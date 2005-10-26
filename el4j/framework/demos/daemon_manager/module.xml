@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!-- project definition -->
+<ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" 
+    xmlns:ant="antlib:org.apache.tools.ant">
+    <module name="module-daemon_manager-demos" path="demos/daemon_manager">
+        <eu name="console">
+            <attribute name="distribution.name" value="daemon-console"/>
+            <attribute name="runtime.runnable" 
+                value="true"/>
+            <attribute name="runtime.class" 
+                value="ch.elca.el4j.demos.daemonmanager.Console"/>
+            <attribute name="runtime.command.creator" 
+                value="runtime.command.creator.basic"/>
+            <hook name="runtime.[module].[eu]" 
+                target="runtime.hook.cmdline.arguments"/>
+        </eu>
+        <eu name="controller">
+            <attribute name="distribution.name" value="daemon-controller"/>
+            <attribute name="runtime.runnable" 
+                value="true"/>
+            <attribute name="runtime.class" 
+                value="ch.elca.el4j.demos.daemonmanager.Controller"/>
+            <attribute name="runtime.command.creator" 
+                value="runtime.command.creator.basic"/>
+        </eu>
+        <attribute name="set" value="framework-demos"/>
+        <dependency module="module-remoting_and_interface_enrichment"/>
+        <dependency module="module-daemon_manager-tests"/>
+    </module>
+</ant:project>

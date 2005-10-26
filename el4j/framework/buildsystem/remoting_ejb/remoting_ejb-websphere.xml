@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!-- Honeydew plugin definition -->
+<project
+  name="remoting_ejb-websphere"
+  xmlns:antcontrib="antlib:net.sf.antcontrib"
+  xmlns:el4ant="antlib:ch.elca.el4ant">
+<description>
+  Remoting-EJB WebSphere plugin.
+</description>
+
+  <!-- Version: $Revision$ -->
+  <!-- Source: $Source$ -->
+  <!-- Date: $Date$ -->
+  <!-- Author: $Author$ -->
+
+  <target
+    name="configure"
+    description="[C] Configure the remoting_ejb-websphere plugin">
+
+    <el4ant:plugin name="runtime" file="buildsystem/core/runtime.xml"/>
+    
+    <ejb:init.ejb.container xmlns:ejb="antlib:ch.elca.el4j.buildsystem.remoting.ejb">
+      <ejb:client.dependency name="websphere-namingclient-ASV51X.b0344.02.jar"/>
+      <ejb:client.dependency name="websphere-naming-ASV51X.b0344.02.jar"/>
+    </ejb:init.ejb.container>
+
+    <el4ant:buildgen action="include" target="remoting_ejb-websphere.include.startpoint"/>
+  </target>
+
+  <!-- Fake targets to load plugin file -->
+  <target name="init"/>
+      
+  <!-- Targets following the next fake target are copied into the generated build.xml file -->
+  <target name="remoting_ejb-websphere.include.startpoint"/>
+
+  <!-- Targets from remoting_ejb-websphere.xml  -->
+
+  <target
+    name="remoting_ejb.xdoclet">
+  
+    <ejbdoclet
+      destdir="${remoting.ejb.gen.dir}"
+      mergedir="parent-fake-to-debug"
+      excludedtags="@version,@author,@todo"
+      addedtags="@xdoclet-generated at ${TODAY}"
+      ejbspec="2.0"
+      force="false"
+      verbose="false">
+      
+      <fileset dir="${remoting.ejb.gen.dir}">
+        <include name="**/ejb/*.java"/>
+      </fileset>
+      <packageSubstitution packages="ejb" substituteWith="interfaces"/>
+      
+      <remoteinterface/>
+      <localinterface/>
+      <homeinterface/>
+      <localhomeinterface/>
+      <session/>
+      
+      <!-- Generate deployment descriptor. -->
+      <deploymentdescriptor
+        destdir="${compile.dest}/META-INF/"
+        validatexml="true"
+        mergedir="fake-to-debug"/>	      
+                
+      <!-- Generate container specific deployment descriptor. -->
+      <websphere
+        destdir="${compile.dest}/META-INF/"
+        validatexml="true"/>
+    </ejbdoclet>
+  </target>
+  
+  <!-- End  remoting_ejb-websphere.xml  -->
+</project>
