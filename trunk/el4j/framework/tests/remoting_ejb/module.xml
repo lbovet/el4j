@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!-- project definition -->
+<ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" xmlns:ant="antlib:org.apache.tools.ant">
+    <module name="module-remoting_ejb-tests" path="tests/remoting_ejb">
+        <eu name="gui">
+
+            <!-- IMPORTANT: This tests runs in start mode only and fails with startdev
+                            The FooRTException can be exculded in the jar file only. -->
+
+            <attribute name="junit.runnable" value="true"/>
+            <attribute name="compile.jar.excludes" value="**/impl/**"/>
+            <hook name="pre.start.[module].[eu]" target="runtime.hook.parallel-ejb.start" if="disttest"/>
+            <hook name="post.start.[module].[eu]" target="runtime.hook.parallel-ejb.stop" if="disttest"/>
+            <attribute name="parallel-ejb.deploytarget" value="deploy.ear.module.eu.module-remoting_ejb-tests.ear"/>
+        </eu>
+       
+        <eu name="ear">
+            <attribute name="runtime.runnable" value="true"/>
+            <attribute name="j2ee.ear.application"/>
+            <attribute name="remoting.ejb" value="true"/>
+            <attribute name="remoting.ejb.inclusiveLocations" value="classpath*:mandatory/env.xml,classpath*:/gui/server-config.xml"/>
+            <attribute name="remoting.ejb.exclusiveLocations" value="classpath*:gui/client-config.xml"/>
+        </eu>
+        
+        <attribute name="set" value="framework-tests"/>
+        <dependency module="module-remoting_ejb"/>
+        <dependency module="module-env"/>
+    </module>
+</ant:project>

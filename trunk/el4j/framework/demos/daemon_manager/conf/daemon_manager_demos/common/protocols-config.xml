@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+    
+    <bean id="rmiProtocol" 
+        class="ch.elca.el4j.services.remoting.protocol.Rmi">
+        <property name="serviceHost">
+            <value>localhost</value>
+        </property>
+        <property name="servicePort">
+            <value>1099</value>
+        </property>
+    </bean>
+</beans>

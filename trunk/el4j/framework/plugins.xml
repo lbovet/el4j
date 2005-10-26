@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<ant:project
+  name="plugins"
+  xmlns="antlib:ch.elca.el4ant"
+  xmlns:ant="antlib:org.apache.tools.ant">
+
+    <plugin name="compile"/>
+    <plugin name="runtime"/>
+    <plugin name="show"/>
+
+    <plugin name="onlinelib">
+        <attribute name="onlinelib.repository" value="http://leaffy/java/lib/"/>
+        <attribute name="onlinelib.repository" value="http://leaffy/java/lib/src/"/>
+        <attribute name="onlinelib.repository" value="http://leaffy/java/el4j/modules/"/>
+    </plugin>
+
+    <!-- Environment support -->
+    <plugin name="env" file="buildsystem/tools/env/env.xml">
+        <attribute name="env.location" value="env/env.properties"/>
+    </plugin>
+
+    <!-- Reports -->
+    <plugin name="junit">
+        <attribute name="junit.jar" value="junit-3.8.1.jar"/>
+        <attribute name="junit.set.list" value="framework-tests"/>
+    </plugin>
+
+    <include file="plugin-javadoc.xml"/>
+
+    <plugin name="checkstyle">
+        <attribute name="checkstyle.config" value="etc/checkstyle_el4j_checks.xml"/>
+        <attribute name="checkstyle.properties" value="etc/checkstyle_el4j.properties"/>
+        <attribute name="checkstyle.set.list" value="framework-modules,framework-tests,framework-demos"/>
+    </plugin>
+
+    <plugin name="emma">
+        <attribute name="emma.mode" value="offline"/>
+        <attribute name="emma.switch" value="emma"/>
+        <attribute name="emma.set.list" value="framework-modules"/>
+    </plugin>
+
+    <plugin name="website"/>
+
+    <!-- IDE integration -->
+    <plugin name="eclipse">
+        <attribute name="eclipse.checkclipse" value="true"/>
+        <attribute name="eclipse.workspace.path" value="workspace"/>
+        <!-- Eclipse targets -->
+        <attribute name="eclipse.tools" value="eclipse.generate"/>
+        <!-- compile targets -->
+        <attribute name="eclipse.tools" value="clean.module,jars"/>
+        <!-- junit targets -->
+        <attribute name="eclipse.tools" value="junit.startdev.all"/>
+        <!-- reports targets -->
+        <attribute name="eclipse.tools" value="javadoc,checkstyle"/>
+        <!-- j2ee-war and j2ee-war-tomcat targets -->
+        <attribute name="eclipse.tools" value="create.war.module.eu,deploy.war.module.eu"/>
+        <!-- binrelease targets -->
+        <attribute name="eclipse.tools" value="binrelease.module"/>
+    </plugin>
+
+    <!-- Tools: commons attributes generation and conf/ folder support -->
+    <plugin name="commons-attributes"/>
+
+    <plugin name="resources">
+        <attribute name="resources.directories" value="conf"/>
+    </plugin>
+
+    <!-- Tools: binary module support -->
+    <plugin name="binrelease">
+        <attribute name="binrelease.output.directory" value="dist/binaries"/>
+        <attribute name="binrelease.default.excludes" value="module.xml,.classpath,.project,.check*,.externalToolBuilders/**"/>
+    </plugin>
+
+    <!-- remoting EJB support -->
+    <plugin name="remoting_ejb" file="buildsystem/remoting_ejb/remoting_ejb.xml"/>
+
+    <!-- parallel support -->
+    <plugin name="parallel" file="buildsystem/tools/parallel/parallel.xml"/>
+
+    <!-- distribution support -->
+    <plugin name="distribution" file="buildsystem/tools/distribution/distribution.xml">
+       <attribute name="distribution.profiles.basedir" value="dist"/>
+       <attribute name="distribution.set.list" value="framework-demos"/>
+    </plugin>
+</ant:project>

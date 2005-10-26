@@ -1,0 +1,302 @@
+<?xml version="1.0"?>
+<!-- EL4Ant plugin definition -->
+<project name="remoting_ejb"
+  xmlns:antcontrib="antlib:net.sf.antcontrib"
+  xmlns:el4ant="antlib:ch.elca.el4ant">
+  <description>
+    Support for generating EJBs from POJOs.
+  </description>
+
+  <target
+    name="configure"
+    depends="init.remoting.ejb.props"
+    description="[C] Configure the Remoting-EJB plugin">
+
+    <property name="plugin.ejb.java" value="${configure.plugin.dir}/java"/>
+    <property name="plugin.ejb.classes" value="${configure.plugin.dir}/classes"/>
+    <property
+      name="plugin.ejb.jar"
+      value="${buildsystem.dist.directory}/buildsystem-remoting_ejb.jar"/>
+    <property name="plugin.ejb.uri" value="antlib:ch.elca.el4j.buildsystem.remoting.ejb"/>
+    <property name="plugin.ejb.resource" value="ch/elca/el4j/buildsystem/remoting/ejb/antlib.xml"/>
+
+    <!-- Compile the plugin Java classes (generators and tasks) -->
+    <el4ant:buildplugin
+      srcdir="${plugin.ejb.java}"
+      destdir="${plugin.ejb.classes}"
+      jarfile="${plugin.ejb.jar}"
+      resource="${plugin.ejb.resource}"
+      uri="${plugin.ejb.uri}">
+      <classpath>
+        <pathelement location="${buildsystem.lib.directory}/${buildsystem.core.jar}"/>
+        <pathelement location="${buildsystem.dist.directory}/${buildsystem.core.jar}"/>
+      </classpath>
+      
+      <fileset dir="${plugin.ejb.classes}"/>
+      <fileset dir="${plugin.ejb.java}">
+        <exclude name="**/*.java"/>
+      </fileset>
+      <fileset dir="${configure.plugin.dir}">
+        <include name="*.xml"/>
+      </fileset>
+      <!-- Optional element for the jar Manifest file -->
+      <manifest>
+        <attribute name="Implementation-Title" value="Remoting-EJB Plugin"/>
+        <attribute name="Implementation-Vendor" value="ELCA Informatique SA"/>
+        <attribute name="Build-Date" value="${TODAY}"/>
+        <attribute name="Built-By" value="${user.name}"/>
+     </manifest>
+     <dependency jar="${velocity.jar}"/>
+     <dependency jar="${spring.jar}"/>
+     <dependency jar="${xdoclet.jar}"/>
+     <dependency jar="${xdoclet-xdoclet.jar}"/>
+     <dependency jar="${xdoclet-ejb.jar}"/>
+     <dependency jar="${xdoclet-jboss.jar}"/>
+     <dependency jar="${xdoclet-bea.jar}"/>
+     <dependency jar="${xdoclet-ibm.jar}"/>
+     <dependency jar="${xdoclet-web.jar}"/>
+     <dependency jar="${xdoclet-jmx.jar}"/>
+     <dependency jar="${xjavadoc.jar}"/>
+     <dependency jar="${commons.collections.jar}"/>
+     <dependency jar="${commons.logging.jar}"/>
+     <dependency jar="${j2ee.jar}"/>
+     <plugin name="remoting_ejb" file="remoting_ejb.xml"/>
+     <plugin name="remoting_ejb-jboss" file="remoting_ejb-jboss.xml"/>
+     <plugin name="remoting_ejb-weblogic" file="remoting_ejb-weblogic.xml"/>
+     <plugin name="remoting_ejb-websphere" file="remoting_ejb-websphere.xml"/>
+    </el4ant:buildplugin>
+
+    <!-- Add a configuration listener to init the EJB generator hook -->
+    <ejb:init.ejb.generator genPath="${remoting.ejb.gen.basedir}"
+      xmlns:ejb="antlib:ch.elca.el4j.buildsystem.remoting.ejb"/>
+
+    <!-- set default application container -->
+    <property name="j2ee-ejb.container" value="jboss"/>
+    
+    <!-- Configure container specific plugins (among others this initializes
+         their configuration listeners for setting up EJB XDoclet hooks -->
+    <el4ant:plugin
+      name="remoting_ejb-${j2ee-ejb.container}"
+      file="buildsystem/remoting_ejb/remoting_ejb-${j2ee-ejb.container}.xml"/>
+    
+    <!-- Create hooks used in targets -->
+    <el4ant:hook action="create" name="ejb.pre.eutarget.[module].[eu]"/>
+    <el4ant:hook action="create" name="ejb.post.eutarget.[module].[eu]"/>
+
+    <!-- Include end of this file build.xml -->
+    <el4ant:buildgen action="include" target="ejb.include.startpoint"/>
+
+    <!-- Information for distclean -->
+    <antcontrib:if>
+      <istrue value="${plugin.compiled}"/>
+      <antcontrib:then>
+        <el4ant:projectproperties
+          action="append"
+          property="plugin.files"
+          value="${configure.plugin.dir}/classes"/>
+      </antcontrib:then>
+    </antcontrib:if>
+  </target>
+
+  <!-- Fake init target to load plugin file -->
+  <target name="init"/>
+
+  <!-- Targets following the next fake target are copied into the generated build.xml file -->
+  <target name="ejb.include.startpoint"/>
+
+
+  <!-- Targets from ejbIntegrationPlugin ejb.xml  -->
+
+  <target
+    name="init.remoting.ejb.props">
+  
+    <property name="remoting.ejb.gen.basedir" value="dist/j2ee/EJB"/>
+    
+    <property name="xdoclet.version" value="1.2.3"/>
+    
+    <property
+      name="velocity.jar"
+      value="${buildsystem.lib.directory}/velocity-1.4.jar"/>
+    <property
+      name="spring.jar"
+      value="${buildsystem.lib.directory}/spring-1.2.5.jar"/>
+    <property
+      name="xdoclet.jar"
+      value="${buildsystem.lib.directory}/xdoclet-${xdoclet.version}.jar"/>
+    <property
+      name="xdoclet-xdoclet.jar"
+      value="${buildsystem.lib.directory}/xdoclet-xdoclet-module-${xdoclet.version}.jar"/>
+    <property
+      name="xdoclet-ejb.jar"
+      value="${buildsystem.lib.directory}/xdoclet-ejb-module-${xdoclet.version}.jar"/>
+    <property
+      name="xdoclet-jboss.jar"
+      value="${buildsystem.lib.directory}/xdoclet-jboss-module-${xdoclet.version}.jar"/>
+    <property
+      name="xdoclet-bea.jar"
+      value="${buildsystem.lib.directory}/xdoclet-bea-module-${xdoclet.version}.jar"/>
+    <property
+      name="xdoclet-ibm.jar"
+      value="${buildsystem.lib.directory}/xdoclet-ibm-module-${xdoclet.version}.jar"/>
+    <property
+      name="xdoclet-web.jar"
+      value="${buildsystem.lib.directory}/xdoclet-web-module-${xdoclet.version}.jar"/>
+    <property
+      name="xdoclet-jmx.jar"
+      value="${buildsystem.lib.directory}/xdoclet-jmx-module-${xdoclet.version}.jar"/>
+    <property
+      name="xjavadoc.jar"
+      value="${buildsystem.lib.directory}/xjavadoc-1.1.jar"/>
+    <property
+      name="commons.collections.jar"
+      value="${buildsystem.lib.directory}/commons-collections-3.1.jar"/>
+    <property
+      name="commons.logging.jar"
+      value="${buildsystem.lib.directory}/commons-logging-1.0.4.jar"/>
+    <property
+      name="j2ee.jar"
+      value="${buildsystem.lib.directory}/ejb-2.0.jar"/>
+  </target>
+  
+  <target
+    name="init.remoting.ejb"
+    unless="init.remoting.ejb.executed"
+    depends="init.remoting.ejb.props">
+    <!-- Init hook to initialize plugin specific elements if needed -->
+
+    <!-- If specific tasks are added, load them here or in the targets that use
+         them when rarely used. In any cases, the targets must declare the
+         namespace -->
+         
+    <el4ant:extendedproperty
+       name="dist.module.classpath" value="${compile.classes.${module}}"/>
+       
+    <typedef
+      resource="ch/elca/el4j/buildsystem/remoting/ejb/antlib.xml"
+      uri="antlib:ch.elca.el4j.buildsystem.remoting.ejb">
+      <classpath>
+        <pathelement location="${buildsystem.lib.directory}/${buildsystem.core.jar}"/>
+        <pathelement location="${buildsystem.dist.directory}/${buildsystem.core.jar}"/>
+      
+        <pathelement location="${buildsystem.lib.directory}/buildsystem-remoting_ejb.jar"/>
+        <pathelement location="${buildsystem.dist.directory}/buildsystem-remoting_ejb.jar"/>
+        
+        <pathelement location="${velocity.jar}"/>
+        <pathelement location="${spring.jar}"/>
+      </classpath>
+    </typedef>
+
+    <!-- init marker -->
+    <property name="init.remoting.ejb.executed" value="true"/>
+  </target>
+
+  <!-- Generate the EJBs -->
+  <target
+    name="remoting_ejb.generate.module.eu"
+    description="Generate the EJBs based on the interface of the POJO"
+    depends="init, init.remoting.ejb"
+    xmlns:ejb="antlib:ch.elca.el4j.buildsystem.remoting.ejb">
+    
+    <el4ant:extendedproperty
+      name="compile.classpath"
+      value="${compile.classpath.${module}}"/>
+    <el4ant:extendedproperty
+       name="compile.dest"
+      value="${compile.classes.${module}}"/>
+    <el4ant:extendedproperty
+      name="compile.sources"
+      value="${compile.sources.${module}}"/>
+    <el4ant:extendedproperty
+      name="eulist"
+      value="${module.eulist.${module}}"/>
+    
+    <path id="classpath">
+      <pathelement location="${xdoclet.jar}"/>
+      <pathelement location="${xdoclet-ejb.jar}"/>
+      <pathelement location="${xdoclet-jboss.jar}"/>
+      <pathelement location="${xdoclet-bea.jar}"/>
+      <pathelement location="${xdoclet-ibm.jar}"/>
+      <pathelement location="${xdoclet-web.jar}"/>
+      <pathelement location="${xdoclet-jmx.jar}"/>
+      <pathelement location="${xjavadoc.jar}"/>
+      <pathelement location="${commons.collections.jar}"/>
+      <pathelement location="${commons.logging.jar}"/>
+      <pathelement location="${j2ee.jar}"/>
+    </path>
+    
+    <taskdef
+      name="ejbdoclet"
+      classname="xdoclet.modules.ejb.EjbDocletTask"
+      classpathref="classpath"/>
+      
+  	<!-- iterate over all execution units of the given module -->
+    <antcontrib:for param="it" list="${eulist}">
+      <sequential>
+      	<el4ant:extendedproperty
+      	  name="remoting.ejb.server.inclusiveLocations"
+      	  value="${remoting.ejb.inclusiveLocations.${module}.@{it}}"/>
+      	<el4ant:extendedproperty
+      	  name="remoting.ejb.server.exclusiveLocations"
+      	  value="${remoting.ejb.exclusiveLocations.${module}.@{it}}"/>
+        <el4ant:extendedproperty
+          name="runtime.classpath"
+          value="${runtime.dev.classpath.${module}.@{it}}"/>
+        <el4ant:extendedproperty
+          name="remoting.ejb"
+          value="${remoting.ejb.${module}.@{it}}"/>
+        <el4ant:extendedproperty 
+          name="remoting.ejb.gen.dir"
+          value="${remoting.ejb.gen.basedir}/${module}-@{it}/"/>
+        <el4ant:extendedproperty
+          name="j2ee.ear.dd"
+          value="${j2ee.ear.dd.${module}.@{it}}"/>
+        
+        <antcontrib:if>
+          <istrue value="${remoting.ejb}"/>
+          <antcontrib:then>
+            <!-- clear generated files from last run -->
+            <delete
+              failonerror="false"
+              dir="${remoting.ejb.gen.dir}"/>
+            
+            <!-- generate session beans -->
+            <ejb:generate.beans
+              moduleName="${module}"
+              euName="@{it}"
+              classpath="${buildsystem.lib.directory}/emma-2.0.4217.jar:${compile.classpath}:${runtime.classpath}"
+              inclusiveLocations="${remoting.ejb.server.inclusiveLocations}"
+	  	      exclusiveLocations="${remoting.ejb.server.exclusiveLocations}"
+              genDir="${remoting.ejb.gen.dir}"
+              xmlns:ejb="antlib:ch.elca.el4j.buildsystem.remoting.ejb"/>
+            
+            <!-- run XDoclet on the generated beans (container specific). -->
+            <antcall target="remoting_ejb.xdoclet"/>
+            
+            <!-- Compile all generated classes. -->
+            <javac
+              destdir="${compile.dest}"
+              classpath="${compile.classpath}"
+              debug="on"
+              deprecation="on"
+              optimize="off">
+            
+              <src>
+                <pathelement location="${compile.sources}"/>
+                <pathelement location="${remoting.ejb.gen.dir}"/>
+              </src>
+            </javac>
+            
+            <!-- generate deployment descriptor -->
+            <ejb:generate.ear.dd
+              moduleName="${module}"
+              euName="@{it}"
+              location="${j2ee.ear.dd}"
+              xmlns:ejb="antlib:ch.elca.el4j.buildsystem.remoting.ejb"/>
+          </antcontrib:then>
+        </antcontrib:if>
+      </sequential>
+    </antcontrib:for>    
+  </target>
+  
+  <!-- End  remoting_ejb.xml  -->
+</project>
