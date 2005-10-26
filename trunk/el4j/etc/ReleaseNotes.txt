@@ -1,0 +1,179 @@
+
+--------------------------------------------------------------------------------
+ Date :   23.09.05
+                            EL4J  version  0.9 (Iteration 2)
+--------------------------------------------------------------------------------
+* GNATS INSTALLED (problems resolved in iteration but not yet acknowledged)
+-
+
+* GNATS CLOSED
+-
+
+==
+  All binary modules are working only with EL4Ant 0.9.1 and special plugins of
+  EL4J. J2EE plugin of EL4Ant must be replaced with the EL4J one.
+==
+
+* Framework modules
+  = module-core (binary verison is 1.1)
+    + BeanTypeAutoProxyCreator for autoproxying beans based on their type.
+    + JNDI property override and placeholder configurers used to adapt the
+      configuration by values retrieved through JNDI.
+    + Application context that resolves resources based on manifest file items
+      (LeafApplicationContext has been moved to ModuleApplicationContext).
+    + Coding support classes added. Only parts which are not covered by spring
+      classes were added.
+    + Implicit context passing generalized. Get and pushed context must now be 
+      an object.
+    + Business exceptions has been deprecated. Subclasses of DataAccessException
+      must now be used. Only the InsertionFailureException is written by EL4J
+      others are from the spring framework.
+    + Useful notification methods added in CoreNotificationHelper, like the the 
+      one to notify a misconfiguration. Should be used in afterPropertiesSet 
+      method for example.
+    + Convenience dao class added for Ibatis SqlMaps.
+    + Abstract dtos are now solved with integer as optimistic locking version 
+      and integer or string as primary key.
+    + Support added for easy creation of an own intercepter. Interception is
+      configurated by using commons attributes.
+    + Interface enrichment can now handle also methods with arrays.
+  = module-core-tests (no binary version)
+    + Tests added for new features.
+    + Adapted to EL4Ant.
+
+  = module-core_integration-tests (no binary version)
+    + Integration tests for module-core.
+    + Tests added for new features.
+    
+  = module-daemon_manager (binary verison is 1.0)
+    + Used to manage deamons. Inspired from orchestra thread manager. Each 
+      demaon belongs to a demaon manager which starts and stops them. Demaons
+      can be executed periodically or with a defined sleep time inbetween.
+  = module-daemon_manager-tests (no binary version)
+    + Tests for module-daemon_manager.
+  = module-daemon_manager-demos (no binary version)
+    + Demo for module-daemon_manager.
+  
+  = module-env (binary verison is 1.0)
+    + Used to replace place holders in configuration files with the environment
+      defined through EL4Ant.
+  = module-env-tests (no binary version)
+    + Tests for module-env.
+  
+  = module-exception_handling (binary verison is 1.0)
+    + Interceptor to handle exceptions.
+    + Configurable handler hierarchy.
+    + Safety facade to handle implementation-specific exceptions.
+    + Context exception handler to handle exceptions depending on the current context.
+    + Provides default handler strategies (retry, transform, log, rethrow).
+  = module-exception_handling-tests (no binary version)
+    + Tests for module-exception_handling.
+  
+  = module-executable_distribution-demos (no binary version)
+    + Demonstrates the use of executable distributions.
+  
+  = module-jmx (binary verison is 1.1)
+    + Used to support developpers in debugging code by providing a real time 
+      view of the beans and their configurations.
+  = module-jmx-tests (no binary version)
+    + Tests for module-jmx.
+  
+  = module-light_statistics (binary verison is 1.0)
+    + Interceptor to measure invocation times.
+  = module-light_statistics-demos (no binary version)
+    + Demo for module-light_statistics.
+  
+  = module-remoting_and_interface_enrichment (binary verison is 1.1)
+    + Soap support added. Also context passing to Leaf2 is possible.
+  = module-remoting_and_interface_enrichment-tests (no binary version)
+    + Tests for soap added.
+    + Tests improved.
+  = module-remoting_and_interface_enrichment-demos (no binary version)
+    + Soap added to benchmark.
+  
+  = module-remoting_ejb (binary verison is 1.0)
+    + Wraps POJOs into session beans (stateful or stateless).
+  = module-remoting_ejb-tests (no binary version)
+    + Tests for module-remoting_ejb
+
+  = module-security
+    + Besides the Acegi Security System library, this module contains an 
+      AuthenticationServiceContextPasser and an AuthenticationService which 
+      allows the user to transparently log in to a server and transparently 
+      invoke the server's methods.
+  = module-security-tests (no binary version)
+    + Tests for module-security.
+    
+  = module-web (binary verison is 1.1)
+    + Web application context that resolves resources based on manifest file
+      items.
+    + Convenience classes added.
+
+
+* Framework plugins
+  = remoting_ejb
+    + Generates EJB wrappers for POJOs.
+    + Supports JBoss, WebLogic, WebSphere.
+  = environment
+    + Adds support for environments.
+  = parallel
+    + Executes existing targets in parallel.
+  = distribution
+    + Adds support for creating executable distributions without EL4Ant 
+      dependencies.
+  = j2ee
+    + EL4Ant j2ee plugin must be replaced with our j2ee plugin to have
+      environment support.
+
+
+
+--------------------------------------------------------------------------------
+ Date :   07.04.05
+                            LEAF  version  3.0 (Iteration 1)
+--------------------------------------------------------------------------------
+* GNATS INSTALLED (problems resolved in iteration but not yet acknowledged)
+-
+
+* GNATS CLOSED
+-
+
+* Framework modules
+  = module-core (binary verison is 1.0)
+    + Simplified transaction attributes.
+    + Locator for defined beans.
+    + Configurator to merge content of bean definitions in xml and properties file.
+      Existing lists can now be extended, not only replaced.
+    + Own application context for better control and more transparency of loaded config.
+    + Additional tier for implicit context passing.
+    + Defined base and often used exceptions.
+    + Abstract classes and factories for DTO usage.
+    + Primary key generation
+    + General exceptions to translate SqlExceptions to more useable RuntimeExceptions.
+    + Ibatis SqlMaps callback handlers to handle large objects <-> java types.
+    + Commons Attributes collector for collection on implementation and interface.
+    + Coding utils
+    + Symmetric encryption
+    + Interface enrichment; used to generate a new interface based on a given interface
+      on runtime.
+    + Helper to load another log4j configuration on runtime.
+    + Configuration presets for use of transaction mechanism with Commons Attributes, 
+      set for data access with Ibatis SqlMaps and connection pool, Apache DBCP.
+  = module-core-tests (no binary version)
+    + Tests for module-core.
+    
+  = module-remoting_and_interface_enrichment (binary verison is 1.0)
+    + Used to easily switch business logic from none distributed to distributed and back.
+      Available protocols are rmi, burlap and hessian.
+    + Context will be implicitly passed. Possablility to turn it off.
+  = module-remoting_and_interface_enrichment-tests (no binary version)
+    + Tests for module-remoting_and_interface_enrichment.
+  = module-remoting_and_interface_enrichment-demos (no binary version)
+    + Demo of all protocols of module-remoting_and_interface_enrichment.
+   
+  = module-web (binary verison is 1.0)
+    + Filter to delegate requests to a spring bean.
+    + Xpf filter to convert xml to html pages.
+    + Struts action to prevent double submission of a form.
+    + General struts exception handler.
+    + Transformer to convert not xml conform characters.
+
