@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<project name="project" basedir=".">
+    
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <description>
+        Build file to generate zips for SourceForge.
+    </description>
+
+    <property name="dist.path" value="dist"/>
+    <property name="zip.path" value="${dist.path}/zips"/>
+    
+    <property name="el4j.version" value="0.9.1"/>
+    <property name="zip.name.prefix" value="el4j-${el4j.version}"/>
+    <property name="zip.name.essential" 
+        value="${zip.name.prefix}-essential.zip"/>
+    <property name="zip.name.convenience" 
+        value="${zip.name.prefix}-convenience.zip"/>
+
+    <target name="distclean" description="Clean the dist directory.">
+        <delete quiet="true" includeEmptyDirs="true">
+            <fileset dir="${dist.path}" defaultexcludes="false"/>
+        </delete>
+    </target>
+    
+    <target name="create.zip.essential" 
+        description="Generate zip file with essential EL4J stuff.">
+        <mkdir dir="${zip.path}"/>
+        <delete quiet="true"
+            file="${zip.path}/${zip.name.essential}"/>
+        <zip destfile="${zip.path}/${zip.name.essential}"
+            update="true"
+            duplicate="fail"
+            defaultexcludes="false">
+            
+            <fileset dir="${basedir}">
+                <exclude name="**/CVS/**"/>
+                
+                <include name="external-tools/el4ant/**/README.txt"/>
+                <include name="external-tools/el4ant/**/ant-contrib-*.jar"/>
+                <include name="external-tools/el4ant/**/buildsystem-*.jar"/>
+                <include name="external-tools/el4ant/**/reports-*.jar"/>
+                <include name="external-tools/el4ant/**/tools-*.jar"/>
+                
+                <include name="external-tools/ant/**"/>
+                <exclude name="external-tools/ant/docs/**"/>
+                
+                <include name="lib/**"/>
+            </fileset>
+        </zip>
+    </target>
+
+    <target name="create.zip.convenience" 
+        description="Generate zip file with essential EL4J stuff and the EL4J framework.">
+        <mkdir dir="${zip.path}"/>
+        <delete quiet="true"
+            file="${zip.path}/${zip.name.convenience}"/>
+        <zip destfile="${zip.path}/${zip.name.convenience}"
+            update="true"
+            duplicate="fail"
+            defaultexcludes="false">
+            
+            <fileset dir="${basedir}">
+                <exclude name="**/CVS/**"/>
+                <exclude name="**/classes/**"/>
+                <exclude name="**/.project"/>
+                <exclude name="**/.classpath"/>
+                <exclude name="**/.check*"/>
+                <exclude name="**/.external*/**"/>
+                
+                <include name="external-tools/el4ant/**/README.txt"/>
+                <include name="external-tools/el4ant/**/ant-contrib-*.jar"/>
+                <include name="external-tools/el4ant/**/buildsystem-*.jar"/>
+                <include name="external-tools/el4ant/**/reports-*.jar"/>
+                <include name="external-tools/el4ant/**/tools-*.jar"/>
+                
+                <include name="external-tools/ant/**"/>
+                <exclude name="external-tools/ant/docs/**"/>
+                
+                <include name="lib/**"/>
+                
+                <include name="framework/**"/>
+                <exclude name="framework/dist/**"/>
+                <exclude name="framework/lib/**"/>
+                <exclude name="framework/workspace/.metadata/**"/>
+                <exclude name="framework/build.xml"/>
+            </fileset>
+        </zip>
+    </target>
+</project>
