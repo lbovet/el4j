@@ -11,7 +11,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
- * For alternative licensing, please contact info@elca.ch 
+ * For alternative licensing, please contact info@elca.ch
  */
 package ch.elca.el4j.services.security.authentication;
 
