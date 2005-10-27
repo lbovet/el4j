@@ -9,9 +9,10 @@
     <plugin name="show"/>
 
     <plugin name="onlinelib">
+        <attribute name="onlinelib.repository" value="../lib/"/>
+        <attribute name="onlinelib.repository" value="../lib/src/"/>
         <attribute name="onlinelib.repository" value="http://leaffy/java/lib/"/>
         <attribute name="onlinelib.repository" value="http://leaffy/java/lib/src/"/>
-        <attribute name="onlinelib.repository" value="http://leaffy/java/el4j/modules/"/>
     </plugin>
 
     <!-- Environment support -->
