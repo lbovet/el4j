@@ -1,3 +1,24 @@
+--------------------------------------------------------------------------------
+ Date :   27.10.05
+                            EL4J  version  0.9.1
+--------------------------------------------------------------------------------
+* GNATS INSTALLED (problems resolved in iteration but not yet acknowledged)
+-
+
+* GNATS CLOSED
+-
+
+* Framework modules
+  = all modules
+    + Prepared for open sourcing.
+  = module-web (no new binary version)
+    + XpfFilter renamed to XmlFilter.
+
+* Framework plugins
+  = all plugins
+    + Prepared for open sourcing.
+  = j2ee
+    + Plugin moved to EL4Ant.
 
 --------------------------------------------------------------------------------
  Date :   23.09.05
