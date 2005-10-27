@@ -61,7 +61,6 @@
 
     <module name="RegexpHeader">
       <property name="headerFile" value="${el4j_java_header_file}"/>
-      <property name="multiLines" value="7"/>
     </module>
 
 
@@ -94,8 +93,9 @@
       <!-- Ignore the import lines. -->
       <!-- Ignore the lines in javadoc with javadoc tag and one word. -->
       <!-- Ignore the long  '* 15.11.04 XYZ ...' in ELCA java comment header -->
+      <!-- Ignore the first text line of header. -->
       <property name="ignorePattern"
-                value="^( *\* *[^ ]+)$|^( \* *\(.\$Sourc[e]: [^$]*\$., ?)$|^(import [^ ]+)$|^( *\* *@[^ ]+ [^ ]+)$|^ \* \d\d.\d\d.\d{2,4}[ ]+[a-zA-Z]{3}[ ]+[a-zA-Z0-9 \./\(\)]+$"/>
+                value="^( *\* *[^ ]+)$|^( \* *\(.\$Sourc[e]: [^$]*\$., ?)$|^(import [^ ]+)$|^( *\* *@[^ ]+ [^ ]+)$|^ \* \d\d.\d\d.\d{2,4}[ ]+[a-zA-Z]{3}[ ]+[a-zA-Z0-9 \./\(\)]+$|^ \* EL4J, the Enterprise Library for Java, complementing Spring http://el4j\.sf\.net$"/>
     </module>
     <module name="MethodLength">
       <property name="max" value="150"/>
