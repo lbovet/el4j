@@ -1,4 +1,5 @@
 external-tools
+dist
 *.lnk
 *.exe
 *.bat
