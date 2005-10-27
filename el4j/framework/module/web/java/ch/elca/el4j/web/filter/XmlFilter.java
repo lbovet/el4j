@@ -42,7 +42,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * Class for filtering xpf files. Depending on whether the browser is xslt
+ * Class for filtering xml files. Depending on whether the browser is xslt
  * compatible or not, this filter generates a html page and sends it to the
  * client or lets the browser do the xslt transformation.
  * 
@@ -55,10 +55,10 @@ import org.apache.commons.logging.LogFactory;
  * 
  * @author Jacques-Olivier Haenni (JOH)
  */
-public final class XpfFilter implements Filter {
+public final class XmlFilter implements Filter {
 
     /** The static logger. */
-    protected static Log s_logger = LogFactory.getLog(XpfFilter.class);
+    protected static Log s_logger = LogFactory.getLog(XmlFilter.class);
     
     /**
      * List of browsers known to support XSLT. Currently, only IE 6.0 fully
@@ -120,7 +120,7 @@ public final class XpfFilter implements Filter {
     }
 
     /**
-     * Apply the xpf filter. If the browser is not xslt compatible, this method
+     * Apply the xml filter. If the browser is not xslt compatible, this method
      * will generate the html page. Otherwise, the xslt transformation will be
      * handed to the browser.
      */
