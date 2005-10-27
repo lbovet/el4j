@@ -1,7 +1,5 @@
 .project
 .classpath
 build.xml
-bslib
 dist
 lib
-workspace
