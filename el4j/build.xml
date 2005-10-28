@@ -12,6 +12,9 @@
 
     <property name="dist.path" value="dist"/>
     <property name="zip.path" value="${dist.path}/zips"/>
+    <property name="docs.path" value="${dist.path}/docs"/>
+    <property name="docs.path.pdf" value="${docs.path}/pdf"/>
+    <property name="docs.path.javadoc" value="${docs.path}/api"/>
     
     <property name="el4j.version" value="0.9.1"/>
     <property name="zip.name.prefix" value="el4j-${el4j.version}"/>
@@ -28,42 +31,22 @@
     
     <target name="create.zip.essential" 
         description="Generate zip file with essential EL4J stuff.">
+        
+        <property name="zip.file.path" 
+            value="${zip.path}/${zip.name.essential}"/>
+        
         <mkdir dir="${zip.path}"/>
-        <delete quiet="true"
-            file="${zip.path}/${zip.name.essential}"/>
-        <zip destfile="${zip.path}/${zip.name.essential}"
-            update="true"
-            duplicate="fail"
-            defaultexcludes="false">
-            
-            <fileset dir="${basedir}">
-                <exclude name="**/CVS/**"/>
-                
-                <include name="external-tools/el4ant/**/README.txt"/>
-                <include name="external-tools/el4ant/**/ant-contrib-*.jar"/>
-                <include name="external-tools/el4ant/**/buildsystem-*.jar"/>
-                <include name="external-tools/el4ant/**/reports-*.jar"/>
-                <include name="external-tools/el4ant/**/tools-*.jar"/>
-                
-                <include name="external-tools/ant/**"/>
-                <exclude name="external-tools/ant/docs/**"/>
-                
-                <include name="lib/**"/>
-            </fileset>
-        </zip>
+        <delete quiet="true" file="${zip.file.path}"/>
+        <antcall target="internal.create.zip.essential" inheritall="true"/>
     </target>
-
-    <target name="create.zip.convenience" 
-        description="Generate zip file with essential EL4J stuff and the EL4J framework.">
-        <mkdir dir="${zip.path}"/>
-        <delete quiet="true"
-            file="${zip.path}/${zip.name.convenience}"/>
-        <zip destfile="${zip.path}/${zip.name.convenience}"
+    
+    <target name="internal.create.zip.essential">
+        <zip destfile="${zip.file.path}"
             update="true"
             duplicate="fail"
             defaultexcludes="false">
             
-            <fileset dir="${basedir}">
+            <zipfileset dir="${basedir}" prefix="${zip.name.prefix}">
                 <exclude name="**/CVS/**"/>
                 <exclude name="**/classes/**"/>
                 <exclude name="**/.project"/>
@@ -71,6 +54,9 @@
                 <exclude name="**/.check*"/>
                 <exclude name="**/.external*/**"/>
                 
+                <include name="*.txt"/>
+                <include name="etc/**"/>
+                
                 <include name="external-tools/el4ant/**/README.txt"/>
                 <include name="external-tools/el4ant/**/ant-contrib-*.jar"/>
                 <include name="external-tools/el4ant/**/buildsystem-*.jar"/>
@@ -81,13 +67,59 @@
                 <exclude name="external-tools/ant/docs/**"/>
                 
                 <include name="lib/**"/>
+            </zipfileset>
+        </zip>    
+    </target>
+
+    <target name="create.zip.convenience" 
+        description="Generate zip file with essential EL4J stuff and the EL4J framework.">
+        
+        <property name="zip.file.path" 
+            value="${zip.path}/${zip.name.convenience}"/>
+        
+        <mkdir dir="${zip.path}"/>
+        <delete quiet="true" file="${zip.file.path}"/>
+        
+        <antcall target="collect.documentation.files" inheritall="true"/>
+        <antcall target="internal.create.zip.essential" inheritall="true"/>
+
+        <zip destfile="${zip.file.path}"
+            update="true"
+            duplicate="fail"
+            defaultexcludes="false">
+            
+            <zipfileset dir="${basedir}" prefix="${zip.name.prefix}">
+                <exclude name="**/CVS/**"/>
+                <exclude name="**/classes/**"/>
+                <exclude name="**/.project"/>
+                <exclude name="**/.classpath"/>
+                <exclude name="**/.check*"/>
+                <exclude name="**/.external*/**"/>
                 
                 <include name="framework/**"/>
                 <exclude name="framework/dist/**"/>
                 <exclude name="framework/lib/**"/>
                 <exclude name="framework/workspace/.metadata/**"/>
                 <exclude name="framework/build.xml"/>
-            </fileset>
+            </zipfileset>
+            <zipfileset dir="${basedir}/dist" prefix="${zip.name.prefix}">
+                <include name="docs/**"/>
+            </zipfileset>
         </zip>
+    </target>
+    
+    <target name="collect.documentation.files">
+        <mkdir dir="${docs.path}"/>
+        <mkdir dir="${docs.path.pdf}"/>
+        <mkdir dir="${docs.path.javadoc}"/>
+        
+        <get dest="${docs.path.pdf}/ReferenceDoc.pdf" 
+            src="http://el4j.sourceforge.net/el4j/ReferenceDoc.pdf"/>
+        <get dest="${docs.path.pdf}/EL4JFeatures.pdf" 
+            src="http://el4j.sourceforge.net/el4j/EL4JFeatures.pdf"/>
+        
+        <copy todir="${docs.path.javadoc}">
+            <fileset dir="framework/dist/website/javadoc" includes="**/*"/>
+        </copy>
     </target>
 </project>
