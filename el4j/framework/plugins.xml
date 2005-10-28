@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <ant:project
-  name="plugins"
-  xmlns="antlib:ch.elca.el4ant"
-  xmlns:ant="antlib:org.apache.tools.ant">
+    name="plugins"
+    xmlns="antlib:ch.elca.el4ant"
+    xmlns:ant="antlib:org.apache.tools.ant">
 
     <plugin name="compile"/>
     <plugin name="runtime"/>
@@ -11,8 +11,10 @@
     <plugin name="onlinelib">
         <attribute name="onlinelib.repository" value="../lib/"/>
         <attribute name="onlinelib.repository" value="../lib/src/"/>
-        <attribute name="onlinelib.repository" value="http://leaffy/java/lib/"/>
-        <attribute name="onlinelib.repository" value="http://leaffy/java/lib/src/"/>
+        <attribute name="onlinelib.repository" 
+            value="http://el4.elca-services.ch/el4j/lib/"/>
+        <attribute name="onlinelib.repository" 
+            value="http://el4.elca-services.ch/el4j/lib/src/"/>
     </plugin>
 
     <!-- Environment support -->
