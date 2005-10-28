@@ -23,7 +23,12 @@ Every directory mentioned in this document starts from your EL4J home directory.
    * cd framework
    * ant -f bootstrap.xml (same as "ant -f bootstrap.xml configure")
        * File "build.xml" will be created. Generates also Eclipse files 
-         (".project", ".classpath and so on).
+         (".project", ".classpath and so on). Needed library (jar/zip) files 
+         will be copied to "framework/lib". Sources of it to "framework/lib/src". 
+         EL4Ant will claim if a library file could not be found. In this case
+         the library file has to be download manually from vendor's homepage and
+         be copied in directory "framework/lib".
+         
    * ant compile
        * Directory "framework/dist/classes" will be created with a folder for
          each module of the EL4J framework project. These folders contain the 
