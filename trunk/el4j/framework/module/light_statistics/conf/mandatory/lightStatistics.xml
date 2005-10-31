@@ -13,7 +13,7 @@
 
     <!-- Proxy all beans using an auto proxy creator -->
     <bean id="lightStatisticsMonitorProxy" 
-        class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        class="ch.elca.el4j.core.aop.ExclusiveBeanNameAutoProxyCreator">
         <property name="beanNames"><value>*</value></property>
         <property name="interceptorNames">
             <list>
