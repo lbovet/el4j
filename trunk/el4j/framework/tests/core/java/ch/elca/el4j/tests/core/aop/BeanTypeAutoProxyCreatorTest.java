@@ -49,7 +49,8 @@ public class BeanTypeAutoProxyCreatorTest extends TestCase {
      * Default constructor.
      */
     public BeanTypeAutoProxyCreatorTest() {
-        m_appContext = new ClassPathXmlApplicationContext("core/aop/*.xml");
+        m_appContext = new ClassPathXmlApplicationContext(
+            "core/aop/testBeansForBeanTypeAutoProxyCreator.xml");
         m_shortcutA = (ShortcutInterceptor) m_appContext.getBean(
                 "shortcutInterceptorA");
         m_shortcutB = (ShortcutInterceptor) m_appContext.getBean(
