@@ -46,7 +46,6 @@
 
     <!-- IDE integration -->
     <plugin name="eclipse">
-        <attribute name="eclipse.checkclipse" value="true"/>
         <attribute name="eclipse.workspace.path" value="workspace"/>
         <!-- Eclipse targets -->
         <attribute name="eclipse.tools" value="eclipse.generate"/>
