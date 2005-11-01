@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!-- distributed-security-scope-client.xml -->
+
+<beans>
+    
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+    
+    <import resource="classpath:optional/security-client.xml"/>
+    
+    <bean id="authenticationManager" 
+        class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
+        <property name="remoteProtocol">
+            <ref bean="remoteProtocol" />
+        </property>
+        <property name="serviceInterface">
+            <value>net.sf.acegisecurity.AuthenticationManager</value>
+        </property>
+    </bean>
+
+</beans>

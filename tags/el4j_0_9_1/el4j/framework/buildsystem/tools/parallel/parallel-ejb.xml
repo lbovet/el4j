@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<!-- Honeydew plugin definition -->
+<project
+  name="parallel-ejb"
+  xmlns:antcontrib="antlib:net.sf.antcontrib"
+  xmlns:el4ant="antlib:ch.elca.el4ant">
+<description>
+Hook to start an EJB server parallely and to deploy a unit given as local ant target.
+</description>
+
+  <!-- Version: $Revision$ -->
+  <!-- Source: $Source$ -->
+  <!-- Date: $Date$ -->
+  <!-- Author: $Author$ -->
+
+  <target
+    name="configure"
+    description="[C] Configure parallel-ejb plugin">
+
+    <el4ant:buildgen action="include" target="parallel-ejb.include.startpoint"/>
+  </target>
+
+  <!-- Fake init target to load plugin file -->
+  <target name="init"/>
+
+  <!-- Targets following the next fake target are copied into the generated build.xml file -->
+  <target name="parallel-ejb.include.startpoint"/>
+
+  <!-- Targets from parallel-ejb.xml  -->
+  <target
+    name="init.parallel-ejb">
+  
+    <property name="parallel-ejb.wait" value="90"/>
+    <fail message="Set the property 'check.ejb.readyness.port'">
+      <condition>
+        <not>
+          <isset property="check.ejb.readyness.port"/>
+        </not>
+      </condition>
+    </fail>
+  </target>
+    
+  <target
+    name="runtime.hook.parallel-ejb.start"
+    depends="init, init.parallel-ejb"
+    description="[R] Hook to start EJB server if necessary.">
+
+    <el4ant:extendedproperty
+      name="parallel-ejb.deploytarget"
+      value="${parallel-ejb.deploytarget.${module}.${eu}}"/>
+    
+    <!-- Test if the application container is not already started -->
+	<antcontrib:if >
+	  <not>
+	    <socket server="${j2ee-ejb.host}" port="${check.ejb.readyness.port}"/>
+	  </not>
+	  
+	  <antcontrib:then>
+        <parallel>
+          <!-- Start parallely and wait for availability -->
+          
+          <daemons>
+            <sequential>
+              <antcall target="start.ejb"/>
+            </sequential>
+          </daemons>
+          
+          <sequential>
+            <!-- wait until the application container has been started -->
+            <waitfor maxwait="${parallel-ejb.wait}" maxwaitunit="second">
+              <socket server="${j2ee-ejb.host}" port="${check.ejb.readyness.port}"/>
+            </waitfor>
+          </sequential>
+          
+        </parallel>
+	  </antcontrib:then>
+	</antcontrib:if>
+    
+    <!-- deploy application -->
+    <antcall target="${parallel-ejb.deploytarget}"/>
+    <sleep seconds="10"/>
+  </target>
+  
+  <target
+    name="runtime.hook.parallel-ejb.stop"
+    depends="init, init.parallel-ejb"
+    description="[R] Hook to stop EJB server.">
+
+    <!-- Test if the application container is not already started -->
+  	<antcontrib:if >
+  	  <socket server="${j2ee-ejb.host}" port="${check.ejb.readyness.port}"/>
+  	  
+  	  <antcontrib:then>
+        <parallel>
+          <sequential>
+            <antcall target="stop.ejb"/>
+          </sequential>
+            
+          <sequential>
+            <waitfor maxwait="${parallel-ejb.wait}" maxwaitunit="second">
+              <not>
+                <socket server="${j2ee-ejb.host}" port="${check.ejb.readyness.port}"/>
+              </not>
+            </waitfor>
+            <sleep seconds="15"/>
+          </sequential>
+            
+        </parallel>
+  	  </antcontrib:then>
+  	</antcontrib:if>
+  </target>
+  
+  <!-- End  parallel-ejb.xml  -->
+</project>
