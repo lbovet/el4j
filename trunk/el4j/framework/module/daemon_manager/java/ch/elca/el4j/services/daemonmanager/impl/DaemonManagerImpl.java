@@ -363,13 +363,11 @@ public class DaemonManagerImpl implements DaemonManager, DaemonObserver {
         } catch (RuntimeException e) {
             exceptionToThrow = e;
         } finally {
-            synchronized (m_daemonManagerLock) {
-                RuntimeException e = cleanupDaemons();
-                if (exceptionToThrow == null) {
-                    exceptionToThrow = e;
-                }
-                setProcessing(false);
+            RuntimeException e = cleanupDaemons();
+            if (exceptionToThrow == null) {
+                exceptionToThrow = e;
             }
+            setProcessing(false);
         }
 
         if (exceptionToThrow == null) {
@@ -439,14 +437,14 @@ public class DaemonManagerImpl implements DaemonManager, DaemonObserver {
      * Method to stop and recover all running daemons.
      */
     protected void stopAndRecoverDaemons() {
+        /**
+         * Stop and join all daemons which must be recovered.
+         */
+        if (!stopAndJoinDaemons(m_runningDaemons)) {
+            return;
+        }
+
         synchronized (m_daemonManagerLock) {
-            /**
-             * Stop and join all daemons which must be recovered.
-             */
-            if (!stopAndJoinDaemons(m_runningDaemons)) {
-                return;
-            }
-            
             Iterator it = m_runningDaemons.iterator();
             while (it.hasNext()) {
                 Daemon daemon = (Daemon) it.next();
@@ -481,14 +479,14 @@ public class DaemonManagerImpl implements DaemonManager, DaemonObserver {
      * Method to unregister and remove all daemons which are in set to remove.
      */
     protected void stopRemovedDaemons() {
+        /**
+         * Stop and join all daemons which must be removed.
+         */
+        if (!stopAndJoinDaemons(m_daemonsToRemove)) {
+            return;
+        }
+
         synchronized (m_daemonManagerLock) {
-            /**
-             * Stop and join all daemons which must be removed.
-             */
-            if (!stopAndJoinDaemons(m_daemonsToRemove)) {
-                return;
-            }
-            
             /**
              * Cleanup and remove each daemon.
              */
@@ -870,12 +868,12 @@ public class DaemonManagerImpl implements DaemonManager, DaemonObserver {
                     success = m_runningDaemons.remove(daemon);
                     if (success) {
                         m_daemonsToRemove.add(daemon);
-                        if (isProcessing()) {
-                            stopRemovedDaemons();
-                        }
                     }
                 }
             }
+        }
+        if (success && isProcessing()) {
+            stopRemovedDaemons();
         }
         return success;
     }
