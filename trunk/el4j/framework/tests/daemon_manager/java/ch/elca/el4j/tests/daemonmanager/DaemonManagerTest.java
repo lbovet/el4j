@@ -482,8 +482,10 @@ public class DaemonManagerTest extends TestCase {
         dmp.start();
         
         sleep(DAEMON_NUMBER_OF_SUCCESSFUL_RUNS * DAEMON_MIN_PERIODICITY
-            + DAEMON_MANAGER_CHECK_PERIOD * 2);
+            + DAEMON_MANAGER_CHECK_PERIOD * 2 
+            + DAEMON_MANAGER_DAEMON_JOIN_TIMEOUT);
         
+        s_logger.debug("Daemon manager should now be stopped.");
         assertFalse("Daemon manager has not stopped processing at expected "
             + "time.", daemonManager.isProcessing());
         
