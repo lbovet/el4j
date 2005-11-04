@@ -36,53 +36,53 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * attributes will be taken you have to go through the following example:
  * 
  * <pre>
- * &frasl;**
+ * &#47;**
  *  * &#64;&#64;AttributeClassX()
- *  *&frasl;
+ *  *&#47;
  * public interface X {
- *     &frasl;**
+ *     &#47;**
  *      * &#64;&#64;AttributeMethodX()
- *      *&frasl;
+ *      *&#47;
  *     public int getValue();
  * }
  * 
- * &frasl;**
+ * &#47;**
  *  * &#64;&#64;AttributeClassY()
- *  *&frasl;
+ *  *&#47;
  * public interface Y {
- *     &frasl;**
+ *     &#47;**
  *      * &#64;&#64;AttributeMethodY()
- *      *&frasl;
+ *      *&#47;
  *     public int getValue();
  * }
  * 
- * &frasl;**
+ * &#47;**
  *  * &#64;&#64;AttributeClassA()
- *  *&frasl;
+ *  *&#47;
  * public class A implements X {
- *     &frasl;**
+ *     &#47;**
  *      * &#64;&#64;AttributeMethodA()
- *      *&frasl;
+ *      *&#47;
  *     public int getValue() {...}
  * }
  * 
- * &frasl;**
+ * &#47;**
  *  * &#64;&#64;AttributeClassB()
- *  *&frasl;
+ *  *&#47;
  * public class B extends A implements Y {
- *     &frasl;**
+ *     &#47;**
  *      * &#64;&#64;AttributeMethodB()
- *      *&frasl;
+ *      *&#47;
  *     public int getValue() {...}
  * }
  * 
- * &frasl;**
+ * &#47;**
  *  * &#64;&#64;AttributeClassC()
- *  *&frasl;
+ *  *&#47;
  * public class C extends B {
- *     &frasl;**
+ *     &#47;**
  *      * &#64;&#64;AttributeMethodC()
- *      *&frasl;
+ *      *&#47;
  *     public int getValue() {...}
  * }
  * </pre>
