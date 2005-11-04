@@ -77,7 +77,7 @@ public class AuthenticationServiceContextPasser extends
     }
 
     /**
-     * {@inheritDoc}
+     * @return Returns the authentication data.
      */
     public Authentication getAuthenticationData() {
         Authentication ad = (Authentication) getSecureContext()
@@ -86,14 +86,15 @@ public class AuthenticationServiceContextPasser extends
     }
 
     /**
-     * {@inheritDoc}
+     * @param authenticationData
+     *            Is the authentication data to set.
      */
     public void setAuthenticationData(Authentication authenticationData) {
         getSecureContext().setAuthentication(authenticationData);
     }
 
     /**
-     * {@inheritDoc}
+     * Removes current authentication data.
      */
     public void removeAuthenticationData() {
         getSecureContext().setAuthentication(null);
@@ -105,7 +106,7 @@ public class AuthenticationServiceContextPasser extends
      * authentication data is fetched from the authentication service.
      * 
      * @return The authentication data for the currently logged in user
-     * @see ch.elca.springframework.contextpassing.AbstractImplicitContextPasser
+     * @see ch.elca.el4j.core.contextpassing.AbstractImplicitContextPasser
      */
     public Object getImplicitlyPassedContext() {
         CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
@@ -122,7 +123,7 @@ public class AuthenticationServiceContextPasser extends
      * @param context
      *            The received implicit context for this passer.
      * @throws ImplicitContextPassingRTException
-     * @see ch.elca.springframework.contextpassing.AbstractImplicitContextPasser
+     * @see ch.elca.el4j.core.contextpassing.AbstractImplicitContextPasser
      */
     public void pushImplicitlyPassedContext(Object context) {
         if (context == null) {

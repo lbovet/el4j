@@ -16,6 +16,8 @@
 package ch.elca.el4j.services.security.authentication;
 
 
+import org.springframework.beans.factory.InitializingBean;
+
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 
 import net.sf.acegisecurity.Authentication;
@@ -52,7 +54,8 @@ import net.sf.acegisecurity.AuthenticationManager;
  * @author Andreas Pfenninger (APR)
  * @author Christoph Schwitter (CSC)
  */
-public class DefaultAuthenticationService implements AuthenticationService {
+public class DefaultAuthenticationService implements AuthenticationService, 
+    InitializingBean {
 
     /** The authentication data for the user. */
     private static ThreadLocal s_authenticationData = new ThreadLocal();

@@ -62,8 +62,10 @@ public interface Calculator {
     public void throwRTException();
     
     /**
-     * Trhows a runtime exception that is not available on client side.
-     * {@see FooRTException} for details about how to drive this test.
+     * Throws a runtime exception that is not available on client side.
+     * 
+     * @see ch.elca.el4j.tests.remoting.ejb.service.impl.CalculatorImpl.FooRTException
+     *      for details about how to drive this test.
      */
     public void throwFooRtException();
     

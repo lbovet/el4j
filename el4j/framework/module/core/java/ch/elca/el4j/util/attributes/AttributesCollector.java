@@ -35,7 +35,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * This class collects attributes from different classes. To explain which
  * attributes will be taken you have to go through the following example:
  * 
- * <code>
+ * <pre>
  * &frasl;**
  *  * &#64;&#64;AttributeClassX()
  *  *&frasl;
@@ -85,7 +85,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  *      *&frasl;
  *     public int getValue() {...}
  * }
- * </code>
+ * </pre>
  * 
  * If you would like to get attributes from class <code>C</code> you will get
  * the following:
