@@ -4,6 +4,9 @@
   <plugin name="javadoc">
     <!-- Sets to generate javadoc for. -->
     <attribute name="javadoc.set.list" value="framework-modules,framework-tests,framework-demos"/>
+    
+    <!-- Use el4j stylesheet file with ELCA colors. -->
+    <attribute name="javadoc.default.stylesheetfile" value="etc/el4j-javadoc-stylesheet.css"/>
 
     <!-- Default group parameters. -->
     <attribute name="javadoc.default.header">
@@ -43,23 +46,17 @@ function printFileStatus (source_kw,revision_kw,date_kw,author_kw) {
   
     <!-- Group specific parameters for set "framework-modules". -->
     <attribute name="javadoc.framework-modules.access" value="protected"/>
-    <attribute name="javadoc.framework-modules.doctitle">
-      <![CDATA[<h1>EL4J framework modules developer documentation</h1>]]>
-    </attribute>
+    <attribute name="javadoc.framework-modules.doctitle">EL4J framework modules developer documentation</attribute>
     <attribute name="javadoc.framework-modules.windowtitle">EL4J API documentation - Framework modules</attribute>
 
     <!-- Group specific parameters for set "framework-tests". -->
     <attribute name="javadoc.framework-tests.access" value="private"/>
-    <attribute name="javadoc.framework-tests.doctitle">
-      <![CDATA[<h1>EL4J framework junit tests developer documentation</h1>]]>
-    </attribute>
+    <attribute name="javadoc.framework-tests.doctitle">EL4J framework junit tests developer documentation</attribute>
     <attribute name="javadoc.framework-tests.windowtitle">EL4J API documentation - Framework junit tests</attribute>
 
     <!-- Group specific parameters for set "framework-demos". -->
     <attribute name="javadoc.framework-demos.access" value="private"/>
-    <attribute name="javadoc.framework-demos.doctitle">
-      <![CDATA[<h1>EL4J framework demonstrations developer documentation</h1>]]>
-    </attribute>
+    <attribute name="javadoc.framework-demos.doctitle">EL4J framework demonstrations developer documentation</attribute>
     <attribute name="javadoc.framework-demos.windowtitle">EL4J API documentation - Framework demonstrations</attribute>
   </plugin>
 </ant:project>
