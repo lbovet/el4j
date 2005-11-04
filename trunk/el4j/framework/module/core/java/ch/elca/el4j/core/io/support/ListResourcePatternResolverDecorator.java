@@ -31,10 +31,10 @@ import org.springframework.util.StringUtils;
 
 /**
  * This class resolves resources using a list of resource names to preserve
- * a specific order. A request is delegated to another {@link
- * org.springframework.core.io.support.ResourcePatternResolver), if there are no
- * resources found by this class. Hence the list of resource names does not
- * have to be exhaustive.
+ * a specific order. A request is delegated to another
+ * {@link org.springframework.core.io.support.ResourcePatternResolver}, if there
+ * are no resources found by this class. Hence the list of resource names does
+ * not have to be exhaustive.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$Source$",

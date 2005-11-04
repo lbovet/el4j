@@ -54,7 +54,7 @@ public class RejectTest extends TestCase {
     }
     
     /**
-     * Checks {@link Reject#ifEmpty(List)}.
+     * Checks {@link Reject#ifEmpty(Collection)}.
      */
     public void testIfEmptyCollection() {
         try {

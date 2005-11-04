@@ -76,7 +76,7 @@ public class CalculatorImpl implements Calculator, Serializable {
      * server and unwrapped on client side transparently. The Exception thrown
      * on client side will be a {@link java.rmi.RemoteException}.
      */
-    private static class FooRTException extends RuntimeException {
+    public static class FooRTException extends RuntimeException {
 
         /**
          * Creates a new instance.
