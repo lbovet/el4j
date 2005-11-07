@@ -26,5 +26,11 @@
         <attribute name="set" value="framework-demos"/>
         <dependency module="module-remoting_and_interface_enrichment"/>
         <dependency module="module-daemon_manager-tests"/>
+        
+        <!--
+            The following dependency to module-jmx is not mandatory. It is only
+            there to have a demo for the jmx support.
+        -->
+        <dependency module="module-jmx"/>
     </module>
 </ant:project>
