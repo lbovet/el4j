@@ -108,6 +108,7 @@ public final class Console {
             }
         }
         printLine();
+        System.exit(0);
     }
 
     /**
