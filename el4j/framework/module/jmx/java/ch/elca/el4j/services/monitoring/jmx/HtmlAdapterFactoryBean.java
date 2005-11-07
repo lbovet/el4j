@@ -19,10 +19,9 @@ package ch.elca.el4j.services.monitoring.jmx;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.util.StringUtils;
 
 import com.sun.jdmk.comm.HtmlAdaptorServer;
 
@@ -41,13 +40,6 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * @author Raphael Boog (RBO)
  */
 public class HtmlAdapterFactoryBean implements FactoryBean, InitializingBean {
-
-    /**
-     * Private logger of this class.
-     */
-    private static Log s_logger = LogFactory
-        .getLog(HtmlAdapterFactoryBean.class);
-
     /**
      * The counter on the number of created HtmlAdaptorServers.
      */
@@ -72,6 +64,12 @@ public class HtmlAdapterFactoryBean implements FactoryBean, InitializingBean {
      * The MBean Server this HtmlAdaptorServer is registered at.
      */
     private MBeanServer m_server;
+    
+    /**
+     * Is the path to the used stylesheet. Default is set to 
+     * <code>jmx/stylesheet.css</code>.
+     */
+    private String m_stylesheetPath = "jmx/stylesheet.css";
 
     /**
      * The port member.
@@ -82,6 +80,11 @@ public class HtmlAdapterFactoryBean implements FactoryBean, InitializingBean {
      * The name of the ObjectName of the HtmlAdaptorServer.
      */
     private String m_name = null;
+    
+    /**
+     * ObjectName of the html parser.
+     */
+    private String m_htmlParserName = null;
 
     /**
      * {@inheritDoc}
@@ -112,27 +115,46 @@ public class HtmlAdapterFactoryBean implements FactoryBean, InitializingBean {
      *             could not be registered at the MBean Server.
      */
     public void afterPropertiesSet() throws Exception {
+        CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+            getServer(), "server", this);
+        CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+            getStylesheetPath(), "stylesheetPath", this);
 
+        /**
+         * Increase instance counter.
+         */
+        setInstanceCounter();
+        
+        /**
+         * Setup css html parser.
+         */
+        CssHtmlParser htmlParser = new CssHtmlParser(getStylesheetPath());
+        if (!StringUtils.hasText(m_htmlParserName)) {
+            m_htmlParserName 
+                = "HtmlAdapter:name=HtmlParser" + getInstanceCounter();
+        }
+        ObjectName htmlParserObjectName = new ObjectName(m_htmlParserName);
+        getServer().registerMBean(htmlParser, htmlParserObjectName);
+        
+        
+        /**
+         * Setup html adapter server.
+         */
         m_htmlAdaptorServer = new HtmlAdaptorServer();
         m_htmlAdaptorServer.setPort(m_port);
-
-        setInstanceCounter();
-
-        if (getName() == null) {
-            String name = "HtmlAdapter:name=HtmlAdapter" + getInstanceCounter();
-            setName(name);
+        if (!StringUtils.hasText(m_name)) {
+            m_name = "HtmlAdapter:name=HtmlAdapter" + getInstanceCounter();
         }
+        ObjectName htmlAdapterServerObjectName = new ObjectName(getName());
+        getServer().registerMBean(m_htmlAdaptorServer, 
+            htmlAdapterServerObjectName);
 
-        ObjectName objectName = new ObjectName(getName());
-
-        if (getServer() == null) {
-            CoreNotificationHelper.notifyMisconfiguration(
-                    "No MBean Server was defined.");
-        }
-
-        getServer().registerMBean(getHtmlAdaptorServer(), objectName);
-
-        getHtmlAdaptorServer().start();
+        
+        /**
+         * Set css html parser in html adaptor server.
+         */
+        m_htmlAdaptorServer.setParser(htmlParserObjectName);
+        m_htmlAdaptorServer.start();
     }
 
     /**
@@ -147,15 +169,12 @@ public class HtmlAdapterFactoryBean implements FactoryBean, InitializingBean {
     /**
      * Save the class variable s_counter to an instance member and increment the
      * class variable by 1.
-     *  
      */
     public void setInstanceCounter() {
-
         synchronized (getClass()) {
             m_instanceCounter = s_counter;
             s_counter++;
         }
-
     }
 
     /**
@@ -213,6 +232,34 @@ public class HtmlAdapterFactoryBean implements FactoryBean, InitializingBean {
      */
     public void setName(String name) {
         m_name = name;
+    }
+    
+    /**
+     * @return Returns the htmlParserName.
+     */
+    public String getHtmlParserName() {
+        return m_htmlParserName;
+    }
+
+    /**
+     * @param htmlParserName The htmlParserName to set.
+     */
+    public void setHtmlParserName(String htmlParserName) {
+        m_htmlParserName = htmlParserName;
+    }
+
+    /**
+     * @return Returns the stylesheetPath.
+     */
+    public String getStylesheetPath() {
+        return m_stylesheetPath;
+    }
+
+    /**
+     * @param stylesheetPath The stylesheetPath to set.
+     */
+    public void setStylesheetPath(String stylesheetPath) {
+        m_stylesheetPath = stylesheetPath;
     }
 
     /**
