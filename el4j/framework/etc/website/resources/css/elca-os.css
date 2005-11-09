@@ -37,11 +37,11 @@ div#InnerTopBar {
 }
 
 div#TopTitle {
-    position    : absolute;
-    left        : 180px;
-    top         : 15px;
-    font-size   : 14pt;
-    font-weight : bolder;
+    position            : absolute;
+    left                : 180px;
+    top                 : 15px;
+    font-size           : 14pt;
+    font-weight         : bolder;
     padding-top         : 0px;
     padding-bottom      : 0px;
     padding-left        : 0px;
@@ -53,11 +53,11 @@ div#TopTitle {
 }
 
 div#Slogan {
-    position    : absolute;
-    left        : 210px;
-    top         : 40px;
-    font-size   : 8pt;
-    font-weight : normal;
+    position            : absolute;
+    left                : 210px;
+    top                 : 40px;
+    font-size           : 8pt;
+    font-weight         : normal;
     padding-top         : 0px;
     padding-bottom      : 0px;
     padding-left        : 0px;
@@ -69,9 +69,9 @@ div#Slogan {
 }
 
 img#Logo {
-    position    : absolute;
-    top         : 5px;
-    left        : 5px;
+    position            : absolute;
+    top                 : 5px;
+    left                : 5px;
     padding-top         : 0px;
     padding-bottom      : 0px;
     padding-left        : 0px;
@@ -83,11 +83,11 @@ img#Logo {
 }
 
 div#Navigation {
-    position    : absolute;
-    top         : 80px;
-    left        : 0px;
-    width       : 180px;
-    padding-top : 5px;
+    position            : absolute;
+    top                 : 80px;
+    left                : 0px;
+    width               : 180px;
+    padding-top         : 5px;
     padding-bottom      : 0px;
     padding-left        : 0px;
     padding-right       : 0px;
@@ -157,7 +157,7 @@ a.MenuItem:hover {
 
 div#Content {
     position           : absolute;
-    overflow: auto;
+    overflow           : auto;
     top                : 83px;
     left               : 190px;
     bottom             : 20px;
@@ -196,7 +196,7 @@ div#RightColumn {
 
 img#SFLogo {
     position     : relative;
-    top          : 50px;
+    top          : 30px;
     left         : 15px;
     border-style : none;
 }
@@ -217,7 +217,7 @@ body {
 }
 
 h1 {
-    background-color    : rgb(185,185,139);
+    background-color    : rgb(153,153,102);
     color               : White;
     font-family         : inherit;
     font-size           : 10pt;
@@ -233,8 +233,8 @@ h1 {
 }
 
 h2 {
-    background-color    : rgb(185,185,139);
-    color               : White;
+    background-color    : rgb(238,238,187);
+    color               : Black;
     font-family         : inherit;
     font-size           : 8pt;
     font-weight         : bold;
@@ -265,8 +265,8 @@ h3 {
 }
 
 hr {
-    color               : rgb(185,185,139);
-    background-color    : rgb(185,185,139);
+    color               : rgb(102,102,51);
+    background-color    : rgb(102,102,51);
     height              : 1px;
     border-style        : solid;
 }

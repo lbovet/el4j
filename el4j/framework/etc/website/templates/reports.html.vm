@@ -1,10 +1,20 @@
-#set($title = "EL4J, the Extension Library for the J2EE - News &amp; Release Notes")
-#set($navigation = "news")
+#set($title = "EL4J, the Extension Library for the J2EE - Reports")
+#set($navigation = "reports")
 #parse("$website_templates_directory/includes/header.include.vm")
 #parse("$website_templates_directory/includes/navigation.include.vm")
 <div id="Content">
-#parse("$website_templates_directory/includes/news.include.vm")
-#parse("$website_templates_directory/includes/release_notes.include.vm")
+    <div>
+    	<h1>REPORTS</h1>
+		<p>
+			The following tables sums up generated reports per module set for 
+			the EL4J project.
+		</p>
+		<p>
+#foreach($report in $reports.getFileList())
+#include("$website_reports_directory/$report")
+#end
+		</p>
+    </div>
 #parse("$website_templates_directory/includes/last_changed_copyright.include.vm")
 </div>
 <div id="RightColumn">

@@ -43,6 +43,7 @@
             </li>
         </ul>
     </div>
+#parse("$website_templates_directory/includes/last_changed_copyright.include.vm")
 </div>
 <div id="RightColumn">
 #parse("$website_templates_directory/includes/related_projects.include.vm")
