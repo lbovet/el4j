@@ -42,7 +42,10 @@
         <attribute name="emma.set.list" value="framework-modules"/>
     </plugin>
 
-    <plugin name="website"/>
+    <plugin name="website">
+        <attribute name="website.resources" value="etc/website/resources"/>
+        <attribute name="website.templates" value="etc/website/templates"/>
+    </plugin>
 
     <!-- IDE integration -->
     <plugin name="eclipse">
