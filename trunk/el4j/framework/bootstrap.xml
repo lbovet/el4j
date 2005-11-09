@@ -1,16 +1,30 @@
 <?xml version="1.0"?>
-<!-- EL4Ant build file -->
+<!--
+EL4Ant, a Ant-based buildsystem, http://el4ant.sourceforge.net
+Copyright (C) 2005 by ELCA Informatique SA, Av. de la Harpe 22-24,
+1000 Lausanne, Switzerland, http://www.elca.ch
+
+This program is published under the GNU General Public License (GPL) license.
+http://www.gnu.org/licenses/gpl.txt
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+For alternative licensing, please contact info@elca.ch
+-->
 <project
   name="el4ant"
   default="configure"
   xmlns:antcontrib="antlib:net.sf.antcontrib"
   xmlns:el4ant="antlib:ch.elca.el4ant">
 <description>
-EL4Ant build file - version 0.9.1
+EL4Ant build file - version 0.9.2
 </description>
 
   <!-- Version: $Revision$ -->
-  <!-- Source: $URL: svn://cvs/subversion/el4ant/trunk/bootstrap.xml $ -->
+  <!-- Source: $URL: svn://cvs.elca.ch/subversion/el4ant/trunk/bootstrap.xml $ -->
   <!-- Date: $Date$ -->
   <!-- Author: $Author$ -->
 
@@ -25,7 +39,7 @@ and etc/bootstrap.properties comes from the same release.">
       <condition>
         <not>
           <!-- Warning: update version here with release number -->
-          <equals arg1="${buildsystem.version}" arg2="0.9.1"/>
+          <equals arg1="${buildsystem.version}" arg2="0.9.2"/>
         </not>
       </condition>
     </fail>

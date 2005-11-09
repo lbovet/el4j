@@ -1,0 +1,50 @@
+#set($title = "EL4J, the Extension Library for the J2EE - Documentation")
+#set($navigation = "documentation")
+#parse("$website_templates_directory/includes/header.include.vm")
+#parse("$website_templates_directory/includes/navigation.include.vm")
+<div id="Content">
+    <div>
+    	<h1>DOCUMENTATION</h1>
+		<h2>EL4J core documentation</h2>
+		<ul>
+			<li>
+				<a href="docs/pdf/EL4J_IntroductionArticle1.pdf" target="_blank">
+					Introduction article (PDF)
+				</a>
+			</li>
+			<li>
+				<a href="docs/pdf/ReferenceDoc.pdf" target="_blank">
+					Reference documentation (PDF)
+				</a>
+			</li>
+			<li>
+				Documentation of the build system 
+				(<a href="http://el4ant.sf.net/documentation.html" target="_blank">link to EL4Ant</a>)
+			</li>
+			<li>
+				Framework API (for now available in the source code, will be 
+				generated from sources of sourceforge soon)
+			</li>
+		</ul>
+
+		<h2>Presentations</h2>
+		<ul>
+			<li>
+				<a href="docs/pdf/EL4JFeatures.pdf" target="_blank">
+					Short presentation with essential features of EL4J
+				</a>
+			</li>
+			<li>
+				<a href="http://www.jugs.ch/html/events/slides/050830_LightDiContainer.pdf" target="_blank">
+					A presentation on Spring at JUGS, with a section on EL4J
+				</a>
+			</li>
+		</ul>
+    </div>
+</div>
+<div id="RightColumn">
+#parse("$website_templates_directory/includes/related_projects.include.vm")
+#parse("$website_templates_directory/includes/sponsor.include.vm")
+</div>
+</body>
+</html>

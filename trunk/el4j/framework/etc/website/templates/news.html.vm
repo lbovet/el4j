@@ -1,0 +1,14 @@
+#set($title = "EL4J, the Extension Library for the J2EE - News &amp; Release Notes")
+#set($navigation = "news")
+#parse("$website_templates_directory/includes/header.include.vm")
+#parse("$website_templates_directory/includes/navigation.include.vm")
+<div id="Content">
+#parse("$website_templates_directory/includes/news.include.vm")
+#parse("$website_templates_directory/includes/release_notes.include.vm")
+</div>
+<div id="RightColumn">
+#parse("$website_templates_directory/includes/related_projects.include.vm")
+#parse("$website_templates_directory/includes/sponsor.include.vm")
+</div>
+</body>
+</html>

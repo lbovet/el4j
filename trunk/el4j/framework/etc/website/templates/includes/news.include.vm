@@ -1,0 +1,14 @@
+    <div>
+        <h1>NEWS</h1>
+
+#macro(newsEntry $newsdate $newstext)
+        <p>
+            <img src="images/bullet.gif" alt="EL4J News" border="0"/> 
+            <i>$newsdate</i> - $newstext
+        </p>
+#end
+
+#newsEntry("26/10/2005" "The <b>first version</b> of the source code and doc <b>is up!</b>")
+#newsEntry("29/09/2005" "The <b>EL4J website</b> is up.")
+
+    </div>
