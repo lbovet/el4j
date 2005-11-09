@@ -22,8 +22,10 @@
 				(<a href="http://el4ant.sf.net/documentation.html" target="_blank">link to EL4Ant</a>)
 			</li>
 			<li>
-				Framework API (for now available in the source code, will be 
-				generated from sources of sourceforge soon)
+				<a href="javadoc/framework-modules/index.html">Framework API</a> 
+				(set framework-modules). The framework API is split up in 
+				multiple sets. For javadoc of other sets please have a look at
+				<a href="reports.html" target="_top">reports page</a>.
 			</li>
 		</ul>
 
@@ -41,6 +43,7 @@
 			</li>
 		</ul>
     </div>
+#parse("$website_templates_directory/includes/last_changed_copyright.include.vm")
 </div>
 <div id="RightColumn">
 #parse("$website_templates_directory/includes/related_projects.include.vm")
