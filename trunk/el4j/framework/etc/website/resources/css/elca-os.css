@@ -419,6 +419,11 @@ tr.Failure {
     font-weight         : bold;
 }
 
+tr.Success {
+    color               : rgb(102,153,0);
+    font-weight         : bold;
+}
+
 th {
     border              : 1px;
     border-color        : rgb(102,102,51);
@@ -444,10 +449,10 @@ td {
     border-color        : rgb(102,102,51);
     border-style        : solid;
     background-color    : White;
-    color               : Black;
+    color               : inherit;
     font-family         : inherit;
     font-size           : 10pt;
-    font-weight         : normal;
+    font-weight         : inherit;
     text-align          : center;
     padding-left        : 5px;
     padding-right       : 5px;

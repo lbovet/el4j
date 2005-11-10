@@ -25,8 +25,8 @@
     <tr>
       <xsl:attribute name="class">
         <xsl:choose>
-          <xsl:when test="$failureCount &gt; 0">Failure</xsl:when>
-          <xsl:when test="$errorCount &gt; 0">Error</xsl:when>
+          <xsl:when test="$failureCount &gt; 0 or $errorCount &gt; 0">Failure</xsl:when>
+          <xsl:when test="$failureCount = 0 and $errorCount = 0">Success</xsl:when>
         </xsl:choose>
       </xsl:attribute>
       <td><xsl:value-of select="$testCount"/></td>
