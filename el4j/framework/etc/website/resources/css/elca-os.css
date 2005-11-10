@@ -117,8 +117,21 @@ div.MenuItemActive {
 }
 
 div.MenuItem {
-    background-color : rgb(204,51,0);
+    padding-top         : 0px;
+    padding-bottom      : 0px;
+    padding-left        : 0px;
+    padding-right       : 0px;
+    margin-top          : 0px;
+    margin-bottom       : 0px;
+    margin-left         : 0px;
+    margin-right        : 0px;
+}
+
+a.MenuItem {
+    display          : block;
+    text-decoration  : none;
     color            : White;
+    background-color : rgb(204,51,0);
     width            : 168px;
     font-size        : 8pt;
     font-weight      : bold;
@@ -135,24 +148,28 @@ div.MenuItem {
     margin-bottom    : 2px;
 }
 
-a.MenuItem {
-    color           : White;
-    text-decoration : none;
-}
-
 a.MenuItem:link {
-    color           : White;
-    text-decoration : none;
+    text-decoration  : none;
+    color            : White;
+    background-color : rgb(204,51,0);
+    font-size        : 8pt;
+    font-weight      : bold;
 }
 
 a.MenuItem:visited {
-    color           : White;
-    text-decoration : none;
+    text-decoration  : none;
+    color            : White;
+    background-color : rgb(204,51,0);
+    font-size        : 8pt;
+    font-weight      : bold;
 }
 
 a.MenuItem:hover {
-    color           : #DDDDDD;
-    text-decoration : none;
+    text-decoration  : none;
+    color            : rgb(204,51,0);
+    background-color : White;
+    font-size        : 8pt;
+    font-weight      : bold;
 }
 
 div#Content {
@@ -323,8 +340,6 @@ a:link {
     text-decoration   : underline;
 }
 
-
-
 a:visited {
     background-color  : inherit;
     font-style        : normal;
@@ -338,9 +353,108 @@ a:visited {
 }
 
 .lastChangedCopyright {
-    position         : relative;
     font-size        : 7pt;
-    left             : 3px;
-    top              : 10px;
-    background-color : #FFFFFF;
+    margin-left      : 3px;
+    margin-top       : 10px;
+    margin-bottom    : 5px;
+}
+
+div.report {
+    padding-top         : 5px;
+    padding-bottom      : 0px;
+    padding-left        : 0px;
+    padding-right       : 0px;
+    margin-top          : 5px;
+    margin-bottom       : 0px;
+    margin-left         : 0px;
+    margin-right        : 0px;    
+}
+
+div.report p.header {
+    color               : Black;
+    font-family         : inherit;
+    font-size           : 8pt;
+    font-weight         : bold;
+    font-style          : normal;
+}
+
+p.header a:link {
+    color             : rgb(204,51,0);
+    text-decoration   : underline;
+    font-size         : 10pt;
+    font-weight       : bold;
+    font-style        : normal;
+}
+
+p.header a:visited {
+    color             : rgb(204,51,0);
+    text-decoration   : underline;
+    font-size         : 10pt;
+    font-weight       : bold;
+    font-style        : normal;
+}
+
+table {
+    border              : 1px;
+    border-color        : rgb(102,102,51);
+    border-style        : solid;
+    border-collapse     : collapse;
+    padding-top         : 0px;
+    padding-bottom      : 0px;
+    padding-left        : 0px;
+    padding-right       : 0px;
+    margin-top          : 10px;
+    margin-bottom       : 10px;
+    margin-left         : 0px;
+    margin-right        : 0px;
+}
+
+tr {
+    color               : Black;
+    font-weight         : normal;
+}
+
+tr.Failure {
+    color               : rgb(204,51,0);
+    font-weight         : bold;
+}
+
+th {
+    border              : 1px;
+    border-color        : rgb(102,102,51);
+    border-style        : solid;
+    background-color    : rgb(238,238,187);
+    color               : Black;
+    font-family         : inherit;
+    font-size           : 8pt;
+    font-weight         : bold;
+    text-align          : center;
+    padding-left        : 5px;
+    padding-right       : 5px;
+    padding-top         : 3px;
+    padding-bottom      : 3px;
+    margin-top          : 0px;
+    margin-bottom       : 5px;
+    margin-left         : 0px;
+    margin-right        : 0px;
+}
+
+td {
+    border              : 1px;
+    border-color        : rgb(102,102,51);
+    border-style        : solid;
+    background-color    : White;
+    color               : Black;
+    font-family         : inherit;
+    font-size           : 10pt;
+    font-weight         : normal;
+    text-align          : center;
+    padding-left        : 5px;
+    padding-right       : 5px;
+    padding-top         : 3px;
+    padding-bottom      : 3px;
+    margin-top          : 0px;
+    margin-bottom       : 5px;
+    margin-left         : 0px;
+    margin-right        : 0px;
 }

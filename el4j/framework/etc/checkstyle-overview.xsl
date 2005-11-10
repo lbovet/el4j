@@ -8,7 +8,11 @@
     <xsl:variable name="totalErrors" select="count(descendant::error)"/>
     <xsl:variable name="errorRate" select="count(descendant::error) div count(descendant::file)"/>
 
-    <p class="header"><xsl:value-of select="$set"/>: coding style check summary</p>
+    <p class="header"><xsl:value-of select="$set"/>:
+       <xsl:text disable-output-escaping="yes"><![CDATA[<a href="checkstyle/]]></xsl:text>
+       <xsl:value-of select="$set"/>
+       <xsl:text disable-output-escaping="yes"><![CDATA[/index.html">coding style checks</a>]]></xsl:text>
+    </p>
     <table>
       <tr>
         <th>Total files checked</th>
