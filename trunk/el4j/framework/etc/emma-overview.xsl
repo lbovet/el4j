@@ -4,7 +4,11 @@
   <xsl:param name="set"/>
 
   <xsl:template match="all">
-    <p class="header"><xsl:value-of select="$set"/>: EMMA summary</p>
+    <p class="header"><xsl:value-of select="$set"/>:
+       <xsl:text disable-output-escaping="yes"><![CDATA[<a href="emma/]]></xsl:text>
+       <xsl:value-of select="$set"/>
+       <xsl:text disable-output-escaping="yes"><![CDATA[/index.html">EMMA report</a>]]></xsl:text>
+    </p>
     <table>
     <tr>
       <xsl:for-each select="coverage">

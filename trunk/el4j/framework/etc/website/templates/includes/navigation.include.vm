@@ -4,9 +4,9 @@
 #if($activeShortName == $shortName)
     <div class="MenuItemActive">$longName</div>
 #else
-    <div class="MenuItem">
-        <a class="MenuItem" href="$url" target="$target">$longName</a>
-    </div>
+	<div class="MenuItem">
+    	<a class="MenuItem" href="$url" target="$target">$longName</a>
+   	</div>
 #end
 #end
 

@@ -9,7 +9,11 @@
     <xsl:variable name="timeCount" select="sum(testsuite/@time)"/>
     <xsl:variable name="successRate" select="($testCount - $failureCount - $errorCount) div $testCount"/>
 
-    <p class="header"><xsl:value-of select="$set"/>: JUnit summary</p>
+    <p class="header"><xsl:value-of select="$set"/>: 
+       <xsl:text disable-output-escaping="yes"><![CDATA[<a href="junit/]]></xsl:text>
+       <xsl:value-of select="$set"/>
+       <xsl:text disable-output-escaping="yes"><![CDATA[/index.html">JUnit execution</a>]]></xsl:text>
+    </p>
     <table>
     <tr>
       <th>Tests</th>
