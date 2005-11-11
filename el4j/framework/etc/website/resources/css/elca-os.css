@@ -223,7 +223,7 @@ body {
     background-color    : White;
     background-image    : url("../images/elca_home_right_bg.gif");
     background-position : 1024px 80px;
-    background-repeat   : no-repeat;
+    background-repeat   : repeat-y;
     color               : #000000; 
     font-family         : Verdana,Arial,"Microsoft Sans Serif","Lucida Console", Sans-Serif; 
     font-size           : 10pt;
