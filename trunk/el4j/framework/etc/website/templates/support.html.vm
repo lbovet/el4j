@@ -7,39 +7,31 @@
     	<h1>SUPPORT</h1>
         Here are you options for support on the EL4J framework:
         <ul>
-            <li>The ability to split applications in modules
-                <ul>
-                    <li>
-                        For community support, check out the 
-                        <a href="http://sourceforge.net/projects/el4j/">support forum on sourceforge</a>.
-                    </li>
-                    <li>
-                    	A FAQ is also in the works, and will published here as 
-                    	soon as it is ready.
-                    </li>
-                    <li>
-                        For professional support in english, german and french, 
-                        please contact <a href="mailto:info@elca.ch">us</a>.
-                    </li>
-                </ul>
+            <li>
+                For community support, check out the 
+                <a href="http://sourceforge.net/projects/el4j/">support forum on sourceforge</a>.
+            </li>
+            <li>
+            	A FAQ is also in the works, and will published here as 
+            	soon as it is ready.
+            </li>
+            <li>
+                For professional support in english, german and french, 
+                please contact <a href="mailto:info@elca.ch">us</a>.
             </li>
         </ul>
 
     	<h1>FORUM USAGE GUIDELINES</h1>
         Before posting to the forum, please:
         <ul>
-            <li>The ability to split applications in modules
-                <ul>
-                    <li>
-                        Search for an existing answer to your question. This 
-                        will save you and us time.
-                    </li>
-                    <li>
-                    	Review the documentation, including the reference 
-                    	manual, the wiki, and linked material. There is a good 
-                    	chance the information you need is already available!
-                    </li>
-                </ul>
+            <li>
+                Search for an existing answer to your question. This 
+                will save you and us time.
+            </li>
+            <li>
+            	Review the documentation, including the reference 
+            	manual, the wiki, and linked material. There is a good 
+            	chance the information you need is already available!
             </li>
         </ul>
     </div>
