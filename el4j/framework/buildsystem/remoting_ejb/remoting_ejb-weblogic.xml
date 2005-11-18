@@ -20,7 +20,7 @@
     <el4ant:plugin name="runtime" file="buildsystem/core/runtime.xml"/>
     
     <ejb:init.ejb.container xmlns:ejb="antlib:ch.elca.el4j.buildsystem.remoting.ejb">
-      <ejb:client.dependency name="wlclient-8.1.1.0.jar"/>
+      <ejb:client.dependency name="wlclient-9.0.jar"/>
     </ejb:init.ejb.container>
     
     <el4ant:buildgen action="include" target="remoting_ejb-weblogic.include.startpoint"/>
@@ -65,7 +65,7 @@
                 
       <!-- Generate container specific deployment descriptor. -->
       <weblogic
-        version="8.1"
+        version="9.0"
         createtables="Disabled"
         destdir="${compile.dest}/META-INF/"
         validatexml="true"/>
