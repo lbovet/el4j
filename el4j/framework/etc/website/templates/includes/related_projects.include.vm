@@ -11,8 +11,7 @@
         </p>
         <p>
             <img src="images/bullet.gif" alt="EL4NET" border="0"/> 
-            <b>EL4NET</b> - The Enterprise Library for the .NET framework. 
-            Will be coming soon. 
+            <b>EL4NET</b> - The Extension Library for the .NET framework. 
             <a href="http://el4net.sourceforge.net/" target="_blank">
                 <img src="images/elca_goto4.gif" alt="EL4NET" width="15" 
                     height="11" border="0"/>
