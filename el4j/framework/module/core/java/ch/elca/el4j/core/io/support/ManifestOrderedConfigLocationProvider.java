@@ -51,7 +51,7 @@ public class ManifestOrderedConfigLocationProvider
     public static final String MANIFEST_FILE = "META-INF/MANIFEST.MF";
     
     /** The name of the configuration section in the manifest file. */
-    public static final String CONFIG_SECTION = "config";
+    public static final String CONFIG_SECTION = "el4j-config";
     
     /** The name of the module name attribute. */
     public static final String CONFIG_MODULE = "Module";
