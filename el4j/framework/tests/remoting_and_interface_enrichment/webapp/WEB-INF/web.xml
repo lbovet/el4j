@@ -12,7 +12,6 @@
         <servlet-class>
             ch.elca.el4j.web.context.ModuleDispatcherServlet
         </servlet-class>
-        <load-on-startup>100</load-on-startup>
         <!-- here: the init parameters are used for testing purposes only -->
         <init-param>
             <param-name>inclusiveLocations</param-name>
@@ -22,6 +21,7 @@
             <param-name>exclusiveLocations</param-name>
             <param-value>foobar.xml</param-value>
         </init-param>
+        <load-on-startup>100</load-on-startup>
     </servlet>
     
     <!-- Used by Soap(Axis) test -->
