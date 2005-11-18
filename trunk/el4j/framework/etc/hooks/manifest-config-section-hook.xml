@@ -104,7 +104,7 @@ Support for manifest 'config' section.
         <manifest
           file="${module.classes}/META-INF/Manifest-${eu}.mf"
           mode="update">
-          <section name="config">
+          <section name="el4j-config">
             <attribute name="Module" value="${module}.${eu}"/>
             <attribute name="Files" value="${module.eu.manifestconfigsection.files}"/>
             <attribute name="Dependencies" value="${module.eu.dependencies}"/>
