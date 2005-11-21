@@ -4,7 +4,7 @@
     <module name="module-core" path="module/core">
         <attribute name="set" value="framework-modules"/>
         <attribute name="binrelease.version" value="1.1"/>
-        <dependency jar="spring-1.2.5.jar"/>
+        <dependency jar="spring-1.2.6.jar"/>
         <dependency jar="commons-logging-1.0.4.jar"/>
         <dependency jar="log4j-1.2.11.jar"/>
         <dependency jar="ibatis-sqlmap-el4j_20050919.jar"/>
