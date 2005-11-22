@@ -10,7 +10,7 @@
 			the EL4J project.
 		</p>
 #foreach($report in $reports.getFileList())
-    #if($report.endsWith("-junit.log"))
+    #if($report.indexOf("junit") != -1)
 		<div class="report">
             #include("$website_reports_directory/$report")
 		</div>
