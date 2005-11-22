@@ -10,9 +10,11 @@
 			the EL4J project.
 		</p>
 #foreach($report in $reports.getFileList())
+    #if($report.endsWith("-junit.log"))
 		<div class="report">
-#include("$website_reports_directory/$report")
+            #include("$website_reports_directory/$report")
 		</div>
+    #end
 #end
     </div>
 #parse("$website_templates_directory/includes/last_changed_copyright.include.vm")

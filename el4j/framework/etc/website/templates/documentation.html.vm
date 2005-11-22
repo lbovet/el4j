@@ -21,12 +21,6 @@
 				Documentation of the build system 
 				(<a href="http://el4ant.sf.net/documentation.html" target="_blank">link to EL4Ant</a>)
 			</li>
-			<li>
-				<a href="javadoc/framework-modules/index.html">Framework API</a> 
-				(set framework-modules). The framework API is split up in 
-				multiple sets. For javadoc of other sets please have a look at
-				<a href="reports.html" target="_top">reports page</a>.
-			</li>
 		</ul>
 
 		<h2>Presentations</h2>
@@ -42,6 +36,17 @@
 				</a>
 			</li>
 		</ul>
+
+        <h2>Framework API</h2>
+        The framework API is split up in multiple sets where set "framework-modules" is the main set.
+        <div class="report">
+#foreach($report in $reports.getFileList())
+    #if($report.endsWith("-javadoc.log"))
+        #include("$website_reports_directory/$report")
+    #end
+#end
+            <br/>
+		</div>
     </div>
 #parse("$website_templates_directory/includes/last_changed_copyright.include.vm")
 </div>
