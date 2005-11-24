@@ -76,6 +76,12 @@ Hook to start a web container parallely and to deploy a unit given as local ant 
 	  </antcontrib:then>
 	</antcontrib:if>
     
+    <!-- 
+      Security factor added. Wait a bit longer than until the readyness port 
+      is up, else first tests could fail.
+    -->
+    <sleep seconds="20"/>
+      
     <!-- deploy application -->
     <antcall target="${parallel-web.deploytarget}"/>
     <sleep seconds="5"/>
