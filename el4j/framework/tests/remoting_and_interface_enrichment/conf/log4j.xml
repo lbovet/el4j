@@ -36,6 +36,15 @@
     <logger name="org.apache.axis">
         <level value="ALL"/>
     </logger>
+    <logger name="org.apache.axis.i18n">
+        <level value="WARN"/>
+    </logger>
+    <logger name="org.apache.axis.utils.NSStack">
+        <level value="WARN"/>
+    </logger>
+    <logger name="org.apache.axis.encoding.SerializationContext">
+        <level value="WARN"/>
+    </logger>
     
     <logger name="javax.xml">
         <level value="ALL"/>
