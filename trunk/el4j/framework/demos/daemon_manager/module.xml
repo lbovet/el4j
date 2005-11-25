@@ -2,7 +2,7 @@
 <!-- project definition -->
 <ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" 
     xmlns:ant="antlib:org.apache.tools.ant">
-    <module name="module-daemon_manager-demos" path="demos/daemon_manager">
+    <module name="module-daemon_manager-demos">
         <eu name="console">
             <attribute name="distribution.name" value="daemon-console"/>
             <attribute name="runtime.runnable" 

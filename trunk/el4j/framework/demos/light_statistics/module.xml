@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- project definition -->
 <ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" xmlns:ant="antlib:org.apache.tools.ant">
-    <module name="module-light_statistics-demos" path="demos/light_statistics">
+    <module name="module-light_statistics-demos">
     	<attribute name="set" value="framework-demos"/>
         <attribute name="runtime.runnable" value="true"/>
         <attribute name="runtime.class" value="ch.elca.el4j.demos.statistics.light.LightStatisticsDemo"/>
