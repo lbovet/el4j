@@ -1,0 +1,85 @@
+/*
+ * EL4J, the Enterprise Library for Java, complementing Spring http://el4j.sf.net
+ * Copyright (C) 2005 by ELCA Informatique SA, Av. de la Harpe 22-24,
+ * 1000 Lausanne, Switzerland, http://www.elca.ch
+ *
+ * This program is published under the GNU General Public License (GPL) license.
+ * http://www.gnu.org/licenses/gpl.txt
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * For alternative licensing, please contact info@elca.ch
+ */
+package ch.elca.el4j.apps.refdb;
+
+/**
+ * Constants for refdb application.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$Source$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Martin Zeltner (MZE)
+ */
+public final class Constants {
+    /**
+     * Is the string representation of an annotation.
+     */
+    public static final String ANNOTATION = "Annotation";
+
+    /**
+     * Is the string representation of a file.
+     */
+    public static final String FILE = "File";
+
+    /**
+     * Is the string representation of a file descriptor view.
+     */
+    public static final String FILE_DESCRIPTOR_VIEW = "FileDescriptorView";
+
+    /**
+     * Is the string representation of a reference.
+     */
+    public static final String REFERENCE = "Reference";
+
+    /**
+     * Is the string representation of a link.
+     */
+    public static final String LINK = "Link";
+    
+    /**
+     * Is the string representation of a formal publication.
+     */
+    public static final String FORMAL_PUBLICATION = "FormalPublication";
+
+    /**
+     * Is the string representation of a book.
+     */
+    public static final String BOOK = "Book";
+    
+    /**
+     * Is the string representation for a search in fields name and 
+     * description.
+     */
+    public static final String SEARCH_FIELDS_NAME_AND_DESCRIPTION 
+        = "NameDescription";
+    
+    /**
+     * Is the string representation for a search in fields name, 
+     * description and incomplete.
+     */
+    public static final String SEARCH_FIELDS_NAME_DESCRIPTION_AND_INCOMPLETE 
+        = "NameDescriptionIncomplete";
+    
+    /**
+     * Is the string representation of a reference keyword relationship.
+     */
+    public static final String REFERENCE_KEYWORD_RELATIONSHIP 
+        = "ReferenceKeywordRelationship";
+}

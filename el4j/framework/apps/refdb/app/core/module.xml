@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" 
+    xmlns:ant="antlib:org.apache.tools.ant">
+
+    <module name="refdb-core">
+        <!-- Working set -->
+        <attribute name="set" value="refdb-modules"/>
+        
+        <!-- Commons attributes enabled -->
+        <attribute name="commons-attributes.enable" value="true"/>
+        
+        <!-- Module dependencies -->
+        <dependency module="keyword-core"/>
+    </module>
+    
+</ant:project>

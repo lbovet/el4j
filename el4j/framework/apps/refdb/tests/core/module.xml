@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" 
+    xmlns:ant="antlib:org.apache.tools.ant">
+
+    <module name="refdb-core-tests">
+        <!-- Working set -->
+        <attribute name="set" value="refdb-tests"/>
+        
+        <!-- Enables JUnit -->
+        <attribute name="junit.runnable" value="true"/>
+        
+        <!-- Module dependencies -->
+        <dependency module="refdb-core"/>
+        <dependency module="common-database"/>
+    </module>
+    
+</ant:project>
