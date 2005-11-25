@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com/DTD SQL Map 2.0//EN"
+	"http://www.ibatis.com/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="refdb-core">
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <!-- 
+        Formal publication related invocations
+    -->
+    <resultMap id="formalPublication" 
+        class="ch.elca.el4j.apps.refdb.dto.FormalPublicationDto">
+        <result property="key" column="KEYID"/>
+        <result property="name" column="NAME"/>
+        <result property="hashValue" column="HASHVALUE"/>
+        <result property="description" column="DESCRIPTION"/>
+        <result property="version" column="VERSION"/>
+        <result property="incomplete" column="INCOMPLETE"/>
+        <result property="whenInserted" column="WHENINSERTED"/>
+        <result property="date" column="DOCUMENTDATE"/>
+        <result property="authorName" column="AUTHORNAME"/>
+        <result property="publisher" column="PUBLISHER"/>
+        <result property="pageNum" column="PAGENUM"/>
+        <result property="optimisticLockingVersion" 
+            column="OPTIMISTICLOCKINGVERSION"/>
+        <result property="keywords" column="KEYID" 
+            select="getKeywordsByReferenceKey"/>
+    </resultMap>
+    <statement id="getFormalPublicationByKey" 
+        parameterClass="int" resultMap="formalPublication">
+        select KEYID, NAME, HASHVALUE, DESCRIPTION, VERSION, INCOMPLETE, 
+            WHENINSERTED, DOCUMENTDATE, AUTHORNAME, PUBLISHER, PAGENUM, 
+            OPTIMISTICLOCKINGVERSION from FORMALPUBLICATIONS, REFERENCESTABLE
+                where KEYID=#value# 
+                    and KEYID=KEYTOREFERENCE
+    </statement>
+    <statement id="getFormalPublicationsByName" 
+        parameterClass="java.lang.String" resultMap="formalPublication">
+        select KEYID, NAME, HASHVALUE, DESCRIPTION, VERSION, INCOMPLETE, 
+            WHENINSERTED, DOCUMENTDATE, AUTHORNAME, PUBLISHER, PAGENUM, 
+            OPTIMISTICLOCKINGVERSION from FORMALPUBLICATIONS, REFERENCESTABLE
+                where NAME=#value# 
+                    and KEYID=KEYTOREFERENCE
+    </statement>
+    <statement id="getAllFormalPublications" resultMap="formalPublication">
+        select KEYID, NAME, HASHVALUE, DESCRIPTION, VERSION, INCOMPLETE, 
+            WHENINSERTED, DOCUMENTDATE, AUTHORNAME, PUBLISHER, PAGENUM, 
+            OPTIMISTICLOCKINGVERSION from FORMALPUBLICATIONS, REFERENCESTABLE
+                where KEYID=KEYTOREFERENCE
+    </statement>
+    <statement id="searchFormalPublicationsWithFieldsNameDescription" 
+        resultMap="formalPublication">
+        select KEYID, NAME, HASHVALUE, DESCRIPTION, VERSION, INCOMPLETE, 
+            WHENINSERTED, DOCUMENTDATE, AUTHORNAME, PUBLISHER, PAGENUM, 
+            OPTIMISTICLOCKINGVERSION from FORMALPUBLICATIONS, REFERENCESTABLE
+                where KEYID=KEYTOREFERENCE
+        <dynamic>
+            <isNotEmpty prepend="and" property="name">
+                lower(NAME) like '%$name$%'
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="description">
+                lower(DESCRIPTION) like '%$description$%'
+            </isNotEmpty>
+        </dynamic>
+        order by NAME, DESCRIPTION
+    </statement>
+    <statement id="searchFormalPublicationsWithFieldsNameDescriptionIncomplete" 
+        resultMap="formalPublication">
+        select KEYID, NAME, HASHVALUE, DESCRIPTION, VERSION, INCOMPLETE, 
+            WHENINSERTED, DOCUMENTDATE, AUTHORNAME, PUBLISHER, PAGENUM, 
+            OPTIMISTICLOCKINGVERSION from FORMALPUBLICATIONS, REFERENCESTABLE
+                where KEYID=KEYTOREFERENCE and INCOMPLETE=#incomplete#
+        <dynamic>
+            <isNotEmpty prepend="and" property="name">
+                lower(NAME) like '%$name$%'
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="description">
+                lower(DESCRIPTION) like '%$description$%'
+            </isNotEmpty>
+        </dynamic>
+        order by NAME, DESCRIPTION
+    </statement>
+
+    <delete id="deleteFormalPublication" parameterClass="int">
+        delete from FORMALPUBLICATIONS where KEYTOREFERENCE=#value#
+    </delete>
+</sqlMap>

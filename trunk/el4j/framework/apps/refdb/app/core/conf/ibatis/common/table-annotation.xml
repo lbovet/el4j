@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com/DTD SQL Map 2.0//EN"
+	"http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="refdb-core">
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <!-- 
+        Annotation related invocations
+    -->
+    <typeAlias 
+        type="com.ibatis.sqlmap.engine.type.ClobTypeHandlerCallback" 
+        alias="clobHandler" />
+        
+    <resultMap id="annotation"
+        class="ch.elca.el4j.apps.refdb.dto.AnnotationDto">
+        <result property="key" column="KEYID"/>
+        <result property="keyToReference" column="KEYTOREFERENCE"/>
+        <result property="annotator" column="ANNOTATOR"/>
+        <result property="grade" column="GRADE"/>
+        <result property="content" column="CONTENT" typeHandler="clobHandler"/>
+        <result property="whenInserted" column="WHENINSERTED"/>
+        <result property="optimisticLockingVersion" 
+            column="OPTIMISTICLOCKINGVERSION"/>
+    </resultMap>
+
+    <statement id="getAnnotationByKey" 
+        parameterClass="int" resultMap="annotation">
+        select KEYID, KEYTOREFERENCE, ANNOTATOR, GRADE, CONTENT, WHENINSERTED,
+            OPTIMISTICLOCKINGVERSION from ANNOTATIONS where KEYID=#value#
+    </statement>
+
+    <statement id="getAnnotationsByAnnotator" 
+        parameterClass="java.lang.String" resultMap="annotation">
+        select KEYID, KEYTOREFERENCE, ANNOTATOR, GRADE, CONTENT, WHENINSERTED,
+            OPTIMISTICLOCKINGVERSION from ANNOTATIONS 
+            where ANNOTATOR=#value#
+    </statement>
+    
+    <statement id="getAnnotationsByReference" 
+        parameterClass="int" resultMap="annotation">
+        select KEYID, KEYTOREFERENCE, ANNOTATOR, GRADE, CONTENT, WHENINSERTED,
+            OPTIMISTICLOCKINGVERSION from ANNOTATIONS 
+            where KEYTOREFERENCE=#value#
+    </statement>
+
+    <statement id="getAllAnnotations" resultMap="annotation">
+        select KEYID, KEYTOREFERENCE, ANNOTATOR, GRADE, CONTENT, WHENINSERTED,
+            OPTIMISTICLOCKINGVERSION from ANNOTATIONS
+    </statement>
+
+    <delete id="deleteAnnotation" parameterClass="int">
+        delete from ANNOTATIONS where KEYID=#value#
+    </delete>
+</sqlMap>

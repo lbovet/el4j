@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com/DTD SQL Map 2.0//EN"
+	"http://www.ibatis.com/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="refdb-core">
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <!-- 
+        Book related invocations
+    -->
+    <!--
+        Tag 'update' and not 'insert' is used, because no primary key must be 
+        generated.
+    -->
+    <update id="insertBook">
+        insert into BOOKS (KEYTOREFERENCE, AUTHORNAME, PUBLISHER, PAGENUM, 
+            ISBNNUMBER) values (#key#, #authorName#, #publisher#, #pageNum#, 
+            #isbnNumber#)
+    </update>
+    <update id="updateBook">
+        update BOOKS set AUTHORNAME=#authorName#, PUBLISHER=#publisher#,
+            PAGENUM=#pageNum#, ISBNNUMBER=#isbnNumber#
+            where KEYTOREFERENCE=#key#
+    </update>
+</sqlMap>

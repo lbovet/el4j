@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com/DTD SQL Map 2.0//EN"
+	"http://www.ibatis.com/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="refdb-core">
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <!-- 
+        Link related invocations
+    -->
+    <!--
+        Tag 'update' and not 'insert' is used, because no primary key must be 
+        generated.
+    -->
+    <update id="insertLink">
+        insert into LINKS (KEYTOREFERENCE, URL) values (#key#, #url#)
+    </update>
+    <update id="updateLink">
+        update LINKS set URL=#url# where KEYTOREFERENCE=#key#
+    </update>
+</sqlMap>

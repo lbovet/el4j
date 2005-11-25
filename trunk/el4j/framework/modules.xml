@@ -31,4 +31,17 @@
     <include file="demos/daemon_manager/module.xml"/>
     <include file="demos/executable_distribution/module.xml"/>
     
+    
+    <!-- Application common modules. -->
+    <include file="apps/common/database/module.xml"/>
+    
+    <!-- Application main modules. -->
+    <include file="apps/keyword/app/core/module.xml"/>
+    <include file="apps/refdb/app/core/module.xml"/>
+    <include file="apps/refdb/app/gui/module.xml"/>
+
+    <!-- Application test modules. -->
+    <include file="apps/keyword/tests/core/module.xml"/>
+    <include file="apps/refdb/tests/core/module.xml"/>
+    
 </ant:project>

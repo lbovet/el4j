@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//iBATIS.com/DTD SQL Map 2.0//EN"
+	"http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="keyword-core">
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <!-- 
+        Keyword related invocations
+    -->
+    <resultMap id="keyword"
+        class="ch.elca.el4j.apps.keyword.dto.KeywordDto">
+        <result property="key" column="KEYID" columnIndex="1" />
+        <result property="name" column="NAME" columnIndex="2" />
+        <result property="description" column="DESCRIPTION" columnIndex="3" />
+        <result property="optimisticLockingVersion" 
+            column="OPTIMISTICLOCKINGVERSION" columnIndex="4" />
+    </resultMap>
+
+    <select id="getKeywordByKey" 
+        parameterClass="int" resultMap="keyword">
+        select KEYID, NAME, DESCRIPTION, OPTIMISTICLOCKINGVERSION from KEYWORDS
+            where KEYID = #value#
+    </select>
+
+    <select id="getKeywordByName" 
+        parameterClass="string" resultMap="keyword">
+        select KEYID, NAME, DESCRIPTION, OPTIMISTICLOCKINGVERSION from KEYWORDS
+            where NAME = #value#
+    </select>
+
+    <select id="getAllKeywords" resultMap="keyword">
+        select KEYID, NAME, DESCRIPTION, OPTIMISTICLOCKINGVERSION from KEYWORDS
+    </select>
+
+    <select id="searchKeywords" resultMap="keyword">
+        select KEYID, NAME, DESCRIPTION, OPTIMISTICLOCKINGVERSION from KEYWORDS
+        <dynamic prepend="where">
+            <isNotEmpty prepend="and" property="name">
+                lower(NAME) like '%$name$%'
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="description">
+                lower(DESCRIPTION) like '%$description$%'
+            </isNotEmpty>
+        </dynamic>
+        order by NAME
+    </select>
+
+    <delete id="deleteKeyword" parameterClass="int">
+        delete from KEYWORDS where KEYID=#value#
+    </delete>
+</sqlMap>

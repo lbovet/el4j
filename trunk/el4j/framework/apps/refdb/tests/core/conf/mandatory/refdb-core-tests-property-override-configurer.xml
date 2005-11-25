@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <bean id="propertiesOverrideRefdbCoreTests"
+        class="org.springframework.beans.factory.config.PropertyOverrideConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:mandatory/common-database-override-oracle.properties</value>
+                <!--value>classpath:mandatory/common-database-override-db2.properties</value-->
+                <value>classpath:mandatory/refdb-core-tests-override-common.properties</value>
+                <value>classpath:mandatory/refdb-core-tests-override-oracle.properties</value>
+                <!--value>classpath:mandatory/refdb-core-tests-override-db2.properties</value-->
+            </list>
+        </property>
+        <property name="order">
+            <value>2</value>
+        </property>
+    </bean>
+</beans>
