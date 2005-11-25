@@ -2,7 +2,7 @@
 <!-- project definition -->
 <ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" 
     xmlns:ant="antlib:org.apache.tools.ant">
-    <module name="module-executable_distribution-demos" path="demos/executable_distribution">
+    <module name="module-executable_distribution-demos">
         <attribute name="distribution.name" value="gui"/>
         <attribute name="runtime.runnable" value="true"/>
         <attribute name="runtime.class" value="ch.elca.el4j.demos.distribution.DistributionDemo"/>

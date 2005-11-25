@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- project definition -->
 <ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" xmlns:ant="antlib:org.apache.tools.ant">
-    <module name="module-exception_handling-tests" path="tests/exception_handling">
+    <module name="module-exception_handling-tests">
         <attribute name="set" value="framework-tests"/>
         <attribute name="junit.runnable" value="true"/>
         <dependency module="module-exception_handling"/>

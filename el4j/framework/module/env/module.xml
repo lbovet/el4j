@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- project definition -->
 <ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" xmlns:ant="antlib:org.apache.tools.ant">
-    <module name="module-env" path="module/env">
+    <module name="module-env">
         <attribute name="set" value="framework-modules"/>
         <attribute name="binrelease.version" value="1.0"/>
         <dependency module="module-core"/>
