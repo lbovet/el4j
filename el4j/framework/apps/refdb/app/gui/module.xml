@@ -9,12 +9,13 @@
         <!-- Runtime configurations -->
         <attribute name="runtime.runnable" value="true"/>
         <attribute name="runtime.class" 
-            value="ch.elca.el4j.apps.refdb.gui.ApplicationMain"/>
+            value="ch.elca.el4j.apps.refdb.gui.Main"/>
         <attribute name="runtime.command.creator" 
             value="runtime.command.creator.basic"/>
         
         <!-- Module dependencies -->
         <dependency module="refdb-core"/>
+        <dependency module="common-spring_rcp"/>
         <dependency module="common-database"/>
     </module>
     
