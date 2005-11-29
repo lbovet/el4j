@@ -34,6 +34,7 @@
     
     <!-- Application common modules. -->
     <include file="apps/common/database/module.xml"/>
+    <include file="apps/common/spring_rcp/module.xml"/>
     
     <!-- Application main modules. -->
     <include file="apps/keyword/app/core/module.xml"/>
