@@ -9,8 +9,12 @@
         <!-- Binary version -->
         <attribute name="binrelease.version" value="1.0"/>
 
+        <!-- Module dependencies -->
+        <dependency module="module-core"/>
+
         <!-- Spring rich client platform (rpc) libraries -->
         <dependency jar="spring-richclient-1.0-alpha-24_11_05.jar"/>
+        <dependency jar="spring-richclient-resources-1.0-alpha-24_11_05.jar"/>
         <dependency jar="spring-binding-1.0-20050722090449.jar"/>
         <dependency jar="concurrent-oswego-edu-2004-07-10.jar"/>
         <dependency jar="glazedlists-0.9.6.jar"/>

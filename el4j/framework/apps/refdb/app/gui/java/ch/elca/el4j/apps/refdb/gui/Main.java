@@ -18,9 +18,9 @@ package ch.elca.el4j.apps.refdb.gui;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.richclient.application.ApplicationLauncher;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
+import ch.elca.el4j.services.gui.richclient.ApplicationLauncher;
 
 /**
  * This class is used to start the RefDB-Application.
@@ -51,8 +51,12 @@ public final class Main {
     /**
      * Main application context files. 
      */
-    public static final String[] ROOT_CONTEXT_PATH 
-        = {"classpath*:mandatory/*.xml"};
+    public static final String[] ROOT_CONTEXT_PATH = {
+        "classpath:optional/interception/methodTracing.xml",
+        "classpath*:mandatory/*.xml",
+        "classpath:scenarios/db/rawDatabase.xml",
+        "classpath:scenarios/dataaccess/ibatisSqlMaps.xml",
+        "classpath:optional/interception/transactionCommonsAttributes.xml" };
     
     /**
      * Hide default constructor.
@@ -67,9 +71,7 @@ public final class Main {
      */
     public static void main(String[] args) {
         try {
-            ModuleApplicationContext rootAppContext
-                = new ModuleApplicationContext(ROOT_CONTEXT_PATH, false); 
-            new ApplicationLauncher(STARTUP_CONTEXT_PATH, rootAppContext);
+            new ApplicationLauncher(STARTUP_CONTEXT_PATH, ROOT_CONTEXT_PATH);
         } catch (Exception e) {
             s_logger.fatal("Reference-Database-Application exited "
                 + "exceptionally! See stack trace for details.", e);
