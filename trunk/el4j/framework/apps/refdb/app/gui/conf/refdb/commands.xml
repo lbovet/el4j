@@ -2,10 +2,9 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
 	"http://www.springframework.org/dtd/spring-beans.dtd">
 <beans>
-	<!-- 
 	<bean id="windowCommandManager" 
 		class="org.springframework.richclient.application.support.ApplicationWindowCommandManager">
-		<property name="sharedCommandIds">
+		<!--property name="sharedCommandIds">
 			<list>
 				<value>saveAsCommand</value>
 				<value>propertiesCommand</value>
@@ -18,9 +17,10 @@
 				<value>selectAllCommand</value>
 				<value>deleteCommand</value>
 			</list>
-		</property>
+		</property-->
 	</bean>
 	
+    <!-- 
 	<bean id="menuBar" 
 		class="org.springframework.richclient.command.CommandGroupFactoryBean">
 		<property name="members">

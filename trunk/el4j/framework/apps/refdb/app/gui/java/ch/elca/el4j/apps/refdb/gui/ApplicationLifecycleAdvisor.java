@@ -18,7 +18,7 @@ package ch.elca.el4j.apps.refdb.gui;
 
 import org.springframework.richclient.application.config.DefaultApplicationLifecycleAdvisor;
 
-public class RefdbApplicationLifecycleAdvisor extends
+public class ApplicationLifecycleAdvisor extends
     DefaultApplicationLifecycleAdvisor {
 
 }
