@@ -30,26 +30,44 @@
             <value>classpath:refdb/commands.xml</value>
         </property>
         <property name="startingPageId">
-            <value>referenceView</value>
+            <value>keywordView</value>
         </property>
     </bean>
 
     <!-- 
-        First view. It is used to display references.
+        Abstract view for RefDB-Application.
     -->
-    <bean id="referenceView"
-        class="org.springframework.richclient.application.support.DefaultViewDescriptor">
-        <property name="viewClass">
-            <value>
-                ch.elca.el4j.apps.refdb.gui.views.ReferenceView
-            </value>
-        </property>
+    <bean id="abstractView" 
+        class="org.springframework.richclient.application.support.DefaultViewDescriptor"
+        abstract="true">
         <property name="viewProperties">
             <map>
                 <entry key="referenceService">
                     <ref bean="referenceService" />
                 </entry>
             </map>
+        </property>
+    </bean>
+
+    <!-- 
+        Reference view of RefDB-Application.
+    -->
+    <bean id="referenceView" parent="abstractView">
+        <property name="viewClass">
+            <value>
+                ch.elca.el4j.apps.refdb.gui.views.ReferenceView
+            </value>
+        </property>
+    </bean>
+
+    <!-- 
+        Keyword view of RefDB-Application.
+    -->
+    <bean id="keywordView" parent="abstractView">
+        <property name="viewClass">
+            <value>
+                ch.elca.el4j.apps.refdb.gui.views.KeywordView
+            </value>
         </property>
     </bean>
 
