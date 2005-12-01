@@ -114,8 +114,8 @@ public class ValidationRulesSource extends DefaultRulesSource {
                 add("publisher", getConstraintNotRequiredMaxLength(
                     Boundaries.MAX_LENGTH_FORMALPUBLICATION_PUBLISHER));
                 add("pageNum", all(new Constraint[] {
-                    gte(Boundaries.MIN_VALUE_FORMALPUBLICATION_PAGENUM), 
-                    lte(Boundaries.MAX_VALUE_FORMALPUBLICATION_PAGENUM)
+                    range(Boundaries.MIN_VALUE_FORMALPUBLICATION_PAGENUM, 
+                        Boundaries.MAX_VALUE_FORMALPUBLICATION_PAGENUM)
                 }));
             }            
         };
@@ -143,8 +143,8 @@ public class ValidationRulesSource extends DefaultRulesSource {
                     Boundaries.MAX_LENGTH_ANNOTATION_ANNOTATOR));
                 add("grade", all(new Constraint[] {
                     required(),
-                    gte(Boundaries.MIN_VALUE_ANNOTATION_GRADE),
-                    lte(Boundaries.MAX_VALUE_ANNOTATION_GRADE)
+                    range(Boundaries.MIN_VALUE_ANNOTATION_GRADE,
+                        Boundaries.MAX_VALUE_ANNOTATION_GRADE)
                 }));
                 add("content", getConstraintRequiredMaxLength(
                     Boundaries.MAX_SIZE_ANNOTATION_CONTENT));
