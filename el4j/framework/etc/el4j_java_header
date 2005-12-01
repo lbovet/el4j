@@ -1,5 +1,6 @@
 ^/\* *$
-^ \* EL4J, the Enterprise Library for Java, complementing Spring http://el4j\.sf\.net *$
+^ \* EL4J, the Extension Library for the J2EE, adds incremental enhancements to *$
+^ \* the spring framework, http://el4j\.sf\.net *$
 ^ \* Copyright \(C\) 2005 by ELCA Informatique SA, Av. de la Harpe 22-24, *$
 ^ \* 1000 Lausanne, Switzerland, http://www\.elca\.ch *$
 ^ \* *$
