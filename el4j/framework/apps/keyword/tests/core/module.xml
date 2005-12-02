@@ -11,7 +11,9 @@
         <attribute name="junit.runnable" value="true"/>
         
         <!-- Module dependencies -->
-        <dependency module="keyword-core"/>
+        <dependency module="keyword-core">
+            <mapping target="implementation"/>
+        </dependency>
         <dependency module="common-database"/>
     </module>
     
