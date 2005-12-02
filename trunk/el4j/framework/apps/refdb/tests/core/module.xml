@@ -10,7 +10,9 @@
         <attribute name="junit.runnable" value="true"/>
         
         <!-- Module dependencies -->
-        <dependency module="refdb-core"/>
+        <dependency module="refdb-core">
+            <mapping target="implementation"/>
+        </dependency>
         <dependency module="common-database"/>
     </module>
     
