@@ -2,7 +2,8 @@
 <ant:project
     name="plugins"
     xmlns="antlib:ch.elca.el4ant"
-    xmlns:ant="antlib:org.apache.tools.ant">
+    xmlns:ant="antlib:org.apache.tools.ant"
+    xmlns:antcontrib="antlib:net.sf.antcontrib">
 
     <!-- Java compiler plugin. Contains tasks like compile and jars. -->
     <plugin name="compile"/>
@@ -18,16 +19,33 @@
 
     <!--
         Plugin online library to automatically download missing libraries 
-        from possible locations.
+        from possible locations. By setting property local to any value the
+        online lib plugin will not be included.
     -->
-    <plugin name="onlinelib">
-        <attribute name="onlinelib.repository" value="../lib/"/>
-        <attribute name="onlinelib.repository" value="../lib/src/"/>
-        <attribute name="onlinelib.repository" 
-            value="http://el4.elca-services.ch/el4j/lib/"/>
-        <attribute name="onlinelib.repository" 
-            value="http://el4.elca-services.ch/el4j/lib/src/"/>
-    </plugin>
+    <antcontrib:if>
+        <ant:isset property="local"/>
+        <antcontrib:then>
+            <ant:echo level="info">
+Automatic download of missing libraries deactivated.
+            </ant:echo>
+        </antcontrib:then>
+        <antcontrib:else>
+            <ant:echo level="info">
+You can disable online plugin with '-Dlocal=t' at configuration time 
+(ant -f bootstrap.xml) to deactivate automatic download of missing libraries. 
+If automatic downloading of libraries is disabled the configuration task will 
+consume less time.
+            </ant:echo>
+            <plugin name="onlinelib">
+                <attribute name="onlinelib.repository" value="../lib/"/>
+                <attribute name="onlinelib.repository" value="../lib/src/"/>
+                <attribute name="onlinelib.repository" 
+                    value="http://el4.elca-services.ch/el4j/lib/"/>
+                <attribute name="onlinelib.repository" 
+                    value="http://el4.elca-services.ch/el4j/lib/src/"/>
+            </plugin>
+        </antcontrib:else>
+    </antcontrib:if>
 
     <!--
         Environment plugin to flexible change configuration. Set configuration  
