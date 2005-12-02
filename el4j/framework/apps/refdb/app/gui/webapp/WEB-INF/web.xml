@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" 
+    version="2.4">
+    
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <servlet>
+        <servlet-name>remoting</servlet-name>
+        <servlet-class>
+            ch.elca.el4j.web.context.ModuleDispatcherServlet
+        </servlet-class>
+        <init-param>
+            <param-name>inclusiveLocations</param-name>
+            <param-value>
+                classpath:optional/interception/methodTracing.xml,
+                classpath*:mandatory/*.xml,
+                classpath:scenarios/db/rawDatabase.xml,
+        	    classpath:scenarios/dataaccess/ibatisSqlMaps.xml,
+                classpath:optional/interception/transactionCommonsAttributes.xml,
+                classpath:scenarios/distributed/server/web/*.xml
+            </param-value>
+        </init-param>
+        <init-param>
+            <param-name>exclusiveLocations</param-name>
+            <param-value>
+                classpath*:mandatory/refdb-gui-richclient.xml
+            </param-value>
+        </init-param>
+        <load-on-startup>100</load-on-startup>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>remoting</servlet-name>
+        <url-pattern>*.remoteservice</url-pattern>
+    </servlet-mapping>
+</web-app>
