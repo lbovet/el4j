@@ -4,10 +4,12 @@
 <beans>
 	<bean id="windowCommandManager" 
 		class="org.springframework.richclient.application.support.ApplicationWindowCommandManager">
-		<!--property name="sharedCommandIds">
-			<list>
+		<property name="sharedCommandIds">
+			<list><!-- 
 				<value>saveAsCommand</value>
+                 -->
 				<value>propertiesCommand</value>
+                <!-- 
 				<value>renameCommand</value>                
 				<value>undoCommand</value>
 				<value>redoCommand</value>
@@ -16,17 +18,17 @@
 				<value>pasteCommand</value>
 				<value>selectAllCommand</value>
 				<value>deleteCommand</value>
+                 -->
 			</list>
-		</property-->
+		</property>
 	</bean>
 	
-    <!-- 
 	<bean id="menuBar" 
 		class="org.springframework.richclient.command.CommandGroupFactoryBean">
 		<property name="members">
 			<list>
-				<ref bean="fileMenu"/>
-				<ref bean="editMenu"/>
+				<ref bean="fileMenu"/><!-- 
+				<ref bean="editMenu"/>-->
 				<ref bean="windowMenu"/>
 				<ref bean="helpMenu"/>
 			</list>
@@ -37,8 +39,7 @@
 		class="org.springframework.richclient.command.CommandGroupFactoryBean">
 		<property name="members">
 			<list>
-				<ref bean="newMenu"/>
-				<value>saveAsCommand</value>
+				<value>propertiesCommand</value>
 			</list>
 		</property>
 	</bean>
@@ -46,7 +47,7 @@
 	<bean id="fileMenu" 
 		class="org.springframework.richclient.command.CommandGroupFactoryBean">
 		<property name="members">
-			<list>
+			<list><!-- 
 				<ref bean="newMenu"/>
 				<value>separator</value>
 				<ref bean="loginCommand"/>
@@ -54,13 +55,14 @@
 				<value>separator</value>
 				<value>saveAsCommand</value>
 				<value>separator</value>
+                 -->
 				<value>propertiesCommand</value>
 				<value>separator</value>
 				<bean class="org.springframework.richclient.command.support.ExitCommand"/>
 			</list>
 		</property>
 	</bean>
-	
+	<!-- 
 	<bean id="newMenu" 
 		class="org.springframework.richclient.command.CommandGroupFactoryBean">
 		<property name="members">
@@ -93,7 +95,7 @@
 			</list>
 		</property>
 	</bean>
-	
+     -->	
 	<bean id="windowMenu" 
 		class="org.springframework.richclient.command.CommandGroupFactoryBean">
 		<property name="members">
@@ -104,7 +106,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="helpMenu" 
 		class="org.springframework.richclient.command.CommandGroupFactoryBean">
 		<property name="members">
@@ -122,16 +124,8 @@
 	<bean id="aboutCommand" 
 		class="org.springframework.richclient.command.support.AboutCommand">
 		<property name="aboutTextPath">
-			<value>org/springframework/richclient/samples/petclinic/about.txt</value>
+			<value>refdb/about.txt</value>
 		</property>
 	</bean>
 		
-	<bean id="loginCommand" 
-		class="org.springframework.richclient.security.LoginCommand">
-		<property name="closeOnCancel" value="false"/>
-	</bean>
-	
-	<bean id="logoutCommand" 
-		class="org.springframework.richclient.security.LogoutCommand"/>
--->
 </beans>

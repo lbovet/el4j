@@ -20,11 +20,10 @@ package ch.elca.el4j.apps.refdb.gui;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.gui.richclient.ApplicationLauncher;
 
 /**
- * This class is used to start the RefDB-Application.
+ * This class is used to start the RefDB-Application in standalone mode.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$Source$",
@@ -35,13 +34,7 @@ import ch.elca.el4j.services.gui.richclient.ApplicationLauncher;
  *
  * @author Martin Zeltner (MZE)
  */
-public final class Main {
-    /**
-     * Private logger.
-     */
-    private static Log s_logger 
-        = LogFactory.getLog(Main.class);
-    
+public final class MainStandalone {
     /**
      * Startup spring configuration file. Used to quickly load beans to present 
      * something to the user.
@@ -50,7 +43,7 @@ public final class Main {
         = "classpath:refdb/startup.xml";
     
     /**
-     * Main application context files. 
+     * MainStandalone application context files. 
      */
     public static final String[] ROOT_CONTEXT_PATH = {
         "classpath:optional/interception/methodTracing.xml",
@@ -60,9 +53,15 @@ public final class Main {
         "classpath:optional/interception/transactionCommonsAttributes.xml" };
     
     /**
+     * Private logger.
+     */
+    private static Log s_logger 
+        = LogFactory.getLog(MainStandalone.class);
+
+    /**
      * Hide default constructor.
      */
-    private Main() { }
+    private MainStandalone() { }
 
     /**
      * Start method.

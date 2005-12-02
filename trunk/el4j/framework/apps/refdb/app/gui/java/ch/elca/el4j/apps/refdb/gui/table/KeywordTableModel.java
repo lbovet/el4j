@@ -61,4 +61,13 @@ public class KeywordTableModel extends BeanTableModel {
     protected Class[] createColumnClasses() {
         return new Class[] {String.class, String.class};
     }
+    
+    /**
+     * {@inheritDoc}
+     * 
+     * Table should not be directly editable.
+     */
+    protected boolean isCellEditableInternal(Object row, int columnIndex) {
+        return false;
+    }
 }
