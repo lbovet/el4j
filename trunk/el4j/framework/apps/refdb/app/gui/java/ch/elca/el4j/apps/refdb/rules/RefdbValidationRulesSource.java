@@ -43,20 +43,20 @@ import ch.elca.el4j.apps.refdb.dto.ReferenceDto;
  *
  * @author Martin Zeltner (MZE)
  */
-public class ValidationRulesSource extends DefaultRulesSource {
+public class RefdbValidationRulesSource extends DefaultRulesSource {
     /**
      * Default constructor.
      */
-    public ValidationRulesSource() {
+    public RefdbValidationRulesSource() {
         super();
-        createKeywordRules();
-        createReferenceRules();
-        createLinkRules();
-        createFormalPublicationRules();
-        createBookRules();
-        createAnnotationRules();
-        createFileRules();
-        createFileDescriptorViewRules();
+        addRules(createKeywordRules());
+        addRules(createReferenceRules());
+        addRules(createLinkRules());
+        addRules(createFormalPublicationRules());
+        addRules(createBookRules());
+        addRules(createAnnotationRules());
+        addRules(createFileRules());
+        addRules(createFileDescriptorViewRules());
     }
     
     /**
@@ -66,9 +66,9 @@ public class ValidationRulesSource extends DefaultRulesSource {
         return new Rules(KeywordDto.class) {
             protected void initRules() {
                 add("name", getConstraintRequiredMaxLength(
-                    Boundaries.MAX_LENGTH_KEYWORD_NAME));
+                    RefdbBoundaries.MAX_LENGTH_KEYWORD_NAME));
                 add("description", getConstraintNotRequiredMaxLength(
-                    Boundaries.MAX_LENGTH_KEYWORD_DESCRIPTION));
+                    RefdbBoundaries.MAX_LENGTH_KEYWORD_DESCRIPTION));
             }            
         };
     }
@@ -80,13 +80,13 @@ public class ValidationRulesSource extends DefaultRulesSource {
         return new Rules(ReferenceDto.class) {
             protected void initRules() {
                 add("name", getConstraintRequiredMaxLength(
-                    Boundaries.MAX_LENGTH_REFERENCE_NAME));
+                    RefdbBoundaries.MAX_LENGTH_REFERENCE_NAME));
                 add("hashValue", getConstraintNotRequiredMaxLength(
-                    Boundaries.MAX_LENGTH_REFERENCE_HASHVALUE));
+                    RefdbBoundaries.MAX_LENGTH_REFERENCE_HASHVALUE));
                 add("description", getConstraintNotRequiredMaxLength(
-                    Boundaries.MAX_LENGTH_REFERENCE_DESCRIPTION));
+                    RefdbBoundaries.MAX_LENGTH_REFERENCE_DESCRIPTION));
                 add("version", getConstraintNotRequiredMaxLength(
-                    Boundaries.MAX_LENGTH_REFERENCE_VERSION));
+                    RefdbBoundaries.MAX_LENGTH_REFERENCE_VERSION));
                 add("documentDate", lt(new Date()));
             }            
         };
@@ -99,7 +99,7 @@ public class ValidationRulesSource extends DefaultRulesSource {
         return new Rules(LinkDto.class) {
             protected void initRules() {
                 add("url", getConstraintNotRequiredMaxLength(
-                    Boundaries.MAX_LENGTH_LINK_URL));
+                    RefdbBoundaries.MAX_LENGTH_LINK_URL));
             }            
         };
     }
@@ -111,12 +111,12 @@ public class ValidationRulesSource extends DefaultRulesSource {
         return new Rules(FormalPublicationDto.class) {
             protected void initRules() {
                 add("authorName", getConstraintNotRequiredMaxLength(
-                    Boundaries.MAX_LENGTH_FORMALPUBLICATION_AUTHORNAME));
+                    RefdbBoundaries.MAX_LENGTH_FORMALPUBLICATION_AUTHORNAME));
                 add("publisher", getConstraintNotRequiredMaxLength(
-                    Boundaries.MAX_LENGTH_FORMALPUBLICATION_PUBLISHER));
+                    RefdbBoundaries.MAX_LENGTH_FORMALPUBLICATION_PUBLISHER));
                 add("pageNum", all(new Constraint[] {
-                    range(Boundaries.MIN_VALUE_FORMALPUBLICATION_PAGENUM, 
-                        Boundaries.MAX_VALUE_FORMALPUBLICATION_PAGENUM)
+                    range(RefdbBoundaries.MIN_VALUE_FORMALPUBLICATION_PAGENUM, 
+                        RefdbBoundaries.MAX_VALUE_FORMALPUBLICATION_PAGENUM)
                 }));
             }            
         };
@@ -129,7 +129,7 @@ public class ValidationRulesSource extends DefaultRulesSource {
         return new Rules(BookDto.class) {
             protected void initRules() {
                 add("isbnNumber", getConstraintNotRequiredMaxLength(
-                    Boundaries.MAX_LENGTH_BOOK_ISBNNUMBER));
+                    RefdbBoundaries.MAX_LENGTH_BOOK_ISBNNUMBER));
             }            
         };
     }
@@ -141,14 +141,14 @@ public class ValidationRulesSource extends DefaultRulesSource {
         return new Rules(AnnotationDto.class) {
             protected void initRules() {
                 add("annotator", getConstraintRequiredMaxLength(
-                    Boundaries.MAX_LENGTH_ANNOTATION_ANNOTATOR));
+                    RefdbBoundaries.MAX_LENGTH_ANNOTATION_ANNOTATOR));
                 add("grade", all(new Constraint[] {
                     required(),
-                    range(Boundaries.MIN_VALUE_ANNOTATION_GRADE,
-                        Boundaries.MAX_VALUE_ANNOTATION_GRADE)
+                    range(RefdbBoundaries.MIN_VALUE_ANNOTATION_GRADE,
+                        RefdbBoundaries.MAX_VALUE_ANNOTATION_GRADE)
                 }));
                 add("content", getConstraintRequiredMaxLength(
-                    Boundaries.MAX_SIZE_ANNOTATION_CONTENT));
+                    RefdbBoundaries.MAX_SIZE_ANNOTATION_CONTENT));
             }            
         };
     }
@@ -187,10 +187,10 @@ public class ValidationRulesSource extends DefaultRulesSource {
          */
         protected void initRules() {
             add("name", getConstraintRequiredMaxLength(
-                Boundaries.MAX_LENGTH_FILE_NAME));
+                RefdbBoundaries.MAX_LENGTH_FILE_NAME));
             add("contentSize", all(new Constraint[] {
                 required(),
-                lte(Boundaries.MAX_SIZE_FILE_CONTENT)
+                lte(RefdbBoundaries.MAX_SIZE_FILE_CONTENT)
             }));
         }            
     }

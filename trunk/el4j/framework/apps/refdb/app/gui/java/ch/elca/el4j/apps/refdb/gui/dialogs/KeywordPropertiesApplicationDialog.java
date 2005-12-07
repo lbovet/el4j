@@ -14,17 +14,14 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
+package ch.elca.el4j.apps.refdb.gui.dialogs;
 
-package ch.elca.el4j.apps.refdb.gui.views;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-
-import javax.swing.JComponent;
-import javax.swing.JPanel;
+import ch.elca.el4j.apps.keyword.dto.KeywordDto;
+import ch.elca.el4j.apps.refdb.gui.views.AbstractRefdbView;
+import ch.elca.el4j.services.gui.richclient.dialogs.AbstractBeanTitledPageApplicationDialog;
 
 /**
- * Reference view.
+ * Dialog to save changes made on a keyword dto.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$Source$",
@@ -35,17 +32,22 @@ import javax.swing.JPanel;
  *
  * @author Martin Zeltner (MZE)
  */
-public class ReferenceView extends AbstractRefdbView {
+public class KeywordPropertiesApplicationDialog 
+    extends AbstractBeanTitledPageApplicationDialog {
 
     /**
      * {@inheritDoc}
      * 
-     * Returns the root component for this view.
+     * Save the received keyword dto and update gui components.
      */
-    protected JComponent createControl() {
-        JPanel p = new JPanel(new BorderLayout());
-        p.setBackground(Color.RED);
-        return p;
+    protected boolean onFinishAfterCommit(Object currentBean) {
+        KeywordDto currentKeyword = (KeywordDto) currentBean;
+        AbstractRefdbView referenceServiceView
+            = (AbstractRefdbView) getBeanView();
+        KeywordDto returnValue
+            = referenceServiceView.getReferenceService().saveKeyword(
+                currentKeyword);
+        referenceServiceView.updateSelectedBean(returnValue);
+        return true;
     }
-
 }

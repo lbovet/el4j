@@ -37,7 +37,7 @@
     <!-- 
         Abstract view for RefDB-Application.
     -->
-    <bean id="abstractView" 
+    <bean id="abstractView"
         class="org.springframework.richclient.application.support.DefaultViewDescriptor"
         abstract="true">
         <property name="viewProperties">
@@ -54,22 +54,100 @@
     -->
     <bean id="referenceView" parent="abstractView">
         <property name="viewClass">
-            <value>
-                ch.elca.el4j.apps.refdb.gui.views.ReferenceView
-            </value>
+            <value>ch.elca.el4j.apps.refdb.gui.views.ReferenceView</value>
         </property>
     </bean>
 
     <!-- 
         Keyword view of RefDB-Application.
     -->
-    <bean id="keywordView" parent="abstractView">
+    <bean id="keywordView"
+        class="org.springframework.richclient.application.support.DefaultViewDescriptor">
         <property name="viewClass">
-            <value>
-                ch.elca.el4j.apps.refdb.gui.views.KeywordView
-            </value>
+            <value>ch.elca.el4j.apps.refdb.gui.views.KeywordView</value>
+        </property>
+        <property name="viewProperties">
+            <map>
+                <entry key="referenceService">
+                    <ref bean="referenceService" />
+                </entry>
+                <entry key="beanTableModel">
+                    <ref bean="keywordBeanTableModel" />
+                </entry>
+                <entry key="beanPropertiesExecutor">
+                    <ref bean="keywordPropertiesExecutor"/>
+                </entry>
+            </map>
         </property>
     </bean>
+
+    <!-- 
+        Table model for keyword dtos.
+    -->
+    <bean id="keywordBeanTableModel"
+        class="ch.elca.el4j.services.gui.richclient.models.BeanTableModel">
+        <property name="beanClass">
+            <value>ch.elca.el4j.apps.keyword.dto.KeywordDto</value>
+        </property>
+        <property name="columnPropertyNames">
+            <list>
+                <value>name</value>
+                <value>description</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 
+        Executor to change keyword properties.
+    -->
+    <bean id="keywordPropertiesExecutor"
+        class="ch.elca.el4j.services.gui.richclient.executors.BeanPropertiesExecutor"
+        singleton="false">
+        <property name="propertiesFormBeanNames">
+            <list>
+                <idref bean="keywordPropertiesFormGeneral" />
+            </list>
+        </property>
+        <property name="applicationDialogBeanName">
+            <idref bean="keywordPropertiesApplicationDialog" />
+        </property>
+        <property name="propertiesId">
+            <value>keywordProperties</value>
+        </property>
+    </bean>
+
+    <!-- 
+        Form that describs which keyword properties should be displayed.
+    -->
+    <bean id="keywordPropertiesFormGeneral"
+        class="ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm"
+        singleton="false">
+        <property name="shownBeanProperties">
+            <list>
+                <value>name</value>
+                <value>description</value>
+            </list>
+        </property>
+        <!--property name="readOnlyBeanProperties">
+            <list>
+                <value>name</value>
+                <value>description</value>
+            </list>
+        </property-->
+        <property name="propertiesId">
+            <value>generalProperties</value>
+        </property>
+    </bean>
+
+    <!--
+        Application dialog to change properties of a keyword.
+    -->
+    <bean id="keywordPropertiesApplicationDialog"
+        class="ch.elca.el4j.apps.refdb.gui.dialogs.KeywordPropertiesApplicationDialog"
+        singleton="false" />
+
+
+
 
     <!-- 
         Describes the application.
@@ -179,11 +257,10 @@
         class="org.springframework.richclient.application.config.JGoodiesLooksConfigurer">
         <property name="popupDropShadowEnabled" value="false" />
         <property name="theme">
-            <bean
-                class="com.jgoodies.looks.plastic.theme.ExperienceBlue" />
+            <bean class="com.jgoodies.looks.plastic.theme.ExperienceBlue" />
         </property>
     </bean>
-    
+
     <!-- 
         Intercepts displayed components (i.e. for highlighting a component on a
         validation error).
@@ -192,7 +269,8 @@
         class="org.springframework.richclient.form.builder.support.ChainedInterceptorFactory">
         <property name="interceptorFactories">
             <list>
-                <bean class="org.springframework.richclient.form.builder.support.OverlayValidationInterceptorFactory" />
+                <bean
+                    class="org.springframework.richclient.form.builder.support.OverlayValidationInterceptorFactory" />
                 <bean class="org.springframework.richclient.text.TextComponentPopupInterceptorFactory" />
                 <bean class="org.springframework.richclient.form.builder.support.ColorValidationInterceptorFactory">
                     <property name="errorColor">
@@ -219,7 +297,7 @@
         Validation rules for input data.
     -->
     <bean id="rulesSource"
-        class="ch.elca.el4j.apps.refdb.rules.ValidationRulesSource" />
+        class="ch.elca.el4j.apps.refdb.rules.RefdbValidationRulesSource" />
     
 <!-- 
     <bean id="binderSelectionStrategy"
