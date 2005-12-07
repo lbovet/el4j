@@ -36,7 +36,7 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
  * <code>Application</code> instance.
  * 
  * @author Keith Donald
- * @author Martin Zeltner
+ * @author Martin Zeltner (MZE)
  * @see Application
  */
 public class ApplicationLauncher {
@@ -53,7 +53,7 @@ public class ApplicationLauncher {
     /**
      * Private logger.
      */
-    private static final Log s_logger
+    private static Log s_logger
         = LogFactory.getLog(ApplicationLauncher.class);
 
     /**
