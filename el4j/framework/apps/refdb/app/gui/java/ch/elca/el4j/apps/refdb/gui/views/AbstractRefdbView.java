@@ -17,9 +17,8 @@
 
 package ch.elca.el4j.apps.refdb.gui.views;
 
-import org.springframework.richclient.application.support.AbstractView;
-
 import ch.elca.el4j.apps.refdb.service.ReferenceService;
+import ch.elca.el4j.services.gui.richclient.views.AbstractBeanView;
 
 /**
  * Abstract reference service view class to provide views access to the 
@@ -34,7 +33,7 @@ import ch.elca.el4j.apps.refdb.service.ReferenceService;
  *
  * @author Martin Zeltner (MZE)
  */
-public abstract class AbstractReferenceServiceView extends AbstractView {
+public abstract class AbstractRefdbView extends AbstractBeanView {
     /**
      * Reference service object.
      */

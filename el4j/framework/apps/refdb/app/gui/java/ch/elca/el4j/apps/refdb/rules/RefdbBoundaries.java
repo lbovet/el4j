@@ -17,7 +17,7 @@
 package ch.elca.el4j.apps.refdb.rules;
 
 /**
- * Boundaries for reference database application dtos.
+ * RefdbBoundaries for reference database application dtos.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$Source$",
@@ -28,7 +28,7 @@ package ch.elca.el4j.apps.refdb.rules;
  *
  * @author Martin Zeltner (MZE)
  */
-public final class Boundaries {
+public final class RefdbBoundaries {
     /**
      * Max length boundary.
      */
