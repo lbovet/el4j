@@ -23,7 +23,7 @@
             <!-- 
                 false: 
                     Jdk proxies will be used. 
-                    Only interface methods will be intercepted.¨
+                    Only interface methods will be intercepted.
                     
                 true: 
                     Cglib will be used to intercept methods. 
