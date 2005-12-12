@@ -16,7 +16,8 @@
 #menuItem($navigation "support" "SUPPORT" "support.html" "_top")
 #menuItem($navigation "reports" "REPORTS" "reports.html" "_top")
 #menuItem($navigation "license" "LICENSE" "license.html" "_top")
-#menuItem($navigation "download" "DOWNLOAD" "http://sourceforge.net/projects/el4j/" "_blank")
+#menuItem($navigation "download" "DOWNLOAD" "http://sourceforge.net/project/showfiles.php?group_id=147215" "_top")
+#menuItem($navigation "sfprojectpage" "SF PROJECT PAGE" "http://sourceforge.net/projects/el4j/" "_top")
 
     <a href="http://sourceforge.net" target="_blank">
         <img id="SFLogo"
