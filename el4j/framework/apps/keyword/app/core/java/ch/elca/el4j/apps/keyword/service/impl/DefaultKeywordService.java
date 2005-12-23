@@ -29,6 +29,7 @@ import ch.elca.el4j.apps.keyword.dto.KeywordDto;
 import ch.elca.el4j.apps.keyword.service.KeywordService;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
+import ch.elca.el4j.services.search.QueryObject;
 
 /**
  * This is the default implementation of the keyword service.
@@ -105,9 +106,9 @@ public class DefaultKeywordService implements KeywordService, InitializingBean {
      * 
      * @@attrib.transaction.RequiredReadOnly()
      */
-    public List searchKeywords(String name, String description)
+    public List searchKeywords(QueryObject query)
         throws DataAccessException {
-        return getKeywordDao().searchKeywords(name, description);
+        return getKeywordDao().searchKeywords(query);
     }
 
     /**
@@ -129,5 +130,19 @@ public class DefaultKeywordService implements KeywordService, InitializingBean {
     public void removeKeyword(int key) throws DataAccessException,
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
         getKeywordDao().removeKeyword(key);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @@attrib.transaction.RequiredRuleBased()
+     */
+    public void removeKeywords(int[] keys) throws DataAccessException, 
+        JdbcUpdateAffectedIncorrectNumberOfRowsException {
+        if (keys != null) {
+            for (int i = 0; i < keys.length; i++) {
+                getKeywordDao().removeKeyword(keys[i]);
+            }
+        }
     }
 }

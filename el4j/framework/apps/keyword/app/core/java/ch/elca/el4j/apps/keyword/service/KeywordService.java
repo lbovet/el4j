@@ -25,6 +25,7 @@ import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException
 
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
 import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
+import ch.elca.el4j.services.search.QueryObject;
 
 /**
  * This interface provides all available business methods, which can be used in
@@ -78,18 +79,15 @@ public interface KeywordService {
     public List getAllKeywords() throws DataAccessException;
 
     /**
-     * Search keywords whose name and description contains given substrings.
-     * This search is case-insensitive.
+     * Search keywords.
      * 
-     * @param name
-     *            Is the name to search for.
-     * @param description
-     *            Is the description to search for.
+     * @param query
+     *            Is the search query object.
      * @return Returns a list with keywords. Returns never <code>null</code>.
      * @throws DataAccessException
      *             If general data access problem occurred.
      */
-    public List searchKeywords(String name, String description)
+    public List searchKeywords(QueryObject query)
         throws DataAccessException;
 
     /**
@@ -118,7 +116,7 @@ public interface KeywordService {
      * Remove keyword. Primary key will be used.
      * 
      * @param key
-     *            Is the primary key of the keyword, which should be deleted.
+     *            Is the primary key of the keyword that should be deleted.
      * @throws DataAccessException
      *             If general data access problem occurred.
      * @throws JdbcUpdateAffectedIncorrectNumberOfRowsException
@@ -129,5 +127,22 @@ public interface KeywordService {
      * @@attrib.transaction.RollbackRuleOnError()
      */
     public void removeKeyword(int key) throws DataAccessException,
+        JdbcUpdateAffectedIncorrectNumberOfRowsException;
+    
+    /**
+     * Remove keywords. Primary key of each keyword will be used.
+     * 
+     * @param keys
+     *            Are the primary keys of the keywords that should be deleted.
+     * @throws DataAccessException
+     *             If general data access problem occurred.
+     * @throws JdbcUpdateAffectedIncorrectNumberOfRowsException
+     *             If a keyword could not be deleted.
+     * 
+     * @@attrib.transaction.RollbackRule(DataAccessException.class)
+     * @@attrib.transaction.RollbackRuleOnRuntimeException()
+     * @@attrib.transaction.RollbackRuleOnError()
+     */
+    public void removeKeywords(int[] keys) throws DataAccessException,
         JdbcUpdateAffectedIncorrectNumberOfRowsException;
 }

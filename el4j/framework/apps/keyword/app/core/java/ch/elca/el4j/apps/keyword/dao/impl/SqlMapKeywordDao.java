@@ -28,8 +28,8 @@ import ch.elca.el4j.apps.keyword.dao.KeywordDao;
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
 import ch.elca.el4j.services.persistence.generic.dao.ConvenienceSqlMapClientDaoSupport;
 import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
+import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.CollectionUtils;
-import ch.elca.el4j.util.codingsupport.ObjectUtils;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
@@ -79,16 +79,10 @@ public class SqlMapKeywordDao extends ConvenienceSqlMapClientDaoSupport
     /**
      * {@inheritDoc}
      */
-    public List searchKeywords(String name, String description) 
+    public List searchKeywords(QueryObject query) 
         throws DataAccessException {
-        String searchName = ObjectUtils.asString(name).toLowerCase();
-        String searchDescription 
-            = ObjectUtils.asString(description).toLowerCase();
-        KeywordDto keyword = new KeywordDto();
-        keyword.setName(searchName);
-        keyword.setDescription(searchDescription);
         List result = getConvenienceSqlMapClientTemplate().queryForList(
-            "searchKeywords", keyword);
+            "searchKeywords", query.getCriteriaList());
         return CollectionUtils.asList(result);
     }
 

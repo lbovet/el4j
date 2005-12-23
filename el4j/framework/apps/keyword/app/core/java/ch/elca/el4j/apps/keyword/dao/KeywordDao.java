@@ -25,6 +25,7 @@ import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException
 
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
 import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
+import ch.elca.el4j.services.search.QueryObject;
 
 /**
  * This class is the keyword dao, which is responsible for accessing and storing
@@ -78,18 +79,15 @@ public interface KeywordDao {
     public List getAllKeywords() throws DataAccessException;
 
     /**
-     * Search keywords whose name and description contains given substrings.
-     * This search is case-insensitive.
+     * Search keywords.
      * 
-     * @param name
-     *            Is the name to search for.
-     * @param description
-     *            Is the description to search for.
+     * @param query
+     *            Is the search query object.
      * @return Returns a list with keywords. Returns never <code>null</code>.
      * @throws DataAccessException
      *             If general data access problem occurred.
      */
-    public List searchKeywords(String name, String description)
+    public List searchKeywords(QueryObject query)
         throws DataAccessException;
 
     /**
