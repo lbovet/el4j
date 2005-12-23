@@ -46,7 +46,7 @@ public final class MainStandalone {
      * MainStandalone application context files. 
      */
     public static final String[] ROOT_CONTEXT_PATH = {
-        "classpath:optional/interception/methodTracing.xml",
+//        "classpath:optional/interception/methodTracing.xml",
         "classpath*:mandatory/*.xml",
         "classpath:scenarios/db/rawDatabase.xml",
         "classpath:scenarios/dataaccess/ibatisSqlMaps.xml",

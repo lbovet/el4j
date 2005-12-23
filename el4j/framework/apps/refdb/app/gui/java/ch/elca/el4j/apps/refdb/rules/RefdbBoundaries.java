@@ -17,7 +17,7 @@
 package ch.elca.el4j.apps.refdb.rules;
 
 /**
- * RefdbBoundaries for reference database application dtos.
+ * Boundaries for reference database application dtos.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$Source$",

@@ -12,7 +12,7 @@
 		class="org.springframework.richclient.application.SplashScreen" 
 		singleton="false">
 		<property name="imageResourcePath">
-			<value>/images/refdb-splash-screen.gif</value>
+			<value>/images/refdb/refdb-splash-screen.gif</value>
 		</property>
 	</bean>
 </beans>
