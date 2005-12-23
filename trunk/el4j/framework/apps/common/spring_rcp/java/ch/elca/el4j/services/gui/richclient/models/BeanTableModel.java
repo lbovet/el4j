@@ -252,9 +252,9 @@ public class BeanTableModel extends BaseTableModel
      */
     public void afterPropertiesSet() throws Exception {
         CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-            m_beanClass, "beanClass", this);
+            getBeanClass(), "beanClass", this);
         CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-            m_columnPropertyNames, "columnPropertyNames", this);
+            getColumnPropertyNames(), "columnPropertyNames", this);
         
         if (m_messageSourceAccessor == null) {
             MessageSource messageSource 

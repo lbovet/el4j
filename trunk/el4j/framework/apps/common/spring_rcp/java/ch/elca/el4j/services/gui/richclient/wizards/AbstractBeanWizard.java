@@ -14,20 +14,25 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.services.gui.richclient.dialogs;
+package ch.elca.el4j.services.gui.richclient.wizards;
 
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.binding.form.FormModel;
-import org.springframework.richclient.dialog.DialogPage;
-import org.springframework.richclient.dialog.TitledPageApplicationDialog;
+import org.springframework.binding.form.HierarchicalFormModel;
+import org.springframework.binding.form.ValidatingFormModel;
+import org.springframework.richclient.form.FormModelHelper;
+import org.springframework.richclient.wizard.AbstractWizard;
+import org.springframework.richclient.wizard.FormBackedWizardPage;
+import org.springframework.richclient.wizard.WizardDialog;
+import org.springframework.util.StringUtils;
 
 import ch.elca.el4j.services.gui.richclient.Constants;
 import ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm;
+import ch.elca.el4j.services.gui.richclient.utils.MessageUtils;
 import ch.elca.el4j.services.gui.richclient.views.AbstractBeanView;
 
 /**
- * Abstract application dialog with title used for beans.
+ * Abstract wizard for beans.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$Source$",
@@ -38,14 +43,18 @@ import ch.elca.el4j.services.gui.richclient.views.AbstractBeanView;
  *
  * @author Martin Zeltner (MZE)
  */
-public abstract class AbstractBeanTitledPageApplicationDialog
-    extends TitledPageApplicationDialog 
+public abstract class AbstractBeanWizard extends AbstractWizard
     implements InitializingBean, BeanNameAware {
+
+    /**
+     * Is the dialog for this wizard.
+     */
+    private WizardDialog m_wizardDialog;
     
     /**
      * Is the root form model for this dialog.
      */
-    private FormModel m_rootFormModel;
+    private HierarchicalFormModel m_rootFormModel;
 
     /**
      * Are the bean properties forms.
@@ -66,17 +75,6 @@ public abstract class AbstractBeanTitledPageApplicationDialog
      * Is the name of this bean.
      */
     private String m_beanName;
-    
-    
-
-    
-    /**
-     * {@inheritDoc}
-     */
-    protected void onAboutToShow() {
-        m_propertiesForms[0].focusFirstComponent();
-        setEnabled(getDialogPage().isPageComplete());
-    }
 
     /**
      * @return Returns current bean. This is the bean the dialog is made for.
@@ -85,16 +83,39 @@ public abstract class AbstractBeanTitledPageApplicationDialog
         return m_rootFormModel != null ? m_rootFormModel.getFormObject() : null;
     }
     
+    
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void addPages() {
+        for (int i = 0; i < m_propertiesForms.length; i++) {
+            BeanPropertiesForm pf = m_propertiesForms[i];
+            
+            ValidatingFormModel childFormModel 
+                = FormModelHelper.createChildPageFormModel(
+                    getRootFormModel(), null);
+            pf.setValidatingFormModel(childFormModel);
+            
+            FormBackedWizardPage wizardPage = new FormBackedWizardPage(pf);
+            addPage(wizardPage);
+        }
+    }
+    
     /**
      * {@inheritDoc}
      */
     protected boolean onFinish() {
+        boolean success = true;
         if (m_rootFormModel.isDirty()) {
             m_rootFormModel.commit();
-            return onFinishAfterCommit(getCurrentBean());
-        } else {
-            return true;
+            try {
+                success = onFinishAfterCommit(getCurrentBean());
+            } catch (RuntimeException re) {
+                success = onFinishException(re);
+            }
         }
+        return success;
     }
     
     /**
@@ -102,22 +123,40 @@ public abstract class AbstractBeanTitledPageApplicationDialog
      * bean.
      * 
      * @param currentBean Is the bean this dialog is made for.
-     * @return Returns <code>true</code> if action completed successfully.
+     * @return Returns <code>true</code> if action completed successfully and
+     *         the dialog should be closed.
      */
     protected abstract boolean onFinishAfterCommit(Object currentBean);
 
     /**
-     * @return Returns the beanView.
+     * Will be invoked if a runtime exception occurred while finishing wizard.
+     * 
+     * @param re Is the thrown runtime exception.
+     * @return Returns <code>false</code> if the wizard should not close the 
+     *         dialog.
      */
-    public final AbstractBeanView getBeanView() {
-        return m_beanView;
+    protected abstract boolean onFinishException(RuntimeException re);
+    
+    /**
+     * @return Returns the wizardDialog.
+     */
+    public final WizardDialog getWizardDialog() {
+        if (m_wizardDialog == null) {
+            m_wizardDialog = new WizardDialog(this) {
+                protected void onAboutToShow() {
+                    super.onAboutToShow();
+                    m_propertiesForms[0].focusFirstComponent();
+                }
+            };
+        }
+        return m_wizardDialog;
     }
 
     /**
-     * @param beanView The beanView to set.
+     * @param wizardDialog The wizardDialog to set.
      */
-    public final void setBeanView(AbstractBeanView beanView) {
-        m_beanView = beanView;
+    public final void setWizardDialog(WizardDialog wizardDialog) {
+        m_wizardDialog = wizardDialog;
     }
 
     /**
@@ -137,17 +176,40 @@ public abstract class AbstractBeanTitledPageApplicationDialog
     /**
      * @return Returns the rootFormModel.
      */
-    public final FormModel getRootFormModel() {
+    public final HierarchicalFormModel getRootFormModel() {
         return m_rootFormModel;
     }
 
     /**
      * @param rootFormModel The rootFormModel to set.
      */
-    public final void setRootFormModel(FormModel rootFormModel) {
+    public final void setRootFormModel(HierarchicalFormModel rootFormModel) {
         m_rootFormModel = rootFormModel;
     }
+
+    /**
+     * @return Returns the beanView.
+     */
+    public final AbstractBeanView getBeanView() {
+        return m_beanView;
+    }
+
+    /**
+     * @param beanView The beanView to set.
+     */
+    public final void setBeanView(AbstractBeanView beanView) {
+        m_beanView = beanView;
+    }
     
+    /**
+     * {@inheritDoc}
+     * 
+     * Method overridden to tell wizard the correct id for fetching messages.
+     */
+    public String getId() {
+        return m_propertiesId;
+    }
+
     /**
      * @return Returns the propertiesId.
      */
@@ -163,13 +225,6 @@ public abstract class AbstractBeanTitledPageApplicationDialog
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public void setDialogPage(DialogPage dialogPage) {
-        super.setDialogPage(dialogPage);
-    }
-
-    /**
      * @return Returns the name of this bean.
      */
     public final String getBeanName() {
@@ -182,9 +237,15 @@ public abstract class AbstractBeanTitledPageApplicationDialog
     public final void setBeanName(String beanName) {
         m_beanName = beanName;
     }
-    
+
     /**
      * {@inheritDoc}
      */
-    public void afterPropertiesSet() throws Exception { }
+    public void afterPropertiesSet() throws Exception {
+        // Set wizard dialog title.
+        String title = MessageUtils.getMessage(getPropertiesId(), "title");
+        if (StringUtils.hasText(title)) {
+            setTitle(title);
+        }
+    }
 }

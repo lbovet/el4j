@@ -16,15 +16,10 @@
  */
 package ch.elca.el4j.services.gui.richclient.executors;
 
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanNameAware;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.binding.form.FormModel;
 import org.springframework.binding.form.HierarchicalFormModel;
 import org.springframework.binding.form.ValidatingFormModel;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.richclient.command.support.AbstractActionCommandExecutor;
+import org.springframework.richclient.command.support.GlobalCommandIds;
 import org.springframework.richclient.dialog.AbstractDialogPage;
 import org.springframework.richclient.dialog.FormBackedDialogPage;
 import org.springframework.richclient.dialog.TabbedDialogPage;
@@ -33,8 +28,7 @@ import org.springframework.util.StringUtils;
 
 import ch.elca.el4j.services.gui.richclient.dialogs.AbstractBeanTitledPageApplicationDialog;
 import ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm;
-import ch.elca.el4j.services.gui.richclient.views.AbstractBeanView;
-import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
+import ch.elca.el4j.services.gui.richclient.utils.MessageUtils;
 
 /**
  * Executor for bean properties.
@@ -48,50 +42,24 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  *
  * @author Martin Zeltner (MZE)
  */
-public class BeanPropertiesExecutor extends AbstractActionCommandExecutor
-    implements InitializingBean, BeanNameAware, ApplicationContextAware {
-    /**
-     * Is the view where this executor is used.
-     */
-    private AbstractBeanView m_beanView;
-    
-    /**
-     * Are the property forms bean names for this executor.
-     */
-    private String[] m_propertiesFormBeanNames;
-
-    /**
-     * Is the bean name of the application dialog.
-     */
-    private String m_applicationDialogBeanName;
-
-    /**
-     * Is the id used to get properties like labels for the created form.
-     */
-    private String m_propertiesId;
-    
-    
-    /**
-     * Name of this bean.
-     */
-    private String m_beanName;
-
-    /**
-     * Is the application context this bean was created with.
-     */
-    private ApplicationContext m_applicationContext;
-    
+public class BeanPropertiesExecutor extends AbstractBeanDialogFormExecutor {
     /**
      * {@inheritDoc}
      */
     public void execute() {
         // Get bean to edit.
-        Object bean = m_beanView.getSelectedBean();
+        Object bean = getBeanView().getSelectedBean();
         
         // Do nothing if no bean is selected.
         if (bean == null) {
             return;
         }
+        
+        // Create an application dialog.
+        AbstractBeanTitledPageApplicationDialog appDialog 
+            = (AbstractBeanTitledPageApplicationDialog)
+              createDialog();
+        String parentId = appDialog.getPropertiesId();
         
         // Create properties forms by application context. 
         BeanPropertiesForm[] propertiesForms = createPropertiesForms();
@@ -114,7 +82,7 @@ public class BeanPropertiesExecutor extends AbstractActionCommandExecutor
             pf.setValidatingFormModel(validatingFormModel);
             
             // Create a dialog page out of the properties form.
-            rootDialogPage = new FormBackedDialogPage(m_propertiesId , pf);
+            rootDialogPage = new FormBackedDialogPage(parentId, pf);
         } else {
             // Create a root form model for multiple properties forms.
             HierarchicalFormModel hierarchicalFormModel 
@@ -123,7 +91,7 @@ public class BeanPropertiesExecutor extends AbstractActionCommandExecutor
             
             // Create dialog page for multiple properties forms.
             TabbedDialogPage tabbedDialogPage 
-                = new TabbedDialogPage(m_propertiesId);
+                = new TabbedDialogPage(parentId);
             rootDialogPage = tabbedDialogPage;
             
             // Go through all properties forms.
@@ -143,153 +111,63 @@ public class BeanPropertiesExecutor extends AbstractActionCommandExecutor
             }
         }
         
-        // Get an instance of the application dialog.
-        AbstractBeanTitledPageApplicationDialog appDialog 
-            = createApplicationDialog(propertiesForms, rootFormModel, 
-                rootDialogPage);
+        // Initializes the application dialog.
+        initializeBeanTitledPageApplicationDialog(appDialog, propertiesForms, 
+                rootFormModel, rootDialogPage);
 
         // Show the dialog.
         appDialog.showDialog();
     }
 
     /**
-     * Create properties forms.
+     * Initializes the given bean titled page application dialog.
      * 
-     * @return Created properties forms.
-     */
-    protected BeanPropertiesForm[] createPropertiesForms() {
-        BeanPropertiesForm[] propertiesForms 
-            = new BeanPropertiesForm[m_propertiesFormBeanNames.length];
-        for (int i = 0; i < propertiesForms.length; i++) {
-            String beanName = m_propertiesFormBeanNames[i];
-            propertiesForms[i] 
-                = (BeanPropertiesForm) m_applicationContext.getBean(beanName);
-        }
-        return propertiesForms;
-    }
-
-    /**
-     * Creates an application dialog.
-     * 
+     * @param appDialog
+     *            Is the application dialog to initialize.
      * @param propertiesForms
      *            Are the properties forms.
      * @param rootFormModel
      *            Is the root form model for this dialog.
      * @param rootDialogPage
      *            Is the root dialog page for this dialog.
-     * @return Returns the created application dialog.
      */
-    protected AbstractBeanTitledPageApplicationDialog createApplicationDialog(
+    protected void initializeBeanTitledPageApplicationDialog(
+        AbstractBeanTitledPageApplicationDialog appDialog,
         BeanPropertiesForm[] propertiesForms, FormModel rootFormModel, 
         AbstractDialogPage rootDialogPage) {
         
-        AbstractBeanTitledPageApplicationDialog appDialog 
-            = (AbstractBeanTitledPageApplicationDialog) 
-                m_applicationContext.getBean(m_applicationDialogBeanName);
         appDialog.setDialogPage(rootDialogPage);
-        appDialog.setTitle(rootDialogPage.getTitle());
-        appDialog.setParent(m_beanView.getContext().getWindow().getControl());
-        appDialog.setBeanView(m_beanView);
+        appDialog.setParent(
+            getBeanView().getContext().getWindow().getControl());
+        appDialog.setBeanView(getBeanView());
         appDialog.setRootFormModel(rootFormModel);
         appDialog.setPropertiesForms(propertiesForms);
-        return appDialog;
-    }
 
-    /**
-     * @return Returns the applicationDialogBeanName.
-     */
-    public final String getApplicationDialogBeanName() {
-        return m_applicationDialogBeanName;
-    }
-
-    /**
-     * @param applicationDialogBeanName The applicationDialogBeanName to set.
-     */
-    public final void setApplicationDialogBeanName(
-        String applicationDialogBeanName) {
-        m_applicationDialogBeanName = applicationDialogBeanName;
-    }
-
-    /**
-     * @return Returns the beanView.
-     */
-    public final AbstractBeanView getBeanView() {
-        return m_beanView;
-    }
-
-    /**
-     * @param beanView The beanView to set.
-     */
-    public final void setBeanView(AbstractBeanView beanView) {
-        m_beanView = beanView;
-    }
-
-    /**
-     * @return Returns the propertiesFormBeanNames.
-     */
-    public final String[] getPropertiesFormBeanNames() {
-        return m_propertiesFormBeanNames;
-    }
-
-    /**
-     * @param propertiesFormBeanNames The propertiesFormBeanNames to set.
-     */
-    public final void setPropertiesFormBeanNames(
-        String[] propertiesFormBeanNames) {
-        m_propertiesFormBeanNames = propertiesFormBeanNames;
-    }
-    
-    /**
-     * @return Returns the propertiesId.
-     */
-    public final String getPropertiesId() {
-        return m_propertiesId;
-    }
-
-    /**
-     * @param propertiesId The propertiesId to set.
-     */
-    public final void setPropertiesId(String propertiesId) {
-        m_propertiesId = propertiesId;
-    }
-
-    
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void afterPropertiesSet() throws Exception {
-        CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-            m_propertiesFormBeanNames, "propertiesFormBeanNames", this);
-        CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-            m_applicationDialogBeanName, "applicationDialogBeanName", this);
-        
-        if (!StringUtils.hasText(m_propertiesId)) {
-            m_propertiesId = m_beanName;
+        // Set the dialog title.
+        String parentId = appDialog.getPropertiesId();
+        String title = MessageUtils.getMessage(parentId, "title");
+        if (!StringUtils.hasText(title)) {
+            title = rootDialogPage.getTitle();
         }
-        CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-            m_propertiesId, "propertiesId", this);
-    }
-    
-    /**
-     * @return Returns the name of this bean.
-     */
-    public String getBeanName() {
-        return m_beanName;
+        appDialog.setTitle(title);
     }
     
     /**
      * {@inheritDoc}
      */
-    public void setBeanName(String beanName) {
-        m_beanName = beanName;
+    public String getCommandId() {
+        String commandId = super.getCommandId();
+        if (!StringUtils.hasText(commandId)) {
+            commandId = GlobalCommandIds.PROPERTIES;
+            setCommandId(commandId);
+        }
+        return commandId;
     }
 
     /**
      * {@inheritDoc}
      */
-    public void setApplicationContext(ApplicationContext applicationContext) 
-        throws BeansException {
-        m_applicationContext = applicationContext;
+    public void updateState() {
+        setEnabled(getBeanView().getSelectedBean() != null);
     }
 }

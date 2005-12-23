@@ -98,7 +98,7 @@ public class BeanPropertiesForm extends AbstractForm
      * shown properties array.
      */
     protected void setReadOnlyProperties() {
-        ValidatingFormModel validatingFormModel = getFormModel();
+        ValidatingFormModel validatingFormModel = getValidatingFormModel();
         for (int i = 0; i < m_shownBeanProperties.length; i++) {
             String propertyName = m_shownBeanProperties[i];
             boolean readOnly = m_readOnlyBeanProperties.contains(propertyName);
@@ -185,11 +185,11 @@ public class BeanPropertiesForm extends AbstractForm
         CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
             m_shownBeanProperties, "shownBeanProperties", this);
         
-        if (m_readOnlyBeanProperties == null) {
-            m_readOnlyBeanProperties = new ArrayList();
+        if (getReadOnlyBeanProperties() == null) {
+            setReadOnlyBeanProperties(new ArrayList());
         }
         if (!StringUtils.hasText(getPropertiesId())) {
-            setPropertiesId(m_beanName);
+            setPropertiesId(getBeanName());
         }
         CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
             getPropertiesId(), "propertiesId", this);
