@@ -17,12 +17,10 @@
 
 package ch.elca.el4j.apps.refdb.gui.views;
 
-import java.awt.BorderLayout;
+import java.util.List;
 
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
+import ch.elca.el4j.services.search.QueryObject;
+import ch.elca.el4j.services.search.events.QueryObjectEvent;
 
 /**
  * Keyword view.
@@ -37,34 +35,16 @@ import javax.swing.JScrollPane;
  * @author Martin Zeltner (MZE)
  */
 public class KeywordView extends AbstractRefdbView {
-    /**    
-     * Fills list with data.
-     */
-    protected void fillDataList() {
-        getDataList().addAll(getReferenceService().getAllKeywords());
-    }
-    
     /**
      * {@inheritDoc}
-     * 
-     * Returns the root component for this view.
      */
-    protected JComponent createControl() {
-        fillDataList();
-        
-        JPanel p = new JPanel(new BorderLayout());
-        
-        // Model for the table.
-        initializeSortedBeanTable();
-
-        p.add(new JScrollPane(getBeanTable()), BorderLayout.CENTER);
-        
-        JPanel keywordSearch = new JPanel();
-        keywordSearch.add(new JRadioButton("All keywords."));
-        p.add(keywordSearch, BorderLayout.WEST);
-        keywordSearch.setVisible(false);
-        
-        
-        return p;
+    protected void onQueryObjectEvent(QueryObjectEvent event) {
+        if (isControlCreated()) {
+            QueryObject queryObject = event.getQueryObject();
+            List list = getReferenceService().searchKeywords(queryObject);
+            getDataList().clear();
+            getDataList().addAll(list);
+            getBeanTableModel().fireTableDataChanged();
+        }
     }
 }

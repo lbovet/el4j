@@ -19,6 +19,7 @@ package ch.elca.el4j.apps.refdb.gui.views;
 
 import ch.elca.el4j.apps.refdb.service.ReferenceService;
 import ch.elca.el4j.services.gui.richclient.views.AbstractBeanView;
+import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 
 /**
  * Abstract reference service view class to provide views access to the 
@@ -51,5 +52,13 @@ public abstract class AbstractRefdbView extends AbstractBeanView {
      */
     public void setReferenceService(ReferenceService referenceService) {
         m_referenceService = referenceService;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void afterPropertiesSet() throws Exception {
+        CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+            getReferenceService(), "referenceService", this);
     }
 }

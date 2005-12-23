@@ -42,7 +42,7 @@ public class ReferenceView extends AbstractRefdbView {
      * 
      * Returns the root component for this view.
      */
-    protected JComponent createControl() {
+    protected JComponent createControlOnce() {
         JPanel p = new JPanel(new BorderLayout());
         p.setBackground(Color.RED);
         return p;

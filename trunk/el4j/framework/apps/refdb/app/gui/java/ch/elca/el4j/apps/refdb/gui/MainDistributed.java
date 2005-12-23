@@ -17,8 +17,12 @@
 
 package ch.elca.el4j.apps.refdb.gui;
 
+import javax.swing.JOptionPane;
+
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.util.StringUtils;
 
 import ch.elca.el4j.services.gui.richclient.ApplicationLauncher;
 
@@ -71,8 +75,16 @@ public final class MainDistributed {
         try {
             new ApplicationLauncher(STARTUP_CONTEXT_PATH, ROOT_CONTEXT_PATH);
         } catch (Exception e) {
-            s_logger.fatal("Reference-Database-Application exited "
-                + "exceptionally! See stack trace for details.", e);
+            String message = "Reference-Database-Application exited "
+                + "exceptionally for an unknown reason! See stack trace for "
+                + "details.";
+            s_logger.fatal(message, e);
+            
+            String stackTrace = ExceptionUtils.getStackTrace(e);
+            String dialogTitle = "Unknown exception occured";
+            String dialogMessage = message + "\n\n" + stackTrace;
+            JOptionPane.showMessageDialog(null, dialogMessage, 
+                dialogTitle, JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
     }

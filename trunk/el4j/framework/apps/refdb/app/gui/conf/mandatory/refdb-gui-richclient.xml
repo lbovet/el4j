@@ -30,65 +30,135 @@
             <value>classpath:refdb/commands.xml</value>
         </property>
         <property name="startingPageId">
-            <value>keywordView</value>
+            <value>keywordPage</value>
         </property>
     </bean>
 
     <!-- 
-        Abstract view for RefDB-Application.
+        Describes the application.
     -->
-    <bean id="abstractView"
-        class="org.springframework.richclient.application.support.DefaultViewDescriptor"
-        abstract="true">
-        <property name="viewProperties">
-            <map>
-                <entry key="referenceService">
-                    <ref bean="referenceService" />
-                </entry>
-            </map>
+    <bean id="applicationDescriptor"
+        class="org.springframework.richclient.application.support.DefaultApplicationDescriptor">
+        <property name="version">
+            <value>1.0</value>
+        </property>
+        <property name="buildId">
+            <value>20051128</value>
         </property>
     </bean>
 
-    <!-- 
-        Reference view of RefDB-Application.
+    <!--
+        Application window prototype. Implementation for multiple views per page
+        is taken.
     -->
-    <bean id="referenceView" parent="abstractView">
-        <property name="viewClass">
-            <value>ch.elca.el4j.apps.refdb.gui.views.ReferenceView</value>
+    <bean id="applicationWindowPrototype"
+        class="ch.elca.el4j.services.gui.richclient.windows.MultipleViewsApplicationWindow"
+        singleton="false">
+    </bean>
+    
+    <!--
+        Application page prototype. Implementation for multiple views per page
+        is taken.
+    -->
+    <bean id="applicationPagePrototype"
+        class="ch.elca.el4j.services.gui.richclient.pages.MultipleViewsApplicationPage"
+        singleton="false">
+    </bean>
+    
+    <!--
+        Keyword page.
+    -->
+    <bean id="keywordPage"
+        class="ch.elca.el4j.services.gui.richclient.pages.descriptors.MultipleViewsPageDescriptor">
+        <property name="viewDescriptorsCenter">
+            <ref bean="keywordView"/>
+        </property>
+        <property name="viewDescriptorsLeft">
+            <ref bean="keywordSearchView"/>
         </property>
     </bean>
 
-    <!-- 
-        Keyword view of RefDB-Application.
+    <!--
+        Keyword view descriptor.
     -->
     <bean id="keywordView"
-        class="org.springframework.richclient.application.support.DefaultViewDescriptor">
-        <property name="viewClass">
-            <value>ch.elca.el4j.apps.refdb.gui.views.KeywordView</value>
+        class="ch.elca.el4j.services.gui.richclient.support.LookupViewDescriptor">
+        <property name="viewPrototypeBeanName">
+            <idref bean="keywordViewTarget" />
+        </property>    
+    </bean>
+
+    <!-- 
+        Keyword view target. Must be prototype!
+    -->
+    <bean id="keywordViewTarget"
+        class="ch.elca.el4j.apps.refdb.gui.views.KeywordView"
+        singleton="false">
+        <property name="referenceService">
+            <ref bean="referenceService" />
         </property>
-        <property name="viewProperties">
-            <map>
-                <entry key="referenceService">
-                    <ref bean="referenceService" />
-                </entry>
-                <entry key="beanTableModel">
-                    <ref bean="keywordBeanTableModel" />
-                </entry>
-                <entry key="beanPropertiesExecutor">
-                    <ref bean="keywordPropertiesExecutor"/>
-                </entry>
-            </map>
+        <property name="beanTableModel">
+            <ref bean="keywordBeanTableModel" />
+        </property>
+        <property name="beanExecutors">
+            <list>
+                <ref bean="keywordPropertiesExecutor"/>
+                <ref bean="keywordDeleteExecutor"/>
+                <ref bean="keywordSelectAllExecutor"/>
+                <ref bean="keywordCreateNewExecutor"/>
+            </list>
         </property>
     </bean>
+
+    <!--
+        Keyword search view descriptor.
+    -->
+    <bean id="keywordSearchView"
+        class="ch.elca.el4j.services.gui.richclient.support.LookupViewDescriptor">
+        <property name="viewPrototypeBeanName">
+            <idref bean="keywordSearchViewTarget" />
+        </property>    
+    </bean>
+    
+    <!--
+        Keyword search view target. Must be prototype!
+    -->
+    <bean id="keywordSearchViewTarget"
+        class="ch.elca.el4j.services.gui.richclient.views.SearchView"
+        singleton="false">
+        <property name="searchItems">
+            <list>
+                <bean class="ch.elca.el4j.services.gui.search.LikeSearchItem">
+                    <property name="targetProperty">
+                        <value>name</value>
+                    </property>
+                </bean>
+                <bean class="ch.elca.el4j.services.gui.search.LikeSearchItem">
+                    <property name="targetProperty">
+                        <value>description</value>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    
+    
+    <!-- 
+        General keyword bean properties.
+    -->
+    <bean id="generalKeywordProperties" abstract="true">
+        <property name="beanClass">
+            <value>ch.elca.el4j.apps.keyword.dto.KeywordDto</value>
+        </property>
+    </bean>    
 
     <!-- 
         Table model for keyword dtos.
     -->
     <bean id="keywordBeanTableModel"
-        class="ch.elca.el4j.services.gui.richclient.models.BeanTableModel">
-        <property name="beanClass">
-            <value>ch.elca.el4j.apps.keyword.dto.KeywordDto</value>
-        </property>
+        class="ch.elca.el4j.services.gui.richclient.models.BeanTableModel"
+        parent="generalKeywordProperties"
+        singleton="false">
         <property name="columnPropertyNames">
             <list>
                 <value>name</value>
@@ -104,63 +174,111 @@
         class="ch.elca.el4j.services.gui.richclient.executors.BeanPropertiesExecutor"
         singleton="false">
         <property name="propertiesFormBeanNames">
-            <list>
-                <idref bean="keywordPropertiesFormGeneral" />
-            </list>
+            <idref bean="keywordPropertiesFormGeneral" />
         </property>
-        <property name="applicationDialogBeanName">
+        <property name="dialogBeanName">
             <idref bean="keywordPropertiesApplicationDialog" />
         </property>
-        <property name="propertiesId">
-            <value>keywordProperties</value>
+    </bean>
+    
+        <!-- 
+            Form that describs which keyword properties should be displayed.
+        -->
+        <bean id="keywordPropertiesFormGeneral"
+            class="ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm"
+            singleton="false">
+            <property name="shownBeanProperties">
+                <list>
+                    <value>key</value>
+                    <value>name</value>
+                    <value>description</value>
+                </list>
+            </property>
+            <property name="readOnlyBeanProperties">
+                <list>
+                    <value>key</value>
+                </list>
+            </property>
+            <property name="propertiesId">
+                <value>keywordFormGeneral</value>
+            </property>
+        </bean>
+    
+        <!--
+            Application dialog to change properties of a keyword.
+        -->
+        <bean id="keywordPropertiesApplicationDialog"
+            class="ch.elca.el4j.apps.refdb.gui.dialogs.KeywordPropertiesApplicationDialog"
+            singleton="false">
+            <property name="propertiesId">
+                <value>keywordProperties</value>
+            </property>            
+        </bean>
+
+    <!-- 
+        Executor to delete keywords.
+    -->
+    <bean id="keywordDeleteExecutor"
+        class="ch.elca.el4j.services.gui.richclient.executors.BeanConfirmationExecutor"
+        singleton="false">
+        <property name="dialogBeanName">
+            <idref bean="keywordDeleteApplicationDialog" />
+        </property>
+        <property name="commandId">
+            <value>deleteCommand</value>
         </property>
     </bean>
 
+        <!--
+            Application dialog to change properties of a keyword.
+        -->
+        <bean id="keywordDeleteApplicationDialog"
+            class="ch.elca.el4j.apps.refdb.gui.dialogs.DeleteKeywordsConfirmationDialog"
+            singleton="false">
+            <property name="propertiesId">
+                <value>keywordDelete</value>
+            </property>
+        </bean>
+
     <!-- 
-        Form that describs which keyword properties should be displayed.
+        Executor to select all keywords.
     -->
-    <bean id="keywordPropertiesFormGeneral"
-        class="ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm"
-        singleton="false">
-        <property name="shownBeanProperties">
-            <list>
-                <value>name</value>
-                <value>description</value>
-            </list>
-        </property>
-        <!--property name="readOnlyBeanProperties">
-            <list>
-                <value>name</value>
-                <value>description</value>
-            </list>
-        </property-->
-        <property name="propertiesId">
-            <value>generalProperties</value>
-        </property>
-    </bean>
+    <bean id="keywordSelectAllExecutor"
+        class="ch.elca.el4j.services.gui.richclient.executors.BeanSelectAllExecutor"
+        singleton="false"/>
 
     <!--
-        Application dialog to change properties of a keyword.
+        Executor to create new keywords.
     -->
-    <bean id="keywordPropertiesApplicationDialog"
-        class="ch.elca.el4j.apps.refdb.gui.dialogs.KeywordPropertiesApplicationDialog"
-        singleton="false" />
-
-
-
-
-    <!-- 
-        Describes the application.
-    -->
-    <bean id="applicationDescriptor"
-        class="org.springframework.richclient.application.support.DefaultApplicationDescriptor">
-        <property name="version">
-            <value>1.0</value>
+    <bean id="keywordCreateNewExecutor"
+        class="ch.elca.el4j.services.gui.richclient.executors.BeanWizardExecutor"
+        singleton="false"
+        parent="generalKeywordProperties">
+        <property name="propertiesFormBeanNames">
+            <idref bean="keywordPropertiesFormGeneral" />
         </property>
-        <property name="buildId">
-            <value>20051128</value>
+        <property name="dialogBeanName">
+            <idref bean="keywordCreateNewWizard" />
+        </property>
+        <property name="commandId">
+            <value>newKeywordCommand</value>
         </property>
     </bean>
+    
+        <!--
+            Wizard to create a new keyword.
+        -->
+        <bean id="keywordCreateNewWizard"
+            class="ch.elca.el4j.apps.refdb.gui.wizards.CreateNewKeywordWizard"
+            singleton="false">
+            <property name="propertiesId">
+                <value>keywordCreateNew</value>
+            </property>
+        </bean>
+
+
+
+
 
     <!-- 
         Place where applications will be configured.
@@ -327,37 +445,5 @@
             </map>
         </property>
     </bean>
-
-    <bean id="newOwnerWizard"
-        class="org.springframework.richclient.samples.petclinic.ui.NewOwnerWizard">
-        <property name="clinic">
-            <ref bean="clinic" />
-        </property>
-    </bean>
-
-    <bean id="vetManagerView"
-        class="org.springframework.richclient.application.support.DefaultViewDescriptor">
-        <property name="viewClass">
-            <value>
-                org.springframework.richclient.samples.petclinic.ui.VetManagerView
-            </value>
-        </property>
-        <property name="viewProperties">
-            <map>
-                <entry key="clinic">
-                    <ref bean="clinic" />
-                </entry>
-            </map>
-        </property>
-    </bean>
-
-    <bean id="setupWizard"
-        class="org.springframework.richclient.application.setup.SetupWizard">
-        <property name="licenseTextLocation">
-            <value>
-                /org/springframework/richclient/samples/petclinic/license.html
-            </value>
-        </property>
-	</bean>
     -->
 </beans>
