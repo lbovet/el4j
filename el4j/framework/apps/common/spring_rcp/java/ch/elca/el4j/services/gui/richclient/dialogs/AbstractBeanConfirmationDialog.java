@@ -18,16 +18,13 @@ package ch.elca.el4j.services.gui.richclient.dialogs;
 
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.binding.form.FormModel;
-import org.springframework.richclient.dialog.DialogPage;
-import org.springframework.richclient.dialog.TitledPageApplicationDialog;
+import org.springframework.richclient.dialog.ConfirmationDialog;
 
 import ch.elca.el4j.services.gui.richclient.Constants;
-import ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm;
 import ch.elca.el4j.services.gui.richclient.views.AbstractBeanView;
 
 /**
- * Abstract application dialog with title used for beans.
+ * Abstract confirmation dialog for beans.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$Source$",
@@ -38,20 +35,8 @@ import ch.elca.el4j.services.gui.richclient.views.AbstractBeanView;
  *
  * @author Martin Zeltner (MZE)
  */
-public abstract class AbstractBeanTitledPageApplicationDialog
-    extends TitledPageApplicationDialog 
+public abstract class AbstractBeanConfirmationDialog extends ConfirmationDialog 
     implements InitializingBean, BeanNameAware {
-    
-    /**
-     * Is the root form model for this dialog.
-     */
-    private FormModel m_rootFormModel;
-
-    /**
-     * Are the bean properties forms.
-     */
-    private BeanPropertiesForm[] m_propertiesForms;
-
     /**
      * Reference to the bean view.
      */
@@ -67,45 +52,28 @@ public abstract class AbstractBeanTitledPageApplicationDialog
      */
     private String m_beanName;
     
-    
-
-    
     /**
-     * {@inheritDoc}
+     * Flag to indicate if the yes button should be used as default. Otherwise
+     * the no button is set as default.
      */
-    protected void onAboutToShow() {
-        m_propertiesForms[0].focusFirstComponent();
-        setEnabled(getDialogPage().isPageComplete());
-    }
+    private boolean m_yesDefault = true;
 
     /**
-     * @return Returns current bean. This is the bean the dialog is made for.
-     */
-    protected Object getCurrentBean() {
-        return m_rootFormModel != null ? m_rootFormModel.getFormObject() : null;
-    }
-    
-    /**
      * {@inheritDoc}
+     * 
+     * If property <code>yesDefault</code> is <code>true</code>, the yes button
+     * will be used as default, if <code>false</code> the no button.
      */
-    protected boolean onFinish() {
-        if (m_rootFormModel.isDirty()) {
-            m_rootFormModel.commit();
-            return onFinishAfterCommit(getCurrentBean());
-        } else {
-            return true;
+    protected void registerDefaultCommand() {
+        if (isControlCreated()) {
+            if (isYesDefault()) {
+                getFinishCommand().setDefaultButtonIn(getDialog());
+            } else {
+                getCancelCommand().setDefaultButtonIn(getDialog());
+            }
         }
     }
     
-    /**
-     * Will be invoked if data changed and so data has been written into current
-     * bean.
-     * 
-     * @param currentBean Is the bean this dialog is made for.
-     * @return Returns <code>true</code> if action completed successfully.
-     */
-    protected abstract boolean onFinishAfterCommit(Object currentBean);
-
     /**
      * @return Returns the beanView.
      */
@@ -121,34 +89,6 @@ public abstract class AbstractBeanTitledPageApplicationDialog
     }
 
     /**
-     * @return Returns the propertiesForms.
-     */
-    public final BeanPropertiesForm[] getPropertiesForms() {
-        return m_propertiesForms;
-    }
-
-    /**
-     * @param propertiesForms The propertiesForms to set.
-     */
-    public final void setPropertiesForms(BeanPropertiesForm[] propertiesForms) {
-        m_propertiesForms = propertiesForms;
-    }
-
-    /**
-     * @return Returns the rootFormModel.
-     */
-    public final FormModel getRootFormModel() {
-        return m_rootFormModel;
-    }
-
-    /**
-     * @param rootFormModel The rootFormModel to set.
-     */
-    public final void setRootFormModel(FormModel rootFormModel) {
-        m_rootFormModel = rootFormModel;
-    }
-    
-    /**
      * @return Returns the propertiesId.
      */
     public final String getPropertiesId() {
@@ -160,13 +100,6 @@ public abstract class AbstractBeanTitledPageApplicationDialog
      */
     public final void setPropertiesId(String propertiesId) {
         m_propertiesId = propertiesId;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setDialogPage(DialogPage dialogPage) {
-        super.setDialogPage(dialogPage);
     }
 
     /**
@@ -182,7 +115,21 @@ public abstract class AbstractBeanTitledPageApplicationDialog
     public final void setBeanName(String beanName) {
         m_beanName = beanName;
     }
-    
+
+    /**
+     * @return Returns the yesDefault.
+     */
+    public final boolean isYesDefault() {
+        return m_yesDefault;
+    }
+
+    /**
+     * @param yesDefault The yesDefault to set.
+     */
+    public final void setYesDefault(boolean yesDefault) {
+        m_yesDefault = yesDefault;
+    }
+
     /**
      * {@inheritDoc}
      */

@@ -1,17 +1,18 @@
 /*
- * Copyright 2002-2004 the original author or authors.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- * 
- * http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
+ * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
+ * the spring framework, http://el4j.sf.net
+ * Copyright (C) 2005 by ELCA Informatique SA, Av. de la Harpe 22-24,
+ * 1000 Lausanne, Switzerland, http://www.elca.ch
+ *
+ * This program is published under the GNU General Public License (GPL) license.
+ * http://www.gnu.org/licenses/gpl.txt
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * For alternative licensing, please contact info@elca.ch
  */
 package ch.elca.el4j.services.gui.richclient;
 
@@ -34,6 +35,17 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
  * The main driver for a Spring Rich Client application. This class displays a
  * configurable splash screen and instantiates the rich client
  * <code>Application</code> instance.
+ * 
+ * <b>ATTENTION:</b> This class has the same name in Spring RCP. The idea is 
+ * that the people from Spring RCP will change their class in a next release
+ * so we do not have to serve a separate class in the future.
+ * 
+ * <script type="text/javascript">printFileStatus
+ *   ("$Source$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  * 
  * @author Keith Donald
  * @author Martin Zeltner (MZE)

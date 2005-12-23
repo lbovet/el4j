@@ -16,26 +16,31 @@
  */
 package ch.elca.el4j.services.gui.richclient.views;
 
+import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.springframework.richclient.application.PageComponentContext;
-import org.springframework.richclient.application.support.AbstractView;
 import org.springframework.richclient.command.support.GlobalCommandIds;
 import org.springframework.richclient.table.SortableTableModel;
 import org.springframework.richclient.table.TableUtils;
 
-import ch.elca.el4j.services.gui.richclient.executors.BeanPropertiesExecutor;
+import ch.elca.el4j.services.gui.richclient.executors.AbstractBeanExecutor;
 import ch.elca.el4j.services.gui.richclient.models.BeanTableModel;
 import ch.elca.el4j.services.gui.swing.table.LineSelectionTableCellRenderer;
+import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 
 /**
  * Base class for bean views.
@@ -72,10 +77,27 @@ public abstract class AbstractBeanView extends AbstractView {
     private JTable m_beanTable;
 
     /**
-     * Executor for bean properties.
+     * Are the executors for this bean view.
      */
-    private BeanPropertiesExecutor m_beanPropertiesExecutor;
+    private AbstractBeanExecutor[] m_beanExecutors;
     
+    /**
+     * Is the executor from executors above to change bean properties.
+     */
+    private AbstractBeanExecutor m_cachedBeanPropertiesExecutor;
+    
+    /**
+     * {@inheritDoc}
+     * 
+     * Returns the root component for this view.
+     */
+    protected JComponent createControlOnce() {
+        JPanel p = new JPanel(new BorderLayout());
+        initializeSortedBeanTable();
+        JScrollPane scrollableTable = new JScrollPane(getBeanTable());
+        p.add(scrollableTable, BorderLayout.CENTER);
+        return p;
+    }
 
     /**
      * Creates and initializes a sorted bean table.
@@ -104,7 +126,8 @@ public abstract class AbstractBeanView extends AbstractView {
         // Only one row is selectable. 
         m_beanTable.setRowSelectionAllowed(true);
         m_beanTable.setColumnSelectionAllowed(false);
-        m_beanTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        m_beanTable.setSelectionMode(
+            ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         
         // Register listener for table row selection.
         ListSelectionModel rowSelectionModel 
@@ -123,12 +146,36 @@ public abstract class AbstractBeanView extends AbstractView {
         m_beanTable.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2 
-                    && e.getButton() == MouseEvent.BUTTON1 
-                    && m_beanPropertiesExecutor.isEnabled()) {
-                    m_beanPropertiesExecutor.execute();
+                    && e.getButton() == MouseEvent.BUTTON1) {
+                    AbstractBeanExecutor executor = getPropertiesExecutor();
+                    if (executor.isEnabled()) {
+                        executor.execute();
+                    }
                 }
             }
         });
+    }
+    
+    /**
+     * @return Returns the executor to change properties. The first executor
+     *         from the executors array will be taken where
+     *         <code>commandId</code> equals 
+     *         <code>GlobalCommandIds.PROPERTIES</code>.
+     */
+    protected AbstractBeanExecutor getPropertiesExecutor() {
+        if (m_cachedBeanPropertiesExecutor == null) {
+            for (int i = 0; m_cachedBeanPropertiesExecutor == null 
+                && m_beanExecutors != null 
+                && i < m_beanExecutors.length; i++) {
+                
+                AbstractBeanExecutor executor = m_beanExecutors[i];
+                String commandId = executor.getCommandId();
+                if (GlobalCommandIds.PROPERTIES.equals(commandId)) {
+                    m_cachedBeanPropertiesExecutor = executor;
+                }
+            }
+        }
+        return m_cachedBeanPropertiesExecutor;
     }
     
     /**
@@ -137,36 +184,78 @@ public abstract class AbstractBeanView extends AbstractView {
      * Registers the properties executor.
      */
     protected void registerLocalCommandExecutors(PageComponentContext context) {
-        context.register(GlobalCommandIds.PROPERTIES, 
-            m_beanPropertiesExecutor);
+        initializeExecutors();
+        for (int i = 0; m_beanExecutors != null 
+            && i < m_beanExecutors.length; i++) {
+            AbstractBeanExecutor executor = m_beanExecutors[i];
+            context.register(executor.getCommandId(), executor);
+        }
+        updateCommands();
+    }
+    
+    /**
+     * Initializes executors.
+     */
+    protected void initializeExecutors() {
+        for (int i = 0; m_beanExecutors != null 
+            && i < m_beanExecutors.length; i++) {
+            AbstractBeanExecutor executor = m_beanExecutors[i];
+            executor.setBeanView(this);
+        }
     }
     
     /**
      * Will be invoked if commands should be update.
      */
     protected void updateCommands() {
-        // Enables the bean properties executer if a bean is selected.
-        m_beanPropertiesExecutor.setEnabled(getSelectedBean() != null);
+        for (int i = 0; m_beanExecutors != null 
+            && i < m_beanExecutors.length; i++) {
+            AbstractBeanExecutor executor = m_beanExecutors[i];
+            executor.updateState();
+        }
     }
 
     /**
-     * @return Returns selected row index.
+     * @return Returns selected row index if only one row is selected.
      */
     protected int getSelectedRow() {
         int rowIndexData = -1;
         if (isControlCreated()) {
-            int rowIndexSorted = m_beanTable.getSelectedRow();
-            if (rowIndexSorted >= 0) {
-                rowIndexData 
-                    = m_sortableTableModel.convertSortedIndexToDataIndex(
-                        rowIndexSorted);
+            if (m_beanTable.getSelectedRowCount() == 1) {
+                int rowIndexSorted = m_beanTable.getSelectedRow();
+                if (rowIndexSorted >= 0) {
+                    rowIndexData 
+                        = m_sortableTableModel.convertSortedIndexToDataIndex(
+                            rowIndexSorted);
+                }
             }
         }
         return rowIndexData;
     }
     
     /**
-     * @return Returns the selected object or <code>null</code>.
+     * @return Returns selected row indices or <code>null</code> if no rows are
+     *         selected.
+     */
+    protected int[] getSelectedRows() {
+        int[] rowIndicesData = null;
+        if (isControlCreated()) {
+            if (m_beanTable.getSelectedRowCount() >= 1) {
+                int[] rowIndicesSorted = m_beanTable.getSelectedRows();
+                if (rowIndicesSorted != null && rowIndicesSorted.length > 0) {
+                    rowIndicesData 
+                        = m_sortableTableModel
+                            .convertSortedIndexesToDataIndexes(
+                                rowIndicesSorted);
+                }
+            }
+        }
+        return rowIndicesData;
+    }
+
+    /**
+     * @return Returns the selected object or <code>null</code>. If more than
+     *         one object is selected also <code>null</code> will be returned.
      */
     public Object getSelectedBean() {
         Object result = null;
@@ -178,18 +267,162 @@ public abstract class AbstractBeanView extends AbstractView {
     }
     
     /**
-     * @param newBean Updates the selected row with the given bean.
+     * @return Returns the selected objects or <code>null</code>.
      */
-    public void updateSelectedBean(Object newBean) {
-        int rowIndex = getSelectedRow();
-        if (rowIndex >= 0 
-            && newBean != null 
-            && m_dataList.size() > rowIndex) {
-            m_dataList.set(rowIndex, newBean);
-            m_beanTableModel.fireTableDataChanged();
+    public Object[] getSelectedBeans() {
+        Object[] result = null;
+        int[] rowIndices = getSelectedRows();
+        if (rowIndices != null && rowIndices.length > 0) {
+            result = new Object[rowIndices.length];
+            for (int i = 0; i < result.length; i++) {
+                result[i] = m_dataList.get(rowIndices[i]);
+            }
+        }
+        return result;
+    }
+    
+    /**
+     * Clears selection.
+     */
+    public void clearSelection() {
+        if (isControlCreated()) {
+            m_beanTable.requestFocusInWindow();
+            m_beanTable.clearSelection();
         }
     }
+    
+    /**
+     * Selects all rows.
+     */
+    public void selectAll() {
+        if (isControlCreated()) {
+            m_beanTable.requestFocusInWindow();
+            m_beanTable.selectAll();
+        }
+    }
+    
+    /**
+     * Additionally selects given bean.
+     * 
+     * @param bean Is the bean to select additionally to the existing selection.
+     * @return Returns <code>true</code> if bean could be successfully selected.
+     */
+    public boolean selectBeanAdditionally(Object bean) {
+        boolean success = false;
+        int dataIndex;
+        if (isControlCreated() 
+            && bean != null
+            && (dataIndex = m_dataList.indexOf(bean)) >= 0) {
+            int sortedIndex = m_sortableTableModel
+                .convertDataIndexesToSortedIndexes(new int[] {dataIndex})[0];
+            m_beanTable.requestFocusInWindow();
+            m_beanTable.addRowSelectionInterval(sortedIndex, sortedIndex);
+            success = true;
+        }
+        return success;
+    }
+    
+    /**
+     * Focus the given bean.
+     * 
+     * @param bean Is the bean to set focus on.
+     * @return Returns <code>true</code> if the bean could be successfully
+     *         focused.
+     */
+    public boolean focusBean(Object bean) {
+        boolean success = false;
+        int dataIndex;
+        if (isControlCreated() 
+            && bean != null
+            && (dataIndex = m_dataList.indexOf(bean)) >= 0) {
+            final int SORTED_INDEX = m_sortableTableModel
+                .convertDataIndexesToSortedIndexes(new int[] {dataIndex})[0];
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    m_beanTable.requestFocusInWindow();
+                    m_beanTable.changeSelection(SORTED_INDEX, 0, false, false);
+                }
+            });
+            success = true;
+        }
+        return success;
+    }
+    
+    /**
+     * Adds the given bean.
+     * 
+     * @param bean Is the bean to add.
+     * @return Returns <code>true</code> if the given bean could be successfully
+     *         added to list.
+     */
+    public boolean addBean(Object bean) {
+        boolean success = false;
+        if (isControlCreated()
+            && bean != null) {
+            success = m_dataList.add(bean);
+            m_beanTableModel.fireTableDataChanged();
+        }
+        return success;
+    }
 
+    /**
+     * Replaces the old with the new bean if the old bean exists in view.
+     * 
+     * @param oldBean Is the old bean that exists in data list.
+     * @param newBean Is the new bean that replaces the old bean.
+     * @return Return <code>true</code> if bean could be successfully replaced.
+     */
+    public boolean replaceBean(Object oldBean, Object newBean) {
+        boolean success = false;
+        int rowIndex;
+        if (isControlCreated()
+            && oldBean != null
+            && newBean != null
+            && (rowIndex = m_dataList.indexOf(oldBean)) >= 0) {
+            m_dataList.set(rowIndex, newBean);
+            m_beanTableModel.fireTableDataChanged();
+            success = true;
+        }
+        return success;
+    }
+
+    /**
+     * Removes given bean from data list.
+     * 
+     * @param bean Is the bean to remove.
+     * @return Returns <code>true</code> if bean could be successfully removed.
+     */
+    public boolean removeBean(Object bean) {
+        boolean success = false;
+        if (isControlCreated()
+            && bean != null) {
+            success = m_dataList.remove(bean);
+            m_beanTableModel.fireTableDataChanged();
+        }
+        return success;
+    }
+    
+    /**
+     * Removes given beans from data list.
+     * 
+     * @param beans Are the beans to remove.
+     * @return Returns <code>true</code> if all beans could be successfully 
+     *         removed.
+     */
+    public boolean removeBeans(Object[] beans) {
+        boolean success = false;
+        if (beans != null && beans.length > 0) {
+            success = true;
+            for (int i = 0; i < beans.length; i++) {
+                Object bean = beans[i];
+                success &= removeBean(bean);
+            }
+        } else {
+            success = false;
+        }
+        return success;
+    }
+    
     /**
      * @return Returns the dataList.
      */
@@ -227,18 +460,24 @@ public abstract class AbstractBeanView extends AbstractView {
     }
 
     /**
-     * @return Returns the beanPropertiesExecutor.
+     * @return Returns the beanExecutors.
      */
-    public final BeanPropertiesExecutor getBeanPropertiesExecutor() {
-        return m_beanPropertiesExecutor;
+    public final AbstractBeanExecutor[] getBeanExecutors() {
+        return m_beanExecutors;
     }
 
     /**
-     * @param beanPropertiesExecutor The beanPropertiesExecutor to set.
+     * @param beanExecutors The beanExecutors to set.
      */
-    public final void setBeanPropertiesExecutor(
-        BeanPropertiesExecutor beanPropertiesExecutor) {
-        m_beanPropertiesExecutor = beanPropertiesExecutor;
-        m_beanPropertiesExecutor.setBeanView(this);
+    public final void setBeanExecutors(AbstractBeanExecutor[] beanExecutors) {
+        m_beanExecutors = beanExecutors;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void afterPropertiesSet() throws Exception {
+        CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+            getBeanTableModel(), "beanTableModel", this);
     }
 }
