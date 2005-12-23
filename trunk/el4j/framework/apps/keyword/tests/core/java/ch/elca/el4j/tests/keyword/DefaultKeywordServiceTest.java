@@ -27,6 +27,8 @@ import org.springframework.dao.OptimisticLockingFailureException;
 
 import ch.elca.el4j.apps.keyword.dao.KeywordDao;
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
+import ch.elca.el4j.services.search.QueryObject;
+import ch.elca.el4j.services.search.criterias.LikeCriteria;
 
 /**
  * Test case for <code>SqlMapKeywordDao</code>.
@@ -250,7 +252,9 @@ public class DefaultKeywordServiceTest extends TestCaseBase {
         keyword4 = dao.saveKeyword(keyword4);
         keyword5 = dao.saveKeyword(keyword5);
 
-        List list = dao.searchKeywords("", "Doc");
+        QueryObject query = new QueryObject();
+        query.addCriteria(LikeCriteria.caseInsensitive("description", "%Doc%"));
+        List list = dao.searchKeywords(query);
         assertEquals(
             "Search for description like 'Doc' results not in two keywords.",
             2, list.size());
@@ -263,7 +267,9 @@ public class DefaultKeywordServiceTest extends TestCaseBase {
             }
         }
 
-        list = dao.searchKeywords("host", "");
+        query = new QueryObject();
+        query.addCriteria(LikeCriteria.caseInsensitive("name", "%host%"));
+        list = dao.searchKeywords(query);
         assertEquals("Search for name like 'host' results not in one keyword.",
             1, list.size());
         it = list.iterator();
@@ -274,11 +280,13 @@ public class DefaultKeywordServiceTest extends TestCaseBase {
             }
         }
 
-        list = dao.searchKeywords("", "");
+        list = dao.searchKeywords(new QueryObject());
         assertEquals("Search for empty name and description results not in "
             + "five keywords.", 5, list.size());
 
-        list = dao.searchKeywords("", "log4j");
+        query = new QueryObject();
+        query.addCriteria(LikeCriteria.caseInsensitive("description", "%log4j%"));
+        list = dao.searchKeywords(query);
         assertEquals(
             "Search for description like 'log4j' results not in one keyword.",
             1, list.size());
