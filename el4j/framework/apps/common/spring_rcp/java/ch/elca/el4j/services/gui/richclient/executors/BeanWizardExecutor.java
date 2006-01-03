@@ -62,6 +62,8 @@ public class BeanWizardExecutor extends AbstractBeanDialogFormExecutor {
         
         // Get the wizard dialog from wizard.
         WizardDialog wizardDialog = wizard.getWizardDialog();
+        wizardDialog.setParent(
+            getBeanView().getContext().getWindow().getControl());
         
         // Show the wizard dialog.
         wizardDialog.showDialog();

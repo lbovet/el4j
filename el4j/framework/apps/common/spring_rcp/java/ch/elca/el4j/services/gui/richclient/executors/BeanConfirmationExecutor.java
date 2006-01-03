@@ -45,6 +45,7 @@ public class BeanConfirmationExecutor extends AbstractBeanDialogExecutor {
         AbstractBeanConfirmationDialog dialog
             = (AbstractBeanConfirmationDialog) getApplicationContext().getBean(
                 getDialogBeanName());
+        dialog.setParent(getBeanView().getContext().getWindow().getControl());
         dialog.setBeanView(getBeanView());
         
         String messageCodePrefix = beans.length == 1 
