@@ -99,7 +99,7 @@
 			<list>
 				<bean class="org.springframework.richclient.command.support.NewWindowCommand"/>
 				<value>separator</value>
-				<bean class="org.springframework.richclient.command.support.ShowViewMenu"/>
+				<bean class="ch.elca.el4j.services.gui.richclient.commands.ShowPageMenu"/>
 			</list>
 		</property>
 	</bean>
@@ -121,7 +121,7 @@
 	<bean id="aboutCommand" 
 		class="org.springframework.richclient.command.support.AboutCommand">
 		<property name="aboutTextPath">
-			<value>refdb/about.txt</value>
+			<value>refdb/etc/about.txt</value>
 		</property>
 	</bean>
 		

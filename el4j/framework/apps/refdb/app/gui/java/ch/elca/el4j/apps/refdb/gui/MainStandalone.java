@@ -17,10 +17,6 @@
 
 package ch.elca.el4j.apps.refdb.gui;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import ch.elca.el4j.services.gui.richclient.ApplicationLauncher;
 
 /**
  * This class is used to start the RefDB-Application in standalone mode.
@@ -36,29 +32,6 @@ import ch.elca.el4j.services.gui.richclient.ApplicationLauncher;
  */
 public final class MainStandalone {
     /**
-     * Startup spring configuration file. Used to quickly load beans to present 
-     * something to the user.
-     */
-    public static final String STARTUP_CONTEXT_PATH
-        = "classpath:refdb/startup.xml";
-    
-    /**
-     * MainStandalone application context files. 
-     */
-    public static final String[] ROOT_CONTEXT_PATH = {
-//        "classpath:optional/interception/methodTracing.xml",
-        "classpath*:mandatory/*.xml",
-        "classpath:scenarios/db/rawDatabase.xml",
-        "classpath:scenarios/dataaccess/ibatisSqlMaps.xml",
-        "classpath:optional/interception/transactionCommonsAttributes.xml" };
-    
-    /**
-     * Private logger.
-     */
-    private static Log s_logger 
-        = LogFactory.getLog(MainStandalone.class);
-
-    /**
      * Hide default constructor.
      */
     private MainStandalone() { }
@@ -67,15 +40,13 @@ public final class MainStandalone {
      * Start method.
      * 
      * @param args
-     *            Are the command line arguments.
+     *            Are the command line arguments. These are ignored.
      */
     public static void main(String[] args) {
-        try {
-            new ApplicationLauncher(STARTUP_CONTEXT_PATH, ROOT_CONTEXT_PATH);
-        } catch (Exception e) {
-            s_logger.fatal("Reference-Database-Application exited "
-                + "exceptionally! See stack trace for details.", e);
-            System.exit(1);
-        }
+        String startupContext 
+            = "classpath:refdb/standalone_startup.xml";
+        String applicationContext 
+            = "classpath:refdb/standalone_application.xml";
+        MainCommon.main(new String[] {startupContext, applicationContext});
     }
 }

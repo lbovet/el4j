@@ -25,9 +25,9 @@
         Main bean to control the application.
     -->
     <bean id="refdbLifecycleAdvisor"
-        class="ch.elca.el4j.apps.refdb.gui.ApplicationLifecycleAdvisor">
+        class="org.springframework.richclient.application.config.DefaultApplicationLifecycleAdvisor">
         <property name="windowCommandBarDefinitions">
-            <value>classpath:refdb/commands.xml</value>
+            <value>classpath:refdb/internal/commands.xml</value>
         </property>
         <property name="startingPageId">
             <value>keywordPage</value>
@@ -174,7 +174,7 @@
         class="ch.elca.el4j.services.gui.richclient.executors.BeanPropertiesExecutor"
         singleton="false">
         <property name="propertiesFormBeanNames">
-            <idref bean="keywordPropertiesFormGeneral" />
+            <idref bean="keywordPropertiesFormAll" />
         </property>
         <property name="dialogBeanName">
             <idref bean="keywordPropertiesApplicationDialog" />
@@ -184,7 +184,7 @@
         <!-- 
             Form that describs which keyword properties should be displayed.
         -->
-        <bean id="keywordPropertiesFormGeneral"
+        <bean id="keywordPropertiesFormAll"
             class="ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm"
             singleton="false">
             <property name="shownBeanProperties">
@@ -200,7 +200,7 @@
                 </list>
             </property>
             <property name="propertiesId">
-                <value>keywordFormGeneral</value>
+                <value>keywordFormAll</value>
             </property>
         </bean>
     
@@ -255,7 +255,7 @@
         singleton="false"
         parent="generalKeywordProperties">
         <property name="propertiesFormBeanNames">
-            <idref bean="keywordPropertiesFormGeneral" />
+            <idref bean="keywordPropertiesFormNormal" />
         </property>
         <property name="dialogBeanName">
             <idref bean="keywordCreateNewWizard" />
@@ -264,6 +264,23 @@
             <value>newKeywordCommand</value>
         </property>
     </bean>
+
+        <!-- 
+            Form that describs which keyword properties should be displayed.
+        -->
+        <bean id="keywordPropertiesFormNormal"
+            class="ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm"
+            singleton="false">
+            <property name="shownBeanProperties">
+                <list>
+                    <value>name</value>
+                    <value>description</value>
+                </list>
+            </property>
+            <property name="propertiesId">
+                <value>keywordFormNormal</value>
+            </property>
+        </bean>
     
         <!--
             Wizard to create a new keyword.
@@ -322,7 +339,7 @@
         class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basenames">
             <list>
-                <value>refdb.messages</value>
+                <value>refdb.properties.messages</value>
                 <value>org.springframework.richclient.application.messages</value>
             </list>
         </property>
@@ -350,7 +367,7 @@
         <property name="locations">
             <list>
                 <value>classpath:org/springframework/richclient/image/images.properties</value>
-                <value>classpath:refdb/images.properties</value>
+                <value>classpath:refdb/properties/images.properties</value>
             </list>
         </property>
         <property name="resourceBasePath">
