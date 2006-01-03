@@ -38,6 +38,7 @@ import ch.elca.el4j.apps.refdb.dto.ReferenceDto;
 import ch.elca.el4j.apps.refdb.dto.ReferenceKeywordRelationshipDto;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
+import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.CollectionUtils;
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
 import ch.elca.el4j.util.codingsupport.Reject;
@@ -275,20 +276,18 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
      * 
      * @param type
      *            Is one of the reference types.
-     * @param searchFields
-     *            Is the string representation for the fields to search.
-     * @param reference
-     *            Is the reference, which contains the search data.
+     * @param query
+     *            Is the search query object.
      * @return Returns a list with references.
      * @throws DataAccessException
      *             If general data access problem occurred.
      */
-    private List searchReferences(String type, String searchFields,
-        ReferenceDto reference) throws DataAccessException {
+    private List searchReferences(String type, QueryObject query) 
+        throws DataAccessException {
         Reject.ifEmpty(type);
-        Reject.ifNull(searchFields);
+        Reject.ifNull(query);
         List result = getSqlMapClientTemplate().queryForList(
-                "search" + type + "sWithFields" + searchFields, reference);
+                "search" + type + "s", query.getCriteriaList());
         return CollectionUtils.asList(result);
     }
 
@@ -416,32 +415,9 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
     /**
      * {@inheritDoc}
      */
-    public List searchLinks(String name, String description)
+    public List searchLinks(QueryObject query)
         throws DataAccessException {
-        String searchName = ObjectUtils.asString(name).toLowerCase();
-        String searchDescription 
-            = ObjectUtils.asString(description).toLowerCase();
-        LinkDto link = new LinkDto();
-        link.setName(searchName);
-        link.setDescription(searchDescription);
-        return searchReferences(Constants.LINK, 
-            Constants.SEARCH_FIELDS_NAME_AND_DESCRIPTION, link);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public List searchLinks(String name, String description, 
-        boolean incomplete) throws DataAccessException {
-        String searchName = ObjectUtils.asString(name).toLowerCase();
-        String searchDescription 
-            = ObjectUtils.asString(description).toLowerCase();
-        LinkDto link = new LinkDto();
-        link.setName(searchName);
-        link.setDescription(searchDescription);
-        link.setIncomplete(incomplete);
-        return searchReferences(Constants.LINK, 
-            Constants.SEARCH_FIELDS_NAME_DESCRIPTION_AND_INCOMPLETE, link);
+        return searchReferences(Constants.LINK, query);
     }
 
     /**
@@ -488,33 +464,9 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
     /**
      * {@inheritDoc}
      */
-    public List searchFormalPublications(String name, String description)
+    public List searchFormalPublications(QueryObject query)
         throws DataAccessException {
-        String searchName = ObjectUtils.asString(name).toLowerCase();
-        String searchDescription 
-            = ObjectUtils.asString(description).toLowerCase();
-        FormalPublicationDto formalPublication = new FormalPublicationDto();
-        formalPublication.setName(searchName);
-        formalPublication.setDescription(searchDescription);
-        return searchReferences(Constants.FORMAL_PUBLICATION, 
-            Constants.SEARCH_FIELDS_NAME_AND_DESCRIPTION, formalPublication);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public List searchFormalPublications(String name, String description,
-            boolean incomplete) throws DataAccessException {
-        String searchName = ObjectUtils.asString(name).toLowerCase();
-        String searchDescription 
-            = ObjectUtils.asString(description).toLowerCase();
-        FormalPublicationDto formalPublication = new FormalPublicationDto();
-        formalPublication.setName(searchName);
-        formalPublication.setDescription(searchDescription);
-        formalPublication.setIncomplete(incomplete);
-        return searchReferences(Constants.FORMAL_PUBLICATION, 
-            Constants.SEARCH_FIELDS_NAME_DESCRIPTION_AND_INCOMPLETE, 
-            formalPublication);
+        return searchReferences(Constants.FORMAL_PUBLICATION, query);
     }
 
     /**
@@ -562,33 +514,9 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
     /**
      * {@inheritDoc}
      */
-    public List searchBooks(String name, String description)
+    public List searchBooks(QueryObject query)
         throws DataAccessException {
-        String searchName = ObjectUtils.asString(name).toLowerCase();
-        String searchDescription 
-            = ObjectUtils.asString(description).toLowerCase();
-        BookDto book = new BookDto();
-        book.setName(searchName);
-        book.setDescription(searchDescription);
-        return searchReferences(Constants.BOOK, 
-            Constants.SEARCH_FIELDS_NAME_AND_DESCRIPTION, book);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public List searchBooks(String name, String description, 
-        boolean incomplete) throws DataAccessException {
-        String searchName = ObjectUtils.asString(name).toLowerCase();
-        String searchDescription 
-            = ObjectUtils.asString(description).toLowerCase();
-        BookDto book = new BookDto();
-        book.setName(searchName);
-        book.setDescription(searchDescription);
-        book.setIncomplete(incomplete);
-        return searchReferences(Constants.BOOK, 
-            Constants.SEARCH_FIELDS_NAME_DESCRIPTION_AND_INCOMPLETE, 
-            book);
+        return searchReferences(Constants.BOOK, query);
     }
 
     /**

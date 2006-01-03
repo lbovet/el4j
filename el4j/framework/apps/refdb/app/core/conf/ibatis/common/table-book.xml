@@ -52,38 +52,45 @@
             ISBNNUMBER, OPTIMISTICLOCKINGVERSION from BOOKS, REFERENCESTABLE
                 where KEYID=KEYTOREFERENCE
     </statement>
-    <statement id="searchBooksWithFieldsNameDescription" 
-        resultMap="book">
+    
+    <select id="searchBooks" resultMap="book" 
+        parameterClass="list">
         select KEYID, NAME, HASHVALUE, DESCRIPTION, VERSION, INCOMPLETE, 
             WHENINSERTED, DOCUMENTDATE, AUTHORNAME, PUBLISHER, PAGENUM, 
             ISBNNUMBER, OPTIMISTICLOCKINGVERSION from BOOKS, REFERENCESTABLE
                 where KEYID=KEYTOREFERENCE
-        <dynamic>
-            <isNotEmpty prepend="and" property="name">
-                lower(NAME) like '%$name$%'
-            </isNotEmpty>
-            <isNotEmpty prepend="and" property="description">
-                lower(DESCRIPTION) like '%$description$%'
-            </isNotEmpty>
-        </dynamic>
+        <!--
+            HACK!
+            This will be replaced by an easier solution.
+            (MZE, 03/01/2006)
+        -->
+        <iterate prepend="and" conjunction="and">
+            <isEqual property="[].type" compareValue="comparisonBoolean">
+                <isEqual property="[].field" compareValue="incomplete">
+                    INCOMPLETE=#[].booleanValue#
+                </isEqual>
+            </isEqual>
+            <isEqual property="[].type" compareValue="like">
+                <isEqual property="[].field" compareValue="name">
+                    <isEqual property="[].caseSensitive" compareValue="true">
+                        NAME like #[].stringValue#
+                    </isEqual>
+                    <isNotEqual property="[].caseSensitive" compareValue="true">
+                        upper(NAME) like upper(#[].stringValue#)
+                    </isNotEqual>
+                </isEqual>
+                <isEqual property="[].field" compareValue="description">
+                    <isEqual property="[].caseSensitive" compareValue="true">
+                        DESCRIPTION like #[].stringValue#
+                    </isEqual>
+                    <isNotEqual property="[].caseSensitive" compareValue="true">
+                        upper(DESCRIPTION) like upper(#[].stringValue#)
+                    </isNotEqual>
+                </isEqual>
+            </isEqual>
+        </iterate>
         order by NAME, DESCRIPTION
-    </statement>
-    <statement id="searchBooksWithFieldsNameDescriptionIncomplete" 
-        resultMap="book">
-        select KEYID, NAME, HASHVALUE, DESCRIPTION, VERSION, INCOMPLETE, 
-            WHENINSERTED, DOCUMENTDATE, AUTHORNAME, PUBLISHER, PAGENUM, 
-            ISBNNUMBER, OPTIMISTICLOCKINGVERSION from BOOKS, REFERENCESTABLE
-                where KEYID=KEYTOREFERENCE and INCOMPLETE=#incomplete#
-        <dynamic>
-            <isNotEmpty prepend="and" property="name">
-                lower(NAME) like '%$name$%'
-            </isNotEmpty>
-            <isNotEmpty prepend="and" property="description">
-                lower(DESCRIPTION) like '%$description$%'
-            </isNotEmpty>
-        </dynamic>
-        order by NAME, DESCRIPTION
-    </statement>
+    </select>
 
     <delete id="deleteBook" parameterClass="int">
         delete from BOOKS where KEYTOREFERENCE=#value#

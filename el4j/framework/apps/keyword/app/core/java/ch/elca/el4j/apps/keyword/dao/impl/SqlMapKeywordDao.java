@@ -81,6 +81,7 @@ public class SqlMapKeywordDao extends ConvenienceSqlMapClientDaoSupport
      */
     public List searchKeywords(QueryObject query) 
         throws DataAccessException {
+        Reject.ifNull(query);
         List result = getConvenienceSqlMapClientTemplate().queryForList(
             "searchKeywords", query.getCriteriaList());
         return CollectionUtils.asList(result);

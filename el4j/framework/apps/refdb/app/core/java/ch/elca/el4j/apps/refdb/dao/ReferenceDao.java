@@ -31,6 +31,7 @@ import ch.elca.el4j.apps.refdb.dto.FileDto;
 import ch.elca.el4j.apps.refdb.dto.FormalPublicationDto;
 import ch.elca.el4j.apps.refdb.dto.LinkDto;
 import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
+import ch.elca.el4j.services.search.QueryObject;
 
 /**
  * A reference DAO is responsible for accessing and storing reference
@@ -270,33 +271,13 @@ public interface ReferenceDao extends KeywordDao {
     /**
      * Search for links where name and description are like the given.
      * 
-     * @param name
-     *            Is the name for which it should be searched for.
-     * @param description
-     *            Is the description for which it should be searched for.
+     * @param query
+     *            Is the search query object.
      * @return Returns a list with links. Returns never <code>null</code>.
      * @throws DataAccessException
      *             If general data access problem occurred.
      */
-    public List searchLinks(String name, String description)
-        throws DataAccessException;
-
-    /**
-     * Search for links where name, description and incomplete are like the
-     * given.
-     * 
-     * @param name
-     *            Is the name for which it should be searched for.
-     * @param description
-     *            Is the description for which it should be searched for.
-     * @param incomplete
-     *            Is the incomplete for which it should be searched for.
-     * @return Returns a list with links. Returns never <code>null</code>.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     */
-    public List searchLinks(
-        String name, String description, boolean incomplete)
+    public List searchLinks(QueryObject query)
         throws DataAccessException;
 
     /**
@@ -371,35 +352,15 @@ public interface ReferenceDao extends KeywordDao {
      * Search for formal publications where name and description are like the
      * given.
      * 
-     * @param name
-     *            Is the name for which it should be searched for.
-     * @param description
-     *            Is the description for which it should be searched for.
+     * @param query
+     *            Is the search query object.
      * @return Returns a list with formal publications. Returns never
      *         <code>null</code>.
      * @throws DataAccessException
      *             If general data access problem occurred.
      */
-    public List searchFormalPublications(String name, String description)
+    public List searchFormalPublications(QueryObject query)
         throws DataAccessException;
-
-    /**
-     * Search for formal publications where name, description and incomplete are
-     * like the given.
-     * 
-     * @param name
-     *            Is the name for which it should be searched for.
-     * @param description
-     *            Is the description for which it should be searched for.
-     * @param incomplete
-     *            Is the incomplete for which it should be searched for.
-     * @return Returns a list with formal publications. Returns never
-     *         <code>null</code>.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     */
-    public List searchFormalPublications(String name, String description,
-            boolean incomplete) throws DataAccessException;
 
     /**
      * Save formal publication. If formal publication is new, viz is has no
@@ -473,33 +434,14 @@ public interface ReferenceDao extends KeywordDao {
     /**
      * Search for books where name and description are like the given.
      * 
-     * @param name
-     *            Is the name for which it should be searched for.
-     * @param description
-     *            Is the description for which it should be searched for.
+     * @param query
+     *            Is the search query object.
      * @return Returns a list with books. Returns never <code>null</code>.
      * @throws DataAccessException
      *             If general data access problem occurred.
      */
-    public List searchBooks(String name, String description)
+    public List searchBooks(QueryObject query)
         throws DataAccessException;
-
-    /**
-     * Search for books where name, description and incomplete are like the
-     * given.
-     * 
-     * @param name
-     *            Is the name for which it should be searched for.
-     * @param description
-     *            Is the description for which it should be searched for.
-     * @param incomplete
-     *            Is the incomplete for which it should be searched for.
-     * @return Returns a list with books. Returns never <code>null</code>.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     */
-    public List searchBooks(String name, String description, 
-        boolean incomplete) throws DataAccessException;
 
     /**
      * Save book. If book is new, viz is has no primary key, it will be

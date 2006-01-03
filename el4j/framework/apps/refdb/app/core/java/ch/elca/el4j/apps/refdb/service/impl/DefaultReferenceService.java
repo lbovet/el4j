@@ -37,6 +37,7 @@ import ch.elca.el4j.apps.refdb.dto.ReferenceDto;
 import ch.elca.el4j.apps.refdb.service.ReferenceService;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
+import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
@@ -331,42 +332,14 @@ public class DefaultReferenceService extends DefaultKeywordService
      * 
      * @@attrib.transaction.RequiredReadOnly()
      */
-    public List searchReferences(String name, String description)
+    public List searchReferences(QueryObject query)
         throws DataAccessException {
-        Reject.ifNull(name);
-        Reject.ifNull(description);
+        Reject.ifNull(query);
         
-        List listLinks 
-            = getReferenceDao().searchLinks(name, description);
+        List listLinks = getReferenceDao().searchLinks(query);
         List listFormalPublications 
-            = getReferenceDao().searchFormalPublications(name, description);
-        List listBooks 
-            = getReferenceDao().searchBooks(name, description);
-        
-        List list = new LinkedList();
-        list.addAll(listLinks);
-        list.addAll(listFormalPublications);
-        list.addAll(listBooks);
-        return list;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @@attrib.transaction.RequiredReadOnly()
-     */
-    public List searchReferences(String name, String description, 
-        boolean incomplete) throws DataAccessException {
-        Reject.ifNull(name);
-        Reject.ifNull(description);
-        
-        List listLinks 
-            = getReferenceDao().searchLinks(name, description, incomplete);
-        List listFormalPublications 
-            = getReferenceDao().searchFormalPublications(
-                name, description, incomplete);
-        List listBooks 
-            = getReferenceDao().searchBooks(name, description, incomplete);
+            = getReferenceDao().searchFormalPublications(query);
+        List listBooks = getReferenceDao().searchBooks(query);
         
         List list = new LinkedList();
         list.addAll(listLinks);

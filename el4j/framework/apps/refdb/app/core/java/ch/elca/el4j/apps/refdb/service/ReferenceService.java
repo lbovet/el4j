@@ -29,6 +29,7 @@ import ch.elca.el4j.apps.refdb.dto.FileDescriptorView;
 import ch.elca.el4j.apps.refdb.dto.FileDto;
 import ch.elca.el4j.apps.refdb.dto.ReferenceDto;
 import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
+import ch.elca.el4j.services.search.QueryObject;
 
 /**
  * This interface provides all available business methods, which can be used in
@@ -309,35 +310,16 @@ public interface ReferenceService extends KeywordService {
     public List getAllReferences() throws DataAccessException;
 
     /**
-     * Search for references where name and description are like the given.
+     * Search references.
      * 
-     * @param name
-     *            Is the name for which it should be searched for.
-     * @param description
-     *            Is the description for which it should be searched for.
-     * @return Returns a list with references. Returns never <code>null</code>.
+     * @param query
+     *            Is the search query object.
+     * @return Returns a list with reference. Returns never <code>null</code>.
      * @throws DataAccessException
      *             If general data access problem occurred.
      */
-    public List searchReferences(String name, String description)
+    public List searchReferences(QueryObject query)
         throws DataAccessException;
-
-    /**
-     * Search for references where name, description and incomplete are like the
-     * given.
-     * 
-     * @param name
-     *            Is the name for which it should be searched for.
-     * @param description
-     *            Is the description for which it should be searched for.
-     * @param incomplete
-     *            Is the incomplete for which it should be searched for.
-     * @return Returns a list with references. Returns never <code>null</code>.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     */
-    public List searchReferences(String name, String description,
-            boolean incomplete) throws DataAccessException;
 
     /**
      * Save reference. If reference is new, viz is has no primary key, it will
