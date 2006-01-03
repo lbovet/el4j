@@ -16,7 +16,6 @@
  */
 package ch.elca.el4j.services.gui.richclient.executors;
 
-import org.springframework.richclient.command.support.GlobalCommandIds;
 import org.springframework.util.StringUtils;
 
 
