@@ -29,6 +29,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ApplicationEventMulticaster;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.richclient.application.Application;
+import org.springframework.richclient.application.PageComponent;
+import org.springframework.richclient.application.PageComponentContext;
 
 import ch.elca.el4j.services.search.events.QueryObjectEvent;
 
@@ -139,7 +141,31 @@ public abstract class AbstractView
     protected void onQueryObjectEvent(QueryObjectEvent event) {
         
     }
-
+    
+    /**
+     * Checks if the query object event is comming from a neighbour from the 
+     * same application window.
+     * 
+     * @param event Is the query object event to check.
+     * @return Returns <code>true</code> if the given event is comming from
+     *         the same application window as the current.
+     */
+    protected boolean isQueryObjectCommingFromNeighbour(
+        QueryObjectEvent event) {
+        boolean result = false;
+        if (event != null && isControlCreated()) {
+            Object sourceObject = event.getSource();
+            if (sourceObject instanceof PageComponent) {
+                PageComponent pageComponent = (PageComponent) sourceObject;
+                int windowNumberNeighBour 
+                    = pageComponent.getContext().getWindow().getNumber();
+                int windowNumberCurrent = getContext().getWindow().getNumber();
+                result = windowNumberNeighBour == windowNumberCurrent;
+            }
+        }
+        return result;
+    }
+    
     /**
      * @return Returns the control.
      */
