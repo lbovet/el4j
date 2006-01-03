@@ -35,6 +35,9 @@ import ch.elca.el4j.apps.refdb.dto.FormalPublicationDto;
 import ch.elca.el4j.apps.refdb.dto.LinkDto;
 import ch.elca.el4j.apps.refdb.dto.ReferenceDto;
 import ch.elca.el4j.apps.refdb.service.ReferenceService;
+import ch.elca.el4j.services.search.QueryObject;
+import ch.elca.el4j.services.search.criterias.ComparisonCriteria;
+import ch.elca.el4j.services.search.criterias.LikeCriteria;
 
 /**
  * Test case for <code>DefaultReferenceService</code>.
@@ -885,11 +888,14 @@ public class DefaultReferenceServiceTest extends TestCaseBase {
         List list;
         Iterator it;
 
-        list = service.searchReferences("", "");
+        QueryObject query = new QueryObject();
+        list = service.searchReferences(query);
         assertEquals("There are not seven references for "
             + "query name='' and description=''.", 7, list.size());
 
-        list = service.searchReferences("", "", false);
+        query = new QueryObject();
+        query.addCriteria(ComparisonCriteria.equals("incomplete", false));
+        list = service.searchReferences(query);
         assertEquals("There are not three references for query name='' and "
             + "description='' and incomplete=false.", 3, list.size());
         it = list.iterator();
@@ -902,7 +908,9 @@ public class DefaultReferenceServiceTest extends TestCaseBase {
             }
         }
 
-        list = service.searchReferences("2", "");
+        query = new QueryObject();
+        query.addCriteria(LikeCriteria.caseInsensitive("name", "%2%"));
+        list = service.searchReferences(query);
         assertEquals("There are not four references for "
             + "query name='2' and description=''.", 4, list.size());
         it = list.iterator();
@@ -915,7 +923,10 @@ public class DefaultReferenceServiceTest extends TestCaseBase {
             }
         }
 
-        list = service.searchReferences("2", "", true);
+        query = new QueryObject();
+        query.addCriteria(LikeCriteria.caseInsensitive("name", "%2%"));
+        query.addCriteria(ComparisonCriteria.equals("incomplete", true));
+        list = service.searchReferences(query);
         assertEquals("There are not three references for query name='2' and "
             + "description='' and incomplete=true.", 3, list.size());
         it = list.iterator();
@@ -928,7 +939,10 @@ public class DefaultReferenceServiceTest extends TestCaseBase {
             }
         }
 
-        list = service.searchReferences("", "deVeLop");
+        query = new QueryObject();
+        query.addCriteria(LikeCriteria.caseInsensitive(
+            "description", "%deVeLop%"));
+        list = service.searchReferences(query);
         assertEquals("There are not two references for query name='' and " 
             + "description='deVeLop'.", 2, list.size());
         it = list.iterator();
@@ -939,7 +953,10 @@ public class DefaultReferenceServiceTest extends TestCaseBase {
             }
         }
 
-        list = service.searchReferences("JAVA", "WEB");
+        query = new QueryObject();
+        query.addCriteria(LikeCriteria.caseInsensitive("name", "%JAVA%"));
+        query.addCriteria(LikeCriteria.caseInsensitive("description", "%WEB%"));
+        list = service.searchReferences(query);
         assertEquals("There was not one reference for "
             + "query name='JAVA' and description='WEB'.", 1, list.size());
         it = list.iterator();

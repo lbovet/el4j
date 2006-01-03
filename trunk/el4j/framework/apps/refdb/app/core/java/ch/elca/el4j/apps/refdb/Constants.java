@@ -65,20 +65,6 @@ public final class Constants {
     public static final String BOOK = "Book";
     
     /**
-     * Is the string representation for a search in fields name and 
-     * description.
-     */
-    public static final String SEARCH_FIELDS_NAME_AND_DESCRIPTION 
-        = "NameDescription";
-    
-    /**
-     * Is the string representation for a search in fields name, 
-     * description and incomplete.
-     */
-    public static final String SEARCH_FIELDS_NAME_DESCRIPTION_AND_INCOMPLETE 
-        = "NameDescriptionIncomplete";
-    
-    /**
      * Is the string representation of a reference keyword relationship.
      */
     public static final String REFERENCE_KEYWORD_RELATIONSHIP 
