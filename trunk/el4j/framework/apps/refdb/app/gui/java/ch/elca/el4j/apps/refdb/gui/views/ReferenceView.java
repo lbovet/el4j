@@ -17,11 +17,10 @@
 
 package ch.elca.el4j.apps.refdb.gui.views;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
+import java.util.List;
 
-import javax.swing.JComponent;
-import javax.swing.JPanel;
+import ch.elca.el4j.services.search.QueryObject;
+import ch.elca.el4j.services.search.events.QueryObjectEvent;
 
 /**
  * Reference view.
@@ -36,16 +35,16 @@ import javax.swing.JPanel;
  * @author Martin Zeltner (MZE)
  */
 public class ReferenceView extends AbstractRefdbView {
-
     /**
      * {@inheritDoc}
-     * 
-     * Returns the root component for this view.
      */
-    protected JComponent createControlOnce() {
-        JPanel p = new JPanel(new BorderLayout());
-        p.setBackground(Color.RED);
-        return p;
+    protected void onQueryObjectEvent(QueryObjectEvent event) {
+        if (isControlCreated() && isQueryObjectCommingFromNeighbour(event)) {
+            QueryObject queryObject = event.getQueryObject();
+            List list = getReferenceService().searchReferences(queryObject);
+            getDataList().clear();
+            getDataList().addAll(list);
+            getBeanTableModel().fireTableDataChanged();
+        }
     }
-
 }

@@ -39,7 +39,7 @@ public class KeywordView extends AbstractRefdbView {
      * {@inheritDoc}
      */
     protected void onQueryObjectEvent(QueryObjectEvent event) {
-        if (isControlCreated()) {
+        if (isControlCreated() && isQueryObjectCommingFromNeighbour(event)) {
             QueryObject queryObject = event.getQueryObject();
             List list = getReferenceService().searchKeywords(queryObject);
             getDataList().clear();

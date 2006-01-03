@@ -8,11 +8,8 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
 
-	<bean id="splashScreen" 
-		class="org.springframework.richclient.application.SplashScreen" 
-		singleton="false">
-		<property name="imageResourcePath">
-			<value>/images/refdb/refdb-splash-screen.gif</value>
-		</property>
-	</bean>
+	<import resource="classpath*:mandatory/*.xml"/>
+    <import resource="classpath:scenarios/db/rawDatabase.xml"/>
+    <import resource="classpath:scenarios/dataaccess/ibatisSqlMaps.xml"/>
+    <import resource="classpath:optional/interception/transactionCommonsAttributes.xml"/>
 </beans>
