@@ -16,6 +16,8 @@
  */
 package ch.elca.el4j.services.search.criterias;
 
+import ch.elca.el4j.util.codingsupport.Reject;
+
 
 /**
  * Marker interface for a criteria.
@@ -47,6 +49,8 @@ public abstract class AbstractCriteria implements Criteria {
      * @param value Is the value of this criteria.
      */
     protected AbstractCriteria(String field, Object value) {
+        Reject.ifEmpty(field);
+        Reject.ifNull(value);
         m_field = field;
         m_value = value;
     }
@@ -70,5 +74,40 @@ public abstract class AbstractCriteria implements Criteria {
      */
     public final String getStringValue() {
         return (String) getValue();
+    }
+    
+    /**
+     * @return Returns the boolean value of this criteria.
+     */
+    public final Boolean getBooleanValue() {
+        return (Boolean) getValue();
+    }
+
+    /**
+     * @return Returns the integer value of this criteria.
+     */
+    public final Integer getIntegerValue() {
+        return (Integer) getValue();
+    }
+
+    /**
+     * @return Returns the long value of this criteria.
+     */
+    public final Long getLongValue() {
+        return (Long) getValue();
+    }
+
+    /**
+     * @return Returns the short value of this criteria.
+     */
+    public final Short getShortValue() {
+        return (Short) getValue();
+    }
+
+    /**
+     * @return Returns the byte value of this criteria.
+     */
+    public final Byte getByteValue() {
+        return (Byte) getValue();
     }
 }
