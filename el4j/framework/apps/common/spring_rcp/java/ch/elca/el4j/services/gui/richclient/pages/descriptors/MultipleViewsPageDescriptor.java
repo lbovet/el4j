@@ -17,15 +17,14 @@
 package ch.elca.el4j.services.gui.richclient.pages.descriptors;
 
 import java.awt.BorderLayout;
-import java.awt.Image;
-
-import javax.swing.Icon;
 
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.richclient.application.PageDescriptor;
 import org.springframework.richclient.application.PageLayoutBuilder;
 import org.springframework.richclient.application.ViewDescriptor;
+import org.springframework.richclient.core.LabeledObjectSupport;
+import org.springframework.util.StringUtils;
 
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 
@@ -41,8 +40,8 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  *
  * @author Martin Zeltner (MZE)
  */
-public class MultipleViewsPageDescriptor implements PageDescriptor,
-    BeanNameAware, InitializingBean {
+public class MultipleViewsPageDescriptor extends LabeledObjectSupport
+    implements PageDescriptor, BeanNameAware, InitializingBean {
     
     /**
      * Are the view descriptors for the center position.
@@ -68,6 +67,11 @@ public class MultipleViewsPageDescriptor implements PageDescriptor,
      * Are the view descriptors for the bottom position.
      */
     private ViewDescriptor[] m_viewDescriptorsBottom = null;
+
+    /**
+     * Is the id of this page.
+     */
+    private String m_id;
 
     /**
      * Is the name of this bean.
@@ -161,44 +165,18 @@ public class MultipleViewsPageDescriptor implements PageDescriptor,
 
     /**
      * {@inheritDoc}
+     * 
+     * If property id is not set the bean name will be taken.
      */
     public String getId() {
-        return getMainViewDescriptor().getId();
+        return StringUtils.hasText(m_id) ? m_id : getBeanName();
     }
 
     /**
-     * {@inheritDoc}
+     * @param id The id to set.
      */
-    public String getDisplayName() {
-        return getMainViewDescriptor().getDisplayName();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public String getCaption() {
-        return getMainViewDescriptor().getCaption();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public String getDescription() {
-        return getMainViewDescriptor().getDescription();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Image getImage() {
-        return getMainViewDescriptor().getImage();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Icon getIcon() {
-        return getMainViewDescriptor().getIcon();
+    public void setId(String id) {
+        m_id = id;
     }
 
     /**
