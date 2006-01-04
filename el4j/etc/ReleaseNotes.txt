@@ -6,7 +6,8 @@
 -
 
 * GNATS CLOSED
-1345770 -  Join of deamons always run in timeout
+1345770 - Join of deamons always run in timeout
+1339539 - Add key information in CoreNotificationHelper
 
 * Automatic test support added
   = Ant notification script to inform developers about junit test results
