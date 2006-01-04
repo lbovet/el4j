@@ -24,6 +24,7 @@ import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException
 import org.springframework.orm.ibatis.SqlMapClientTemplate;
 
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
+import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
 import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
 import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
 import ch.elca.el4j.util.codingsupport.Reject;
@@ -83,8 +84,19 @@ public class ConvenienceSqlMapClientTemplate extends SqlMapClientTemplate {
              */
             int count = update("update" + objectName, parameterObject);
             if (count != 1) {
+                String message;
+                if (parameterObject instanceof PrimaryKeyObject) {
+                    PrimaryKeyObject primaryKeyObject 
+                        = (PrimaryKeyObject) parameterObject;
+                    message = objectName + " with key " 
+                        + primaryKeyObject.getKeyAsObject()
+                        + " was modified or deleted in the meantime.";
+                } else {
+                    message = objectName 
+                        + " was modified or deleted in the meantime.";
+                }
                 CoreNotificationHelper.notifyOptimisticLockingFailure(
-                    objectName);
+                    message, objectName);
             } else {
                 parameterObject.increaseOptimisticLockingVersion();
             }
@@ -119,7 +131,17 @@ public class ConvenienceSqlMapClientTemplate extends SqlMapClientTemplate {
         
         Object result = queryForObject(statementName, parameterObject);
         if (result == null) {
-            CoreNotificationHelper.notifyDataRetrievalFailure(objectName);
+            String message;
+            if (parameterObject instanceof PrimaryKeyObject) {
+                PrimaryKeyObject primaryKeyObject 
+                    = (PrimaryKeyObject) parameterObject;
+                message = "The desired " + objectName + " with key " 
+                    + primaryKeyObject.getKeyAsObject() + " does not exist.";
+            } else {
+                message = "The desired " + objectName + " does not exist.";
+            }
+            CoreNotificationHelper.notifyDataRetrievalFailure(
+                message, objectName);
         }
         return result;
     }
@@ -151,9 +173,19 @@ public class ConvenienceSqlMapClientTemplate extends SqlMapClientTemplate {
         String statementName = "delete" + objectName;
         int actualRowsAffected = delete(statementName, parameterObject);
         if (actualRowsAffected != requiredRowsAffected) {
+            String message;
+            if (parameterObject instanceof PrimaryKeyObject) {
+                PrimaryKeyObject primaryKeyObject 
+                    = (PrimaryKeyObject) parameterObject;
+                message = objectName + " with key " 
+                    + primaryKeyObject.getKeyAsObject() 
+                    + " could not be deleted.";
+            } else {
+                message = objectName + " could not be deleted.";
+            }
             CoreNotificationHelper
                 .notifyJdbcUpdateAffectedIncorrectNumberOfRows(
-                    objectName + " could not be deleted.", objectName, 
+                    message, objectName, 
                     statementName, requiredRowsAffected, actualRowsAffected);
         }
     }
