@@ -17,9 +17,6 @@
         <!-- Working set -->
         <attribute name="set" value="keyword-modules"/>
         
-        <!-- Binary version -->
-        <attribute name="binrelease.version" value="1.2"/>
-        
         <!-- Commons attributes enabled -->
         <attribute name="commons-attributes.enable" value="true"/>
         
