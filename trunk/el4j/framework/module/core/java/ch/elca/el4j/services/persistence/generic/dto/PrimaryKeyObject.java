@@ -41,6 +41,12 @@ public interface PrimaryKeyObject {
     public void setKey(Object keyObject);
     
     /**
+     * @return Returns the key as an object or <code>null</code> if it does not
+     *         exist.
+     */
+    public Object getKeyAsObject();
+    
+    /**
      * This method will be called when the primary key object is requested to
      * generate a key object for himself.
      */

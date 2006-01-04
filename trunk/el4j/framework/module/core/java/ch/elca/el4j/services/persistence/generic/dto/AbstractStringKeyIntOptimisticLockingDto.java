@@ -65,6 +65,13 @@ public abstract class AbstractStringKeyIntOptimisticLockingDto
     /**
      * {@inheritDoc}
      */
+    public final Object getKeyAsObject() {
+        return isKeyNew() ? null : getKey();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public void setKey(Object keyObject) {
         String key = (keyObject == null) ? null : keyObject.toString();
         setKey(key);

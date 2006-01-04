@@ -53,6 +53,13 @@ public abstract class AbstractIntKeyIntOptimisticLockingDto
     public final int getKey() {
         return m_key;
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public final Object getKeyAsObject() {
+        return isKeyNew() ? null : new Integer(getKey());
+    }
 
     /**
      * @param key The key to set.
