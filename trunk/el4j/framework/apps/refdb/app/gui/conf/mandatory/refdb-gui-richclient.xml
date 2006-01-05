@@ -9,7 +9,8 @@
     <!-- Author: $Author$ -->
 
     <!-- 
-        The application itself.
+        The application itself. The bean with id "application" is looked up
+        by the application launcher.
     -->
     <bean id="application"
         class="org.springframework.richclient.application.Application">
@@ -17,21 +18,8 @@
             <ref bean="applicationDescriptor" />
         </constructor-arg>
         <constructor-arg index="1">
-            <ref bean="refdbLifecycleAdvisor" />
+            <ref bean="applicationLifecycleAdvisor" />
         </constructor-arg>
-    </bean>
-
-    <!--
-        Main bean to control the application.
-    -->
-    <bean id="refdbLifecycleAdvisor"
-        class="org.springframework.richclient.application.config.DefaultApplicationLifecycleAdvisor">
-        <property name="windowCommandBarDefinitions">
-            <value>classpath:refdb/internal/commands.xml</value>
-        </property>
-        <property name="startingPageId">
-            <value>keywordPage</value>
-        </property>
     </bean>
 
     <!-- 
@@ -43,83 +31,136 @@
             <value>1.0</value>
         </property>
         <property name="buildId">
-            <value>20051128</value>
+            <value>2006-01-05</value>
+        </property>
+    </bean>
+
+    <!--
+        Bean to control application's lifecycle. Constructor argument of 
+        application.
+    -->
+    <bean id="applicationLifecycleAdvisor"
+        class="org.springframework.richclient.application.config.DefaultApplicationLifecycleAdvisor">
+        <property name="windowCommandBarDefinitions">
+            <!--
+                Separate spring configuration file that contains the command
+                definitions.
+            -->
+            <value>classpath:refdb/internal/commands.xml</value>
+        </property>
+        <property name="startingPageId">
+            <!--
+                Bean with this id must be a page descriptor. This page will be
+                loaded on startup.
+            -->
+            <value>keywordPage</value>
         </property>
     </bean>
 
     <!--
         Application window prototype. Implementation for multiple views per page
-        is taken.
+        is taken. Must be prototype!
     -->
     <bean id="applicationWindowPrototype"
         class="ch.elca.el4j.services.gui.richclient.windows.MultipleViewsApplicationWindow"
         singleton="false">
     </bean>
-    
+
     <!--
         Application page prototype. Implementation for multiple views per page
-        is taken.
+        is taken. Must be prototype!
     -->
     <bean id="applicationPagePrototype"
         class="ch.elca.el4j.services.gui.richclient.pages.MultipleViewsApplicationPage"
         singleton="false">
     </bean>
-    
+
     <!--
-        Keyword page.
+        Keyword page descriptor. Describs the page for keywords.
     -->
     <bean id="keywordPage"
         class="ch.elca.el4j.services.gui.richclient.pages.descriptors.MultipleViewsPageDescriptor">
         <property name="viewDescriptorsCenter">
-            <ref bean="keywordView"/>
+            <!-- 
+                The following view will be placed in the center of the page.
+            -->
+            <ref bean="keywordTableView" />
         </property>
         <property name="viewDescriptorsLeft">
-            <ref bean="keywordSearchView"/>
+            <!-- 
+                The following view will be placed in the left of the page.
+            -->
+            <ref bean="keywordSearchView" />
         </property>
     </bean>
 
     <!--
-        Keyword view descriptor.
+        Keyword table view descriptor. Describs the keyword table view. This 
+        class is needed as factory for the given viewPrototypeBeanName. 
     -->
-    <bean id="keywordView"
+    <bean id="keywordTableView"
         class="ch.elca.el4j.services.gui.richclient.support.LookupViewDescriptor">
         <property name="viewPrototypeBeanName">
-            <idref bean="keywordViewTarget" />
-        </property>    
+            <idref bean="keywordTableViewTarget" />
+        </property>
     </bean>
 
     <!-- 
-        Keyword view target. Must be prototype!
+        Keyword table view target. Must be prototype! Implemented by user.
     -->
-    <bean id="keywordViewTarget"
+    <bean id="keywordTableViewTarget"
         class="ch.elca.el4j.apps.refdb.gui.views.KeywordView"
         singleton="false">
         <property name="referenceService">
+            <!--
+                Is the service used in this application. For module *refdb-gui*
+                this is the reference service. We get and put dtos by this
+                service.
+            -->
             <ref bean="referenceService" />
         </property>
         <property name="beanTableModel">
+            <!--
+                Is the table model for keyword dtos.
+            -->
             <ref bean="keywordBeanTableModel" />
         </property>
         <property name="beanExecutors">
+            <!--
+                These are the executors for this view.
+            -->
             <list>
-                <ref bean="keywordPropertiesExecutor"/>
-                <ref bean="keywordDeleteExecutor"/>
-                <ref bean="keywordSelectAllExecutor"/>
-                <ref bean="keywordCreateNewExecutor"/>
+                <!--
+                    Executor to change keyword data.
+                -->
+                <ref bean="keywordPropertiesExecutor" />
+                <!--
+                    Executor to delete keywords.
+                -->
+                <ref bean="keywordDeleteExecutor" />
+                <!--
+                    Executor to select all displayed keywords.
+                -->
+                <ref bean="keywordSelectAllExecutor" />
+                <!--
+                    Executor to create a keyword.
+                -->
+                <ref bean="keywordCreateNewExecutor" />
             </list>
         </property>
     </bean>
 
     <!--
-        Keyword search view descriptor.
+        Keyword search view descriptor. Describs the keyword search view. This 
+        class is needed as factory for the given viewPrototypeBeanName.
     -->
     <bean id="keywordSearchView"
         class="ch.elca.el4j.services.gui.richclient.support.LookupViewDescriptor">
         <property name="viewPrototypeBeanName">
             <idref bean="keywordSearchViewTarget" />
-        </property>    
+        </property>
     </bean>
-    
+
     <!--
         Keyword search view target. Must be prototype!
     -->
@@ -127,12 +168,23 @@
         class="ch.elca.el4j.services.gui.richclient.views.SearchView"
         singleton="false">
         <property name="searchItems">
+            <!--
+                These are the search items used for this view.
+            -->
             <list>
+                <!--
+                    Search item for keyword property name.
+                    This allows a like search.
+                -->
                 <bean class="ch.elca.el4j.services.gui.search.LikeSearchItem">
                     <property name="targetProperty">
                         <value>name</value>
                     </property>
                 </bean>
+                <!--
+                    Search item for keyword property description.
+                    This allows a like search.
+                -->
                 <bean class="ch.elca.el4j.services.gui.search.LikeSearchItem">
                     <property name="targetProperty">
                         <value>description</value>
@@ -141,26 +193,29 @@
             </list>
         </property>
     </bean>
-    
-    
+
+
     <!-- 
-        General keyword bean properties.
+        Abstract bean. General keyword bean properties.
     -->
     <bean id="generalKeywordProperties" abstract="true">
         <property name="beanClass">
             <value>ch.elca.el4j.apps.keyword.dto.KeywordDto</value>
         </property>
-    </bean>    
+    </bean>
 
     <!-- 
-        Table model for keyword dtos.
+        Table model for keyword dtos. Extends bean "generalKeywordProperties".
     -->
     <bean id="keywordBeanTableModel"
         class="ch.elca.el4j.services.gui.richclient.models.BeanTableModel"
-        parent="generalKeywordProperties"
-        singleton="false">
+        parent="generalKeywordProperties" singleton="false">
         <property name="columnPropertyNames">
             <list>
+                <!--
+                    List properties that must be displayed in shown table. The 
+                    order here is the same in shown table.
+                -->
                 <value>name</value>
                 <value>description</value>
             </list>
@@ -174,46 +229,61 @@
         class="ch.elca.el4j.services.gui.richclient.executors.BeanPropertiesExecutor"
         singleton="false">
         <property name="propertiesFormBeanNames">
+            <!--
+                Displayed property forms. Here only one is diplayed for all 
+                keyword properties.
+            -->
             <idref bean="keywordPropertiesFormAll" />
         </property>
         <property name="dialogBeanName">
+            <!--
+                Dialog to display.
+            -->
             <idref bean="keywordPropertiesApplicationDialog" />
         </property>
     </bean>
-    
-        <!-- 
-            Form that describs which keyword properties should be displayed.
-        -->
-        <bean id="keywordPropertiesFormAll"
-            class="ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm"
-            singleton="false">
-            <property name="shownBeanProperties">
-                <list>
-                    <value>key</value>
-                    <value>name</value>
-                    <value>description</value>
-                </list>
-            </property>
-            <property name="readOnlyBeanProperties">
-                <list>
-                    <value>key</value>
-                </list>
-            </property>
-            <property name="propertiesId">
-                <value>keywordFormAll</value>
-            </property>
-        </bean>
-    
-        <!--
-            Application dialog to change properties of a keyword.
-        -->
-        <bean id="keywordPropertiesApplicationDialog"
-            class="ch.elca.el4j.apps.refdb.gui.dialogs.KeywordPropertiesApplicationDialog"
-            singleton="false">
-            <property name="propertiesId">
-                <value>keywordProperties</value>
-            </property>            
-        </bean>
+
+    <!-- 
+        Form that describs which keyword properties should be displayed.
+    -->
+    <bean id="keywordPropertiesFormAll"
+        class="ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm"
+        singleton="false">
+        <property name="shownBeanProperties">
+            <!--
+                Are the shown bean properties. The order is the same in 
+                dialog.
+            -->
+            <list>
+                <value>key</value>
+                <value>name</value>
+                <value>description</value>
+            </list>
+        </property>
+        <property name="readOnlyBeanProperties">
+            <!--
+                Are shown but read only bean properties.
+            -->
+            <list>
+                <value>key</value>
+            </list>
+        </property>
+        <property name="propertiesId">
+            <value>keywordFormAll</value>
+        </property>
+    </bean>
+
+    <!--
+        Application dialog to change properties of a keyword.
+        Implemented by user.
+    -->
+    <bean id="keywordPropertiesApplicationDialog"
+        class="ch.elca.el4j.apps.refdb.gui.dialogs.KeywordPropertiesApplicationDialog"
+        singleton="false">
+        <property name="propertiesId">
+            <value>keywordProperties</value>
+        </property>
+    </bean>
 
     <!-- 
         Executor to delete keywords.
@@ -222,6 +292,9 @@
         class="ch.elca.el4j.services.gui.richclient.executors.BeanConfirmationExecutor"
         singleton="false">
         <property name="dialogBeanName">
+            <!--
+                Dialog to display.
+            -->
             <idref bean="keywordDeleteApplicationDialog" />
         </property>
         <property name="commandId">
@@ -229,35 +302,42 @@
         </property>
     </bean>
 
-        <!--
-            Application dialog to change properties of a keyword.
-        -->
-        <bean id="keywordDeleteApplicationDialog"
-            class="ch.elca.el4j.apps.refdb.gui.dialogs.DeleteKeywordsConfirmationDialog"
-            singleton="false">
-            <property name="propertiesId">
-                <value>keywordDelete</value>
-            </property>
-        </bean>
+    <!--
+        Application dialog to change properties of a keyword.
+    -->
+    <bean id="keywordDeleteApplicationDialog"
+        class="ch.elca.el4j.apps.refdb.gui.dialogs.DeleteKeywordsConfirmationDialog"
+        singleton="false">
+        <property name="propertiesId">
+            <value>keywordDelete</value>
+        </property>
+    </bean>
 
     <!-- 
         Executor to select all keywords.
     -->
     <bean id="keywordSelectAllExecutor"
         class="ch.elca.el4j.services.gui.richclient.executors.BeanSelectAllExecutor"
-        singleton="false"/>
+        singleton="false" />
 
     <!--
-        Executor to create new keywords.
+        Executor to create new keywords. 
+        Extends bean "generalKeywordProperties".
     -->
     <bean id="keywordCreateNewExecutor"
         class="ch.elca.el4j.services.gui.richclient.executors.BeanWizardExecutor"
-        singleton="false"
-        parent="generalKeywordProperties">
+        singleton="false" parent="generalKeywordProperties">
         <property name="propertiesFormBeanNames">
+            <!--
+                Displayed property forms. Here only one is diplayed for most 
+                keyword properties.
+            -->
             <idref bean="keywordPropertiesFormNormal" />
         </property>
         <property name="dialogBeanName">
+            <!--
+                Dialog to display.
+            -->
             <idref bean="keywordCreateNewWizard" />
         </property>
         <property name="commandId">
@@ -265,40 +345,53 @@
         </property>
     </bean>
 
-        <!-- 
-            Form that describs which keyword properties should be displayed.
-        -->
-        <bean id="keywordPropertiesFormNormal"
-            class="ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm"
-            singleton="false">
-            <property name="shownBeanProperties">
-                <list>
-                    <value>name</value>
-                    <value>description</value>
-                </list>
-            </property>
-            <property name="propertiesId">
-                <value>keywordFormNormal</value>
-            </property>
-        </bean>
-    
-        <!--
-            Wizard to create a new keyword.
-        -->
-        <bean id="keywordCreateNewWizard"
-            class="ch.elca.el4j.apps.refdb.gui.wizards.CreateNewKeywordWizard"
-            singleton="false">
-            <property name="propertiesId">
-                <value>keywordCreateNew</value>
-            </property>
-        </bean>
+    <!-- 
+        Form that describs which keyword properties should be displayed.
+    -->
+    <bean id="keywordPropertiesFormNormal"
+        class="ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm"
+        singleton="false">
+        <property name="shownBeanProperties">
+            <!--
+                Are the shown bean properties. The order is the same in 
+                dialog.
+            -->
+            <list>
+                <value>name</value>
+                <value>description</value>
+            </list>
+        </property>
+        <property name="propertiesId">
+            <value>keywordFormNormal</value>
+        </property>
+    </bean>
 
+    <!--
+        Wizard to create a new keyword. Implemented by user.
+    -->
+    <bean id="keywordCreateNewWizard"
+        class="ch.elca.el4j.apps.refdb.gui.wizards.CreateNewKeywordWizard"
+        singleton="false">
+        <property name="propertiesId">
+            <value>keywordCreateNew</value>
+        </property>
+    </bean>
 
 
 
 
     <!-- 
-        Place where applications will be configured.
+        Sends all application events to every registered application listener.
+        Used views are registered application listeners. The bean with id 
+        "applicationEventMulticaster" is looked up by the application context.
+    -->
+    <bean id="applicationEventMulticaster"
+        class="org.springframework.context.event.SimpleApplicationEventMulticaster" />
+
+    <!-- 
+        Place where application objects will be configured. The bean with id 
+        "applicationObjectConfigurer" is looked up by the application services
+        class.
     -->
     <bean id="applicationObjectConfigurer"
         class="org.springframework.richclient.application.config.DefaultApplicationObjectConfigurer">
@@ -314,13 +407,9 @@
     </bean>
 
     <!-- 
-        Sends all application events to every registered application listener.
-    -->
-    <bean id="applicationEventMulticaster"
-        class="org.springframework.context.event.SimpleApplicationEventMulticaster" />
-
-    <!-- 
-        Where components are created and receive all needed stuff.
+        Where components are created and can receive all needed stuff. The bean 
+        with id "componentFactory" is looked up by the application services 
+        class.
     -->
     <bean id="componentFactory"
         class="org.springframework.richclient.factory.DefaultComponentFactory">
@@ -339,6 +428,14 @@
         class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basenames">
             <list>
+                <!--
+                    Takes the localized messages. First line means that file
+                    with name "messages_de.properties" will be taken from 
+                    directory "refdb/properties" if current language is German.
+                    If this file does not exist file with name 
+                    "messages.properties" will be taken. Same for the second 
+                    line.
+                -->
                 <value>refdb.properties.messages</value>
                 <value>org.springframework.richclient.application.messages</value>
             </list>
@@ -354,6 +451,9 @@
             <ref bean="imageResourcesFactory" />
         </constructor-arg>
         <property name="brokenImageIndicator">
+            <!-- 
+                This image will be taken if the requested image does not exist.
+            -->
             <value>images/alert/error_obj.gif</value>
         </property>
     </bean>
@@ -386,7 +486,9 @@
     </bean>
 
     <!-- 
-        Sets the look and feel for the application.
+        Sets the look and feel for the application. The bean 
+        with id "lookAndFeelConfigurer" is looked up by the application
+        services class.
     -->
     <bean id="lookAndFeelConfigurer"
         class="org.springframework.richclient.application.config.JGoodiesLooksConfigurer">
@@ -398,7 +500,8 @@
 
     <!-- 
         Intercepts displayed components (i.e. for highlighting a component on a
-        validation error).
+        validation error). The bean with id "formComponentInterceptorFactory" 
+        is looked up by the application services class.
     -->
     <bean id="formComponentInterceptorFactory"
         class="org.springframework.richclient.form.builder.support.ChainedInterceptorFactory">
@@ -406,13 +509,16 @@
             <list>
                 <bean
                     class="org.springframework.richclient.form.builder.support.OverlayValidationInterceptorFactory" />
-                <bean class="org.springframework.richclient.text.TextComponentPopupInterceptorFactory" />
-                <bean class="org.springframework.richclient.form.builder.support.ColorValidationInterceptorFactory">
+                <bean
+                    class="org.springframework.richclient.text.TextComponentPopupInterceptorFactory" />
+                <bean
+                    class="org.springframework.richclient.form.builder.support.ColorValidationInterceptorFactory">
                     <property name="errorColor">
                         <value>255,245,245</value>
                     </property>
                 </bean>
-                <bean class="org.springframework.richclient.list.ComboBoxAutoCompletionInterceptorFactory">
+                <bean
+                    class="org.springframework.richclient.list.ComboBoxAutoCompletionInterceptorFactory">
                     <property name="messageSource">
                         <ref bean="messageSource" />
                     </property>
@@ -423,13 +529,15 @@
 
     <!--
         Fetches names, labels, captions and descriptions displayed by components
-        from message source.
+        from message source. The bean with id "formPropertyFaceDescriptorSource" 
+        is looked up by the application services class.
     -->
     <bean id="formPropertyFaceDescriptorSource"
         class="org.springframework.binding.form.support.MessageSourceFormPropertyFaceDescriptorSource" />
-    
+
     <!-- 
-        Validation rules for input data.
+        Validation rules for input data. Used in all forms. The bean with id 
+        "rulesSource" is looked up by the application services class.
     -->
     <bean id="rulesSource"
         class="ch.elca.el4j.apps.refdb.rules.RefdbValidationRulesSource" />
