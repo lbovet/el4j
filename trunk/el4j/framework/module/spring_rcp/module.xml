@@ -2,9 +2,9 @@
 <ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" 
     xmlns:ant="antlib:org.apache.tools.ant">
 
-    <module name="common-spring_rcp">
+    <module name="module-spring_rcp">
         <!-- Working set -->
-        <attribute name="set" value="common-modules"/>
+        <attribute name="set" value="framework-modules"/>
         
         <!-- Binary version -->
         <attribute name="binrelease.version" value="1.0"/>

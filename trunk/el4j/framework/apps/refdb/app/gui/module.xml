@@ -51,8 +51,8 @@
         <dependency module="refdb-core" eu="server">
             <mapping target="implementation"/>
         </dependency>
-        <dependency module="common-spring_rcp"/>
         <dependency module="common-database"/>
+        <dependency module="module-spring_rcp"/>
         <dependency module="module-remoting_and_interface_enrichment"/>
         <dependency module="module-web"/>
         <dependency module="module-env"/>

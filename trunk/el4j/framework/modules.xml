@@ -13,6 +13,7 @@
     <include file="module/exception_handling/module.xml"/>
     <include file="module/env/module.xml"/>
     <include file="module/daemon_manager/module.xml"/>
+    <include file="module/spring_rcp/module.xml"/>
 
     <!-- Test modules. -->
     <include file="tests/core/module.xml"/>
@@ -34,7 +35,6 @@
     
     <!-- Application common modules. -->
     <include file="apps/common/database/module.xml"/>
-    <include file="apps/common/spring_rcp/module.xml"/>
     
     <!-- Application main modules. -->
     <include file="apps/keyword/app/core/module.xml"/>
