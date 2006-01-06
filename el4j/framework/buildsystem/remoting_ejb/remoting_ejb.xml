@@ -119,7 +119,7 @@
       value="${buildsystem.lib.directory}/velocity-1.4.jar"/>
     <property
       name="spring.jar"
-      value="${buildsystem.lib.directory}/spring-1.2.5.jar"/>
+      value="${buildsystem.lib.directory}/spring-1.2.6.jar"/>
     <property
       name="xdoclet.jar"
       value="${buildsystem.lib.directory}/xdoclet-${xdoclet.version}.jar"/>
