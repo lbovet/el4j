@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <bean id="daemonManagerOne" 
+        class="ch.elca.el4j.services.daemonmanager.impl.DaemonManagerImpl">
+        <property name="checkPeriod" value="10000"/>
+        <property name="maxMissingHeartbeats" value="3"/>
+        <property name="daemonJoinTimeout" value="12000"/>
+        <property name="minDaemonStartupDelay" value="200"/>
+        <property name="maxDaemonStartupDelay" value="1000"/>
+        <property name="daemons">
+            <set>
+                <ref bean="daemonOne"/>
+                <ref bean="daemonTwo"/>
+                <ref bean="daemonThree"/>
+                <ref bean="daemonFour"/>
+                <ref bean="daemonFive"/>
+            </set>
+        </property>
+    </bean>
+</beans>

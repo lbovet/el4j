@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" 
+    xmlns:ant="antlib:org.apache.tools.ant">
+    
+    <!-- Main modules. -->
+    <include file="module/core/module.xml"/>
+    <include file="module/web/module.xml"/>
+    <include file="module/remoting_and_interface_enrichment/module.xml"/>
+    <include file="module/remoting_ejb/module.xml"/>
+    <include file="module/jmx/module.xml"/>
+    <include file="module/security/module.xml"/>
+    <include file="module/light_statistics/module.xml"/>
+    <include file="module/exception_handling/module.xml"/>
+    <include file="module/env/module.xml"/>
+    <include file="module/daemon_manager/module.xml"/>
+    <include file="module/spring_rcp/module.xml"/>
+
+    <!-- Test modules. -->
+    <include file="tests/core/module.xml"/>
+    <include file="tests/core_integration/module.xml"/>
+    <include file="tests/remoting_and_interface_enrichment/module.xml"/>
+    <include file="tests/remoting_ejb/module.xml"/>
+    <include file="tests/jmx/module.xml"/>
+    <include file="tests/security/module.xml"/>
+    <include file="tests/exception_handling/module.xml"/>
+    <include file="tests/env/module.xml"/>
+    <include file="tests/daemon_manager/module.xml"/>
+
+    <!-- Demo modules. -->
+    <include file="demos/remoting_and_interface_enrichment/module.xml"/>
+    <include file="demos/light_statistics/module.xml"/>
+    <include file="demos/daemon_manager/module.xml"/>
+    <include file="demos/executable_distribution/module.xml"/>
+    
+    
+    <!-- Application common modules. -->
+    <include file="apps/common/database/module.xml"/>
+    
+    <!-- Application main modules. -->
+    <include file="apps/keyword/app/core/module.xml"/>
+    <include file="apps/refdb/app/core/module.xml"/>
+    <include file="apps/refdb/app/gui/module.xml"/>
+
+    <!-- Application test modules. -->
+    <include file="apps/keyword/tests/core/module.xml"/>
+    <include file="apps/refdb/tests/core/module.xml"/>
+    
+</ant:project>

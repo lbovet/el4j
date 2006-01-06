@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+    Spring bean configuration file to access burlap service.
+-->
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+    
+    <import resource="classpath:template/common/protocols-config.xml"/>
+    
+    <bean id="calculator" class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
+        <property name="remoteProtocol">
+            <ref bean="burlapProtocol" />
+        </property>
+        <property name="serviceInterface">
+            <value>ch.elca.el4j.tests.remoting.service.Calculator</value>
+        </property>
+        <property name="serviceName">
+            <value>Calculator.Burlap.Remotingtests</value>
+        </property>
+    </bean>
+</beans>

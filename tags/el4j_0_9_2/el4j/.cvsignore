@@ -1,0 +1,8 @@
+external-tools
+dist
+*.lnk
+*.exe
+*.bat
+*.sh
+.project
+.classpath

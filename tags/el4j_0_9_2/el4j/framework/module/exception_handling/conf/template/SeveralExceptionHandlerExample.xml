@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<!-- 
+    Spring bean configuration how to use exception handlers.
+-->
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <bean id="unsafeA" class="ch.elca.el4j.tests.services.exceptionhandler.AImpl"/>
+    
+    <bean id="A" class="ch.elca.el4j.services.exceptionhandler.SafetyFacadeFactoryBean">
+        <property name="target"><ref local="unsafeA"/></property>
+        <property name="exceptionConfigurations">
+            <list>
+                <bean class="ch.elca.el4j.services.exceptionhandler.ClassExceptionConfiguration">
+                    <property name="exceptionTypes">
+                        <list>
+                            <value>java.lang.ArithmeticException</value>
+                        </list>
+                    </property>
+                    <property name="exceptionHandler">
+                        <bean class="ch.elca.el4j.services.exceptionhandler.handler.SequenceExceptionHandler">
+                            <property name="exceptionHandlers">
+                                <list>
+                                    <bean class="ch.elca.el4j.services.exceptionhandler.handler.SimpleLogExceptionHandler">
+                                        <property name="useDynamicLogger"><value>true</value></property>
+                                    </bean>
+                
+                                    <bean class="ch.elca.el4j.services.exceptionhandler.handler.RetryExceptionHandler">
+                                        <property name="retries"><value>5</value></property>
+                                        <property name="sleepMillis"><value>0</value></property>
+                                        <property name="useDynamicLogger"><value>true</value></property>
+                                    </bean>
+            
+                                    <bean class="ch.elca.el4j.services.exceptionhandler.handler.SimpleExceptionTransformerExceptionHandler">
+                                        <property name="transformedExceptionClass">
+                                            <value>java.lang.RuntimeException</value>
+                                        </property>
+                                    </bean>
+                                </list>
+                            </property>
+                        </bean>
+                    </property>
+                </bean>
+                
+                <bean class="ch.elca.el4j.services.exceptionhandler.ClassExceptionConfiguration">
+                    <property name="exceptionTypes">
+                        <list>
+                            <value>java.lang.UnsupportedOperationException</value>
+                        </list>
+                    </property>
+                    <property name="exceptionHandler">
+                        <bean class="ch.elca.el4j.tests.services.exceptionhandler.ReconfigureExceptionHandler">
+                            <property name="c"><ref local="C"/></property>
+                        </bean>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+</beans>

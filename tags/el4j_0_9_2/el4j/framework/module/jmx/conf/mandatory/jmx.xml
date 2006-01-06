@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<!-- 
+    Spring bean configuration file for jmx mBean server and loader.
+-->
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <!-- The MBean Server created by the MBeanServerFactoryBean -->
+    <bean id="mBeanServer" class="ch.elca.el4j.services.monitoring.jmx.MBeanServerFactoryBean">
+        <property name="defaultDomain">
+            <value>foobar1</value>
+        </property>
+    </bean>
+    <!-- The loader which sets up the JMX world -->
+    <bean id="jmxLoader" class="ch.elca.el4j.services.monitoring.jmx.Loader">
+        <property name="server">
+            <ref bean="mBeanServer"/>
+        </property>
+    </bean>
+</beans>
