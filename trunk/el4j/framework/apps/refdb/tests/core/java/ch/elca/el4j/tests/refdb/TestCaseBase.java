@@ -44,7 +44,7 @@ import junit.framework.TestCase;
  * 
  * @author Martin Zeltner (MZE)
  */
-public class TestCaseBase extends TestCase {
+public abstract class TestCaseBase extends TestCase {
     /**
      * Private logger.
      */
