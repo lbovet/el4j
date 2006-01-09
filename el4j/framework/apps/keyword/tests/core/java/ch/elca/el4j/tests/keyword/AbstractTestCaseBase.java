@@ -76,7 +76,7 @@ public abstract class AbstractTestCaseBase extends TestCase {
     /**
      * Default constructor. Loads the application context.
      */
-    public AbstractTestCaseBase() {
+    protected AbstractTestCaseBase() {
         m_applicationContext = new ModuleApplicationContext(
             m_includeConfigLocations, m_excludeConfigLocations, false,
             (ApplicationContext) null);
