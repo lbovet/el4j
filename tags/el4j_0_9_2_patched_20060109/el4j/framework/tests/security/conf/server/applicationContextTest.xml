@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <!-- =================== SECURITY SYSTEM DEFINITIONS ================== -->
+    <!-- RunAsManager -->
+    <bean id="runAsManager" class="net.sf.acegisecurity.runas.RunAsManagerImpl">
+        <property name="key">
+            <value>my_run_as_password</value>
+        </property>
+    </bean>
+    <!-- ~~~~~~~~~~~~~~~~~~~~ AUTHENTICATION DEFINITIONS ~~~~~~~~~~~~~~~~~~ -->
+    <!-- This authentication provider accepts any presented TestingAuthenticationToken -->
+    <bean id="extendedTestingAuthenticationProvider" 
+        class="ch.elca.el4j.tests.security.provider.ExtendedTestingAuthenticationProvider"/>
+    <!-- The authentication manager that iterates through our only authentication provider -->
+    <bean id="authenticationManager" 
+        class="net.sf.acegisecurity.providers.ProviderManager">
+        <property name="providers">
+            <list>
+                <ref local="extendedTestingAuthenticationProvider"/>
+            </list>
+        </property>
+    </bean>
+    <!-- ~~~~~~~~~~~~~~~~~~~~ AUTHORIZATION DEFINITIONS ~~~~~~~~~~~~~~~~~~~ -->
+    <!-- An access decision voter that reads ROLE_* configuaration settings -->
+    <bean id="roleVoter" class="net.sf.acegisecurity.vote.RoleVoter"/>
+    <!-- A unanimous access decision manager -->
+    <bean id="accessDecisionManager" 
+        class="net.sf.acegisecurity.vote.UnanimousBased">
+        <property name="allowIfAllAbstainDecisions">
+            <value>false</value>
+        </property>
+        <property name="decisionVoters">
+            <list>
+                <ref local="roleVoter"/>
+            </list>
+        </property>
+    </bean>
+</beans>

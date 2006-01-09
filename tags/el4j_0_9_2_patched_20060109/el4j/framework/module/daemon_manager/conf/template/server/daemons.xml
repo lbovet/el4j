@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!-- 
+    Spring bean configuration file with two abstract daemons that are used in
+    five daemons.
+-->
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <bean id="fastAbstractDaemon" abstract="true" singleton="false"
+        class="ch.elca.el4j.tests.daemonmanager.helpers.ActorDaemon">
+        <property name="minPeriodicity" value="2000"/>
+        <property name="simulateDurationOfOneJobRunMin" value="500"/>
+        <property name="simulateDurationOfOneJobRunMax" value="1500"/>
+    </bean>
+
+    <bean id="slowAbstractDaemon" abstract="true" singleton="false"
+        class="ch.elca.el4j.tests.daemonmanager.helpers.ActorDaemon">
+        <property name="minPeriodicity" value="10000"/>
+        <property name="simulateDurationOfOneJobRunMin" value="3000"/>
+        <property name="simulateDurationOfOneJobRunMax" value="7000"/>
+    </bean>
+
+    <bean id="daemonOne" parent="fastAbstractDaemon"
+        class="ch.elca.el4j.tests.daemonmanager.helpers.ActorDaemon">
+        <property name="identification" value="Daemon #1"/>
+    </bean>
+
+    <bean id="daemonTwo" parent="fastAbstractDaemon"
+        class="ch.elca.el4j.tests.daemonmanager.helpers.ActorDaemon">
+        <property name="identification" value="Daemon #2"/>
+    </bean>
+
+    <bean id="daemonThree" parent="slowAbstractDaemon"
+        class="ch.elca.el4j.tests.daemonmanager.helpers.ActorDaemon">
+        <property name="identification" value="Daemon #3"/>
+    </bean>
+
+    <bean id="daemonFour" parent="slowAbstractDaemon"
+        class="ch.elca.el4j.tests.daemonmanager.helpers.ActorDaemon">
+        <property name="identification" value="Daemon #4"/>
+    </bean>
+
+    <bean id="daemonFive" parent="slowAbstractDaemon"
+        class="ch.elca.el4j.tests.daemonmanager.helpers.ActorDaemon">
+        <property name="identification" value="Daemon #5"/>
+    </bean>
+</beans>

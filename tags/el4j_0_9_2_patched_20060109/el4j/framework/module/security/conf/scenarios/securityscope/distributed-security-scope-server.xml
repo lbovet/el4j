@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+    Spring bean configuration file to export the authentication manager.
+-->
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+    
+    <bean id="authenticationManagerExporter"
+        class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
+        <property name="remoteProtocol">
+            <ref bean="remoteProtocol" />
+        </property>
+        <property name="serviceInterface">
+            <value>net.sf.acegisecurity.AuthenticationManager</value>
+        </property>
+        <property name="service">
+            <value>authenticationManager</value>
+        </property>
+    </bean>
+    
+    <bean id="authenticationServiceContextPasser"
+        class="ch.elca.el4j.services.security.authentication.AuthenticationServiceContextPasser">
+        <property name="implicitContextPassingRegistry">
+            <ref bean="implicitContextPassingRegistry"/>
+        </property>
+    </bean>
+    
+</beans>

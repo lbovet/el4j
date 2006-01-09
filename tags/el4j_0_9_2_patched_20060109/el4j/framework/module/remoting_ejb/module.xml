@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!-- project definition -->
+<ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" xmlns:ant="antlib:org.apache.tools.ant">
+    <module name="module-remoting_ejb">
+        <attribute name="set" value="framework-modules"/>
+        <attribute name="binrelease.version" value="1.0"/>
+        <dependency module="module-remoting_and_interface_enrichment"/>
+        <dependency jar="ejb-2.0.jar"/>
+    </module>
+</ant:project>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+    Spring bean configuration file to collect protocols that must be exported in
+    webserver.
+-->
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+    
+    <import resource="classpath:scenarios/distributed/server/web/hessian-server-config.xml"/>
+    
+    <bean id="beanNameHandlerMapping" 
+        class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+</beans>

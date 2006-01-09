@@ -1,0 +1,325 @@
+<?xml version="1.0"?>
+<!--
+EL4Ant, a Ant-based buildsystem, http://el4ant.sourceforge.net
+Copyright (C) 2005 by ELCA Informatique SA, Av. de la Harpe 22-24,
+1000 Lausanne, Switzerland, http://www.elca.ch
+
+This program is published under the GNU General Public License (GPL) license.
+http://www.gnu.org/licenses/gpl.txt
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+For alternative licensing, please contact info@elca.ch
+-->
+<project
+  name="el4ant"
+  default="configure"
+  xmlns:antcontrib="antlib:net.sf.antcontrib"
+  xmlns:el4ant="antlib:ch.elca.el4ant">
+<description>
+EL4Ant build file - version 0.9.2
+</description>
+
+  <!-- Version: $Revision$ -->
+  <!-- Source: $URL: svn://cvs.elca.ch/subversion/el4ant/trunk/bootstrap.xml $ -->
+  <!-- Date: $Date$ -->
+  <!-- Author: $Author$ -->
+
+  <target
+    name="init.core"
+    unless="init.executed">
+    <property file="etc/bootstrap.properties"/>
+
+    <!-- Check Build System file consistency -->
+    <fail message="Version control issue. Please assume that bootstrap.xml
+and etc/bootstrap.properties comes from the same release.">
+      <condition>
+        <not>
+          <!-- Warning: update version here with release number -->
+          <equals arg1="${buildsystem.version}" arg2="0.9.2"/>
+        </not>
+      </condition>
+    </fail>
+
+    <!-- Check AntContrib availability or fail -->
+    <fail message="AntContrib is not available.
+Expects ${buildsystem.antcontrib.jar} or in Ant lib/ directory.">
+      <condition>
+        <not>
+          <available
+            classpath="${buildsystem.antcontrib.jar}"
+            resource="net/sf/antcontrib/antlib.xml"/>
+        </not>
+      </condition>
+    </fail>
+    <!-- Load AntContrib tasks -->
+    <typedef
+      classpath="${java.class.path}:${buildsystem.antcontrib.jar}"
+      resource="net/sf/antcontrib/antlib.xml"
+      uri="antlib:net.sf.antcontrib"/>
+  </target>
+
+  <!-- EL4Ant project configuration -->
+  <target
+    name="configure"
+    depends="init.core"
+    description="[C] Create the project build file and properties">
+
+    <!-- Get current build.xml checksum -->
+    <antcontrib:if>
+      <available file="${buildsystem.project.build}" type="file"/>
+      <antcontrib:then>
+        <checksum
+          file="${buildsystem.project.build}"
+          property="configure.build.checksum"/>
+        <echo
+          message="Initial ${buildsystem.project.build} checksum ${configure.build.checksum}"
+          level="verbose"/>
+      </antcontrib:then>
+    </antcontrib:if>
+
+    <tstamp/>
+    <mkdir dir="${buildsystem.dist.directory}"/>
+
+    <antcontrib:if>
+      <available file="${buildsystem.core.java}" type="dir"/>
+
+      <antcontrib:then>
+        <!-- Compile and package core Ant tasks and model classes -->
+        <mkdir dir="${buildsystem.core.classes}"/>
+        <javac
+          srcdir="${buildsystem.core.java}"
+          destdir="${buildsystem.core.classes}"
+          deprecation="true"
+          debug="${buildsystem.javac.debug}"
+          encoding="${buildsystem.javac.encoding}"/>
+        <jar
+          destfile="${buildsystem.dist.directory}/${buildsystem.core.jar}">
+          <fileset dir="${buildsystem.core.classes}"/>
+          <fileset dir="${buildsystem.core.java}">
+            <exclude name="**/*.java"/>
+          </fileset>
+          <fileset dir="${buildsystem.core.java}/..">
+            <include name="*.xml"/>
+          </fileset>
+          <manifest>
+            <attribute name="Implementation-Title"
+              value="EL4Ant Core Classes"/>
+            <attribute name="Implementation-Vendor" value="ELCA Informatique SA"/>
+            <attribute name="Built-Date" value="${TODAY}"/>
+            <attribute name="Built-By" value="${user.name}"/>
+            <attribute name="BuildSystemVersion" value="${buildsystem.version}"/>
+            <section name="ch/elca/el4ant">
+              <attribute name="Plugin-compile" value="compile.xml"/>
+              <attribute name="Plugin-runtime" value="runtime.xml"/>
+              <attribute name="Plugin-onlinelib" value="onlinelib.xml"/>
+              <attribute name="Plugin-show" value="show.xml"/>
+            </section>
+          </manifest>
+        </jar>
+        <property name="core.compiled" value="true"/>
+      </antcontrib:then>
+    </antcontrib:if>
+
+    <!-- Check Core tasks availability or fail -->
+    <fail message="Core tasks are not available.
+Expects ${buildsystem.lib.directory}/${buildsystem.core.jar} or in Ant lib/ directory.">
+      <condition>
+        <not>
+          <available
+            classpath="${java.class.path}:${buildsystem.lib.directory}/${buildsystem.core.jar}:${buildsystem.dist.directory}/${buildsystem.core.jar}"
+            resource="ch/elca/el4ant/antlib-core.xml"/>
+        </not>
+      </condition>
+    </fail>
+    <!-- Register core Ant tasks in a dedicated namespace URI -->
+    <typedef
+      classpath="${java.class.path}:${buildsystem.lib.directory}/${buildsystem.core.jar}:${buildsystem.dist.directory}/${buildsystem.core.jar}"
+      resource="ch/elca/el4ant/antlib-core.xml"
+      uri="antlib:ch.elca.el4ant"/>
+
+    <!-- Init hook for plugin -->
+    <el4ant:projectproperties
+      action="register"
+      class="ch.elca.el4ant.propgen.HookPropertyGenerator"/>
+    <el4ant:hook action="create" name="init"/>
+
+    <!-- Register this file as base code for generated build.xml -->
+    <el4ant:buildgen action="source" target="insertPoint" file="bootstrap.xml"/>
+
+    <!-- Register the core module property generator -->
+    <el4ant:projectproperties
+      action="register"
+      class="ch.elca.el4ant.propgen.ModulesPropertyGenerator"/>
+    <el4ant:projectproperties
+      action="register"
+      class="ch.elca.el4ant.propgen.ModuleSetPropertyGenerator"/>
+
+    <!-- Information for distclean (bootstrap) -->
+    <el4ant:projectproperties
+      action="append"
+      property="plugin.files"
+      value="${buildsystem.project.properties},${buildsystem.project.build},${buildsystem.dist.directory}"/>
+    <antcontrib:if>
+      <istrue value="${core.compiled}"/>
+      <antcontrib:then>
+        <el4ant:projectproperties
+          action="append"
+          property="plugin.files"
+          value="${buildsystem.core.classes}"/>
+      </antcontrib:then>
+    </antcontrib:if>
+
+    <!-- Load project components (plugin, module,...) -->
+    <el4ant:loadproject file="${buildsystem.project}"/>
+
+    <!-- Register attributes generator in last position to avoid overwriting -->
+    <el4ant:projectproperties
+      action="register"
+      class="ch.elca.el4ant.propgen.AttributesPropertyGenerator"/>
+
+    <!-- Generate the properties file -->
+    <el4ant:projectproperties
+      action="output"
+      file="${buildsystem.project.properties}"/>
+
+    <!-- Generate the build.xml file -->
+    <el4ant:buildgen action="output" file="${buildsystem.project.build}"/>
+
+    <!-- Configuration may have changed the build.xml -->
+    <checksum
+      file="${buildsystem.project.build}"
+      property="${configure.build.checksum}"
+      verifyproperty="changed.build.checksum"/>
+
+    <echo
+      message="Build checksum matches ${changed.build.checksum}"
+      level="verbose"/>
+    <antcontrib:if>
+      <and>
+        <isset property="configure.build.checksum"/>
+        <isfalse value="${changed.build.checksum}"/>
+      </and>
+      <antcontrib:then>
+        <!-- Reload project file immediately,
+             in case other targets are on the command line -->
+        <el4ant:reload file="${buildsystem.project.build}"/>
+      </antcontrib:then>
+    </antcontrib:if>
+
+  </target>
+
+
+  <!-- EL4Ant clean target -->
+  <target
+    name="distclean"
+    depends="init.core"
+    description="[C] Clean and unconfigure the project">
+    <property file="etc/bootstrap.properties"/>
+    <!-- Check for project properties -->
+    <fail message="The project is not configured yet.">
+      <condition>
+        <not>
+          <available file="${buildsystem.project.properties}"/>
+        </not>
+      </condition>
+    </fail>
+    <!-- Get current build.xml checksum -->
+    <antcontrib:if>
+      <available file="${buildsystem.project.build}" type="file"/>
+      <antcontrib:then>
+        <checksum
+          file="${buildsystem.project.build}"
+          property="configure.build.checksum"/>
+        <echo
+          message="Initial ${buildsystem.project.build} checksum ${configure.build.checksum}"
+          level="verbose"/>
+      </antcontrib:then>
+    </antcontrib:if>
+    <!-- EL4Ant tasks should be available-->
+    <typedef
+      classpath="${java.class.path}:${buildsystem.lib.directory}/${buildsystem.core.jar}:${buildsystem.dist.directory}/${buildsystem.core.jar}"
+      resource="ch/elca/el4ant/antlib-core.xml"
+      uri="antlib:ch.elca.el4ant"/>
+    <!-- Only need plugin.files, do not load everything if configure follows -->
+    <loadproperties srcFile="${buildsystem.project.properties}">
+      <filterchain>
+        <linecontains>
+          <contains value="plugin.files="/>
+        </linecontains>
+      </filterchain>
+    </loadproperties>
+    <!-- Plugin files -->
+    <antcontrib:for param="afile" list="${plugin.files}">
+      <sequential>
+        <!-- Try with dir, may fail silently, and then with file -->
+        <delete
+          failonerror="false"
+          includeEmptyDirs="true"
+          deleteonexit="true"
+          dir="@{afile}"/>
+        <delete
+          failonerror="false"
+          deleteonexit="true"
+          file="@{afile}"/>
+      </sequential>
+    </antcontrib:for>
+  </target>
+
+
+  <!-- EL4Ant build system initialization target -->
+  <target
+    name="init"
+    depends="init.core"
+    unless="init.executed">
+
+    <!-- Only need project.files, do not load everything if configure follows -->
+    <loadproperties srcFile="${buildsystem.project.properties}">
+      <filterchain>
+        <linecontains>
+          <contains value="project.files="/>
+        </linecontains>
+      </filterchain>
+    </loadproperties>
+
+    <!-- Check the project configuration is up-to-date -->
+    <antcontrib:if>
+      <uptodate>
+        <srcfiles dir="." includes="${project.files}"/>
+        <srcfiles dir="." includes="etc/bootstrap.properties"/>
+        <srcfiles dir="." includes="bootstrap.xml"/>
+        <mapper>
+          <mapper type="merge" to="${buildsystem.project.properties}"/>
+          <mapper type="merge" to="${buildsystem.project.build}"/>
+        </mapper>
+      </uptodate>
+      <antcontrib:else>
+        <antcall target="configure"/>
+      </antcontrib:else>
+    </antcontrib:if>
+
+    <property file="${buildsystem.project.properties}"/>
+    <!-- Loads AntLib here -->
+    <typedef
+      classpath="${java.class.path}:${buildsystem.lib.directory}/${buildsystem.core.jar}:${buildsystem.dist.directory}/${buildsystem.core.jar}"
+      resource="ch/elca/el4ant/antlib-core.xml"
+      uri="antlib:ch.elca.el4ant"/>
+
+    <!-- Call registered init hooks -->
+    <el4ant:hook action="call" name="init"/>
+
+    <!-- AutoSelect current module if possible -->
+    <el4ant:autoselect/>
+
+    <!-- init mark for only one execution -->
+    <property name="init.executed" value="true"/>
+  </target>
+
+
+  <target name="insertPoint"/>
+  <!-- Fake target as insert point for build.xml generation -->
+
+</project>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+    Spring bean configuration file for jndi environment support in weblogic.
+-->
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+    
+	<bean name="weblogicJndiConfig" class="ch.elca.el4j.util.codingsupport.Properties">
+	    <property name="properties">
+	        <props>
+				<prop key="java.naming.factory.initial">weblogic.jndi.WLInitialContextFactory</prop>
+				<prop key="ch.elca.el4j.jndi.prefix">t3://</prop>
+			</props>
+	    </property>
+	</bean>
+</beans>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+    
+    <bean id="rmiWithContextCalculatorExporter" class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
+        <property name="remoteProtocol">
+            <ref bean="rmiProtocol" />
+        </property>
+        <property name="serviceInterface">
+            <value>ch.elca.el4j.demos.remoting.Calculator</value>
+        </property>
+        <property name="serviceName">
+            <value>Calculator.RmiWithContext.Benchmark</value>
+        </property>
+        <property name="service">
+            <idref bean="rmiCalculatorImpl"/>
+        </property>
+    </bean>
+    <bean id="rmiWithoutContextCalculatorExporter" class="org.springframework.remoting.rmi.RmiServiceExporter">
+        <property name="registryPort">
+            <value>${rmi.port}</value>
+        </property>
+        <property name="serviceInterface">
+            <value>ch.elca.el4j.demos.remoting.Calculator</value>
+        </property>
+        <property name="serviceName">
+            <value>Calculator.RmiWithoutContext.Benchmark</value>
+        </property>
+        <property name="service">
+            <ref bean="rmiCalculatorImpl"/>
+        </property>
+    </bean>
+    
+    <bean id="rmiCalculatorImpl" class="ch.elca.el4j.demos.remoting.impl.CalculatorImpl" />
+</beans>

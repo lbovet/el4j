@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<!-- 
+    Spring bean configuration file for html jmx adapter.
+-->
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <!-- In case you want to access the MBeans via the html protocol,
+         use this adapter -->
+    <bean id="htmlAdapter"
+        class="ch.elca.el4j.services.monitoring.jmx.HtmlAdapterFactoryBean">
+        <property name="server">
+            <ref bean="mBeanServer"/>
+        </property>
+        <property name="port">
+            <value>9092</value>
+        </property>
+    </bean>
+</beans>

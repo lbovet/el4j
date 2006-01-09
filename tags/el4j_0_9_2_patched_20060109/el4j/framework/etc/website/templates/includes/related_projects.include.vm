@@ -1,0 +1,29 @@
+    <div>
+        <h1>RELATED PROJECTS</h1>
+        <p>
+            <img src="images/bullet.gif" alt="EL4Ant" border="0"/> 
+            <b>EL4Ant</b> - A light build system based on Ant with transitive 
+            dependencies and plugins. 
+            <a href="http://el4ant.sourceforge.net/" target="_blank">
+                <img src="images/elca_goto4.gif" alt="EL4Ant" width="15" 
+                    height="11" border="0"/>
+            </a>
+        </p>
+        <p>
+            <img src="images/bullet.gif" alt="EL4NET" border="0"/> 
+            <b>EL4NET</b> - The Extension Library for the .NET framework. 
+            <a href="http://el4net.sourceforge.net/" target="_blank">
+                <img src="images/elca_goto4.gif" alt="EL4NET" width="15" 
+                    height="11" border="0"/>
+            </a>
+        </p>
+        <p>
+            <img src="images/bullet.gif" alt="IIOP.NET" border="0"/> 
+            <b>IIOP.NET</b> - The light IIOP interoperability solution, 
+            connecting e.g. J2EE and .NET applications in an efficient way. 
+            <a href="http://iiop-net.sourceforge.net/" target="_blank">
+                <img src="images/elca_goto4.gif" alt="IIOP.NET" width="15" 
+                    height="11" border="0"/>
+            </a>
+        </p>
+    </div>

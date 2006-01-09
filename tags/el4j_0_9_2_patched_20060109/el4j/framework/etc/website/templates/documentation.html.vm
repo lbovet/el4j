@@ -1,0 +1,58 @@
+#set($title = "EL4J, the Extension Library for the J2EE - Documentation")
+#set($navigation = "documentation")
+#parse("$website_templates_directory/includes/header.include.vm")
+#parse("$website_templates_directory/includes/navigation.include.vm")
+<div id="Content">
+    <div>
+    	<h1>DOCUMENTATION</h1>
+		<h2>EL4J core documentation</h2>
+		<ul>
+			<li>
+				<a href="docs/pdf/EL4J_IntroductionArticle1.pdf" target="_blank">
+					Introduction article (PDF)
+				</a>
+			</li>
+			<li>
+				<a href="docs/pdf/ReferenceDoc.pdf" target="_blank">
+					Reference documentation (PDF)
+				</a>
+			</li>
+			<li>
+				Documentation of the build system 
+				(<a href="http://el4ant.sf.net/documentation.html" target="_blank">link to EL4Ant</a>)
+			</li>
+		</ul>
+
+		<h2>Presentations</h2>
+		<ul>
+			<li>
+				<a href="docs/pdf/EL4JFeatures.pdf" target="_blank">
+					Short presentation with essential features of EL4J
+				</a>
+			</li>
+			<li>
+				<a href="http://www.jugs.ch/html/events/slides/050830_LightDiContainer.pdf" target="_blank">
+					A presentation on Spring at JUGS, with a section on EL4J
+				</a>
+			</li>
+		</ul>
+
+        <h2>Framework API</h2>
+        The framework API is split up in multiple sets where set "framework-modules" is the main set.
+        <div class="report">
+#foreach($report in $reports.getFileList())
+    #if($report.endsWith("-javadoc.log"))
+        #include("$website_reports_directory/$report")
+    #end
+#end
+            <br/>
+		</div>
+    </div>
+#parse("$website_templates_directory/includes/last_changed_copyright.include.vm")
+</div>
+<div id="RightColumn">
+#parse("$website_templates_directory/includes/related_projects.include.vm")
+#parse("$website_templates_directory/includes/sponsor.include.vm")
+</div>
+</body>
+</html>
