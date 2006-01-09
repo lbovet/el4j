@@ -134,13 +134,13 @@ consume less time.
         
         <!-- Group specific parameters for set "refdb-modules". -->
         <attribute name="javadoc.refdb-modules.access" value="protected"/>
-        <attribute name="javadoc.refdb-modules.doctitle">EL4J reference database (refdb) application modules developer documentation</attribute>
-        <attribute name="javadoc.refdb-modules.windowtitle">EL4J API documentation - Reference database (refdb) application modules</attribute>
+        <attribute name="javadoc.refdb-modules.doctitle">EL4J reference database &#40;refdb&#41; application modules developer documentation</attribute>
+        <attribute name="javadoc.refdb-modules.windowtitle">EL4J API documentation - Reference database &#40;refdb&#41; application modules</attribute>
         
         <!-- Group specific parameters for set "keyword-tests". -->
         <attribute name="javadoc.refdb-tests.access" value="private"/>
-        <attribute name="javadoc.refdb-tests.doctitle">EL4J reference database (refdb) application junit tests developer documentation</attribute>
-        <attribute name="javadoc.refdb-tests.windowtitle">EL4J API documentation - Reference database (refdb) application junit tests</attribute>
+        <attribute name="javadoc.refdb-tests.doctitle">EL4J reference database &#40;refdb&#41; application junit tests developer documentation</attribute>
+        <attribute name="javadoc.refdb-tests.windowtitle">EL4J API documentation - Reference database &#40;refdb&#41; application junit tests</attribute>
     </plugin>
 
     <!--
