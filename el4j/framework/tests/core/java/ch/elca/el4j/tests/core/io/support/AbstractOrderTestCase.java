@@ -32,7 +32,11 @@ import junit.framework.TestCase;
  * @author Andreas Bur (ABU)
  */
 public abstract class AbstractOrderTestCase extends TestCase {
-
+    /**
+     * Hide default constructor to solve issue with the EL4Ant junit plugin.
+     */
+    protected AbstractOrderTestCase() { }
+    
     /**
      * Asserts that object <code>a</code> is before object <code>b</code>
      * in list <code>list</code>.
