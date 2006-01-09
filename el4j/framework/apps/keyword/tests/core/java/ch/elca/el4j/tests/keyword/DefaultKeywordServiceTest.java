@@ -42,7 +42,7 @@ import ch.elca.el4j.services.search.criterias.LikeCriteria;
  *
  * @author Martin Zeltner (MZE)
  */
-public class DefaultKeywordServiceTest extends TestCaseBase {
+public class DefaultKeywordServiceTest extends AbstractTestCaseBase {
     /**
      * Private logger.
      */

@@ -47,7 +47,7 @@ import ch.elca.el4j.apps.refdb.dto.FileDto;
  * 
  * @author Martin Zeltner (MZE)
  */
-public class SqlMapReferenceDaoTest extends TestCaseBase {
+public class SqlMapReferenceDaoTest extends AbstractTestCaseBase {
     /**
      * Private logger.
      */

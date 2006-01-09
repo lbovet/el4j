@@ -44,12 +44,12 @@ import junit.framework.TestCase;
  * 
  * @author Martin Zeltner (MZE)
  */
-public abstract class TestCaseBase extends TestCase {
+public abstract class AbstractTestCaseBase extends TestCase {
     /**
      * Private logger.
      */
     private static Log s_logger 
-        = LogFactory.getLog(TestCaseBase.class);
+        = LogFactory.getLog(AbstractTestCaseBase.class);
 
     /**
      * String array to point to the used configuration files.
@@ -89,7 +89,7 @@ public abstract class TestCaseBase extends TestCase {
     /**
      * Default constructor. Loads the application context.
      */
-    public TestCaseBase() {
+    public AbstractTestCaseBase() {
         m_applicationContext = new ModuleApplicationContext(
                 m_includeConfigLocations, m_excludeConfigLocations, false,
                 (ApplicationContext) null);

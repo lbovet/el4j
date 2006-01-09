@@ -51,7 +51,7 @@ import ch.elca.el4j.services.search.criterias.LikeCriteria;
  * 
  * @author Martin Zeltner (MZE)
  */
-public class DefaultReferenceServiceTest extends TestCaseBase {
+public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
     /**
      * Private logger.
      */
