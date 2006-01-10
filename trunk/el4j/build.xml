@@ -113,11 +113,16 @@
         <mkdir dir="${docs.path.pdf}"/>
         <mkdir dir="${docs.path.javadoc}"/>
         
-        <get dest="${docs.path.pdf}/ReferenceDoc.pdf" 
-            src="http://el4j.sourceforge.net/el4j/ReferenceDoc.pdf"/>
-        <get dest="${docs.path.pdf}/EL4JFeatures.pdf" 
-            src="http://el4j.sourceforge.net/el4j/EL4JFeatures.pdf"/>
+        <delete quiet="true" file="${docs.path.pdf}/ReferenceDoc.pdf"/>
+        <delete quiet="true" file="${docs.path.pdf}/EL4JFeatures.pdf"/>
+        <delete quiet="true" includeEmptyDirs="true">
+            <fileset dir="${docs.path.javadoc}" defaultexcludes="false"/>
+        </delete>
         
+        <copy file="framework/etc/website/resources/docs/pdf/ReferenceDoc.pdf"
+            tofile="${docs.path.pdf}/ReferenceDoc.pdf" overwrite="true"/>
+        <copy file="framework/etc/website/resources/docs/pdf/EL4JFeatures.pdf"
+            tofile="${docs.path.pdf}/EL4JFeatures.pdf" overwrite="true"/>
         <copy todir="${docs.path.javadoc}">
             <fileset dir="framework/dist/website/javadoc" includes="**/*"/>
         </copy>
