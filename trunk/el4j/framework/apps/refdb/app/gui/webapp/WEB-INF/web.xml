@@ -20,7 +20,6 @@
                 <!-- classpath:optional/interception/methodTracing.xml, -->
                 classpath*:mandatory/*.xml,
                 classpath:scenarios/db/rawDatabase.xml,
-        	    classpath:scenarios/dataaccess/ibatisSqlMaps.xml,
                 classpath:optional/interception/transactionCommonsAttributes.xml,
                 classpath:scenarios/distributed/server/web/*.xml
             </param-value>

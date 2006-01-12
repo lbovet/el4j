@@ -14,6 +14,7 @@
     <include file="module/env/module.xml"/>
     <include file="module/daemon_manager/module.xml"/>
     <include file="module/spring_rcp/module.xml"/>
+    <include file="module/ibatis/module.xml"/>
 
     <!-- Test modules. -->
     <include file="tests/core/module.xml"/>
