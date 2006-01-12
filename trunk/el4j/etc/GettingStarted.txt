@@ -40,11 +40,11 @@ Remark: Every directory mentioned in this document is relative to the
          compiled classes.
    * ant jars
        * Generated jars will be located in the directory "framework/dist/lib".
-   * ant start.module.eu.module-daemon_manager
+   * ant start.module.eu.module-daemon_manager-tests
        * JUnit tests of module-daemon_manager will be started. JUnit Reports (xml files) can be
          found in directory "framework/dist/junit". This command executes the
          tests with generated module jar files (command "ant jars" is prerequisite).
-   * ant startdev.module.eu.module-daemon_manager
+   * ant startdev.module.eu.module-daemon_manager-tests
        * Executes the same as before but with code from classes directory (not from jars) 
          from directory "framework/dist/classes".
    * ant junit.report
