@@ -50,9 +50,6 @@ public class ManifestResourceResolverIntegrationTest
     public static final String CONFIG_CORE_2
         = "optional/interception/transactionCommonsAttributes.xml";
     /** A configuration file from module core. */
-    public static final String CONFIG_CORE_3
-        = "scenarios/dataaccess/ibatisSqlMaps.xml";
-    /** A configuration file from module core. */
     public static final String CONFIG_CORE_4 = "sql-error-codes.xml";
     
     /** A configuration file from module core-tests. */
@@ -89,7 +86,7 @@ public class ManifestResourceResolverIntegrationTest
     
     /** Configuration files form the module core. */
     public static final String[] CONFIG_CORE = {
-        CONFIG_CORE_1, CONFIG_CORE_2, CONFIG_CORE_3, CONFIG_CORE_4
+        CONFIG_CORE_1, CONFIG_CORE_2, CONFIG_CORE_4
     };
     
     /** Configuration files form the module core-tests. */
