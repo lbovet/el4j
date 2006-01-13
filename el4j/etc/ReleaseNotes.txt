@@ -41,7 +41,7 @@
   = module-spring_rcp module added (binary verison is 1.0)
     + Spring RCP extensions and debugged classes.
 
-  = module-daemon_manager (binary verison is 1.2)
+  = module-daemon_manager (binary verison is 1.1)
     + Bug corrected.
   = module-daemon_manager-demos (no binary version)
     + Dependency to module-jmx added to have jmx demo.

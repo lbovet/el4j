@@ -36,7 +36,7 @@
 				<dd>Manifest section config renamed to el4j-config to prevent errors.</dd>
 			<dt>module-spring_rcp module added (binary verison is 1.0)</dt>
 				<dd>Spring RCP extensions and debugged classes.</dd>
-			<dt>module-daemon_manager (binary verison is 1.2)</dt>
+			<dt>module-daemon_manager (binary verison is 1.1)</dt>
 				<dd>Bug corrected.</dd>
 			<dt>module-daemon_manager-demos (no binary version)</dt>
 				<dd>Dependency to module-jmx added to have jmx demo.</dd>
