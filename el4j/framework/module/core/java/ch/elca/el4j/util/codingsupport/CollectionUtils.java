@@ -102,6 +102,54 @@ public final class CollectionUtils {
 
     /**
      * Method to check if a collection contains only objects which are equals, a
+     * subclass or implements one of the given classes. If the given collection
+     * is empty, <code>true</code> will be returned.
+     * 
+     * @param c
+     *            Is the collection to check.
+     * @param containingClassTypes
+     *            Are the class types which are expected.
+     * @return Returns <code>true</code> if the given collection contains only
+     *         objects which are equals, a subclass or implements one of the 
+     *         given classes
+     */
+    public static boolean containsOnlyObjectsOfType(
+        Collection c, Class[] containingClassTypes) {
+        Reject.ifNull(c);
+        Reject.ifNull(containingClassTypes);
+        Reject.ifFalse(containingClassTypes.length > 0);
+        Iterator it = c.iterator();
+        while (it.hasNext()) {
+            Class elementClass = it.next().getClass();
+            boolean noClassMatches = true;
+            for (int i = 0; noClassMatches && i < containingClassTypes.length; 
+                i++) {
+                Class containingClassType = containingClassTypes[i];
+                noClassMatches 
+                    = !containingClassType.isAssignableFrom(elementClass);
+            }
+            if (noClassMatches) {
+                if (s_logger.isDebugEnabled()) {
+                    StringBuffer sb = new StringBuffer();
+                    sb.append("Found object of type '");
+                    sb.append(elementClass.getName());
+                    sb.append("' which is not in assignable form for one of ");
+                    sb.append("the following types: ");
+                    for (int i = 0; i < containingClassTypes.length; i++) {
+                        Class containingClassType = containingClassTypes[i];
+                        if (i > 0) { sb.append(", "); }
+                        sb.append(containingClassType.getName());
+                    }
+                    s_logger.debug(sb.toString());
+                }
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Method to check if a collection contains only objects which are equals, a
      * subclass or implements the given class. If the given collection is empty,
      * <code>true</code> will be returned.
      * 
@@ -117,16 +165,6 @@ public final class CollectionUtils {
         Collection c, Class containingClassType) {
         Reject.ifNull(c);
         Reject.ifNull(containingClassType);
-        Iterator it = c.iterator();
-        while (it.hasNext()) {
-            Class elementClass = it.next().getClass();
-            if (!containingClassType.isAssignableFrom(elementClass)) {
-                s_logger.debug("Found object of type '" + elementClass.getName()
-                    + "' which is not in assignable form for type '" 
-                    + containingClassType.getName() + "'.");
-                return false;
-            }
-        }
-        return true;
+        return containsOnlyObjectsOfType(c, new Class[] {containingClassType});
     }
 }
