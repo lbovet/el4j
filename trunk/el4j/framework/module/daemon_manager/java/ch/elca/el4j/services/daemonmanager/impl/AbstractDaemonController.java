@@ -1,61 +1,51 @@
 /*
- * AbstractDaemonController.java
+ * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
+ * the spring framework, http://el4j.sf.net
+ * Copyright (C) 2006 by ELCA Informatique SA, Av. de la Harpe 22-24,
+ * 1000 Lausanne, Switzerland, http://www.elca.ch
  *
- * Project: xxxx
+ * This program is published under the GNU General Public License (GPL) license.
+ * http://www.gnu.org/licenses/gpl.txt
  *
- * WHEN           WHO           WHAT            DESCRIPTION
- * 07.10.2005     str           create
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
  *
- * Copyright 2005 by ELCA Informatique SA
- * Av. de la Harpe 22-24, 1000 Lausanne 13
- * All rights reserved.
- *
- * This software is the confidential and proprietary information
- * of ELCA Informatique SA. ("Confidential Information"). You
- * shall not disclose such Confidential Information and shall
- * use it only in accordance with the terms of the license
- * agreement you entered into with ELCA.
+ * For alternative licensing, please contact info@elca.ch
  */
-
 package ch.elca.el4j.services.daemonmanager.impl;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.context.ApplicationContext;
 import org.tanukisoftware.wrapper.WrapperListener;
 import org.tanukisoftware.wrapper.WrapperManager;
 
-import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.daemonmanager.DaemonManager;
 import ch.elca.el4j.services.daemonmanager.exceptions.CollectionOfDaemonCausedRTException;
 import ch.elca.el4j.services.daemonmanager.exceptions.DaemonsStillRunningRTException;
 import ch.elca.el4j.services.daemonmanager.exceptions.MissingHeartbeatsRTException;
 
 /**
- * This abstract class provide the implementation for a control of a set of
- * extanded daemon <code>AbstractExtendedDaemon</code>. You need just to
- * implement 3 method corresponding to your daemons configuration
- *
- *
- *
+ * Abstract daemon manager controller for java service wrapper.
+ * 
+ * <script type="text/javascript">printFileStatus
+ *   ("$Source$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ * 
+ * @author Martin Zeltner (MZE)
  * @author Stéphane Rose (STR)
  */
-public abstract class AbstractDaemonController implements WrapperListener,
-    Runnable {
-
-    /**
-     * Exit code if heartbeats had missed.
-     */
-    public static final String START_AFTER_CRASH_DATE = "CRASH_DATE";
-
+public abstract class AbstractDaemonController 
+    implements WrapperListener, Runnable {
     /**
      * Exit code if heartbeats had missed.
      */
@@ -72,131 +62,169 @@ public abstract class AbstractDaemonController implements WrapperListener,
     public static final int EXIT_CODE_DAEMONS_STILL_RUNNING = -12;
 
     /**
-     * Exit code if there was a trowable for an unknown reason.
+     * Exit code if no daemon manager could be created.
      */
-    public static final int EXIT_CODE_UNKNOWN_REASON = -20;
+    public static final int EXIT_CODE_NO_DAEMON_MANAGER_CREATED = -20;    
+    
+    /**
+     * Exit code if there was a throwable for an unknown reason.
+     */
+    public static final int EXIT_CODE_UNKNOWN_REASON = -30;
 
     /**
      * Exit code if daemon manager has been gracefully terminated.
      */
     public static final int EXIT_CODE_GRACEFULLY_TERMINATED = 0;
-
+    
     /**
-     * The name of the file create to know if the daemon manager crash or finish
-     * normally.
+     * Default run indicator file path.
      */
-    public static final String RUN_FILE = "Daemon.run";
+    public static final String DEFAULT_RUN_INDICATOR_FILE_PATH 
+        = "daemon-manager-is-running.txt";
 
     /**
      * Private logger of this class.
      */
-    private static Log s_logger = LogFactory
-        .getLog(AbstractDaemonController.class);
+    private static Log s_logger
+        = LogFactory.getLog(AbstractDaemonController.class);
 
     /**
-     * An reference of the daemon manager, used to start and stop daemons.
+     * Daemon manager to work on.
      */
-    private DaemonManager m_daemonManager = null;
-
-
-    /**
-     *  Spring application context.
-     */
-    private ApplicationContext m_appContext = null;
+    protected DaemonManager m_daemonManager = null;
 
     /**
-     * The thread in which the daemon manager run.
+     * Thread the daemon manager is running.
      */
-    private Thread m_manager = null;
+    protected Thread m_thread;
 
-    /*---------------------------------------------------------------
-     * Constructors
-     *-------------------------------------------------------------*/
     /**
-     *
+     * Hook method. Will be invoked before starting the daemon manager.
+     * 
+     * @param startAfterCrash
+     *            Is <code>true</code> if the daemon manager crashed at last 
+     *            execution.
+     * @return Return <code>true</code> if the daemon manager should be started.
      */
-    protected AbstractDaemonController() {
-        // do nothing
+    protected boolean preDaemonManagerControllerStart(
+        boolean startAfterCrash) {
+        // By default do nothing. Let daemon manager controller start.
+        return true;
     }
 
-    /*---------------------------------------------------------------
-     * Abstract methods
-     *-------------------------------------------------------------*/
     /**
-     * Put into a Map all data (constant, variable, object, etc..) you want
-     * share between all daemon.
-     * @return a custom map, can be null
+     * @return Returns the created daemon manager.
      */
-    protected abstract Map getMemorySharedMap();
+    protected abstract DaemonManager createDaemonManager();
 
     /**
-     * Return the name of bean daemon definied in your config file
-     * (normaly daemonManager.xml).
-     * @return the bean id, cannot be null
+     * @return Returns the file path, where the file that indicates that the
+     *         daemon manager is currently running, will be saved.
      */
-    protected abstract String getDaemonBeanName();
+    protected String getRunInicatorFilePath() {
+        return DEFAULT_RUN_INDICATOR_FILE_PATH;
+    }
 
     /**
-     * Return an array of String used to configure the
-     * <code>ModuleApplicationContext</code>.
-     * @see ch.elca.el4j.core.context.ModuleApplicationContext
-     * @return an array of config paths
+     * @return Returns <code>true</code> if the run indicator file could be
+     *         successfully written on disk.
      */
-    protected abstract String[] getInclusiveConfigLocation();
-
-    /*---------------------------------------------------------------
-     * Runnable method
-     *-------------------------------------------------------------*/
+    protected boolean createRunIndicatorFile() {
+        boolean success = false;
+        try {
+            File file = new File(getRunInicatorFilePath());
+            success = file.createNewFile();
+            if (success) {
+                s_logger.debug("Run indicator file successfully created at '" 
+                    + file.getAbsolutePath() + "'.");
+            } else {
+                s_logger.error("Run indicator file could not be created at '" 
+                    + file.getAbsolutePath() + "'! Perhaps it already exits "
+                    + "(like after a crash) or executing user has no write "
+                    + "permission.");
+            }
+        } catch (IOException e) {
+            s_logger.error("Could not create the run indicator file with path '"
+                + getRunInicatorFilePath() + "'.", e);
+            success = false;
+        }
+        return success;
+    }
+    
     /**
-     * @see java.lang.Runnable#run()
+     * @return Returns <code>true</code> if the run indicator file exists. 
+     */
+    protected boolean doesRunIndicatorFileExists() {
+        File file = new File(getRunInicatorFilePath());
+        boolean fileExists = file.isFile() && file.exists();
+        if (fileExists) {
+            s_logger.debug("Run indicator file exists at '" 
+                + file.getAbsolutePath() + "'.");
+        } else {
+            s_logger.debug("No run indicator file exists at '" 
+                + file.getAbsolutePath() + "'!");
+        }
+        return fileExists;
+    }
+    
+    /**
+     * @return Returns <code>true</code> if the run indicator file could be
+     *         successfully deleted from disk.
+     */
+    protected boolean deleteRunIndicatorFile() {
+        File file = new File(getRunInicatorFilePath());
+        boolean success = file.delete();
+        if (success) {
+            s_logger.debug("Run indicator file successfully delete from '" 
+                + file.getAbsolutePath() + "'.");
+        } else {
+            s_logger.error("Run indicator file could not be deleted from '" 
+                + file.getAbsolutePath() + "'!");
+        }
+        return success;
+    }
+    
+    /**
+     * {@inheritDoc}
      */
     public void run() {
-        s_logger.debug("run()");
+        s_logger.debug("Run method entered.");
+        boolean fileExists = doesRunIndicatorFileExists();
+        if (fileExists) {
+            s_logger.info("Seams that last run of daemon manager controller"
+                + "crashed. Run indicator file will now be deleted.");
+            deleteRunIndicatorFile();
+        }
+        
+        if (preDaemonManagerControllerStart(fileExists)) {
+            s_logger.info("Daemon manager controller will not be started "
+                + "because answer of pre daemon manager start method was "
+                + "false.");
+            return;
+        }
+        
         try {
-            Map memoryShared = getMemorySharedMap();
-            if( memoryShared == null)
-                memoryShared = new HashMap();
-            if( isStartAfterCrash() )
-            {
-                memoryShared.put(START_AFTER_CRASH_DATE, new Date());
-            }
-
-            Set daemons = m_daemonManager.getDaemons();
-            Iterator it = daemons.iterator();
-            while (it.hasNext()) {
-                AbstractExtendedDaemon daemon = (AbstractExtendedDaemon) it
-                    .next();
-                daemon.setMemorySharedMap(memoryShared);
-            }
-
-            // create run file
-            File file = new File(RUN_FILE);
-            try {
-                if( !file.createNewFile() ) {
-                    s_logger.error("Can't create run file "+file.getAbsolutePath());
-                }
-            } catch(IOException e) {
-                s_logger.error("Can't create run file "+file.getAbsolutePath(), e);
-            }
-
-            s_logger.info("Start batch");
+            createRunIndicatorFile();
+            s_logger.info("Daemon manager controller started.");
             m_daemonManager.process();
             s_logger.info("Daemon manager controller terminated gracefully.");
-            if( !file.delete() ) {
-                s_logger.error("Can't delete file "+file.getAbsolutePath());
-            }
+            deleteRunIndicatorFile();
             System.exit(EXIT_CODE_GRACEFULLY_TERMINATED);
         } catch (MissingHeartbeatsRTException e) {
             s_logger.error("Daemon manager controller terminated in cause of "
                 + "missing heartbeats.", e);
             System.exit(EXIT_CODE_MISSING_HEARTBEATS);
         } catch (CollectionOfDaemonCausedRTException e) {
+            Set daemons = e.getDaemonCausedExceptions();
+            int numberOfExceptions = daemons.size();
             s_logger.error("Daemon manager controller terminated in cause of "
-                + "daemon caused exceptions.", e);
-            Set set = e.getDaemonCausedExceptions();
-            Iterator it = set.iterator();
-            while( it.hasNext() ) {
-                s_logger.error("Exception collection", (Throwable)it.next());
+                + "daemon caused exceptions. See the " + numberOfExceptions 
+                + "exception(s) below.", e);
+            Iterator it = daemons.iterator();
+            int exceptionNumber = 1;
+            while (it.hasNext()) {
+                s_logger.error("Daemon caused exception #" + exceptionNumber 
+                    + " of " + numberOfExceptions + ".", (Throwable) it.next());
             }
             System.exit(EXIT_CODE_DAEMON_CAUSED_EXCEPTIONS);
         } catch (DaemonsStillRunningRTException e) {
@@ -210,73 +238,49 @@ public abstract class AbstractDaemonController implements WrapperListener,
         }
     }
 
-    /*---------------------------------------------------------------
-     * WrapperListener Methods
-     *-------------------------------------------------------------*/
     /**
-     * The start method is called when the WrapperManager is signaled by the
-     * native wrapper code that it can start its application. This method call
-     * is expected to return, so a new thread should be launched if necessary.
-     *
-     * @param arg List of arguments used to initialize the application.
-     *
-     * @return Any error code if the application should exit on completion of
-     *         the start method. If there were no problems then this method
-     *         should return null.
+     * {@inheritDoc}
+     * 
+     * Creates and starts the daemon manager in a new thread.
      */
-
     public Integer start(String[] arg) {
-        s_logger.debug("start()");
-        /**
-         * Load deamon manager from application context.
-         */
-        m_appContext = new ModuleApplicationContext(
-            getInclusiveConfigLocation(), false);
-
-        m_daemonManager = (DaemonManager)
-            m_appContext.getBean(getDaemonBeanName());
-        m_manager = new Thread(this);
-        m_manager.start();
-        return null;
+        s_logger.debug("Start method entered.");
+        Integer result;
+        m_daemonManager = createDaemonManager();
+        if (m_daemonManager == null) {
+            result = new Integer(EXIT_CODE_NO_DAEMON_MANAGER_CREATED);
+        } else {
+            m_thread = new Thread(this);
+            m_thread.start();
+            result = null;
+        }
+        return result;
     }
 
     /**
-     * Called when the application is shutting down. The Wrapper assumes that
-     * this method will return fairly quickly. If the shutdown code code could
-     * potentially take a long time, then WrapperManager.signalStopping() should
-     * be called to extend the timeout period. If for some reason, the stop
-     * method can not return, then it must call WrapperManager.stopped() to
-     * avoid warning messages from the Wrapper.
-     *
-     * @param exitCode
-     *            The suggested exit code that will be returned to the OS when
-     *            the JVM exits.
-     * @return The exit code to actually return to the OS. In most cases, this
-     *         should just be the value of exitCode, however the user code has
-     *         the option of changing the exit code if there are any problems
-     *         during shutdown.
+     * {@inheritDoc}
+     * 
+     * Stops processing of daemon manager and waits the internal thread, where 
+     * the daemon manager is running to die.
      */
     public int stop(int exitCode) {
-        s_logger.debug("stop()");
+        s_logger.debug("Stop method with exit code " + exitCode + " entered.");
         m_daemonManager.doStopProcessing();
         try {
-            m_manager.join();
+            m_thread.join();
         } catch (InterruptedException e) {
-            s_logger.error("sad", e);
+            s_logger.warn("Join of thread where the daemon manager controller "
+                + "is running has been interrupted.", e);
         }
         return exitCode;
     }
 
     /**
-     * Called whenever the native wrapper code traps a system control signal
-     * against the Java process. It is up to the callback to take any actions
-     * necessary. Possible values are: WrapperManager.WRAPPER_CTRL_C_EVENT,
-     * WRAPPER_CTRL_CLOSE_EVENT, WRAPPER_CTRL_LOGOFF_EVENT, or
-     * WRAPPER_CTRL_SHUTDOWN_EVENT
-     *
-     * @param event The system control signal.
+     * {@inheritDoc}
      */
     public void controlEvent(int event) {
+        s_logger.debug("Control event method with event #" + event 
+            + " entered.");
         if (!WrapperManager.isControlledByNativeWrapper()) {
             // We are not being controlled by the Wrapper, so
             // handle the event ourselves.
@@ -286,23 +290,5 @@ public abstract class AbstractDaemonController implements WrapperListener,
                 WrapperManager.stop(0);
             }
         }
-    }
-
-    /**
-     * This method verifies if the last shutdown was successful.
-     * @return true if a crash is detected, false otherwise
-     */
-    protected boolean isStartAfterCrash() {
-        File file = new File(RUN_FILE);
-        if( file.exists() ) {
-            if( !file.delete() )
-                s_logger.error("Can't delete file "+file.getAbsolutePath());
-            return true;
-        }
-        return false;
-    }
-
-    public ApplicationContext getApplicationContext() {
-        return m_appContext;
     }
 }
