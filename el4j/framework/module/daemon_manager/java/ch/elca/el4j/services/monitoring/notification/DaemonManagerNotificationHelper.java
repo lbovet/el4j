@@ -52,7 +52,7 @@ public final class DaemonManagerNotificationHelper {
      * Method to log that current daemon does not have an identification. This
      * method will always throw an exception.
      * 
-     * @throws MissconfigurationRTException
+     * @throws MisconfigurationRTException
      *             Will be thrown in every case.
      */
     public static void notifyMissingDaemonIdentification()
@@ -68,7 +68,7 @@ public final class DaemonManagerNotificationHelper {
      * 
      * @param daemon
      *            Is the daemon where a daemon observer is missing.
-     * @throws MissconfigurationRTException
+     * @throws MisconfigurationRTException
      *             Will be thrown in every case.
      */
     public static void notifyNoDaemonObserverRegistered(Daemon daemon)
@@ -93,7 +93,7 @@ public final class DaemonManagerNotificationHelper {
      *            is the property which is not correctly set.
      * @param daemon
      *            Is the daemon where the property is not set properly.
-     * @throws MissconfigurationRTException
+     * @throws MisconfigurationRTException
      *             Will be thrown in every case.
      */
     public static void notifyBrokenBoundaryCondition(

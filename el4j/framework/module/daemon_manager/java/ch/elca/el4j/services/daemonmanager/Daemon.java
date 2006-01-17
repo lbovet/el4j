@@ -17,6 +17,8 @@
 
 package ch.elca.el4j.services.daemonmanager;
 
+import org.springframework.core.Ordered;
+
 import ch.elca.el4j.services.daemonmanager.exceptions.DaemonAlreadyStartedRTException;
 
 /**
@@ -32,7 +34,7 @@ import ch.elca.el4j.services.daemonmanager.exceptions.DaemonAlreadyStartedRTExce
  *
  * @author Martin Zeltner (MZE)
  */
-public interface Daemon {
+public interface Daemon extends Ordered {
     
     /**
      * This method is used to tell the daemon that it should stop working. The

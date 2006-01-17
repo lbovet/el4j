@@ -222,6 +222,7 @@ public class ActorDaemon extends AbstractDaemon {
          * Set flag that method has been called.
          */
         m_initCalled = true;
+        ActionRegister.registerDaemonAction(this, DaemonAction.INIT);
         
         if (getActorRole() 
             == ActorRole.THROWS_DAEMON_CAUSED_EXCEPTION_WHILE_INIT) {
@@ -276,6 +277,7 @@ public class ActorDaemon extends AbstractDaemon {
          * Set flag that method has been called.
          */
         m_reconfigureCalled = true;
+        ActionRegister.registerDaemonAction(this, DaemonAction.RECONFIGURE);
         logMethodInvocation("reconfigure", "entered");
         
         if (getActorRole() 
@@ -303,6 +305,7 @@ public class ActorDaemon extends AbstractDaemon {
          * Set flag that method has been called.
          */
         m_cleanupCalled = true;
+        ActionRegister.registerDaemonAction(this, DaemonAction.CLEANUP);
         
         if (getActorRole() 
             == ActorRole.THROWS_DAEMON_CAUSED_EXCEPTION_WHILE_CLEAN_UP) {
