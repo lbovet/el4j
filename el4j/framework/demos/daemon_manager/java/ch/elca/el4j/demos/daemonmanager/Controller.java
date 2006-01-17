@@ -17,6 +17,9 @@
 
 package ch.elca.el4j.demos.daemonmanager;
 
+import java.util.Iterator;
+import java.util.Set;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -116,8 +119,17 @@ public final class Controller {
                 + "missing heartbeats.", e);
             System.exit(EXIT_CODE_MISSING_HEARTBEATS);
         } catch (CollectionOfDaemonCausedRTException e) {
+            Set daemons = e.getDaemonCausedExceptions();
+            int numberOfExceptions = daemons.size();
             s_logger.error("Daemon manager controller terminated in cause of "
-                + "daemon caused exceptions.", e);
+                + "daemon caused exceptions. See the " + numberOfExceptions 
+                + "exception(s) below.", e);
+            Iterator it = daemons.iterator();
+            int exceptionNumber = 1;
+            while (it.hasNext()) {
+                s_logger.error("Daemon caused exception #" + exceptionNumber 
+                    + " of " + numberOfExceptions + ".", (Throwable) it.next());
+            }
             System.exit(EXIT_CODE_DAEMON_CAUSED_EXCEPTIONS);
         } catch (DaemonsStillRunningRTException e) {
             s_logger.error("Daemon manager controller terminated in cause of "
