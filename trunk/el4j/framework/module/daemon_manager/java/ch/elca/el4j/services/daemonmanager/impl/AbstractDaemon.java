@@ -108,6 +108,11 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * </tr>
  * </table>
  * 
+ * For property <code>order</code> see {@link org.springframework.core.Ordered}.
+ * It is used for ordered starting and stopping of daemons. Lowest order number
+ * of all daemon means that this daemon will be started as first and stopped as 
+ * last.
+ * 
  * <script type="text/javascript">printFileStatus
  *   ("$Source$",
  *    "$Revision$",
@@ -117,7 +122,8 @@ import ch.elca.el4j.util.codingsupport.Reject;
  *
  * @author Martin Zeltner (MZE)
  */
-public abstract class AbstractDaemon implements Daemon, Runnable, Serializable {
+public abstract class AbstractDaemon 
+    implements Daemon, Runnable, Serializable {
     
     /**
      * Is the max allowed sleep time after job has been done.
@@ -223,6 +229,13 @@ public abstract class AbstractDaemon implements Daemon, Runnable, Serializable {
      * 
      */
     private long m_minPeriodicity = DEFAULT_PERIODICITY;
+    
+    /**
+     * Is the order the daemon is started and stopped. Low value means daemon 
+     * started early and stopped lately. By default it is set to 
+     * <code>Integer.MAX_VALUE</code>, so it is like non-ordered.
+     */
+    private int m_order = Integer.MAX_VALUE;
 
     /**
      * Time when this daemon has been instantiated.
@@ -360,6 +373,17 @@ public abstract class AbstractDaemon implements Daemon, Runnable, Serializable {
         sb.append(getSleepTimeAfterJob());
         sb.append("ms.");
         sb.append(NEWLINE);
+        
+        int order = getOrder();
+        if (order < Integer.MAX_VALUE) {
+            sb.append("   * Order is set to ");
+            sb.append(getOrder());
+            sb.append(".");
+        } else {
+            sb.append("   * Not ordered.");
+        }
+        sb.append(NEWLINE);
+        
         sb.append(NEWLINE);
     }
 
@@ -889,6 +913,26 @@ public abstract class AbstractDaemon implements Daemon, Runnable, Serializable {
     public final Date getLastStartDate() {
         synchronized (m_daemonThreadLock) {
             return m_lastStartDate;
+        }
+    }
+
+    /**
+     * @param order
+     *            Is the order the daemon is started and stopped. Low value
+     *            means daemon started early and stopped lately.
+     */
+    public void setOrder(int order) {
+        synchronized (m_daemonLock) {
+            m_order = order;
+        }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public int getOrder() {
+        synchronized (m_daemonLock) {
+            return m_order;
         }
     }
 }

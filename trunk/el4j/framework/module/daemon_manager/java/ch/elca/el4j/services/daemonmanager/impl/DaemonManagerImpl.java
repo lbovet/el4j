@@ -18,18 +18,25 @@
 package ch.elca.el4j.services.daemonmanager.impl;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.core.OrderComparator;
 
 import ch.elca.el4j.services.daemonmanager.Daemon;
+import ch.elca.el4j.services.daemonmanager.DaemonFactory;
 import ch.elca.el4j.services.daemonmanager.DaemonManager;
 import ch.elca.el4j.services.daemonmanager.DaemonObserver;
 import ch.elca.el4j.services.daemonmanager.exceptions.CollectionOfDaemonCausedRTException;
@@ -75,6 +82,10 @@ import ch.elca.el4j.util.codingsupport.Reject;
  *     daemon manager should wait between starting two daemons.
  * </li>
  * <li>
+ *     If <code>strongShutdownOrder</code> is set to <code>true</code>, daemons
+ *     will be stopped in reverse order they where started.
+ * </li>
+ * <li>
  *     The <code>cachedInformationMessageTimeout</code> is the time in millis 
  *     the collected information message of method <code>getInformation</code>
  *     will be cached, because the invocation of this method is very time 
@@ -116,6 +127,11 @@ public class DaemonManagerImpl implements DaemonManager, DaemonObserver {
      * Default max daemon startup delay.
      */
     public static final long DEFAULT_MAX_DAEMON_STARTUP_DELAY = 500;
+    
+    /**
+     * Default strong shutdown order set to <code>false</code>.
+     */
+    public static final boolean DEFAULT_STRONG_SHUTDOWN_ORDER = false;
 
     /**
      * This is the time in millis the information message should be cached.
@@ -141,22 +157,33 @@ public class DaemonManagerImpl implements DaemonManager, DaemonObserver {
     /**
      * Set of running <code>Daemon</code> classes.
      */
-    protected final Set m_runningDaemons = new HashSet();
+    protected final List m_runningDaemons = new ArrayList();
     
     /**
      * Set of <code>Daemon</code> classes which must be added.
      */
-    protected final Set m_daemonsToAdd = new HashSet();
+    protected final List m_daemonsToAdd = new ArrayList();
 
     /**
      * Set of <code>Daemon</code> classes which must be removed.
      */
-    protected final Set m_daemonsToRemove = new HashSet();
+    protected final List m_daemonsToRemove = new ArrayList();
 
     /**
      * Set of <code>Daemon</code> classes which has been terminated.
      */
-    protected final Set m_terminatedDaemons = new HashSet();
+    protected final List m_terminatedDaemons = new ArrayList();
+    
+    /**
+     * Is the normal comparator for the daemon lists.
+     */
+    protected final Comparator m_normalComparator = new OrderComparator();
+
+    /**
+     * Is the reverse comparator for the daemon lists.
+     */
+    protected final Comparator m_reverseComparator 
+        = new ReverseComparator(m_normalComparator);
 
     /**
      * Map of <code>DaemonHeartbeat</code>s which contains the last heartbeat
@@ -231,6 +258,11 @@ public class DaemonManagerImpl implements DaemonManager, DaemonObserver {
      * daemons.
      */
     private long m_maxDaemonStartupDelay = DEFAULT_MAX_DAEMON_STARTUP_DELAY;
+    
+    /**
+     * Strong order flag for shutdown process.
+     */
+    private boolean m_strongShutdownOrder = DEFAULT_STRONG_SHUTDOWN_ORDER;
     
     /**
      * Is the time in millis the generated information message of method 
@@ -473,6 +505,7 @@ public class DaemonManagerImpl implements DaemonManager, DaemonObserver {
                         + "is not under control of this daemon manager.");
                 }
             }
+            Collections.sort(m_daemonsToAdd, m_normalComparator);
         }
     }
 
@@ -519,8 +552,8 @@ public class DaemonManagerImpl implements DaemonManager, DaemonObserver {
      *            Is a set of daemons where the work has to do.
      * @return Returns <code>true</code> if the given set contains daemons.
      */
-    protected boolean stopAndJoinDaemons(Set daemons) {
-        Set daemonsLocally;
+    protected boolean stopAndJoinDaemons(List daemons) {
+        List allDaemons;
         synchronized (m_daemonManagerLock) {
             /**
              * Return immediately if there are no daemons.
@@ -528,26 +561,83 @@ public class DaemonManagerImpl implements DaemonManager, DaemonObserver {
             if (CollectionUtils.isEmpty(daemons)) {
                 return false;
             } else {
-                daemonsLocally = new HashSet(daemons);
+                allDaemons = new ArrayList(daemons);
             }
         }
     
+        if (isStrongShutdownOrder()) {
+            /**
+             * Stop and join daemons ordered. A group contains daemons with 
+             * same order number.
+             */
+            Iterator itAllDaemons = allDaemons.iterator();
+            List daemonGroup = new ArrayList();
+            int lastOrder = Integer.MAX_VALUE;
+            while (itAllDaemons.hasNext()) {
+                Daemon daemon = (Daemon) itAllDaemons.next();
+                int currentOrder = daemon.getOrder();
+                if (currentOrder != lastOrder && !daemonGroup.isEmpty()) {
+                    /**
+                     * Try to stop and join daemons of current group.
+                     */
+                    stopDaemons(daemonGroup);
+                    joinDaemons(daemonGroup);
+                    daemonGroup.clear();
+                }
+                daemonGroup.add(daemon);
+                lastOrder = currentOrder;
+            }
+            if (!daemonGroup.isEmpty()) {
+                /**
+                 * Try to stop and join daemons of current group.
+                 */
+                stopDaemons(daemonGroup);
+                joinDaemons(daemonGroup);
+            }
+        } else {
+            /**
+             * Stop and join all daemons at once.
+             */
+            stopDaemons(allDaemons);
+            joinDaemons(allDaemons);
+        }
+        return true;
+    }
+
+    /**
+     * Stops all daemons in list.
+     * 
+     * @param daemonGroup Is the group of daemons to stop.
+     */
+    protected void stopDaemons(List daemonGroup) {
         /**
-         * First tell every to be stopped daemon, 
-         * that it should stop its work.
+         * Return if list is <code>null</code> or empty.
          */
-        Iterator it = daemonsLocally.iterator();
+        if (daemonGroup == null || daemonGroup.isEmpty()) {
+            return;
+        }
+        Iterator it = daemonGroup.iterator();
         while (it.hasNext()) {
             Daemon daemon = (Daemon) it.next();
             s_logger.info("Trying to stop daemon '" 
                 + daemon.getIdentification() + "'.");
             daemon.doStop();
         }
-        
+    }
+    
+    /**
+     * Joins all daemons in list.
+     * 
+     * @param daemonGroup Is the group of daemons to join.
+     */
+    protected void joinDaemons(List daemonGroup) {
         /**
-         * Then try to join every daemon.
+         * Return if list is <code>null</code> or empty.
          */
-        it = daemonsLocally.iterator();
+        if (daemonGroup == null || daemonGroup.isEmpty()) {
+            return;
+        }
+        Iterator it = daemonGroup.iterator();
         long daemonJoinTimeout 
             = getDaemonJoinTimeout();
         long daemonJoinEndTime 
@@ -585,8 +675,6 @@ public class DaemonManagerImpl implements DaemonManager, DaemonObserver {
                     + "' successfully finished.");
             }
         }
-        
-        return true;
     }
 
     /**
@@ -635,6 +723,7 @@ public class DaemonManagerImpl implements DaemonManager, DaemonObserver {
                     sleepRandomDelayForNextStart();
                 }
             }
+            Collections.sort(m_runningDaemons, m_reverseComparator);
         }
         
     }
@@ -811,28 +900,48 @@ public class DaemonManagerImpl implements DaemonManager, DaemonObserver {
                     + "is processing. Please stop processing first.");
         }
         
-        Set newDaemons = daemons == null ? new HashSet() : daemons;
-        
-        if (!CollectionUtils.containsOnlyObjectsOfType(
-                newDaemons, Daemon.class)) {
-            CoreNotificationHelper.notifyMisconfiguration(
-                "Set must only contain "
-                + "objects which implements the interface '"
-                + Daemon.class.getName() + "'.");
+        Set daemonSet = daemons == null ? new HashSet() : daemons;        
+        Set daemonsToAdd = new HashSet();
+        Iterator it = daemonSet.iterator();
+        while (it.hasNext()) {
+            Object daemonObject = it.next();
+            if (daemonObject instanceof Daemon) {
+                daemonsToAdd.add(daemonObject);
+            } else if (daemonObject instanceof DaemonFactory) {
+                DaemonFactory daemonFactory = (DaemonFactory) daemonObject;
+                List newDaemons = daemonFactory.getDaemons();
+                if (!CollectionUtils.containsOnlyObjectsOfType(
+                    newDaemons, Daemon.class)) {
+                    CoreNotificationHelper.notifyMisconfiguration(
+                        "Daemon factory must create only daemons that "
+                        + "implements the interface '"
+                        + Daemon.class.getName() + "'.");
+                }
+                daemonsToAdd.addAll(newDaemons);
+            } else {
+                CoreNotificationHelper.notifyMisconfiguration(
+                    "Set must only contain "
+                    + "objects which implements the interface '"
+                    + Daemon.class.getName() + "' or '" 
+                    + DaemonFactory.class.getName() + "'.");
+            }
         }
         
-        Iterator it = newDaemons.iterator();
+        it = daemonsToAdd.iterator();
         while (it.hasNext()) {
             Daemon daemon = (Daemon) it.next();
             if (daemon.isDaemonAlive()) {
                 CoreNotificationHelper.notifyMisconfiguration(
                     "Given daemons must not be alive.");
+            } else {
+                daemonsToAdd.add(daemon);
             }
         }
-        
+
         synchronized (m_daemonManagerLock) {
             m_daemonsToAdd.clear();
-            m_daemonsToAdd.addAll(newDaemons);
+            m_daemonsToAdd.addAll(daemonsToAdd);
+            Collections.sort(m_daemonsToAdd, m_normalComparator);
         }
     }
 
@@ -848,6 +957,7 @@ public class DaemonManagerImpl implements DaemonManager, DaemonObserver {
                 && !m_runningDaemons.contains(daemon)
                 && !m_daemonsToRemove.contains(daemon)) {
                 success = m_daemonsToAdd.add(daemon);
+                Collections.sort(m_daemonsToAdd, m_normalComparator);
                 if (success && isProcessing()) {
                     startAddedDaemons();
                 }
@@ -869,6 +979,8 @@ public class DaemonManagerImpl implements DaemonManager, DaemonObserver {
                     success = m_runningDaemons.remove(daemon);
                     if (success) {
                         m_daemonsToRemove.add(daemon);
+                        Collections.sort(
+                            m_daemonsToRemove, m_reverseComparator);
                     }
                 }
             }
@@ -1087,7 +1199,7 @@ public class DaemonManagerImpl implements DaemonManager, DaemonObserver {
      * @param sb
      *            Is the string buffer where information must be appended.
      * @param daemons
-     *            Is the set of daemons.
+     *            Is the list of daemons.
      * @param noDaemonsMessage
      *            Is the message to print out if the given set is empty.
      * @param hasDaemonsPrefix
@@ -1097,7 +1209,7 @@ public class DaemonManagerImpl implements DaemonManager, DaemonObserver {
      *            Is the message to print out after the size of set, if the
      *            given set is not empty.
      */
-    private void appendInformationOfDaemons(StringBuffer sb, Set daemons, 
+    private void appendInformationOfDaemons(StringBuffer sb, List daemons, 
         String noDaemonsMessage, String hasDaemonsPrefix, 
         String hasDaemonsSuffix) {
         int size = daemons.size();
@@ -1135,6 +1247,7 @@ public class DaemonManagerImpl implements DaemonManager, DaemonObserver {
             if (m_runningDaemons.contains(daemon)
                 || m_daemonsToRemove.contains(daemon)) {
                 m_terminatedDaemons.add(daemon);
+                Collections.sort(m_terminatedDaemons, m_reverseComparator);
             }
         }
     }
@@ -1175,6 +1288,7 @@ public class DaemonManagerImpl implements DaemonManager, DaemonObserver {
             if (m_runningDaemons.contains(daemon)
                 || m_daemonsToRemove.contains(daemon)) {
                 m_terminatedDaemons.add(daemon);
+                Collections.sort(m_terminatedDaemons, m_reverseComparator);
             }
         }
     }
@@ -1273,6 +1387,24 @@ public class DaemonManagerImpl implements DaemonManager, DaemonObserver {
     public final void setMaxDaemonStartupDelay(long maxDaemonStartupDelay) {
         synchronized (m_daemonManagerLock) {
             m_maxDaemonStartupDelay = maxDaemonStartupDelay;
+        }
+    }
+
+    /**
+     * @return Returns the strongShutdownOrder.
+     */
+    public final boolean isStrongShutdownOrder() {
+        synchronized (m_daemonManagerLock) {
+            return m_strongShutdownOrder;
+        }
+    }
+
+    /**
+     * @param strongShutdownOrder The strongShutdownOrder to set.
+     */
+    public final void setStrongShutdownOrder(boolean strongShutdownOrder) {
+        synchronized (m_daemonManagerLock) {
+            m_strongShutdownOrder = strongShutdownOrder;
         }
     }
 
