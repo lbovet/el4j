@@ -16,8 +16,9 @@
         <property name="checkPeriod" value="10000"/>
         <property name="maxMissingHeartbeats" value="3"/>
         <property name="daemonJoinTimeout" value="12000"/>
-        <property name="minDaemonStartupDelay" value="200"/>
-        <property name="maxDaemonStartupDelay" value="1000"/>
+        <property name="minDaemonStartupDelay" value="100"/>
+        <property name="maxDaemonStartupDelay" value="200"/>
+        <property name="strongShutdownOrder" value="true"/>
         <property name="daemons">
             <set>
                 <ref bean="daemonOne"/>
@@ -25,6 +26,18 @@
                 <ref bean="daemonThree"/>
                 <ref bean="daemonFour"/>
                 <ref bean="daemonFive"/>
+                <bean class="ch.elca.el4j.services.daemonmanager.impl.DaemonFactoryImpl">
+                    <property name="daemonBeanName" value="daemonC"/>
+                    <property name="numberOfDaemons" value="10"/>
+                </bean>
+                <bean class="ch.elca.el4j.services.daemonmanager.impl.DaemonFactoryImpl">
+                    <property name="daemonBeanName" value="daemonA"/>
+                    <property name="numberOfDaemons" value="5"/>
+                </bean>
+                <bean class="ch.elca.el4j.services.daemonmanager.impl.DaemonFactoryImpl">
+                    <property name="daemonBeanName" value="daemonB"/>
+                    <property name="numberOfDaemons" value="20"/>
+                </bean>
             </set>
         </property>
     </bean>
