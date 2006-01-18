@@ -13,7 +13,7 @@
             <value>localhost</value>
         </property>
         <property name="servicePort">
-            <value>1099</value>
+            <value>8090</value>
         </property>
     </bean>
 </beans>
