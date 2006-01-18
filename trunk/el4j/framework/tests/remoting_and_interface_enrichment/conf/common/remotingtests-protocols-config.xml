@@ -9,10 +9,10 @@
     
     <bean id="rmiProtocol" class="ch.elca.el4j.services.remoting.protocol.Rmi">
         <property name="serviceHost">
-            <value>localhost</value>
+            <value>${rmi.host}</value>
         </property>
         <property name="servicePort">
-            <value>1099</value>
+            <value>${rmi.port}</value>
         </property>
         <property name="implicitContextPassingRegistry">
             <ref local="implicitContextPassingRegistry" />
