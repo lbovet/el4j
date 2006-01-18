@@ -129,6 +129,7 @@ public final class Controller {
             while (it.hasNext()) {
                 s_logger.error("Daemon caused exception #" + exceptionNumber 
                     + " of " + numberOfExceptions + ".", (Throwable) it.next());
+                exceptionNumber++;
             }
             System.exit(EXIT_CODE_DAEMON_CAUSED_EXCEPTIONS);
         } catch (DaemonsStillRunningRTException e) {
