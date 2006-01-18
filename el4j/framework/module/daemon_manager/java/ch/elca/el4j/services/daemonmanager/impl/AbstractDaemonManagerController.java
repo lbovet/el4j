@@ -44,7 +44,7 @@ import ch.elca.el4j.services.daemonmanager.exceptions.MissingHeartbeatsRTExcepti
  * @author Martin Zeltner (MZE)
  * @author Stéphane Rose (STR)
  */
-public abstract class AbstractDaemonController 
+public abstract class AbstractDaemonManagerController 
     implements WrapperListener, Runnable {
     /**
      * Exit code if heartbeats had missed.
@@ -62,14 +62,9 @@ public abstract class AbstractDaemonController
     public static final int EXIT_CODE_DAEMONS_STILL_RUNNING = -12;
 
     /**
-     * Exit code if no daemon manager could be created.
-     */
-    public static final int EXIT_CODE_NO_DAEMON_MANAGER_CREATED = -20;    
-    
-    /**
      * Exit code if there was a throwable for an unknown reason.
      */
-    public static final int EXIT_CODE_UNKNOWN_REASON = -30;
+    public static final int EXIT_CODE_UNKNOWN_REASON = -20;
 
     /**
      * Exit code if daemon manager has been gracefully terminated.
@@ -83,10 +78,16 @@ public abstract class AbstractDaemonController
         = "daemon-manager-is-running.txt";
 
     /**
+     * Default daemon manager controller join timeout.
+     */
+    public static final long DEFAULT_DAEMON_MANAGER_CONTROLLER_JOIN_TIMEOUT 
+        = 10000;
+
+    /**
      * Private logger of this class.
      */
     private static Log s_logger
-        = LogFactory.getLog(AbstractDaemonController.class);
+        = LogFactory.getLog(AbstractDaemonManagerController.class);
 
     /**
      * Daemon manager to work on.
@@ -118,6 +119,8 @@ public abstract class AbstractDaemonController
     protected abstract DaemonManager createDaemonManager();
 
     /**
+     * It is recommended to override this method.
+     * 
      * @return Returns the file path, where the file that indicates that the
      *         daemon manager is currently running, will be saved.
      */
@@ -185,18 +188,29 @@ public abstract class AbstractDaemonController
     }
     
     /**
+     * It is recommended to override this method.
+     * 
+     * @return Returns the daemon manager controller join timeout.
+     */
+    protected long getDaemonManagerControllerJoinTimeout() {
+        return DEFAULT_DAEMON_MANAGER_CONTROLLER_JOIN_TIMEOUT;
+    }
+    
+    /**
      * {@inheritDoc}
+     * 
+     * Do not override this method!
      */
     public void run() {
         s_logger.debug("Run method entered.");
         boolean fileExists = doesRunIndicatorFileExists();
         if (fileExists) {
-            s_logger.info("Seams that last run of daemon manager controller"
+            s_logger.info("Seams that last run of daemon manager controller "
                 + "crashed. Run indicator file will now be deleted.");
             deleteRunIndicatorFile();
         }
         
-        if (preDaemonManagerControllerStart(fileExists)) {
+        if (!preDaemonManagerControllerStart(fileExists)) {
             s_logger.info("Daemon manager controller will not be started "
                 + "because answer of pre daemon manager start method was "
                 + "false.");
@@ -242,19 +256,15 @@ public abstract class AbstractDaemonController
      * {@inheritDoc}
      * 
      * Creates and starts the daemon manager in a new thread.
+     * 
+     * Do not override this method!
      */
     public Integer start(String[] arg) {
         s_logger.debug("Start method entered.");
-        Integer result;
         m_daemonManager = createDaemonManager();
-        if (m_daemonManager == null) {
-            result = new Integer(EXIT_CODE_NO_DAEMON_MANAGER_CREATED);
-        } else {
-            m_thread = new Thread(this);
-            m_thread.start();
-            result = null;
-        }
-        return result;
+        m_thread = new Thread(this);
+        m_thread.start();
+        return null;
     }
 
     /**
@@ -262,16 +272,25 @@ public abstract class AbstractDaemonController
      * 
      * Stops processing of daemon manager and waits the internal thread, where 
      * the daemon manager is running to die.
+     * 
+     * Do not override this method!
      */
     public int stop(int exitCode) {
         s_logger.debug("Stop method with exit code " + exitCode + " entered.");
         m_daemonManager.doStopProcessing();
         try {
-            m_thread.join();
+            long timeout = getDaemonManagerControllerJoinTimeout();
+            m_thread.join(timeout);
+            if (m_thread.isAlive()) {
+                s_logger.warn("The daemon manager controller is still alive "
+                    + "after a timeout of " + timeout + "ms! The controller "
+                    + "will now be stopped.");
+            }
         } catch (InterruptedException e) {
             s_logger.warn("Join of thread where the daemon manager controller "
                 + "is running has been interrupted.", e);
         }
+        s_logger.debug("Stop method left.");
         return exitCode;
     }
 
