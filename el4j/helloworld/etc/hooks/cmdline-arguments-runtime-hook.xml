@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!-- EL4Ant plugin definition -->
+<project name="cmdline-arguments-runtime-hook" 
+    xmlns:antcontrib="antlib:net.sf.antcontrib" 
+    xmlns:el4ant="antlib:ch.elca.el4ant">
+    <description>
+        Command line arguments runtime hook.
+    </description>
+    
+    <!-- Version: $Revision$ -->
+    <!-- Source:  $Source$ -->
+    <!-- Date:    $Date$ -->
+    <!-- Author:  $Author$ -->
+  
+    <target name="configure" 
+        description="[C] Configure command line arguments runtime hook plugin">
+      <el4ant:buildgen action="include" 
+          target="cmdline-arguments-runtime-hook.include.startpoint"/>
+    </target>
+    
+    <!-- Fake init target to load plugin file -->
+    <target name="init"/>
+    
+    <!--
+        Targets following the next fake target are copied into the generated 
+        'build.xml' file.
+    -->
+    <target name="cmdline-arguments-runtime-hook.include.startpoint"/>
+    
+    <!-- Targets from 'cmdline-argument-runtime-hook.xml'  -->
+    <target name="runtime.hook.cmdline.arguments" 
+        description="[R] Hook to send arguments to main method.">
+        <!-- Overrideable default value -->
+        <property name="args" value=""/>
+        <property name="arg1" value=""/>
+        <property name="arg2" value=""/>
+        <property name="arg3" value=""/>
+        <property name="arg4" value=""/>
+        <property name="arg5" value=""/>
+        <property name="arg6" value=""/>
+        <property name="arg7" value=""/>
+        <property name="arg8" value=""/>
+        <property name="arg9" value=""/>
+        <el4ant:javacommand command="command.${module}.${eu}" action="append">
+            <arg value="${args}"/>
+            <arg value="${arg1}"/>
+            <arg value="${arg2}"/>
+            <arg value="${arg3}"/>
+            <arg value="${arg4}"/>
+            <arg value="${arg5}"/>
+            <arg value="${arg6}"/>
+            <arg value="${arg7}"/>
+            <arg value="${arg8}"/>
+            <arg value="${arg9}"/>
+        </el4ant:javacommand>
+    </target>
+    <!-- End from 'cmdline-argument-runtime-hook.xml'  -->    
+</project>

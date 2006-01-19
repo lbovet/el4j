@@ -1,0 +1,465 @@
+div#TopBar {
+    position            : absolute;
+    top                 : 0px;
+    left                : 0px;
+    height              : 80px;
+    width               : 100%;
+    border-bottom-style : solid;
+    border-bottom-width : 3px;
+    border-bottom-color : rgb(204,51,0);
+    padding-top         : 0px;
+    padding-bottom      : 0px;
+    padding-left        : 0px;
+    padding-right       : 0px;
+    margin-top          : 0px;
+    margin-bottom       : 0px;
+    margin-left         : 0px;
+    margin-right        : 0px;
+}
+
+div#InnerTopBar {
+    position            : absolute;
+    top                 : 0px;
+    left                : 0px;
+    height              : 80px;
+    width               : 1024px;
+    border-right-style  : solid;
+    border-right-width  : 1px;
+    border-right-color  : Black;
+    padding-top         : 0px;
+    padding-bottom      : 0px;
+    padding-left        : 0px;
+    padding-right       : 0px;
+    margin-top          : 0px;
+    margin-bottom       : 0px;
+    margin-left         : 0px;
+    margin-right        : 0px;
+}
+
+div#TopTitle {
+    position            : absolute;
+    left                : 180px;
+    top                 : 15px;
+    font-size           : 14pt;
+    font-weight         : bolder;
+    padding-top         : 0px;
+    padding-bottom      : 0px;
+    padding-left        : 0px;
+    padding-right       : 0px;
+    margin-top          : 0px;
+    margin-bottom       : 0px;
+    margin-left         : 0px;
+    margin-right        : 0px;
+}
+
+div#Slogan {
+    position            : absolute;
+    left                : 210px;
+    top                 : 40px;
+    font-size           : 8pt;
+    font-weight         : normal;
+    padding-top         : 0px;
+    padding-bottom      : 0px;
+    padding-left        : 0px;
+    padding-right       : 0px;
+    margin-top          : 0px;
+    margin-bottom       : 0px;
+    margin-left         : 0px;
+    margin-right        : 0px;
+}
+
+img#Logo {
+    position            : absolute;
+    top                 : 5px;
+    left                : 5px;
+    padding-top         : 0px;
+    padding-bottom      : 0px;
+    padding-left        : 0px;
+    padding-right       : 0px;
+    margin-top          : 0px;
+    margin-bottom       : 0px;
+    margin-left         : 0px;
+    margin-right        : 0px;
+}
+
+div#Navigation {
+    position            : absolute;
+    top                 : 80px;
+    left                : 0px;
+    width               : 180px;
+    padding-top         : 5px;
+    padding-bottom      : 0px;
+    padding-left        : 0px;
+    padding-right       : 0px;
+    margin-top          : 0px;
+    margin-bottom       : 0px;
+    margin-left         : 0px;
+    margin-right        : 0px;
+}
+
+div.MenuItemActive {
+    background-color : White;
+    color            : rgb(204,51,0);
+    width            : 168px;
+    font-size        : 8pt;
+    font-weight      : bold;
+    border-style     : solid;
+    border-color     : rgb(204,51,0);
+    border-width     : 1px;
+    padding-left     : 5px;
+    padding-right    : 5px;
+    padding-top      : 3px;
+    padding-bottom   : 3px;
+    margin-left      : 2px;
+    margin-right     : 2px;
+    margin-top       : 2px;
+    margin-bottom    : 2px;
+}
+
+div.MenuItem {
+    padding-top         : 0px;
+    padding-bottom      : 0px;
+    padding-left        : 0px;
+    padding-right       : 0px;
+    margin-top          : 0px;
+    margin-bottom       : 0px;
+    margin-left         : 0px;
+    margin-right        : 0px;
+}
+
+a.MenuItem {
+    display          : block;
+    text-decoration  : none;
+    color            : White;
+    background-color : rgb(204,51,0);
+    width            : 168px;
+    font-size        : 8pt;
+    font-weight      : bold;
+    border-style     : solid;
+    border-color     : rgb(204,51,0);
+    border-width     : 1px;
+    padding-left     : 5px;
+    padding-right    : 5px;
+    padding-top      : 3px;
+    padding-bottom   : 3px;
+    margin-left      : 2px;
+    margin-right     : 2px;
+    margin-top       : 2px;
+    margin-bottom    : 2px;
+}
+
+a.MenuItem:link {
+    text-decoration  : none;
+    color            : White;
+    background-color : rgb(204,51,0);
+    font-size        : 8pt;
+    font-weight      : bold;
+}
+
+a.MenuItem:visited {
+    text-decoration  : none;
+    color            : White;
+    background-color : rgb(204,51,0);
+    font-size        : 8pt;
+    font-weight      : bold;
+}
+
+a.MenuItem:hover {
+    text-decoration  : none;
+    color            : rgb(204,51,0);
+    background-color : White;
+    font-size        : 8pt;
+    font-weight      : bold;
+}
+
+div#Content {
+    position           : absolute;
+    overflow           : auto;
+    top                : 83px;
+    left               : 190px;
+    bottom             : 20px;
+    width              : 550px;
+    padding-left       : 10px;
+    padding-right      : 10px;
+    padding-top        : 2px;
+    padding-bottom     : 0px;
+    margin-top         : 0px;
+    margin-bottom      : 0px;
+    margin-left        : 0px;
+    margin-right       : 0px;
+    border-right-style : solid;
+    border-right-width : 1px;
+    border-right-color : rgb(204,51,0);
+}
+
+div#RightColumn {
+    position           : absolute;
+    top                : 83px;
+    left               : 760px;
+    bottom             : 0px;
+    width              : 244px;
+    padding-left       : 10px;
+    padding-right      : 10px;
+    padding-top        : 2px;
+    padding-bottom     : 0px;
+    margin-top         : 0px;
+    margin-bottom      : 0px;
+    margin-left        : 0px;
+    margin-right       : 0px;
+    border-right-color : Black;
+    border-right-style : solid;
+    border-right-width : 1px;
+}
+
+img#SFLogo {
+    position     : relative;
+    top          : 30px;
+    left         : 27px;
+    border-style : none;
+}
+
+body { 
+    font-weight         : normal;
+    background-color    : White;
+    background-image    : url("../images/elca_home_right_bg.gif");
+    background-position : 1024px 80px;
+    background-repeat   : repeat-y;
+    color               : #000000; 
+    font-family         : Verdana,Arial,"Microsoft Sans Serif","Lucida Console", Sans-Serif; 
+    font-size           : 10pt;
+    margin-top          : 0px;
+    margin-bottom       : 0px;
+    margin-left         : 0px;
+    margin-right        : 0px;
+}
+
+h1 {
+    background-color    : rgb(153,153,102);
+    color               : White;
+    font-family         : inherit;
+    font-size           : 10pt;
+    font-weight         : bold;
+    padding-left        : 5px;
+    padding-right       : 5px;
+    padding-top         : 3px;
+    padding-bottom      : 3px;
+    margin-top          : 0px;
+    margin-bottom       : 5px;
+    margin-left         : 0px;
+    margin-right        : 0px;
+}
+
+h2 {
+    background-color    : rgb(238,238,187);
+    color               : Black;
+    font-family         : inherit;
+    font-size           : 8pt;
+    font-weight         : bold;
+    padding-left        : 5px;
+    padding-right       : 5px;
+    padding-top         : 3px;
+    padding-bottom      : 3px;
+    margin-top          : 0px;
+    margin-bottom       : 5px;
+    margin-left         : 0px;
+    margin-right        : 0px;
+}
+
+h3 {
+    color               : Black;
+    font-family         : inherit;
+    font-size           : 8pt;
+    font-weight         : bold;
+    font-style          : normal;
+    padding-left        : 0px;
+    padding-right       : 0px;
+    padding-top         : 0px;
+    padding-bottom      : 0px;
+    margin-top          : 10px;
+    margin-bottom       : 5px;
+    margin-left         : 0px;
+    margin-right        : 0px;
+}
+
+hr {
+    color               : rgb(102,102,51);
+    background-color    : rgb(102,102,51);
+    height              : 1px;
+    border-style        : solid;
+}
+
+dl {
+    color               : Black;
+    font-family         : inherit;
+    font-size           : 8pt;
+    font-weight         : normal;
+}
+
+dt {
+    font-style          : italic;
+    margin-top          : 8px;
+}
+
+dd {
+    font-style          : normal;
+    margin-top          : 5px;
+}
+
+p {
+    padding-top         : 5px;
+    padding-bottom      : 0px;
+    padding-left        : 0px;
+    padding-right       : 0px;
+    margin-top          : 5px;
+    margin-bottom       : 0px;
+    margin-left         : 0px;
+    margin-right        : 0px;
+}
+
+div {
+    padding-top         : 5px;
+    padding-bottom      : 0px;
+    padding-left        : 0px;
+    padding-right       : 0px;
+    margin-top          : 5px;
+    margin-bottom       : 0px;
+    margin-left         : 0px;
+    margin-right        : 0px;
+}
+
+ul {
+    list-style-type  : square;
+    list-style-image : url("../images/bullet.gif");
+}
+
+a:link {
+    font-style        : normal;
+    font-weight       : inherit;
+    background-color  : inherit;
+    color             : rgb(204,51,0);
+    text-decoration   : underline;
+}
+
+a:visited {
+    background-color  : inherit;
+    font-style        : normal;
+    font-weight       : inherit;
+    color             : rgb(153,153,102);
+    text-decoration   : underline;
+}
+
+.goto {
+    border-style : none;
+}
+
+.lastChangedCopyright {
+    font-size        : 7pt;
+    margin-left      : 3px;
+    margin-top       : 10px;
+    margin-bottom    : 5px;
+}
+
+div.report {
+    padding-top         : 5px;
+    padding-bottom      : 0px;
+    padding-left        : 0px;
+    padding-right       : 0px;
+    margin-top          : 5px;
+    margin-bottom       : 0px;
+    margin-left         : 0px;
+    margin-right        : 0px;    
+}
+
+div.report p.header {
+    color               : Black;
+    font-family         : inherit;
+    font-size           : 8pt;
+    font-weight         : bold;
+    font-style          : normal;
+}
+
+p.header a:link {
+    color             : rgb(204,51,0);
+    text-decoration   : underline;
+    font-size         : 10pt;
+    font-weight       : bold;
+    font-style        : normal;
+}
+
+p.header a:visited {
+    color             : rgb(204,51,0);
+    text-decoration   : underline;
+    font-size         : 10pt;
+    font-weight       : bold;
+    font-style        : normal;
+}
+
+table {
+    border              : 1px;
+    border-color        : rgb(102,102,51);
+    border-style        : solid;
+    border-collapse     : collapse;
+    padding-top         : 0px;
+    padding-bottom      : 0px;
+    padding-left        : 0px;
+    padding-right       : 0px;
+    margin-top          : 10px;
+    margin-bottom       : 10px;
+    margin-left         : 0px;
+    margin-right        : 0px;
+}
+
+tr {
+    color               : Black;
+    font-weight         : normal;
+}
+
+tr.Failure {
+    color               : rgb(204,51,0);
+    font-weight         : bold;
+}
+
+tr.Success {
+    color               : rgb(102,153,0);
+    font-weight         : bold;
+}
+
+th {
+    border              : 1px;
+    border-color        : rgb(102,102,51);
+    border-style        : solid;
+    background-color    : rgb(238,238,187);
+    color               : Black;
+    font-family         : inherit;
+    font-size           : 8pt;
+    font-weight         : bold;
+    text-align          : center;
+    padding-left        : 5px;
+    padding-right       : 5px;
+    padding-top         : 3px;
+    padding-bottom      : 3px;
+    margin-top          : 0px;
+    margin-bottom       : 5px;
+    margin-left         : 0px;
+    margin-right        : 0px;
+}
+
+td {
+    border              : 1px;
+    border-color        : rgb(102,102,51);
+    border-style        : solid;
+    background-color    : White;
+    color               : inherit;
+    font-family         : inherit;
+    font-size           : 10pt;
+    font-weight         : inherit;
+    text-align          : center;
+    padding-left        : 5px;
+    padding-right       : 5px;
+    padding-top         : 3px;
+    padding-bottom      : 3px;
+    margin-top          : 0px;
+    margin-bottom       : 5px;
+    margin-left         : 0px;
+    margin-right        : 0px;
+}

@@ -17,3 +17,7 @@ For current release notes see file "etc/ReleaseNotes.txt".
 Code and documentation of the EL4J J2EE framework can be found on 
 "http://el4j.sourceforge.net". Please look at file "etc/GettingStarted.txt" for 
 further information.
+
+---+ New projects
+You can use the Hello World project template (in directory "helloworld") to
+begin with a new project. Please read the "helloworld/README.txt".
