@@ -30,6 +30,8 @@ import ch.elca.el4j.apps.keyword.dto.KeywordDto;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.LikeCriteria;
 
+// Checkstyle: MagicNumber off
+
 /**
  * Test case for <code>SqlMapKeywordDao</code>.
  *
@@ -285,7 +287,8 @@ public class DefaultKeywordServiceTest extends AbstractTestCaseBase {
             + "five keywords.", 5, list.size());
 
         query = new QueryObject();
-        query.addCriteria(LikeCriteria.caseInsensitive("description", "%log4j%"));
+        query.addCriteria(LikeCriteria.caseInsensitive(
+            "description", "%log4j%"));
         list = dao.searchKeywords(query);
         assertEquals(
             "Search for description like 'log4j' results not in one keyword.",

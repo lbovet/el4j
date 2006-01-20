@@ -33,7 +33,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Text;
 
 import ch.elca.el4j.core.exceptions.BaseRTException;
-import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 
 /**
  * This class is used to help creating wssd documents for axis deployment.

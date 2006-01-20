@@ -16,11 +16,19 @@
  */
 package ch.elca.el4j.tests.security;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import ch.elca.el4j.core.exceptions.BaseRTException;
+import ch.elca.el4j.tests.security.sample.SampleService;
+
 import junit.framework.TestCase;
+
 import net.sf.acegisecurity.AccessDeniedException;
 import net.sf.acegisecurity.AuthenticationCredentialsNotFoundException;
 import net.sf.acegisecurity.AuthenticationException;
-import net.sf.acegisecurity.AuthenticationManager;
 import net.sf.acegisecurity.GrantedAuthority;
 import net.sf.acegisecurity.GrantedAuthorityImpl;
 import net.sf.acegisecurity.context.Context;
@@ -29,13 +37,8 @@ import net.sf.acegisecurity.context.security.SecureContext;
 import net.sf.acegisecurity.context.security.SecureContextImpl;
 import net.sf.acegisecurity.providers.TestingAuthenticationToken;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import ch.elca.el4j.core.exceptions.BaseRTException;
-import ch.elca.el4j.tests.security.sample.SampleService;
+// Checkstyle: EmptyBlock off
+// Checkstyle: MagicNumber off
 
 /**
  * Tests various logins and authorization in a local environment.
@@ -55,28 +58,37 @@ public class AuthorizationLocalTest extends TestCase {
     private static Log s_logger = LogFactory
         .getLog(AuthorizationLocalTest.class);
 
-    private static String METHOD_ACCESS_ROLE = "ROLE_PERMISSION_ADDONE";
+    /**
+     * Method access role.
+     */
+    private static final String METHOD_ACCESS_ROLE = "ROLE_PERMISSION_ADDONE";
 
-    private String[] m_applicationContext = new String[] {
+    /**
+     * Config locations.
+     */
+    private String[] m_configLocations = new String[] {
         "classpath:optional/security-attributes.xml",
         "classpath:server/applicationContextTest.xml",
         "classpath:services/sampleService.xml"};
 
+    /**
+     * Application context.
+     */
     private ApplicationContext m_ac;
 
     /**
      * Test tries to execute the target method without authentication.
      * 
-     * @throws Exception
+     * @throws Exception If something.
      */
     public void testMethodCallWithoutLogin() throws Exception {
 
         s_logger.debug("Loading Application Context.");
-        m_ac = new ClassPathXmlApplicationContext(m_applicationContext);
+        m_ac = new ClassPathXmlApplicationContext(m_configLocations);
         s_logger.debug("Application Context loaded.");
 
         try {
-            int result = getSampleService().addOne(1234);
+            getSampleService().addOne(1234);
             fail("User should not be able to execute this method without "
                     + "login");
         } catch (AuthenticationCredentialsNotFoundException e) {
@@ -89,12 +101,12 @@ public class AuthorizationLocalTest extends TestCase {
      * Test does a correct authorization. Then it does a remote call to the
      * sample service.
      * 
-     * @throws Exception
+     * @throws Exception If something.
      */
     public void testCorrectAuthorization() throws Exception {
 
         s_logger.debug("Loading Application Context.");
-        m_ac = new ClassPathXmlApplicationContext(m_applicationContext);
+        m_ac = new ClassPathXmlApplicationContext(m_configLocations);
         s_logger.debug("Application Context loaded.");
 
         createSecureContext("server", "server", METHOD_ACCESS_ROLE);
@@ -108,12 +120,12 @@ public class AuthorizationLocalTest extends TestCase {
      * sample service. Afterwards, it logs out, tries to call the method again
      * and fails.
      * 
-     * @throws Exception
+     * @throws Exception If something.
      */
     public void testCorrectAuthorizationAfterLogoutNoAccess() throws Exception {
 
         s_logger.debug("Loading Application Context.");
-        m_ac = new ClassPathXmlApplicationContext(m_applicationContext);
+        m_ac = new ClassPathXmlApplicationContext(m_configLocations);
         s_logger.debug("Application Context loaded.");
 
         createSecureContext("server", "server", METHOD_ACCESS_ROLE);
@@ -136,12 +148,12 @@ public class AuthorizationLocalTest extends TestCase {
      * to the sample service. Since the required permission is not given, the
      * call should throw an exception.
      * 
-     * @throws Exception
+     * @throws Exception If something.
      */
     public void testFailedAuthorization() throws Exception {
 
         s_logger.debug("Loading Application Context.");
-        m_ac = new ClassPathXmlApplicationContext(m_applicationContext);
+        m_ac = new ClassPathXmlApplicationContext(m_configLocations);
         s_logger.debug("Application Context loaded.");
 
         createSecureContext("server", "server", "WRONG_ROLE");
@@ -158,12 +170,12 @@ public class AuthorizationLocalTest extends TestCase {
      * Test tries to authenticate with a wrong username/password combination. An
      * exception should be thrown.
      * 
-     * @throws Exception
+     * @throws Exception If something.
      */
     public void testFailedAuthentication() throws Exception {
 
         s_logger.debug("Loading Application Context.");
-        m_ac = new ClassPathXmlApplicationContext(m_applicationContext);
+        m_ac = new ClassPathXmlApplicationContext(m_configLocations);
         s_logger.debug("Application Context loaded.");
 
         createSecureContext("server", "wrong_credential", "SOME_ROLE");
@@ -178,14 +190,8 @@ public class AuthorizationLocalTest extends TestCase {
     }
 
     /**
-     * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-     * Additional methods
-     * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     * @return Returns the sample service.
      */
-    private AuthenticationManager getAuthenticationManager() {
-        return (AuthenticationManager) m_ac.getBean("authenticationManager");
-    }
-
     private SampleService getSampleService() {
         return (SampleService) m_ac.getBean("sampleService");
     }

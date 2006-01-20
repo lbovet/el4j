@@ -22,6 +22,8 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.daemonmanager.DaemonManager;
 import ch.elca.el4j.services.daemonmanager.impl.AbstractDaemonManagerController;
 
+//Checkstyle: UncommentedMain off
+
 /**
  * Sample for the daemon manager controller with java service wrapper.
  *

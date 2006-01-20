@@ -193,7 +193,9 @@ public class ManifestResourceResolverIntegrationTest
     public void testLocalResource() throws IOException {
         Resource[] r = m_resolver.getResources(
                 "classpath*:core/io/integration/*.xml");
+        // Checkstyle: MagicNumber off
         assertEquals(4, r.length);
+        // Checkstyle: MagicNumber on
     }
     
     /**

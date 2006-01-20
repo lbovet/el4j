@@ -20,13 +20,16 @@ package ch.elca.el4j.tests.remoting.ejb;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import junit.framework.TestCase;
 import ch.elca.el4j.services.remoting.RemotingServiceExporter;
 import ch.elca.el4j.services.remoting.protocol.ejb.EjbConfigurationObject;
 import ch.elca.el4j.services.remoting.protocol.ejb.xdoclet.XDocletException;
 import ch.elca.el4j.services.remoting.protocol.ejb.xdoclet.XDocletTag;
 import ch.elca.el4j.services.remoting.protocol.ejb.xdoclet.XDocletTagGenerator;
 import ch.elca.el4j.services.remoting.protocol.ejb.xdoclet.XDocletTagSet;
+
+import junit.framework.TestCase;
+
+// Checkstyle: EmptyBlock off
 
 /**
  * Tests the XDoclet tag support.

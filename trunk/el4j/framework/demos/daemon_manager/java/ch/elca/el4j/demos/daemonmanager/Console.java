@@ -22,6 +22,8 @@ import org.springframework.util.StringUtils;
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.daemonmanager.DaemonManager;
 
+//Checkstyle: UncommentedMain off
+
 /**
  * This class is the console for a daemon manager. Depending on arguments of
  * method main, tasks will be executed.

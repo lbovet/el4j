@@ -69,21 +69,14 @@ public abstract class AbstractExceptionHandler implements ExceptionHandler {
      * 
      * @param t
      *      The exception thrown in the method invocation.
-     *      
      * @param exceptionInvoker
      *      The exception invoker that called this exception handler.
-     * 
      * @param invocation
      *      The original method invocation.
      * @param logger
      *      The logger to be used by subclasses.
-     *      
      * @return Returns an object that is treated as the original invocation's
      *      return value.
-     *      
-     * @throws ch.elca.el4j.services.exceptionhandler.RetryException
-     *      Signals that the complete invocation has to be rerun.
-     *      
      * @throws Throwable
      *      Any exception thrown by the handler.
      */

@@ -48,6 +48,7 @@ import junit.framework.TestCase;
  * @author Martin Zeltner (MZE)
  */
 public class DaemonManagerFeaturesTest extends TestCase {
+    // Checkstyle: MagicNumber off
     
     /**
      * Private logger of this class.
@@ -134,20 +135,7 @@ public class DaemonManagerFeaturesTest extends TestCase {
             actionList.size());
         
         // Check order in action list init.
-        Iterator it = actionList.iterator();
-        int actionNumber = 1;
-        while (it.hasNext()) {
-            AbstractDaemon daemon = (AbstractDaemon) it.next();
-            String id = daemon.getIdentification();
-            if (!(id.startsWith("Daemon A") && actionNumber <= 5
-                || id.startsWith("Daemon B") && actionNumber <= 25
-                || id.startsWith("Daemon D") && actionNumber <= 26
-                || id.startsWith("Daemon C") && actionNumber <= 36)
-                || actionNumber <= 0) {
-                fail("Unexpected daemon init order.");
-            }
-            actionNumber++;
-        }
+        checkDaemonStartOrder(actionList);
         
         // Stop daemon manager.
         stopAndCheckStoppedDaemonManager(daemonManager, dmp, 
@@ -162,22 +150,63 @@ public class DaemonManagerFeaturesTest extends TestCase {
             actionList.size());
 
         // Check order in action list init.
+        checkDaemonStopOrder(actionList);
+    }
+
+    /**
+     * Checks the daemon start order.
+     * 
+     * @param actionList Is the time sorted list of started daemons.
+     */
+    private void checkDaemonStartOrder(List actionList) {
+        Iterator it = actionList.iterator();
+        int actionNumber = 1;
+        while (it.hasNext()) {
+            AbstractDaemon daemon = (AbstractDaemon) it.next();
+            checkDaemonActionOrder(actionNumber, daemon);
+            actionNumber++;
+        }
+    }
+
+    /**
+     * Checks the action order of the given daemon. 
+     * 
+     * @param actionNumber Is the action number the daemon should have.
+     * @param daemon Is the daemon to check.
+     */
+    private void checkDaemonActionOrder(int actionNumber, 
+        AbstractDaemon daemon) {
+        String id = daemon.getIdentification();
+        boolean isDaemonA = id.startsWith("Daemon A") 
+            && actionNumber >= 1 && actionNumber <= 5;
+        boolean isDaemonB = id.startsWith("Daemon B") 
+            && actionNumber >= 6 && actionNumber <= 25;
+        boolean isDaemonC = id.startsWith("Daemon C") 
+            && actionNumber >= 27 && actionNumber <= 36;
+        boolean isDaemonD = id.startsWith("Daemon D") 
+            && actionNumber == 26;
+        if (!(isDaemonA || isDaemonB || isDaemonC || isDaemonD)) {
+            fail("Unexpected daemon order.");
+        }
+    }
+    
+    /**
+     * Checks the daemon stop order.
+     * 
+     * @param actionList Is the time sorted list of stopped daemons.
+     */
+    private void checkDaemonStopOrder(List actionList) {
+        Iterator it;
+        int actionNumber;
         it = actionList.iterator();
         actionNumber = 36;
         while (it.hasNext()) {
             AbstractDaemon daemon = (AbstractDaemon) it.next();
-            String id = daemon.getIdentification();
-            if (!(id.startsWith("Daemon A") && actionNumber <= 5
-                || id.startsWith("Daemon B") && actionNumber <= 25
-                || id.startsWith("Daemon D") && actionNumber <= 26
-                || id.startsWith("Daemon C") && actionNumber <= 36)
-                || actionNumber <= 0) {
-                fail("Unexpected daemon cleanup order.");
-            }
+            checkDaemonActionOrder(actionNumber, daemon);
             actionNumber--;
         }
     }
-    
+
     /**
      * Method to sleep for given millis.
      * 
@@ -269,4 +298,5 @@ public class DaemonManagerFeaturesTest extends TestCase {
             = (DaemonManagerImpl) appContext.getBean("daemonManagerOne");
         return daemonManager;
     }
+    // Checkstyle: MagicNumber on
 }

@@ -16,15 +16,6 @@
  */
 package ch.elca.el4j.tests.security;
 
-import junit.framework.TestCase;
-import net.sf.acegisecurity.AccessDeniedException;
-import net.sf.acegisecurity.Authentication;
-import net.sf.acegisecurity.AuthenticationCredentialsNotFoundException;
-import net.sf.acegisecurity.BadCredentialsException;
-import net.sf.acegisecurity.GrantedAuthority;
-import net.sf.acegisecurity.GrantedAuthorityImpl;
-import net.sf.acegisecurity.providers.TestingAuthenticationToken;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
@@ -33,6 +24,19 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ch.elca.el4j.services.security.authentication.AuthenticationService;
 import ch.elca.el4j.tests.security.sample.SampleService;
 import ch.elca.el4j.tests.security.server.AuthorizationServer;
+
+import junit.framework.TestCase;
+
+import net.sf.acegisecurity.AccessDeniedException;
+import net.sf.acegisecurity.Authentication;
+import net.sf.acegisecurity.AuthenticationCredentialsNotFoundException;
+import net.sf.acegisecurity.BadCredentialsException;
+import net.sf.acegisecurity.GrantedAuthority;
+import net.sf.acegisecurity.GrantedAuthorityImpl;
+import net.sf.acegisecurity.providers.TestingAuthenticationToken;
+
+// Checkstyle: EmptyBlock off
+// Checkstyle: MagicNumber off
 
 /**
  * Tests various logins and authorization in a distributed environment. <br>
@@ -51,11 +55,20 @@ import ch.elca.el4j.tests.security.server.AuthorizationServer;
  * @author Raphael Boog (RBO)
  */
 public class AuthorizationDistributedTest extends TestCase {
+    /**
+     * Private logger.
+     */
     private static Log s_logger = LogFactory
         .getLog(AuthorizationDistributedTest.class);
+    
+    /**
+     * Method access role.
+     */
+    private static final String METHOD_ACCESS_ROLE = "ROLE_PERMISSION_ADDONE";
 
-    private static String METHOD_ACCESS_ROLE = "ROLE_PERMISSION_ADDONE";
-
+    /**
+     * Server config locations.
+     */
     private String[] m_configLocationsServer = new String[] {
         "classpath:optional/security-attributes.xml",
         "classpath:services/sampleService.xml",
@@ -65,21 +78,26 @@ public class AuthorizationDistributedTest extends TestCase {
         "classpath:optional/rmi-protocol-config.xml",
         "classpath:services/serviceExporter.xml"};
 
+    /**
+     * Client config locations.
+     */
     private String[] m_configLocationsClient = new String[] {
         "classpath:services/serviceProxy.xml",
         "classpath:scenarios/securityscope/"
             + "distributed-security-scope-client.xml",
         "classpath:optional/rmi-protocol-config.xml"};
 
+    /**
+     * Application context.
+     */
     private ApplicationContext m_ac;
 
     /**
      * Test tries to execute the target method without authentication.
      * 
-     * @throws Exception
+     * @throws Exception If something.
      */
     public void testMethodCallWithoutLogin() throws Exception {
-
         s_logger.debug("Starting server.");
         AuthorizationServer.main(m_configLocationsServer);
         s_logger.debug("Server started. Loading client context.");
@@ -88,23 +106,21 @@ public class AuthorizationDistributedTest extends TestCase {
         s_logger.debug("Client context loaded.");
 
         try {
-            int result = getSampleService().addOne(1234);
+            getSampleService().addOne(1234);
             fail("User should not be able to execute this method "
                     + "without login");
         } catch (AuthenticationCredentialsNotFoundException e) {
             // o.k.
         }
-
     }
 
     /**
      * Test does a correct authorization. Then it does a remote call to the
      * sample service.
      * 
-     * @throws Exception
+     * @throws Exception If something.
      */
     public void testCorrectAuthorization() throws Exception {
-
         s_logger.debug("Starting server.");
         AuthorizationServer.main(m_configLocationsServer);
         s_logger.debug("Server started. Loading client context.");
@@ -122,10 +138,9 @@ public class AuthorizationDistributedTest extends TestCase {
      * sample service. Afterwards, it logs out, tries to call the method again
      * and fails.
      * 
-     * @throws Exception
+     * @throws Exception If something.
      */
     public void testCorrectAuthorizationAfterLogoutNoAccess() throws Exception {
-
         s_logger.debug("Starting server.");
         AuthorizationServer.main(m_configLocationsServer);
         s_logger.debug("Server started. Loading client context.");
@@ -145,7 +160,6 @@ public class AuthorizationDistributedTest extends TestCase {
         } catch (AccessDeniedException e) {
             // ok.
         }
-
     }
 
     /**
@@ -153,10 +167,9 @@ public class AuthorizationDistributedTest extends TestCase {
      * to the sample service. Since the required permission is not given, the
      * call should throw an exception.
      * 
-     * @throws Exception
+     * @throws Exception If something.
      */
     public void testFailedAuthorization() throws Exception {
-
         s_logger.debug("Starting server.");
         AuthorizationServer.main(m_configLocationsServer);
         s_logger.debug("Server started. Loading client context.");
@@ -178,10 +191,9 @@ public class AuthorizationDistributedTest extends TestCase {
      * Test tries to authenticate with a wrong username/password combination. An
      * exception should be thrown.
      * 
-     * @throws Exception
+     * @throws Exception If something.
      */
     public void testFailedAuthentication() throws Exception {
-
         s_logger.debug("Starting server.");
         AuthorizationServer.main(m_configLocationsServer);
         s_logger.debug("Server started. Loading client context.");
@@ -196,18 +208,18 @@ public class AuthorizationDistributedTest extends TestCase {
         } catch (BadCredentialsException e) {
             // o.k.
         }
-
     }
 
     /**
-     * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-     * Additional methods
-     * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     * @return Returns the authentication service.
      */
     private AuthenticationService getAuthenticationService() {
         return (AuthenticationService) m_ac.getBean("authenticationService");
     }
 
+    /**
+     * @return Returns the sample service.
+     */
     private SampleService getSampleService() {
         return (SampleService) m_ac.getBean("sampleService");
     }
@@ -235,6 +247,9 @@ public class AuthorizationDistributedTest extends TestCase {
 
     /**
      * Delete the secure context, i.e. logging out the user.
+     * 
+     * @param principal Is the principal.
+     * @param credential is the credential.
      */
     private void destroySecureContext(String principal, String credential) {
         Authentication auth = new TestingAuthenticationToken(principal,

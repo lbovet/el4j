@@ -29,6 +29,8 @@ import ch.elca.el4j.services.daemonmanager.exceptions.CollectionOfDaemonCausedRT
 import ch.elca.el4j.services.daemonmanager.exceptions.DaemonsStillRunningRTException;
 import ch.elca.el4j.services.daemonmanager.exceptions.MissingHeartbeatsRTException;
 
+//Checkstyle: UncommentedMain off
+
 /**
  * This class is the controller for the daemon manager. On exception it does
  * exit with a specific error code. With this behaviour it is possible to wrap

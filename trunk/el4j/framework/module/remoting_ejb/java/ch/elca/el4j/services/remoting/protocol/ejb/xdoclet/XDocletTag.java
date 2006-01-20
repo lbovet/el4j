@@ -75,31 +75,32 @@ public class XDocletTag {
      *      Invalid tag string format.
      */
     public XDocletTag(String tag) throws XDocletException {
-        if (!tag.startsWith(XDOCLET_START_SEQUENCE)) {
+        String localTag = tag;
+        if (!localTag.startsWith(XDOCLET_START_SEQUENCE)) {
             throw new XDocletException("Invalid XDoclet tag: Does not start "
-                    + "with " + XDOCLET_START_SEQUENCE + " (" + tag + ")");
+                    + "with " + XDOCLET_START_SEQUENCE + " (" + localTag + ")");
         }
         
         // set tag's name
-        int idx = tag.indexOf(DELIMITER);
+        int idx = localTag.indexOf(DELIMITER);
         if (idx == -1) {
             // tag with no parameters
-            m_tagName = tag;
+            m_tagName = localTag;
             
         } else {
-            m_tagName = tag.substring(0, idx);
+            m_tagName = localTag.substring(0, idx);
             
             // parse parameters
-            tag = tag.substring(idx + 1).trim();
+            localTag = localTag.substring(idx + 1).trim();
             
-            while (!"".equals(tag)) {
-                idx = parameterEndIndex(tag);
-                String next = tag.substring(0, idx);
+            while (!"".equals(localTag)) {
+                idx = parameterEndIndex(localTag);
+                String next = localTag.substring(0, idx);
                 parseParameter(next);
-                if (idx + 1 == tag.length()) {
+                if (idx + 1 == localTag.length()) {
                     break;
                 }
-                tag = tag.substring(idx + 1).trim();
+                localTag = localTag.substring(idx + 1).trim();
             }
         }
     }
@@ -241,6 +242,13 @@ public class XDocletTag {
             buffer.append(QUOTES);
         }
         return buffer.toString();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public int hashCode() {
+        return getTagName().hashCode();
     }
     
     /**

@@ -26,11 +26,6 @@ import java.util.Set;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import ch.elca.el4j.core.exceptions.BaseRTException;
-import ch.elca.el4j.core.exceptions.MisconfigurationRTException;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 
 /**
@@ -57,11 +52,6 @@ public class JvmMB implements JvmMBMBean {
      * The counter on the number of JVMs.
      */
     private static int s_counter = 1;
-
-    /**
-     * Private logger of this class.
-     */
-    private static Log s_logger = LogFactory.getLog(JvmMB.class);
 
     /**
      * A list of Application Context proxies which are running in this JVM

@@ -25,6 +25,8 @@ import org.apache.commons.logging.LogFactory;
 
 import ch.elca.el4j.services.gui.richclient.ApplicationLauncher;
 
+// Checkstyle: UncommentedMain off
+
 /**
  * This class is used to start the RefDB-Application.
  *

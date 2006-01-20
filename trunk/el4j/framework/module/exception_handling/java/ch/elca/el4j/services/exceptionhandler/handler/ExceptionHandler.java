@@ -20,6 +20,7 @@ package ch.elca.el4j.services.exceptionhandler.handler;
 import org.aopalliance.intercept.MethodInvocation;
 
 import ch.elca.el4j.services.exceptionhandler.AbstractExceptionHandlerInterceptor;
+import ch.elca.el4j.services.exceptionhandler.RetryException;
 
 /**
  * An exception handler is a expert for handling some kind of exceptions.
@@ -51,13 +52,13 @@ public interface ExceptionHandler {
      * @return Returns an object that is treated as the original invocation's
      *      return value.
      * 
-     * @throws ch.elca.el4j.services.exceptionhandler.RetryException
+     * @throws RetryException
      *      Signals that the complete invocation has to be rerun.
      *      
      * @throws Throwable
      *      Any exception thrown by the handler.
      */
     public Object handleException(Throwable t,
-            AbstractExceptionHandlerInterceptor exceptionInvoker,
-            MethodInvocation invocation) throws Throwable;
+        AbstractExceptionHandlerInterceptor exceptionInvoker,
+        MethodInvocation invocation) throws RetryException, Throwable;
 }

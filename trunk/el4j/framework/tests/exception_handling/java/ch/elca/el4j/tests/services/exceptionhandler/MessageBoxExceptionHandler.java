@@ -73,9 +73,11 @@ public class MessageBoxExceptionHandler extends AbstractExceptionHandler {
      *      The buffer to write the hyphens to.
      */
     private void drawLine(int length, StringBuffer buffer) {
+        // Checkstyle: MagicNumber off
         for (int i = 0; i < length + 4; i++) {
             buffer.append("-");
         }
         buffer.append('\n');
+        // Checkstyle: MagicNumber on
     }
 }

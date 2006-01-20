@@ -17,6 +17,7 @@
 
 package ch.elca.el4j.apps.refdb.gui;
 
+// Checkstyle: UncommentedMain off
 
 /**
  * This class is used to start the RefDB-Application in standalone mode.

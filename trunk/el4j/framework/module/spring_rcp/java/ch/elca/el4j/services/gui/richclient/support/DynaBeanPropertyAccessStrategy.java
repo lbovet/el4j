@@ -123,12 +123,10 @@ public class DynaBeanPropertyAccessStrategy
         int lastSeparator = getLastPropertySeparatorIndex(propertyPath);
         if (lastSeparator == -1) {
             return propertyPath;
-        }
-        else {
+        } else {
             if (propertyPath.charAt(lastSeparator) == PropertyAccessor.NESTED_PROPERTY_SEPARATOR_CHAR) {
                 return propertyPath.substring(lastSeparator + 1);
-            }
-            else {
+            } else {
                 return propertyPath.substring(lastSeparator);
             }
         }
@@ -249,8 +247,7 @@ public class DynaBeanPropertyAccessStrategy
                 settingBeanProperty = true;
                 DynaBean domainObject = (DynaBean) getDomainObject();
                 domainObject.set(propertyPath, value);
-            }
-            finally {
+            } finally {
                 settingBeanProperty = false;
             }
             fireValueChange(savedPropertyValue, value);

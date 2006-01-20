@@ -34,7 +34,6 @@ import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.core.exceptions.BaseException;
-import ch.elca.el4j.core.exceptions.BaseRTException;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.util.codingsupport.Reject;
 

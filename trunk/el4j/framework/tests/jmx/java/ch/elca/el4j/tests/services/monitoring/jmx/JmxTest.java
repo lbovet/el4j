@@ -21,14 +21,14 @@ import javax.management.MBeanServer;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
-import junit.framework.TestCase;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
+
+import junit.framework.TestCase;
 
 /**
  * JUnit Test Class for the JMX package.

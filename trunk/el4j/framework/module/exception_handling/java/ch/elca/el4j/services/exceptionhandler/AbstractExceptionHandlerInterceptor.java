@@ -104,7 +104,7 @@ public abstract class AbstractExceptionHandlerInterceptor
      *      handler, <code>false</code> to rethorw them.
      */
     public void setHandleRTSignatureExceptions(
-            boolean handleRTSignatureExceptions) {
+        boolean handleRTSignatureExceptions) {
         m_handleRTSignatureExceptions = handleRTSignatureExceptions;
     }
 
@@ -135,7 +135,7 @@ public abstract class AbstractExceptionHandlerInterceptor
      * @see #setHandleRTSignatureExceptions(boolean)
      */
     public void setForwardSignatureExceptions(
-            boolean forwardSignatureException) {
+        boolean forwardSignatureException) {
         m_forwardSignatureExceptions = forwardSignatureException;
     }
 
@@ -206,7 +206,8 @@ public abstract class AbstractExceptionHandlerInterceptor
      *      Any exception thrown by the original method's invocation or by
      *      one of the used exception handlers.
      */
-    protected Object doInvoke(MethodInvocation invocation) throws Throwable {
+    protected Object doInvoke(MethodInvocation invocation) 
+        throws RetryException, Throwable {
         Object result = null;
         try {
             result = invocation.proceed();
@@ -242,7 +243,7 @@ public abstract class AbstractExceptionHandlerInterceptor
      *      Any exception thrown by a exception handler.
      */
     protected abstract Object handleException(Throwable t,
-            MethodInvocation invocation) throws Throwable;
+        MethodInvocation invocation) throws RetryException, Throwable;
 
     /**
      * Handles exceptions that are listed in a method's signature.
@@ -258,7 +259,7 @@ public abstract class AbstractExceptionHandlerInterceptor
      *      invoker.
      */
     protected void handleInterfaceExceptions(MethodInvocation invocation,
-            Throwable t) throws Throwable {
+        Throwable t) throws Throwable {
         if (m_handleRTSignatureExceptions && t instanceof RuntimeException) {
             return;
         }
@@ -295,7 +296,8 @@ public abstract class AbstractExceptionHandlerInterceptor
      *      Any exception thrown by a exception handler.
      */
     protected Object doHandleException(Throwable t, MethodInvocation invocation,
-            ExceptionConfiguration[] exceptionConfigurations) throws Throwable {
+        ExceptionConfiguration[] exceptionConfigurations)
+        throws RetryException, Throwable {
         for (int i = 0; i < exceptionConfigurations.length; i++) {
             
             ExceptionConfiguration next = exceptionConfigurations[i];

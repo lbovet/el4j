@@ -28,6 +28,8 @@ import java.rmi.RemoteException;
  *    "$Date$",
  *    "$Author$"
  * );</script>
+ * 
+ * @author Andreas Bur (ABU)
  */
 public class RemoteRTException extends BaseRTException {
 
@@ -46,6 +48,9 @@ public class RemoteRTException extends BaseRTException {
     /**
      * Package private method to construct an exception when only the
      * original class name and stack trace are available.
+     * 
+     * @param className Is the class name.
+     * @param stackTrace Is the stack trace as string.
      */
     RemoteRTException(String className, String stackTrace) {
         //the message and stack trace formatting is made to be symmetrical

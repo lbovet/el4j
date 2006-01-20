@@ -104,11 +104,13 @@ public class SimpleExceptionTransformerExceptionHandler
         Exception e = null;
         Class[] params = {String.class, Throwable.class};
         Object[] values = {t.getMessage(), t};
+        // Checkstyle: EmptyBlock off
         try {
             Constructor c = m_transformedExceptionClass.getConstructor(params);
             e = (Exception) c.newInstance(values);
         } catch (Exception ex) { }
         return e;
+        // Checkstyle: EmptyBlock on
     }
     
     /**
@@ -124,10 +126,12 @@ public class SimpleExceptionTransformerExceptionHandler
         Exception e = null;
         Class[] params = {String.class};
         Object[] values = {t.getMessage()};
+        // Checkstyle: EmptyBlock off
         try {
             Constructor c = m_transformedExceptionClass.getConstructor(params);
             e = (Exception) c.newInstance(values);
         } catch (Exception ex) { }
+        // Checkstyle: EmptyBlock on
         return e;
     }
     
@@ -137,9 +141,11 @@ public class SimpleExceptionTransformerExceptionHandler
      */
     private Exception createException() {
         Exception e = null;
+        // Checkstyle: EmptyBlock off
         try {
             e = (Exception) m_transformedExceptionClass.newInstance();
         } catch (Exception ex) { }
+        // Checkstyle: EmptyBlock on
         return e;
     }
 }
