@@ -101,6 +101,12 @@
                 <exclude name="framework/lib/**"/>
                 <exclude name="framework/workspace/.metadata/**"/>
                 <exclude name="framework/build.xml"/>
+
+                <include name="helloworld/**"/>
+                <exclude name="helloworld/dist/**"/>
+                <exclude name="helloworld/lib/**"/>
+                <exclude name="helloworld/workspace/.metadata/**"/>
+                <exclude name="helloworld/build.xml"/>
             </zipfileset>
             <zipfileset dir="${basedir}/dist" prefix="${zip.name.prefix}">
                 <include name="docs/**"/>
