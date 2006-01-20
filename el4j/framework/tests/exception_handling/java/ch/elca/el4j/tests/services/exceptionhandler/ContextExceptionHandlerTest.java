@@ -17,12 +17,12 @@
 
 package ch.elca.el4j.tests.services.exceptionhandler;
 
-import junit.framework.TestCase;
-
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import ch.elca.el4j.services.exceptionhandler.ContextExceptionHandlerInterceptor;
 import ch.elca.el4j.services.exceptionhandler.MissingContextException;
+
+import junit.framework.TestCase;
 
 /**
  * This class tests the context exception handler.
@@ -72,10 +72,12 @@ public class ContextExceptionHandlerTest extends TestCase {
      */
     public void testMissingContext() {
         ContextExceptionHandlerInterceptor.setContext(null);
+        // Checkstyle: EmptyBlock off
         try {
             step(1, 1, 0);
             fail("Expected a MissingContextException but didn't catch one.");
         } catch (MissingContextException mce) { }
+        // Checkstyle: EmptyBlock on
     }
 
     /**

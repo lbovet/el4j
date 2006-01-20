@@ -28,8 +28,8 @@ import ch.elca.el4j.services.remoting.RemotingProxyFactoryBean;
 import ch.elca.el4j.services.remoting.RemotingServiceExporter;
 
 /**
- * Empty protocol to simulate protocols. Just the implicit context passing will be enabled.
- * Client and server must be in same JVM.
+ * Empty protocol to simulate protocols. Just the implicit context passing will 
+ * be enabled. Client and server must be in same JVM.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$Source$",

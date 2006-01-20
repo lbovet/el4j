@@ -20,6 +20,8 @@ package ch.elca.el4j.demos.statistics.light;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+//Checkstyle: UncommentedMain off
+
 /**
  * This class is a demo that loads an application context, registers the light
  * statistics performance monitor and invokes some methods. The thread sleeps
@@ -61,10 +63,12 @@ public class LightStatisticsDemo {
         Foo bean = (Foo) ac.getBean(s_bean);
         
         // execute some operations
+        // Checkstyle: MagicNumber off
         bean.fibonacci(20);
         bean.fibonacci(10);
         bean.sleepOneSecond();
         bean.fibonacci(15);
+        // Checkstyle: MagicNumber on
         
         System.out.println("Waiting forever...");
         try {

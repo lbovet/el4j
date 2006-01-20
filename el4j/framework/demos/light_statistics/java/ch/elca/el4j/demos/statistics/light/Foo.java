@@ -48,7 +48,9 @@ public class Foo {
         return fib;
     }
     
-    /**
+    // Checkstyle: EmptyBlock off
+    // Checkstyle: MagicNumber off
+   /**
      * This methods sleeps one second.
      */
     public void sleepOneSecond() {
@@ -56,4 +58,6 @@ public class Foo {
             Thread.sleep(1000);
         } catch (InterruptedException e) { }
     }
+    // Checkstyle: MagicNumber on
+    // Checkstyle: EmptyBlock on
 }

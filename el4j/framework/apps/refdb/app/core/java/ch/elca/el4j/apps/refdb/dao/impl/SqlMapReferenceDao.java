@@ -40,7 +40,6 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.CollectionUtils;
-import ch.elca.el4j.util.codingsupport.ObjectUtils;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**

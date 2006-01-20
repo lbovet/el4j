@@ -262,6 +262,7 @@ public class DefaultReferenceService extends DefaultKeywordService
         throws DataAccessException, DataRetrievalFailureException {
         ReferenceDto reference = null;
         boolean referenceExists = false;
+        // Checkstyle: EmptyBlock off
         try {
             reference = getReferenceDao().getLinkByKey(key);
             referenceExists = true;
@@ -278,6 +279,7 @@ public class DefaultReferenceService extends DefaultKeywordService
                 referenceExists = true;
             } catch (DataRetrievalFailureException e) { }
         }
+        // Checkstyle: EmptyBlock on
         if (!referenceExists) {
             CoreNotificationHelper.notifyDataRetrievalFailure(
                 Constants.REFERENCE);
@@ -385,6 +387,7 @@ public class DefaultReferenceService extends DefaultKeywordService
     public void removeReference(int key) throws DataAccessException, 
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
         boolean referenceExists = false;
+        // Checkstyle: EmptyBlock off
         try {
             getReferenceDao().removeLink(key);
             referenceExists = true;
@@ -401,6 +404,7 @@ public class DefaultReferenceService extends DefaultKeywordService
                 referenceExists = true;
             } catch (JdbcUpdateAffectedIncorrectNumberOfRowsException e) { }
         }
+        // Checkstyle: EmptyBlock on
         if (!referenceExists) {
             CoreNotificationHelper
                 .notifyJdbcUpdateAffectedIncorrectNumberOfRows(

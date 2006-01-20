@@ -20,6 +20,8 @@ package ch.elca.el4j.demos.distribution;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+//Checkstyle: UncommentedMain off
+
 /**
  * This class demonstrates how the El4Ant distribution plugin is used to create
  * an executable distribution.

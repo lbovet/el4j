@@ -41,7 +41,9 @@ public class AImpl implements A {
     private Adder m_adder;
     
     /** Number of retires. */
+    // Checkstyle: MagicNumber off
     private int m_retries = 4;
+    // Checkstyle: MagicNumber on
     
     /** Resets the static counter. */
     public static void reset() {

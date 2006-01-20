@@ -23,6 +23,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import junit.framework.TestCase;
 
+// Checkstyle: MagicNumber off
+
 /**
  * JUnit test for the GenericAttributeAdvisor class.
  * 
@@ -136,14 +138,15 @@ public class GenericAttributesTest extends TestCase {
      * interceptor are defined. This test checks whether an exception is thrown.
      */
     public void testAdvisorWithNoInterceptor() {
-
+        // Checkstyle: EmptyBlock off
         try {
-            ApplicationContext ac = new ClassPathXmlApplicationContext(
+            new ClassPathXmlApplicationContext(
                 "classpath:util/attributes/beansNoInterceptor.xml");
             fail("A BaseException should have been thrown.");
         } catch (BeansException e) {
             // Expected behaviour
         }
+        // Checkstyle: EmptyBlock on
     }
 
     /**
@@ -153,14 +156,15 @@ public class GenericAttributesTest extends TestCase {
      * exception is thrown.
      */
     public void testAdvisorWithNoInterceptingAttributes() {
-
+        // Checkstyle: EmptyBlock off
         try {
-            ApplicationContext ac = new ClassPathXmlApplicationContext(
+            new ClassPathXmlApplicationContext(
                 "classpath:util/attributes/beansNoInterceptingAttributes.xml");
             fail("A BaseRTException should have been thrown");
         } catch (Exception e) {
             // Expected behaviour
         }
+        // Checkstyle: EmptyBlock on
     }
     
     /**

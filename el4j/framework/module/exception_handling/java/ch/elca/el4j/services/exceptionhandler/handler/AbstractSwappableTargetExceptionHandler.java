@@ -61,8 +61,9 @@ public abstract class AbstractSwappableTargetExceptionHandler extends
      * {@inheritDoc}
      */
     protected Object retry(Throwable t,
-            AbstractExceptionHandlerInterceptor exceptionInvoker,
-            MethodInvocation invocation, Log logger) throws Throwable {
+        AbstractExceptionHandlerInterceptor exceptionInvoker,
+        MethodInvocation invocation, Log logger) 
+        throws InappropriateHandlerException, RetryException {
         
         try {
             Object newTarget = getNewTarget(
@@ -104,5 +105,6 @@ public abstract class AbstractSwappableTargetExceptionHandler extends
      *      Whenever something goes wrong.
      */
     protected abstract Object getNewTarget(Object current, Throwable t,
-            MethodInvocation invocation, Log logger) throws Throwable;
+        MethodInvocation invocation, Log logger) 
+        throws RetryException, Throwable;
 }

@@ -19,9 +19,12 @@ package ch.elca.el4j.tests.services.persistence.generic;
 import java.util.HashSet;
 import java.util.Set;
 
-import junit.framework.TestCase;
 import ch.elca.el4j.services.persistence.generic.primarykey.PrimaryKeyGenerator;
 import ch.elca.el4j.services.persistence.generic.primarykey.UuidPrimaryKeyGenerator;
+
+import junit.framework.TestCase;
+
+// Checkstyle: MagicNumber off
 
 /**
  * This is the unit test for <code>UuidPrimaryKeyGenerator</code>.
@@ -36,7 +39,6 @@ import ch.elca.el4j.services.persistence.generic.primarykey.UuidPrimaryKeyGenera
  * @author Jacques-Olivier Haenni (JOH)
  */
 public class UuidPrimaryKeyGeneratorTest extends TestCase {
-
     /**
      * Tests the key size.
      */

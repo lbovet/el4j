@@ -20,11 +20,11 @@ package ch.elca.el4j.tests.remoting.ejb;
 import java.lang.reflect.Method;
 import java.util.ConcurrentModificationException;
 
-import junit.framework.TestCase;
-
 import org.springframework.jdbc.object.SqlFunction;
 
 import ch.elca.el4j.services.remoting.protocol.ejb.generator.MethodSignature;
+
+import junit.framework.TestCase;
 
 /**
  * Tests the method signature implementation used in the EJB session bean
@@ -45,9 +45,37 @@ public class MethodSignatureTest extends TestCase {
      * Sample interface used to drive this tests.
      */
     interface Foo {
+        /**
+         * Foo method.
+         * 
+         * @param a Is first parameter.
+         * @param b Is second parameter.
+         * @param c Is third parameter.
+         * @param d Is fourth parameter.
+         * @return Returns a foo value.
+         * @throws Exception If something occurs.
+         */
         public int foo(int a, float b, String c, Double d) throws Exception;
+        
+        /**
+         * Bar method.
+         * 
+         * @param f Is the sql function.
+         * @return Returns something.
+         * @throws IllegalStateException If bla.
+         * @throws ConcurrentModificationException If bli.
+         */
         public String[] bar(SqlFunction f) throws IllegalStateException,
             ConcurrentModificationException;
+        
+        /**
+         * Another bar method.
+         * 
+         * @param a Is a four dimensional array.
+         * @param b Is a number.
+         * @param c Is a three dimensional array.
+         * @return Returns a two dimensional array.
+         */
         public Object[][] bar(Object[][][][] a, int b, char[][][] c);
     }
     

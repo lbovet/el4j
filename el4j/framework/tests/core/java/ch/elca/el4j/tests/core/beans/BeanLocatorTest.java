@@ -19,12 +19,12 @@ package ch.elca.el4j.tests.core.beans;
 
 import java.util.Map;
 
-import junit.framework.TestCase;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import ch.elca.el4j.core.beans.BeanLocator;
+
+import junit.framework.TestCase;
 
 /**
  * This test tests the <code>BeanLocator</code> class.

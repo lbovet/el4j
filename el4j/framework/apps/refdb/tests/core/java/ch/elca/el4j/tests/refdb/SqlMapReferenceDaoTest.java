@@ -35,6 +35,8 @@ import ch.elca.el4j.apps.refdb.dao.ReferenceDao;
 import ch.elca.el4j.apps.refdb.dto.AnnotationDto;
 import ch.elca.el4j.apps.refdb.dto.FileDto;
 
+// Checkstyle: MagicNumber off
+
 /**
  * Test case for <code>SqlMapReferenceDao</code>.
  * 

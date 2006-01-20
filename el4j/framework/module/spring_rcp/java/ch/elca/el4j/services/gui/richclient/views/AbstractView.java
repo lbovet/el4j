@@ -18,7 +18,6 @@ package ch.elca.el4j.services.gui.richclient.views;
 
 import javax.swing.JComponent;
 
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
@@ -30,7 +29,6 @@ import org.springframework.context.event.ApplicationEventMulticaster;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.richclient.application.Application;
 import org.springframework.richclient.application.PageComponent;
-import org.springframework.richclient.application.PageComponentContext;
 
 import ch.elca.el4j.services.search.events.QueryObjectEvent;
 

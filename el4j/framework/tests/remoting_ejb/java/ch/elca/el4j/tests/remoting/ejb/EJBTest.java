@@ -17,11 +17,15 @@
 
 package ch.elca.el4j.tests.remoting.ejb;
 
-import junit.framework.TestCase;
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.remoting.protocol.ejb.EJBLifecycleManager;
 import ch.elca.el4j.tests.remoting.ejb.service.Calculator;
 import ch.elca.el4j.tests.remoting.ejb.service.Library;
+
+import junit.framework.TestCase;
+
+// Checkstyle: EmptyBlock off
+// Checkstyle: MagicNumber off
 
 /**
  * EJB integration tests.

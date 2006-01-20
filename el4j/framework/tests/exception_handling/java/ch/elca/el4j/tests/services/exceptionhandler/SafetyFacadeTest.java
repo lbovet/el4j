@@ -17,9 +17,12 @@
 
 package ch.elca.el4j.tests.services.exceptionhandler;
 
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import junit.framework.TestCase;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+// Checkstyle: MagicNumber off
+// Checkstyle: EmptyBlock off
 
 /**
  * This class tests the security facade.

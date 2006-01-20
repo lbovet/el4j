@@ -24,6 +24,8 @@ import ch.elca.el4j.util.codingsupport.Reject;
 
 import junit.framework.TestCase;
 
+// Checkstyle: EmptyBlock off
+
 /**
  * This tests check the behavior of the {@link
  * ch.elca.el4j.util.codingsupport.Reject} class.

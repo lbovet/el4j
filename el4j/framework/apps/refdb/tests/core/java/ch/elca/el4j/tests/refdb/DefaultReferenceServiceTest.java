@@ -39,6 +39,8 @@ import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.ComparisonCriteria;
 import ch.elca.el4j.services.search.criterias.LikeCriteria;
 
+// Checkstyle: MagicNumber off
+
 /**
  * Test case for <code>DefaultReferenceService</code>.
  * 

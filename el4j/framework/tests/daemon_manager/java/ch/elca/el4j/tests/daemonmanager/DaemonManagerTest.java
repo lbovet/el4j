@@ -147,7 +147,6 @@ public class DaemonManagerTest extends TestCase {
          */
         checkAndRecoverStoppedDaemon(daemonManager);
         
-        
         /**
          * Start same daemon manager a second time. For that the stop flag must
          * be reset. At the end do sleep a while so daemons can work.

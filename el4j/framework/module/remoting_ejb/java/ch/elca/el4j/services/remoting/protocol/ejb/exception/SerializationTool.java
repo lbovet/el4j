@@ -43,7 +43,7 @@ import java.util.Map;
  *    "$Author$"
  * );</script>
  */
-public class SerializationTool {
+public final class SerializationTool {
 
     /**
      * Hidden constructor (there is no need to create instances of this class).

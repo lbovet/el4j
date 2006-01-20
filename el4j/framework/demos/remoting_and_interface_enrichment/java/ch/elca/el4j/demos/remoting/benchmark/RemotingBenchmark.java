@@ -37,6 +37,8 @@ import ch.elca.el4j.core.exceptions.BaseRTException;
 import ch.elca.el4j.demos.remoting.Calculator;
 import ch.elca.el4j.demos.remoting.CalculatorException;
 
+//Checkstyle: UncommentedMain off
+
 /**
  * This benchmark compares following protocols.
  * <ul>
@@ -210,36 +212,16 @@ public class RemotingBenchmark {
         final int MINIMUM_FRACTION_DIGITS = 1;
         final int LEGEND_INTENTION = 15;
 
-        StringBuffer line = new StringBuffer();
-        line.append(VERTICAL_CHARACTER);
-        line.append(' ');
-        line.append(
-            appendSpacesOnString("*Name of test*", COLUMN_SIZE_TEST_NAME));
-        line.append(' ');
-        line.append(VERTICAL_CHARACTER);
-        line.append(' ');
-        line.append(
-            appendSpacesOnString("*Method 1 [ms]*", COLUMN_SIZE_TIME));
-        line.append(' ');
-        line.append(VERTICAL_CHARACTER);
-        line.append(' ');
-        line.append(
-            appendSpacesOnString("*Method 2 [ms]*", COLUMN_SIZE_TIME));
-        line.append(' ');
-        line.append(VERTICAL_CHARACTER);
-        line.append(' ');
-        line.append(
-            appendSpacesOnString("*Method 3 [ms]*", COLUMN_SIZE_TIME));
-        line.append(' ');
-        line.append(VERTICAL_CHARACTER);
+        String header = createTestResultHeader(COLUMN_SIZE_TEST_NAME, 
+            COLUMN_SIZE_TIME, VERTICAL_CHARACTER);
 
         StringBuffer horizontalRow = new StringBuffer();
-        for (int i = 0; i < line.length(); i++) {
+        for (int i = 0; i < header.length(); i++) {
             horizontalRow.append(HORIZONTAL_CHARACTER);
         }
 
         System.out.println(horizontalRow);
-        System.out.println(line);
+        System.out.println(header);
         System.out.println(horizontalRow);
 
         DecimalFormat df = new DecimalFormat();
@@ -249,31 +231,8 @@ public class RemotingBenchmark {
         Iterator it = m_benchmarkResults.iterator();
         while (it.hasNext()) {
             RemotingBenchmarkResult r = (RemotingBenchmarkResult) it.next();
-            line = new StringBuffer();
-            line.append(VERTICAL_CHARACTER);
-            line.append(' ');
-            line.append(appendSpacesOnString(r.getBeanName(),
-                    COLUMN_SIZE_TEST_NAME));
-            line.append(' ');
-            line.append(VERTICAL_CHARACTER);
-            line.append(' ');
-            line.append(appendSpacesOnString(df.format(r.getAverageGetArea()),
-                    COLUMN_SIZE_TIME));
-            line.append(' ');
-            line.append(VERTICAL_CHARACTER);
-            line.append(' ');
-            line.append(appendSpacesOnString(df.format(r
-                    .getAverageThrowMeAnException()), COLUMN_SIZE_TIME));
-            line.append(' ');
-            line.append(VERTICAL_CHARACTER);
-            line.append(' ');
-            line
-                    .append(appendSpacesOnString(df.format(r
-                            .getAverageCountNumberOfUppercaseLetters()),
-                            COLUMN_SIZE_TIME));
-            line.append(' ');
-            line.append(VERTICAL_CHARACTER);
-
+            String line = createTestResultLine(COLUMN_SIZE_TEST_NAME, 
+                COLUMN_SIZE_TIME, VERTICAL_CHARACTER, df, r);
             System.out.println(line);
             System.out.println(horizontalRow);
         }
@@ -286,6 +245,77 @@ public class RemotingBenchmark {
         System.out.print(appendSpacesOnString("", LEGEND_INTENTION));
         System.out.println("Method 3: int "
             + "countNumberOfUppercaseLetters(String textOfSize60kB)");
+    }
+
+    /**
+     * @param columnSizeTestName Is the size for the test name column.
+     * @param columnSizeTime Is the size for the time column.
+     * @param verticalCharacter Is the vertical character to use.
+     * @return Returns the created benchmark header.
+     */
+    private String createTestResultHeader(final int columnSizeTestName, 
+        final int columnSizeTime, final char verticalCharacter) {
+        StringBuffer header = new StringBuffer();
+        header.append(verticalCharacter);
+        header.append(' ');
+        header.append(
+            appendSpacesOnString("*Name of test*", columnSizeTestName));
+        header.append(' ');
+        header.append(verticalCharacter);
+        header.append(' ');
+        header.append(
+            appendSpacesOnString("*Method 1 [ms]*", columnSizeTime));
+        header.append(' ');
+        header.append(verticalCharacter);
+        header.append(' ');
+        header.append(
+            appendSpacesOnString("*Method 2 [ms]*", columnSizeTime));
+        header.append(' ');
+        header.append(verticalCharacter);
+        header.append(' ');
+        header.append(
+            appendSpacesOnString("*Method 3 [ms]*", columnSizeTime));
+        header.append(' ');
+        header.append(verticalCharacter);
+        return header.toString();
+    }
+
+    /**
+     * @param columnSizeTestName Is the size for the test name column.
+     * @param columnSizeTime Is the size for the time column.
+     * @param verticalCharacter Is the vertical character to use.
+     * @param df Is the decimal format for the test time.
+     * @param r Is the benchmark result.
+     * @return Returns the create benchmark result line.
+     */
+    private String createTestResultLine(final int columnSizeTestName, 
+        final int columnSizeTime, final char verticalCharacter, 
+        DecimalFormat df, RemotingBenchmarkResult r) {
+        StringBuffer line = new StringBuffer();
+        line.append(verticalCharacter);
+        line.append(' ');
+        line.append(appendSpacesOnString(
+            r.getBeanName(), columnSizeTestName));
+        line.append(' ');
+        line.append(verticalCharacter);
+        line.append(' ');
+        line.append(appendSpacesOnString(
+            df.format(r.getAverageGetArea()), columnSizeTime));
+        line.append(' ');
+        line.append(verticalCharacter);
+        line.append(' ');
+        line.append(appendSpacesOnString(
+            df.format(r.getAverageThrowMeAnException()), 
+            columnSizeTime));
+        line.append(' ');
+        line.append(verticalCharacter);
+        line.append(' ');
+        line.append(appendSpacesOnString(
+            df.format(r.getAverageCountNumberOfUppercaseLetters()), 
+            columnSizeTime));
+        line.append(' ');
+        line.append(verticalCharacter);
+        return line.toString();
     }
 
     /**
@@ -358,11 +388,13 @@ public class RemotingBenchmark {
     private void warmupTest(Calculator calc) {
         for (int i = 0; i < WARMUP_REPETITION_COUNT; i++) {
             calc.getArea(AREA_SIDE_A, AREA_SIDE_B);
+            // Checkstyle: EmptyBlock off
             try {
                 calc.throwMeAnException();
             } catch (CalculatorException e) {
                 // Okay.
             }
+            // Checkstyle: EmptyBlock on
             calc.countNumberOfUppercaseLetters(m_largeText);
         }
     }
@@ -399,12 +431,14 @@ public class RemotingBenchmark {
     private double executeTestMethodThrowMeAnException(Calculator calc) {
         long start = System.currentTimeMillis();
         for (int i = 0; i < TEST_REPETITION_COUNT; i++) {
+            // Checkstyle: EmptyBlock off
             try {
                 calc.throwMeAnException();
                 throw new BaseRTException("Benchmark is corrupted!");
             } catch (CalculatorException e) {
                 // Okay.
             }
+            // Checkstyle: EmptyBlock on
         }
         long stop = System.currentTimeMillis();
         return (stop - start) / (double) TEST_REPETITION_COUNT;

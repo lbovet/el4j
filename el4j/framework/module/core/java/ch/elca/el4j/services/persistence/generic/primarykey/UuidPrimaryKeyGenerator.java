@@ -79,6 +79,7 @@ public class UuidPrimaryKeyGenerator implements PrimaryKeyGenerator {
         return keyString;
     }
 
+    // Checkstyle: MagicNumber off
     /**
      * Initalize the primary key generator.
      */
@@ -126,5 +127,6 @@ public class UuidPrimaryKeyGenerator implements PrimaryKeyGenerator {
         int hexLength = hex.length();
         return m_zeros[8 - hexLength] + hex;
     }
+    // Checkstyle: MagicNumber on
 }
 

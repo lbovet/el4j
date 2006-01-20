@@ -43,7 +43,9 @@ public class EnvTest extends TestCase {
     public static final String CONTAINER_BEAN = "servletContainer";
 
     /** The highest transport protocol port number. */ 
+    // Checkstyle: MagicNumber off
     private static final int MAX_PORT = 1 << 16 - 1;
+    // Checkstyle: MagicNumber on
     
     /** The application context. */
     private ApplicationContext m_appContext;

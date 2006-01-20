@@ -21,7 +21,6 @@ import java.util.Map;
 import org.springframework.richclient.application.Application;
 import org.springframework.richclient.application.ApplicationWindow;
 import org.springframework.richclient.application.PageDescriptor;
-import org.springframework.richclient.application.ViewDescriptor;
 import org.springframework.richclient.command.ActionCommand;
 
 import ch.elca.el4j.services.gui.richclient.commands.ShowPageCommand;

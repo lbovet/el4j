@@ -19,6 +19,8 @@ package ch.elca.el4j.tests.security.server;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+// Checkstyle: UncommentedMain off
+
 /**
  * The server part for <code>AuthorizationTestDistributed</code>.
  * 
@@ -32,10 +34,15 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author Andreas Pfenninger (APR)
  */
 public class AuthorizationServer {
-
     /** The application context. */
     private static ApplicationContext s_appContext;
     
+    /**
+     * Hide constructor.
+     *
+     */
+    protected AuthorizationServer() { }
+
     /**
      * The main method.
      * 
@@ -47,8 +54,6 @@ public class AuthorizationServer {
         String[] str = s_appContext.getBeanDefinitionNames();
         for (int i = 0; i < str.length; i++) {
             System.out.println(str[i]);
-
         }
     }
-    
 }

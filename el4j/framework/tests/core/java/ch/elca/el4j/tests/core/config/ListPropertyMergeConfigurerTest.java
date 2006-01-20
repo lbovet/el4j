@@ -17,11 +17,11 @@
 
 package ch.elca.el4j.tests.core.config;
 
-import junit.framework.TestCase;
-
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import junit.framework.TestCase;
 
 /**
  * JUnit test class for the ListPropertyMergeConfigurer.
@@ -90,6 +90,7 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
 
         ListClass listTest = (ListClass) ac.getBean("ListTest");
 
+        // Checkstyle: MagicNumber off
         assertEquals("The list in 'ListTest' does not contain 3 entries.", 3,
                 listTest.getListTest().size());
 
@@ -101,7 +102,7 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
 
         assertEquals("The third entry in the list is not 'item 3'.", "item 3",
                 listTest.getListTest().get(2));
-
+        // Checkstyle: MagicNumber on
     }
 
     /**
@@ -118,6 +119,7 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
 
         ListClass listTest = (ListClass) ac.getBean("ListTest");
 
+        // Checkstyle: MagicNumber off
         assertEquals("The list in 'ListTest' does not contain 4 entries.", 4,
                 listTest.getListTest().size());
 
@@ -132,6 +134,7 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
 
         assertEquals("The four entry in the list is not 'item 3'.", "item 3",
                 listTest.getListTest().get(3));
+        // Checkstyle: MagicNumber on
     }
 
     /**
@@ -211,13 +214,13 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
      *  
      */
     public void testAddValuesToUndefinedBean() {
-
+        // Checkstyle: EmptyBlock off
         try {
             new ClassPathXmlApplicationContext(
                     "classpath:/core/config/beansAddUndefinedBean.xml");
             fail("Should raise an exception.");
-        } catch (BeanInitializationException e) {
-        }
+        } catch (BeanInitializationException e) { }
+        // Checkstyle: EmptyBlock on
     }
 
 }
