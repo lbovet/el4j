@@ -43,6 +43,11 @@ public abstract class AbstractCriteria implements Criteria {
     private Object m_value;
     
     /**
+     * Default constructor for remoting protocols like hessian and burlap added.
+     */
+    protected AbstractCriteria() { }
+    
+    /**
      * Constructor.
      * 
      * @param field Is the field the criteria is made for.
