@@ -21,6 +21,8 @@ import org.springframework.util.StringUtils;
 import ch.elca.el4j.util.codingsupport.PreconditionRTException;
 import ch.elca.helloworld.services.Calculator;
 
+// Checkstyle: UncommentedMain off
+
 /**
  * Sample demo for the Hello World project.
  *
@@ -45,10 +47,12 @@ public class MainCalculator {
      * @param args Are the calculator parameters.
      */
     public static void main(String[] args) {
+        // Checkstyle: MagicNumber off
         if (args == null || args.length < 3) {
             printUsage();
             return;
         }
+        // Checkstyle: MagicNumber on
         
         boolean printUsage = true;
         String operation = args[0];

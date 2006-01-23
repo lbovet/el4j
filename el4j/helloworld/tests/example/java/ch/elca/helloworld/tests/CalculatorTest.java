@@ -38,16 +38,20 @@ public class CalculatorTest extends TestCase {
      */
     public void testCalculatorDivision() {
         Calculator c = new Calculator();
+        // Checkstyle: MagicNumber off
         double dividend = 3;
         double divisor = 7;
         double delta = 0.000001;
+        // Checkstyle: MagicNumber on
         double result = c.div(dividend, divisor);
         assertEquals(dividend / divisor, result, delta);
         
         divisor = 0;
+        // Checkstyle: EmptyBlock off
         try {
             c.div(dividend, divisor);
             fail("No exception on division by zero!");
         } catch (RuntimeException e) { }
+        // Checkstyle: EmptyBlock on
     }
 }
