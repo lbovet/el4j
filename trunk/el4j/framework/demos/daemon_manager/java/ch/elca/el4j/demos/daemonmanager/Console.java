@@ -169,3 +169,4 @@ public final class Console {
         System.out.flush();
     }
 }
+//Checkstyle: UncommentedMain on

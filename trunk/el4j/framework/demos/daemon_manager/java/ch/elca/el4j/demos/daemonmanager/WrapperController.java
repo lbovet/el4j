@@ -59,3 +59,4 @@ public class WrapperController extends AbstractDaemonManagerController {
         WrapperManager.start(new WrapperController(), args);
     }
 }
+//Checkstyle: UncommentedMain on

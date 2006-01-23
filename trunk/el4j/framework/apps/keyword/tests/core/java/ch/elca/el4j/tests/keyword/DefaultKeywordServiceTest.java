@@ -303,3 +303,4 @@ public class DefaultKeywordServiceTest extends AbstractTestCaseBase {
         }
     }
 }
+//Checkstyle: MagicNumber on

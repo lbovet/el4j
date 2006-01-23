@@ -518,3 +518,4 @@ public class SqlMapReferenceDaoTest extends AbstractTestCaseBase {
             0, list.size());
     }
 }
+//Checkstyle: MagicNumber on

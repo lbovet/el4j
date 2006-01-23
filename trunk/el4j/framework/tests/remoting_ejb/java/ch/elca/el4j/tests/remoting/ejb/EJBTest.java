@@ -232,3 +232,5 @@ public class EJBTest extends TestCase {
         }
     }
 }
+//Checkstyle: MagicNumber on
+//Checkstyle: EmptyBlock on

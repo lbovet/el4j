@@ -191,3 +191,4 @@ public class GenericAttributesTest extends TestCase {
 
     }
 }
+//Checkstyle: MagicNumber on

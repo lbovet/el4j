@@ -90,3 +90,4 @@ public class MainCalculator {
         System.out.println("Example: java MainCalculator div 6.8 3.9");
     }
 }
+//Checkstyle: UncommentedMain on

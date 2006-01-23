@@ -96,3 +96,4 @@ public class RejectTest extends TestCase {
         }
     }
 }
+//Checkstyle: EmptyBlock on

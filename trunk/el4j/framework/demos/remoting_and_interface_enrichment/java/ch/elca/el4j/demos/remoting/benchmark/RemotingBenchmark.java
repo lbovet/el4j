@@ -465,3 +465,4 @@ public class RemotingBenchmark {
         return (stop - start) / (double) TEST_REPETITION_COUNT;
     }
 }
+//Checkstyle: UncommentedMain on

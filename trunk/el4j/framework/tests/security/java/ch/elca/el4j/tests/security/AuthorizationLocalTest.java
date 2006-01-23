@@ -235,5 +235,6 @@ public class AuthorizationLocalTest extends TestCase {
     private static void destroySecureContext() {
         ContextHolder.setContext(new SecureContextImpl());
     }
-
 }
+//Checkstyle: EmptyBlock on
+//Checkstyle: MagicNumber on

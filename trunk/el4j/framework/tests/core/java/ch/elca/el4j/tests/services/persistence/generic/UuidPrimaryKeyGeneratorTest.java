@@ -82,3 +82,4 @@ public class UuidPrimaryKeyGeneratorTest extends TestCase {
         return new UuidPrimaryKeyGenerator();
     }
 }
+//Checkstyle: MagicNumber on

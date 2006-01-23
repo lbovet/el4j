@@ -48,4 +48,17 @@ public interface PageLayoutBuilder
      *            Is the argument to know where to place the given view.
      */
     public void addView(String viewDescriptorId, Object positionArgument);
+
+    /**
+     * Adds the view with the given view descriptor id to the the current page.
+     * The position argument is used to place the view.
+     * 
+     * @param viewDescriptorId
+     *            Is the id of the view to add to this page.
+     * @param positionArgument
+     *            Is the argument to know where to place the given view.
+     * @param positionIndex
+     *            Is the order index to place the given view. 
+     */
+    public void addView(String viewDescriptorId, Object positionArgument, int positionIndex);
 }
