@@ -35,6 +35,11 @@ public class LikeCriteria extends AbstractCriteria {
     private Boolean m_caseSensitive;
     
     /**
+     * Default constructor for remoting protocols like hessian and burlap added.
+     */
+    protected LikeCriteria() { }
+    
+    /**
      * Constructor.
      * 
      * @param field Is the field the criteria is made for.

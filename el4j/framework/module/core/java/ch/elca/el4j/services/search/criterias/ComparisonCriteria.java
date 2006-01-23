@@ -49,6 +49,11 @@ public class ComparisonCriteria extends AbstractCriteria {
     private String m_type;
     
     /**
+     * Default constructor for remoting protocols like hessian and burlap added.
+     */
+    protected ComparisonCriteria() { }
+    
+    /**
      * Constructor.
      * 
      * @param field Is the field the criteria is made for.
