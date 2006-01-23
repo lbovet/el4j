@@ -86,3 +86,4 @@ public final class MainCommon {
         }
     }
 }
+//Checkstyle: UncommentedMain on

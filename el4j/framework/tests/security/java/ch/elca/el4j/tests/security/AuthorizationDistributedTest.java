@@ -257,5 +257,6 @@ public class AuthorizationDistributedTest extends TestCase {
         
         getAuthenticationService().authenticate(auth);
     }
-
 }
+//Checkstyle: EmptyBlock on
+//Checkstyle: MagicNumber on

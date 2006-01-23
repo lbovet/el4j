@@ -1034,3 +1034,4 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
             + "with annotator 'Mister Lazy' in database.", list.size(), 0);
     }
 }
+//Checkstyle: MagicNumber on

@@ -57,3 +57,4 @@ public class AuthorizationServer {
         }
     }
 }
+//Checkstyle: UncommentedMain on

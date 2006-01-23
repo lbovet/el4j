@@ -158,3 +158,4 @@ public class XDocletTagTest extends TestCase {
                 + "author=\"ELCA\"\n */", tagSet.toString());
     }
 }
+//Checkstyle: EmptyBlock on

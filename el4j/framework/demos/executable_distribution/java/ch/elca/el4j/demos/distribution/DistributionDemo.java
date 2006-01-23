@@ -80,3 +80,4 @@ public class DistributionDemo {
         System.out.println();
     }
 }
+//Checkstyle: UncommentedMain on

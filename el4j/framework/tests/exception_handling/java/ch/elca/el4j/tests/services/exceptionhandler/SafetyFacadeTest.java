@@ -231,3 +231,5 @@ public class SafetyFacadeTest extends TestCase {
         }
     }
 }
+//Checkstyle: MagicNumber on
+//Checkstyle: EmptyBlock on

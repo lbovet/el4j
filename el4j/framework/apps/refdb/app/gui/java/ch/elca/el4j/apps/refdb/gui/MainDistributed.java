@@ -51,3 +51,4 @@ public final class MainDistributed {
         MainCommon.main(new String[] {startupContext, applicationContext});
     }
 }
+//Checkstyle: UncommentedMain on

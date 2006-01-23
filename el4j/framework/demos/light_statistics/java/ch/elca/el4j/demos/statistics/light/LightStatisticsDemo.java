@@ -78,3 +78,4 @@ public class LightStatisticsDemo {
         }
     }
 }
+//Checkstyle: UncommentedMain on

@@ -51,3 +51,4 @@ public final class MainStandalone {
         MainCommon.main(new String[] {startupContext, applicationContext});
     }
 }
+//Checkstyle: UncommentedMain on
