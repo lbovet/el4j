@@ -16,13 +16,13 @@
  */
 package ch.elca.el4j.services.gui.richclient.pages.descriptors;
 
-import java.awt.BorderLayout;
+import java.awt.LayoutManager;
 
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.richclient.application.PageComponentDescriptor;
 import org.springframework.richclient.application.PageDescriptor;
 import org.springframework.richclient.application.PageLayoutBuilder;
-import org.springframework.richclient.application.ViewDescriptor;
 import org.springframework.richclient.core.LabeledObjectSupport;
 import org.springframework.util.StringUtils;
 
@@ -44,29 +44,14 @@ public class MultipleViewsPageDescriptor extends LabeledObjectSupport
     implements PageDescriptor, BeanNameAware, InitializingBean {
     
     /**
-     * Are the view descriptors for the center position.
+     * Are the page component descriptors.
      */
-    private ViewDescriptor[] m_viewDescriptorsCenter = null;
+    private PageComponentDescriptor[] m_pageComponentDescriptors = null;
 
     /**
-     * Are the view descriptors for the right position.
+     * Layout manager to layout views on page.
      */
-    private ViewDescriptor[] m_viewDescriptorsRight = null;
-
-    /**
-     * Are the view descriptors for the left position.
-     */
-    private ViewDescriptor[] m_viewDescriptorsLeft = null;
-
-    /**
-     * Are the view descriptors for the top position.
-     */
-    private ViewDescriptor[] m_viewDescriptorsTop = null;
-
-    /**
-     * Are the view descriptors for the bottom position.
-     */
-    private ViewDescriptor[] m_viewDescriptorsBottom = null;
+    private LayoutManager m_layoutManager;
 
     /**
      * Is the id of this page.
@@ -79,50 +64,6 @@ public class MultipleViewsPageDescriptor extends LabeledObjectSupport
     private String m_beanName;
 
     /**
-     * Returns the first view descriptor that can be found by going through the
-     * following order of properties, or <code>null</code> if no view
-     * descriptor exists.
-     * <ol>
-     *     <li>viewDescriptorsCenter</li>
-     *     <li>viewDescriptorsLeft</li>
-     *     <li>viewDescriptorsTop</li>
-     *     <li>viewDescriptorsRight</li>
-     *     <li>viewDescriptorsBottom</li>
-     * </ol>
-     * 
-     * @return Returns the main view descriptor of this page.
-     */
-    protected ViewDescriptor getMainViewDescriptor() {
-        ViewDescriptor viewDesc 
-            = getFirstViewDescriptor(getViewDescriptorsCenter());
-        if (viewDesc == null) {
-            viewDesc = getFirstViewDescriptor(getViewDescriptorsLeft());
-            if (viewDesc == null) {
-                viewDesc = getFirstViewDescriptor(getViewDescriptorsTop());
-                if (viewDesc == null) {
-                    viewDesc = getFirstViewDescriptor(
-                        getViewDescriptorsRight());
-                    if (viewDesc == null) {
-                        viewDesc = getFirstViewDescriptor(
-                            getViewDescriptorsBottom());
-                    }
-                }
-            }
-        }
-        return viewDesc;
-    }
-    
-    /**
-     * @param viewDescs Are the view descriptions.
-     * @return Returns the first view descriptor of the given array or 
-     *         <code>null</code> if there is no view descriptor.
-     */
-    protected ViewDescriptor getFirstViewDescriptor(
-        ViewDescriptor[] viewDescs) {
-        return viewDescs != null && viewDescs.length > 0 ? viewDescs[0] : null;
-    }
-
-    /**
      * {@inheritDoc}
      * 
      * The given <code>PageLayourBuilder</code> from Spring RCP must be casted
@@ -133,34 +74,46 @@ public class MultipleViewsPageDescriptor extends LabeledObjectSupport
             = (ch.elca.el4j.services.gui.richclient.pages.PageLayoutBuilder)
                 oldPageLayoutBuilder;
         
-        layoutViews(pageLayout, getViewDescriptorsCenter(), 
-            BorderLayout.CENTER);
-        layoutViews(pageLayout, getViewDescriptorsLeft(), 
-            BorderLayout.WEST);
-        layoutViews(pageLayout, getViewDescriptorsTop(), 
-            BorderLayout.NORTH);
-        layoutViews(pageLayout, getViewDescriptorsRight(), 
-            BorderLayout.EAST);
-        layoutViews(pageLayout, getViewDescriptorsBottom(), 
-            BorderLayout.SOUTH);
+        if (m_layoutManager != null) {
+            pageLayout.setLayoutManager(m_layoutManager);
+        }
+        
+        if (m_pageComponentDescriptors != null) {
+            for (int i = 0; i < m_pageComponentDescriptors.length; i++) {
+                PageComponentDescriptor pageComponentDescriptor 
+                    = m_pageComponentDescriptors[i];
+                pageLayout.addPageComponentDescriptor(pageComponentDescriptor);
+            }
+        }
     }
 
     /**
-     * Lays the given view out by using given page layout builder.
-     * 
-     * @param pageLayout Is the layout builder.
-     * @param viewDescs Are the views to layout.
-     * @param positionArgument Is the position argument for the given views.
+     * @return Returns the pageComponentDescriptors.
      */
-    protected void layoutViews(
-        ch.elca.el4j.services.gui.richclient.pages.PageLayoutBuilder pageLayout,
-        ViewDescriptor[] viewDescs, Object positionArgument) {
-        if (viewDescs != null) {
-            for (int i = 0; i < viewDescs.length; i++) {
-                ViewDescriptor viewDesc = viewDescs[i];
-                pageLayout.addView(viewDesc.getId(), positionArgument);
-            }
-        }
+    public final PageComponentDescriptor[] getPageComponentDescriptors() {
+        return m_pageComponentDescriptors;
+    }
+
+    /**
+     * @param pageComponentDescriptors The pageComponentDescriptors to set.
+     */
+    public final void setPageComponentDescriptors(
+        PageComponentDescriptor[] pageComponentDescriptors) {
+        m_pageComponentDescriptors = pageComponentDescriptors;
+    }
+
+    /**
+     * @return Returns the layoutManager.
+     */
+    public final LayoutManager getLayoutManager() {
+        return m_layoutManager;
+    }
+
+    /**
+     * @param layoutManager The layoutManager to set.
+     */
+    public final void setLayoutManager(LayoutManager layoutManager) {
+        m_layoutManager = layoutManager;
     }
 
     /**
@@ -194,91 +147,14 @@ public class MultipleViewsPageDescriptor extends LabeledObjectSupport
     }
 
     /**
-     * @return Returns the viewDescriptorsBottom.
-     */
-    public final ViewDescriptor[] getViewDescriptorsBottom() {
-        return m_viewDescriptorsBottom;
-    }
-
-    /**
-     * @param viewDescriptorsBottom The viewDescriptorsBottom to set.
-     */
-    public final void setViewDescriptorsBottom(
-        ViewDescriptor[] viewDescriptorsBottom) {
-        m_viewDescriptorsBottom = viewDescriptorsBottom;
-    }
-
-    /**
-     * @return Returns the viewDescriptorsCenter.
-     */
-    public final ViewDescriptor[] getViewDescriptorsCenter() {
-        return m_viewDescriptorsCenter;
-    }
-
-    /**
-     * @param viewDescriptorsCenter The viewDescriptorsCenter to set.
-     */
-    public final void setViewDescriptorsCenter(
-        ViewDescriptor[] viewDescriptorsCenter) {
-        m_viewDescriptorsCenter = viewDescriptorsCenter;
-    }
-
-    /**
-     * @return Returns the viewDescriptorsLeft.
-     */
-    public final ViewDescriptor[] getViewDescriptorsLeft() {
-        return m_viewDescriptorsLeft;
-    }
-
-    /**
-     * @param viewDescriptorsLeft The viewDescriptorsLeft to set.
-     */
-    public final void setViewDescriptorsLeft(
-        ViewDescriptor[] viewDescriptorsLeft) {
-        m_viewDescriptorsLeft = viewDescriptorsLeft;
-    }
-
-    /**
-     * @return Returns the viewDescriptorsRight.
-     */
-    public final ViewDescriptor[] getViewDescriptorsRight() {
-        return m_viewDescriptorsRight;
-    }
-
-    /**
-     * @param viewDescriptorsRight The viewDescriptorsRight to set.
-     */
-    public final void setViewDescriptorsRight(
-        ViewDescriptor[] viewDescriptorsRight) {
-        m_viewDescriptorsRight = viewDescriptorsRight;
-    }
-
-    /**
-     * @return Returns the viewDescriptorsTop.
-     */
-    public final ViewDescriptor[] getViewDescriptorsTop() {
-        return m_viewDescriptorsTop;
-    }
-
-    /**
-     * @param viewDescriptorsTop The viewDescriptorsTop to set.
-     */
-    public final void setViewDescriptorsTop(
-        ViewDescriptor[] viewDescriptorsTop) {
-        m_viewDescriptorsTop = viewDescriptorsTop;
-    }
-    
-    /**
      * {@inheritDoc}
      */
     public void afterPropertiesSet() throws Exception {
-        if (getMainViewDescriptor() == null) {
+        if (m_pageComponentDescriptors == null 
+            || m_pageComponentDescriptors.length <= 0) {
             CoreNotificationHelper.notifyMisconfiguration(
                 "Bean with name '" + getBeanName() + "' must have minimum "
-                + "one of the following properties with minimum "
-                + "one view descriptor: viewDescriptorsCenter, "
-                + "viewDescriptorsLeft, viewDescriptorsTop, "
-                + "viewDescriptorsRight or viewDescriptorsBottom.");
+                + "one page component descriptor.");
         }
     }
 }

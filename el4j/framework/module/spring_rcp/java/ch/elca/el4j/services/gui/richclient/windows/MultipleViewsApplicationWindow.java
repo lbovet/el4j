@@ -21,8 +21,8 @@ import org.springframework.richclient.application.ApplicationPage;
 import org.springframework.richclient.application.PageDescriptor;
 import org.springframework.richclient.application.support.DefaultApplicationWindow;
 
-import ch.elca.el4j.services.gui.richclient.pages.AbstractApplicationPage;
-import ch.elca.el4j.services.gui.richclient.pages.MultipleViewsApplicationPage;
+import ch.elca.el4j.services.gui.richclient.pages.impl.AbstractApplicationPage;
+import ch.elca.el4j.services.gui.richclient.pages.impl.MultipleViewsApplicationPage;
 
 /**
  * Application window for having multiple views in a page.

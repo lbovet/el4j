@@ -14,12 +14,8 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.services.gui.richclient.support;
+package ch.elca.el4j.services.gui.richclient.views.descriptors.impl;
 
-import org.springframework.beans.factory.BeanNameAware;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.richclient.application.ApplicationWindow;
 import org.springframework.richclient.application.PageComponent;
 import org.springframework.richclient.application.View;
@@ -27,9 +23,9 @@ import org.springframework.richclient.application.ViewDescriptor;
 import org.springframework.richclient.command.ActionCommand;
 import org.springframework.richclient.command.config.CommandButtonLabelInfo;
 import org.springframework.richclient.command.support.ShowViewCommand;
-import org.springframework.richclient.core.LabeledObjectSupport;
-import org.springframework.util.StringUtils;
 
+import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.LayoutDescriptor;
+import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.AbstractPageComponentDescriptor;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 
 /**
@@ -45,14 +41,8 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  *
  * @author Martin Zeltner (MZE)
  */
-public class LookupViewDescriptor extends LabeledObjectSupport
-    implements ViewDescriptor, BeanNameAware, ApplicationContextAware, 
-        InitializingBean {
-    
-    /**
-     * Is the id of this view descriptor.
-     */
-    private String m_id;
+public class LookupViewDescriptor extends AbstractPageComponentDescriptor
+    implements ViewDescriptor, LayoutDescriptor {
     
     /**
      * Is the bean name of the view to describe. This bean must be defined as
@@ -60,62 +50,6 @@ public class LookupViewDescriptor extends LabeledObjectSupport
      */
     private String m_viewPrototypeBeanName;
     
-    /**
-     * Is the application context this bean has been created with.
-     */
-    private ApplicationContext m_applicationContext;
-    
-    /**
-     * Is the name of this bean.
-     */
-    private String m_beanName;
-
-    /**
-     * @return Returns the applicationContext.
-     */
-    public final ApplicationContext getApplicationContext() {
-        return m_applicationContext;
-    }
-
-    /**
-     * @param applicationContext The applicationContext to set.
-     */
-    public final void setApplicationContext(
-        ApplicationContext applicationContext) {
-        m_applicationContext = applicationContext;
-    }
-
-    /**
-     * @return Returns the beanName.
-     */
-    public final String getBeanName() {
-        return m_beanName;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public final void setBeanName(String beanName) {
-        m_beanName = beanName;
-        if (!StringUtils.hasText(getId())) {
-            setId(beanName);
-        }
-    }
-
-    /**
-     * @return Returns the id.
-     */
-    public final String getId() {
-        return m_id;
-    }
-
-    /**
-     * @param id The id to set.
-     */
-    public final void setId(String id) {
-        m_id = id;
-    }
-
     /**
      * @return Returns the viewPrototypeBeanName.
      */
