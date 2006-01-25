@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.services.gui.richclient.pages;
+package ch.elca.el4j.services.gui.richclient.pages.impl;
 
 import java.util.Collections;
 import java.util.HashSet;

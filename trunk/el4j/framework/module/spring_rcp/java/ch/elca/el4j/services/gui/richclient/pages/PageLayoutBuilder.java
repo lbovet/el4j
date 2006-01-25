@@ -16,10 +16,14 @@
  */
 package ch.elca.el4j.services.gui.richclient.pages;
 
+import java.awt.LayoutManager;
+
+import org.springframework.richclient.application.PageComponentDescriptor;
+
 /**
  * Interface to place views on a page. This interface extends the one from 
- * Spring RCP to be able to place multiple views on a page on different 
- * locations (e.g. center, right, left and so on).
+ * Spring RCP to be able to add complete page component descriptors. It is also
+ * able to set layout manager for the page.
  * 
  * <b>ATTENTION:</b> This class has the same name in Spring RCP. The idea is 
  * that the people from Spring RCP will change their class in a next release
@@ -32,33 +36,21 @@ package ch.elca.el4j.services.gui.richclient.pages;
  *    "$Author$"
  * );</script>
  *
- * @author Any Spring RCP developer
  * @author Martin Zeltner (MZE)
  */
 public interface PageLayoutBuilder
     extends org.springframework.richclient.application.PageLayoutBuilder {
     
     /**
-     * Adds the view with the given view descriptor id to the the current page.
-     * The position argument is used to place the view.
+     * Adds the given page component descriptor to the page.
      * 
-     * @param viewDescriptorId
-     *            Is the id of the view to add to this page.
-     * @param positionArgument
-     *            Is the argument to know where to place the given view.
+     * @param pageComponentDescriptor Is the page component descriptor to add.
      */
-    public void addView(String viewDescriptorId, Object positionArgument);
-
+    public void addPageComponentDescriptor(
+        PageComponentDescriptor pageComponentDescriptor);
+    
     /**
-     * Adds the view with the given view descriptor id to the the current page.
-     * The position argument is used to place the view.
-     * 
-     * @param viewDescriptorId
-     *            Is the id of the view to add to this page.
-     * @param positionArgument
-     *            Is the argument to know where to place the given view.
-     * @param positionIndex
-     *            Is the order index to place the given view. 
+     * @param layoutManager Is the layout manager for the page.
      */
-    public void addView(String viewDescriptorId, Object positionArgument, int positionIndex);
+    public void setLayoutManager(LayoutManager layoutManager);
 }

@@ -29,7 +29,9 @@ import org.springframework.context.event.ApplicationEventMulticaster;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.richclient.application.Application;
 import org.springframework.richclient.application.PageComponent;
+import org.springframework.richclient.application.PageComponentDescriptor;
 
+import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.LayoutDescriptor;
 import ch.elca.el4j.services.search.events.QueryObjectEvent;
 
 /**
@@ -51,7 +53,7 @@ import ch.elca.el4j.services.search.events.QueryObjectEvent;
 public abstract class AbstractView 
     extends org.springframework.richclient.application.support.AbstractView 
     implements InitializingBean, BeanNameAware, ApplicationEventPublisherAware, 
-        ApplicationListener {
+        ApplicationListener, LayoutDescriptor {
     /**
      * Is the control of this view.
      */
@@ -244,5 +246,44 @@ public abstract class AbstractView
     public void componentClosed() {
         unregisterOnApplicationEventMulticaster();
         super.componentClosed();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Object getPreferredPositionArgument() {
+        Object result = null;
+        PageComponentDescriptor descriptor = getDescriptor();
+        if (descriptor instanceof LayoutDescriptor) {
+            LayoutDescriptor layoutDescriptor = (LayoutDescriptor) descriptor;
+            result = layoutDescriptor.getPreferredPositionArgument();
+        }
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Integer getPreferredPositionIndex() {
+        Integer result = null;
+        PageComponentDescriptor descriptor = getDescriptor();
+        if (descriptor instanceof LayoutDescriptor) {
+            LayoutDescriptor layoutDescriptor = (LayoutDescriptor) descriptor;
+            result = layoutDescriptor.getPreferredPositionIndex();
+        }
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getPreferredGroup() {
+        String result = null;
+        PageComponentDescriptor descriptor = getDescriptor();
+        if (descriptor instanceof LayoutDescriptor) {
+            LayoutDescriptor layoutDescriptor = (LayoutDescriptor) descriptor;
+            result = layoutDescriptor.getPreferredGroup();
+        }
+        return result;
     }
 }
