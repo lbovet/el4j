@@ -16,14 +16,11 @@
  */
 package ch.elca.el4j.services.gui.richclient.pages;
 
-import java.awt.LayoutManager;
-
 import org.springframework.richclient.application.PageComponentDescriptor;
 
 /**
  * Interface to place views on a page. This interface extends the one from 
- * Spring RCP to be able to add complete page component descriptors. It is also
- * able to set layout manager for the page.
+ * Spring RCP to be able to add complete page component descriptors.
  * 
  * <b>ATTENTION:</b> This class has the same name in Spring RCP. The idea is 
  * that the people from Spring RCP will change their class in a next release
@@ -48,9 +45,4 @@ public interface PageLayoutBuilder
      */
     public void addPageComponentDescriptor(
         PageComponentDescriptor pageComponentDescriptor);
-    
-    /**
-     * @param layoutManager Is the layout manager for the page.
-     */
-    public void setLayoutManager(LayoutManager layoutManager);
 }

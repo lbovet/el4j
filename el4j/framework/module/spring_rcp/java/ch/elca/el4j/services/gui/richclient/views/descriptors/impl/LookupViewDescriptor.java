@@ -25,7 +25,7 @@ import org.springframework.richclient.command.config.CommandButtonLabelInfo;
 import org.springframework.richclient.command.support.ShowViewCommand;
 
 import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.LayoutDescriptor;
-import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.AbstractPageComponentDescriptor;
+import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.AbstractGroupPageComponentDescriptor;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 
 /**
@@ -41,7 +41,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  *
  * @author Martin Zeltner (MZE)
  */
-public class LookupViewDescriptor extends AbstractPageComponentDescriptor
+public class LookupViewDescriptor extends AbstractGroupPageComponentDescriptor
     implements ViewDescriptor, LayoutDescriptor {
     
     /**

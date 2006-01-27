@@ -18,6 +18,8 @@ package ch.elca.el4j.services.gui.richclient.pagecomponents.impl;
 
 import java.awt.Image;
 import java.beans.PropertyChangeListener;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.Icon;
 import javax.swing.JComponent;
@@ -28,9 +30,10 @@ import org.springframework.richclient.application.PageComponentDescriptor;
 import org.springframework.richclient.factory.AbstractControlFactory;
 
 import ch.elca.el4j.services.gui.richclient.pagecomponents.GroupPageComponent;
+import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.GroupPageComponentDescriptor;
 import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.LayoutDescriptor;
-import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.PageComponentDescriptorGroup;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
+import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
  * Abstract class for a page component group.
@@ -50,12 +53,18 @@ public abstract class AbstractGroupPageComponent extends AbstractControlFactory
     /**
      * Is the context of this group component.
      */
-    private PageComponentContext m_context; 
+    protected PageComponentContext m_context; 
     
     /**
      * Is the descriptor for this group descriptor.
      */
-    private PageComponentDescriptorGroup m_pageComponentDescriptorGroup;
+    protected GroupPageComponentDescriptor m_pageComponentDescriptorGroup;
+    
+    /**
+     * Are the page components and its JComponent that are on the control. The
+     * page component is used as key.
+     */
+    protected final Map m_containingPageComponents = new HashMap();
 
     /**
      * {@inheritDoc}
@@ -101,21 +110,21 @@ public abstract class AbstractGroupPageComponent extends AbstractControlFactory
      */
     public void setDescriptor(PageComponentDescriptor pageComponentDescriptor) {
         if (pageComponentDescriptor == null || !(pageComponentDescriptor 
-            instanceof PageComponentDescriptorGroup)) {
+            instanceof GroupPageComponentDescriptor)) {
             CoreNotificationHelper.notifyMisconfiguration(
                 "Descriptor must be of type " 
-                + PageComponentDescriptorGroup.class.getName() 
+                + GroupPageComponentDescriptor.class.getName() 
                 + ". Given descriptor is of type " 
                 + pageComponentDescriptor.getClass().getName() + ".");
         }
         m_pageComponentDescriptorGroup 
-            = (PageComponentDescriptorGroup) pageComponentDescriptor;
+            = (GroupPageComponentDescriptor) pageComponentDescriptor;
     }
     
     /**
      * @return Returns the page component descriptor group.
      */
-    public PageComponentDescriptorGroup getPageComponentDescriptorGroup() {
+    public GroupPageComponentDescriptor getPageComponentDescriptorGroup() {
         return m_pageComponentDescriptorGroup;
     }
 
@@ -214,11 +223,26 @@ public abstract class AbstractGroupPageComponent extends AbstractControlFactory
     public String getPreferredGroup() {
         return m_pageComponentDescriptorGroup.getPreferredGroup();
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public String getConfiguredGroup() {
+        return m_pageComponentDescriptorGroup.getConfiguredGroup();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void setConfiguredGroup(String group) {
+        m_pageComponentDescriptorGroup.setConfiguredGroup(group);
+    }
 
     /**
      * {@inheritDoc}
      */
-    public JComponent addPageComponent(PageComponent pageComponent) {
+    public synchronized JComponent addPageComponent(
+        PageComponent pageComponent) {
         JComponent addedComponent = null;
         if (isControlCreated()) {
             JComponent groupControl = getControl();
@@ -229,6 +253,9 @@ public abstract class AbstractGroupPageComponent extends AbstractControlFactory
             } else {
                 childControl = pageComponent.getControl();
             }
+            
+            Reject.ifNull(childControl, "The control of a given page component "
+                + "must not be null.");
             
             Object positionArgument = null;
             Integer positionIndex = null;
@@ -257,6 +284,7 @@ public abstract class AbstractGroupPageComponent extends AbstractControlFactory
             groupControl.validate();
             groupControl.repaint();
             
+            m_containingPageComponents.put(pageComponent, childControl);
             addedComponent = childControl;
         }
         return addedComponent;
@@ -265,11 +293,25 @@ public abstract class AbstractGroupPageComponent extends AbstractControlFactory
     /**
      * {@inheritDoc}
      */
-    public JComponent removePageComponent(PageComponent pageComponent) {
-        JComponent removedComponent = null;
+    public synchronized boolean containsPageComponent(
+        PageComponent pageComponent) {
+        boolean result = false;
         if (isControlCreated()) {
+            result = m_containingPageComponents.containsKey(pageComponent);
+        }
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public synchronized JComponent removePageComponent(
+        PageComponent pageComponent) {
+        JComponent removedComponent = null;
+        if (isControlCreated() && containsPageComponent(pageComponent)) {
+            JComponent childControl
+                = (JComponent) m_containingPageComponents.get(pageComponent);
             JComponent groupControl = getControl();
-            JComponent childControl;
             
             PageComponentContext childContext = pageComponent.getContext();
             if (childContext != null) {
@@ -282,6 +324,7 @@ public abstract class AbstractGroupPageComponent extends AbstractControlFactory
             groupControl.validate();
             groupControl.repaint();
 
+            m_containingPageComponents.remove(pageComponent);
             removedComponent = childControl;
         }
         return removedComponent;

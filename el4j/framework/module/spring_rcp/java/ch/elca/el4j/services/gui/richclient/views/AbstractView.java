@@ -31,6 +31,7 @@ import org.springframework.richclient.application.Application;
 import org.springframework.richclient.application.PageComponent;
 import org.springframework.richclient.application.PageComponentDescriptor;
 
+import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.GroupDescriptor;
 import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.LayoutDescriptor;
 import ch.elca.el4j.services.search.events.QueryObjectEvent;
 
@@ -53,7 +54,7 @@ import ch.elca.el4j.services.search.events.QueryObjectEvent;
 public abstract class AbstractView 
     extends org.springframework.richclient.application.support.AbstractView 
     implements InitializingBean, BeanNameAware, ApplicationEventPublisherAware, 
-        ApplicationListener, LayoutDescriptor {
+        ApplicationListener, LayoutDescriptor, GroupDescriptor {
     /**
      * Is the control of this view.
      */
@@ -280,10 +281,34 @@ public abstract class AbstractView
     public String getPreferredGroup() {
         String result = null;
         PageComponentDescriptor descriptor = getDescriptor();
-        if (descriptor instanceof LayoutDescriptor) {
-            LayoutDescriptor layoutDescriptor = (LayoutDescriptor) descriptor;
-            result = layoutDescriptor.getPreferredGroup();
+        if (descriptor instanceof GroupDescriptor) {
+            GroupDescriptor groupDescriptor = (GroupDescriptor) descriptor;
+            result = groupDescriptor.getPreferredGroup();
         }
         return result;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public String getConfiguredGroup() {
+        String result = null;
+        PageComponentDescriptor descriptor = getDescriptor();
+        if (descriptor instanceof GroupDescriptor) {
+            GroupDescriptor groupDescriptor = (GroupDescriptor) descriptor;
+            result = groupDescriptor.getConfiguredGroup();
+        }
+        return result;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void setConfiguredGroup(String group) {
+        PageComponentDescriptor descriptor = getDescriptor();
+        if (descriptor instanceof GroupDescriptor) {
+            GroupDescriptor groupDescriptor = (GroupDescriptor) descriptor;
+            groupDescriptor.setConfiguredGroup(group);
+        }
     }
 }

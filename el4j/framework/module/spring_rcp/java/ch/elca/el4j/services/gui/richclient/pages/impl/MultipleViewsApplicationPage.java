@@ -16,9 +16,8 @@
  */
 package ch.elca.el4j.services.gui.richclient.pages.impl;
 
-import java.awt.BorderLayout;
-import java.awt.LayoutManager;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -30,14 +29,12 @@ import org.springframework.richclient.application.PageComponent;
 import org.springframework.richclient.application.PageComponentDescriptor;
 import org.springframework.richclient.application.PageComponentPane;
 import org.springframework.richclient.application.View;
-import org.springframework.richclient.application.ViewDescriptor;
 import org.springframework.richclient.application.support.DefaultViewContext;
 import org.springframework.util.StringUtils;
 
 import ch.elca.el4j.services.gui.richclient.pagecomponents.GroupPageComponent;
-import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.LayoutDescriptor;
-import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.PageComponentDescriptorGroup;
-import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.DefaultPageComponentDescriptorGroup;
+import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.GroupDescriptor;
+import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.GroupPageComponentDescriptor;
 import ch.elca.el4j.services.gui.richclient.pages.PageLayoutBuilder;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.util.codingsupport.Reject;
@@ -56,25 +53,18 @@ import ch.elca.el4j.util.codingsupport.Reject;
  */
 public class MultipleViewsApplicationPage extends AbstractApplicationPage 
     implements PageLayoutBuilder {
-    /**
-     * Are the top page component descriptors for this page.
-     */
-    private final List m_pageComponentDescriptors = new ArrayList();
     
     /**
      * Are the group page components. The group name is used as key.
      */
-    private final Map m_groupPageComponents = new HashMap();
+    protected final Map m_groupPageComponents 
+        = Collections.synchronizedMap(new HashMap());
     
     /**
      * Are the page component descriptor groups. The group name is used as key.
      */
-    private final Map m_groupDescriptors = new HashMap();
-
-    /**
-     * Layout manager for the page control.
-     */
-    private LayoutManager m_layoutManager = new BorderLayout();
+    protected final Map m_groupPageComponentDescriptors 
+        = Collections.synchronizedMap(new HashMap());
 
     /**
      * {@inheritDoc}
@@ -82,28 +72,19 @@ public class MultipleViewsApplicationPage extends AbstractApplicationPage
      * Returns the control of this page.
      */
     public JComponent getControl() {
-        GroupPageComponent mainGroupPageComponent = getMainGroupPageComponent();
-        if (mainGroupPageComponent == null) {
-            mainGroupPageComponent = createMainGroupPageComponent();
-            setMainGroupPageComponent(mainGroupPageComponent);
+        GroupPageComponent mainComponent = getMainGroupPageComponent();
+        if (mainComponent == null) {
             getPageDescriptor().buildInitialLayout(this);
+            mainComponent = getMainGroupPageComponent();
+            if (mainComponent == null) {
+                CoreNotificationHelper.notifyMisconfiguration("There is no main"
+                    + " group page component, also after building the initial"
+                    + " layout of the page.");
+            }
             setActiveComponent();
         }
-        return mainGroupPageComponent.getControl();
+        return mainComponent.getControl();
     }
-    
-    /**
-     * @return Returns the created main group page component.
-     */
-    protected GroupPageComponent createMainGroupPageComponent() {
-        DefaultPageComponentDescriptorGroup groupDescriptor 
-            = new DefaultPageComponentDescriptorGroup();
-        groupDescriptor.setLayoutManager(getLayoutManager());
-        groupDescriptor.setPreferredGroup(LayoutDescriptor.DEFAULT_GROUP);
-        return (GroupPageComponent) groupDescriptor.createPageComponent();
-    }
-    
-    
     
     /**
      * @return Returns the main group page component.
@@ -132,7 +113,7 @@ public class MultipleViewsApplicationPage extends AbstractApplicationPage
                 m_groupPageComponents.get(groupName);
         } else {
             groupPageComponent = (GroupPageComponent) 
-                m_groupPageComponents.get(LayoutDescriptor.DEFAULT_GROUP);
+                m_groupPageComponents.get(GroupDescriptor.DEFAULT_GROUP);
         }
         return groupPageComponent;
     }
@@ -148,7 +129,7 @@ public class MultipleViewsApplicationPage extends AbstractApplicationPage
         if (StringUtils.hasLength(groupName)) {
             m_groupPageComponents.put(groupName, groupPageComponent);
         } else {
-            m_groupPageComponents.put(LayoutDescriptor.DEFAULT_GROUP, 
+            m_groupPageComponents.put(GroupDescriptor.DEFAULT_GROUP, 
                 groupPageComponent);
         }
     }
@@ -156,79 +137,179 @@ public class MultipleViewsApplicationPage extends AbstractApplicationPage
     
     
     /**
-     * @return Returns the main group descriptor.
+     * @return Returns the main group page component descriptor.
      */
-    protected final PageComponentDescriptorGroup getMainGroupDescriptor() {
-        return getGroupDescriptor(null);
+    protected final GroupPageComponentDescriptor 
+    getMainGroupPageComponentDescriptor() {
+        return getGroupPageComponentDescriptor(null);
     }
     
     /**
-     * @param mainGroupDescriptor Is the main group descriptor to set.
+     * @param mainGroupPageComponentDescriptor
+     *            Is the main group descriptor to set.
      */
-    protected final void setMainGroupDescriptor(
-        PageComponentDescriptorGroup mainGroupDescriptor) {
-        setGroupDescriptor(null, mainGroupDescriptor);
+    protected final void setMainGroupPageComponentDescriptor(
+        GroupPageComponentDescriptor mainGroupPageComponentDescriptor) {
+        setGroupPageComponentDescriptor(null, mainGroupPageComponentDescriptor);
     }
     
     /**
      * @param groupName Is the name of the descriptor to return.
      * @return Returns the group descriptor with the given group name.
      */
-    protected final PageComponentDescriptorGroup getGroupDescriptor(
-        String groupName) {
-        PageComponentDescriptorGroup groupDescriptor;
+    protected final GroupPageComponentDescriptor 
+    getGroupPageComponentDescriptor(String groupName) {
+        GroupPageComponentDescriptor groupPageComponentDescriptor;
         if (StringUtils.hasLength(groupName)) {
-            groupDescriptor = (PageComponentDescriptorGroup) 
-                m_groupDescriptors.get(groupName);
+            groupPageComponentDescriptor = (GroupPageComponentDescriptor) 
+                m_groupPageComponentDescriptors.get(groupName);
         } else {
-            groupDescriptor = (PageComponentDescriptorGroup) 
-                m_groupDescriptors.get(LayoutDescriptor.DEFAULT_GROUP);
+            groupPageComponentDescriptor = (GroupPageComponentDescriptor) 
+                m_groupPageComponentDescriptors.get(
+                    GroupDescriptor.DEFAULT_GROUP);
         }
-        return groupDescriptor;
+        return groupPageComponentDescriptor;
     }
     
     /**
      * @param groupName
      *            Is the name of the group to set.
-     * @param groupDescriptor
+     * @param groupPageComponentDescriptor
      *            Is the group descriptor to set for the given group name.
      */
-    protected final void setGroupDescriptor(
-        String groupName, PageComponentDescriptorGroup groupDescriptor) {
+    protected final void setGroupPageComponentDescriptor(
+        String groupName, 
+        GroupPageComponentDescriptor groupPageComponentDescriptor) {
         if (StringUtils.hasLength(groupName)) {
-            m_groupDescriptors.put(groupName, groupDescriptor);
+            m_groupPageComponentDescriptors.put(groupName, 
+                groupPageComponentDescriptor);
         } else {
-            m_groupDescriptors.put(LayoutDescriptor.DEFAULT_GROUP, 
-                groupDescriptor);
+            m_groupPageComponentDescriptors.put(GroupDescriptor.DEFAULT_GROUP, 
+                groupPageComponentDescriptor);
         }
     }
-
+    
     /**
      * {@inheritDoc}
      */
     protected boolean giveFocusTo(PageComponent pageComponent) {
-        String groupName = null;
-        if (pageComponent instanceof LayoutDescriptor) {
-            LayoutDescriptor layoutDescriptor
-                = (LayoutDescriptor) pageComponent;
-            groupName = layoutDescriptor.getPreferredGroup();
-        }
-        
-        GroupPageComponent groupPageComponent 
-            = getGroupPageComponent(groupName);
-        
-        if (groupPageComponent == null) {
+        GroupPageComponent targetGroup = findTargetGroup(pageComponent);
+        if (targetGroup == null) {
             CoreNotificationHelper.notifyMisconfiguration(
-                "No group page component found for group '" + groupName + "'.");
+                "No group page component found for page component with id "
+                    + pageComponent.getId() + ".");
         }
         
-        groupPageComponent.addPageComponent(pageComponent);
-        // TODO implement
+        /**
+         * Return immediately if the given page component is the same as the 
+         * target group.
+         */
+        if (targetGroup == pageComponent) {
+            return false;
+        }
         
+        /**
+         * Remove the page component from other group page components than the 
+         * target group page component.
+         */
+        synchronized (m_groupPageComponents) {
+            Iterator it = m_groupPageComponents.values().iterator();
+            while (it.hasNext()) {
+                GroupPageComponent currentGroup 
+                    = (GroupPageComponent) it.next();
+                if (currentGroup != targetGroup 
+                    && currentGroup.containsPageComponent(pageComponent)) {
+                    currentGroup.removePageComponent(pageComponent);
+                }
+            }
+        }
         
-        return true;
+        /**
+         * Add the page component to the target group if it is not already on
+         * it.
+         */
+        if (!targetGroup.containsPageComponent(pageComponent)) {
+            targetGroup.addPageComponent(pageComponent);
+        }
+        
+        /**
+         * Focus target group page component too.
+         */
+        giveFocusTo(targetGroup);
+        
+        return targetGroup.getControl().requestFocusInWindow();
     }
     
+    /**
+     * Method to find the group page component where the given page component 
+     * belongs to.
+     * 
+     * @param pageComponent Is the page component to lookup a group for.
+     * @return Returns the found group page component.
+     */
+    protected GroupPageComponent findTargetGroup(PageComponent pageComponent) {
+        GroupPageComponent targetGroup = null;
+        // If page component is a group descriptor group can be extracted.
+        if (pageComponent instanceof GroupDescriptor) {
+            GroupDescriptor groupDescriptor
+                = (GroupDescriptor) pageComponent;
+            
+            // Take the configured group if it exists.
+            String groupName = groupDescriptor.getConfiguredGroup();
+            if (StringUtils.hasLength(groupName)) {
+                targetGroup = getGroupPageComponent(groupName);
+            }
+            // Otherwise take the preferred group.
+            if (targetGroup == null) {
+                groupName = groupDescriptor.getPreferredGroup();
+                targetGroup = getGroupPageComponent(groupName);
+            }
+        }
+        // Return the main group if no specific group could be found.
+        if (targetGroup == null) {
+            targetGroup = getMainGroupPageComponent();
+        }
+        return targetGroup;
+    }
+    
+    /**
+     * Method to find the group page component descriptor where the given page
+     * component descriptor belongs to.
+     * 
+     * @param pageComponentDescriptor
+     *            Is the page component descriptor to lookup a group descriptor
+     *            for.
+     * @return Returns the found group page component descriptor.
+     */
+    protected GroupPageComponentDescriptor findTargetGroupDescriptor(
+        PageComponentDescriptor pageComponentDescriptor) {
+        GroupPageComponentDescriptor targetGroupDescriptor = null;
+        // If page component descriptor is a group descriptor, group can be 
+        // extracted.
+        if (pageComponentDescriptor instanceof GroupDescriptor) {
+            GroupDescriptor groupDescriptor
+                = (GroupDescriptor) pageComponentDescriptor;
+            
+            // Take the configured group if it exists.
+            String groupName = groupDescriptor.getConfiguredGroup();
+            if (StringUtils.hasLength(groupName)) {
+                targetGroupDescriptor 
+                    = getGroupPageComponentDescriptor(groupName);
+            }
+            // Otherwise take the preferred group.
+            if (targetGroupDescriptor == null) {
+                groupName = groupDescriptor.getPreferredGroup();
+                targetGroupDescriptor 
+                    = getGroupPageComponentDescriptor(groupName);
+            }
+        }
+        // Return the main group if no specific group descriptor could be found.
+        if (targetGroupDescriptor == null) {
+            targetGroupDescriptor = getMainGroupPageComponentDescriptor();
+        }
+        return targetGroupDescriptor;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -236,33 +317,68 @@ public class MultipleViewsApplicationPage extends AbstractApplicationPage
         PageComponentDescriptor pageComponentDescriptor) {
         PageComponent pageComponent;
         boolean isGroupComponentDesciptor 
-            = pageComponentDescriptor instanceof PageComponentDescriptorGroup;
+            = pageComponentDescriptor instanceof GroupPageComponentDescriptor;
         if (isGroupComponentDesciptor) {
-            PageComponentDescriptorGroup groupDescriptor 
-                = (PageComponentDescriptorGroup) pageComponentDescriptor;
-            String groupName = groupDescriptor.getPreferredGroup();
+            GroupPageComponentDescriptor groupPageComponentDescriptor 
+                = (GroupPageComponentDescriptor) pageComponentDescriptor;
+            
+            /**
+             * Create the group page component if it was not already created.
+             */
+            String groupName = groupPageComponentDescriptor.getId();
             pageComponent = getGroupPageComponent(groupName);
             if (pageComponent == null) {
                 GroupPageComponent groupPageComponent = (GroupPageComponent)
-                    internalCreatePageComponent(groupDescriptor);
+                    internalCreatePageComponent(groupPageComponentDescriptor);
                 setGroupPageComponent(groupName, groupPageComponent);
                 pageComponent = groupPageComponent;
             }
-        } else {
-            if (pageComponentDescriptor instanceof LayoutDescriptor) {
-                LayoutDescriptor layoutDescriptor 
-                    = (LayoutDescriptor) pageComponentDescriptor;
-                String groupName = layoutDescriptor.getPreferredGroup();
-                PageComponentDescriptorGroup groupDescriptor 
-                    = getGroupDescriptor(groupName);
-                if (groupDescriptor != null) {
-                    createPageComponent(groupDescriptor);
-                } else {
-                    CoreNotificationHelper.notifyMisconfiguration(
-                        "No page component descriptor group available for group"
-                        + "with name " + groupName + ".");
-                }
+            
+            /**
+             * Find the parent group page component descriptor for the given
+             * group page component descriptor.
+             */
+            GroupPageComponentDescriptor parentGroupPageComponentDescriptor 
+                = findTargetGroupDescriptor(groupPageComponentDescriptor);
+            if (parentGroupPageComponentDescriptor == null) {
+                CoreNotificationHelper.notifyMisconfiguration(
+                    "No parent group descriptor could be found for the group "
+                    + "page component descriptor with id " 
+                    + groupPageComponentDescriptor.getId() + ".");
             }
+            /**
+             * Only create the parent group page component if the parent group
+             * page component descriptor is not the same as the given group page
+             * component descriptor.
+             */
+            if (parentGroupPageComponentDescriptor 
+                != groupPageComponentDescriptor) {
+                createPageComponent(parentGroupPageComponentDescriptor);
+            }
+            
+        } else {
+            /**
+             * Get the group page component descriptor for the given page
+             * component descriptor.
+             */
+            GroupPageComponentDescriptor groupPageComponentDescriptor 
+                = findTargetGroupDescriptor(pageComponentDescriptor);
+            if (groupPageComponentDescriptor == null) {
+                CoreNotificationHelper.notifyMisconfiguration(
+                    "No group descriptor could be found for the "
+                    + "page component descriptor with id " 
+                    + pageComponentDescriptor.getId() + ".");
+            }
+            
+            /**
+             * Create the group page component.
+             */
+            createPageComponent(groupPageComponentDescriptor);
+            
+            /**
+             * Create the page component for the given page component
+             * descriptor.
+             */
             pageComponent 
                 = internalCreatePageComponent(pageComponentDescriptor);
         }
@@ -281,14 +397,12 @@ public class MultipleViewsApplicationPage extends AbstractApplicationPage
         PageComponent pageComponent 
             = pageComponentDescriptor.createPageComponent();
         configurePageComponent(pageComponent);
-
         /**
          * Trigger the createControl method of the PageComponent, so if a
          * PageComponentListener is added in the createControl method, the
          * componentOpened event is received.
          */
         pageComponent.getControl();
-        
         return pageComponent;
     }
     
@@ -317,70 +431,101 @@ public class MultipleViewsApplicationPage extends AbstractApplicationPage
      */
     public void addPageComponentDescriptor(
         PageComponentDescriptor pageComponentDescriptor) {
-        m_pageComponentDescriptors.add(pageComponentDescriptor);
-        List viewDescriptorIds = new ArrayList();
-        collectAllViews(pageComponentDescriptor, viewDescriptorIds);
-        Iterator it = viewDescriptorIds.iterator();
+        List leafDescriptors = new ArrayList();
+        initializeDescriptorsAndCollectLeafDescriptors(
+            null, pageComponentDescriptor, leafDescriptors);
+        Iterator it = leafDescriptors.iterator();
         while (it.hasNext()) {
-            String viewDescriptorId = (String) it.next();
-            addView(viewDescriptorId);
+            PageComponentDescriptor leafDescriptor 
+                = (PageComponentDescriptor) it.next();
+            String leafDescriptorId = leafDescriptor.getId();
+            addView(leafDescriptorId);
         }
     }
     
     /**
-     * Method to collect all views of a page component descriptor. Currently
-     * only <code>PageComponentDescriptorGroup</code> and
-     * <code>ViewDescriptor</code> classes are allowed. Subclass this method
-     * for other types.
+     * Method to initialize the given page component descriptor recursivly and
+     * collect all leaf page component descriptor ids.
      * 
+     * @param parentPageComponentDescriptor
+     *            Is the parent page component descriptor of the given page
+     *            component descriptor.
      * @param pageComponentDescriptor
      *            Is the page component descriptor to handle.
-     * @param viewDescriptorIds
-     *            Is the list where to put all found view descriptor ids.
+     * @param leafDescriptors
+     *            Is the list where to put all found page component descriptors
+     *            that are not a group page component descriptor.
      */
-    protected void collectAllViews(
+    protected void initializeDescriptorsAndCollectLeafDescriptors(
+        GroupPageComponentDescriptor parentPageComponentDescriptor,
         PageComponentDescriptor pageComponentDescriptor, 
-        List viewDescriptorIds) {
+        final List leafDescriptors) {
+        
         Reject.ifNull(pageComponentDescriptor);
-        if (pageComponentDescriptor instanceof PageComponentDescriptorGroup) {
-            PageComponentDescriptorGroup groupDescriptor
-                = (PageComponentDescriptorGroup) pageComponentDescriptor;
+        Reject.ifNull(leafDescriptors);
+        
+        setInitialGroup(
+            parentPageComponentDescriptor, pageComponentDescriptor);
+        
+        if (pageComponentDescriptor instanceof GroupPageComponentDescriptor) {
+            GroupPageComponentDescriptor groupPageComponentDescriptor
+                = (GroupPageComponentDescriptor) pageComponentDescriptor;
             
-            String groupName = groupDescriptor.getPreferredGroup();
-            if (getGroupDescriptor(groupName) == null) {
-                setGroupDescriptor(groupName, groupDescriptor);
+            /**
+             * Register group page component descriptor. This can be done only 
+             * once per group name.
+             */
+            String groupName = groupPageComponentDescriptor.getId();
+            if (getGroupPageComponentDescriptor(groupName) == null) {
+                setGroupPageComponentDescriptor(groupName, 
+                    groupPageComponentDescriptor);
             } else {
                 CoreNotificationHelper.notifyMisconfiguration(
                     "Group name '" + groupName + "' must only be used once.");
             }
             
+            /**
+             * Invoke the current method for all child page components of the 
+             * group page component descriptor.
+             */
             PageComponentDescriptor[] descriptors 
-                = groupDescriptor.getPageComponentDescriptors();
-            for (int i = 0; i < descriptors.length; i++) {
-                PageComponentDescriptor descriptor = descriptors[i];
-                collectAllViews(descriptor, viewDescriptorIds);
+                = groupPageComponentDescriptor.getPageComponentDescriptors();
+            if (descriptors != null) {
+                for (int i = 0; i < descriptors.length; i++) {
+                    PageComponentDescriptor childPageComponentDescriptor 
+                        = descriptors[i];
+                    initializeDescriptorsAndCollectLeafDescriptors(
+                        groupPageComponentDescriptor, 
+                        childPageComponentDescriptor, leafDescriptors);
+                }
             }
-        } else if (pageComponentDescriptor instanceof ViewDescriptor) {
-            String viewDescriptorId = pageComponentDescriptor.getId();
-            viewDescriptorIds.add(viewDescriptorId);
         } else {
-            CoreNotificationHelper.notifyMisconfiguration(
-                "Unsupported type of page component descriptor '" 
-                + pageComponentDescriptor.getClass().getName() + "'.");
+            /**
+             * Add the non group page component descriptor to the leaf desriptor
+             * list.
+             */
+            leafDescriptors.add(pageComponentDescriptor);
         }
     }
 
     /**
-     * @return Returns the layout manager for this page.
+     * Set the configured group of the child page component descriptor if it is
+     * a group descriptor and the group page component descriptor is not null.
+     * 
+     * @param groupPageComponentDescriptor
+     *            Is the group where the child must be in.
+     * @param childPageComponentDescriptor
+     *            Is the child where the group name must be set.
      */
-    public final LayoutManager getLayoutManager() {
-        return m_layoutManager;
-    }
-
-    /**
-     * @param layoutManager Is the layout manager to set.
-     */
-    public final void setLayoutManager(LayoutManager layoutManager) {
-        m_layoutManager = layoutManager;
+    protected void setInitialGroup(
+        GroupPageComponentDescriptor groupPageComponentDescriptor, 
+        PageComponentDescriptor childPageComponentDescriptor) {
+        if (groupPageComponentDescriptor != null 
+            && childPageComponentDescriptor instanceof GroupDescriptor) {
+            GroupDescriptor groupDescriptor
+                = (GroupDescriptor) childPageComponentDescriptor;
+            String configuredGroupName = groupPageComponentDescriptor.getId();
+            groupDescriptor.setConfiguredGroup(configuredGroupName);
+        }
     }
 }
