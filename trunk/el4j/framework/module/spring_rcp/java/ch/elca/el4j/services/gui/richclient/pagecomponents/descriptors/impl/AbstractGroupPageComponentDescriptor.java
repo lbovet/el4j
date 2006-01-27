@@ -24,6 +24,7 @@ import org.springframework.richclient.application.PageComponentDescriptor;
 import org.springframework.richclient.core.LabeledObjectSupport;
 import org.springframework.util.StringUtils;
 
+import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.GroupDescriptor;
 import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.LayoutDescriptor;
 
 /**
@@ -38,10 +39,10 @@ import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.LayoutDes
  *
  * @author Martin Zeltner (MZE)
  */
-public abstract class AbstractPageComponentDescriptor 
+public abstract class AbstractGroupPageComponentDescriptor 
     extends LabeledObjectSupport 
     implements PageComponentDescriptor, BeanNameAware, ApplicationContextAware, 
-        InitializingBean, LayoutDescriptor {
+        InitializingBean, LayoutDescriptor, GroupDescriptor {
     /**
      * Is the id of this page component descriptor.
      */
@@ -61,7 +62,12 @@ public abstract class AbstractPageComponentDescriptor
      * Is the name of the preferred group. 
      */
     private String m_preferredGroup;
-    
+
+    /**
+     * Is the name of the configured group. 
+     */
+    private String m_configuredGroup;
+
     /**
      * Is the application context this bean has been created with.
      */
@@ -131,6 +137,20 @@ public abstract class AbstractPageComponentDescriptor
     }
 
     /**
+     * @return Returns the configuredGroup.
+     */
+    public final String getConfiguredGroup() {
+        return m_configuredGroup;
+    }
+
+    /**
+     * @param configuredGroup The configuredGroup to set.
+     */
+    public final void setConfiguredGroup(String configuredGroup) {
+        m_configuredGroup = configuredGroup;
+    }
+
+    /**
      * @return Returns the applicationContext.
      */
     public final ApplicationContext getApplicationContext() {
@@ -165,13 +185,5 @@ public abstract class AbstractPageComponentDescriptor
     /**
      * {@inheritDoc}
      */
-    public void afterPropertiesSet() throws Exception {
-        if (!StringUtils.hasText(getPreferredGroup())) {
-            if (StringUtils.hasText(getId())) {
-                setPreferredGroup(getId());
-            } else {
-                setPreferredGroup(LayoutDescriptor.DEFAULT_GROUP);
-            }
-        }
-    }
+    public void afterPropertiesSet() throws Exception { }
 }

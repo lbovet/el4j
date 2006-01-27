@@ -20,6 +20,7 @@ import javax.swing.JComponent;
 
 import org.springframework.richclient.application.PageComponent;
 
+import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.GroupDescriptor;
 import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.LayoutDescriptor;
 
 /**
@@ -34,7 +35,8 @@ import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.LayoutDes
  *
  * @author Martin Zeltner (MZE)
  */
-public interface GroupPageComponent extends PageComponent, LayoutDescriptor {
+public interface GroupPageComponent extends PageComponent, LayoutDescriptor, 
+    GroupDescriptor {
     /**
      * Adds the given page component to the group page component.
      * 
@@ -42,6 +44,16 @@ public interface GroupPageComponent extends PageComponent, LayoutDescriptor {
      * @return Returns the really added <code>JComponent</code>.
      */
     public JComponent addPageComponent(PageComponent pageComponent);
+    
+    /**
+     * Checks if the group contains the given page component.
+     * 
+     * @param pageComponent
+     *            Is the page component that could be in group.
+     * @return Returns <code>true</code> if the given page component is in
+     *         group.
+     */
+    public boolean containsPageComponent(PageComponent pageComponent);
     
     /**
      * Removes the given page component from the group page component.

@@ -16,6 +16,7 @@
  */
 package ch.elca.el4j.services.gui.richclient.pages.descriptors;
 
+import java.awt.BorderLayout;
 import java.awt.LayoutManager;
 
 import org.springframework.beans.factory.BeanNameAware;
@@ -26,6 +27,8 @@ import org.springframework.richclient.application.PageLayoutBuilder;
 import org.springframework.richclient.core.LabeledObjectSupport;
 import org.springframework.util.StringUtils;
 
+import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.GroupDescriptor;
+import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.DefaultGroupPageComponentDescriptor;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 
 /**
@@ -51,7 +54,7 @@ public class MultipleViewsPageDescriptor extends LabeledObjectSupport
     /**
      * Layout manager to layout views on page.
      */
-    private LayoutManager m_layoutManager;
+    private LayoutManager m_layoutManager = new BorderLayout();
 
     /**
      * Is the id of this page.
@@ -74,17 +77,24 @@ public class MultipleViewsPageDescriptor extends LabeledObjectSupport
             = (ch.elca.el4j.services.gui.richclient.pages.PageLayoutBuilder)
                 oldPageLayoutBuilder;
         
+        DefaultGroupPageComponentDescriptor mainGroupPageComponentDescriptor 
+            = new DefaultGroupPageComponentDescriptor();
         if (m_layoutManager != null) {
-            pageLayout.setLayoutManager(m_layoutManager);
+            mainGroupPageComponentDescriptor.setLayoutManager(m_layoutManager);
+        }
+        mainGroupPageComponentDescriptor.setPageComponentDescriptors(
+            m_pageComponentDescriptors);
+        mainGroupPageComponentDescriptor.setId(GroupDescriptor.DEFAULT_GROUP);
+        
+        try {
+            mainGroupPageComponentDescriptor.afterPropertiesSet();
+        } catch (Exception e) {
+            CoreNotificationHelper.notifyMisconfiguration(
+                "Could not create properly the root group page component "
+                + "descriptor. Have a look at the appended exception.", e);
         }
         
-        if (m_pageComponentDescriptors != null) {
-            for (int i = 0; i < m_pageComponentDescriptors.length; i++) {
-                PageComponentDescriptor pageComponentDescriptor 
-                    = m_pageComponentDescriptors[i];
-                pageLayout.addPageComponentDescriptor(pageComponentDescriptor);
-            }
-        }
+        pageLayout.addPageComponentDescriptor(mainGroupPageComponentDescriptor);
     }
 
     /**
@@ -110,6 +120,8 @@ public class MultipleViewsPageDescriptor extends LabeledObjectSupport
     }
 
     /**
+     * <code>BorderLayout</code> is the default layout manager.
+     * 
      * @param layoutManager The layoutManager to set.
      */
     public final void setLayoutManager(LayoutManager layoutManager) {

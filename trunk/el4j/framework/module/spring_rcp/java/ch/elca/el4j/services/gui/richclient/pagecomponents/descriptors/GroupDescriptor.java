@@ -17,7 +17,10 @@
 package ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors;
 
 /**
- * Interface for a layout descriptor.
+ * Interface for a group descriptor. The configured group is the one that will 
+ * set by configuration, so it is the initial state. The preferred group will 
+ * normally be taken if the configured group is not set, i.e. if the page 
+ * component was not initially linked to a page.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$Source$",
@@ -28,17 +31,24 @@ package ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors;
  *
  * @author Martin Zeltner (MZE)
  */
-public interface LayoutDescriptor {
+public interface GroupDescriptor {
     /**
-     * Preferred position argument. For the border layout this could be the 
-     * north, south, west, east and center argument.
-     * 
-     * @return Returns the prefered position argument.
+     * Is the name of the default group.
      */
-    public Object getPreferredPositionArgument();
+    public static final String DEFAULT_GROUP = "rootGroup";
+
+    /**
+     * @return Returns the name of the preferred group.
+     */
+    public String getPreferredGroup();
     
     /**
-     * @return Returns the preferred position index.
+     * @return Returns the name of the configured group.
      */
-    public Integer getPreferredPositionIndex();
+    public String getConfiguredGroup();
+    
+    /**
+     * @param group Is the configured group name to set. 
+     */
+    public void setConfiguredGroup(String group);
 }

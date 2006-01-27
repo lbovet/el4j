@@ -22,7 +22,7 @@ import java.awt.LayoutManager;
 import org.springframework.richclient.application.PageComponent;
 import org.springframework.richclient.application.PageComponentDescriptor;
 
-import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.PageComponentDescriptorGroup;
+import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.GroupPageComponentDescriptor;
 import ch.elca.el4j.services.gui.richclient.pagecomponents.impl.JPanelGroupPageComponent;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 
@@ -38,9 +38,9 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  *
  * @author Martin Zeltner (MZE)
  */
-public class DefaultPageComponentDescriptorGroup 
-    extends AbstractPageComponentDescriptor
-    implements PageComponentDescriptorGroup {
+public class DefaultGroupPageComponentDescriptor 
+    extends AbstractGroupPageComponentDescriptor
+    implements GroupPageComponentDescriptor {
     
     /**
      * Are the page component descriptors.
@@ -101,11 +101,8 @@ public class DefaultPageComponentDescriptorGroup
             getLayoutManager(), "layoutManager", this);
         PageComponentDescriptor[] pageComponentDescriptors 
             = getPageComponentDescriptors();
-        if (pageComponentDescriptors == null 
-            || pageComponentDescriptors.length <= 0) {
-            CoreNotificationHelper.notifyMisconfiguration(
-                "Property pageComponentDescriptors must have minimum one page "
-                + "component descriptor id.");
+        if (pageComponentDescriptors == null) {
+            pageComponentDescriptors = new PageComponentDescriptor[0];
         }
     }
 }
