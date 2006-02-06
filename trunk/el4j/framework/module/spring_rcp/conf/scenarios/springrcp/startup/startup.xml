@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+	<bean id="splashScreen" 
+		class="org.springframework.richclient.application.SplashScreen" 
+		singleton="false">
+		<property name="imageResourcePath">
+			<value>/images/springrcp-splash-screen.gif</value>
+		</property>
+	</bean>
+</beans>
