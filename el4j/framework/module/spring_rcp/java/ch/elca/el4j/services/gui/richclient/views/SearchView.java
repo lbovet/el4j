@@ -19,6 +19,9 @@ package ch.elca.el4j.services.gui.richclient.views;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -118,7 +121,7 @@ public class SearchView extends AbstractView {
     /**
      * {@inheritDoc}
      */
-    protected JComponent createControlOnce() {
+    protected JComponent createControl() {
         m_control = getComponentFactory().createPanel(new SpringLayout());
         m_control.add(getSearchComponent());
         m_control.add(getButtonComponent());
@@ -281,17 +284,25 @@ public class SearchView extends AbstractView {
     public void search() {
         if (isControlCreated()) {
             m_formModel.commit();
-            QueryObject queryObject = new QueryObject();
+            Map queryObjects = new HashMap();
             DynaBean dynaBean = (DynaBean) m_formModel.getFormObject();
             for (int i = 0; i < m_searchItems.length; i++) {
                 AbstractSearchItem searchItem = m_searchItems[i];
                 String propertyName = getPropertyName(searchItem);
                 Object value = dynaBean.get(propertyName);
                 AbstractCriteria[] criterias = searchItem.getCriterias(value);
+                Class targetBeanClass = searchItem.getTargetBeanClass();
+                QueryObject queryObject 
+                    = (QueryObject) queryObjects.get(targetBeanClass);
+                if (queryObject == null) {
+                    queryObject = new QueryObject(targetBeanClass);
+                    queryObjects.put(targetBeanClass, queryObject);
+                }
                 queryObject.addCriterias(criterias);
             }
+            Collection queryCollection = queryObjects.values();
             QueryObjectEvent objectQueryEvent 
-                = new QueryObjectEvent(this, queryObject);
+                = new QueryObjectEvent(this, queryCollection);
             getApplicationEventPublisher().publishEvent(objectQueryEvent);
         }
     }
