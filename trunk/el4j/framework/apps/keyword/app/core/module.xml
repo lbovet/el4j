@@ -21,8 +21,9 @@
         <attribute name="commons-attributes.enable" value="true"/>
         
         <!-- Module dependencies -->
-	<dependency module="module-core"/>
-	<dependency module="module-ibatis"/>
+        <dependency module="module-core"/>
+        <dependency module="module-ibatis"/>
+        <dependency module="module-env"/>
     </module>
     
 </ant:project>
