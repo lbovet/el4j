@@ -19,8 +19,13 @@ package ch.elca.el4j.services.gui.richclient.views;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -39,11 +44,14 @@ import org.springframework.richclient.table.TableUtils;
 
 import ch.elca.el4j.services.gui.richclient.executors.AbstractBeanExecutor;
 import ch.elca.el4j.services.gui.richclient.models.BeanTableModel;
-import ch.elca.el4j.services.gui.swing.table.LineSelectionTableCellRenderer;
+import ch.elca.el4j.services.gui.richclient.presenters.BeanPresenter;
+import ch.elca.el4j.services.gui.swing.table.BooleanNoFocusTableCellRenderer;
+import ch.elca.el4j.services.gui.swing.table.DateNoFocusTableCellRenderer;
+import ch.elca.el4j.services.gui.swing.table.DefaultNoFocusTableCellRenderer;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 
 /**
- * Base class for bean views.
+ * Table view for beans.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$Source$",
@@ -54,7 +62,8 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  *
  * @author Martin Zeltner (MZE)
  */
-public abstract class AbstractBeanView extends AbstractView {
+public abstract class AbstractBeanTableView extends AbstractView 
+    implements BeanPresenter {
     /**
      * List with the displayed data.
      */
@@ -84,14 +93,14 @@ public abstract class AbstractBeanView extends AbstractView {
     /**
      * Is the executor from executors above to change bean properties.
      */
-    private AbstractBeanExecutor m_cachedBeanPropertiesExecutor;
+    private AbstractBeanExecutor m_cachedBeanPropertiesExecutor = null;
     
     /**
      * {@inheritDoc}
      * 
      * Returns the root component for this view.
      */
-    protected JComponent createControlOnce() {
+    protected JComponent createControl() {
         JPanel p = new JPanel(new BorderLayout());
         initializeSortedBeanTable();
         JScrollPane scrollableTable = new JScrollPane(getBeanTable());
@@ -114,11 +123,27 @@ public abstract class AbstractBeanView extends AbstractView {
         TableUtils.attachSorter(m_beanTable);
         m_sortableTableModel = (SortableTableModel) m_beanTable.getModel();
         
-        // Line selection renderer so clicked cells will not be specially
-        // hovered.
-        LineSelectionTableCellRenderer lineSelectionRenderer 
-            = new LineSelectionTableCellRenderer();
-        m_beanTable.setDefaultRenderer(Object.class, lineSelectionRenderer);
+        // Install default, not focusable renderers.
+        m_beanTable.setDefaultRenderer(Object.class, 
+            new DefaultNoFocusTableCellRenderer());
+        m_beanTable.setDefaultRenderer(Boolean.class, 
+            new BooleanNoFocusTableCellRenderer());
+        m_beanTable.setDefaultRenderer(boolean.class, 
+            new BooleanNoFocusTableCellRenderer());
+        m_beanTable.setDefaultRenderer(Date.class, 
+            new DateNoFocusTableCellRenderer(
+                DateFormat.getDateInstance(DateFormat.SHORT)));
+        m_beanTable.setDefaultRenderer(java.sql.Date.class, 
+            new DateNoFocusTableCellRenderer(
+                DateFormat.getDateInstance(DateFormat.SHORT)));
+        m_beanTable.setDefaultRenderer(Timestamp.class, 
+            new DateNoFocusTableCellRenderer(
+                DateFormat.getDateTimeInstance(
+                    DateFormat.SHORT, DateFormat.SHORT)));
+        m_beanTable.setDefaultRenderer(Time.class, 
+            new DateNoFocusTableCellRenderer(
+                DateFormat.getTimeInstance(DateFormat.SHORT)));
+        
 
         // Calculate prefered column sizes.
         TableUtils.sizeColumnsToFitRowData(m_beanTable);
@@ -148,7 +173,7 @@ public abstract class AbstractBeanView extends AbstractView {
                 if (e.getClickCount() == 2 
                     && e.getButton() == MouseEvent.BUTTON1) {
                     AbstractBeanExecutor executor = getPropertiesExecutor();
-                    if (executor.isEnabled()) {
+                    if (executor != null && executor.isEnabled()) {
                         executor.execute();
                     }
                 }
@@ -200,7 +225,7 @@ public abstract class AbstractBeanView extends AbstractView {
         for (int i = 0; m_beanExecutors != null 
             && i < m_beanExecutors.length; i++) {
             AbstractBeanExecutor executor = m_beanExecutors[i];
-            executor.setBeanView(this);
+            executor.setBeanPresenter(this);
         }
     }
     
@@ -254,8 +279,7 @@ public abstract class AbstractBeanView extends AbstractView {
     }
 
     /**
-     * @return Returns the selected object or <code>null</code>. If more than
-     *         one object is selected also <code>null</code> will be returned.
+     * {@inheritDoc}
      */
     public Object getSelectedBean() {
         Object result = null;
@@ -267,7 +291,7 @@ public abstract class AbstractBeanView extends AbstractView {
     }
     
     /**
-     * @return Returns the selected objects or <code>null</code>.
+     * {@inheritDoc}
      */
     public Object[] getSelectedBeans() {
         Object[] result = null;
@@ -282,7 +306,7 @@ public abstract class AbstractBeanView extends AbstractView {
     }
     
     /**
-     * Clears selection.
+     * {@inheritDoc}
      */
     public void clearSelection() {
         if (isControlCreated()) {
@@ -292,9 +316,9 @@ public abstract class AbstractBeanView extends AbstractView {
     }
     
     /**
-     * Selects all rows.
+     * {@inheritDoc}
      */
-    public void selectAll() {
+    public void selectAllBeans() {
         if (isControlCreated()) {
             m_beanTable.requestFocusInWindow();
             m_beanTable.selectAll();
@@ -302,10 +326,7 @@ public abstract class AbstractBeanView extends AbstractView {
     }
     
     /**
-     * Additionally selects given bean.
-     * 
-     * @param bean Is the bean to select additionally to the existing selection.
-     * @return Returns <code>true</code> if bean could be successfully selected.
+     * {@inheritDoc}
      */
     public boolean selectBeanAdditionally(Object bean) {
         boolean success = false;
@@ -323,11 +344,7 @@ public abstract class AbstractBeanView extends AbstractView {
     }
     
     /**
-     * Focus the given bean.
-     * 
-     * @param bean Is the bean to set focus on.
-     * @return Returns <code>true</code> if the bean could be successfully
-     *         focused.
+     * {@inheritDoc}
      */
     public boolean focusBean(Object bean) {
         boolean success = false;
@@ -349,11 +366,7 @@ public abstract class AbstractBeanView extends AbstractView {
     }
     
     /**
-     * Adds the given bean.
-     * 
-     * @param bean Is the bean to add.
-     * @return Returns <code>true</code> if the given bean could be successfully
-     *         added to list.
+     * {@inheritDoc}
      */
     public boolean addBean(Object bean) {
         boolean success = false;
@@ -366,11 +379,20 @@ public abstract class AbstractBeanView extends AbstractView {
     }
 
     /**
-     * Replaces the old with the new bean if the old bean exists in view.
-     * 
-     * @param oldBean Is the old bean that exists in data list.
-     * @param newBean Is the new bean that replaces the old bean.
-     * @return Return <code>true</code> if bean could be successfully replaced.
+     * {@inheritDoc}
+     */
+    public boolean setBeans(Collection beans) {
+        boolean listChanged = false;
+        getDataList().clear();
+        if (beans != null) {
+            listChanged = getDataList().addAll(beans);
+        }
+        getBeanTableModel().fireTableDataChanged();
+        return listChanged;
+    }
+    
+    /**
+     * {@inheritDoc}
      */
     public boolean replaceBean(Object oldBean, Object newBean) {
         boolean success = false;
@@ -387,10 +409,7 @@ public abstract class AbstractBeanView extends AbstractView {
     }
 
     /**
-     * Removes given bean from data list.
-     * 
-     * @param bean Is the bean to remove.
-     * @return Returns <code>true</code> if bean could be successfully removed.
+     * {@inheritDoc}
      */
     public boolean removeBean(Object bean) {
         boolean success = false;
@@ -403,11 +422,7 @@ public abstract class AbstractBeanView extends AbstractView {
     }
     
     /**
-     * Removes given beans from data list.
-     * 
-     * @param beans Are the beans to remove.
-     * @return Returns <code>true</code> if all beans could be successfully 
-     *         removed.
+     * {@inheritDoc}
      */
     public boolean removeBeans(Object[] beans) {
         boolean success = false;
