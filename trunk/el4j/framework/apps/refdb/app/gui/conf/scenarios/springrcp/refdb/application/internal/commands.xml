@@ -26,7 +26,7 @@
     <!-- 
         Is the application's menu bar
         
-        This bean with id "windowCommandManager" is looked up by the 
+        This bean with id "menuBar" is looked up by the 
         class DefaultApplicationLifecycleAdvisor.
     -->
     <bean id="menuBar" 
@@ -44,7 +44,7 @@
     <!-- 
         Is the application's tool bar
         
-        This bean with id "windowCommandManager" is looked up by the 
+        This bean with id "toolBar" is looked up by the 
         class DefaultApplicationLifecycleAdvisor.
     -->
     <bean id="toolBar" 
