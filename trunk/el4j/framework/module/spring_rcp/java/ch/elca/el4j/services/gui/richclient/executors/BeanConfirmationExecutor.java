@@ -16,6 +16,8 @@
  */
 package ch.elca.el4j.services.gui.richclient.executors;
 
+import org.springframework.richclient.application.PageComponent;
+
 import ch.elca.el4j.services.gui.richclient.dialogs.AbstractBeanConfirmationDialog;
 import ch.elca.el4j.services.gui.richclient.utils.MessageUtils;
 
@@ -37,7 +39,7 @@ public class BeanConfirmationExecutor extends AbstractBeanDialogExecutor {
      * {@inheritDoc}
      */
     public void execute() {
-        Object[] beans = getBeanView().getSelectedBeans();
+        Object[] beans = getBeanPresenter().getSelectedBeans();
         if (beans == null || beans.length == 0) {
             return;
         }
@@ -45,15 +47,16 @@ public class BeanConfirmationExecutor extends AbstractBeanDialogExecutor {
         AbstractBeanConfirmationDialog dialog
             = (AbstractBeanConfirmationDialog) getApplicationContext().getBean(
                 getDialogBeanName());
-        dialog.setParent(getBeanView().getContext().getWindow().getControl());
-        dialog.setBeanView(getBeanView());
+        PageComponent pageComponent = (PageComponent) getBeanPresenter();
+        dialog.setParent(pageComponent.getContext().getWindow().getControl());
+        dialog.setBeanPresenter(getBeanPresenter());
         
         String messageCodePrefix = beans.length == 1 
-            ? "singleBean" : "multipleBeans";
+            ? "singlebean" : "multiplebeans";
         String confirmationMessage = MessageUtils.getMessage(
-            dialog.getPropertiesId(), messageCodePrefix + "Message");
+            dialog.getPropertiesId(), messageCodePrefix + ".message");
         String title = MessageUtils.getMessage(
-            dialog.getPropertiesId(), messageCodePrefix + "Title");
+            dialog.getPropertiesId(), messageCodePrefix + ".title");
         
         
         dialog.setConfirmationMessage(confirmationMessage);
@@ -66,6 +69,6 @@ public class BeanConfirmationExecutor extends AbstractBeanDialogExecutor {
      * {@inheritDoc}
      */
     public void updateState() {
-        setEnabled(getBeanView().getSelectedBeans() != null);
+        setEnabled(getBeanPresenter().getSelectedBeans() != null);
     }
 }

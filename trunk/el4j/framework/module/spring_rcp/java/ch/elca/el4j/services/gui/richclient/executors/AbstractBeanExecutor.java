@@ -23,7 +23,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.richclient.command.support.AbstractActionCommandExecutor;
 
-import ch.elca.el4j.services.gui.richclient.views.AbstractBeanView;
+import ch.elca.el4j.services.gui.richclient.presenters.BeanPresenter;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 
 /**
@@ -47,9 +47,9 @@ public abstract class AbstractBeanExecutor extends AbstractActionCommandExecutor
     private String m_commandId;
 
     /**
-     * Is the view where this executor is used.
+     * Is the presenter where this executor is used.
      */
-    private AbstractBeanView m_beanView;
+    private BeanPresenter m_beanPresenter;
 
     /**
      * Name of this bean.
@@ -81,17 +81,17 @@ public abstract class AbstractBeanExecutor extends AbstractActionCommandExecutor
     }
 
     /**
-     * @return Returns the beanView.
+     * @return Returns the beanPresenter.
      */
-    public final AbstractBeanView getBeanView() {
-        return m_beanView;
+    public final BeanPresenter getBeanPresenter() {
+        return m_beanPresenter;
     }
 
     /**
-     * @param beanView The beanView to set.
+     * @param beanPresenter The beanPresenter to set.
      */
-    public final void setBeanView(AbstractBeanView beanView) {
-        m_beanView = beanView;
+    public final void setBeanPresenter(BeanPresenter beanPresenter) {
+        m_beanPresenter = beanPresenter;
     }
 
     /**

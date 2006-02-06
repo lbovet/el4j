@@ -24,7 +24,7 @@ import org.springframework.richclient.dialog.TitledPageApplicationDialog;
 
 import ch.elca.el4j.services.gui.richclient.Constants;
 import ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm;
-import ch.elca.el4j.services.gui.richclient.views.AbstractBeanView;
+import ch.elca.el4j.services.gui.richclient.presenters.BeanPresenter;
 
 /**
  * Abstract application dialog with title used for beans.
@@ -53,9 +53,9 @@ public abstract class AbstractBeanTitledPageApplicationDialog
     private BeanPropertiesForm[] m_propertiesForms;
 
     /**
-     * Reference to the bean view.
+     * Reference to the bean presenter.
      */
-    private AbstractBeanView m_beanView;
+    private BeanPresenter m_beanPresenter;
 
     /**
      * Is the id used to get properties like labels for the created form.
@@ -107,17 +107,17 @@ public abstract class AbstractBeanTitledPageApplicationDialog
     protected abstract boolean onFinishAfterCommit(Object currentBean);
 
     /**
-     * @return Returns the beanView.
+     * @return Returns the beanPresenter.
      */
-    public final AbstractBeanView getBeanView() {
-        return m_beanView;
+    public final BeanPresenter getBeanPresenter() {
+        return m_beanPresenter;
     }
 
     /**
-     * @param beanView The beanView to set.
+     * @param beanPresenter The beanPresenter to set.
      */
-    public final void setBeanView(AbstractBeanView beanView) {
-        m_beanView = beanView;
+    public final void setBeanPresenter(BeanPresenter beanPresenter) {
+        m_beanPresenter = beanPresenter;
     }
 
     /**

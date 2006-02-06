@@ -17,6 +17,7 @@
 package ch.elca.el4j.services.gui.richclient.executors;
 
 import org.springframework.binding.form.HierarchicalFormModel;
+import org.springframework.richclient.application.PageComponent;
 import org.springframework.richclient.form.FormModelHelper;
 import org.springframework.richclient.wizard.WizardDialog;
 
@@ -62,8 +63,9 @@ public class BeanWizardExecutor extends AbstractBeanDialogFormExecutor {
         
         // Get the wizard dialog from wizard.
         WizardDialog wizardDialog = wizard.getWizardDialog();
+        PageComponent pageComponent = (PageComponent) getBeanPresenter();
         wizardDialog.setParent(
-            getBeanView().getContext().getWindow().getControl());
+            pageComponent.getContext().getWindow().getControl());
         
         // Show the wizard dialog.
         wizardDialog.showDialog();
@@ -101,7 +103,7 @@ public class BeanWizardExecutor extends AbstractBeanDialogFormExecutor {
         BeanPropertiesForm[] propertiesForms) {
         AbstractBeanWizard wizard 
             = (AbstractBeanWizard) createDialog();
-        wizard.setBeanView(getBeanView());
+        wizard.setBeanPresenter(getBeanPresenter());
         wizard.setRootFormModel(rootFormModel);
         wizard.setPropertiesForms(propertiesForms);
         return wizard;

@@ -19,6 +19,7 @@ package ch.elca.el4j.services.gui.richclient.executors;
 import org.springframework.binding.form.FormModel;
 import org.springframework.binding.form.HierarchicalFormModel;
 import org.springframework.binding.form.ValidatingFormModel;
+import org.springframework.richclient.application.PageComponent;
 import org.springframework.richclient.command.support.GlobalCommandIds;
 import org.springframework.richclient.dialog.AbstractDialogPage;
 import org.springframework.richclient.dialog.FormBackedDialogPage;
@@ -48,7 +49,7 @@ public class BeanPropertiesExecutor extends AbstractBeanDialogFormExecutor {
      */
     public void execute() {
         // Get bean to edit.
-        Object bean = getBeanView().getSelectedBean();
+        Object bean = getBeanPresenter().getSelectedBean();
         
         // Do nothing if no bean is selected.
         if (bean == null) {
@@ -137,9 +138,10 @@ public class BeanPropertiesExecutor extends AbstractBeanDialogFormExecutor {
         AbstractDialogPage rootDialogPage) {
         
         appDialog.setDialogPage(rootDialogPage);
+        PageComponent pageComponent = (PageComponent) getBeanPresenter();
         appDialog.setParent(
-            getBeanView().getContext().getWindow().getControl());
-        appDialog.setBeanView(getBeanView());
+            pageComponent.getContext().getWindow().getControl());
+        appDialog.setBeanPresenter(getBeanPresenter());
         appDialog.setRootFormModel(rootFormModel);
         appDialog.setPropertiesForms(propertiesForms);
 
@@ -168,6 +170,6 @@ public class BeanPropertiesExecutor extends AbstractBeanDialogFormExecutor {
      * {@inheritDoc}
      */
     public void updateState() {
-        setEnabled(getBeanView().getSelectedBean() != null);
+        setEnabled(getBeanPresenter().getSelectedBean() != null);
     }
 }
