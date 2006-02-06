@@ -24,7 +24,8 @@ import ch.elca.el4j.services.search.criterias.Criteria;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
- * Is the object to execute queries.
+ * Object to holds criterias to execute queries. A query object can be specified
+ * for exactly one class.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$Source$",
@@ -37,9 +38,37 @@ import ch.elca.el4j.util.codingsupport.Reject;
  */
 public class QueryObject implements Serializable {
     /**
+     * The bean class the query object is for.
+     */
+    private Class m_beanClass;
+    
+    /**
      * Are the criterias for this query.
      */
     private List m_criterias = new ArrayList();
+    
+    /**
+     * Specifies a general query object.
+     */
+    public QueryObject() {
+        this(null);
+    }
+
+    /**
+     * Specifies the query object for a specific class.
+     * 
+     * @param beanClass Is the bean class this query object is made for.
+     */
+    public QueryObject(Class beanClass) {
+        m_beanClass = beanClass;
+    }
+
+    /**
+     * @return Returns the bean class this query object is made for.
+     */
+    public Class getBeanClass() {
+        return m_beanClass;
+    }
     
     /**
      * Adds the given criteria.
