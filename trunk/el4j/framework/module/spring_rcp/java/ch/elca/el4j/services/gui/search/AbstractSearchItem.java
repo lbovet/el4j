@@ -37,6 +37,11 @@ import ch.elca.el4j.services.search.criterias.AbstractCriteria;
 public abstract class AbstractSearchItem 
     implements InitializingBean, BeanNameAware {
     /**
+     * Is the bean class where the target property is.
+     */
+    private Class m_targetBeanClass;
+    
+    /**
      * Is the name of the property that is the target for searchs.
      */
     private String m_targetProperty;
@@ -74,6 +79,20 @@ public abstract class AbstractSearchItem
      * @return Returns the criterias for this search item.
      */
     public abstract AbstractCriteria[] getCriterias(Object[] values);
+
+    /**
+     * @return Returns the targetBeanClass.
+     */
+    public final Class getTargetBeanClass() {
+        return m_targetBeanClass;
+    }
+
+    /**
+     * @param targetBeanClass The targetBeanClass to set.
+     */
+    public final void setTargetBeanClass(Class targetBeanClass) {
+        m_targetBeanClass = targetBeanClass;
+    }
 
     /**
      * @return Returns the targetProperty.
