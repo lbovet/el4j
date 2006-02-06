@@ -57,8 +57,8 @@ public abstract class AbstractTestCaseBase extends TestCase {
     private String[] m_includeConfigLocations = {
         "classpath:optional/interception/methodTracing.xml",
         "classpath*:mandatory/*.xml",
-        "classpath:scenarios/db/rawDatabase.xml",
-        "classpath:scenarios/dataaccess/ibatisSqlMaps.xml",
+        "classpath*:scenarios/db/raw/*.xml",
+        "classpath*:scenarios/dataaccess/ibatis/*.xml",
         "classpath:optional/interception/transactionCommonsAttributes.xml" };
 
     /**
