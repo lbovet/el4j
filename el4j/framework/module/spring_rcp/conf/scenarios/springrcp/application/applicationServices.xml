@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <!-- 
+        Sends all application events to every registered application listener.
+        Used views are registered application listeners. The bean with id 
+        "applicationEventMulticaster" is looked up by the application context.
+    -->
+    <bean id="applicationEventMulticaster"
+        class="org.springframework.context.event.SimpleApplicationEventMulticaster" />
+
+    <!--
+        Converter service.
+    -->
+    <bean id="conversionService" 
+        class="ch.elca.el4j.services.gui.richclient.converters.ExtendedConversionService">
+        <property name="converters">
+            <list>
+                <bean id="converterBooleanToText"
+                    class="ch.elca.el4j.services.gui.richclient.converters.BooleanToText">
+                </bean>
+                <bean id="converterTextToBoolean"
+                    class="ch.elca.el4j.services.gui.richclient.converters.TextToBoolean">
+                </bean>
+                <bean id="converterNumberToText"
+                    class="ch.elca.el4j.services.gui.richclient.converters.NumberToText">
+                    <constructor-arg ref="formatterLocator"/>
+                    <constructor-arg value="true"/>
+                </bean>
+                <bean id="converterTextToNumber"
+                    class="ch.elca.el4j.services.gui.richclient.converters.TextToNumber">
+                    <constructor-arg ref="formatterLocator"/>
+                    <constructor-arg value="true"/>
+                </bean>
+                <bean id="converterDateToText"
+                    class="ch.elca.el4j.services.gui.richclient.converters.DateToText">
+                    <constructor-arg ref="formatterLocator"/>
+                    <constructor-arg value="true"/>
+                </bean>
+                <bean id="converterTextToDate"
+                    class="ch.elca.el4j.services.gui.richclient.converters.TextToDate">
+                    <constructor-arg ref="formatterLocator"/>
+                    <constructor-arg value="true"/>
+                </bean>
+            </list>
+        </property>
+        <property name="formatterLocator">
+            <ref bean="formatterLocator"/>
+        </property>
+    </bean>
+    
+    <!-- Formatter locator used in string converters. -->
+    <bean id="formatterLocator"
+        class="org.springframework.binding.format.support.SimpleFormatterLocator">
+        <property name="defaultDateStyle">
+            <bean name="org.springframework.binding.format.Style.SHORT"
+                class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean"/>
+        </property>
+        <property name="defaultTimeStyle">
+            <bean name="org.springframework.binding.format.Style.SHORT"
+                class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean"/>
+        </property>
+    </bean>
+
+    <!-- 
+        Sets the look and feel for the application. The bean 
+        with id "lookAndFeelConfigurer" is looked up by the application
+        services class.
+    -->
+    <bean id="lookAndFeelConfigurer"
+        class="org.springframework.richclient.application.config.JGoodiesLooksConfigurer">
+        <property name="popupDropShadowEnabled" value="false" />
+        <property name="theme">
+            <bean class="com.jgoodies.looks.plastic.theme.ExperienceBlue" />
+        </property>
+    </bean>
+</beans>
