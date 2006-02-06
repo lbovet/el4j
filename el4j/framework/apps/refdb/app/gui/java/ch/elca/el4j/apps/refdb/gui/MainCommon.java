@@ -25,10 +25,8 @@ import org.apache.commons.logging.LogFactory;
 
 import ch.elca.el4j.services.gui.richclient.ApplicationLauncher;
 
-// Checkstyle: UncommentedMain off
-
 /**
- * This class is used to start the RefDB-Application.
+ * Abstract class to start the RefDB-Application.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$Source$",
@@ -45,32 +43,24 @@ public final class MainCommon {
      */
     private static Log s_logger 
         = LogFactory.getLog(MainCommon.class);
-
+    
     /**
      * Hide default constructor.
      */
     private MainCommon() { }
 
     /**
-     * Start method.
+     * Start method for the application.
      * 
-     * @param args
-     *            Are the command line arguments.
+     * @param startupContext
+     *            Is a small spring context used while starting the application.
+     * @param applicationContexts
+     *            Are big spring contexts that are used for application to run.
      */
-    public static void main(String[] args) {
-        if (args == null || args.length != 2) {
-            System.out.println("Usage: java MainCommon <startup context path> "
-                + "<application context path>");
-            System.out.println("Example: java MainCommon "
-                + "classpath:refdb/standalone_startup.xml "
-                + "classpath:refdb/standalone_application.xml");
-        }
-        
-        String startupContext = args[0];
-        String applicationContext = args[1];
-        
+    public static void launchApplication(String startupContext, 
+        String[] applicationContexts) {
         try {
-            new ApplicationLauncher(startupContext, applicationContext);
+            new ApplicationLauncher(startupContext, applicationContexts);
         } catch (Exception e) {
             String message = "Reference-Database-Application exited "
                 + "exceptionally for an unknown reason! See stack trace for "
@@ -86,4 +76,3 @@ public final class MainCommon {
         }
     }
 }
-//Checkstyle: UncommentedMain on

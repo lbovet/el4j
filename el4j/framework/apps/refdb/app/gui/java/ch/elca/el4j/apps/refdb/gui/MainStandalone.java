@@ -45,10 +45,15 @@ public final class MainStandalone {
      */
     public static void main(String[] args) {
         String startupContext 
-            = "classpath:refdb/standalone_startup.xml";
-        String applicationContext 
-            = "classpath:refdb/standalone_application.xml";
-        MainCommon.main(new String[] {startupContext, applicationContext});
+            = "classpath:scenarios/springrcp/refdb/startup/*.xml";
+        String[] applicationContexts = {
+            "classpath*:mandatory/*.xml",
+            "classpath*:scenarios/db/raw/*.xml",
+            "classpath*:scenarios/dataaccess/ibatis/*.xml",
+            "classpath:optional/interception/transactionCommonsAttributes.xml",
+            "classpath:scenarios/springrcp/refdb/application/*.xml"
+        };
+        MainCommon.launchApplication(startupContext, applicationContexts);
     }
 }
 //Checkstyle: UncommentedMain on

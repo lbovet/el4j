@@ -17,17 +17,11 @@
         <init-param>
             <param-name>inclusiveLocations</param-name>
             <param-value>
-                <!-- classpath:optional/interception/methodTracing.xml, -->
                 classpath*:mandatory/*.xml,
-                classpath:scenarios/db/rawDatabase.xml,
+                classpath*:scenarios/db/raw/*.xml,
+                classpath*:scenarios/dataaccess/ibatis/*.xml,
                 classpath:optional/interception/transactionCommonsAttributes.xml,
-                classpath:scenarios/distributed/server/web/*.xml
-            </param-value>
-        </init-param>
-        <init-param>
-            <param-name>exclusiveLocations</param-name>
-            <param-value>
-                classpath*:mandatory/refdb-gui-richclient.xml
+                classpath:scenarios/remoting/server/web/*.xml
             </param-value>
         </init-param>
         <load-on-startup>100</load-on-startup>
