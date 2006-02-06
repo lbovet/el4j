@@ -36,7 +36,7 @@ public class BeanSelectAllExecutor extends AbstractBeanExecutor {
      * {@inheritDoc}
      */
     public void execute() {
-        getBeanView().selectAll();
+        getBeanPresenter().selectAllBeans();
     }
     
     /**

@@ -28,8 +28,8 @@ import org.springframework.util.StringUtils;
 
 import ch.elca.el4j.services.gui.richclient.Constants;
 import ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm;
+import ch.elca.el4j.services.gui.richclient.presenters.BeanPresenter;
 import ch.elca.el4j.services.gui.richclient.utils.MessageUtils;
-import ch.elca.el4j.services.gui.richclient.views.AbstractBeanView;
 
 /**
  * Abstract wizard for beans.
@@ -62,9 +62,9 @@ public abstract class AbstractBeanWizard extends AbstractWizard
     private BeanPropertiesForm[] m_propertiesForms;
 
     /**
-     * Reference to the bean view.
+     * Reference to the bean presenter.
      */
-    private AbstractBeanView m_beanView;
+    private BeanPresenter m_beanPresenter;
 
     /**
      * Is the id used to get properties like labels for the created form.
@@ -188,19 +188,19 @@ public abstract class AbstractBeanWizard extends AbstractWizard
     }
 
     /**
-     * @return Returns the beanView.
+     * @return Returns the beanPresenter.
      */
-    public final AbstractBeanView getBeanView() {
-        return m_beanView;
+    public final BeanPresenter getBeanPresenter() {
+        return m_beanPresenter;
     }
 
     /**
-     * @param beanView The beanView to set.
+     * @param beanPresenter The beanPresenter to set.
      */
-    public final void setBeanView(AbstractBeanView beanView) {
-        m_beanView = beanView;
+    public final void setBeanPresenter(BeanPresenter beanPresenter) {
+        m_beanPresenter = beanPresenter;
     }
-    
+
     /**
      * {@inheritDoc}
      * 

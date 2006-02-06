@@ -21,7 +21,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.richclient.dialog.ConfirmationDialog;
 
 import ch.elca.el4j.services.gui.richclient.Constants;
-import ch.elca.el4j.services.gui.richclient.views.AbstractBeanView;
+import ch.elca.el4j.services.gui.richclient.presenters.BeanPresenter;
 
 /**
  * Abstract confirmation dialog for beans.
@@ -38,9 +38,9 @@ import ch.elca.el4j.services.gui.richclient.views.AbstractBeanView;
 public abstract class AbstractBeanConfirmationDialog extends ConfirmationDialog 
     implements InitializingBean, BeanNameAware {
     /**
-     * Reference to the bean view.
+     * Reference to the bean presenter.
      */
-    private AbstractBeanView m_beanView;
+    private BeanPresenter m_beanPresenter;
 
     /**
      * Is the id used to get properties like labels for the created form.
@@ -75,17 +75,17 @@ public abstract class AbstractBeanConfirmationDialog extends ConfirmationDialog
     }
     
     /**
-     * @return Returns the beanView.
+     * @return Returns the beanPresenter.
      */
-    public final AbstractBeanView getBeanView() {
-        return m_beanView;
+    public final BeanPresenter getBeanPresenter() {
+        return m_beanPresenter;
     }
 
     /**
-     * @param beanView The beanView to set.
+     * @param beanPresenter The beanPresenter to set.
      */
-    public final void setBeanView(AbstractBeanView beanView) {
-        m_beanView = beanView;
+    public final void setBeanPresenter(BeanPresenter beanPresenter) {
+        m_beanPresenter = beanPresenter;
     }
 
     /**
