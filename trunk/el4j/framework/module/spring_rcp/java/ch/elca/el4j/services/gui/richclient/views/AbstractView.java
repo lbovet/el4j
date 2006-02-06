@@ -71,31 +71,6 @@ public abstract class AbstractView
     private ApplicationEventPublisher m_applicationEventPublisher;
 
     /**
-     * {@inheritDoc}
-     * 
-     * Creates control only once.
-     */
-    protected JComponent createControl() {
-        JComponent control = getCreatedControl();
-        if (control == null) {
-            control = createControlOnce();
-            setCreatedControl(control);
-        }
-        return control;
-    }
-    
-    /**
-     * Is used that control is created only once. If method 
-     * <code>createControl</code> is not overridden then this method must be 
-     * overridden!
-     * 
-     * @return Returns the created control.
-     */
-    protected JComponent createControlOnce() {
-        return null;
-    }
-    
-    /**
      * @return Returns the beanName.
      */
     public final String getBeanName() {
