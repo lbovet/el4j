@@ -19,6 +19,9 @@
         <!-- Universal IBM driver -->
         <dependency jar="db2jcc.jar"/>
         <dependency jar="db2jcc_license_c.jar"/>
+        
+        <!-- Module dependencies -->
+        <dependency module="module-env"/>
     </module>
     
 </ant:project>
