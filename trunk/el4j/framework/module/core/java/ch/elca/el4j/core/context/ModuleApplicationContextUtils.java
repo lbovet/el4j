@@ -26,7 +26,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 
-import ch.elca.el4j.core.exceptions.BaseRTException;
+import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 
 /**
  * This class allows excluding some items out of a file list.
@@ -184,8 +184,7 @@ public class ModuleApplicationContextUtils {
             }
         } catch (IOException e) {
             String message = "An IOException has occurred.";
-            s_logger.error(message);
-            throw new BaseRTException(message, e);
+            CoreNotificationHelper.notifyMisconfiguration(message, e);
         }
 
         String[] result = new String[resolvedAttributes.size()];
