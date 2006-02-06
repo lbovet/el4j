@@ -36,7 +36,10 @@
     <logger name="org.apache.log4j">
         <level value="WARN"/>
     </logger>
-    
+
+    <logger name="org.springframework.beans.factory.config">
+        <level value="DEBUG"/>
+    </logger>
     
     <root>
         <level value="WARN"/>
