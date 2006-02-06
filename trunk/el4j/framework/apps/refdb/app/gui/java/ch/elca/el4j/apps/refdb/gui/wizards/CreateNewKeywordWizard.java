@@ -22,8 +22,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
-import ch.elca.el4j.apps.refdb.gui.views.AbstractRefdbView;
+import ch.elca.el4j.apps.refdb.gui.brokers.ServiceBroker;
 import ch.elca.el4j.apps.refdb.service.ReferenceService;
+import ch.elca.el4j.services.gui.richclient.presenters.BeanPresenter;
 import ch.elca.el4j.services.gui.richclient.utils.MessageUtils;
 import ch.elca.el4j.services.gui.richclient.wizards.AbstractBeanWizard;
 import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
@@ -46,12 +47,13 @@ public class CreateNewKeywordWizard extends AbstractBeanWizard {
      */
     protected boolean onFinishAfterCommit(Object currentBean) {
         KeywordDto currentKeyword = (KeywordDto) currentBean;
-        AbstractRefdbView view = (AbstractRefdbView) getBeanView();
-        ReferenceService service = view.getReferenceService();
         
-        KeywordDto newKeyword = service.saveKeyword(currentKeyword);
-        view.addBean(newKeyword);
-        view.focusBean(newKeyword);
+        ReferenceService referenceService = ServiceBroker.getReferenceService();
+        KeywordDto newKeyword = referenceService.saveKeyword(currentKeyword);
+        
+        BeanPresenter beanPresenter = getBeanPresenter();
+        beanPresenter.addBean(newKeyword);
+        beanPresenter.focusBean(newKeyword);
         
         return true;
     }
@@ -64,19 +66,19 @@ public class CreateNewKeywordWizard extends AbstractBeanWizard {
         boolean closeDialog = false;
         
         if (re instanceof DataIntegrityViolationException) {
-            errorCode = "dialogDuplicatedKeyword";
+            errorCode = "DataIntegrityViolationException";
         } else if (re instanceof InsertionFailureException) {
-            errorCode = "dialogKeywordInsertionProblem";
+            errorCode = "InsertionFailureException";
         } else if (re instanceof DataAccessException) {
-            errorCode = "dialogDataAccessProblem";
+            errorCode = "DataAccessException";
         } else {
             throw re;
         }
         
         String title = MessageUtils.getMessage(getPropertiesId(), 
-            errorCode + ".title");
+            "keyword", errorCode + ".title");
         String message = MessageUtils.getMessage(getPropertiesId(), 
-            errorCode + ".message");
+            "keyword", errorCode + ".message");
         
         JOptionPane.showMessageDialog(getWizardDialog().getDialog(), 
             message, title, JOptionPane.ERROR_MESSAGE);

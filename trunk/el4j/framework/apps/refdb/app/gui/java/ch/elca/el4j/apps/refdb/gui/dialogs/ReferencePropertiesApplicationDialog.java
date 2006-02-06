@@ -19,10 +19,9 @@ package ch.elca.el4j.apps.refdb.gui.dialogs;
 import javax.swing.JOptionPane;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
-import ch.elca.el4j.apps.keyword.dto.KeywordDto;
+import ch.elca.el4j.apps.refdb.dto.ReferenceDto;
 import ch.elca.el4j.apps.refdb.gui.brokers.ServiceBroker;
 import ch.elca.el4j.apps.refdb.service.ReferenceService;
 import ch.elca.el4j.services.gui.richclient.dialogs.AbstractBeanTitledPageApplicationDialog;
@@ -30,7 +29,7 @@ import ch.elca.el4j.services.gui.richclient.presenters.BeanPresenter;
 import ch.elca.el4j.services.gui.richclient.utils.MessageUtils;
 
 /**
- * Dialog to save changes made on a keyword dto.
+ * Dialog to save changes made on a reference dto.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$Source$",
@@ -41,7 +40,7 @@ import ch.elca.el4j.services.gui.richclient.utils.MessageUtils;
  *
  * @author Martin Zeltner (MZE)
  */
-public class KeywordPropertiesApplicationDialog 
+public class ReferencePropertiesApplicationDialog 
     extends AbstractBeanTitledPageApplicationDialog {
 
     /**
@@ -50,12 +49,13 @@ public class KeywordPropertiesApplicationDialog
      * Save the received keyword dto and update gui components.
      */
     protected boolean onFinishAfterCommit(Object currentBean) {
-        KeywordDto currentKeyword = (KeywordDto) currentBean;
+        ReferenceDto currentReference = (ReferenceDto) currentBean;
         ReferenceService referenceService = ServiceBroker.getReferenceService();
-        KeywordDto returnValue = referenceService.saveKeyword(currentKeyword);
+        ReferenceDto returnValue 
+            = referenceService.saveReference(currentReference);
         
         BeanPresenter beanPresenter = getBeanPresenter();
-        beanPresenter.replaceBean(currentKeyword, returnValue);
+        beanPresenter.replaceBean(currentReference, returnValue);
         return true;
     }
     
@@ -66,37 +66,30 @@ public class KeywordPropertiesApplicationDialog
         String errorCode = null;
         boolean closeDialog = false;
 
-        KeywordDto currentKeyword = (KeywordDto) getCurrentBean();
+        ReferenceDto currentReference = (ReferenceDto) getCurrentBean();
         BeanPresenter beanPresenter = getBeanPresenter();
         ReferenceService referenceService = ServiceBroker.getReferenceService();
         
-        if (e instanceof DataIntegrityViolationException) {
-            KeywordDto oldKeyword
-                = referenceService.getKeywordByKey(currentKeyword.getKey());
-            beanPresenter.replaceBean(currentKeyword, oldKeyword);
-            getRootFormModel().setFormObject(oldKeyword);
-            closeDialog = false;
-            errorCode = "DataIntegrityViolationException";
-        } else if (e instanceof OptimisticLockingFailureException) {
-            // Get keyword from database.
-            KeywordDto modifiedKeyword;
+        if (e instanceof OptimisticLockingFailureException) {
+            // Get reference from database.
+            ReferenceDto modifiedReference;
             try {
-                modifiedKeyword
-                    = referenceService.getKeywordByKey(currentKeyword.getKey());
+                modifiedReference = referenceService.getReferenceByKey(
+                    currentReference.getKey());
             } catch (Exception ex) {
-                modifiedKeyword = null;
+                modifiedReference = null;
             }
             
-            if (modifiedKeyword != null) {
-                // Keyword has been modificated. Update the bean and left 
+            if (modifiedReference != null) {
+                // Reference has been modificated. Update the bean and left 
                 // dialog open.
-                beanPresenter.replaceBean(currentKeyword, modifiedKeyword);
-                getRootFormModel().setFormObject(modifiedKeyword);
+                beanPresenter.replaceBean(currentReference, modifiedReference);
+                getRootFormModel().setFormObject(modifiedReference);
                 closeDialog = false;
                 errorCode = "OptimisticLockingFailureException.modified";
             } else {
                 // Remove the current bean and close the dialog.
-                beanPresenter.removeBean(currentKeyword);
+                beanPresenter.removeBean(currentReference);
                 closeDialog = true;
                 errorCode = "OptimisticLockingFailureException.deleted";
             }
@@ -107,9 +100,9 @@ public class KeywordPropertiesApplicationDialog
         
         if (errorCode != null) {
             String title = MessageUtils.getMessage(getPropertiesId(), 
-                "keyword", errorCode + ".title");
+                "reference", errorCode + ".title");
             String message = MessageUtils.getMessage(getPropertiesId(), 
-                "keyword", errorCode + ".message");
+                "reference", errorCode + ".message");
             
             JOptionPane.showMessageDialog(getDialog(), message, 
                 title, JOptionPane.ERROR_MESSAGE);

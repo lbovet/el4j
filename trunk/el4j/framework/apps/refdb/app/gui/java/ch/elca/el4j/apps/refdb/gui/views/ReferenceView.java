@@ -19,6 +19,10 @@ package ch.elca.el4j.apps.refdb.gui.views;
 
 import java.util.List;
 
+import ch.elca.el4j.apps.refdb.dto.ReferenceDto;
+import ch.elca.el4j.apps.refdb.gui.brokers.ServiceBroker;
+import ch.elca.el4j.apps.refdb.service.ReferenceService;
+import ch.elca.el4j.services.gui.richclient.views.AbstractBeanTableView;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.events.QueryObjectEvent;
 
@@ -34,17 +38,19 @@ import ch.elca.el4j.services.search.events.QueryObjectEvent;
  *
  * @author Martin Zeltner (MZE)
  */
-public class ReferenceView extends AbstractRefdbView {
+public class ReferenceView extends AbstractBeanTableView {
     /**
      * {@inheritDoc}
      */
     protected void onQueryObjectEvent(QueryObjectEvent event) {
         if (isControlCreated() && isQueryObjectCommingFromNeighbour(event)) {
-            QueryObject queryObject = event.getQueryObject();
-            List list = getReferenceService().searchReferences(queryObject);
-            getDataList().clear();
-            getDataList().addAll(list);
-            getBeanTableModel().fireTableDataChanged();
+            QueryObject queryObject = event.getQueryObject(ReferenceDto.class);
+            if (queryObject != null) {
+                ReferenceService referenceService 
+                    = ServiceBroker.getReferenceService();
+                List list = referenceService.searchReferences(queryObject);
+                setBeans(list);
+            }
         }
     }
 }

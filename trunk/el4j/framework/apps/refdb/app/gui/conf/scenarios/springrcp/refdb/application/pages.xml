@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <bean id="keywordPage"
+        class="ch.elca.el4j.services.gui.richclient.pages.descriptors.MultipleViewsPageDescriptor">
+        <property name="pageComponentDescriptors">
+            <list>
+                <bean name="tableGroup"
+                    class="ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.DefaultGroupPageComponentDescriptor">
+                    <property name="preferredPositionArgument" value="Center"/>
+                    <property name="pageComponentDescriptors">
+                        <ref bean="keywordTableView" />
+                    </property>
+                </bean>
+                <bean name="searchGroup"
+                    class="ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.DefaultGroupPageComponentDescriptor">
+                    <property name="preferredPositionArgument" value="West"/>
+                    <property name="pageComponentDescriptors">
+                        <ref bean="keywordSearchView" />
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="referencePage"
+        class="ch.elca.el4j.services.gui.richclient.pages.descriptors.MultipleViewsPageDescriptor">
+        <property name="pageComponentDescriptors">
+            <list>
+                <bean name="tableGroup"
+                    class="ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.DefaultGroupPageComponentDescriptor">
+                    <property name="preferredPositionArgument" value="Center"/>
+                    <property name="pageComponentDescriptors">
+                        <ref bean="referenceTableView" />
+                    </property>
+                </bean>
+                <bean name="searchGroup"
+                    class="ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.DefaultGroupPageComponentDescriptor">
+                    <property name="preferredPositionArgument" value="West"/>
+                    <property name="pageComponentDescriptors">
+                        <ref bean="referenceSearchView" />
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="referenceKeywordPage"
+        class="ch.elca.el4j.services.gui.richclient.pages.descriptors.MultipleViewsPageDescriptor">
+        <property name="pageComponentDescriptors">
+            <list>
+                <bean name="tableGroup"
+                    class="ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.DefaultGroupPageComponentDescriptor">
+                    <property name="preferredPositionArgument" value="Center"/>
+                    <property name="pageComponentDescriptors">
+                        <list>
+                            <ref bean="referenceTableView" />
+                            <ref bean="keywordTableView" />
+                        </list>
+                    </property>
+                </bean>
+                <bean name="searchGroup"
+                    class="ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.DefaultGroupPageComponentDescriptor">
+                    <property name="preferredPositionArgument" value="West"/>
+                    <property name="pageComponentDescriptors">
+                        <list>
+                            <ref bean="referenceSearchView" />
+                            <ref bean="keywordSearchView" />
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+</beans>

@@ -45,10 +45,13 @@ public final class MainDistributed {
      */
     public static void main(String[] args) {
         String startupContext 
-            = "classpath:refdb/distributed_startup.xml";
-        String applicationContext 
-            = "classpath:refdb/distributed_application.xml";
-        MainCommon.main(new String[] {startupContext, applicationContext});
+            = "classpath:scenarios/springrcp/refdb/startup/*.xml";
+        String[] applicationContexts = {
+            "classpath*:mandatory/*.xml",
+            "classpath:scenarios/remoting/client/*.xml",
+            "classpath:scenarios/springrcp/refdb/application/*.xml"
+        };
+        MainCommon.launchApplication(startupContext, applicationContexts);
     }
 }
 //Checkstyle: UncommentedMain on

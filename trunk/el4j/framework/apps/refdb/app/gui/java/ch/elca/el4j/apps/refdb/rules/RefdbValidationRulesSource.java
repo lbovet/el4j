@@ -16,6 +16,7 @@
  */
 package ch.elca.el4j.apps.refdb.rules;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.core.closure.Constraint;
@@ -29,7 +30,6 @@ import ch.elca.el4j.apps.refdb.dto.FileDescriptorView;
 import ch.elca.el4j.apps.refdb.dto.FileDto;
 import ch.elca.el4j.apps.refdb.dto.FormalPublicationDto;
 import ch.elca.el4j.apps.refdb.dto.LinkDto;
-import ch.elca.el4j.apps.refdb.dto.ReferenceDto;
 
 /**
  * Validation rules source for the reference database application.
@@ -48,131 +48,246 @@ public class RefdbValidationRulesSource extends DefaultRulesSource {
      * Default constructor.
      */
     public RefdbValidationRulesSource() {
-        super();
-        addRules(createKeywordRules());
-        addRules(createReferenceRules());
-        addRules(createLinkRules());
-        addRules(createFormalPublicationRules());
-        addRules(createBookRules());
-        addRules(createAnnotationRules());
-        addRules(createFileRules());
-        addRules(createFileDescriptorViewRules());
+        addRules(new KeywordRules());
+        addRules(new LinkRules());
+        addRules(new FormalPublicationRules());
+        addRules(new BookRules());
+        addRules(new AnnotationRules());
+        addRules(new FileDescriptorViewRules(FileDto.class));
+        addRules(new FileDescriptorViewRules(FileDescriptorView.class));
     }
     
     /**
-     * @return Returns rules for keyword dto classes.
+     * Rules for keywords.
+     *
+     * @author Martin Zeltner (MZE)
      */
-    protected Rules createKeywordRules() {
-        return new Rules(KeywordDto.class) {
-            protected void initRules() {
-                add("name", getConstraintRequiredMaxLength(
-                    RefdbBoundaries.MAX_LENGTH_KEYWORD_NAME));
-                add("description", getConstraintNotRequiredMaxLength(
-                    RefdbBoundaries.MAX_LENGTH_KEYWORD_DESCRIPTION));
-            }            
-        };
+    protected class KeywordRules extends Rules {
+        /**
+         * Default constructor.
+         */
+        public KeywordRules() {
+            super(KeywordDto.class);
+        }
+
+        /**
+         * Constructor.
+         * 
+         * @param domainObjectClass Is the class where to use the rules.
+         */
+        public KeywordRules(Class domainObjectClass) {
+            super(domainObjectClass);
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        protected void initRules() {
+            super.initRules();
+            add("name", getConstraintRequiredMaxLength(
+                RefdbBoundaries.MAX_LENGTH_KEYWORD_NAME));
+            add("description", getConstraintNotRequiredMaxLength(
+                RefdbBoundaries.MAX_LENGTH_KEYWORD_DESCRIPTION));
+        }            
     }
 
     /**
-     * @return Returns rules for reference dto classes.
+     * Rules for references.
+     *
+     * @author Martin Zeltner (MZE)
      */
-    protected Rules createReferenceRules() {
-        return new Rules(ReferenceDto.class) {
-            protected void initRules() {
-                add("name", getConstraintRequiredMaxLength(
-                    RefdbBoundaries.MAX_LENGTH_REFERENCE_NAME));
-                add("hashValue", getConstraintNotRequiredMaxLength(
-                    RefdbBoundaries.MAX_LENGTH_REFERENCE_HASHVALUE));
-                add("description", getConstraintNotRequiredMaxLength(
-                    RefdbBoundaries.MAX_LENGTH_REFERENCE_DESCRIPTION));
-                add("version", getConstraintNotRequiredMaxLength(
-                    RefdbBoundaries.MAX_LENGTH_REFERENCE_VERSION));
-                add("documentDate", lt(new Date()));
-            }            
-        };
+    protected class ReferenceRules extends Rules {
+        /**
+         * Is the oldest possible reference date. 
+         */
+        protected final Date m_oldestPossibleReferenceDate;
+        
+        /**
+         * Constructor.
+         * 
+         * @param domainObjectClass Is the class where to use the rules.
+         */
+        public ReferenceRules(Class domainObjectClass) {
+            super(domainObjectClass);
+            Calendar c = Calendar.getInstance();
+            // Checkstyle: MagicNumber off
+            c.set(Calendar.YEAR, 1980);
+            c.set(Calendar.DAY_OF_YEAR, 1);
+            c.set(Calendar.MILLISECOND, 0);
+            c.set(Calendar.SECOND, 0);
+            c.set(Calendar.MINUTE, 0);
+            c.set(Calendar.HOUR, 0);
+            c.set(Calendar.AM_PM, Calendar.AM);
+            m_oldestPossibleReferenceDate = c.getTime();
+            // Checkstyle: MagicNumber on
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        protected void initRules() {
+            super.initRules();
+            add("name", getConstraintRequiredMaxLength(
+                RefdbBoundaries.MAX_LENGTH_REFERENCE_NAME));
+            add("hashValue", getConstraintNotRequiredMaxLength(
+                RefdbBoundaries.MAX_LENGTH_REFERENCE_HASHVALUE));
+            add("description", getConstraintNotRequiredMaxLength(
+                RefdbBoundaries.MAX_LENGTH_REFERENCE_DESCRIPTION));
+            add("version", getConstraintNotRequiredMaxLength(
+                RefdbBoundaries.MAX_LENGTH_REFERENCE_VERSION));
+            add("date", or(
+                range(m_oldestPossibleReferenceDate, new Date()), 
+                not(required())));
+        }            
+    }
+    
+    /**
+     * Rules for links.
+     *
+     * @author Martin Zeltner (MZE)
+     */
+    protected class LinkRules extends ReferenceRules {
+        /**
+         * Default constructor.
+         */
+        public LinkRules() {
+            super(LinkDto.class);
+        }
+
+        /**
+         * Constructor.
+         * 
+         * @param domainObjectClass Is the class where to use the rules.
+         */
+        public LinkRules(Class domainObjectClass) {
+            super(domainObjectClass);
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        protected void initRules() {
+            super.initRules();
+            add("url", getConstraintNotRequiredMaxLength(
+                RefdbBoundaries.MAX_LENGTH_LINK_URL));
+        }            
     }
 
     /**
-     * @return Returns rules for link dto classes.
+     * Rules for formal publications.
+     *
+     * @author Martin Zeltner (MZE)
      */
-    protected Rules createLinkRules() {
-        return new Rules(LinkDto.class) {
-            protected void initRules() {
-                add("url", getConstraintNotRequiredMaxLength(
-                    RefdbBoundaries.MAX_LENGTH_LINK_URL));
-            }            
-        };
+    protected class FormalPublicationRules extends ReferenceRules {
+        /**
+         * Default constructor.
+         */
+        public FormalPublicationRules() {
+            super(FormalPublicationDto.class);
+        }
+
+        /**
+         * Constructor.
+         * 
+         * @param domainObjectClass Is the class where to use the rules.
+         */
+        public FormalPublicationRules(Class domainObjectClass) {
+            super(domainObjectClass);
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        protected void initRules() {
+            super.initRules();
+            add("authorName", getConstraintNotRequiredMaxLength(
+                RefdbBoundaries.MAX_LENGTH_FORMALPUBLICATION_AUTHORNAME));
+            add("publisher", getConstraintNotRequiredMaxLength(
+                RefdbBoundaries.MAX_LENGTH_FORMALPUBLICATION_PUBLISHER));
+            add("pageNum", all(new Constraint[] {
+                range(RefdbBoundaries.MIN_VALUE_FORMALPUBLICATION_PAGENUM, 
+                    RefdbBoundaries.MAX_VALUE_FORMALPUBLICATION_PAGENUM)
+            }));
+        }            
     }
-    
+
     /**
-     * @return Returns rules for formal publication dto classes.
+     * Rules for books.
+     *
+     * @author Martin Zeltner (MZE)
      */
-    protected Rules createFormalPublicationRules() {
-        return new Rules(FormalPublicationDto.class) {
-            protected void initRules() {
-                add("authorName", getConstraintNotRequiredMaxLength(
-                    RefdbBoundaries.MAX_LENGTH_FORMALPUBLICATION_AUTHORNAME));
-                add("publisher", getConstraintNotRequiredMaxLength(
-                    RefdbBoundaries.MAX_LENGTH_FORMALPUBLICATION_PUBLISHER));
-                add("pageNum", all(new Constraint[] {
-                    range(RefdbBoundaries.MIN_VALUE_FORMALPUBLICATION_PAGENUM, 
-                        RefdbBoundaries.MAX_VALUE_FORMALPUBLICATION_PAGENUM)
-                }));
-            }            
-        };
+    protected class BookRules extends FormalPublicationRules {
+        /**
+         * Default constructor.
+         */
+        public BookRules() {
+            super(BookDto.class);
+        }
+
+        /**
+         * Constructor.
+         * 
+         * @param domainObjectClass Is the class where to use the rules.
+         */
+        public BookRules(Class domainObjectClass) {
+            super(domainObjectClass);
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        protected void initRules() {
+            super.initRules();
+            add("isbnNumber", getConstraintNotRequiredMaxLength(
+                RefdbBoundaries.MAX_LENGTH_BOOK_ISBNNUMBER));
+        }            
     }
-    
+
     /**
-     * @return Returns rules for book dto classes.
+     * Rules for annotations.
+     *
+     * @author Martin Zeltner (MZE)
      */
-    protected Rules createBookRules() {
-        return new Rules(BookDto.class) {
-            protected void initRules() {
-                add("isbnNumber", getConstraintNotRequiredMaxLength(
-                    RefdbBoundaries.MAX_LENGTH_BOOK_ISBNNUMBER));
-            }            
-        };
+    protected class AnnotationRules extends Rules {
+        /**
+         * Default constructor.
+         */
+        public AnnotationRules() {
+            super(AnnotationDto.class);
+        }
+
+        /**
+         * Constructor.
+         * 
+         * @param domainObjectClass Is the class where to use the rules.
+         */
+        public AnnotationRules(Class domainObjectClass) {
+            super(domainObjectClass);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        protected void initRules() {
+            super.initRules();
+            add("annotator", getConstraintRequiredMaxLength(
+                RefdbBoundaries.MAX_LENGTH_ANNOTATION_ANNOTATOR));
+            add("grade", all(new Constraint[] {
+                required(),
+                range(RefdbBoundaries.MIN_VALUE_ANNOTATION_GRADE,
+                    RefdbBoundaries.MAX_VALUE_ANNOTATION_GRADE)
+            }));
+            add("content", getConstraintRequiredMaxLength(
+                RefdbBoundaries.MAX_SIZE_ANNOTATION_CONTENT));
+        }            
     }
-    
-    /**
-     * @return Returns rules for annotation dto classes.
-     */
-    protected Rules createAnnotationRules() {
-        return new Rules(AnnotationDto.class) {
-            protected void initRules() {
-                add("annotator", getConstraintRequiredMaxLength(
-                    RefdbBoundaries.MAX_LENGTH_ANNOTATION_ANNOTATOR));
-                add("grade", all(new Constraint[] {
-                    required(),
-                    range(RefdbBoundaries.MIN_VALUE_ANNOTATION_GRADE,
-                        RefdbBoundaries.MAX_VALUE_ANNOTATION_GRADE)
-                }));
-                add("content", getConstraintRequiredMaxLength(
-                    RefdbBoundaries.MAX_SIZE_ANNOTATION_CONTENT));
-            }            
-        };
-    }
-    
-    /**
-     * @return Returns rules for file dto classes.
-     */
-    protected Rules createFileRules() {
-        return new FileDescriptorViewRules(FileDto.class);
-    }
-    
-    /**
-     * @return Returns rules for file descriptor view classes.
-     */
-    protected Rules createFileDescriptorViewRules() {
-        return new FileDescriptorViewRules(FileDescriptorView.class);
-    }
-    
+
     /**
      * Rules for file descriptor view.
      *
      * @author Martin Zeltner (MZE)
      */
-    private class FileDescriptorViewRules extends Rules {
+    protected class FileDescriptorViewRules extends Rules {
         /**
          * Constructor.
          * 
@@ -186,6 +301,7 @@ public class RefdbValidationRulesSource extends DefaultRulesSource {
          * {@inheritDoc}
          */
         protected void initRules() {
+            super.initRules();
             add("name", getConstraintRequiredMaxLength(
                 RefdbBoundaries.MAX_LENGTH_FILE_NAME));
             add("contentSize", all(new Constraint[] {
@@ -199,7 +315,7 @@ public class RefdbValidationRulesSource extends DefaultRulesSource {
      * @param maxLength Is the maximal allowed length.
      * @return Returns a combined required and max length constraint.
      */
-    private Constraint getConstraintRequiredMaxLength(int maxLength) {
+    protected Constraint getConstraintRequiredMaxLength(int maxLength) {
         return all(new Constraint[] {
             required(), maxLength(maxLength)
         });
@@ -209,7 +325,7 @@ public class RefdbValidationRulesSource extends DefaultRulesSource {
      * @param maxLength Is the maximal allowed length.
      * @return Returns a max length constraint.
      */
-    private Constraint getConstraintNotRequiredMaxLength(int maxLength) {
+    protected Constraint getConstraintNotRequiredMaxLength(int maxLength) {
         return maxLength(maxLength);
     }
 }
