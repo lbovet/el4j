@@ -25,7 +25,7 @@
     <bean id="refdbGuiSpringrcpPropertyOverrideConfigurer"
         class="org.springframework.beans.factory.config.PropertyOverrideConfigurer">
         <property name="location"
-            value="classpath:scenarios/springrcp/refdb/application/refdb-gui-springrcp-property-override-configurer.properties"/>
+            value="classpath:scenarios/springrcp/refdb/application/property-override-configurer.properties"/>
     </bean>
     
     
@@ -33,7 +33,7 @@
     <bean id="refdbGuiSpringrcpListPropertyMergeConfigurerAfter"
         class="ch.elca.el4j.core.config.ListPropertyMergeConfigurer">
         <property name="location"
-            value="classpath:scenarios/springrcp/refdb/application/refdb-gui-springrcp-list-property-merge-configurer-after.properties"/>
+            value="classpath:scenarios/springrcp/refdb/application/property-merge-configurer-after.properties"/>
         <property name="insertNewItemsAfter" value="true"/>
     </bean>
 
@@ -42,7 +42,7 @@
     <bean id="refdbGuiSpringrcpListPropertyMergeConfigurerBefore"
         class="ch.elca.el4j.core.config.ListPropertyMergeConfigurer">
         <property name="location"
-            value="classpath:scenarios/springrcp/refdb/application/refdb-gui-springrcp-list-property-merge-configurer-before.properties"/>
+            value="classpath:scenarios/springrcp/refdb/application/property-merge-configurer-before.properties"/>
         <property name="insertNewItemsBefore" value="true"/>
     </bean>
 
