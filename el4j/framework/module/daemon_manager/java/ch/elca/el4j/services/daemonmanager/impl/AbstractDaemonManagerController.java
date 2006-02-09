@@ -223,7 +223,7 @@ public abstract class AbstractDaemonManagerController
             m_daemonManager.process();
             s_logger.info("Daemon manager controller terminated gracefully.");
             deleteRunIndicatorFile();
-            System.exit(EXIT_CODE_GRACEFULLY_TERMINATED);
+            postGracefullyTerminated();
         } catch (MissingHeartbeatsRTException e) {
             s_logger.error("Daemon manager controller terminated in cause of "
                 + "missing heartbeats.", e);
@@ -251,6 +251,14 @@ public abstract class AbstractDaemonManagerController
                 + "an unknown reason.", e);
             System.exit(EXIT_CODE_UNKNOWN_REASON);
         }
+    }
+
+    /**
+     * This method will be invoked if the daemon manager stopped processing
+     * successfully. By default nothing will be done.
+     */
+    protected void postGracefullyTerminated() {
+        // System.exit(EXIT_CODE_GRACEFULLY_TERMINATED);
     }
 
     /**
