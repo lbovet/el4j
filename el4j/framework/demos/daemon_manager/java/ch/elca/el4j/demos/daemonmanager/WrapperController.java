@@ -51,6 +51,13 @@ public class WrapperController extends AbstractDaemonManagerController {
     }
     
     /**
+     * {@inheritDoc}
+     */
+    protected void postGracefullyTerminated() {
+        System.exit(EXIT_CODE_GRACEFULLY_TERMINATED);
+    }
+    
+    /**
      * Main method to instantiate this class.
      * 
      * @param args Are the wrapper arguments.
