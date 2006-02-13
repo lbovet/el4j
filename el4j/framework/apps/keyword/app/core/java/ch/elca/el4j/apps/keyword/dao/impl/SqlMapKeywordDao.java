@@ -26,8 +26,8 @@ import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException
 import ch.elca.el4j.apps.keyword.Constants;
 import ch.elca.el4j.apps.keyword.dao.KeywordDao;
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
-import ch.elca.el4j.services.persistence.generic.dao.ConvenienceSqlMapClientDaoSupport;
 import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
+import ch.elca.el4j.services.persistence.ibatis.dao.ConvenienceSqlMapClientDaoSupport;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.CollectionUtils;
 import ch.elca.el4j.util.codingsupport.Reject;

@@ -15,7 +15,7 @@
  * For alternative licensing, please contact info@elca.ch
  */
 
-package ch.elca.el4j.services.persistence.generic.dao;
+package ch.elca.el4j.services.persistence.ibatis.dao;
 
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 

@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.services.persistence.ibatis;
+package ch.elca.el4j.services.persistence.ibatis.callback;
 
 import java.io.StringReader;
 import java.sql.Clob;
