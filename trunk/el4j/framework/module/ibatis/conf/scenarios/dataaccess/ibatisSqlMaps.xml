@@ -19,7 +19,7 @@
 
     <bean id="convenienceSqlMapClientTemplate" 
         name="sqlMapClientTemplate"
-        class="ch.elca.el4j.services.persistence.generic.dao.ConvenienceSqlMapClientTemplate">
+        class="ch.elca.el4j.services.persistence.ibatis.dao.ConvenienceSqlMapClientTemplate">
         <property name="sqlMapClient">
             <ref local="sqlMapClientConfigurator"/>
         </property>
