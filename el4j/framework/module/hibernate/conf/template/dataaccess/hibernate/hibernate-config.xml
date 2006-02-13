@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+    Spring bean configuration file to prepare Hibernate SessionFactory. This
+    bean is normally used in daos.
+
+    Needed beans which are not defined in this file:
+       * dataSource
+-->
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <!-- Hibernate Session Factory Bean -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="mappingResources">
+            <list>
+                <value>hibernate/Booking.hbm.xml</value>
+                <value>hibernate/Genre.hbm.xml</value>
+                <value>hibernate/Performance.hbm.xml</value>
+                <value>hibernate/PriceBand.hbm.xml</value>
+                <value>hibernate/PriceStructure.hbm.xml</value>
+                <value>hibernate/Purchase.hbm.xml</value>
+                <value>hibernate/Seat.hbm.xml</value>
+                <value>hibernate/SeatClass.hbm.xml</value>
+                <value>hibernate/SeatStatus.hbm.xml</value>
+                <value>hibernate/SeatingPlan.hbm.xml</value>
+                <value>hibernate/Show.hbm.xml</value>
+                <value>hibernate/queries.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle9Dialect</prop>
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+                <prop key="hibernate.max_fetch_depth">3</prop>
+            </props>
+        </property>
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+    </bean>
+</beans>
