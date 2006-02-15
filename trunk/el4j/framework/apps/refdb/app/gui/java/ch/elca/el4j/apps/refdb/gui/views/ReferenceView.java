@@ -43,7 +43,7 @@ public class ReferenceView extends AbstractBeanTableView {
      * {@inheritDoc}
      */
     protected void onQueryObjectEvent(QueryObjectEvent event) {
-        if (isControlCreated() && isQueryObjectCommingFromNeighbour(event)) {
+        if (isControlCreated() && isQueryObjectComingFromNeighbour(event)) {
             QueryObject queryObject = event.getQueryObject(ReferenceDto.class);
             if (queryObject != null) {
                 ReferenceService referenceService 

@@ -43,7 +43,7 @@ public class KeywordView extends AbstractBeanTableView {
      * {@inheritDoc}
      */
     protected void onQueryObjectEvent(QueryObjectEvent event) {
-        if (isControlCreated() && isQueryObjectCommingFromNeighbour(event)) {
+        if (isControlCreated() && isQueryObjectComingFromNeighbour(event)) {
             QueryObject queryObject = event.getQueryObject(KeywordDto.class);
             if (queryObject != null) {
                 ReferenceService referenceService 
