@@ -16,7 +16,7 @@
     <property name="docs.path.pdf" value="${docs.path}/pdf"/>
     <property name="docs.path.javadoc" value="${docs.path}/api"/>
     
-    <property name="el4j.version" value="0.9.2"/>
+    <property name="el4j.version" value="0.9.3"/>
     <property name="zip.name.prefix" value="el4j-${el4j.version}"/>
     <property name="zip.name.essential" 
         value="${zip.name.prefix}-essential.zip"/>
