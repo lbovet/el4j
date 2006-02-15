@@ -119,14 +119,14 @@ public abstract class AbstractView
     }
     
     /**
-     * Checks if the query object event is comming from a neighbour from the 
+     * Checks if the query object event is coming from a neighbour from the 
      * same application window.
      * 
      * @param event Is the query object event to check.
-     * @return Returns <code>true</code> if the given event is comming from
+     * @return Returns <code>true</code> if the given event is coming from
      *         the same application window as the current.
      */
-    protected boolean isQueryObjectCommingFromNeighbour(
+    protected boolean isQueryObjectComingFromNeighbour(
         QueryObjectEvent event) {
         boolean result = false;
         if (event != null && isControlCreated()) {
