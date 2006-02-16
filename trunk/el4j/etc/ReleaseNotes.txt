@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
- Date :   15.02.06
+ Date :   16.02.06
                             EL4J version  0.9.3
 --------------------------------------------------------------------------------
 * SourceForge Change Requests PENDING (problems resolved but not yet acknowledged)
@@ -17,13 +17,15 @@
   = Checkstyle check suppression filters added. Deprecated checks disabled.
   = Rmi port changed from 1099 to 8090 to circumvent problem with Microsoft
     Outlook.
-  = Environment varibale "db.name" introduced. Default value is "db2".
+  = Environment varibale "db.name" introduced. Default value is "db2" 
+    (rationale for the default: we use apache derby database, which is
+     compatible with DB2)
   = Command line hook improved.
   = EL4Ant quick reference sheet added.
 
 
 * Framework modules
-  = module-core (binary verison is 1.3)
+  = module-core (binary version is 1.3)
     + IBatis stuff moved to separate module with name module-ibatis.
     + List property merge configurer can now prepend and append new values to 
       lists.
@@ -32,9 +34,8 @@
       See http://opensource2.atlassian.com/projects/spring/browse/SPR-1657
     + Query object can now belong to a specific bean class.
     + Query object event can now contain multiple query objects.
-    + Method added to collection utils class.
+    + Method added to collection util class.
   = module-ibatis added (binary verison is 1.0)
-    + Same stuff as in module-core.
     + Callback classes moved from package 
       ch.elca.el4j.services.persistence.ibatis to
       ch.elca.el4j.services.persistence.ibatis.callback
@@ -42,13 +43,14 @@
       ch.elca.el4j.services.persistence.generic.dao to
       ch.elca.el4j.services.persistence.ibatis.dao
   = module-hibernate added (binary verison is 1.0)
-    + Contains no java files just configuration files.
+    + Contains no java files, just configuration files.
   = module-daemon_manager (binary verison is 1.2)
     + Dependency to Java Service Wrapper jar added.
-    + Interface daemon extends interface ordered.
+    + Abstract daemon manager controller class for Java Service Wrapper added.
     + Ordered startup and shutdown of daemons in daemon manager possible.
-    + Daemon bean factory added.
-    + Abstract daemon manager class for Java Service Wrapper added.
+      (Interface Daemon extends interface Ordered (of Spring))
+    + Daemon bean factory added. Can be used to instantiate the same daemon
+      multiple times.
   = module-daemon_manager-tests (no binary version)
     + Test added for new daemon manager features.
   = module-daemon_manager-demos (no binary version)
@@ -60,9 +62,10 @@
       override configurer. Is ordered (value -1) and will be loaded after
       property placeholder configurer.
   = module-spring_rcp (binary verison is 1.1)
+    + Extensive documentation added (in refererence doc pdf).
     + General configuration added.
-    + String to * and * to string converters added.
-    + Bean presenter interface introduced. No more dependency to abstract 
+    + "String to *" and "* to string" converters added.
+    + Bean presenter interface introduced. No more dependency on abstract 
       bean view.
     + Message keywords refactored.
     + Binder added to display java.lang.Boolean with three radio buttons.
@@ -78,7 +81,7 @@
     + Method "createControlOnce" of AbstractView removed. Use method 
       "createControl" instead.
     + Comparison search item added.
-    + Not focusable table cell renderers added.
+    + Unfocusable table cell renderers added.
 
 * Framework applications
   = common-database (binary verison is 1.1)
@@ -108,7 +111,7 @@
     + Application start classes improved.
     + Service broker to access reference service added.
     + Bean presenter interface introduced.
-    + Dialog and wizard classes improved and added.
+    + Dialog and wizard classes added and improved.
     + Rule source corrected.
 
 
