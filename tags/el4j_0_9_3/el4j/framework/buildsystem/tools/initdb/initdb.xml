@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+<!-- EL4Ant plugin definition -->
+<project
+  name="initdb"
+  xmlns:antcontrib="antlib:net.sf.antcontrib"
+  xmlns:el4ant="antlib:ch.elca.el4ant">
+
+  <description>
+    EL4Ant plugin to initialize a database.
+  </description>
+
+  <!-- Version: $Revision$ -->
+  <!-- Source: $Source$ -->
+  <!-- Date: $Date$ -->
+  <!-- Author: $Author$ -->
+
+  <target
+    name="configure"
+    description="initdb Plugin configuration target">
+
+    <property
+      name="plugin.initdb.jar"
+      value="${buildsystem.dist.directory}/tools-initdb.jar"/>
+
+    <!-- Compile the plugin Java classes (generators and tasks) -->
+    <!--   Create the jar file and load tasks -->
+    <el4ant:buildplugin jarfile="${plugin.initdb.jar}">
+      <classpath>
+        <pathelement location="${buildsystem.lib.directory}/${buildsystem.core.jar}"/>
+        <pathelement location="${buildsystem.dist.directory}/${buildsystem.core.jar}"/>
+      </classpath>
+      <fileset dir="${configure.plugin.dir}">
+        <include name="initdb.xml"/>
+      </fileset>
+      <!-- Optional element for the jar Manifest file -->
+      <manifest>
+        <attribute name="Implementation-Title" value="Init DB Plugin"/>
+        <attribute name="Implementation-Vendor" value="ELCA Informatique SA"/>
+        <attribute name="Build-Date" value="${TODAY}"/>
+        <attribute name="Built-By" value="${user.name}"/>
+      </manifest>
+      <plugin name="initdb" file="initdb.xml"/>
+    </el4ant:buildplugin>
+
+    <!-- Include end of this file build.xml -->
+    <el4ant:buildgen action="include" target="initdb.include.startpoint"/>
+    
+    <!-- Information for shortcut generator -->
+    <el4ant:buildgen
+      action="shortcut"
+      target="initdb.module"
+      ifattribute="initdb.enable">
+      <param name="module"/>
+    </el4ant:buildgen>
+      
+  </target>
+
+  <!-- Fake init target to load plugin file -->
+  <target name="init"/>
+
+  <!-- Targets following the next fake target are copied into the generated build.xml file -->
+  <target name="initdb.include.startpoint"/>
+
+
+  <!-- Targets from initdbplugin initdb.xml  -->
+  <target
+    name="init.initdb"
+    depends="init"
+    unless="initdb.initialzied">
+    
+    <fail message="initdb has not been initialized correctly. Check init parameters.">
+      <condition>
+        <not>
+          <and>
+            <isset property="initdb.driver"/>
+            <isset property="initdb.driver.classpath"/>
+            <isset property="initdb.url"/>
+            <isset property="initdb.user"/>
+            <isset property="initdb.password"/>
+          </and>
+        </not>
+      </condition>
+    </fail>
+    
+    <!-- set default values -->
+    <property name="initdb.default.db" value="sql99"/>
+    <property name="initdb.sequence" value="create,insert"/>
+    <property name="initdb.onerror" value="abort"/>
+    <property name="initdb.script.folder" value="sql"/>
+    
+    <property name="initdb.initialized" value="true"/>
+  </target>
+  
+  
+  <target
+    name="initdb"
+    depends="init.initdb">
+  
+    <antcontrib:for param="it" list="${module.list}">
+      <sequential>
+        <antcall target="initdb.module">
+          <param name="module" value="@{it}"/>
+        </antcall>
+      </sequential>
+    </antcontrib:for>
+  </target>
+  
+  <target
+    name="initdb.module"
+    description="Executes appropriate sql script for the given module."
+    depends="init.initdb">
+
+    <el4ant:extendedproperty
+      name="initdb.enable.module.property"
+      value="initdb.enable.${module}"/>
+    <el4ant:extendedproperty
+      name="initdb.enable.module.value"
+      value="${initdb.enable.${module}}"/>
+    
+    <antcontrib:if>
+      <isset property="${initdb.enable.module.property}"/>
+      <then>
+        <antcontrib:for param="it" list="${initdb.sequence}">
+          <sequential>
+            
+            <el4ant:extendedproperty
+              name="initdb.basedir"
+              value="${module.path.${module}}/${initdb.script.folder}"/>
+            
+            <!-- find appropriate sql script -->
+            <el4ant:extendedproperty
+              name="sql.file"
+              value="${initdb.basedir}/@{it}-${initdb.db}.sql"/>
+            
+            <antcontrib:if>
+              <not>
+                <available file="${sql.file}"/>
+              </not>
+              <then>
+                <el4ant:extendedproperty
+                  name="sql.file"
+                  value="${initdb.basedir}/@{it}-${initdb.default.db}.sql"/>
+              </then>
+            </antcontrib:if>
+            
+            <!-- execute script -->
+            <sql
+              driver="${initdb.driver}"
+              classpath="${initdb.driver.classpath}"
+              url="${initdb.url}"
+              userid="${initdb.user}"
+              password="${initdb.password}"
+              src="${sql.file}"
+              onerror="${initdb.onerror}"
+              autocommit="true"/>
+          </sequential>
+        </antcontrib:for>
+      </then>
+    </antcontrib:if>
+  </target>
+
+</project>

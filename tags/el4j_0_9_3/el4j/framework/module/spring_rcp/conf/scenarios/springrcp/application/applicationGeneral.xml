@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <!-- 
+        The application itself. The bean with id "application" is looked up
+        by the application launcher.
+    -->
+    <bean id="application"
+        class="org.springframework.richclient.application.Application">
+        <constructor-arg index="0">
+            <ref bean="applicationDescriptor" />
+        </constructor-arg>
+        <constructor-arg index="1">
+            <ref bean="applicationLifecycleAdvisor" />
+        </constructor-arg>
+    </bean>
+
+    <!-- 
+        Describes the application.
+    -->
+    <bean id="applicationDescriptor"
+        class="org.springframework.richclient.application.support.DefaultApplicationDescriptor">
+        <property name="version" value="x.y"/>
+        <property name="buildId" value="200x-yy-zz"/>
+    </bean>
+
+    <!--
+        Bean to control application's lifecycle. Constructor argument of 
+        application.
+    -->
+    <bean id="applicationLifecycleAdvisor"
+        class="org.springframework.richclient.application.config.DefaultApplicationLifecycleAdvisor">
+        <property name="windowCommandBarDefinitions">
+            <!--
+                Separate spring configuration file that contains the command
+                definitions.
+            -->
+            <value>classpath:scenarios/springrcp/application/internal/commands.xml</value>
+        </property>
+        <property name="startingPageId">
+            <!--
+                Bean with this id must be a page descriptor. This page will be
+                loaded on startup.
+            -->
+            <value>myStartPage</value>
+        </property>
+    </bean>
+
+    <!--
+        Application window prototype. Implementation for multiple views per page
+        is taken. Must be prototype!
+    -->
+    <bean id="applicationWindowPrototype"
+        class="ch.elca.el4j.services.gui.richclient.windows.MultipleViewsApplicationWindow"
+        singleton="false">
+    </bean>
+
+    <!--
+        Application page prototype. Implementation for multiple views per page
+        is taken. Must be prototype!
+    -->
+    <bean id="applicationPagePrototype"
+        class="ch.elca.el4j.services.gui.richclient.pages.impl.MultipleViewsApplicationPage"
+        singleton="false">
+    </bean>
+</beans>

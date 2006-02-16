@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="refdb-core">
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <!-- 
+        Reference related invocations
+    -->
+    <insert id="insertReference">
+        <selectKey resultClass="int" keyProperty="key">
+            select REFERENCE_SEQUENCE.NEXTVAL AS KEY FROM DUAL
+        </selectKey>
+        insert into REFERENCESTABLE (KEYID, NAME, HASHVALUE, DESCRIPTION, 
+            VERSION, INCOMPLETE, WHENINSERTED, DOCUMENTDATE, 
+            OPTIMISTICLOCKINGVERSION) 
+            values (#key#, #name#, #hashValue#, #description#, #version#, 
+                #incomplete#, #whenInserted#, #date#, 
+                #optimisticLockingVersion#)
+    </insert>
+
+    <update id="updateReference">
+        update REFERENCESTABLE set NAME=#name#, HASHVALUE=#hashValue#, 
+            DESCRIPTION=#description#, VERSION=#version#, 
+            INCOMPLETE=#incomplete#, DOCUMENTDATE=#date#, 
+            OPTIMISTICLOCKINGVERSION=OPTIMISTICLOCKINGVERSION+1 
+            where KEYID=#key# 
+                and OPTIMISTICLOCKINGVERSION=#optimisticLockingVersion#
+    </update>
+</sqlMap>

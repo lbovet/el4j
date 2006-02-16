@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" 
+    xmlns:ant="antlib:org.apache.tools.ant">
+
+    <module name="refdb-gui">
+        <eu name="standalone-client">
+            <!-- Runtime configurations for standalone use. -->
+            <attribute name="runtime.runnable" value="true"/>
+            <attribute name="runtime.class" 
+                value="ch.elca.el4j.apps.refdb.gui.MainStandalone"/>
+            <attribute name="runtime.command.creator" 
+                value="runtime.command.creator.basic"/>
+            
+            <!-- Jar excludes for standalone client. -->
+            <attribute name="compile.jar.excludes" value=""/>
+        </eu>
+        <eu name="thin-client">
+            <!-- Runtime configurations for distributed use. -->
+            <attribute name="runtime.runnable" value="true"/>
+            <attribute name="runtime.class" 
+                value="ch.elca.el4j.apps.refdb.gui.MainDistributed"/>
+            <attribute name="runtime.command.creator" 
+                value="runtime.command.creator.basic"/>
+            
+            <!-- Jar excludes for thin client. -->
+            <attribute name="compile.jar.excludes"
+                value="**/server/**,**/mandatory/*override*"/>
+        </eu>
+        <eu name="server">
+            <!-- Runtime configurations for distributed use. -->
+            <attribute name="runtime.runnable" value="true"/>
+            <attribute name="j2ee.war.application"/>
+            <attribute name="runtime.command.creator"
+                value="runtime.command.creator.web"/>
+
+            <!-- Jar excludes for thin client. -->
+            <attribute name="compile.jar.excludes"
+                value="**/client/**,**/images/**,**/refdb/**,**/*.class,,**/mandatory/*richclient*"/>
+        </eu>
+
+        <!-- Working set -->
+        <attribute name="set" value="refdb-modules"/>
+        
+        <!-- Module dependencies -->
+        <dependency module="refdb-core" eu="standalone-client">
+            <mapping target="implementation"/>
+        </dependency>
+        <dependency module="refdb-core" eu="thin-client">
+            <mapping target="interface"/>
+        </dependency>
+        <dependency module="refdb-core" eu="server">
+            <mapping target="implementation"/>
+        </dependency>
+        <dependency module="common-database"/>
+        <dependency module="module-spring_rcp"/>
+        <dependency module="module-remoting_and_interface_enrichment"/>
+        <dependency module="module-web"/>
+    </module>
+    
+</ant:project>

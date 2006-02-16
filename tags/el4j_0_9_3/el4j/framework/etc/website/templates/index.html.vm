@@ -1,0 +1,93 @@
+#set($title = "EL4J, the Extension Library for the J2EE")
+#set($navigation = "home")
+#parse("$website_templates_directory/includes/header.include.vm")
+#parse("$website_templates_directory/includes/navigation.include.vm")
+<div id="Content">
+    <div>
+        <h1>EL4J PROJECT OVERVIEW</h1>
+        <p>
+            EL4J, the Extension Library for the J2EE, adds incremental improvements to
+            the Spring Java framework 
+            (<a href="http://www.springframework.org/" target="_blank">http://www.springframework.org/</a>).
+        </p>
+    </div>
+    <div>
+        Among the improvements:
+        <ul>
+            <li>The ability to split applications in modules
+                <ul>
+                    <li>
+                        A module can consist of code, jar-files and configurations
+                    </li>
+                    <li>There can be transitive dependencies between modules</li>
+                    <li>
+                        A module can automatically enable its spring configuration
+                        when it is present
+                    </li>
+                    <li>
+                        The order and the location of configuration-information works
+                        accross various J2EE containers
+                    </li>
+                </ul>
+            </li>
+            <li>Simplified remoting
+                <ul>
+                    <li>
+                        Optional implicit context passing to cleanly add technical 
+                        context with remote method invocations (e.g. to add a 
+                        security principal or the sub-company on whose behalf a 
+                        request is being made)
+                    </li>
+                    <li>Remote a POJO as SLSB or SFSB, remote a POJO via SOAP</li>
+                    <li>
+                        Clean remoting support for interfaces that lack a 
+                        RemoteException in their interface where it's required
+                    </li>
+                </ul>
+            </li>
+            <li>A light daemon manager service</li>
+            <li>Various improvements
+                <ul>
+                    <li>
+                        Make the active beans and their configuration visible in JMX
+                    </li>
+                    <li>
+                        A light exception handling framework that implements a 
+                        safety facade
+                    </li>
+                    <li>
+                        Simplified configuration of attribute-interceptor mappings
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div>
+        More information
+        <a href="documentation.html" target="_self">
+            <img src="images/elca_goto4.gif" alt="Documentation" width="15" 
+                height="11" border="0"/>
+        </a>
+    </div>
+    <div>
+        <h1>You are new to EL4J?</h1>
+        <ul>
+            <li>
+                Read the <a href="documentation.html">quick start information</a>
+            </li>
+            <li>Browse the <a href="documentation.html">documentation</a></li>
+            <li>
+                <a href="http://sourceforge.net/projects/el4j">Download</a> the 
+                latest releases
+            </li>
+        </ul>
+    </div>
+#parse("$website_templates_directory/includes/last_changed_copyright.include.vm")
+</div>
+<div id="RightColumn">
+#parse("$website_templates_directory/includes/news.include.vm")
+#parse("$website_templates_directory/includes/related_projects.include.vm")
+#parse("$website_templates_directory/includes/sponsor.include.vm")
+</div>
+</body>
+</html>

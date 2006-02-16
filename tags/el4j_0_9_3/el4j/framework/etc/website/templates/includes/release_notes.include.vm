@@ -1,0 +1,397 @@
+    <div>
+        <h1>RELEASE NOTES</h1>
+        
+        <h2>0.9.3 (16/02/2006)</h2>
+        <h3>Hello world project added</h3>
+        <dl>
+            <dt>Template to start new projects and update existing projects.</dt>
+        </dl>
+        <h3>General framework</h3>
+        <dl>
+            <dt>GPL version in EL4J java header explicitly set to GPL version 2.0.</dt>
+            <dt>Problem with javadoc titles solved for sets refdb-modules and refdb-tests.</dt>
+            <dt>Checkstyle check suppression filters added. Deprecated checks disabled.</dt>
+            <dt>Rmi port changed from 1099 to 8090 to circumvent problem with Microsoft Outlook.</dt>
+            <dt>
+                Environment varibale <code>db.name</code> introduced. Default value is <code>db2</code> 
+                (rationale for the default: we use apache derby database, which is
+                compatible with DB2).
+            </dt>
+            <dt>Command line hook improved.</dt>
+            <dt>EL4Ant quick reference sheet added.</dt>
+        </dl>
+        <h3>Framework modules</h3>
+        <dl>
+            <dt>module-core (binary version is 1.3)</dt>
+                <dd>IBatis stuff moved to separate module with name <b>module-ibatis</b>.</dd>
+                <dd>List property merge configurer can now prepend and append new values to lists.</dd>
+                <dd>
+                    Refresh property override configurer added to circumvent problem with 
+                    abstract application context. 
+                    See <a href="http://opensource2.atlassian.com/projects/spring/browse/SPR-1657">
+                    http://opensource2.atlassian.com/projects/spring/browse/SPR-1657</a>
+                </dd>
+                <dd>Query object can now belong to a specific bean class.</dd>
+                <dd>Query object event can now contain multiple query objects.</dd>
+                <dd>Method added to collection util class.</dd>
+            <dt>module-ibatis added (binary verison is 1.0)</dt>
+                <dd>
+                    Callback classes moved from package 
+                    <code>ch.elca.el4j.services.persistence.ibatis</code> to
+                    <code>ch.elca.el4j.services.persistence.ibatis.callback</code>
+                </dd>
+                <dd>
+                    Dao classes moved from package 
+                    <code>ch.elca.el4j.services.persistence.generic.dao</code> to
+                    <code>ch.elca.el4j.services.persistence.ibatis.dao</code>
+                </dd>
+            <dt>module-hibernate added (binary verison is 1.0)</dt>
+                <dd>Contains no java files, just configuration files.</dd>
+            <dt>module-daemon_manager (binary verison is 1.2)</dt>
+                <dd>Dependency to Java Service Wrapper jar added.</dd>
+                <dd>Abstract daemon manager controller class for Java Service Wrapper added.</dd>
+                <dd>
+                    Ordered startup and shutdown of daemons in daemon manager possible
+                    (Interface Daemon extends interface Ordered (of Spring)).
+                </dd>
+                <dd>Daemon bean factory added. Can be used to instantiate the same daemon multiple times.</dd>
+            <dt>module-daemon_manager-tests (no binary version)</dt>
+                <dd>Test added for new daemon manager features.</dd>
+            <dt>module-daemon_manager-demos (no binary version)</dt>
+                <dd>Demo for Java Service Wrapper added.</dd>
+                <dd>Demo improved for new daemon manager features.</dd>
+            <dt>module-env (binary verison is 1.1)</dt>
+                <dd>Property placeholder configurer ordered (value -2).</dd>
+                <dd>
+                    Sceanario added to be able to use env properties with lazy property
+                    override configurer. Is ordered (value -1) and will be loaded after
+                    property placeholder configurer.
+                </dd>
+            <dt>module-spring_rcp (binary verison is 1.1)</dt>
+                <dd>Extensive documentation added (in refererence doc pdf).</dd>
+                <dd>General configuration added.</dd>
+                <dd><code>String to *</code> and <code>* to string</code> converters added.</dd>
+                <dd>Bean presenter interface introduced. No more dependency on abstract bean view.</dd>
+                <dd>Message keywords refactored.</dd>
+                <dd>Binder added to display <code>java.lang.Boolean</code> with three radio buttons.</dd>
+                <dd>Page component added to group page components. Default implementation groups them in a <code>javax.swing.JPanel</code>.</dd>
+                <dd>Interface group- and layout-descriptor added to arrange page components on a page.</dd>
+                <dd>Interface page layout builder improved.</dd>
+                <dd>LookupViewDescriptor moved to package <code>ch.elca.el4j.services.gui.richclient.views.descriptors.impl</code></dd>
+                <dd>AbstractBeanView renamed to AbstractBeanTableView.</dd>
+                <dd>AbstractView implements group- and layout-descriptor.</dd>
+                <dd>Method <code>createControlOnce</code> of AbstractView removed. Use method <code>createControl</code> instead.</dd>
+                <dd>Comparison search item added.</dd>
+                <dd>Unfocusable table cell renderers added.</dd>
+        </dl>
+        <h3>Framework applications</h3>
+        <dl>
+            <dt>common-database (binary verison is 1.1)</dt>
+                <dd>Dependency to <b>module-env</b> added for easier configuration.</dd>
+                <dd>Configuration files moved from <code>mandatory</code> to <code>scenarios</code> and improved.</dd>
+            <dt>keyword-core (no binary version)</dt>
+                <dd>Dependency to <b>module-env</b> and <b>module-ibatis</b> added.</dd>
+                <dd>Configuration files moved from <code>mandatory</code> to <code>scenarios</code>.</dd>
+            <dt>keyword-core-tests (no binary version)</dt>
+                <dd>Configuration files moved from <code>mandatory</code> to <code>scenarios</code> and improved. Configurations for datasource and IBatis were split up.</dd>
+                <dd>TestCaseBase renamed to AbstractTestCaseBase, config locations adapted and default constructor hidden.</dd>
+            <dt>refdb-core (no binary version)</dt>
+                <dd>Configuration files moved from <code>mandatory</code> to <code>scenarios</code>.</dd>
+            <dt>refdb-core-tests (no binary version)</dt>
+                <dd>Configuration files moved from <code>mandatory</code> to <code>scenarios</code> and improved. Configurations for datasource and IBatis were split up.</dd>
+                <dd>TestCaseBase renamed to AbstractTestCaseBase, config locations adapted and default constructor hidden.</dd>
+            <dt>refdb-gui (no binary version)</dt>
+                <dd>Direct dependency to <b>module-env</b> removed.</dd>
+                <dd>
+                    Configuration files moved from <code>mandatory</code> to <code>scenarios</code> and improved.
+                    Configurations for datasource and IBatis were split up. Configuration for 
+                    SpringRCP reorganized and parts moved to <b>module-springrcp</b>. See doc of 
+                    <b>module-springrcp</b>.</dd>
+                <dd>Application start classes improved.</dd>
+                <dd>Service broker to access reference service added.</dd>
+                <dd>Bean presenter interface introduced.</dd>
+                <dd>Dialog and wizard classes added and improved.</dd>
+                <dd>Rule source corrected.</dd>
+        </dl>
+
+
+        <h2>0.9.2 (05/01/2006)</h2>
+        <h3>SourceForge Change Requests CLOSED</h3>
+        <dl>
+            <dt>1345770</dt>
+                <dd>Join of deamons always run in timeout</dd>
+            <dt>1339539</dt>
+                <dd>Add key information in CoreNotificationHelper</dd>
+        </dl>
+        <h3>General framework</h3>
+        <dl>
+            <dt>Moved from EL4Ant 0.9.1 to 0.9.2.</dt>
+            <dt>Added application modules (Demo application & common modules).</dt>
+            <dt>Plugin declarations cleaned up. All plugins are now configured in one file (plugin.xml).</dt>
+            <dt>Plugin onlinelib can now be turned off via the command line.</dt>
+            <dt>Plugin javadoc has now its own stylesheet for the generated javadoc.</dt>
+            <dt>Module declarations (one module.xml per module) moved into module directory and attribute path of element module removed in xml file.</dt>
+            <dt>Weblogic environment files adapted and added.</dt>
+            <dt>Checkstyle, Emma and JUnit XSL improved for dynamic website generation.</dt>
+            <dt>EL4J java header corrected.</dt>
+            <dt>Hook manifest section config renamed to el4j-config to prevent errors.</dt>
+            <dt>Added website parts for dynamic generation of project website.</dt>
+            <dt>Ant notification script added to inform developers by mail about junit test results. This can be used for daily automatic tests.</dt>
+        </dl>
+        <h3>Framework modules</h3>
+        <dl>
+            <dt>module-core (binary verison is 1.2)</dt>
+                <dd>Search service added.</dd>
+                <dd>Key information of a dto added in log and error message in class ConvenienceSqlMapClientTemplate.</dd>
+                <dd>Method getKeyAsObject added in interface PrimaryKeyObject.</dd>
+                <dd>Spring version moved from 1.2.5 to 1.2.6.</dd>
+                <dd>Patched IBatis version moved from cvs state of 19.09.05 to 23.12.05.</dd>
+                <dd>Patched Commons Attributes version moved from cvs state of 01.01.05 to 29.11.05.</dd>
+                <dd>Manifest section config renamed to el4j-config to prevent errors.</dd>
+            <dt>module-spring_rcp module added (binary verison is 1.0)</dt>
+                <dd>Spring RCP extensions and debugged classes.</dd>
+            <dt>module-daemon_manager (binary verison is 1.1)</dt>
+                <dd>Bug corrected.</dd>
+            <dt>module-daemon_manager-demos (no binary version)</dt>
+                <dd>Dependency to module-jmx added to have jmx demo.</dd>
+                <dd>Console will be stopped correctly now.</dd>
+            <dt>module-daemon_manager-tests (no binary version)</dt>
+                <dd>Sleep time corrected in test.</dd>
+            <dt>module-jmx (binary verison is 1.2)</dt>
+                <dd>Own css stylesheet used in html adapter.</dd>
+                <dd>As demo module-daemon_manager-demos is used.</dd>
+            <dt>module-remoting_and_interface_enrichment (binary verison is 1.2)</dt>
+                <dd>Hessian version moved from 2.1.12 to 3.0.13.</dd>
+            <dt>module-remoting_and_interface_enrichment-tests (no binary version)</dt>
+                <dd>Log output reduced.</dd>
+                <dd>File web.xml corrected.</dd>
+            <dt>module-web (binary verison is 1.2)</dt>
+                <dd>Default web page added.</dd>
+        </dl>
+        <h3>Framework applications</h3>
+        <dl>
+            <dt>common-database module added (binary verison is 1.0)</dt>
+                <dd>Configuration module for database access. Supported are Oracle and DB2.</dd>
+            <dt>keyword-core module added (no binary version)</dt>
+                <dd>Core part of the keyword demo application.</dd>
+                <dd>Contains the business and data access layer of this demo application.</dd>
+            <dt>keyword-core-tests module added (no binary version)</dt>
+                <dd>Tests for keyword-core.</dd>
+            <dt>refdb-core module added (no binary version)</dt>
+                <dd>Core part of the reference database demo application.</dd>
+                <dd>Extension of keyword-core.</dd>
+                <dd>Contains the business and data access layer of this demo application.</dd>
+            <dt>refdb-core-tests module added (no binary version)</dt>
+                <dd>Tests for refdb-core.</dd>
+            <dt>refdb-gui module added (no binary version)</dt>
+                <dd>Presentation layer of the reference database demo application.</dd>
+                <dd>Currently in development. It contains only the gui part for the keyword management of keyword-core.</dd>
+                <dd>Demo application can be executed standalone (fat client, only database needed), or distributed (thin client, database and webserver needed). The used remoting protocol is Hessian.</dd>
+        </dl>
+        <h3>Build system support</h3>
+        <dl>
+            <dt>remoting_ejb plugin</dt>
+                <dd>Weblogic plugin part moved from version 8.1 to 9.0.</dd>
+            <dt>parallel plugin</dt>
+                <dd>Sleep time added to solve issue with Weblogic.</dd>
+        </dl>
+
+
+        <h2>0.9.1 (27/10/2005)</h2>
+        <h3>Framework modules</h3>
+        <dl>
+            <dt>all modules</dt>
+                <dd>Prepared for open sourcing</dd>
+            <dt>module-web (no new binary version)</dt>
+                <dd>XpfFilter renamed to XmlFilter</dd>
+        </dl>
+        <h3>Framework plugins</h3>
+        <dl>
+            <dt>all modules</dt>
+                <dd>Prepared for open sourcing</dd>
+            <dt>j2ee</dt>
+                <dd>Plugin moved to EL4Ant</dd>
+        </dl>
+
+
+        <h2>0.9 (23/09/2005)</h2>
+        <h3>Framework modules</h3>
+        <dl>
+            <dt>module-core (binary verison is 1.1)</dt>
+                <dd>BeanTypeAutoProxyCreator for autoproxying beans based on their type.</dd>
+                <dd>
+                    JNDI property override and placeholder configurers used to adapt the
+                      configuration by values retrieved through JNDI.
+                  </dd>
+                <dd>
+                    Application context that resolves resources based on manifest file items
+                      (LeafApplicationContext has been moved to ModuleApplicationContext).
+                  </dd>
+                <dd>
+                    Coding support classes added. Only parts which are not covered by spring
+                      classes were added.
+                  </dd>
+                <dd>
+                    Implicit context passing generalized. Get and pushed context must now be 
+                      an object.
+                  </dd>
+                <dd>
+                    Business exceptions has been deprecated. Subclasses of DataAccessException
+                      must now be used. Only the InsertionFailureException is written by EL4J
+                      others are from the spring framework.
+                  </dd>
+                <dd>
+                    Useful notification methods added in CoreNotificationHelper, like the the 
+                      one to notify a misconfiguration. Should be used in afterPropertiesSet 
+                      method for example.
+                  </dd>
+                <dd>Convenience dao class added for Ibatis SqlMaps</dd>
+                <dd>
+                    Abstract dtos are now solved with integer as optimistic locking version 
+                      and integer or string as primary key.
+                  </dd>
+                <dd>
+                    Support added for easy creation of an own intercepter. Interception is
+                     configurated by using commons attributes.
+                 </dd>
+                <dd>Interface enrichment can now handle also methods with arrays</dd>
+            <dt>module-core-tests (no binary version)</dt>
+                <dd>Tests added for new features</dd>
+                <dd>Adapted to EL4Ant</dd>
+            <dt>module-core_integration-tests (no binary version)</dt>
+                <dd>Integration tests for module-core</dd>
+                <dd>Tests added for new features</dd>
+            <dt>module-daemon_manager (binary verison is 1.0)</dt>
+                <dd>
+                    Used to manage deamons. Inspired from orchestra thread manager. Each 
+                      demaon belongs to a demaon manager which starts and stops them. Demaons
+                      can be executed periodically or with a defined sleep time inbetween.
+                </dd>
+            <dt>module-daemon_manager-tests (no binary version)</dt>
+                <dd>Tests for module-daemon_manager</dd>
+            <dt>module-daemon_manager-demos (no binary version)</dt>
+                <dd>Demo for module-daemon_manager</dd>
+            <dt>module-env (binary verison is 1.0)</dt>
+                <dd>
+                    Used to replace place holders in configuration files with the environment
+                      defined through EL4Ant.
+                  </dd>
+            <dt>module-env-tests (no binary version)</dt>
+                <dd>Tests for module-env</dd>
+            <dt>module-exception_handling (binary verison is 1.0)</dt>
+                <dd>Interceptor to handle exceptions</dd>
+                <dd>Configurable handler hierarchy</dd>
+                <dd>Safety facade to handle implementation-specific exceptions</dd>
+                <dd>Context exception handler to handle exceptions depending on the current context</dd>
+                <dd>Provides default handler strategies (retry, transform, log, rethrow)</dd>
+            <dt>module-exception_handling-tests (no binary version)</dt>
+                <dd>Tests for module-exception_handling</dd>
+            <dt>module-executable_distribution-demos (no binary version)</dt>
+                <dd>Demonstrates the use of executable distributions</dd>
+            <dt>module-jmx (binary verison is 1.1)</dt>
+                <dd>
+                    Used to support developpers in debugging code by providing a real time 
+                      view of the beans and their configurations.
+                  </dd>
+            <dt>module-jmx-tests (no binary version)</dt>
+                <dd>Tests for module-jmx</dd>
+            <dt>module-light_statistics (binary verison is 1.0)</dt>
+                <dd>Interceptor to measure invocation times</dd>
+            <dt>module-light_statistics-demos (no binary version)</dt>
+                <dd>Demo for module-light_statistics</dd>
+            <dt>module-remoting_and_interface_enrichment (binary verison is 1.1)</dt>
+                <dd>Soap support added. Also context passing to Leaf2 is possible</dd>
+            <dt>module-remoting_and_interface_enrichment-tests (no binary version)</dt>
+                <dd>Tests for soap added</dd>
+                <dd>Tests improved</dd>
+            <dt>module-remoting_and_interface_enrichment-demos (no binary version)</dt>
+                <dd>Soap added to benchmark</dd>
+            <dt>module-remoting_ejb (binary verison is 1.0)</dt>
+                <dd>Wraps POJOs into session beans (stateful or stateless)</dd>
+            <dt>module-remoting_ejb-tests (no binary version)</dt>
+                <dd>Tests for module-remoting_ejb</dd>
+            <dt>module-security</dt>
+                <dd>
+                    Besides the Acegi Security System library, this module contains an 
+                      AuthenticationServiceContextPasser and an AuthenticationService which 
+                      allows the user to transparently log in to a server and transparently 
+                      invoke the server's methods.
+                  </dd>
+            <dt>module-security-tests (no binary version)</dt>
+                <dd>Tests for module-security</dd>
+            <dt>module-web (binary verison is 1.1)</dt>
+                <dd>
+                    Web application context that resolves resources based on manifest file
+                      items.
+                  </dd>
+                <dd>Convenience classes added</dd>
+        </dl>
+
+        <h3>Framework plugins</h3>
+        <dl>
+            <dt>remoting_ejb</dt>
+                <dd>Generates EJB wrappers for POJOs</dd>
+                <dd>Supports JBoss, WebLogic, WebSphere</dd>
+            <dt>environment</dt>
+                <dd>Adds support for environments</dd>
+            <dt>parallel</dt>
+                <dd>Executes existing targets in parallel</dd>
+            <dt>distribution</dt>
+                <dd>
+                    Adds support for creating executable distributions without EL4Ant 
+                      dependencies.
+                  </dd>
+            <dt>j2ee</dt>
+                <dd>
+                    EL4Ant j2ee plugin must be replaced with our j2ee plugin to have
+                      environment support.
+                  </dd>
+        </dl>
+
+
+        <h2>Leaf 3.0 (07/04/2005)</h2>
+        <h3>Framework modules</h3>
+        <dl>
+            <dt>module-core (binary verison is 1.0)</dt>
+                <dd>Simplified transaction attributes</dd>
+                <dd>Locator for defined beans</dd>
+                <dd>
+                    Configurator to merge content of bean definitions in xml and properties file.
+                      Existing lists can now be extended, not only replaced.
+                  </dd>
+                <dd>Own application context for better control and more transparency of loaded config</dd>
+                <dd>Additional tier for implicit context passing</dd>
+                <dd>Defined base and often used exceptions</dd>
+                <dd>Abstract classes and factories for DTO usage</dd>
+                <dd>Primary key generation</dd>
+                <dd>General exceptions to translate SqlExceptions to more useable RuntimeExceptions</dd>
+                <dd>Ibatis SqlMaps callback handlers to handle large objects &lt;-&gt; java types</dd>
+                <dd>Commons Attributes collector for collection on implementation and interface</dd>
+                <dd>Coding utils</dd>
+                <dd>Symmetric encryption</dd>
+                <dd>Interface enrichment; used to generate a new interface based on a given interface on runtime</dd>
+                <dd>Helper to load another log4j configuration on runtime</dd>
+                <dd>
+                    Configuration presets for use of transaction mechanism with Commons Attributes, 
+                      set for data access with Ibatis SqlMaps and connection pool, Apache DBCP.
+                  </dd>
+            <dt>module-core-tests (no binary version)</dt>
+                <dd>Tests for module-core</dd>
+            <dt>module-remoting_and_interface_enrichment (binary verison is 1.0)</dt>
+                <dd>
+                    Used to easily switch business logic from none distributed to distributed and back.
+                      Available protocols are rmi, burlap and hessian.
+                  </dd>
+                <dd>Context will be implicitly passed. Possablility to turn it off</dd>
+            <dt>module-remoting_and_interface_enrichment-tests (no binary version)</dt>
+                <dd>Tests for module-remoting_and_interface_enrichment</dd>
+            <dt>module-remoting_and_interface_enrichment-demos (no binary version)</dt>
+                <dd>Demo of all protocols of module-remoting_and_interface_enrichment</dd>
+            <dt>module-web (binary verison is 1.0)</dt>
+                <dd>Filter to delegate requests to a spring bean</dd>
+                <dd>Xpf filter to convert xml to html pages</dd>
+                <dd>Struts action to prevent double submission of a form</dd>
+                <dd>General struts exception handler</dd>
+                <dd>Transformer to convert not xml conform characters</dd>
+        </dl>
+    </div>

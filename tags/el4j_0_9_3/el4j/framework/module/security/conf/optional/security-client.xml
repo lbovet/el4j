@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+    Spring bean configuration file to access authentication service.
+-->
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+    
+    <bean id="authenticationService" 
+        class="ch.elca.el4j.services.security.authentication.DefaultAuthenticationService" 
+        singleton="false">
+        <property name="authenticationManager">
+            <ref bean="authenticationManager"/>
+        </property>
+    </bean>
+    
+    <bean id="authenticationServiceContextPasser" 
+        class="ch.elca.el4j.services.security.authentication.AuthenticationServiceContextPasser">
+        <property name="authenticationService">
+            <ref local="authenticationService"/>
+        </property>
+        <property name="implicitContextPassingRegistry">
+            <ref bean="implicitContextPassingRegistry"/>
+        </property>
+    </bean>
+
+</beans>

@@ -1,0 +1,31 @@
+#set($title = "EL4J, the Extension Library for the J2EE - License")
+#set($navigation = "license")
+#parse("$website_templates_directory/includes/header.include.vm")
+#parse("$website_templates_directory/includes/navigation.include.vm")
+<div id="Content">
+    <div>
+        <h1>LICENSE</h1>
+        <p>
+            For the time being, EL4J is published under the
+            <a href="http://www.gnu.org/licenses/">GPL version 2.0</a>.
+        </p>
+        <p>
+            We also have plans to try to submit parts of EL4J as contribution
+            to the Spring framework. Should these be accepted as such, they will
+            of course be made available under the
+            <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache licence</a>
+            as used by Spring.
+        </p>
+        <p>
+            Please contact <a href="mailto:info@elca.ch">info@elca.ch</a> for a
+            commercial license.
+        </p>
+    </div>
+#parse("$website_templates_directory/includes/last_changed_copyright.include.vm")
+</div>
+<div id="RightColumn">
+#parse("$website_templates_directory/includes/related_projects.include.vm")
+#parse("$website_templates_directory/includes/sponsor.include.vm")
+</div>
+</body>
+</html>

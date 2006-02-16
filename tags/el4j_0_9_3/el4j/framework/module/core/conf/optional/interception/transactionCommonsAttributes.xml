@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!-- 
+    Spring bean configuration file for automatic interception of methods where
+    transaction commons attributes are defined.
+
+    Needed beans which are not defined in this file:
+       * transactionManager
+-->
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <!--
+        General AOP definitions.
+    -->
+    <bean id="transactionAutoproxy" 
+        class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
+        <property name="proxyTargetClass">
+            <!-- 
+                false: 
+                    Jdk proxies will be used. 
+                    Only interface methods will be intercepted.
+                    
+                true: 
+                    Cglib will be used to intercept methods. 
+                    Intercepted beans must have a default constructor and 
+                    must not be final.
+            -->
+            <value>false</value>
+        </property>
+    </bean>
+    
+    <!--
+        Transaction configurations.
+    -->
+    <bean id="transactionAdvisor" 
+        class="org.springframework.transaction.interceptor.TransactionAttributeSourceAdvisor">
+        <constructor-arg>
+            <ref local="transactionInterceptor"/>
+        </constructor-arg>
+    </bean>
+    <bean id="transactionInterceptor" 
+        class="org.springframework.transaction.interceptor.TransactionInterceptor">
+        <property name="transactionManager">
+            <ref bean="transactionManager"/>
+        </property>
+        <property name="transactionAttributeSource">
+            <ref local="transactionAttributeSource"/>
+        </property>
+    </bean>
+    <bean id="transactionAttributeSource" 
+        class="org.springframework.transaction.interceptor.AttributesTransactionAttributeSource">
+        <constructor-arg>
+            <ref local="attributesCollector"/>
+        </constructor-arg>
+    </bean>
+    
+    <!--
+        General attribute definitions.
+    -->
+    <bean id="attributesCollector" 
+        class="ch.elca.el4j.util.attributes.AttributesCollector">
+        <property name="attributes">
+            <ref local="commonsAttributes"/>
+        </property>
+    </bean>
+    <bean id="commonsAttributes" 
+        class="org.springframework.metadata.commons.CommonsAttributes"/>
+</beans>

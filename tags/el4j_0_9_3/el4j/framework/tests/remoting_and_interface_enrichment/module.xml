@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!-- project definition -->
+<ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" xmlns:ant="antlib:org.apache.tools.ant">
+    <module name="module-remoting_and_interface_enrichment-tests">
+        <eu name="gui">
+            <attribute name="junit.runnable" value="true"/>
+            <attribute name="compile.jar.excludes" value="**/server/web/*"/>
+            <hook name="pre.start.[module].[eu]" target="runtime.hook.parallel-web.start" if="disttest"/>
+            <hook name="post.start.[module].[eu]" target="runtime.hook.parallel-web.stop" if="disttest"/>
+            <attribute name="parallel-web.deploytarget" value="deploy.war.module.eu.module-remoting_and_interface_enrichment-tests.web"/>
+        </eu>
+        <eu name="web">
+            <attribute name="runtime.runnable" value="true"/>
+            <attribute name="compile.jar.excludes" value="**/client/*,**/server/app/*"/>
+            <attribute name="j2ee.war.application"/>
+            <attribute name="runtime.command.creator" value="runtime.command.creator.web"/>
+        </eu>
+        <attribute name="set" value="framework-tests"/>
+        <dependency module="module-remoting_and_interface_enrichment"/>
+        <dependency module="module-env"/>
+        <dependency module="module-web"/>
+    </module>
+</ant:project>

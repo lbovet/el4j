@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="refdb-core">
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <!-- 
+        File related invocations
+    -->
+    <typeAlias 
+        type="com.ibatis.sqlmap.engine.type.BlobTypeHandlerCallback"
+        alias="blobHandler" />
+    
+    <resultMap id="file" class="ch.elca.el4j.apps.refdb.dto.FileDto">
+        <result property="key" column="KEYID"/>
+        <result property="keyToReference" column="KEYTOREFERENCE"/>
+        <result property="name" column="NAME"/>
+        <result property="mimeType" column="MIMETYPE"/>
+        <result property="size" column="CONTENTSIZE"/>
+        <result property="content" column="CONTENT" typeHandler="blobHandler"/>
+        <result property="optimisticLockingVersion" 
+            column="OPTIMISTICLOCKINGVERSION"/>
+    </resultMap>
+
+    <statement id="getFileByKey" parameterClass="int" resultMap="file">
+        select KEYID, KEYTOREFERENCE, NAME, MIMETYPE, CONTENTSIZE, CONTENT, 
+            OPTIMISTICLOCKINGVERSION from FILES where KEYID=#value# 
+    </statement>
+
+    <statement id="getFilesByName"
+        parameterClass="java.lang.String" resultMap="file">
+        select KEYID, KEYTOREFERENCE, NAME, MIMETYPE, CONTENTSIZE, CONTENT, 
+            OPTIMISTICLOCKINGVERSION from FILES where NAME=#value# 
+    </statement>
+    
+    <statement id="getFilesByReference" 
+        parameterClass="int" resultMap="file">
+        select KEYID, KEYTOREFERENCE, NAME, MIMETYPE, CONTENTSIZE, CONTENT, 
+            OPTIMISTICLOCKINGVERSION from FILES where KEYTOREFERENCE=#value# 
+    </statement>
+
+    <statement id="getAllFiles" resultMap="file">
+        select KEYID, KEYTOREFERENCE, NAME, MIMETYPE, CONTENTSIZE, CONTENT, 
+            OPTIMISTICLOCKINGVERSION from FILES
+    </statement>
+    
+    <delete id="deleteFile" parameterClass="int">
+        delete from FILES where KEYID=#value#
+    </delete>
+    
+    <!-- 
+        FileDescriptorView related invocations
+    -->
+    <resultMap id="fileDescriptorView"
+        class="ch.elca.el4j.apps.refdb.dto.FileDescriptorView">
+        <result property="key" column="KEYID"/>
+        <result property="keyToReference" column="KEYTOREFERENCE"/>
+        <result property="name" column="NAME"/>
+        <result property="mimeType" column="MIMETYPE"/>
+        <result property="size" column="CONTENTSIZE"/>
+        <result property="optimisticLockingVersion" 
+            column="OPTIMISTICLOCKINGVERSION"/>
+    </resultMap>
+
+    <statement id="getFileDescriptorViewsByReference" 
+        parameterClass="int" resultMap="fileDescriptorView">
+        select KEYID, KEYTOREFERENCE, NAME, MIMETYPE, CONTENTSIZE, 
+            OPTIMISTICLOCKINGVERSION from FILES where KEYTOREFERENCE=#value# 
+    </statement>
+</sqlMap>

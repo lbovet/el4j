@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- Source: $Source$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+    
+    <!-- 
+        Binds bean properties to gui components.
+    -->
+    <bean id="binderSelectionStrategy" 
+        class="org.springframework.richclient.form.binding.swing.SwingBinderSelectionStrategy">
+        <property name="bindersForPropertyTypes">
+            <map>
+                <entry>
+                    <key><value type="java.lang.Class">java.lang.Boolean</value></key>
+                    <bean class="ch.elca.el4j.services.gui.richclient.forms.binding.ThreeStateBooleanBinder"/>
+                </entry>
+            </map>
+        </property>
+    </bean>
+</beans>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" 
+    xmlns:ant="antlib:org.apache.tools.ant">
+
+    <module name="common-database">
+        <!-- Working set -->
+        <attribute name="set" value="common-modules"/>
+        
+        <!-- Binary version -->
+        <attribute name="binrelease.version" value="1.1"/>
+
+        <!-- DBCP libraries -->
+        <dependency jar="commons-dbcp-1.2.1.jar"/>
+        <dependency jar="commons-pool-1.2.jar"/>
+        
+        <!-- Oracle driver -->
+        <dependency jar="ojdbc14_g-10.2.0.1.0.jar"/>
+        
+        <!-- Universal IBM driver -->
+        <dependency jar="db2jcc.jar"/>
+        <dependency jar="db2jcc_license_c.jar"/>
+        
+        <!-- Module dependencies -->
+        <dependency module="module-env"/>
+    </module>
+    
+</ant:project>
