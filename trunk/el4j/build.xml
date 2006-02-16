@@ -129,6 +129,8 @@
             tofile="${docs.path.pdf}/ReferenceDoc.pdf" overwrite="true"/>
         <copy file="framework/etc/website/resources/docs/pdf/EL4JFeatures.pdf"
             tofile="${docs.path.pdf}/EL4JFeatures.pdf" overwrite="true"/>
+        <copy file="framework/etc/website/resources/docs/pdf/EL4AntQuickReferenceSheet_v1_0.pdf"
+            tofile="${docs.path.pdf}/EL4AntQuickReferenceSheet_v1_0.pdf" overwrite="true"/>
         <copy todir="${docs.path.javadoc}">
             <fileset dir="framework/dist/website/javadoc" includes="**/*"/>
         </copy>
