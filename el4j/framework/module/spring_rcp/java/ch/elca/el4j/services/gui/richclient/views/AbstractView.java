@@ -30,6 +30,7 @@ import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.richclient.application.Application;
 import org.springframework.richclient.application.PageComponent;
 import org.springframework.richclient.application.PageComponentDescriptor;
+import org.springframework.richclient.application.ViewDescriptor;
 
 import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.GroupDescriptor;
 import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.LayoutDescriptor;
@@ -285,5 +286,12 @@ public abstract class AbstractView
             GroupDescriptor groupDescriptor = (GroupDescriptor) descriptor;
             groupDescriptor.setConfiguredGroup(group);
         }
+    }
+    
+    /**
+     * Requests page to set this view as active page component.
+     */
+    protected void requestActivePageComponent() {
+        getActiveWindow().getPage().showView((ViewDescriptor) getDescriptor());
     }
 }
