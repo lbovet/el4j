@@ -115,4 +115,18 @@ public abstract class AbstractCriteria implements Criteria {
     public final Byte getByteValue() {
         return (Byte) getValue();
     }
+    
+    /**
+     * @return Returns the double value of this criteria.
+     */
+    public final Double getDoubleValue() {
+        return (Double) getValue();
+    }
+    
+    /**
+     * @return Returns the float value of this criteria.
+     */
+    public final Float getFloatValue() {
+        return (Float) getValue();
+    }
 }
