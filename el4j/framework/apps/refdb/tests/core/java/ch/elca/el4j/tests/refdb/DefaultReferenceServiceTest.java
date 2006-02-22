@@ -17,6 +17,7 @@
 package ch.elca.el4j.tests.refdb;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -838,54 +839,118 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
     public void testSearchReferences() {
         ReferenceService service = getReferenceService();
 
-        BookDto book = new BookDto();
-        book.setName("UML Distilled");
-        book.setDescription(
+        KeywordDto kUml = createAndSaveKeyword(
+            "uml", "Unified modeling language.", service);
+        KeywordDto kLanguage = createAndSaveKeyword(
+            "language", "Program or design language.", service);
+        KeywordDto kJsp = createAndSaveKeyword(
+            "jsp", "Java server pages.", service);
+        KeywordDto kJava = createAndSaveKeyword(
+            "java", "Java program language.", service);
+        KeywordDto kStruts = createAndSaveKeyword(
+            "struts", "Web MVC product.", service);
+        KeywordDto kDictionary = createAndSaveKeyword(
+            "dictionary", "Dictionary.", service);
+        KeywordDto kJ2ee = createAndSaveKeyword(
+            "j2ee", "Java enterprise library.", service);
+        KeywordDto kIbatis = createAndSaveKeyword(
+            "ibatis", "Apache IBatis software.", service);
+        KeywordDto kDeveloperguide = createAndSaveKeyword(
+            "developerguide", "Guide for developers.", service);
+        KeywordDto kBarcode = createAndSaveKeyword(
+            "barcode", "Machine readable string.", service);
+        KeywordDto k2d = createAndSaveKeyword(
+            "2d", "Two dimensions.", service);
+        KeywordDto kEnglish = createAndSaveKeyword(
+            "english", "English language.", service);
+        KeywordDto kGerman = createAndSaveKeyword(
+            "german", "German language.", service);
+        createAndSaveKeyword("zombie", "", service);
+        
+        
+        BookDto bUmlDistilled = new BookDto();
+        bUmlDistilled.setName("UML Distilled");
+        bUmlDistilled.setDescription(
             "A brief guide to the standard object modeling language.");
-        book.setIncomplete(false);
+        bUmlDistilled.setIncomplete(false);
+        List keywordsUmlDistilled = new ArrayList();
+        keywordsUmlDistilled.add(kUml);
+        keywordsUmlDistilled.add(kLanguage);
+        keywordsUmlDistilled.add(kEnglish);
+        bUmlDistilled.setKeywords(keywordsUmlDistilled);
 
-        BookDto book2 = new BookDto();
-        book2.setName("Beginning Jsp 2.0");
-        book2.setDescription(
+        BookDto bBeginningJsp2 = new BookDto();
+        bBeginningJsp2.setName("Beginning Jsp 2.0");
+        bBeginningJsp2.setDescription(
             "Build Web Applications Using Jsp, Java, and Struts.");
-        book2.setIncomplete(true);
+        bBeginningJsp2.setIncomplete(true);
+        List keywordsBeginningJsp2 = new ArrayList();
+        keywordsBeginningJsp2.add(kJ2ee);
+        keywordsBeginningJsp2.add(kJava);
+        keywordsBeginningJsp2.add(kJsp);
+        keywordsBeginningJsp2.add(kStruts);
+        keywordsBeginningJsp2.add(kEnglish);
+        bBeginningJsp2.setKeywords(keywordsBeginningJsp2);
 
-        BookDto book3 = new BookDto();
-        book3.setName("Zombie");
+        BookDto bZombie = new BookDto();
+        bZombie.setName("Zombie");
 
-        LinkDto link = new LinkDto();
-        link.setName("LEO Dictionary English-German");
-        link.setDescription(
+        LinkDto lLeoEngGer = new LinkDto();
+        lLeoEngGer.setName("LEO Dictionary English-German");
+        lLeoEngGer.setDescription(
             "An online dictionary to translate German to English and reverse.");
-        link.setIncomplete(false);
+        lLeoEngGer.setIncomplete(false);
+        List keywordsLeoEngGer = new ArrayList();
+        keywordsLeoEngGer.add(kEnglish);
+        keywordsLeoEngGer.add(kGerman);
+        keywordsLeoEngGer.add(kDictionary);
+        keywordsLeoEngGer.add(kLanguage);
+        lLeoEngGer.setKeywords(keywordsLeoEngGer);
 
-        LinkDto link2 = new LinkDto();
-        link2.setName("J2EE - JavaServer Pages Technology");
-        link2.setDescription("JavaServer Pages (JSP) technology provides "
+        LinkDto lJ2eeJsp = new LinkDto();
+        lJ2eeJsp.setName("J2EE - JavaServer Pages Technology");
+        lJ2eeJsp.setDescription("JavaServer Pages (JSP) technology provides "
             + "a simplified, fast way to create dynamic web content. "
             + "JSP technology enables rapid development of web-based "
             + "applications that are server- and platform-independent.");
-        link2.setIncomplete(true);
+        lJ2eeJsp.setIncomplete(true);
+        List keywordsJ2eeJsp = new ArrayList();
+        keywordsJ2eeJsp.add(kJ2ee);
+        keywordsJ2eeJsp.add(kJsp);
+        keywordsJ2eeJsp.add(kJava);
+        keywordsJ2eeJsp.add(kEnglish);
+        lJ2eeJsp.setKeywords(keywordsJ2eeJsp);
 
-        FormalPublicationDto formalPublication = new FormalPublicationDto();
-        formalPublication.setName("iBatis SqlMap 2.0 Developer Guide");
-        formalPublication.setDescription("This guide shows you how to "
+        FormalPublicationDto fSqlMaps2DevGuide = new FormalPublicationDto();
+        fSqlMaps2DevGuide.setName("iBatis SqlMap 2.0 Developer Guide");
+        fSqlMaps2DevGuide.setDescription("This guide shows you how to "
             + "develop an application using SqlMap 2.0.");
-        formalPublication.setIncomplete(true);
+        fSqlMaps2DevGuide.setIncomplete(true);
+        List keywordsSqlMaps2DevGuide = new ArrayList();
+        keywordsSqlMaps2DevGuide.add(kJava);
+        keywordsSqlMaps2DevGuide.add(kIbatis);
+        keywordsSqlMaps2DevGuide.add(kDeveloperguide);
+        keywordsSqlMaps2DevGuide.add(kEnglish);
+        fSqlMaps2DevGuide.setKeywords(keywordsSqlMaps2DevGuide);
 
-        FormalPublicationDto formalPublication2 = new FormalPublicationDto();
-        formalPublication2.setName("2D barcode PDF417");
-        formalPublication2.setDescription("Describse who a "
+        FormalPublicationDto f2dBarcodePdf417 = new FormalPublicationDto();
+        f2dBarcodePdf417.setName("2D barcode PDF417");
+        f2dBarcodePdf417.setDescription("Describse who a "
             + "PDF417 2D barcode is built-up.");
-        formalPublication2.setIncomplete(false);
+        f2dBarcodePdf417.setIncomplete(false);
+        List keywords2dBarcodePdf417 = new ArrayList();
+        keywords2dBarcodePdf417.add(k2d);
+        keywords2dBarcodePdf417.add(kBarcode);
+        keywords2dBarcodePdf417.add(kEnglish);
+        f2dBarcodePdf417.setKeywords(keywords2dBarcodePdf417);
 
-        service.saveReference(book);
-        service.saveReference(book2);
-        service.saveReference(book3);
-        service.saveReference(link);
-        service.saveReference(link2);
-        service.saveReference(formalPublication);
-        service.saveReference(formalPublication2);
+        service.saveReference(bUmlDistilled);
+        service.saveReference(bBeginningJsp2);
+        service.saveReference(bZombie);
+        service.saveReference(lLeoEngGer);
+        service.saveReference(lJ2eeJsp);
+        service.saveReference(fSqlMaps2DevGuide);
+        service.saveReference(f2dBarcodePdf417);
 
         List list;
         Iterator it;
@@ -903,9 +968,9 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         it = list.iterator();
         while (it.hasNext()) {
             ReferenceDto r = (ReferenceDto) it.next();
-            if (!(r.equals(book) 
-                || r.equals(link) 
-                || r.equals(formalPublication2))) {
+            if (!(r.equals(bUmlDistilled) 
+                || r.equals(lLeoEngGer) 
+                || r.equals(f2dBarcodePdf417))) {
                 fail("There was an unexpected reference.");
             }
         }
@@ -918,9 +983,9 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         it = list.iterator();
         while (it.hasNext()) {
             ReferenceDto r = (ReferenceDto) it.next();
-            if (!(r.equals(book2) || r.equals(link2)
-                || r.equals(formalPublication) 
-                || r.equals(formalPublication2))) {
+            if (!(r.equals(bBeginningJsp2) || r.equals(lJ2eeJsp)
+                || r.equals(fSqlMaps2DevGuide) 
+                || r.equals(f2dBarcodePdf417))) {
                 fail("There was an unexpected reference.");
             }
         }
@@ -934,9 +999,9 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         it = list.iterator();
         while (it.hasNext()) {
             ReferenceDto r = (ReferenceDto) it.next();
-            if (!(r.equals(book2) 
-                || r.equals(link2) 
-                || r.equals(formalPublication))) {
+            if (!(r.equals(bBeginningJsp2) 
+                || r.equals(lJ2eeJsp) 
+                || r.equals(fSqlMaps2DevGuide))) {
                 fail("There was an unexpected reference.");
             }
         }
@@ -950,7 +1015,7 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         it = list.iterator();
         while (it.hasNext()) {
             ReferenceDto r = (ReferenceDto) it.next();
-            if (!(r.equals(link2) || r.equals(formalPublication))) {
+            if (!(r.equals(lJ2eeJsp) || r.equals(fSqlMaps2DevGuide))) {
                 fail("There was an unexpected reference.");
             }
         }
@@ -964,12 +1029,77 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         it = list.iterator();
         while (it.hasNext()) {
             ReferenceDto r = (ReferenceDto) it.next();
-            if (!r.equals(link2)) {
+            if (!r.equals(lJ2eeJsp)) {
+                fail("There was an unexpected reference.");
+            }
+        }
+        
+        query = new QueryObject();
+        query.addCriteria(ComparisonCriteria.equals(
+            "keywords", kJava.getKey()));
+        list = service.searchReferences(query);
+        assertEquals("Unexpected number of references with keyword java.", 
+            3, list.size());
+        it = list.iterator();
+        while (it.hasNext()) {
+            ReferenceDto r = (ReferenceDto) it.next();
+            if (!(r.equals(bBeginningJsp2) || r.equals(lJ2eeJsp) 
+                || r.equals(fSqlMaps2DevGuide))) {
+                fail("There was an unexpected reference.");
+            }
+        }
+        
+        query = new QueryObject();
+        query.addCriteria(ComparisonCriteria.equals(
+            "keywords", kJava.getKey()));
+        query.addCriteria(LikeCriteria.caseInsensitive("description", "%WEB%"));
+        list = service.searchReferences(query);
+        assertEquals("Unexpected number of references with keyword java and "
+            + "description='WEB'.", 
+            2, list.size());
+        it = list.iterator();
+        while (it.hasNext()) {
+            ReferenceDto r = (ReferenceDto) it.next();
+            if (!(r.equals(bBeginningJsp2) || r.equals(lJ2eeJsp))) {
+                fail("There was an unexpected reference.");
+            }
+        }
+        
+        query = new QueryObject();
+        query.addCriteria(ComparisonCriteria.equals(
+            "keywords", kJava.getKey()));
+        query.addCriteria(ComparisonCriteria.equals(
+            "keywords", kStruts.getKey()));
+        query.addCriteria(LikeCriteria.caseInsensitive("description", "%WEB%"));
+        list = service.searchReferences(query);
+        assertEquals("Unexpected number of references with keyword java, "
+            + "keyword struts and description='WEB'.", 
+            1, list.size());
+        it = list.iterator();
+        while (it.hasNext()) {
+            ReferenceDto r = (ReferenceDto) it.next();
+            if (!r.equals(bBeginningJsp2)) {
                 fail("There was an unexpected reference.");
             }
         }
     }
 
+    /**
+     * Creates, saves and returns a keyword by using given parameters.
+     * 
+     * @param name Is the name of the keyword to create.
+     * @param description Is the description of the keyword to create.
+     * @param service Is the service where to save the created keyword.
+     * @return Returns the created and saved keyword.
+     */
+    protected KeywordDto createAndSaveKeyword(String name, String description, 
+        ReferenceService service) {
+        KeywordDto keyword = new KeywordDto();
+        keyword.setName(name);
+        keyword.setDescription(description);
+        return service.saveKeyword(keyword);
+    }
+    
     /**
      * This test adds a file and gets a FileDescriptorView. This view will be
      * modified and saved. The file will be get as normal file and as
