@@ -55,14 +55,15 @@
     
     <select id="searchFormalPublications" resultMap="formalPublication" 
         parameterClass="list">
-        select KEYID, NAME, HASHVALUE, DESCRIPTION, VERSION, INCOMPLETE, 
+        select distinct KEYID, NAME, HASHVALUE, DESCRIPTION, VERSION, INCOMPLETE, 
             WHENINSERTED, DOCUMENTDATE, AUTHORNAME, PUBLISHER, PAGENUM, 
-            OPTIMISTICLOCKINGVERSION from FORMALPUBLICATIONS, REFERENCESTABLE
+            OPTIMISTICLOCKINGVERSION
+            from REFERENCESTABLE, FORMALPUBLICATIONS
                 where KEYID=KEYTOREFERENCE
         <!--
             HACK!
             This will be replaced by an easier solution.
-            (MZE, 03/01/2006)
+            (MZE, 22/02/2006)
         -->
         <iterate prepend="and" conjunction="and">
             <isEqual property="[].type" compareValue="comparisonBoolean">
@@ -86,6 +87,16 @@
                     <isNotEqual property="[].caseSensitive" compareValue="true">
                         upper(DESCRIPTION) like upper(#[].stringValue#)
                     </isNotEqual>
+                </isEqual>
+            </isEqual>
+        </iterate>
+        <iterate prepend="and"
+            conjunction="and" >
+            <isEqual property="[].type" compareValue="comparisonInteger">
+                <isEqual property="[].field" compareValue="keywords">
+                    KEYID in (
+                        select KEYREFERENCE from REFERENCEKEYWORDRELATIONSHIPS 
+                            where KEYKEYWORD=#[].integerValue#)
                 </isEqual>
             </isEqual>
         </iterate>
