@@ -35,6 +35,7 @@
 
     <select id="getAllKeywords" resultMap="keyword">
         select KEYID, NAME, DESCRIPTION, OPTIMISTICLOCKINGVERSION from KEYWORDS
+        order by NAME
     </select>
 
     <select id="searchKeywords" resultMap="keyword" parameterClass="list">
