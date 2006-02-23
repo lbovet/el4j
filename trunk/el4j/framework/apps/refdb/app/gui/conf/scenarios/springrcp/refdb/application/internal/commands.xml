@@ -54,6 +54,8 @@
                 <ref bean="newMenu"/>
                 <value>propertiesCommand</value>
                 <value>deleteCommand</value>
+                <value>separator</value>
+                <ref bean="refreshCommand"/>
             </list>
         </property>
     </bean>
@@ -63,6 +65,8 @@
         <property name="members">
             <list>
                 <ref bean="newMenu"/>
+                <value>separator</value>
+                <ref bean="refreshCommand"/>
                 <value>separator</value>
                 <bean class="org.springframework.richclient.command.support.ExitCommand"/>
             </list>
@@ -114,6 +118,9 @@
             </list>
         </property>
     </bean>
+    
+    <bean id="refreshCommand"
+    	class="ch.elca.el4j.services.gui.richclient.commands.RefreshCommand"/>
     
     <bean id="helpContentsCommand" 
         class="org.springframework.richclient.command.support.HelpContentsCommand"/>

@@ -18,6 +18,7 @@ package ch.elca.el4j.services.gui.search;
 
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.richclient.form.binding.Binder;
 
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.search.criterias.AbstractCriteria;
@@ -65,6 +66,11 @@ public abstract class AbstractSearchItem
      * Is the name of this bean.
      */
     private String m_beanName;
+    
+    /**
+     * Is the specific binder for this search item.
+     */
+    private Binder m_specificBinder;
     
     /**
      * @param value Is the value for the criterias.
@@ -162,6 +168,20 @@ public abstract class AbstractSearchItem
      */
     public final void setBeanName(String beanName) {
         m_beanName = beanName;
+    }
+
+    /**
+     * @return the specificBinder
+     */
+    public final Binder getSpecificBinder() {
+        return m_specificBinder;
+    }
+
+    /**
+     * @param specificBinder the specificBinder to set
+     */
+    public final void setSpecificBinder(Binder specificBinder) {
+        m_specificBinder = specificBinder;
     }
 
     /**

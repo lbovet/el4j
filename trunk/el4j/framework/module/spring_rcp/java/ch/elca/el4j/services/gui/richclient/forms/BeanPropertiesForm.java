@@ -17,7 +17,9 @@
 package ch.elca.el4j.services.gui.richclient.forms;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JComponent;
 
@@ -26,6 +28,8 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.binding.form.PropertyMetadata;
 import org.springframework.binding.form.ValidatingFormModel;
 import org.springframework.richclient.form.AbstractForm;
+import org.springframework.richclient.form.binding.Binder;
+import org.springframework.richclient.form.binding.Binding;
 import org.springframework.richclient.form.builder.TableFormBuilder;
 import org.springframework.util.StringUtils;
 
@@ -55,6 +59,11 @@ public class BeanPropertiesForm extends AbstractForm
      * List of bean properties that should be read only.
      */
     private List m_readOnlyBeanProperties;
+    
+    /**
+     * Are specific binders for the shown bean properties.
+     */
+    private Map m_specificBinders = Collections.EMPTY_MAP;
 
     /**
      * Is the first focused component.
@@ -82,7 +91,17 @@ public class BeanPropertiesForm extends AbstractForm
             = new TableFormBuilder(getBindingFactory());
         for (int i = 0; i < m_shownBeanProperties.length; i++) {
             String propertyName = m_shownBeanProperties[i];
-            JComponent[] components = formBuilder.add(propertyName);
+            Binder specificBinder 
+                = (Binder) m_specificBinders.get(propertyName);
+            JComponent[] components;
+            if (specificBinder == null) {
+                components = formBuilder.add(propertyName);
+            } else {
+                Binding binding = specificBinder.bind(
+                    getFormModel(), propertyName, Collections.EMPTY_MAP); 
+                components = formBuilder.add(binding);
+            }
+            
             if (m_firstFocusedComponent == null && components.length >= 2) {
                 m_firstFocusedComponent = components[1];
             }
@@ -148,6 +167,24 @@ public class BeanPropertiesForm extends AbstractForm
     public final void setReadOnlyBeanProperties(
         List readOnlyBeanProperties) {
         m_readOnlyBeanProperties = readOnlyBeanProperties;
+    }
+
+    /**
+     * @return the specificBinders
+     */
+    public final Map getSpecificBinders() {
+        return m_specificBinders;
+    }
+
+    /**
+     * Method to set specific binders for shown bean properties. The key of each
+     * map entry is a shown bean property. The value must be of type 
+     * <code>org.springframework.richclient.form.binding.Binder</code>.
+     * 
+     * @param specificBinders the specificBinders to set
+     */
+    public final void setSpecificBinders(Map specificBinders) {
+        m_specificBinders = specificBinders;
     }
 
     /**

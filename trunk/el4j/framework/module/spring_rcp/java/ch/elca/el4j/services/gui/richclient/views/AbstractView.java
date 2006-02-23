@@ -32,8 +32,10 @@ import org.springframework.richclient.application.PageComponent;
 import org.springframework.richclient.application.PageComponentDescriptor;
 import org.springframework.richclient.application.ViewDescriptor;
 
+import ch.elca.el4j.services.gui.event.RefreshEvent;
 import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.GroupDescriptor;
 import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.LayoutDescriptor;
+import ch.elca.el4j.services.gui.richclient.utils.ApplicationListenerUtils;
 import ch.elca.el4j.services.search.events.QueryObjectEvent;
 
 /**
@@ -106,19 +108,27 @@ public abstract class AbstractView
     public void onApplicationEvent(ApplicationEvent event) {
         if (event instanceof QueryObjectEvent) {
             onQueryObjectEvent((QueryObjectEvent) event);
+        } else if (event instanceof RefreshEvent) {
+            onRefreshEvent((RefreshEvent) event);
         }
     }
-    
+
     /**
      * Will be invoked if a <code>QueryObjectEvent</code> has been received.
      * Per default nothing will be made.
      * 
      * @param event Is the query object event.
      */
-    protected void onQueryObjectEvent(QueryObjectEvent event) {
-        
-    }
+    protected void onQueryObjectEvent(QueryObjectEvent event) { }
     
+    /**
+     * Will be invoked if a <code>RefreshEvent</code> has been received.
+     * Per default nothing will be made.
+     * 
+     * @param event Is the refresh event.
+     */
+    protected void onRefreshEvent(RefreshEvent event) { }
+
     /**
      * Checks if the query object event is coming from a neighbour from the 
      * same application window.
@@ -158,70 +168,18 @@ public abstract class AbstractView
     }
     
     /**
-     * @return Returns the application event multicaster if it is available,
-     *         otherwise <code>null</code>. 
-     */
-    protected ApplicationEventMulticaster getApplicationEventMulticaster() {
-        ApplicationContext appContext 
-            = Application.services().getApplicationContext();
-        try {
-            ApplicationEventMulticaster eventMulticaster 
-                = (ApplicationEventMulticaster) appContext.getBean(
-                    AbstractApplicationContext
-                        .APPLICATION_EVENT_MULTICASTER_BEAN_NAME);
-            return eventMulticaster;
-        } catch (Exception e) {
-            return null;
-        }
-    }
-    
-    /**
-     * Registers current view for application events.
-     * 
-     * @return Returns <code>true</code> if current view could be successfully
-     *         registered.
-     */
-    protected boolean registerOnApplicationEventMulticaster() {
-        boolean success = false;
-        ApplicationEventMulticaster eventMulticaster 
-            = getApplicationEventMulticaster();
-        if (eventMulticaster != null) {
-            eventMulticaster.addApplicationListener(this);
-            success = true;
-        }
-        return success;
-    }
-    
-    /**
-     * Unregisters current view for application events.
-     * 
-     * @return Returns <code>true</code> if current view could be successfully
-     *         unregistered.
-     */
-    protected boolean unregisterOnApplicationEventMulticaster() {
-        boolean success = false;
-        ApplicationEventMulticaster eventMulticaster 
-            = getApplicationEventMulticaster();
-        if (eventMulticaster != null) {
-            eventMulticaster.removeApplicationListener(this);
-            success = true;
-        }
-        return success;
-    }
-    
-    /**
      * {@inheritDoc}
      */
     public void componentOpened() {
         super.componentOpened();
-        registerOnApplicationEventMulticaster();
+        ApplicationListenerUtils.registerApplicationListener(this);
     }
 
     /**
      * {@inheritDoc}
      */
     public void componentClosed() {
-        unregisterOnApplicationEventMulticaster();
+        ApplicationListenerUtils.unregisterApplicationListener(this);
         super.componentClosed();
     }
 

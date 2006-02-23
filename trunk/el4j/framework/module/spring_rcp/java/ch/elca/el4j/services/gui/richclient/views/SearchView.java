@@ -34,6 +34,7 @@ import org.apache.commons.beanutils.DynaClass;
 import org.apache.commons.beanutils.DynaProperty;
 import org.springframework.binding.form.ValidatingFormModel;
 import org.springframework.binding.form.support.DefaultFormModel;
+import org.springframework.richclient.form.binding.Binder;
 import org.springframework.richclient.util.SpringLayoutUtils;
 import org.springframework.util.StringUtils;
 
@@ -186,6 +187,18 @@ public class SearchView extends AbstractView {
         m_beanPropertiesForm.setPropertiesId(getId());
         m_beanPropertiesForm.setShownBeanProperties(m_propertyNames);
         m_beanPropertiesForm.setValidatingFormModel(m_formModel);
+        
+        Map specificBinders = new HashMap();
+        for (int i = 0; i < m_searchItems.length; i++) {
+            AbstractSearchItem searchItem = m_searchItems[i];
+            Binder specificBinder = searchItem.getSpecificBinder();
+            if (specificBinder != null) {
+                String propertyName = getPropertyName(searchItem);
+                specificBinders.put(propertyName, specificBinder);
+            }
+        }
+        m_beanPropertiesForm.setSpecificBinders(specificBinders);
+        
         try {
             m_beanPropertiesForm.afterPropertiesSet();
         } catch (Exception e) {
@@ -231,7 +244,8 @@ public class SearchView extends AbstractView {
      */
     protected JComponent getButtonComponent() {
         JPanel buttonPanel = getComponentFactory().createPanel(
-            new FlowLayout(FlowLayout.CENTER));
+            new FlowLayout(
+                FlowLayout.CENTER, COMPONENT_SPACER, COMPONENT_SPACER));
 
         String searchButtonLabelKey 
             = getId() + "." + MESSAGE_MEDIUM_BUTTON_SEARCH + ".label";
