@@ -22,6 +22,7 @@ import java.util.List;
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
 import ch.elca.el4j.apps.refdb.gui.brokers.ServiceBroker;
 import ch.elca.el4j.apps.refdb.service.ReferenceService;
+import ch.elca.el4j.services.gui.event.RefreshEvent;
 import ch.elca.el4j.services.gui.richclient.views.AbstractBeanTableView;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.events.QueryObjectEvent;
@@ -52,5 +53,12 @@ public class KeywordView extends AbstractBeanTableView {
                 setBeans(list);
             }
         }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    protected void onRefreshEvent(RefreshEvent event) {
+        // TODO Auto-generated method stub
     }
 }

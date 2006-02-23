@@ -94,6 +94,19 @@
                     <property name="targetProperty" value="incomplete"/>
                     <property name="targetBeanClass" 
                         value="ch.elca.el4j.apps.refdb.dto.ReferenceDto"/>
+                    <property name="type" value="java.lang.Boolean"/>
+                </bean>
+                <bean class="ch.elca.el4j.services.gui.search.ComparisonSearchItem">
+                    <property name="targetProperty" value="keywords"/>
+                    <property name="targetBeanClass" 
+                        value="ch.elca.el4j.apps.refdb.dto.ReferenceDto"/>
+                    <property name="type" value="java.util.List"/>
+                    <property name="specificBinder">
+                    	<bean class="ch.elca.el4j.services.gui.richclient.forms.binding.DynamicListBinder">
+                    		<property name="bindingClass" 
+                    			value="ch.elca.el4j.apps.refdb.gui.bindings.KeywordDynamicListBinding"/>
+                    	</bean>
+                    </property>
                 </bean>
             </list>
         </property>

@@ -17,7 +17,6 @@
 package ch.elca.el4j.services.gui.richclient.forms.binding;
 
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.util.Map;
 
@@ -76,7 +75,9 @@ public class ThreeStateBooleanBinder extends AbstractBinder {
      * @return Returns the created layout manager.
      */
     protected LayoutManager createLayoutManager() {
+        // Checkstyle: MagicNumber off
         return new FlowLayout(FlowLayout.LEFT, 5, 5);
+        // Checkstyle: MagicNumber on
     }
 
     /**

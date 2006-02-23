@@ -20,7 +20,6 @@ import javax.swing.JComponent;
 
 import org.springframework.binding.form.FormModel;
 import org.springframework.binding.form.FormPropertyFaceDescriptor;
-import org.springframework.richclient.form.binding.support.AbstractBinding;
 
 import ch.elca.el4j.util.codingsupport.Reject;
 
@@ -36,12 +35,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  *
  * @author Martin Zeltner (MZE)
  */
-public class ThreeStateBooleanBinding extends AbstractBinding {
-    /**
-     * Is the JComponent to bind with the form model.
-     */
-    private final ThreeStateBooleanJPanel m_control;
-
+public class ThreeStateBooleanBinding extends AbstractSwingBinding {
     /**
      * Constructor.
      * 
@@ -51,15 +45,17 @@ public class ThreeStateBooleanBinding extends AbstractBinding {
      */
     public ThreeStateBooleanBinding(ThreeStateBooleanJPanel control, 
         FormModel formModel, String formPropertyPath) {
-        super(formModel, formPropertyPath, Boolean.class);
-        m_control = control;
+        super(control, formModel, formPropertyPath, Boolean.class);
     }
 
     /**
      * {@inheritDoc}
      */
     protected JComponent doBindControl() {
-        m_control.setValueModel(getValueModel());
+        ThreeStateBooleanJPanel control 
+            = (ThreeStateBooleanJPanel) getJComponent();
+        
+        control.setValueModel(getValueModel());
         FormPropertyFaceDescriptor trueButtonDescriptor 
             = getFormPropertyFaceDescriptor(
                 ThreeStateBooleanJPanel.TRUE_BUTTON_PROPERTY_NAME);
@@ -70,19 +66,19 @@ public class ThreeStateBooleanBinding extends AbstractBinding {
             = getFormPropertyFaceDescriptor(
                 ThreeStateBooleanJPanel.UNKNOWN_BUTTON_PROPERTY_NAME);
         
-        m_control.getTrueButton().setText(
+        control.getTrueButton().setText(
             trueButtonDescriptor.getDisplayName());
-        m_control.getTrueButton().setToolTipText(
+        control.getTrueButton().setToolTipText(
             trueButtonDescriptor.getDescription());
-        m_control.getFalseButton().setText(
+        control.getFalseButton().setText(
             falseButtonDescriptor.getDisplayName());
-        m_control.getFalseButton().setToolTipText(
+        control.getFalseButton().setToolTipText(
             falseButtonDescriptor.getDescription());
-        m_control.getUnknownButton().setText(
+        control.getUnknownButton().setText(
             unknownButtonDescriptor.getDisplayName());
-        m_control.getUnknownButton().setToolTipText(
+        control.getUnknownButton().setToolTipText(
             unknownButtonDescriptor.getDescription());
-        return m_control;
+        return control;
     }
     
     /**
@@ -98,19 +94,5 @@ public class ThreeStateBooleanBinding extends AbstractBinding {
         FormPropertyFaceDescriptor faceDescriptor 
             = getFormModel().getFormPropertyFaceDescriptor(propertyPath);
         return faceDescriptor;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected void readOnlyChanged() {
-        m_control.setEnabled(isEnabled() && !isReadOnly());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected void enabledChanged() {
-        m_control.setEnabled(isEnabled() && !isReadOnly());
     }
 }
