@@ -25,6 +25,7 @@
         <dependency jar="forms-1.0.5.jar"/>
         <dependency jar="jlfgr-1.0.jar"/>
         <dependency jar="jdnc-0.7-all.jar"/>
+        <dependency jar="microba-0.3.1.jar"/>
     </module>
     
 </ant:project>
