@@ -55,7 +55,7 @@
                 <bean id="componentTextComponentPopupInterceptorFactory"
                     class="org.springframework.richclient.text.TextComponentPopupInterceptorFactory" />
                 <bean id="componentColorValidationInterceptorFactory"
-                    class="org.springframework.richclient.form.builder.support.ColorValidationInterceptorFactory">
+                    class="ch.elca.el4j.services.gui.richclient.interceptor.ColorValidationInterceptorFactory">
                     <property name="errorColor">
                         <value>255,245,245</value>
                     </property>
