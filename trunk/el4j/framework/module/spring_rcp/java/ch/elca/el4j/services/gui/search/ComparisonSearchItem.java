@@ -103,6 +103,8 @@ public class ComparisonSearchItem extends AbstractSearchItem {
         }
         Reject.ifNull(type);
         
+        // TODO Add methods in comparison criteria to directly send wrapper
+        // classes of primitive types.
         if (Boolean.class.isAssignableFrom(type)) {
             criterias.add(ComparisonCriteria.equals(
                 field, ((Boolean) value).booleanValue()));
