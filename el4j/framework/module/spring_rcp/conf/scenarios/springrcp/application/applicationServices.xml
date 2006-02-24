@@ -49,6 +49,10 @@
                     <constructor-arg ref="formatterLocator"/>
                     <constructor-arg value="true"/>
                 </bean>
+                <bean id="converterDateToSqlType"
+                    class="ch.elca.el4j.services.gui.richclient.converters.DateToSqlType"/>
+                <bean id="converterSqlTypeToDate"
+                    class="ch.elca.el4j.services.gui.richclient.converters.SqlTypeToDate"/>
             </list>
         </property>
         <property name="formatterLocator">
