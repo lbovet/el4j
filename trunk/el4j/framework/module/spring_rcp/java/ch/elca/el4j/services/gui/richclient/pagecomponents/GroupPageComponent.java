@@ -62,4 +62,9 @@ public interface GroupPageComponent extends PageComponent, LayoutDescriptor,
      * @return Returns the really removed <code>JComponent</code>.
      */
     public JComponent removePageComponent(PageComponent pageComponent);
+    
+    /**
+     * @return Returns the number containing page components.
+     */
+    public int getNumberOfPageComponents();
 }

@@ -27,7 +27,6 @@ import javax.swing.JComponent;
 
 import org.springframework.richclient.application.PageComponent;
 import org.springframework.richclient.application.PageComponentDescriptor;
-import org.springframework.richclient.application.PageComponentPane;
 import org.springframework.richclient.application.View;
 import org.springframework.richclient.application.support.DefaultViewContext;
 import org.springframework.util.StringUtils;
@@ -35,6 +34,8 @@ import org.springframework.util.StringUtils;
 import ch.elca.el4j.services.gui.richclient.pagecomponents.GroupPageComponent;
 import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.GroupDescriptor;
 import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.GroupPageComponentDescriptor;
+import ch.elca.el4j.services.gui.richclient.pagecomponents.panes.ControlablePageComponentPane;
+import ch.elca.el4j.services.gui.richclient.pages.ExtendedApplicationPage;
 import ch.elca.el4j.services.gui.richclient.pages.PageLayoutBuilder;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.util.codingsupport.Reject;
@@ -52,7 +53,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * @author Martin Zeltner (MZE)
  */
 public class MultipleViewsApplicationPage extends AbstractApplicationPage 
-    implements PageLayoutBuilder {
+    implements PageLayoutBuilder, ExtendedApplicationPage {
     
     /**
      * Are the group page components. The group name is used as key.
@@ -133,7 +134,6 @@ public class MultipleViewsApplicationPage extends AbstractApplicationPage
                 groupPageComponent);
         }
     }
-
     
     
     /**
@@ -415,7 +415,7 @@ public class MultipleViewsApplicationPage extends AbstractApplicationPage
         Reject.ifNull(pageComponent);
         if (pageComponent instanceof View) {
             pageComponent.setContext(new DefaultViewContext(
-                this, new PageComponentPane(pageComponent)));
+                this, new ControlablePageComponentPane(pageComponent, this)));
         }
     }
 
@@ -527,5 +527,44 @@ public class MultipleViewsApplicationPage extends AbstractApplicationPage
             String configuredGroupName = groupPageComponentDescriptor.getId();
             groupDescriptor.setConfiguredGroup(configuredGroupName);
         }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void close(PageComponent pageComponent) {
+        GroupPageComponent parentPageComponent
+            = getParentPageComponent(pageComponent);
+        if (parentPageComponent != null) {
+            parentPageComponent.removePageComponent(pageComponent);
+        }
+        super.close(pageComponent);
+        
+        if (parentPageComponent != null
+            && parentPageComponent.getNumberOfPageComponents() <= 0) {
+            close(parentPageComponent);
+        }
+    }
+    
+    /**
+     * @param pageComponent
+     *            Is the page component that is looking for its parent.
+     * @return Returns the parent page component or <code>null</code> if there
+     *         is no.
+     */
+    protected GroupPageComponent getParentPageComponent(
+        PageComponent pageComponent) {
+        GroupPageComponent result = null;
+        synchronized (m_groupPageComponents) {
+            Iterator it = m_groupPageComponents.values().iterator();
+            while (it.hasNext()) {
+                GroupPageComponent currentGroup 
+                    = (GroupPageComponent) it.next();
+                if (currentGroup.containsPageComponent(pageComponent)) {
+                    result = currentGroup;
+                }
+            }
+        }
+        return result;
     }
 }
