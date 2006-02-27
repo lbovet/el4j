@@ -329,4 +329,11 @@ public abstract class AbstractGroupPageComponent extends AbstractControlFactory
         }
         return removedComponent;
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public synchronized int getNumberOfPageComponents() {
+        return m_containingPageComponents.size();
+    }
 }
