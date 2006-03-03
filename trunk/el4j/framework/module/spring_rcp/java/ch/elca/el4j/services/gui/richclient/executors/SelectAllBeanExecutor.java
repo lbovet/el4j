@@ -31,7 +31,7 @@ import org.springframework.util.StringUtils;
  *
  * @author Martin Zeltner (MZE)
  */
-public class BeanSelectAllExecutor extends AbstractBeanExecutor {
+public class SelectAllBeanExecutor extends AbstractBeanExecutor {
     /**
      * {@inheritDoc}
      */
@@ -56,5 +56,12 @@ public class BeanSelectAllExecutor extends AbstractBeanExecutor {
      */
     public void updateState() {
         setEnabled(true);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getSchema() {
+        return null;
     }
 }

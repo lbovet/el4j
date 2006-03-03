@@ -16,13 +16,12 @@
  */
 package ch.elca.el4j.services.gui.richclient.executors;
 
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.richclient.command.support.AbstractActionCommandExecutor;
+import org.springframework.util.StringUtils;
 
+import ch.elca.el4j.services.gui.richclient.executors.action.ExecutorAction;
 import ch.elca.el4j.services.gui.richclient.presenters.BeanPresenter;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 
@@ -39,7 +38,11 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * @author Martin Zeltner (MZE)
  */
 public abstract class AbstractBeanExecutor extends AbstractActionCommandExecutor
-    implements InitializingBean, BeanNameAware, ApplicationContextAware {
+    implements InitializingBean, BeanNameAware, ExecutorAction {
+    /**
+     * Is the id of this executor action.
+     */
+    private String m_id;
     
     /**
      * Is the id of the command.
@@ -50,21 +53,37 @@ public abstract class AbstractBeanExecutor extends AbstractActionCommandExecutor
      * Is the presenter where this executor is used.
      */
     private BeanPresenter m_beanPresenter;
-
+    
     /**
      * Name of this bean.
      */
     private String m_beanName;
 
     /**
-     * Is the application context this bean was created with.
-     */
-    private ApplicationContext m_applicationContext;
-
-    /**
      * Will be invoked if the executor should update its state.
      */
     public abstract void updateState();
+    
+    /**
+     * The schema is used to specify displayed messages.
+     * 
+     * @return Returns the schema of this executor. 
+     */
+    public abstract String getSchema();
+    
+    /**
+     * @return Returns the id.
+     */
+    public final String getId() {
+        return m_id;
+    }
+
+    /**
+     * @param id Is the id to set.
+     */
+    public final void setId(String id) {
+        m_id = id;
+    }
     
     /**
      * @return Returns the commandId.
@@ -106,23 +125,34 @@ public abstract class AbstractBeanExecutor extends AbstractActionCommandExecutor
      */
     public final void setBeanName(String beanName) {
         m_beanName = beanName;
+        if (!StringUtils.hasText(getId())) {
+            setId(beanName);
+        }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void onAboutToShow() { }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean onFinishOrConfirm() throws Exception {
+        return true;
     }
 
     /**
      * {@inheritDoc}
      */
-    public final void setApplicationContext(
-        ApplicationContext applicationContext) 
-        throws BeansException {
-        m_applicationContext = applicationContext;
+    public boolean onFinishOrConfirmException(Exception e) {
+        return true;
     }
-    
+
     /**
-     * @return Returns the application context this bean was made with.
+     * {@inheritDoc}
      */
-    public final ApplicationContext getApplicationContext() {
-        return m_applicationContext;
-    }
+    public void onCancel() { }
     
     /**
      * {@inheritDoc}

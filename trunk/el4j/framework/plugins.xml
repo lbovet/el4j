@@ -87,7 +87,7 @@ consume less time.
             return v.substring(0, v.length-4);
         }
         function printFileStatus (source_kw,revision_kw,date_kw,author_kw) {
-            document.write ('<br/><dl><dt><b>File-location:</b><dd><a href=\'http://cvs.sourceforge.net/viewcvs.py/');
+            document.write ('<br/><dl><dt><b>File-location:</b><dd><a href=\'http://svn.sourceforge.net/viewcvs.cgi/');
             document.write(removeHead(source_kw));
             document.write('\'>');
             document.write(removeHead(source_kw));
