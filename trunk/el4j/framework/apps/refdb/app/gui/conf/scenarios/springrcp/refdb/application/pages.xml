@@ -9,7 +9,8 @@
     <!-- Author: $Author$ -->
 
     <bean id="keywordPage"
-        class="ch.elca.el4j.services.gui.richclient.pages.descriptors.MultipleViewsPageDescriptor">
+        class="ch.elca.el4j.services.gui.richclient.pages.descriptors.MultipleViewsPageDescriptor"
+        singleton="false">
         <property name="pageComponentDescriptors">
             <list>
                 <bean name="tableGroup"
@@ -31,7 +32,8 @@
     </bean>
 
     <bean id="referencePage"
-        class="ch.elca.el4j.services.gui.richclient.pages.descriptors.MultipleViewsPageDescriptor">
+        class="ch.elca.el4j.services.gui.richclient.pages.descriptors.MultipleViewsPageDescriptor"
+        singleton="false">
         <property name="pageComponentDescriptors">
             <list>
                 <bean name="tableGroup"
@@ -53,7 +55,8 @@
     </bean>
 
     <bean id="referenceKeywordPage"
-        class="ch.elca.el4j.services.gui.richclient.pages.descriptors.MultipleViewsPageDescriptor">
+        class="ch.elca.el4j.services.gui.richclient.pages.descriptors.MultipleViewsPageDescriptor"
+        singleton="false">
         <property name="pageComponentDescriptors">
             <list>
                 <bean name="tableGroup"
