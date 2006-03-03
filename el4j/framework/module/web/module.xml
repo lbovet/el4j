@@ -11,7 +11,6 @@
         <dependency jar="commons-fileupload-1.0.jar"/>
         <dependency jar="commons-validator-1.1.4.jar"/>
         <dependency jar="jakarta-oro-2.0.7.jar"/>
-        <dependency jar="commons-lang-2.0.jar"/>
         <dependency jar="servlet-api-2.4.jar"/>
     </module>
 </ant:project>
