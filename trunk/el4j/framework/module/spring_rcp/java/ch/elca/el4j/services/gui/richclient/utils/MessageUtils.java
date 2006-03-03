@@ -41,6 +41,17 @@ public final class MessageUtils {
     private MessageUtils() { }
     
     /**
+     * Returns the requested message.
+     * 
+     * @param messageId Is the id of the message
+     * @return Returns the looked up message or <code>null</code> if no could 
+     *         be found.
+     */
+    public static String getMessage(String messageId) {
+        return getMessage(null, null, messageId);
+    }
+    
+    /**
      * Returns the requested message. Lookup codes are listed in order below:
      * <ol>
      *     <li><code>parentId.messageId</code></li>
