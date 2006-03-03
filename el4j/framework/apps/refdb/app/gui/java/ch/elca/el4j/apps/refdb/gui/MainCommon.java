@@ -17,13 +17,11 @@
 
 package ch.elca.el4j.apps.refdb.gui;
 
-import javax.swing.JOptionPane;
-
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import ch.elca.el4j.services.gui.richclient.ApplicationLauncher;
+import ch.elca.el4j.services.gui.richclient.utils.DialogUtils;
 
 /**
  * Abstract class to start the RefDB-Application.
@@ -66,12 +64,7 @@ public final class MainCommon {
                 + "exceptionally for an unknown reason! See stack trace for "
                 + "details.";
             s_logger.fatal(message, e);
-            
-            String stackTrace = ExceptionUtils.getStackTrace(e);
-            String dialogTitle = "Unknown exception occured";
-            String dialogMessage = message + "\n\n" + stackTrace;
-            JOptionPane.showMessageDialog(null, dialogMessage, 
-                dialogTitle, JOptionPane.ERROR_MESSAGE);
+            DialogUtils.showErrorMessageDialog(e, null);
             System.exit(1);
         }
     }
