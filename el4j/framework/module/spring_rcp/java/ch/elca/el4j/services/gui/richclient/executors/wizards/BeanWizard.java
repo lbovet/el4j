@@ -43,7 +43,7 @@ public class BeanWizard extends AbstractWizard {
     /**
      * Is the wizard executor to use in this wizard.
      */
-    private final AbstractWizardBeanExecutor m_executor;
+    protected final AbstractWizardBeanExecutor m_executor;
 
     /**
      * Constructor.
@@ -77,7 +77,8 @@ public class BeanWizard extends AbstractWizard {
                     (HierarchicalFormModel) formModel, null);
             pf.setValidatingFormModel(childFormModel);
             
-            FormBackedWizardPage wizardPage = new FormBackedWizardPage(pf);
+            FormBackedWizardPage wizardPage
+                = new FormBackedWizardPage(m_executor.getId(), pf);
             addPage(wizardPage);
         }
     }
