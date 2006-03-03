@@ -12,20 +12,14 @@
         Executor to change reference properties.
     -->
     <bean id="referencePropertiesExecutor"
-        class="ch.elca.el4j.services.gui.richclient.executors.BeanPropertiesExecutor"
+        class="ch.elca.el4j.apps.refdb.gui.executors.ReferencePropertiesExecutor"
         singleton="false">
-        <property name="propertiesFormBeanNames">
+        <property name="beanPropertiesForms">
             <!--
                 Displayed property forms. Here only one is diplayed for all 
                 reference properties.
             -->
-            <idref bean="referenceFormAll" />
-        </property>
-        <property name="dialogBeanName">
-            <!--
-                Dialog to display.
-            -->
-            <idref bean="referencePropertiesApplicationDialog" />
+            <ref local="referenceFormAll" />
         </property>
     </bean>
 
@@ -59,18 +53,6 @@
                 <value>key</value>
                 <value>whenInserted</value>
             </list>
-        </property>
-    </bean>
-
-    <!--
-        Application dialog to change properties of a reference.
-        Implemented by user.
-    -->
-    <bean id="referencePropertiesApplicationDialog"
-        class="ch.elca.el4j.apps.refdb.gui.dialogs.ReferencePropertiesApplicationDialog"
-        singleton="false">
-        <property name="propertiesId">
-            <value>referenceProperties</value>
         </property>
     </bean>
 </beans>

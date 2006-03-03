@@ -12,20 +12,14 @@
         Executor to change keyword properties.
     -->
     <bean id="keywordPropertiesExecutor"
-        class="ch.elca.el4j.services.gui.richclient.executors.BeanPropertiesExecutor"
+        class="ch.elca.el4j.apps.refdb.gui.executors.KeywordPropertiesExecutor"
         singleton="false">
-        <property name="propertiesFormBeanNames">
+        <property name="beanPropertiesForms">
             <!--
                 Displayed property forms. Here only one is diplayed for all 
                 keyword properties.
             -->
-            <idref bean="keywordFormAll" />
-        </property>
-        <property name="dialogBeanName">
-            <!--
-                Dialog to display.
-            -->
-            <idref bean="keywordPropertiesApplicationDialog" />
+            <ref local="keywordFormAll" />
         </property>
     </bean>
 
@@ -56,77 +50,32 @@
         </property>
     </bean>
 
-    <!--
-        Application dialog to change properties of a keyword.
-        Implemented by user.
-    -->
-    <bean id="keywordPropertiesApplicationDialog"
-        class="ch.elca.el4j.apps.refdb.gui.dialogs.KeywordPropertiesApplicationDialog"
-        singleton="false">
-        <property name="propertiesId">
-            <value>keywordProperties</value>
-        </property>
-    </bean>
-
     <!-- 
         Executor to delete keywords.
     -->
     <bean id="keywordDeleteExecutor"
-        class="ch.elca.el4j.services.gui.richclient.executors.BeanConfirmationExecutor"
-        singleton="false">
-        <property name="dialogBeanName">
-            <!--
-                Dialog to display.
-            -->
-            <idref bean="keywordDeleteApplicationDialog" />
-        </property>
-        <property name="commandId">
-            <value>deleteCommand</value>
-        </property>
-    </bean>
-
-    <!--
-        Application dialog to change properties of a keyword.
-    -->
-    <bean id="keywordDeleteApplicationDialog"
-        class="ch.elca.el4j.apps.refdb.gui.dialogs.DeleteKeywordsConfirmationDialog"
-        singleton="false">
-        <property name="propertiesId">
-            <value>keywordDelete</value>
-        </property>
-    </bean>
+        class="ch.elca.el4j.apps.refdb.gui.executors.KeywordDeleteExecutor"
+        singleton="false" />
 
     <!-- 
         Executor to select all keywords.
     -->
     <bean id="keywordSelectAllExecutor"
-        class="ch.elca.el4j.services.gui.richclient.executors.BeanSelectAllExecutor"
+        class="ch.elca.el4j.services.gui.richclient.executors.SelectAllBeanExecutor"
         singleton="false" />
 
     <!--
         Executor to create new keywords.
     -->
     <bean id="keywordCreateNewExecutor"
-        class="ch.elca.el4j.services.gui.richclient.executors.BeanWizardExecutor"
+        class="ch.elca.el4j.apps.refdb.gui.executors.KeywordNewExecutor"
         singleton="false">
-        <property name="beanClass">
-            <value>ch.elca.el4j.apps.keyword.dto.KeywordDto</value>
-        </property>
-        <property name="propertiesFormBeanNames">
+        <property name="beanPropertiesForms">
             <!--
                 Displayed property forms. Here only one is diplayed for most 
                 keyword properties.
             -->
-            <idref bean="keywordFormNormal" />
-        </property>
-        <property name="dialogBeanName">
-            <!--
-                Dialog to display.
-            -->
-            <idref bean="keywordCreateNewWizard" />
-        </property>
-        <property name="commandId">
-            <value>newKeywordCommand</value>
+            <ref local="keywordFormNormal" />
         </property>
     </bean>
 
@@ -145,17 +94,6 @@
                 <value>name</value>
                 <value>description</value>
             </list>
-        </property>
-    </bean>
-
-    <!--
-        Wizard to create a new keyword. Implemented by user.
-    -->
-    <bean id="keywordCreateNewWizard"
-        class="ch.elca.el4j.apps.refdb.gui.wizards.CreateNewKeywordWizard"
-        singleton="false">
-        <property name="propertiesId">
-            <value>keywordCreateNew</value>
         </property>
     </bean>
 </beans>
