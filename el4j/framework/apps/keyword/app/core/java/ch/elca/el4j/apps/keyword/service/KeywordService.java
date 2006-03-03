@@ -16,6 +16,7 @@
  */
 package ch.elca.el4j.apps.keyword.service;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
@@ -143,6 +144,6 @@ public interface KeywordService {
      * @@attrib.transaction.RollbackRuleOnRuntimeException()
      * @@attrib.transaction.RollbackRuleOnError()
      */
-    public void removeKeywords(int[] keys) throws DataAccessException,
+    public void removeKeywords(Collection keys) throws DataAccessException,
         JdbcUpdateAffectedIncorrectNumberOfRowsException;
 }

@@ -16,6 +16,8 @@
  */
 package ch.elca.el4j.apps.keyword.service.impl;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.InitializingBean;
@@ -137,11 +139,24 @@ public class DefaultKeywordService implements KeywordService, InitializingBean {
      * 
      * @@attrib.transaction.RequiredRuleBased()
      */
-    public void removeKeywords(int[] keys) throws DataAccessException, 
+    public void removeKeywords(Collection keys) throws DataAccessException, 
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
         if (keys != null) {
-            for (int i = 0; i < keys.length; i++) {
-                getKeywordDao().removeKeyword(keys[i]);
+            Iterator it = keys.iterator();
+            while (it.hasNext()) {
+                Object element = it.next();
+                if (element instanceof Number) {
+                    int key = ((Number) element).intValue();
+                    getKeywordDao().removeKeyword(key);
+                } else if (element instanceof String) {
+                    int key = Integer.parseInt((String) element);
+                    getKeywordDao().removeKeyword(key);
+                } else {
+                    CoreNotificationHelper.notifyMisconfiguration(
+                        "Given keys must be of type number or string. "
+                        + "Given key element is of type " 
+                        + element.getClass() + ".");
+                }
             }
         }
     }
