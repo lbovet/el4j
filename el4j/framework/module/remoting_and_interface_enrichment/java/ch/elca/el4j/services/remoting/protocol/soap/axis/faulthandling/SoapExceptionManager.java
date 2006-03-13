@@ -38,7 +38,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * This class manages the soap exception/business exception handling.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

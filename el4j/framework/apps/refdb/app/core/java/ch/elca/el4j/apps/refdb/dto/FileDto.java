@@ -25,7 +25,7 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  * Dto for a file.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

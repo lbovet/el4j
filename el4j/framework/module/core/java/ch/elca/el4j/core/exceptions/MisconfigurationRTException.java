@@ -21,7 +21,7 @@ package ch.elca.el4j.core.exceptions;
  * General exception used if a misconfiguration occurred. 
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

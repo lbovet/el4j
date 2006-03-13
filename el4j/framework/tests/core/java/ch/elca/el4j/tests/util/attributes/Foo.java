@@ -22,7 +22,7 @@ package ch.elca.el4j.tests.util.attributes;
  * This is the interface of class <code>FooImpl</code>.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

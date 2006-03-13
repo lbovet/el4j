@@ -31,7 +31,7 @@ import junit.framework.TestCase;
  * Please be sure to compile the Commons Attributes before launching this test.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

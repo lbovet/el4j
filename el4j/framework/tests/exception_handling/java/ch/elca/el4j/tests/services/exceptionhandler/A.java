@@ -21,7 +21,7 @@ package ch.elca.el4j.tests.services.exceptionhandler;
  * Interface for testing purposes.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

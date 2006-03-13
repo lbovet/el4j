@@ -41,7 +41,7 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
  * so we do not have to serve a separate class in the future.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

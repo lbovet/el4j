@@ -21,7 +21,7 @@ package ch.elca.el4j.demos.remoting.benchmark;
  * This class contains a result set for a benchmark.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

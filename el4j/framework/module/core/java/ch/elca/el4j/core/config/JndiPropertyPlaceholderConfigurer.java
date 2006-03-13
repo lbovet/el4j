@@ -35,7 +35,7 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
  * console for instance.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *   "$Revision$", "$Date$", "$Author$"
  * )</script>
  *

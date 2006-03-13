@@ -38,7 +38,7 @@ import ch.elca.el4j.services.daemonmanager.exceptions.MissingHeartbeatsRTExcepti
  * a crash (restart or not).
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -27,7 +27,7 @@ import com.ibatis.sqlmap.client.extensions.TypeHandlerCallback;
  * This class is used to make blobs work with ibatis sqlmaps.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

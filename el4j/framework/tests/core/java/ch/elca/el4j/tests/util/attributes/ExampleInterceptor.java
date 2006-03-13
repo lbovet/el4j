@@ -30,7 +30,7 @@ import ch.elca.el4j.util.attributes.GenericAttributeSource;
  * The interceptor to be invoked if an ExampleAttribute is set.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

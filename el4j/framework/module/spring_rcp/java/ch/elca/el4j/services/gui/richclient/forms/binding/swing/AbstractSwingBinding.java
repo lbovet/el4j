@@ -25,7 +25,7 @@ import org.springframework.richclient.form.binding.support.AbstractBinding;
  * Abstract binding for swing classes.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

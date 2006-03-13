@@ -41,7 +41,7 @@ import ch.elca.el4j.apps.refdb.dto.FileDto;
  * Test case for <code>SqlMapReferenceDao</code>.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

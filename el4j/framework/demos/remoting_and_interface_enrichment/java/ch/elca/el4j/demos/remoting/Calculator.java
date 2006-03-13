@@ -22,7 +22,7 @@ package ch.elca.el4j.demos.remoting;
  * This interface is a calculator.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

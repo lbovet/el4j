@@ -38,7 +38,7 @@ import org.springframework.util.StringUtils;
  * not have to be exhaustive.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

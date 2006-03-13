@@ -25,7 +25,7 @@ import java.util.Map;
  * register the implicit context passers, their classname is used as id.
  * 
  * <script type="text/javascript">printFileStatus 
- * ("$Source$",
+ * ("$URL$",
  *  "$Revision$",
  *  "$Date$", 
  *  "$Author$" ); </script>

@@ -55,7 +55,7 @@ import java.util.NoSuchElementException;
  * supported by EL4J.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

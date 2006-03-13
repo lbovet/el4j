@@ -41,7 +41,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * The proxy class for an ApplicationContext.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

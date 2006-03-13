@@ -26,7 +26,7 @@ import org.apache.axis.deployment.wsdd.WSDDService;
  * This class is used by axis to get an instance of the proxy bean provider.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -39,7 +39,7 @@ import junit.framework.TestCase;
  * factory and the ordered daemon startup and shutdown.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

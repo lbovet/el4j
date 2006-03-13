@@ -24,7 +24,7 @@ import org.springframework.richclient.application.PageComponentDescriptor;
  * Group of page component descriptors.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -46,7 +46,7 @@ import net.sf.acegisecurity.providers.TestingAuthenticationToken;
  * </ul>
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

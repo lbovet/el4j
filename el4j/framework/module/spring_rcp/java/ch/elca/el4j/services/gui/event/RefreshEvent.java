@@ -22,7 +22,7 @@ import org.springframework.context.ApplicationEvent;
  * Event used to tell gui components that they should refresh themself.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

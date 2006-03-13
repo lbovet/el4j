@@ -28,7 +28,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * with a given name and returns the given result.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

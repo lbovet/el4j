@@ -52,7 +52,7 @@ import org.springframework.util.StringUtils;
  * checked.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

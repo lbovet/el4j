@@ -21,7 +21,7 @@ package ch.elca.el4j.tests.env;
  * This class is used for testing purposes only.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

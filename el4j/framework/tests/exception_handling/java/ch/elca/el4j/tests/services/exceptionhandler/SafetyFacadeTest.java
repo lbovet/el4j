@@ -28,7 +28,7 @@ import junit.framework.TestCase;
  * This class tests the security facade.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

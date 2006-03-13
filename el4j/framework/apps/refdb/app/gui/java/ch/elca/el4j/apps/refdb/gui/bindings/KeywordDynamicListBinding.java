@@ -31,7 +31,7 @@ import ch.elca.el4j.services.gui.richclient.forms.binding.swing.AbstractDynamicL
  * Dynmaic binding list for keywords.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -21,7 +21,7 @@ package ch.elca.el4j.services.persistence.generic.dto;
  * Interface to provide optimistic locking version support.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

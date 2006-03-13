@@ -21,7 +21,7 @@ package ch.elca.el4j.tests.services.exceptionhandler;
  * Sample bean class used for testing.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

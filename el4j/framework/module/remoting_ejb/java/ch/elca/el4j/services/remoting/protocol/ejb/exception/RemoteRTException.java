@@ -23,7 +23,7 @@ import java.rmi.RemoteException;
  * This exception replaces java.rmi.RemoteException.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -32,7 +32,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * {@link org.springframework.ejb.access.SimpleRemoteSlsbInvokerInterceptor}.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

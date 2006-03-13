@@ -24,7 +24,7 @@ import net.sf.acegisecurity.Authentication;
  * are already logged in, you have to log out first and then log in again.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

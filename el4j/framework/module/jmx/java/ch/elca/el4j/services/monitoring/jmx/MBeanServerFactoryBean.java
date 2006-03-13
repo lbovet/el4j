@@ -31,7 +31,7 @@ import org.springframework.beans.factory.InitializingBean;
  * otherwise, a new one will be created.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

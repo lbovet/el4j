@@ -44,7 +44,7 @@ import net.sf.acegisecurity.providers.TestingAuthenticationToken;
  * Tests various logins and authorization in a local environment.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -23,7 +23,7 @@ import ch.elca.el4j.core.contextpassing.AbstractImplicitContextPasser;
  * This is the test implicit context passer B on client side.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

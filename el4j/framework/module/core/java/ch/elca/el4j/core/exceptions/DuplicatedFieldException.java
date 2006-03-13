@@ -21,7 +21,7 @@ package ch.elca.el4j.core.exceptions;
  * already the same value as the given.
  * 
  * <script type="text/javascript">printFileStatus 
- * ("$Source$",
+ * ("$URL$",
  *  "$Revision$",
  *  "$Date$",
  *  "$Author$" );

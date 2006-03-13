@@ -33,7 +33,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * This is a convenience class for the sql map client template.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

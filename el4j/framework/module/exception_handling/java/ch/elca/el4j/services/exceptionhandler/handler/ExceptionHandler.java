@@ -26,7 +26,7 @@ import ch.elca.el4j.services.exceptionhandler.RetryException;
  * An exception handler is a expert for handling some kind of exceptions.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

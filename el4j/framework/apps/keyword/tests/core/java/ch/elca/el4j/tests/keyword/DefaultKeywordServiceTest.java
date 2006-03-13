@@ -36,7 +36,7 @@ import ch.elca.el4j.services.search.criterias.LikeCriteria;
  * Test case for <code>SqlMapKeywordDao</code>.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

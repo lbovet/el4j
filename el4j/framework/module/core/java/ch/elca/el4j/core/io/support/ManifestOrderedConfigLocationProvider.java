@@ -37,7 +37,7 @@ import ch.elca.el4j.core.exceptions.BaseRTException;
  * from manifest files.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

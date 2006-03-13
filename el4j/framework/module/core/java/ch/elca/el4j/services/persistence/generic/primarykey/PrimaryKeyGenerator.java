@@ -23,7 +23,7 @@ import java.io.Serializable;
  * can be used as primary keys for database storage.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

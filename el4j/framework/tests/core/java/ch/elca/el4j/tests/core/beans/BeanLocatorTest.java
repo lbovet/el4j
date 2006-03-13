@@ -30,7 +30,7 @@ import junit.framework.TestCase;
  * This test tests the <code>BeanLocator</code> class.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

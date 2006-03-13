@@ -26,7 +26,7 @@ import ch.elca.el4j.services.remoting.AbstractRemotingProtocol;
  * This is an abstract <code>InetSocketAddress</code> protocol.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

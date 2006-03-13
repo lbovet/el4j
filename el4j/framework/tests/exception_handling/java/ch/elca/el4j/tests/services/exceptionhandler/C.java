@@ -21,7 +21,7 @@ package ch.elca.el4j.tests.services.exceptionhandler;
  * This class is used to show the reconfigure exception handling strategy.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

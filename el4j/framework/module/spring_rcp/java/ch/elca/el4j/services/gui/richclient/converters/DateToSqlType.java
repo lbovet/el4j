@@ -30,7 +30,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * <code>java.sql.Time</code> and <code>java.sql.Timestamp</code>.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

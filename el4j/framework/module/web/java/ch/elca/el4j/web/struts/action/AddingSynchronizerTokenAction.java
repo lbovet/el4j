@@ -35,7 +35,7 @@ import ch.elca.el4j.web.struts.form.SynchronizerForm;
  * pattern is mainly used to prevent double submission of a form.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

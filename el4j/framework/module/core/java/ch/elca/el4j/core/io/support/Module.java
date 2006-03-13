@@ -26,7 +26,7 @@ import java.util.StringTokenizer;
  * unit). It contains its name, the configuration files and the dependencies.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

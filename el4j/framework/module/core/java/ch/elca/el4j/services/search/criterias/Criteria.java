@@ -22,7 +22,7 @@ import java.io.Serializable;
  * Criteria interface.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

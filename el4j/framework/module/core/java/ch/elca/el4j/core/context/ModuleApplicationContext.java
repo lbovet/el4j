@@ -50,7 +50,7 @@ import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
  * loaded.
  * 
  * <script type="text/javascript">printFileStatus 
- * ("$Source$",
+ * ("$URL$",
  *  "$Revision$",
  *  "$Date$", 
  *  "$Author$" ); </script>

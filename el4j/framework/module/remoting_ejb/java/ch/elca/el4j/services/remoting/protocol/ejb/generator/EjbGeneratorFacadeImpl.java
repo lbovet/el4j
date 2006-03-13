@@ -39,7 +39,7 @@ import ch.elca.el4j.services.remoting.protocol.ejb.xdoclet.XDocletTagGenerator;
  * It is uses in the build system plugin responsible for generating them.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

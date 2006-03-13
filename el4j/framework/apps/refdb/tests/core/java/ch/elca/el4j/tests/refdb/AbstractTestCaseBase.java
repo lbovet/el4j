@@ -36,7 +36,7 @@ import junit.framework.TestCase;
  * This class is a base class for tests in module-refdb-core.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

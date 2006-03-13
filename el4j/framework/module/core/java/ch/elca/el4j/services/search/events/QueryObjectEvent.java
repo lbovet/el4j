@@ -32,7 +32,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * Event for query objects.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

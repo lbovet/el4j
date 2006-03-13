@@ -28,7 +28,7 @@ import ch.elca.el4j.services.exceptionhandler.RetryException;
  * several times after waiting a configurable delay.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

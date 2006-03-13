@@ -27,7 +27,7 @@ import ch.elca.el4j.util.codingsupport.CollectionUtils;
  * This exception is used to summarize daemon caused exceptions.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

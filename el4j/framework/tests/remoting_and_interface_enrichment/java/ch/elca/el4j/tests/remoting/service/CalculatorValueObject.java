@@ -21,7 +21,7 @@ package ch.elca.el4j.tests.remoting.service;
  * This is a value object for test reason.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

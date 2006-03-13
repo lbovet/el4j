@@ -53,7 +53,7 @@ import org.springframework.context.ApplicationContextAware;
  * 
  *  
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -22,7 +22,7 @@ package ch.elca.el4j.tests.services.exceptionhandler;
  * handling strategies. 
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

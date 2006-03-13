@@ -25,7 +25,7 @@ import ch.elca.el4j.core.io.support.ModuleSorter;
  * This class tests a {@link ch.elca.el4j.core.io.support.ModuleSorter}.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

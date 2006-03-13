@@ -26,7 +26,7 @@ import junit.framework.TestCase;
  * This class test the environment support.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

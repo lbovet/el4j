@@ -24,7 +24,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * Criteria to compare.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

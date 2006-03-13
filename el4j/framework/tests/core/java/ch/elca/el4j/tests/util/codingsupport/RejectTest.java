@@ -31,7 +31,7 @@ import junit.framework.TestCase;
  * ch.elca.el4j.util.codingsupport.Reject} class.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

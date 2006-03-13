@@ -23,7 +23,7 @@ import org.springframework.util.StringUtils;
  * This class simplifies the setup of JNDI.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

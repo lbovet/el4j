@@ -31,7 +31,7 @@ import ch.elca.el4j.services.remoting.ClientContextInvocationHandler;
  * and unwraps runtime exceptions.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

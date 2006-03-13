@@ -25,7 +25,7 @@ import javax.swing.JPanel;
  * Page component group that groups page components in a <code>JPanel</code>.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

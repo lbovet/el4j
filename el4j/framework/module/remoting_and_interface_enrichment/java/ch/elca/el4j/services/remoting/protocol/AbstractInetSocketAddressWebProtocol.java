@@ -33,7 +33,7 @@ import ch.elca.el4j.services.remoting.RemotingServiceExporter;
  * web servers. It is used to map servlets to a path in the current context.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -28,7 +28,7 @@ import ch.elca.el4j.services.gui.richclient.utils.WindowUtils;
  * Menu to change the displayed page.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

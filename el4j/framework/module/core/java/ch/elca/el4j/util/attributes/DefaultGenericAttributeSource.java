@@ -36,7 +36,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * The default implementation of the GenericAttributeSource interface.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

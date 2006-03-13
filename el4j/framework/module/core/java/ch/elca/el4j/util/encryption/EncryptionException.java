@@ -23,7 +23,7 @@ import ch.elca.el4j.core.exceptions.BaseException;
  * Exception that is thrown when an encryption or decryption exception occured.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

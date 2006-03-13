@@ -38,7 +38,7 @@ import ch.elca.el4j.services.remoting.protocol.ejb.exception.WrapperException;
  * remove it explicitely (but this is not required by the EJB standard).
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

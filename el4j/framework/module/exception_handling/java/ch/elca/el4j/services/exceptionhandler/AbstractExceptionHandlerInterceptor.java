@@ -32,7 +32,7 @@ import org.springframework.aop.target.HotSwappableTargetSource;
  * respect to a number of classes or the whole system).
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

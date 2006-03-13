@@ -24,7 +24,7 @@ import junit.framework.TestCase;
  * Sample JUnit testcase for the Hello World project.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

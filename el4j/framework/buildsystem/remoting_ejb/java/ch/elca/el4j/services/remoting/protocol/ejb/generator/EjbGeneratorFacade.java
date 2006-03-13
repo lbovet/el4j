@@ -29,7 +29,7 @@ package ch.elca.el4j.services.remoting.protocol.ejb.generator;
  * the EJB classes after each modification.</b>
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

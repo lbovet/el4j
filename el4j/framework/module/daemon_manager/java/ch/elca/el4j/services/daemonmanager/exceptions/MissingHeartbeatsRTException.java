@@ -32,7 +32,7 @@ import ch.elca.el4j.util.codingsupport.CollectionUtils;
  * Exception to indicate that daemon heartbeats have missed.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

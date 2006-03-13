@@ -28,7 +28,7 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
  * basically the host name and port number.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

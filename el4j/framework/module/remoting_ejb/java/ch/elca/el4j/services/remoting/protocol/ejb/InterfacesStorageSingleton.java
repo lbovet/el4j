@@ -24,7 +24,7 @@ import java.util.HashMap;
  * dynamically created interfaces.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

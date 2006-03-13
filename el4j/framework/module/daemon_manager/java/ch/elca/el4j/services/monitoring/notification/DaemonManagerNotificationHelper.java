@@ -27,7 +27,7 @@ import ch.elca.el4j.services.daemonmanager.Daemon;
  * This class is used to notify on events which are daemon manager based.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

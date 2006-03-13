@@ -24,7 +24,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * Converter for booleans to strings.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

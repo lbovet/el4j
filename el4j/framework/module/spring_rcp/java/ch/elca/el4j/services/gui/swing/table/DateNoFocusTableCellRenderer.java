@@ -26,7 +26,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * Table cell renderer for dates.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

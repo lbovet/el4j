@@ -23,7 +23,7 @@ import ch.elca.el4j.util.codingsupport.AbstractDefaultEnum;
  * Enumeration for action results.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

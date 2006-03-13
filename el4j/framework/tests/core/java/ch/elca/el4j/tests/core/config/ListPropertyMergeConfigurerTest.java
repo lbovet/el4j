@@ -27,7 +27,7 @@ import junit.framework.TestCase;
  * JUnit test class for the ListPropertyMergeConfigurer.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

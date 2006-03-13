@@ -37,7 +37,7 @@ import org.apache.struts.config.ExceptionConfig;
  * and the stack trace on the page to which this action is forwarded.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -50,7 +50,7 @@ import ch.elca.el4j.services.search.events.QueryObjectEvent;
  * Search view.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -42,7 +42,7 @@ import ch.elca.el4j.services.remoting.protocol.soap.SoapHelper;
  * This class is the default soap exception handler.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

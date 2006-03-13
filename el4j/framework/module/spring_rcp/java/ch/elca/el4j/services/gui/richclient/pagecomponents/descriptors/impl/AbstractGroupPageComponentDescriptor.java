@@ -31,7 +31,7 @@ import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.LayoutDes
  * Abstract page component descriptor.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

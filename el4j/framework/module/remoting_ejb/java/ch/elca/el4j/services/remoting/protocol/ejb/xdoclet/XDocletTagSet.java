@@ -24,7 +24,7 @@ import java.util.LinkedHashMap;
  * This class implements a tag set that gathers XDoclet tags.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

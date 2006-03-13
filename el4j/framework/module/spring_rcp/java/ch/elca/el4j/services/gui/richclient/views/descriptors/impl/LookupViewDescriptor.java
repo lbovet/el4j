@@ -33,7 +33,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * has been instantiated with.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

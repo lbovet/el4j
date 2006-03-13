@@ -38,7 +38,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * <a href="http://microba.sf.net">http://microba.sf.net</a>.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

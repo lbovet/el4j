@@ -24,7 +24,7 @@ import org.apache.commons.logging.LogFactory;
  * This class contains a method called test(int) with attribute declarations.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

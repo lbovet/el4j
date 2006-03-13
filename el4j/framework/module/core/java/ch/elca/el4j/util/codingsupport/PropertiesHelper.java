@@ -42,7 +42,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * "file:C:/folder/..." or by "classpath:folder/...".
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

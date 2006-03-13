@@ -27,7 +27,7 @@ import ch.elca.el4j.services.gui.richclient.utils.DialogUtils;
  * Abstract class to start the RefDB-Application.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

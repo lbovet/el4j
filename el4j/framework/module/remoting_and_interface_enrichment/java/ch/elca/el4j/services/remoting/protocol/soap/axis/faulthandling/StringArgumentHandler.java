@@ -39,7 +39,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * string constructor argument(s).
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

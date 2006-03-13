@@ -23,7 +23,7 @@ import javax.management.ObjectName;
  * The interface of the proxy class for the JVM.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

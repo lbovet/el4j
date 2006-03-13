@@ -25,7 +25,7 @@ import ch.elca.el4j.services.remoting.ProtocolSpecificConfiguration;
  * This class is a value object and contains soap specific configurations.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

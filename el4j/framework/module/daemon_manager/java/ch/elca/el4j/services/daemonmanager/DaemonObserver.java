@@ -24,7 +24,7 @@ import ch.elca.el4j.services.daemonmanager.exceptions.DaemonCausedRTException;
  * This interface is used to observe a daemon.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

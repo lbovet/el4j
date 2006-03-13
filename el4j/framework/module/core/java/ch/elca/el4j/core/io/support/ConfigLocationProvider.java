@@ -25,7 +25,7 @@ package ch.elca.el4j.core.io.support;
  * <code>classpath*:mandatory/*</code>).
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

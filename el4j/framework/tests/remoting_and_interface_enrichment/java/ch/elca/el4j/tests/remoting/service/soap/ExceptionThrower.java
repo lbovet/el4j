@@ -22,7 +22,7 @@ package ch.elca.el4j.tests.remoting.service.soap;
  * fault specification.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

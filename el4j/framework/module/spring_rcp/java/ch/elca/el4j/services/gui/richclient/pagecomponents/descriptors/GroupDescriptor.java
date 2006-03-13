@@ -23,7 +23,7 @@ package ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors;
  * component was not initially linked to a page.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

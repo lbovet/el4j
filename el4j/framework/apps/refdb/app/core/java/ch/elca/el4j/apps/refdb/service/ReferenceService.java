@@ -36,7 +36,7 @@ import ch.elca.el4j.services.search.QueryObject;
  * presentation layer.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

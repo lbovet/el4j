@@ -27,7 +27,7 @@ import javax.swing.border.AbstractBorder;
  * A custom border for the raised header pseudo 3D effect.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

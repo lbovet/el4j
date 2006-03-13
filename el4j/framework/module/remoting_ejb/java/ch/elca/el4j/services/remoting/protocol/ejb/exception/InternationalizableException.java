@@ -26,7 +26,7 @@ package ch.elca.el4j.services.remoting.protocol.ejb.exception;
  * use of {@link java.text.MessageFormat}.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

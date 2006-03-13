@@ -23,7 +23,7 @@ package ch.elca.el4j.core.contextpassing;
  * more information on this.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

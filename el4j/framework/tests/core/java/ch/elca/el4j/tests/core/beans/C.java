@@ -21,7 +21,7 @@ package ch.elca.el4j.tests.core.beans;
  * This is a test class.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -32,7 +32,7 @@ import ch.elca.el4j.util.codingsupport.CollectionUtils;
  * This exception is used to inform that given daemons could not be stopped.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -24,7 +24,7 @@ import ch.elca.el4j.core.exceptions.BaseRTException;
  * while it is processing.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -41,7 +41,7 @@ import org.apache.commons.logging.LogFactory;
  * dependency graph.  
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

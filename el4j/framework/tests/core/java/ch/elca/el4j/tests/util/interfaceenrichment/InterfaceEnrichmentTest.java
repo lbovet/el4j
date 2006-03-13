@@ -33,7 +33,7 @@ import junit.framework.TestCase;
  * This is the test case for the interface enrichment.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -26,7 +26,7 @@ import org.springframework.util.StringUtils;
  * Util class to get application messages.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

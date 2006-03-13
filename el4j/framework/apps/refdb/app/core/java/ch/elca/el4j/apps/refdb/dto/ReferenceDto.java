@@ -28,7 +28,7 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  * This is the base reference class.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

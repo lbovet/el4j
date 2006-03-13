@@ -29,7 +29,7 @@ import org.aopalliance.intercept.MethodInvocation;
  * ch.elca.el4j.services.exceptionhandler.SafetyFacadeFactoryBean}.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

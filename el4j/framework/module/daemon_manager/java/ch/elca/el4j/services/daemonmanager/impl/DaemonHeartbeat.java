@@ -23,7 +23,7 @@ package ch.elca.el4j.services.daemonmanager.impl;
  * of missed heartbeats.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

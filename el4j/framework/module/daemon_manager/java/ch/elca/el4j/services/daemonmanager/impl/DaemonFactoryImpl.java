@@ -32,7 +32,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * Default implementation for a daemon factory.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

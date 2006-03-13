@@ -28,7 +28,7 @@ import ch.elca.el4j.services.daemonmanager.impl.AbstractDaemonManagerController;
  * Sample for the daemon manager controller with java service wrapper.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -22,7 +22,7 @@ package ch.elca.el4j.web.struts.form;
  * version number.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

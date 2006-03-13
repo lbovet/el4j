@@ -28,7 +28,7 @@ import junit.framework.TestCase;
  * This class tests the context exception handler.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

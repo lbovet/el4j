@@ -33,7 +33,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * Confirmation dialog used for beans.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

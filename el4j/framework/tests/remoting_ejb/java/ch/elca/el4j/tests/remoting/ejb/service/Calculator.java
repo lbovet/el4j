@@ -21,7 +21,7 @@ package ch.elca.el4j.tests.remoting.ejb.service;
  * Example class used to test the EJB integration.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

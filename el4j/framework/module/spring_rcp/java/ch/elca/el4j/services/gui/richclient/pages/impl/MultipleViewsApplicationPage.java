@@ -44,7 +44,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * Application page that can have multiple views.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

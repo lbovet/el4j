@@ -26,7 +26,7 @@ import org.apache.struts.action.ActionForm;
  * token.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

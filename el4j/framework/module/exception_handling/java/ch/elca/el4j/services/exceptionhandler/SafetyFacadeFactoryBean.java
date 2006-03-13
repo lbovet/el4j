@@ -23,7 +23,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * Convenience proxy factory for creating safety facades.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

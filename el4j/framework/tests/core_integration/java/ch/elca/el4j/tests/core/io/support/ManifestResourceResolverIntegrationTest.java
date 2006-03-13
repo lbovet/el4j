@@ -32,7 +32,7 @@ import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
  * configuration location section are available.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

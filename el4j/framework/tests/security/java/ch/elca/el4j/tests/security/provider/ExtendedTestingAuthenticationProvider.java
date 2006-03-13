@@ -27,7 +27,7 @@ import net.sf.acegisecurity.providers.TestingAuthenticationProvider;
  * case the username is not equal to the password.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

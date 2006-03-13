@@ -22,7 +22,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * Calculator for the Hello World project.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

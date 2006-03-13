@@ -28,7 +28,7 @@ import junit.framework.TestCase;
  * ch.elca.el4j.core.aop.ExclusiveBeanNameAutoProxyCreator}.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

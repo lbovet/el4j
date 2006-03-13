@@ -42,7 +42,7 @@ import ch.elca.el4j.services.search.events.QueryObjectEvent;
  * so we do not have to serve a separate class in the future.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

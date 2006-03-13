@@ -24,7 +24,7 @@ import com.sun.jdmk.comm.HtmlParser;
  * {@link ch.elca.el4j.services.monitoring.jmx.CssHtmlParser}.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

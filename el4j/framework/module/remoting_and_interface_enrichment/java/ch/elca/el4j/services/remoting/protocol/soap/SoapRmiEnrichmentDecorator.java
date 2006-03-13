@@ -26,7 +26,7 @@ import ch.elca.el4j.util.interfaceenrichment.MethodDescriptor;
  * showed in wsdl file, because they will be handled specially.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

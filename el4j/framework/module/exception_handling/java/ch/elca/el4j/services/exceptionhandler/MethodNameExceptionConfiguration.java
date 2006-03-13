@@ -26,7 +26,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * method's name to specify the exception handler.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

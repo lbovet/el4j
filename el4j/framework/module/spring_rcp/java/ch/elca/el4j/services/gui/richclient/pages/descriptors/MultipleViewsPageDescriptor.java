@@ -35,7 +35,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * Page descriptor for multiple views.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

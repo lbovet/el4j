@@ -27,7 +27,7 @@ import java.util.Map;
  * another one on the server side is needed.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

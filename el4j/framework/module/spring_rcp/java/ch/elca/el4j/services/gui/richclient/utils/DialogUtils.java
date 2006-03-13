@@ -30,7 +30,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * Util class for dialog boxes.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

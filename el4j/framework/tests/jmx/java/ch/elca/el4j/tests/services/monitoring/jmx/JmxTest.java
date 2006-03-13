@@ -47,7 +47,7 @@ import junit.framework.TestCase;
  * HREF="http://mc4j.sourceforge.net/">http://mc4j.sourceforge.net/ </A>.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

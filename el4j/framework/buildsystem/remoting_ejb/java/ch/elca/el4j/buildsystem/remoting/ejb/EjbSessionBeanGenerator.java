@@ -32,7 +32,7 @@ import ch.elca.el4j.services.remoting.protocol.ejb.generator.EjbGeneratorFacade;
  * This task generates EJB business implementations of Spring beans.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

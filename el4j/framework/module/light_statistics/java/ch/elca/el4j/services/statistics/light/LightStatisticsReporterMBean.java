@@ -21,7 +21,7 @@ package ch.elca.el4j.services.statistics.light;
  * This interface defines the functionality accessible through JMX.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

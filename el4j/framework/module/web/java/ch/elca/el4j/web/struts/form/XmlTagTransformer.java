@@ -25,7 +25,7 @@ import org.apache.commons.logging.LogFactory;
  * errors.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

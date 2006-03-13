@@ -21,7 +21,7 @@ package ch.elca.el4j.tests.security.sample;
  * Sample service for access tests.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *   "$Revision$", "$Date$", "$Author$"
  * );</script>
  * 

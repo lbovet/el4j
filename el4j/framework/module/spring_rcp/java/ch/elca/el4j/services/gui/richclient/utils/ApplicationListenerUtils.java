@@ -26,7 +26,7 @@ import org.springframework.richclient.application.Application;
  * Util class for application listeners.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

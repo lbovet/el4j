@@ -48,7 +48,7 @@ import org.apache.commons.logging.LogFactory;
  * client or lets the browser do the xslt transformation.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -26,7 +26,7 @@ import ch.elca.el4ant.propgen.AbstractPropertyGenerator;
  * properties.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

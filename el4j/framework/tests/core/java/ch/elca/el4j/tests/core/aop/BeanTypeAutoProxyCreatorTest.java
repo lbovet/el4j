@@ -27,7 +27,7 @@ import junit.framework.TestCase;
  * intercept either one or the other method invocation of the target classes.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

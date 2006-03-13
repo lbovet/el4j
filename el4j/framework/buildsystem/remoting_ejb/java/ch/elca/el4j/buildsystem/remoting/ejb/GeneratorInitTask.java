@@ -32,7 +32,7 @@ import ch.elca.el4ant.model.ProjectRepository;
  * EJB session beans.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

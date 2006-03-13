@@ -31,7 +31,7 @@ import junit.framework.TestCase;
  * JUnit Test Class for the ModuleApplicationContext.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -23,7 +23,7 @@ import java.text.MessageFormat;
  * This is the parent exception of all the unchecked exceptions in EL4J.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

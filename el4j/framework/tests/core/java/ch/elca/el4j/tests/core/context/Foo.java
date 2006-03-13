@@ -22,7 +22,7 @@ package ch.elca.el4j.tests.core.context;
  * and provides nothing.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
