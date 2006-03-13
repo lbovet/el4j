@@ -16,7 +16,8 @@ Remark: Every directory mentioned in this document is relative to the
          Note: You can also use the 10g driver for version 9 database.
    * Directory "lib/src" contains sources for library files of directory "lib".
    * Directory "framework" contains the source of the EL4J framework. If your 
-     download does not contain it, you can get it from "cvs.sourceforge.net".
+     download does not contain it, you can get it from SourceForge Subversion
+     server (svn co https://svn.sourceforge.net/svnroot/el4j el4j/framework).
    * Directory "etc" contains various little files about EL4J.
    
 ---+ How to get started (this is just a proposition to show some features)
