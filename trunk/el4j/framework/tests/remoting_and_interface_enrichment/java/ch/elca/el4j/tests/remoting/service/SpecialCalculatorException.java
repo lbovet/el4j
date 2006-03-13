@@ -23,7 +23,7 @@ import ch.elca.el4j.core.exceptions.BaseException;
  * This special exception is used for testing.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

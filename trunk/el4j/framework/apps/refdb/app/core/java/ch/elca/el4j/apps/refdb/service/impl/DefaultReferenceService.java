@@ -44,7 +44,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * This is the default implementation of the reference service.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

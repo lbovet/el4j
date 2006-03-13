@@ -32,7 +32,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * This class allows excluding some items out of a file list.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

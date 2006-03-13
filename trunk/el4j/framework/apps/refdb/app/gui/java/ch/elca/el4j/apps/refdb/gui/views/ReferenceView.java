@@ -31,7 +31,7 @@ import ch.elca.el4j.services.search.events.QueryObjectEvent;
  * Reference view.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

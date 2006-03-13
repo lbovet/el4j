@@ -24,7 +24,7 @@ import org.apache.axis.encoding.ser.BeanSerializerFactory;
  * This class defines a type mapping for beans.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

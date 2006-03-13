@@ -21,7 +21,7 @@ package ch.elca.el4j.demos.statistics.light;
  * This class is just a demo bean.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

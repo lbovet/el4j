@@ -24,7 +24,7 @@ import org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator;
  * Auto proxy creator that identifies beans to proxy via a list of classes.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

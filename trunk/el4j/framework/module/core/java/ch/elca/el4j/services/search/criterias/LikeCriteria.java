@@ -20,7 +20,7 @@ package ch.elca.el4j.services.search.criterias;
  * Criteria for the like pattern.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

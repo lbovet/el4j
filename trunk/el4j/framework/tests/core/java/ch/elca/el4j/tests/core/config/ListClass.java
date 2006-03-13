@@ -25,7 +25,7 @@ import java.util.List;
  * a list member and provides a setter and a getter method for this member.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

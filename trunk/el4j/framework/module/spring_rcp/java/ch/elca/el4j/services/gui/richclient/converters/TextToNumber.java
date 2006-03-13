@@ -27,7 +27,7 @@ import org.springframework.util.StringUtils;
  * Convertor for strings to numbers.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -36,7 +36,7 @@ import com.ibatis.sqlmap.client.extensions.TypeHandlerCallback;
  * array an vice versa.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

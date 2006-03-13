@@ -23,7 +23,7 @@ package ch.elca.el4j.tests.core.aop;
  * container.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

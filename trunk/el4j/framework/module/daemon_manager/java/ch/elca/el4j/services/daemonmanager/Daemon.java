@@ -26,7 +26,7 @@ import ch.elca.el4j.services.daemonmanager.exceptions.DaemonAlreadyStartedRTExce
  * with <code>do</code> will be executed in asynchronous way.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

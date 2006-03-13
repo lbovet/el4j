@@ -25,7 +25,7 @@ import org.springframework.dao.DataAccessException;
  * exists.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

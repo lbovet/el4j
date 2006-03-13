@@ -31,7 +31,7 @@ import com.jamonapi.MonitorFactory;
  * This class is a JMX proxy for JAMon performance measurements.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

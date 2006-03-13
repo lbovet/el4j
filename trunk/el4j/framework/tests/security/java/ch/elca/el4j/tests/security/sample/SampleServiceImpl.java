@@ -25,7 +25,7 @@ import org.apache.commons.logging.LogFactory;
  * Sample service implementation.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *   "$Revision$", "$Date$", "$Author$"
  * );</script>
  * 

@@ -32,7 +32,7 @@ import org.springframework.remoting.RemoteAccessException;
  * exceptions.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -21,7 +21,7 @@ package ch.elca.el4j.tests.core.aop;
  * A marker interface used in the tests.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

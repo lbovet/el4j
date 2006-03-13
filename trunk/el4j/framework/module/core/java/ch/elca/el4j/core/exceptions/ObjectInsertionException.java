@@ -20,7 +20,7 @@ package ch.elca.el4j.core.exceptions;
  * This exception will be thrown when insertion of an object failed.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

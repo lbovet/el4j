@@ -22,7 +22,7 @@ import ch.elca.el4j.core.exceptions.BaseRTException;
 /**
  * This exception is a base exception class for not fulfilled conditions.
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

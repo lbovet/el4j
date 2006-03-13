@@ -20,7 +20,7 @@ package ch.elca.el4j.apps.keyword;
  * Constants for keyword application.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -52,7 +52,7 @@ import ch.elca.el4j.demos.remoting.CalculatorException;
  * </ul>
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

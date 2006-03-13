@@ -24,7 +24,7 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
  * convenience sqlmap client template without casting it.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

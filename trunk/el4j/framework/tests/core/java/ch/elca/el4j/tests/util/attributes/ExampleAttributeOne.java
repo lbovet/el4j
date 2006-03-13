@@ -22,7 +22,7 @@ package ch.elca.el4j.tests.util.attributes;
  * a multiplication factor.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

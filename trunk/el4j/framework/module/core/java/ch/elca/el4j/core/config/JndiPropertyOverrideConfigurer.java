@@ -40,7 +40,7 @@ import org.springframework.util.StringUtils;
  * behaviour, if there are any JNDI-related problems.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

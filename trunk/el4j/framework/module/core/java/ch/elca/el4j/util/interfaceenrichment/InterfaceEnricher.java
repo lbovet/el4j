@@ -55,7 +55,7 @@ import org.apache.commons.logging.LogFactory;
  *
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

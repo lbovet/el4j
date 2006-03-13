@@ -30,7 +30,7 @@ import com.jamonapi.MonitorFactory;
  * in contrast to the one implemented by Spring.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

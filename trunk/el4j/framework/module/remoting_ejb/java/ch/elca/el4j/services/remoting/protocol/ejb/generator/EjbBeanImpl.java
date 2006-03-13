@@ -32,7 +32,7 @@ import ch.elca.el4j.util.codingsupport.ClassUtils;
  * This class provides all meta data needed to generate EJB session beans.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

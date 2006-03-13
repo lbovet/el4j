@@ -29,7 +29,7 @@ import ch.elca.el4j.services.gui.richclient.commands.ShowPageCommand;
  * Util class for general spring rcp needs. 
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

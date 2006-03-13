@@ -25,7 +25,7 @@ import javax.swing.table.DefaultTableCellRenderer;
  * Table cell renderer used for tables where only complete rows can be selected.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

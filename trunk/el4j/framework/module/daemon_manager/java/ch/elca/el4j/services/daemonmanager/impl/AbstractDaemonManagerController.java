@@ -35,7 +35,7 @@ import ch.elca.el4j.services.daemonmanager.exceptions.MissingHeartbeatsRTExcepti
  * Abstract daemon manager controller for java service wrapper.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

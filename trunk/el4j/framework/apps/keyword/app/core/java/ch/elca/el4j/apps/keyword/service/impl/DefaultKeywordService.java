@@ -37,7 +37,7 @@ import ch.elca.el4j.services.search.QueryObject;
  * This is the default implementation of the keyword service.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

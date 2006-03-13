@@ -32,7 +32,7 @@ import junit.framework.TestCase;
  * This class is a test for the calculator.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

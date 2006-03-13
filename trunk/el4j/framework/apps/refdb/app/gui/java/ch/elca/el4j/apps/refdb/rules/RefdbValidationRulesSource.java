@@ -35,7 +35,7 @@ import ch.elca.el4j.apps.refdb.dto.LinkDto;
  * Validation rules source for the reference database application.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

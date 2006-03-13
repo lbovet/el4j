@@ -28,7 +28,7 @@ import ch.elca.el4j.services.exceptionhandler.AbstractExceptionHandlerIntercepto
  * as well as the exception handler's.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

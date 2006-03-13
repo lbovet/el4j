@@ -28,7 +28,7 @@ import org.springframework.binding.format.FormatterLocator;
  * Converter for dates and strings.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

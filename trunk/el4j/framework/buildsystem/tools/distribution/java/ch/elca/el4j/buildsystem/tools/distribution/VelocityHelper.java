@@ -39,7 +39,7 @@ import org.apache.velocity.runtime.log.LogSystem;
  * TBD: replace it with the velocity EL4Ant plugin as soon as it's available.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *   "$Revision$", "$Date$", "$Author$"
  * );</script>
  *

@@ -26,7 +26,7 @@ import ch.elca.el4j.services.persistence.generic.primarykey.PrimaryKeyGenerator;
  * <code>PrimaryKeyGenerator</code>. Primary key are strings in this case.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

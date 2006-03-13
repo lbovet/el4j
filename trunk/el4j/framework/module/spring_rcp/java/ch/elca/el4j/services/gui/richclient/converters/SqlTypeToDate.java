@@ -27,7 +27,7 @@ import org.springframework.binding.convert.support.AbstractConverter;
  * <code>java.sql.Timestamp</code> to <code>java.util.Date</code>.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

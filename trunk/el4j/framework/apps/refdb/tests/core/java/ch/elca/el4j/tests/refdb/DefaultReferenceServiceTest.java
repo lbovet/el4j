@@ -46,7 +46,7 @@ import ch.elca.el4j.services.search.criterias.LikeCriteria;
  * Test case for <code>DefaultReferenceService</code>.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

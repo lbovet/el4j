@@ -37,7 +37,7 @@ import ch.elca.el4j.services.gui.swing.border.RaisedHeaderBorder;
  * Controlable internal frame. Used to wrap a <code>JComponent</code>.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

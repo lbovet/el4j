@@ -25,7 +25,7 @@ import ch.elca.el4j.apps.refdb.service.ReferenceService;
  * Broker for services. Currently only the reference service is implemented.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

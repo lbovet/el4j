@@ -22,7 +22,7 @@ package ch.elca.el4j.tests.services.monitoring.jmx;
  * and a setter method for this member and an 'add' method.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -25,7 +25,7 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
  * Superclass of all EJB beans containing the spring application context.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

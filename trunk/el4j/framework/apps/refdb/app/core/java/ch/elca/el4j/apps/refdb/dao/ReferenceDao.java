@@ -39,7 +39,7 @@ import ch.elca.el4j.services.search.QueryObject;
  * example.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

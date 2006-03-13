@@ -26,7 +26,7 @@ import ch.elca.el4j.services.gui.event.RefreshEvent;
  * Command to publish a refresh event.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

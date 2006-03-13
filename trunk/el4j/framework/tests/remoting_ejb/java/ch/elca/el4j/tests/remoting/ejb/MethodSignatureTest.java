@@ -31,7 +31,7 @@ import junit.framework.TestCase;
  * generator.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

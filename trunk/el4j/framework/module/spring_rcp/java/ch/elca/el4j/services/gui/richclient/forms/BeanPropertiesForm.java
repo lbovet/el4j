@@ -39,7 +39,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * Properties form for beans.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

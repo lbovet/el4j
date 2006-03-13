@@ -20,7 +20,7 @@ package ch.elca.el4j.util.codingsupport;
 /**
  * This exception will be thrown when a precondition is not fulfilled.
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

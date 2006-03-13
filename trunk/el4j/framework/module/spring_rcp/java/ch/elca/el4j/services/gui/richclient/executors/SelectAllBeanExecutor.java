@@ -23,7 +23,7 @@ import org.springframework.util.StringUtils;
  * Executor to select all visible beans.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

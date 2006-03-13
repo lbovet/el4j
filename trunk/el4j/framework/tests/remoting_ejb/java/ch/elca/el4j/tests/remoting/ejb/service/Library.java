@@ -25,7 +25,7 @@ import javax.ejb.SessionContext;
  * Example class for testing EJB integration.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

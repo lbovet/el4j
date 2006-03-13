@@ -29,7 +29,7 @@ import ch.elca.el4j.services.daemonmanager.exceptions.MissingHeartbeatsRTExcepti
  * This class is used to let the daemon manager process.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

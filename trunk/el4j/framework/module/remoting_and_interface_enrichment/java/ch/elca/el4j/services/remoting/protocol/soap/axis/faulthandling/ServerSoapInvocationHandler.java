@@ -27,7 +27,7 @@ import java.lang.reflect.Method;
  * be translated into a <code>SOAPFaultException</code>.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

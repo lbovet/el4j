@@ -25,7 +25,7 @@ import org.springframework.util.StringUtils;
  * of class <code>org.springframework.util.NumberUtils</code>.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

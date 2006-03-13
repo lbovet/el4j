@@ -34,7 +34,7 @@ import ch.elca.el4j.services.persistence.generic.primarykey.PrimaryKeyGenerator;
  * each dto with help of this dto factory.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

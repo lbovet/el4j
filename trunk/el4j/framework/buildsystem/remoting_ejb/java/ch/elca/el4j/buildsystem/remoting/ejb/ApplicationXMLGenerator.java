@@ -28,7 +28,7 @@ import ch.elca.el4j.buildsystem.remoting.ejb.util.VelocityHelper;
  * This task generates the ear deployment descriptor (application.xml).
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

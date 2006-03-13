@@ -32,7 +32,7 @@ import ch.elca.el4j.services.remoting.RemotingServiceExporter;
  * be enabled. Client and server must be in same JVM.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

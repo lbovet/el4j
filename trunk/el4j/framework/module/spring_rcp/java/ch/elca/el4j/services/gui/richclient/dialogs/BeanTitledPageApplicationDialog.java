@@ -34,7 +34,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * Application dialog with title used for beans.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

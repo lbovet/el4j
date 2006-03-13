@@ -28,7 +28,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * Class to register daemon actions.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -97,7 +97,7 @@ import java.util.Hashtable;
  * "Effective Java" by Joshua Bloch.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

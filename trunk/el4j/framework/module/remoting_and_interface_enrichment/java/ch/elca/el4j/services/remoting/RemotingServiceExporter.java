@@ -34,7 +34,7 @@ import ch.elca.el4j.util.interfaceenrichment.InterfaceEnricher;
  * This class is the global remote service exporter bean.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

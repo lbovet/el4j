@@ -36,7 +36,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * <a href="http://microba.sf.net">http://microba.sf.net</a>.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

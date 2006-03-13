@@ -30,7 +30,7 @@ import org.apache.commons.logging.LogFactory;
  * This class creates stateful EJB remote proxies.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

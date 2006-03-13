@@ -22,7 +22,7 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  * This class is a reference and describs a formal publication.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -30,7 +30,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * Groups multiple page component descriptors.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

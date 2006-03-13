@@ -33,7 +33,7 @@ import java.text.MessageFormat;
  * class that was introduced with the JDK 1.4.
  * 
  * <script type="text/javascript">printFileStatus 
- * ("$Source$",
+ * ("$URL$",
  *  "$Revision$",
  *  "$Date$", 
  *  "$Author$" );

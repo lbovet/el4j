@@ -39,7 +39,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * Abstract class for a page component group.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

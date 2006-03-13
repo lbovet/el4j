@@ -42,7 +42,7 @@ import ch.elca.el4ant.model.ProjectRepository;
  * from a central properties file and makes them available to the project.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

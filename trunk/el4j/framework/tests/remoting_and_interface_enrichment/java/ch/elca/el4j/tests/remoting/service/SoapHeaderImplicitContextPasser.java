@@ -31,7 +31,7 @@ import ch.elca.el4j.core.exceptions.BaseRTException;
  * Implicit context passer to test client side soap header modification.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

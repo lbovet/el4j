@@ -30,7 +30,7 @@ import junit.framework.TestCase;
  * This is the unit test for <code>UuidPrimaryKeyGenerator</code>.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

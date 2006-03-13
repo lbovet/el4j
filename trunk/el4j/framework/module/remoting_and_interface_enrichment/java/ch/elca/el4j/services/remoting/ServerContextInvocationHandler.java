@@ -32,7 +32,7 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
  * This class passes the context additionally with every method call.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

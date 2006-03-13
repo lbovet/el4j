@@ -38,7 +38,7 @@ import org.springframework.beans.factory.InitializingBean;
  * <p>Exclusion has higher precedence than inclusions.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

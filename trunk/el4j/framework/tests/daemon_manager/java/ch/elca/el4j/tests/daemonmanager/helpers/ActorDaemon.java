@@ -30,7 +30,7 @@ import junit.framework.Assert;
  * This daemon can act in different roles.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

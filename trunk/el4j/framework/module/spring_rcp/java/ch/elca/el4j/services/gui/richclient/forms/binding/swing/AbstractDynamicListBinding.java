@@ -37,7 +37,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * Binding for a <code>JList</code> with a collection. 
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

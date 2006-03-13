@@ -24,7 +24,7 @@ import java.util.List;
  * This class simplifies writing ordered configuration location providers.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

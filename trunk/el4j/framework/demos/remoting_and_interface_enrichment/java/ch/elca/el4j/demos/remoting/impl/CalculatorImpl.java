@@ -25,7 +25,7 @@ import ch.elca.el4j.demos.remoting.CalculatorException;
  * This class is the implementation of the calculator.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

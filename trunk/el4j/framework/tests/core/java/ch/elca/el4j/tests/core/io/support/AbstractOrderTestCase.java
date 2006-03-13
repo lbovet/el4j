@@ -23,7 +23,7 @@ import junit.framework.TestCase;
  * Abstract test case for order tests.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -22,7 +22,7 @@ package ch.elca.el4j.services.exceptionhandler;
  * not been set appropriately.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

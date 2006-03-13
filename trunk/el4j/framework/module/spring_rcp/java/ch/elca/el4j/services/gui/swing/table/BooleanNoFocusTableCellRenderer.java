@@ -27,7 +27,7 @@ import javax.swing.table.TableCellRenderer;
  * Table cell renderer for boolean value. Cell will be displayed as check box.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

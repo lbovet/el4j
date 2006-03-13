@@ -23,7 +23,7 @@ import org.springframework.beans.factory.BeanNameAware;
  * This is a test class.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

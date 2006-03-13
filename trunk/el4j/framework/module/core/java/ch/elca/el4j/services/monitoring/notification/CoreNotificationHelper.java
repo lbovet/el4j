@@ -34,7 +34,7 @@ import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureExce
  * This class is used to notify on events which are core based.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -26,7 +26,7 @@ import ch.elca.el4j.services.daemonmanager.Daemon;
  * This class is used to wrap a throwable which was thrown by a daemon.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

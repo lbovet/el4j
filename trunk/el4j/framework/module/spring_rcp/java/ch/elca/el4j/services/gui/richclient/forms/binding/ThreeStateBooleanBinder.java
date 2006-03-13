@@ -36,7 +36,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * Binder for a three state boolean component.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

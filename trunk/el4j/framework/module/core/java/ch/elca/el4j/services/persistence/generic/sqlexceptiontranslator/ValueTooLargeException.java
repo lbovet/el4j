@@ -24,7 +24,7 @@ import org.springframework.dao.DataAccessException;
  * This exception will be thrown when a value is to large.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

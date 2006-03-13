@@ -40,7 +40,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * constructor in form <code>JList.class, FormModel.class, String.class</code>.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

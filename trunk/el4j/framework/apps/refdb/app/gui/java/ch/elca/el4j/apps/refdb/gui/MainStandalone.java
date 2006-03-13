@@ -23,7 +23,7 @@ package ch.elca.el4j.apps.refdb.gui;
  * This class is used to start the RefDB-Application in standalone mode.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

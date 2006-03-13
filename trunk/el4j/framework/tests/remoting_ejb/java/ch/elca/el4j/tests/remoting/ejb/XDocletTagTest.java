@@ -35,7 +35,7 @@ import junit.framework.TestCase;
  * Tests the XDoclet tag support.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

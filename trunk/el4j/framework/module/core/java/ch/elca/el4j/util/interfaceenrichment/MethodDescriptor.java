@@ -21,7 +21,7 @@ package ch.elca.el4j.util.interfaceenrichment;
  * Class to describe a method. This is used to decorate methods.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

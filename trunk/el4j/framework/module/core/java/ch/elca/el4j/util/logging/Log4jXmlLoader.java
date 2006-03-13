@@ -31,7 +31,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * This class is used to load a freely choosable log4j xml configuration file.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

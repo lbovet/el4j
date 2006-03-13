@@ -26,7 +26,7 @@ import org.springframework.util.StringUtils;
  * string representation.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

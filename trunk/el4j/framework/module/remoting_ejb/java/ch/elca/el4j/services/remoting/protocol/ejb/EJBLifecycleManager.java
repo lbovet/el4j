@@ -26,7 +26,7 @@ import org.apache.commons.logging.LogFactory;
  * This class allows to control the life cycle of an EJB Object.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

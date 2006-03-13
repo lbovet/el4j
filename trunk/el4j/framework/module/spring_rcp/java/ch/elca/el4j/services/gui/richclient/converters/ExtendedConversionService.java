@@ -32,7 +32,7 @@ import org.springframework.binding.format.support.SimpleFormatterLocator;
  * Extended converter service. Support for sql types.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -21,7 +21,7 @@ package ch.elca.el4j.services.remoting.protocol.ejb;
  * This class creates stateless EJB remote proxies.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

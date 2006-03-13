@@ -94,7 +94,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * </ul>
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

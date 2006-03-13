@@ -22,7 +22,7 @@ import org.apache.tools.ant.Task;
  * This class represents a container specific client dependency.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

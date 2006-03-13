@@ -77,7 +77,7 @@ import ch.elca.el4j.util.interfaceenrichment.MethodDescriptor;
  * This class implements all needed things for the soap protocol.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

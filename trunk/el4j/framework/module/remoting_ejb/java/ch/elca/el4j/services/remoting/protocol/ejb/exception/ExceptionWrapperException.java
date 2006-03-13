@@ -41,7 +41,7 @@ import org.apache.commons.logging.LogFactory;
  * exception in the <code>byte[]</code> can be ignored.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *   "$Revision$", "$Date$", "$Author$"
  * );</script>
  **/

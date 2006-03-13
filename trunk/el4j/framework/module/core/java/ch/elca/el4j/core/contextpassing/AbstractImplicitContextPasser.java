@@ -28,7 +28,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * <code>ImplicitContextPassingRegistry</code> where it is should be registered.
  * 
  * <script type="text/javascript">printFileStatus 
- * ("$Source$",
+ * ("$URL$",
  *  "$Revision$",
  *  "$Date$", 
  *  "$Author$" ); </script>

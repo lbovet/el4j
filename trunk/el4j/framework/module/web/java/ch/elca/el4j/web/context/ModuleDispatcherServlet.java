@@ -30,7 +30,7 @@ import org.springframework.web.servlet.DispatcherServlet;
  * preserves the order of module dependencies when resources are resolved.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

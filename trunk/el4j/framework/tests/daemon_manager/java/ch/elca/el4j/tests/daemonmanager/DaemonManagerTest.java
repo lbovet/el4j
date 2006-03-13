@@ -38,7 +38,7 @@ import junit.framework.TestCase;
  * <code>ch.elca.el4j.services.daemonmanager.impl.DaemonManagerImpl</code>.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -39,7 +39,7 @@ import ch.elca.el4j.services.gui.swing.panel.ControlableInternalFrame;
  * Page component pane for a controlable internal frame.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

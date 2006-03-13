@@ -28,7 +28,7 @@ import ch.elca.el4j.services.exceptionhandler.handler.AbstractReconfigureExcepti
  * {@link ch.elca.el4j.tests.services.exceptionhandler.Adder} implementation.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

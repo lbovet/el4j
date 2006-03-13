@@ -25,7 +25,7 @@ import org.springframework.richclient.core.LabeledObjectSupport;
  * Is the show command for pages.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

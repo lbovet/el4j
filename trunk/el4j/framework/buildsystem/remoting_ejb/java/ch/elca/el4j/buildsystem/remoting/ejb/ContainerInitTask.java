@@ -30,7 +30,7 @@ import ch.elca.el4ant.model.Module;
  * of the remoting EJB support.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

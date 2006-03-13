@@ -28,7 +28,7 @@ import ch.elca.el4j.util.interfaceenrichment.MethodDescriptor;
  * method of the given interface.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

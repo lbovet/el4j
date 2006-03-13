@@ -9,7 +9,7 @@ Hook to start an EJB server parallely and to deploy a unit given as local ant ta
 </description>
 
   <!-- Version: $Revision$ -->
-  <!-- Source: $Source$ -->
+  <!-- Source: $URL$ -->
   <!-- Date: $Date$ -->
   <!-- Author: $Author$ -->
 

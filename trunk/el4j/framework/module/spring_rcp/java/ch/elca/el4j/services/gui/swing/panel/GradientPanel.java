@@ -30,7 +30,7 @@ import javax.swing.UIManager;
  * A panel with a horizontal gradient background.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

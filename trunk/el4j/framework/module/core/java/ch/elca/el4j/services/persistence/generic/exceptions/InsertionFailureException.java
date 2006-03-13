@@ -24,7 +24,7 @@ import org.springframework.dao.InvalidDataAccessResourceUsageException;
  * not be inserted.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -21,7 +21,7 @@ package ch.elca.el4j.tests.util.attributes;
  * The interface for the Example Attributes used in this JUnit test.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

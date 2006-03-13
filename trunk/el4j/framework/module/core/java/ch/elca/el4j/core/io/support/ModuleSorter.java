@@ -22,7 +22,7 @@ package ch.elca.el4j.core.io.support;
  * dependencies into a list of modules that respects the partial order.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

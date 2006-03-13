@@ -20,7 +20,7 @@ package ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors;
  * Interface for a layout descriptor.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

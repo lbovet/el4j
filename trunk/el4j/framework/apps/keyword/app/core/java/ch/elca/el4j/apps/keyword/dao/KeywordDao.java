@@ -32,7 +32,7 @@ import ch.elca.el4j.services.search.QueryObject;
  * keyword information.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

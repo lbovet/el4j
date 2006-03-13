@@ -22,7 +22,7 @@ package ch.elca.el4j.services.gui.richclient.executors.action;
  * service layer. 
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

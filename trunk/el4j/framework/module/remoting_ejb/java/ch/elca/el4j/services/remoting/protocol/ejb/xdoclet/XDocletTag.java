@@ -29,7 +29,7 @@ import org.apache.commons.logging.LogFactory;
  * representations and helps merging multiple tags.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

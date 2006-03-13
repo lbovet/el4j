@@ -23,7 +23,7 @@ package ch.elca.el4j.util.codingsupport;
  * class <code>org.springframework.util.ObjectUtils</code>.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

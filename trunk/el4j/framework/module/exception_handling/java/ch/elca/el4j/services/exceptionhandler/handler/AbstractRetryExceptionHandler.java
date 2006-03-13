@@ -33,7 +33,7 @@ import ch.elca.el4j.services.exceptionhandler.SafetyFacadeInterceptor;
  * handler are used).
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

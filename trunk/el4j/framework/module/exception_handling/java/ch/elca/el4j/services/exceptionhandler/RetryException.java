@@ -23,7 +23,7 @@ import org.springframework.aop.target.HotSwappableTargetSource;
  * This exception signals a retry.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

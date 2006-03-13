@@ -23,7 +23,7 @@ import org.springframework.transaction.interceptor.RuleBasedTransactionAttribute
  * It must be used in combination with <code>RollbackRule</code>(s).
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

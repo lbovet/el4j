@@ -31,7 +31,7 @@ import ch.elca.el4ant.model.ProjectRepository;
  * Abstract class to setup hooks for the EJB integration build system plugin.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

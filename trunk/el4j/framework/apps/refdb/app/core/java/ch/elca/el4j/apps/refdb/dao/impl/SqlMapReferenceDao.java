@@ -46,7 +46,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * Implementation of the reference DAO using iBatis.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

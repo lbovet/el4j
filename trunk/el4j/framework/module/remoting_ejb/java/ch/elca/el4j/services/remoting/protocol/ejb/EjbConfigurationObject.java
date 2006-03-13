@@ -30,7 +30,7 @@ import ch.elca.el4j.services.remoting.ProtocolSpecificConfiguration;
  * setup the EJB remoting solution.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

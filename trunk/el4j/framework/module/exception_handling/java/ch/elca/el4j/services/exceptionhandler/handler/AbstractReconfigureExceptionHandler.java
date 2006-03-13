@@ -30,7 +30,7 @@ import ch.elca.el4j.services.exceptionhandler.RetryException;
  * this exception handler's interceptor.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

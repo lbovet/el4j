@@ -23,7 +23,7 @@ import org.apache.struts.action.ActionForm;
  * Abstract struts form for optimistic locking version number.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

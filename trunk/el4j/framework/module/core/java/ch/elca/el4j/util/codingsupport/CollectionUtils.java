@@ -34,7 +34,7 @@ import org.apache.commons.logging.LogFactory;
  * of class <code>org.springframework.util.CollectionUtils</code>.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -30,7 +30,7 @@ import ch.elca.el4j.services.remoting.RemotingServiceExporter;
  * This class implements all needed things for the hessian protocol.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

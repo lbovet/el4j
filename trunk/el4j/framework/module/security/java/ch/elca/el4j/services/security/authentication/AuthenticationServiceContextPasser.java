@@ -33,7 +33,7 @@ import net.sf.acegisecurity.context.security.SecureContextImpl;
  * passing of the AuthenticationData and stores it in a ThreadLocal.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

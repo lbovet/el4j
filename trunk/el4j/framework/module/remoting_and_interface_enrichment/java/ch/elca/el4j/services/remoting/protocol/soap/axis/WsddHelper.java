@@ -38,7 +38,7 @@ import ch.elca.el4j.core.exceptions.BaseRTException;
  * This class is used to help creating wssd documents for axis deployment.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -28,7 +28,7 @@ import org.springframework.jndi.JndiCallback;
  * org.springframework.jndi.JndiTemplate}.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

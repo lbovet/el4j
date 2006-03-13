@@ -25,7 +25,7 @@ package ch.elca.el4j.util.interfaceenrichment;
  * and/or one can change any signatures of its methods.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

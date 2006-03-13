@@ -26,7 +26,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * This class is used to manage the given remote protocol.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

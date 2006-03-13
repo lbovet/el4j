@@ -25,7 +25,7 @@ import ch.elca.el4j.services.daemonmanager.exceptions.DaemonCausedRTException;
  * This is a daemon observer for the actor daemon.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

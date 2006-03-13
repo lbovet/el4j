@@ -29,7 +29,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * Convenience factory to create exception handler proxies.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

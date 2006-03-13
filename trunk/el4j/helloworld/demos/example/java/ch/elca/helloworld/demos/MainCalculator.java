@@ -27,7 +27,7 @@ import ch.elca.helloworld.services.Calculator;
  * Sample demo for the Hello World project.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

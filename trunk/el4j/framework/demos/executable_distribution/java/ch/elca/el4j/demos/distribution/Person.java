@@ -21,7 +21,7 @@ package ch.elca.el4j.demos.distribution;
  * This class represents a person.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

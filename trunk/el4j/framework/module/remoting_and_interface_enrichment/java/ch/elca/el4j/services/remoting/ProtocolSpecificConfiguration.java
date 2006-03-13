@@ -23,7 +23,7 @@ import org.springframework.beans.factory.InitializingBean;
  * Interface to describe additional protocol specific configuration.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

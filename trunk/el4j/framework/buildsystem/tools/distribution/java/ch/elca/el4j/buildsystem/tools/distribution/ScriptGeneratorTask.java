@@ -31,7 +31,7 @@ import org.apache.velocity.VelocityContext;
  * This task generates script files for a executable distribution.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

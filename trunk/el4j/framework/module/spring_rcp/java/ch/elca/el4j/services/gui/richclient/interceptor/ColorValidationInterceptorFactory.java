@@ -40,7 +40,7 @@ import org.springframework.util.Assert;
  * - ColorChanger gets now reference to inner component.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

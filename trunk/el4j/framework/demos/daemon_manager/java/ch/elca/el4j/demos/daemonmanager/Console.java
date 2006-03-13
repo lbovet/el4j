@@ -29,7 +29,7 @@ import ch.elca.el4j.services.daemonmanager.DaemonManager;
  * method main, tasks will be executed.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

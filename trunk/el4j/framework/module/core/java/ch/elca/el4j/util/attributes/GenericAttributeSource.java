@@ -26,7 +26,7 @@ import org.springframework.metadata.Attributes;
  * Interface for the AttributeSource.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

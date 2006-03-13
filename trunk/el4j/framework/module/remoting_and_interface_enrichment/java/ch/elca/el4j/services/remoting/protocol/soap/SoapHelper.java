@@ -22,7 +22,7 @@ package ch.elca.el4j.services.remoting.protocol.soap;
  * Helper for soap services.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

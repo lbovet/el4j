@@ -36,7 +36,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * Implementation of the keyword dao which is using iBatis SqlMaps.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

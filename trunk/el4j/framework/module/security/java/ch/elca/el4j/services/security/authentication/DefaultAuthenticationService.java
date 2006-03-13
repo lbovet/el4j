@@ -45,7 +45,7 @@ import net.sf.acegisecurity.AuthenticationManager;
  * <br>
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

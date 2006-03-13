@@ -31,7 +31,7 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
  * This class is used to test if the implicit context passing works.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

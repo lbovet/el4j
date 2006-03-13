@@ -21,7 +21,7 @@ package ch.elca.el4j.tests.services.exceptionhandler;
  * This interface delivers support to add two integers.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

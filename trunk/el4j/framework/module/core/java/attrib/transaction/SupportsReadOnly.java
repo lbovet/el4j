@@ -23,7 +23,7 @@ import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
  * It must be used standalone.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

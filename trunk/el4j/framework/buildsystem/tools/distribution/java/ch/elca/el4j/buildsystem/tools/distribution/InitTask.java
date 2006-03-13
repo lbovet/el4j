@@ -42,7 +42,7 @@ import ch.elca.el4ant.propgen.RuntimePropertyGenerator;
  * <code>runtime.command.creator=runtime.command.creator.basic</code>.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

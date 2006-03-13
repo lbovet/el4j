@@ -40,7 +40,7 @@ import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
  * configuration files that are included using using wildcard notation.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

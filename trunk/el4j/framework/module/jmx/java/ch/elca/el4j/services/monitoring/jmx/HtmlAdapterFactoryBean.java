@@ -32,7 +32,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * This class creates a HtmlAdapter for an MBeanServer.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

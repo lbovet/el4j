@@ -28,7 +28,7 @@ import ch.elca.el4j.services.gui.richclient.pages.impl.MultipleViewsApplicationP
  * Application window for having multiple views in a page.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

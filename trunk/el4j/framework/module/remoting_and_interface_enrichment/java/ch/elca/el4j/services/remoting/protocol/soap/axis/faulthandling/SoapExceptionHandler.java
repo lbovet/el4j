@@ -25,7 +25,7 @@ import org.apache.axis.AxisFault;
  * Handler to translate exceptions.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

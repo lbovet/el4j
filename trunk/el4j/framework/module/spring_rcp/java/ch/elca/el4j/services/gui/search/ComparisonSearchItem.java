@@ -31,7 +31,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * Is a comparison search item.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

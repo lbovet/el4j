@@ -40,7 +40,7 @@ import sun.misc.BASE64Encoder;
  * Class to en- and decrypt data symetrically.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

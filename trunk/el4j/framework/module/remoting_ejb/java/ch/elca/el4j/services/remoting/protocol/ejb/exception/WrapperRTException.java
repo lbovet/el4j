@@ -44,7 +44,7 @@ import java.io.StringWriter;
  * &nbsp;&nbsp;at .... [the stack trace of B].</tt>
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *   "$Revision$", "$Date$", "$Author$"
  * );</script>
  *

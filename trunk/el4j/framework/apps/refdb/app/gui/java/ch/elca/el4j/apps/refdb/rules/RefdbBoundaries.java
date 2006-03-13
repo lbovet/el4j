@@ -20,7 +20,7 @@ package ch.elca.el4j.apps.refdb.rules;
  * Boundaries for reference database application dtos.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

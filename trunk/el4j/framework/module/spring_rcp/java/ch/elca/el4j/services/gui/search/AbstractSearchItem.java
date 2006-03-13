@@ -27,7 +27,7 @@ import ch.elca.el4j.services.search.criterias.AbstractCriteria;
  * Abstract form of a search item.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

@@ -25,7 +25,7 @@ import ch.elca.el4j.services.search.criterias.LikeCriteria;
  * Is a like pattern search item.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

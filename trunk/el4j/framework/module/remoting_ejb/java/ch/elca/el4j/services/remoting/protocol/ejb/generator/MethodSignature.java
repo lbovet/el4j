@@ -34,7 +34,7 @@ import ch.elca.el4j.util.codingsupport.ClassUtils;
  * simplify java source code generation.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"

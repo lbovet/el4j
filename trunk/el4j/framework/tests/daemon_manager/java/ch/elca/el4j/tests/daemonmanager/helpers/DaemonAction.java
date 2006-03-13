@@ -23,7 +23,7 @@ import ch.elca.el4j.util.codingsupport.AbstractDefaultEnum;
  * This class is an enumeration for possible daemon actions.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
