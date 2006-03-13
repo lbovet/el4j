@@ -85,14 +85,14 @@ consume less time.
             return str;
         }
         function removeHead (str) {
-            v=str.substring(18);
-            return v.substring(0, v.length-4);
+            v=str.substring(42);
+            return v.substring(0, v.length-2);
         }
-        function printFileStatus (source_kw,revision_kw,date_kw,author_kw) {
-            document.write ('<br/><dl><dt><b>File-location:</b><dd><a href=\'http://my-helloworld-cvs-server/cvsview/');
-            document.write(removeHead(source_kw));
+        function printFileStatus (url_kw,revision_kw,date_kw,author_kw) {
+            document.write ('<br/><dl><dt><b>File-location:</b><dd><a href=\'http://svn.sourceforge.net/viewcvs.cgi/');
+            document.write(removeHead(url_kw));
             document.write('\'>');
-            document.write(removeHead(source_kw));
+            document.write(removeHead(url_kw));
             document.write('</a></dl>');
             document.write ('<dl><dt><b>Last check-in date </b>');
             document.write(removeKeyword(date_kw));
