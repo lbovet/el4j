@@ -47,7 +47,7 @@
             defaultexcludes="false">
             
             <zipfileset dir="${basedir}" prefix="${zip.name.prefix}">
-                <exclude name="**/CVS/**"/>
+                <exclude name="**/.svn/**"/>
                 <exclude name="**/classes/**"/>
                 <exclude name="**/.project"/>
                 <exclude name="**/.classpath"/>
@@ -89,7 +89,7 @@
             defaultexcludes="false">
             
             <zipfileset dir="${basedir}" prefix="${zip.name.prefix}">
-                <exclude name="**/CVS/**"/>
+                <exclude name="**/.svn/**"/>
                 <exclude name="**/classes/**"/>
                 <exclude name="**/.project"/>
                 <exclude name="**/.classpath"/>
