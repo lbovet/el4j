@@ -8,6 +8,9 @@
 DOTASK="${1}"
 shift 1
 
+# Setup the environment for project "framework"
+./setup_environment_framework.sh
+
 if [ -z "$LOGBASEDIR" ] || ! [ -d "$LOGBASEDIR" ] ; then
     echo "Env variable LOGBASEDIR must be set and point "
     echo "to the directory where log files can be written!"
