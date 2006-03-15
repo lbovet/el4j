@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# $URL$
+# $Revision$
+# $Date$
+# $Author$
+
 DOTASK="${1}"
 PROJECTFOLDER="${2}"
 REPORTNAME="${3}"

@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 <project name="project" basedir="." 
     xmlns:antcontrib="antlib:net.sf.antcontrib">
+
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
     <description>
         Script to check if a given file contains an expected string. In some 
         cases it is necessary to notify by mail.
