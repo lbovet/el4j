@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# $URL$
+# $Revision$
+# $Date$
+# $Author$
+
 cd "${1}"
 shift 1
 
