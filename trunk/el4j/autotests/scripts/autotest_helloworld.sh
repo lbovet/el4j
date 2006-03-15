@@ -42,5 +42,5 @@ mkdir -p "${SPECLOGDIR}"
 ./delete_old_log_files.sh "${SPECLOGDIR}"
 
 echo "Executing task ${DOTASK} for external helloworld..."
-./website_project.sh "${DOTASK}" "external/helloworld" "helloworld" "helloworld-tests" "tomcat" &> ${SPECLOGPATH}
+./autotest_project.sh "${DOTASK}" "external/helloworld" "helloworld" "helloworld-tests" "tomcat" &> ${SPECLOGPATH}
 cat ${SPECLOGPATH}

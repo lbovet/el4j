@@ -42,5 +42,5 @@ mkdir -p "${SPECLOGDIR}"
 ./delete_old_log_files.sh "${SPECLOGDIR}"
 
 echo "Executing task ${DOTASK} for external framework..."
-./website_project.sh "${DOTASK}" "external/framework" "framework" "framework-tests" "weblogic-weblogic tomcat-jboss" &> ${SPECLOGPATH}
+./autotest_project.sh "${DOTASK}" "external/framework" "framework" "framework-tests" "weblogic-weblogic tomcat-jboss" &> ${SPECLOGPATH}
 cat ${SPECLOGPATH}
