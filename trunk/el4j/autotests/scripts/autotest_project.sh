@@ -68,6 +68,9 @@ testProfile () {
     # make log dir
     mkdir -p "${LOGDIR}"
     
+    #Delete old log files
+    ./delete_old_log_files.sh "${LOGDIR}"
+    
     # invoke all junit tests
     ${XANTCMD} -f bootstrap.xml distclean 
     ${XANTCMD} -f bootstrap.xml configure -Dwebsite.donotclean=true $*
