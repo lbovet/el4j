@@ -14,7 +14,7 @@ shift 5
 
 if [ -z "$BASEDIR" ] || ! [ -d "$BASEDIR" ] ; then
     echo "Env variable BASEDIR must be set and point "
-    echo "to the directory where the EL4J autotest "
+    echo "to the directory where the EL4J builder "
     echo "configuration and EL4J projects are!"
     exit 1
 fi
@@ -34,14 +34,14 @@ fi
 
 SCRIPTDIR="`pwd`"
 
-MAILPROPERTIES="${BASEDIR}/autotests/etc/mail.properties"
+MAILPROPERTIES="${BASEDIR}/builder/etc/mail.properties"
 ANTMAILLOGGERPARAMS="-logger org.apache.tools.ant.listener.MailLogger -propertyfile ${MAILPROPERTIES}"
-MAILERANTCMD="${BASEDIR}/autotests/mailer/ant/bin/ant -f ${BASEDIR}/autotests/mailer/build.xml ${ANTMAILLOGGERPARAMS}"
+MAILERANTCMD="${BASEDIR}/builder/mailer/ant/bin/ant -f ${BASEDIR}/builder/mailer/build.xml ${ANTMAILLOGGERPARAMS}"
 ANTCMD="${BASEDIR}/external-tools/ant/bin/ant"
 XANTCMD="${ANTCMD} ${ANTMAILLOGGERPARAMS}"
 
 PROJECTDIR="${BASEDIR}/${PROJECTFOLDER}"
-ENVDIR="${BASEDIR}/autotests/env"
+ENVDIR="${BASEDIR}/builder/env"
 
 STARTTIME="`date +%Y%m%d_%H%M%S`"
 
