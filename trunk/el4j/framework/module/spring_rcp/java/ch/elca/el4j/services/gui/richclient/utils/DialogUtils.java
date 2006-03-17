@@ -57,17 +57,17 @@ public class DialogUtils {
     /**
      * Multiplicity code for zero beans.
      */
-    public static final String MULTIPLICITY_ZEROBEANS = "zerobeans";
+    public static final String MULTIPLICITY_ZEROBEANS = "0";
     
     /**
      * Multiplicity code for one bean.
      */
-    public static final String MULTIPLICITY_ONEBEAN = "onebean";
+    public static final String MULTIPLICITY_ONEBEAN = "1";
 
     /**
      * Multiplicity code for multiple beans.
      */
-    public static final String MULTIPLICITY_MULTIPLEBEANS = "multiplebeans";
+    public static final String MULTIPLICITY_MULTIPLEBEANS = "n";
 
     /**
      * Default constructor hidden.
