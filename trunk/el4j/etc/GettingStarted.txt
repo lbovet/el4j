@@ -72,7 +72,7 @@ Remark: Every directory mentioned in this document is relative to the
    * If you need J2EE container support, set the configurations for your containers 
      under framework/env. These settings are then automatically available for EL4Ant
      and for Spring. We have tested the framework with Tomcat (5.0), Jboss
-     (4.0), Weblogic (8.1).
+     (4.0) and Weblogic (9.0).
    * ant deploy.war.module.eu.module-remoting_and_interface_enrichment-tests.web
        * Re/Deploys the web part of the remoting test in the web container (tomcat
          by default, directory "external-tools/tomcat") and starts the web container 
