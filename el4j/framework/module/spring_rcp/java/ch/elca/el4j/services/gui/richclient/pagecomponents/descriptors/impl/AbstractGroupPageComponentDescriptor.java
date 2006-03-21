@@ -20,10 +20,10 @@ import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.richclient.application.PageComponentDescriptor;
 import org.springframework.richclient.core.LabeledObjectSupport;
 import org.springframework.util.StringUtils;
 
+import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.ExtendedPageComponentDescriptor;
 import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.GroupDescriptor;
 import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.LayoutDescriptor;
 
@@ -40,9 +40,9 @@ import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.LayoutDes
  * @author Martin Zeltner (MZE)
  */
 public abstract class AbstractGroupPageComponentDescriptor 
-    extends LabeledObjectSupport 
-    implements PageComponentDescriptor, BeanNameAware, ApplicationContextAware, 
-        InitializingBean, LayoutDescriptor, GroupDescriptor {
+    extends LabeledObjectSupport implements ExtendedPageComponentDescriptor, 
+        BeanNameAware, ApplicationContextAware, InitializingBean,
+        LayoutDescriptor, GroupDescriptor {
     /**
      * Is the id of this page component descriptor.
      */
@@ -186,4 +186,34 @@ public abstract class AbstractGroupPageComponentDescriptor
      * {@inheritDoc}
      */
     public void afterPropertiesSet() throws Exception { }
+    
+    /**
+     * {@inheritDoc}
+     * 
+     * Fire method now public visible.
+     */
+    public void firePropertyChange(String propertyName, boolean oldValue, 
+        boolean newValue) {
+        super.firePropertyChange(propertyName, oldValue, newValue);
+    }
+    
+    /**
+     * {@inheritDoc}
+     * 
+     * Fire method now public visible.
+     */
+    public void firePropertyChange(String propertyName, int oldValue, 
+        int newValue) {
+        super.firePropertyChange(propertyName, oldValue, newValue);
+    }
+    
+    /**
+     * {@inheritDoc}
+     * 
+     * Fire method now public visible.
+     */
+    public void firePropertyChange(String propertyName, Object oldValue, 
+        Object newValue) {
+        super.firePropertyChange(propertyName, oldValue, newValue);
+    }
 }
