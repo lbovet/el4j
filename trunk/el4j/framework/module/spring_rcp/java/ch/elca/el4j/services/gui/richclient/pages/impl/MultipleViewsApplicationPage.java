@@ -28,6 +28,7 @@ import javax.swing.JComponent;
 import org.springframework.richclient.application.PageComponent;
 import org.springframework.richclient.application.PageComponentDescriptor;
 import org.springframework.richclient.application.View;
+import org.springframework.richclient.application.ViewDescriptor;
 import org.springframework.richclient.application.support.DefaultViewContext;
 import org.springframework.util.StringUtils;
 
@@ -414,8 +415,11 @@ public class MultipleViewsApplicationPage extends AbstractApplicationPage
     protected void configurePageComponent(PageComponent pageComponent) {
         Reject.ifNull(pageComponent);
         if (pageComponent instanceof View) {
-            pageComponent.setContext(new DefaultViewContext(
-                this, new ControlablePageComponentPane(pageComponent, this)));
+            if (pageComponent.getContext() == null) {
+                pageComponent.setContext(new DefaultViewContext(
+                    this, new ControlablePageComponentPane(
+                        pageComponent, this)));
+            }
         }
     }
 
@@ -425,7 +429,14 @@ public class MultipleViewsApplicationPage extends AbstractApplicationPage
     public void addView(String viewDescriptorId) {
         showView(viewDescriptorId);
     }
-
+    
+    /**
+     * @param viewDescriptor Is the view descriptor to add to this page.
+     */
+    public void addView(ViewDescriptor viewDescriptor) {
+        showView(viewDescriptor);
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -438,8 +449,13 @@ public class MultipleViewsApplicationPage extends AbstractApplicationPage
         while (it.hasNext()) {
             PageComponentDescriptor leafDescriptor 
                 = (PageComponentDescriptor) it.next();
-            String leafDescriptorId = leafDescriptor.getId();
-            addView(leafDescriptorId);
+            if (leafDescriptor instanceof ViewDescriptor) {
+                ViewDescriptor viewDescriptor = (ViewDescriptor) leafDescriptor;
+                addView(viewDescriptor);
+            } else {
+                String leafDescriptorId = leafDescriptor.getId();
+                addView(leafDescriptorId);
+            }
         }
     }
     
@@ -566,5 +582,12 @@ public class MultipleViewsApplicationPage extends AbstractApplicationPage
             }
         }
         return result;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void setActiveComponent(PageComponent pageComponent) {
+        super.setActiveComponent(pageComponent);
     }
 }
