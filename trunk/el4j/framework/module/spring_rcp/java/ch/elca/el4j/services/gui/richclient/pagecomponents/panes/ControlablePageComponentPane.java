@@ -18,6 +18,8 @@ package ch.elca.el4j.services.gui.richclient.pagecomponents.panes;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.Icon;
@@ -28,11 +30,13 @@ import javax.swing.SpringLayout;
 
 import org.springframework.richclient.application.PageComponent;
 import org.springframework.richclient.application.PageComponentPane;
+import org.springframework.richclient.application.View;
 import org.springframework.richclient.util.SpringLayoutUtils;
 
 import com.jgoodies.forms.factories.Borders;
 
 import ch.elca.el4j.services.gui.richclient.pages.ExtendedApplicationPage;
+import ch.elca.el4j.services.gui.richclient.utils.ComponentUtils;
 import ch.elca.el4j.services.gui.swing.panel.ControlableInternalFrame;
 
 /**
@@ -81,7 +85,13 @@ public class ControlablePageComponentPane extends PageComponentPane {
      * {@inheritDoc}
      */
     public void propertyChange(PropertyChangeEvent evt) {
-        refreshProperties(getControlableInternalFrame());
+        ControlableInternalFrame frame = getControlableInternalFrame();
+        String propertyName = evt.getPropertyName();
+        if ("pageComponentSelected".equals(propertyName)) {
+            boolean selected = ((Boolean) evt.getNewValue()).booleanValue();
+            frame.setSelected(selected);
+        }
+        refreshProperties(frame);
     }
     
     /**
@@ -105,6 +115,18 @@ public class ControlablePageComponentPane extends PageComponentPane {
         JComponent control = getPageComponent().getControl();
         JComponent controlPanel = createControlPanel();
         frame.init(control, controlPanel);
+        
+        final PageComponent PAGE_COMPONENT = getPageComponent();
+        if (PAGE_COMPONENT instanceof View) {
+            ComponentUtils.addMouseListenerRecursivly(frame, 
+                new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    m_extendedApplicationPage.setActiveComponent(
+                        PAGE_COMPONENT);
+                }
+            });
+        }
+        
         return frame;
     }
 
