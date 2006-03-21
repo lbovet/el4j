@@ -33,7 +33,7 @@ import org.springframework.richclient.application.PageComponentDescriptor;
  * @author Martin Zeltner (MZE)
  */
 public interface GroupPageComponentDescriptor 
-    extends LayoutDescriptor, GroupDescriptor, PageComponentDescriptor {
+    extends LayoutDescriptor, GroupDescriptor, ExtendedPageComponentDescriptor {
     
     /**
      * @return Returns the page component descriptors of this group.
