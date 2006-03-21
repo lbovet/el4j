@@ -20,8 +20,10 @@ import java.awt.Component;
 
 import org.springframework.richclient.application.PageComponent;
 import org.springframework.richclient.dialog.ConfirmationDialog;
+import org.springframework.util.Assert;
 
 import ch.elca.el4j.services.gui.richclient.executors.AbstractBeanExecutor;
+import ch.elca.el4j.services.gui.richclient.executors.AbstractConfirmBeanExecutor;
 import ch.elca.el4j.services.gui.richclient.executors.action.ExecutorAction;
 import ch.elca.el4j.services.gui.richclient.executors.displayable.ExecutorDisplayable;
 import ch.elca.el4j.services.gui.richclient.presenters.BeanPresenter;
@@ -140,14 +142,18 @@ public class BeanConfirmationDialog extends ConfirmationDialog
      * {@inheritDoc}
      */
     public void configure(AbstractBeanExecutor executor) {
-        Reject.ifNull(executor);
-        BeanPresenter beanPresenter = executor.getBeanPresenter();
+        Assert.isInstanceOf(AbstractConfirmBeanExecutor.class, executor);
+        
+        AbstractConfirmBeanExecutor confirmBeanExecutor
+            = (AbstractConfirmBeanExecutor) executor;
+        
+        BeanPresenter beanPresenter = confirmBeanExecutor.getBeanPresenter();
         Object[] beans = beanPresenter.getSelectedBeans();
         Reject.ifNull(beans, 
             "Can not configure dialog without any selected bean!");
         
         // Sets the executor action.
-        setExecutorAction(executor);
+        setExecutorAction(confirmBeanExecutor);
         
         // Set the parent component.
         if (beanPresenter instanceof PageComponent) {
@@ -156,7 +162,7 @@ public class BeanConfirmationDialog extends ConfirmationDialog
         }
         
         // Sets the title and confirmation message on this dialog.
-        String code = executor.getId();
+        String code = confirmBeanExecutor.getId();
         int multiplicity = beans.length;
         String decoratedCode = DialogUtils.decorateCode(code, multiplicity);
         String confirmationMessage = MessageUtils.getMessage(

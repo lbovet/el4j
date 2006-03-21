@@ -21,7 +21,6 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.richclient.command.support.AbstractActionCommandExecutor;
 import org.springframework.util.StringUtils;
 
-import ch.elca.el4j.services.gui.richclient.executors.action.ExecutorAction;
 import ch.elca.el4j.services.gui.richclient.presenters.BeanPresenter;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 
@@ -38,7 +37,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * @author Martin Zeltner (MZE)
  */
 public abstract class AbstractBeanExecutor extends AbstractActionCommandExecutor
-    implements InitializingBean, BeanNameAware, ExecutorAction {
+    implements InitializingBean, BeanNameAware {
     /**
      * Is the id of this executor action.
      */
@@ -129,30 +128,6 @@ public abstract class AbstractBeanExecutor extends AbstractActionCommandExecutor
             setId(beanName);
         }
     }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void onAboutToShow() { }
-
-    /**
-     * {@inheritDoc}
-     */
-    public boolean onFinishOrConfirm() throws Exception {
-        return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public boolean onFinishOrConfirmException(Exception e) {
-        return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void onRevertOrCancel() { }
     
     /**
      * {@inheritDoc}

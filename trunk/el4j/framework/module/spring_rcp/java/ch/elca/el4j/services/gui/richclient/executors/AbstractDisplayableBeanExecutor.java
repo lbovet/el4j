@@ -16,6 +16,7 @@
  */
 package ch.elca.el4j.services.gui.richclient.executors;
 
+import ch.elca.el4j.services.gui.richclient.executors.action.ExecutorAction;
 import ch.elca.el4j.services.gui.richclient.executors.displayable.ExecutorDisplayable;
 
 /**
@@ -31,7 +32,7 @@ import ch.elca.el4j.services.gui.richclient.executors.displayable.ExecutorDispla
  * @author Martin Zeltner (MZE)
  */
 public abstract class AbstractDisplayableBeanExecutor 
-    extends AbstractBeanExecutor {
+    extends AbstractBeanExecutor implements ExecutorAction {
     /**
      * Is the displayable for this executor.
      */
@@ -58,4 +59,28 @@ public abstract class AbstractDisplayableBeanExecutor
      * @return Returns the default displayable for this executor.
      */
     protected abstract ExecutorDisplayable getDefaultDisplayable();
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void onAboutToShow() { }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean onFinishOrConfirm() throws Exception {
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean onFinishOrConfirmException(Exception e) {
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void onRevertOrCancel() { }
 }
