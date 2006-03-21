@@ -46,6 +46,8 @@ public abstract class AbstractBeanPropertiesExecutor
     public boolean onFinishAfterCommit(Object currentBean) throws Exception {
         PrimaryKeyObject givenBean = (PrimaryKeyObject) currentBean;
         PrimaryKeyObject savedBean = saveBean(givenBean);
+        FormModel formModel = getFormModel();
+        formModel.setFormObject(savedBean);
         getBeanPresenter().replaceBean(givenBean, savedBean);
         return true;
     }
