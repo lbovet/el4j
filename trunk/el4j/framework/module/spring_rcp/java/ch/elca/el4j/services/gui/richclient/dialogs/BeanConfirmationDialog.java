@@ -88,7 +88,7 @@ public class BeanConfirmationDialog extends ConfirmationDialog
      */
     protected void onCancel() {
         ExecutorAction action = getExecutorAction();
-        action.onCancel();
+        action.onRevertOrCancel();
         super.onCancel();
     }
     

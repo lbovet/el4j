@@ -62,7 +62,7 @@ public interface ExecutorAction {
     public boolean onFinishOrConfirmException(Exception e);
     
     /**
-     * Handle an executor component cancellation request.
+     * Handle an executor component revert and cancel request.
      */
-    public void onCancel();
+    public void onRevertOrCancel();
 }

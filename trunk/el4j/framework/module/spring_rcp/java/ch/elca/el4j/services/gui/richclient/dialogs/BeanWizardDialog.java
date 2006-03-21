@@ -21,6 +21,7 @@ import java.awt.Component;
 import org.springframework.richclient.application.PageComponent;
 import org.springframework.richclient.wizard.Wizard;
 import org.springframework.richclient.wizard.WizardDialog;
+import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import ch.elca.el4j.services.gui.richclient.executors.AbstractBeanExecutor;
@@ -29,7 +30,6 @@ import ch.elca.el4j.services.gui.richclient.executors.action.ExecutorAction;
 import ch.elca.el4j.services.gui.richclient.executors.displayable.ExecutorDisplayable;
 import ch.elca.el4j.services.gui.richclient.presenters.BeanPresenter;
 import ch.elca.el4j.services.gui.richclient.utils.MessageUtils;
-import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
  * Wizard dialog used for beans.
@@ -92,7 +92,7 @@ public class BeanWizardDialog extends WizardDialog
      */
     protected void onCancel() {
         ExecutorAction action = getExecutorAction();
-        action.onCancel();
+        action.onRevertOrCancel();
         super.onCancel();
     }
 
@@ -114,13 +114,7 @@ public class BeanWizardDialog extends WizardDialog
      * {@inheritDoc}
      */
     public void configure(AbstractBeanExecutor executor) {
-        BeanPresenter beanPresenter = executor.getBeanPresenter();
-        Reject.ifNull(executor);
-        Reject.ifFalse(executor instanceof AbstractWizardBeanExecutor, 
-            "The given executor must be of type " 
-            + AbstractWizardBeanExecutor.class.getName() 
-            + ". Given executor is of type " 
-            + executor.getClass().getName() + ".");
+        Assert.isInstanceOf(AbstractWizardBeanExecutor.class, executor);
         
         AbstractWizardBeanExecutor wizardBeanExecutor 
             = (AbstractWizardBeanExecutor) executor;
@@ -128,6 +122,7 @@ public class BeanWizardDialog extends WizardDialog
         Wizard wizard = wizardBeanExecutor.getWizard();
         setWizard(wizard);
         
+        BeanPresenter beanPresenter = executor.getBeanPresenter();
         if (beanPresenter instanceof PageComponent) {
             PageComponent pageComponent = (PageComponent) beanPresenter;
             setParent(pageComponent.getContext().getWindow().getControl());
