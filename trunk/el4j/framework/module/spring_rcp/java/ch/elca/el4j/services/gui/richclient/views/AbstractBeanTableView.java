@@ -17,8 +17,6 @@
 package ch.elca.el4j.services.gui.richclient.views;
 
 import java.awt.BorderLayout;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Time;
@@ -180,25 +178,6 @@ public abstract class AbstractBeanTableView extends AbstractView
                     }
                 }
             }
-        });
-        
-        // Register focus listener to set this view as active page component.
-        m_beanTable.addFocusListener(new FocusListener() {
-            /**
-             * {@inheritDoc}
-             * 
-             * Sets the current view as active.
-             */
-            public void focusGained(FocusEvent e) {
-                requestActivePageComponent();
-            }
-
-            /**
-             * {@inheritDoc}
-             * 
-             * By default do nothing.
-             */
-            public void focusLost(FocusEvent e) { }
         });
     }
     
