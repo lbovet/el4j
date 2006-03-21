@@ -38,4 +38,9 @@ public interface ExtendedApplicationPage extends ApplicationPage {
      * @param pageComponent Is the page component to close.
      */
     public void close(PageComponent pageComponent);
+    
+    /**
+     * @param pageComponent Is the page component to set as active.
+     */
+    public void setActiveComponent(PageComponent pageComponent);
 }
