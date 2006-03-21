@@ -122,14 +122,15 @@ public class BeanWizardDialog extends WizardDialog
         Wizard wizard = wizardBeanExecutor.getWizard();
         setWizard(wizard);
         
-        BeanPresenter beanPresenter = executor.getBeanPresenter();
+        BeanPresenter beanPresenter = wizardBeanExecutor.getBeanPresenter();
         if (beanPresenter instanceof PageComponent) {
             PageComponent pageComponent = (PageComponent) beanPresenter;
             setParent(pageComponent.getContext().getWindow().getControl());
         }
         
         // Set wizard dialog title.
-        String title = MessageUtils.getMessage(executor.getId(), "title");
+        String title 
+            = MessageUtils.getMessage(wizardBeanExecutor.getId(), "title");
         if (!StringUtils.hasText(title)) {
             title = wizard.getTitle();
         }
