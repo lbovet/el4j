@@ -20,7 +20,7 @@ import org.springframework.binding.form.FormModel;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
-import ch.elca.el4j.services.gui.richclient.executors.AbstractPropertiesBeanExecutor;
+import ch.elca.el4j.services.gui.richclient.executors.AbstractEditorBeanExecutor;
 import ch.elca.el4j.services.gui.richclient.presenters.BeanPresenter;
 import ch.elca.el4j.services.gui.richclient.utils.DialogUtils;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
@@ -39,7 +39,7 @@ import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
  * @author Martin Zeltner (MZE)
  */
 public abstract class AbstractBeanPropertiesExecutor 
-    extends AbstractPropertiesBeanExecutor {
+    extends AbstractEditorBeanExecutor {
     /**
      * {@inheritDoc}
      */

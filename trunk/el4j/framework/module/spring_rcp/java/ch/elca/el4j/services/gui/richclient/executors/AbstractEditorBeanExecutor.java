@@ -43,7 +43,7 @@ import ch.elca.el4j.services.gui.richclient.views.descriptors.impl.DialogPageVie
  *
  * @author Martin Zeltner (MZE)
  */
-public abstract class AbstractPropertiesBeanExecutor 
+public abstract class AbstractEditorBeanExecutor 
     extends AbstractFinishBeanExecutor {
     
     /**
