@@ -16,14 +16,13 @@
  */
 package ch.elca.el4j.services.gui.richclient.views;
 
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Component;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
@@ -34,12 +33,17 @@ import org.apache.commons.beanutils.DynaClass;
 import org.apache.commons.beanutils.DynaProperty;
 import org.springframework.binding.form.ValidatingFormModel;
 import org.springframework.binding.form.support.DefaultFormModel;
+import org.springframework.richclient.command.AbstractCommand;
+import org.springframework.richclient.command.ActionCommand;
+import org.springframework.richclient.command.CommandGroup;
 import org.springframework.richclient.form.binding.Binder;
+import org.springframework.richclient.util.GuiStandardUtils;
 import org.springframework.richclient.util.SpringLayoutUtils;
 import org.springframework.util.StringUtils;
 
 import ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm;
 import ch.elca.el4j.services.gui.richclient.support.DynaBeanPropertyAccessStrategy;
+import ch.elca.el4j.services.gui.richclient.utils.ComponentUtils;
 import ch.elca.el4j.services.gui.search.AbstractSearchItem;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.search.QueryObject;
@@ -60,24 +64,29 @@ import ch.elca.el4j.services.search.events.QueryObjectEvent;
  */
 public class SearchView extends AbstractView {
     /**
-     * Is the message medium for teh search button.
+     * Id for the search command.
      */
-    public static final String MESSAGE_MEDIUM_BUTTON_SEARCH = "buttonSearch";
+    public static final String SEARCH_COMMAND_ID = "searchCommand";
 
     /**
-     * Is the message medium for teh search button.
+     * Id for the clear command.
      */
-    public static final String MESSAGE_MEDIUM_BUTTON_CLEAR = "buttonClear";
+    public static final String CLEAR_COMMAND_ID = "clearCommand";
 
     /**
      * Is the name suffix of the generated bean.
      */
     public static final String SEARCH_BEAN_NAME_SUFFIX = "SearchBean";
-
+    
     /**
-     * Is the space between components.
+     * Is the search command.
      */
-    private static final int COMPONENT_SPACER = 10;
+    protected ActionCommand m_searchCommand = null;
+    
+    /**
+     * Is the clear command.
+     */
+    protected ActionCommand m_clearCommand = null;
 
     /**
      * Are the search items for this view.
@@ -124,11 +133,18 @@ public class SearchView extends AbstractView {
      */
     protected JComponent createControl() {
         m_control = getComponentFactory().createPanel(new SpringLayout());
-        m_control.add(getSearchComponent());
+        JComponent searchControl = getSearchComponent();
+        ComponentUtils.addFocusListenerRecursivly(searchControl, 
+            new FocusAdapter() {
+            public void focusGained(FocusEvent e) {
+                Component focusedComponent = e.getComponent();
+                setLastFocusedComponent(focusedComponent);
+            }
+        });
+        m_control.add(searchControl);
         m_control.add(getButtonComponent());
         SpringLayoutUtils.makeCompactGrid(m_control, 
-            m_control.getComponentCount(), 1, COMPONENT_SPACER, 
-            COMPONENT_SPACER, COMPONENT_SPACER, COMPONENT_SPACER);
+            m_control.getComponentCount(), 1, 0, 0, 0, 0);
         return m_control;
     }
     
@@ -141,10 +157,9 @@ public class SearchView extends AbstractView {
         initializeFormModel();
         initializeSearchPropertiesForm();
         
-//        FormBackedDialogPage page = new FormBackedDialogPage(
-//            getId(), m_beanPropertiesForm);
         JComponent searchComponent = m_beanPropertiesForm.getControl();
         searchComponent.setMaximumSize(searchComponent.getMinimumSize());
+        GuiStandardUtils.attachDialogBorder(searchComponent);
         return searchComponent;
     }
 
@@ -243,52 +258,57 @@ public class SearchView extends AbstractView {
      *         and clear button.
      */
     protected JComponent getButtonComponent() {
-        JPanel buttonPanel = getComponentFactory().createPanel(
-            new FlowLayout(
-                FlowLayout.CENTER, COMPONENT_SPACER, COMPONENT_SPACER));
-
-        String searchButtonLabelKey 
-            = getId() + "." + MESSAGE_MEDIUM_BUTTON_SEARCH + ".label";
-        String clearButtonLabelKey 
-            = getId() + "." + MESSAGE_MEDIUM_BUTTON_CLEAR + ".label";
-
-        JButton searchButton 
-            = getComponentFactory().createButton(searchButtonLabelKey);
-        JButton clearButton 
-            = getComponentFactory().createButton(clearButtonLabelKey);
-        
-        searchButton.addActionListener(new ActionListener() {
+        m_searchCommand = new ActionCommand(getSearchCommandId()) {
             /**
              * {@inheritDoc}
              */
-            public void actionPerformed(ActionEvent e) {
+            protected void doExecuteCommand() {
                 search();
             }
-        });
-
-        clearButton.addActionListener(new ActionListener() {
+        };
+        
+        m_clearCommand = new ActionCommand(getClearCommandId()) {
             /**
              * {@inheritDoc}
              */
-            public void actionPerformed(ActionEvent e) {
+            protected void doExecuteCommand() {
                 clear();
             }
-        });
+        };
 
-        buttonPanel.add(searchButton);
-        buttonPanel.add(clearButton);
-        
-        buttonPanel.setMaximumSize(buttonPanel.getMinimumSize());
-        return buttonPanel;
+        CommandGroup commandGroup = CommandGroup.createCommandGroup(null, 
+            new AbstractCommand[] {m_searchCommand, m_clearCommand});
+        JComponent buttonBar = commandGroup.createButtonBar();
+        GuiStandardUtils.attachDialogBorder(buttonBar);
+        return buttonBar;
     }
 
+    /**
+     * @return Returns the id for the search command.
+     */
+    protected String getSearchCommandId() {
+        return SEARCH_COMMAND_ID;
+    }
+    
+    /**
+     * @return Returns the id for the clear command.
+     */
+    protected String getClearCommandId() {
+        return CLEAR_COMMAND_ID;
+    }
+    
     /**
      * {@inheritDoc}
      */
     public void componentFocusGained() {
         super.componentFocusGained();
         if (isControlCreated()) {
-            m_beanPropertiesForm.focusFirstComponent();
+            Component c = getLastFocusedComponent();
+            if (c != null) {
+                c.requestFocusInWindow();
+            } else {
+                m_beanPropertiesForm.focusFirstComponent();
+            }
         }
     }
     
