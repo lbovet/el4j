@@ -29,6 +29,7 @@ import org.springframework.util.StringUtils;
 import ch.elca.el4j.services.gui.richclient.dialogs.BeanTitledPageApplicationDialog;
 import ch.elca.el4j.services.gui.richclient.executors.displayable.ExecutorDisplayable;
 import ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm;
+import ch.elca.el4j.services.gui.richclient.views.descriptors.impl.DialogPageViewDescriptor;
 
 /**
  * Abstract executor to edit bean properties.
@@ -49,6 +50,12 @@ public abstract class AbstractPropertiesBeanExecutor
      * Is the used dialog page.
      */
     private DialogPage m_dialogPage;
+    
+    /**
+     * Flag to indicate if the displayable should be embedded in page or be a 
+     * separate dialog. Default is not embedded.
+     */
+    private boolean m_embedded = false;
     
     /**
      * {@inheritDoc}
@@ -131,7 +138,6 @@ public abstract class AbstractPropertiesBeanExecutor
         }
     }
 
-
     /**
      * @return Returns the dialogPage.
      */
@@ -146,6 +152,23 @@ public abstract class AbstractPropertiesBeanExecutor
         m_dialogPage = dialogPage;
     }
     
+    /**
+     * @return Returns the embedded.
+     */
+    public final boolean isEmbedded() {
+        return m_embedded;
+    }
+
+    /**
+     * Flag to indicate if the displayable should be embedded in page or be a 
+     * separate dialog. Default is not embedded.
+     * 
+     * @param embedded Is the embedded to set.
+     */
+    public final void setEmbedded(boolean embedded) {
+        m_embedded = embedded;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -168,11 +191,18 @@ public abstract class AbstractPropertiesBeanExecutor
     /**
      * {@inheritDoc}
      * 
-     * Default displayable is <code>BeanTitledPageApplicationDialog</code>.
+     * If displayable should be embedded the default 
+     * <code>DialogPageViewDescriptor</code> else it is 
+     * <code>BeanTitledPageApplicationDialog</code>.
      * 
+     * @see DialogPageViewDescriptor
      * @see BeanTitledPageApplicationDialog
      */
     protected ExecutorDisplayable getDefaultDisplayable() {
-        return new BeanTitledPageApplicationDialog();
+        if (isEmbedded()) {
+            return new DialogPageViewDescriptor();
+        } else {
+            return new BeanTitledPageApplicationDialog();
+        }
     }
 }
