@@ -92,7 +92,7 @@ public class ControlableInternalFrame extends JPanel {
             add(content, BorderLayout.CENTER);
         }
         setBorder(new ShadowBorder());
-        setSelected(true);
+        setSelected(false);
         updateHeader();
     }
 
