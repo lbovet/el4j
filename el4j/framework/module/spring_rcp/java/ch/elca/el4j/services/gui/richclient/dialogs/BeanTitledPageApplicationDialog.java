@@ -20,6 +20,7 @@ import java.awt.Component;
 
 import org.springframework.richclient.application.PageComponent;
 import org.springframework.richclient.dialog.TitledPageApplicationDialog;
+import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import ch.elca.el4j.services.gui.richclient.executors.AbstractBeanExecutor;
@@ -28,7 +29,6 @@ import ch.elca.el4j.services.gui.richclient.executors.action.ExecutorAction;
 import ch.elca.el4j.services.gui.richclient.executors.displayable.ExecutorDisplayable;
 import ch.elca.el4j.services.gui.richclient.presenters.BeanPresenter;
 import ch.elca.el4j.services.gui.richclient.utils.MessageUtils;
-import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
  * Application dialog with title used for beans.
@@ -91,7 +91,7 @@ public class BeanTitledPageApplicationDialog
      */
     protected void onCancel() {
         ExecutorAction action = getExecutorAction();
-        action.onCancel();
+        action.onRevertOrCancel();
         super.onCancel();
     }
 
@@ -113,12 +113,7 @@ public class BeanTitledPageApplicationDialog
      * {@inheritDoc}
      */
     public void configure(AbstractBeanExecutor executor) {
-        Reject.ifNull(executor);
-        Reject.ifFalse(executor instanceof AbstractPropertiesBeanExecutor, 
-            "The given executor must be of type " 
-            + AbstractPropertiesBeanExecutor.class.getName() 
-            + ". Given executor is of type " 
-            + executor.getClass().getName() + ".");
+        Assert.isInstanceOf(AbstractPropertiesBeanExecutor.class, executor);
         
         AbstractPropertiesBeanExecutor propertiesBeanExecutor 
             = (AbstractPropertiesBeanExecutor) executor;
