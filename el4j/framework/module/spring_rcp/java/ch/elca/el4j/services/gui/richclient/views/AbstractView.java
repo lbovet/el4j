@@ -16,6 +16,8 @@
  */
 package ch.elca.el4j.services.gui.richclient.views;
 
+import java.awt.Component;
+
 import javax.swing.JComponent;
 
 import org.springframework.beans.factory.BeanNameAware;
@@ -27,8 +29,10 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.richclient.application.PageComponent;
 import org.springframework.richclient.application.PageComponentDescriptor;
 import org.springframework.richclient.application.ViewDescriptor;
+import org.springframework.util.Assert;
 
 import ch.elca.el4j.services.gui.event.RefreshEvent;
+import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.ExtendedPageComponentDescriptor;
 import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.GroupDescriptor;
 import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.LayoutDescriptor;
 import ch.elca.el4j.services.gui.richclient.utils.ApplicationListenerUtils;
@@ -69,6 +73,11 @@ public abstract class AbstractView
      */
     private ApplicationEventPublisher m_applicationEventPublisher;
 
+    /**
+     * Is the component which had as last the focus.
+     */
+    private Component m_lastFocusedComponent;
+    
     /**
      * @return Returns the beanName.
      */
@@ -178,7 +187,38 @@ public abstract class AbstractView
         ApplicationListenerUtils.unregisterApplicationListener(this);
         super.componentClosed();
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void componentFocusGained() {
+        super.componentFocusGained();
+        firePropertyChange("pageComponentSelected", false, true);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void componentFocusLost() {
+        firePropertyChange("pageComponentSelected", true, false);        
+        super.componentFocusLost();
+    }
 
+    /**
+     * @return Returns the lastFocusedComponent.
+     */
+    protected final Component getLastFocusedComponent() {
+        return m_lastFocusedComponent;
+    }
+
+    /**
+     * @param lastFocusedComponent Is the lastFocusedComponent to set.
+     */
+    protected final void setLastFocusedComponent(
+        Component lastFocusedComponent) {
+        m_lastFocusedComponent = lastFocusedComponent;
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -246,6 +286,55 @@ public abstract class AbstractView
      * Requests page to set this view as active page component.
      */
     protected void requestActivePageComponent() {
-        getActiveWindow().getPage().showView((ViewDescriptor) getDescriptor());
+        getContext().getPage().showView((ViewDescriptor) getDescriptor());
+    }
+    
+    /**
+     * @return Returns the extended page component descriptor of this page
+     *         component.
+     */
+    public final ExtendedPageComponentDescriptor getExtendedDescriptor() {
+        PageComponentDescriptor descriptor = getDescriptor();
+        Assert.isInstanceOf(ExtendedPageComponentDescriptor.class, descriptor);
+        return (ExtendedPageComponentDescriptor) descriptor;
+    }
+    
+    /**
+     * Fires a property change event.
+     * 
+     * @param propertyName Is the name of the changed property.
+     * @param oldValue Is the old value of given property.
+     * @param newValue Is the new value of given property.
+     */
+    protected void firePropertyChange(String propertyName, boolean oldValue, 
+        boolean newValue) {
+        getExtendedDescriptor().firePropertyChange(
+            propertyName, oldValue, newValue);
+    }
+    
+    /**
+     * Fires a property change event.
+     * 
+     * @param propertyName Is the name of the changed property.
+     * @param oldValue Is the old value of given property.
+     * @param newValue Is the new value of given property.
+     */
+    protected void firePropertyChange(String propertyName, int oldValue, 
+        int newValue) {
+        getExtendedDescriptor().firePropertyChange(
+            propertyName, oldValue, newValue);
+    }
+    
+    /**
+     * Fires a property change event.
+     * 
+     * @param propertyName Is the name of the changed property.
+     * @param oldValue Is the old value of given property.
+     * @param newValue Is the new value of given property.
+     */
+    protected void firePropertyChange(String propertyName, Object oldValue, 
+        Object newValue) {
+        getExtendedDescriptor().firePropertyChange(
+            propertyName, oldValue, newValue);
     }
 }
