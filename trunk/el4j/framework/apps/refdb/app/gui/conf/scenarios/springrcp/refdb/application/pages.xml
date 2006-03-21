@@ -27,6 +27,10 @@
                         <ref bean="keywordSearchView" />
                     </property>
                 </bean>
+                <bean name="dialogGroup"
+                    class="ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.DefaultGroupPageComponentDescriptor">
+                    <property name="preferredPositionArgument" value="East"/>
+                </bean>
             </list>
         </property>
     </bean>
@@ -49,6 +53,10 @@
                     <property name="pageComponentDescriptors">
                         <ref bean="referenceSearchView" />
                     </property>
+                </bean>
+                <bean name="dialogGroup"
+                    class="ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.DefaultGroupPageComponentDescriptor">
+                    <property name="preferredPositionArgument" value="East"/>
                 </bean>
             </list>
         </property>
@@ -78,6 +86,10 @@
                             <ref bean="keywordSearchView" />
                         </list>
                     </property>
+                </bean>
+                <bean name="dialogGroup"
+                    class="ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.DefaultGroupPageComponentDescriptor">
+                    <property name="preferredPositionArgument" value="East"/>
                 </bean>
             </list>
         </property>
