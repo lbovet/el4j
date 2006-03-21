@@ -88,6 +88,14 @@ public abstract class AbstractFinishBeanExecutor
     /**
      * {@inheritDoc}
      */
+    public void onRevertOrCancel() {
+        FormModel formModel = getFormModel();
+        formModel.revert();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
     public void onAboutToShow() {
         BeanPropertiesForm[] beanPropertiesForms = getBeanPropertiesForms();
         if (beanPropertiesForms != null && beanPropertiesForms.length > 0) {

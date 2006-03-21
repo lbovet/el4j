@@ -152,7 +152,7 @@ public abstract class AbstractBeanExecutor extends AbstractActionCommandExecutor
     /**
      * {@inheritDoc}
      */
-    public void onCancel() { }
+    public void onRevertOrCancel() { }
     
     /**
      * {@inheritDoc}
