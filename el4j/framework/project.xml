@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-<!-- Project definition. -->
 <ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" 
     xmlns:ant="antlib:org.apache.tools.ant">
     <!-- Plugins. -->
@@ -10,5 +9,4 @@
 
     <!-- Modules. -->
     <include file="modules.xml"/>
-
 </ant:project>

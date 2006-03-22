@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-<!-- EL4Ant plugin definition -->
 <project name="cmdline-arguments-runtime-hook" 
     xmlns:antcontrib="antlib:net.sf.antcontrib" 
     xmlns:el4ant="antlib:ch.elca.el4ant">
