@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-<!-- Honeydew plugin definition -->
 <project
   name="manifest-config-section-hook"
   xmlns:antcontrib="antlib:net.sf.antcontrib"
