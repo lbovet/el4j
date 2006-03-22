@@ -566,8 +566,9 @@ public class DaemonManagerTest extends TestCase {
         daemonManager.addDaemon(daemon);
         dmp = new DaemonManagerProcessor(daemonManager);
         dmp.start();
+        // Should notice failure in less than one check period.
         sleepTimeUntilDaemonManagerShouldBeStopped 
-            = DAEMON_MANAGER_CHECK_PERIOD * 2;
+            = DAEMON_MANAGER_CHECK_PERIOD / 2;
         sleep(sleepTimeUntilDaemonManagerShouldBeStopped);
         checkDaemonCausedExceptionThrowingDaemon(daemonManager, daemon, dmp, 
             DAEMON_MANAGER_PROCESSOR_JOIN_TIMEOUT);
@@ -589,9 +590,10 @@ public class DaemonManagerTest extends TestCase {
         daemonManager.addDaemon(daemon);
         dmp = new DaemonManagerProcessor(daemonManager);
         dmp.start();
+        // Should notice failure in less than one check period.
         sleepTimeUntilDaemonManagerShouldBeStopped 
             = DAEMON_NUMBER_OF_SUCCESSFUL_RUNS * DAEMON_MIN_PERIODICITY
-                + DAEMON_MANAGER_CHECK_PERIOD * 2;
+                + DAEMON_MANAGER_CHECK_PERIOD / 2;
         sleep(sleepTimeUntilDaemonManagerShouldBeStopped);
         checkDaemonCausedExceptionThrowingDaemon(daemonManager, daemon, dmp, 
             DAEMON_MANAGER_PROCESSOR_JOIN_TIMEOUT);
@@ -615,8 +617,9 @@ public class DaemonManagerTest extends TestCase {
         sleep(DAEMON_WORKING_TIME);
         checkIfDaemonManagerIsStillProcessing(dmp);
         daemonManager.doReconfigureDaemons();
+        // Should notice failure in less than one check period.
         sleepTimeUntilDaemonManagerShouldBeStopped 
-            = DAEMON_MANAGER_CHECK_PERIOD * 2;
+            = DAEMON_MIN_PERIODICITY + DAEMON_MANAGER_CHECK_PERIOD / 2;
         sleep(sleepTimeUntilDaemonManagerShouldBeStopped);
         checkDaemonCausedExceptionThrowingDaemon(daemonManager, daemon, dmp, 
             DAEMON_MANAGER_PROCESSOR_JOIN_TIMEOUT);
@@ -640,8 +643,9 @@ public class DaemonManagerTest extends TestCase {
         sleep(DAEMON_WORKING_TIME);
         checkIfDaemonManagerIsStillProcessing(dmp);
         daemonManager.removeDaemon(daemon);
+        // Should notice failure in less than one check period.
         sleepTimeUntilDaemonManagerShouldBeStopped 
-            = DAEMON_MANAGER_CHECK_PERIOD;
+            = DAEMON_MIN_PERIODICITY + DAEMON_MANAGER_CHECK_PERIOD / 2;
         sleep(sleepTimeUntilDaemonManagerShouldBeStopped);
         checkDaemonCausedExceptionThrowingDaemon(daemonManager, daemon, dmp, 
             DAEMON_MANAGER_PROCESSOR_JOIN_TIMEOUT);
