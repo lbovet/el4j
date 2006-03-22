@@ -368,30 +368,32 @@ public class DaemonManagerImpl implements DaemonManager, DaemonObserver {
              */
             checkForDaemonZombiesInPendingDaemons();
             
-            /**
-             * Do inital stop and start work. Check also if a daemon has already
-             * threw an exception.
-             */
-            stopRemovedDaemons();
-            startAddedDaemons();
-            checkDaemonCausedExceptions();
-            
-            /**
-             * Set next daemon heartbeats check to now plus one check period,
-             * that started daemons have time to startup.
-             */
-            long nextDaemonHeartbeatsCheck 
-                = System.currentTimeMillis() + m_checkPeriod;
-            
-            /**
-             * Work while daemon should not stop processing. 
-             */
-            while (!shouldStopProcessing()) {
-                nextDaemonHeartbeatsCheck
-                    = sleepUntilNextDaemonHeartbeatsCheck(
-                        nextDaemonHeartbeatsCheck);
+            synchronized (m_daemonManagerStopProcessingMonitor) {
+                /**
+                 * Do inital stop and start work. Check also if a daemon has
+                 * already threw an exception.
+                 */
+                stopRemovedDaemons();
+                startAddedDaemons();
                 checkDaemonCausedExceptions();
-                checkDaemonHeartbeats();
+                
+                /**
+                 * Set next daemon heartbeats check to now plus one check
+                 * period, that started daemons have time to startup.
+                 */
+                long nextDaemonHeartbeatsCheck 
+                    = System.currentTimeMillis() + m_checkPeriod;
+                
+                /**
+                 * Work while daemon should not stop processing. 
+                 */
+                while (!shouldStopProcessing()) {
+                    nextDaemonHeartbeatsCheck
+                        = sleepUntilNextDaemonHeartbeatsCheck(
+                            nextDaemonHeartbeatsCheck);
+                    checkDaemonCausedExceptions();
+                    checkDaemonHeartbeats();
+                }
             }
         } catch (RuntimeException e) {
             exceptionToThrow = e;
@@ -792,9 +794,7 @@ public class DaemonManagerImpl implements DaemonManager, DaemonObserver {
                 long sleepTime = nextDaemonHeartbeatsCheck - now;
                 
                 try {
-                    synchronized (m_daemonManagerStopProcessingMonitor) {
-                        m_daemonManagerStopProcessingMonitor.wait(sleepTime);
-                    }
+                    m_daemonManagerStopProcessingMonitor.wait(sleepTime);
                 } catch (InterruptedException e) {
                     s_logger.debug("Interrupted while waiting for next daemon " 
                         + "heartbeats check.");
@@ -1291,6 +1291,9 @@ public class DaemonManagerImpl implements DaemonManager, DaemonObserver {
                 Collections.sort(m_terminatedDaemons, m_reverseComparator);
             }
         }
+        synchronized (m_daemonManagerStopProcessingMonitor) {
+            m_daemonManagerStopProcessingMonitor.notifyAll();
+        }
     }
 
     /**
@@ -1310,6 +1313,9 @@ public class DaemonManagerImpl implements DaemonManager, DaemonObserver {
             + "' will be stopped in cause of an occurred exception.", t);
         synchronized (m_daemonManagerLock) {
             m_daemonCausedExceptions.add(e);
+        }
+        synchronized (m_daemonManagerStopProcessingMonitor) {
+            m_daemonManagerStopProcessingMonitor.notifyAll();
         }
     }
 
