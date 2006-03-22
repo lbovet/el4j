@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-<!-- project definition -->
 <ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" xmlns:ant="antlib:org.apache.tools.ant">
     <module name="module-daemon_manager">
         <attribute name="set" value="framework-modules"/>
