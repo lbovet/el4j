@@ -41,7 +41,7 @@ import org.springframework.richclient.util.SpringLayoutUtils;
 import org.springframework.util.Assert;
 
 import ch.elca.el4j.services.gui.richclient.executors.AbstractBeanExecutor;
-import ch.elca.el4j.services.gui.richclient.executors.AbstractPropertiesBeanExecutor;
+import ch.elca.el4j.services.gui.richclient.executors.AbstractEditorBeanExecutor;
 import ch.elca.el4j.services.gui.richclient.executors.action.ExecutorAction;
 import ch.elca.el4j.services.gui.richclient.executors.displayable.ExecutorDisplayable;
 import ch.elca.el4j.services.gui.richclient.pages.ExtendedApplicationPage;
@@ -331,10 +331,10 @@ public class DialogPageView extends AbstractView
      * {@inheritDoc}
      */
     public void configure(AbstractBeanExecutor executor) {
-        Assert.isInstanceOf(AbstractPropertiesBeanExecutor.class, executor);
+        Assert.isInstanceOf(AbstractEditorBeanExecutor.class, executor);
         
-        AbstractPropertiesBeanExecutor propertiesBeanExecutor 
-            = (AbstractPropertiesBeanExecutor) executor;
+        AbstractEditorBeanExecutor propertiesBeanExecutor 
+            = (AbstractEditorBeanExecutor) executor;
         setExecutorAction(propertiesBeanExecutor);
         setDialogPage(propertiesBeanExecutor.getDialogPage());
         
