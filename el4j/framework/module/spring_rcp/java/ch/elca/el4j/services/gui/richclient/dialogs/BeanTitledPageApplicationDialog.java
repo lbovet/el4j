@@ -24,7 +24,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import ch.elca.el4j.services.gui.richclient.executors.AbstractBeanExecutor;
-import ch.elca.el4j.services.gui.richclient.executors.AbstractPropertiesBeanExecutor;
+import ch.elca.el4j.services.gui.richclient.executors.AbstractEditorBeanExecutor;
 import ch.elca.el4j.services.gui.richclient.executors.action.ExecutorAction;
 import ch.elca.el4j.services.gui.richclient.executors.displayable.ExecutorDisplayable;
 import ch.elca.el4j.services.gui.richclient.presenters.BeanPresenter;
@@ -113,10 +113,10 @@ public class BeanTitledPageApplicationDialog
      * {@inheritDoc}
      */
     public void configure(AbstractBeanExecutor executor) {
-        Assert.isInstanceOf(AbstractPropertiesBeanExecutor.class, executor);
+        Assert.isInstanceOf(AbstractEditorBeanExecutor.class, executor);
         
-        AbstractPropertiesBeanExecutor propertiesBeanExecutor 
-            = (AbstractPropertiesBeanExecutor) executor;
+        AbstractEditorBeanExecutor propertiesBeanExecutor 
+            = (AbstractEditorBeanExecutor) executor;
         setExecutorAction(propertiesBeanExecutor);
         setDialogPage(propertiesBeanExecutor.getDialogPage());
         
