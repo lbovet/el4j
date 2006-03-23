@@ -7,18 +7,18 @@
 
     <!-- Java compiler plugin. Contains tasks like compile and jars. -->
     <plugin name="compile"/>
-    
+
     <!-- Runtime plugin. Generates shortcuts to launch applications. -->
     <plugin name="runtime"/>
-    
+
     <!--
-        Shows configuration at the end of project configuration step 
+        Shows configuration at the end of project configuration step
         (command "ant -f bootstrap.xml").
     -->
     <plugin name="show"/>
 
     <!--
-        Plugin online library to automatically download missing libraries 
+        Plugin online library to automatically download missing libraries
         from possible locations. By setting property local to any value the
         online lib plugin will not be included.
     -->
@@ -31,25 +31,25 @@ Automatic download of missing libraries deactivated.
         </antcontrib:then>
         <antcontrib:else>
             <ant:echo level="info">
-You can disable online plugin with '-Dlocal=t' at configuration time 
-(ant -f bootstrap.xml) to deactivate automatic download of missing libraries. 
-If automatic downloading of libraries is disabled the configuration task will 
+You can disable online plugin with '-Dlocal=t' at configuration time
+(ant -f bootstrap.xml) to deactivate automatic download of missing libraries.
+If automatic downloading of libraries is disabled the configuration task will
 consume less time.
             </ant:echo>
             <plugin name="onlinelib">
                 <attribute name="onlinelib.repository" value="../lib/"/>
                 <attribute name="onlinelib.repository" value="../lib/src/"/>
-                <attribute name="onlinelib.repository" 
+                <attribute name="onlinelib.repository"
                     value="http://el4.elca-services.ch/el4j/lib/"/>
-                <attribute name="onlinelib.repository" 
+                <attribute name="onlinelib.repository"
                     value="http://el4.elca-services.ch/el4j/lib/src/"/>
             </plugin>
         </antcontrib:else>
     </antcontrib:if>
 
     <!--
-        Environment plugin to flexible change configuration. Set configuration  
-        is available for plugins (EL4Ant) and modules (properties file on 
+        Environment plugin to flexible change configuration. Set configuration
+        is available for plugins (EL4Ant) and modules (properties file on
         classpath).
     -->
     <plugin name="env" file="buildsystem/tools/env/env.xml">
@@ -65,12 +65,13 @@ consume less time.
     <!-- Plugin to generate javadoc. -->
     <plugin name="javadoc">
         <!-- Sets to generate javadoc for. -->
-        <attribute name="javadoc.set.list" 
+        <attribute name="javadoc.set.list"
             value="framework-modules,framework-tests,framework-demos,keyword-modules,keyword-tests,refdb-modules,refdb-tests"/>
-        
+
         <!-- Use el4j stylesheet file with ELCA colors. -->
-        <attribute name="javadoc.default.stylesheetfile" value="etc/el4j-javadoc-stylesheet.css"/>
-        
+        <attribute name="javadoc.default.stylesheetfile"
+            value="etc/el4j-javadoc-stylesheet.css"/>
+
         <!-- Default group parameters. -->
         <attribute name="javadoc.default.header">
 <![CDATA[
@@ -148,9 +149,12 @@ consume less time.
         check results.
     -->
     <plugin name="checkstyle">
-        <attribute name="checkstyle.config" value="etc/checkstyle_el4j_checks.xml"/>
-        <attribute name="checkstyle.properties" value="etc/checkstyle_el4j.properties"/>
-        <attribute name="checkstyle.set.list" value="framework-modules,framework-tests,framework-demos,keyword-modules,keyword-tests,refdb-modules,refdb-tests"/>
+        <attribute name="checkstyle.config"
+            value="etc/checkstyle_el4j_checks.xml"/>
+        <attribute name="checkstyle.properties"
+            value="etc/checkstyle_el4j.properties"/>
+        <attribute name="checkstyle.set.list"
+            value="framework-modules,framework-tests,framework-demos,keyword-modules,keyword-tests,refdb-modules,refdb-tests"/>
     </plugin>
 
     <!-- Plugin to check code coverage and generate a coverage report. -->
@@ -175,9 +179,9 @@ consume less time.
     -->
     <plugin name="eclipse">
         <attribute name="eclipse.workspace.path" value="workspace"/>
-        
+
         <!--
-            Following targets/target groups will be available as 
+            Following targets/target groups will be available as
             Eclipse-External-Tools-Commands.
         -->
         <!-- Eclipse targets -->
