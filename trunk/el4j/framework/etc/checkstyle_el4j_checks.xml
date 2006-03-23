@@ -6,7 +6,7 @@
 <!--  Checkstyle configuration that checks EL4J coding guidelines. -->
 <module name="Checker">
     <!-- Version: $Revision$ -->
-    <!-- Source: $URL$ -->
+    <!-- URL: $URL$ -->
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
 

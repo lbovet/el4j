@@ -1,5 +1,5 @@
 -- Version: $Revision$
--- Source: $URL$
+-- URL: $URL$
 -- Date: $Date$
 -- Author: $Author$
 
