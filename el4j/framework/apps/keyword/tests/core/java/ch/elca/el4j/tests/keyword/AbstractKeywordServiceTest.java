@@ -57,6 +57,11 @@ public abstract class AbstractKeywordServiceTest extends AbstractTestCaseBase {
     private KeywordDao m_keywordDao;
 
     /**
+     * Hide default constructor.
+     */
+    protected AbstractKeywordServiceTest() { }
+    
+    /**
      * @return Returns the keywordDao.
      */
     protected KeywordDao getKeywordDao() {
