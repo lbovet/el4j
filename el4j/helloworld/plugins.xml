@@ -37,15 +37,28 @@ If automatic downloading of libraries is disabled the configuration task will
 consume less time.
             </ant:echo>
             <plugin name="onlinelib">
+                <!-- Local repositories -->
                 <attribute name="onlinelib.repository" value="../lib/"/>
                 <attribute name="onlinelib.repository" value="../lib/src/"/>
-                <attribute name="onlinelib.repository" 
+                <attribute name="onlinelib.repository" value="../modules/"/>
+                
+                <!-- Internet repositories -->
+                <attribute name="onlinelib.repository"
                     value="http://el4.elca-services.ch/el4j/lib/"/>
-                <attribute name="onlinelib.repository" 
+                <attribute name="onlinelib.repository"
                     value="http://el4.elca-services.ch/el4j/lib/src/"/>
-                <attribute name="onlinelib.repository" 
+                <attribute name="onlinelib.repository"
                     value="http://el4.elca-services.ch/el4j/modules/"/>
-            </plugin>
+                <attribute name="onlinelib.repository"
+                    value="http://el4.elca-services.ch/el4j/modules/sandbox/"/>
+                
+                <!-- ELCA internal repositories -->
+                <attribute name="onlinelib.repository"
+                    value="http://leaffy/java/lib/"/>
+                <attribute name="onlinelib.repository"
+                    value="http://leaffy/java/lib/src/"/>
+                <attribute name="onlinelib.repository"
+                    value="http://leaffy/java/el4j/modules/"/>            </plugin>
         </antcontrib:else>
     </antcontrib:if>
 
