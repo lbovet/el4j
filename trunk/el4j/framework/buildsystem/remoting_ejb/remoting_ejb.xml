@@ -110,7 +110,7 @@
   <target
     name="init.remoting.ejb.props">
   
-    <property name="remoting.ejb.gen.basedir" value="dist/j2ee/EJB"/>
+    <property name="remoting.ejb.gen.basedir" value="${basedir}/dist/j2ee/EJB"/>
     
     <property name="xdoclet.version" value="1.2.3"/>
     
