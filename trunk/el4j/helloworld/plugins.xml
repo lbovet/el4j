@@ -20,27 +20,33 @@
     <!--
         Plugin online library to automatically download missing libraries 
         from possible locations. By setting property local to any value the
-        online lib plugin will not be included.
+        online lib plugin will only search for libraries locally.
     -->
     <antcontrib:if>
         <ant:isset property="local"/>
         <antcontrib:then>
             <ant:echo level="info">
-Automatic download of missing libraries deactivated.
-            </ant:echo>
-        </antcontrib:then>
-        <antcontrib:else>
-            <ant:echo level="info">
-You can disable online plugin with '-Dlocal=t' at configuration time 
-(ant -f bootstrap.xml) to deactivate automatic download of missing libraries. 
-If automatic downloading of libraries is disabled the configuration task will 
-consume less time.
+Automatic download of missing libraries from the network deactivated.
             </ant:echo>
             <plugin name="onlinelib">
                 <!-- Local repositories -->
-                <attribute name="onlinelib.repository" value="../lib/"/>
-                <attribute name="onlinelib.repository" value="../lib/src/"/>
-                <attribute name="onlinelib.repository" value="../modules/"/>
+                <attribute name="onlinelib.repository" value="${basedir}/../lib/"/>
+                <attribute name="onlinelib.repository" value="${basedir}/../lib/src/"/>
+                <attribute name="onlinelib.repository" value="${basedir}/../modules/"/>
+            </plugin>
+        </antcontrib:then>
+        <antcontrib:else>
+            <ant:echo level="info">
+You can disable online plugin with '-Dlocal=t' at configuration time
+(ant -f bootstrap.xml) to deactivate automatic download of missing libraries
+from the network. If automatic downloading of libraries is disabled the
+configuration task will consume less time.
+            </ant:echo>
+            <plugin name="onlinelib">
+                <!-- Local repositories -->
+                <attribute name="onlinelib.repository" value="${basedir}/../lib/"/>
+                <attribute name="onlinelib.repository" value="${basedir}/../lib/src/"/>
+                <attribute name="onlinelib.repository" value="${basedir}/../modules/"/>
                 
                 <!-- Internet repositories -->
                 <attribute name="onlinelib.repository"
@@ -58,7 +64,8 @@ consume less time.
                 <attribute name="onlinelib.repository"
                     value="http://leaffy/java/lib/src/"/>
                 <attribute name="onlinelib.repository"
-                    value="http://leaffy/java/el4j/modules/"/>            </plugin>
+                    value="http://leaffy/java/el4j/modules/"/>
+            </plugin>
         </antcontrib:else>
     </antcontrib:if>
 
