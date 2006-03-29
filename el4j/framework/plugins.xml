@@ -18,28 +18,35 @@
     <plugin name="show"/>
 
     <!--
-        Plugin online library to automatically download missing libraries
+        Plugin online library to automatically download missing libraries 
         from possible locations. By setting property local to any value the
-        online lib plugin will not be included.
+        online lib plugin will only search for libraries locally.
     -->
     <antcontrib:if>
         <ant:isset property="local"/>
         <antcontrib:then>
             <ant:echo level="info">
-Automatic download of missing libraries deactivated.
+Automatic download of missing libraries from the network deactivated.
             </ant:echo>
+            <plugin name="onlinelib">
+                <!-- Local repositories -->
+                <attribute name="onlinelib.repository" value="${basedir}/../lib/"/>
+                <attribute name="onlinelib.repository" value="${basedir}/../lib/src/"/>
+                <attribute name="onlinelib.repository" value="${basedir}/../modules/"/>
+            </plugin>
         </antcontrib:then>
         <antcontrib:else>
             <ant:echo level="info">
 You can disable online plugin with '-Dlocal=t' at configuration time
-(ant -f bootstrap.xml) to deactivate automatic download of missing libraries.
-If automatic downloading of libraries is disabled the configuration task will
-consume less time.
+(ant -f bootstrap.xml) to deactivate automatic download of missing libraries
+from the network. If automatic downloading of libraries is disabled the
+configuration task will consume less time.
             </ant:echo>
             <plugin name="onlinelib">
                 <!-- Local repositories -->
-                <attribute name="onlinelib.repository" value="../lib/"/>
-                <attribute name="onlinelib.repository" value="../lib/src/"/>
+                <attribute name="onlinelib.repository" value="${basedir}/../lib/"/>
+                <attribute name="onlinelib.repository" value="${basedir}/../lib/src/"/>
+                <attribute name="onlinelib.repository" value="${basedir}/../modules/"/>
                 
                 <!-- Internet repositories -->
                 <attribute name="onlinelib.repository"
@@ -74,14 +81,14 @@ consume less time.
     <!-- Plugin to execute JUnit tests and generate JUnit test reports. -->
     <plugin name="junit">
         <attribute name="junit.jar" value="junit-3.8.1.jar"/>
-        <attribute name="junit.set.list" value="framework-tests,keyword-tests,refdb-tests"/>
+        <attribute name="junit.set.list" value="framework-tests,application-tests"/>
     </plugin>
 
     <!-- Plugin to generate javadoc. -->
     <plugin name="javadoc">
         <!-- Sets to generate javadoc for. -->
         <attribute name="javadoc.set.list"
-            value="framework-modules,framework-tests,framework-demos,keyword-modules,keyword-tests,refdb-modules,refdb-tests"/>
+            value="framework-modules,framework-tests,framework-demos,application-modules,application-tests,application-demos"/>
 
         <!-- Use el4j stylesheet file with ELCA colors. -->
         <attribute name="javadoc.default.stylesheetfile"
@@ -138,25 +145,20 @@ consume less time.
         <attribute name="javadoc.framework-demos.doctitle">EL4J framework demonstrations developer documentation</attribute>
         <attribute name="javadoc.framework-demos.windowtitle">EL4J API documentation - Framework demonstrations</attribute>
         
-        <!-- Group specific parameters for set "keyword-modules". -->
-        <attribute name="javadoc.keyword-modules.access" value="protected"/>
-        <attribute name="javadoc.keyword-modules.doctitle">EL4J keyword application modules developer documentation</attribute>
-        <attribute name="javadoc.keyword-modules.windowtitle">EL4J API documentation - Keyword application modules</attribute>
+        <!-- Group specific parameters for set "application-modules". -->
+        <attribute name="javadoc.application-modules.access" value="protected"/>
+        <attribute name="javadoc.application-modules.doctitle">EL4J application modules developer documentation</attribute>
+        <attribute name="javadoc.application-modules.windowtitle">EL4J API documentation - Application modules</attribute>
         
-        <!-- Group specific parameters for set "keyword-tests". -->
-        <attribute name="javadoc.keyword-tests.access" value="private"/>
-        <attribute name="javadoc.keyword-tests.doctitle">EL4J keyword application junit tests developer documentation</attribute>
-        <attribute name="javadoc.keyword-tests.windowtitle">EL4J API documentation - Keyword application junit tests</attribute>
+        <!-- Group specific parameters for set "application-tests". -->
+        <attribute name="javadoc.application-tests.access" value="private"/>
+        <attribute name="javadoc.application-tests.doctitle">EL4J application junit tests developer documentation</attribute>
+        <attribute name="javadoc.application-tests.windowtitle">EL4J API documentation - Application junit tests</attribute>
         
-        <!-- Group specific parameters for set "refdb-modules". -->
-        <attribute name="javadoc.refdb-modules.access" value="protected"/>
-        <attribute name="javadoc.refdb-modules.doctitle">EL4J reference database &#40;refdb&#41; application modules developer documentation</attribute>
-        <attribute name="javadoc.refdb-modules.windowtitle">EL4J API documentation - Reference database &#40;refdb&#41; application modules</attribute>
-        
-        <!-- Group specific parameters for set "keyword-tests". -->
-        <attribute name="javadoc.refdb-tests.access" value="private"/>
-        <attribute name="javadoc.refdb-tests.doctitle">EL4J reference database &#40;refdb&#41; application junit tests developer documentation</attribute>
-        <attribute name="javadoc.refdb-tests.windowtitle">EL4J API documentation - Reference database &#40;refdb&#41; application junit tests</attribute>
+        <!-- Group specific parameters for set "application-demos". -->
+        <attribute name="javadoc.application-demos.access" value="private"/>
+        <attribute name="javadoc.application-demos.doctitle">EL4J application demonstrations developer documentation</attribute>
+        <attribute name="javadoc.application-demos.windowtitle">EL4J API documentation - Application demonstrations</attribute>
     </plugin>
 
     <!--
@@ -169,14 +171,14 @@ consume less time.
         <attribute name="checkstyle.properties"
             value="etc/checkstyle_el4j.properties"/>
         <attribute name="checkstyle.set.list"
-            value="framework-modules,framework-tests,framework-demos,keyword-modules,keyword-tests,refdb-modules,refdb-tests"/>
+            value="framework-modules,framework-tests,framework-demos,application-modules,application-tests"/>
     </plugin>
 
     <!-- Plugin to check code coverage and generate a coverage report. -->
     <plugin name="emma">
         <attribute name="emma.mode" value="offline"/>
         <attribute name="emma.switch" value="emma"/>
-        <attribute name="emma.set.list" value="framework-modules,keyword-modules,refdb-modules"/>
+        <attribute name="emma.set.list" value="framework-modules,application-modules"/>
     </plugin>
 
     <!--
@@ -236,6 +238,6 @@ consume less time.
     <!-- Plugin to create "Ant free" start scripts. -->
     <plugin name="distribution" file="buildsystem/tools/distribution/distribution.xml">
        <attribute name="distribution.profiles.basedir" value="dist"/>
-       <attribute name="distribution.set.list" value="framework-demos"/>
+       <attribute name="distribution.set.list" value="framework-demos,application-demos"/>
     </plugin>
 </ant:project>

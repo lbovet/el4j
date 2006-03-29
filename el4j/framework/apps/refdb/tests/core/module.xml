@@ -4,7 +4,7 @@
 
     <module name="refdb-core-tests">
         <!-- Working set -->
-        <attribute name="set" value="refdb-tests"/>
+        <attribute name="set" value="application-tests"/>
         
         <!-- Enables JUnit -->
         <attribute name="junit.runnable" value="true"/>

@@ -4,7 +4,7 @@
 
     <module name="keyword-core-tests">
         <!-- Working set -->
-        <attribute name="set" value="keyword-tests"/>
+        <attribute name="set" value="application-tests"/>
         
         <!-- Enables JUnit -->
         <attribute name="junit.runnable" value="true"/>

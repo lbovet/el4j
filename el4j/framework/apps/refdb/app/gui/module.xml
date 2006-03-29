@@ -39,7 +39,7 @@
         </eu>
 
         <!-- Working set -->
-        <attribute name="set" value="refdb-modules"/>
+        <attribute name="set" value="application-demos"/>
         
         <!-- Module dependencies -->
         <dependency module="refdb-core" eu="standalone-client">
