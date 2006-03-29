@@ -14,7 +14,7 @@
         </eu>
 
         <!-- Working set -->
-        <attribute name="set" value="refdb-modules"/>
+        <attribute name="set" value="application-modules"/>
         
         <!-- Binary version -->
         <attribute name="binrelease.version" value="2.0-rc0"/>
