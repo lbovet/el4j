@@ -52,24 +52,36 @@
             update="false"
             duplicate="fail">
             
-            <zipfileset dir="${basedir}" prefix="${builder.zip.name.prefix}"
+            <zipfileset dir="${basedir}"
+                prefix="${builder.zip.name.prefix}"
                 excludes="${builder.general.excludes}">
                 <include name="*.txt"/>
-                <include name="etc/**"/>
-                
-                <include name="external-tools/el4ant/**/README.txt"/>
-                <include name="external-tools/el4ant/**/ant-contrib-*.jar"/>
-                <include name="external-tools/el4ant/**/buildsystem-*.jar"/>
-                <include name="external-tools/el4ant/**/reports-*.jar"/>
-                <include name="external-tools/el4ant/**/tools-*.jar"/>
-                
-                <include name="external-tools/ant/**"/>
-                <exclude name="external-tools/ant/docs/**"/>
-                
-                <include name="${builder.library.path}/**"/>
-                <exclude name="${builder.library.path.excludes}"/>
-                
-                <include name="${builder.modules.path}/**"/>
+            </zipfileset>
+            <zipfileset dir="${basedir}/etc"
+                prefix="${builder.zip.name.prefix}/etc"
+                excludes="${builder.general.excludes}">
+            </zipfileset>
+            <zipfileset dir="${basedir}/external-tools/el4ant"
+                prefix="${builder.zip.name.prefix}/external-tools/el4ant"
+                excludes="${builder.general.excludes}">
+                <include name="**/README.txt"/>
+                <include name="**/ant-contrib-*.jar"/>
+                <include name="**/buildsystem-*.jar"/>
+                <include name="**/reports-*.jar"/>
+                <include name="**/tools-*.jar"/>
+            </zipfileset>
+            <zipfileset dir="${basedir}/external-tools/ant"
+                prefix="${builder.zip.name.prefix}/external-tools/ant"
+                excludes="${builder.general.excludes}">
+                <exclude name="docs/**"/>
+            </zipfileset>
+            <zipfileset dir="${basedir}/${builder.library.path}"
+                prefix="${builder.zip.name.prefix}/${builder.library.path}"
+                excludes="${builder.general.excludes},${builder.library.excludes}">
+            </zipfileset>
+            <zipfileset dir="${basedir}/${builder.modules.path}"
+                prefix="${builder.zip.name.prefix}/${builder.modules.path}"
+                excludes="${builder.general.excludes}">
             </zipfileset>
         </zip>    
     </target>
@@ -83,24 +95,25 @@
             update="true"
             duplicate="fail">
             
-            <zipfileset dir="${basedir}" prefix="${builder.zip.name.prefix}"
+            <zipfileset dir="${basedir}/framework"
+                prefix="${builder.zip.name.prefix}/framework"
                 excludes="${builder.general.excludes}">
-                <include name="framework/**"/>
-                <exclude name="framework/dist/**"/>
-                <exclude name="framework/lib/**"/>
-                <exclude name="framework/workspace/.metadata/**"/>
-                <exclude name="framework/build.xml"/>
-
-                <include name="helloworld/**"/>
-                <exclude name="helloworld/dist/**"/>
-                <exclude name="helloworld/lib/**"/>
-                <exclude name="helloworld/workspace/.metadata/**"/>
-                <exclude name="helloworld/build.xml"/>
+                <exclude name="dist/**"/>
+                <exclude name="lib/**"/>
+                <exclude name="workspace/.metadata/**"/>
+                <exclude name="build.xml"/>
             </zipfileset>
-            <zipfileset dir="${basedir}/dist"
-                prefix="${builder.zip.name.prefix}"
+            <zipfileset dir="${basedir}/helloworld"
+                prefix="${builder.zip.name.prefix}/helloworld"
                 excludes="${builder.general.excludes}">
-                <include name="docs/**"/>
+                <exclude name="dist/**"/>
+                <exclude name="lib/**"/>
+                <exclude name="workspace/.metadata/**"/>
+                <exclude name="build.xml"/>
+            </zipfileset>
+            <zipfileset dir="${basedir}/dist/docs"
+                prefix="${builder.zip.name.prefix}/docs"
+                excludes="${builder.general.excludes}">
             </zipfileset>
         </zip>
     </target>
