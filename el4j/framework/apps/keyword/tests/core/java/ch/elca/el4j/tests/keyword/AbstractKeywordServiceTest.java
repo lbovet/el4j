@@ -236,6 +236,7 @@ public abstract class AbstractKeywordServiceTest extends AbstractTestCaseBase {
     /**
      * This test inserts five keywords and does different searchs on it.
      */
+    
     public void testSearchKeywords() {
         KeywordDao dao = getKeywordDao();
         KeywordDto keyword = new KeywordDto();

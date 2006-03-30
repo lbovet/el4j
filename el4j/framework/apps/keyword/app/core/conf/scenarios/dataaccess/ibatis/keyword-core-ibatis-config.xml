@@ -7,7 +7,7 @@
 -->
 <beans>
     <!-- Version: $Revision$ -->
-    <!-- URL: $URL$ -->
+    <!-- Source: $URL$ -->
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
 
@@ -18,7 +18,7 @@
         </property>
     </bean>
     <bean id="keywordDao"
-        class="ch.elca.el4j.apps.keyword.dao.impl.SqlMapKeywordDao">
+        class="ch.elca.el4j.apps.keyword.dao.impl.ibatis.SqlMapKeywordDao">
         <property name="convenienceSqlMapClientTemplate">
             <ref bean="convenienceSqlMapClientTemplate" />
         </property>

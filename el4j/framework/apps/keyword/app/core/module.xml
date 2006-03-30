@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" 
+<ant:project name="el4j" xmlns="antlib:ch.elca.el4ant"
     xmlns:ant="antlib:org.apache.tools.ant">
 
     <module name="keyword-core">
@@ -12,20 +12,22 @@
         <eu name="implementation">
             <attribute name="compile.jar.excludes" value=""/>
         </eu>
-        
+
         <!-- Working set -->
         <attribute name="set" value="application-modules"/>
-        
+
         <!-- Binary version -->
         <attribute name="binrelease.version" value="2.0-rc0"/>
 
         <!-- Commons attributes enabled -->
         <attribute name="commons-attributes.enable" value="true"/>
-        
+
         <!-- Module dependencies -->
         <dependency module="module-core"/>
         <dependency module="module-ibatis"/>
+        <dependency module="module-hibernate"/>
         <dependency module="module-env"/>
+ 
     </module>
-    
+
 </ant:project>
