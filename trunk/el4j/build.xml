@@ -62,8 +62,7 @@
                 excludes="${builder.general.excludes}">
             </zipfileset>
             <zipfileset dir="${basedir}/external-tools/el4ant"
-                prefix="${builder.zip.name.prefix}/external-tools/el4ant"
-                excludes="${builder.general.excludes}">
+                prefix="${builder.zip.name.prefix}/external-tools/el4ant">
                 <include name="**/README.txt"/>
                 <include name="**/ant-contrib-*.jar"/>
                 <include name="**/buildsystem-*.jar"/>
@@ -71,8 +70,7 @@
                 <include name="**/tools-*.jar"/>
             </zipfileset>
             <zipfileset dir="${basedir}/external-tools/ant"
-                prefix="${builder.zip.name.prefix}/external-tools/ant"
-                excludes="${builder.general.excludes}">
+                prefix="${builder.zip.name.prefix}/external-tools/ant">
                 <exclude name="docs/**"/>
             </zipfileset>
             <zipfileset dir="${basedir}/${builder.library.path}"
@@ -83,7 +81,7 @@
                 prefix="${builder.zip.name.prefix}/${builder.modules.path}"
                 excludes="${builder.general.excludes}">
             </zipfileset>
-        </zip>    
+        </zip>
     </target>
 
     <!-- Internal target to create the convenience zip -->
@@ -148,7 +146,29 @@
                 includes="${builder.collect.binary.modules.includes}"/>
         </delete>
     </target>
-    
+
+    <target name="clean.el4ant.libraries">
+        
+        <delete quiet="true">
+            <fileset dir="${basedir}/external-tools/el4ant/framework_lib">
+                <include name="*.jar"/>
+                <exclude name="ant-contrib-*.jar"/>
+                <exclude name="buildsystem-*.jar"/>
+                <exclude name="reports-*.jar"/>
+                <exclude name="tools-*.jar"/>
+            </fileset>
+        </delete>
+        <delete quiet="true">
+            <fileset dir="${basedir}/external-tools/el4ant/lib">
+                <include name="*.jar"/>
+                <exclude name="ant-contrib-*.jar"/>
+                <exclude name="buildsystem-*.jar"/>
+                <exclude name="reports-*.jar"/>
+                <exclude name="tools-*.jar"/>
+            </fileset>
+        </delete>
+        
+    </target>
 
 
     <!--
@@ -183,6 +203,7 @@
         unless="collect.essential.executed"
         description="Collects the needed for the essential zip.">
         
+        <antcall target="clean.el4ant.libraries"/>
         <antcall target="collect.libraries.project">
             <param name="builder.current.project" value="framework"/>
         </antcall>
@@ -192,6 +213,8 @@
         <antcall target="collect.libraries.project">
             <param name="builder.current.project" value="helloworld"/>
         </antcall>
+        <antcall target="collect.el4ant.libraries"/>
+        
         <property name="collect.essential.executed" value="true"/>
     </target>
     
@@ -210,6 +233,24 @@
         <property name="collect.convenience.executed" value="true"/>
     </target>
 
+    <target name="collect.el4ant.libraries">
+        <copy todir="${builder.library.path}" overwrite="true">
+            <fileset dir="${basedir}/external-tools/el4ant/framework_lib">
+                <include name="*.jar"/>
+                <exclude name="ant-contrib-*.jar"/>
+                <exclude name="buildsystem-*.jar"/>
+                <exclude name="reports-*.jar"/>
+                <exclude name="tools-*.jar"/>
+            </fileset>
+            <fileset dir="${basedir}/external-tools/el4ant/lib">
+                <include name="*.jar"/>
+                <exclude name="ant-contrib-*.jar"/>
+                <exclude name="buildsystem-*.jar"/>
+                <exclude name="reports-*.jar"/>
+                <exclude name="tools-*.jar"/>
+            </fileset>
+        </copy>
+    </target>
     
     <target name="collect.libraries.project" depends="reconfigure.project">
         <copy todir="${builder.library.path}" overwrite="true">
