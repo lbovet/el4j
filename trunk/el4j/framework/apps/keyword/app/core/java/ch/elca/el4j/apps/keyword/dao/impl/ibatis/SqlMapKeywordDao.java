@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.apps.keyword.dao.impl;
+package ch.elca.el4j.apps.keyword.dao.impl.ibatis;
 
 import java.util.List;
 

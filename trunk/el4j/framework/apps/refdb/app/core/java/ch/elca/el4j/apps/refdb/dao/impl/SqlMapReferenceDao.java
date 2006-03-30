@@ -24,7 +24,7 @@ import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException;
 
-import ch.elca.el4j.apps.keyword.dao.impl.SqlMapKeywordDao;
+import ch.elca.el4j.apps.keyword.dao.impl.ibatis.SqlMapKeywordDao;
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
 import ch.elca.el4j.apps.refdb.Constants;
 import ch.elca.el4j.apps.refdb.dao.ReferenceDao;

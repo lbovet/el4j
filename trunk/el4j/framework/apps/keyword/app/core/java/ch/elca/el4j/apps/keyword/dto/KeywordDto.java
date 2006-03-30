@@ -32,6 +32,7 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  * @author Martin Zeltner (MZE)
  */
 public class KeywordDto extends AbstractIntKeyIntOptimisticLockingDto {
+    
     /**
      * This is the name of the keyword.
      */
