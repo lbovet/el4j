@@ -147,7 +147,8 @@
         </delete>
     </target>
 
-    <target name="clean.el4ant.libraries">
+    <target name="clean.el4ant.libraries"
+        unless="clean.el4ant.libraries.executed">
         
         <delete quiet="true">
             <fileset dir="${basedir}/external-tools/el4ant/framework_lib">
@@ -168,6 +169,7 @@
             </fileset>
         </delete>
         
+        <property name="clean.el4ant.libraries.executed" value="true"/>
     </target>
 
 
@@ -177,6 +179,8 @@
     --> 
     <target name="reconfigure.project"
         unless="reconfigured.${builder.current.project}">
+        
+        <antcall target="clean.el4ant.libraries"/>
         
         <!-- Can not execute distclean because the build.xml could not exist! -->
         <!--ant dir="${builder.current.project}" antfile="bootstrap.xml" 
@@ -203,7 +207,6 @@
         unless="collect.essential.executed"
         description="Collects the needed for the essential zip.">
         
-        <antcall target="clean.el4ant.libraries"/>
         <antcall target="collect.libraries.project">
             <param name="builder.current.project" value="framework"/>
         </antcall>
