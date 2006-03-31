@@ -5,7 +5,7 @@
     
     <!--
         Binary modules. The modules below are all from the EL4J 0.9.3 framework.
-        Hello world modules can have dependencies to them like they were local
+        Hello World modules can have dependencies to them like they were local
         modules. The name of the modules are the name of the attribute elements 
         below without the substring "binrelease.version.".
     -->
