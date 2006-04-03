@@ -13,7 +13,7 @@
 #menuItem($navigation "home" "HOME" "index.html" "_top")
 #menuItem($navigation "news" "NEWS/RELEASE NOTES" "news.html" "_top")
 #menuItem($navigation "documentation" "DOCUMENTATION" "documentation.html" "_top")
-#menuItem($navigation "support" "SUPPORT" "support.html" "_top")
+#menuItem($navigation "support" "SUPPORT/ USES" "support.html" "_top")
 #menuItem($navigation "reports" "REPORTS" "reports.html" "_top")
 #menuItem($navigation "license" "LICENSE" "license.html" "_top")
 #menuItem($navigation "download" "DOWNLOAD" "http://sourceforge.net/project/showfiles.php?group_id=147215" "_top")
