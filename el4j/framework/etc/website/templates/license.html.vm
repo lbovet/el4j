@@ -10,7 +10,7 @@
             <a href="http://www.gnu.org/licenses/">GPL version 2.0</a>.
         </p>
         <p>
-            We also have plans to try to submit parts of EL4J as contribution
+            We also plans to try to submit parts of EL4J as contribution
             to the Spring framework. Should these be accepted as such, they will
             of course be made available under the
             <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache licence</a>
