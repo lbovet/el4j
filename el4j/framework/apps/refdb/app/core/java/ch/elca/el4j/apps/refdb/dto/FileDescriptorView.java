@@ -52,6 +52,12 @@ public class FileDescriptorView extends AbstractIntKeyIntOptimisticLockingDto {
      * Size of the content in bytes.
      */
     private int m_size;
+    
+    /**
+     * Reference this file is associated with (only used if
+     * Hibernate is used to perform ORM).
+     */
+    //private ReferenceDto m_reference;
 
     /**
      * @return Returns the mimeType
@@ -97,7 +103,7 @@ public class FileDescriptorView extends AbstractIntKeyIntOptimisticLockingDto {
     public void setSize(int size) {
         m_size = size;
     }
-
+ 
     /**
      * @return Returns the key to reference.
      */
@@ -113,6 +119,23 @@ public class FileDescriptorView extends AbstractIntKeyIntOptimisticLockingDto {
         m_keyToReference = keyToReference;
     }
 
+    /**
+     * @return Returns the reference this file is associated with (only
+     *         used if Hibernate is used to perform ORM).
+     */
+    /*public ReferenceDto getReference() {
+        return m_reference;
+    }*/
+    
+    /**
+     * @param reference
+     *            The reference this file will be associated with (only
+     *            used if Hibernate is used to perform ORM).
+     */
+    /*public void setReference(ReferenceDto reference) {
+        m_reference = reference;
+    }*/
+    
     /**
      * {@inheritDoc}
      */

@@ -19,7 +19,8 @@ package ch.elca.el4j.apps.refdb.dto;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
@@ -78,8 +79,28 @@ public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * Set of keywords for this reference.
      */
-    private List m_keywords;
+    private Set m_keywords = new HashSet();
 
+    /**
+     * Set of annotations for this reference (only used if Hibernate is used to
+     * perform ORM).
+     */
+    private Set m_annotations;
+    
+    /**
+     * Set of files for this reference (only used if Hibernate is used to
+     * perform ORM).
+     */
+    private Set m_files;
+    
+    /**
+     * Set of file descriptor views for this reference (only used if Hibernate
+     * is used to perform ORM).
+     */
+    private Set m_fileDescriptorViews;
+    
+    
+    
     /**
      * @return Returns the date.
      */
@@ -203,7 +224,7 @@ public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * @return Returns the keywords.
      */
-    public List getKeywords() {
+    public Set getKeywords() {
         return m_keywords;
     }
 
@@ -211,8 +232,59 @@ public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
      * @param keywords
      *            The keywords to set.
      */
-    public void setKeywords(List keywords) {
+    public void setKeywords(Set keywords) {
         m_keywords = keywords;
+    }
+    
+    /**
+     * @return Returns the set of annotations for this reference (only used if
+     *         Hibernate is used to perform ORM).
+     */
+    public Set getAnnotations() {
+        return m_annotations;
+    }
+    
+    /**
+     * @param annotations
+     *            The set of annotations for this reference (only used if
+     *            Hibernate is used to perform ORM).
+     */
+    public void setAnnotations(Set annotations) {
+        m_annotations = annotations;
+    }
+    
+    /**
+     * @return Returns the set of files for this reference (only used if
+     *         Hibernate is used to perform ORM).
+     */
+    public Set getFiles() {
+        return m_files;
+    }
+    
+    /**
+     * @param files
+     *            The set of files for this reference (only used if
+     *            Hibernate is used to perform ORM).
+     */
+    public void setFiles(Set files) {
+        m_files = files;
+    }
+    
+    /**
+     * @return Returns the set of file descriptor views for this reference (only
+     *         used if Hibernate is used to perform ORM).
+     */
+    public Set getFileDescriptorViews() {
+        return m_fileDescriptorViews;
+    }
+    
+    /**
+     * @param fileDescriptorViews
+     *            The set of file descriptor views for this reference (only used
+     *            if Hibernate is used to perform ORM).
+     */
+    public void setFileDescriptorViews(Set fileDescriptorViews) {
+        m_fileDescriptorViews = fileDescriptorViews;
     }
 
     /**

@@ -284,6 +284,8 @@ public interface ReferenceService extends KeywordService {
      *             If general data access problem occurred.
      * @throws DataRetrievalFailureException
      *             If link could not be retrieved.
+     * 
+     * @@attrib.transaction.SupportsReadOnly()
      */
     public ReferenceDto getReferenceByKey(int key)
         throws DataAccessException, DataRetrievalFailureException;
@@ -296,6 +298,8 @@ public interface ReferenceService extends KeywordService {
      * @return Returns a list with references. Returns never <code>null</code>.
      * @throws DataAccessException
      *             If general data access problem occurred.
+     *             
+     * @@attrib.transaction.SupportsReadOnly()            
      */
     public List getReferencesByName(String name) throws DataAccessException;
 
@@ -306,6 +310,8 @@ public interface ReferenceService extends KeywordService {
      *         <code>null</code>.
      * @throws DataAccessException
      *             If general data access problem occurred.
+     *             
+     * @@attrib.transaction.SupportsReadOnly()            
      */
     public List getAllReferences() throws DataAccessException;
 

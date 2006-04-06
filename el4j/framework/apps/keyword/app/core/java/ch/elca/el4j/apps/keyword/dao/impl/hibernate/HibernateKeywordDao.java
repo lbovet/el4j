@@ -64,7 +64,7 @@ public class HibernateKeywordDao extends ConvenienceHibernateDaoSupport
     public KeywordDto getKeywordByName(String name) throws DataAccessException,
         DataRetrievalFailureException {
       
-        String queryString = "from KeywordDto keyword where name like :name";
+        String queryString = "from KeywordDto keyword where name = :name";
         
         return (KeywordDto) getConvenienceHibernateTemplate()
             .findByNamedParamStrong(queryString, "name", name,
@@ -87,9 +87,9 @@ public class HibernateKeywordDao extends ConvenienceHibernateDaoSupport
         DetachedCriteria hibernateCriteria = transformer
             .transform(query, KeywordDto.class); 
             
-       // Execute Hibernate criteria query and return the list of KeywordDto
-       // objects returned by the query.
-       return getConvenienceHibernateTemplate().
+        // Execute Hibernate criteria query and return the list of KeywordDto
+        // objects returned by the query.
+        return getConvenienceHibernateTemplate().
             findByCriteria(hibernateCriteria);
     }
 

@@ -60,12 +60,18 @@ public class FileDto extends AbstractIntKeyIntOptimisticLockingDto {
     private int m_size;
 
     /**
+     * Reference this file is associated with (only used if
+     * Hibernate is used to perform ORM).
+     */
+    //private ReferenceDto m_reference;
+    
+    /**
      * @return Returns the content.
      */
     public byte[] getContent() {
         return m_content;
     }
-
+ 
     /**
      * @param content
      *            The content to set.
@@ -137,6 +143,23 @@ public class FileDto extends AbstractIntKeyIntOptimisticLockingDto {
         m_keyToReference = keyToReference;
     }
 
+    /**
+     * @return Returns the reference this file is associated with (only
+     *         used if Hibernate is used to perform ORM).
+     */
+    /*public ReferenceDto getReference() {
+        return m_reference;
+    }*/
+    
+    /**
+     * @param reference
+     *            The reference this file will be associated with (only
+     *            used if Hibernate is used to perform ORM).
+     */
+    /*public void setReference(ReferenceDto reference) {
+        m_reference = reference;
+    }*/
+    
     /**
      * {@inheritDoc}
      */

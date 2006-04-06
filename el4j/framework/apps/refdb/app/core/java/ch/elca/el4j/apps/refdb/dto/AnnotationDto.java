@@ -62,6 +62,12 @@ public class AnnotationDto extends AbstractIntKeyIntOptimisticLockingDto {
     private Timestamp m_whenInserted;
 
     /**
+     * Reference this annotation is associated with (only used if
+     * Hibernate is used to perform ORM).
+     */
+    //private ReferenceDto m_reference;
+    
+    /**
      * @return Returns the annotator.
      */
     public String getAnnotator() {
@@ -138,6 +144,23 @@ public class AnnotationDto extends AbstractIntKeyIntOptimisticLockingDto {
     public void setKeyToReference(int keyToReference) {
         m_keyToReference = keyToReference;
     }
+    
+    /**
+     * @return Returns the reference this annotation is associated with (only
+     *         used if Hibernate is used to perform ORM).
+     */
+    /*public ReferenceDto getReference() {
+        return m_reference;
+    }*/
+    
+    /**
+     * @param reference
+     *            The reference this annotation will be associated with (only
+     *            used if Hibernate is used to perform ORM).
+     */
+    /*public void setReference(ReferenceDto reference) {
+        m_reference = reference;
+    }*/
 
     /**
      * {@inheritDoc}
