@@ -55,11 +55,13 @@
         </ul>
     </div>
     
-        <p>
-      The following components make up EL4J:
-    
-    <img src="images/el4j-overview.bmp" alt="EL4J-Overview"  border="0"/>
-    <!-- width="500" height="400" -->
+    <div>
+        The following components make up EL4J:<br/>
+        <br/>
+        <img src="images/el4j-overview.gif" alt="EL4J-Overview"
+    	    width="500" height="301" border="0"/><br/>
+    	<br/>
+    </div>
     
     <div>
         More information

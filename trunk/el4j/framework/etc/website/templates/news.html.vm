@@ -4,7 +4,7 @@
 #parse("$website_templates_directory/includes/navigation.include.vm")
 <div id="Content">
 #parse("$website_templates_directory/includes/news.include.vm")
-#parse("$website_templates_directory/includes/release_notes.include.vm")
+#parse("$website_templates_directory/includes/uses.include.vm")
 #parse("$website_templates_directory/includes/last_changed_copyright.include.vm")
 </div>
 <div id="RightColumn">
