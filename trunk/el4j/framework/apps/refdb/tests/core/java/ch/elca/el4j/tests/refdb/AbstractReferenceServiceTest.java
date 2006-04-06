@@ -17,11 +17,11 @@
 package ch.elca.el4j.tests.refdb;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -43,7 +43,7 @@ import ch.elca.el4j.services.search.criterias.LikeCriteria;
 // Checkstyle: MagicNumber off
 
 /**
- * Test case for <code>DefaultReferenceService</code>.
+ * Abstract test case for <code>DefaultReferenceService</code>.
  * 
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -54,12 +54,12 @@ import ch.elca.el4j.services.search.criterias.LikeCriteria;
  * 
  * @author Martin Zeltner (MZE)
  */
-public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
+public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase {
     /**
      * Private logger.
      */
     private static Log s_logger = LogFactory
-            .getLog(DefaultReferenceServiceTest.class);
+            .getLog(AbstractReferenceServiceTest.class);
 
     /**
      * This test inserts a link and three keywords.
@@ -88,7 +88,7 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         service.saveKeyword(keyword2);
         service.saveKeyword(keyword3);
 
-        List listKeywords = new LinkedList();
+        Set listKeywords = new HashSet();
         listKeywords.add(keyword);
         listKeywords.add(keyword2);
         listKeywords.add(keyword3);
@@ -131,7 +131,7 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         service.saveKeyword(keyword3);
         service.saveKeyword(keyword4);
 
-        List listKeywords = new LinkedList();
+        Set listKeywords = new HashSet();
         listKeywords.add(keyword);
         listKeywords.add(keyword2);
         listKeywords.add(keyword3);
@@ -142,7 +142,7 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         LinkDto link2 = (LinkDto) service.getReferenceByKey(link.getKey());
         assertTrue("Links are not equal.", link.equals(link2));
 
-        List listKeywords2 = link2.getKeywords();
+        Set listKeywords2 = link2.getKeywords();
         assertEquals("There are not three keywords related with the link.", 
             3, listKeywords2.size());
         Iterator it = listKeywords2.iterator();
@@ -197,7 +197,7 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         service.saveKeyword(keyword3);
         service.saveKeyword(keyword4);
 
-        List listKeywords = new LinkedList();
+        Set listKeywords = new HashSet();
         listKeywords.add(keyword);
         listKeywords.add(keyword2);
         listKeywords.add(keyword3);
@@ -212,7 +212,7 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         LinkDto link2 = (LinkDto) list.get(0);
         assertTrue("Links are not equal.", link.equals(link2));
 
-        List listKeywords2 = link2.getKeywords();
+        Set listKeywords2 = link2.getKeywords();
         assertEquals("There are not three keywords related with the link.", 
             3, listKeywords2.size());
         Iterator it = listKeywords2.iterator();
@@ -247,7 +247,7 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         LinkDto link3 = (LinkDto) list.get(0);
         assertTrue("Links are not equal.", link2.equals(link3));
 
-        List listKeywords3 = link3.getKeywords();
+        Set listKeywords3 = link3.getKeywords();
         assertEquals("There are not three keywords related with the link.",
             3, listKeywords3.size());
         Iterator it2 = listKeywords3.iterator();
@@ -339,7 +339,7 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         service.saveKeyword(keyword2);
         service.saveKeyword(keyword3);
 
-        List listKeywords = new LinkedList();
+        Set listKeywords = new HashSet();
         listKeywords.add(keyword);
         listKeywords.add(keyword2);
         listKeywords.add(keyword3);
@@ -380,7 +380,7 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         service.saveKeyword(keyword2);
         service.saveKeyword(keyword3);
 
-        List listKeywords = new LinkedList();
+        Set listKeywords = new HashSet();
         listKeywords.add(keyword);
         listKeywords.add(keyword2);
         listKeywords.add(keyword3);
@@ -395,7 +395,7 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         assertTrue("Formal publications are not equal.", 
             formalPublication.equals(formalPublication2));
 
-        List listKeywords2 = formalPublication2.getKeywords();
+        Set listKeywords2 = formalPublication2.getKeywords();
         assertEquals("There are not three keywords related with the formal "
             + "publication.", 3, listKeywords2.size());
         Iterator it = listKeywords2.iterator();
@@ -448,7 +448,7 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         service.saveKeyword(keyword2);
         service.saveKeyword(keyword3);
 
-        List listKeywords = new LinkedList();
+        Set listKeywords = new HashSet();
         listKeywords.add(keyword);
         listKeywords.add(keyword2);
         listKeywords.add(keyword3);
@@ -466,7 +466,7 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         assertTrue("Formal publications are not equal.", 
             formalPublication.equals(formalPublication2));
 
-        List listKeywords2 = formalPublication2.getKeywords();
+        Set listKeywords2 = formalPublication2.getKeywords();
         assertEquals("There are not three keywords related with the formal "
             + "publication.", 3, listKeywords2.size());
         Iterator it = listKeywords2.iterator();
@@ -505,7 +505,7 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         assertTrue("Formal publications are not equal.", 
                 formalPublication2.equals(formalPublication3));
 
-        List listKeywords3 = formalPublication3.getKeywords();
+        Set listKeywords3 = formalPublication3.getKeywords();
         assertEquals("There are not three keywords related with the formal "
             + "publication.", 3, listKeywords3.size());
         Iterator it2 = listKeywords3.iterator();
@@ -609,7 +609,7 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         service.saveKeyword(keyword2);
         service.saveKeyword(keyword3);
 
-        List listKeywords = new LinkedList();
+        Set listKeywords = new HashSet();
         listKeywords.add(keyword);
         listKeywords.add(keyword2);
         listKeywords.add(keyword3);
@@ -650,7 +650,7 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         service.saveKeyword(keyword2);
         service.saveKeyword(keyword3);
 
-        List listKeywords = new LinkedList();
+        Set listKeywords = new HashSet();
         listKeywords.add(keyword);
         listKeywords.add(keyword2);
         listKeywords.add(keyword3);
@@ -661,7 +661,7 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         BookDto book2 = (BookDto) service.getReferenceByKey(book.getKey());
         assertTrue("Books are not equal.", book.equals(book2));
 
-        List listKeywords2 = book2.getKeywords();
+        Set listKeywords2 = book2.getKeywords();
         assertEquals("There are not three keywords related with the book.", 
             3, listKeywords2.size());
         Iterator it = listKeywords2.iterator();
@@ -714,7 +714,7 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         service.saveKeyword(keyword2);
         service.saveKeyword(keyword3);
 
-        List listKeywords = new LinkedList();
+        Set listKeywords = new HashSet();
         listKeywords.add(keyword);
         listKeywords.add(keyword2);
         listKeywords.add(keyword3);
@@ -729,7 +729,7 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         BookDto book2 = (BookDto) list.get(0);
         assertTrue("Books are not equal.", book.equals(book2));
 
-        List listKeywords2 = book2.getKeywords();
+        Set listKeywords2 = book2.getKeywords();
         assertEquals("There are not three keywords related with the book.", 
             3, listKeywords2.size());
         Iterator it = listKeywords2.iterator();
@@ -764,7 +764,7 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         BookDto book3 = (BookDto) list.get(0);
         assertTrue("Books are not equal.", book2.equals(book3));
 
-        List listKeywords3 = book3.getKeywords();
+        Set listKeywords3 = book3.getKeywords();
         assertEquals("There are not three keywords related with the book.", 
             3, listKeywords3.size());
         Iterator it2 = listKeywords3.iterator();
@@ -873,7 +873,7 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         bUmlDistilled.setDescription(
             "A brief guide to the standard object modeling language.");
         bUmlDistilled.setIncomplete(false);
-        List keywordsUmlDistilled = new ArrayList();
+        Set keywordsUmlDistilled = new HashSet();
         keywordsUmlDistilled.add(kUml);
         keywordsUmlDistilled.add(kLanguage);
         keywordsUmlDistilled.add(kEnglish);
@@ -884,7 +884,7 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         bBeginningJsp2.setDescription(
             "Build Web Applications Using Jsp, Java, and Struts.");
         bBeginningJsp2.setIncomplete(true);
-        List keywordsBeginningJsp2 = new ArrayList();
+        Set keywordsBeginningJsp2 = new HashSet();
         keywordsBeginningJsp2.add(kJ2ee);
         keywordsBeginningJsp2.add(kJava);
         keywordsBeginningJsp2.add(kJsp);
@@ -900,7 +900,7 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         lLeoEngGer.setDescription(
             "An online dictionary to translate German to English and reverse.");
         lLeoEngGer.setIncomplete(false);
-        List keywordsLeoEngGer = new ArrayList();
+        Set keywordsLeoEngGer = new HashSet();
         keywordsLeoEngGer.add(kEnglish);
         keywordsLeoEngGer.add(kGerman);
         keywordsLeoEngGer.add(kDictionary);
@@ -914,7 +914,7 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
             + "JSP technology enables rapid development of web-based "
             + "applications that are server- and platform-independent.");
         lJ2eeJsp.setIncomplete(true);
-        List keywordsJ2eeJsp = new ArrayList();
+        Set keywordsJ2eeJsp = new HashSet();
         keywordsJ2eeJsp.add(kJ2ee);
         keywordsJ2eeJsp.add(kJsp);
         keywordsJ2eeJsp.add(kJava);
@@ -926,7 +926,7 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         fSqlMaps2DevGuide.setDescription("This guide shows you how to "
             + "develop an application using SqlMap 2.0.");
         fSqlMaps2DevGuide.setIncomplete(true);
-        List keywordsSqlMaps2DevGuide = new ArrayList();
+        Set keywordsSqlMaps2DevGuide = new HashSet();
         keywordsSqlMaps2DevGuide.add(kJava);
         keywordsSqlMaps2DevGuide.add(kIbatis);
         keywordsSqlMaps2DevGuide.add(kDeveloperguide);
@@ -938,7 +938,7 @@ public class DefaultReferenceServiceTest extends AbstractTestCaseBase {
         f2dBarcodePdf417.setDescription("Describse who a "
             + "PDF417 2D barcode is built-up.");
         f2dBarcodePdf417.setIncomplete(false);
-        List keywords2dBarcodePdf417 = new ArrayList();
+        Set keywords2dBarcodePdf417 = new HashSet();
         keywords2dBarcodePdf417.add(k2d);
         keywords2dBarcodePdf417.add(kBarcode);
         keywords2dBarcodePdf417.add(kEnglish);

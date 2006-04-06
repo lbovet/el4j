@@ -54,17 +54,21 @@ public abstract class AbstractTestCaseBase extends TestCase {
     /**
      * String array to point to the used configuration files.
      */
+    /*
     private String[] m_includeConfigLocations = {
         "classpath:optional/interception/methodTracing.xml",
         "classpath*:mandatory/*.xml",
         "classpath*:scenarios/db/raw/*.xml",
         "classpath*:scenarios/dataaccess/ibatis/*.xml",
         "classpath:optional/interception/transactionCommonsAttributes.xml" };
+    */
 
     /**
      * String array to declare files which should not be used.
      */
+    /*
     private String[] m_excludeConfigLocations = null;
+    */
 
     /**
      * Application context to load beans.
@@ -89,26 +93,55 @@ public abstract class AbstractTestCaseBase extends TestCase {
     /**
      * Default constructor. Loads the application context.
      */
-    protected AbstractTestCaseBase() {
+    /*protected AbstractTestCaseBase() {
         m_applicationContext = new ModuleApplicationContext(
                 m_includeConfigLocations, m_excludeConfigLocations, false,
                 (ApplicationContext) null);
-    }
+    }*/
+    
+    /**
+     * Hide default constructor.
+     */
+    protected AbstractTestCaseBase() { }
 
     /**
      * @return Returns the applicationContext.
      */
-    protected ApplicationContext getApplicationContext() {
+    protected synchronized ApplicationContext getApplicationContext() {
+        //return m_applicationContext;
+        if (m_applicationContext == null) {
+            m_applicationContext = new ModuleApplicationContext(
+                getIncludeConfigLocations(), getExcludeConfigLocations(), 
+                isBeanOverridingAllowed(), (ApplicationContext) null);
+        }
         return m_applicationContext;
     }
 
+    /**
+     * @return Returns <code>true</code> if bean definition overriding should
+     *         be allowed.
+     */
+    protected boolean isBeanOverridingAllowed() {
+        return false;
+    }
+    
+    /**
+     * @return Returns the string array with exclude locations.
+     */
+    protected abstract String[] getExcludeConfigLocations();
+
+    /**
+     * @return Returns the string array with include locations.
+     */
+    protected abstract String[] getIncludeConfigLocations();
+    
     /**
      * @return Returns the dataSource.
      */
     protected DataSource getDataSource() {
         if (m_dataSource == null) {
             m_dataSource 
-                = (DataSource) m_applicationContext.getBean("dataSource");
+                = (DataSource) getApplicationContext().getBean("dataSource");
         }
         return m_dataSource;
     }
@@ -146,7 +179,7 @@ public abstract class AbstractTestCaseBase extends TestCase {
             }
         }
     }
-    
+
     /**
      * Method to add a fake reference to database.
      * 

@@ -31,7 +31,7 @@
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${databaseDialect}</prop>
-                <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+                <!--  <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>-->
                 <prop key="hibernate.max_fetch_depth">3</prop>
             </props>
         </property>
