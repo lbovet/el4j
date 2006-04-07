@@ -18,7 +18,7 @@
         </property>
     </bean>
     <bean id="referenceDao" 
-        class="ch.elca.el4j.apps.refdb.dao.impl.SqlMapReferenceDao">
+        class="ch.elca.el4j.apps.refdb.dao.impl.ibatis.SqlMapReferenceDao">
         <property name="convenienceSqlMapClientTemplate">
             <ref bean="convenienceSqlMapClientTemplate"/>
         </property>

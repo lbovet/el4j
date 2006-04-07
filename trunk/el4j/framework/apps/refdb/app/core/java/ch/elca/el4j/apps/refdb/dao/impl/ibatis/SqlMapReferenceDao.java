@@ -14,10 +14,11 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.apps.refdb.dao.impl;
+package ch.elca.el4j.apps.refdb.dao.impl.ibatis;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -347,9 +348,9 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
          * new.
          */
         removeAllReferenceKeywordRelationshipsByReference(reference.getKey());
-        List list = reference.getKeywords();
-        if (list != null) {
-            Iterator it = list.iterator();
+        Set set = reference.getKeywords();
+        if (set != null) {
+            Iterator it = set.iterator();
             while (it.hasNext()) {
                 KeywordDto keyword = (KeywordDto) it.next();
                 addReferenceKeywordRelationship(
