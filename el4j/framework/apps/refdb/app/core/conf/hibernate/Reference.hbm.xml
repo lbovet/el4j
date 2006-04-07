@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping>
+
+	<class name="ch.elca.el4j.apps.refdb.dto.ReferenceDto" table="REFERENCESTABLE">
+		<cache usage="read-write"/>
+		<id name="key">
+            <column name="KEYID"/>
+            <generator class="native">
+            	<param name="sequence">reference_sequence</param>
+            </generator>
+        </id>
+        <version name="optimisticLockingVersion">
+        	<column name="OPTIMISTICLOCKINGVERSION"/>
+        </version>
+        <property name="name" type="string">
+            <column name="NAME"/>
+        </property>
+        <property name="hashValue" type="string">
+            <column name="HASHVALUE"/>
+        </property>
+        <property name="description" type="string">
+            <column name="DESCRIPTION"/>
+        </property>
+        <property name="version" type="string">
+            <column name="VERSION"/>
+        </property>
+        <property name="incomplete" type="boolean">
+            <column name="INCOMPLETE"/>
+        </property>
+        <property name="whenInserted" type="timestamp">
+            <column name="WHENINSERTED"/>
+        </property>
+        <property name="date" type="date">
+            <column name="DOCUMENTDATE"/>
+        </property>
+        
+        <set name="annotations" cascade="all-delete-orphan">
+        	<key column="KEYTOREFERENCE"/>
+        	<one-to-many class="ch.elca.el4j.apps.refdb.dto.AnnotationDto"/>
+        </set>
+        
+        <set name="files" cascade="all-delete-orphan">
+        	<key column="KEYTOREFERENCE"/>
+        	<one-to-many class="ch.elca.el4j.apps.refdb.dto.FileDto"/>
+        </set>
+        
+        <set name="fileDescriptorViews" cascade="all-delete-orphan">
+        	<key column="KEYTOREFERENCE"/>
+        	<one-to-many class="ch.elca.el4j.apps.refdb.dto.FileDescriptorView"/>
+        </set>
+        
+        <set name="keywords" table="REFERENCEKEYWORDRELATIONSHIPS"
+        	cascade="save-update">
+        	<key column="KEYREFERENCE"/>
+        	<many-to-many class="ch.elca.el4j.apps.keyword.dto.KeywordDto"
+        		column="KEYKEYWORD"/>
+       	</set> 
+        
+        <joined-subclass name="ch.elca.el4j.apps.refdb.dto.LinkDto" table="LINKS">
+        	<key column="KEYTOREFERENCE"/>
+        	<property name="url" type="string">
+        		<column name="URL"/>
+        	</property>
+        </joined-subclass>
+        
+        <joined-subclass name="ch.elca.el4j.apps.refdb.dto.FormalPublicationDto"
+        	 table="FORMALPUBLICATIONS">
+        	<key column="KEYTOREFERENCE"/>
+        	<property name="authorName" type="string">
+        		<column name="AUTHORNAME"/>
+        	</property>
+        	<property name="publisher">
+        		<column name="PUBLISHER"/>
+        	</property>
+        	<property name="pageNum" type="integer">
+        		<column name="PAGENUM"/>
+        	</property>
+        	
+        	<!--  
+        	<joined-subclass name="ch.elca.el4j.apps.refdb.dto.BookDto"
+        		 table="BOOKS">
+        		<key column="KEYTOREFERENCE"/>
+        		<property name="isbnNumber">
+        			<column name="ISBNNUMBER"/>
+        		</property>
+        	</joined-subclass>
+        	-->
+        </joined-subclass>
+        
+        <joined-subclass name="ch.elca.el4j.apps.refdb.dto.BookDto"
+        	table="BOOKS">
+        	<key column="KEYTOREFERENCE"/>
+        	<property name="authorName" type="string">
+        		<column name="AUTHORNAME"/>
+        	</property>
+        	<property name="publisher">
+        		<column name="PUBLISHER"/>
+        	</property>
+        	<property name="pageNum" type="integer">
+        		<column name="PAGENUM"/>
+        	</property>
+        	<property name="isbnNumber">
+        			<column name="ISBNNUMBER"/>
+        	</property>
+        </joined-subclass>
+        
+	</class>
+
+</hibernate-mapping>
