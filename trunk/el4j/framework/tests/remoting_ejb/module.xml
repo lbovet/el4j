@@ -15,7 +15,7 @@
        
         <eu name="ear">
             <attribute name="runtime.runnable" value="true"/>
-            <attribute name="j2ee.ear.application"/>
+            <attribute name="j2ee.ear.application" value="true"/>
             <attribute name="remoting.ejb" value="true"/>
             <attribute name="remoting.ejb.inclusiveLocations" value="classpath*:mandatory/env.xml,classpath*:/gui/server-config.xml"/>
             <attribute name="remoting.ejb.exclusiveLocations" value="classpath*:gui/client-config.xml"/>
