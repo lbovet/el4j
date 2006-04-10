@@ -150,10 +150,26 @@ EL4Ant plugin for creating executable standalone distributions.
       </mapper>
     </pathconvert>
     
+    <el4ant:extendedproperty name="module.distribution.name" 
+        value="${distribution.name.${module}}"/>
+    <el4ant:extendedproperty name="module.distribution.version" 
+        value="${distribution.version.${module}}"/>
+
     <antcontrib:for list="${distribution.profiles}" param="profile">
       <sequential>
         <el4ant:extendedproperty name="distribution.profile" value="@{profile}"/>
-        <el4ant:extendedproperty name="distribution.dir" value="dist/distribution/${module}-${distribution.profile}"/>
+        
+        <antcontrib:if>
+          <isset property="module.distribution.version"/>
+          <antcontrib:then>
+            <el4ant:extendedproperty name="distribution.dir" 
+                value="dist/distribution/${module}-${distribution.profile}/${module.distribution.name}_${module.distribution.version}"/>
+          </antcontrib:then>
+          <antcontrib:else>
+            <el4ant:extendedproperty name="distribution.dir" 
+                value="dist/distribution/${module}-${distribution.profile}"/>
+          </antcontrib:else>
+        </antcontrib:if>
     
         <el4ant:extendedproperty name="module.eulist" value="${module.eulist.${module}}"/>
         <antcontrib:for list="${module.eulist}" param="it">
@@ -190,11 +206,28 @@ EL4Ant plugin for creating executable standalone distributions.
         <flattenmapper/>
       </mapper>
     </pathconvert>
-    
+
+    <el4ant:extendedproperty name="module.eu.distribution.name" 
+        value="${distribution.name.${module}.${eu}}"/>
+    <el4ant:extendedproperty name="module.eu.distribution.version" 
+        value="${distribution.version.${module}.${eu}}"/>
+
     <antcontrib:for list="${distribution.profiles}" param="profile">
       <sequential>
         <el4ant:extendedproperty name="distribution.profile" value="@{profile}"/>
-        <el4ant:extendedproperty name="distribution.dir" value="dist/distribution/${module}-${eu}-${distribution.profile}"/>
+ 
+        <antcontrib:if>
+          <isset property="module.eu.distribution.version"/>
+          <antcontrib:then>
+            <el4ant:extendedproperty name="distribution.dir" 
+                value="dist/distribution/${module}-${eu}-${distribution.profile}/${module.eu.distribution.name}_${module.eu.distribution.version}"/>
+          </antcontrib:then>
+          <antcontrib:else>
+            <el4ant:extendedproperty name="distribution.dir" 
+                value="dist/distribution/${module}-${eu}-${distribution.profile}"/>
+          </antcontrib:else>
+        </antcontrib:if>
+    
         <antcall target="copy.distribution.libs.module.eu"/>
         <antcall target="copy.and.zip.distribution.profile.module"/>
       </sequential>
