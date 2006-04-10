@@ -62,6 +62,11 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
             .getLog(AbstractReferenceServiceTest.class);
 
     /**
+     * Hide default constructor.
+     */
+    protected AbstractReferenceServiceTest() { }
+    
+    /**
      * This test inserts a link and three keywords.
      */
     public void testInsertLink() {

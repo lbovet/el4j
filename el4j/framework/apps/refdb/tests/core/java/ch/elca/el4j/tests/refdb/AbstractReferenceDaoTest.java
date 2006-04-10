@@ -59,7 +59,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
     /**
      * Hide default constructor.
      */
-    public AbstractReferenceDaoTest() { }
+    protected AbstractReferenceDaoTest() { }
     
     /**
      * This test inserts an annotation.
