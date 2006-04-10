@@ -4,6 +4,10 @@
 
     <module name="refdb-gui">
         <eu name="standalone-client">
+            <!-- Name for the distribution. -->
+            <attribute name="distribution.name"
+                value="refdb-standalone-gui-client"/>
+        
             <!-- Runtime configurations for standalone use. -->
             <attribute name="runtime.runnable" value="true"/>
             <attribute name="runtime.class" 
@@ -15,6 +19,10 @@
             <attribute name="compile.jar.excludes" value=""/>
         </eu>
         <eu name="thin-client">
+            <!-- Name for the distribution. -->
+            <attribute name="distribution.name"
+                value="refdb-thin-gui-client"/>
+
             <!-- Runtime configurations for distributed use. -->
             <attribute name="runtime.runnable" value="true"/>
             <attribute name="runtime.class" 
@@ -29,7 +37,7 @@
         <eu name="server">
             <!-- Runtime configurations for distributed use. -->
             <attribute name="runtime.runnable" value="true"/>
-            <attribute name="j2ee.war.application"/>
+            <attribute name="j2ee.war.application" value="true"/>
             <attribute name="runtime.command.creator"
                 value="runtime.command.creator.web"/>
 
