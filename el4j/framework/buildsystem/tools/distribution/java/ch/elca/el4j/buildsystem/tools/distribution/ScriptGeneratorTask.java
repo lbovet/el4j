@@ -27,6 +27,8 @@ import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 import org.apache.velocity.VelocityContext;
 
+import ch.elca.el4ant.velocity.VelocityEngineTask;
+
 /**
  * This task generates script files for a executable distribution.
  *
@@ -194,15 +196,17 @@ public class ScriptGeneratorTask extends Task {
         }
         
         VelocityContext context = createVelocityContext();
-        
-        VelocityHelper helper = new VelocityHelper();
-        helper.setProjectLogger(getProject(), this);
+        VelocityEngineTask velocityEngine = new VelocityEngineTask();
+        velocityEngine.setProject(getProject());
         
         for (int i = 0; i < TEMPLATES.length; i++) {
             String path = m_path + "/" + m_scriptName + "." + FILE_SIFFIXES[i];
             log("Writing scritp file to '" + path + "'", Project.MSG_DEBUG);
-            File f = new File(path);
-            helper.writeDataToFile(f, TEMPLATES[i], context);
+            
+            velocityEngine.setFile(new File(path));
+            velocityEngine.setTemplate(TEMPLATES[i]);
+            velocityEngine.setContext(context);
+            velocityEngine.execute();
         }
     }
 }
