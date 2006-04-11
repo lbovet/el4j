@@ -14,7 +14,7 @@
         depends="init.distribution.properties"
         description="[C] Load the distribution plugin">
         <!-- This plugins depends on plugin velocity -->
-        <el4ant:plugin name="velocity" file="buildsystem/tools/velocity/velocity.xml" />
+        <el4ant:plugin name="velocity"/>
 
         <property name="plugin.distribution.java" 
             value="${configure.plugin.dir}/java" />

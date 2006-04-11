@@ -1,78 +1,82 @@
 <?xml version="1.0"?>
-<!-- Honeydew plugin definition -->
-<project
-  name="remoting_ejb-jboss"
-  xmlns:antcontrib="antlib:net.sf.antcontrib"
-  xmlns:el4ant="antlib:ch.elca.el4ant">
-<description>
-  Remoting-EJB Jboss plugin.
-</description>
+<!-- EL4Ant plugin definition -->
+<project name="remoting_ejb-jboss" 
+    xmlns:antcontrib="antlib:net.sf.antcontrib" 
+    xmlns:el4ant="antlib:ch.elca.el4ant">
+    <description>
+        Remoting-EJB Jboss plugin.
+    </description>
 
-  <!-- Version: $Revision$ -->
-  <!-- URL: $URL$ -->
-  <!-- Date: $Date$ -->
-  <!-- Author: $Author$ -->
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
 
-  <target
-    name="configure"
-    description="[C] Configure the remoting_ejb-jboss plugin">
+    <target name="configure" 
+        depends="init.remoting_ejb-jboss.props"
+        description="[C] Configure the remoting_ejb-jboss plugin">
+        
+        <el4ant:plugin name="runtime"/>
+        <el4ant:plugin name="remoting_ejb" file="buildsystem/remoting_ejb/remoting_ejb.xml"/>
+        
+        <ejb:init.ejb.container xmlns:ejb="antlib:ch.elca.el4j.buildsystem.remoting.ejb">
+            <ejb:client.dependency name="${remoting.ejb.jboss.client.dependency}" />
+        </ejb:init.ejb.container>
 
-    <el4ant:plugin name="runtime" file="buildsystem/core/runtime.xml"/>
+        <el4ant:buildgen action="include" 
+            target="remoting_ejb-jboss.include.startpoint" />
+    </target>
+
+    <!-- Fake targets to load plugin file -->
+    <target name="init" />
+
+    <!-- Targets following the next fake target are copied into the generated build.xml file -->
+    <target name="remoting_ejb-jboss.include.startpoint" />
     
-	<ejb:init.ejb.container xmlns:ejb="antlib:ch.elca.el4j.buildsystem.remoting.ejb">
-	  <ejb:client.dependency name="jbossall-client-4.0.2.jar"/>
-    </ejb:init.ejb.container>
+    <!-- Initialize plugin specific properties -->
+    <target name="init.remoting_ejb-jboss.props">
+        <property name="remoting.ejb.jboss.client.dependency"
+            value="jbossall-client-4.0.2.jar"/>
+        <property name="remoting.ejb.jboss.version"
+            value="4.0"/>
+    </target>
 
-    <el4ant:buildgen action="include" target="remoting_ejb-jboss.include.startpoint"/>
-  </target>
+    <!-- Targets from remoting_ejb-jboss.xml  -->
+    <target name="remoting_ejb.xdoclet"
+        depends="init.remoting_ejb-jboss.props">
+        <ejbdoclet destdir="${remoting.ejb.gen.dir}" 
+            mergedir="parent-fake-to-debug" 
+            excludedtags="@version,@author,@todo" 
+            addedtags="@xdoclet-generated at ${TODAY}" 
+            ejbspec="2.0" 
+            force="false" 
+            verbose="false">
 
-  <!-- Fake targets to load plugin file -->
-  <target name="init"/>
-      
-  <!-- Targets following the next fake target are copied into the generated build.xml file -->
-  <target name="remoting_ejb-jboss.include.startpoint"/>
+            <fileset dir="${remoting.ejb.gen.dir}">
+                <include name="**/ejb/*.java" />
+            </fileset>
+            <packageSubstitution packages="ejb" 
+                substituteWith="interfaces" />
 
-  <!-- Targets from remoting_ejb-jboss.xml  -->
+            <remoteinterface />
+            <localinterface />
+            <homeinterface />
+            <localhomeinterface />
+            <session />
 
-  <target
-    name="remoting_ejb.xdoclet">
-  
-    <ejbdoclet
-      destdir="${remoting.ejb.gen.dir}"
-      mergedir="parent-fake-to-debug"
-      excludedtags="@version,@author,@todo"
-      addedtags="@xdoclet-generated at ${TODAY}"
-      ejbspec="2.0"
-      force="false"
-      verbose="false">
-      
-      <fileset dir="${remoting.ejb.gen.dir}">
-        <include name="**/ejb/*.java"/>
-      </fileset>
-      <packageSubstitution packages="ejb" substituteWith="interfaces"/>
-      
-      <remoteinterface/>
-      <localinterface/>
-      <homeinterface/>
-      <localhomeinterface/>
-      <session/>
-      
-      <!-- Generate deployment descriptor. -->
-      <deploymentdescriptor
-        destdir="${compile.dest}/META-INF/"
-        validatexml="true"
-        mergedir="fake-to-debug"/>	      
-                
-      <!-- Generate container specific deployment descriptor. -->
-      <jboss
-        version="4.0"
-        unauthenticatedPrincipal="nobody"
-        xmlencoding="UTF-8"
-        destdir="${compile.dest}/META-INF/"
-        validatexml="true"
-        preferredrelationmapping="relation-table"/>
-    </ejbdoclet>
-  </target>
-  
-  <!-- End  remoting_ejb-jboss.xml  -->
+            <!-- Generate deployment descriptor. -->
+            <deploymentdescriptor destdir="${compile.dest}/META-INF/" 
+                validatexml="true" 
+                mergedir="fake-to-debug" />
+
+            <!-- Generate container specific deployment descriptor. -->
+            <jboss version="${remoting.ejb.jboss.version}" 
+                unauthenticatedPrincipal="nobody" 
+                xmlencoding="UTF-8" 
+                destdir="${compile.dest}/META-INF/" 
+                validatexml="true" 
+                preferredrelationmapping="relation-table" />
+        </ejbdoclet>
+    </target>
+    <!-- End  remoting_ejb-jboss.xml  -->
 </project>
