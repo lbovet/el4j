@@ -15,7 +15,7 @@
             <attribute name="runtime.runnable" value="true"/>
             <attribute name="compile.jar.excludes" 
                 value="**/benchmark/*,**/client/*,**/files/*,**/server/app/*"/>
-            <attribute name="j2ee.war.application" value="true"/>
+            <attribute name="j2ee.war.application" value=""/>
             <attribute name="runtime.command.creator" value="runtime.command.creator.web"/>
         </eu>
         <attribute name="set" value="framework-demos"/>
