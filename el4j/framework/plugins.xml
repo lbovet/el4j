@@ -5,6 +5,9 @@
     xmlns:ant="antlib:org.apache.tools.ant"
     xmlns:antcontrib="antlib:net.sf.antcontrib">
 
+    <!-- Develop plugin to publish plugins as modules. Must be first ! -->
+    <plugin name="develop"/>
+
     <!-- Java compiler plugin. Contains tasks like compile and jars. -->
     <plugin name="compile"/>
 
@@ -77,7 +80,7 @@ configuration task will consume less time.
     <plugin name="env" file="buildsystem/tools/env/env.xml">
         <attribute name="env.location" value="env/env.properties"/>
     </plugin>
-
+    
     <!-- Plugin to execute JUnit tests and generate JUnit test reports. -->
     <plugin name="junit">
         <attribute name="junit.jar" value="junit-3.8.1.jar"/>
@@ -194,26 +197,26 @@ configuration task will consume less time.
         Eclipse IDE integration. Creates an Eclipse workspace for that EL4Ant
         project and Eclipse project files per EL4Ant module.
     -->
-    <plugin name="eclipse">
-        <attribute name="eclipse.workspace.path" value="workspace"/>
+<!--    <plugin name="eclipse">-->
+<!--        <attribute name="eclipse.workspace.path" value="workspace"/>-->
 
         <!--
             Following targets/target groups will be available as
             Eclipse-External-Tools-Commands.
         -->
         <!-- Eclipse targets -->
-        <attribute name="eclipse.tools" value="eclipse.generate"/>
+<!--        <attribute name="eclipse.tools" value="eclipse.generate"/>-->
         <!-- compile targets -->
-        <attribute name="eclipse.tools" value="clean.module,jars"/>
+<!--        <attribute name="eclipse.tools" value="clean.module,jars"/>-->
         <!-- junit targets -->
-        <attribute name="eclipse.tools" value="junit.startdev.all"/>
+<!--        <attribute name="eclipse.tools" value="junit.startdev.all"/>-->
         <!-- reports targets -->
-        <attribute name="eclipse.tools" value="javadoc,checkstyle"/>
+<!--        <attribute name="eclipse.tools" value="javadoc,checkstyle"/>-->
         <!-- j2ee-war and j2ee-war-tomcat targets -->
-        <attribute name="eclipse.tools" value="create.war.module.eu,deploy.war.module.eu"/>
+<!--        <attribute name="eclipse.tools" value="create.war.module.eu,deploy.war.module.eu"/>-->
         <!-- binrelease targets -->
-        <attribute name="eclipse.tools" value="binrelease.module"/>
-    </plugin>
+<!--        <attribute name="eclipse.tools" value="binrelease.module"/>-->
+<!--    </plugin>-->
 
     <!-- Plugin to create and compile commons attributes source files. -->
     <plugin name="commons-attributes"/>
@@ -228,9 +231,6 @@ configuration task will consume less time.
         <attribute name="binrelease.output.directory" value="dist/binaries"/>
         <attribute name="binrelease.default.excludes" value="module.xml,.classpath,.project,.check*,.externalToolBuilders/**"/>
     </plugin>
-
-    <!-- Plugin to create EJBs out of POJOs. -->
-    <plugin name="remoting_ejb" file="buildsystem/remoting_ejb/remoting_ejb.xml"/>
 
     <!-- Plugin to execute Ant tasks parallel. -->
     <plugin name="parallel" file="buildsystem/tools/parallel/parallel.xml"/>
