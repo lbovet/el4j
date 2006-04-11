@@ -24,7 +24,7 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.Path;
 import org.apache.velocity.VelocityContext;
 
-import ch.elca.el4j.buildsystem.remoting.ejb.util.VelocityHelper;
+import ch.elca.el4ant.velocity.VelocityEngineTask;
 import ch.elca.el4j.services.remoting.protocol.ejb.generator.EjbBean;
 import ch.elca.el4j.services.remoting.protocol.ejb.generator.EjbGeneratorFacade;
 
@@ -114,9 +114,12 @@ public class EjbSessionBeanGenerator extends Task {
         VelocityContext context = buildVelocityContext(bean);
         File file = getFile(bean);
         
-        VelocityHelper helper = new VelocityHelper();
-        helper.setProjectLogger(getProject(), this);
-        helper.writeDataToFile(file, template, context);
+        VelocityEngineTask velocityEngine = new VelocityEngineTask();
+        velocityEngine.setProject(getProject());
+        velocityEngine.setFile(file);
+        velocityEngine.setTemplate(template);
+        velocityEngine.setContext(context);
+        velocityEngine.execute();
     }
 
     /**

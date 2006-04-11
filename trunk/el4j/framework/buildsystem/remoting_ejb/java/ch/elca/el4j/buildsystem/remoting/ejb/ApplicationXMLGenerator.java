@@ -22,7 +22,7 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 import org.apache.velocity.VelocityContext;
 
-import ch.elca.el4j.buildsystem.remoting.ejb.util.VelocityHelper;
+import ch.elca.el4ant.velocity.VelocityEngineTask;
 
 /**
  * This task generates the ear deployment descriptor (application.xml).
@@ -95,8 +95,11 @@ public class ApplicationXMLGenerator extends Task {
         
         File file = new File(m_location);
         
-        VelocityHelper helper = new VelocityHelper();
-        helper.setProjectLogger(getProject(), this);
-        helper.writeDataToFile(file, APPLICATIONXML_TEMPLATE_FILE, context);
+        VelocityEngineTask velocityEngine = new VelocityEngineTask();
+        velocityEngine.setProject(getProject());
+        velocityEngine.setFile(file);
+        velocityEngine.setTemplate(APPLICATIONXML_TEMPLATE_FILE);
+        velocityEngine.setContext(context);
+        velocityEngine.execute();
     }
 }
