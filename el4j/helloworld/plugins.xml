@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ant:project
-    name="helloworld-plugins"
+    name="plugins"
     xmlns="antlib:ch.elca.el4ant"
     xmlns:ant="antlib:org.apache.tools.ant"
     xmlns:antcontrib="antlib:net.sf.antcontrib">
@@ -181,9 +181,9 @@ configuration task will consume less time.
     -->
     <plugin name="eclipse">
         <attribute name="eclipse.workspace.path" value="workspace"/>
-        
+
         <!--
-            Following targets/target groups will be available as 
+            Following targets/target groups will be available as
             Eclipse-External-Tools-Commands.
         -->
         <!-- Eclipse targets -->
