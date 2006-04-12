@@ -24,7 +24,7 @@ EL4Ant build file - version 0.9.2
 </description>
 
   <!-- Version: $Revision$ -->
-  <!-- URL: $URL$ -->
+  <!-- Source: $URL$ -->
   <!-- Date: $Date$ -->
   <!-- Author: $Author$ -->
 
@@ -111,7 +111,7 @@ Expects ${buildsystem.antcontrib.jar} or in Ant lib/ directory.">
             <attribute name="Implementation-Vendor" value="ELCA Informatique SA"/>
             <attribute name="Built-Date" value="${TODAY}"/>
             <attribute name="Built-By" value="${user.name}"/>
-            <attribute name="BuildSystemVersion" value="${buildsystem.version}"/>
+            <attribute name="EL4AntVersion" value="${buildsystem.version}"/>
             <section name="ch/elca/el4ant">
               <attribute name="Plugin-compile" value="compile.xml"/>
               <attribute name="Plugin-runtime" value="runtime.xml"/>
@@ -129,17 +129,22 @@ Expects ${buildsystem.antcontrib.jar} or in Ant lib/ directory.">
 Expects ${buildsystem.lib.directory}/${buildsystem.core.jar} or in Ant lib/ directory.">
       <condition>
         <not>
-          <available
-            classpath="${java.class.path}:${buildsystem.lib.directory}/${buildsystem.core.jar}:${buildsystem.dist.directory}/${buildsystem.core.jar}"
-            resource="ch/elca/el4ant/antlib-core.xml"/>
+          <available resource="ch/elca/el4ant/antlib-core.xml">
+            <classpath id="el4ant.coreclasspath">
+              <pathelement path="${java.class.path}"/>
+              <pathelement location="${buildsystem.lib.directory}/${buildsystem.core.jar}"/>
+              <pathelement location="${buildsystem.dist.directory}/${buildsystem.core.jar}"/>
+            </classpath>
+          </available>
         </not>
       </condition>
     </fail>
     <!-- Register core Ant tasks in a dedicated namespace URI -->
     <typedef
-      classpath="${java.class.path}:${buildsystem.lib.directory}/${buildsystem.core.jar}:${buildsystem.dist.directory}/${buildsystem.core.jar}"
       resource="ch/elca/el4ant/antlib-core.xml"
-      uri="antlib:ch.elca.el4ant"/>
+      uri="antlib:ch.elca.el4ant"
+      classpathref="el4ant.coreclasspath"
+      loaderref="el4ant.coreloader"/>
 
     <!-- Init hook for plugin -->
     <el4ant:projectproperties
