@@ -6,7 +6,7 @@
     xmlns:antcontrib="antlib:net.sf.antcontrib">
 
     <!-- Develop plugin to publish plugins as modules. Must be first ! -->
-    <plugin name="develop"/>
+<!--    <plugin name="develop"/>-->
 
     <!-- Java compiler plugin. Contains tasks like compile and jars. -->
     <plugin name="compile"/>
@@ -197,8 +197,8 @@ configuration task will consume less time.
         Eclipse IDE integration. Creates an Eclipse workspace for that EL4Ant
         project and Eclipse project files per EL4Ant module.
     -->
-<!--    <plugin name="eclipse">-->
-<!--        <attribute name="eclipse.workspace.path" value="workspace"/>-->
+    <plugin name="eclipse">
+        <attribute name="eclipse.workspace.path" value="workspace"/>
 
         <!--
             Following targets/target groups will be available as
@@ -216,7 +216,7 @@ configuration task will consume less time.
 <!--        <attribute name="eclipse.tools" value="create.war.module.eu,deploy.war.module.eu"/>-->
         <!-- binrelease targets -->
 <!--        <attribute name="eclipse.tools" value="binrelease.module"/>-->
-<!--    </plugin>-->
+    </plugin>
 
     <!-- Plugin to create and compile commons attributes source files. -->
     <plugin name="commons-attributes"/>
