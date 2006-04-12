@@ -80,7 +80,7 @@ configuration task will consume less time.
     <plugin name="env" file="buildsystem/tools/env/env.xml">
         <attribute name="env.location" value="env/env.properties"/>
     </plugin>
-    
+
     <!-- Plugin to execute JUnit tests and generate JUnit test reports. -->
     <plugin name="junit">
         <attribute name="junit.jar" value="junit-3.8.1.jar"/>
