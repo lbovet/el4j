@@ -68,6 +68,8 @@
                 <include name="**/buildsystem-*.jar"/>
                 <include name="**/reports-*.jar"/>
                 <include name="**/tools-*.jar"/>
+                <include name="**/j2ee.jar"/>
+                <include name="**/commons-attributes.jar"/>
             </zipfileset>
             <zipfileset dir="${basedir}/external-tools/ant"
                 prefix="${builder.zip.name.prefix}/external-tools/ant">
@@ -157,6 +159,8 @@
                 <exclude name="buildsystem-*.jar"/>
                 <exclude name="reports-*.jar"/>
                 <exclude name="tools-*.jar"/>
+                <exclude name="j2ee.jar"/>
+                <exclude name="commons-attributes.jar"/>
             </fileset>
         </delete>
         <delete quiet="true">
@@ -166,6 +170,8 @@
                 <exclude name="buildsystem-*.jar"/>
                 <exclude name="reports-*.jar"/>
                 <exclude name="tools-*.jar"/>
+                <exclude name="j2ee.jar"/>
+                <exclude name="commons-attributes.jar"/>
             </fileset>
         </delete>
         
@@ -244,6 +250,8 @@
                 <exclude name="buildsystem-*.jar"/>
                 <exclude name="reports-*.jar"/>
                 <exclude name="tools-*.jar"/>
+                <exclude name="j2ee.jar"/>
+                <exclude name="commons-attributes.jar"/>
             </fileset>
             <fileset dir="${basedir}/external-tools/el4ant/lib">
                 <include name="*.jar"/>
@@ -251,6 +259,8 @@
                 <exclude name="buildsystem-*.jar"/>
                 <exclude name="reports-*.jar"/>
                 <exclude name="tools-*.jar"/>
+                <exclude name="j2ee.jar"/>
+                <exclude name="commons-attributes.jar"/>
             </fileset>
         </copy>
     </target>
