@@ -12,12 +12,18 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
 
-    <target name="configure" 
+    <target name="load" 
         depends="init.remoting_ejb-jboss.props"
-        description="[C] Configure the remoting_ejb-jboss plugin">
+        description="[C] Load the remoting_ejb-jboss plugin">
         
         <el4ant:plugin name="runtime"/>
         <el4ant:plugin name="remoting_ejb" file="buildsystem/remoting_ejb/remoting_ejb.xml"/>
+
+    </target>
+    
+    <target name="configure" 
+        depends="init.remoting_ejb-jboss.props"
+        description="[C] Configure the remoting_ejb-jboss plugin">
         
         <ejb:init.ejb.container xmlns:ejb="antlib:ch.elca.el4j.buildsystem.remoting.ejb">
             <ejb:client.dependency name="${remoting.ejb.jboss.client.dependency}" />

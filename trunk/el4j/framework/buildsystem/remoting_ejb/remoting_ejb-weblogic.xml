@@ -12,13 +12,19 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
 
+    <target name="load" 
+        depends="init.remoting_ejb-weblogic.props"
+        description="[C] Load the remoting_ejb-weblogic plugin">
+        
+        <el4ant:plugin name="runtime"/>
+        <el4ant:plugin name="remoting_ejb" file="buildsystem/remoting_ejb/remoting_ejb.xml"/>
+
+    </target>
+
     <target name="configure" 
         depends="init.remoting_ejb-weblogic.props"
         description="[C] Configure the remoting_ejb-weblogic plugin">
 
-        <el4ant:plugin name="runtime"/>
-        <el4ant:plugin name="remoting_ejb" file="buildsystem/remoting_ejb/remoting_ejb.xml"/>
-        
         <ejb:init.ejb.container xmlns:ejb="antlib:ch.elca.el4j.buildsystem.remoting.ejb">
             <ejb:client.dependency name="${remoting.ejb.weblogic.client.dependency}" />
         </ejb:init.ejb.container>
