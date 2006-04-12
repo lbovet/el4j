@@ -7,12 +7,12 @@
 
     <!-- Java compiler plugin. Contains tasks like compile and jars. -->
     <plugin name="compile"/>
-    
+
     <!-- Runtime plugin. Generates shortcuts to launch applications. -->
     <plugin name="runtime"/>
-    
+
     <!--
-        Shows configuration at the end of project configuration step 
+        Shows configuration at the end of project configuration step
         (command "ant -f bootstrap.xml").
     -->
     <plugin name="show"/>
@@ -70,11 +70,11 @@ configuration task will consume less time.
     </antcontrib:if>
 
     <!--
-        Environment plugin to flexible change configuration. Set configuration  
-        is available for plugins (EL4Ant) and modules (properties file on 
+        Environment plugin to flexible change configuration. Set configuration
+        is available for plugins (EL4Ant) and modules (properties file on
         classpath).
     -->
-    <plugin name="env" file="buildsystem/tools/env/env.xml">
+    <plugin name="env">
         <attribute name="env.location" value="env/env.properties"/>
     </plugin>
 
@@ -87,12 +87,13 @@ configuration task will consume less time.
     <!-- Plugin to generate javadoc. -->
     <plugin name="javadoc">
         <!-- Sets to generate javadoc for. -->
-        <attribute name="javadoc.set.list" 
+        <attribute name="javadoc.set.list"
             value="helloworld-modules,helloworld-tests,helloworld-demos"/>
-        
+
         <!-- Use el4j stylesheet file with ELCA colors. -->
-        <attribute name="javadoc.default.stylesheetfile" value="etc/el4j-javadoc-stylesheet.css"/>
-        
+        <attribute name="javadoc.default.stylesheetfile"
+            value="etc/el4j-javadoc-stylesheet.css"/>
+
         <!-- Default group parameters. -->
         <attribute name="javadoc.default.header">
 <![CDATA[
@@ -150,9 +151,12 @@ configuration task will consume less time.
         check results.
     -->
     <plugin name="checkstyle">
-        <attribute name="checkstyle.config" value="etc/checkstyle_el4j_checks.xml"/>
-        <attribute name="checkstyle.properties" value="etc/checkstyle_el4j.properties"/>
-        <attribute name="checkstyle.set.list" value="helloworld-modules,helloworld-tests,helloworld-demos"/>
+        <attribute name="checkstyle.config"
+            value="etc/checkstyle_el4j_checks.xml"/>
+        <attribute name="checkstyle.properties"
+            value="etc/checkstyle_el4j.properties"/>
+        <attribute name="checkstyle.set.list"
+            value="helloworld-modules,helloworld-tests,helloworld-demos"/>
     </plugin>
 
     <!-- Plugin to check code coverage and generate a coverage report. -->
@@ -209,9 +213,6 @@ configuration task will consume less time.
         <attribute name="binrelease.output.directory" value="dist/binaries"/>
         <attribute name="binrelease.default.excludes" value="module.xml,.classpath,.project,.check*,.externalToolBuilders/**"/>
     </plugin>
-
-    <!-- Plugin to create EJBs out of POJOs. -->
-    <!--plugin name="remoting_ejb"/-->
 
     <!-- Plugin to execute Ant tasks parallel. -->
     <plugin name="parallel"/>
