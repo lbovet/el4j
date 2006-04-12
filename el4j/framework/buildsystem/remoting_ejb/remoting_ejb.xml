@@ -47,6 +47,7 @@
             </manifest>
             <dependency jar="${remoting.ejb.velocity.jar}" />
             <dependency jar="${remoting.ejb.collections.jar}" />
+            <dependency jar="${remoting.ejb.vpp.jar}" />
             <dependency jar="${remoting.ejb.spring.jar}" />
             <dependency jar="${remoting.ejb.xdoclet.jar}" />
             <dependency jar="${remoting.ejb.xdoclet-xdoclet.jar}" />
@@ -117,7 +118,10 @@
         <property name="remoting.ejb.velocity.jar" 
             value="${buildsystem.lib.directory}/velocity-1.4.jar" />
         <property name="remoting.ejb.collections.jar" 
-                value="${buildsystem.lib.directory}/commons-collections-3.1.jar" />
+            value="${buildsystem.lib.directory}/commons-collections-3.1.jar" />
+        <property name="remoting.ejb.vpp.jar"
+            value="${buildsystem.lib.directory}/foundrylogic-vpp-2.2.1.jar"/>
+
 
         <property name="remoting.ejb.spring.jar" 
             value="${buildsystem.lib.directory}/spring-1.2.7.jar" />
@@ -173,6 +177,7 @@
                 <pathelement location="${buildsystem.lib.directory}/${buildsystem.core.jar}" />
                 <pathelement location="${remoting.ejb.collections.jar}" />
                 <pathelement location="${remoting.ejb.velocity.jar}" />
+                <pathelement location="${remoting.ejb.vpp.jar}" />
             </classpath>
         </typedef>
 
