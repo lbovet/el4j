@@ -51,6 +51,7 @@
             <plugin name="distribution" file="distribution.xml" />
             <dependency jar="${distribution.collections.jar}" />
             <dependency jar="${distribution.velocity.jar}" />
+            <dependency jar="${distribution.vpp.jar}" />
         </el4ant:buildplugin>
 
         <typedef resource="${distribution.antlib.path}" 
@@ -113,6 +114,9 @@
             value="${buildsystem.lib.directory}/velocity-1.4.jar" />
         <property name="distribution.collections.jar" 
                 value="${buildsystem.lib.directory}/commons-collections-3.1.jar" />
+        <property name="distribution.vpp.jar"
+            value="${buildsystem.lib.directory}/foundrylogic-vpp-2.2.1.jar"/>
+
         
         <property name="distribution.antlib.path"
             value="ch/elca/el4j/buildsystem/tools/distribution/antlib.xml"/>
@@ -280,6 +284,7 @@
                 <pathelement location="${buildsystem.lib.directory}/${buildsystem.core.jar}" />
                 <pathelement location="${distribution.collections.jar}" />
                 <pathelement location="${distribution.velocity.jar}" />
+                <pathelement location="${distribution.vpp.jar}" />
             </classpath>
         </typedef>
         
