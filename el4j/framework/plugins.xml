@@ -205,17 +205,17 @@ configuration task will consume less time.
             Eclipse-External-Tools-Commands.
         -->
         <!-- Eclipse targets -->
-<!--        <attribute name="eclipse.tools" value="eclipse.generate"/>-->
+        <attribute name="eclipse.tools" value="eclipse.generate"/>
         <!-- compile targets -->
-<!--        <attribute name="eclipse.tools" value="clean.module,jars"/>-->
+        <attribute name="eclipse.tools" value="clean.module,jars"/>
         <!-- junit targets -->
-<!--        <attribute name="eclipse.tools" value="junit.startdev.all"/>-->
+        <attribute name="eclipse.tools" value="junit.startdev.all"/>
         <!-- reports targets -->
-<!--        <attribute name="eclipse.tools" value="javadoc,checkstyle"/>-->
+        <attribute name="eclipse.tools" value="javadoc,checkstyle"/>
         <!-- j2ee-war and j2ee-war-tomcat targets -->
-<!--        <attribute name="eclipse.tools" value="create.war.module.eu,deploy.war.module.eu"/>-->
+        <attribute name="eclipse.tools" value="create.war.module.eu,deploy.war.module.eu"/>
         <!-- binrelease targets -->
-<!--        <attribute name="eclipse.tools" value="binrelease.module"/>-->
+        <attribute name="eclipse.tools" value="binrelease.module"/>
     </plugin>
 
     <!-- Plugin to create and compile commons attributes source files. -->
