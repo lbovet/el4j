@@ -145,10 +145,10 @@ else
         rm -f stylesheet.css
 
         if [ "${REPOTYPE}" = "CVS" ]; then
-	    # Remove cvs backup files.
+            # Remove cvs backup files.
             find -name .#* -exec rm {} \;
         else
-	    # Remove conflict files.
+            # Remove conflict files.
             find -name *.mine -exec rm {} \;
             find -name *.r* -exec rm {} \;
         fi
@@ -164,17 +164,17 @@ else
         # Get a clean copy
         if [ "${REPOTYPE}" = "CVS" ]; then
             cvs update -d -C
-	    find -name .#* -exec rm {} \;
+            find -name .#* -exec rm {} \;
         else
-	    svn revert -R .
+            svn revert -R .
             svn update
-	    svn cleanup
+            svn cleanup
 
             find -name *.mine -exec rm {} \;
-	    find -name *.r* -exec rm {} \;
-	    
-	    svn status
-	fi
+            find -name *.r* -exec rm {} \;
+            
+            svn status
+        fi
     else
         echo "No ${REPOTYPE} update for project in directory ${PROJECTDIR}!"
     fi
