@@ -98,6 +98,7 @@
             <zipfileset dir="${basedir}/framework"
                 prefix="${builder.zip.name.prefix}/framework"
                 excludes="${builder.general.excludes}">
+                <exclude name="**/classes/**"/>
                 <exclude name="dist/**"/>
                 <exclude name="lib/**"/>
                 <exclude name="workspace/.metadata/**"/>
@@ -106,6 +107,7 @@
             <zipfileset dir="${basedir}/helloworld"
                 prefix="${builder.zip.name.prefix}/helloworld"
                 excludes="${builder.general.excludes}">
+                <exclude name="**/classes/**"/>
                 <exclude name="dist/**"/>
                 <exclude name="lib/**"/>
                 <exclude name="workspace/.metadata/**"/>
@@ -189,12 +191,13 @@
         <antcall target="clean.el4ant.libraries"/>
         
         <!-- Can not execute distclean because the build.xml could not exist! -->
-        <!--ant dir="${builder.current.project}" antfile="bootstrap.xml" 
-            target="distclean"/-->
+        <ant dir="${builder.current.project}" antfile="bootstrap.xml" 
+            target="distclean" />
         <delete quiet="true" includeemptydirs="true">
             <fileset dir="${builder.current.project}">
-                <include name="dist/**/*"/>
-                <include name="lib/**/*"/>
+                <include name="**/classes/**"/>
+                <include name="dist/**"/>
+                <include name="lib/**"/>
                 <include name="build.xml"/>
             </fileset>
         </delete>
