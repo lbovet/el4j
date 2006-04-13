@@ -78,7 +78,7 @@ testProfile () {
     ${SCRIPTDIR}/delete_old_log_files.sh "${LOGDIR}"
     
     # invoke all junit tests
-    ${XANTCMD} -f bootstrap.xml distclean 
+    ${ANTCMD} -f bootstrap.xml distclean 
     ${XANTCMD} -f bootstrap.xml configure -Dwebsite.donotclean=true $*
     ${XANTCMD} jars
     ${XANTCMD} junit.start.all -Ddisttest=true $* &> ${LOGPATH}
@@ -194,7 +194,7 @@ else
         done
 
         # generate emma reports
-        ${XANTCMD} -f bootstrap.xml distclean 
+        ${ANTCMD} -f bootstrap.xml distclean 
         ${XANTCMD} -f bootstrap.xml configure -Dwebsite.donotclean=true
         ${XANTCMD} jars junit.start.all emma.report -Demma=true -Ddisttest=true
 
