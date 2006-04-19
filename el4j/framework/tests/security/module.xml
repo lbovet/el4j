@@ -5,5 +5,6 @@
         <attribute name="junit.runnable" value="true"/>
         <attribute name="commons-attributes.enable" value="true"/>
         <dependency module="module-security"/>
+        <dependency module="module-remoting_core"/>
     </module>
 </ant:project>
