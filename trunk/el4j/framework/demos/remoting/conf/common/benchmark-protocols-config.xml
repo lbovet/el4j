@@ -26,7 +26,7 @@
             <value>${j2ee-web.port}</value>
         </property>
         <property name="contextPath">
-            <value>module-remoting_and_interface_enrichment-demos-web</value>
+            <value>module-remoting-demos-web</value>
         </property>
         <property name="implicitContextPassingRegistry">
             <ref local="implicitContextPassingRegistry" />
@@ -40,7 +40,7 @@
             <value>${j2ee-web.port}</value>
         </property>
         <property name="contextPath">
-            <value>module-remoting_and_interface_enrichment-demos-web</value>
+            <value>module-remoting-demos-web</value>
         </property>
         <property name="implicitContextPassingRegistry">
             <ref local="implicitContextPassingRegistry" />
@@ -55,7 +55,7 @@
             <value>${j2ee-web.port}</value>
         </property>
         <property name="contextPath">
-            <value>module-remoting_and_interface_enrichment-demos-web</value>
+            <value>module-remoting-demos-web</value>
         </property>
         <property name="implicitContextPassingRegistry">
             <ref local="implicitContextPassingRegistry" />
