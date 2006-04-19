@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" xmlns:ant="antlib:org.apache.tools.ant">
-    <module name="module-remoting_and_interface_enrichment-tests">
+    <module name="module-remoting-tests">
         <eu name="gui">
             <attribute name="junit.runnable" value="true"/>
             <attribute name="compile.jar.excludes" value="**/server/web/*"/>
             <hook name="pre.start.[module].[eu]" target="runtime.hook.parallel-web.start" if="disttest"/>
             <hook name="post.start.[module].[eu]" target="runtime.hook.parallel-web.stop" if="disttest"/>
-            <attribute name="parallel-web.deploytarget" value="deploy.war.module.eu.module-remoting_and_interface_enrichment-tests.web"/>
+            <attribute name="parallel-web.deploytarget" value="deploy.war.module.eu.module-remoting-tests.web"/>
         </eu>
         <eu name="web">
             <attribute name="runtime.runnable" value="true"/>
@@ -15,7 +15,8 @@
             <attribute name="runtime.command.creator" value="runtime.command.creator.web"/>
         </eu>
         <attribute name="set" value="framework-tests"/>
-        <dependency module="module-remoting_and_interface_enrichment"/>
+        <dependency module="module-remoting_caucho"/>
+        <dependency module="module-remoting_soap"/>
         <dependency module="module-env"/>
         <dependency module="module-web"/>
     </module>
