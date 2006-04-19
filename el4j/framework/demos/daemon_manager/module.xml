@@ -23,7 +23,7 @@
                 value="runtime.command.creator.basic"/>
         </eu>
         <attribute name="set" value="framework-demos"/>
-        <dependency module="module-remoting_and_interface_enrichment"/>
+        <dependency module="module-remoting_core"/>
         <dependency module="module-daemon_manager-tests"/>
         
         <!--
