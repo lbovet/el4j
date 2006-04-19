@@ -41,10 +41,4 @@
         <!-- Default to 5 minute session timeouts -->
         <session-timeout>5</session-timeout>
     </session-config>
-    
-    <!-- Used by Hessian and Burlap tests -->    
-    <servlet-mapping>
-        <servlet-name>remotingtemplate</servlet-name>
-        <url-pattern>*.Remotingtests</url-pattern>
-    </servlet-mapping>
 </web-app>
