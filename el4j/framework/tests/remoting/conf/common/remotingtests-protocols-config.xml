@@ -26,7 +26,7 @@
             <value>${j2ee-web.port}</value>
         </property>
         <property name="contextPath">
-            <value>module-remoting_and_interface_enrichment-tests-web</value>
+            <value>module-remoting-tests-web</value>
         </property>
         <property name="implicitContextPassingRegistry">
             <ref local="implicitContextPassingRegistry" />
@@ -40,7 +40,7 @@
             <value>${j2ee-web.port}</value>
         </property>
         <property name="contextPath">
-            <value>module-remoting_and_interface_enrichment-tests-web</value>
+            <value>module-remoting-tests-web</value>
         </property>
         <property name="implicitContextPassingRegistry">
             <ref local="implicitContextPassingRegistry" />
@@ -55,7 +55,7 @@
             <value>${j2ee-web.port}</value>
         </property>
         <property name="contextPath">
-            <value>module-remoting_and_interface_enrichment-tests-web</value>
+            <value>module-remoting-tests-web</value>
         </property>
         <property name="protocolSpecificConfiguration">
             <ref local="soapProtocolSpecificConfiguration"/>
@@ -123,7 +123,7 @@
             <value>${j2ee-web.port}</value>
         </property>
         <property name="contextPath">
-            <value>module-remoting_and_interface_enrichment-tests-web</value>
+            <value>module-remoting-tests-web</value>
         </property>
         <property name="protocolSpecificConfiguration">
             <ref local="protocolSpecificConfigurationForSpecificSoapConformExceptions"/>
