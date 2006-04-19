@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" xmlns:ant="antlib:org.apache.tools.ant">
-    <module name="module-remoting_and_interface_enrichment-demos">
+    <module name="module-remoting-demos">
         <eu name="gui">
             <attribute name="runtime.runnable" value="true"/>
             <attribute name="runtime.class" value="ch.elca.el4j.demos.remoting.benchmark.RemotingBenchmark"/>
@@ -9,7 +9,7 @@
 
             <hook name="pre.start.[module].[eu]" target="runtime.hook.parallel-web.start" if="distdemo"/>
             <hook name="post.start.[module].[eu]" target="runtime.hook.parallel-web.stop" if="distdemo"/>
-            <attribute name="parallel-web.deploytarget" value="deploy.war.module.eu.module-remoting_and_interface_enrichment-demos.web"/>
+            <attribute name="parallel-web.deploytarget" value="deploy.war.module.eu.module-remoting-demos.web"/>
         </eu>
         <eu name="web">
             <attribute name="runtime.runnable" value="true"/>
@@ -20,6 +20,7 @@
         </eu>
         <attribute name="set" value="framework-demos"/>
         <dependency module="module-env"/>
-        <dependency module="module-remoting_and_interface_enrichment"/>
+        <dependency module="module-remoting_caucho"/>
+        <dependency module="module-remoting_soap"/>
     </module>
 </ant:project>
