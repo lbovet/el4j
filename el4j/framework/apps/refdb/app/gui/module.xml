@@ -61,7 +61,7 @@
         </dependency>
         <dependency module="common-database"/>
         <dependency module="module-spring_rcp"/>
-        <dependency module="module-remoting_and_interface_enrichment"/>
+        <dependency module="module-remoting_caucho"/>
         <dependency module="module-web"/>
     </module>
     
