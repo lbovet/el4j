@@ -5,7 +5,9 @@
     <!-- Main modules. -->
     <include file="module/core/module.xml"/>
     <include file="module/web/module.xml"/>
-    <include file="module/remoting_and_interface_enrichment/module.xml"/>
+    <include file="module/remoting_core/module.xml"/>
+    <include file="module/remoting_caucho/module.xml"/>
+    <include file="module/remoting_soap/module.xml"/>
     <include file="module/remoting_ejb/module.xml"/>
     <include file="module/jmx/module.xml"/>
     <include file="module/security/module.xml"/>
@@ -20,7 +22,7 @@
     <!-- Test modules. -->
     <include file="tests/core/module.xml"/>
     <include file="tests/core_integration/module.xml"/>
-    <include file="tests/remoting_and_interface_enrichment/module.xml"/>
+    <include file="tests/remoting/module.xml"/>
     <include file="tests/remoting_ejb/module.xml"/>
     <include file="tests/jmx/module.xml"/>
     <include file="tests/security/module.xml"/>
@@ -29,7 +31,7 @@
     <include file="tests/daemon_manager/module.xml"/>
 
     <!-- Demo modules. -->
-    <include file="demos/remoting_and_interface_enrichment/module.xml"/>
+    <include file="demos/remoting/module.xml"/>
     <include file="demos/light_statistics/module.xml"/>
     <include file="demos/daemon_manager/module.xml"/>
     <include file="demos/executable_distribution/module.xml"/>
