@@ -21,8 +21,8 @@ import org.springframework.beans.factory.InitializingBean;
 
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 
-import net.sf.acegisecurity.Authentication;
-import net.sf.acegisecurity.AuthenticationManager;
+import org.acegisecurity.Authentication;
+import org.acegisecurity.AuthenticationManager;
 
 /**
  * Default implementation of <code>AuthenticationService</code> used for

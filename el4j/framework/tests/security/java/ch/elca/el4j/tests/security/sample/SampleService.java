@@ -27,7 +27,7 @@ package ch.elca.el4j.tests.security.sample;
  * 
  * @author Andreas Pfenninger (APR)
  * 
- * @@net.sf.acegisecurity.SecurityConfig("ROLE_TELLER")
+ * @@org.acegisecurity.SecurityConfig("ROLE_TELLER")
  */
 public interface SampleService  {
 
@@ -35,7 +35,7 @@ public interface SampleService  {
      * @param i a numer.
      * @return i + 1
      * 
-     * @@net.sf.acegisecurity.SecurityConfig("ROLE_PERMISSION_ADDONE")
+     * @@org.acegisecurity.SecurityConfig("ROLE_PERMISSION_ADDONE")
      */
     public int addOne(int i);
 

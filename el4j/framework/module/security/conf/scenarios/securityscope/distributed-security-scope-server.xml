@@ -16,7 +16,7 @@
             <ref bean="remoteProtocol" />
         </property>
         <property name="serviceInterface">
-            <value>net.sf.acegisecurity.AuthenticationManager</value>
+            <value>org.acegisecurity.AuthenticationManager</value>
         </property>
         <property name="service">
             <value>authenticationManager</value>

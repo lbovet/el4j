@@ -17,7 +17,7 @@
 
 package ch.elca.el4j.services.security.authentication;
 
-import net.sf.acegisecurity.Authentication;
+import org.acegisecurity.Authentication;
 
 /**
  * AuthenticationService interface. Provides methods to log in and out. If you

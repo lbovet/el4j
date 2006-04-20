@@ -26,7 +26,7 @@
         above configuration is a Commons Attributes-based source.
     -->
     <bean id="methodSecurityAdvisor" 
-        class="net.sf.acegisecurity.intercept.method.aopalliance.MethodDefinitionSourceAdvisor">
+        class="org.acegisecurity.intercept.method.aopalliance.MethodDefinitionSourceAdvisor">
         <constructor-arg>
             <ref local="securityInterceptor"/>
         </constructor-arg>
@@ -34,7 +34,7 @@
     
         <!-- We don't validate config attributes, as it's unsupported by MethodDefinitionAttributes -->
     <bean id="securityInterceptor" 
-        class="net.sf.acegisecurity.intercept.method.aopalliance.MethodSecurityInterceptor">
+        class="org.acegisecurity.intercept.method.aopalliance.MethodSecurityInterceptor">
         <property name="validateConfigAttributes">
             <value>false</value>
         </property>
@@ -53,7 +53,7 @@
     </bean>
     
     <bean id="objectDefinitionSource" 
-        class="net.sf.acegisecurity.intercept.method.MethodDefinitionAttributes">
+        class="org.acegisecurity.intercept.method.MethodDefinitionAttributes">
         <property name="attributes">
             <ref local="attributes"/>
         </property>
