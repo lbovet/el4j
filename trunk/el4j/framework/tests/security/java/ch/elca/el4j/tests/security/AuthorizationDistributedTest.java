@@ -16,6 +16,13 @@
  */
 package ch.elca.el4j.tests.security;
 
+import org.acegisecurity.AccessDeniedException;
+import org.acegisecurity.Authentication;
+import org.acegisecurity.AuthenticationCredentialsNotFoundException;
+import org.acegisecurity.BadCredentialsException;
+import org.acegisecurity.GrantedAuthority;
+import org.acegisecurity.GrantedAuthorityImpl;
+import org.acegisecurity.providers.TestingAuthenticationToken;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
@@ -26,14 +33,6 @@ import ch.elca.el4j.tests.security.sample.SampleService;
 import ch.elca.el4j.tests.security.server.AuthorizationServer;
 
 import junit.framework.TestCase;
-
-import net.sf.acegisecurity.AccessDeniedException;
-import net.sf.acegisecurity.Authentication;
-import net.sf.acegisecurity.AuthenticationCredentialsNotFoundException;
-import net.sf.acegisecurity.BadCredentialsException;
-import net.sf.acegisecurity.GrantedAuthority;
-import net.sf.acegisecurity.GrantedAuthorityImpl;
-import net.sf.acegisecurity.providers.TestingAuthenticationToken;
 
 // Checkstyle: EmptyBlock off
 // Checkstyle: MagicNumber off

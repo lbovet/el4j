@@ -17,10 +17,10 @@
 
 package ch.elca.el4j.tests.security.provider;
 
-import net.sf.acegisecurity.Authentication;
-import net.sf.acegisecurity.AuthenticationException;
-import net.sf.acegisecurity.BadCredentialsException;
-import net.sf.acegisecurity.providers.TestingAuthenticationProvider;
+import org.acegisecurity.Authentication;
+import org.acegisecurity.AuthenticationException;
+import org.acegisecurity.BadCredentialsException;
+import org.acegisecurity.providers.TestingAuthenticationProvider;
 
 /**
  * Provider for testing reasons. This class throws a BadCredentialsException in
