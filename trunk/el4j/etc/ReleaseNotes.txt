@@ -79,9 +79,12 @@
     + Depends now on module-remoting_core
       (previously module-remoting_and_interface_enrichment).
   = module-security (binary version is 1.1)
+    + Acegi security moved from 0.8.2 to 1.0.0-rc2.
+    + Class names adapted to new version.
     + Not explicitly needed dependency to 
       module-remoting_and_interface_enrichment removed.
   = module-security-tests (no binary version)
+    + Tests adapted to new version of Acegi.
     + Depends now on module-remoting_core
       (previously module-remoting_and_interface_enrichment dependency was 
       defined in module-security).
