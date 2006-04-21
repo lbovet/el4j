@@ -1,4 +1,153 @@
 --------------------------------------------------------------------------------
+ Date :   21.04.06
+                            EL4J version  1.0
+--------------------------------------------------------------------------------
+* SourceForge Change Requests PENDING (problems resolved but not yet acknowledged)
+  -
+  
+* SourceForge Change Requests CLOSED
+  1441551 - Exceptions from daemons should be notified instantly
+
+* Builder scripts added
+  = Scripts added to automate nightly building.
+  = Contains ant file to check if JUnit tests failed, succeeded or where not 
+    executed.
+  = In error case an email will be sent to configured email address.
+
+* General framework
+  = Ant build file to create essential and convenience zip improved.
+  = CVS repository "cvs.sourceforge.net:/cvsroot/el4j" replaced by 
+    Subversion repository "https://svn.sourceforge.net/svnroot/el4j/tags/el4j_0_9_2".
+  = Checkstyle: Java source file header check disabled to reduce problems with 
+    configuring Checkstyle in Eclipse.
+  = Xml encoding attribute value "ISO-8859-15" replaced by "ISO-8859-1" to
+    reduce problems while reading xml files with Spring and Log4J.
+  = Plugin remoting_ejb declaration moved to environment configuration.
+  = EL4Ant attributes must now have a value defined. The following attribute
+    definitions "<attribute name="j2ee.war.application"/>" and 
+    "<attribute name="j2ee.ear.application"/>" were changed to 
+    "<attribute name="j2ee.war.application" value=""/>" and 
+    "<attribute name="j2ee.ear.application" value=""/>".
+  = Configurations prepared for EL4Ant 0.9.3.
+
+
+* Framework modules
+  = module-core (binary version is 1.4)
+    + Spring moved from 1.2.6 to 1.2.7.
+    + Commons language 2.1 library added.
+    + Refresh property placeholder configurer added to circumvent problem with 
+      abstract application context. 
+      See http://opensource2.atlassian.com/projects/spring/browse/SPR-1657
+    + Double and float methods added in criteria classes.
+  = module-daemon_manager (binary verison is 1.3)
+    + Java service wrapper moved from 3.1.2 to 3.2.0.
+    + Issue "1441551 - Exceptions from daemons should be notified instantly"
+      solved.
+  = module-daemon_manager-demos (no binary version)
+    + Depends now on module-remoting_core
+      (previously module-remoting_and_interface_enrichment).
+  = module-daemon_manager-tests (no binary version)
+    + Daemon manager tests tightened to detect issue
+      "1441551 - Exceptions from daemons should be notified instantly".
+  = module-env (binary verison is 1.2)
+    + Unresolveable placeholders will now be ignored.
+  = module-hibernate (binary verison is 1.1)
+    + Needed jar dependencies added: dom4j, jta, antlr and ehcache.
+    + ConvenienceHibernateDaoSupport and ConvenienceHibernateTemplate like used
+      in module-ibatis added.
+    + Helper classes added to transform EL4J criterias into Hibernate criterias.
+  = module-remoting_and_interface_enrichment spltted up
+    + Splitted up into modules: module-remoting_core, module-remoting_caucho,
+      module-remoting_soap
+  = module-remoting_and_interface_enrichment-demos renamed
+    + Module renamed to module-remoting-demos.
+  = module-remoting_and_interface_enrichment-tests renamed
+    + Module renamed to module-remoting-tests.
+  = module-remoting_core (binary version is 2.0)
+    + Contains core remoting classes, RMI protocol and template config files for
+      RMI protocol.
+    + Depends on module-core.
+  = module-remoting_caucho (binary version is 2.0)
+    + Contains Hessian and Burlap protocol classes, template config files and
+      jars for these protocols.
+    + Depends on module-remoting_core.
+  = module-remoting_soap (binary version is 2.0)
+    + Contains Soap protocol classes, template config files and
+      jars for this protocols.
+    + Depends on module-remoting_core.
+  = module-remoting_ejb (binary version is 2.0)
+    + Depends now on module-remoting_core
+      (previously module-remoting_and_interface_enrichment).
+  = module-security (binary version is 1.1)
+    + Not explicitly needed dependency to 
+      module-remoting_and_interface_enrichment removed.
+  = module-security-tests (no binary version)
+    + Depends now on module-remoting_core
+      (previously module-remoting_and_interface_enrichment dependency was 
+      defined in module-security).
+  = module-spring_rcp (binary version is 1.2)
+    + Page components (views) are now closeable.
+    + Color validation interceptor improved to catch encapsulated text 
+      components too.
+    + Converter added to convert java.util.Date to java.sql.* and vice versa.
+    + Date picker gui (http://microba.sourceforge.net) component added as 
+      default binder for bean properties of type java.sql.Date.
+    + Buttons on search view are now action commands.
+    + Refresh command and event added to trigger refreshing of page component
+      content.
+    + Unused constant class removed.
+    + Dialogs (includes wizards) are now not abstract anymore. Normally they do 
+      not have to be extended. The new dialogs implements new interface
+      ExecutorDisplayable that are used in executors.
+    + Executors are abstract now and must be extended. Executors with an
+      ExecutorDisplayable implements interface ExecutorAction. The executor
+      displayable uses the executor action interface as callback.
+    + Convenience executors to create, change and delete beans of type
+      ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject added.
+    + Bean properties can now be displayed with specific binders, defined per
+      bean properties form.
+    + Binder and binding for dynamic lists added. Useful i.e. in search views.
+    + Page component descriptor interface extended to make firePropertyChange
+      methods publicly visible.
+    + Group page component interface enriched with method to get the count of
+      containing page components.
+    + Application page interface enriched with method to close a page component
+      and set a page component as active.
+    + Util class for application listeners added. Used to register/unregister
+      application listeners on global application event multicaster.
+    + Util class for gui components added. Used to recursivly add mouse and
+      focus listener.
+    + Util class for dialogs added. Used to display error message dialogs in
+      a convenient way.
+    + Simple message fetch method added in message util class.
+    + Dialog page view and dialog page view descriptor added to easily display 
+      a page dialog embedded as a view and not only as a separate dialog. Both
+      classes implements the ExecutorDisplayable interface and are usable in 
+      executors.
+    + Search items can now have a specific binder.
+    + Comparison search item extended.
+    + General usable swing components (border and special panels) added.
+  = module-web (binary version is 1.3)
+    + Common language library moved to module-core.
+
+* Build system support
+  = remoting_ejb plugin
+    + Prepared for EL4Ant 0.9.3.
+    + Uses now Velocity plugin from EL4Ant.
+    + Refactored so now the specific plugin (remoting_ejb-jboss, 
+      remoting_ejb-weblogic or remoting_ejb-websphere) must be used in
+      plugin configuration.
+  = distribution plugin
+    + Prepared for EL4Ant 0.9.3.
+    + Uses now Velocity plugin from EL4Ant.
+    + Nearby distribution.name a distribution.version can be defined.
+  = env plugin
+    + Prepared for EL4Ant 0.9.3.
+  = parallel plugin
+    + Prepared for EL4Ant 0.9.3.
+
+
+--------------------------------------------------------------------------------
  Date :   16.02.06
                             EL4J version  0.9.3
 --------------------------------------------------------------------------------
