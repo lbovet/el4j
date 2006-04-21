@@ -61,7 +61,7 @@ public final class WindowUtils {
      */
     public static PageDescriptor[] getPageDescriptors() {
         Map pageDescriptors = Application.services().getApplicationContext()
-            .getBeansOfType(PageDescriptor.class, false, false);
+            .getBeansOfType(PageDescriptor.class, true, false);
         return (PageDescriptor[]) pageDescriptors.values().toArray(
             new PageDescriptor[pageDescriptors.size()]);
     }
