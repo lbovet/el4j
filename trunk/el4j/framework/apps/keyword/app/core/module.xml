@@ -26,7 +26,6 @@
         <dependency module="module-core"/>
         <dependency module="module-ibatis"/>
         <dependency module="module-hibernate"/>
-        <dependency module="module-env"/>
  
     </module>
 
