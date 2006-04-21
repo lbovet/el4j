@@ -17,7 +17,7 @@
 * General framework
   = Ant build file to create essential and convenience zip improved.
   = CVS repository "cvs.sourceforge.net:/cvsroot/el4j" replaced by 
-    Subversion repository "https://svn.sourceforge.net/svnroot/el4j/tags/el4j_0_9_2".
+    Subversion repository "https://svn.sourceforge.net/svnroot/el4j/trunk".
   = Checkstyle: Java source file header check disabled to reduce problems with 
     configuring Checkstyle in Eclipse.
   = Xml encoding attribute value "ISO-8859-15" replaced by "ISO-8859-1" to
@@ -132,6 +132,33 @@
     + General usable swing components (border and special panels) added.
   = module-web (binary version is 1.3)
     + Common language library moved to module-core.
+
+* Framework applications
+  = common-database (binary verison is 1.2)
+    + Dependency to module-env removed due to the problem when using this
+      module as binary release.
+  = keyword-core (binary verison is 2.0)
+    + Dao layer for Hibernate added and IBatis files unified.
+    + Service layer interface method to delete multiple keywords improved. Used
+      parameter is now a collection.
+  = keyword-core-tests (no binary version)
+    + Tests for Hibernate parts added.
+    + Dependency to module-env added.
+  = refdb-core (binary verison is 2.0)
+    + Dao layer for Hibernate added and IBatis files unified.
+    + Search of references by multiple keywords now possible.
+    + Reference dto enriched with properties annotations, files and 
+      fileDescriptorViews. Property keywords is now a set.
+  = refdb-core-tests (no binary version)
+    + Tests for Hibernate parts added.
+    + Dependency to module-env added.
+  = refdb-gui (no binary version)
+    + Adapted to new features of module-spring_rcp. Classes are now very small!
+    + Keyword list binding added in reference search view.
+    + Depends now on module-remoting_caucho
+      (previously module-remoting_and_interface_enrichment).
+    + Dependency to module-env added.
+    + Distributions can now be create from eus standalone-client and thin-client.
 
 * Build system support
   = remoting_ejb plugin
