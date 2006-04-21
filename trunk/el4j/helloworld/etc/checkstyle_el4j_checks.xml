@@ -83,11 +83,10 @@
         <module name="TypeName" />
 
 
-        <!-- Headers -->
-
-        <module name="RegexpHeader">
-            <property name="headerFile" value="${el4j_java_header_file}" />
-        </module>
+        <!-- Header. Commented because we have files with different headers. -->
+<!--        <module name="RegexpHeader">-->
+<!--            <property name="headerFile" value="${el4j_java_header_file}" />-->
+<!--        </module>-->
 
 
         <!-- Imports -->
