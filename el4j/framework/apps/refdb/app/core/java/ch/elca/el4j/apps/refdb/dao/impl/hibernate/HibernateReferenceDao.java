@@ -16,12 +16,13 @@
  */
 package ch.elca.el4j.apps.refdb.dao.impl.hibernate;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Hibernate;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Expression;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -40,6 +41,8 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
 import ch.elca.el4j.services.persistence.hibernate.criteria.CriteriaTransformer;
 import ch.elca.el4j.services.search.QueryObject;
+import ch.elca.el4j.services.search.criterias.AbstractCriteria;
+import ch.elca.el4j.services.search.criterias.IncludeCriteria;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
@@ -208,8 +211,6 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
      */
     public LinkDto getLinkByKey(int key) throws DataAccessException,
         DataRetrievalFailureException {
-        /*return (LinkDto) getConvenienceHibernateTemplate()
-            .getByIdStrong(LinkDto.class, key, Constants.LINK);*/
         LinkDto link = (LinkDto) getConvenienceHibernateTemplate()
             .getByIdStrong(LinkDto.class, key, Constants.LINK);
         Hibernate.initialize(link.getKeywords());    
@@ -221,15 +222,12 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
      */
     public List getLinksByName(String name) throws DataAccessException {
         Reject.ifEmpty(name);
-        /*String queryString
-            = "from LinkDto link left join fetch link.keywords "
-                + "where name = :name";*/
         String queryString = "from LinkDto link where name = :name";
         List result = getConvenienceHibernateTemplate()
             .findByNamedParam(queryString, "name", name);
         Iterator it = result.iterator();
-        while(it.hasNext()){
-            Hibernate.initialize(((LinkDto)it.next()).getKeywords());
+        while (it.hasNext()) {
+            Hibernate.initialize(((LinkDto) it.next()).getKeywords());
         }
         return result;
     }
@@ -246,14 +244,52 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
      * {@inheritDoc}
      */
     public List searchLinks(QueryObject query) throws DataAccessException {
-        CriteriaTransformer transformer = new CriteriaTransformer();
-        DetachedCriteria hibernateCriteria = transformer
-            .transform(query, LinkDto.class); 
-            
-        // Execute Hibernate criteria query and return the list of KeywordDto
-        // objects returned by the query.
-        return getConvenienceHibernateTemplate().
-            findByCriteria(hibernateCriteria);
+        DetachedCriteria hibernateCriteria = CriteriaTransformer
+            .transform(query,
+            LinkDto.class);
+
+        // HACK! IncludeCriteria are handled in the search method. In a future
+        // version, this will be replaced by an easier solution, where the
+        // IncludeCriteria will be treated by the CriteriaTransformer class.
+        
+        List criteriaList = query.getCriteriaList();
+
+        if (containsIncludeCriteria(criteriaList)) {
+
+            Iterator it = criteriaList.iterator();
+            AbstractCriteria currentCriterion;
+            List resultList = new ArrayList();
+            List currentList;
+
+            while (it.hasNext()) {
+                currentCriterion = (AbstractCriteria) it.next();
+                if (currentCriterion instanceof IncludeCriteria) {
+                    hibernateCriteria.createCriteria(
+                        ((IncludeCriteria) currentCriterion).getField()).add(
+                            Expression.eq("key",
+                                ((IncludeCriteria) currentCriterion)
+                                    .getIntegerValue()));
+                    currentList = getConvenienceHibernateTemplate()
+                        .findByCriteria(hibernateCriteria);
+                    resultList.add(currentList);
+                    hibernateCriteria = CriteriaTransformer.transform(query,
+                        LinkDto.class);
+                }
+            }
+            Iterator it2 = resultList.iterator();
+            currentList = (List) it2.next();
+            List nextList = new ArrayList();
+            while (it2.hasNext()) {
+                nextList = (List) it2.next();
+                currentList.retainAll(nextList);
+            }
+            return currentList;
+
+        // Executed if the query does not include any IncludeCriteria    
+        } else {
+            return getConvenienceHibernateTemplate().findByCriteria(
+                hibernateCriteria);
+        }
     }
 
     /**
@@ -282,9 +318,6 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
      */
     public FormalPublicationDto getFormalPublicationByKey(int key)
         throws DataAccessException, DataRetrievalFailureException {
-        /*return (FormalPublicationDto) getConvenienceHibernateTemplate()
-            .getByIdStrong(FormalPublicationDto.class, key,
-                Constants.FORMAL_PUBLICATION);*/
         FormalPublicationDto formalPublication
             = (FormalPublicationDto) getConvenienceHibernateTemplate()
                 .getByIdStrong(FormalPublicationDto.class, key,
@@ -299,27 +332,41 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
     public List getFormalPublicationsByName(String name)
         throws DataAccessException {
         Reject.ifEmpty(name);
-        /*String queryString
-            = "from FormalPublicationDto formalPublication left join fetch "
-                + "formalPublication.keywords where name = :name";*/
         String queryString = "from FormalPublicationDto formalPublication "
             + "where name = :name";
         List result = getConvenienceHibernateTemplate()
             .findByNamedParam(queryString, "name", name);
         Iterator it = result.iterator();
-        while(it.hasNext()){
-            Hibernate.initialize(((FormalPublicationDto)it.next()).getKeywords());
+        FormalPublicationDto currentPublication;
+        List finalResult = new ArrayList();
+        while (it.hasNext()) {
+            currentPublication = (FormalPublicationDto) it.next();
+            if (!(currentPublication instanceof BookDto)) {
+                Hibernate.initialize(currentPublication.getKeywords());
+                finalResult.add(currentPublication);
+            } 
         }
-        return result;
+        return finalResult;
     }
 
     /**
      * {@inheritDoc}
      */
     public List getAllFormalPublications() throws DataAccessException {
-        return getConvenienceHibernateTemplate()
+        List result = getConvenienceHibernateTemplate()
             .find("from FormalPublicationDto formalPublication left join "
                 + "fetch formalPublication.keywords");
+        
+        Iterator it = result.iterator();
+        FormalPublicationDto currentPublication;
+        List finalResult = new ArrayList();
+        while (it.hasNext()) {
+            currentPublication = (FormalPublicationDto) it.next();
+            if (!(currentPublication instanceof BookDto)) {
+                finalResult.add(currentPublication);
+            } 
+        }
+        return finalResult;
     }
 
     /**
@@ -327,14 +374,62 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
      */
     public List searchFormalPublications(QueryObject query)
         throws DataAccessException {
-        CriteriaTransformer transformer = new CriteriaTransformer();
-        DetachedCriteria hibernateCriteria = transformer
-            .transform(query, FormalPublicationDto.class); 
+        
+        DetachedCriteria hibernateCriteria = CriteriaTransformer
+            .transform(query, FormalPublicationDto.class);
+
+        // HACK! IncludeCriteria are handled in the search method. In a future
+        // version, this will be replaced by an easier solution, where the
+        // IncludeCriteria will be treated by the CriteriaTransformer class.
+        
+        List criteriaList = query.getCriteriaList();
+        List currentList = new ArrayList();
+
+        if (containsIncludeCriteria(criteriaList)) {
+
+            Iterator it = criteriaList.iterator();
+            AbstractCriteria currentCriterion;
+            List resultList = new ArrayList();
+
+            while (it.hasNext()) {
+                currentCriterion = (AbstractCriteria) it.next();
+                if (currentCriterion instanceof IncludeCriteria) {
+                    hibernateCriteria.createCriteria(
+                        ((IncludeCriteria) currentCriterion).getField()).add(
+                            Expression.eq("key",
+                                ((IncludeCriteria) currentCriterion)
+                                    .getIntegerValue()));
+                    currentList = getConvenienceHibernateTemplate()
+                        .findByCriteria(hibernateCriteria);
+                    resultList.add(currentList);
+                    hibernateCriteria = CriteriaTransformer.transform(query,
+                        FormalPublicationDto.class);
+                }
+            }
+            Iterator it2 = resultList.iterator();
+            currentList = (List) it2.next();
+            List nextList = new ArrayList();
+            while (it2.hasNext()) {
+                nextList = (List) it2.next();
+                currentList.retainAll(nextList);
+            }
             
-        // Execute Hibernate criteria query and return the list of KeywordDto
-        // objects returned by the query.
-        return getConvenienceHibernateTemplate().
-            findByCriteria(hibernateCriteria);
+        // Executed if the query does not include any IncludeCriteria
+        } else {
+            currentList = getConvenienceHibernateTemplate().findByCriteria(
+                hibernateCriteria);
+        }
+
+        Iterator it3 = currentList.iterator();
+        FormalPublicationDto currentPublication;
+        List finalResult = new ArrayList();
+        while (it3.hasNext()) {
+            currentPublication = (FormalPublicationDto) it3.next();
+            if (!(currentPublication instanceof BookDto)) {
+                finalResult.add(currentPublication);
+            }
+        }
+        return finalResult;
     }
 
     /**
@@ -363,8 +458,6 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
      */
     public BookDto getBookByKey(int key) throws DataAccessException,
         DataRetrievalFailureException {
-        /*return (BookDto) getConvenienceHibernateTemplate()
-            .getByIdStrong(BookDto.class, key, Constants.BOOK);*/
         BookDto book
             = (BookDto) getConvenienceHibernateTemplate()
                 .getByIdStrong(BookDto.class, key,
@@ -378,15 +471,12 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
      */
     public List getBooksByName(String name) throws DataAccessException {
         Reject.ifEmpty(name);
-        /*String queryString
-            = "from BookDto book left join fetch book.keywords where name"
-               + " = :name";*/
         String queryString = "from BookDto book where name = :name";
         List result = getConvenienceHibernateTemplate()
             .findByNamedParam(queryString, "name", name);
         Iterator it = result.iterator();
-        while(it.hasNext()){
-            Hibernate.initialize(((BookDto)it.next()).getKeywords());
+        while (it.hasNext()) {
+            Hibernate.initialize(((BookDto) it.next()).getKeywords());
         }
         return result;
     }
@@ -403,14 +493,53 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
      * {@inheritDoc}
      */
     public List searchBooks(QueryObject query) throws DataAccessException {
-        CriteriaTransformer transformer = new CriteriaTransformer();
-        DetachedCriteria hibernateCriteria = transformer
-            .transform(query, BookDto.class); 
-            
-        // Execute Hibernate criteria query and return the list of KeywordDto
-        // objects returned by the query.
-        return getConvenienceHibernateTemplate().
-            findByCriteria(hibernateCriteria);
+        
+        DetachedCriteria hibernateCriteria = CriteriaTransformer
+            .transform(query, BookDto.class);
+
+        // HACK! IncludeCriteria are handled in the search method. In a future
+        // version, this will be replaced by an easier solution, where the
+        // IncludeCriteria will be treated by the CriteriaTransformer class.
+        
+        List criteriaList = query.getCriteriaList();
+
+        // Handle IncludeCriteria
+        if (containsIncludeCriteria(criteriaList)) {
+
+            Iterator it = criteriaList.iterator();
+            AbstractCriteria currentCriterion;
+            List resultList = new ArrayList();
+            List currentList;
+
+            while (it.hasNext()) {
+                currentCriterion = (AbstractCriteria) it.next();
+                if (currentCriterion instanceof IncludeCriteria) {
+                    hibernateCriteria.createCriteria(
+                        ((IncludeCriteria) currentCriterion).getField()).add(
+                            Expression.eq("key",
+                                ((IncludeCriteria) currentCriterion)
+                                    .getIntegerValue()));
+                    currentList = getConvenienceHibernateTemplate()
+                        .findByCriteria(hibernateCriteria);
+                    resultList.add(currentList);
+                    hibernateCriteria = CriteriaTransformer.transform(query,
+                        BookDto.class);
+                }
+            }
+            Iterator it2 = resultList.iterator();
+            currentList = (List) it2.next();
+            List nextList = new ArrayList();
+            while (it2.hasNext()) {
+                nextList = (List) it2.next();
+                currentList.retainAll(nextList);
+            }
+            return currentList;
+
+        // Executed if the query does not include any IncludeCriteria     
+        } else {
+            return getConvenienceHibernateTemplate().findByCriteria(
+                hibernateCriteria);
+        }
     }
 
     /**
@@ -433,4 +562,19 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
             Constants.BOOK);
     }
 
+    /**
+     * Checkas whether the given list contains at least one IncludeCriteria. 
+     * @param criteriaList list of criteria
+     * @return true if the list contains at least one IncludeCriteria
+     */
+    private boolean containsIncludeCriteria(List criteriaList) {
+        Iterator it = criteriaList.iterator();
+        while (it.hasNext()) {
+            if (it.next() instanceof IncludeCriteria) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
 }

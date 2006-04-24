@@ -87,7 +87,7 @@
         </iterate>
         <iterate prepend="and"
             conjunction="and" >
-            <isEqual property="[].type" compareValue="comparisonInteger">
+            <isEqual property="[].type" compareValue="include">
                 <isEqual property="[].field" compareValue="keywords">
                     KEYID in (
                         select KEYREFERENCE from REFERENCEKEYWORDRELATIONSHIPS 
