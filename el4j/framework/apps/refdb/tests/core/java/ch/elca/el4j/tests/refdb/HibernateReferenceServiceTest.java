@@ -51,13 +51,5 @@ public class HibernateReferenceServiceTest extends
     protected String[] getExcludeConfigLocations() {
         return null;
     }
-    
-    // These three tests are temporarily overridden, since they do not
-    // work yet...
-    public void testInsertChangeBook() {}
-    public void testGetAllBooks() {}
-    public void testSearchReferences() {}
-    
-    
-    
+     
 }
