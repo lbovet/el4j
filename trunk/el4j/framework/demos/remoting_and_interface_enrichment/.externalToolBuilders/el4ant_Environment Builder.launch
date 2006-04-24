@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <launchConfiguration type="org.eclipse.ant.AntBuilderLaunchConfigurationType">
+  <booleanAttribute key="org.eclipse.debug.ui.ATTR_LAUNCH_IN_BACKGROUND"
+                    value="false"/>
+  <stringAttribute key="process_factory_id"
+                   value="org.eclipse.ant.ui.remoteAntProcessFactory"/>
+  <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE"
+                   value="org.eclipse.ant.internal.ui.antsupport.InternalAntRunner"/>
+  <listAttribute key="org.eclipse.debug.ui.favoriteGroups">
+    <listEntry value="org.eclipse.ui.externaltools.launchGroup"/>
+  </listAttribute>
+  <stringAttribute key="org.eclipse.ui.externaltools.ATTR_WORKING_DIRECTORY"
+                   value="D:\Projects\el4j\external\framework"/>
+  <intAttribute key="org.eclipse.ui.externaltoolsATTR_SORT_TARGETS" value="1"/>
+  <booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables"
+                    value="true"/>
+  <stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY"
+                   value="D:\Projects\el4j\external\framework"/>
+  <stringAttribute key="org.eclipse.ant.ui.ATTR_BUILD_SCOPE" value="${none}"/>
+  <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER"
+                   value="org.eclipse.ant.ui.AntClasspathProvider"/>
+  <stringAttribute key="org.eclipse.ui.externaltools.ATTR_ANT_TARGETS"
+                   value="env.copy.module,"/>
+  <stringAttribute key="org.eclipse.jdt.launching.VM_INSTALL_TYPE_ID"
+                   value="org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType"/>
+  <stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS"
+                   value="-Dmodule=&quot;module-remoting_and_interface_enrichment-demos&quot;"/>
+  <stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION"
+                   value="D:\Projects\el4j\external\framework/build.xml"/>
+</launchConfiguration>
