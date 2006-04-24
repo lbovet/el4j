@@ -73,22 +73,13 @@
         	<property name="authorName" type="string">
         		<column name="AUTHORNAME"/>
         	</property>
-        	<property name="publisher">
+        	<property name="publisher" type="string">
         		<column name="PUBLISHER"/>
         	</property>
         	<property name="pageNum" type="integer">
         		<column name="PAGENUM"/>
         	</property>
-        	
-        	<!--  
-        	<joined-subclass name="ch.elca.el4j.apps.refdb.dto.BookDto"
-        		 table="BOOKS">
-        		<key column="KEYTOREFERENCE"/>
-        		<property name="isbnNumber">
-        			<column name="ISBNNUMBER"/>
-        		</property>
-        	</joined-subclass>
-        	-->
+        	   
         </joined-subclass>
         
         <joined-subclass name="ch.elca.el4j.apps.refdb.dto.BookDto"
@@ -97,13 +88,13 @@
         	<property name="authorName" type="string">
         		<column name="AUTHORNAME"/>
         	</property>
-        	<property name="publisher">
+        	<property name="publisher" type="string">
         		<column name="PUBLISHER"/>
         	</property>
         	<property name="pageNum" type="integer">
         		<column name="PAGENUM"/>
         	</property>
-        	<property name="isbnNumber">
+        	<property name="isbnNumber" type="string">
         			<column name="ISBNNUMBER"/>
         	</property>
         </joined-subclass>
