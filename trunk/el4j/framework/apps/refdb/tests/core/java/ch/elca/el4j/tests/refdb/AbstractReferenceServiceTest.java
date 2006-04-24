@@ -38,6 +38,7 @@ import ch.elca.el4j.apps.refdb.dto.ReferenceDto;
 import ch.elca.el4j.apps.refdb.service.ReferenceService;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.ComparisonCriteria;
+import ch.elca.el4j.services.search.criterias.IncludeCriteria;
 import ch.elca.el4j.services.search.criterias.LikeCriteria;
 
 // Checkstyle: MagicNumber off
@@ -1040,8 +1041,10 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         }
         
         query = new QueryObject();
-        query.addCriteria(ComparisonCriteria.equals(
-            "keywords", kJava.getKey()));
+        
+        query.addCriteria(new IncludeCriteria("keywords",
+            kJava.getKeyAsObject()));
+        
         list = service.searchReferences(query);
         assertEquals("Unexpected number of references with keyword java.", 
             3, list.size());
@@ -1055,8 +1058,10 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         }
         
         query = new QueryObject();
-        query.addCriteria(ComparisonCriteria.equals(
-            "keywords", kJava.getKey()));
+        
+        query.addCriteria(new IncludeCriteria("keywords", 
+            kJava.getKeyAsObject()));
+        
         query.addCriteria(LikeCriteria.caseInsensitive("description", "%WEB%"));
         list = service.searchReferences(query);
         assertEquals("Unexpected number of references with keyword java and "
@@ -1071,10 +1076,12 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         }
         
         query = new QueryObject();
-        query.addCriteria(ComparisonCriteria.equals(
-            "keywords", kJava.getKey()));
-        query.addCriteria(ComparisonCriteria.equals(
-            "keywords", kStruts.getKey()));
+        
+        query.addCriteria(new IncludeCriteria("keywords",
+            kJava.getKeyAsObject()));
+        query.addCriteria(new IncludeCriteria("keywords", 
+            kStruts.getKeyAsObject()));
+        
         query.addCriteria(LikeCriteria.caseInsensitive("description", "%WEB%"));
         list = service.searchReferences(query);
         assertEquals("Unexpected number of references with keyword java, "
