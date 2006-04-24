@@ -83,8 +83,7 @@ public class HibernateKeywordDao extends ConvenienceHibernateDaoSupport
      */
     public List searchKeywords(QueryObject query) throws DataAccessException {
        
-        CriteriaTransformer transformer = new CriteriaTransformer();
-        DetachedCriteria hibernateCriteria = transformer
+        DetachedCriteria hibernateCriteria = CriteriaTransformer
             .transform(query, KeywordDto.class); 
             
         // Execute Hibernate criteria query and return the list of KeywordDto
