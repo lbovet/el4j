@@ -27,6 +27,11 @@ import ch.elca.el4j.services.search.criterias.LikeCriteria;
  * @author Alex Mathey (AMA)
  */
 public class CriteriaTransformer {
+     
+    /**
+     * Hide default constructor.
+     */
+    protected CriteriaTransformer() { };
     
     /**
      * Transforms EL4J criteria of the given <code>QueryObject</code> into the
@@ -40,7 +45,7 @@ public class CriteriaTransformer {
      * @return the Hibernate criteria corresponding to the
      *         <code>QueryObject</code>'s EL4J criteria.
      */
-    public DetachedCriteria transform(QueryObject query,
+    public static DetachedCriteria transform(QueryObject query,
         Class domainObjectClass) {
         
         // Hibernate criteria for the domain object.
@@ -76,7 +81,22 @@ public class CriteriaTransformer {
             } else if (currentEl4jCriteria instanceof ComparisonCriteria) {
                 hibernateCriteria.add(Expression.eq(currentCriteriaField,
                     currentCriteriaValue));
-            }
+            } 
+            
+            // Handling of IncludeCriteria is not working yet. At the moment,
+            // IncludeCriteria have to be treated individually in the search 
+            // methods of the application making use of IncludeCriteria. This
+            // will be replaced in a future version.
+            
+            /* else if (currentEl4jCriteria instanceof IncludeCriteria) {
+                
+                DetachedCriteria subcrit
+                    = hibernateCriteria.createCriteria( 
+                        currentCriteriaField).setProjection(Property
+                            .forName("name"));
+                hibernateCriteria.add(Subqueries
+                    .in(currentCriteriaValue, subcrit));
+            }*/
         }
         
         return hibernateCriteria;
