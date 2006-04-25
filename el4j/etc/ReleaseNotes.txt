@@ -40,6 +40,7 @@
       abstract application context. 
       See http://opensource2.atlassian.com/projects/spring/browse/SPR-1657
     + Double and float methods added in criteria classes.
+    + IncludeCriteria class added.
   = module-daemon_manager (binary verison is 1.3)
     + Java service wrapper moved from 3.1.2 to 3.2.0.
     + Issue "1441551 - Exceptions from daemons should be notified instantly"
@@ -149,12 +150,15 @@
     + Dependency to module-env added.
   = refdb-core (binary verison is 2.0)
     + Dao layer for Hibernate added and IBatis files unified.
-    + Search of references by multiple keywords now possible.
+    + Search of references by multiple keywords now possible. IncludeCriteria are
+      used for this purpose.
     + Reference dto enriched with properties annotations, files and 
       fileDescriptorViews. Property keywords is now a set.
   = refdb-core-tests (no binary version)
     + Tests for Hibernate parts added.
     + Dependency to module-env added.
+    + Tests adapted to support IncludeCriteria. IncludeCriteria are used to search
+      references by one or more keywords.
   = refdb-gui (no binary version)
     + Adapted to new features of module-spring_rcp. Classes are now very small!
     + Keyword list binding added in reference search view.
