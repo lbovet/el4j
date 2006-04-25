@@ -734,8 +734,8 @@ public abstract class AbstractDaemon
      * @return Returns the calculated sleeping time.
      */
     private long calculateSleepTime(long start, long end) {
-        Reject.ifFalse(end >= start, 
-            "End time must be greater or equals than start time.");
+//        Reject.ifFalse(end >= start, 
+//            "End time must be greater or equals than start time.");
         long sleepTime = 0;
         
         long sleepTimeAfterJob;
@@ -751,6 +751,10 @@ public abstract class AbstractDaemon
          */
         if (sleepTimeAfterJob > 0 && minPeriodicity > 0) {
             long latterDueTime = end - start;
+            if (latterDueTime < 0) {
+                latterDueTime = 0;
+            }
+            
             /**
              * If the latter due time for the daemon job is smaller than the 
              * given minimal periodicity it could be possible that we can go
