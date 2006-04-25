@@ -1,0 +1,28 @@
+<div id="Navigation">
+
+#macro(menuItem $activeShortName $shortName $longName $url $target)
+#if($activeShortName == $shortName)
+    <div class="MenuItemActive">$longName</div>
+#else
+	<div class="MenuItem">
+    	<a class="MenuItem" href="$url" target="$target">$longName</a>
+   	</div>
+#end
+#end
+
+#menuItem($navigation "home" "HOME" "index.html" "_top")
+#menuItem($navigation "news" "NEWS &amp; USES" "news.html" "_top")
+#menuItem($navigation "documentation" "DOCUMENTATION" "documentation.html" "_top")
+#menuItem($navigation "support" "SUPPORT" "support.html" "_top")
+#menuItem($navigation "reports" "REPORTS" "reports.html" "_top")
+#menuItem($navigation "license" "LICENSE" "license.html" "_top")
+#menuItem($navigation "download" "DOWNLOAD" "http://sourceforge.net/project/showfiles.php?group_id=147215" "_top")
+#menuItem($navigation "sfprojectpage" "SF PROJECT PAGE" "http://sourceforge.net/projects/el4j/" "_top")
+
+    <a href="http://sourceforge.net" target="_blank">
+        <img id="SFLogo"
+            src="http://sourceforge.net/sflogo.php?group_id=147215&amp;type=2" 
+            width="125" height="37" alt="SourceForge.net Logo" />
+    </a>
+
+</div>

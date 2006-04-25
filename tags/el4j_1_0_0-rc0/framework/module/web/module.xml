@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" xmlns:ant="antlib:org.apache.tools.ant">
+    <module name="module-web">
+        <attribute name="set" value="framework-modules"/>
+        <attribute name="binrelease.version" value="1.3"/>
+        <dependency module="module-core"/>
+        <dependency jar="struts-1.2.7.jar"/>
+        <dependency jar="commons-beanutils-1.7.0.jar"/>
+        <dependency jar="commons-digester-1.6.jar"/>
+        <dependency jar="commons-fileupload-1.0.jar"/>
+        <dependency jar="commons-validator-1.1.4.jar"/>
+        <dependency jar="jakarta-oro-2.0.7.jar"/>
+        <dependency jar="servlet-api-2.4.jar"/>
+    </module>
+</ant:project>

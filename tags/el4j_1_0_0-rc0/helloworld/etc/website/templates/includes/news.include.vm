@@ -1,0 +1,13 @@
+    <div>
+        <h1>NEWS</h1>
+
+#macro(newsEntry $newsdate $newstext)
+        <p>
+            <img src="images/bullet.gif" alt="Hello World News" border="0"/>
+            <i>$newsdate</i> - $newstext
+        </p>
+#end
+
+#newsEntry("XX/YY/200Z" "My <b>first version</b> of Hello World <b>is up!</b>")
+
+    </div>
