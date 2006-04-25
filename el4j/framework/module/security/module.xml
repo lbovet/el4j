@@ -2,7 +2,7 @@
 <ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" xmlns:ant="antlib:org.apache.tools.ant">
     <module name="module-security">
         <attribute name="set" value="framework-modules"/>
-        <attribute name="binrelease.version" value="1.1-rc1"/>
+        <attribute name="binrelease.version" value="1.1"/>
         <dependency module="module-core"/>
         <dependency jar="acegi-security-1.0.0-RC2.jar"/>
         <dependency jar="ehcache-1.1.jar"/>
