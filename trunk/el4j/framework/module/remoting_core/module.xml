@@ -3,7 +3,7 @@
     xmlns:ant="antlib:org.apache.tools.ant">
     <module name="module-remoting_core">
         <attribute name="set" value="framework-modules"/>
-        <attribute name="binrelease.version" value="2.0-rc0"/>
+        <attribute name="binrelease.version" value="2.0"/>
         <dependency module="module-core"/>
     </module>
 </ant:project>

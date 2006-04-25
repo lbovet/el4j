@@ -7,7 +7,7 @@
         <attribute name="set" value="common-modules"/>
         
         <!-- Binary version -->
-        <attribute name="binrelease.version" value="1.2-rc0"/>
+        <attribute name="binrelease.version" value="1.2"/>
 
         <!-- DBCP libraries -->
         <dependency jar="commons-dbcp-1.2.1.jar"/>
