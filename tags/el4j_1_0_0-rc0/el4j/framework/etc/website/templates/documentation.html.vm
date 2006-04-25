@@ -1,0 +1,70 @@
+#set($title = "EL4J, the Extension Library for the J2EE - Documentation")
+#set($navigation = "documentation")
+#parse("$website_templates_directory/includes/header.include.vm")
+#parse("$website_templates_directory/includes/navigation.include.vm")
+<div id="Content">
+    <div>
+        <h1>DOCUMENTATION</h1>
+        <h2>EL4J core documentation</h2>
+        <ul>
+            <li>
+                <a href="docs/pdf/EL4J_IntroductionArticle1.pdf">
+                    EL4J Introduction Article (PDF)
+                </a>
+            </li>
+            <li>
+                <a href="docs/pdf/ReferenceDoc.pdf">
+                    EL4J Reference Documentation (PDF)
+                </a>
+            </li>
+            <li>
+                <a href="docs/pdf/EL4AntQuickReferenceSheet_v1_0.pdf">
+                    Quick Reference Sheet for the build system (EL4Ant) (PDF)
+                </a>
+            </li>
+            <li>
+                Full documentation of the build system (EL4Ant)
+                (<a href="http://el4ant.sf.net/documentation.html">link to EL4Ant</a>)
+            </li>
+        </ul>
+        
+        <h2>Presentations</h2>
+        <ul>
+            <li>
+                <a href="docs/pdf/EL4JFeatures.pdf">
+                    Short presentation with essential features of EL4J
+                </a>
+            </li>
+            <li>
+                <a href="http://www.jugs.ch/html/events/slides/050830_LightDiContainer.pdf">
+                    A presentation on Spring at JUGS, with a section on EL4J
+                </a>
+            </li>
+        </ul>
+
+        <h2>Release notes</h2>
+        <p>
+            Release notes directly from the 
+            <a href="http://svn.sourceforge.net/viewcvs.cgi/*checkout*/el4j/trunk/el4j/etc/ReleaseNotes.txt">
+                sourceforge subversion repository</a>.<br/><br/>
+        </p>
+
+        <h2>Framework API</h2>
+        The framework is split in multiple sets of modules, the set "framework-modules" is the main part of EL4J.
+        Here is the Javadoc for each module set:
+#foreach($report in $reports.getFileList())
+    #if($report.indexOf("javadoc") != -1)
+		<div class="report">
+            #include("$website_reports_directory/$report")
+		</div>
+    #end
+#end
+    </div>
+#parse("$website_templates_directory/includes/last_changed_copyright.include.vm")
+</div>
+<div id="RightColumn">
+#parse("$website_templates_directory/includes/related_projects.include.vm")
+#parse("$website_templates_directory/includes/sponsor.include.vm")
+</div>
+</body>
+</html>

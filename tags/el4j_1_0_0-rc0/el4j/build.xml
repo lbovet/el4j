@@ -1,0 +1,306 @@
+<?xml version="1.0"?>
+<project name="el4j" basedir="." default="create.zips">
+    
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <description>
+        Build file to generate zips for SourceForge.
+    </description>
+
+    <!-- Imports the build properties -->
+    <property file="build.properties"/>
+
+    
+    
+    <!-- Target to create all zips -->
+    <target name="create.zips" description="Global target to create all zips.">
+        <antcall target="create.zip.essential"/>
+        <antcall target="create.zip.convenience"/>
+    </target>
+    
+    <!-- Target to create the essential zip -->
+    <target name="create.zip.essential" 
+        description="Generate zip file with essential EL4J stuff.">
+        
+        <property name="builder.zip.file.path" 
+            value="${builder.zip.path}/${builder.zip.name.essential}"/>
+        <delete quiet="true" file="${builder.zip.file.path}"/>
+        <mkdir dir="${builder.zip.path}"/>
+        
+        <antcall target="internal.create.zip.essential"/>
+    </target>
+    
+    <!-- Target to create the convenience zip -->
+    <target name="create.zip.convenience" 
+        description="Generate zip file with most EL4J stuff and the EL4J framework and helloworld.">
+        
+        <property name="builder.zip.file.path" 
+            value="${builder.zip.path}/${builder.zip.name.convenience}"/>
+        <delete quiet="true" file="${builder.zip.file.path}"/>
+        <mkdir dir="${builder.zip.path}"/>
+        
+        <antcall target="internal.create.zip.convenience"/>
+    </target>
+    
+    <!-- Internal target to create the essential zip -->
+    <target name="internal.create.zip.essential"
+        depends="collect.essential">
+        <zip destfile="${builder.zip.file.path}"
+            update="false"
+            duplicate="fail">
+            
+            <zipfileset dir="${basedir}"
+                prefix="${builder.zip.name.prefix}"
+                excludes="${builder.general.excludes}">
+                <include name="*.txt"/>
+            </zipfileset>
+            <zipfileset dir="${basedir}/etc"
+                prefix="${builder.zip.name.prefix}/etc"
+                excludes="${builder.general.excludes}">
+            </zipfileset>
+            <zipfileset dir="${basedir}/external-tools/el4ant"
+                prefix="${builder.zip.name.prefix}/external-tools/el4ant">
+                <include name="**/README.txt"/>
+                <include name="**/ant-contrib-*.jar"/>
+                <include name="**/buildsystem-*.jar"/>
+                <include name="**/reports-*.jar"/>
+                <include name="**/tools-*.jar"/>
+                <include name="**/j2ee.jar"/>
+                <include name="**/commons-attributes.jar"/>
+            </zipfileset>
+            <zipfileset dir="${basedir}/external-tools/ant"
+                prefix="${builder.zip.name.prefix}/external-tools/ant">
+                <exclude name="docs/**"/>
+            </zipfileset>
+            <zipfileset dir="${basedir}/${builder.library.path}"
+                prefix="${builder.zip.name.prefix}/${builder.library.path}"
+                excludes="${builder.general.excludes},${builder.library.excludes}">
+            </zipfileset>
+            <zipfileset dir="${basedir}/${builder.modules.path}"
+                prefix="${builder.zip.name.prefix}/${builder.modules.path}"
+                excludes="${builder.general.excludes}">
+            </zipfileset>
+        </zip>
+    </target>
+
+    <!-- Internal target to create the convenience zip -->
+    <target name="internal.create.zip.convenience"
+        depends="collect.convenience">
+        <antcall target="internal.create.zip.essential"/>
+        
+        <zip destfile="${builder.zip.file.path}"
+            update="true"
+            duplicate="fail">
+            
+            <zipfileset dir="${basedir}/framework"
+                prefix="${builder.zip.name.prefix}/framework"
+                excludes="${builder.general.excludes}">
+                <exclude name="**/classes/**"/>
+                <exclude name="dist/**"/>
+                <exclude name="lib/**"/>
+                <exclude name="workspace/.metadata/**"/>
+                <exclude name="build.xml"/>
+            </zipfileset>
+            <zipfileset dir="${basedir}/helloworld"
+                prefix="${builder.zip.name.prefix}/helloworld"
+                excludes="${builder.general.excludes}">
+                <exclude name="**/classes/**"/>
+                <exclude name="dist/**"/>
+                <exclude name="lib/**"/>
+                <exclude name="workspace/.metadata/**"/>
+                <exclude name="build.xml"/>
+            </zipfileset>
+            <zipfileset dir="${basedir}/dist/docs"
+                prefix="${builder.zip.name.prefix}/docs"
+                excludes="${builder.general.excludes}">
+            </zipfileset>
+        </zip>
+    </target>
+    
+    
+    <!-- Global target to clean -->
+    <target name="clean" description="Cleans dirs that are used to create zips.">
+        <antcall target="distclean"/>
+        <antcall target="libclean"/>
+        <antcall target="moduleclean"/>
+    </target>
+    
+    <!-- Target to clean the dist dir -->
+    <target name="distclean" description="Clean the dist directory.">
+        <delete quiet="true" includeEmptyDirs="true">
+            <fileset dir="${builder.dist.path}"/>
+        </delete>
+    </target>
+    
+    <!-- Target to clean the lib dir -->
+    <target name="libclean" description="Clean the lib directory.">
+        <delete quiet="true">
+            <fileset dir="${builder.library.path}"
+                includes="${builder.collect.libraries.includes}"/>
+        </delete>
+    </target>
+    
+    <!-- Target to clean the modules dir -->
+    <target name="moduleclean" description="Clean the modules directory.">
+        <delete quiet="true">
+            <fileset dir="${builder.modules.path}"
+                includes="${builder.collect.binary.modules.includes}"/>
+        </delete>
+    </target>
+
+    <target name="clean.el4ant.libraries"
+        unless="clean.el4ant.libraries.executed">
+        
+        <delete quiet="true">
+            <fileset dir="${basedir}/external-tools/el4ant/framework_lib">
+                <include name="*.jar"/>
+                <exclude name="ant-contrib-*.jar"/>
+                <exclude name="buildsystem-*.jar"/>
+                <exclude name="reports-*.jar"/>
+                <exclude name="tools-*.jar"/>
+                <exclude name="j2ee.jar"/>
+                <exclude name="commons-attributes.jar"/>
+            </fileset>
+        </delete>
+        <delete quiet="true">
+            <fileset dir="${basedir}/external-tools/el4ant/lib">
+                <include name="*.jar"/>
+                <exclude name="ant-contrib-*.jar"/>
+                <exclude name="buildsystem-*.jar"/>
+                <exclude name="reports-*.jar"/>
+                <exclude name="tools-*.jar"/>
+                <exclude name="j2ee.jar"/>
+                <exclude name="commons-attributes.jar"/>
+            </fileset>
+        </delete>
+        
+        <property name="clean.el4ant.libraries.executed" value="true"/>
+    </target>
+
+
+    <!--
+        Reconfigures project given in property "builder.current.project".
+        This task will be executed only once per project.
+    --> 
+    <target name="reconfigure.project"
+        unless="reconfigured.${builder.current.project}">
+        
+        <antcall target="clean.el4ant.libraries"/>
+        
+        <!-- Can not execute distclean because the build.xml could not exist! -->
+        <ant dir="${builder.current.project}" antfile="bootstrap.xml" 
+            target="distclean" />
+        <delete quiet="true" includeemptydirs="true">
+            <fileset dir="${builder.current.project}">
+                <include name="**/classes/**"/>
+                <include name="dist/**"/>
+                <include name="lib/**"/>
+                <include name="build.xml"/>
+            </fileset>
+        </delete>
+        <ant dir="${builder.current.project}" antfile="bootstrap.xml" 
+            target="configure"/>
+        
+        <property name="reconfigured.${builder.current.project}" value="true"/>
+    </target>
+    
+    
+    <!--
+        Targets to collect parts for the zip file.
+    -->
+    <!-- Will be executed only once. -->
+    <target name="collect.essential"
+        unless="collect.essential.executed"
+        description="Collects the needed for the essential zip.">
+        
+        <antcall target="collect.libraries.project">
+            <param name="builder.current.project" value="framework"/>
+        </antcall>
+        <antcall target="collect.binary.modules.project">
+            <param name="builder.current.project" value="framework"/>
+        </antcall>
+        <antcall target="collect.libraries.project">
+            <param name="builder.current.project" value="helloworld"/>
+        </antcall>
+        <antcall target="collect.el4ant.libraries"/>
+        
+        <property name="collect.essential.executed" value="true"/>
+    </target>
+    
+    <!-- Will be executed only once. -->
+    <target name="collect.convenience"
+        unless="collect.convenience.executed"
+        description="Collects the needed for the convenience zip.">
+        
+        <antcall target="collect.javadoc.project">
+            <param name="builder.current.project" value="framework"/>
+        </antcall>
+        <antcall target="collect.pdf.project">
+            <param name="builder.current.project" value="framework"/>
+        </antcall>
+        
+        <property name="collect.convenience.executed" value="true"/>
+    </target>
+
+    <target name="collect.el4ant.libraries">
+        <copy todir="${builder.library.path}" overwrite="true">
+            <fileset dir="${basedir}/external-tools/el4ant/framework_lib">
+                <include name="*.jar"/>
+                <exclude name="ant-contrib-*.jar"/>
+                <exclude name="buildsystem-*.jar"/>
+                <exclude name="reports-*.jar"/>
+                <exclude name="tools-*.jar"/>
+                <exclude name="j2ee.jar"/>
+                <exclude name="commons-attributes.jar"/>
+            </fileset>
+            <fileset dir="${basedir}/external-tools/el4ant/lib">
+                <include name="*.jar"/>
+                <exclude name="ant-contrib-*.jar"/>
+                <exclude name="buildsystem-*.jar"/>
+                <exclude name="reports-*.jar"/>
+                <exclude name="tools-*.jar"/>
+                <exclude name="j2ee.jar"/>
+                <exclude name="commons-attributes.jar"/>
+            </fileset>
+        </copy>
+    </target>
+    
+    <target name="collect.libraries.project" depends="reconfigure.project">
+        <copy todir="${builder.library.path}" overwrite="true">
+            <fileset dir="${builder.current.project}/${builder.library.path.project}" 
+                includes="${builder.collect.libraries.includes}"/>
+        </copy>
+    </target>
+    
+    <target name="collect.binary.modules.project" depends="reconfigure.project">
+        <ant dir="${builder.current.project}" target="binrelease"/>
+        <copy todir="${builder.modules.path}" overwrite="true">
+            <fileset dir="${builder.current.project}/${builder.modules.path.project}"
+                includes="${builder.collect.binary.modules.includes}"/>
+        </copy>
+    </target>
+    
+    <target name="collect.javadoc.project" depends="reconfigure.project">
+        <ant dir="${builder.current.project}" target="javadoc"/>
+        <delete quiet="true" includeEmptyDirs="true">
+            <fileset dir="${builder.docs.path.javadoc}"/>
+        </delete>
+        <mkdir dir="${builder.docs.path.javadoc}"/>
+        <copy todir="${builder.docs.path.javadoc}">
+            <fileset dir="${builder.current.project}/${builder.javadoc.path.project}" includes="**/*"/>
+        </copy>
+    </target>
+    
+    <target name="collect.pdf.project">
+        <delete quiet="true" includeEmptyDirs="true">
+            <fileset dir="${builder.docs.path.pdf}"/>
+        </delete>
+        <mkdir dir="${builder.docs.path.pdf}"/>
+        <copy todir="${builder.docs.path.pdf}">
+            <fileset dir="${builder.current.project}/${builder.pdf.path.project}" includes="**/*"/>
+        </copy>
+    </target>
+</project>
