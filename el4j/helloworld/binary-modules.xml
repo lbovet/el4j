@@ -37,7 +37,7 @@
         <attribute name="binrelease.version.module-security" 
             value="1.1"/>
         <attribute name="binrelease.version.module-spring_rcp" 
-            value="1.1"/>
+            value="1.2"/>
         <attribute name="binrelease.version.module-web" 
             value="1.3"/>
         <attribute name="binrelease.version.common-database" 
