@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+    
+    <import resource="classpath:common/remotingtests-protocols-config.xml"/>
+    
+    <bean id="calculator" class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
+        <property name="remoteProtocol">
+            <ref bean="soapProtocol" />
+        </property>
+        <property name="serviceInterface">
+            <value>ch.elca.el4j.tests.remoting.service.Calculator</value>
+        </property>
+        <property name="serviceName">
+            <value>Calculator.Soap.Remotingtests</value>
+        </property>
+    </bean>
+
+    <bean id="soapExceptionThrower" class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
+        <property name="remoteProtocol">
+            <ref bean="soapProtocolForSpecificSoapConformExceptions" />
+        </property>
+        <property name="serviceInterface">
+            <value>ch.elca.el4j.tests.remoting.service.soap.ExceptionThrower</value>
+        </property>
+    </bean>
+</beans>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <bean id="ConfigurationTest" 
+        class="ch.elca.el4j.core.config.ListPropertyMergeConfigurer">
+        <property name="location">
+            <value>core/config/TwoValuesList.properties</value>
+        </property>
+        <property name="order">
+            <value>1</value>
+        </property>
+    </bean>
+    <bean id="OverrideTest" 
+        class="org.springframework.beans.factory.config.PropertyOverrideConfigurer">
+        <property name="location">
+            <value>core/config/Override.properties</value>
+        </property>
+        <property name="order">
+            <value>2</value>
+        </property>
+    </bean>
+    <bean id="ConfigurationTest2" 
+        class="ch.elca.el4j.core.config.ListPropertyMergeConfigurer">
+        <property name="location">
+            <value>core/config/OneValueList.properties</value>
+        </property>
+        <property name="order">
+            <value>3</value>
+        </property>
+    </bean>
+    <bean id="ListTest" class="ch.elca.el4j.tests.core.config.ListClass">
+        <property name="listTest">
+            <list>
+                <value>item 0</value>
+            </list>
+        </property>
+    </bean>
+</beans>

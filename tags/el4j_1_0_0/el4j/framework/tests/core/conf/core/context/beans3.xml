@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+    
+<beans>
+    <bean id="Bean3" class="ch.elca.el4j.tests.core.context.Foo">
+    </bean>
+    <bean id="Bean4" class="ch.elca.el4j.tests.core.context.Foo">
+    </bean>
+</beans>
