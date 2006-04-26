@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<ant:project name="helloworld-demos" xmlns="antlib:ch.elca.el4ant" 
+    xmlns:ant="antlib:org.apache.tools.ant">
+    <module name="module-example-demos">
+        <attribute name="set" value="helloworld-demos"/>
+        <attribute name="runtime.runnable" value="true"/>
+        <attribute name="runtime.class" 
+            value="ch.elca.helloworld.demos.MainCalculator"/>
+        <attribute name="runtime.command.creator" 
+            value="runtime.command.creator.basic"/>
+        <hook name="runtime.[module].[eu]" 
+            target="runtime.hook.cmdline.arguments"/>
+        <dependency module="module-example"/>
+    </module>
+</ant:project>

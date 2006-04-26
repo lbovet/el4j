@@ -1,0 +1,243 @@
+<?xml version="1.0"?>
+<ant:project
+    name="plugins"
+    xmlns="antlib:ch.elca.el4ant"
+    xmlns:ant="antlib:org.apache.tools.ant"
+    xmlns:antcontrib="antlib:net.sf.antcontrib">
+
+    <!-- Develop plugin to publish plugins as modules. Must be first ! -->
+<!--    <plugin name="develop"/>-->
+
+    <!-- Java compiler plugin. Contains tasks like compile and jars. -->
+    <plugin name="compile"/>
+
+    <!-- Runtime plugin. Generates shortcuts to launch applications. -->
+    <plugin name="runtime"/>
+
+    <!--
+        Shows configuration at the end of project configuration step
+        (command "ant -f bootstrap.xml").
+    -->
+    <plugin name="show"/>
+
+    <!--
+        Plugin online library to automatically download missing libraries 
+        from possible locations. By setting property local to any value the
+        online lib plugin will only search for libraries locally.
+    -->
+    <antcontrib:if>
+        <ant:isset property="local"/>
+        <antcontrib:then>
+            <ant:echo level="info">
+Automatic download of missing libraries from the network deactivated.
+            </ant:echo>
+            <plugin name="onlinelib">
+                <!-- Local repositories -->
+                <attribute name="onlinelib.repository" value="${basedir}/../lib/"/>
+                <attribute name="onlinelib.repository" value="${basedir}/../lib/src/"/>
+                <attribute name="onlinelib.repository" value="${basedir}/../modules/"/>
+            </plugin>
+        </antcontrib:then>
+        <antcontrib:else>
+            <ant:echo level="info">
+You can disable online plugin with '-Dlocal=t' at configuration time
+(ant -f bootstrap.xml) to deactivate automatic download of missing libraries
+from the network. If automatic downloading of libraries is disabled the
+configuration task will consume less time.
+            </ant:echo>
+            <plugin name="onlinelib">
+                <!-- Local repositories -->
+                <attribute name="onlinelib.repository" value="${basedir}/../lib/"/>
+                <attribute name="onlinelib.repository" value="${basedir}/../lib/src/"/>
+                <attribute name="onlinelib.repository" value="${basedir}/../modules/"/>
+                
+                <!-- Internet repositories -->
+                <attribute name="onlinelib.repository"
+                    value="http://el4.elca-services.ch/el4j/lib/"/>
+                <attribute name="onlinelib.repository"
+                    value="http://el4.elca-services.ch/el4j/lib/src/"/>
+                <attribute name="onlinelib.repository"
+                    value="http://el4.elca-services.ch/el4j/modules/"/>
+                <attribute name="onlinelib.repository"
+                    value="http://el4.elca-services.ch/el4j/modules/sandbox/"/>
+                
+                <!-- ELCA internal repositories -->
+                <attribute name="onlinelib.repository"
+                    value="http://leaffy/java/lib/"/>
+                <attribute name="onlinelib.repository"
+                    value="http://leaffy/java/lib/src/"/>
+                <attribute name="onlinelib.repository"
+                    value="http://leaffy/java/el4j/modules/"/>
+            </plugin>
+        </antcontrib:else>
+    </antcontrib:if>
+
+    <!--
+        Environment plugin to flexible change configuration. Set configuration
+        is available for plugins (EL4Ant) and modules (properties file on
+        classpath).
+    -->
+    <plugin name="env" file="buildsystem/tools/env/env.xml">
+        <attribute name="env.location" value="env/env.properties"/>
+    </plugin>
+
+    <!-- Plugin to execute JUnit tests and generate JUnit test reports. -->
+    <plugin name="junit">
+        <attribute name="junit.jar" value="junit-3.8.1.jar"/>
+        <attribute name="junit.set.list" value="framework-tests,application-tests"/>
+    </plugin>
+
+    <!-- Plugin to generate javadoc. -->
+    <plugin name="javadoc">
+        <!-- Sets to generate javadoc for. -->
+        <attribute name="javadoc.set.list"
+            value="framework-modules,framework-tests,framework-demos,application-modules,application-tests,application-demos"/>
+
+        <!-- Use el4j stylesheet file with ELCA colors. -->
+        <attribute name="javadoc.default.stylesheetfile"
+            value="etc/el4j-javadoc-stylesheet.css"/>
+
+        <!-- Default group parameters. -->
+        <attribute name="javadoc.default.header">
+<![CDATA[
+    <script type='text/javascript'>
+        function removeKeyword(str) {
+            i = str.indexOf(':');
+            str = str.substring(i+1);
+            i = str.length;
+            str = str.substring(0, i-1);
+            return str;
+        }
+        function removeHead (str) {
+            v=str.substring(42);
+            return v.substring(0, v.length-2);
+        }
+        function printFileStatus (url_kw,revision_kw,date_kw,author_kw) {
+            document.write ('<br/><dl><dt><b>File-location:</b><dd><a href=\'http://svn.sourceforge.net/viewcvs.cgi/');
+            document.write(removeHead(url_kw));
+            document.write('\'>');
+            document.write(removeHead(url_kw));
+            document.write('</a></dl>');
+            document.write ('<dl><dt><b>Last check-in date </b>');
+            document.write(removeKeyword(date_kw));
+            document.write('<b> by </b>');
+            document.write(removeKeyword(author_kw));
+            document.write('<b> for revision </b>');
+            document.write(removeKeyword(revision_kw));
+            document.write('</a></dl>');
+        }
+    </script>
+]]>
+        </attribute>
+        <!-- Commented due to bug of javadoc ant task. Problem occurs only on windows. -->
+        <!--[CDATA[Copyright &#169; 2005 ELCA, Lausanne, Switzerland. All Rights Reserved.]]-->
+        <attribute name="javadoc.default.bottom">ELCA</attribute>
+        
+        <!-- Group specific parameters for set "framework-modules". -->
+        <attribute name="javadoc.framework-modules.access" value="protected"/>
+        <attribute name="javadoc.framework-modules.doctitle">EL4J framework modules developer documentation</attribute>
+        <attribute name="javadoc.framework-modules.windowtitle">EL4J API documentation - Framework modules</attribute>
+        
+        <!-- Group specific parameters for set "framework-tests". -->
+        <attribute name="javadoc.framework-tests.access" value="private"/>
+        <attribute name="javadoc.framework-tests.doctitle">EL4J framework junit tests developer documentation</attribute>
+        <attribute name="javadoc.framework-tests.windowtitle">EL4J API documentation - Framework junit tests</attribute>
+        
+        <!-- Group specific parameters for set "framework-demos". -->
+        <attribute name="javadoc.framework-demos.access" value="private"/>
+        <attribute name="javadoc.framework-demos.doctitle">EL4J framework demonstrations developer documentation</attribute>
+        <attribute name="javadoc.framework-demos.windowtitle">EL4J API documentation - Framework demonstrations</attribute>
+        
+        <!-- Group specific parameters for set "application-modules". -->
+        <attribute name="javadoc.application-modules.access" value="protected"/>
+        <attribute name="javadoc.application-modules.doctitle">EL4J application modules developer documentation</attribute>
+        <attribute name="javadoc.application-modules.windowtitle">EL4J API documentation - Application modules</attribute>
+        
+        <!-- Group specific parameters for set "application-tests". -->
+        <attribute name="javadoc.application-tests.access" value="private"/>
+        <attribute name="javadoc.application-tests.doctitle">EL4J application junit tests developer documentation</attribute>
+        <attribute name="javadoc.application-tests.windowtitle">EL4J API documentation - Application junit tests</attribute>
+        
+        <!-- Group specific parameters for set "application-demos". -->
+        <attribute name="javadoc.application-demos.access" value="private"/>
+        <attribute name="javadoc.application-demos.doctitle">EL4J application demonstrations developer documentation</attribute>
+        <attribute name="javadoc.application-demos.windowtitle">EL4J API documentation - Application demonstrations</attribute>
+    </plugin>
+
+    <!--
+        Plugin to execute style checks on source code and generate a report of
+        check results.
+    -->
+    <plugin name="checkstyle">
+        <attribute name="checkstyle.config"
+            value="etc/checkstyle_el4j_checks.xml"/>
+        <attribute name="checkstyle.properties"
+            value="etc/checkstyle_el4j.properties"/>
+        <attribute name="checkstyle.set.list"
+            value="framework-modules,framework-tests,framework-demos,application-modules,application-tests"/>
+    </plugin>
+
+    <!-- Plugin to check code coverage and generate a coverage report. -->
+    <plugin name="emma">
+        <attribute name="emma.mode" value="offline"/>
+        <attribute name="emma.switch" value="emma"/>
+        <attribute name="emma.set.list" value="framework-modules,application-modules"/>
+    </plugin>
+
+    <!--
+        Plugin to create a website by using velocity templates. Previous
+        generated reports can be included in this website.
+    -->
+    <plugin name="website">
+        <attribute name="website.resources" value="etc/website/resources"/>
+        <attribute name="website.templates" value="etc/website/templates"/>
+    </plugin>
+
+    <!--
+        Eclipse IDE integration. Creates an Eclipse workspace for that EL4Ant
+        project and Eclipse project files per EL4Ant module.
+    -->
+    <plugin name="eclipse">
+        <attribute name="eclipse.workspace.path" value="workspace"/>
+
+        <!--
+            Following targets/target groups will be available as
+            Eclipse-External-Tools-Commands.
+        -->
+        <!-- Eclipse targets -->
+        <attribute name="eclipse.tools" value="eclipse.generate"/>
+        <!-- compile targets -->
+        <attribute name="eclipse.tools" value="clean.module,jars"/>
+        <!-- junit targets -->
+        <attribute name="eclipse.tools" value="junit.startdev.all"/>
+        <!-- reports targets -->
+        <attribute name="eclipse.tools" value="javadoc,checkstyle"/>
+        <!-- j2ee-war and j2ee-war-tomcat targets -->
+        <attribute name="eclipse.tools" value="create.war.module.eu,deploy.war.module.eu"/>
+        <!-- binrelease targets -->
+        <attribute name="eclipse.tools" value="binrelease.module"/>
+    </plugin>
+
+    <!-- Plugin to create and compile commons attributes source files. -->
+    <plugin name="commons-attributes"/>
+
+    <!-- Plugin to include given directories in generates jar files. -->
+    <plugin name="resources">
+        <attribute name="resources.directories" value="conf"/>
+    </plugin>
+
+    <!-- Plugin to receive and create binary modules. -->
+    <plugin name="binrelease">
+        <attribute name="binrelease.output.directory" value="dist/binaries"/>
+        <attribute name="binrelease.default.excludes" value="module.xml,.classpath,.project,.check*,.externalToolBuilders/**"/>
+    </plugin>
+
+    <!-- Plugin to execute Ant tasks parallel. -->
+    <plugin name="parallel" file="buildsystem/tools/parallel/parallel.xml"/>
+
+    <!-- Plugin to create "Ant free" start scripts. -->
+    <plugin name="distribution" file="buildsystem/tools/distribution/distribution.xml">
+       <attribute name="distribution.profiles.basedir" value="dist"/>
+       <attribute name="distribution.set.list" value="framework-demos,application-demos"/>
+    </plugin>
+</ant:project>
