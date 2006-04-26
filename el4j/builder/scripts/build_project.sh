@@ -197,11 +197,6 @@ else
         ${ANTCMD} -f bootstrap.xml distclean 
         ${XANTCMD} -f bootstrap.xml configure -Dwebsite.donotclean=true
         ${XANTCMD} jars junit.start.all emma.report -Demma=true -Ddisttest=true
-        
-        # remove compiled classes with emma stuff and compile newly
-        ${ANTCMD} -f bootstrap.xml distclean 
-        ${XANTCMD} -f bootstrap.xml configure -Dwebsite.donotclean=true
-        ${XANTCMD} jars
 
         # generate reports (javadoc, checkstyle, website)
         ${XANTCMD} javadoc 
