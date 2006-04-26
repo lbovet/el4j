@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+    Spring bean configuration file to prepare ibatis sqlmaps client. This bean
+    is normally used in daos.
+
+    Needed beans which are not defined in this file:
+       * dataSource
+           
+    Following properties must be overwritten:
+       * sqlMapClientConfigurator.configLocation
+-->
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <bean id="convenienceSqlMapClientTemplate" 
+        name="sqlMapClientTemplate"
+        class="ch.elca.el4j.services.persistence.ibatis.dao.ConvenienceSqlMapClientTemplate">
+        <property name="sqlMapClient">
+            <ref local="sqlMapClientConfigurator"/>
+        </property>
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+        <property name="exceptionTranslator">
+            <bean class="org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator">
+                <constructor-arg>
+                    <ref bean="dataSource"/>
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean>
+    <bean id="sqlMapClientConfigurator" 
+        class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+        <property name="configLocation">
+            <value>ibatis/my-sqlmap-config.xml</value>
+        </property>
+    </bean>
+</beans>
