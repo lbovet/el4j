@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!-- Project definition. -->
+<ant:project name="helloworld-project" xmlns="antlib:ch.elca.el4ant" 
+    xmlns:ant="antlib:org.apache.tools.ant">
+    
+    <!-- Binary modules. -->
+    <include file="binary-modules.xml"/>
+
+    <!-- Plugins. -->
+    <include file="plugins.xml"/>
+
+    <!-- Hooks. -->
+    <include file="hooks.xml"/>
+
+    <!-- Modules. -->
+    <include file="modules.xml"/>
+
+</ant:project>
