@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" xmlns:ant="antlib:org.apache.tools.ant">
+    <module name="module-hibernate">
+    	
+    	<!--  Working set -->
+        <attribute name="set" value="framework-modules"/>
+        
+        <!-- Binary release -->
+        <attribute name="binrelease.version" value="1.1"/>
+        
+        <!-- Module dependencies -->
+        <dependency module="module-core" />
+        
+         <!-- Jar dependencies -->
+        <dependency jar="hibernate-3.1.2.jar"/>
+        <dependency jar="dom4j-1.6.1.jar"/>
+        <dependency jar="jta-1.0.1b.jar"/>
+        <dependency jar="antlr-2.7.6rc1.jar"/>
+        <dependency jar="ehcache-1.1.jar"/>
+        
+    </module>
+</ant:project>

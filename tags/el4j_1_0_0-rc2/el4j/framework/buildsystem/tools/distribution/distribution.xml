@@ -1,0 +1,317 @@
+<?xml version="1.0"?>
+<!-- EL4Ant plugin definition -->
+<project name="distribution" xmlns:antcontrib="antlib:net.sf.antcontrib" xmlns:el4ant="antlib:ch.elca.el4ant">
+    <description>
+        EL4Ant plugin for creating executable standalone distributions.
+    </description>
+
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <target name="load"
+        depends="init.distribution.properties"
+        description="[C] Load the distribution plugin">
+        <!-- This plugins depends on plugin velocity -->
+        <el4ant:plugin name="velocity"/>
+
+        <property name="plugin.distribution.java" 
+            value="${configure.plugin.dir}/java" />
+        <property name="plugin.distribution.classes" 
+                value="${configure.plugin.dir}/classes" />
+        <property name="plugin.distribution.jar" 
+            value="${buildsystem.dist.directory}/${plugin.distribution.jar.name}" />
+
+        <!-- Compile the plugin Java classes (generators and tasks) -->
+        <!--   Create the jar file and load tasks -->
+        <el4ant:buildplugin srcdir="${plugin.distribution.java}" 
+            destdir="${plugin.distribution.classes}" 
+            jarfile="${plugin.distribution.jar}">
+            <classpath>
+                <pathelement location="${buildsystem.lib.directory}/${plugin.distribution.jar.name}" />
+                <pathelement location="${buildsystem.dist.directory}/${plugin.distribution.jar.name}" />
+                <pathelement location="${buildsystem.lib.directory}/tools-velocity.jar" />
+                <pathelement location="${buildsystem.lib.directory}/${buildsystem.core.jar}" />
+            </classpath>
+            <fileset dir="${plugin.distribution.classes}" />
+            <fileset dir="${plugin.distribution.java}">
+                <exclude name="**/*.java" />
+            </fileset>
+            <fileset dir="${configure.plugin.dir}">
+                <include name="distribution.xml" />
+            </fileset>
+            <!-- Optional element for the jar Manifest file -->
+            <manifest>
+                <attribute name="Implementation-Title" value="Distribution Plugin" />
+                <attribute name="Implementation-Vendor" value="ELCA Informatique SA" />
+                <attribute name="Build-Date" value="${TODAY}" />
+                <attribute name="Built-By" value="${user.name}" />
+            </manifest>
+            <plugin name="distribution" file="distribution.xml" />
+            <dependency jar="${distribution.collections.jar}" />
+            <dependency jar="${distribution.velocity.jar}" />
+            <dependency jar="${distribution.vpp.jar}" />
+        </el4ant:buildplugin>
+
+        <typedef resource="${distribution.antlib.path}" 
+            uri="antlib:ch.elca.el4j.tools.distribution"
+            loaderRef="el4ant.coreloader"/>
+    </target>
+        
+    <target name="configure"
+        depends="init.distribution.properties"
+        description="[C] Configure the distribution support">
+        <!-- Include user targets -->
+        <el4ant:buildgen action="include" 
+            target="distribution.include.startpoint" />
+
+        <!-- Load distribution properties and register a property generator -->
+        <distribution:init distributionSetList="${distribution.set.list}" 
+            xmlns:distribution="antlib:ch.elca.el4j.tools.distribution" />
+
+        <!-- Information for distclean -->
+        <antcontrib:if>
+            <istrue value="${plugin.compiled}" />
+            <antcontrib:then>
+                <el4ant:projectproperties 
+                    action="append" property="plugin.files" 
+                    value="${configure.plugin.dir}/classes" />
+            </antcontrib:then>
+        </antcontrib:if>
+
+        <el4ant:projectproperties action="append" property="plugin.files" 
+            value="dist/distribution" />
+
+        <!-- Information for shortcut generator -->
+        <el4ant:buildgen action="shortcut" target="create.distribution.module.eu" 
+            ifattribute="distribution.create.shortcut.module.eu">
+            <param name="module" />
+            <param name="eu" />
+        </el4ant:buildgen>
+
+        <el4ant:buildgen action="shortcut" target="create.distribution.module" 
+            ifattribute="distribution.create.shortcut.module">
+            <param name="module" />
+        </el4ant:buildgen>
+    </target>
+
+    <!-- Fake init target to load plugin file -->
+    <target name="init" />
+
+    <!-- Targets following the next fake target are copied into the generated
+         build.xml file -->
+
+    <target name="distribution.include.startpoint" />
+
+    <!-- Targets from distribution.xml -->
+    <target name="init.distribution.properties">
+        <property name="distribution.profiles.basedir" value="dist" />
+                                    
+        <property name="plugin.distribution.jar.name" 
+            value="tools-distribution.jar" />
+        <property name="distribution.velocity.jar" 
+            value="${buildsystem.lib.directory}/velocity-1.4.jar" />
+        <property name="distribution.collections.jar" 
+                value="${buildsystem.lib.directory}/commons-collections-3.1.jar" />
+        <property name="distribution.vpp.jar"
+            value="${buildsystem.lib.directory}/foundrylogic-vpp-2.2.1.jar"/>
+
+        
+        <property name="distribution.antlib.path"
+            value="ch/elca/el4j/buildsystem/tools/distribution/antlib.xml"/>
+
+    </target>
+    
+    <target name="check.module.distributable">
+        <antcontrib:if>
+            <isset property="module" />
+            <then>
+                <el4ant:extendedproperty name="module.path" 
+                    value="${module.path.${module}}" />
+                <fail message="The module '${module}' has no distribution profiles. Create '${module.path}/${distribution.profiles.basedir}' with at least one profile (subfolder).">
+                    <condition>
+                        <not>
+                            <available file="${module.path}/${distribution.profiles.basedir}" 
+                                type="dir" />
+                        </not>
+                    </condition>
+                </fail>
+            </then>
+        </antcontrib:if>
+    </target>
+
+    <target name="create.distribution.module" 
+        depends="init,init.distribution.properties,check.module.distributable">
+        <el4ant:extendedproperty name="module.path" value="${module.path.${module}}" />
+        <dirset dir="${module.path}/${distribution.profiles.basedir}" 
+            includes="*" 
+            id="distribution.profiles" />
+        <pathconvert property="distribution.profiles" 
+            refid="distribution.profiles" 
+            pathsep=",">
+            <mapper>
+                <flattenmapper />
+            </mapper>
+        </pathconvert>
+
+        <el4ant:extendedproperty name="module.distribution.name" 
+            value="${distribution.name.${module}}" />
+        <el4ant:extendedproperty name="module.distribution.version" 
+            value="${distribution.version.${module}}" />
+
+        <antcontrib:for list="${distribution.profiles}" param="profile">
+            <sequential>
+                <el4ant:extendedproperty name="distribution.profile" value="@{profile}" />
+
+                <antcontrib:if>
+                    <and>
+                        <isset property="module.distribution.version" />
+                        <not>
+                            <contains string="${module.distribution.version}"
+                                substring="$${" />
+                        </not>
+                    </and>
+                    <antcontrib:then>
+                        <el4ant:extendedproperty name="distribution.dir" 
+                            value="dist/distribution/${module}-${distribution.profile}/${module.distribution.name}_${module.distribution.version}" />
+                    </antcontrib:then>
+                    <antcontrib:else>
+                        <el4ant:extendedproperty name="distribution.dir" 
+                            value="dist/distribution/${module}-${distribution.profile}" />
+                    </antcontrib:else>
+                </antcontrib:if>
+
+                <el4ant:extendedproperty name="module.eulist" value="${module.eulist.${module}}" />
+                <antcontrib:for list="${module.eulist}" param="it">
+                    <sequential>
+
+                        <!-- include targets with basic runtime creator only -->
+                        <antcontrib:if>
+                            <or>
+                                <equals arg1="@{it}" arg2="0" />
+                                <isset property="distribution.create.shortcut.module.eu.${module}.@{it}" />
+                            </or>
+                            <antcontrib:then>
+                                <antcall target="copy.distribution.libs.module.eu">
+                                    <param name="eu" value="@{it}" />
+                                </antcall>
+                            </antcontrib:then>
+                        </antcontrib:if>
+                    </sequential>
+                </antcontrib:for>
+
+                <antcall target="copy.and.zip.distribution.profile.module" />
+            </sequential>
+        </antcontrib:for>
+    </target>
+
+    <target name="create.distribution.module.eu" 
+        depends="init,init.distribution.properties,check.module.distributable">
+        <el4ant:extendedproperty name="module.path" 
+            value="${module.path.${module}}" />
+        <dirset dir="${module.path}/${distribution.profiles.basedir}" 
+            includes="*" 
+            id="distribution.profiles" />
+        <pathconvert property="distribution.profiles" 
+            refid="distribution.profiles" 
+            pathsep=",">
+            <mapper>
+                <flattenmapper />
+            </mapper>
+        </pathconvert>
+
+        <el4ant:extendedproperty name="module.eu.distribution.name" 
+            value="${distribution.name.${module}.${eu}}" />
+        <el4ant:extendedproperty name="module.eu.distribution.version" 
+            value="${distribution.version.${module}.${eu}}" />
+
+        <antcontrib:for list="${distribution.profiles}" param="profile">
+            <sequential>
+                <el4ant:extendedproperty name="distribution.profile" value="@{profile}" />
+
+                <antcontrib:if>
+                    <and>
+                        <isset property="module.eu.distribution.version" />
+                        <not>
+                            <contains string="${module.eu.distribution.version}"
+                                substring="$${" />
+                        </not>
+                    </and>
+                    <antcontrib:then>
+                        <el4ant:extendedproperty name="distribution.dir" 
+                            value="dist/distribution/${module}-${eu}-${distribution.profile}/${module.eu.distribution.name}_${module.eu.distribution.version}" />
+                    </antcontrib:then>
+                    <antcontrib:else>
+                        <el4ant:extendedproperty name="distribution.dir" 
+                            value="dist/distribution/${module}-${eu}-${distribution.profile}" />
+                    </antcontrib:else>
+                </antcontrib:if>
+
+                <antcall target="copy.distribution.libs.module.eu" />
+                <antcall target="copy.and.zip.distribution.profile.module" />
+            </sequential>
+        </antcontrib:for>
+    </target>
+
+    <!-- worker targets -->
+    <target name="copy.distribution.libs.module.eu">
+        <!-- copy libs and modules to distribution's lib folder -->
+        <el4ant:extendedproperty name="runtime.classpath.module.eu" 
+            value="${runtime.classpath.${module}.${eu}}" />
+
+        <antcontrib:for list="${runtime.classpath.module.eu}" param="it" delimiter=":">
+            <sequential>
+                <mkdir dir="${distribution.dir}/lib" />
+                <copy file="@{it}" todir="${distribution.dir}/lib" overwrite="true" />
+            </sequential>
+        </antcontrib:for>
+
+        <!-- create scripts -->
+        <el4ant:extendedproperty name="runtime.class.module.eu" 
+            value="${runtime.class.${module}.${eu}}" />
+        <property name="distribution.name.${module}.${eu}" 
+            value="start-${module}-${eu}" />
+        <el4ant:extendedproperty name="distribution.name" 
+            value="${distribution.name.${module}.${eu}}" />
+        
+        <typedef resource="${distribution.antlib.path}" 
+            uri="antlib:ch.elca.el4j.tools.distribution">
+            <classpath>
+                <pathelement location="${buildsystem.lib.directory}/${plugin.distribution.jar.name}" />
+                <pathelement location="${buildsystem.dist.directory}/${plugin.distribution.jar.name}" />
+                <pathelement location="${buildsystem.lib.directory}/tools-velocity.jar" />
+                <pathelement location="${buildsystem.lib.directory}/${buildsystem.core.jar}" />
+                <pathelement location="${distribution.collections.jar}" />
+                <pathelement location="${distribution.velocity.jar}" />
+                <pathelement location="${distribution.vpp.jar}" />
+            </classpath>
+        </typedef>
+        
+        <distribution:generateScripts 
+            classpath="${runtime.classpath.module.eu}" 
+            mainClass="${runtime.class.module.eu}" 
+            path="${distribution.dir}" 
+            scriptName="${distribution.name}" 
+            xmlns:distribution="antlib:ch.elca.el4j.tools.distribution" />
+
+        <!-- set executable flag for shell script -->
+        <chmod file="${distribution.dir}/${distribution.name}.sh" perm="0755" />
+    </target>
+
+    <target name="copy.and.zip.distribution.profile.module">
+        <!-- add distribution-specific files -->
+        <el4ant:extendedproperty name="module.path" 
+            value="${module.path.${module}}" />
+
+        <copy todir="${distribution.dir}" overwrite="true">
+            <fileset dir="${module.path}/${distribution.profiles.basedir}/${distribution.profile}" />
+        </copy>
+
+        <zip basedir="${distribution.dir}" 
+            destfile="${distribution.dir}.zip" 
+            update="true" />
+        <echo message="The distribution is available here: ${distribution.dir}.zip." />
+    </target>
+    <!-- End distribution.xml -->
+</project>
