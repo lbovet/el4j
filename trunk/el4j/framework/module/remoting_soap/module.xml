@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<ant:project name="el4j" xmlns="antlib:ch.elca.el4ant"
+    xmlns:ant="antlib:org.apache.tools.ant">
+    <module name="module-remoting_soap">
+        <attribute name="set" value="framework-modules"/>
+        <attribute name="binrelease.version" value="2.0"/>
+        <dependency module="module-remoting_core"/>
+
+        <!-- Soap protocol (Axis is used) -->
+        <dependency jar="jaxrpc-1.1.jar"/>
+        <dependency jar="saaj-1.2.jar"/>
+        <dependency jar="javamail-1.3.2.jar"/>
+        <dependency jar="wsdl4j-1.5.1.jar"/>
+        <dependency jar="axis-1.2.1.jar"/>
+        <dependency jar="axis-ant-1.2.1.jar"/>
+        <dependency jar="commons-discovery-0.2.jar"/>
+        <dependency jar="commons-httpclient-3.0-rc2.jar"/>
+        <dependency jar="activation-1.0.2.jar"/>
+        <dependency jar="servlet-api-2.4.jar"/>
+    </module>
+</ant:project>

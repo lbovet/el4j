@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+    <title>$title</title>
+    <meta name="description"
+        content="EL4J is an extension Library for the J2EE open sourced by ELCA. ELCA itself stands for technology, consulting and innovation. It is a software services company specializing in information, decision support and distributed systems, edm, data warehouse and industrial software."/>
+    <meta name="keywords"
+        content="el4j, elca, j2ee, java ee, spring framework, careers, job opportunities, project management, business process management, knowledge management, migration, webdesign, IT strategy, resource optimization, architecture design, system engineer, elca technology, Informatiker, DB Entwickler, project support, software engineering, Wirtschaftsinformatiker, workflow, software engineer, intranet, web development, maintenance, consultant, Programmierer, IT Architekt, Applikationsentwickler, documentum, data warehouse, Datenbankspezialist, crm, siebel, document management, internet portal, Vignette, consulting, emploi, ecommerce, e-commerce,  IT audit, scoping, software design, content management, information systems, information Technology, financial service partner business integration, healthcare partner business integrationIT audit, project organization, ingenieur, smart card development, bea, system integration services"/>
+    <meta name="author"          content="EL4J team"/>
+    <meta name="DC.Publisher"    content="Martin Zeltner"/>
+    <meta name="DC.Date"         content="2006-04-25T12:33:00+01:00"/>
+    <meta name="DC.Identifier"   content="http://www.elca.ch/"/>
+    <meta name="DC.Language"     content="en"/>
+    <meta name="DC.Rights"       content="license.html"/>
+    <meta name="DC.Date.created" content="2006-04-25T12:33:00+01:00"/>
+    <meta name="SELF.Pagetype"   content="page"/>
+
+    <link rel="Stylesheet" href="css/elca-os.css" media="screen"
+        type="text/css"/>
+    <link rel="Stylesheet" href="css/elca-os-print.css" media="print"
+        type="text/css"/>
+    <link rel="shortcut icon" href="favicon.ico"/>
+</head>
+<body>
+<div id="TopBar">
+    <div id="InnerTopBar">
+        <img id="Logo" src="images/el4j_logo.gif" alt="EL4J Logo"/>
+        <div id="TopTitle">
+            EL4J - the Extension Library for the J2EE
+        </div>
+        <div id="Slogan">
+            Incremental enhancements for the spring framework
+        </div>
+    </div>
+</div>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <!-- 
+        Executor to change keyword properties.
+    -->
+    <bean id="keywordPropertiesExecutor"
+        class="ch.elca.el4j.apps.refdb.gui.executors.KeywordPropertiesExecutor"
+        singleton="false">
+        <property name="beanPropertiesForms">
+            <!--
+                Displayed property forms. Here only one is diplayed for all 
+                keyword properties.
+            -->
+            <ref local="keywordFormAll" />
+        </property>
+    </bean>
+
+    <!-- 
+        Form that describs which keyword properties should be displayed.
+    -->
+    <bean id="keywordFormAll"
+        class="ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm"
+        singleton="false">
+        <property name="shownBeanProperties">
+            <!--
+                Are the shown bean properties. The order is the same in 
+                dialog.
+            -->
+            <list>
+                <value>key</value>
+                <value>name</value>
+                <value>description</value>
+            </list>
+        </property>
+        <property name="readOnlyBeanProperties">
+            <!--
+                Are shown but read only bean properties.
+            -->
+            <list>
+                <value>key</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 
+        Executor to delete keywords.
+    -->
+    <bean id="keywordDeleteExecutor"
+        class="ch.elca.el4j.apps.refdb.gui.executors.KeywordDeleteExecutor"
+        singleton="false" />
+
+    <!-- 
+        Executor to select all keywords.
+    -->
+    <bean id="keywordSelectAllExecutor"
+        class="ch.elca.el4j.services.gui.richclient.executors.SelectAllBeanExecutor"
+        singleton="false" />
+
+    <!--
+        Executor to create new keywords.
+    -->
+    <bean id="keywordCreateNewExecutor"
+        class="ch.elca.el4j.apps.refdb.gui.executors.KeywordNewExecutor"
+        singleton="false">
+        <property name="beanPropertiesForms">
+            <!--
+                Displayed property forms. Here only one is diplayed for most 
+                keyword properties.
+            -->
+            <ref local="keywordFormNormal" />
+        </property>
+    </bean>
+
+    <!-- 
+        Form that describs which keyword properties should be displayed.
+    -->
+    <bean id="keywordFormNormal"
+        class="ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm"
+        singleton="false">
+        <property name="shownBeanProperties">
+            <!--
+                Are the shown bean properties. The order is the same in 
+                dialog.
+            -->
+            <list>
+                <value>name</value>
+                <value>description</value>
+            </list>
+        </property>
+    </bean>
+</beans>
