@@ -60,7 +60,7 @@
     + ConvenienceHibernateDaoSupport and ConvenienceHibernateTemplate like used
       in module-ibatis added.
     + Helper classes added to transform EL4J criterias into Hibernate criterias.
-  = module-remoting_and_interface_enrichment spltted up
+  = module-remoting_and_interface_enrichment splitted up
     + Splitted up into modules: module-remoting_core, module-remoting_caucho,
       module-remoting_soap
   = module-remoting_and_interface_enrichment-demos renamed
@@ -133,6 +133,7 @@
       executors.
     + Search items can now have a specific binder.
     + Comparison search item extended.
+    + Include search item added.
     + Generally usable swing components (border and special panels) added.
   = module-web (binary version is 1.3)
     + Common Lang library moved to module-core.
