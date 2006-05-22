@@ -11,7 +11,7 @@
     -->
     <plugin name="binrelease.versions">
         <attribute name="binrelease.version.module-core" 
-            value="1.4"/>
+            value="1.5-rc0"/>
         <attribute name="binrelease.version.module-ibatis" 
             value="1.0"/>
         <attribute name="binrelease.version.module-hibernate" 
