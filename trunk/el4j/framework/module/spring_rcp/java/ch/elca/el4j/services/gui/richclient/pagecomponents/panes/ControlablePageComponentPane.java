@@ -85,13 +85,15 @@ public class ControlablePageComponentPane extends PageComponentPane {
      * {@inheritDoc}
      */
     public void propertyChange(PropertyChangeEvent evt) {
-        ControlableInternalFrame frame = getControlableInternalFrame();
-        String propertyName = evt.getPropertyName();
-        if ("pageComponentSelected".equals(propertyName)) {
-            boolean selected = ((Boolean) evt.getNewValue()).booleanValue();
-            frame.setSelected(selected);
+        if (isControlCreated()) {
+            ControlableInternalFrame frame = getControlableInternalFrame();
+            String propertyName = evt.getPropertyName();
+            if ("pageComponentSelected".equals(propertyName)) {
+                boolean selected = ((Boolean) evt.getNewValue()).booleanValue();
+                frame.setSelected(selected);
+            }
+            refreshProperties(frame);
         }
-        refreshProperties(frame);
     }
     
     /**
