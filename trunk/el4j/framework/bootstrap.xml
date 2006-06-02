@@ -95,6 +95,7 @@ Expects ${buildsystem.antcontrib.jar} or in Ant lib/ directory.">
           destdir="${buildsystem.core.classes}"
           deprecation="true"
           debug="${buildsystem.javac.debug}"
+          source="${buildsystem.javac.source}"
           encoding="${buildsystem.javac.encoding}"/>
         <jar
           destfile="${buildsystem.dist.directory}/${buildsystem.core.jar}">
