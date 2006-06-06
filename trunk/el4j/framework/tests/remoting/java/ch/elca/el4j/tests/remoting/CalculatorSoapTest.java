@@ -31,8 +31,6 @@ import ch.elca.el4j.tests.remoting.service.soap.impl.ExceptionThrowerImpl;
 
 import junit.framework.TestCase;
 
-
-
 /**
  * This class is a test for the calculator.
  *
