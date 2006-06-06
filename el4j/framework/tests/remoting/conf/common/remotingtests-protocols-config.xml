@@ -18,6 +18,23 @@
             <ref local="implicitContextPassingRegistry" />
         </property>
     </bean>
+    
+    <bean id="httpInvokerProtocol" 
+        class="ch.elca.el4j.services.remoting.protocol.HttpInvoker">
+        <property name="serviceHost">
+            <value>${j2ee-web.host}</value>
+        </property>
+        <property name="servicePort">
+            <value>${j2ee-web.port}</value>
+        </property>
+        <property name="contextPath">
+            <value>module-remoting-tests-web</value>
+        </property>
+        <property name="implicitContextPassingRegistry">
+            <ref local="implicitContextPassingRegistry" />
+        </property>
+    </bean>    
+    
     <bean id="hessianProtocol" class="ch.elca.el4j.services.remoting.protocol.Hessian">
         <property name="serviceHost">
             <value>${j2ee-web.host}</value>
@@ -32,6 +49,7 @@
             <ref local="implicitContextPassingRegistry" />
         </property>
     </bean>
+        
     <bean id="burlapProtocol" class="ch.elca.el4j.services.remoting.protocol.Burlap">
         <property name="serviceHost">
             <value>${j2ee-web.host}</value>

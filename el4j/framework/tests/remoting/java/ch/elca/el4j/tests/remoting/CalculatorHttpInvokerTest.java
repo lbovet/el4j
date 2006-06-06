@@ -29,16 +29,15 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
  * );</script>
  *
  * @author Martin Zeltner (MZE)
+ * @author Waraich Rashid (RWA)
  */
-public class CalculatorRmiTest extends AbstractCalculatorTest {
+public class CalculatorHttpInvokerTest extends AbstractCalculatorTest {
     /**
      * {@inheritDoc}
      */
     ModuleApplicationContext getContext() {
         return  new ModuleApplicationContext(
             new String[] {"classpath*:mandatory/*.xml",
-                "server/app/remotingtests-rmi-server-config.xml",
-                "client/remotingtests-rmi-client-config.xml"},
-                true);
+                "client/remotingtests-httpinvoker-client-config.xml"}, true);
     }
 }

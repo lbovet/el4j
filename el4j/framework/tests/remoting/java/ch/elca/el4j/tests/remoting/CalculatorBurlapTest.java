@@ -14,17 +14,8 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-
 package ch.elca.el4j.tests.remoting;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import ch.elca.el4j.core.context.ModuleApplicationContext;
-import ch.elca.el4j.tests.remoting.service.Calculator;
-import ch.elca.el4j.tests.remoting.service.CalculatorException;
-
-import junit.framework.TestCase;
 
 /**
  * This class is a test for the calculator.
@@ -37,51 +28,16 @@ import junit.framework.TestCase;
  * );</script>
  *
  * @author Martin Zeltner (MZE)
+ * @author Waraich Rashid (RWA)
  */
-public class CalculatorBurlapTest extends TestCase {
-    /**
-     * Private logger.
-     */
-    private static Log s_logger = LogFactory.getLog(CalculatorBurlapTest.class);
-
-    /**
-     * Instance of the calculator proxy.
-     */
-    private Calculator m_calc;
-
+public class CalculatorBurlapTest extends AbstractCalculatorTest {
+    
     /**
      * {@inheritDoc}
      */
-    public void setUp() {
-        ModuleApplicationContext appContext 
-            = new ModuleApplicationContext(
-                new String[] {"classpath*:mandatory/*.xml",
-                    "client/remotingtests-burlap-client-config.xml"}, true);
-        m_calc = (Calculator) appContext.getBean("calculator");
-    }
-
-    /**
-     * This test tests the area calculation method.
-     */
-    public void testAreaCalculation() {
-        final double VALUE_A = 2.3;
-        final double VALUE_B = 5.7;
-        final double FAULT_DELTA = 0.00000001;
-        double result = m_calc.getArea(VALUE_A, VALUE_B);
-        assertEquals("The area is not correctly calculated.", result, 
-            VALUE_A * VALUE_B, FAULT_DELTA);
-    }
-    
-    /**
-     * This test tests the exception handling.
-     * @throws Exception
-     */
-    public void testExceptionBehaviour() {
-        try {
-            m_calc.throwMeAnException();
-            fail("No exception was thrown.");
-        } catch (CalculatorException e) {
-            s_logger.debug("Expected exception caught.", e);
-        }
+    ModuleApplicationContext getContext() {
+        return  new ModuleApplicationContext(
+            new String[] {"classpath*:mandatory/*.xml",
+                "client/remotingtests-burlap-client-config.xml"}, true);
     }
 }
