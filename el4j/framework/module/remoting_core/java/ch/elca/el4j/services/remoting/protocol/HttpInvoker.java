@@ -30,10 +30,10 @@ import ch.elca.el4j.services.remoting.RemotingServiceExporter;
  * This class implements all needed things for the httpinvoker protocol.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$URL: https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/module/remoting_core/java/ch/elca/el4j/services/remoting/protocol/HttpInvoker.java $",
- *    "$Revision: 245 $",
- *    "$Date: 2006-06-06 09:45:55 +0100 (Tu, 06 Jun 2006) $",
- *    "$Author: swisswheel $"
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
  * );</script>
  *
  * @author Rashid Waraich (RWA)
