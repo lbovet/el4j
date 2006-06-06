@@ -205,7 +205,8 @@ else
 
         # generate reports (javadoc, checkstyle, website)
         ${XANTCMD} javadoc 
-        ${XANTCMD} checkstyle 
+        # Checkstyle commented because it works not with Java 5!
+        # ${XANTCMD} checkstyle 
         ${XANTCMD} website
 
         # copy website
