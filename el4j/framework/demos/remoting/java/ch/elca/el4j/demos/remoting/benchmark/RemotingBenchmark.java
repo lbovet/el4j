@@ -124,7 +124,9 @@ public class RemotingBenchmark {
     private static String[] s_tests = {"rmiWithoutContextCalculator",
         "rmiWithContextCalculator", "hessianWithoutContextCalculator",
         "hessianWithContextCalculator", "burlapWithoutContextCalculator",
-        "burlapWithContextCalculator", "soapWithContextCalculator"};
+        "burlapWithContextCalculator", "soapWithContextCalculator",
+        "httpInvokerWithoutContextCalculator",
+        "httpInvokerWithContextCalculator"};
 
     /**
      * This member contains the large text. It will be used for testing.
