@@ -35,7 +35,7 @@ public class IncludeCriteria extends AbstractCriteria {
     /**
      * Default constructor for remoting protocols like hessian and burlap added.
      */
-    protected IncludeCriteria() { };
+    protected IncludeCriteria() { }
     
     /**
      * Constructor.
