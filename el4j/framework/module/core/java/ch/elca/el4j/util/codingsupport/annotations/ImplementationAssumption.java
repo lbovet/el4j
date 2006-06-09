@@ -52,7 +52,7 @@ import java.lang.annotation.RetentionPolicy;
  *    "$Author$"
  * );</script>
  *
- * @see Reject
+ * @see ch.elca.el4j.util.codingsupport.Reject
  * @author Adrian Moos (AMS)
  */
 @Retention(RetentionPolicy.SOURCE)
