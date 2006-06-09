@@ -25,7 +25,9 @@ import java.lang.annotation.RetentionPolicy;
  * idea for this type was shamelessly stolen from 
  * 
  * <p>
- * {@link http://java.sun.com/j2se/1.5.0/docs/guide/language/annotations.html}
+ * <a href="http://java.sun.com/j2se/1.5.0/docs/guide/language/annotations.html">
+ * http://java.sun.com/j2se/1.5.0/docs/guide/language/annotations.html</a>
+ * 
  * 
  * <p> The String argument should detail why the annotated element is 
  * preliminary. This annotation itself is preliminary (prototype stage).
