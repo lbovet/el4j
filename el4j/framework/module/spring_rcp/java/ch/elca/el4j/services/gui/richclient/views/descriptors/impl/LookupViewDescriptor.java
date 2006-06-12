@@ -16,15 +16,9 @@
  */
 package ch.elca.el4j.services.gui.richclient.views.descriptors.impl;
 
-import org.springframework.richclient.application.ApplicationWindow;
 import org.springframework.richclient.application.PageComponent;
 import org.springframework.richclient.application.View;
-import org.springframework.richclient.application.ViewDescriptor;
-import org.springframework.richclient.command.ActionCommand;
-import org.springframework.richclient.command.config.CommandButtonLabelInfo;
-import org.springframework.richclient.command.support.ShowViewCommand;
 
-import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.AbstractGroupPageComponentDescriptor;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 
 /**
@@ -40,8 +34,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  *
  * @author Martin Zeltner (MZE)
  */
-public class LookupViewDescriptor extends AbstractGroupPageComponentDescriptor
-    implements ViewDescriptor {
+public class LookupViewDescriptor extends AbstractViewDescriptor {
     
     /**
      * Is the bean name of the view to describe. This bean must be defined as
@@ -61,20 +54,6 @@ public class LookupViewDescriptor extends AbstractGroupPageComponentDescriptor
      */
     public final void setViewPrototypeBeanName(String viewPrototypeBeanName) {
         m_viewPrototypeBeanName = viewPrototypeBeanName;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public ActionCommand createShowViewCommand(final ApplicationWindow window) {
-        return new ShowViewCommand(this, window);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public CommandButtonLabelInfo getShowViewCommandLabel() {
-        return getLabel();
     }
 
     /**

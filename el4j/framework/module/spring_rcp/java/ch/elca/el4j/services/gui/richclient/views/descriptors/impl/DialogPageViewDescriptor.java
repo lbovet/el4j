@@ -47,9 +47,8 @@ import ch.elca.el4j.services.gui.richclient.views.DialogPageView;
  *
  * @author Martin Zeltner (MZE)
  */
-public class DialogPageViewDescriptor
-    extends AbstractGroupPageComponentDescriptor
-    implements ExecutorDisplayable, ViewDescriptor {
+public class DialogPageViewDescriptor extends AbstractViewDescriptor 
+                                      implements ExecutorDisplayable {
     /**
      * Is the default of this descriptor.
      */
@@ -156,20 +155,6 @@ public class DialogPageViewDescriptor
      */
     public Component getMainComponent() {
         return getDialogPageView().getMainComponent();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public ActionCommand createShowViewCommand(final ApplicationWindow window) {
-        return new ShowViewCommand(this, window);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public CommandButtonLabelInfo getShowViewCommandLabel() {
-        return getLabel();
     }
 }
 
