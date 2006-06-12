@@ -19,17 +19,11 @@ package ch.elca.el4j.services.gui.richclient.views.descriptors.impl;
 import java.awt.Component;
 
 import org.springframework.richclient.application.ApplicationPage;
-import org.springframework.richclient.application.ApplicationWindow;
 import org.springframework.richclient.application.PageComponent;
-import org.springframework.richclient.application.ViewDescriptor;
-import org.springframework.richclient.command.ActionCommand;
-import org.springframework.richclient.command.config.CommandButtonLabelInfo;
-import org.springframework.richclient.command.support.ShowViewCommand;
 import org.springframework.util.Assert;
 
 import ch.elca.el4j.services.gui.richclient.executors.AbstractBeanExecutor;
 import ch.elca.el4j.services.gui.richclient.executors.displayable.ExecutorDisplayable;
-import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.AbstractGroupPageComponentDescriptor;
 import ch.elca.el4j.services.gui.richclient.pages.PageLayoutBuilder;
 import ch.elca.el4j.services.gui.richclient.presenters.BeanPresenter;
 import ch.elca.el4j.services.gui.richclient.views.DialogPageView;
