@@ -43,7 +43,7 @@ public class GenericAttributesTest extends TestCase {
     /**
      * QDox library (usde by Common Attributes Compiler) 
      * does not support Generics.
-     * Tests are disabled for now.
+     * Tests are disabled for now. 
      * TODO: reenable tests
      */
     public void testDisabledDueToJDK5Annotations() {}
