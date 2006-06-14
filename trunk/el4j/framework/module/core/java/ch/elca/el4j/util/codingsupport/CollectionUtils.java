@@ -17,6 +17,7 @@
 
 package ch.elca.el4j.util.codingsupport;
 
+import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -24,14 +25,19 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import ch.elca.el4j.util.collections.ExtendedReorderableList;
+
 /**
- * This class supports methods to handle with collections. It covers only caps
+ * This class supports methods to handle with collections. It covers only gaps
  * of class <code>org.springframework.util.CollectionUtils</code>.
+ *
+ * 
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -114,17 +120,17 @@ public final class CollectionUtils {
      *         given classes
      */
     public static boolean containsOnlyObjectsOfType(
-        Collection c, Class[] containingClassTypes) {
+        Collection c, Class<?>[] containingClassTypes) {
         Reject.ifNull(c);
         Reject.ifNull(containingClassTypes);
         Reject.ifFalse(containingClassTypes.length > 0);
         Iterator it = c.iterator();
         while (it.hasNext()) {
-            Class elementClass = it.next().getClass();
+            Class<?> elementClass = it.next().getClass();
             boolean noClassMatches = true;
             for (int i = 0; noClassMatches && i < containingClassTypes.length; 
                 i++) {
-                Class containingClassType = containingClassTypes[i];
+                Class<?> containingClassType = containingClassTypes[i];
                 noClassMatches 
                     = !containingClassType.isAssignableFrom(elementClass);
             }
@@ -166,5 +172,86 @@ public final class CollectionUtils {
         Reject.ifNull(c);
         Reject.ifNull(containingClassType);
         return containsOnlyObjectsOfType(c, new Class[] {containingClassType});
+    }
+    
+    
+    /** 
+     * Finds the first element with index at least
+     * {@code startAt} that equals {@code o}. This method may take linear time.
+     * 
+     * @param list the list to search
+     * @param <T> the list's element type (duh!)
+     * @param t the element to look for
+     * @param startAt the index to start the search at
+     * @return the index of the first matching element
+     * @throws NoSuchElementException if no such element exists.
+     */    
+    public static <T> int find(List<T> list, T t, int startAt)
+        throws NoSuchElementException {
+        for (int id = startAt; id < list.size(); id++) {
+            if (list.get(id).equals(t)) {
+                return id;
+            }
+        }      
+        throw new NoSuchElementException(t.toString());        
+    }
+    
+
+    
+    /**
+     * See {@link ExtendedReorderableList#orderLike(List)}.
+     * @param <T> see there
+     * @param list see there
+     * @param example see there
+     */
+    public static <T> void orderLike(ExtendedReorderableList<T> list,
+                                     List<? extends T> example) {
+        for (int i = 0; i < example.size(); i++) {
+            list.swap(i, find(list, example.get(i), i));
+        }
+    }
+    
+    /**
+     * Copies the list's contents to an array.
+     * @param <T> the arrays element type 
+     * @param list the list to copy
+     * @param c the element type for the new array
+     * @return an new array containing this list's contents
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T[] toArray(List<? extends T> list, Class<T> c) {
+        return list.toArray((T[]) Array.newInstance(c, list.size()));
+    }
+    
+    /** swaps the elements at locations {@code i} and {@code j}. 
+     * If this list is a {@link ExtendedReorderableList}, its swap method
+     * is invoked, otherwise, set/get is used.
+     * 
+     * This behaves like Lists always declared a convenience swap method,
+     * that is overridden if ReordableRandomAccessList is implemented.
+     * @param list see above
+     * @param i see above
+     * @param j see above
+     * @param <T> .
+     */
+    public static <T> void swap(List<T> list, int i, int j) {
+        if (list instanceof ExtendedReorderableList) {
+            ((ExtendedReorderableList<T>) list).swap(i, j);
+        } else {
+            defaultSwap(list, i, j);
+        }
+    }
+    
+    /** 
+     * swaps the elements at locations {@code i} and {@code j} by set/get.
+     * @param list .
+     * @param i .
+     * @param j .
+     * @param <T> .
+     */
+    private static <T> void defaultSwap(List<T> list, int i, int j) {
+        T t = list.get(i);
+        list.set(i, list.get(j));
+        list.set(j, t);        
     }
 }
