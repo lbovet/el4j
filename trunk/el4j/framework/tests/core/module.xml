@@ -4,6 +4,7 @@
         <dependency module="module-core"/>
         <attribute name="set" value="framework-tests"/>
         <attribute name="junit.runnable" value="true"/>
+        <!--  disabled, because it can't handle Java 5 generics -->
 <!--        <attribute name="commons-attributes.enable" value="true"/>-->
     </module>
 </ant:project>
