@@ -11,7 +11,7 @@
     <!-- Author: $Author$ -->
 
     <!-- default severity is "warning" -->
-    <property name="severity" value="warning" />
+    <property name="severity" value="info" />
 
     <!-- Checks that each package has a package.html file -->
     <!--module name="PackageHtml"/-->
@@ -54,6 +54,12 @@
             <property name="authorFormat" value="[A-Za-z ]+\([a-zA-Z]{3}\)" />
         </module>
         <module name="JavadocMethod">
+            <property name="allowThrowsTagsForSubclasses" value="true" />
+            
+            <!-- permit lean specification in documentation text -->
+            <property name="allowMissingParamTags" value="true" />
+            <property name="allowMissingThrowsTags" value="true" />
+            <property name="allowMissingReturnTag" value="true" />
             <property name="allowThrowsTagsForSubclasses" value="true" />
             
             <!-- Allow missing throw tag activated due to bug of checkstyle! -->

@@ -1,0 +1,49 @@
+<html>
+<body>
+Contains the types used to configure a GUI.
+
+<p>TODO: provide lengthy example (e.g. RefDbGui.java)
+
+<p>Gui configuration using this package follows the building block methaphor:
+The user is expected to build his GUI by plugging pre-manufactured GUI elements
+together. The building blocks used (hereafter called elements) are instantiated
+by the user and may subsequently be configured by updating their public fields.
+Once configuration is complete, elements verify their configuration's integrity
+and are displayed as requested.
+
+<p>There is a one-to-one relationship
+between elements and widgets; an element is most conveniently reused by 
+putting its configuring code in a subclass and instantiating that class several
+times.
+
+<p>Configuring an element's properties is often most conveniently done in a 
+subclass (since there is no need to repeat the receiver for each assignment). 
+Typically, these subclasses are not reused and require no parameters. We 
+therefore recommend the use of anonymous classes and instance initializers. 
+Also, these classes rarely declare additional members. We have therefore 
+found it most useful to skip an identation level and to nest classes freely:
+
+// TODO: add relevant except from RefDbGui.java
+
+<p>An element's configurable fields are called properties. Properties are set 
+at configuration time, later updates typically have no effect. Nevertheless, 
+some properties (e.g. an edit view's active bean) represent mutable aspects 
+of a component. Instead of directly installing a value into these fields, we
+merely install a value holder, whose value is permitted to change at display
+time. Since changes must be propagated to the widgets, these holders are of type
+{@link util.Observable}. Note that it is permitted to install the same observable 
+in various fields to represent common state:
+
+<pre>new Table(Person.class) {{
+	filter = personSearch.query;
+}}</pre>
+
+More complex depedencies among such properties can be expressed using
+{@link util.Rule}.
+
+<h3>Implementation Note</h3>
+Since elements must create objects usually managed by a Spring Context, a
+lightweight non-factory substitute Spring Context is provided to them at 
+verification time.
+</body>
+</html>
