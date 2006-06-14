@@ -44,9 +44,9 @@
     <include file="apps/keyword/app/core/module.xml"/>
     <include file="apps/refdb/app/core/module.xml"/>
     <include file="apps/refdb/app/gui/module.xml"/>
+    <include file="apps/refdb/app/gui-tiger/module.xml"/>
 
     <!-- Application test modules. -->
     <include file="apps/keyword/tests/core/module.xml"/>
     <include file="apps/refdb/tests/core/module.xml"/>
-    
 </ant:project>

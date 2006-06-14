@@ -4,6 +4,6 @@
         <dependency module="module-core"/>
         <attribute name="set" value="framework-tests"/>
         <attribute name="junit.runnable" value="true"/>
-        <attribute name="commons-attributes.enable" value="true"/>
+<!--        <attribute name="commons-attributes.enable" value="true"/>-->
     </module>
 </ant:project>

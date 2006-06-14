@@ -14,24 +14,13 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.util.codingsupport.annotations;
+package ch.elca.el4j.services.dom.annotations;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.*;
 
 /**
- * The annotated API element is preliminary and subject to major change. The
- * idea for this type was shamelessly stolen from 
- * 
- * <p>
- *<a href="http://java.sun.com/j2se/1.5.0/docs/guide/language/annotations.html">
- * http://java.sun.com/j2se/1.5.0/docs/guide/language/annotations.html</a>
- * 
- * 
- * <p> The String argument should detail why the annotated element is 
- * preliminary. This annotation itself is preliminary (prototype stage).
+ * Defines the meaning of the annotated element. 
+ * The DOM-equivalent of JavaDoc ...
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -42,11 +31,9 @@ import java.lang.annotation.RetentionPolicy;
  *
  * @author Adrian Moos (AMS)
  */
+@Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Retention(RetentionPolicy.SOURCE)
-@Inherited
-public @interface Preliminary { 
-    /** why this is preliminary. */
-    @Preliminary("lack of known use cases")
-    String value() default "";
+public @interface Description {
+    /** text describing this element's meaning. */
+    String value();
 }
