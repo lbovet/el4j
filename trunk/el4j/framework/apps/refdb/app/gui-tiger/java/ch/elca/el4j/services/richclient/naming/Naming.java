@@ -83,7 +83,7 @@ public class Naming {
             return m_source.getMessage(
                 keyFor(t) + ".Description",
                 null,
-                t.description
+                ""
             );
         } catch (NoSuchMessageException e) {
             return null;
@@ -135,7 +135,7 @@ public class Naming {
      * @return .
      */    
     public String getDescription(Property p) {
-        return get(p, "description", p.description);
+        return get(p, "description", "");
     }
     
     /**

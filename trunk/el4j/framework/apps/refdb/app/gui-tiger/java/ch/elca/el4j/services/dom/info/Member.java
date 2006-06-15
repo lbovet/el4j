@@ -16,8 +16,6 @@
  */
 package ch.elca.el4j.services.dom.info;
 
-import ch.elca.el4j.services.dom.annotations.Description;
-
 /** represents a type's member.
  *
  * <script type="text/javascript">printFileStatus
@@ -36,12 +34,8 @@ public abstract class Member {
     /** this member's name. */
     public final String name;
     
-    /** the type's {@link Description} ({@code null} if none was provided). */
-    public final String description;
-    
-    Member(EntityType declaring, String n, String d) {
+    Member(EntityType declaring, String n) {
         declaringType = declaring;
         name = n;
-        description = d;
     }
 }

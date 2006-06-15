@@ -16,7 +16,6 @@
  */
 package ch.elca.el4j.apps.lightrefdb.dom;
 
-import ch.elca.el4j.services.dom.annotations.Description;
 import ch.elca.el4j.services.dom.annotations.MemberOrder;
 
 /** 
@@ -38,9 +37,12 @@ import ch.elca.el4j.services.dom.annotations.MemberOrder;
 })
 public class Keyword {
     private String name;    
+    
+    /** 
+     * Describes this keyword's meaning.
+     */
     private String description;
 
-    @Description("describes this keyword's meaning")
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
