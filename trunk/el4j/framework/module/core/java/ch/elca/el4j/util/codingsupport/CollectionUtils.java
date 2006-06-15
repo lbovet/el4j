@@ -32,6 +32,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import ch.elca.el4j.util.collections.ExtendedReorderableList;
+import ch.elca.el4j.util.collections.FilteredList;
+import ch.elca.el4j.util.collections.helpers.Filter;
+import ch.elca.el4j.util.collections.impl.DefaultFilteredList;
 
 /**
  * This class supports methods to handle with collections. It covers only gaps
@@ -46,7 +49,7 @@ import ch.elca.el4j.util.collections.ExtendedReorderableList;
  *    "$Author$"
  * );</script>
  *
- * @author Martin Zeltner (MZE)
+ * @author Martin Zeltner (MZE), Adrian Moos (AMS)
  */
 public final class CollectionUtils {
     /**
@@ -253,5 +256,17 @@ public final class CollectionUtils {
         T t = list.get(i);
         list.set(i, list.get(j));
         list.set(j, t);        
+    }
+    
+    /**
+     *  returns a filtered view on {@code list}.
+     * @param <T> .
+     * @param list see above
+     * @param filter the filter deciding which elements to include
+     * @return the filtered view
+     */
+    public static <T> FilteredList<T> filtered(List<? extends T> list, 
+                                               Filter<? super T> filter) {
+        return new DefaultFilteredList<T>(list, filter);
     }
 }

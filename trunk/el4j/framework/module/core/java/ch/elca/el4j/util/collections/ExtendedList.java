@@ -16,6 +16,10 @@
  */
 package ch.elca.el4j.util.collections;
 
+import java.util.List;
+
+import ch.elca.el4j.util.collections.helpers.Filter;
+
 /**
  * A slightly extended Iterable.
  * 
@@ -31,10 +35,16 @@ package ch.elca.el4j.util.collections;
  *
  * @author Adrian Moos (AMS)
  */
-public interface ExtendedIterable<T> extends Iterable<T> {
+public interface ExtendedList<T> extends List<T> {
     /**
      * @param c the element type for the new array
      * @return an new array containing this list's contents
      */
     T[] toArray(Class<T> c);
+    
+    /**
+     * Convenience method returning a filtered view on this collection.
+     * @param filter the filter deciding which elements are included
+     */
+    FilteredList<T> filtered(Filter<? super T> filter);
 }

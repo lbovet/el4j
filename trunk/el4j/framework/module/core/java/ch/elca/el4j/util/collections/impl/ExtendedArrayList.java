@@ -20,13 +20,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import ch.elca.el4j.util.codingsupport.CollectionUtils;
 import ch.elca.el4j.util.collections.ExtendedWritableList;
+import ch.elca.el4j.util.collections.FilteredList;
 import ch.elca.el4j.util.collections.TransformedList;
 import ch.elca.el4j.util.collections.helpers.Filter;
 import ch.elca.el4j.util.collections.helpers.Function;
 
 /**
- * A default implementation of the ExtendedList interface.
+ * A default implementation of the ExtendedWritableList interface.
  * 
  * @param <T> the member type
  *
@@ -94,14 +96,14 @@ public class ExtendedArrayList<T> extends ArrayList<T>
     public void orderLike(List<? extends T> example) 
         throws NoSuchElementException {
         
-        ListUtil.orderLike(this, example);
+        CollectionUtils.orderLike(this, example);
     }
 
     /**
      * {@inheritDoc}
      */
     public T[] toArray(Class<T> c) {
-        return ListUtil.toArray(this, c);
+        return CollectionUtils.toArray(this, c);
     }
 
     /**
@@ -115,6 +117,11 @@ public class ExtendedArrayList<T> extends ArrayList<T>
      * {@inheritDoc}
      */
     public ExtendedWritableList<T> getOnly(Filter<? super T> filter) {
-        return new ExtendedArrayList<T>(new FilteredList<T>(this, filter));
+        return new ExtendedArrayList<T>(filtered(filter));
+    }
+
+    /** {@inheritDoc} */
+    public FilteredList<T> filtered(Filter<? super T> filter) {
+        return new DefaultFilteredList<T>(this, filter);
     }
 }

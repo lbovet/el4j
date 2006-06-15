@@ -16,7 +16,6 @@
  */
 package ch.elca.el4j.util.collections;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.RandomAccess;
 
@@ -39,9 +38,9 @@ import ch.elca.el4j.util.collections.helpers.Function;
  *
  * @author Adrian Moos (AMS)
  */
-public interface ExtendedReorderableList<T> extends ExtendedIterable<T>, 
-                                                      RandomAccess,
-                                                      List<T> {
+public interface ExtendedReorderableList<T> extends ExtendedList<T>, 
+                                                    RandomAccess {
+                                                      
     
     /** exchanges the elements located at indices {@code i} and {@code j}.
      * @param i ...
