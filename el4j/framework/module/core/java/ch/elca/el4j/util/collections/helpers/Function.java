@@ -32,6 +32,9 @@ package ch.elca.el4j.util.collections.helpers;
  * @author Adrian Moos (AMS)
  */
 public interface Function<D, R> {
-    /** returns this function's value at {@code d}. */
+    /** returns this function's value at {@code d}. 
+     * @param d the function's argument 
+     * @return the function's return type 
+     **/
     R apply(D d);
 }

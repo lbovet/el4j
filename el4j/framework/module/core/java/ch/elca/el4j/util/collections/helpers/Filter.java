@@ -33,6 +33,8 @@ package ch.elca.el4j.util.collections.helpers;
  */
 
 public interface Filter<T> {
-    /** returns true iff this filter accepts {@code t}. */
+    /** returns true iff this filter accepts {@code t}.
+     * @param t the object to judge
+     * @return see above */
     boolean accepts(T t);
 }

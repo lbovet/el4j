@@ -19,7 +19,9 @@ package ch.elca.el4j.util.collections.impl;
 import java.util.AbstractList;
 import java.util.List;
 
+import ch.elca.el4j.util.codingsupport.CollectionUtils;
 import ch.elca.el4j.util.collections.ExtendedWritableList;
+import ch.elca.el4j.util.collections.FilteredList;
 import ch.elca.el4j.util.collections.TransformedList;
 import ch.elca.el4j.util.collections.helpers.Filter;
 import ch.elca.el4j.util.collections.helpers.Function;
@@ -75,14 +77,14 @@ public class DefaultTransformedList<I, O> extends AbstractList<O>
      * {@inheritDoc}
      */
     public void swap(int i, int j) {
-        ListUtil.swap(m_backing, i, j);
+        CollectionUtils.swap(m_backing, i, j);
     }
     
     /**
      * {@inheritDoc}
      */    
     public void orderLike(List<? extends O> example) {
-        ListUtil.orderLike(this, example);
+        CollectionUtils.orderLike(this, example);
     }
 
     /**
@@ -90,7 +92,7 @@ public class DefaultTransformedList<I, O> extends AbstractList<O>
      */
     @SuppressWarnings("unchecked")
     public O[] toArray(Class<O> c) {
-        return ListUtil.toArray(this, c);
+        return CollectionUtils.toArray(this, c);
     }
 
     /**
@@ -112,6 +114,12 @@ public class DefaultTransformedList<I, O> extends AbstractList<O>
      * {@inheritDoc}
      */
     public ExtendedWritableList<O> getOnly(Filter<? super O> filter) {
-        return new ExtendedArrayList<O>(new FilteredList<O>(this, filter));
+        return new ExtendedArrayList<O>(filtered(filter));
+    }
+
+
+    /** {@inheritDoc} */
+    public FilteredList<O> filtered(Filter<? super O> filter) {
+        return new DefaultFilteredList<O>(this, filter);
     }
 }

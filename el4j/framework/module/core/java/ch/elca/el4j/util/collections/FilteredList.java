@@ -16,12 +16,16 @@
  */
 package ch.elca.el4j.util.collections;
 
-
+import java.util.ListIterator;
 
 /**
- * An enriched version of {@link java.util.List}.
- *
- * @param <T> the member type
+ * A view on a backing BiDiIterable showing only the elements accepted by a 
+ * filter.
+ * It may be iterated over (for instance using the extended for-statement).
+ * Alternatively, you may copy its contents to an array or an ExtendedArrayList
+ * (see {@link ExtendedArrayList#ExtendedArrayList(Iterable)}).
+ * 
+ * @param <T> the element type
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -32,13 +36,15 @@ package ch.elca.el4j.util.collections;
  *
  * @author Adrian Moos (AMS)
  */
-
-public interface ExtendedWritableList<T> extends ExtendedReorderableList<T> {
-    /** equivalent to calling <code>add</code> for each argument, in order.
-     * @param ts the objects to be added */ 
-    public void add(T... ts);    
-    
-    /** equivalent to calling <code>remove</code> for each argument, in order.
-     * @param ts the objects to be added */
-    public void remove(T... ts);
+public interface FilteredList<T> extends ExtendedList<T> {
+    /** 
+     * Returns a BiDiIterator for this collection pointing at the place
+     * corresponding to {@code location}.
+     * 
+     * @param location An iterator for the backing collection. This reference
+     *                 may be captured, i.e. it
+     *                 shouldn't be be used in client code afterwards.
+     * @return The iterator
+     */
+    public ListIterator<T> listIterator(ListIterator<? extends T> location);
 }
