@@ -34,8 +34,7 @@ public class Operation extends Member {
     Operation(EntityType declaring, Method m) {
         super(
             declaring,
-            m.getName(),
-            InternalUtil.getDescription(m)
+            m.getName()
         );
     }
 }

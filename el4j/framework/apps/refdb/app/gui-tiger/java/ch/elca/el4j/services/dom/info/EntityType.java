@@ -63,9 +63,6 @@ public class EntityType {
     @ImplementationAssumption("unqualified entity type name is unique within DOM")
     public final String name;
     
-    /** the type's {@link Description} ({@code null} if none was provided). */
-    public final String description;
-    
     /** the type's properties.*/
     public final List<Property> props;
     
@@ -79,7 +76,6 @@ public class EntityType {
     protected EntityType(Class<?> c) {
         this.clazz = c;
         name = c.getSimpleName();
-        description = InternalUtil.getDescription(c);
         ExtendedWritableList<Property> mprops 
             = new ExtendedArrayList<Property>();
         List<Operation> mops = new ArrayList<Operation>();

@@ -48,8 +48,7 @@ public class Property extends Member {
     Property(EntityType declaring, Field f) {
         super(
             declaring,
-            f.getName(),
-            InternalUtil.getDescription(f)
+            f.getName()
         );        
         type = f.getType();
         readonly = false;
@@ -65,8 +64,7 @@ public class Property extends Member {
     Property(EntityType declaring, Method getter, String name, Method setter) {
         super(
             declaring,
-            name,
-            InternalUtil.getDescription(getter, setter)
+            name
         );
         type = getter.getReturnType();
         readonly = setter == null;
