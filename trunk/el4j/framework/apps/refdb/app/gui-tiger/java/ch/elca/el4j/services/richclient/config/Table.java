@@ -181,6 +181,7 @@ public class Table extends AbstractGenericView {
                     Arrays.asList(selected)
                 );
             }
+            super.updateCommands();
         }
     }
     
