@@ -79,8 +79,8 @@ public class EditablePropertyList extends DisplayablePropertyList {
      * @return .
      */
     List getReadonly() {
-        return (List) m_eprops.getOnly(s_visibles)
-                              .getOnly(s_ineditables)
+        return (List) m_eprops.filtered(s_visibles)
+                              .filtered(s_ineditables)
                               .mapped(s_toName);
     }
 }

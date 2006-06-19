@@ -32,9 +32,6 @@ import ch.elca.el4j.util.collections.helpers.Function;
 import ch.elca.el4j.util.observer.impl.SettableObservableValue;
 
 
-
-
-
 /**
  * A search form for entities of a specific type.
  *
@@ -72,7 +69,7 @@ public class Search extends AbstractGenericView {
         /***/
         GenericComponent() {
             setSearchItems(
-                properties.m_eprops.getOnly(DisplayablePropertyList.s_visibles).mapped(
+                properties.m_eprops.filtered(DisplayablePropertyList.s_visibles).mapped(
                     new Function<EditableProperty, AbstractSearchItem>() {
                         public AbstractSearchItem apply(EditableProperty d) {
                             return getDefaultSearchItem(d.prop);
@@ -133,7 +130,7 @@ public class Search extends AbstractGenericView {
          */
         @Override
         protected void initializeFormModel() {
-            super.initializeFormModel();            
+            super.initializeFormModel();
             m_formModel.setFormPropertyFaceDescriptorSource(
                 m_propertyFaceDescriptorSource                
             );
