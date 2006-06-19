@@ -19,9 +19,6 @@ package ch.elca.el4j.util.collections;
 import java.util.NoSuchElementException;
 import java.util.RandomAccess;
 
-import ch.elca.el4j.util.collections.helpers.Filter;
-import ch.elca.el4j.util.collections.helpers.Function;
-
 /**
  * An extended interface, random access list permitting element reordering, but
  * not neccessarily inserting/removing elements. 
@@ -66,23 +63,4 @@ public interface ExtendedReorderableList<T> extends ExtendedList<T>,
      **/
     public void orderLike(java.util.List<? extends T> example)
         throws NoSuchElementException;
-    
-    /**
-     * Convenience method returning a {@link TransformedList} view to this
-     * list.
-     * @param function the transformation function to apply to each element 
-     * @return see above
-     */
-    public <O> TransformedList<T, O> mapped(
-        Function<? super T, O> function); 
-    
-    /**
-     * returns a new list containing only the elements matching the filter.
-     * @param filter the filter deciding which elements to include
-     * @return see above
-     * @deprecated use {@link ExtendedList#filtered(Filter) filtered(Filter)}
-     * instead.
-     */
-    @Deprecated
-    public ExtendedWritableList<T> getOnly(Filter<? super T> filter);
 }

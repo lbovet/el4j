@@ -113,13 +113,6 @@ public class ExtendedArrayList<T> extends ArrayList<T>
         return new DefaultTransformedList<T, O>(this, function);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public ExtendedWritableList<T> getOnly(Filter<? super T> filter) {
-        return new ExtendedArrayList<T>(filtered(filter));
-    }
-
     /** {@inheritDoc} */
     public FilteredList<T> filtered(Filter<? super T> filter) {
         return new DefaultFilteredList<T>(this, filter);
