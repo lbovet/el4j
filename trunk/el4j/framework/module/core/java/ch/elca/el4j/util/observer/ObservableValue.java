@@ -29,10 +29,11 @@ package ch.elca.el4j.util.observer;
  * 
  * <p> Note to implementors: If LiveValues may depend on instances of your
  * class, you must invoke 
- * {@link ch.elca.el4j.util.observer.impl.LiveValue#observableGetterInterceptor(ObservableValue)
- * whenever {{@link #get()} may be invoked from a LiveValue. (We do not require
- * this by static means to avoid loading LiveValue regardless of whether it is
- * used.)
+ *{@link ch.elca.el4j.util.observer.impl.LiveValue#observableGetterInterceptor(
+ *ObservableValue) LiveValue.observableGetterInterceptor()}
+ * whenever {@link #get()} may have been invoked from a LiveValue. (We do not 
+ * require this by static means to avoid loading LiveValue regardless of whether
+ * it is used.)
  * 
  * @param <T> the type of object held. 
  * 

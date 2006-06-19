@@ -19,11 +19,13 @@ package ch.elca.el4j.util.collections;
 import java.util.ListIterator;
 
 /**
- * A view on a backing BiDiIterable showing only the elements accepted by a 
+ * A view on a backing List showing only the elements accepted by a 
  * filter.
  * It may be iterated over (for instance using the extended for-statement).
  * Alternatively, you may copy its contents to an array or an ExtendedArrayList
- * (see {@link ExtendedArrayList#ExtendedArrayList(Iterable)}).
+ * (see 
+ *{@link ch.elca.el4j.util.collections.impl.ExtendedArrayList#ExtendedArrayList(
+ *Iterable) ExtendedArrayList(Iterable)}
  * 
  * @param <T> the element type
  *

@@ -45,7 +45,7 @@ import ch.elca.el4j.util.collections.helpers.Filter;
  */
 public class DefaultFilteredList<T> extends AbstractSequentialList<T> 
                                  implements FilteredList<T> {
-    /** The backing BiDiIterable. */
+    /** The backing list. */
     private List<? extends T> m_backing;
     
     /** The backing filter. */
