@@ -37,6 +37,7 @@ import ch.elca.el4j.services.richclient.naming.ConfigurablePropertyFaceDescripto
 import ch.elca.el4j.services.richclient.naming.Naming;
 import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
 import ch.elca.el4j.util.codingsupport.annotations.Preliminary;
+import ch.elca.el4j.util.collections.ExtendedList;
 import ch.elca.el4j.util.collections.ExtendedWritableList;
 import ch.elca.el4j.util.observer.ObservableValue;
 import ch.elca.el4j.util.observer.ValueObserver;
@@ -267,8 +268,8 @@ public class Edit extends AbstractGenericView {
      */
     @Override
     protected ViewDescriptor createDescriptor() {
-        ExtendedWritableList<EditableProperty> visible = properties.m_eprops
-            .getOnly(DisplayablePropertyList.s_visibles);
+        ExtendedList<EditableProperty> visible = properties.m_eprops
+            .filtered(DisplayablePropertyList.s_visibles);
         for (EditableProperty ep : visible) {
             m_propertyFaceDescriptorSource.defaults.put(
                 ep.prop.name,

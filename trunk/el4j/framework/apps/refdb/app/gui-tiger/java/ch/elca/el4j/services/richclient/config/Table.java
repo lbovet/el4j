@@ -32,6 +32,7 @@ import ch.elca.el4j.services.gui.richclient.views.AbstractBeanTableView;
 import ch.elca.el4j.services.richclient.naming.Naming;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.Reject;
+import ch.elca.el4j.util.collections.ExtendedList;
 import ch.elca.el4j.util.collections.ExtendedWritableList;
 import ch.elca.el4j.util.collections.helpers.Function;
 import ch.elca.el4j.util.collections.impl.ExtendedArrayList;
@@ -110,8 +111,8 @@ public class Table extends AbstractGenericView {
         
         /** @param properties .*/
         Model(DisplayablePropertyList properties) {
-            ExtendedWritableList<? extends DisplayableProperty> visible 
-                = properties.m_eprops.getOnly(
+            ExtendedList<? extends DisplayableProperty> visible 
+                = properties.m_eprops.filtered(
                     DisplayablePropertyList.s_visibles
                 );
             setColumnPropertyNames(
