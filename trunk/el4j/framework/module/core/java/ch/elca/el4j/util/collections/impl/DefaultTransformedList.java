@@ -20,7 +20,6 @@ import java.util.AbstractList;
 import java.util.List;
 
 import ch.elca.el4j.util.codingsupport.CollectionUtils;
-import ch.elca.el4j.util.collections.ExtendedWritableList;
 import ch.elca.el4j.util.collections.FilteredList;
 import ch.elca.el4j.util.collections.TransformedList;
 import ch.elca.el4j.util.collections.helpers.Filter;
@@ -109,14 +108,6 @@ public class DefaultTransformedList<I, O> extends AbstractList<O>
     public List<? extends I> getBacking() {
         return m_backing;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public ExtendedWritableList<O> getOnly(Filter<? super O> filter) {
-        return new ExtendedArrayList<O>(filtered(filter));
-    }
-
 
     /** {@inheritDoc} */
     public FilteredList<O> filtered(Filter<? super O> filter) {

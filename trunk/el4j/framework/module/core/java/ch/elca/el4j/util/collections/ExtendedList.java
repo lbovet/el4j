@@ -19,6 +19,7 @@ package ch.elca.el4j.util.collections;
 import java.util.List;
 
 import ch.elca.el4j.util.collections.helpers.Filter;
+import ch.elca.el4j.util.collections.helpers.Function;
 
 /**
  * A slightly extended Iterable.
@@ -47,4 +48,14 @@ public interface ExtendedList<T> extends List<T> {
      * @param filter the filter deciding which elements are included
      */
     FilteredList<T> filtered(Filter<? super T> filter);
+    
+    
+    /**
+     * Convenience method returning a {@link TransformedList} view to this
+     * list.
+     * @param function the transformation function to apply to each element 
+     * @return see above
+     */
+    public <O> TransformedList<T, O> mapped(
+        Function<? super T, O> function); 
 }

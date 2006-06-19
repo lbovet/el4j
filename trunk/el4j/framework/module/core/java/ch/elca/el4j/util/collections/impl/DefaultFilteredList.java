@@ -25,7 +25,9 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import ch.elca.el4j.util.collections.FilteredList;
+import ch.elca.el4j.util.collections.TransformedList;
 import ch.elca.el4j.util.collections.helpers.Filter;
+import ch.elca.el4j.util.collections.helpers.Function;
 
 /**
  * Default Implementation for FilteredList.
@@ -269,5 +271,10 @@ public class DefaultFilteredList<T> extends AbstractSequentialList<T>
     /** {@inheritDoc} */
     public FilteredList<T> filtered(Filter<? super T> filter) {
         return new DefaultFilteredList<T>(this, filter);
+    }
+
+    /** {@inheritDoc} */
+    public <O> TransformedList<T, O> mapped(Function<? super T, O> function) {
+        return new DefaultTransformedList<T, O>(this, function);
     }
 }
