@@ -80,6 +80,9 @@ public interface ExtendedReorderableList<T> extends ExtendedList<T>,
      * returns a new list containing only the elements matching the filter.
      * @param filter the filter deciding which elements to include
      * @return see above
+     * @deprecated use {@link ExtendedList#filtered(Filter) filtered(Filter)}
+     * instead.
      */
+    @Deprecated
     public ExtendedWritableList<T> getOnly(Filter<? super T> filter);
 }

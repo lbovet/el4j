@@ -36,7 +36,9 @@ import ch.elca.el4j.util.observer.ObservableValue;
  * <p>A LiveValue is an ObservableValue. Therefore, it is possible to build 
  * directed acyclic graphs (and thus trees) of LiveValues. For 
  * obvious reasons, cyclic dependencies are not permitted; detection of one 
- * results in a {@link CyclicDependencyException} to be thrown.
+ * results in a {@link 
+ * ch.elca.el4j.util.observer.impl.LiveValue.CyclicDependencyException 
+ * CyclicDependencyException} to be thrown.
  * 
  * <p>This class is thread safe.
  * 

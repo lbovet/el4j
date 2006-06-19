@@ -17,7 +17,7 @@
 package ch.elca.el4j.util.observer.impl;
 
 /**
- * An ObservableValue whose value can be {@link #set(T)}.
+ * An ObservableValue whose value can be {@link #set(Object)}.
  * 
  * @param <T> see supertype.
  *

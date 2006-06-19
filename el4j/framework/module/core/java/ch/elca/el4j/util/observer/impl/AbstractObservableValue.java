@@ -56,7 +56,8 @@ public abstract class AbstractObservableValue<T> implements ObservableValue<T> {
     private List<ValueObserver<? super T>> m_obs 
         = new LinkedList<ValueObserver<? super T>>();
 
-    /** creates a new ObservableValue. Subclasses must invoke {@link #set(T)} to
+    /** creates a new ObservableValue. Subclasses must invoke 
+     * {@link #set(Object)} to
      * set the initial reference before {@link #get()} is invoked. */
     protected AbstractObservableValue() { }
     
