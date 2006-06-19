@@ -107,9 +107,9 @@ public class ExtendedListTest extends TestCase {
     }
     
     /***/
-    public void testGetOnly() {
+    public void testFiltered() {
         assertEquals(
-            m_a.getOnly(new Filter<Integer>() {
+            m_a.filtered(new Filter<Integer>() {
                 public boolean accepts(Integer i) {
                     return i % 2 == 0;
                 }
