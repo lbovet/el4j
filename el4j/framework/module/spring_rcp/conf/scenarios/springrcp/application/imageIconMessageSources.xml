@@ -10,6 +10,7 @@
 
     <!-- 
         Language specific messages will be taken from this source.
+        Listed in service registry.
     -->
     <bean id="messageSource"
         class="org.springframework.context.support.ResourceBundleMessageSource">
@@ -31,6 +32,7 @@
 
     <!-- 
         Images will be taken by this source.
+        Listed in service registry.
     -->
     <bean id="imageSource"
         class="org.springframework.richclient.image.DefaultImageSource">
@@ -60,15 +62,5 @@
         <property name="resourceBasePath">
             <value>images/</value>
         </property>
-    </bean>
-
-    <!-- 
-        Icons will be taken from this source.
-    -->
-    <bean id="iconSource"
-        class="org.springframework.richclient.image.DefaultIconSource">
-        <constructor-arg index="0">
-            <ref bean="imageSource" />
-        </constructor-arg>
     </bean>
 </beans>

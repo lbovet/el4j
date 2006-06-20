@@ -18,12 +18,13 @@ package ch.elca.el4j.services.gui.richclient.utils;
 
 import java.util.Map;
 
-import org.springframework.richclient.application.Application;
+import org.springframework.context.ApplicationContext;
 import org.springframework.richclient.application.ApplicationWindow;
 import org.springframework.richclient.application.PageDescriptor;
 import org.springframework.richclient.command.ActionCommand;
 
 import ch.elca.el4j.services.gui.richclient.commands.ShowPageCommand;
+import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
 
 /**
  * Util class for general spring rcp needs. 
@@ -59,9 +60,12 @@ public final class WindowUtils {
     /**
      * @return Returns an array of available page descriptors.
      */
+    @ImplementationAssumption(
+        "All page descriptors are contained in the application context.")
     public static PageDescriptor[] getPageDescriptors() {
-        Map pageDescriptors = Application.services().getApplicationContext()
-            .getBeansOfType(PageDescriptor.class, true, false);
+        Map pageDescriptors = Services.get(
+            ApplicationContext.class
+        ).getBeansOfType(PageDescriptor.class, true, false);
         return (PageDescriptor[]) pageDescriptors.values().toArray(
             new PageDescriptor[pageDescriptors.size()]);
     }

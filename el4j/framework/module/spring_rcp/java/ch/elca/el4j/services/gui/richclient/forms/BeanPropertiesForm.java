@@ -25,7 +25,7 @@ import javax.swing.JComponent;
 
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.binding.form.PropertyMetadata;
+import org.springframework.binding.form.FieldMetadata;
 import org.springframework.binding.form.ValidatingFormModel;
 import org.springframework.richclient.form.AbstractForm;
 import org.springframework.richclient.form.binding.Binder;
@@ -121,9 +121,9 @@ public class BeanPropertiesForm extends AbstractForm
         for (int i = 0; i < m_shownBeanProperties.length; i++) {
             String propertyName = m_shownBeanProperties[i];
             boolean readOnly = m_readOnlyBeanProperties.contains(propertyName);
-            PropertyMetadata propertyMetadata 
-                = validatingFormModel.getPropertyMetadata(propertyName);
-            propertyMetadata.setReadOnly(readOnly);
+            FieldMetadata fieldMetadata 
+                = validatingFormModel.getFieldMetadata(propertyName);
+            fieldMetadata.setReadOnly(readOnly);
         }
     }
 

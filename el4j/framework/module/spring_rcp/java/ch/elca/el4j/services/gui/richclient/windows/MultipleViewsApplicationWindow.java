@@ -23,6 +23,7 @@ import org.springframework.richclient.application.support.DefaultApplicationWind
 
 import ch.elca.el4j.services.gui.richclient.pages.impl.AbstractApplicationPage;
 import ch.elca.el4j.services.gui.richclient.pages.impl.MultipleViewsApplicationPage;
+import ch.elca.el4j.services.gui.richclient.utils.Services;
 
 /**
  * Application window for having multiple views in a page.
@@ -49,8 +50,10 @@ public class MultipleViewsApplicationWindow extends DefaultApplicationWindow {
     protected ApplicationPage createPage(PageDescriptor pageDescriptor) {
         AbstractApplicationPage page;
         try {
-            page = (AbstractApplicationPage) getServices().getBean(
-                APPLICATION_PAGE_BEAN_ID, AbstractApplicationPage.class);
+            page = Services.getBean(
+                APPLICATION_PAGE_BEAN_ID,
+                AbstractApplicationPage.class
+            );
         } catch (NoSuchBeanDefinitionException e) {
             page = new MultipleViewsApplicationPage();
         }

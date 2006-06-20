@@ -27,6 +27,7 @@ import javax.swing.JComponent;
 
 import org.springframework.richclient.application.PageComponent;
 import org.springframework.richclient.application.PageComponentDescriptor;
+import org.springframework.richclient.application.PageDescriptor;
 import org.springframework.richclient.application.View;
 import org.springframework.richclient.application.ViewDescriptor;
 import org.springframework.richclient.application.support.DefaultViewContext;
@@ -59,14 +60,19 @@ public class MultipleViewsApplicationPage extends AbstractApplicationPage
     /**
      * Are the group page components. The group name is used as key.
      */
-    protected final Map m_groupPageComponents 
-        = Collections.synchronizedMap(new HashMap());
+    protected final Map<String, GroupPageComponent> m_groupPageComponents 
+        = Collections.synchronizedMap(
+            new HashMap<String, GroupPageComponent>()
+        );
     
     /**
      * Are the page component descriptor groups. The group name is used as key.
      */
-    protected final Map m_groupPageComponentDescriptors 
-        = Collections.synchronizedMap(new HashMap());
+    protected final 
+    Map<String, GroupPageComponentDescriptor> m_groupPageComponentDescriptors 
+        = Collections.synchronizedMap(
+            new HashMap<String, GroupPageComponentDescriptor>()
+        );
 
     /**
      * {@inheritDoc}
@@ -107,17 +113,11 @@ public class MultipleViewsApplicationPage extends AbstractApplicationPage
      * @param groupName Is the name of the page component to return.
      * @return Returns the group page component with the given group name.
      */
-    protected final GroupPageComponent getGroupPageComponent(
-        String groupName) {
-        GroupPageComponent groupPageComponent;
-        if (StringUtils.hasLength(groupName)) {
-            groupPageComponent = (GroupPageComponent) 
-                m_groupPageComponents.get(groupName);
-        } else {
-            groupPageComponent = (GroupPageComponent) 
-                m_groupPageComponents.get(GroupDescriptor.DEFAULT_GROUP);
-        }
-        return groupPageComponent;
+    protected final GroupPageComponent getGroupPageComponent(String groupName) {
+        return m_groupPageComponents.get(
+            StringUtils.hasLength(groupName)
+            ? groupName : GroupDescriptor.DEFAULT_GROUP
+        );
     }
     
     /**
@@ -160,16 +160,11 @@ public class MultipleViewsApplicationPage extends AbstractApplicationPage
      */
     protected final GroupPageComponentDescriptor 
     getGroupPageComponentDescriptor(String groupName) {
-        GroupPageComponentDescriptor groupPageComponentDescriptor;
-        if (StringUtils.hasLength(groupName)) {
-            groupPageComponentDescriptor = (GroupPageComponentDescriptor) 
-                m_groupPageComponentDescriptors.get(groupName);
-        } else {
-            groupPageComponentDescriptor = (GroupPageComponentDescriptor) 
-                m_groupPageComponentDescriptors.get(
-                    GroupDescriptor.DEFAULT_GROUP);
-        }
-        return groupPageComponentDescriptor;
+        return m_groupPageComponentDescriptors.get(
+            StringUtils.hasLength(groupName)
+            ? groupName
+            : GroupDescriptor.DEFAULT_GROUP
+        );        
     }
     
     /**
@@ -210,17 +205,14 @@ public class MultipleViewsApplicationPage extends AbstractApplicationPage
         }
         
         /**
-         * Remove the page component from other group page components than the 
+         * Remove the page component from group page components other than the 
          * target group page component.
          */
         synchronized (m_groupPageComponents) {
-            Iterator it = m_groupPageComponents.values().iterator();
-            while (it.hasNext()) {
-                GroupPageComponent currentGroup 
-                    = (GroupPageComponent) it.next();
-                if (currentGroup != targetGroup 
-                    && currentGroup.containsPageComponent(pageComponent)) {
-                    currentGroup.removePageComponent(pageComponent);
+            for (GroupPageComponent group : m_groupPageComponents.values()) {
+                if (group != targetGroup 
+                    && group.containsPageComponent(pageComponent)) {
+                    group.removePageComponent(pageComponent);
                 }
             }
         }
@@ -442,13 +434,14 @@ public class MultipleViewsApplicationPage extends AbstractApplicationPage
      */
     public void addPageComponentDescriptor(
         PageComponentDescriptor pageComponentDescriptor) {
-        List leafDescriptors = new ArrayList();
+        List<PageComponentDescriptor> leafDescriptors 
+            = new ArrayList<PageComponentDescriptor>();
         initializeDescriptorsAndCollectLeafDescriptors(
             null, pageComponentDescriptor, leafDescriptors);
-        Iterator it = leafDescriptors.iterator();
+        Iterator<PageComponentDescriptor> it = leafDescriptors.iterator();
         while (it.hasNext()) {
             PageComponentDescriptor leafDescriptor 
-                = (PageComponentDescriptor) it.next();
+                = it.next();
             if (leafDescriptor instanceof ViewDescriptor) {
                 ViewDescriptor viewDescriptor = (ViewDescriptor) leafDescriptor;
                 addView(viewDescriptor);
@@ -475,7 +468,7 @@ public class MultipleViewsApplicationPage extends AbstractApplicationPage
     protected void initializeDescriptorsAndCollectLeafDescriptors(
         GroupPageComponentDescriptor parentPageComponentDescriptor,
         PageComponentDescriptor pageComponentDescriptor, 
-        final List leafDescriptors) {
+        final List<PageComponentDescriptor> leafDescriptors) {
         
         Reject.ifNull(pageComponentDescriptor);
         Reject.ifNull(leafDescriptors);
@@ -572,12 +565,9 @@ public class MultipleViewsApplicationPage extends AbstractApplicationPage
         PageComponent pageComponent) {
         GroupPageComponent result = null;
         synchronized (m_groupPageComponents) {
-            Iterator it = m_groupPageComponents.values().iterator();
-            while (it.hasNext()) {
-                GroupPageComponent currentGroup 
-                    = (GroupPageComponent) it.next();
-                if (currentGroup.containsPageComponent(pageComponent)) {
-                    result = currentGroup;
+            for (GroupPageComponent group : m_groupPageComponents.values()) {
+                if (group.containsPageComponent(pageComponent)) {
+                    result = group;
                 }
             }
         }
@@ -589,5 +579,13 @@ public class MultipleViewsApplicationPage extends AbstractApplicationPage
      */
     public void setActiveComponent(PageComponent pageComponent) {
         super.setActiveComponent(pageComponent);
+    }
+
+    /** {@inheritDoc} */
+    public void setDescriptor(PageDescriptor descriptor) {
+        // TODO Auto-generated method stub
+        // don't know what goes in here, leaving it for MZE
+        // -- AMS
+        assert false;
     }
 }

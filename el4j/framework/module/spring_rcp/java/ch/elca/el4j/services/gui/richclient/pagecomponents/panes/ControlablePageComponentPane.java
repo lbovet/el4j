@@ -31,12 +31,14 @@ import javax.swing.SpringLayout;
 import org.springframework.richclient.application.PageComponent;
 import org.springframework.richclient.application.PageComponentPane;
 import org.springframework.richclient.application.View;
+import org.springframework.richclient.image.IconSource;
 import org.springframework.richclient.util.SpringLayoutUtils;
 
 import com.jgoodies.forms.factories.Borders;
 
 import ch.elca.el4j.services.gui.richclient.pages.ExtendedApplicationPage;
 import ch.elca.el4j.services.gui.richclient.utils.ComponentUtils;
+import ch.elca.el4j.services.gui.richclient.utils.Services;
 import ch.elca.el4j.services.gui.swing.panel.ControlableInternalFrame;
 
 /**
@@ -136,10 +138,11 @@ public class ControlablePageComponentPane extends PageComponentPane {
      * @return Returns the created control panel.
      */
     protected JComponent createControlPanel() {
-        Icon closeIcon 
-            = getApplicationServices().getIcon("pagecomponent.close.icon");
-        Icon closeIconRollover = getApplicationServices().getIcon(
-            "pagecomponent.close.rolloverIcon");
+        IconSource iconSource = Services.get(IconSource.class);
+        Icon closeIcon = iconSource.getIcon("pagecomponent.close.icon");
+        Icon closeIconRollover = iconSource.getIcon(
+            "pagecomponent.close.rolloverIcon"
+        );
         JButton closeButton = new JButton(closeIcon);
         closeButton.setRolloverIcon(closeIconRollover);
         closeButton.setOpaque(false);

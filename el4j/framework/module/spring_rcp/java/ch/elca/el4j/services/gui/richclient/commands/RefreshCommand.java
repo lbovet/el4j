@@ -16,11 +16,12 @@
  */
 package ch.elca.el4j.services.gui.richclient.commands;
 
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.richclient.application.Application;
 import org.springframework.richclient.command.support.ApplicationWindowAwareCommand;
 
 import ch.elca.el4j.services.gui.event.RefreshEvent;
+import ch.elca.el4j.services.gui.richclient.utils.Services;
 
 /**
  * Command to publish a refresh event.
@@ -50,7 +51,7 @@ public class RefreshCommand extends ApplicationWindowAwareCommand {
     protected void doExecuteCommand() {
         RefreshEvent event = new RefreshEvent(getApplicationWindow());
         ApplicationEventPublisher applicationEventPublisher 
-            = Application.instance().getServices().getApplicationContext();
+            = Services.get(ApplicationContext.class);
         applicationEventPublisher.publishEvent(event);
     }
 }

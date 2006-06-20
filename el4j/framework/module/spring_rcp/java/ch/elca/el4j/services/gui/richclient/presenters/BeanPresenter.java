@@ -87,7 +87,7 @@ public interface BeanPresenter {
      * @return Returns <code>true</code> if bean presenter's collection has
      *         changed.
      */
-    public boolean setBeans(Collection beans);
+    public boolean setBeans(Collection<?> beans);
 
     /**
      * Replaces the old with the new bean if the old bean exists in view.

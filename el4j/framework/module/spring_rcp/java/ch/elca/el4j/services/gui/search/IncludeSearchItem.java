@@ -24,6 +24,7 @@ import java.util.List;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
 import ch.elca.el4j.services.search.criterias.AbstractCriteria;
+import ch.elca.el4j.services.search.criterias.Criteria;
 import ch.elca.el4j.services.search.criterias.IncludeCriteria;
 import ch.elca.el4j.util.codingsupport.Reject;
 
@@ -70,7 +71,7 @@ public class IncludeSearchItem extends AbstractSearchItem {
      * {@inheritDoc}
      */
     public AbstractCriteria[] getCriterias(Object[] values) {
-        List criterias = new ArrayList();
+        List<Criteria> criterias = new ArrayList<Criteria>();
         if (values.length > 0) {
             String field = getTargetProperty();
             Object value = values[0];
@@ -97,8 +98,9 @@ public class IncludeSearchItem extends AbstractSearchItem {
      * @param value Is the value to create a criteria with.
      * @param type Is the class type of the value.
      */
-    protected void addCriterias(List criterias, String field, Object value,
-        Class type) {
+    protected void addCriterias(List<Criteria> criterias, 
+                                String field, Object value,
+                                Class type) {
 
         if (value == null) {
             return;

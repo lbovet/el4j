@@ -18,8 +18,6 @@ package ch.elca.el4j.services.gui.richclient.utils;
 
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.MessageSourceAccessor;
-import org.springframework.richclient.application.Application;
-import org.springframework.richclient.application.ApplicationServices;
 import org.springframework.util.StringUtils;
 
 /**
@@ -136,9 +134,6 @@ public final class MessageUtils {
      * @return Returns the message source accessor.
      */
     private static MessageSourceAccessor getMessageSourceAccessor() {
-        ApplicationServices services = Application.services();
-        MessageSourceAccessor messages 
-            = services != null ? services.getMessages() : null;
-        return messages;
+        return Services.get(MessageSourceAccessor.class);
     }
 }

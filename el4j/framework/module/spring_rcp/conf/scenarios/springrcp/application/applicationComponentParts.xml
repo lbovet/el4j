@@ -9,42 +9,24 @@
     <!-- Author: $Author$ -->
 
     <!-- 
-        Place where application objects will be configured. The bean with id 
-        "applicationObjectConfigurer" is looked up by the application services
-        class.
+        Place where application objects will be configured.
+        Listed in service registry.
     -->
-    <bean id="applicationObjectConfigurer"
+    <bean id="applicationObjectConfigurer" depends-on="serviceLocator"
         class="org.springframework.richclient.application.config.DefaultApplicationObjectConfigurer">
-        <constructor-arg index="0">
-            <ref bean="messageSource" />
-        </constructor-arg>
-        <constructor-arg index="1">
-            <ref bean="imageSource" />
-        </constructor-arg>
-        <constructor-arg index="2">
-            <ref bean="iconSource" />
-        </constructor-arg>
     </bean>
 
     <!-- 
-        Where components are created and can receive all needed stuff. The bean 
-        with id "componentFactory" is looked up by the application services 
-        class.
+        Where components are created and can receive all needed stuff.
+        Listed in service registry.
     -->
     <bean id="componentFactory"
         class="org.springframework.richclient.factory.DefaultComponentFactory">
-        <property name="iconSource">
-            <ref bean="iconSource" />
-        </property>
-        <property name="messageSource">
-            <ref bean="messageSource" />
-        </property>
     </bean>
 
     <!-- 
         Intercepts displayed components (i.e. for highlighting a component on a
-        validation error). The bean with id "formComponentInterceptorFactory" 
-        is looked up by the application services class.
+        validation error). Listed in service registry.
     -->
     <bean id="formComponentInterceptorFactory"
         class="org.springframework.richclient.form.builder.support.ChainedInterceptorFactory">
@@ -62,9 +44,6 @@
                 </bean>
                 <bean id="componentComboBoxAutoCompletionInterceptorFactory"
                     class="org.springframework.richclient.list.ComboBoxAutoCompletionInterceptorFactory">
-                    <property name="messageSource">
-                        <ref bean="messageSource" />
-                    </property>
                 </bean>
             </list>
         </property>
@@ -72,9 +51,8 @@
 
     <!--
         Fetches names, labels, captions and descriptions displayed by components
-        from message source. The bean with id "formPropertyFaceDescriptorSource" 
-        is looked up by the application services class.
+        from message source. Listed in service registry.
     -->
-    <bean id="formPropertyFaceDescriptorSource"
-        class="org.springframework.binding.form.support.MessageSourceFormPropertyFaceDescriptorSource" />
+    <bean id="formFieldFaceSource"
+        class="org.springframework.binding.form.support.MessageSourceFieldFaceSource" />
 </beans>
