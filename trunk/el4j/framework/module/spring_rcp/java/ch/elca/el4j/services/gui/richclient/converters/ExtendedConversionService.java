@@ -19,7 +19,6 @@ package ch.elca.el4j.services.gui.richclient.converters;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.binding.convert.Converter;
@@ -44,8 +43,8 @@ public class ExtendedConversionService extends DefaultConversionService {
     /**
      * Are the added converters.
      */
-    protected final List m_addedConverters 
-        = Collections.synchronizedList(new ArrayList());
+    protected final List<Converter> m_addedConverters 
+        = Collections.synchronizedList(new ArrayList<Converter>());
 
     /**
      * Formatter locator.
@@ -96,9 +95,7 @@ public class ExtendedConversionService extends DefaultConversionService {
     public void setFormatterLocator(FormatterLocator formatterLocator) {
         m_formatterLocator = formatterLocator;
         synchronized (m_addedConverters) {
-            Iterator it = m_addedConverters.iterator();
-            while (it.hasNext()) {
-                Converter converter = (Converter) it.next();
+            for (Converter converter : m_addedConverters) {
                 if (converter instanceof AbstractFormattingConverter) {
                     AbstractFormattingConverter formattingConverter
                         = (AbstractFormattingConverter) converter;

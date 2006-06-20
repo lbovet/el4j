@@ -18,8 +18,8 @@ package ch.elca.el4j.services.gui.richclient.forms.binding.swing;
 
 import javax.swing.JComponent;
 
+import org.springframework.binding.form.FieldFace;
 import org.springframework.binding.form.FormModel;
-import org.springframework.binding.form.FormPropertyFaceDescriptor;
 
 import ch.elca.el4j.util.codingsupport.Reject;
 
@@ -56,14 +56,14 @@ public class ThreeStateBooleanBinding extends AbstractSwingBinding {
             = (ThreeStateBooleanJPanel) getJComponent();
         
         control.setValueModel(getValueModel());
-        FormPropertyFaceDescriptor trueButtonDescriptor 
-            = getFormPropertyFaceDescriptor(
+        FieldFace trueButtonDescriptor 
+            = getFieldFace(
                 ThreeStateBooleanJPanel.TRUE_BUTTON_PROPERTY_NAME);
-        FormPropertyFaceDescriptor falseButtonDescriptor 
-            = getFormPropertyFaceDescriptor(
+        FieldFace falseButtonDescriptor 
+            = getFieldFace(
                 ThreeStateBooleanJPanel.FALSE_BUTTON_PROPERTY_NAME);
-        FormPropertyFaceDescriptor unknownButtonDescriptor 
-            = getFormPropertyFaceDescriptor(
+        FieldFace unknownButtonDescriptor 
+            = getFieldFace(
                 ThreeStateBooleanJPanel.UNKNOWN_BUTTON_PROPERTY_NAME);
         
         control.getTrueButton().setText(
@@ -83,16 +83,15 @@ public class ThreeStateBooleanBinding extends AbstractSwingBinding {
     
     /**
      * @param buttonProperty
-     *            Is the button property we'd like to know the form property
-     *            face descriptor.
-     * @return Return theform porpoerty face descriptor for the given button.
+     *            Is the button property we'd like to know face for.
+     * @return Return the face for the given button.
      */
-    protected FormPropertyFaceDescriptor getFormPropertyFaceDescriptor(
+    protected FieldFace getFieldFace(
         String buttonProperty) {
         Reject.ifEmpty(buttonProperty);
         String propertyPath = formPropertyPath + "." + buttonProperty;
-        FormPropertyFaceDescriptor faceDescriptor 
-            = getFormModel().getFormPropertyFaceDescriptor(propertyPath);
+        FieldFace faceDescriptor 
+            = getFormModel().getFieldFace(propertyPath);
         return faceDescriptor;
     }
 }

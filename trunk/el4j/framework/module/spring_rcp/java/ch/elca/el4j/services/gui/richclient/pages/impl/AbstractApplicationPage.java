@@ -18,12 +18,10 @@ package ch.elca.el4j.services.gui.richclient.pages.impl;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.springframework.core.closure.support.AbstractConstraint;
-import org.springframework.richclient.application.Application;
 import org.springframework.richclient.application.ApplicationPage;
 import org.springframework.richclient.application.ApplicationWindow;
 import org.springframework.richclient.application.PageComponent;
@@ -36,6 +34,8 @@ import org.springframework.richclient.application.ViewDescriptorRegistry;
 import org.springframework.richclient.application.support.SharedCommandTargeter;
 import org.springframework.richclient.util.EventListenerListHelper;
 import org.springframework.util.Assert;
+
+import ch.elca.el4j.services.gui.richclient.utils.Services;
 
 /**
  * Abstract class for an application page.
@@ -65,12 +65,13 @@ public abstract class AbstractApplicationPage implements ApplicationPage {
      * Registry to get all view descriptors from application context.
      */
     private final ViewDescriptorRegistry m_viewDescriptorRegistry 
-        = Application.services().getViewDescriptorRegistry();
+        = Services.get(ViewDescriptorRegistry.class);
 
     /**
      * List of page components for this page.
      */
-    private final Set m_pageComponents = new LinkedHashSet();
+    private final Set<PageComponent> m_pageComponents 
+        = new LinkedHashSet<PageComponent>();
 
     /**
      * Is the currently active page component.
@@ -145,7 +146,7 @@ public abstract class AbstractApplicationPage implements ApplicationPage {
     protected void setActiveComponent() {
         if (m_pageComponents.size() > 0) {
             setActiveComponent(
-                (PageComponent) m_pageComponents.iterator().next());
+                m_pageComponents.iterator().next());
         }
     }
 
@@ -240,9 +241,9 @@ public abstract class AbstractApplicationPage implements ApplicationPage {
      * Closes all page components.
      */
     public boolean close() {
-        Iterator iter = new HashSet(m_pageComponents).iterator();
-        while (iter.hasNext()) {
-            PageComponent component = (PageComponent) iter.next();
+        Set<PageComponent> snapshot
+            = new HashSet<PageComponent>(m_pageComponents);
+        for (PageComponent component : snapshot) {
             close(component);
         }
         return true;
@@ -309,7 +310,7 @@ public abstract class AbstractApplicationPage implements ApplicationPage {
     /**
      * @return Returns all page components in a set.
      */
-    public Set getPageComponents() {
+    public Set<PageComponent> getPageComponents() {
         return Collections.unmodifiableSet(m_pageComponents);
     }
 

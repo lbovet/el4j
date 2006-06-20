@@ -84,7 +84,7 @@ public abstract class AbstractDynamicListBinding extends ListBinding
         // Is the class type of the selection property. This is normally an 
         // assignale form for a collection.
         Class selectionPropertyType 
-            = formModel.getPropertyMetadata(formPropertyPath).getPropertyType();
+            = formModel.getFieldMetadata(formPropertyPath).getPropertyType();
         if (selectionPropertyType != null) {
             setSelectedItemType(selectionPropertyType);
         }

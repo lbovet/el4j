@@ -67,8 +67,8 @@ public abstract class AbstractBeanTableView extends AbstractView
     /**
      * List with the displayed data.
      */
-    private final List m_dataList 
-        = Collections.synchronizedList(new ArrayList()); 
+    private final List<Object> m_dataList 
+        = Collections.synchronizedList(new ArrayList<Object>()); 
     
     /**
      * Bean table model.
@@ -381,7 +381,7 @@ public abstract class AbstractBeanTableView extends AbstractView
     /**
      * {@inheritDoc}
      */
-    public boolean setBeans(Collection beans) {
+    public boolean setBeans(Collection<?> beans) {
         boolean listChanged = false;
         getDataList().clear();
         if (beans != null) {
@@ -441,7 +441,7 @@ public abstract class AbstractBeanTableView extends AbstractView
     /**
      * @return Returns the dataList.
      */
-    public final List getDataList() {
+    public final List<Object> getDataList() {
         return m_dataList;
     }
 

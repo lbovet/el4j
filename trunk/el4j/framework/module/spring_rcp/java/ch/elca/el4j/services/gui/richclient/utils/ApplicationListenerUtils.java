@@ -16,11 +16,8 @@
  */
 package ch.elca.el4j.services.gui.richclient.utils;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ApplicationEventMulticaster;
-import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.richclient.application.Application;
 
 /**
  * Util class for application listeners.
@@ -45,17 +42,22 @@ public class ApplicationListenerUtils {
      *         otherwise <code>null</code>. 
      */
     public static ApplicationEventMulticaster getApplicationEventMulticaster() {
-        ApplicationContext appContext 
-            = Application.services().getApplicationContext();
         try {
-            ApplicationEventMulticaster eventMulticaster 
-                = (ApplicationEventMulticaster) appContext.getBean(
-                    AbstractApplicationContext
-                        .APPLICATION_EVENT_MULTICASTER_BEAN_NAME);
-            return eventMulticaster;
-        } catch (Exception e) {
+            return Services.get(ApplicationEventMulticaster.class);
+        } catch (UnsupportedOperationException e) {
             return null;
         }
+//        ApplicationContext appContext 
+//            = Application.services().getApplicationContext();
+//        try {
+//            ApplicationEventMulticaster eventMulticaster 
+//                = (ApplicationEventMulticaster) appContext.getBean(
+//                    AbstractApplicationContext
+//                        .APPLICATION_EVENT_MULTICASTER_BEAN_NAME);
+//            return eventMulticaster;
+//        } catch (Exception e) {
+//            return null;
+//        }
     }
     
     /**

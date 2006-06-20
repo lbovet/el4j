@@ -64,7 +64,8 @@ public abstract class AbstractGroupPageComponent extends AbstractControlFactory
      * Are the page components and its JComponent that are on the control. The
      * page component is used as key.
      */
-    protected final Map m_containingPageComponents = new HashMap();
+    protected final Map<PageComponent, JComponent> m_containingPageComponents 
+        = new HashMap<PageComponent, JComponent>();
 
     /**
      * {@inheritDoc}
@@ -310,7 +311,7 @@ public abstract class AbstractGroupPageComponent extends AbstractControlFactory
         JComponent removedComponent = null;
         if (isControlCreated() && containsPageComponent(pageComponent)) {
             JComponent childControl
-                = (JComponent) m_containingPageComponents.get(pageComponent);
+                = m_containingPageComponents.get(pageComponent);
             JComponent groupControl = getControl();
             
             PageComponentContext childContext = pageComponent.getContext();

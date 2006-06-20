@@ -9,7 +9,7 @@
     <!-- Author: $Author$ -->
     
     <!-- 
-        Binds bean properties to gui components.
+        Binds bean properties to gui components. Listed in service registry.
     -->
     <bean id="binderSelectionStrategy" 
         class="org.springframework.richclient.form.binding.swing.SwingBinderSelectionStrategy">

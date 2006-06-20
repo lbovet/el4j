@@ -71,7 +71,7 @@ public abstract class AbstractBeanDeleteExecutor
         System.arraycopy(objects, 0, beans, 0, beans.length);
         setBeans(beans);
         
-        List keys = new ArrayList();
+        List<Object> keys = new ArrayList<Object>();
         for (int i = 0; i < beans.length; i++) {
             keys.add(beans[i].getKeyAsObject());
         }
@@ -136,7 +136,7 @@ public abstract class AbstractBeanDeleteExecutor
      * 
      * @param keys Are the keys of beans to delete.
      */
-    protected abstract void deleteBeansByKey(List keys);
+    protected abstract void deleteBeansByKey(List<Object> keys);
     
     /**
      * @param key Used to lookup the bean.

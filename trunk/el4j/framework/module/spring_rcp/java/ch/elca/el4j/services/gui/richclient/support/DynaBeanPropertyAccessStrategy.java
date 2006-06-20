@@ -18,6 +18,7 @@ package ch.elca.el4j.services.gui.richclient.support;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Map;
 
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.DynaClass;
@@ -346,6 +347,21 @@ public class DynaBeanPropertyAccessStrategy
             }
             return dynaProperty;
         }
-    }
 
+        public Map getAllUserMetadata(String propertyName) {
+            // TODO Auto-generated method stub
+            // no clue what goes in here, leaving it for MZE
+            // -- AMS
+            assert false;
+            return null;
+        }
+
+        public Object getUserMetadata(String propertyName, String key) {
+            // TODO Auto-generated method stub
+            // no clue what goes in here, leaving it for MZE
+            // -- AMS
+            assert false;
+            return null;
+        }
+    }
 }

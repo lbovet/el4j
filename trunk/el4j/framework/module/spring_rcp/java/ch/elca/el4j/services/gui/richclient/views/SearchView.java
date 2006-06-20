@@ -136,11 +136,12 @@ public class SearchView extends AbstractView {
         JComponent searchControl = getSearchComponent();
         ComponentUtils.addFocusListenerRecursivly(searchControl, 
             new FocusAdapter() {
-            public void focusGained(FocusEvent e) {
-                Component focusedComponent = e.getComponent();
-                setLastFocusedComponent(focusedComponent);
+                public void focusGained(FocusEvent e) {
+                    Component focusedComponent = e.getComponent();
+                    setLastFocusedComponent(focusedComponent);
+                }
             }
-        });
+        );
         m_control.add(searchControl);
         m_control.add(getButtonComponent());
         SpringLayoutUtils.makeCompactGrid(m_control, 
@@ -203,7 +204,7 @@ public class SearchView extends AbstractView {
         m_beanPropertiesForm.setShownBeanProperties(m_propertyNames);
         m_beanPropertiesForm.setValidatingFormModel(m_formModel);
         
-        Map specificBinders = new HashMap();
+        Map<String, Binder> specificBinders = new HashMap<String, Binder>();
         for (int i = 0; i < m_searchItems.length; i++) {
             AbstractSearchItem searchItem = m_searchItems[i];
             Binder specificBinder = searchItem.getSpecificBinder();
@@ -318,7 +319,8 @@ public class SearchView extends AbstractView {
     public void search() {
         if (isControlCreated()) {
             m_formModel.commit();
-            Map queryObjects = new HashMap();
+            Map<Class, QueryObject> queryObjects
+                = new HashMap<Class, QueryObject>();
             DynaBean dynaBean = (DynaBean) m_formModel.getFormObject();
             for (int i = 0; i < m_searchItems.length; i++) {
                 AbstractSearchItem searchItem = m_searchItems[i];
@@ -327,14 +329,14 @@ public class SearchView extends AbstractView {
                 AbstractCriteria[] criterias = searchItem.getCriterias(value);
                 Class targetBeanClass = searchItem.getTargetBeanClass();
                 QueryObject queryObject 
-                    = (QueryObject) queryObjects.get(targetBeanClass);
+                    = queryObjects.get(targetBeanClass);
                 if (queryObject == null) {
                     queryObject = new QueryObject(targetBeanClass);
                     queryObjects.put(targetBeanClass, queryObject);
                 }
                 queryObject.addCriterias(criterias);
             }
-            Collection queryCollection = queryObjects.values();
+            Collection<QueryObject> queryCollection = queryObjects.values();
             QueryObjectEvent objectQueryEvent 
                 = new QueryObjectEvent(this, queryCollection);
             getApplicationEventPublisher().publishEvent(objectQueryEvent);

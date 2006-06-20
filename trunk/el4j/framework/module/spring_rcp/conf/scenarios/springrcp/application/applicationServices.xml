@@ -8,6 +8,33 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
 
+    <!-- Locator for the application service registry -->
+    <bean id="serviceLocator" class="org.springframework.richclient.application.ApplicationServicesLocator">
+        <property name="applicationServices" ref="applicationServices"/>
+    </bean>
+
+    <!-- Application Service Registry -->
+    <bean id="applicationServices" singleton="true"
+      class="org.springframework.richclient.application.support.DefaultApplicationServices">
+      <property name="applicationObjectConfigurerId"><idref bean="applicationObjectConfigurer"/></property>
+      <property name="binderSelectionStrategy" ref="binderSelectionStrategy"/>
+      <property name="componentFactory" ref="componentFactory"/>
+      <property name="conversionService" ref="conversionService"/>
+      <property name="fieldFaceSource" ref="formFieldFaceSource"/>
+      <property name="formComponentInterceptorFactory" ref="formComponentInterceptorFactory"/>
+      <property name="imageSource" ref="imageSource"/>
+      <property name="messageSource" ref="messageSource"/>
+      <property name="rulesSource" ref="rulesSource"/>
+      <property name="registryEntries">
+          <map>
+              <entry>
+                  <key><value>org.springframework.context.event.ApplicationEventMulticaster</value></key>
+                  <idref bean="applicationEventMulticaster"/>
+              </entry>
+          </map>          
+      </property>
+    </bean>
+
     <!-- 
         Sends all application events to every registered application listener.
         Used views are registered application listeners. The bean with id 
@@ -17,7 +44,7 @@
         class="org.springframework.context.event.SimpleApplicationEventMulticaster" />
 
     <!--
-        Converter service.
+        Converter service. Listed in service registry.
     -->
     <bean id="conversionService" 
         class="ch.elca.el4j.services.gui.richclient.converters.ExtendedConversionService">
@@ -74,11 +101,9 @@
     </bean>
 
     <!-- 
-        Sets the look and feel for the application. The bean 
-        with id "lookAndFeelConfigurer" is looked up by the application
-        services class.
+        Sets the look and feel for the application.
     -->
-    <bean id="lookAndFeelConfigurer"
+   <bean id="lookAndFeelConfigurer"
         class="org.springframework.richclient.application.config.JGoodiesLooksConfigurer">
         <property name="popupDropShadowEnabled" value="false" />
         <property name="theme">
