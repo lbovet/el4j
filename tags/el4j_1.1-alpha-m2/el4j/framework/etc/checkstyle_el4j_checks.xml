@@ -1,0 +1,293 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+    "-//Puppy Crawl//DTD Check Configuration 1.2//EN"
+    "http://www.puppycrawl.com/dtds/configuration_1_2.dtd">
+
+<!--  Checkstyle configuration that checks EL4J coding guidelines. -->
+<module name="Checker">
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <!-- default severity is "warning" -->
+    <property name="severity" value="warning" />
+
+    <!-- Checks that each package has a package.html file -->
+    <!--module name="PackageHtml"/-->
+
+    <!--module name="NewlineAtEndOfFile"/-->
+
+
+    <!-- Duplicate Code (COMMENTED BECAUSE ELCA HEADER IS ALWAYS INDICATED) -->
+    <!--module name="StrictDuplicateCode"-->
+        <!--property name="min" value="12"/-->
+    <!--/module-->
+
+    <!-- Commment supppression filters -->
+    <!-- MagicNumber filter -->
+    <module name="SuppressionCommentFilter">
+        <property name="offCommentFormat" value="Checkstyle: MagicNumber off" />
+        <property name="onCommentFormat" value="Checkstyle: MagicNumber on" />
+        <property name="checkFormat" value="MagicNumber" />
+    </module>
+    <!-- UncommentedMain filter -->
+    <module name="SuppressionCommentFilter">
+        <property name="offCommentFormat" value="Checkstyle: UncommentedMain off" />
+        <property name="onCommentFormat" value="Checkstyle: UncommentedMain on" />
+        <property name="checkFormat" value="UncommentedMain" />
+    </module>
+    <!-- EmptyBlock filter -->
+    <module name="SuppressionCommentFilter">
+        <property name="offCommentFormat" value="Checkstyle: EmptyBlock off" />
+        <property name="onCommentFormat" value="Checkstyle: EmptyBlock on" />
+        <property name="checkFormat" value="EmptyBlock" />
+    </module>
+    
+    <module name="TreeWalker">
+        <!-- Makes comments available to filters -->
+        <module name="FileContentsHolder"/>
+
+        <!-- Javadoc Checks -->
+
+        <module name="JavadocType">
+            <property name="authorFormat" value="[A-Za-z ]+\([a-zA-Z]{3}\)" />
+        </module>
+        <module name="JavadocMethod">
+            <property name="allowThrowsTagsForSubclasses" value="true" />
+            
+            <!-- Allow missing throw tag activated due to bug of checkstyle! -->
+            <property name="allowMissingThrowsTags" value="true"/>
+        </module>
+        <module name="JavadocVariable" />
+        <module name="JavadocStyle" />
+
+
+        <!-- Naming Conventions -->
+
+        <module name="AbstractClassName" />
+        <module name="ConstantName" />
+        <module name="LocalFinalVariableName">
+            <property name="format"
+                value="^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*|logger$" />
+        </module>
+        <module name="LocalVariableName" />
+        <module name="MemberName">
+            <property name="format" value="^m_[a-z][a-zA-Z0-9]*$" />
+        </module>
+        <module name="MethodName" />
+        <module name="PackageName">
+            <property name="format" value="^[a-z]+(\.[a-z][a-z0-9]*)*$" />
+        </module>
+        <module name="ParameterName" />
+        <module name="StaticVariableName">
+            <property name="format" value="^s_[a-z][a-zA-Z0-9]*$" />
+        </module>
+        <module name="TypeName" />
+
+
+        <!-- Header. Commented because we have files with different headers. -->
+<!--        <module name="RegexpHeader">-->
+<!--            <property name="headerFile" value="${el4j_java_header_file}" />-->
+<!--        </module>-->
+
+
+        <!-- Imports -->
+
+        <module name="IllegalImport">
+            <property name="illegalPkgs" value="" />
+        </module>
+        <module name="RedundantImport" />
+        <module name="UnusedImports" />
+        <module name="ImportOrder">
+            <property name="groups" value="java,javax,org,com" />
+            <property name="ordered" value="true" />
+            <property name="separated" value="true" />
+        </module>
+
+
+        <!-- Size violation -->
+
+        <module name="ExecutableStatementCount">
+            <property name="max" value="30" />
+        </module>
+        <module name="FileLength">
+            <property name="max" value="2000" />
+        </module>
+        <module name="LineLength">
+            <property name="max" value="80" />
+            <!-- Ignore long javadoc lines containing only one word and ignore -->
+            <!-- Ignore the long '("$URL: ...' lines. -->
+            <!-- Ignore the import lines. -->
+            <!-- Ignore the lines in javadoc with javadoc tag and one word. -->
+            <!-- Ignore the long  '* 15.11.04 XYZ ...' in ELCA java comment header -->
+            <!-- Ignore the first text line of header. -->
+            <property name="ignorePattern"
+                value="^( *\* *[^ ]+)$|^( \* *\(.\$URL: [^$]*\$., ?)$|^(import [^ ]+)$|^( *\* *@[^ ]+ [^ ]+)$|^ \* \d\d.\d\d.\d{2,4}[ ]+[a-zA-Z]{3}[ ]+[a-zA-Z0-9 \./\(\)]+$|^ \* EL4J, the Enterprise Library for Java, complementing Spring http://el4j\.sf\.net$" />
+        </module>
+        <module name="MethodLength">
+            <property name="max" value="150" />
+        </module>
+        <module name="AnonInnerLength">
+            <property name="max" value="20" />
+        </module>
+        <module name="ParameterNumber">
+            <property name="max" value="7" />
+        </module>
+
+
+        <!-- Whitespace -->
+
+        <module name="EmptyForInitializerPad" />
+        <module name="EmptyForIteratorPad" />
+        <module name="MethodParamPad">
+            <property name="option" value="nospace" />
+            <property name="allowLineBreaks" value="true" />
+        </module>
+        <module name="NoWhitespaceAfter" />
+        <module name="NoWhitespaceBefore" />
+        <module name="OperatorWrap">
+            <property name="tokens"
+                value="ASSIGN, BAND, BAND_ASSIGN, BOR, BOR_ASSIGN, BSR, BSR_ASSIGN, BXOR, BXOR_ASSIGN, COLON, DIV, DIV_ASSIGN, EQUAL, GE, GT, LAND, LE, LITERAL_INSTANCEOF, LOR, LT, MINUS, MINUS_ASSIGN, MOD, MOD_ASSIGN, NOT_EQUAL, PLUS, PLUS_ASSIGN, QUESTION, SL, SL_ASSIGN, SR, SR_ASSIGN, STAR, STAR_ASSIGN" />
+            <property name="option" value="nl" />
+        </module>
+        <module name="ParenPad" />
+        <module name="TypecastParenPad" />
+        <module name="TabCharacter" />
+        <module name="WhitespaceAfter" />
+        <module name="WhitespaceAround">
+            <property name="tokens" value="ASSIGN, BAND, BAND_ASSIGN, BOR, BOR_ASSIGN, BSR, BSR_ASSIGN, BXOR, BXOR_ASSIGN, COLON, DIV, DIV_ASSIGN, EQUAL, GE, GT, LAND, LCURLY, LE, LITERAL_ASSERT, LITERAL_CATCH, LITERAL_DO, LITERAL_ELSE, LITERAL_FINALLY, LITERAL_FOR, LITERAL_IF, LITERAL_RETURN, LITERAL_SYNCHRONIZED, LITERAL_TRY, LITERAL_WHILE, LOR, LT, MINUS, MINUS_ASSIGN, MOD, MOD_ASSIGN, NOT_EQUAL, PLUS, PLUS_ASSIGN, QUESTION, RCURLY, SL, SLIST, SL_ASSIGN, SR, SR_ASSIGN, STAR, STAR_ASSIGN, TYPE_EXTENSION_AND"/>
+        </module>
+
+
+        <!-- Modifiers -->
+
+        <module name="ModifierOrder" />
+        <!--module name="RedundantModifier"/-->
+
+
+        <!-- Block Checks -->
+
+        <module name="EmptyBlock" />
+        <module name="LeftCurly" />
+        <module name="NeedBraces" />
+        <module name="RightCurly" />
+        <module name="AvoidNestedBlocks" />
+
+
+        <!-- Coding -->
+
+        <!--module name="ArrayTrailingComma"/-->
+        <!--module name="AvoidInlineConditionals"/-->
+        <module name="CovariantEquals" />
+        <module name="DoubleCheckedLocking" />
+        <module name="EmptyStatement" />
+        <module name="EqualsHashCode" />
+        <!--module name="FinalLocalVariable"/-->
+        <module name="HiddenField" />
+        <module name="IllegalInstantiation">
+            <property name="classes" value="java.lang.Boolean" />
+        </module>
+        <!--module name="IllegalToken"/-->
+        <module name="InnerAssignment" />
+        <module name="MagicNumber" />
+        <module name="MissingSwitchDefault" />
+        <!--module name="ModifiedControlVariable"/ doesn't exist in 3.4-->
+        <module name="RedundantThrows">
+            <property name="allowUnchecked" value="true" />
+            <property name="allowSubclasses" value="true" />
+        </module>
+        <module name="SimplifyBooleanExpression" />
+        <module name="SimplifyBooleanReturn" />
+        <module name="StringLiteralEquality" />
+        <module name="NestedIfDepth">
+            <property name="max" value="4" />
+        </module>
+        <module name="NestedTryDepth">
+            <property name="max" value="3" />
+        </module>
+        <module name="SuperClone" />
+        <module name="SuperFinalize" />
+        <!--module name="IllegalCatch"/-->
+        <module name="PackageDeclaration" />
+        <module name="JUnitTestCase" />
+        <module name="ReturnCount" />
+        <!--module name="IllegalType"/-->
+        <module name="DeclarationOrder" />
+        <module name="ParameterAssignment" />
+        <!--module name="ExplicitInitialization"/-->
+        <module name="DefaultComesLast" />
+        <!--module name="MissingCtor"/-->
+        <module name="FallThrough" />
+        <!--module name="MultipleStringLiterals"/  doesn't exist in 3.4-->
+        <module name="MultipleVariableDeclarations" />
+        <!--module name="RequireThis"/-->
+        <!--module name="UnnecessaryParentheses"/-->
+
+
+        <!-- Class Design -->
+
+        <module name="VisibilityModifier">
+            <property name="protectedAllowed" value="true" />
+            <property name="packageAllowed" value="true" />
+        </module>
+        <module name="FinalClass" />
+        <module name="InterfaceIsType" />
+        <module name="HideUtilityClassConstructor" />
+        <!--module name="DesignForExtension"/-->
+        <!--module name="MutableException"/-->
+        <module name="ThrowsCount">
+            <property name="max" value="4" />
+        </module>
+
+
+        <!-- Metrics -->
+
+        <module name="BooleanExpressionComplexity">
+            <property name="max" value="3" />
+        </module>
+        <module name="ClassDataAbstractionCoupling">
+            <property name="max" value="7" />
+        </module>
+        <module name="ClassFanOutComplexity">
+            <property name="max" value="20" />
+        </module>
+        <module name="CyclomaticComplexity">
+            <property name="max" value="12" />
+        </module>
+        <module name="NPathComplexity">
+            <property name="max" value="200" />
+        </module>
+        <!--module name="JavaNCSS"/ doesn't exist in 3.4-->
+
+
+        <!-- Miscellaneous -->
+
+        <!--module name="GenericIllegalRegexp"-->
+        <!--property name="format" value="System\.out\.println"/-->
+        <!--/module-->
+        <module name="TodoComment">
+            <property name="format" value="TBD|TODO" />
+        </module>
+        <module name="UncommentedMain">
+            <property name="excludedClasses" value="\.Main$" />
+        </module>
+        <module name="UpperEll" />
+        <module name="ArrayTypeStyle" />
+        <!--module name="FinalParameters"/-->
+        <module name="Indentation" />
+        <module name="TrailingComment" />
+        <module name="RequiredRegexp">
+            <property name="format" value="printFileStatus" />
+        </module>
+
+
+        <!-- Usage Checks -->
+        <!--module name="usage.OneMethodPrivateField"/-->
+        <!--module name="usage.UnusedLocalVariable" /-->
+        <!--module name="usage.UnusedParameter"/-->
+        <!--module name="usage.UnusedPrivateField" /-->
+        <!--module name="usage.UnusedPrivateMethod" /-->
+
+    </module>
+</module>

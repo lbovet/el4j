@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!-- 
+    Spring configuration file for method trace interception. By default enter,
+    exit normally and exit exceptionally for methods of interfaces of beans that
+    name ends with 'Dao' and 'Service' will be logged with logger of invoked 
+    class at level TRACE. Only interface methods will be traced.
+ -->
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <bean id="methodTraceAutoProxy"
+        class="ch.elca.el4j.core.aop.ExclusiveBeanNameAutoProxyCreator">
+        <property name="interceptorNames">
+            <value>methodTraceInterceptor</value>
+        </property>
+        <property name="beanNames">
+            <value>*Dao,*Service</value>
+        </property>
+        <property name="proxyTargetClass">
+            <value>false</value>
+        </property>
+    </bean>
+    <bean id="methodTraceInterceptor"
+        class="org.springframework.aop.interceptor.CustomizableTraceInterceptor">
+        <property name="enterMessage">
+            <value>Entering method $[targetClassShortName].$[methodName]($[arguments]) with types($[argumentTypes])</value>
+        </property>
+        <property name="exceptionMessage">
+            <value>Exception thrown in method '$[methodName]' of class [$[targetClassName]]</value>
+        </property>
+        <property name="exitMessage">
+            <value>Exiting method '$[methodName]' of class [$[targetClassName]]</value>
+        </property>
+        <property name="useDynamicLogger">
+            <value>true</value>
+        </property>
+    </bean>
+</beans>

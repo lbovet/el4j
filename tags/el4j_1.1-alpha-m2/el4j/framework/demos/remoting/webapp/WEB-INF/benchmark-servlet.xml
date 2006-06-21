@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+    
+    <import resource="classpath*:mandatory/*.xml"/>
+    <import resource="classpath:common/benchmark-protocols-config.xml"/>
+    <import resource="classpath:server/web/benchmark-hessian-server-config.xml"/>
+    <import resource="classpath:server/web/benchmark-burlap-server-config.xml"/>
+    <import resource="classpath:server/web/benchmark-httpinvoker-server-config.xml"/>
+    <import resource="classpath:server/web/benchmark-soap-server-config.xml"/>
+    
+    <bean id="beanNameHandlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+</beans>
