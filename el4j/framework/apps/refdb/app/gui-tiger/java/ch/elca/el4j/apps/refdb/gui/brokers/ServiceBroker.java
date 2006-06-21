@@ -16,10 +16,8 @@
  */
 package ch.elca.el4j.apps.refdb.gui.brokers;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.richclient.application.Application;
-
 import ch.elca.el4j.apps.refdb.service.ReferenceService;
+import ch.elca.el4j.services.gui.richclient.utils.Services;
 
 /**
  * Broker for services. Currently only the reference service is implemented.
@@ -65,10 +63,10 @@ public class ServiceBroker {
         boolean allowCaching) {
         ReferenceService referenceService = null;
         if (s_cachedReferenceService == null || !allowCaching) {
-            ApplicationContext appContext 
-                = Application.services().getApplicationContext();
-            referenceService 
-                = (ReferenceService) appContext.getBean("referenceService"); 
+            referenceService = Services.getBean(
+                "referenceService",
+                ReferenceService.class
+            );
         } else {
             referenceService = s_cachedReferenceService;
         }
@@ -80,5 +78,4 @@ public class ServiceBroker {
         }
         return referenceService;
     }
-
 }

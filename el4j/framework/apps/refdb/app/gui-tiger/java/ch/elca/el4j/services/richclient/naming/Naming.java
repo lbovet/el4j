@@ -27,7 +27,8 @@ import org.springframework.util.StringUtils;
 import ch.elca.el4j.core.exceptions.MisconfigurationRTException;
 import ch.elca.el4j.services.dom.info.EntityType;
 import ch.elca.el4j.services.dom.info.Property;
-import ch.elca.el4j.services.richclient.naming.ConfigurablePropertyFaceDescriptorSource.Prop;
+import ch.elca.el4j.services.richclient.naming.ConfigurableFieldFaceSource.Prop;
+import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
 
 
 
@@ -69,7 +70,7 @@ public class Naming {
      * @return .
      */
     public String getName(EntityType t) {
-        return m_source.getMessage(keyFor(t) + ".Name", null, t.name);
+        return m_source.getMessage(keyFor(t) + ".displayName", null, t.name);
     }
     
     /**
@@ -139,11 +140,11 @@ public class Naming {
     }
     
     /**
-     * looks up and returns the localizable string <code>key</code>
+     * Looks up and returns the localizable string <code>key</code>
      * for a component with schema <code>schema</code> that is 
      * displaying entities of type <code>entityType</code>.
      * 
-     *<p>for {@code}getComponentAttribute(Person.class, Table.class, "title")}
+     *<p>for {@code}getComponentAttribute(Person.class, "Table", "title")}
      *this method checks the message codes
      *<pre>Table.title.Person
      *Table.title</pre>
@@ -159,6 +160,44 @@ public class Naming {
             new String[] {lkey + "." + keyFor(entityType), lkey},
             new Object[] {getName(entityType)}
         ));
+    }
+    
+    /**
+     * Looks up and returns an enum value's localized face property.
+     * @param e the enum value whose face property is sought
+     * @param key the name of the face property sought
+     * @return the value of the face property, or {@code null}
+     *         if the face property is not defined.
+     */
+    @ImplementationAssumption("unqualified enum names are unique within dom")
+    public String getEnumValueFaceProperty(Enum<?> e, String key) {
+        return getConstantValueFaceProperty(
+            e.getDeclaringClass().getSimpleName(),
+            e.name(),
+            key
+        );
+    }
+    
+    /**
+     * Looks up and returns an enum value's localized face property.
+     * 
+     * <p>For real enums, you might prefer 
+     * {@link #getEnumValueFaceProperty(Enum, String)};
+     * this method is provided for values that are conceptually enums, but are
+     * not enums in the source code (boolean values, for instance).
+     *  
+     * @param type the unqualified name of the type the value belongs to 
+     * @param value the name of the value
+     * @param key the name of the desired face property
+     * @return the value of the face property, or {@code null}
+     *         if the face property is not defined.
+     */
+    public String getConstantValueFaceProperty(String type, String value,
+                                               String key) {
+        return m_source.getMessage(
+            type + "." + value + "." + key,
+            (String) null
+        );
     }
     
     /**
@@ -190,6 +229,7 @@ public class Naming {
         }
         return s_instance;
     }
+    
     /** registers the default naming instance. */
     public static void setInstance(Naming n) {
         s_instance = n;

@@ -33,7 +33,7 @@ import ch.elca.el4j.services.gui.richclient.executors.displayable.ExecutorDispla
 import ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm;
 import ch.elca.el4j.services.gui.richclient.views.DialogPageView;
 import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
-import ch.elca.el4j.services.richclient.naming.ConfigurablePropertyFaceDescriptorSource;
+import ch.elca.el4j.services.richclient.naming.ConfigurableFieldFaceSource;
 import ch.elca.el4j.services.richclient.naming.Naming;
 import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
 import ch.elca.el4j.util.codingsupport.annotations.Preliminary;
@@ -68,8 +68,8 @@ public class Edit extends AbstractGenericView {
     public ObservableValue<?> current;
 
     /** provides default property faces. */ 
-    ConfigurablePropertyFaceDescriptorSource m_propertyFaceDescriptorSource 
-        = new ConfigurablePropertyFaceDescriptorSource();
+    ConfigurableFieldFaceSource m_propertyFaceDescriptorSource 
+        = new ConfigurableFieldFaceSource();
 
     /** the backing executor. */
     Executor m_executor;
@@ -205,7 +205,7 @@ public class Edit extends AbstractGenericView {
             // HACK: implementation dependent downcast. Spring RCP's public API
             // does not permit to configure the localization provider used.
             AbstractFormModel fm = (AbstractFormModel) getFormModel();
-            fm.setFormPropertyFaceDescriptorSource(
+            fm.setFieldFaceSource(
                 m_propertyFaceDescriptorSource
             );
         }

@@ -23,14 +23,14 @@ import java.util.Map;
 import javax.swing.Icon;
 
 import org.springframework.binding.form.FormModel;
-import org.springframework.binding.form.FormPropertyFaceDescriptor;
-import org.springframework.binding.form.support.DefaultFormPropertyFaceDescriptor;
-import org.springframework.binding.form.support.MessageSourceFormPropertyFaceDescriptorSource;
+import org.springframework.binding.form.FieldFace;
+import org.springframework.binding.form.support.DefaultFieldFace;
+import org.springframework.binding.form.support.MessageSourceFieldFaceSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 
 /**
- * Instances of this class are MessageSourceFormPropertyFaceDescriptorSource(s) 
+ * Instances of this class are MessageSourceFieldFaceSource(s) 
  * where the default messages that are returned if no localized message is 
  * available can be configured.
  * 
@@ -44,8 +44,8 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
  * @author Adrian Moos (AMS)
  */
 
-public class ConfigurablePropertyFaceDescriptorSource extends
-    MessageSourceFormPropertyFaceDescriptorSource {
+public class ConfigurableFieldFaceSource extends
+    MessageSourceFieldFaceSource {
     
     /** the set of property face properties. */
     public enum Prop {
@@ -72,7 +72,7 @@ public class ConfigurablePropertyFaceDescriptorSource extends
         = new HashMap<String, EnumMap<Prop, String>>();
     
     /**
-     * Looks up the localized value of the desired FormPropertyFaceDescriptor
+     * Looks up the localized value of the desired FieldFace
      * property, delegating to 
      * {@link #getMessageKeys(FormModel, String, String)} for message key 
      * generation.
@@ -107,15 +107,15 @@ public class ConfigurablePropertyFaceDescriptorSource extends
     
     /** 
      * same as
-     * {@link org.springframework.binding.form.support.MessageSourceFormPropertyFaceDescriptorSource#loadFormPropertyFaceDescriptor(FormModel,String)
+     * {@link org.springframework.binding.form.support.MessageSourceFieldFaceSource#loadFieldFace(FormModel,String)
      * super implementation} except that settings not available in the backing
      * message source are taken from {@link #defaults}.
      * @param formModel as super
      * @param formPropertyPath as super
      * @return as super
      */
-    protected FormPropertyFaceDescriptor 
-    loadFormPropertyFaceDescriptor(FormModel formModel, 
+    protected FieldFace 
+    loadFieldFace(FormModel formModel, 
                                    String formPropertyPath) {
         
         // as in superclass, except that a different helper method is called
@@ -124,7 +124,7 @@ public class ConfigurablePropertyFaceDescriptorSource extends
         String description  = getMessage(formModel, formPropertyPath, Prop.description);
         String encodedLabel = getMessage(formModel, formPropertyPath, Prop.encodedLabel);
         Icon icon = getIconSource().getIcon(getMessage(formModel, formPropertyPath, "icon"));
-        return new DefaultFormPropertyFaceDescriptor(
+        return new DefaultFieldFace(
             displayName, caption, description, encodedLabel, icon
         );
     }
