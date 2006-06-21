@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+    Spring bean configuration file to export service with soap.
+-->
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+    
+    <import resource="classpath:template/common/protocols-config.xml"/>
+    
+    <bean id="soapCalculatorExporter" 
+        class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
+        <property name="remoteProtocol">
+            <ref bean="soapProtocol" />
+        </property>
+        <property name="serviceInterface">
+            <value>ch.elca.el4j.tests.remoting.service.Calculator</value>
+        </property>
+        <property name="serviceName">
+            <value>Calculator.Soap.Remotingtests</value>
+        </property>
+        <property name="service">
+            <refid local="soapCalculatorImpl" />
+        </property>
+    </bean>
+    
+    <bean id="soapCalculatorImpl" 
+        class="ch.elca.el4j.tests.remoting.service.impl.CalculatorImpl" />
+
+    <bean id="soapExceptionThrowerExporter" 
+        class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
+        <property name="remoteProtocol">
+            <ref bean="soapProtocolForSpecificSoapConformExceptions" />
+        </property>
+        <property name="serviceInterface">
+            <value>ch.elca.el4j.tests.remoting.service.soap.ExceptionThrower</value>
+        </property>
+        <property name="service">
+            <refid local="soapExceptionThrowerImpl" />
+        </property>
+    </bean>
+    
+    <bean id="soapExceptionThrowerImpl" 
+        class="ch.elca.el4j.tests.remoting.service.soap.impl.ExceptionThrowerImpl" />
+</beans>

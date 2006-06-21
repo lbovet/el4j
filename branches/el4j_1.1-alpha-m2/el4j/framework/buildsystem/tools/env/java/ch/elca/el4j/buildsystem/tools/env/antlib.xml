@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<antlib>
+  <taskdef name="init" classname="ch.elca.el4j.buildsystem.tools.env.InitTask"/>
+</antlib>
