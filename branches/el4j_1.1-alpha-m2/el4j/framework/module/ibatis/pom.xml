@@ -35,17 +35,17 @@
         <dependency>
             <groupId>org.apache.ibatis</groupId>
             <artifactId>ibatis-common</artifactId>
-            <version>el4j_20051223</version>
+            <version>[el4j_20051223]</version>
         </dependency>
         <dependency>
             <groupId>org.apache.ibatis</groupId>
             <artifactId>ibatis-sqlmap</artifactId>
-            <version>el4j_20051223</version>
+            <version>[el4j_20051223]</version>
         </dependency>
         <dependency>
             <groupId>org.apache.ibatis</groupId>
             <artifactId>ibatis-dao</artifactId>
-            <version>el4j_20051223</version>
+            <version>[el4j_20051223]</version>
         </dependency>
     </dependencies>
 </project>
