@@ -49,6 +49,7 @@ import ch.elca.el4j.services.gui.search.AbstractSearchItem;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.AbstractCriteria;
+import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
  * Search view.

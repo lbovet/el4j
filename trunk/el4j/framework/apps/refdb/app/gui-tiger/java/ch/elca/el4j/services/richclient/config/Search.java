@@ -24,7 +24,7 @@ import ch.elca.el4j.services.gui.search.AbstractSearchItem;
 import ch.elca.el4j.services.gui.search.ComparisonSearchItem;
 import ch.elca.el4j.services.gui.search.LikeSearchItem;
 import ch.elca.el4j.services.richclient.components.SearchView;
-import ch.elca.el4j.services.richclient.naming.ConfigurablePropertyFaceDescriptorSource;
+import ch.elca.el4j.services.richclient.naming.ConfigurableFieldFaceSource;
 import ch.elca.el4j.services.richclient.naming.Naming;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.annotations.Preliminary;
@@ -63,8 +63,8 @@ public class Search extends AbstractGenericView {
     /***/
     class GenericComponent extends SearchView {
         /** a fds with reasonable default values. */
-        ConfigurablePropertyFaceDescriptorSource m_propertyFaceDescriptorSource
-            = new ConfigurablePropertyFaceDescriptorSource();
+        ConfigurableFieldFaceSource m_propertyFaceDescriptorSource
+            = new ConfigurableFieldFaceSource();
         
         /***/
         GenericComponent() {
@@ -76,7 +76,7 @@ public class Search extends AbstractGenericView {
                         }
                     }
                 ).toArray(AbstractSearchItem.class)
-            );                                        
+            );
         }
 
         /** @param prop .
@@ -131,7 +131,7 @@ public class Search extends AbstractGenericView {
         @Override
         protected void initializeFormModel() {
             super.initializeFormModel();
-            m_formModel.setFormPropertyFaceDescriptorSource(
+            m_formModel.setFieldFaceSource(
                 m_propertyFaceDescriptorSource                
             );
         }

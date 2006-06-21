@@ -17,7 +17,27 @@
     <!-- Are helpers and factories to create and manage components. -->
     <import resource="classpath:scenarios/springrcp/application/applicationComponentParts.xml"/>
     <!-- Are binders for gui components with data models. -->
-    <import resource="classpath:scenarios/springrcp/application/componentBinders.xml"/>
+<!--    <import resource="classpath:scenarios/springrcp/application/componentBinders.xml"/>-->
+    
+    <!-- 
+        Binds bean properties to gui components.
+    -->
+    <bean id="binderSelectionStrategy" 
+        class="org.springframework.richclient.form.binding.swing.SwingBinderSelectionStrategy">
+        <property name="bindersForPropertyTypes">
+            <map>
+                <entry>
+                    <key><value type="java.lang.Class">java.lang.Boolean</value></key>
+                    <bean class="ch.elca.el4j.services.richclient.binders.ThreeStateBooleanBinder"/>
+                </entry>
+                <entry>
+                    <key><value type="java.lang.Class">java.sql.Date</value></key>
+                    <bean class="ch.elca.el4j.services.gui.richclient.forms.binding.DatePickerBinder"/>
+                </entry>
+            </map>
+        </property>
+    </bean>
+    
     
     
     
