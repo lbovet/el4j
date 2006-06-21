@@ -260,7 +260,7 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
                     <configuration>
-                        <configLocation>../etc/checkstyle_el4j_checks.xml</configLocation>
+                        <configLocation>etc/checkstyle_el4j_checks.xml</configLocation>
                         <enableRSS>false</enableRSS>
                         <enableRulesSummary>false</enableRulesSummary>
                     </configuration>
@@ -307,20 +307,21 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
-            <id>pcmzeRepository</id>
-            <name>Private repository of MZE</name>
-            <url>http://pcmze/maven2repository</url>
+            <id>central</id>
+            <name>External repository of the EL4J project</name>
+            <url>http://el4.elca-services.ch/el4j/maven2repository</url>
         </repository>
-        <repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
-            <id>springRichclientRepository</id>
-            <name>Spring rich client repository</name>
-            <url>http://spring-rich-c.sourceforge.net/maven2repository</url>
-        </repository>
-    </repositories>
-    <pluginRepositories/>
+            <id>el4jPluginRepository</id>
+            <name>External repository of the EL4J project</name>
+            <url>http://el4.elca-services.ch/el4j/maven2repository</url>
+        </pluginRepository>    
+    </pluginRepositories>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -340,8 +341,8 @@
     </dependencyManagement>
     <distributionManagement>
         <repository>
-            <id>pcmzeRepository</id>
-            <url>scp://pcmze/maven2repository</url>
+            <id>central</id>
+            <url>ftp://el4.elca-services.ch/htdocs/el4j/maven2repository/</url>
         </repository>
         <site>
             <id>pcmzeRepository</id>
