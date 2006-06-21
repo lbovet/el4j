@@ -23,19 +23,6 @@
         Module spring rcp of the EL4J framework.
     </description>
     <build>
-        <!-- Temporary used until definitive movement to Maven2. -->
-        <resources>
-            <resource>
-                <directory>../../../module/spring_rcp/conf</directory>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-                <directory>../../../tests/spring_rcp/conf</directory>
-            </testResource>
-        </testResources>
-        <sourceDirectory>../../../module/spring_rcp/java</sourceDirectory>
-        <testSourceDirectory>../../../tests/spring_rcp/java</testSourceDirectory>
     </build>
     <dependencies>
         <!-- EL4J framework modules -->

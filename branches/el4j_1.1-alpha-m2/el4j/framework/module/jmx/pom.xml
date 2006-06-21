@@ -23,19 +23,6 @@
         Module jmx of the EL4J framework.
     </description>
     <build>
-        <!-- Temporary used until definitive movement to Maven2. -->
-        <resources>
-            <resource>
-                <directory>../../../module/jmx/conf</directory>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-                <directory>../../../tests/jmx/conf</directory>
-            </testResource>
-        </testResources>
-        <sourceDirectory>../../../module/jmx/java</sourceDirectory>
-        <testSourceDirectory>../../../tests/jmx/java</testSourceDirectory>
     </build>
     <dependencies>
         <!-- EL4J framework modules -->

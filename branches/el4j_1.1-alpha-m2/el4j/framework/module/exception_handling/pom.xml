@@ -23,19 +23,6 @@
         Module exception_handling of the EL4J framework.
     </description>
     <build>
-        <!-- Temporary used until definitive movement to Maven2. -->
-        <resources>
-            <resource>
-                <directory>../../../module/exception_handling/conf</directory>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-                <directory>../../../tests/exception_handling/conf</directory>
-            </testResource>
-        </testResources>
-        <sourceDirectory>../../../module/exception_handling/java</sourceDirectory>
-        <testSourceDirectory>../../../tests/exception_handling/java</testSourceDirectory>
     </build>
     <dependencies>
         <!-- EL4J framework modules -->

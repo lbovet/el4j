@@ -23,19 +23,6 @@
         Module daemon manager of the EL4J framework.
     </description>
     <build>
-        <!-- Temporary used until definitive movement to Maven2. -->
-        <resources>
-            <resource>
-                <directory>../../../module/daemon_manager/conf</directory>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-                <directory>../../../tests/daemon_manager/conf</directory>
-            </testResource>
-        </testResources>
-        <sourceDirectory>../../../module/daemon_manager/java</sourceDirectory>
-        <testSourceDirectory>../../../tests/daemon_manager/java</testSourceDirectory>
     </build>
     <dependencies>
         <!-- EL4J framework modules -->

@@ -23,19 +23,6 @@
         Module ibatis of the EL4J framework.
     </description>
     <build>
-        <!-- Temporary used until definitive movement to Maven2. -->
-        <resources>
-            <resource>
-                <directory>../../../module/ibatis/conf</directory>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-                <directory>../../../tests/ibatis/conf</directory>
-            </testResource>
-        </testResources>
-        <sourceDirectory>../../../module/ibatis/java</sourceDirectory>
-        <testSourceDirectory>../../../tests/ibatis/java</testSourceDirectory>
     </build>
     <dependencies>
         <!-- EL4J framework modules -->

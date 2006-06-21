@@ -23,19 +23,6 @@
         Module remoting core of the EL4J framework.
     </description>
     <build>
-        <!-- Temporary used until definitive movement to Maven2. -->
-        <resources>
-            <resource>
-                <directory>../../../module/remoting_core/conf</directory>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-                <directory>../../../tests/remoting_core/conf</directory>
-            </testResource>
-        </testResources>
-        <sourceDirectory>../../../module/remoting_core/java</sourceDirectory>
-        <testSourceDirectory>../../../tests/remoting_core/java</testSourceDirectory>
     </build>
     <dependencies>
         <!-- EL4J framework modules -->

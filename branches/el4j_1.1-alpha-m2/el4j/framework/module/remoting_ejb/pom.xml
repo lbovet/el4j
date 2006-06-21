@@ -23,19 +23,6 @@
         Module remoting ejb of the EL4J framework.
     </description>
     <build>
-        <!-- Temporary used until definitive movement to Maven2. -->
-        <resources>
-            <resource>
-                <directory>../../../module/remoting_ejb/conf</directory>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-                <directory>../../../tests/remoting_ejb/conf</directory>
-            </testResource>
-        </testResources>
-        <sourceDirectory>../../../module/remoting_ejb/java</sourceDirectory>
-        <testSourceDirectory>../../../tests/remoting_ejb/java</testSourceDirectory>
     </build>
     <dependencies>
         <!-- EL4J framework modules -->

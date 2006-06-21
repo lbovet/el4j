@@ -23,19 +23,13 @@
         Module security of the EL4J framework.
     </description>
     <build>
-        <!-- Temporary used until definitive movement to Maven2. -->
-        <resources>
-            <resource>
-                <directory>../../../module/security/conf</directory>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-                <directory>../../../tests/security/conf</directory>
-            </testResource>
-        </testResources>
-        <sourceDirectory>../../../module/security/java</sourceDirectory>
-        <testSourceDirectory>../../../tests/security/java</testSourceDirectory>
+        <!-- Support for Commons Attributes -->
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>commons-attributes-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
     </build>
     <dependencies>
         <!-- EL4J framework modules -->
@@ -43,7 +37,12 @@
             <groupId>ch.elca.el4j</groupId>
             <artifactId>module-core</artifactId>
         </dependency>
-    
+        <dependency>
+            <groupId>ch.elca.el4j</groupId>
+            <artifactId>module-remoting_core</artifactId>
+            <scope>test</scope>
+        </dependency>
+            
         <!-- Third party tools -->
         <dependency>
             <groupId>org.acegisecurity</groupId>

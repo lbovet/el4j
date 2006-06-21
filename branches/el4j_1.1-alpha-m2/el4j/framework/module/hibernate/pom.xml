@@ -23,19 +23,6 @@
         Module hibernate of the EL4J framework.
     </description>
     <build>
-        <!-- Temporary used until definitive movement to Maven2. -->
-        <resources>
-            <resource>
-                <directory>../../../module/hibernate/conf</directory>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-                <directory>../../../tests/hibernate/conf</directory>
-            </testResource>
-        </testResources>
-        <sourceDirectory>../../../module/hibernate/java</sourceDirectory>
-        <testSourceDirectory>../../../tests/hibernate/java</testSourceDirectory>
     </build>
     <dependencies>
         <!-- EL4J framework modules -->

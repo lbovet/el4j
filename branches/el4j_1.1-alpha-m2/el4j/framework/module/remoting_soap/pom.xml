@@ -23,19 +23,6 @@
         Module remoting soap of the EL4J framework.
     </description>
     <build>
-        <!-- Temporary used until definitive movement to Maven2. -->
-        <resources>
-            <resource>
-                <directory>../../../module/remoting_soap/conf</directory>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-                <directory>../../../tests/remoting_soap/conf</directory>
-            </testResource>
-        </testResources>
-        <sourceDirectory>../../../module/remoting_soap/java</sourceDirectory>
-        <testSourceDirectory>../../../tests/remoting_soap/java</testSourceDirectory>
     </build>
     <dependencies>
         <!-- EL4J framework modules -->
