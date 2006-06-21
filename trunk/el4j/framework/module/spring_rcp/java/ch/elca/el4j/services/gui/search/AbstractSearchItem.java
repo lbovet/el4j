@@ -35,12 +35,12 @@ import ch.elca.el4j.services.search.criterias.AbstractCriteria;
  *
  * @author Martin Zeltner (MZE)
  */
-public abstract class AbstractSearchItem 
+public abstract class AbstractSearchItem
     implements InitializingBean, BeanNameAware {
     /**
      * Is the bean class where the target property is.
      */
-    private Class m_targetBeanClass;
+    private Class<?> m_targetBeanClass;
     
     /**
      * Is the name of the property that is the target for searchs.
@@ -55,7 +55,7 @@ public abstract class AbstractSearchItem
     /**
      * Is the type of this search item.
      */
-    private Class m_type;
+    private Class<?> m_type;
     
     /**
      * Is the initial value of this search item.
@@ -89,14 +89,14 @@ public abstract class AbstractSearchItem
     /**
      * @return Returns the targetBeanClass.
      */
-    public final Class getTargetBeanClass() {
+    public final Class<?> getTargetBeanClass() {
         return m_targetBeanClass;
     }
 
     /**
      * @param targetBeanClass The targetBeanClass to set.
      */
-    public final void setTargetBeanClass(Class targetBeanClass) {
+    public final void setTargetBeanClass(Class<?> targetBeanClass) {
         m_targetBeanClass = targetBeanClass;
     }
 
@@ -131,14 +131,14 @@ public abstract class AbstractSearchItem
     /**
      * @return Returns the type.
      */
-    public Class getType() {
+    public Class<?> getType() {
         return m_type;
     }
 
     /**
      * @param type The type to set.
      */
-    public void setType(Class type) {
+    public void setType(Class<?> type) {
         m_type = type;
     }
 
@@ -153,7 +153,7 @@ public abstract class AbstractSearchItem
      * @param initialValue The initialValue to set.
      */
     public void setInitialValue(Object initialValue) {
-        m_initialValue = initialValue;
+        m_initialValue = m_type.cast(initialValue);
     }
 
     /**
