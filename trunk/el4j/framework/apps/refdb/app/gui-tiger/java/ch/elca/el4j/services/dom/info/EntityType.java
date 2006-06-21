@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import ch.elca.el4j.services.dom.annotations.MemberOrder;
+import ch.elca.el4j.util.codingsupport.CollectionUtils;
 import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
 import ch.elca.el4j.util.collections.ExtendedWritableList;
 import ch.elca.el4j.util.collections.helpers.Function;
@@ -133,6 +134,22 @@ public class EntityType {
         
         props = Collections.unmodifiableList(mprops);
         ops   = Collections.unmodifiableList(mops);
+    }
+    
+    /** 
+     * Returns the property named {@code name} or throws a 
+     * {@code NoSuchElementException} if no such propery exists.  
+     * @param name see above
+     * @return see above
+     */
+    public Property find(String name) {
+        return props.get(
+            CollectionUtils.find(
+                CollectionUtils.mapped(props, Member.toName),
+                name,
+                0
+            )
+        );
     }
 
     /** @return the entityType describing the domain class c. */

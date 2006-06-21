@@ -16,6 +16,8 @@
  */
 package ch.elca.el4j.services.dom.info;
 
+import ch.elca.el4j.util.collections.helpers.Function;
+
 /** represents a type's member.
  *
  * <script type="text/javascript">printFileStatus
@@ -28,6 +30,14 @@ package ch.elca.el4j.services.dom.info;
  * @author Adrian Moos (AMS)
  */
 public abstract class Member {
+    /** Maps a member to its name. */
+    static final Function<Member, String> toName
+        = new Function<Member, String>() {
+            public String apply(Member d) {
+                return d.name;
+            }
+        };
+    
     /** the entity type declaring this member. */
     public final EntityType declaringType;
     
