@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <parent>
+        <groupId>ch.elca.el4j</groupId>
+        <artifactId>el4j-framework-modules</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>module-remoting_core</artifactId>
+    <version>${version.module-remoting_core}</version>
+    <packaging>jar</packaging>
+    <name>EL4J module remoting core</name>
+    <description>
+        Module remoting core of the EL4J framework.
+    </description>
+    <build>
+        <!-- Temporary used until definitive movement to Maven2. -->
+        <resources>
+            <resource>
+                <directory>../../../module/remoting_core/conf</directory>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>../../../tests/remoting_core/conf</directory>
+            </testResource>
+        </testResources>
+        <sourceDirectory>../../../module/remoting_core/java</sourceDirectory>
+        <testSourceDirectory>../../../tests/remoting_core/java</testSourceDirectory>
+    </build>
+    <dependencies>
+        <!-- EL4J framework modules -->
+        <dependency>
+            <groupId>ch.elca.el4j</groupId>
+            <artifactId>module-core</artifactId>
+        </dependency>
+    </dependencies>
+</project>

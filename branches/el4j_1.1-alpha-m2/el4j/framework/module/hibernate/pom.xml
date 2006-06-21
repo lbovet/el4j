@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <parent>
+        <groupId>ch.elca.el4j</groupId>
+        <artifactId>el4j-framework-modules</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>module-hibernate</artifactId>
+    <version>${version.module-hibernate}</version>
+    <packaging>jar</packaging>
+    <name>EL4J module hibernate</name>
+    <description>
+        Module hibernate of the EL4J framework.
+    </description>
+    <build>
+        <!-- Temporary used until definitive movement to Maven2. -->
+        <resources>
+            <resource>
+                <directory>../../../module/hibernate/conf</directory>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>../../../tests/hibernate/conf</directory>
+            </testResource>
+        </testResources>
+        <sourceDirectory>../../../module/hibernate/java</sourceDirectory>
+        <testSourceDirectory>../../../tests/hibernate/java</testSourceDirectory>
+    </build>
+    <dependencies>
+        <!-- EL4J framework modules -->
+        <dependency>
+            <groupId>ch.elca.el4j</groupId>
+            <artifactId>module-core</artifactId>
+        </dependency>
+    
+        <!-- Third party tools -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate</artifactId>
+            <version>3.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>jta</groupId>
+            <artifactId>jta</artifactId>
+            <version>1.0.1b</version>
+        </dependency>
+        <dependency>
+            <groupId>antlr</groupId>
+            <artifactId>antlr</artifactId>
+            <version>2.7.6</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>1.2</version>
+        </dependency>
+    </dependencies>
+</project>

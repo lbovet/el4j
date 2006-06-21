@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <groupId>ch.elca.el4j</groupId>
+    <artifactId>el4j-framework</artifactId>
+    <packaging>pom</packaging>
+    <name>EL4J framework</name>
+    <version>1.1.0-SNAPSHOT</version>
+    <description>
+        EL4J, the Extension Library for the J2EE, adds incremental improvements 
+        to the Spring Java framework (http://www.springframework.org/).
+    </description>
+    <issueManagement>
+        <system>Sourceforge</system>
+        <url>http://sourceforge.net/tracker/?group_id=147215&amp;atid=779814</url>
+    </issueManagement>
+    <inceptionYear>2005</inceptionYear>
+    <mailingLists>
+        <mailingList>
+            <name>Version control commits</name>
+            <subscribe>https://lists.sourceforge.net/lists/listinfo/el4j-commits</subscribe>
+            <unsubscribe>https://lists.sourceforge.net/lists/listinfo/el4j-commits</unsubscribe>
+            <post>el4j-commits@lists.sourceforge.net</post>
+            <archive>http://sourceforge.net/mailarchive/forum.php?forum=el4j-commits</archive>
+        </mailingList>
+    </mailingLists>
+    <developers>
+        <developer>
+            <id>poser55</id>
+            <name>Philipp Oser</name>
+            <email/>
+            <roles>
+                <role>Project leader</role>
+                <role>Java developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <id>swisswheel</id>
+            <name>Martin Zeltner</name>
+            <email/>
+            <roles>
+                <role>Java developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <id>mathey</id>
+            <name>Alex Mathey</name>
+            <roles>
+                <role>Java developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <id>elca-ams</id>
+            <name>Adrian Moos</name>
+            <email/>
+            <roles>
+                <role>Intern</role>
+                <role>Java developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <id>rashid_w</id>
+            <name>Rashid Waraich</name>
+            <email/>
+            <roles>
+                <role>Intern</role>
+                <role>Java developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
+    <contributors/>
+    <licenses>
+        <license>
+            <name>GPL version 2.0</name>
+            <url>http://www.gnu.org/licenses/gpl.txt</url>
+        </license>
+    </licenses>
+    <scm>
+        <connection>
+            scm:svn:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/
+        </connection>
+        <developerConnection>
+            scm:svn:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/
+        </developerConnection>
+        <url>
+            http://svn.sourceforge.net/viewcvs.cgi/el4j/trunk/el4j/
+        </url>
+    </scm>
+    <organization>
+        <name>ELCA</name>
+        <url>http://www.elca.ch</url>
+    </organization>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!--
+                    Last time synchronized with the latest plugin releases:
+                    2006-06-06
+                    See http://news.gmane.org/gmane.comp.apache.maven.announce
+                -->
+
+                <!-- Building -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-help-plugin</artifactId>
+                    <version>2.0.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>2.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.0.1</version>
+                    <configuration>
+                        <source>1.5</source>
+                        <target>1.5</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>commons-attributes-maven-plugin</artifactId>
+                    <version>1.0</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>compile</goal>
+                                <goal>test-compile</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.2</version>
+                    <configuration>
+                        <testFailureIgnore>false</testFailureIgnore>
+                        <forkMode>never</forkMode>
+                        <includes>
+                            <include>**/*Test.java</include>
+                        </includes>
+                        <excludes>
+                            <exclude>**/Abstract*</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+
+                <!-- Packaging -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.0</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>test-jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.0.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>2.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>2.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-archetype-plugin</artifactId>
+                    <version>1.0-alpha-4</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>2.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>2.0-beta-4</version>
+                    <configuration>
+                        <tagBase>
+                            https://svn.sourceforge.net/svnroot/el4j/tags/
+                        </tagBase>
+                    </configuration>
+                </plugin>
+
+                <!-- IDE -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-eclipse-plugin</artifactId>
+                    <version>2.2</version>
+                    <configuration>
+                        <downloadSources>true</downloadSources>
+                    </configuration>
+                </plugin>
+
+                <!-- Site -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>2.0-beta-5</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>2.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-report-plugin</artifactId>
+                    <version>2.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jxr-plugin</artifactId>
+                    <version>2.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <configuration>
+                        <configLocation>../etc/checkstyle_el4j_checks.xml</configLocation>
+                        <enableRSS>false</enableRSS>
+                        <enableRulesSummary>false</enableRulesSummary>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+        </plugins>
+    </build>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>taglist-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
+    <profiles>
+        <profile>
+            <id>fast</id>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+            </properties>
+        </profile>
+    </profiles>
+    <modules>
+<!--        <module>modules</module>-->
+<!--        <module>demos</module>-->
+    </modules>
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <id>pcmzeRepository</id>
+            <name>Private repository of MZE</name>
+            <url>http://pcmze/maven2repository</url>
+        </repository>
+        <repository>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <id>springRichclientRepository</id>
+            <name>Spring rich client repository</name>
+            <url>http://spring-rich-c.sourceforge.net/maven2repository</url>
+        </repository>
+    </repositories>
+    <pluginRepositories/>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+    </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <!-- Testing -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>3.8.1</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <distributionManagement>
+        <repository>
+            <id>pcmzeRepository</id>
+            <url>scp://pcmze/maven2repository</url>
+        </repository>
+        <site>
+            <id>pcmzeRepository</id>
+            <url>scp://pcmze/maven2site</url>
+        </site>
+    </distributionManagement>
+</project>
