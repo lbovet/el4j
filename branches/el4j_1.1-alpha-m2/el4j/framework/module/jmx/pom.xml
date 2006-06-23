@@ -33,22 +33,22 @@
     
         <!-- Third party tools -->
         <dependency>
-            <groupId>jmx</groupId>
+            <groupId>javax.management</groupId>
             <artifactId>jmxremote</artifactId>
             <version>[1.4.2]</version>
         </dependency>
         <dependency>
-            <groupId>jmx</groupId>
+            <groupId>javax.management</groupId>
             <artifactId>jmxremote_optional</artifactId>
             <version>[1.4.2]</version>
         </dependency>
         <dependency>
-            <groupId>jmx</groupId>
+            <groupId>javax.management</groupId>
             <artifactId>jmxri</artifactId>
             <version>[1.4.2]</version>
         </dependency>
         <dependency>
-            <groupId>jmx</groupId>
+            <groupId>javax.management</groupId>
             <artifactId>jmxtools</artifactId>
             <version>[1.4.2]</version>
         </dependency>

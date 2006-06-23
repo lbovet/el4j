@@ -228,6 +228,15 @@
                     <configuration>
                         <downloadSources>true</downloadSources>
                     </configuration>
+                    <executions>
+                        <execution>
+                            <id>actualizeEclipseProjects</id>
+                            <phase>install</phase>
+                            <goals>
+                                <goal>eclipse</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
 
                 <!-- Site -->
@@ -269,6 +278,18 @@
         </pluginManagement>
         <plugins>
         </plugins>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ftp</artifactId>
+                <version>1.0-beta-1</version>
+            </extension>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh-external</artifactId>
+                <version>1.0-beta-1</version>
+            </extension>
+        </extensions>
     </build>
     <reporting>
         <plugins>
@@ -299,6 +320,7 @@
         </profile>
     </profiles>
     <modules>
+<!--        <module>plugins</module>-->
 <!--        <module>modules</module>-->
 <!--        <module>demos</module>-->
     </modules>
@@ -307,7 +329,7 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
-            <id>central</id>
+            <id>el4jModuleRepository</id>
             <name>External repository of the EL4J project</name>
             <url>http://el4.elca-services.ch/el4j/maven2repository</url>
         </repository>
@@ -320,7 +342,7 @@
             <id>el4jPluginRepository</id>
             <name>External repository of the EL4J project</name>
             <url>http://el4.elca-services.ch/el4j/maven2repository</url>
-        </pluginRepository>    
+        </pluginRepository>
     </pluginRepositories>
     <dependencies>
         <dependency>
@@ -337,16 +359,45 @@
                 <version>3.8.1</version>
                 <scope>test</scope>
             </dependency>
+            
+            <!-- Spring -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring</artifactId>
+                <version>[1.2.8]</version>
+            </dependency>
+            
+            <!-- Apache Commons -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>[1.1]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-logging-api</artifactId>
+                <version>[1.1]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-logging-adapters</artifactId>
+                <version>[1.1]</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <distributionManagement>
         <repository>
-            <id>central</id>
+            <id>ftpEl4ElcaServices</id>
+            <name>FTP server ELCA services for EL4 projects</name>
             <url>ftp://el4.elca-services.ch/htdocs/el4j/maven2repository/</url>
         </repository>
         <site>
-            <id>pcmzeRepository</id>
+            <id>pcmzeSite</id>
+            <name>Local website tryout location of MZE.</name>
             <url>scp://pcmze/maven2site</url>
         </site>
     </distributionManagement>
+    <properties>
+        <version.maven-repohelper-plugin>1.0-alpha1</version.maven-repohelper-plugin>
+    </properties>
 </project>

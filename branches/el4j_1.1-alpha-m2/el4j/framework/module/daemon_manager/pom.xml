@@ -33,7 +33,7 @@
     
         <!-- Third party tools -->
         <dependency>
-            <groupId>tanukisoft</groupId>
+            <groupId>org.tanukisoftware.wrapper</groupId>
             <artifactId>wrapper</artifactId>
             <version>[3.2.0]</version>
         </dependency>

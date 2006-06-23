@@ -38,32 +38,32 @@
             <version>[1.1]</version>
         </dependency>
         <dependency>
-            <groupId>javax.xml</groupId>
+            <groupId>javax.xml.soap</groupId>
             <artifactId>saaj</artifactId>
             <version>[1.2]</version>
         </dependency>
         <dependency>
-            <groupId>javamail</groupId>
+            <groupId>javax.mail</groupId>
             <artifactId>javamail</artifactId>
             <version>[1.3.2]</version>
         </dependency>
         <dependency>
-            <groupId>wsdl4j</groupId>
+            <groupId>javax.wsdl</groupId>
             <artifactId>wsdl4j</artifactId>
             <version>[1.5.2]</version>
         </dependency>
         <dependency>
-            <groupId>axis</groupId>
+            <groupId>org.apache.axis</groupId>
             <artifactId>axis</artifactId>
             <version>[1.2.1]</version>
         </dependency>
         <dependency>
-            <groupId>commons-discovery</groupId>
+            <groupId>org.apache.commons</groupId>
             <artifactId>commons-discovery</artifactId>
             <version>[0.2]</version>
         </dependency>
         <dependency>
-            <groupId>commons-httpclient</groupId>
+            <groupId>org.apache.commons</groupId>
             <artifactId>commons-httpclient</artifactId>
             <version>[3.0.1]</version>
         </dependency>
