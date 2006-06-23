@@ -21,7 +21,14 @@
     <description>
         Modules of the EL4J framework.
     </description>
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
     <modules>
         <module>core</module>
         <module>daemon_manager</module>
@@ -39,7 +46,6 @@
         <module>spring_rcp</module>
         <module>web</module>
     </modules>
-    
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -119,7 +125,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    
     <properties>
         <!-- EL4J framework module version numbers -->
         <version.module-core>1.5-alpha1</version.module-core>
