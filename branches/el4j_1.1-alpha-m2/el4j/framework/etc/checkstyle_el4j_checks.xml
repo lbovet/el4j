@@ -43,6 +43,17 @@
         <property name="onCommentFormat" value="Checkstyle: EmptyBlock on" />
         <property name="checkFormat" value="EmptyBlock" />
     </module>
+    <!--
+        MemberName filter
+        
+        ATTENTION: Only allowed to use it for Maven2 Mojos due to parameter 
+                   problems!
+    -->
+    <module name="SuppressionCommentFilter">
+        <property name="offCommentFormat" value="Checkstyle: MemberName off" />
+        <property name="onCommentFormat" value="Checkstyle: MemberName on" />
+        <property name="checkFormat" value="MemberName" />
+    </module>
     
     <module name="TreeWalker">
         <!-- Makes comments available to filters -->
