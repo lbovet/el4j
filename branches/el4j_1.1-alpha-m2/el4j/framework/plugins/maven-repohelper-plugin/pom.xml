@@ -45,7 +45,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
-            <artifactId>commons-logging</artifactId>
+            <artifactId>commons-logging-api</artifactId>
         </dependency>
     </dependencies>
 </project>
