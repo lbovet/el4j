@@ -19,6 +19,7 @@ package ch.elca.el4j.plugins.repositoryhelper;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -51,87 +52,92 @@ import org.springframework.util.StringUtils;
  * @goal deploy-libraries
  */
 public class LibraryDeployerMojo extends AbstractMojo {
+    // Checkstyle: MemberName off
     /**
      * Directory where the libraries to deloy are.
      * 
      * @parameter expression="${libraryDirectory}"
-     *            property="libraryDirectory"
      * @required
      */
-    private File m_libraryDirectory;
+    protected File libraryDirectory;
     
     /**
      * Directory where to deploy the libraries.
      * 
      * @parameter expression="${repositoryDirectory}"
-     *            property="repositoryDirectory"
-     * @required
      */
-    private File m_repositoryDirectory;
+    protected File repositoryDirectory;
+    
+    /**
+     * Url where to deploy the libraries.
+     * 
+     * @parameter expression="${repositoryUrl}"
+     */
+    protected URL repositoryUrl;
+    
+    /**
+     * Id of the repository.
+     * 
+     * @parameter expression="${repositoryId}" default-value="unknownRepository"
+     */
+    protected String repositoryId;
     
     /**
      * Extension of jar files.
      * 
      * @parameter expression="${jarExtension}" default-value=".jar"
-     *            property="jarExtension"
      * @required
      */
-    private String m_jarExtension;
+    protected String jarExtension;
     
     /**
      * Extension of source files.
      * 
      * @parameter expression="${sourceExtension}" default-value="-src.zip"
-     *            property="sourceExtension"
      * @required
      */
-    private String m_sourceExtension;
+    protected String sourceExtension;
     
     /**
      * Pattern to lookup jar files.
      * 
      * @parameter expression="${jarLookupPattern}" default-value="**\/*.jar"
-     *            property="jarLookupPattern"
      * @required
      */
-    private String m_jarLookupPattern;
+    protected String jarLookupPattern;
     
     /**
      * Pattern to lookup source files.
      * 
      * @parameter expression="${sourceLookupPattern}" 
      *            default-value="**\/*-src.zip"
-     *            property="sourceLookupPattern"
      * @required
      */    
-    private String m_sourceLookupPattern;
+    protected String sourceLookupPattern;
     
     /**
      * Flag to indicate if the deploy process should stop on problem.
      * 
      * @parameter expression="${stopOnProblem}" default-value=true
-     *            property="stopOnProblem"
      */
-    private boolean m_stopOnProblem;
-    
+    protected boolean stopOnProblem;
     
     /**
      * Flag to indicate if the execute process should only check the given data.
      * 
      * @parameter expression="${justCheckDirectories}" default-value=false
-     *            property="justCheckDirectories"
      */
-    private boolean m_justCheckDirectories;
+    protected boolean justCheckDirectories;
 
     /**
      * Is the dir where this mojo is executed.
      * 
      * @parameter expression="${basedir}"
-     *            property="basedir"
      * @required
      * @readonly
      */
-    private File m_basedir;
+    protected File basedir;
+    //Checkstyle: MemberName on
         
     /**
      * {@inheritDoc}
@@ -142,38 +148,59 @@ public class LibraryDeployerMojo extends AbstractMojo {
          */
         String basedirString = null;
         try {
-            basedirString = getBasedir().getCanonicalPath();
+            basedirString = basedir.getCanonicalPath();
         } catch (IOException e) {
             throw new MojoExecutionException(
                 "Could not get canonical basedir path.", e);
         }
         
         /**
-         * Check the given directories and save the canonical path from them
+         * Check the given library directory and save the canonical path 
          * for later use.
          */
         String libraryDirectoryCanonical 
-            = checkIfWritableDirectory(getLibraryDirectory(), "Library");
-        checkIfWritableDirectory(getRepositoryDirectory(), "Repository");
-        String repositoryUrl = getRepositoryUrl();
+            = checkIfWritableDirectory(libraryDirectory, "Library");
+
+        /**
+         * Get the repository url.
+         */
+        String repositoryUrlString = null;
+        if (repositoryUrl != null && repositoryDirectory != null) {
+            throw new MojoExecutionException(
+                "Please set JUST ONE of the following "
+                + "properties: repositoryDirectory or repositoryUrl");
+        } else if (repositoryUrl != null) {
+            repositoryUrlString = repositoryUrl.toString();
+        } else if (repositoryDirectory != null) {
+            checkIfWritableDirectory(repositoryDirectory, 
+                "Repository");
+            try {
+                repositoryUrlString = repositoryDirectory.toURL().toString();
+            } catch (MalformedURLException e) {
+                throw new MojoExecutionException(e.getMessage(), e);
+            }
+        } else {
+            throw new MojoExecutionException("Please set ONE of the following "
+                + "properties: repositoryDirectory or repositoryUrl");
+        }
         
         /**
          * Lookup files by using the given patterns.
          */
         List<File> jarList 
-            = getFiles(getLibraryDirectory(), getJarLookupPattern());
+            = getFiles(libraryDirectory, jarLookupPattern);
         List<File> sourceList 
-            = getFiles(getLibraryDirectory(), getSourceLookupPattern());
+            = getFiles(libraryDirectory, sourceLookupPattern);
         
         /**
          * Translate normal filenames into maven dependencies.
          */
         List<MavenDependency> jarDepList = getDependencies(
-            jarList, libraryDirectoryCanonical, getJarExtension(), "");
+            jarList, libraryDirectoryCanonical, jarExtension, "");
         List<MavenDependency> sourceDepList = getDependencies(sourceList, 
-            libraryDirectoryCanonical, getSourceExtension(), "sources");
+            libraryDirectoryCanonical, sourceExtension, "sources");
         
-        if (isJustCheckDirectories()) {
+        if (justCheckDirectories) {
             getLog().info("Directory check successfully terminated.");
             getLog().info("Property 'justCheckDirectories' set to true, "
                 + "so no library will be deployed.");
@@ -183,8 +210,10 @@ public class LibraryDeployerMojo extends AbstractMojo {
         /**
          * Deploy libraries and sources.
          */
-        deployLibraries(jarDepList, basedirString, repositoryUrl);
-        deployLibraries(sourceDepList, basedirString, repositoryUrl);
+        deployLibraries(jarDepList, basedirString, repositoryUrlString, 
+            repositoryId);
+        deployLibraries(sourceDepList, basedirString, repositoryUrlString, 
+            repositoryId);
     }
     
     /**
@@ -194,23 +223,27 @@ public class LibraryDeployerMojo extends AbstractMojo {
      *            Is the list of dependencies to deploy.
      * @param basedirString
      *            Is the dir where to run the deploy command.
-     * @param repositoryUrl
+     * @param repositoryUrlString
      *            Is the url of the repository where to deploy the dependencies.
+     * @param repositoryIdString
+     *            Is the id of the repository.
      * @throws MojoExecutionException
      *             If deploying failed.
      */
     protected void deployLibraries(List<MavenDependency> dependencyList, 
-        String basedirString, String repositoryUrl) 
+        String basedirString, String repositoryUrlString, 
+        String repositoryIdString) 
         throws MojoExecutionException {
-        Assert.notEmpty(dependencyList);
+        Assert.notNull(dependencyList);
         Assert.hasText(basedirString);
-        Assert.hasText(repositoryUrl);
+        Assert.hasText(repositoryUrlString);
         Commandline cmd = new Commandline();
         cmd.setWorkingDirectory(basedirString);
         cmd.setExecutable("mvn");
         
         for (MavenDependency dependency : dependencyList) {
-            deployLibrary(dependency, cmd, repositoryUrl);
+            deployLibrary(dependency, cmd, repositoryUrlString, 
+                repositoryIdString);
         }
     }
     
@@ -221,20 +254,23 @@ public class LibraryDeployerMojo extends AbstractMojo {
      *            Is the dependency to deploy.
      * @param cmd
      *            Is the command used to execute the deploy command.
-     * @param repositoryUrl
+     * @param repositoryUrlString
      *            Is the place where to deploy the libraries.
+     * @param repositoryIdString
+     *            Is the id of the repository.
      * @throws MojoExecutionException
      *             If deploying failed.
      */
     protected void deployLibrary(MavenDependency dependency, 
-        Commandline cmd, String repositoryUrl) throws MojoExecutionException {
+        Commandline cmd, String repositoryUrlString, String repositoryIdString) 
+        throws MojoExecutionException {
         Assert.notNull(dependency);
         Assert.hasText(dependency.getGroupId());
         Assert.hasText(dependency.getArtifactId());
         Assert.hasText(dependency.getVersion());
         Assert.hasText(dependency.getLibraryPath());
         Assert.notNull(cmd);
-        Assert.hasText(repositoryUrl);
+        Assert.hasText(repositoryUrlString);
 
         /**
          * Add arguments to commandline.
@@ -247,8 +283,8 @@ public class LibraryDeployerMojo extends AbstractMojo {
         cmd.createArgument().setValue("-Dversion=" + dependency.getVersion());
         cmd.createArgument().setValue("-Dpackaging=jar");
         cmd.createArgument().setValue("-Dfile=" + dependency.getLibraryPath());
-        cmd.createArgument().setValue("-DrepositoryId=repository");
-        cmd.createArgument().setValue("-Durl=" + repositoryUrl);
+        cmd.createArgument().setValue("-DrepositoryId=" + repositoryIdString);
+        cmd.createArgument().setValue("-Durl=" + repositoryUrlString);
         String classifier = dependency.getClassifier();
         if (StringUtils.hasText(classifier)) {
             cmd.createArgument().setValue("-Dclassifier=" + classifier);
@@ -293,6 +329,7 @@ public class LibraryDeployerMojo extends AbstractMojo {
      */
     protected String checkIfWritableDirectory(File dir, 
         String description) throws MojoExecutionException {
+        Assert.notNull(dir);
         Log logger = getLog();
         String path = null;
         try {
@@ -459,7 +496,7 @@ public class LibraryDeployerMojo extends AbstractMojo {
      */
     protected void reportFileProblem(String message, Throwable t) 
         throws MojoExecutionException {
-        if (isStopOnProblem()) {
+        if (stopOnProblem) {
             throw new MojoExecutionException(
                 message + " Deploy process terminated!", t);
         } else {
@@ -569,143 +606,5 @@ public class LibraryDeployerMojo extends AbstractMojo {
             groupId = dependency.getArtifactId();
         }
         dependency.setGroupId(groupId);
-    }
-
-    /**
-     * @return Returns the basedir.
-     */
-    public final File getBasedir() {
-        return m_basedir;
-    }
-
-    /**
-     * @param basedir Is the basedir to set.
-     */
-    public final void setBasedir(File basedir) {
-        m_basedir = basedir;
-    }
-
-    /**
-     * @return Returns the jarExtension.
-     */
-    public final String getJarExtension() {
-        return m_jarExtension;
-    }
-
-    /**
-     * @param jarExtension Is the jarExtension to set.
-     */
-    public final void setJarExtension(String jarExtension) {
-        m_jarExtension = jarExtension;
-    }
-
-    /**
-     * @return Returns the jarLookupPattern.
-     */
-    public final String getJarLookupPattern() {
-        return m_jarLookupPattern;
-    }
-
-    /**
-     * @param jarLookupPattern Is the jarLookupPattern to set.
-     */
-    public final void setJarLookupPattern(String jarLookupPattern) {
-        m_jarLookupPattern = jarLookupPattern;
-    }
-
-    /**
-     * @return Returns the libraryDirectory.
-     */
-    public final File getLibraryDirectory() {
-        return m_libraryDirectory;
-    }
-
-    /**
-     * @param libraryDirectory Is the libraryDirectory to set.
-     */
-    public final void setLibraryDirectory(File libraryDirectory) {
-        m_libraryDirectory = libraryDirectory;
-    }
-
-    /**
-     * @return Returns the repositoryDirectory.
-     */
-    public final File getRepositoryDirectory() {
-        return m_repositoryDirectory;
-    }
-    
-    /**
-     * @return Returns the repository directory as URL in string form.
-     * @throws MojoExecutionException If there is a problem creating the URL.
-     */
-    protected String getRepositoryUrl() throws MojoExecutionException {
-        try {
-            return getRepositoryDirectory().toURL().toString();
-        } catch (MalformedURLException e) {
-            throw new MojoExecutionException(e.getMessage(), e);
-        }
-    }
-
-    /**
-     * @param repositoryDirectory Is the repositoryDirectory to set.
-     */
-    public final void setRepositoryDirectory(File repositoryDirectory) {
-        m_repositoryDirectory = repositoryDirectory;
-    }
-
-    /**
-     * @return Returns the sourceExtension.
-     */
-    public final String getSourceExtension() {
-        return m_sourceExtension;
-    }
-
-    /**
-     * @param sourceExtension Is the sourceExtension to set.
-     */
-    public final void setSourceExtension(String sourceExtension) {
-        m_sourceExtension = sourceExtension;
-    }
-
-    /**
-     * @return Returns the sourceLookupPattern.
-     */
-    public final String getSourceLookupPattern() {
-        return m_sourceLookupPattern;
-    }
-
-    /**
-     * @param sourceLookupPattern Is the sourceLookupPattern to set.
-     */
-    public final void setSourceLookupPattern(String sourceLookupPattern) {
-        m_sourceLookupPattern = sourceLookupPattern;
-    }
-
-    /**
-     * @return Returns the stopOnProblem.
-     */
-    public final boolean isStopOnProblem() {
-        return m_stopOnProblem;
-    }
-
-    /**
-     * @param stopOnProblem Is the stopOnProblem to set.
-     */
-    public final void setStopOnProblem(boolean stopOnProblem) {
-        m_stopOnProblem = stopOnProblem;
-    }
-
-    /**
-     * @return Returns the justCheckDirectories.
-     */
-    public final boolean isJustCheckDirectories() {
-        return m_justCheckDirectories;
-    }
-
-    /**
-     * @param justCheckDirectories Is the justCheckDirectories to set.
-     */
-    public final void setJustCheckDirectories(boolean justCheckDirectories) {
-        m_justCheckDirectories = justCheckDirectories;
     }
 }
