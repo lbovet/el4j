@@ -103,11 +103,11 @@
         
         <!-- Others -->
         <dependency>
-            <groupId>commons-codec</groupId>
+            <groupId>org.apache.commons</groupId>
             <artifactId>commons-codec</artifactId>
         </dependency>
         <dependency>
-            <groupId>commons-beanutils</groupId>
+            <groupId>org.apache.commons</groupId>
             <artifactId>commons-beanutils</artifactId>
         </dependency>        
     </dependencies>
