@@ -50,6 +50,7 @@ import org.springframework.util.StringUtils;
  * @author Martin Zeltner (MZE)
  * 
  * @goal deploy-libraries
+ * @requiresProject false
  */
 public class LibraryDeployerMojo extends AbstractMojo {
     // Checkstyle: MemberName off
