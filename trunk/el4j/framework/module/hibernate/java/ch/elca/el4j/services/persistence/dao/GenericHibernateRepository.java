@@ -27,7 +27,6 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import ch.elca.el4j.services.persistence.generic.dao.GenericRepository;
 import ch.elca.el4j.services.persistence.hibernate.criteria.CriteriaTransformer;
 import ch.elca.el4j.services.search.QueryObject;
-import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
  * 
@@ -51,7 +50,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * @author Philipp Oser (POS)
  * @author Alex Mathey (AMA)
  */
-public class GenericHibernateRepository<T, ID,
+public class GenericHibernateRepository<T, ID extends Serializable,
     RepositoryImpl extends GenericRepository<T, ID>> extends HibernateDaoSupport
     implements GenericRepository<T, ID> {
     
@@ -85,22 +84,13 @@ public class GenericHibernateRepository<T, ID,
      */
     @SuppressWarnings("unchecked")
     public T findById(ID id, boolean lock) {
-        // We do the following test because the id has to extend 
-        // the Serializable interface. We do not specify this in the class
-        // declaration, since we want that this class meets the requirements to 
-        // be published as a JAX-WS web service - specifying that the id extends
-        // Serializable in the class declaration is not compatible with JAXB
-        // (used by JAX-WS), since JAXB cannot hanlde interfaces.
-        Reject.ifFalse(id instanceof Serializable);
-        
+                
         T entity;
         if (lock) {
-            entity = (T) getHibernateTemplate().load(getPersistentClass(),
-                (Serializable) id,
+            entity = (T) getHibernateTemplate().load(getPersistentClass(), id,
                 LockMode.UPGRADE);
         } else {
-            entity = (T) getHibernateTemplate().load(getPersistentClass(),
-                (Serializable) id);
+            entity = (T) getHibernateTemplate().load(getPersistentClass(), id);
         }
         return entity;
     }

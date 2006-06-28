@@ -16,6 +16,7 @@
  */
 package ch.elca.el4j.services.persistence.generic.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
 import ch.elca.el4j.services.search.QueryObject;
@@ -43,7 +44,7 @@ import ch.elca.el4j.services.search.QueryObject;
  * @author Philipp Oser (POS)
  * @author Alex Mathey (AMA)
  */
-public interface GenericRepository<T, ID> {
+public interface GenericRepository<T, ID extends Serializable> {
 
     /**
      * Retrieves a domain object by identifier.
