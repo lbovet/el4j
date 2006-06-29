@@ -54,14 +54,15 @@ public interface GenericRepository<T, ID extends Serializable> {
      * @param lock
      *            Indicates whether a database lock should be obtained for this
      *            operation
-     * @return The desired domain object
+     * @return The desired domain object, or null if it does not exist
      */   
     T findById(ID id, boolean lock);
 
     /**
      * Retrieves all the domain objects of type T.
      * 
-     * @return The list containing all the domain objects of type T
+     * @return The list containing all the domain objects of type T; if no such
+     *         domain objects exist, an empty list will be returned
      */
     List<T> findAll();   
 

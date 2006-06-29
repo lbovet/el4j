@@ -87,10 +87,10 @@ public class GenericHibernateRepository<T, ID extends Serializable,
                 
         T entity;
         if (lock) {
-            entity = (T) getHibernateTemplate().load(getPersistentClass(), id,
+            entity = (T) getHibernateTemplate().get(getPersistentClass(), id,
                 LockMode.UPGRADE);
         } else {
-            entity = (T) getHibernateTemplate().load(getPersistentClass(), id);
+            entity = (T) getHibernateTemplate().get(getPersistentClass(), id);
         }
         return entity;
     }
