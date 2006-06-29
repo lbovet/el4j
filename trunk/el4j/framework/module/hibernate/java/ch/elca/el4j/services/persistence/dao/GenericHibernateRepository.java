@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.hibernate.LockMode;
 import org.hibernate.criterion.DetachedCriteria;
+import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ch.elca.el4j.services.persistence.generic.dao.GenericRepository;
@@ -91,6 +92,10 @@ public class GenericHibernateRepository<T, ID extends Serializable,
                 LockMode.UPGRADE);
         } else {
             entity = (T) getHibernateTemplate().get(getPersistentClass(), id);
+        }
+        if (entity == null) {
+            throw new DataRetrievalFailureException("The desired domain object"
+                   + " does not exist.");
         }
         return entity;
     }

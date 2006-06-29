@@ -54,7 +54,7 @@ public interface GenericRepository<T, ID extends Serializable> {
      * @param lock
      *            Indicates whether a database lock should be obtained for this
      *            operation
-     * @return The desired domain object, or null if it does not exist
+     * @return The desired domain object
      */   
     T findById(ID id, boolean lock);
 
