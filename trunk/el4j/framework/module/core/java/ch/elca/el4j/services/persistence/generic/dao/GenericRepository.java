@@ -19,6 +19,11 @@ package ch.elca.el4j.services.persistence.generic.dao;
 import java.io.Serializable;
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.OptimisticLockingFailureException;
+
 import ch.elca.el4j.services.search.QueryObject;
 
 /**
@@ -53,18 +58,25 @@ public interface GenericRepository<T, ID extends Serializable> {
      *            The id of a domain object
      * @param lock
      *            Indicates whether a database lock should be obtained for this
-     *            operation
+     *            operation        
+     * @throws DataAccessException
+     *             If general data access problem occurred
+     * @throws DataRetrievalFailureException
+     *             If domain object could not be retrieved           
      * @return The desired domain object
      */   
-    T findById(ID id, boolean lock);
+    T findById(ID id, boolean lock)
+        throws DataAccessException, DataRetrievalFailureException;
 
     /**
      * Retrieves all the domain objects of type T.
      * 
      * @return The list containing all the domain objects of type T; if no such
      *         domain objects exist, an empty list will be returned
+     * @throws DataAccessException
+     *             If general data access problem occurred
      */
-    List<T> findAll();   
+    List<T> findAll() throws DataAccessException;   
 
     /**
      * Executes a query based on a given example domain object.
@@ -72,34 +84,48 @@ public interface GenericRepository<T, ID extends Serializable> {
      * @param exampleInstance
      *            An instance of the desired domain object, serving as example
      *            for "query-by-example"
+     * @throws DataAccessException
+     *             If general data access problem occurred           
      * @return A list containing 0 or more domain objects
      */
-    List<T> findByExample(T exampleInstance);
+    List<T> findByExample(T exampleInstance) throws DataAccessException;
 
     /**
      * Executes a query based on a given query object.
      * 
      * @param q
      *            The search query object
+     * @throws DataAccessException
+     *             If general data access problem occurred
      * @return A list containing 0 or more domain objects
      */
-    List<T> findByQuery(QueryObject q);
+    List<T> findByQuery(QueryObject q) throws DataAccessException;
 
     /**
      * Saves or updates the given domain object.
      * 
      * @param entity
      *            The domain object to save or update
+     * @throws DataAccessException
+     *             If general data access problem occurred           
+     * @throws DataIntegrityViolationException
+     *             If domain object could not be inserted due to a data
+     *             integrity violation        
+     * @throws OptimisticLockingFailureException
+     *             If domain object has been modified in the meantime   
      * @return The saved or updated domain object
      */
-    T saveOrUpdate(T entity);
+    T saveOrUpdate(T entity) throws DataAccessException,
+        DataIntegrityViolationException, OptimisticLockingFailureException;
 
     /**
      * Deletes the domain object with the given id.
      * 
      * @param id
      *            The id of the domain object to delete
+     * @throws DataAccessException
+     *            If general data access problem occurred                       
      */
-    void delete(ID id);
+    void delete(ID id) throws DataAccessException;
 
 }

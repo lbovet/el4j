@@ -22,7 +22,10 @@ import java.util.List;
 
 import org.hibernate.LockMode;
 import org.hibernate.criterion.DetachedCriteria;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ch.elca.el4j.services.persistence.generic.dao.GenericRepository;
@@ -84,7 +87,8 @@ public class GenericHibernateRepository<T, ID extends Serializable,
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    public T findById(ID id, boolean lock) {
+    public T findById(ID id, boolean lock) 
+        throws DataAccessException, DataRetrievalFailureException {
                 
         T entity;
         if (lock) {
@@ -95,7 +99,7 @@ public class GenericHibernateRepository<T, ID extends Serializable,
         }
         if (entity == null) {
             throw new DataRetrievalFailureException("The desired domain object"
-                   + " does not exist.");
+                   + " could not be retrieved.");
         }
         return entity;
     }
@@ -104,7 +108,7 @@ public class GenericHibernateRepository<T, ID extends Serializable,
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    public List<T> findAll() {
+    public List<T> findAll() throws DataAccessException {
         DetachedCriteria criteria = DetachedCriteria
             .forClass(getPersistentClass());
         return getHibernateTemplate().findByCriteria(criteria);
@@ -114,7 +118,7 @@ public class GenericHibernateRepository<T, ID extends Serializable,
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    public List<T> findByExample(T exampleInstance) {
+    public List<T> findByExample(T exampleInstance) throws DataAccessException {
         return getHibernateTemplate().findByExample(exampleInstance);
     }
 
@@ -122,7 +126,7 @@ public class GenericHibernateRepository<T, ID extends Serializable,
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    public List<T> findByQuery(QueryObject q) {
+    public List<T> findByQuery(QueryObject q) throws DataAccessException {
         DetachedCriteria hibernateCriteria = CriteriaTransformer.transform(q,
             getPersistentClass());
         return getHibernateTemplate().findByCriteria(hibernateCriteria);
@@ -132,7 +136,8 @@ public class GenericHibernateRepository<T, ID extends Serializable,
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    public T saveOrUpdate(T entity) {
+    public T saveOrUpdate(T entity) throws DataAccessException,
+        DataIntegrityViolationException, OptimisticLockingFailureException {
         getHibernateTemplate().saveOrUpdate(entity);
         return entity;
     }
@@ -140,7 +145,7 @@ public class GenericHibernateRepository<T, ID extends Serializable,
     /**
      * {@inheritDoc}
      */
-    public void delete(ID id) {
+    public void delete(ID id) throws DataAccessException {
         T entity = findById(id, false);
         getHibernateTemplate().delete(entity);
     }
