@@ -20,7 +20,9 @@
         <attribute name="binrelease.version" value="2.0"/>
 
         <!-- Commons attributes enabled -->
-        <attribute name="commons-attributes.enable" value="true"/>
+        <!-- Commons attributes are disabled, since they are not compaitble
+             with Java 1.5 -->
+        <!--  <attribute name="commons-attributes.enable" value="true"/> -->
 
         <!-- Module dependencies -->
         <dependency module="module-core"/>

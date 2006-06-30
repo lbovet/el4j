@@ -1,11 +1,11 @@
 /*
  * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
  * the spring framework, http://el4j.sf.net
- * Copyright (C) 2005 by ELCA Informatique SA, Av. de la Harpe 22-24,
+ * Copyright (C) 2006 by ELCA Informatique SA, Av. de la Harpe 22-24,
  * 1000 Lausanne, Switzerland, http://www.elca.ch
  *
- * EL4J is published under the GNU General Public License (GPL) Version 2.0.
- * http://www.gnu.org/licenses/
+ * This program is published under the GNU General Public License (GPL) license.
+ * http://www.gnu.org/licenses/gpl.txt
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -26,15 +26,16 @@ import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException;
 
-import ch.elca.el4j.apps.keyword.dao.KeywordDao;
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
+import ch.elca.el4j.apps.keyword.repository.RepositoryFactory;
 import ch.elca.el4j.apps.keyword.service.KeywordService;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
 import ch.elca.el4j.services.search.QueryObject;
 
 /**
- * This is the default implementation of the keyword service.
+ * 
+ * This class is the repository-specific implementation of the keyword service.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -43,87 +44,95 @@ import ch.elca.el4j.services.search.QueryObject;
  *    "$Author$"
  * );</script>
  *
- * @author Martin Zeltner (MZE)
+ * @author Alex Mathey (AMA)
  */
-public class DefaultKeywordService implements KeywordService, InitializingBean {
+public class KeywordRepositoryService implements KeywordService,
+    InitializingBean {
+    
     /**
-     * Inner keyword to the working dao.
+     * Hibernate repository factory.
      */
-    private KeywordDao m_keywordDao;
-
+    private RepositoryFactory m_repositoryFactory;
+    
     /**
-     * @return Returns the keywordDao.
+     * @return The repository factory
      */
-    public KeywordDao getKeywordDao() {
-        return m_keywordDao;
+    public RepositoryFactory getRepositoryFactory() {
+        return m_repositoryFactory;
     }
-
+    
     /**
-     * @param keywordDao
-     *            The keywordDao to set.
+     * @param repositoryFactory
+     *            The repositoryFactory to set
      */
-    public void setKeywordDao(KeywordDao keywordDao) {
-        m_keywordDao = keywordDao;
+    public void setRepositoryFactory(RepositoryFactory repositoryFactory) {
+        m_repositoryFactory = repositoryFactory;
     }
-
+    
     /**
      * {@inheritDoc}
      */
     public void afterPropertiesSet() throws Exception {
         CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-            getKeywordDao(), "keywordDao", this);
+            getRepositoryFactory().getKeywordRepository(), "keywordRepository",
+            this);
     }
-
+    
     /**
      * {@inheritDoc}
      */
     public KeywordDto getKeywordByKey(int key)
         throws DataAccessException, DataRetrievalFailureException {
-        return getKeywordDao().getKeywordByKey(key);
+        return getRepositoryFactory().getKeywordRepository().findById(key,
+            false);
     }
-
+    
     /**
      * {@inheritDoc}
      */
-    public KeywordDto getKeywordByName(String name)
-        throws DataAccessException, DataRetrievalFailureException {
-        return getKeywordDao().getKeywordByName(name);
+    public KeywordDto getKeywordByName(String name) throws DataAccessException,
+        DataRetrievalFailureException {
+        return getRepositoryFactory().getKeywordRepository()
+            .getKeywordByName(name);    
     }
-
+    
     /**
      * {@inheritDoc}
      */
-    public List getAllKeywords() throws DataAccessException {
-        return getKeywordDao().getAllKeywords();
+    public List<KeywordDto> getAllKeywords() throws DataAccessException {
+        return getRepositoryFactory().getKeywordRepository().findAll();
     }
-
+    
     /**
      * {@inheritDoc}
      */
-    public List searchKeywords(QueryObject query)
-        throws DataAccessException {
-        return getKeywordDao().searchKeywords(query);
+    public List searchKeywords(QueryObject query) throws DataAccessException {
+        return getRepositoryFactory().getKeywordRepository().findByQuery(query);
     }
-
+    
     /**
      * {@inheritDoc}
      */
     public KeywordDto saveKeyword(KeywordDto keyword)
-        throws DataAccessException, InsertionFailureException, 
-            OptimisticLockingFailureException {
-        return getKeywordDao().saveKeyword(keyword);
+        throws DataAccessException, InsertionFailureException,
+        OptimisticLockingFailureException {
+        return getRepositoryFactory().getKeywordRepository()
+            .saveOrUpdate(keyword);
     }
-
+    
     /**
      * {@inheritDoc}
      */
     public void removeKeyword(int key) throws DataAccessException,
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
-        getKeywordDao().removeKeyword(key);
+        
+        getRepositoryFactory().getKeywordRepository().delete(key);
     }
-
+    
     /**
      * {@inheritDoc}
+     * 
+     * @@attrib.transaction.RequiredRuleBased()
      */
     public void removeKeywords(Collection keys) throws DataAccessException, 
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
@@ -133,10 +142,10 @@ public class DefaultKeywordService implements KeywordService, InitializingBean {
                 Object element = it.next();
                 if (element instanceof Number) {
                     int key = ((Number) element).intValue();
-                    getKeywordDao().removeKeyword(key);
+                    removeKeyword(key);
                 } else if (element instanceof String) {
                     int key = Integer.parseInt((String) element);
-                    getKeywordDao().removeKeyword(key);
+                    removeKeyword(key);
                 } else {
                     CoreNotificationHelper.notifyMisconfiguration(
                         "Given keys must be of type number or string. "
@@ -144,6 +153,7 @@ public class DefaultKeywordService implements KeywordService, InitializingBean {
                         + element.getClass() + ".");
                 }
             }
-        }
+        }    
     }
+    
 }

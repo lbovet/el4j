@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+    
+<beans>
+	<!-- $Version$ -->
+	<!-- $Source$ -->
+	<!-- $Date$ -->
+	<!-- $Author$ -->
+	 
+	 <bean id="keywordService"
+	 	class="ch.elca.el4j.apps.keyword.service.impl.KeywordRepositoryService">
+	 	<property name="repositoryFactory">
+	 		<ref local="repositoryFactory"/>
+	 	</property>
+	 </bean>
+	   
+	<bean id="repositoryFactory"
+		class="ch.elca.el4j.apps.keyword.repository.impl.hibernate.HibernateRepositoryFactory">
+		<property name="sessionFactory">
+			<ref local="sessionFactory"/>
+		</property>
+	</bean>
+	
+	<!-- Hibernate Session Factory Bean -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="mappingResources">
+            <list>
+                <value>hibernate/Keyword.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${databaseDialect}</prop>
+                <prop key="hibernate.max_fetch_depth">3</prop>
+            </props>
+        </property>
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+    </bean>
+	
+</beans>

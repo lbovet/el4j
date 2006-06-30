@@ -4,8 +4,8 @@
  * Copyright (C) 2006 by ELCA Informatique SA, Av. de la Harpe 22-24,
  * 1000 Lausanne, Switzerland, http://www.elca.ch
  *
- * EL4J is published under the GNU General Public License (GPL) Version 2.0.
- * http://www.gnu.org/licenses/
+ * This program is published under the GNU General Public License (GPL) license.
+ * http://www.gnu.org/licenses/gpl.txt
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -14,10 +14,11 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.tests.keyword;
+package ch.elca.el4j.tests.keyword.repository;
 
 /**
- * Test class for keyword application with IBatis SqlMaps.
+ * 
+ * Test class for <code>KeywordHibernateRepository</code>.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -26,9 +27,11 @@ package ch.elca.el4j.tests.keyword;
  *    "$Author$"
  * );</script>
  *
- * @author Martin Zeltner (MZE)
+ * @author Alex Mathey (AMA)
  */
-public class SqlMapsKeywordServiceTest extends AbstractKeywordServiceTest {
+public class HibernateKeywordRepositoryTest
+    extends AbstractKeywordRepositoryTest {
+    
     /**
      * {@inheritDoc}
      */
@@ -37,14 +40,17 @@ public class SqlMapsKeywordServiceTest extends AbstractKeywordServiceTest {
             "classpath:optional/interception/methodTracing.xml",
             "classpath*:mandatory/*.xml",
             "classpath*:scenarios/db/raw/*.xml",
-            "classpath*:scenarios/dataaccess/ibatis/*.xml",
-            "classpath:optional/interception/transactionCommonsAttributes.xml"};
+            "classpath*:scenarios/dataaccess/hibernate/*.xml",
+            "classpath*:optional/interception/transactionJava5Annotations.xml"};
     }
 
     /**
      * {@inheritDoc}
      */
     protected String[] getExcludeConfigLocations() {
-        return null;
+        return new String[] {
+            "classpath*:scenarios/dataaccess/hibernate/keyword-core-hibernate-config.xml"
+        };
     }
+    
 }
