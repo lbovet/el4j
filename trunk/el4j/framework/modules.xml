@@ -5,6 +5,7 @@
     <!-- Main modules. -->
     <include file="module/core/module.xml"/>
     <include file="module/web/module.xml"/>
+    <include file="module/webtest/module.xml"/>
     <include file="module/remoting_core/module.xml"/>
     <include file="module/remoting_caucho/module.xml"/>
     <include file="module/remoting_soap/module.xml"/>
