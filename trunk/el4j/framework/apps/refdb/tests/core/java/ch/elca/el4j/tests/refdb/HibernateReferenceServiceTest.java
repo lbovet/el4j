@@ -49,7 +49,9 @@ public class HibernateReferenceServiceTest extends
      * {@inheritDoc}
      */
     protected String[] getExcludeConfigLocations() {
-        return null;
+        return new String[] {
+            "classpath*:scenarios/dataaccess/hibernate/keyword-core-repository-hibernate-config.xml"
+        };
     }
      
 }
