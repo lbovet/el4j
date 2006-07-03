@@ -60,7 +60,7 @@ public class DynaBeanPropertyAccessStrategy
 
     private final ValueModelCache valueModelCache;
 
-    private final PropertyMetadataAccessStrategy metaAspectAccessor;
+    private final BeanPropertyMetaAspectAccessor metaAspectAccessor;
 
     /**
      * Creates a new instance of BeanPropertyAccessStrategy that will provide access
@@ -177,7 +177,7 @@ public class DynaBeanPropertyAccessStrategy
         return domainObjectHolder.getValue();
     }
 
-    public PropertyMetadataAccessStrategy getMetadataAccessStrategy() {
+    public BeanPropertyMetaAspectAccessor getMetadataAccessStrategy() {
         return metaAspectAccessor;
     }
 
@@ -308,11 +308,18 @@ public class DynaBeanPropertyAccessStrategy
 
     /**
      * Implementation of PropertyMetadataAccessStrategy that 
-     * simply delegates to the beanWrapper.
+     * simply delegates to the beanWrapper for standard metadata and to
+     * a user-settable FieldUserMetadataProvider for user metadata.
      */
-    private class BeanPropertyMetaAspectAccessor 
+    public class BeanPropertyMetaAspectAccessor 
         implements PropertyMetadataAccessStrategy {
 
+        /**
+         * The object used to fetch user metadata. May be null, in which case
+         * user metadate is considered to be empty.
+         */
+        public FieldUserMetadataProvider m_userMetadataProvider;
+        
         public Class getPropertyType(String propertyPath) {
             DynaProperty dynaProperty = getDynaProperty(propertyPath);
             if (dynaProperty == null) {
@@ -348,20 +355,19 @@ public class DynaBeanPropertyAccessStrategy
             return dynaProperty;
         }
 
-        public Map getAllUserMetadata(String propertyName) {
-            // TODO Auto-generated method stub
-            // no clue what goes in here, leaving it for MZE
-            // -- AMS
-            assert false;
-            return null;
+        /** {@inheritDoc} */
+        public Map<String, Object> getAllUserMetadata(String propertyName) {
+            return (m_userMetadataProvider != null)
+                 ? m_userMetadataProvider.getAll(propertyName)
+                 : null;
         }
 
+        /** {@inheritDoc} */
         public Object getUserMetadata(String propertyName, String key) {
-            // TODO Auto-generated method stub
-            // no clue what goes in here, leaving it for MZE
-            // -- AMS
-            assert false;
-            return null;
+            Map<String, Object> m = getAllUserMetadata(propertyName);
+            return m != null
+                 ? m.get(key)
+                 : null;
         }
     }
 }
