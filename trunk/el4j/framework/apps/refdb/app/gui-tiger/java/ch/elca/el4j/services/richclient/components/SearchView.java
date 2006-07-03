@@ -41,8 +41,12 @@ import org.springframework.richclient.util.GuiStandardUtils;
 import org.springframework.richclient.util.SpringLayoutUtils;
 import org.springframework.util.StringUtils;
 
+import ch.elca.el4j.services.dom.info.EntityType;
+import ch.elca.el4j.services.dom.info.Property;
 import ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm;
 import ch.elca.el4j.services.gui.richclient.support.DynaBeanPropertyAccessStrategy;
+import ch.elca.el4j.services.gui.richclient.support.FieldUserMetadataProvider;
+import ch.elca.el4j.services.gui.richclient.support.MapBackedFieldUserMetadataProvider;
 import ch.elca.el4j.services.gui.richclient.utils.ComponentUtils;
 import ch.elca.el4j.services.gui.richclient.views.AbstractView;
 import ch.elca.el4j.services.gui.search.AbstractSearchItem;
@@ -50,6 +54,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.AbstractCriteria;
 import ch.elca.el4j.util.codingsupport.Reject;
+import ch.elca.el4j.util.registy.impl.StringMapBackedRegistry;
 
 /**
  * Search view.
@@ -208,15 +213,46 @@ public class SearchView extends AbstractView {
      */
     protected void initializeFormModel() {
         DynaBean dynaBean = getInitializedDynaBean();
+        
+        FieldUserMetadataProvider fump = new MapBackedFieldUserMetadataProvider(
+            buildPropertyUserMetadata()
+        );
+        
         DynaBeanPropertyAccessStrategy strategy 
             = new DynaBeanPropertyAccessStrategy(dynaBean);
+        strategy.getMetadataAccessStrategy().m_userMetadataProvider = fump; 
         m_formModel = new DefaultFormModel(strategy, false);
     }
 
+    /** 
+     * Returns the user property metadata. The first key is the field name,
+     * the second the metadata property name.
+     * @return see above
+     */
+    protected Map<String, Map<String, Object>> buildPropertyUserMetadata() {
+        Map<String, Map<String, Object>> metadata
+            = new HashMap<String, Map<String, Object>>();
+        for (AbstractSearchItem si : m_searchItems) {
+            StringMapBackedRegistry reg = new StringMapBackedRegistry();
+            reg.set(AbstractSearchItem.class, si);
+            reg.set(
+                Property.class, 
+                EntityType.get(si.getTargetBeanClass()).find(si.getTargetProperty())
+            );
+            metadata.put(
+                getPropertyName(si),
+                reg.m_backing
+            );
+        }
+        return metadata;
+    }
+    
     /**
      * Initializes the search properties form.
      */
     protected void initializeSearchPropertiesForm() {
+        Reject.ifNull(m_formModel);
+        
         m_beanPropertiesForm = new BeanPropertiesForm();
         m_beanPropertiesForm.setPropertiesId(getId());
         m_beanPropertiesForm.setShownBeanProperties(m_propertyNames);

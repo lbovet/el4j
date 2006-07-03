@@ -16,6 +16,8 @@
  */
 package ch.elca.el4j.services.richclient.config;
 
+import java.util.Map;
+
 import org.springframework.richclient.application.ViewDescriptor;
 
 import ch.elca.el4j.services.dom.info.EntityType;
@@ -24,12 +26,12 @@ import ch.elca.el4j.services.gui.search.AbstractSearchItem;
 import ch.elca.el4j.services.gui.search.ComparisonSearchItem;
 import ch.elca.el4j.services.gui.search.LikeSearchItem;
 import ch.elca.el4j.services.richclient.components.SearchView;
-import ch.elca.el4j.services.richclient.naming.ConfigurableFieldFaceSource;
-import ch.elca.el4j.services.richclient.naming.Naming;
+import ch.elca.el4j.services.richclient.naming.SimpleFieldFaceSource;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.annotations.Preliminary;
 import ch.elca.el4j.util.collections.helpers.Function;
 import ch.elca.el4j.util.observer.impl.SettableObservableValue;
+import ch.elca.el4j.util.registy.impl.StringMapBackedRegistry;
 
 
 /**
@@ -62,10 +64,6 @@ public class Search extends AbstractGenericView {
 
     /***/
     class GenericComponent extends SearchView {
-        /** a fds with reasonable default values. */
-        ConfigurableFieldFaceSource m_propertyFaceDescriptorSource
-            = new ConfigurableFieldFaceSource();
-        
         /***/
         GenericComponent() {
             setSearchItems(
@@ -110,29 +108,19 @@ public class Search extends AbstractGenericView {
             }
             i.setTargetProperty(prop.name);
             i.setTargetBeanClass(m_type.clazz);
-            
-            // the search items determine the dynabean property
-            // ==> register default messages now
-            // TODO: have AbstractSearchItem use Property and
-            //       have super define a template method where
-            //       this can be done more cleanly
-            m_propertyFaceDescriptorSource.defaults.put(
-                getPropertyName(i),
-                Naming.instance().getDefaultPropertyFace(prop)
-            );
-            
+                        
             return i;
         }
         
         /**
          * {@inheritDoc}
-         * install default-capable message provider.
+         * install custom message provider.
          */
         @Override
         protected void initializeFormModel() {
             super.initializeFormModel();
             m_formModel.setFieldFaceSource(
-                m_propertyFaceDescriptorSource                
+                SimpleFieldFaceSource.instance()            
             );
         }
 
@@ -140,6 +128,20 @@ public class Search extends AbstractGenericView {
         @Override
         protected void onQueryChanged(QueryObject newQuery) {
             query.set(newQuery);
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        protected Map<String, Map<String, Object>> buildPropertyUserMetadata() {
+            Map<String, Map<String, Object>> pum 
+                = super.buildPropertyUserMetadata();
+            for (AbstractSearchItem si : getSearchItems()) {
+                StringMapBackedRegistry reg = new StringMapBackedRegistry(
+                    pum.get(getPropertyName(si))
+                );
+                reg.set(AbstractGenericView.class, Search.this);
+            }
+            return pum;
         }
     }
 

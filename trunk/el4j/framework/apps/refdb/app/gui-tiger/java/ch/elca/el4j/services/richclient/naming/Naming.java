@@ -16,8 +16,6 @@
  */
 package ch.elca.el4j.services.richclient.naming;
 
-import java.util.EnumMap;
-
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -27,8 +25,6 @@ import org.springframework.util.StringUtils;
 import ch.elca.el4j.core.exceptions.MisconfigurationRTException;
 import ch.elca.el4j.services.dom.info.EntityType;
 import ch.elca.el4j.services.dom.info.Property;
-import ch.elca.el4j.services.richclient.naming.ConfigurableFieldFaceSource.Prop;
-import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
 
 
 
@@ -64,33 +60,7 @@ public class Naming {
         return t.name;
     }
     
-    /**
-     * returns the localized name for entity type <code>t</code>.
-     * @param t .
-     * @return .
-     */
-    public String getName(EntityType t) {
-        return m_source.getMessage(keyFor(t) + ".displayName", null, t.name);
-    }
-    
-    /**
-     * returns the localized description for entity type <code>c</code>,
-     * or <code>null</code> if none is found.
-     * @param t .
-     * @return .
-     */
-    public String getDescription(EntityType t) {
-        try {
-            return m_source.getMessage(
-                keyFor(t) + ".Description",
-                null,
-                ""
-            );
-        } catch (NoSuchMessageException e) {
-            return null;
-        }
-    }
-    
+       
     /**
      * 
      * @param p    the model property 
@@ -139,86 +109,204 @@ public class Naming {
         return get(p, "description", "");
     }
     
-    /**
-     * Looks up and returns the localizable string <code>key</code>
-     * for a component with schema <code>schema</code> that is 
-     * displaying entities of type <code>entityType</code>.
-     * 
-     *<p>for {@code}getComponentAttribute(Person.class, "Table", "title")}
-     *this method checks the message codes
-     *<pre>Table.title.Person
-     *Table.title</pre>
-     *<p>messages can use {0} to refer to the entity type's name.
-     * @throws NoSuchMessageException iff no message could be found
-     */
-    public String getComponentAttribute(EntityType entityType, 
-                                        String schema, String key)
-        throws NoSuchMessageException {
-        
-        String lkey = schema + "." + key;
-        return m_source.getMessage(new DefaultMessageSourceResolvable(
-            new String[] {lkey + "." + keyFor(entityType), lkey},
-            new Object[] {getName(entityType)}
-        ));
-    }
     
-    /**
-     * Looks up and returns an enum value's localized face property.
-     * @param e the enum value whose face property is sought
-     * @param key the name of the face property sought
-     * @return the value of the face property, or {@code null}
-     *         if the face property is not defined.
-     */
-    @ImplementationAssumption("unqualified enum names are unique within dom")
-    public String getEnumValueFaceProperty(Enum<?> e, String key) {
-        return getConstantValueFaceProperty(
-            e.getDeclaringClass().getSimpleName(),
-            e.name(),
-            key
-        );
-    }
-    
-    /**
-     * Looks up and returns an enum value's localized face property.
-     * 
-     * <p>For real enums, you might prefer 
-     * {@link #getEnumValueFaceProperty(Enum, String)};
-     * this method is provided for values that are conceptually enums, but are
-     * not enums in the source code (boolean values, for instance).
-     *  
-     * @param type the unqualified name of the type the value belongs to 
-     * @param value the name of the value
-     * @param key the name of the desired face property
-     * @return the value of the face property, or {@code null}
-     *         if the face property is not defined.
-     */
-    public String getConstantValueFaceProperty(String type, String value,
-                                               String key) {
-        return m_source.getMessage(
-            type + "." + value + "." + key,
-            (String) null
-        );
-    }
-    
-    /**
-     * returns a map with the default face properties for the model property
-     * <code>p</code>. 
-     * @param p
+    /** 
+     * Returns a message provider for the constant value {@code value} of
+     * a DOM property {@code property}.
+     * @param property .
+     * @param value .
      * @return .
      */
-    public EnumMap<Prop, String> getDefaultPropertyFace(Property p) {
-        String name = getName(p);
-        String label = "&" + name + (p.type.equals(boolean.class) ? "?" : ":");
-        
-        EnumMap<Prop, String> m = new EnumMap<Prop, String>(Prop.class);
-        m.put(Prop.displayName,  name);
-        m.put(Prop.caption,      name);
-        m.put(Prop.description,  getDescription(p));
-        m.put(Prop.encodedLabel, label);
-        m.put(Prop.icon,         null);
-        return m;
+    public Fetcher forConstantValue(Property property, String value) {
+        return new SimpleFetcher(
+            "Dom.value." 
+            + property.declaringType.name + "." 
+            + property.name + "."
+            + value            
+        );
     }
     
+    
+    /**
+     * Returns a message source for confirmation strings.
+     * @param action the id of the action to confirm
+     * @param type the type of the entities affected by the action 
+     * @param multiplicity the number of entities affected by the action
+     * @return see above
+     */
+    public Fetcher forConfirmation(String action, EntityType type,
+                                   int multiplicity) {
+        // TODO also look at supertypes' key (or keys)
+        return new SimpleFetcher(
+            "Confirm." 
+                + action + '.' 
+                + type.name + '.' 
+                + Integer.toString(multiplicity)
+        );
+    }
+    
+    /**
+     * Returns a message source for views.
+     * @param kind the schema of the requesting view
+     * @param type the type of entities shown by the requesting view
+     * @return .
+     */
+    public Fetcher forView(String kind, EntityType type) {
+        return new SimpleFetcher("View." + kind + '.' + type.name);
+    }
+    
+    /**
+     * An object representing the space of messages that may be fetched by key 
+     * suffix.
+     */
+    public interface Fetcher {
+        /** 
+         * Attempts to resolve the message associated with the supplied key 
+         * suffix.
+         * @param keySuffix the string identifying a message in the key space
+         *                  represented by this fetcher.
+         * @return the resolved message, or null if no such message could be 
+         *         found.
+         */
+        String get(String keySuffix);
+    }
+    
+
+    /**
+     * A fetcher whose namespace is defined by a prefix shared by all keys. 
+     */
+    protected class SimpleFetcher implements Fetcher {
+        /***/
+        private final String m_keyPrefix;
+        /** the replacements for {0}, ... */
+        private final Object[] m_arguments;
+        
+        /**
+         * Constructor.
+         */
+        SimpleFetcher(String keyPrefix, Object... arguments) {
+            m_keyPrefix = keyPrefix;
+            m_arguments = arguments;
+        }
+
+        /** {@inheritDoc} */
+        public String get(String keySuffix) {
+            try {
+                return m_source.getMessage(
+                    m_keyPrefix + '.' + keySuffix,
+                    m_arguments
+                ); 
+            } catch (NoSuchMessageException e) {
+                return null;
+            }
+        }
+    }
+    
+    /**
+     * Returns a field face property.
+     * @param kind the displaying view's schema
+     * @param domProperty the backing property in the domain object model
+     * @param faceProperty the name of the desired face property
+     * @return see above
+     */
+    public String getFieldFaceProperty(String kind, Property domProperty,
+                                       String faceProperty) {
+        
+        String key = "View." 
+            + kind + '.' 
+            + domProperty.declaringType.name + '.'
+            + domProperty.name + '.'
+            + faceProperty;
+ 
+        try {
+            return m_source.getMessage(key);
+        } catch (NoSuchMessageException e) {
+            System.err.println(e);
+            return key;
+        }
+    }
+    
+    /** 
+     * Returns an array with the sequence of prefixes obtained by iteratively
+     * chopping away the last qualifier until only one qualifier remains.
+     * 
+     * <p> Example: {@code prefixes("ch.elca.el4j.services.richclient")} 
+     * returns 
+     * <pre>[
+     *"ch.elca.el4j.services.richclient",
+     *"ch.elca.el4j.services",
+     *"ch.elca.el4j",
+     *"ch.elca",
+     *"ch"
+     *]</pre> 
+     * 
+     * @param s the string to find the prefixes for
+     * @return the array containing the prefixes
+     */
+    protected static String[] prefixes(String s) {
+        return prefixes(s, 0);
+    }
+
+    /**
+     * Helper to {@link #prefixes(String)}.
+     * @param depth iteration counter
+     */
+    private static String[] prefixes(String s, int depth) {
+        int i = s.lastIndexOf('.');
+        String[] r;
+        if (i == -1) {
+            // no match
+            r = new String[depth + 1];
+        } else {
+            r = prefixes(s.substring(0, i), depth + 1);
+        }
+        r[depth] = s;
+        return r;
+    }
+    
+    /**
+     * Fetches messages from the message source using key prefixes and 
+     * replacements (for {0}, {1}, ...). For instance, if the prefixes are
+     * {@code "string", "object"} and the key is {@code "displayName"}, the keys
+     * {@code "string.displayName"} and {@code "object.displayName"} are tried
+     * in order. 
+     * 
+     * <p> You might wish to use a RewritingMessageSource with pattern rules
+     * instead.
+     */
+    protected class PrefixFetcher implements Fetcher {
+        /** The key prefixes to try, starting with the most specific one. */
+        String[] m_prefixes;
+        
+        /** The replacements for {0}, {1}, ... */
+        Object[] m_replacements;
+        
+        /**
+         * Constructor.
+         * @param prefixes
+         * @param replacements
+         */
+        PrefixFetcher(String[] prefixes, Object... replacements) {
+            m_prefixes = prefixes;
+            m_replacements = replacements;
+        }
+        
+        /** {@inheritDoc} */
+        public String get(String key) {
+            try {
+                String[] keys = new String[m_prefixes.length];
+                for (int i = 0; i < m_prefixes.length; i++) {
+                    keys[i] = m_prefixes[i] + "." + key;
+                }
+                
+                return m_source.getMessage(new DefaultMessageSourceResolvable(
+                    keys, m_replacements, null
+                ));
+            } catch (NoSuchMessageException e) {
+                return null;
+            }
+        }
+    }
     
     /** returns the registered default naming. */
     public static Naming instance() {

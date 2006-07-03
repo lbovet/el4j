@@ -21,8 +21,8 @@ import java.util.List;
 import ch.elca.el4j.apps.refdb.gui.brokers.ServiceBroker;
 import ch.elca.el4j.apps.refdb.gui.support.RefdbSchemas;
 import ch.elca.el4j.apps.refdb.service.ReferenceService;
-import ch.elca.el4j.services.gui.richclient.executors.convenience.AbstractBeanDeleteExecutor;
 import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
+import ch.elca.el4j.services.richclient.components.executors.AbstractBeanDeleteExecutor;
 
 /**
  * Executor to delete keywords.
@@ -40,9 +40,7 @@ public class KeywordDeleteExecutor extends AbstractBeanDeleteExecutor {
     /**
      * Default constructor.
      */
-    public KeywordDeleteExecutor() {
-        setId("keywordDelete");
-    }
+    public KeywordDeleteExecutor() { }
     
     /**
      * {@inheritDoc}

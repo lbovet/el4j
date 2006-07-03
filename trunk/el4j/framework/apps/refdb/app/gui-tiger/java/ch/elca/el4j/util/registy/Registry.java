@@ -14,20 +14,22 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package temp;
+package ch.elca.el4j.util.registy;
 
-public class Sandbox {
-    static Class<?> c;
-    
-    static <T> T cast(Class<T> t) {
-        return null;
-    }
-    
-    static <T> T ocast() {
-        return null;
-    }
-    
-    public static void main(String[] args) throws Exception {
-        System.out.println(Class.forName("ch.elca.el4j.apps.lightrefdb.dom.Reference"));
-    }
+/**
+ * An object registry.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Adrian Moos (AMS)
+ */
+public interface Registry {
+    /** returns the registered object of type c or null, if there is no such
+     * object.*/
+    <T> T get(Class<T> c);
 }

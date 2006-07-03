@@ -14,20 +14,21 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package temp;
+package ch.elca.el4j.services.richclient.components.executors;
 
-public class Sandbox {
-    static Class<?> c;
-    
-    static <T> T cast(Class<T> t) {
-        return null;
+import ch.elca.el4j.services.gui.richclient.executors.displayable.ExecutorDisplayable;
+import ch.elca.el4j.services.richclient.components.dialogs.BeanConfirmationDialog;
+
+public abstract class AbstractBeanDeleteExecutor extends
+    ch.elca.el4j.services.gui.richclient.executors.convenience.AbstractBeanDeleteExecutor {
+
+    public AbstractBeanDeleteExecutor() {
+        setId("delete");
     }
     
-    static <T> T ocast() {
-        return null;
-    }
-    
-    public static void main(String[] args) throws Exception {
-        System.out.println(Class.forName("ch.elca.el4j.apps.lightrefdb.dom.Reference"));
+    @Override
+    protected ExecutorDisplayable getDefaultDisplayable() {
+        // use new dialoag
+        return new BeanConfirmationDialog();
     }
 }

@@ -11,7 +11,7 @@
     <!-- Application general parts. -->
     <import resource="classpath:scenarios/springrcp/application/applicationGeneral.xml"/>  
     <!-- Are the message, image and icon sources. -->
-    <import resource="classpath:scenarios/springrcp/application/imageIconMessageSources.xml"/>
+    <import resource="classpath:scenarios/springrcp/refdb/application/internal/localizationSources.framework.xml"/>
     <!-- Are some services for the application. -->
     <import resource="classpath:scenarios/springrcp/application/applicationServices.xml"/>
     <!-- Are helpers and factories to create and manage components. -->

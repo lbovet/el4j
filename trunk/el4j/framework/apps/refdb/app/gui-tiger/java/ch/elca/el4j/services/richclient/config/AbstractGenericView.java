@@ -83,7 +83,7 @@ public abstract class AbstractGenericView extends AbstractComponent {
     protected <T extends AbstractGroupPageComponentDescriptor>
     T configure(T d) {
         d.setTitle(
-            Naming.instance().getComponentAttribute(m_type, schema, "title")
+            Naming.instance().forView(schema, m_type).get("title")
         );
         d.setImage(m_awaker.getImages().getImage(m_type, schema, "image"));
         m_awaker.awaken(d);

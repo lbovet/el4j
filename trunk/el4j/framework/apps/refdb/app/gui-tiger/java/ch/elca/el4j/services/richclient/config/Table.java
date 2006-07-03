@@ -105,7 +105,7 @@ public class Table extends AbstractGenericView {
     // Vision: merge the lookup code into BeanTableModel, 
     // replacing the inlined one
     /** A BeanTableModel with column names localized using Naming. */
-    private static class Model extends BeanTableModel {
+    private class Model extends BeanTableModel {
         /** the precomputed column names. */
         String[] m_columnNames;
         
@@ -122,7 +122,11 @@ public class Table extends AbstractGenericView {
             m_columnNames = visible.mapped(
                 new Function<DisplayableProperty, String>() {
                     public String apply(DisplayableProperty d) {
-                        return Naming.instance().getName(d.prop);
+                        return Naming.instance().getFieldFaceProperty(
+                            schema,
+                            d.prop,
+                            "displayName"
+                        );
                     }
                 }
             ).toArray(String.class);            

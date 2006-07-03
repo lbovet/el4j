@@ -20,6 +20,7 @@ import javax.swing.JComponent;
 
 import org.springframework.binding.form.FormModel;
 import org.springframework.binding.form.support.AbstractFormModel;
+import org.springframework.binding.form.support.DefaultFieldMetadata;
 import org.springframework.richclient.application.ViewDescriptor;
 import org.springframework.richclient.dialog.DialogPage;
 
@@ -28,17 +29,16 @@ import ch.elca.el4j.apps.lightrefdb.dom.Keyword;
 import ch.elca.el4j.apps.refdb.dto.ReferenceDto;
 import ch.elca.el4j.apps.refdb.gui.brokers.ServiceBroker;
 import ch.elca.el4j.apps.refdb.service.ReferenceService;
+import ch.elca.el4j.services.dom.info.Property;
 import ch.elca.el4j.services.gui.richclient.executors.convenience.AbstractBeanPropertiesExecutor;
 import ch.elca.el4j.services.gui.richclient.executors.displayable.ExecutorDisplayable;
 import ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm;
 import ch.elca.el4j.services.gui.richclient.views.DialogPageView;
 import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
-import ch.elca.el4j.services.richclient.naming.ConfigurableFieldFaceSource;
-import ch.elca.el4j.services.richclient.naming.Naming;
+import ch.elca.el4j.services.richclient.naming.SimpleFieldFaceSource;
 import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
 import ch.elca.el4j.util.codingsupport.annotations.Preliminary;
 import ch.elca.el4j.util.collections.ExtendedList;
-import ch.elca.el4j.util.collections.ExtendedWritableList;
 import ch.elca.el4j.util.observer.ObservableValue;
 import ch.elca.el4j.util.observer.ValueObserver;
 import ch.elca.el4j.util.observer.impl.SettableObservableValue;
@@ -67,12 +67,11 @@ public class Edit extends AbstractGenericView {
     /** holds the domain object currently being edited. */
     public ObservableValue<?> current;
 
-    /** provides default property faces. */ 
-    ConfigurableFieldFaceSource m_propertyFaceDescriptorSource 
-        = new ConfigurableFieldFaceSource();
-
     /** the backing executor. */
     Executor m_executor;
+    
+    /** the list of visible properties */
+    ExtendedList<EditableProperty> m_visible;
 
     /**
      * creates a new edit view for entities represented by (a subtype of)
@@ -197,17 +196,32 @@ public class Edit extends AbstractGenericView {
         /**
          * {@inheritDoc}
          **/
-        @Override
-        @ImplementationAssumption("all form models are subtypes of AbstractFormModel")
-        @Preliminary
+        @Override @Preliminary @ImplementationAssumption(
+            "All form models are subtypes of AbstractFormModel. "
+            + "Instances of FieldMetadata are always DefaultFieldMetadata")
         protected void initializeFormModelAndDialogPage(Object bean) {
             super.initializeFormModelAndDialogPage(bean);
             // HACK: implementation dependent downcast. Spring RCP's public API
             // does not permit to configure the localization provider used.
             AbstractFormModel fm = (AbstractFormModel) getFormModel();
             fm.setFieldFaceSource(
-                m_propertyFaceDescriptorSource
+                SimpleFieldFaceSource.instance()
             );
+
+            for (DisplayableProperty ep : m_visible) {
+                // HACK: Implementation dependent downcast.
+                //       The public api does not permit to set user metadata.
+                DefaultFieldMetadata metadata 
+                    = ((DefaultFieldMetadata) fm.getFieldMetadata(ep.prop.name));
+                metadata.setUserMetadata(
+                    AbstractGenericView.class.getName(),
+                    Edit.this
+                );
+                metadata.setUserMetadata(
+                    Property.class.getName(),
+                    ep.prop
+                );
+            }
         }
     }
 
@@ -268,28 +282,23 @@ public class Edit extends AbstractGenericView {
      */
     @Override
     protected ViewDescriptor createDescriptor() {
-        ExtendedList<EditableProperty> visible = properties.m_eprops
+        m_visible = properties.m_eprops
             .filtered(DisplayablePropertyList.s_visibles);
-        for (EditableProperty ep : visible) {
-            m_propertyFaceDescriptorSource.defaults.put(
-                ep.prop.name,
-                Naming.instance().getDefaultPropertyFace(ep.prop)
-            );
-        }
 
         BeanPropertiesForm form = new BeanPropertiesForm();
         form.setShownBeanProperties(
-            visible.mapped(
+            m_visible.mapped(
                 DisplayablePropertyList.s_toName
             ).toArray(String.class)
         );
         form.setReadOnlyBeanProperties(properties.getReadonly());
-
+        m_awaker.awaken(form);
+        
         GenericComponent gc = new GenericComponent(); //configure(new DialogPageViewDescriptor());
         m_executor = new Executor();
         m_executor.setBeanPropertiesForms(new BeanPropertiesForm[] {form});
         m_executor.setDisplayable(gc);
-        m_awaker.awaken(m_executor);
+        m_awaker.awaken(m_executor);        
         return configure(new Descriptor(gc));
     }
 }
