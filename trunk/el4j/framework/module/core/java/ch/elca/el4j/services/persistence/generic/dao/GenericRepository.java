@@ -121,11 +121,11 @@ public interface GenericRepository<T, ID extends Serializable> {
     /**
      * Deletes the domain object with the given id.
      * 
-     * @param id
-     *            The id of the domain object to delete
+     * @param entity
+     *            The domain object to delete
      * @throws DataAccessException
      *            If general data access problem occurred                       
      */
-    void delete(ID id) throws DataAccessException;
+    void delete(T entity) throws DataAccessException;
 
 }
