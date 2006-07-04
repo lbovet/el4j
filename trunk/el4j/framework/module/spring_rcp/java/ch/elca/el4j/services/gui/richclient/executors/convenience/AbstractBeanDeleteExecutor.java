@@ -17,6 +17,8 @@
 package ch.elca.el4j.services.gui.richclient.executors.convenience;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.richclient.command.support.GlobalCommandIds;
@@ -40,46 +42,41 @@ import ch.elca.el4j.util.codingsupport.Reject;
  *
  * @author Martin Zeltner (MZE)
  */
-public abstract class AbstractBeanDeleteExecutor 
+public abstract class AbstractBeanDeleteExecutor<T extends PrimaryKeyObject> 
     extends AbstractConfirmBeanExecutor {
     /**
      * Are the beans that should be deleted.
      */
-    private PrimaryKeyObject[] m_beans;
+    private List<T> m_beans;
 
     /**
      * @return Returns the beans that should be deleted.
      */
-    protected PrimaryKeyObject[] getBeans() {
+    protected List<T> getBeans() {
         return m_beans;
     }
     
     /**
      * @param beans Are the beans to set.
      */
-    public void setBeans(PrimaryKeyObject[] beans) {
+    public void setBeans(List<T> beans) {
         m_beans = beans;
     }
     
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     public boolean onFinishOrConfirm() {
         Object[] objects = getBeanPresenter().getSelectedBeans();
         Reject.ifNull(objects);
-        PrimaryKeyObject[] beans = new PrimaryKeyObject[objects.length];
-        System.arraycopy(objects, 0, beans, 0, beans.length);
+        List<T> beans = (List<T>)Arrays.asList(objects);
+        
         setBeans(beans);
-        
-        List<Object> keys = new ArrayList<Object>();
-        for (int i = 0; i < beans.length; i++) {
-            keys.add(beans[i].getKeyAsObject());
-        }
-        
-        deleteBeansByKey(keys);
+        deleteBeans(beans);
         
         BeanPresenter beanPresenter = getBeanPresenter();
-        beanPresenter.removeBeans(beans);
+        beanPresenter.removeBeans(objects);
         return true;
     }
 
@@ -89,10 +86,10 @@ public abstract class AbstractBeanDeleteExecutor
     public boolean onFinishOrConfirmException(Exception e) {
         BeanPresenter beanPresenter = getBeanPresenter();
         
-        PrimaryKeyObject[] beans = getBeans();
-        PrimaryKeyObject[] actualizedBeans = new PrimaryKeyObject[beans.length];
-        for (int i = 0; i < beans.length; i++) {
-            PrimaryKeyObject oldBean = beans[i];
+        List<T> beans = getBeans();
+        PrimaryKeyObject[] actualizedBeans = new PrimaryKeyObject[beans.size()];
+        for (int i = 0; i < beans.size(); i++) {
+            PrimaryKeyObject oldBean = beans.get(i);
             try {
                 Object key = oldBean.getKeyAsObject();
                 PrimaryKeyObject newBean = getBeanByKey(key);
@@ -113,7 +110,7 @@ public abstract class AbstractBeanDeleteExecutor
         }
         
         // Show error message dialog.
-        int multiplicity = beans.length;
+        int multiplicity = beans.size();
         DialogUtils.showErrorMessageDialog(getId(), getSchema(), e, 
             multiplicity, getDisplayable().getMainComponent());
         return true;
@@ -134,9 +131,9 @@ public abstract class AbstractBeanDeleteExecutor
     /**
      * Deletes beans with the given keys.
      * 
-     * @param keys Are the keys of beans to delete.
+     * @param beans Are the beans to delete.
      */
-    protected abstract void deleteBeansByKey(List<Object> keys);
+    protected abstract void deleteBeans(List<T> beans);
     
     /**
      * @param key Used to lookup the bean.
