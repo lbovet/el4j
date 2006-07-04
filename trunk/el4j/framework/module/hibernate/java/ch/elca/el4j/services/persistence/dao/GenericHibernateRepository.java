@@ -145,8 +145,7 @@ public class GenericHibernateRepository<T, ID extends Serializable,
     /**
      * {@inheritDoc}
      */
-    public void delete(ID id) throws DataAccessException {
-        T entity = findById(id, false);
+    public void delete(T entity) throws DataAccessException {
         getHibernateTemplate().delete(entity);
     }
 
