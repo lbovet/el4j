@@ -207,7 +207,7 @@ public abstract class AbstractKeywordRepositoryTest
         keyword.setName("Java");
         keyword.setDescription("Java related documentation");
         KeywordDto keyword2 = repository.saveOrUpdate(keyword);
-        repository.delete(keyword2.getKey());
+        repository.delete(keyword2);
         try {
             repository.findById(keyword2.getKey(), false);
             fail("The removed keyword is still in the DB.");
@@ -220,9 +220,8 @@ public abstract class AbstractKeywordRepositoryTest
      * This test inserts one keyword, which will afterwards be looked up by two
      * people. Now, these people edit the same keyword and would like to save
      * changes. The person that saves second must get a
-     * <code>OptimisticLockingFailureException</code>. But this person should be
-     * able to remove this keyword, because removing is not under optimistic
-     * locking control.
+     * <code>OptimisticLockingFailureException</code>. The same should
+     * happen if she attempts to delete the keyword.
      */
     public void testInsertModifyDeleteKeywordByTwoPeople() {
         KeywordRepository repository = getKeywordRepository();
@@ -240,9 +239,15 @@ public abstract class AbstractKeywordRepositoryTest
             fail("The current keyword could be modified "
                     + "by two persons at the same time.");
         } catch (OptimisticLockingFailureException e) {
-            s_logger.debug("Expected exception catched.", e);
+            s_logger.debug("caught expected exception.", e);
         }
-        repository.delete(keyword3.getKey());
+        try {
+            repository.delete(keyword3);
+            fail("A keyword could be deleted although it has been modified "
+                + "concurrently.");
+        } catch (OptimisticLockingFailureException e) {
+            s_logger.debug("caught expected exception.", e);
+        }
     }
     
     /**

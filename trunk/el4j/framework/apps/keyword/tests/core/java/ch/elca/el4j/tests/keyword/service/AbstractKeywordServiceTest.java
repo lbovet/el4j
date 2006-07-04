@@ -197,7 +197,7 @@ public abstract class AbstractKeywordServiceTest extends AbstractTestCaseBase {
         keyword.setName("Java");
         keyword.setDescription("Java related documentation");
         KeywordDto keyword2 = service.saveKeyword(keyword);
-        service.removeKeyword(keyword2.getKey());
+        service.removeKeyword(keyword2);
         try {
             service.getKeywordByKey(keyword2.getKey());
             fail("The removed keyword is still in the DB.");
@@ -207,12 +207,11 @@ public abstract class AbstractKeywordServiceTest extends AbstractTestCaseBase {
     }
 
     /**
-     * This test inserts one keyword. Afterwards it will be looked up by two
+     * This test inserts one keyword, which will afterwards be looked up by two
      * people. Now, these people edit the same keyword and would like to save
-     * changes. The person that savea second must get a
-     * <code>OptimisticLockingFailureException</code>. But this person should be
-     * able to remove this keyword, because removing is not under optimistic
-     * locking control.
+     * changes. The person that saves second must get a
+     * <code>OptimisticLockingFailureException</code>. The same should
+     * happen if she attempts to delete the keyword.
      */
     public void testInsertModificateRemoveKeywordByTwoPersons() {
         KeywordService service = getKeywordService();
@@ -227,12 +226,18 @@ public abstract class AbstractKeywordServiceTest extends AbstractTestCaseBase {
         keyword3.setDescription("Java API of version 1.5");
         try {
             service.saveKeyword(keyword3);
-            fail("The current keyword could be modificated "
-                    + "by two persons on the same time.");
+            fail("The current keyword could be modified "
+                + "by two persons at the same time.");
         } catch (OptimisticLockingFailureException e) {
             s_logger.debug("Expected exception catched.", e);
         }
-        service.removeKeyword(keyword3.getKey());
+        try {
+            service.removeKeyword(keyword3);
+            fail("A keyword could be deleted although it has been modified "
+                + "concurrently.");
+        } catch (OptimisticLockingFailureException e) {
+            s_logger.debug("caught expected exception.", e);
+        }
     }
 
     /**
