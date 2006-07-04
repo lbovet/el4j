@@ -18,6 +18,7 @@ package ch.elca.el4j.apps.refdb.gui.executors;
 
 import java.util.List;
 
+import ch.elca.el4j.apps.keyword.dto.KeywordDto;
 import ch.elca.el4j.apps.refdb.gui.brokers.ServiceBroker;
 import ch.elca.el4j.apps.refdb.gui.support.RefdbSchemas;
 import ch.elca.el4j.apps.refdb.service.ReferenceService;
@@ -36,7 +37,8 @@ import ch.elca.el4j.services.richclient.components.executors.AbstractBeanDeleteE
  *
  * @author Martin Zeltner (MZE)
  */
-public class KeywordDeleteExecutor extends AbstractBeanDeleteExecutor {
+public class KeywordDeleteExecutor 
+    extends AbstractBeanDeleteExecutor<KeywordDto> {
     /**
      * Default constructor.
      */
@@ -45,11 +47,12 @@ public class KeywordDeleteExecutor extends AbstractBeanDeleteExecutor {
     /**
      * {@inheritDoc}
      */
-    protected void deleteBeansByKey(List keys) {
+    @Override
+    protected void deleteBeans(List<KeywordDto> beans) {
         ReferenceService referenceService = ServiceBroker.getReferenceService();
-        referenceService.removeKeywords(keys);
+        referenceService.removeKeywords(beans);
     }
-    
+
     /**
      * {@inheritDoc}
      */
