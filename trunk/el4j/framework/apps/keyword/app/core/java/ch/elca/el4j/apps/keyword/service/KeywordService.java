@@ -131,7 +131,7 @@ public interface KeywordService {
      */
     @Transactional(rollbackFor = {DataAccessException.class,
             RuntimeException.class, Error.class })
-    public void removeKeyword(int key) throws DataAccessException,
+    public void removeKeyword(KeywordDto keyword) throws DataAccessException,
         JdbcUpdateAffectedIncorrectNumberOfRowsException;
     
     /**
@@ -146,6 +146,6 @@ public interface KeywordService {
      */
     @Transactional(rollbackFor = {DataAccessException.class,
             RuntimeException.class, Error.class })
-    public void removeKeywords(Collection keys) throws DataAccessException,
+    public void removeKeywords(Collection<KeywordDto> keywords) throws DataAccessException,
         JdbcUpdateAffectedIncorrectNumberOfRowsException;
 }

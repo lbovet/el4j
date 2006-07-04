@@ -17,7 +17,6 @@
 package ch.elca.el4j.apps.keyword.service.impl;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.InitializingBean;
@@ -123,10 +122,10 @@ public class KeywordRepositoryService implements KeywordService,
     /**
      * {@inheritDoc}
      */
-    public void removeKeyword(int key) throws DataAccessException,
+    public void removeKeyword(KeywordDto keyword) throws DataAccessException,
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
         
-        getRepositoryFactory().getKeywordRepository().delete(key);
+        getRepositoryFactory().getKeywordRepository().delete(keyword);
     }
     
     /**
@@ -134,26 +133,13 @@ public class KeywordRepositoryService implements KeywordService,
      * 
      * @@attrib.transaction.RequiredRuleBased()
      */
-    public void removeKeywords(Collection keys) throws DataAccessException, 
+    public void removeKeywords(Collection<KeywordDto> keywords)
+        throws DataAccessException, 
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
-        if (keys != null) {
-            Iterator it = keys.iterator();
-            while (it.hasNext()) {
-                Object element = it.next();
-                if (element instanceof Number) {
-                    int key = ((Number) element).intValue();
-                    removeKeyword(key);
-                } else if (element instanceof String) {
-                    int key = Integer.parseInt((String) element);
-                    removeKeyword(key);
-                } else {
-                    CoreNotificationHelper.notifyMisconfiguration(
-                        "Given keys must be of type number or string. "
-                        + "Given key element is of type " 
-                        + element.getClass() + ".");
-                }
+        if (keywords != null) {
+            for (KeywordDto kw : keywords) {
+                removeKeyword(kw);
             }
         }    
     }
-    
 }
