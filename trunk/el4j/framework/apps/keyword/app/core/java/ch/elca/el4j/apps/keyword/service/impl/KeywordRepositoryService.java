@@ -28,7 +28,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
-import ch.elca.el4j.apps.keyword.repository.RepositoryFactory;
+import ch.elca.el4j.apps.keyword.repository.KeywordRepository;
+import ch.elca.el4j.apps.keyword.repository.KeywordRepositoryRegistry;
 import ch.elca.el4j.apps.keyword.service.KeywordService;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
@@ -37,6 +38,8 @@ import ch.elca.el4j.services.search.QueryObject;
 /**
  * 
  * This class is the repository-specific implementation of the keyword service.
+ * 
+ * @param <RR> The RepositoryRegistry's type.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -46,36 +49,43 @@ import ch.elca.el4j.services.search.QueryObject;
  * );</script>
  *
  * @author Alex Mathey (AMA)
+ * @author Adrian Moos (AMS)
  */
-public class KeywordRepositoryService implements KeywordService,
-    InitializingBean {
+public class KeywordRepositoryService<RR extends KeywordRepositoryRegistry>
+    implements KeywordService, InitializingBean {
     
     /**
      * Hibernate repository factory.
      */
-    private RepositoryFactory m_repositoryFactory;
+    private RR m_repositoryRegistry;
     
     /**
-     * @return The repository factory
+     * @return The repository registry
      */
-    public RepositoryFactory getRepositoryFactory() {
-        return m_repositoryFactory;
+    public RR getRepositoryRegistry() {
+        return m_repositoryRegistry;
     }
     
     /**
-     * @param repositoryFactory
-     *            The repositoryFactory to set
+     * @param reg
+     *            The repositoryRegistry to set
      */
-    public void setRepositoryFactory(RepositoryFactory repositoryFactory) {
-        m_repositoryFactory = repositoryFactory;
+    public void setRepositoryRegistry(RR reg) {
+        m_repositoryRegistry = reg;
     }
     
+    /**
+     * Returns the repository for keywords.
+     */
+    protected KeywordRepository getKeywordRepository() {
+        return getRepositoryRegistry().getForKeyword();
+    }
     /**
      * {@inheritDoc}
      */
     public void afterPropertiesSet() throws Exception {
         CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-            getRepositoryFactory().getKeywordRepository(), "keywordRepository",
+            getKeywordRepository(), "keywordRepository",
             this);
     }
     
@@ -85,7 +95,7 @@ public class KeywordRepositoryService implements KeywordService,
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public KeywordDto getKeywordByKey(int key)
         throws DataAccessException, DataRetrievalFailureException {
-        return getRepositoryFactory().getKeywordRepository().findById(key,
+        return getKeywordRepository().findById(key,
             false);
     }
     
@@ -95,8 +105,7 @@ public class KeywordRepositoryService implements KeywordService,
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public KeywordDto getKeywordByName(String name) throws DataAccessException,
         DataRetrievalFailureException {
-        return getRepositoryFactory().getKeywordRepository()
-            .getKeywordByName(name);    
+        return getKeywordRepository().getKeywordByName(name);    
     }
     
     /**
@@ -104,7 +113,7 @@ public class KeywordRepositoryService implements KeywordService,
      */
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<KeywordDto> getAllKeywords() throws DataAccessException {
-        return getRepositoryFactory().getKeywordRepository().findAll();
+        return getKeywordRepository().findAll();
     }
     
     /**
@@ -112,7 +121,7 @@ public class KeywordRepositoryService implements KeywordService,
      */
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List searchKeywords(QueryObject query) throws DataAccessException {
-        return getRepositoryFactory().getKeywordRepository().findByQuery(query);
+        return getKeywordRepository().findByQuery(query);
     }
     
     /**
@@ -121,8 +130,7 @@ public class KeywordRepositoryService implements KeywordService,
     public KeywordDto saveKeyword(KeywordDto keyword)
         throws DataAccessException, InsertionFailureException,
         OptimisticLockingFailureException {
-        return getRepositoryFactory().getKeywordRepository()
-            .saveOrUpdate(keyword);
+        return getKeywordRepository().saveOrUpdate(keyword);
     }
     
     /**
@@ -131,7 +139,7 @@ public class KeywordRepositoryService implements KeywordService,
     public void removeKeyword(KeywordDto keyword) throws DataAccessException,
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
         
-        getRepositoryFactory().getKeywordRepository().delete(keyword);
+        getKeywordRepository().delete(keyword);
     }
     
     /**

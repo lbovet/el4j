@@ -26,8 +26,7 @@ import org.springframework.dao.OptimisticLockingFailureException;
 
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
 import ch.elca.el4j.apps.keyword.repository.KeywordRepository;
-import ch.elca.el4j.apps.keyword.repository.RepositoryFactory;
-import ch.elca.el4j.apps.keyword.repository.impl.hibernate.HibernateRepositoryFactory;
+import ch.elca.el4j.apps.keyword.repository.impl.hibernate.HibernateKeywordRepositoryRegistry;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.LikeCriteria;
 import ch.elca.el4j.tests.keyword.AbstractTestCaseBase;
@@ -71,10 +70,10 @@ public abstract class AbstractKeywordRepositoryTest
      */
     protected KeywordRepository getKeywordRepository() {
         if (m_keywordRepository == null) {
-            RepositoryFactory repositoryFactory 
-                = (HibernateRepositoryFactory) getApplicationContext()
-                    .getBean("repositoryFactory");
-            m_keywordRepository = repositoryFactory.getKeywordRepository();
+            HibernateKeywordRepositoryRegistry repositoryFactory 
+                = (HibernateKeywordRepositoryRegistry) getApplicationContext()
+                    .getBean("repositoryRegistry");
+            m_keywordRepository = repositoryFactory.getForKeyword();
         }
         return m_keywordRepository;
     }

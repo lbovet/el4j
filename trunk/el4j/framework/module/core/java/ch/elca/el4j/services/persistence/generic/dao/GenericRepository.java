@@ -50,6 +50,10 @@ import ch.elca.el4j.services.search.QueryObject;
  * @author Alex Mathey (AMA)
  */
 public interface GenericRepository<T, ID extends Serializable> {
+    /**
+     * @return Returns the domain class this repository is responsible for.
+     */
+    public Class<T> getPersistentClass();    
 
     /**
      * Retrieves a domain object by identifier.
@@ -123,6 +127,8 @@ public interface GenericRepository<T, ID extends Serializable> {
      * 
      * @param entity
      *            The domain object to delete
+     * @throws OptimisticLockingFailureException
+     *             If domain object has been modified in the meantime   
      * @throws DataAccessException
      *            If general data access problem occurred                       
      */

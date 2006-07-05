@@ -54,8 +54,8 @@ import ch.elca.el4j.services.search.QueryObject;
  * @author Philipp Oser (POS)
  * @author Alex Mathey (AMA)
  */
-public class GenericHibernateRepository<T, ID extends Serializable,
-    RepositoryImpl extends GenericRepository<T, ID>> extends HibernateDaoSupport
+public class GenericHibernateRepository<T, ID extends Serializable>
+    extends HibernateDaoSupport
     implements GenericRepository<T, ID> {
     
     /**

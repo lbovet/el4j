@@ -10,13 +10,13 @@
 	 
 	 <bean id="keywordService"
 	 	class="ch.elca.el4j.apps.keyword.service.impl.KeywordRepositoryService">
-	 	<property name="repositoryFactory">
-	 		<ref local="repositoryFactory"/>
+	 	<property name="repositoryRegistry">
+	 		<ref local="repositoryRegistry"/>
 	 	</property>
 	 </bean>
 	   
-	<bean id="repositoryFactory"
-		class="ch.elca.el4j.apps.keyword.repository.impl.hibernate.HibernateRepositoryFactory">
+	<bean id="repositoryRegistry"
+		class="ch.elca.el4j.apps.keyword.repository.impl.hibernate.HibernateKeywordRepositoryRegistry">
 		<property name="sessionFactory">
 			<ref local="sessionFactory"/>
 		</property>

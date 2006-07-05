@@ -40,7 +40,7 @@ import ch.elca.el4j.services.persistence.dao.GenericHibernateRepository;
  * @author Alex Mathey (AMA)
  */
 public class HibernateKeywordRepository
-    extends GenericHibernateRepository<KeywordDto, Integer, KeywordRepository>
+    extends GenericHibernateRepository<KeywordDto, Integer>
     implements KeywordRepository {
     
     /**
