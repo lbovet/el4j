@@ -24,6 +24,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
 import ch.elca.el4j.apps.keyword.repository.RepositoryFactory;
@@ -80,6 +82,7 @@ public class KeywordRepositoryService implements KeywordService,
     /**
      * {@inheritDoc}
      */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public KeywordDto getKeywordByKey(int key)
         throws DataAccessException, DataRetrievalFailureException {
         return getRepositoryFactory().getKeywordRepository().findById(key,
@@ -89,6 +92,7 @@ public class KeywordRepositoryService implements KeywordService,
     /**
      * {@inheritDoc}
      */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public KeywordDto getKeywordByName(String name) throws DataAccessException,
         DataRetrievalFailureException {
         return getRepositoryFactory().getKeywordRepository()
@@ -98,6 +102,7 @@ public class KeywordRepositoryService implements KeywordService,
     /**
      * {@inheritDoc}
      */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<KeywordDto> getAllKeywords() throws DataAccessException {
         return getRepositoryFactory().getKeywordRepository().findAll();
     }
@@ -105,6 +110,7 @@ public class KeywordRepositoryService implements KeywordService,
     /**
      * {@inheritDoc}
      */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List searchKeywords(QueryObject query) throws DataAccessException {
         return getRepositoryFactory().getKeywordRepository().findByQuery(query);
     }
@@ -130,8 +136,6 @@ public class KeywordRepositoryService implements KeywordService,
     
     /**
      * {@inheritDoc}
-     * 
-     * @@attrib.transaction.RequiredRuleBased()
      */
     public void removeKeywords(Collection<KeywordDto> keywords)
         throws DataAccessException, 

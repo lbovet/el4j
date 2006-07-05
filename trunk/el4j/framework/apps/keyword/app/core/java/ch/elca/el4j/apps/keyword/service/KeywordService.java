@@ -23,7 +23,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
@@ -54,10 +53,8 @@ public interface KeywordService {
      * @throws DataAccessException
      *             If general data access problem occurred.
      * @throws DataRetrievalFailureException
-     *             If keyword could not be retrieved.
-     *             
+     *             If keyword could not be retrieved.           
      */
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public KeywordDto getKeywordByKey(int key)
         throws DataAccessException, DataRetrievalFailureException;
 
@@ -72,7 +69,6 @@ public interface KeywordService {
      * @throws DataRetrievalFailureException
      *             If keyword could not be retrieved.
      */
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public KeywordDto getKeywordByName(String name)
         throws DataAccessException, DataRetrievalFailureException;
 
@@ -83,7 +79,6 @@ public interface KeywordService {
      * @throws DataAccessException
      *             If general data access problem occurred.
      */
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List getAllKeywords() throws DataAccessException;
 
     /**
@@ -95,7 +90,6 @@ public interface KeywordService {
      * @throws DataAccessException
      *             If general data access problem occurred.
      */
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List searchKeywords(QueryObject query)
         throws DataAccessException;
 

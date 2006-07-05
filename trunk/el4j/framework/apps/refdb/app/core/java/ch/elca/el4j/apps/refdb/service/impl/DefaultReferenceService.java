@@ -23,6 +23,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import ch.elca.el4j.apps.keyword.service.impl.DefaultKeywordService;
 import ch.elca.el4j.apps.refdb.Constants;
@@ -86,9 +88,8 @@ public class DefaultReferenceService extends DefaultKeywordService
 
     /**
      * {@inheritDoc}
-     * 
-     * @@attrib.transaction.RequiredReadOnly()
      */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public AnnotationDto getAnnotationByKey(int key)
         throws DataAccessException, DataRetrievalFailureException {
         return getReferenceDao().getAnnotationByKey(key);
@@ -96,9 +97,8 @@ public class DefaultReferenceService extends DefaultKeywordService
 
     /**
      * {@inheritDoc}
-     * 
-     * @@attrib.transaction.RequiredReadOnly()
      */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List getAnnotationsByAnnotator(String annotator)
         throws DataAccessException {
         Reject.ifEmpty(annotator);
@@ -107,26 +107,22 @@ public class DefaultReferenceService extends DefaultKeywordService
 
     /**
      * {@inheritDoc}
-     * 
-     * @@attrib.transaction.RequiredReadOnly()
      */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List getAnnotationsByReference(int key) throws DataAccessException {
         return getReferenceDao().getAnnotationsByReference(key);
     }
 
     /**
      * {@inheritDoc}
-     * 
-     * @@attrib.transaction.RequiredReadOnly()
      */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List getAllAnnotations() throws DataAccessException {
         return getReferenceDao().getAllAnnotations();
     }
 
     /**
      * {@inheritDoc}
-     * 
-     * @@attrib.transaction.RequiredRuleBased()
      */
     public AnnotationDto saveAnnotation(AnnotationDto annotation)
         throws DataAccessException, InsertionFailureException, 
@@ -137,8 +133,6 @@ public class DefaultReferenceService extends DefaultKeywordService
 
     /**
      * {@inheritDoc}
-     * 
-     * @@attrib.transaction.RequiredRuleBased()
      */
     public void removeAnnotation(int key) throws DataAccessException, 
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
@@ -147,9 +141,8 @@ public class DefaultReferenceService extends DefaultKeywordService
 
     /**
      * {@inheritDoc}
-     * 
-     * @@attrib.transaction.RequiredReadOnly()
      */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public FileDto getFileByKey(int key) throws DataAccessException, 
         DataRetrievalFailureException {
         return getReferenceDao().getFileByKey(key);
@@ -157,9 +150,8 @@ public class DefaultReferenceService extends DefaultKeywordService
 
     /**
      * {@inheritDoc}
-     * 
-     * @@attrib.transaction.RequiredReadOnly()
      */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List getFilesByName(String name) throws DataAccessException {
         Reject.ifEmpty(name);
         return getReferenceDao().getFilesByName(name);
@@ -167,26 +159,22 @@ public class DefaultReferenceService extends DefaultKeywordService
 
     /**
      * {@inheritDoc}
-     * 
-     * @@attrib.transaction.RequiredReadOnly()
      */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List getFilesByReference(int key) throws DataAccessException {
         return getReferenceDao().getFilesByReference(key);
     }
 
     /**
      * {@inheritDoc}
-     * 
-     * @@attrib.transaction.RequiredReadOnly()
      */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List getAllFiles() throws DataAccessException {
         return getReferenceDao().getAllFiles();
     }
 
     /**
      * {@inheritDoc}
-     * 
-     * @@attrib.transaction.RequiredRuleBased()
      */
     public FileDto saveFile(FileDto file) throws DataAccessException, 
         InsertionFailureException, OptimisticLockingFailureException {
@@ -196,8 +184,6 @@ public class DefaultReferenceService extends DefaultKeywordService
 
     /**
      * {@inheritDoc}
-     * 
-     * @@attrib.transaction.RequiredRuleBased()
      */
     public void removeFile(int key) throws DataAccessException, 
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
@@ -206,9 +192,8 @@ public class DefaultReferenceService extends DefaultKeywordService
 
     /**
      * {@inheritDoc}
-     * 
-     * @@attrib.transaction.RequiredReadOnly()
      */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List getFileDescriptorViewsByReference(int key)
         throws DataAccessException {
         return getReferenceDao().getFileDescriptorViewsByReference(key);
@@ -216,8 +201,6 @@ public class DefaultReferenceService extends DefaultKeywordService
 
     /**
      * {@inheritDoc}
-     * 
-     * @@attrib.transaction.RequiredRuleBased()
      */
     public FileDescriptorView modifyFileDescriptorView(
         FileDescriptorView fileView) throws DataAccessException, 
@@ -227,9 +210,7 @@ public class DefaultReferenceService extends DefaultKeywordService
     }
 
     /**
-     * {@inheritDoc}
-     * 
-     * @@attrib.transaction.RequiredRuleBased()
+     * {@inheritDoc}      
      */
     public FileDescriptorView saveFileAndReturnFileDescriptorView(FileDto file)
         throws DataAccessException, InsertionFailureException, 
@@ -255,9 +236,8 @@ public class DefaultReferenceService extends DefaultKeywordService
 
     /**
      * {@inheritDoc}
-     * 
-     * @@attrib.transaction.RequiredReadOnly()
      */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public ReferenceDto getReferenceByKey(int key)
         throws DataAccessException, DataRetrievalFailureException {
         ReferenceDto reference = null;
@@ -289,9 +269,8 @@ public class DefaultReferenceService extends DefaultKeywordService
 
     /**
      * {@inheritDoc}
-     * 
-     * @@attrib.transaction.RequiredReadOnly()
      */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List getReferencesByName(String name) throws DataAccessException {
         Reject.ifEmpty(name);
         
@@ -311,9 +290,8 @@ public class DefaultReferenceService extends DefaultKeywordService
 
     /**
      * {@inheritDoc}
-     * 
-     * @@attrib.transaction.RequiredReadOnly()
      */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List getAllReferences() throws DataAccessException {
         List listLinks 
             = getReferenceDao().getAllLinks();
@@ -331,9 +309,8 @@ public class DefaultReferenceService extends DefaultKeywordService
 
     /**
      * {@inheritDoc}
-     * 
-     * @@attrib.transaction.RequiredReadOnly()
      */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)    
     public List searchReferences(QueryObject query)
         throws DataAccessException {
         Reject.ifNull(query);
@@ -352,8 +329,6 @@ public class DefaultReferenceService extends DefaultKeywordService
 
     /**
      * {@inheritDoc}
-     * 
-     * @@attrib.transaction.RequiredRuleBased()
      */
     public ReferenceDto saveReference(ReferenceDto reference)
         throws DataAccessException, InsertionFailureException, 
@@ -381,8 +356,6 @@ public class DefaultReferenceService extends DefaultKeywordService
 
     /**
      * {@inheritDoc}
-     * 
-     * @@attrib.transaction.RequiredRuleBased()
      */
     public void removeReference(int key) throws DataAccessException, 
         JdbcUpdateAffectedIncorrectNumberOfRowsException {

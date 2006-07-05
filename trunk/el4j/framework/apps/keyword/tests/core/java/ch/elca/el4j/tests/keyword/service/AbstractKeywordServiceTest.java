@@ -17,11 +17,14 @@
  */
 package ch.elca.el4j.tests.keyword.service;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -205,6 +208,36 @@ public abstract class AbstractKeywordServiceTest extends AbstractTestCaseBase {
             s_logger.debug("Expected exception catched.", e);
         }
     }
+    
+    /**
+     * This test inserts two keywords and removes them using the removeKeywords
+     * method. Afterwards, they should not be reachable any more.
+     */
+    public void testInsertRemoveKeywords() {
+        KeywordService service = getKeywordService();
+        KeywordDto keyword = new KeywordDto();
+        keyword.setName("Java");
+        keyword.setDescription("Java related documentation");
+        KeywordDto keyword2 = service.saveKeyword(keyword);
+        
+        KeywordDto keyword3 = new KeywordDto();
+        keyword3.setName("C");
+        keyword3.setDescription("C related documentation");
+        KeywordDto keyword4 = service.saveKeyword(keyword3);
+        
+        HashSet<KeywordDto> keywords = new HashSet<KeywordDto>();
+        keywords.add(keyword2);
+        keywords.add(keyword4);
+        
+        service.removeKeywords(keywords);
+        
+        try {
+            service.getKeywordByKey(keyword2.getKey());
+            service.getKeywordByKey(keyword4.getKey());
+        } catch (DataRetrievalFailureException e) {
+            s_logger.debug("Expected exception catched.", e);
+        }
+    }
 
     /**
      * This test inserts one keyword, which will afterwards be looked up by two
@@ -314,5 +347,6 @@ public abstract class AbstractKeywordServiceTest extends AbstractTestCaseBase {
             }
         }
     }
+    
 }
 //Checkstyle: MagicNumber on

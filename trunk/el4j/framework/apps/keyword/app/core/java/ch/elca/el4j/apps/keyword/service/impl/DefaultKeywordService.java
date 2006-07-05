@@ -24,6 +24,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import ch.elca.el4j.apps.keyword.dao.KeywordDao;
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
@@ -76,6 +78,7 @@ public class DefaultKeywordService implements KeywordService, InitializingBean {
     /**
      * {@inheritDoc}
      */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public KeywordDto getKeywordByKey(int key)
         throws DataAccessException, DataRetrievalFailureException {
         return getKeywordDao().getKeywordByKey(key);
@@ -84,6 +87,7 @@ public class DefaultKeywordService implements KeywordService, InitializingBean {
     /**
      * {@inheritDoc}
      */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public KeywordDto getKeywordByName(String name)
         throws DataAccessException, DataRetrievalFailureException {
         return getKeywordDao().getKeywordByName(name);
@@ -92,6 +96,7 @@ public class DefaultKeywordService implements KeywordService, InitializingBean {
     /**
      * {@inheritDoc}
      */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List getAllKeywords() throws DataAccessException {
         return getKeywordDao().getAllKeywords();
     }
@@ -99,6 +104,7 @@ public class DefaultKeywordService implements KeywordService, InitializingBean {
     /**
      * {@inheritDoc}
      */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List searchKeywords(QueryObject query)
         throws DataAccessException {
         return getKeywordDao().searchKeywords(query);
