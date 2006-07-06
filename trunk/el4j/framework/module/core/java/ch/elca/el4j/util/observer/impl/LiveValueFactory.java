@@ -43,7 +43,7 @@ public final class LiveValueFactory {
      * @return see above. 
      */
     public static <T> LiveValue<T> theElementIn(
-        ObservableValue<Collection<T>> oc) {
+        ObservableValue<Collection<? extends T>> oc) {
         
         return new LiveValue<T>(new UniqueElementIn<T>(oc));
     }
@@ -51,10 +51,10 @@ public final class LiveValueFactory {
     /** see {@link LiveValueFactory#theElementIn(AbstractObservableValue)}. */
     private static class UniqueElementIn<T> implements Computable<T> {
         /** The backing collection. */
-        ObservableValue<Collection<T>> m_oc;
+        ObservableValue<Collection<? extends T>> m_oc;
         
         /** Constructor. */
-        UniqueElementIn(ObservableValue<Collection<T>> oc) {
+        UniqueElementIn(ObservableValue<Collection<? extends T>> oc) {
             this.m_oc = oc;
         }
         
