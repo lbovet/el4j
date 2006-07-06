@@ -114,10 +114,10 @@ public interface KeywordService {
             OptimisticLockingFailureException;
 
     /**
-     * Removes a keyword.
+     * Remove keyword. Primary key will be used.
      * 
-     * @param keyword
-     *            Is the keyword that should be deleted.
+     * @param key
+     *            Is the primary key of the keyword that should be deleted.
      * @throws DataAccessException
      *             If general data access problem occurred.
      * @throws JdbcUpdateAffectedIncorrectNumberOfRowsException
@@ -125,14 +125,14 @@ public interface KeywordService {
      */
     @Transactional(rollbackFor = {DataAccessException.class,
             RuntimeException.class, Error.class })
-    public void removeKeyword(KeywordDto keyword) throws DataAccessException,
+    public void removeKeyword(int key) throws DataAccessException,
         JdbcUpdateAffectedIncorrectNumberOfRowsException;
     
     /**
-     * Removes several keywords. 
+     * Remove keywords. Primary key of each keyword will be used.
      * 
-     * @param keywords
-     *            Are the keywords that should be deleted.
+     * @param keys
+     *            Are the primary keys of the keywords that should be deleted.
      * @throws DataAccessException
      *             If general data access problem occurred.
      * @throws JdbcUpdateAffectedIncorrectNumberOfRowsException
@@ -140,7 +140,7 @@ public interface KeywordService {
      */
     @Transactional(rollbackFor = {DataAccessException.class,
             RuntimeException.class, Error.class })
-    public void removeKeywords(Collection<KeywordDto> keywords) 
+    public void removeKeywords(Collection<?> keys) 
         throws DataAccessException,
         JdbcUpdateAffectedIncorrectNumberOfRowsException;
 }

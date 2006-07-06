@@ -17,6 +17,7 @@
 package ch.elca.el4j.apps.keyword.service.impl;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.InitializingBean;
@@ -38,6 +39,10 @@ import ch.elca.el4j.services.search.QueryObject;
 /**
  * 
  * This class is the repository-specific implementation of the keyword service.
+ * 
+ * This class is presently not maintained; it is left in the repository in
+ * case the keyword web-application will later be migrated to the repository,
+ * in which case implementions present in this class could be reused.
  * 
  * @param <RR> The RepositoryRegistry's type.
  *
@@ -136,21 +141,35 @@ public class KeywordRepositoryService<RR extends KeywordRepositoryRegistry>
     /**
      * {@inheritDoc}
      */
-    public void removeKeyword(KeywordDto keyword) throws DataAccessException,
+    public void removeKeyword(int key) throws DataAccessException,
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
         
-        getKeywordRepository().delete(keyword);
+        getKeywordRepository().delete(
+            getKeywordRepository().findById(key, true)
+        );
     }
     
     /**
      * {@inheritDoc}
      */
-    public void removeKeywords(Collection<KeywordDto> keywords)
-        throws DataAccessException, 
+    public void removeKeywords(Collection<?> keys) throws DataAccessException, 
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
-        if (keywords != null) {
-            for (KeywordDto kw : keywords) {
-                removeKeyword(kw);
+        if (keys != null) {
+            Iterator it = keys.iterator();
+            while (it.hasNext()) {
+                Object element = it.next();
+                if (element instanceof Number) {
+                    int key = ((Number) element).intValue();
+                    removeKeyword(key);
+                } else if (element instanceof String) {
+                    int key = Integer.parseInt((String) element);
+                    removeKeyword(key);
+                } else {
+                    CoreNotificationHelper.notifyMisconfiguration(
+                        "Given keys must be of type number or string. "
+                        + "Given key element is of type " 
+                        + element.getClass() + ".");
+                }
             }
         }    
     }

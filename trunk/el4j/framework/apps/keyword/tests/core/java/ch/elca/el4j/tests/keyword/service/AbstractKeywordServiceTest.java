@@ -200,7 +200,7 @@ public abstract class AbstractKeywordServiceTest extends AbstractTestCaseBase {
         keyword.setName("Java");
         keyword.setDescription("Java related documentation");
         KeywordDto keyword2 = service.saveKeyword(keyword);
-        service.removeKeyword(keyword2);
+        service.removeKeyword(keyword2.getKey());
         try {
             service.getKeywordByKey(keyword2.getKey());
             fail("The removed keyword is still in the DB.");
@@ -225,9 +225,9 @@ public abstract class AbstractKeywordServiceTest extends AbstractTestCaseBase {
         keyword3.setDescription("C related documentation");
         KeywordDto keyword4 = service.saveKeyword(keyword3);
         
-        HashSet<KeywordDto> keywords = new HashSet<KeywordDto>();
-        keywords.add(keyword2);
-        keywords.add(keyword4);
+        HashSet<Integer> keywords = new HashSet<Integer>();
+        keywords.add(keyword2.getKey());
+        keywords.add(keyword4.getKey());
         
         service.removeKeywords(keywords);
         
@@ -264,13 +264,11 @@ public abstract class AbstractKeywordServiceTest extends AbstractTestCaseBase {
         } catch (OptimisticLockingFailureException e) {
             s_logger.debug("Expected exception catched.", e);
         }
-        try {
-            service.removeKeyword(keyword3);
-            fail("A keyword could be deleted although it has been modified "
-                + "concurrently.");
-        } catch (OptimisticLockingFailureException e) {
-            s_logger.debug("caught expected exception.", e);
-        }
+        // this suceeds, as the service never throws an 
+        // OptimisticLockingException on delete. The
+        // new repository interface, which will superseed this interface
+        // at a later time, throws the expected excaption.
+        service.removeKeyword(keyword3.getKey());
     }
 
     /**
