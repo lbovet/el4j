@@ -48,6 +48,7 @@ import ch.elca.el4j.services.search.QueryObject;
  * @author Martin Zeltner (MZE)
  */
 public class DefaultKeywordService implements KeywordService, InitializingBean {
+     
     /**
      * Inner keyword to the working dao.
      */
@@ -114,6 +115,7 @@ public class DefaultKeywordService implements KeywordService, InitializingBean {
     /**
      * {@inheritDoc}
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public KeywordDto saveKeyword(KeywordDto keyword)
         throws DataAccessException, InsertionFailureException, 
             OptimisticLockingFailureException {
@@ -123,6 +125,7 @@ public class DefaultKeywordService implements KeywordService, InitializingBean {
     /**
      * {@inheritDoc}
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void removeKeyword(int key) throws DataAccessException, 
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
         getKeywordDao().removeKeyword(key);
@@ -131,6 +134,7 @@ public class DefaultKeywordService implements KeywordService, InitializingBean {
     /**
      * {@inheritDoc}
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void removeKeywords(Collection<?> keys) throws DataAccessException, 
     JdbcUpdateAffectedIncorrectNumberOfRowsException {
         if (keys != null) {

@@ -8,7 +8,20 @@
 	<!-- $Date$ -->
 	<!-- $Author$ -->
 	 
-	 <bean id="keywordService"
+	<bean id="keywordService"
+        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager">
+        	<ref bean="transactionManager"/>
+        </property>
+        <property name="target">
+        	<ref local="keywordServiceTarget"/>
+        </property>
+        <property name="transactionAttributeSource">
+    		<bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
+  		</property>
+    </bean>
+    
+    <bean id="keywordServiceTarget"
 	 	class="ch.elca.el4j.apps.keyword.service.impl.KeywordRepositoryService">
 	 	<property name="repositoryRegistry">
 	 		<ref local="repositoryRegistry"/>

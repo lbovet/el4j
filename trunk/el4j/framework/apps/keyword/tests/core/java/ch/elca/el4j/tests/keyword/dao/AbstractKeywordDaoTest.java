@@ -308,5 +308,6 @@ public abstract class AbstractKeywordDaoTest extends AbstractTestCaseBase {
             }
         }
     }
+    
 }
 //Checkstyle: MagicNumber on

@@ -9,11 +9,25 @@
     <!-- Author: $Author$ -->
 
     <bean id="keywordService"
+        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager">
+        	<ref bean="transactionManager"/>
+        </property>
+        <property name="target">
+        	<ref local="keywordServiceTarget"/>
+        </property>
+        <property name="transactionAttributeSource">
+    		<bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
+  		</property>
+    </bean>
+    
+    <bean id="keywordServiceTarget"
         class="ch.elca.el4j.apps.keyword.service.impl.DefaultKeywordService">
         <property name="keywordDao">
             <ref local="keywordDao" />
         </property>
     </bean>
+    
     <bean id="keywordDao"
         class="ch.elca.el4j.apps.keyword.dao.impl.hibernate.HibernateKeywordDao">
         <property name="sessionFactory">
@@ -23,6 +37,7 @@
     
     <!-- Hibernate Session Factory Bean -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+    <!--  <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">-->
         <property name="mappingResources">
             <list>
                 <value>hibernate/Keyword.hbm.xml</value>

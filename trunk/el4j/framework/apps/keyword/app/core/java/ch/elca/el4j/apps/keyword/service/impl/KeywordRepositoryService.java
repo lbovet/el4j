@@ -59,6 +59,8 @@ import ch.elca.el4j.services.search.QueryObject;
 public class KeywordRepositoryService<RR extends KeywordRepositoryRegistry>
     implements KeywordService, InitializingBean {
     
+    public KeywordRepositoryService() {}
+    
     /**
      * Hibernate repository factory.
      */
