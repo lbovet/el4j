@@ -124,6 +124,7 @@ public class DefaultReferenceService extends DefaultKeywordService
     /**
      * {@inheritDoc}
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public AnnotationDto saveAnnotation(AnnotationDto annotation)
         throws DataAccessException, InsertionFailureException, 
             OptimisticLockingFailureException {
@@ -134,6 +135,7 @@ public class DefaultReferenceService extends DefaultKeywordService
     /**
      * {@inheritDoc}
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void removeAnnotation(int key) throws DataAccessException, 
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
         getReferenceDao().removeAnnotation(key);
@@ -176,6 +178,7 @@ public class DefaultReferenceService extends DefaultKeywordService
     /**
      * {@inheritDoc}
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public FileDto saveFile(FileDto file) throws DataAccessException, 
         InsertionFailureException, OptimisticLockingFailureException {
         Reject.ifNull(file);
@@ -185,6 +188,7 @@ public class DefaultReferenceService extends DefaultKeywordService
     /**
      * {@inheritDoc}
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void removeFile(int key) throws DataAccessException, 
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
         getReferenceDao().removeFile(key);
@@ -202,6 +206,7 @@ public class DefaultReferenceService extends DefaultKeywordService
     /**
      * {@inheritDoc}
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public FileDescriptorView modifyFileDescriptorView(
         FileDescriptorView fileView) throws DataAccessException, 
             DataRetrievalFailureException, OptimisticLockingFailureException {
@@ -212,6 +217,7 @@ public class DefaultReferenceService extends DefaultKeywordService
     /**
      * {@inheritDoc}      
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public FileDescriptorView saveFileAndReturnFileDescriptorView(FileDto file)
         throws DataAccessException, InsertionFailureException, 
             OptimisticLockingFailureException {
@@ -237,7 +243,7 @@ public class DefaultReferenceService extends DefaultKeywordService
     /**
      * {@inheritDoc}
      */
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public ReferenceDto getReferenceByKey(int key)
         throws DataAccessException, DataRetrievalFailureException {
         ReferenceDto reference = null;
@@ -270,7 +276,7 @@ public class DefaultReferenceService extends DefaultKeywordService
     /**
      * {@inheritDoc}
      */
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public List getReferencesByName(String name) throws DataAccessException {
         Reject.ifEmpty(name);
         
@@ -330,6 +336,7 @@ public class DefaultReferenceService extends DefaultKeywordService
     /**
      * {@inheritDoc}
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public ReferenceDto saveReference(ReferenceDto reference)
         throws DataAccessException, InsertionFailureException, 
             OptimisticLockingFailureException {
@@ -357,6 +364,7 @@ public class DefaultReferenceService extends DefaultKeywordService
     /**
      * {@inheritDoc}
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void removeReference(int key) throws DataAccessException, 
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
         boolean referenceExists = false;
