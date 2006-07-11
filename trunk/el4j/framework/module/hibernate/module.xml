@@ -12,11 +12,13 @@
         <dependency module="module-core" />
         
          <!-- Jar dependencies -->
-        <dependency jar="hibernate-3.1.2.jar"/>
+        <dependency jar="hibernate-3.2.0.CR2.jar"/>
+        <dependency jar="hibernate-annotations-3.2.0.CR1.jar"/>
         <dependency jar="dom4j-1.6.1.jar"/>
         <dependency jar="jta-1.0.1b.jar"/>
         <dependency jar="antlr-2.7.6rc1.jar"/>
-        <dependency jar="ehcache-1.1.jar"/>
+        <dependency jar="ehcache-1.2.1.jar"/>
+        <dependency jar="ejb3-persistence-3.1beta7.jar"/>
         
     </module>
 </ant:project>
