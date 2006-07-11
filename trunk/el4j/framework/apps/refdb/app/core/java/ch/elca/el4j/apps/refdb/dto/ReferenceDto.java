@@ -22,7 +22,10 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.hibernate.validator.NotNull;
+
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
+import ch.elca.el4j.services.persistence.hibernate.validation.Validate;
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
 /**
@@ -37,6 +40,7 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  *
  * @author Martin Zeltner (MZE)
  */
+@Validate()
 public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * Name of the reference (book title, ...).
@@ -176,6 +180,7 @@ public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * @return Returns the name.
      */
+    @NotNull
     public String getName() {
         return m_name;
     }
@@ -206,6 +211,7 @@ public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * @return Returns the whenInserted.
      */
+    @NotNull
     public Timestamp getWhenInserted() {
         if (m_whenInserted == null) {
             m_whenInserted = new Timestamp(System.currentTimeMillis());
@@ -316,5 +322,17 @@ public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
             return false;
         }
     }
+    
+    /**
+     * Validates the reference.
+     * @return true if the reference is valid, false otherwise
+     */
+    public boolean validate() {
+        if (getDate() != null) {
+            return (getDate().getTime() <= getWhenInserted().getTime());
+        }
+        return true;
+    }
+    
 }
 
