@@ -40,7 +40,7 @@ public class HibernateReferenceDaoTest extends AbstractReferenceDaoTest {
             "classpath*:mandatory/*.xml",
             "classpath*:scenarios/db/raw/*.xml",
             "classpath*:scenarios/dataaccess/hibernate/*.xml",
-            "classpath:optional/interception/transactionCommonsAttributes.xml"};
+            "classpath*:optional/interception/transactionJava5Annotations.xml"};
     }
     
     /**

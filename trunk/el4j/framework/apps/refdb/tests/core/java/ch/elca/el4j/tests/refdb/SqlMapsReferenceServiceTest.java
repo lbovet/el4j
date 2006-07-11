@@ -41,7 +41,7 @@ public class SqlMapsReferenceServiceTest extends AbstractReferenceServiceTest {
             "classpath*:mandatory/*.xml",
             "classpath*:scenarios/db/raw/*.xml",
             "classpath*:scenarios/dataaccess/ibatis/*.xml",
-            "classpath:optional/interception/transactionCommonsAttributes.xml"};
+            "classpath*:optional/interception/transactionJava5Annotations.xml"};
     }
     
     /**
