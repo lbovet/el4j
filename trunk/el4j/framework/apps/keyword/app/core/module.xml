@@ -19,8 +19,7 @@
         <!-- Binary version -->
         <attribute name="binrelease.version" value="2.1-rc0"/>
 
-        <!-- Commons attributes enabled -->
-        <!-- Commons attributes are disabled, since they are not compaitble
+        <!-- Commons attributes are disabled, since they are not compatible
              with Java 1.5 -->
         <!--  <attribute name="commons-attributes.enable" value="true"/> -->
 
@@ -28,7 +27,6 @@
         <dependency module="module-core"/>
         <dependency module="module-ibatis"/>
         <dependency module="module-hibernate"/>
- 
     </module>
 
 </ant:project>
