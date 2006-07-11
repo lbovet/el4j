@@ -217,7 +217,7 @@ public abstract class AbstractTestCaseBase extends TestCase {
     }
     
     /**
-     * @return Returns the referenceDao.
+     * @return Returns the reference service.
      */
     protected ReferenceService getReferenceService() {
         if (m_referenceService == null) {
