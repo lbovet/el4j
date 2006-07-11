@@ -75,7 +75,7 @@ public class ModuleContextLoader extends ContextLoader {
     /**
      * Name of servlet context parameter indicating whether the resources
      * retrieved by the configuration files section of the manifest files should
-     * be merged ith resources found by searching in the file system.
+     * be merged with resources found by searching in the file system.
      */
     public static final String MERGE_RESOURCES_PARAM = "mergeResources";
     
