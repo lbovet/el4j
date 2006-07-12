@@ -72,7 +72,7 @@ public abstract class AbstractGenericView extends AbstractComponent {
     @Override
     void init(AwakingContext context) {
         m_awaker = context;
-        m_descriptor = createDescriptor();
+        m_descriptor = createDescriptor(m_type.clazz);
     }
     
     /** labels and wakens <code>d</code>. Also returns it (for convenience)
@@ -118,8 +118,9 @@ public abstract class AbstractGenericView extends AbstractComponent {
     
     /** creates and returns the descriptor holding the View represented by 
      * this object.
+     * @param clazz the domain class for this view's entity type.
      * @return . */
-    protected abstract ViewDescriptor createDescriptor();
+    protected abstract <T> ViewDescriptor createDescriptor(Class<T> clazz);
     
     /** {@inheritDoc} */
     ViewDescriptor getDescriptor(AwakingContext context) {

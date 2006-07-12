@@ -74,6 +74,24 @@
     <bean id="rulesSource"
         class="ch.elca.el4j.apps.refdb.rules.RefdbValidationRulesSource" />
         
+    
+    <bean id="servicesExtender"
+    	class="ch.elca.el4j.services.gui.richclient.support.ExtendableApplicationServices$Extender">
+    	
+    	<property name="services">
+    		<map>
+    			<entry>
+    				<key><value>ch.elca.el4j.services.persistence.generic.LazyRepositoryViewRegistry</value></key>
+    				<ref bean="repoView"/>
+    			</entry>
+    		</map>
+    	</property>
+   	</bean>
+   	
+   	<bean id="repoView"
+   		class="ch.elca.el4j.services.persistence.generic.DefaultLazyRepositoryViewRegistry">
+   		<constructor-arg><ref bean="repoRegistry"/></constructor-arg>
+   	</bean>
         
     <!-- and last, but certainly not least, the actual GUI: -->
     <bean id="Gui"

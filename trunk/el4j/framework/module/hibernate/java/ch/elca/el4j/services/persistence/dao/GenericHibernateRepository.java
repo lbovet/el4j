@@ -28,7 +28,7 @@ import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import ch.elca.el4j.services.persistence.generic.dao.GenericRepository;
+import ch.elca.el4j.services.persistence.generic.dao.ConvenientGenericRepository;
 import ch.elca.el4j.services.persistence.hibernate.criteria.CriteriaTransformer;
 import ch.elca.el4j.services.search.QueryObject;
 
@@ -48,15 +48,13 @@ import ch.elca.el4j.services.search.QueryObject;
  *            The domain class the repository is responsible for
  * @param <ID>
  *            The type of the domain class' identifier
- * @param <RepositoryImpl>
- *            The repository interface that is implemented by this class
  * 
  * @author Philipp Oser (POS)
  * @author Alex Mathey (AMA)
  */
 public class GenericHibernateRepository<T, ID extends Serializable>
     extends HibernateDaoSupport
-    implements GenericRepository<T, ID> {
+    implements ConvenientGenericRepository<T, ID> {
     
     /**
      * The domain class this repository is responsible for.
@@ -148,5 +146,11 @@ public class GenericHibernateRepository<T, ID extends Serializable>
     public void delete(T entity) throws DataAccessException {
         getHibernateTemplate().delete(entity);
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void refresh(T entity) {
+        getHibernateTemplate().refresh(entity);
+    }
 }

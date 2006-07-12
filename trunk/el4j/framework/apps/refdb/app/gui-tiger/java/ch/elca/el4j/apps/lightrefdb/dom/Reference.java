@@ -18,9 +18,14 @@ package ch.elca.el4j.apps.lightrefdb.dom;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Set;
 
+import ch.elca.el4j.apps.refdb.dto.AnnotationDto;
+import ch.elca.el4j.apps.refdb.dto.FileDescriptorView;
+import ch.elca.el4j.apps.refdb.dto.FileDto;
 import ch.elca.el4j.services.dom.annotations.MemberOrder;
+import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 
 
 /**
@@ -46,12 +51,18 @@ import ch.elca.el4j.services.dom.annotations.MemberOrder;
     "date",
     "keywords"
 })
-public class Reference {
+public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
     private String name;
     
     /** This reference's unique identifier; an ISBN for instance. */
     private String hashValue;
+    
+    /**
+     * Short description of the reference (short summary, comment on the format
+     * of the document, ...).
+     */
     private String description;
+    
     private String version;
     
     /** Is only part of this reference available? */
@@ -65,6 +76,24 @@ public class Reference {
     
     /** the keyword(s) that apply to this reference */
     private Set<Keyword> keywords;
+    
+    /**
+     * Set of annotations for this reference (only used if Hibernate is used to
+     * perform ORM).
+     */
+    private Set<AnnotationDto> m_annotations;
+    
+    /**
+     * Set of files for this reference (only used if Hibernate is used to
+     * perform ORM).
+     */
+    private Set<FileDto> m_files;
+    
+    /**
+     * Set of file descriptor views for this reference (only used if Hibernate
+     * is used to perform ORM).
+     */
+    private Set<FileDescriptorView> m_fileDescriptorViews;
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -85,14 +114,49 @@ public class Reference {
         this.incomplete = incomplete;
     }
 
-    public Timestamp getWhenInserted() { return whenInserted; }
+    public Timestamp getWhenInserted() {         
+        if (whenInserted == null) {
+            whenInserted = new Timestamp(System.currentTimeMillis());
+        }
+        return whenInserted;
+    }
     public void setWhenInserted(Timestamp whenInserted) {
         this.whenInserted = whenInserted;
     }
 
     public Date getDate() { return date; }
-    public void setDate(Date date) { this.date = date; }
+    public void setDate(Date date) { 
+        if (date != null) {
+            Calendar c = Calendar.getInstance();
+            c.setTime(date);
+            c.set(Calendar.MILLISECOND, 0);
+            c.set(Calendar.SECOND, 0);
+            c.set(Calendar.MINUTE, 0);
+            c.set(Calendar.HOUR, 0);
+            c.set(Calendar.AM_PM, Calendar.AM);
+            date.setTime(c.getTimeInMillis());
+            this.date = date;
+        } else {
+            this.date = null;
+        }
+    }
 
     public Set<Keyword> getKeywords() { return keywords; }
     public void setKeywords(Set<Keyword> keywords) { this.keywords = keywords; }
+    
+    public Set<AnnotationDto> getAnnotations() { return m_annotations; }
+    public void setAnnotations(Set<AnnotationDto> annotations) {
+        m_annotations = annotations;
+    }
+    
+    public Set<FileDescriptorView> getFileDescriptorViews() {
+        return m_fileDescriptorViews;
+    }
+    public 
+    void setFileDescriptorViews(Set<FileDescriptorView> fileDescriptorViews) {
+        m_fileDescriptorViews = fileDescriptorViews;
+    }
+
+    public Set<FileDto> getFiles() { return m_files; }
+    public void setFiles(Set<FileDto> files) { m_files = files; }
 }

@@ -23,9 +23,10 @@ import javax.swing.ListSelectionModel;
 
 import org.springframework.binding.form.FormModel;
 
-import ch.elca.el4j.apps.refdb.gui.brokers.ServiceBroker;
-import ch.elca.el4j.apps.refdb.service.ReferenceService;
+import ch.elca.el4j.apps.keyword.dto.KeywordDto;
 import ch.elca.el4j.services.gui.richclient.forms.binding.swing.AbstractDynamicListBinding;
+import ch.elca.el4j.services.gui.richclient.utils.Services;
+import ch.elca.el4j.services.persistence.generic.LazyRepositoryViewRegistry;
 
 /**
  * Dynmaic binding list for keywords.
@@ -57,7 +58,8 @@ public class KeywordDynamicListBinding extends AbstractDynamicListBinding {
      * {@inheritDoc}
      */
     protected List getActualSelectableItems() {
-        ReferenceService service = ServiceBroker.getReferenceService();
-        return service.getAllKeywords();
+        return Services.get(LazyRepositoryViewRegistry.class)
+                       .getFor(KeywordDto.class)
+                       .findAll();
     }
 }

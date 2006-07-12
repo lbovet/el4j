@@ -19,7 +19,7 @@
             <value>${j2ee-web.port}</value>
         </property>
         <property name="contextPath">
-            <value>refdb-gui-server</value>
+            <value>refdb-gui-tiger-server</value>
         </property>
     </bean>
 </beans>

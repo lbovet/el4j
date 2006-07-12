@@ -27,13 +27,17 @@ import org.springframework.richclient.dialog.DialogPage;
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
 import ch.elca.el4j.apps.lightrefdb.dom.Keyword;
 import ch.elca.el4j.apps.refdb.dto.ReferenceDto;
-import ch.elca.el4j.apps.refdb.gui.brokers.ServiceBroker;
 import ch.elca.el4j.apps.refdb.service.ReferenceService;
 import ch.elca.el4j.services.dom.info.Property;
 import ch.elca.el4j.services.gui.richclient.executors.convenience.AbstractBeanPropertiesExecutor;
 import ch.elca.el4j.services.gui.richclient.executors.displayable.ExecutorDisplayable;
 import ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm;
+import ch.elca.el4j.services.gui.richclient.utils.Services;
 import ch.elca.el4j.services.gui.richclient.views.DialogPageView;
+import ch.elca.el4j.services.persistence.generic.LazyRepositoryView;
+import ch.elca.el4j.services.persistence.generic.LazyRepositoryViewRegistry;
+import ch.elca.el4j.services.persistence.generic.dao.ConvenientGenericRepository;
+import ch.elca.el4j.services.persistence.generic.dao.SimpleGenericRepository;
 import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
 import ch.elca.el4j.services.richclient.naming.SimpleFieldFaceSource;
 import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
@@ -85,28 +89,23 @@ public class Edit extends AbstractGenericView {
     }
     
     /***/
-    class Executor extends AbstractBeanPropertiesExecutor {
+    class Executor<T> extends AbstractBeanPropertiesExecutor {
         ///////////////////////
         // persistence logic
         ///////////////////////
         
         // Kludge to account for non-generic persistence
         boolean isKeyword;
+        
+        SimpleGenericRepository<T> m_repository;
 
         /**
          * {@inheritDoc}
          */
+        @SuppressWarnings("unchecked")
         @Override
         protected PrimaryKeyObject saveBean(PrimaryKeyObject givenBean) {
-            ReferenceService referenceService 
-                = ServiceBroker.getReferenceService();
-            if (isKeyword) {
-                KeywordDto givenKeyword = (KeywordDto) givenBean;
-                return referenceService.saveKeyword(givenKeyword);
-            } else {
-                ReferenceDto givenReference = (ReferenceDto) givenBean;
-                return referenceService.saveReference(givenReference);
-            }
+            return (PrimaryKeyObject)m_repository.saveOrUpdate((T) givenBean);
         }
 
         /**
@@ -114,15 +113,9 @@ public class Edit extends AbstractGenericView {
          */
         @Override
         protected PrimaryKeyObject getBeanByKey(Object key) throws Exception {
-            ReferenceService referenceService 
-                = ServiceBroker.getReferenceService();
-            if (isKeyword) {
-                int intKey = ((Number) key).intValue();
-                return referenceService.getKeywordByKey(intKey);
-            } else {
-                int intKey = ((Number) key).intValue();
-                return referenceService.getReferenceByKey(intKey);
-            }
+            return (PrimaryKeyObject) 
+                ((ConvenientGenericRepository<T, Integer>)m_repository)
+                    .findById((Integer) key, false);
         }
         
         /**
@@ -281,7 +274,7 @@ public class Edit extends AbstractGenericView {
      * {@inheritDoc}
      */
     @Override
-    protected ViewDescriptor createDescriptor() {
+    protected <T> ViewDescriptor createDescriptor(Class<T> clazz) {
         m_visible = properties.m_eprops
             .filtered(DisplayablePropertyList.s_visibles);
 
@@ -295,10 +288,14 @@ public class Edit extends AbstractGenericView {
         m_awaker.awaken(form);
         
         GenericComponent gc = new GenericComponent(); //configure(new DialogPageViewDescriptor());
-        m_executor = new Executor();
-        m_executor.setBeanPropertiesForms(new BeanPropertiesForm[] {form});
-        m_executor.setDisplayable(gc);
-        m_awaker.awaken(m_executor);        
+        Executor<T> exec = new Executor<T>(); 
+        exec.m_repository = Services.get(LazyRepositoryViewRegistry.class)
+                                    .getFor(clazz);
+        exec.setBeanPropertiesForms(new BeanPropertiesForm[] {form});
+        exec.setDisplayable(gc);
+        m_awaker.awaken(exec);
+        m_executor=exec;
+        
         return configure(new Descriptor(gc));
     }
 }

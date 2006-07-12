@@ -50,7 +50,7 @@ public final class MainStandalone {
         String[] applicationContexts = {
             "classpath*:mandatory/*.xml",
             "classpath*:scenarios/db/raw/*.xml",
-            "classpath*:scenarios/dataaccess/ibatis/*.xml",
+            "classpath*:scenarios/dataaccess/hibernate/*-repository-hibernate-config.xml",
             "classpath:optional/interception/transactionCommonsAttributes.xml",
             "classpath:scenarios/springrcp/refdb/application/*.xml"
         };

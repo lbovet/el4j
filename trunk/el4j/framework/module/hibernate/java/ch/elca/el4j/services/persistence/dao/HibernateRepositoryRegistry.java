@@ -49,7 +49,7 @@ public class HibernateRepositoryRegistry
     }
     
     /**
-     * Returns the session factory repositories are configured with upon
+     * Returns the session factory that repositories are configured with upon
      * registration. 
      */
     public SessionFactory getSessionFactory() {

@@ -4,8 +4,8 @@
  * Copyright (C) 2006 by ELCA Informatique SA, Av. de la Harpe 22-24,
  * 1000 Lausanne, Switzerland, http://www.elca.ch
  *
- * This program is published under the GNU General Public License (GPL) license.
- * http://www.gnu.org/licenses/gpl.txt
+ * EL4J is published under the GNU General Public License (GPL) Version 2.0.
+ * http://www.gnu.org/licenses/
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -16,18 +16,16 @@
  */
 package ch.elca.el4j.services.persistence.generic.dao;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
 import ch.elca.el4j.services.search.QueryObject;
 
 /**
- * 
+ *
  * This interface serves as generic access to storage repositories. It is the
  * interface for the DDD-Book's Repository pattern. The repository pattern is
  * similar to the DAO pattern, but a bit more generic. This interface can be
@@ -43,57 +41,17 @@ import ch.elca.el4j.services.search.QueryObject;
  *
  * @param <T>
  *            The domain class the repository is responsible for
- * @param <ID>
- *            The type of the domain class' identifier
  *
  * @author Philipp Oser (POS)
  * @author Alex Mathey (AMA)
+ * @author Adrian Moos (AMS)
  */
-public interface GenericRepository<T, ID extends Serializable> {
+public interface SimpleGenericRepository<T> {
     /**
      * @return Returns the domain class this repository is responsible for.
      */
     public Class<T> getPersistentClass();    
-
-    /**
-     * Retrieves a domain object by identifier.
-     * 
-     * @param id
-     *            The id of a domain object
-     * @param lock
-     *            Indicates whether a database lock should be obtained for this
-     *            operation        
-     * @throws DataAccessException
-     *             If general data access problem occurred
-     * @throws DataRetrievalFailureException
-     *             If domain object could not be retrieved           
-     * @return The desired domain object
-     */   
-    T findById(ID id, boolean lock)
-        throws DataAccessException, DataRetrievalFailureException;
-
-    /**
-     * Retrieves all the domain objects of type T.
-     * 
-     * @return The list containing all the domain objects of type T; if no such
-     *         domain objects exist, an empty list will be returned
-     * @throws DataAccessException
-     *             If general data access problem occurred
-     */
-    List<T> findAll() throws DataAccessException;   
-
-    /**
-     * Executes a query based on a given example domain object.
-     * 
-     * @param exampleInstance
-     *            An instance of the desired domain object, serving as example
-     *            for "query-by-example"
-     * @throws DataAccessException
-     *             If general data access problem occurred           
-     * @return A list containing 0 or more domain objects
-     */
-    List<T> findByExample(T exampleInstance) throws DataAccessException;
-
+    
     /**
      * Executes a query based on a given query object.
      * 
@@ -104,6 +62,22 @@ public interface GenericRepository<T, ID extends Serializable> {
      * @return A list containing 0 or more domain objects
      */
     List<T> findByQuery(QueryObject q) throws DataAccessException;
+
+    
+    /**
+     * Retrieves all the domain objects of type T.
+     * 
+     * @return The list containing all the domain objects of type T; if no such
+     *         domain objects exist, an empty list will be returned
+     * @throws DataAccessException
+     *             If general data access problem occurred
+     */
+    List<T> findAll() throws DataAccessException;   
+    
+    /**
+     * Re-read the state of the given entity from the underlying database.
+     */
+    void refresh(T entity);
 
     /**
      * Saves or updates the given domain object.
@@ -133,5 +107,4 @@ public interface GenericRepository<T, ID extends Serializable> {
      *            If general data access problem occurred                       
      */
     void delete(T entity) throws DataAccessException;
-
 }

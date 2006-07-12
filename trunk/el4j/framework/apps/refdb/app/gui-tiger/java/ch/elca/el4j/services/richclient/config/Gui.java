@@ -21,6 +21,11 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import ch.elca.el4j.apps.lightrefdb.dom.Keyword;
+import ch.elca.el4j.apps.lightrefdb.dom.Reference;
+import ch.elca.el4j.services.gui.richclient.utils.Services;
+import ch.elca.el4j.services.persistence.generic.LazyRepositoryViewRegistry;
+import ch.elca.el4j.services.persistence.generic.dao.SimpleGenericRepository;
 import ch.elca.el4j.services.richclient.context.AwakingContext;
 import ch.elca.el4j.util.collections.ExtendedWritableList;
 import ch.elca.el4j.util.collections.impl.ExtendedArrayList;
@@ -53,6 +58,7 @@ public abstract class Gui implements InitializingBean, ApplicationContextAware {
     private AwakingContext m_context; 
     
     protected Gui() {
+        test();
         System.out.println("Gui is beeing configured.");
     }
     
@@ -66,9 +72,6 @@ public abstract class Gui implements InitializingBean, ApplicationContextAware {
             initialize(w);
         }       
         System.out.println("Gui initialization succeeded");        
-
-        
-        test();
     }
     
     /**
@@ -90,8 +93,25 @@ public abstract class Gui implements InitializingBean, ApplicationContextAware {
     
     /** place to put tests during testing. */
     void test() {
-        System.out.println(m_context.m_backingContext.getBean(
-            "messageSource"
-        ).getClass());        
+        SimpleGenericRepository<Reference> refrepo
+            = Services.get(LazyRepositoryViewRegistry.class)
+                      .getFor(Reference.class);
+
+        if (refrepo.findAll().size() == 0) {
+            Reference ref = new Reference();
+            ref.setName("Hibernate in Action");
+            ref.setDescription("");
+            refrepo.saveOrUpdate(ref);
+        }
+
+        SimpleGenericRepository<Keyword> kwrepo
+        = Services.get(LazyRepositoryViewRegistry.class)
+              .getFor(Keyword.class);
+        
+        if (kwrepo.findAll().size() == 0) {
+            Keyword kw = new Keyword();
+            kw.setName("persistence");
+            kwrepo.saveOrUpdate(kw);            
+        }
     }
 }

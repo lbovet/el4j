@@ -58,7 +58,7 @@ public class EntityType {
         = new HashMap<Class< ? >, EntityType>();
     
     /** the domain object class. */
-    public final Class clazz;
+    public final Class<?> clazz;
     
     /** this type's name. */
     @ImplementationAssumption("unqualified entity type name is unique within DOM")
@@ -132,7 +132,11 @@ public class EntityType {
             );
         }
         
-        props = Collections.unmodifiableList(mprops);
+        props = Collections.unmodifiableList(
+            // restrict to entries present in member order if member order is
+            // present. TODO: find a semantically cleaner way to ignore members.
+            mo != null ? mprops.subList(0, mo.value().length) : mprops
+        );
         ops   = Collections.unmodifiableList(mops);
     }
     

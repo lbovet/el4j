@@ -14,10 +14,17 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.services.persistence.generic.dao;
+package ch.elca.el4j.services.persistence.generic;
+
+import ch.elca.el4j.services.persistence.generic.dao.SimpleGenericRepository;
+
 
 /**
- * A registry for repositories.
+ * A local, lazily updated view to the repository that notifies observers of 
+ * updates.
+ * 
+ * @param <T> The type of entities accessible through this view.
+ * 
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -28,9 +35,6 @@ package ch.elca.el4j.services.persistence.generic.dao;
  *
  * @author Adrian Moos (AMS)
  */
-public interface RepositoryRegistry {
-    /**
-     * Returns the generic repository for entities of type {@code entityType}.
-     */
-    <T> SimpleGenericRepository<T> getFor(Class<T> entityType);
+public interface LazyRepositoryView<T> extends SimpleGenericRepository<T> {
+    
 }

@@ -12,12 +12,31 @@
     
     <import resource="classpath:scenarios/remoting/common/*.xml"/>
     
-    <bean id="referenceService" class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
+    <bean id="keywordRepo" class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
         <property name="remoteProtocol">
             <ref bean="hessianProtocol" />
         </property>
         <property name="serviceInterface">
-            <value>ch.elca.el4j.apps.refdb.service.ReferenceService</value>
+            <value>ch.elca.el4j.services.persistence.generic.dao.SimpleGenericRepository</value>
         </property>
+    </bean>
+    
+    <bean id="referenceRepo" class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
+        <property name="remoteProtocol">
+            <ref bean="hessianProtocol" />
+        </property>
+        <property name="serviceInterface">
+            <value>ch.elca.el4j.services.persistence.generic.dao.SimpleGenericRepository</value>
+        </property>
+    </bean>
+    
+    
+   	<bean id="repoRegistry"	class="ch.elca.el4j.services.persistence.generic.dao.SettableRepositoryRegistry">
+    	<property name="repos">
+    		<list>
+    			<ref bean="keywordRepo"/>
+    			<ref bean="referenceRepo"/>
+       		</list>
+    	</property>
     </bean>
 </beans>

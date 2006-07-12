@@ -17,6 +17,7 @@
 package ch.elca.el4j.apps.lightrefdb.dom;
 
 import ch.elca.el4j.services.dom.annotations.MemberOrder;
+import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 
 /** 
  * .
@@ -35,7 +36,7 @@ import ch.elca.el4j.services.dom.annotations.MemberOrder;
     "name",
     "description"
 })
-public class Keyword {
+public class Keyword extends AbstractIntKeyIntOptimisticLockingDto {
     private String name;    
     
     /** 

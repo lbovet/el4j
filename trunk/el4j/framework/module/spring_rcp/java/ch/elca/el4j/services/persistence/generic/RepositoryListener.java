@@ -14,10 +14,15 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.services.persistence.generic.dao;
+package ch.elca.el4j.services.persistence.generic;
 
-/**
- * A registry for repositories.
+import java.util.Collection;
+
+/** 
+ * An object receiving change notifications from the repository.
+ * 
+ * @param <T> the type of the entities managed by the repository this object
+ *            listens to.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -28,9 +33,16 @@ package ch.elca.el4j.services.persistence.generic.dao;
  *
  * @author Adrian Moos (AMS)
  */
-public interface RepositoryRegistry {
-    /**
-     * Returns the generic repository for entities of type {@code entityType}.
-     */
-    <T> SimpleGenericRepository<T> getFor(Class<T> entityType);
+public interface RepositoryListener<T> {
+    /** the passed entities have been added. */
+    public void added(Collection<? extends T> entities);
+    
+    /** the passed entities have been removed. */
+    public void removed(Collection<? extends T> entities);
+    
+    /** the passed entities have changed. */
+    public void changed(Collection<? extends T> entities);
+    
+    /** anything may have changed. */
+    public void invalidate();    
 }

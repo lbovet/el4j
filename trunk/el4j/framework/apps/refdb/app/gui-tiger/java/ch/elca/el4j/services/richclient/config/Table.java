@@ -22,13 +22,13 @@ import java.util.Collection;
 import org.springframework.richclient.application.ViewDescriptor;
 
 import ch.elca.el4j.apps.lightrefdb.dom.Keyword;
-import ch.elca.el4j.apps.refdb.gui.brokers.ServiceBroker;
 import ch.elca.el4j.apps.refdb.gui.executors.KeywordDeleteExecutor;
-import ch.elca.el4j.apps.refdb.service.ReferenceService;
 import ch.elca.el4j.services.gui.richclient.executors.AbstractBeanExecutor;
 import ch.elca.el4j.services.gui.richclient.executors.SelectAllBeanExecutor;
 import ch.elca.el4j.services.gui.richclient.models.BeanTableModel;
+import ch.elca.el4j.services.gui.richclient.utils.Services;
 import ch.elca.el4j.services.gui.richclient.views.AbstractBeanTableView;
+import ch.elca.el4j.services.persistence.generic.LazyRepositoryViewRegistry;
 import ch.elca.el4j.services.richclient.naming.Naming;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.Reject;
@@ -148,14 +148,11 @@ public class Table extends AbstractGenericView {
         public void changed(QueryObject q) {
             Reject.ifNull(q);
             if (isControlCreated()) {
-                // Kludge to account for non-generic persistence
-                ReferenceService referenceService = ServiceBroker
-                    .getReferenceService();
-                if (m_type.clazz.equals(Keyword.class)) {
-                    setBeans(referenceService.searchKeywords(q));
-                } else {
-                    setBeans(referenceService.searchReferences(q));
-                }
+                setBeans(
+                    Services.get(LazyRepositoryViewRegistry.class)
+                            .getFor(m_type.clazz)
+                            .findAll()
+                );
             }
         }
 
@@ -195,26 +192,13 @@ public class Table extends AbstractGenericView {
      * {@inheritDoc}
      */
     @Override
-    protected ViewDescriptor createDescriptor() {
+    protected <T> ViewDescriptor createDescriptor(Class<T> clazz) {
         for (AbstractBeanExecutor e : executors) {
             m_awaker.awaken(e);
         }
 
         m_model = new Model(properties);
-
-        // Kludge to account for the fact that dn!=n in this prototype.
-        String dn;
-        if (m_type.clazz.equals(Keyword.class)) {
-            dn = "ch.elca.el4j.apps.keyword.dto." + m_type.name + "Dto";
-        } else {
-            dn = "ch.elca.el4j.apps.refdb.dto." + m_type.name + "Dto";
-        }
-        try {
-            m_model.setBeanClass(Class.forName(dn));
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
+        m_model.setBeanClass(m_type.clazz);
         m_awaker.awaken(m_model);
         
         GenericComponent gc = new GenericComponent();

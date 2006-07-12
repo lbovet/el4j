@@ -20,7 +20,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
-import ch.elca.el4j.services.persistence.generic.dao.GenericRepository;
+import ch.elca.el4j.services.persistence.generic.dao.ConvenientGenericRepository;
 
 /**
  * 
@@ -37,7 +37,7 @@ import ch.elca.el4j.services.persistence.generic.dao.GenericRepository;
  * @author Alex Mathey (AMA)
  */
 public interface KeywordRepository
-    extends GenericRepository<KeywordDto, Integer> {
+    extends ConvenientGenericRepository<KeywordDto, Integer> {
     
     /**
      * Get keyword by name.

@@ -14,10 +14,14 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.services.persistence.generic.dao;
+package ch.elca.el4j.services.persistence.generic;
+
+import ch.elca.el4j.services.persistence.generic.dao.RepositoryRegistry;
+import ch.elca.el4j.services.persistence.generic.dao.SimpleGenericRepository;
+import ch.elca.el4j.services.persistence.generic.dao.WrappingRepositoryRegistry;
 
 /**
- * A registry for repositories.
+ * Wraps a repository registry's repositories with {@link LazyRepositoryView}.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -28,9 +32,22 @@ package ch.elca.el4j.services.persistence.generic.dao;
  *
  * @author Adrian Moos (AMS)
  */
-public interface RepositoryRegistry {
+public class DefaultLazyRepositoryViewRegistry 
+        extends WrappingRepositoryRegistry
+     implements LazyRepositoryViewRegistry {
+
     /**
-     * Returns the generic repository for entities of type {@code entityType}.
+     * Constructor.
+     * @param backing the backing registry.
      */
-    <T> SimpleGenericRepository<T> getFor(Class<T> entityType);
+    public DefaultLazyRepositoryViewRegistry(RepositoryRegistry backing) {
+        super(backing);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    protected <T> 
+    SimpleGenericRepository<T> wrap(SimpleGenericRepository<T> repo) {
+        return new DefaultLazyRepositoryView<T>(repo);
+    }
 }

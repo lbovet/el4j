@@ -49,8 +49,7 @@ import ch.elca.el4j.util.registy.impl.StringMapBackedRegistry;
 // TODO: Why is this a View?
 public class Search extends AbstractGenericView {
     /** holds the query represented by this search form. */
-    public final SettableObservableValue<QueryObject> query
-        = new SettableObservableValue<QueryObject>(new QueryObject());
+    public final SettableObservableValue<QueryObject> query;
     
     /** the searchable properties. */
     @Preliminary
@@ -59,6 +58,7 @@ public class Search extends AbstractGenericView {
     /** @param c .*/
     public Search(Class c) {
         super(c);
+        query = new SettableObservableValue<QueryObject>(new QueryObject(c));
         properties = new EditablePropertyList(EntityType.get(c));
     }
 
@@ -90,15 +90,19 @@ public class Search extends AbstractGenericView {
             } else {
                 // Kludge: box primitive types to satisfy DynaBean
                 if (pt.isPrimitive()) {
-                    String n = pt.getName();
-                    try {
-                        pt = Class.forName(
-                            "java.lang."
-                            + n.substring(0, 1).toUpperCase()
-                            + n.substring(1)
-                        );
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
+                    if (pt.equals(int.class)) {
+                        pt = Integer.class;
+                    } else {
+                        String n = pt.getName();
+                        try {
+                            pt = Class.forName(
+                                "java.lang."
+                                + n.substring(0, 1).toUpperCase()
+                                + n.substring(1)
+                            );
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }
                 
@@ -148,7 +152,7 @@ public class Search extends AbstractGenericView {
 
     /** {@inheritDoc} */
     @Override
-    protected ViewDescriptor createDescriptor() {
+    protected <T> ViewDescriptor createDescriptor(Class<T> clazz) {
         return configure(new Descriptor(new GenericComponent()));
     }
 }

@@ -19,9 +19,10 @@ package ch.elca.el4j.apps.refdb.gui.executors;
 import java.util.List;
 
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
-import ch.elca.el4j.apps.refdb.gui.brokers.ServiceBroker;
 import ch.elca.el4j.apps.refdb.gui.support.RefdbSchemas;
-import ch.elca.el4j.apps.refdb.service.ReferenceService;
+import ch.elca.el4j.services.gui.richclient.utils.Services;
+import ch.elca.el4j.services.persistence.generic.LazyRepositoryViewRegistry;
+import ch.elca.el4j.services.persistence.generic.dao.ConvenientGenericRepository;
 import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
 import ch.elca.el4j.services.richclient.components.executors.AbstractBeanDeleteExecutor;
 
@@ -49,8 +50,11 @@ public class KeywordDeleteExecutor
      */
     @Override
     protected void deleteBeans(List<KeywordDto> beans) {
-        ReferenceService referenceService = ServiceBroker.getReferenceService();
-        referenceService.removeKeywords(beans);
+        for (KeywordDto k : beans) {
+            Services.get(LazyRepositoryViewRegistry.class)
+                    .getFor(KeywordDto.class)
+                    .delete(k);
+        }
     }
 
     /**
@@ -58,12 +62,11 @@ public class KeywordDeleteExecutor
      */
     protected PrimaryKeyObject getBeanByKey(Object key) throws Exception {
         int intKey = ((Number) key).intValue();
-        ReferenceService referenceService 
-            = ServiceBroker.getReferenceService();
-        PrimaryKeyObject newBean 
-            = referenceService.getKeywordByKey(intKey);
-        return newBean;
-    }    
+
+        return ((ConvenientGenericRepository<KeywordDto, Integer>)
+            Services.get(LazyRepositoryViewRegistry.class)
+                    .getFor(KeywordDto.class)).findById(intKey, false);
+    } 
 
     /**
      * {@inheritDoc}

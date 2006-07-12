@@ -38,7 +38,7 @@ import org.springframework.beans.factory.InitializingBean;
  *
  * @author Adrian Moos (AMS)
  */
-public class SettableRepositoryRegistry<R extends GenericRepository<?, ?>> 
+public class SettableRepositoryRegistry<R extends SimpleGenericRepository<?>> 
     implements RepositoryRegistry, InitializingBean {
     
     /** The already created repositories. */
@@ -63,11 +63,15 @@ public class SettableRepositoryRegistry<R extends GenericRepository<?, ?>>
             register(rep);
         }
     }
+    
+    public void setRepos(R... reps) {
+        register(reps);
+    }
 
     /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
-    public <T> GenericRepository<T, ?> getFor(Class<T> entityType) {
-        return (GenericRepository<T, ?>) m_repositories.get(entityType);
+    public <T> SimpleGenericRepository<T> getFor(Class<T> entityType) {
+        return (SimpleGenericRepository<T>) m_repositories.get(entityType);
     }
 
     public void afterPropertiesSet() throws Exception {
@@ -76,7 +80,7 @@ public class SettableRepositoryRegistry<R extends GenericRepository<?, ?>>
             
             // TODO provide better BeanFactory illusion
             if (rep instanceof InitializingBean) {
-                ((InitializingBean)rep).afterPropertiesSet();
+                ((InitializingBean) rep).afterPropertiesSet();
             }
         }
     }
