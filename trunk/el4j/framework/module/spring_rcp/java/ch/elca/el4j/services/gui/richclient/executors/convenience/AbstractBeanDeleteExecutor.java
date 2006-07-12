@@ -70,7 +70,9 @@ public abstract class AbstractBeanDeleteExecutor<T extends PrimaryKeyObject>
     public boolean onFinishOrConfirm() {
         Object[] objects = getBeanPresenter().getSelectedBeans();
         Reject.ifNull(objects);
-        List<T> beans = (List<T>) Arrays.asList(objects);
+        
+        // two casts because the compiler is stubborn
+        List<T> beans = (List<T>) (List<?>) Arrays.asList(objects);
         
         setBeans(beans);
         deleteBeans(beans);
