@@ -6,7 +6,7 @@
         <attribute name="set" value="framework-modules"/>
         
         <!-- Binary release -->
-        <attribute name="binrelease.version" value="1.2-rc0"/>
+        <attribute name="binrelease.version" value="1.2-rc1"/>
         
         <!-- Module dependencies -->
         <dependency module="module-core" />

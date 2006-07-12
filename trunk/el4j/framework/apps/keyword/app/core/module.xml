@@ -17,7 +17,7 @@
         <attribute name="set" value="application-modules"/>
 
         <!-- Binary version -->
-        <attribute name="binrelease.version" value="2.1-rc0"/>
+        <attribute name="binrelease.version" value="2.1-rc1"/>
 
         <!-- Commons attributes are disabled, since they are not compatible
              with Java 1.5 -->
