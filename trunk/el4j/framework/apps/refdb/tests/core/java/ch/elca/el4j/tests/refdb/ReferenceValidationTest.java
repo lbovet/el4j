@@ -27,7 +27,7 @@ import ch.elca.el4j.apps.refdb.dto.ReferenceDto;
 
 /**
  * 
- * This test class tests the validation of a reference domain
+ * This test class tests custom validation of a reference domain
  * object.
  *
  * <script type="text/javascript">printFileStatus

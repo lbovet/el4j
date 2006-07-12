@@ -27,8 +27,8 @@ import org.hibernate.validator.ValidatorClass;
 
 /**
  * 
- * This annotation enables validation of the annotated bean using a validation
- * method defined by the bean.
+ * This annotation enables custom validation of the annotated bean using a
+ * validation method defined by the bean.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -41,10 +41,10 @@ import org.hibernate.validator.ValidatorClass;
  */
 
 @Documented
-@ValidatorClass(ValidateValidator.class)
+@ValidatorClass(CustomValidator.class)
 @Target(TYPE)
 @Retention(RUNTIME)
-public @interface Validate {
+public @interface CustomValidation {
    
     /**
      * The name of the validation method defined by the annotated bean. 

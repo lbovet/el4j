@@ -25,7 +25,7 @@ import java.util.Set;
 import org.hibernate.validator.NotNull;
 
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
-import ch.elca.el4j.services.persistence.hibernate.validation.Validate;
+import ch.elca.el4j.services.persistence.hibernate.validation.CustomValidation;
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
 /**
@@ -40,7 +40,7 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  *
  * @author Martin Zeltner (MZE)
  */
-@Validate()
+@CustomValidation()
 public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * Name of the reference (book title, ...).

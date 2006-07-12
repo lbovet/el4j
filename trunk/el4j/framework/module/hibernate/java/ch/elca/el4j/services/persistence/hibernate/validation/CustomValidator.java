@@ -27,8 +27,8 @@ import org.hibernate.validator.Validator;
 
 /**
  * 
- * This class validates a bean with the help of a validation method defined by
- * the bean.
+ * This class performs custom validation of a bean with the help of a validation
+ * method defined by the bean.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -39,13 +39,14 @@ import org.hibernate.validator.Validator;
  *
  * @author Alex Mathey (AMA)
  */
-public class ValidateValidator implements Validator<Validate>, Serializable {
+public class CustomValidator implements Validator<CustomValidation>,
+    Serializable {
     
     /**
      * Private logger.
      */
     private static Log s_logger 
-        = LogFactory.getLog(ValidateValidator.class);
+        = LogFactory.getLog(CustomValidator.class);
     
     /**
      * The validation method defined by the annotated bean.
@@ -55,7 +56,7 @@ public class ValidateValidator implements Validator<Validate>, Serializable {
     /**
      * {@inheritDoc}
      */
-    public void initialize(Validate parameters) {
+    public void initialize(CustomValidation parameters) {
         m_validationMethod = parameters.validationMethod();    
     }
     
