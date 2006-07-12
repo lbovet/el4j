@@ -20,7 +20,7 @@
                 classpath*:mandatory/*.xml,
                 classpath*:scenarios/db/raw/*.xml,
                 <!--  classpath*:scenarios/dataaccess/ibatis/*.xml, -->
-                classpath*:scenarios/dataaccess/hibernate/*.xml,
+				classpath*:scenarios/dataaccess/hibernate/*-repository-hibernate-config.xml,
                 classpath:optional/interception/transactionCommonsAttributes.xml,
                 classpath:scenarios/remoting/server/web/*.xml
             </param-value>
