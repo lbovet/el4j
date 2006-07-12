@@ -18,6 +18,7 @@ package ch.elca.el4j.apps.keyword.repository.impl.hibernate;
 
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
 import ch.elca.el4j.apps.keyword.repository.KeywordRepositoryRegistry;
+import ch.elca.el4j.services.persistence.dao.GenericHibernateRepository;
 import ch.elca.el4j.services.persistence.dao.HibernateRepositoryRegistry;
 
 /**
@@ -49,7 +50,10 @@ public class HibernateKeywordRepositoryRegistry
     /**
      * Returns the keyword repository.
      */
+    @SuppressWarnings("unchecked")
     public HibernateKeywordRepository getForKeyword() {
-        return (HibernateKeywordRepository) getFor(KeywordDto.class);
+        return (HibernateKeywordRepository) 
+            (GenericHibernateRepository<KeywordDto, Integer>)
+            getFor(KeywordDto.class);
     }
 }
