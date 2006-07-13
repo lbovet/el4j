@@ -16,25 +16,7 @@
  */
 package ch.elca.el4j.services.persistence.generic;
 
-import ch.elca.el4j.services.persistence.generic.dao.SimpleGenericRepository;
-
-
-/**
- * A local, lazily updated view to the repository that notifies observers of 
- * updates.
- * 
- * @param <T> The type of entities accessible through this view.
- * 
- *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
- *
- * @author Adrian Moos (AMS)
- */
-public interface LazyRepositoryView<T> extends SimpleGenericRepository<T> {
-    
+public interface RepositoryChangeListener {
+    /** Processes the change notification {@code change}. */
+    void process(RepositoryChangeNotifier.Change change);
 }

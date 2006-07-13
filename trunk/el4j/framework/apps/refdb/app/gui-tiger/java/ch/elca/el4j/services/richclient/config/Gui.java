@@ -24,7 +24,7 @@ import org.springframework.context.ApplicationContextAware;
 import ch.elca.el4j.apps.lightrefdb.dom.Keyword;
 import ch.elca.el4j.apps.lightrefdb.dom.Reference;
 import ch.elca.el4j.services.gui.richclient.utils.Services;
-import ch.elca.el4j.services.persistence.generic.LazyRepositoryViewRegistry;
+import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcherRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.SimpleGenericRepository;
 import ch.elca.el4j.services.richclient.context.AwakingContext;
 import ch.elca.el4j.util.collections.ExtendedWritableList;
@@ -94,7 +94,7 @@ public abstract class Gui implements InitializingBean, ApplicationContextAware {
     /** place to put tests during testing. */
     void test() {
         SimpleGenericRepository<Reference> refrepo
-            = Services.get(LazyRepositoryViewRegistry.class)
+            = Services.get(LazyRepositoryWatcherRegistry.class)
                       .getFor(Reference.class);
 
         if (refrepo.findAll().size() == 0) {
@@ -105,7 +105,7 @@ public abstract class Gui implements InitializingBean, ApplicationContextAware {
         }
 
         SimpleGenericRepository<Keyword> kwrepo
-        = Services.get(LazyRepositoryViewRegistry.class)
+        = Services.get(LazyRepositoryWatcherRegistry.class)
               .getFor(Keyword.class);
         
         if (kwrepo.findAll().size() == 0) {

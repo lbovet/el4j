@@ -120,7 +120,9 @@
     </bean>
     
     <bean id="refreshCommand"
-    	class="ch.elca.el4j.services.gui.richclient.commands.RefreshCommand"/>
+    	class="ch.elca.el4j.services.gui.richclient.commands.RepositoryRefreshCommand">
+    	<constructor-arg><ref bean="repoWatcherRegistry"/></constructor-arg>
+  	</bean>
     
     <bean id="helpContentsCommand" 
         class="org.springframework.richclient.command.support.HelpContentsCommand"/>

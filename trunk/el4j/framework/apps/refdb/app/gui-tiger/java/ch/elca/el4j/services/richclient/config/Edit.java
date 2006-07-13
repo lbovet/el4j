@@ -24,18 +24,14 @@ import org.springframework.binding.form.support.DefaultFieldMetadata;
 import org.springframework.richclient.application.ViewDescriptor;
 import org.springframework.richclient.dialog.DialogPage;
 
-import ch.elca.el4j.apps.keyword.dto.KeywordDto;
 import ch.elca.el4j.apps.lightrefdb.dom.Keyword;
-import ch.elca.el4j.apps.refdb.dto.ReferenceDto;
-import ch.elca.el4j.apps.refdb.service.ReferenceService;
 import ch.elca.el4j.services.dom.info.Property;
 import ch.elca.el4j.services.gui.richclient.executors.convenience.AbstractBeanPropertiesExecutor;
 import ch.elca.el4j.services.gui.richclient.executors.displayable.ExecutorDisplayable;
 import ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm;
 import ch.elca.el4j.services.gui.richclient.utils.Services;
 import ch.elca.el4j.services.gui.richclient.views.DialogPageView;
-import ch.elca.el4j.services.persistence.generic.LazyRepositoryView;
-import ch.elca.el4j.services.persistence.generic.LazyRepositoryViewRegistry;
+import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcherRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.ConvenientGenericRepository;
 import ch.elca.el4j.services.persistence.generic.dao.SimpleGenericRepository;
 import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
@@ -241,7 +237,6 @@ public class Edit extends AbstractGenericView {
         /**
          * {@inheritDoc}
          */
-        
         @Override
         public void dispose() {
             current.unsubscribe(this);
@@ -289,12 +284,12 @@ public class Edit extends AbstractGenericView {
         
         GenericComponent gc = new GenericComponent(); //configure(new DialogPageViewDescriptor());
         Executor<T> exec = new Executor<T>(); 
-        exec.m_repository = Services.get(LazyRepositoryViewRegistry.class)
+        exec.m_repository = Services.get(LazyRepositoryWatcherRegistry.class)
                                     .getFor(clazz);
         exec.setBeanPropertiesForms(new BeanPropertiesForm[] {form});
         exec.setDisplayable(gc);
         m_awaker.awaken(exec);
-        m_executor=exec;
+        m_executor = exec;
         
         return configure(new Descriptor(gc));
     }

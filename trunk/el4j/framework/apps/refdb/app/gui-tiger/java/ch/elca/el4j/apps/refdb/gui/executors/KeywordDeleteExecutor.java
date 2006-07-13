@@ -21,7 +21,7 @@ import java.util.List;
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
 import ch.elca.el4j.apps.refdb.gui.support.RefdbSchemas;
 import ch.elca.el4j.services.gui.richclient.utils.Services;
-import ch.elca.el4j.services.persistence.generic.LazyRepositoryViewRegistry;
+import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcherRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.ConvenientGenericRepository;
 import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
 import ch.elca.el4j.services.richclient.components.executors.AbstractBeanDeleteExecutor;
@@ -51,7 +51,7 @@ public class KeywordDeleteExecutor
     @Override
     protected void deleteBeans(List<KeywordDto> beans) {
         for (KeywordDto k : beans) {
-            Services.get(LazyRepositoryViewRegistry.class)
+            Services.get(LazyRepositoryWatcherRegistry.class)
                     .getFor(KeywordDto.class)
                     .delete(k);
         }
@@ -64,7 +64,7 @@ public class KeywordDeleteExecutor
         int intKey = ((Number) key).intValue();
 
         return ((ConvenientGenericRepository<KeywordDto, Integer>)
-            Services.get(LazyRepositoryViewRegistry.class)
+            Services.get(LazyRepositoryWatcherRegistry.class)
                     .getFor(KeywordDto.class)).findById(intKey, false);
     } 
 

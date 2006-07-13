@@ -16,12 +16,17 @@
  */
 package ch.elca.el4j.services.persistence.generic;
 
-import ch.elca.el4j.services.persistence.generic.dao.RepositoryRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.SimpleGenericRepository;
-import ch.elca.el4j.services.persistence.generic.dao.WrappingRepositoryRegistry;
+
 
 /**
- * Wraps a repository registry's repositories with {@link LazyRepositoryView}.
+ * Instances intercept access to the repository and broadcast concurrent 
+ * changes discovered during such accesses to all registered observers, thereby
+ * providing them with consistent information.
+ * 
+ * <p> The view communicated need not be current.
+ * 
+ * @param <T> The type of entities accessible through this view.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -32,22 +37,14 @@ import ch.elca.el4j.services.persistence.generic.dao.WrappingRepositoryRegistry;
  *
  * @author Adrian Moos (AMS)
  */
-public class DefaultLazyRepositoryViewRegistry 
-        extends WrappingRepositoryRegistry
-     implements LazyRepositoryViewRegistry {
-
+public interface LazyRepositoryWatcher<T> extends SimpleGenericRepository<T>,
+                                                  RepositoryChangeNotifier { 
+    
     /**
-     * Constructor.
-     * @param backing the backing registry.
+     * Announces {@code change} to all subscribed observers if it is responsible
+     * for announcing this change notification, does nothing otherwise.
+     * 
+     * <P>This implementation always considers itself responsible. 
      */
-    public DefaultLazyRepositoryViewRegistry(RepositoryRegistry backing) {
-        super(backing);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected <T> 
-    SimpleGenericRepository<T> wrap(SimpleGenericRepository<T> repo) {
-        return new DefaultLazyRepositoryView<T>(repo);
-    }
+    void announceIfResponsible(Change change);
 }

@@ -14,23 +14,25 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.services.persistence.generic;
+package ch.elca.el4j.services.persistence.generic.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
+import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcher;
 import ch.elca.el4j.services.persistence.generic.dao.SimpleGenericRepository;
 import ch.elca.el4j.services.search.QueryObject;
 
-public class DefaultLazyRepositoryView<T> implements LazyRepositoryView<T> {
-    SimpleGenericRepository<T> m_backing;
-    RepositoryListener<T> m_listener;
+public class DefaultLazyRepositoryWatcher<T> 
+     extends DefaultRepositoryChangeNotifier
+     implements LazyRepositoryWatcher<T> {
     
-    public DefaultLazyRepositoryView(SimpleGenericRepository<T> backing) {
+    SimpleGenericRepository<T> m_backing;
+    
+    public DefaultLazyRepositoryWatcher(SimpleGenericRepository<T> backing) {
         m_backing = backing;
     }
     
@@ -38,6 +40,10 @@ public class DefaultLazyRepositoryView<T> implements LazyRepositoryView<T> {
     public void delete(T entity) throws DataAccessException {
         try {
             m_backing.delete(entity);
+            
+            EntityDeletion ed = new EntityDeletion();
+            ed.changee = entity;
+            announce(ed);
         } catch (OptimisticLockingFailureException e) {
             refresh(entity);
             throw e;
@@ -45,10 +51,12 @@ public class DefaultLazyRepositoryView<T> implements LazyRepositoryView<T> {
     }
 
     public List<T> findAll() throws DataAccessException {
+        // TODO
         return m_backing.findAll();
     }
 
     public List<T> findByQuery(QueryObject q) throws DataAccessException {
+        // TODO
         return m_backing.findByQuery(q);
     }
 
@@ -56,19 +64,49 @@ public class DefaultLazyRepositoryView<T> implements LazyRepositoryView<T> {
         return m_backing.getPersistentClass();
     }
 
-    public T saveOrUpdate(T entity) throws DataAccessException, DataIntegrityViolationException, OptimisticLockingFailureException {
+    /** {@inheritDoc} */
+    public T saveOrUpdate(T entity) throws DataAccessException,
+                                           DataIntegrityViolationException, 
+                                           OptimisticLockingFailureException {
         try {
             m_backing.saveOrUpdate(entity);
+            return entity;
         } catch (OptimisticLockingFailureException e) {
             refresh(entity);
             throw e;            
         }
-        return null;
     }
 
     public void refresh(T entity) {
-        List<T> ce = new ArrayList<T>();
-        ce.add(entity);
-        //m_listener.changed(ce);
+        m_backing.refresh(entity);
+        // TODO fire nested change notifications
+        
+        EntityChange ec = new EntityChange();
+        ec.changee = entity;
+        announce(ec);
+    }
+    
+    /** 
+     * Returns true iff this notifier is responsible for announcing {@code 
+     * change}.
+     */
+    private boolean isResponsibleFor(Change change) {
+        if (change instanceof EntityChange) {
+            return m_backing.getPersistentClass().isInstance(
+                ((EntityChange) change).changee
+            );
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Announces {@code change} if this notifier is responsible for announcing 
+     * it. 
+     */
+    public void announceIfResponsible(Change change) {
+        if (isResponsibleFor(change)) {
+            super.announce(change);
+        }
     }
 }

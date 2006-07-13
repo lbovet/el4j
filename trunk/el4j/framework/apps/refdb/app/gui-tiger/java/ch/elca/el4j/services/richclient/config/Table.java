@@ -28,7 +28,7 @@ import ch.elca.el4j.services.gui.richclient.executors.SelectAllBeanExecutor;
 import ch.elca.el4j.services.gui.richclient.models.BeanTableModel;
 import ch.elca.el4j.services.gui.richclient.utils.Services;
 import ch.elca.el4j.services.gui.richclient.views.AbstractBeanTableView;
-import ch.elca.el4j.services.persistence.generic.LazyRepositoryViewRegistry;
+import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcherRegistry;
 import ch.elca.el4j.services.richclient.naming.Naming;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.Reject;
@@ -149,7 +149,7 @@ public class Table extends AbstractGenericView {
             Reject.ifNull(q);
             if (isControlCreated()) {
                 setBeans(
-                    Services.get(LazyRepositoryViewRegistry.class)
+                    Services.get(LazyRepositoryWatcherRegistry.class)
                             .getFor(m_type.clazz)
                             .findAll()
                 );

@@ -16,8 +16,11 @@
  */
 package ch.elca.el4j.services.persistence.generic;
 
+import java.util.Collection;
+
 import ch.elca.el4j.services.persistence.generic.dao.RepositoryRegistry;
 
-public interface LazyRepositoryViewRegistry extends RepositoryRegistry {
-
+public interface LazyRepositoryWatcherRegistry 
+         extends RepositoryRegistry,
+                 RepositoryChangeListener {    
 }
