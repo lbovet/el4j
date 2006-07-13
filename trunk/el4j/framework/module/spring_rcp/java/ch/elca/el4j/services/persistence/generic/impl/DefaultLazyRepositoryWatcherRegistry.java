@@ -16,19 +16,17 @@
  */
 package ch.elca.el4j.services.persistence.generic.impl;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcherRegistry;
 import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcher;
+import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcherRegistry;
 import ch.elca.el4j.services.persistence.generic.RepositoryChangeNotifier.Change;
-import ch.elca.el4j.services.persistence.generic.RepositoryChangeNotifier.EntityChange;
 import ch.elca.el4j.services.persistence.generic.dao.RepositoryRegistry;
-import ch.elca.el4j.services.persistence.generic.dao.SimpleGenericRepository;
 
 /**
- * Wraps a repository registry's repositories with {@link LazyRepositoryWatcher}.
+ * Wraps a repository registry's repositories with 
+ * {@link LazyRepositoryWatcher}.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",

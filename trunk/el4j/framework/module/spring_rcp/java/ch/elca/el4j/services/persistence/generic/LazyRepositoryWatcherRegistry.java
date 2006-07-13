@@ -16,10 +16,21 @@
  */
 package ch.elca.el4j.services.persistence.generic;
 
-import java.util.Collection;
-
 import ch.elca.el4j.services.persistence.generic.dao.RepositoryRegistry;
 
+/**
+ * A registry for {@link LazyRepositoryWatcher}s relaying change notifications
+ * to the approapriate notifiers.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Adrian Moos (AMS)
+ */
 public interface LazyRepositoryWatcherRegistry 
          extends RepositoryRegistry,
                  RepositoryChangeListener {    

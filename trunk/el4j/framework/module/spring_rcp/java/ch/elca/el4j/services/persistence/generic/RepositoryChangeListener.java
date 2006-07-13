@@ -16,6 +16,19 @@
  */
 package ch.elca.el4j.services.persistence.generic;
 
+/**
+ * This object receives change notifications from repository change notifiers.
+ * 
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Adrian Moos (AMS)
+ * @see RepositoryChangeNotifier
+ */
 public interface RepositoryChangeListener {
     /** Processes the change notification {@code change}. */
     void process(RepositoryChangeNotifier.Change change);

@@ -24,7 +24,8 @@ import ch.elca.el4j.services.persistence.generic.dao.SimpleGenericRepository;
  * changes discovered during such accesses to all registered observers, thereby
  * providing them with consistent information.
  * 
- * <p> The view communicated need not be current.
+ * <p> The notfications need not reflect the current state of the database,
+ * though they'll strive to be as current as possible.
  * 
  * @param <T> The type of entities accessible through this view.
  *
@@ -41,10 +42,8 @@ public interface LazyRepositoryWatcher<T> extends SimpleGenericRepository<T>,
                                                   RepositoryChangeNotifier { 
     
     /**
-     * Announces {@code change} to all subscribed observers if it is responsible
-     * for announcing this change notification, does nothing otherwise.
-     * 
-     * <P>This implementation always considers itself responsible. 
+     * Announces {@code change} if this watcher is responsible
+     * for announcing it, otherwise it simply returns.
      */
     void announceIfResponsible(Change change);
 }

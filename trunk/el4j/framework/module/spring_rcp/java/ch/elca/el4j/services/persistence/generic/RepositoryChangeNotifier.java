@@ -31,6 +31,9 @@ package ch.elca.el4j.services.persistence.generic;
  * @author Adrian Moos (AMS)
  */
 public interface RepositoryChangeNotifier {
+    /** A fuzzy change object so callers do not have to construct their own. */
+    public static final Change FUZZY_CHANGE = new Change();
+
     /**
      * Sent if something in this repository view may have changed.
      **/
@@ -40,6 +43,7 @@ public interface RepositoryChangeNotifier {
      * Something about {@link #changee} may have changed. 
      */
     public static class EntityChange extends Change {
+        /** See class documentation. */
         public Object changee;
     }
     
@@ -70,7 +74,5 @@ public interface RepositoryChangeNotifier {
     /**
      * Announces {@code change} to all subscribed observers.
      **/
-    public void announce(Change change);
-    
-    public static final Change FUZZY_CHANGE = new Change();
+    public void announce(Change change);    
 }

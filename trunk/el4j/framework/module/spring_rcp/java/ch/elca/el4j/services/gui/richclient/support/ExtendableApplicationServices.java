@@ -25,8 +25,6 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.richclient.application.support.DefaultApplicationServices;
 
-import ch.elca.el4j.services.gui.richclient.utils.Services;
-
 public class ExtendableApplicationServices extends DefaultApplicationServices 
                                         implements InitializingBean {
     
