@@ -35,22 +35,20 @@ import org.hibernate.id.TableHiLoGenerator;
  *
  * @author Adrian Moos (AMS)
  */
-// TODO: verify safetly of identity and sequence generation strategy.
+// TODO: verify safety of identity and sequence generation strategy.
 // mail to hibernate mailing list currently pending.
 public class PatchedDerbyDialect extends DerbyDialect {
 
     /** {@inheritDoc} */
     @Override
     public Class getNativeIdentifierGeneratorClass() {
-        if ( supportsIdentityColumns() ) {
+        if (supportsIdentityColumns()) {
             return IdentityGenerator.class;
-        }
-        else if ( supportsSequences() ) {
+        } else if (supportsSequences()) {
             return SequenceGenerator.class;
-        }
-        else {
+        } else {
             return TableHiLoGenerator.class;
-        }        
+        }
     }
     
 }

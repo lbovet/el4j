@@ -38,7 +38,7 @@
 
 				<!-- Database-specific Hibernate dialect. -->
 				<prop key="hibernate.dialect">
-					org.hibernate.dialect.Oracle9Dialect
+					${databaseDialect}
 				</prop>
 
 				<!--
