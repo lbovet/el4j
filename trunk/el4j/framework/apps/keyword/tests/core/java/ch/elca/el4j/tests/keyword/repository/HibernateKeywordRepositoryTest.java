@@ -49,7 +49,7 @@ public class HibernateKeywordRepositoryTest
      */
     protected String[] getExcludeConfigLocations() {
         return new String[] {
-            "classpath*:scenarios/dataaccess/hibernate/keyword-core-hibernate-config.xml"
+            "classpath*:scenarios/dataaccess/hibernate/keyword-core-dao-hibernate-config.xml"
         };
     }
     

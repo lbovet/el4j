@@ -14,12 +14,12 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.tests.refdb;
+package ch.elca.el4j.tests.refdb.dao;
+
 
 /**
  * 
- * Test case for <code>DefaultReferenceService</code> using Hibernate
- * as ORM framework.
+ * Test case for <code>HibernateReferenceDao</code>.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -30,8 +30,7 @@ package ch.elca.el4j.tests.refdb;
  *
  * @author Alex Mathey (AMA)
  */
-public class HibernateReferenceServiceTest extends
-    AbstractReferenceServiceTest {
+public class HibernateReferenceDaoTest extends AbstractReferenceDaoTest {
 
     /**
      * {@inheritDoc}
@@ -53,5 +52,5 @@ public class HibernateReferenceServiceTest extends
             "classpath*:scenarios/dataaccess/hibernate/keyword-core-repository-hibernate-config.xml"
         };
     }
-     
+
 }

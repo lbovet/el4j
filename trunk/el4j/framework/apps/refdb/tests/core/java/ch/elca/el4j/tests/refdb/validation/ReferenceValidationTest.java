@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.tests.refdb;
+package ch.elca.el4j.tests.refdb.validation;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -24,6 +24,8 @@ import org.hibernate.validator.ClassValidator;
 import org.hibernate.validator.InvalidValue;
 
 import ch.elca.el4j.apps.refdb.dto.ReferenceDto;
+
+import junit.framework.TestCase;
 
 /**
  * 
@@ -39,7 +41,7 @@ import ch.elca.el4j.apps.refdb.dto.ReferenceDto;
  *
  * @author Alex Mathey (AMA)
  */
-public class ReferenceValidationTest extends AbstractTestCaseBase {
+public class ReferenceValidationTest extends TestCase {
 
     /**
      * This test creates a reference which has a document date which is a later
@@ -71,8 +73,7 @@ public class ReferenceValidationTest extends AbstractTestCaseBase {
     protected String[] getIncludeConfigLocations() {
         return new String[] {
             "classpath:optional/interception/methodTracing.xml",
-            "classpath*:mandatory/*.xml",
-            "classpath*:scenarios/db/raw/*.xml"};
+            "classpath*:mandatory/*.xml"};
     }
     
     /**

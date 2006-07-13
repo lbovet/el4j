@@ -14,12 +14,12 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.tests.refdb;
+package ch.elca.el4j.tests.refdb.dao;
+
 
 /**
  * 
- * Test case for <code>DefaultReferenceService</code> using iBatis
- * as ORM framework.
+ * Test case for <code>SqlMapReferenceDao</code>.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -30,7 +30,7 @@ package ch.elca.el4j.tests.refdb;
  *
  * @author Alex Mathey (AMA)
  */
-public class SqlMapsReferenceServiceTest extends AbstractReferenceServiceTest {
+public class SqlMapsReferenceDaoTest extends AbstractReferenceDaoTest {
 
     /**
      * {@inheritDoc}

@@ -8,13 +8,6 @@
     <!-- $Date$ -->
     <!-- $Author$ -->
 
-    <!--  <bean id="referenceService" 
-        class="ch.elca.el4j.apps.refdb.service.impl.DefaultReferenceService">
-        <property name="referenceDao">
-            <ref local="referenceDao"/>
-        </property>
-    </bean> -->
-    
     <bean id="referenceService"
         class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
         <property name="transactionManager">

@@ -8,8 +8,6 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
     
-    <import resource="classpath:scenarios/db/rawDatabase.xml"/>
-
     <bean id="commonDatabaseDbRawOverrideConfigurer"
         class="ch.elca.el4j.core.config.RefreshPropertyOverrideConfigurer"
         singleton="false">
