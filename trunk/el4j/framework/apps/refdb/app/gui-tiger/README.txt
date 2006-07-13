@@ -39,6 +39,6 @@ It is nearly an industry standard to specify configuration in XML. We chose to u
 Maturity (or lack thereof ;) )
 ------------------------------
 
-To accelerate the construction of this prototype, we have concentrated on the configuration interface. To present a working prototype, backing support is simulated using the refdb's persistence logic. This dependency will be removed at a later time. 
+To accelerate the construction of this prototype, we have concentrated on the configuration interface. In particular, remoting the repository is currently broken.
 
 We have yet to provide the full capabilities of refdb; the impossibility to create/delete entities is particularly annoying.
