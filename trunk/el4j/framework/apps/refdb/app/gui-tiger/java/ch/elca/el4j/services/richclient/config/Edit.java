@@ -24,7 +24,6 @@ import org.springframework.binding.form.support.DefaultFieldMetadata;
 import org.springframework.richclient.application.ViewDescriptor;
 import org.springframework.richclient.dialog.DialogPage;
 
-import ch.elca.el4j.apps.lightrefdb.dom.Keyword;
 import ch.elca.el4j.services.dom.info.Property;
 import ch.elca.el4j.services.gui.richclient.executors.convenience.AbstractBeanPropertiesExecutor;
 import ch.elca.el4j.services.gui.richclient.executors.displayable.ExecutorDisplayable;
@@ -70,7 +69,7 @@ public class Edit extends AbstractGenericView {
     /** the backing executor. */
     Executor m_executor;
     
-    /** the list of visible properties */
+    /** the list of visible properties. */
     ExtendedList<EditableProperty> m_visible;
 
     /**
@@ -90,9 +89,7 @@ public class Edit extends AbstractGenericView {
         // persistence logic
         ///////////////////////
         
-        // Kludge to account for non-generic persistence
-        boolean isKeyword;
-        
+        /** The repository to be used. */
         SimpleGenericRepository<T> m_repository;
 
         /**
@@ -101,7 +98,7 @@ public class Edit extends AbstractGenericView {
         @SuppressWarnings("unchecked")
         @Override
         protected PrimaryKeyObject saveBean(PrimaryKeyObject givenBean) {
-            return (PrimaryKeyObject)m_repository.saveOrUpdate((T) givenBean);
+            return (PrimaryKeyObject) m_repository.saveOrUpdate((T) givenBean);
         }
 
         /**
@@ -110,7 +107,7 @@ public class Edit extends AbstractGenericView {
         @Override
         protected PrimaryKeyObject getBeanByKey(Object key) throws Exception {
             return (PrimaryKeyObject) 
-                ((ConvenientGenericRepository<T, Integer>)m_repository)
+                ((ConvenientGenericRepository<T, Integer>) m_repository)
                     .findById((Integer) key, false);
         }
         
@@ -146,7 +143,7 @@ public class Edit extends AbstractGenericView {
                 Object exampleBean = bean;
                 if (exampleBean == null) {
                     try {
-                        exampleBean = m_type.clazz.newInstance(); //isKeyword ? new KeywordDto() : new ReferenceDto();
+                        exampleBean = m_type.clazz.newInstance();
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -174,7 +171,6 @@ public class Edit extends AbstractGenericView {
 
         Executor() {
             setId(m_type.name + "Properties");
-            isKeyword = m_type.clazz.equals(Keyword.class);
         }
 
         
@@ -201,7 +197,8 @@ public class Edit extends AbstractGenericView {
                 // HACK: Implementation dependent downcast.
                 //       The public api does not permit to set user metadata.
                 DefaultFieldMetadata metadata 
-                    = ((DefaultFieldMetadata) fm.getFieldMetadata(ep.prop.name));
+                    = ((DefaultFieldMetadata) 
+                        fm.getFieldMetadata(ep.prop.name));
                 metadata.setUserMetadata(
                     AbstractGenericView.class.getName(),
                     Edit.this
@@ -215,7 +212,8 @@ public class Edit extends AbstractGenericView {
     }
 
     /***/
-    class GenericComponent extends DialogPageView implements ValueObserver<Object> {
+    class GenericComponent extends DialogPageView 
+                        implements ValueObserver<Object> {
         /**
          * {@inheritDoc}
          */
@@ -282,7 +280,7 @@ public class Edit extends AbstractGenericView {
         form.setReadOnlyBeanProperties(properties.getReadonly());
         m_awaker.awaken(form);
         
-        GenericComponent gc = new GenericComponent(); //configure(new DialogPageViewDescriptor());
+        GenericComponent gc = new GenericComponent();
         Executor<T> exec = new Executor<T>(); 
         exec.m_repository = Services.get(LazyRepositoryWatcherRegistry.class)
                                     .getFor(clazz);

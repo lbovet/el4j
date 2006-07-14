@@ -52,6 +52,7 @@ import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimistic
     "keywords"
 })
 public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
+    /** This reference's name. */
     private String name;
     
     /** This reference's unique identifier; an ISBN for instance. */
@@ -63,18 +64,19 @@ public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
      */
     private String description;
     
+    /** This reference's version. */
     private String version;
     
     /** Is only part of this reference available? */
     private boolean incomplete;
     
-    /** the time this reference was entered into the database */
+    /** The time this reference was entered into the database. */
     private Timestamp whenInserted;
     
     /** When was this reference last changed? */
     private Date date;
     
-    /** the keyword(s) that apply to this reference */
+    /** the keyword(s) that apply to this reference. */
     private Set<Keyword> keywords;
     
     /**
@@ -95,36 +97,50 @@ public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
      */
     private Set<FileDescriptorView> m_fileDescriptorViews;
 
+    /***/
     public String getName() { return name; }
+    /***/
     public void setName(String name) { this.name = name; }
 
+    /***/
     public String getHashValue() { return hashValue; }
+    /***/
     public void setHashValue(String hashValue) { this.hashValue = hashValue; }
 
+    /***/
     public String getDescription() { return description; }
+    /***/
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /***/
     public String getVersion() { return version; }
+    /***/
     public void setVersion(String version) { this.version = version; }
 
+    /***/
     public boolean isIncomplete() { return incomplete; }
+    /***/
     public void setIncomplete(boolean incomplete) {
         this.incomplete = incomplete;
     }
 
+    /***/
     public Timestamp getWhenInserted() {         
         if (whenInserted == null) {
             whenInserted = new Timestamp(System.currentTimeMillis());
         }
         return whenInserted;
     }
+    /***/
     public void setWhenInserted(Timestamp whenInserted) {
         this.whenInserted = whenInserted;
     }
 
+    /***/
     public Date getDate() { return date; }
+    /***/
     public void setDate(Date date) { 
         if (date != null) {
             Calendar c = Calendar.getInstance();
@@ -141,22 +157,30 @@ public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
         }
     }
 
+    /***/
     public Set<Keyword> getKeywords() { return keywords; }
+    /***/
     public void setKeywords(Set<Keyword> keywords) { this.keywords = keywords; }
     
+    /***/
     public Set<AnnotationDto> getAnnotations() { return m_annotations; }
+    /***/
     public void setAnnotations(Set<AnnotationDto> annotations) {
         m_annotations = annotations;
     }
     
+    /***/
     public Set<FileDescriptorView> getFileDescriptorViews() {
         return m_fileDescriptorViews;
     }
+    /***/
     public 
     void setFileDescriptorViews(Set<FileDescriptorView> fileDescriptorViews) {
         m_fileDescriptorViews = fileDescriptorViews;
     }
 
+    /***/
     public Set<FileDto> getFiles() { return m_files; }
+    /***/
     public void setFiles(Set<FileDto> files) { m_files = files; }
 }

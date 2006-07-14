@@ -28,18 +28,34 @@ import ch.elca.el4j.util.codingsupport.Reject;
 import ch.elca.el4j.util.registy.Registry;
 import ch.elca.el4j.util.registy.impl.StringMapBackedRegistry;
 
+/**
+ * Resolves field faces using the schema configured in the containing view.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Adrian Moos (AMS)
+ */
 public class SimpleFieldFaceSource extends MessageSourceFieldFaceSource {
-    private SimpleFieldFaceSource() { }
-    
-    /** The single instance. */
+    /** The default instance. */
     private static SimpleFieldFaceSource s_instance 
         = new SimpleFieldFaceSource();
     
+    /** Constructor for subclasses. */
+    protected SimpleFieldFaceSource() { }
+
+    /** Returns the default instance. */
     public static SimpleFieldFaceSource instance() { return s_instance; }
     
+    /** Sets the default instance. */
     public static void setInstance(SimpleFieldFaceSource instance) {
         s_instance = instance;
     }
+    
     
     /** {@inheritDoc} */
     @Override @SuppressWarnings("unchecked")
@@ -64,6 +80,4 @@ public class SimpleFieldFaceSource extends MessageSourceFieldFaceSource {
             faceDescriptorProperty
         );
     }
-    
-    
 }

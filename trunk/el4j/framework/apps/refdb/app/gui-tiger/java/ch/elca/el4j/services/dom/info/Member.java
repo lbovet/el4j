@@ -44,6 +44,7 @@ public abstract class Member {
     /** this member's name. */
     public final String name;
     
+    /***/
     Member(EntityType declaring, String n) {
         declaringType = declaring;
         name = n;

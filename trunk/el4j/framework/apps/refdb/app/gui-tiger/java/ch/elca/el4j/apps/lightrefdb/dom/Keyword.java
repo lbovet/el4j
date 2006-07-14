@@ -37,6 +37,7 @@ import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimistic
     "description"
 })
 public class Keyword extends AbstractIntKeyIntOptimisticLockingDto {
+    /** This keyword's name. */
     private String name;    
     
     /** 
@@ -44,9 +45,15 @@ public class Keyword extends AbstractIntKeyIntOptimisticLockingDto {
      */
     private String description;
 
+    /***/
     public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    /***/
+    public void setDescription(String description) { 
+        this.description = description; 
+    }
 
+    /***/
     public String getName() { return name; }
+    /***/
     public void setName(String name) { this.name = name; }
 }

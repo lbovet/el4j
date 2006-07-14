@@ -64,7 +64,7 @@ public class Window {
         for (Page p : pages) {
             p.init(awaker);
         }
-        if (currentPage==null) {
+        if (currentPage == null) {
             currentPage = new SettableObservableValue<Page>(pages.get(0));
         }
 
@@ -76,7 +76,7 @@ public class Window {
     
     /***/
     class GenericWindow extends MultipleViewsApplicationWindow {
-        /** keeps the displayed page up to date */
+        /** keeps the displayed page up to date. */
         ValueObserver<Page> m_currentPageObserver
             = new ValueObserver<Page>() {
                 /** update the displayed page */
@@ -84,7 +84,7 @@ public class Window {
                 // e.g. what if window closed?
                 @Preliminary
                 public void changed(Page newPage) {
-                    if (newPage!=null) {
+                    if (newPage != null) {
                         showPage(newPage.name);  
                     } else {
                         if (isControlCreated()) {

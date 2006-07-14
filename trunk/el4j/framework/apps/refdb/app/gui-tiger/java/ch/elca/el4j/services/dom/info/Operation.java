@@ -31,6 +31,11 @@ import java.lang.reflect.Method;
  * @author Adrian Moos (AMS)
  */
 public class Operation extends Member {
+    /**
+     * Constructor.
+     * @param declaring the declaring type.
+     * @param m the implementing method.
+     */
     Operation(EntityType declaring, Method m) {
         super(
             declaring,

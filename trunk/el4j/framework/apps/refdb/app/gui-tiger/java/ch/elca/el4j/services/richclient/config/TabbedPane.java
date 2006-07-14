@@ -32,12 +32,13 @@ public class TabbedPane extends AbstractComponent {
     ExtendedWritableList<AbstractComponent> components 
         = new ExtendedArrayList<AbstractComponent>();
     
-    
+    /** {@inheritDoc} */
     @Override
     void init(AwakingContext context) {
         Reject.ifEmpty(components);
     }
 
+    /** {@inheritDoc} */
     @Override
     PageComponentDescriptor getDescriptor(AwakingContext awaker) {
         // TODO Auto-generated method stub

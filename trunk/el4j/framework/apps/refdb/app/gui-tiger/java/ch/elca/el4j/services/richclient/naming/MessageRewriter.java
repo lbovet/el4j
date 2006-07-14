@@ -247,7 +247,7 @@ public class MessageRewriter {
     }
     
     /** Represents a rewriting rule having a textual representation. */
-    static class TextRule implements Rule {
+    static final class TextRule implements Rule {
         /** The message format performing the rewrite.
          * 
          * <p>The argument array
@@ -643,8 +643,10 @@ public class MessageRewriter {
      * thrown to indicate that there is no matching rule for the requested key.
      **/
     static class NoDefinitionException extends NoSuchMessageException {
+        /***/
         String m_key;
         
+        /***/
         public NoDefinitionException(String key) {
             super(key);
             m_key = key;

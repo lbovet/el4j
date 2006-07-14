@@ -18,6 +18,18 @@ package ch.elca.el4j.apps.keyword.repository;
 
 import ch.elca.el4j.services.persistence.generic.dao.RepositoryRegistry;
 
+/**
+ * A repository registry for the keyword application.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Adrian Moos (AMS)
+ */
 public interface KeywordRepositoryRegistry extends RepositoryRegistry {
     /**
      * Returns the keyword repository.

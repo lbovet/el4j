@@ -20,13 +20,15 @@ import ch.elca.el4j.services.gui.richclient.executors.displayable.ExecutorDispla
 import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
 import ch.elca.el4j.services.richclient.components.dialogs.BeanConfirmationDialog;
 
-public abstract class AbstractBeanDeleteExecutor<T extends PrimaryKeyObject> extends
-    ch.elca.el4j.services.gui.richclient.executors.convenience.AbstractBeanDeleteExecutor<T> {
+public abstract class AbstractBeanDeleteExecutor<T extends PrimaryKeyObject> 
+    extends ch.elca.el4j.services.gui.richclient.executors.convenience.AbstractBeanDeleteExecutor<T> {
 
+    /***/
     public AbstractBeanDeleteExecutor() {
         setId("delete");
     }
     
+    /** {@inheritDoc} */
     @Override
     protected ExecutorDisplayable getDefaultDisplayable() {
         // use new dialoag

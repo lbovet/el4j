@@ -19,9 +19,9 @@ package ch.elca.el4j.services.richclient.naming;
 import java.util.HashMap;
 import java.util.Map;
 
+import static java.lang.Character.isWhitespace;
 import static java.lang.Character.toLowerCase;
 import static java.lang.Character.toUpperCase;
-import static java.lang.Character.isWhitespace;
 
 /**
  * A rewriting rule providing a set of utility functions. The keys accepted
@@ -59,7 +59,52 @@ public class Utilities implements MessageRewriter.Rule {
         abstract void apply(String argument, StringBuffer target);
     }
     
+    /** Default functions. */
+    private static Function[] s_defaultFunctions = {
+        new Function("decapitalize") {
+            @Override void apply(String argument, StringBuffer target) {
+                changeCapitalization(argument, false, target);
+            }
+        },
+        new Function("capitalize") {
+            @Override void apply(String argument, StringBuffer target) {
+                changeCapitalization(argument, true, target);
+            }
+        }
+    };
+    
+    /** The package-like prefix to function names. Includes delimiter. */
+    protected String m_requiredPrefix;
 
+    /** the functions provided by this instance, keyed by function.m_name. */
+    protected Map<String, Function> m_functions 
+        = new HashMap<String, Function>();
+    
+
+    /**
+     * Creates a utility function package called {@code Utils} and 
+     * adds default utility functions.
+     */
+    public Utilities() {
+        this("Utils.");
+    }
+    
+    /** 
+     * Constructor. Adds default utility functions.
+     * @param packageName the package name as used to form keys.
+     */
+    public Utilities(String packageName) {
+        m_requiredPrefix = packageName;
+        for (Function f : s_defaultFunctions) {
+            add(f);
+        }
+    }
+
+    /** 
+     * Writes {@code argument} into {@code target} while changing the first
+     * character for each word.
+     * @param toUpper whether to change it to upper or lower case
+     */
     private static void changeCapitalization(String argument, boolean toUpper, 
                                              StringBuffer target) {
         
@@ -82,46 +127,6 @@ public class Utilities implements MessageRewriter.Rule {
         } while (i < argument.length());
     }
     
-    /** Default functions. */
-    private static Function[] s_defaultFunctions = {
-        new Function("decapitalize") {
-            @Override void apply(String argument, StringBuffer target) {
-                changeCapitalization(argument, false, target);
-            }
-        },
-        new Function("capitalize") {
-            @Override void apply(String argument, StringBuffer target) {
-                changeCapitalization(argument, true, target);
-            }
-        }
-    };
-    
-    
-    /** The package-like prefix to function names. Includes delimiter. */
-    protected String m_requiredPrefix;
-
-    /** the functions provided by this instance, keyed by function.m_name. */
-    protected Map<String, Function> m_functions 
-        = new HashMap<String, Function>();
-    
-    /**
-     * Creates a utility function package called {@code Utils} and 
-     * adds default utility functions.
-     */
-    public Utilities() {
-        this("Utils.");
-    }
-    
-    /** 
-     * Constructor. Adds default utility functions.
-     * @param packageName the package name as used to form keys.
-     */
-    public Utilities(String packageName) {
-        m_requiredPrefix = packageName;
-        for (Function f : s_defaultFunctions) {
-            add(f);
-        }
-    }
     
     /** Adds a function, replacing any previous function with the same name. */
     public void add(Function f) {

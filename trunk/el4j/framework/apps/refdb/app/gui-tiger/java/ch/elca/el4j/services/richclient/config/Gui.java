@@ -57,6 +57,7 @@ public abstract class Gui implements InitializingBean, ApplicationContextAware {
     /** the awaker to be used to wake manually created beans. */ 
     private AwakingContext m_context; 
     
+    /***/
     protected Gui() {
         test();
         System.out.println("Gui is beeing configured.");
@@ -105,8 +106,8 @@ public abstract class Gui implements InitializingBean, ApplicationContextAware {
         }
 
         SimpleGenericRepository<Keyword> kwrepo
-        = Services.get(LazyRepositoryWatcherRegistry.class)
-              .getFor(Keyword.class);
+            = Services.get(LazyRepositoryWatcherRegistry.class)
+                      .getFor(Keyword.class);
         
         if (kwrepo.findAll().size() == 0) {
             Keyword kw = new Keyword();
