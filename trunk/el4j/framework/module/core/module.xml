@@ -3,7 +3,7 @@
     <module name="module-core">
         <attribute name="set" value="framework-modules"/>
         <attribute name="binrelease.version" value="1.5-rc2"/>
-        <dependency jar="spring-1.2.8.jar"/>
+        <dependency jar="spring-2.0-rc2.jar"/>
         <dependency jar="commons-logging-1.0.4.jar"/>
         <dependency jar="log4j-1.2.11.jar"/>
         <dependency jar="bcel-5.1.jar"/>
