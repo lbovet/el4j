@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.OptimisticLockingFailureException;
 
 /**
  * Extends the SimpleGenericRepository with a few convenience methods.
@@ -72,4 +73,15 @@ public interface ConvenientGenericRepository<T, ID extends Serializable>
      * @return A list containing 0 or more domain objects
      */
     List<T> findByExample(T exampleInstance) throws DataAccessException;
+    
+    /**
+     * Deletes the domain object with the given id, disregarding any 
+     * concurrent modifications that may have occurred.
+     * 
+     * @param id
+     *            The id of the domain object to delete
+     * @throws DataAccessException
+     *            If general data access problem occurred                       
+     */
+    void delete(ID id) throws DataAccessException;
 }
