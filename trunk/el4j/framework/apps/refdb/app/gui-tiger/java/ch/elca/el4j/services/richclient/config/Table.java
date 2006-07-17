@@ -151,7 +151,7 @@ public class Table extends AbstractGenericView {
                 setBeans(
                     Services.get(LazyRepositoryWatcherRegistry.class)
                             .getFor(m_type.clazz)
-                            .findAll()
+                            .findByQuery(q)
                 );
             }
         }
