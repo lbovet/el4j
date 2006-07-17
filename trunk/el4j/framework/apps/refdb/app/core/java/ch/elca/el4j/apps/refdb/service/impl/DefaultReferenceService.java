@@ -372,18 +372,18 @@ public class DefaultReferenceService extends DefaultKeywordService
         try {
             getReferenceDao().removeLink(key);
             referenceExists = true;
-        } catch (JdbcUpdateAffectedIncorrectNumberOfRowsException e) { }
+        } catch (DataAccessException e) { }
         if (!referenceExists) {
             try {
                 getReferenceDao().removeBook(key);
                 referenceExists = true;
-            } catch (JdbcUpdateAffectedIncorrectNumberOfRowsException e) { }
+            } catch (DataAccessException e) { }
         }
         if (!referenceExists) {
             try {
                 getReferenceDao().removeFormalPublication(key);
                 referenceExists = true;
-            } catch (JdbcUpdateAffectedIncorrectNumberOfRowsException e) { }
+            } catch (DataAccessException e) { }
         }
         // Checkstyle: EmptyBlock on
         if (!referenceExists) {
