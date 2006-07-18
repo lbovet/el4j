@@ -38,7 +38,12 @@
         </dependency>
         <dependency>
             <groupId>ch.elca.el4j</groupId>
-            <artifactId>module-remoting_web</artifactId>
+            <artifactId>module-web</artifactId>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j</groupId>
+            <artifactId>module-env</artifactId>
             <type>jar</type>
         </dependency>
     </dependencies>
