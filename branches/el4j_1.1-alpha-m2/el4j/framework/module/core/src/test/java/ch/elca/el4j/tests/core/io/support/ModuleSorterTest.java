@@ -32,6 +32,7 @@ import ch.elca.el4j.core.io.support.ModuleSorter;
  * );</script>
  *
  * @author Andreas Bur (ABU)
+ * @author Martin Zeltner (MZE)
  */
 public class ModuleSorterTest extends AbstractOrderTestCase {
 
@@ -148,6 +149,35 @@ public class ModuleSorterTest extends AbstractOrderTestCase {
         a.addDependency("b");
         b.addDependency("a");
         
-        m_sorter.sortModules(new Module[] {b, a});
+        Module[] sorted = m_sorter.sortModules(new Module[] {b, a});
+        assertTrue("There should be no usable module array!", 
+            sorted == null || sorted.length == 0);
+    }
+    
+    /**
+     * Sorts a graph that has a root object which itself has a dependency an
+     * unknown module.
+     */
+    public void testUndeclaredRootModule() {
+        Module a = new Module("a");
+        Module b = new Module("b");
+        Module c = new Module("c");
+        Module d = new Module("d");
+        Module e = new Module("e");
+        
+        a.addDependency("unknown");
+        b.addDependency("a");
+        c.addDependency("a");
+        d.addDependency("c");
+        e.addDependency("c");
+        
+        Module[] sorted = m_sorter.sortModules(
+            new Module[] {b, a, e, d, c});
+        assertNotNull(sorted);
+        assertEquals(sorted.length, 5);
+        assertBefore(a, b, sorted);
+        assertBefore(a, c, sorted);
+        assertBefore(c, d, sorted);
+        assertBefore(c, e, sorted);
     }
 }
