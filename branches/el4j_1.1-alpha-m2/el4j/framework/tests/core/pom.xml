@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <parent>
+        <groupId>ch.elca.el4j</groupId>
+        <artifactId>el4j-framework-tests</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>module-core-tests</artifactId>
+    <version>${version.module-core}</version>
+    <packaging>jar</packaging>
+    <name>EL4J module core tests</name>
+    <description>
+        Test module for module core of the EL4J framework.
+    </description>
+    <build>
+    </build>
+    <dependencies>
+        <!-- EL4J framework modules -->
+        <dependency>
+            <groupId>ch.elca.el4j</groupId>
+            <artifactId>module-core</artifactId>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j</groupId>
+            <artifactId>module-core</artifactId>
+            <type>test-jar</type>
+        </dependency>
+    </dependencies>
+</project>
