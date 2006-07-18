@@ -26,7 +26,7 @@
 
 
     <logger name="ch.elca.el4j">
-        <level value="ALL"/>
+        <level value="INFO"/>
     </logger>    
 
     <logger name="org.springframework">
@@ -34,7 +34,7 @@
     </logger>    
 
     <logger name="org.apache.axis">
-        <level value="ALL"/>
+        <level value="INFO"/>
     </logger>
     <logger name="org.apache.axis.i18n">
         <level value="WARN"/>

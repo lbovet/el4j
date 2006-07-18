@@ -7,7 +7,7 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
     
-    <import resource="classpath:common/remotingtests-protocols-config.xml"/>
+    <import resource="classpath:common/remotingtests-web-protocols-config.xml"/>
     
     <bean id="calculator" class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
         <property name="remoteProtocol">
