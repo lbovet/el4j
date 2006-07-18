@@ -30,7 +30,6 @@
             <groupId>ch.elca.el4j</groupId>
             <artifactId>module-core</artifactId>
             <type>jar</type>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>ch.elca.el4j</groupId>

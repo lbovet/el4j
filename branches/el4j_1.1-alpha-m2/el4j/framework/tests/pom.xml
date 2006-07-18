@@ -23,5 +23,23 @@
     </description>
     <modules>
         <module>core</module>
+        <module>core_integration</module>
     </modules>
+    <dependencyManagement>
+        <dependencies>
+            <!-- module-core-tests -->
+            <dependency>
+                <groupId>ch.elca.el4j</groupId>
+                <artifactId>module-core-tests</artifactId>
+                <version>${version.module-core}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j</groupId>
+                <artifactId>module-core-tests</artifactId>
+                <version>${version.module-core}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

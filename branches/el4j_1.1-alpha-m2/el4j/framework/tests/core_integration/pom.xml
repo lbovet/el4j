@@ -26,6 +26,28 @@
     </build>
     <dependencies>
         <!-- EL4J framework modules -->
+        <!--
+            The following two dependencies were added due to problems with 
+            transitive dependencies with type test-jar. See 
+            http://jira.codehaus.org/browse/MNG-1895 for more information.
+         -->
+        <dependency>
+            <groupId>ch.elca.el4j</groupId>
+            <artifactId>module-core</artifactId>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j</groupId>
+            <artifactId>module-core</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>ch.elca.el4j</groupId>
+            <artifactId>module-core-tests</artifactId>
+            <type>jar</type>
+        </dependency>
         <dependency>
             <groupId>ch.elca.el4j</groupId>
             <artifactId>module-core-tests</artifactId>
