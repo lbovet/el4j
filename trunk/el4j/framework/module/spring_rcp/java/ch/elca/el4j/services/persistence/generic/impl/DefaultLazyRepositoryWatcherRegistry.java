@@ -68,7 +68,7 @@ public class DefaultLazyRepositoryWatcherRegistry
                 m_repWatchers.get(entityType);
         if (rep == null) {
             rep = new DefaultLazyRepositoryWatcher<T>(
-                m_backing.getFor(entityType)
+                this, m_backing.getFor(entityType) 
             );
             m_repWatchers.put(entityType, rep);
         }
@@ -80,7 +80,7 @@ public class DefaultLazyRepositoryWatcherRegistry
      */
     public void process(Change change) {
         for (LazyRepositoryWatcher<?> w : m_repWatchers.values()) {
-            w.announce(change);
+            w.announceIfResponsible(change);
         }
     }
 }

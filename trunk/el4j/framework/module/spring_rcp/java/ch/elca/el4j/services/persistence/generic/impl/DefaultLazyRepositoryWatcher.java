@@ -23,6 +23,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
 import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcher;
+import ch.elca.el4j.services.persistence.generic.RepositoryChangeListener;
 import ch.elca.el4j.services.persistence.generic.dao.SimpleGenericRepository;
 import ch.elca.el4j.services.search.QueryObject;
 
@@ -41,9 +42,13 @@ import ch.elca.el4j.services.search.QueryObject;
  *
  * @author Adrian Moos (AMS)
  */
+// TODO: include IdentityFixer
 public class DefaultLazyRepositoryWatcher<T> 
      extends DefaultRepositoryChangeNotifier
      implements LazyRepositoryWatcher<T> {
+    
+    /** The listener non-local changes should be escalated to. */
+    RepositoryChangeListener m_escalator; 
     
     /** The backing repository. */
     SimpleGenericRepository<T> m_backing;
@@ -51,8 +56,11 @@ public class DefaultLazyRepositoryWatcher<T>
     /** 
      * Constructor.
      * @param backing see {@link #m_backing}
+     * @param escalator see {@link #m_escalator}
      */
-    public DefaultLazyRepositoryWatcher(SimpleGenericRepository<T> backing) {
+    public DefaultLazyRepositoryWatcher(RepositoryChangeListener escalator,
+                                        SimpleGenericRepository<T> backing) {
+        m_escalator = escalator;
         m_backing = backing;
     }
     
@@ -65,7 +73,7 @@ public class DefaultLazyRepositoryWatcher<T>
             ed.changee = entity;
             announce(ed);
         } catch (OptimisticLockingFailureException e) {
-            refresh(entity);
+            escalate(FUZZY_CHANGE);
             throw e;
         }
     }
@@ -95,11 +103,11 @@ public class DefaultLazyRepositoryWatcher<T>
             m_backing.saveOrUpdate(entity);
             return entity;
         } catch (OptimisticLockingFailureException e) {
-            refresh(entity);
+            escalate(FUZZY_CHANGE);
             throw e;            
         }
     }
-
+    
     /** {@inheritDoc} */
     public void refresh(T entity) {
         m_backing.refresh(entity);
@@ -129,5 +137,10 @@ public class DefaultLazyRepositoryWatcher<T>
         if (isResponsibleFor(change)) {
             super.announce(change);
         }
+    }
+    
+    /** Escalates the change to the configured escalator. */
+    private void escalate(Change c) {
+        m_escalator.process(c);
     }
 }
