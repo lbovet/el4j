@@ -65,7 +65,7 @@ public abstract class AbstractOrderedConfigLocationProvider
      * @return Returns an ordered list of modules that fulfill the partial
      *      order defined by the module's hierarchical constraints.
      */
-    protected Module[] sorteModules(Module[] modules) {
+    protected Module[] sortModules(Module[] modules) {
         return m_moduleSorter.sortModules(modules);
     }
     

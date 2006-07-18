@@ -88,7 +88,7 @@ public class ManifestOrderedConfigLocationProvider
         String[] configLocations = new String[0];
         try {
             Module[] modules = createModules();
-            configLocations = mergeConfigLocations(sorteModules(modules));
+            configLocations = mergeConfigLocations(sortModules(modules));
             
         } catch (IOException ioe) {
             s_logger.error("Error while loading module structure from manifest "

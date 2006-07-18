@@ -19,9 +19,11 @@ package ch.elca.el4j.core.io.support;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -48,6 +50,7 @@ import org.apache.commons.logging.LogFactory;
  * );</script>
  *
  * @author Andreas Bur (ABU)
+ * @author Martin Zeltner (MZE)
  */
 public class DefaultModuleSorter implements ModuleSorter {
     
@@ -55,21 +58,21 @@ public class DefaultModuleSorter implements ModuleSorter {
     private static Log s_logger = LogFactory.getLog(DefaultModuleSorter.class);
     
     /** The list with root modules. */
-    private List m_rootModules;
+    private List<Module> m_rootModules;
     
     /** Maps from module names (String) to their children (Module). */
-    private Map m_children;
+    private Map<String, List<Module>> m_children;
     
     /** Maps from modules (Module) to their dependencies (String). */
-    private Map m_dependencies;
+    private Map<Module, List<String>> m_dependencies;
     
     /**
      * {@inheritDoc}
      */
     public Module[] sortModules(Module[] modules) {
-        m_rootModules = new ArrayList();
-        m_children = new HashMap();
-        m_dependencies = new HashMap();
+        m_rootModules = new ArrayList<Module>();
+        m_children = new HashMap<String, List<Module>>();
+        m_dependencies = new HashMap<Module, List<String>>();
         
         buildInternalModel(modules);
         Module[] flat = computeOrderedList();
@@ -84,21 +87,38 @@ public class DefaultModuleSorter implements ModuleSorter {
      *      The list of modules to build the inner presentation for.
      */
     private void buildInternalModel(Module[] modules) {
+        Set<String> moduleNames = new HashSet<String>();
         for (int i = 0; i < modules.length; i++) {
-            String[] deps = modules[i].getDependencies();
+            Module m = modules[i];
+            moduleNames.add(m.getName());
+        }
+        for (int i = 0; i < modules.length; i++) {
+            Module m = modules[i];
+            String[] deps = m.getDependencies();
             
-            if (deps.length == 0) {
-                m_rootModules.add(modules[i]);
-                continue;
+            if (deps.length > 0) {
+                // Add current module as child to all its parents but only if 
+                // the parent is one of the known modules.
+                List<String> wellKnownChilds = new ArrayList<String>();
+                for (int j = 0; j < deps.length; j++) {
+                    String dependencyName = deps[j];
+                    if (moduleNames.contains(dependencyName)) {
+                        addChild(dependencyName, m);
+                        wellKnownChilds.add(dependencyName);
+                    }
+                }
+                if (wellKnownChilds.size() > 0) {
+                    // Copy dependency information of well known dependencies.
+                    m_dependencies.put(m, wellKnownChilds);
+                } else {
+                    // There are no well known childs so the given module is a 
+                    // root.
+                    m_rootModules.add(m);
+                }
+            } else {
+                // Given module has no dependencies, so it is a root module.
+                m_rootModules.add(m);
             }
-            
-            // add current module as child to all its parents
-            for (int j = 0; j < deps.length; j++) {
-                addChild(deps[j], modules[i]);
-            }
-            
-            // copy dependency information
-            m_dependencies.put(modules[i], modules[i].getDependenciesAsList());
         }
     }
     
@@ -112,9 +132,9 @@ public class DefaultModuleSorter implements ModuleSorter {
      *      The child module.
      */
     private void addChild(String module, Module child) {
-        List children = (List) m_children.get(module);
+        List<Module> children = m_children.get(module);
         if (children == null) {
-            children = new ArrayList();
+            children = new ArrayList<Module>();
             m_children.put(module, children);
         }
         children.add(child);
@@ -127,26 +147,21 @@ public class DefaultModuleSorter implements ModuleSorter {
      *      defined by the modules' dependencies. 
      */
     private Module[] computeOrderedList() {
-        List ordered = new ArrayList();
+        List<Module> ordered = new ArrayList<Module>();
         while (!m_rootModules.isEmpty()) {
-            Module nextRoot = (Module) m_rootModules.remove(0);
+            Module nextRoot = m_rootModules.remove(0);
             ordered.add(nextRoot);
             
-            List children = (List) m_children.get(nextRoot.getName());
-            if (children == null) {
-                continue;
-            }
-            
-            for (Iterator iter = children.iterator(); iter.hasNext();) {
-                Module child = (Module) iter.next();
-                List deps = (List) m_dependencies.get(child);
-                
-                if (deps != null) {
-                    deps.remove(nextRoot.getName());
-                    
-                    if (deps.size() == 0) {
-                        m_dependencies.remove(child);
-                        m_rootModules.add(child);
+            List<Module> children = m_children.get(nextRoot.getName());
+            if (children != null) {
+                for (Module child : children) {
+                    List deps = m_dependencies.get(child);
+                    if (deps != null) {
+                        deps.remove(nextRoot.getName());
+                        if (deps.size() == 0) {
+                            m_dependencies.remove(child);
+                            m_rootModules.add(child);
+                        }
                     }
                 }
             }
@@ -154,27 +169,26 @@ public class DefaultModuleSorter implements ModuleSorter {
         
         checkUnresolvedDependencies();
         
-        return (Module[]) ordered.toArray(new Module[ordered.size()]);
+        return ordered.toArray(new Module[ordered.size()]);
     }
     
     /**
-     * Checks if there are unresolved dependencies indicating that there
-     * are cycles.
+     * Checks if there are unresolved dependencies.
      */
     private void checkUnresolvedDependencies() {
-        if (!m_dependencies.isEmpty()) {
+        if (!m_dependencies.isEmpty() && s_logger.isWarnEnabled()) {
             StringBuffer buffer = new StringBuffer(
-                "Configuration contains cycles! "
-                    + "Unresolved modules with dependencies (ignored): ");
+                "Unresolved modules with dependencies (ignored): ");
             
-            Iterator iter = m_dependencies.entrySet().iterator();
+            Iterator<Map.Entry<Module, List<String>>> iter 
+                = m_dependencies.entrySet().iterator();
             while (iter.hasNext()) {
-                Map.Entry next = (Map.Entry) iter.next();
+                Map.Entry<Module, List<String>> next = iter.next();
                 buffer.append("[");
                 buffer.append(next.getKey());
                 buffer.append(": ");
-                List deps = (List) next.getValue();
-                for (Iterator diter = deps.iterator(); diter.hasNext();) {
+                Iterator<String> diter = next.getValue().iterator();
+                while (diter.hasNext()) {
                     buffer.append(diter.next());
                     if (diter.hasNext()) {
                         buffer.append(", ");
@@ -185,8 +199,7 @@ public class DefaultModuleSorter implements ModuleSorter {
                     buffer.append(", ");
                 }
             }
-            
-            s_logger.error(buffer.toString());
+            s_logger.warn(buffer.toString());
         }
     }
 }
