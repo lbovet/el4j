@@ -100,11 +100,15 @@ public interface SimpleGenericRepository<T> {
      * Deletes the domain object with the given id.
      * 
      * @param entity
-     *            The domain object to delete
+     *             The domain object to delete
+     * @throws DataAccessException
+     *             If general data access problem occurred
+     * @throws DataIntegrityViolationException
+     *             If domain object could not be deleted due to a data
+     *             integrity violation 
      * @throws OptimisticLockingFailureException
      *             If domain object has been modified in the meantime   
-     * @throws DataAccessException
-     *            If general data access problem occurred                       
      */
-    void delete(T entity) throws DataAccessException;
+    void delete(T entity)  throws DataAccessException,
+        DataIntegrityViolationException, OptimisticLockingFailureException;
 }
