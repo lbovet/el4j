@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
@@ -79,9 +80,12 @@ public interface ConvenientGenericRepository<T, ID extends Serializable>
      * concurrent modifications that may have occurred.
      * 
      * @param id
-     *            The id of the domain object to delete
+     *             The id of the domain object to delete
+     * @throws DataIntegrityViolationException
+     *             If domain object could not be deleted due to a data
+     *             integrity violation 
      * @throws DataAccessException
-     *            If general data access problem occurred                       
+     *             If general data access problem occurred
      */
     void delete(ID id) throws DataAccessException;
 }

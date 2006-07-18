@@ -97,7 +97,7 @@ public interface SimpleGenericRepository<T> {
         DataIntegrityViolationException, OptimisticLockingFailureException;
 
     /**
-     * Deletes the domain object with the given id.
+     * Deletes the given domain object.
      * 
      * @param entity
      *             The domain object to delete
