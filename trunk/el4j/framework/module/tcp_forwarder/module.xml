@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" xmlns:ant="antlib:org.apache.tools.ant">
+    <module name="module-tcp_forwarder">
+        <dependency module="module-core"/>
+        <attribute name="set" value="framework-tests"/>
+    </module>
+</ant:project>

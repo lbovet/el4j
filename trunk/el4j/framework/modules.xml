@@ -19,25 +19,7 @@
     <include file="module/spring_rcp/module.xml"/>
     <include file="module/ibatis/module.xml"/>
     <include file="module/hibernate/module.xml"/>
-    <include file="module/tcp_redirector/module.xml"/>
-
-    <!-- Test modules. -->
-    <include file="tests/core/module.xml"/>
-    <include file="tests/core_integration/module.xml"/>
-    <include file="tests/remoting/module.xml"/>
-    <include file="tests/remoting_ejb/module.xml"/>
-    <include file="tests/jmx/module.xml"/>
-    <include file="tests/security/module.xml"/>
-    <include file="tests/exception_handling/module.xml"/>
-    <include file="tests/env/module.xml"/>
-    <include file="tests/daemon_manager/module.xml"/>
-    <include file="tests/tcp_redirector/module.xml"/>
-    
-    <!-- Demo modules. -->
-    <include file="demos/remoting/module.xml"/>
-    <include file="demos/light_statistics/module.xml"/>
-    <include file="demos/daemon_manager/module.xml"/>
-    <include file="demos/executable_distribution/module.xml"/>
+    <include file="module/tcp_forwarder/module.xml"/>
 
     <!-- Application common modules. -->
     <include file="apps/common/database/module.xml"/>
@@ -51,4 +33,23 @@
     <!-- Application test modules. -->
     <include file="apps/keyword/tests/core/module.xml"/>
     <include file="apps/refdb/tests/core/module.xml"/>
+
+     <!-- Test modules. -->
+    <include file="tests/core/module.xml"/>
+    <include file="tests/core_integration/module.xml"/>
+    <include file="tests/remoting/module.xml"/>
+    <include file="tests/remoting_ejb/module.xml"/>
+    <include file="tests/jmx/module.xml"/>
+    <include file="tests/security/module.xml"/>
+    <include file="tests/exception_handling/module.xml"/>
+    <include file="tests/env/module.xml"/>
+    <include file="tests/daemon_manager/module.xml"/>
+    <include file="tests/tcp_forwarder/module.xml"/>
+
+    <!-- Demo modules. -->
+    <include file="demos/remoting/module.xml"/>
+    <include file="demos/light_statistics/module.xml"/>
+    <include file="demos/daemon_manager/module.xml"/>
+    <include file="demos/executable_distribution/module.xml"/>
+
 </ant:project>
