@@ -27,6 +27,8 @@ import ch.elca.el4j.apps.refdb.dto.ReferenceDto;
 
 import junit.framework.TestCase;
 
+//Checkstyle: MagicNumber off
+
 /**
  * 
  * This test class tests custom validation of a reference domain
@@ -67,20 +69,6 @@ public class ReferenceValidationTest extends TestCase {
             + " must me equal to 1.", 1, validationMessages.length);
     }
     
-    /**
-     * {@inheritDoc}
-     */
-    protected String[] getIncludeConfigLocations() {
-        return new String[] {
-            "classpath:optional/interception/methodTracing.xml",
-            "classpath*:mandatory/*.xml"};
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    protected String[] getExcludeConfigLocations() {
-        return new String[] {};
-    }
-
 }
+
+//Checkstyle: MagicNumber on
