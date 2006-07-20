@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.services.persistence.generic;
+package ch.elca.el4j.services.persistence.generic.repo;
 
 /**
  * Notifies registered observers of repository changes.
@@ -47,18 +47,21 @@ public interface RepositoryChangeNotifier {
         public Object changee;
     }
     
+    /** The {@link #changee} has new state. */
+    public static class NewEntityState extends EntityChange { }
+    
     /** The {@link #changee}'s state has changed. */
-    public static class EntityStateChange extends EntityChange { }
+    public static class EntityStateChanged extends NewEntityState { }
     
     /**
      * The {@link #changee} has been inserted.
      */
-    public static class EntityInsertion extends EntityChange { }
+    public static class EntityInserted extends NewEntityState { }
     
     /**
      * The {@link #changee} has been deleted.
      */
-    public static class EntityDeletion extends EntityChange { }
+    public static class EntityDeleted extends EntityChange { }
 
     
     /** 

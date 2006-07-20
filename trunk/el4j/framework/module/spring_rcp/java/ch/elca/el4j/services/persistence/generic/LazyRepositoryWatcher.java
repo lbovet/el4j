@@ -16,15 +16,15 @@
  */
 package ch.elca.el4j.services.persistence.generic;
 
-import ch.elca.el4j.services.persistence.generic.dao.SimpleGenericRepository;
+import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier;
+import ch.elca.el4j.services.persistence.generic.repo.SimpleGenericRepository;
 
 
 /**
  * Instances intercept access to the repository and broadcast concurrent 
  * changes discovered during such accesses to all registered observers, thereby
- * providing them with consistent information.
- * 
- * <p> The notfications need not reflect the current state of the database,
+ * providing them with consistent information. Note that the notfications need 
+ * not reflect the current state of the database,
  * though they'll strive to be as current as possible.
  * 
  * @param <T> The type of entities accessible through this view.

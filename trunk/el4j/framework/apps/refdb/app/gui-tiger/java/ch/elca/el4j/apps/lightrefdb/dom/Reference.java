@@ -21,6 +21,8 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Set;
 
+import javax.persistence.Entity;
+
 import ch.elca.el4j.apps.refdb.dto.AnnotationDto;
 import ch.elca.el4j.apps.refdb.dto.FileDescriptorView;
 import ch.elca.el4j.apps.refdb.dto.FileDto;
@@ -51,6 +53,7 @@ import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimistic
     "date",
     "keywords"
 })
+@Entity
 public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
     /** This reference's name. */
     private String name;

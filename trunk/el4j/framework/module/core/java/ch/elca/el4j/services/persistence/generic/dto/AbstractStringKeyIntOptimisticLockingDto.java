@@ -17,6 +17,8 @@
 
 package ch.elca.el4j.services.persistence.generic.dto;
 
+import javax.persistence.Id;
+
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
 /**
@@ -39,6 +41,7 @@ public abstract class AbstractStringKeyIntOptimisticLockingDto
     /**
      * Primary key.
      */
+    @Id
     private String m_key;
 
     /**

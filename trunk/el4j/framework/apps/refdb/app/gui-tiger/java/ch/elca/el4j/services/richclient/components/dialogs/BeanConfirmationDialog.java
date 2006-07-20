@@ -73,15 +73,10 @@ public class BeanConfirmationDialog extends
             setParent(pageComponent.getContext().getWindow().getControl());
         }
         
-        // Kludge to account for non-generic persistence logic
-        Class<?> clazz = beans[0].getClass().equals(KeywordDto.class)
-                       ? Keyword.class
-                       : Reference.class;
-        
         // Sets the title and confirmation message on this dialog.        
         Naming.Fetcher msgs = Naming.instance().forConfirmation(
             confirmBeanExecutor.getId(),
-            EntityType.get(clazz),
+            EntityType.get(beans[0].getClass()),
             beans.length
         );
         setConfirmationMessage(msgs.get("message"));

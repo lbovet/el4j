@@ -21,8 +21,9 @@ import java.util.Map;
 
 import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcher;
 import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcherRegistry;
-import ch.elca.el4j.services.persistence.generic.RepositoryChangeNotifier.Change;
-import ch.elca.el4j.services.persistence.generic.dao.RepositoryRegistry;
+import ch.elca.el4j.services.persistence.generic.repo.AbstractIdentityFixer;
+import ch.elca.el4j.services.persistence.generic.repo.RepositoryRegistry;
+import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier.Change;
 
 /**
  * Wraps a repository registry's repositories with 
@@ -45,6 +46,11 @@ public class DefaultLazyRepositoryWatcherRegistry
      */
     protected RepositoryRegistry m_backing;
     
+    /**
+     * The identity fixer to be injected.
+     */
+    protected AbstractIdentityFixer m_identityFixer;
+    
     /** 
      * The already created repository watchers.
      */
@@ -56,8 +62,11 @@ public class DefaultLazyRepositoryWatcherRegistry
      * Constructor.
      * @param backing the backing registry.
      */
-    public DefaultLazyRepositoryWatcherRegistry(RepositoryRegistry backing) {
+    public DefaultLazyRepositoryWatcherRegistry(AbstractIdentityFixer ifixer,
+                                                RepositoryRegistry backing) {
         m_backing = backing;
+        m_identityFixer = ifixer;
+        m_identityFixer.getChangeNotifier().subscribe(this);
     }
 
     /** {@inheritDoc} */
@@ -68,12 +77,16 @@ public class DefaultLazyRepositoryWatcherRegistry
                 m_repWatchers.get(entityType);
         if (rep == null) {
             rep = new DefaultLazyRepositoryWatcher<T>(
-                this, m_backing.getFor(entityType) 
+                this,
+                new IdentityFixedRepository(
+                    m_identityFixer,
+                    m_backing.getFor(entityType)
+                )
             );
             m_repWatchers.put(entityType, rep);
         }
         return rep;
-    }    
+    }
 
     /** 
      * Asks all repositories to announce this change.

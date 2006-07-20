@@ -28,7 +28,7 @@ import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import ch.elca.el4j.services.persistence.generic.dao.ConvenientGenericRepository;
+import ch.elca.el4j.services.persistence.generic.repo.ConvenientGenericRepository;
 import ch.elca.el4j.services.persistence.hibernate.criteria.CriteriaTransformer;
 import ch.elca.el4j.services.search.QueryObject;
 
@@ -150,8 +150,9 @@ public class GenericHibernateRepository<T, ID extends Serializable>
     /**
      * {@inheritDoc}
      */
-    public void refresh(T entity) {
+    public T refresh(T entity) {
         getHibernateTemplate().refresh(entity);
+        return entity;
     }
 
     /**

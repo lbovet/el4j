@@ -20,8 +20,7 @@ import org.springframework.richclient.command.support.ApplicationWindowAwareComm
 
 import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcherRegistry;
 
-import static 
-ch.elca.el4j.services.persistence.generic.RepositoryChangeNotifier.FUZZY_CHANGE;
+import static ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier.FUZZY_CHANGE;
 
 /**
  * A command to request an refreshing data loaded using a lazy repository

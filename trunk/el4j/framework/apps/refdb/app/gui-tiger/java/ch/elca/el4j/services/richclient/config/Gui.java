@@ -25,7 +25,7 @@ import ch.elca.el4j.apps.lightrefdb.dom.Keyword;
 import ch.elca.el4j.apps.lightrefdb.dom.Reference;
 import ch.elca.el4j.services.gui.richclient.utils.Services;
 import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcherRegistry;
-import ch.elca.el4j.services.persistence.generic.dao.SimpleGenericRepository;
+import ch.elca.el4j.services.persistence.generic.repo.SimpleGenericRepository;
 import ch.elca.el4j.services.richclient.context.AwakingContext;
 import ch.elca.el4j.util.collections.ExtendedWritableList;
 import ch.elca.el4j.util.collections.impl.ExtendedArrayList;

@@ -23,8 +23,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
 import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcher;
-import ch.elca.el4j.services.persistence.generic.RepositoryChangeListener;
-import ch.elca.el4j.services.persistence.generic.dao.SimpleGenericRepository;
+import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeListener;
+import ch.elca.el4j.services.persistence.generic.repo.SimpleGenericRepository;
+import ch.elca.el4j.services.persistence.generic.repo.impl.DefaultRepositoryChangeNotifier;
 import ch.elca.el4j.services.search.QueryObject;
 
 /**
@@ -42,10 +43,9 @@ import ch.elca.el4j.services.search.QueryObject;
  *
  * @author Adrian Moos (AMS)
  */
-// TODO: include IdentityFixer
 public class DefaultLazyRepositoryWatcher<T> 
-     extends DefaultRepositoryChangeNotifier
-     implements LazyRepositoryWatcher<T> {
+        extends DefaultRepositoryChangeNotifier
+        implements LazyRepositoryWatcher<T> {
     
     /** The listener non-local changes should be escalated to. */
     RepositoryChangeListener m_escalator; 
@@ -55,11 +55,11 @@ public class DefaultLazyRepositoryWatcher<T>
     
     /** 
      * Constructor.
-     * @param backing see {@link #m_backing}
+     * @param backing see {@link #m_backing}.
      * @param escalator see {@link #m_escalator}
      */
     public DefaultLazyRepositoryWatcher(RepositoryChangeListener escalator,
-                                        SimpleGenericRepository<T> backing) {
+                                        IdentityFixedRepository<T> backing) {
         m_escalator = escalator;
         m_backing = backing;
     }
@@ -69,7 +69,8 @@ public class DefaultLazyRepositoryWatcher<T>
         try {
             m_backing.delete(entity);
             
-            EntityDeletion ed = new EntityDeletion();
+            // TODO: notify cascadingly deleted entities 
+            EntityDeleted ed = new EntityDeleted();
             ed.changee = entity;
             announce(ed);
         } catch (OptimisticLockingFailureException e) {
@@ -80,13 +81,11 @@ public class DefaultLazyRepositoryWatcher<T>
 
     /** {@inheritDoc} */
     public List<T> findAll() throws DataAccessException {
-        // TODO
         return m_backing.findAll();
     }
 
     /** {@inheritDoc} */
     public List<T> findByQuery(QueryObject q) throws DataAccessException {
-        // TODO
         return m_backing.findByQuery(q);
     }
 
@@ -100,8 +99,7 @@ public class DefaultLazyRepositoryWatcher<T>
                                            DataIntegrityViolationException, 
                                            OptimisticLockingFailureException {
         try {
-            m_backing.saveOrUpdate(entity);
-            return entity;
+            return m_backing.saveOrUpdate(entity);
         } catch (OptimisticLockingFailureException e) {
             escalate(FUZZY_CHANGE);
             throw e;            
@@ -109,13 +107,8 @@ public class DefaultLazyRepositoryWatcher<T>
     }
     
     /** {@inheritDoc} */
-    public void refresh(T entity) {
-        m_backing.refresh(entity);
-        // TODO fire nested change notifications
-        
-        EntityChange ec = new EntityChange();
-        ec.changee = entity;
-        announce(ec);
+    public T refresh(T entity) {
+        return m_backing.refresh(entity);
     }
     
     /** 
@@ -135,7 +128,7 @@ public class DefaultLazyRepositoryWatcher<T>
     /** {@inheritDoc} */
     public void announceIfResponsible(Change change) {
         if (isResponsibleFor(change)) {
-            super.announce(change);
+            announce(change);
         }
     }
     

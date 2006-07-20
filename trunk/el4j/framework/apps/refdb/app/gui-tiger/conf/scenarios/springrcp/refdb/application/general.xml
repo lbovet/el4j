@@ -90,6 +90,7 @@
    	
    	<bean id="repoWatcherRegistry"
    		class="ch.elca.el4j.services.persistence.generic.impl.DefaultLazyRepositoryWatcherRegistry">
+   		<constructor-arg><ref bean="identityFixer"/></constructor-arg>
    		<constructor-arg><ref bean="repoRegistry"/></constructor-arg>
    	</bean>
         

@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.services.persistence.generic.dao;
+package ch.elca.el4j.services.persistence.generic.repo;
 
 import java.io.Serializable;
 import java.util.List;

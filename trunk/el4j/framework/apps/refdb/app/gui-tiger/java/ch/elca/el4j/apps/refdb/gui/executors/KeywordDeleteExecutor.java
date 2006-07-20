@@ -19,10 +19,11 @@ package ch.elca.el4j.apps.refdb.gui.executors;
 import java.util.List;
 
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
+import ch.elca.el4j.apps.lightrefdb.dom.Keyword;
 import ch.elca.el4j.apps.refdb.gui.support.RefdbSchemas;
 import ch.elca.el4j.services.gui.richclient.utils.Services;
 import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcherRegistry;
-import ch.elca.el4j.services.persistence.generic.dao.ConvenientGenericRepository;
+import ch.elca.el4j.services.persistence.generic.repo.ConvenientGenericRepository;
 import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
 import ch.elca.el4j.services.richclient.components.executors.AbstractBeanDeleteExecutor;
 
@@ -39,7 +40,7 @@ import ch.elca.el4j.services.richclient.components.executors.AbstractBeanDeleteE
  * @author Martin Zeltner (MZE)
  */
 public class KeywordDeleteExecutor 
-    extends AbstractBeanDeleteExecutor<KeywordDto> {
+    extends AbstractBeanDeleteExecutor<Keyword> {
     /**
      * Default constructor.
      */
@@ -49,10 +50,10 @@ public class KeywordDeleteExecutor
      * {@inheritDoc}
      */
     @Override
-    protected void deleteBeans(List<KeywordDto> beans) {
-        for (KeywordDto k : beans) {
+    protected void deleteBeans(List<Keyword> beans) {
+        for (Keyword k : beans) {
             Services.get(LazyRepositoryWatcherRegistry.class)
-                    .getFor(KeywordDto.class)
+                    .getFor(Keyword.class)
                     .delete(k);
         }
     }

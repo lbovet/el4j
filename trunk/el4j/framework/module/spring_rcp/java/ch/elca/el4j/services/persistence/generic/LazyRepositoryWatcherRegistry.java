@@ -16,7 +16,8 @@
  */
 package ch.elca.el4j.services.persistence.generic;
 
-import ch.elca.el4j.services.persistence.generic.dao.RepositoryRegistry;
+import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeListener;
+import ch.elca.el4j.services.persistence.generic.repo.RepositoryRegistry;
 
 /**
  * A registry for {@link LazyRepositoryWatcher}s relaying change notifications

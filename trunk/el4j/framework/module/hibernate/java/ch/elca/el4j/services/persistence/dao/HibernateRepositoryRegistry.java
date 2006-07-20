@@ -20,7 +20,7 @@ import java.io.Serializable;
 
 import org.hibernate.SessionFactory;
 
-import ch.elca.el4j.services.persistence.generic.dao.SettableRepositoryRegistry;
+import ch.elca.el4j.services.persistence.generic.repo.impl.SettableRepositoryRegistry;
 
 /**
  * A repository registry for hibernate repositories. Repositories are configured

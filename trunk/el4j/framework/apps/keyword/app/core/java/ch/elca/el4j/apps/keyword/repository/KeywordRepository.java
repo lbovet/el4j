@@ -20,7 +20,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
-import ch.elca.el4j.services.persistence.generic.dao.ConvenientGenericRepository;
+import ch.elca.el4j.services.persistence.generic.repo.ConvenientGenericRepository;
 
 /**
  * 

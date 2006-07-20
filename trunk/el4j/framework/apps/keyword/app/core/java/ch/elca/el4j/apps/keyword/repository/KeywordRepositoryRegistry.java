@@ -16,7 +16,7 @@
  */
 package ch.elca.el4j.apps.keyword.repository;
 
-import ch.elca.el4j.services.persistence.generic.dao.RepositoryRegistry;
+import ch.elca.el4j.services.persistence.generic.repo.RepositoryRegistry;
 
 /**
  * A repository registry for the keyword application.

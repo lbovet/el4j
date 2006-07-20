@@ -16,6 +16,8 @@
  */
 package ch.elca.el4j.apps.lightrefdb.dom;
 
+import javax.persistence.Entity;
+
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
 /**
@@ -30,6 +32,7 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  * 
  * @author Martin Zeltner (MZE)
  */
+@Entity
 public class FormalPublication extends Reference {
     /**
      * Name of the author.

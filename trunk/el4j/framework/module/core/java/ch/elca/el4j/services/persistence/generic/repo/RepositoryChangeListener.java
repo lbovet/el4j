@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.services.persistence.generic;
+package ch.elca.el4j.services.persistence.generic.repo;
 
 /**
  * This object receives change notifications from repository change notifiers.

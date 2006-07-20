@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.services.persistence.generic.dao;
+package ch.elca.el4j.services.persistence.generic.repo;
 
 import java.util.List;
 
@@ -75,9 +75,9 @@ public interface SimpleGenericRepository<T> {
     List<T> findAll() throws DataAccessException;   
     
     /**
-     * Re-read the state of the given entity from the underlying database.
+     * Re-read the state of the given entity from the underlying database. 
      */
-    void refresh(T entity);
+    T refresh(T entity);
 
     /**
      * Saves or updates the given domain object.

@@ -39,5 +39,8 @@
     			<ref bean="referenceRepo"/>
        		</list>
     	</property>
-    </bean>    
+    </bean>
+    
+    <bean id="identityFixer"
+    	class="ch.elca.el4j.services.persistence.hibernate.HibernateProxyAwareIdentityFixer"/>    	
 </beans>

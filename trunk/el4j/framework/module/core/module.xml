@@ -15,5 +15,8 @@
         <dependency jar="easymock-1.1.jar"/>
         <dependency jar="easymockclassextension-1.1.jar"/>
         <dependency jar="which4j-0.21.jar"/>
+        
+        <!-- annotations for generic persistence support -->
+        <dependency jar="ejb3-persistence-3.1beta7.jar"/> 
     </module>
 </ant:project>
