@@ -28,7 +28,7 @@ import java.util.Date;
 
 /**
  * This class is a simple user interface for using the tcp forwarder.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -69,16 +69,16 @@ public class TcpForwarderTool {
     /**
      * Hide default constructor.
      */
-    protected TcpForwarderTool() { } 
-    
+    protected TcpForwarderTool() { }
+
     /**
      * User interface to plug / unplug the described connection.
-     * 
+     *
      * @param args Starting arguments, currently no arguments supportet.
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
-        
+
         /**
          * User input.
          */

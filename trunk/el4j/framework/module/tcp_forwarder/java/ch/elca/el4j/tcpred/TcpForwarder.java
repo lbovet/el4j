@@ -23,6 +23,9 @@ import java.nio.channels.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 //Checkstyle: MagicNumber off
 
 /**
@@ -48,18 +51,24 @@ import java.util.Set;
  */
 public class TcpForwarder implements Runnable {
 
-    /** the listen port. */
+    /**
+     * Private logger.
+     */
+    private static Log s_logger 
+        = LogFactory.getLog(TcpForwarder.class);
+    
+    /** The listen port. */
     int m_port;
 
-    /** the socket address to forward traffic to. */
+    /** The socket address to forward traffic to. */
     SocketAddress m_target;
 
-    /** the server socket channel. */
+    /** The server socket channel. */
     ServerSocketChannel m_ssc;
 
-    /** the set of active links. */
+    /** The set of active links. */
     Set<Link> m_active = new HashSet<Link>();
-
+    
     /**
      * Creates a new TcpForwarder that listens on port <code>listenport</code>
      * and forwards all traffic to <code>targetport</code> on 127.0.0.1.
@@ -86,17 +95,8 @@ public class TcpForwarder implements Runnable {
         new Thread(this).start();
     }
 
-    /**
-     * = System.out.println.
-     * 
-     * @param msg String to print
-     */
-    static void trace(String msg) {
-        System.out.println(msg);
-    }
-
     /** 
-     * called to log an error.
+     * Called to log an error.
      * 
      * @param msg Message to print
      * @param e   The exception that occured
@@ -106,15 +106,6 @@ public class TcpForwarder implements Runnable {
         e.printStackTrace();
     }
 
-    /** 
-     * Should never happen.
-     * 
-     * @param e The exception that occured
-     */
-    static void impossible(Exception e) {
-        log("This shouldn't happen ...", e);
-    }
-
     /**
      * @return an InetAddress for the loopback-interface
      */
@@ -122,7 +113,7 @@ public class TcpForwarder implements Runnable {
         try {
             return Inet4Address.getByAddress(new byte[] {127, 0, 0, 1});
         } catch (UnknownHostException e) {
-            log("this shouldn't happen ...", e);
+            s_logger.warn("Unknown host", e);
             return null;
         }
     }
@@ -137,7 +128,7 @@ public class TcpForwarder implements Runnable {
         try {
             c.close();
         } catch (IOException e) {
-            log("closing failed, skipping ...", e);
+            s_logger.warn("closing failed, skipping ...", e);
         }
     }
 
@@ -148,10 +139,10 @@ public class TcpForwarder implements Runnable {
                 m_ssc = ServerSocketChannel.open();
                 m_ssc.socket().bind(new InetSocketAddress(localhost(), m_port));
             } catch (IOException e) {
-                log("binding to socket failed, aborting ...", e);
+                s_logger.warn("binding to socket failed, aborting ...", e);
                 return;
             }
-            trace("ServerSocket bound to "
+            s_logger.debug("ServerSocket bound to "
                 + m_ssc.socket().getLocalSocketAddress());
 
             while (true) {
@@ -159,12 +150,13 @@ public class TcpForwarder implements Runnable {
                 SocketChannel out;
                 try {
                     in = m_ssc.accept();
-                    trace("Connection accepted");
+                    s_logger.debug("Connection accepted");
                     out = SocketChannel.open(m_target);
                 } catch (ClosedChannelException e) {
                     break;
                 } catch (IOException e) {
-                    log("accepting incoming connection failed, aborting...", e);
+                    s_logger.warn("accepting incoming connection failed,"
+                        + " aborting...", e);
                     return;
                 }
                 new Link(this, in, out);
@@ -176,7 +168,7 @@ public class TcpForwarder implements Runnable {
                 try {
                     wait();
                 } catch (InterruptedException e) {
-                    impossible(e);
+                    s_logger.warn("Unexpected exception occurred", e);
                 }
             }
         }
@@ -276,8 +268,8 @@ public class TcpForwarder implements Runnable {
                         return AbstractTcpMsg.RST;
                     }
                 }
-                log("unrecognized exception, assuming the channel was "
-                    + "closed", e);
+                s_logger.warn("unrecognized exception, assuming the channel "
+                    + "was closed", e);
                 return AbstractTcpMsg.FIN;
             }
         }
@@ -286,7 +278,7 @@ public class TcpForwarder implements Runnable {
          * {@inheritDoc}
          */
         public void run() {
-            trace(toString() + " started");
+            s_logger.debug(toString() + " started");
             while (!m_done) {
                 AbstractTcpMsg msg;
                 try {
@@ -298,7 +290,7 @@ public class TcpForwarder implements Runnable {
                 process(msg);
             }
             done();
-            trace(toString() + " terminated");
+            s_logger.debug(toString() + " terminated");
         }
 
         /** 
@@ -307,7 +299,7 @@ public class TcpForwarder implements Runnable {
          * @param msg Message to print.
          */
         protected void process(AbstractTcpMsg msg) {
-            trace(toString() + " " + msg.toString());
+            s_logger.debug(toString() + " " + msg.toString());
             m_done = msg.last();
         }
 
@@ -350,10 +342,10 @@ public class TcpForwarder implements Runnable {
                 }
                 b.flip();
                 sc.write(b);
-                trace(getClass().getName() + " has written");
+                s_logger.debug(getClass().getName() + " has written");
                 b.flip();
                 sc.read(b);
-                trace(getClass().getName() + " has read");
+                s_logger.debug(getClass().getName() + " has read");
                 System.out.println(b);
             } catch (Exception e) {
                 System.err.println(e);
