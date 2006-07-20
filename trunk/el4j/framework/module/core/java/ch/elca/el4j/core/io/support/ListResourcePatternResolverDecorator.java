@@ -325,7 +325,7 @@ public class ListResourcePatternResolverDecorator
     /**
      * {@inheritDoc}
      */
-    public ClassLoader getClassLoader() {
+    /*public ClassLoader getClassLoader() {
         return m_patternResolver.getClassLoader();
-    }
+    }*/
 }
