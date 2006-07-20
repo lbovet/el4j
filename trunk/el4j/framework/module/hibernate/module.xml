@@ -18,7 +18,8 @@
         <dependency jar="jta-1.0.1b.jar"/>
         <dependency jar="antlr-2.7.6rc1.jar"/>
         <dependency jar="ehcache-1.2.1.jar"/>
-        <dependency jar="ejb3-persistence-3.1beta7.jar"/>
-        
+        <!-- 
+        	depedency ejb3-persistence-3.xxxxxx.jar is declared in module core
+       	 -->
     </module>
 </ant:project>
