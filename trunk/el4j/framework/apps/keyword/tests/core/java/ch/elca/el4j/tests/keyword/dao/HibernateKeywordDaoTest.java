@@ -40,6 +40,7 @@ public class HibernateKeywordDaoTest extends AbstractKeywordDaoTest {
             "classpath*:mandatory/*.xml",
             "classpath*:scenarios/db/raw/*.xml",
             "classpath*:scenarios/dataaccess/hibernate/*.xml",
+            //"classpath*:scenarios/dataaccess/ibatis/*.xml",
             "classpath*:optional/interception/transactionJava5Annotations.xml"};
     }
 
