@@ -104,6 +104,26 @@
         <url>http://www.elca.ch</url>
     </organization>
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/env</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>false</filtering>
+            </testResource>
+            <testResource>
+                <directory>src/test/env</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
         <pluginManagement>
             <plugins>
                 <!--
@@ -231,11 +251,55 @@
                     <artifactId>maven-source-plugin</artifactId>
                     <version>2.0.1</version>
                 </plugin>
+                
+                
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
-                    <version>2.0</version>
+                    <configuration>
+                        <warName>${jee-web.war.name}</warName>
+                        <webappDirectory>${jee-web.war.location}</webappDirectory>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>default</id>
+                            <goals>
+                                <goal>exploded</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
+                <plugin>
+                    <groupId>org.codehaus.cargo</groupId>
+                    <artifactId>cargo-maven2-plugin</artifactId>
+                    <version>0.3-SNAPSHOT</version>
+                    <configuration>
+                        <container>
+                            <containerId>${jee-web.containerId}</containerId>
+<!--                            <home>${jee-web.home}</home>-->
+                            <zipUrlInstaller>
+                                <url>${jee-web.zipDownloadUrl}</url>
+                                <installDir>${jee-web.installDir}</installDir>
+                            </zipUrlInstaller>
+                        </container>
+                        <configuration>
+                            <type>existing</type>
+                            <home>${jee-web.home}</home>
+                        </configuration>
+                        <deployer>
+                            <deployables>
+                                <deployable>
+                                    <location>${jee-web.war.location}</location>
+                                    <properties>
+                                        <context>${jee-web.context}</context>
+                                    </properties>
+                                </deployable>
+                            </deployables>
+                        </deployer>
+                    </configuration>
+                </plugin>
+            
+            
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
@@ -324,12 +388,12 @@
 
                 <!-- EL4J specific plugins -->
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
+                    <groupId>ch.elca.el4j.plugins</groupId>
                     <artifactId>maven-repohelper-plugin</artifactId>
                     <version>${version.maven-repohelper-plugin}</version>
                 </plugin>
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
+                    <groupId>ch.elca.el4j.plugins</groupId>
                     <artifactId>maven-manifest-decorator-plugin</artifactId>
                     <version>${version.maven-manifest-decorator-plugin}</version>
                     <executions>
@@ -393,6 +457,41 @@
             <id>fast</id>
             <properties>
                 <maven.test.skip>true</maven.test.skip>
+            </properties>
+        </profile>
+        <profile>
+            <id>rmi.settings.default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <rmi.host>localhost</rmi.host>
+                <rmi.port>8099</rmi.port>
+            </properties>
+        </profile>
+        <profile>
+            <id>jee-web.settings.war.exploded</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <jee-web.host>localhost</jee-web.host>
+                <jee-web.port>8080</jee-web.port>
+                <jee-web.war.name>${project.build.finalName}</jee-web.war.name>
+                <jee-web.war.location>${project.build.directory}/exploded-wars/${jee-web.war.name}</jee-web.war.location>
+                <jee-web.context>${project.artifactId}</jee-web.context>
+            </properties>
+        </profile>
+        <profile>
+            <id>jee-web.container.tomcat5x</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <jee-web.containerId>tomcat5x</jee-web.containerId>
+                <jee-web.zipDownloadUrl>${tomcat5x.zipDownloadUrl}</jee-web.zipDownloadUrl>
+                <jee-web.installDir>${tomcat5x.basedir}</jee-web.installDir>
+                <jee-web.home>${tomcat5x.home}</jee-web.home>
             </properties>
         </profile>
     </profiles>

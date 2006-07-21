@@ -17,10 +17,10 @@
 
     <artifactId>module-remoting-tests</artifactId>
     <version>${version.module-remoting-tests}</version>
-    <packaging>jar</packaging>
-    <name>EL4J module core integration tests</name>
+    <packaging>war</packaging>
+    <name>EL4J module for remoting tests</name>
     <description>
-        Integration test module for module core of the EL4J framework.
+        Test module for remoting modules of the EL4J framework.
     </description>
     <build>
     </build>
@@ -45,6 +45,10 @@
             <groupId>ch.elca.el4j</groupId>
             <artifactId>module-env</artifactId>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
         </dependency>
     </dependencies>
 </project>
