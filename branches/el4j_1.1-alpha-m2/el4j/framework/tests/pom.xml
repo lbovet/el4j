@@ -24,6 +24,7 @@
     <modules>
         <module>core</module>
         <module>core_integration</module>
+        <module>remoting</module>
     </modules>
     <dependencyManagement>
         <dependencies>
