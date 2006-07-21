@@ -8,6 +8,7 @@
         </p>
 #end
 
+#newsEntry("21/07/2006" "EL4J 1.1 planned for august: Maven and JDK 1.5 support, generic DAO, more integrations, ... ")
 #newsEntry("25/04/2006" "<b>EL4J 1.0.0</b> released.")
 #newsEntry("15/03/2006" "EL4J has been <b>moved from CVS to Subversion</b>.")
 #newsEntry("16/02/2006" "<b>EL4J 0.9.3</b> released.")
