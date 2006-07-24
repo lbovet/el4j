@@ -22,6 +22,8 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Entity;
+
 import org.hibernate.validator.NotNull;
 
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
@@ -40,6 +42,7 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  *
  * @author Martin Zeltner (MZE)
  */
+@Entity
 @CustomValidation()
 public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**

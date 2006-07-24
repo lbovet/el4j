@@ -18,6 +18,8 @@ package ch.elca.el4j.apps.refdb.dto;
 
 import java.util.Arrays;
 
+import javax.persistence.Entity;
+
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
@@ -33,6 +35,7 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  * 
  * @author Martin Zeltner (MZE)
  */
+@Entity
 public class FileDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * Primary key of related reference.
