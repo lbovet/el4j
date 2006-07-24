@@ -55,6 +55,7 @@ public class SettableRepositoryRegistry<R extends SimpleGenericRepository<?>>
      * Registers the passed repository.
      */
     public void register(R rep) {
+        injectInto(rep);
         m_repositories.put(rep.getPersistentClass(), rep);        
     }
     
