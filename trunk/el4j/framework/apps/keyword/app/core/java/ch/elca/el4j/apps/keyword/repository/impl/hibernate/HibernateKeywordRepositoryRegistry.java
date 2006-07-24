@@ -42,7 +42,7 @@ public class HibernateKeywordRepositoryRegistry
      * Constructor.
      */
     protected HibernateKeywordRepositoryRegistry() {
-        super.register(
+        super.setRepos(
             new HibernateKeywordRepository()
         );
     }

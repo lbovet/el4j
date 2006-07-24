@@ -44,6 +44,9 @@ import ch.elca.el4j.services.persistence.generic.repo.SimpleGenericRepository;
 public class SettableRepositoryRegistry<R extends SimpleGenericRepository<?>> 
     implements RepositoryRegistry, InitializingBean {
     
+    /** The preinstantiated repositories. */
+    private R[] m_presetRepositories;
+    
     /** The already created repositories. */
     private Map<Class<?>, R> m_repositories
         = new HashMap<Class<?>, R>();
@@ -68,8 +71,12 @@ public class SettableRepositoryRegistry<R extends SimpleGenericRepository<?>>
         }
     }
     
+    /**
+     * Schedules the passed repositories for registration once this registry's
+     * initialization is complete. 
+     */
     public void setRepos(R... reps) {
-        register(reps);
+        m_presetRepositories = reps;
     }
 
     /** {@inheritDoc} */
@@ -78,13 +85,16 @@ public class SettableRepositoryRegistry<R extends SimpleGenericRepository<?>>
         return (SimpleGenericRepository<T>) m_repositories.get(entityType);
     }
 
+    /** {@inheritDoc} */
     public void afterPropertiesSet() throws Exception {
-        for (R rep : m_repositories.values()) {
-            injectInto(rep);
-            
-            // TODO provide better BeanFactory illusion
-            if (rep instanceof InitializingBean) {
-                ((InitializingBean) rep).afterPropertiesSet();
+        if (m_presetRepositories != null) {
+            for (R rep : m_presetRepositories) {
+                register(rep);
+                
+                // TODO provide better BeanFactory illusion
+                if (rep instanceof InitializingBean) {
+                    ((InitializingBean) rep).afterPropertiesSet();
+                }
             }
         }
     }
