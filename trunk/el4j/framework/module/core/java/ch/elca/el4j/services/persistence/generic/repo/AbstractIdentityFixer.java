@@ -339,13 +339,12 @@ public abstract class AbstractIdentityFixer {
      * <p>The ID objects returned by this method 
      * must be value-comparable using {@code equals} 
      * (which implies that hashCode must be overridden as well).
-     * To permit garbage-collection, ids refering to parts of the object they
-     * identify should do so with weak references. You may assume that the id
-     * is not accessed after your weak reference is.
+     * To permit garbage-collection, ids refering to the object they
+     * identify should do so with weak references.
      */
-    // We query keys only while it is in the map, the map uses a weak reference,
-    // and if the part is weakly referenced, so is the object (because the 
-    // object has a hard reference to its part).
+    // Keys become eligible for collection shortly after the object they 
+    // identify becomes is weakly reachable (because the latter triggers removal
+    // from m_representatives.
     protected abstract Object id(Object o);
     
     /**

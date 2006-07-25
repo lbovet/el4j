@@ -16,7 +16,6 @@
  */
 package ch.elca.el4j.services.persistence.hibernate;
 
-import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.security.AccessController;
@@ -50,7 +49,8 @@ import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
  * <p> This class assumes that entities are annotated with 
  * {@link Entity}, and hibernate identities are stored in exactly one
  * property annotated with {@link Id}. Moreover, identity objects are required
- * to override equals and hashcode to provide a value comparison.
+ * to override equals and hashcode to provide a value comparison and must not be
+ * identical to the object they identify.
  * 
  * <p> This class needs {@link java.lang.reflect.ReflectPermission} 
  * "suppressAccessChecks" if a security manager is present and an object
@@ -71,29 +71,23 @@ public class HibernateProxyAwareIdentityFixer
     /**
      * A type holding an object's identity as required by 
      * {@link HibernateProxyAwareIdentityFixer#id(Object)}. 
-     * @param <HID> the type used to store the hibernate id
      */
     @ImplementationAssumption(
         "A hibernate-persisted object never changes its dynamic type.")
-    private static class ID<HID> {
+    private static class ID {
         /** The object's dynamic type. */
         Class<?> m_clazz;
         
         /** The object's hibernate id. */
-        HID m_hibernateId;
-        
-        /** Returns whether {@code other}'s hibernate id is equal to this'. */
-        boolean hidEquals(ID<?> other) {
-            return m_hibernateId.equals(other.m_hibernateId);
-        }
+        Object m_hibernateId;
         
         /** {@inheritDoc} */
         @Override
         public boolean equals(Object obj) {
             if (obj instanceof ID) {
                 ID other = (ID) obj;
-                return m_clazz.equals(other.m_clazz)
-                    && hidEquals(other);
+                return m_clazz.      equals(other.m_clazz)
+                    && m_hibernateId.equals(other.m_hibernateId);
             } else {
                 return false;
             }
@@ -106,29 +100,6 @@ public class HibernateProxyAwareIdentityFixer
         }
     }
     
-    /** For hibernate identities that refer to parts of the identified object.*/
-    private static class ReferringID extends ID<WeakReference<Object>> {
-        /** {@inheritDoc} */
-        @Override
-        boolean hidEquals(ID<?> other) {
-            assert m_hibernateId.get() != null;
-
-            if (other instanceof ReferringID) {
-                return m_hibernateId.get().equals(
-                    ((ReferringID) other).m_hibernateId.get());
-            } else {
-                return false;
-            }
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public int hashCode() {
-            assert m_hibernateId.get() != null;
-            return m_clazz.hashCode() ^ m_hibernateId.get().hashCode();
-        }
-    }
-
     /** Cache for {@link #idField(Class)}. */
     private static Map<Class<?>, Field> s_cachedIdFields
         = new HashMap<Class<?>, Field>();
@@ -177,15 +148,10 @@ public class HibernateProxyAwareIdentityFixer
                 Object hid = idf.get(o);
                 if (hid == null) {
                     return null;
-                } else if (idf.getType().isPrimitive()) {
-                    ID<Object> uid = new ID<Object>();
+                } else {
+                    ID uid = new ID();
                     uid.m_clazz = o.getClass();
                     uid.m_hibernateId = hid;
-                    return uid;
-                } else {
-                    ReferringID uid = new ReferringID();
-                    uid.m_clazz = o.getClass();
-                    uid.m_hibernateId = new WeakReference<Object>(hid);
                     return uid;
                 }
             } catch (IllegalAccessException e) { 
