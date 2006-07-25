@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+    <classpathentry excluding="**/CVS/" kind="src" path="java"/>
+    <classpathentry kind="con"
+                  path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+    <classpathentry exported="true" sourcepath="D:\Projects\el4j\external\framework\lib\src\junit-3.8.1-src.zip" kind="lib" path="D:\Projects\el4j\external\framework\lib\junit-3.8.1.jar"/>
+    <classpathentry exported="true" kind="src" path="/module-xml_merge"/>
+  <classpathentry kind="output" path="el4ant_eclipse_classes"/>
+</classpath>

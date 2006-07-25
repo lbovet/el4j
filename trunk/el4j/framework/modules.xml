@@ -20,6 +20,7 @@
     <include file="module/ibatis/module.xml"/>
     <include file="module/hibernate/module.xml"/>
     <include file="module/tcp_forwarder/module.xml"/>
+    <include file="module/xml_merge/module.xml"/>
 
     <!-- Application common modules. -->
     <include file="apps/common/database/module.xml"/>
@@ -45,6 +46,7 @@
     <include file="tests/env/module.xml"/>
     <include file="tests/daemon_manager/module.xml"/>
     <include file="tests/tcp_forwarder/module.xml"/>
+	<include file="tests/xml_merge/module.xml"/>
 
     <!-- Demo modules. -->
     <include file="demos/remoting/module.xml"/>

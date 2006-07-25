@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" xmlns:ant="antlib:org.apache.tools.ant">
+    <module name="module-xml_merge-tests">
+        <attribute name="set" value="framework-tests"/>
+        <attribute name="junit.runnable" value="true"/>
+        <dependency module="module-xml_merge"/>
+    </module>
+</ant:project>
