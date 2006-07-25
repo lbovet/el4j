@@ -21,7 +21,7 @@
     <plugin name="show"/>
 
     <!--
-        Plugin online library to automatically download missing libraries 
+        Plugin online library to automatically download missing libraries
         from possible locations. By setting property local to any value the
         online lib plugin will only search for libraries locally.
     -->
@@ -50,7 +50,7 @@ configuration task will consume less time.
                 <attribute name="onlinelib.repository" value="${basedir}/../lib/"/>
                 <attribute name="onlinelib.repository" value="${basedir}/../lib/src/"/>
                 <attribute name="onlinelib.repository" value="${basedir}/../modules/"/>
-                
+
                 <!-- Internet repositories -->
                 <attribute name="onlinelib.repository"
                     value="http://el4.elca-services.ch/el4j/lib/"/>
@@ -60,7 +60,7 @@ configuration task will consume less time.
                     value="http://el4.elca-services.ch/el4j/modules/"/>
                 <attribute name="onlinelib.repository"
                     value="http://el4.elca-services.ch/el4j/modules/sandbox/"/>
-                
+
                 <!-- ELCA internal repositories -->
                 <attribute name="onlinelib.repository"
                     value="http://leaffy/java/lib/"/>
@@ -132,32 +132,32 @@ configuration task will consume less time.
         <!-- Commented due to bug of javadoc ant task. Problem occurs only on windows. -->
         <!--[CDATA[Copyright &#169; 2005 ELCA, Lausanne, Switzerland. All Rights Reserved.]]-->
         <attribute name="javadoc.default.bottom">ELCA</attribute>
-        
+
         <!-- Group specific parameters for set "framework-modules". -->
         <attribute name="javadoc.framework-modules.access" value="protected"/>
         <attribute name="javadoc.framework-modules.doctitle">EL4J framework modules developer documentation</attribute>
         <attribute name="javadoc.framework-modules.windowtitle">EL4J API documentation - Framework modules</attribute>
-        
+
         <!-- Group specific parameters for set "framework-tests". -->
         <attribute name="javadoc.framework-tests.access" value="private"/>
         <attribute name="javadoc.framework-tests.doctitle">EL4J framework junit tests developer documentation</attribute>
         <attribute name="javadoc.framework-tests.windowtitle">EL4J API documentation - Framework junit tests</attribute>
-        
+
         <!-- Group specific parameters for set "framework-demos". -->
         <attribute name="javadoc.framework-demos.access" value="private"/>
         <attribute name="javadoc.framework-demos.doctitle">EL4J framework demonstrations developer documentation</attribute>
         <attribute name="javadoc.framework-demos.windowtitle">EL4J API documentation - Framework demonstrations</attribute>
-        
+
         <!-- Group specific parameters for set "application-modules". -->
         <attribute name="javadoc.application-modules.access" value="protected"/>
         <attribute name="javadoc.application-modules.doctitle">EL4J application modules developer documentation</attribute>
         <attribute name="javadoc.application-modules.windowtitle">EL4J API documentation - Application modules</attribute>
-        
+
         <!-- Group specific parameters for set "application-tests". -->
         <attribute name="javadoc.application-tests.access" value="private"/>
         <attribute name="javadoc.application-tests.doctitle">EL4J application junit tests developer documentation</attribute>
         <attribute name="javadoc.application-tests.windowtitle">EL4J API documentation - Application junit tests</attribute>
-        
+
         <!-- Group specific parameters for set "application-demos". -->
         <attribute name="javadoc.application-demos.access" value="private"/>
         <attribute name="javadoc.application-demos.doctitle">EL4J application demonstrations developer documentation</attribute>
@@ -238,6 +238,6 @@ configuration task will consume less time.
     <!-- Plugin to create "Ant free" start scripts. -->
     <plugin name="distribution" file="buildsystem/tools/distribution/distribution.xml">
        <attribute name="distribution.profiles.basedir" value="dist"/>
-       <attribute name="distribution.set.list" value="framework-demos,application-demos"/>
+       <attribute name="distribution.set.list" value="framework-modules,framework-demos,application-demos"/>
     </plugin>
 </ant:project>
