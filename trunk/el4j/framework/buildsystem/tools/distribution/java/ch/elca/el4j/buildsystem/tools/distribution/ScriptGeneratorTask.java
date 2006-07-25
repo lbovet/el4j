@@ -69,6 +69,12 @@ public class ScriptGeneratorTask extends Task {
     /** The folder where libraries were copied to. */
     public static final String LIB_DIRECTORY = "lib";
     
+    /**
+     *  The variable referencing the folder containing the script which
+     *  will be generated.
+     */
+    public static final String SCRIPT_DIRECTORY = "DISTRIBUTION_HOME";
+    
     /** The classpath items. */
     private String[] m_classpathItems;
     
@@ -178,7 +184,13 @@ public class ScriptGeneratorTask extends Task {
     private String buildPlatformSpecificClasspath(String delimiter) {
         StringBuffer buffer = new StringBuffer();
         for (int i = 0; i < m_classpathItems.length; i++) {
-            buffer.append(m_classpathItems[i]);
+        	if (delimiter.equals(DELIMITER_WINDOWS)) {
+        		buffer.append("%" + SCRIPT_DIRECTORY + "%/"  
+                    + m_classpathItems[i]);
+        	} else {
+        		buffer.append("$" + SCRIPT_DIRECTORY + "/"
+            		+ m_classpathItems[i]);
+        	}
             buffer.append(delimiter);
         }
         buffer.append(".");
@@ -201,7 +213,7 @@ public class ScriptGeneratorTask extends Task {
         
         for (int i = 0; i < TEMPLATES.length; i++) {
             String path = m_path + "/" + m_scriptName + "." + FILE_SIFFIXES[i];
-            log("Writing scritp file to '" + path + "'", Project.MSG_DEBUG);
+            log("Writing script file to '" + path + "'", Project.MSG_DEBUG);
             
             velocityEngine.setFile(new File(path));
             velocityEngine.setTemplate(TEMPLATES[i]);
