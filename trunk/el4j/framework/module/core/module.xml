@@ -8,15 +8,15 @@
         <dependency jar="log4j-1.2.11.jar"/>
         <dependency jar="bcel-5.1.jar"/>
         <dependency jar="cglib-nodep-2.1_2.jar"/>
-        <dependency jar="jdom.jar"/>
+        <dependency jar="jdom-1.0.jar"/>
         <dependency jar="commons-lang-2.1.jar"/>
         <dependency jar="commons-collections-3.1.jar"/>
         <dependency jar="commons-attributes-api-el4ant_20051129.jar"/>
         <dependency jar="easymock-1.1.jar"/>
         <dependency jar="easymockclassextension-1.1.jar"/>
         <dependency jar="which4j-0.21.jar"/>
-        
+
         <!-- annotations for generic persistence support -->
-        <dependency jar="ejb3-persistence-3.1beta7.jar"/> 
+        <dependency jar="ejb3-persistence-3.1beta7.jar"/>
     </module>
 </ant:project>
