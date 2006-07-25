@@ -22,7 +22,6 @@ import java.util.List;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
-import org.springframework.dao.OptimisticLockingFailureException;
 
 /**
  * Extends the SimpleGenericRepository with a few convenience methods.

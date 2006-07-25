@@ -16,6 +16,7 @@
  */
 package ch.elca.el4j.services.persistence.generic.repo;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.security.AccessController;
@@ -26,30 +27,66 @@ import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.collections.map.AbstractReferenceMap;
 import org.apache.commons.collections.map.ReferenceMap;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.aop.IntroductionInterceptor;
+import org.springframework.aop.framework.ProxyFactory;
+import org.springframework.aop.support.IntroductionInfoSupport;
 
 import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier.NewEntityState;
+import ch.elca.el4j.services.persistence.generic.repo.annotations.ReturnsUnchangedParameter;
 import ch.elca.el4j.services.persistence.generic.repo.impl.DefaultRepositoryChangeNotifier;
-
 
 /**
  * Fixes object identities mangled by loosing ORM context or by remoting.
  * 
- * <p>We call objects in the database logical objects, and their fully 
- * materialized local proxies representatives. 
+ * <h4>Motivation</h4>
  * 
- * <p> An IdentityFixer ensures uniqueness of representatives, i.e. for every 
- * logical object, an IdentityFixer will always return the same representative. 
+ * Object Identity is an important concept in OOP, but is not always 
+ * guaranteed or maintained. For instance, sending an object back and
+ * forth over the wire (using any standard remoting protocal) will create new
+ * objects, causing changes applied to the object not to propagate properly -
+ * even within a single VM. Similarly, loosing an OR-Mapper's context between 
+ * load invocations typically results in creating multiplie proxies to the same 
+ * persisted object. Accepting that loss of identity complicates the programming
+ * model, and contradicts OO methodology. 
  * 
- * <p> An IdentityFixer can be shown a new version of a logical object to update
- * the representative's state.
+ * <p> Given a definition of logical identity and a means to recognize 
+ * immutable value types, an instance of this class fixes the identities of the 
+ * objects passing through it while propagating state updates to the logical
+ * object's unique representative.
  * 
- * <p> If the client refrains from 
- * checking the dynamic type or the identity of non-materialized proxies, every
- * proxy to a logical object behaves exactly like this object unless 
- * non-materialized properties are accessed.
+ * <h4>Terminology</h4>
+ * A <i>representative</i> is an object that has a logical identity. A given
+ * identity fixer will always return the same representative for every logical 
+ * identity, different identity fixers may return different ones. Usually,
+ * you will therefore use a singleton identity fixer, but you may allocate as
+ * many as you please ;-)
  * 
+ * <h4>Configuration</h4>
+ * To get a working identity fixer, you must write a subclass and override the
+ * two abstract methods, {@link #id(Object)} and {@link #immutableValue(Object)}
+ * . 
+ * 
+ * <h4>Use</h4>
+ * All objects received from an identity-mangling source should pass through an
+ * identity fixer. {@link GenericInterceptor} provides a generic Spring AOP 
+ * interceptor to be wrapped around the identity-mangling objects. As an
+ * alternative, manual
+ * access to indentity translation is granted by {@link #merge(Object, Object)}.
+ * 
+ * <h4>Guarantees</h4>
+ * During its lifetime, an identity fixer will always return the same object
+ * for every logical identity. It will update the shared instance with the state
+ * of the new copies, and notify registered observers about every such update.
+ * These guarantees extend to objects (directly or indirecly) referenced by the
+ * translated object unless they are recognized as immutable values by
+ * {@link #immutableValue(Object)}.
+ * 
+ * <h4>Requirements</h4>
  * <p> This class needs {@link java.lang.reflect.ReflectPermission} 
  * "suppressAccessChecks" if a security manager is present and an object
  * requiring fixing has non-public fields.
@@ -64,10 +101,25 @@ import ch.elca.el4j.services.persistence.generic.repo.impl.DefaultRepositoryChan
  * @author Adrian Moos (AMS)
  */
 public abstract class AbstractIdentityFixer {
+    /**
+     * Id for objects of anynomous types (= value types).
+     */
+    protected static final Object ANONYMOUS = new Object();
+    
     /** Cache for {@link #fields(Class)}. */
-    private static Map<Class<?>, List<Field>> s_cachedFields 
+    static Map<Class<?>, List<Field>> s_cachedFields 
         = new HashMap<Class<?>, List<Field>>();
-        
+
+    /** The logger. */
+    static Log s_logger = LogFactory.getLog(AbstractIdentityFixer.class);
+    
+    /** ID generator for logging. */
+    static ObjectIdentifier s_oi = new ObjectIdentifier();    
+    
+    
+    /** Indendation for tracing. */
+    int m_traceIndentation = 0;
+    
     /** The notifier for broadcasting changes. */
     RepositoryChangeNotifier m_changeNotifier;
     
@@ -76,7 +128,8 @@ public abstract class AbstractIdentityFixer {
      * @see #id(Object)
      */
     Map<Object, Object> m_representatives; 
-    
+
+
     /**
      * Constructs a new IdentityFixer. You'd never have guessed that, would you?
      * ;-)
@@ -92,9 +145,33 @@ public abstract class AbstractIdentityFixer {
     @SuppressWarnings("unchecked")
     public AbstractIdentityFixer(RepositoryChangeNotifier changeNotifier) {
         m_changeNotifier = changeNotifier;
-        
-        int weak = AbstractReferenceMap.WEAK;
-        m_representatives = new ReferenceMap(weak, weak);
+        m_representatives = new ReferenceMap(
+            AbstractReferenceMap.HARD, AbstractReferenceMap.WEAK);
+    }
+    
+    /**
+     * Returns the notifier used to announce changes. Chiefly useful because
+     * you can subscribe to change messages there.
+     * @return see above
+     */
+    public RepositoryChangeNotifier getChangeNotifier() {
+        return m_changeNotifier;
+    }
+    
+    
+    /**
+     * Returns a list of all non-static fields of class {@code c}.
+     */
+    protected static List<Field> instanceFields(Class<?> c) {
+        List<Field> fs = new ArrayList<Field>();
+        for (Class<?> sc = c; sc != null; sc = sc.getSuperclass()) {
+            for (Field f : sc.getDeclaredFields()) {
+                if (!Modifier.isStatic(f.getModifiers())) {
+                    fs.add(f);
+                }
+            }
+        }
+        return fs;
     }
     
     /**
@@ -103,7 +180,7 @@ public abstract class AbstractIdentityFixer {
      * @param c the class whose fields are desired
      * @return see above.
      */
-    private List<Field> fields(Class<?> c) {
+    private static List<Field> fields(Class<?> c) {
         List<Field> fields = s_cachedFields.get(c);
         if (fields == null) {
             fields = instanceFields(c);
@@ -126,129 +203,264 @@ public abstract class AbstractIdentityFixer {
         }
         return fields;
     }
-    
+
     /**
-     * Returns a list of all non-static fields of class {@code c}.
-     */
-    protected static List<Field> instanceFields(Class<?> c) {
-        List<Field> fs = new ArrayList<Field>();
-        for (Class<?> sc = c; sc != null; sc = sc.getSuperclass()) {
-            for (Field f : sc.getDeclaredFields()) {
-                if (!Modifier.isStatic(f.getModifiers())) {
-                    fs.add(f);
-                }
-            }
-        }
-        return fs;
-    }
-    
-    /**
-     * Returns the notifier used to announce changes. Chiefly useful because
-     * you can subscribe to change messages there.
-     * @return see above
-     */
-    public RepositoryChangeNotifier getChangeNotifier() {
-        return m_changeNotifier;
-    }
-    
-    /**
-     * Actually performs the merge. 
-     * @see #merge(Object, Object)
-     * @param anchor see {@link #merge(Object, Object)}
-     * @param updated see {@link #merge(Object, Object)}
-     * @param reached the set of referenced objects that were already discovered
-     *                (the call discovering  an object is responsible for
-     *                updating it)
-     * @return the representative.
+     * Actually performs the merge.
+     *  
+     * @param anchor
+     *              the (presumed) representative, or null
+     * @param updated 
+     *              the new version of the object
+     * @param isIdentical 
+     *              whether anchor is known to be transitively identical with 
+     *              updated.
+     * @param reached 
+     *              the set of objects in the updated object graph that have
+     *              been (or are beeing) merged. Used to avoid merging an 
+     *              object more than once. 
+     * @return 
+     *              the representative.
      */
     @SuppressWarnings("unchecked")
-    protected <T> T doMerge(T anchor, T updated, 
-                            IdentityHashMap<Object, Object> reached) {
-        
-        assert needsFixing(updated) : updated;
-        assert id(updated) != null;
-        
+    protected <T> T merge(T anchor, T updated, 
+                          boolean isIdentical,
+                          IdentityHashMap<Object, Object> reached) {
+        if (immutableValue(updated)) {
+            trace("", updated, " is an immutable value");
+            return updated;
+        }
+                
+        T attached = (T) reached.get(updated);
+        if (attached != null) {
+            trace("",  updated, " was already merged to ", attached);
+            return attached;
+        }
+
         // choose representative
-        T attached;
-        if (anchor == null) {
-            attached = (T) m_representatives.get(id(updated));
+        //s_logger.debug(m_representatives);
+        Object id = id(updated);
+        if (isIdentical) {
+            attached = anchor;
+            assert id(anchor) == null
+                || id(anchor) == ANONYMOUS
+                || id(anchor).equals(id);
+        } else {
+            if (id == ANONYMOUS) {
+                attached = anchor;
+            } else {
+                assert id != null;
+                attached = (T) m_representatives.get(id);
+            }
+            
             if (attached == null) {
                 attached = updated;
             }
-        } else {
-            assert id(anchor) == null 
-                || id(anchor).equals(id(updated));
-            attached = anchor;
-            m_representatives.put(id(attached), attached);
+        }
+        assert attached != null;
+        if (id != ANONYMOUS && id != null) {
+            m_representatives.put(id, attached);
         }
         
-        // merge state if not already done
-        if (!reached.containsKey(attached)) {
-            reached.put(attached, null);
+        // register representative
+        reached.put(updated, attached);
+        
+        trace("merging ", updated, " to ", attached);
+        m_traceIndentation++;
+        if (updated.getClass().isArray()) {
+            
+            int l = Array.getLength(updated);
+            assert Array.getLength(attached) == Array.getLength(updated);
+            for (int i = 0; i < l; i++) {
+                Array.set(
+                    attached, i,
+                    merge(
+                        anchor != null ? Array.get(anchor, i) : null,
+                        Array.get(updated, i),
+                        isIdentical,
+                        reached
+                    )
+                );
+            }            
+        } else {
             for (Field f : fields(updated.getClass())) {
-                f.setAccessible(true);
-                // remove access protection from f
-                
                 try {
                     f.set(
                         attached,
-                        mergeIfNeeded(
+                        merge(
                             anchor != null ? f.get(anchor) : null,
-                            f.get(updated)
+                            f.get(updated),
+                            isIdentical,
+                            reached
                         )
                     );
                 } catch (IllegalAccessException e) { assert false : e; }
             }
-
-            NewEntityState e = new NewEntityState();
-            e.changee = attached;
-            m_changeNotifier.announce(e);
         }
-               
+        m_traceIndentation--;
+
+        // notify state change
+        NewEntityState e = new NewEntityState();
+        e.changee = attached;
+        m_changeNotifier.announce(e);
+        
         return attached;
     }
     
-    
     /**
-     * Updates the unique representitive by duplicating the state in
+     * Updates the unique representative by duplicating the state in
      * {@code updated}. If no representative exists so far, one is created.
      * 
-     * @param anchor the representative known to be identical with updated,
-     *               or null, if the representative's logical identity is 
-     *               already defined.
-     * @return the representative
+     * <p>For every potentially modified entity, {@link NewEntityState} 
+     * notification are sent using the configured change notifier.
+     * 
+     * @param anchor 
+     *              the representative known to be transitively identical 
+     *              with {@code updated}, or null, if the representative's  
+     *              logical identity is already defined.
+     * @param updated
+     *              The object holding the new state.
+     * @return The representative.
      */
-    @SuppressWarnings("unchecked")
     public <T> T merge(T anchor, T updated) {
-        return doMerge(anchor, updated, new IdentityHashMap<Object, Object>());
-    }
-
-    /**
-     * Merges if updated is materialized, immediately returns {@code updated} 
-     * otherwise.
-     * @see #merge(Object, Object)
-     */
-    public Object mergeIfNeeded(Object anchor, Object updated) {
-        return needsFixing(updated)
-             ? merge(anchor, updated)
-             : updated;
+        return merge(
+            anchor, 
+            updated, 
+            anchor != null, 
+            new IdentityHashMap<Object, Object>()
+        ); 
     }
     
     /** 
      * Returns the globally unique, logical id for the provided object, or 
-     * {@code null}, if it has no id (yet). 
+     * {@code null}, if it has no id (yet), or {@link #ANONYMOUS} is this object
+     * is of value type. {@code o} may be null, point to an ordinary object or
+     * to an array.
      * 
-     * The ID objects returned by this method 
+     * <p>The ID objects returned by this method 
      * must be value-comparable using {@code equals} 
      * (which implies that hashCode must be overridden as well).
+     * To permit garbage-collection, ids refering to parts of the object they
+     * identify should do so with weak references. You may assume that the id
+     * is not accessed after your weak reference is.
      */
+    // We query keys only while it is in the map, the map uses a weak reference,
+    // and if the part is weakly referenced, so is the object (because the 
+    // object has a hard reference to its part).
     protected abstract Object id(Object o);
     
     /**
-     * Returns whether the supplied object needs identity fixing, i.e. if its
-     * identity matters 
-     * (i.e. not a conceptional value type like {@code String}).
-     * and it is materialized. 
+     * Returns whether the given reference represents an immutable value, either
+     * because it really is a value ({@code null}) or because the referenced 
+     * object's identity is not accessed and its state is not modified. 
+     * {@code o} may be null, point to an ordinary object or to an array.
      */
-    protected abstract boolean needsFixing(Object o);
+    protected abstract boolean immutableValue(Object o);
+    
+    /** 
+     * A generic "around advice" (as defined in AOP terminology) for remote
+     * objects. This interceptor works "out of the box" unless incoming objects
+     * have unknown logical identity. If this occurs, it attempts to infer
+     * logical identity from {@link ReturnsUnchangedParameter} annotations.
+     */
+    public class GenericInterceptor
+            extends IntroductionInfoSupport 
+            implements IntroductionInterceptor {
+
+        /** 
+         * Constructor.
+         * @param fixedInterface The marker-interface to be "introduced".
+         */
+        @SuppressWarnings("unchecked")
+        public GenericInterceptor(Class<?> fixedInterface) {
+            publishedInterfaces.add(fixedInterface);
+        }
+        
+        /** {@inheritDoc} */
+        public Object invoke(MethodInvocation invocation) throws Throwable {
+            Object result = invocation.proceed();
+            ReturnsUnchangedParameter rp 
+                = invocation.getMethod().getAnnotation(
+                    ReturnsUnchangedParameter.class
+                );
+            return (rp != null) 
+                 ? merge(invocation.getArguments()[rp.value()], result) 
+                 : merge(null, result);
+        }
+
+        /**
+         * Convenience method returning a proxy to the supplied object
+         * that implements this "advice".
+         * @param o .
+         * @return .
+         */
+        @SuppressWarnings("unchecked")
+        public Object decorate(Object o) {
+            ProxyFactory pf = new ProxyFactory(o);
+            pf.setProxyTargetClass(true);
+            pf.addAdvice(this);                
+            return pf.getProxy();
+        }
+    }
+    
+    
+    ////////////
+    // Tracing
+    ////////////
+    
+    /** 
+     * Logs a trace message. The arguments are assembled on a single line. It
+     * is assumed that arguments with even index are strings to be printed, and
+     * arguments with odd index are objects whose class and identity should be
+     * inserted.
+     * @param os .
+     */
+    void trace(Object... os) {
+        if (s_logger.isDebugEnabled()) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < m_traceIndentation; i++) {
+                sb.append("    ");
+            }
+            boolean isLiteral = false;
+            for (Object o : os) {
+                isLiteral = o instanceof String && !isLiteral;
+                if (isLiteral) {
+                    sb.append(o);
+                } else {
+                    s_oi.format(o, sb);                    
+                }
+            }
+            s_logger.debug(sb);
+        }
+    }
+
+    /**
+     * For tracing. Assigns names to traced objects to identify them in
+     * trace output.
+     */
+    private static class ObjectIdentifier {
+        /** The next id to be assigned. */
+        int m_maxid = 0;
+        
+        /** Maps every already encountered object to its id. */
+        IdentityHashMap<Object, Integer> m_seen 
+            = new IdentityHashMap<Object, Integer>();
+        
+        /** 
+         * Prints {code o}'s class and id to {@code toAppendTo}.
+         * @return {@code toAppendTo} (for call chaining)
+         */
+        public StringBuilder format(Object obj, StringBuilder toAppendTo) {
+            if (obj == null) {
+                return toAppendTo.append("null");
+            } else {
+                Integer id = m_seen.get(obj);
+                if (id == null) {
+                    id = m_maxid++;
+                    m_seen.put(obj, id);
+                }
+                return toAppendTo.append(obj.getClass().getSimpleName())
+                                 .append(id.toString());
+            }
+        }
+    }   
 }

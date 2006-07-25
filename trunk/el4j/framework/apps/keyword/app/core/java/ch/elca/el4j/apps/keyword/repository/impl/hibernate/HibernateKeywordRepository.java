@@ -47,7 +47,7 @@ public class HibernateKeywordRepository
      * Creates a new HibernateKeywordRepository instance.
      */
     public HibernateKeywordRepository() {
-        super(KeywordDto.class);
+        setPersistentClass(KeywordDto.class);
     }
     
     /**
@@ -66,7 +66,5 @@ public class HibernateKeywordRepository
         } else {
             return (KeywordDto) keywordList.get(0);
         }
-        
     }
-    
 }

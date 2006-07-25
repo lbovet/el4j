@@ -23,10 +23,12 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
 import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcher;
+import ch.elca.el4j.services.persistence.generic.repo.IdentityFixedRepository;
 import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeListener;
 import ch.elca.el4j.services.persistence.generic.repo.SimpleGenericRepository;
 import ch.elca.el4j.services.persistence.generic.repo.impl.DefaultRepositoryChangeNotifier;
 import ch.elca.el4j.services.search.QueryObject;
+
 
 /**
  * A LazyRepositoryWatcher that automatically reloads beans if a concurrent

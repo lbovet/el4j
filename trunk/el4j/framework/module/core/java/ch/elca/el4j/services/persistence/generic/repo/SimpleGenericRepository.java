@@ -22,6 +22,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
+import ch.elca.el4j.services.persistence.generic.repo.annotations.ReturnsUnchangedParameter;
 import ch.elca.el4j.services.search.QueryObject;
 
 /**
@@ -75,7 +76,7 @@ public interface SimpleGenericRepository<T> {
     List<T> findAll() throws DataAccessException;   
     
     /**
-     * Re-read the state of the given entity from the underlying database. 
+     * Re-reads the state of the given entity from the underlying database. 
      */
     T refresh(T entity);
 
@@ -93,6 +94,7 @@ public interface SimpleGenericRepository<T> {
      *             If domain object has been modified in the meantime   
      * @return The saved or updated domain object
      */
+    @ReturnsUnchangedParameter
     T saveOrUpdate(T entity) throws DataAccessException,
         DataIntegrityViolationException, OptimisticLockingFailureException;
 

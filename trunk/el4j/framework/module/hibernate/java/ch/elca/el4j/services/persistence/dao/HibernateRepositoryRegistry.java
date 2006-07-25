@@ -70,7 +70,8 @@ public class HibernateRepositoryRegistry
             = (GenericHibernateRepository<T, ?>)
                 super.getFor(entityType);
         if (hr == null) {
-            hr = new GenericHibernateRepository<T, Serializable>(entityType);
+            hr = new GenericHibernateRepository<T, Serializable>();
+            hr.setPersistentClass(entityType);
             register(hr);
         }
         return hr;

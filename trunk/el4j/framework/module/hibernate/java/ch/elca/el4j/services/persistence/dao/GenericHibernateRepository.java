@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.hibernate.LockMode;
 import org.hibernate.criterion.DetachedCriteria;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -29,8 +30,10 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ch.elca.el4j.services.persistence.generic.repo.ConvenientGenericRepository;
+import ch.elca.el4j.services.persistence.generic.repo.annotations.ReturnsUnchangedParameter;
 import ch.elca.el4j.services.persistence.hibernate.criteria.CriteriaTransformer;
 import ch.elca.el4j.services.search.QueryObject;
+import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
  * 
@@ -54,23 +57,25 @@ import ch.elca.el4j.services.search.QueryObject;
  */
 public class GenericHibernateRepository<T, ID extends Serializable>
     extends HibernateDaoSupport
-    implements ConvenientGenericRepository<T, ID> {
+    implements ConvenientGenericRepository<T, ID>, InitializingBean {
     
     /**
      * The domain class this repository is responsible for.
      */
     private Class<T> m_persistentClass;
-
-    /**
-     * Creates a new Hibernate-specific repository.
-     * 
+    
+    /** 
      * @param c
-     *            The domain class this repository is responsible for.
+     *           Mandatory. The domain class this repository is responsible for.
      */
-    public GenericHibernateRepository(Class<T> c) {
-        // Since it is impossible to determine the actual type of a type 
-        // parameter (!), we resort to requiring the caller to provide the
-        // actual type as parameter, too. 
+    // Since it is impossible to determine the actual type of a type 
+    // parameter (!), we resort to requiring the caller to provide the
+    // actual type as parameter, too.
+    // Not set in a constructor to enable easy CGLIB-proxying (passing 
+    // constructor arguments to Spring AOP proxies is quite cumbersome).
+    public void setPersistentClass(Class<T> c) {
+        assert m_persistentClass == null;
+        Reject.ifNull(c);
         m_persistentClass = c;
     }
 
@@ -78,6 +83,7 @@ public class GenericHibernateRepository<T, ID extends Serializable>
      * @return Returns the domain class this repository is responsible for.
      */
     public Class<T> getPersistentClass() {
+        assert m_persistentClass != null;
         return m_persistentClass;
     }
 
@@ -133,6 +139,7 @@ public class GenericHibernateRepository<T, ID extends Serializable>
     /**
      * {@inheritDoc}
      */
+    @ReturnsUnchangedParameter
     @SuppressWarnings("unchecked")
     public T saveOrUpdate(T entity) throws DataAccessException,
         DataIntegrityViolationException, OptimisticLockingFailureException {

@@ -22,8 +22,9 @@ import java.util.Map;
 import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcher;
 import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcherRegistry;
 import ch.elca.el4j.services.persistence.generic.repo.AbstractIdentityFixer;
-import ch.elca.el4j.services.persistence.generic.repo.RepositoryRegistry;
+import ch.elca.el4j.services.persistence.generic.repo.IdentityFixedRepository;
 import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier.Change;
+import ch.elca.el4j.services.persistence.generic.repo.RepositoryRegistry;
 
 /**
  * Wraps a repository registry's repositories with 
@@ -49,7 +50,7 @@ public class DefaultLazyRepositoryWatcherRegistry
     /**
      * The identity fixer to be injected.
      */
-    protected AbstractIdentityFixer m_identityFixer;
+    protected AbstractIdentityFixer.GenericInterceptor m_identityFixerAdvice;
     
     /** 
      * The already created repository watchers.
@@ -65,8 +66,9 @@ public class DefaultLazyRepositoryWatcherRegistry
     public DefaultLazyRepositoryWatcherRegistry(AbstractIdentityFixer ifixer,
                                                 RepositoryRegistry backing) {
         m_backing = backing;
-        m_identityFixer = ifixer;
-        m_identityFixer.getChangeNotifier().subscribe(this);
+        ifixer.getChangeNotifier().subscribe(this);
+        m_identityFixerAdvice 
+            = ifixer.new GenericInterceptor(IdentityFixedRepository.class);
     }
 
     /** {@inheritDoc} */
@@ -78,10 +80,10 @@ public class DefaultLazyRepositoryWatcherRegistry
         if (rep == null) {
             rep = new DefaultLazyRepositoryWatcher<T>(
                 this,
-                new IdentityFixedRepository(
-                    m_identityFixer,
-                    m_backing.getFor(entityType)
-                )
+                (IdentityFixedRepository<T>) 
+                    m_identityFixerAdvice.decorate(
+                        m_backing.getFor(entityType)
+                    )
             );
             m_repWatchers.put(entityType, rep);
         }

@@ -16,18 +16,44 @@
  */
 package temp;
 
+import org.aopalliance.intercept.MethodInvocation;
+import org.springframework.aop.IntroductionInterceptor;
+import org.springframework.aop.framework.ProxyFactory;
+import org.springframework.aop.support.IntroductionInfoSupport;
+
 public class Sandbox {
-    static Class<?> c;
-    
-    static <T> T cast(Class<T> t) {
-        return null;
+    static interface X {
+        
     }
     
-    static <T> T ocast() {
-        return null;
+    public static class RealX implements X { } 
+    
+    static interface Y extends X {
+        void foo();
+    }
+    
+    static class Z extends IntroductionInfoSupport implements IntroductionInterceptor {
+        Z() {
+            publishedInterfaces.add(Y.class);
+        }
+        
+        public Object invoke(MethodInvocation invocation) throws Throwable {
+            System.out.println(invocation);
+            return null;
+        }
+    }
+    
+    static void proxy(X x) {
+        ProxyFactory pf = new ProxyFactory();
+        pf.setTarget(x);
+        pf.setProxyTargetClass(true);
+        pf.addAdvice(new Z());
+        ((Y) pf.getProxy()).foo();
+        
+        
     }
     
     public static void main(String[] args) throws Exception {
-        System.out.println(Class.forName("ch.elca.el4j.apps.lightrefdb.dom.Reference"));
+        proxy(new RealX());
     }
 }
