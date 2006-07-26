@@ -34,5 +34,11 @@ import ch.elca.el4j.services.persistence.generic.repo.RepositoryRegistry;
  */
 public interface RepositoryAgency 
          extends RepositoryRegistry,
-                 RepositoryChangeListener {    
+                 RepositoryChangeListener {
+    
+    /** 
+     * Returns the repository agent responsible for entities of type 
+     * {@code entityType}. 
+     */
+    <T> RepositoryAgent<T> getFor(Class<T> entityType);
 }
