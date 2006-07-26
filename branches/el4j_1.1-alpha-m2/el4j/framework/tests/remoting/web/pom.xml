@@ -11,28 +11,27 @@
     <!-- Author: $Author$ -->
 
     <parent>
-        <groupId>ch.elca.el4j</groupId>
-        <artifactId>el4j-framework-tests</artifactId>
+        <groupId>ch.elca.el4j.tests</groupId>
+        <artifactId>el4j-framework-tests-remoting</artifactId>
         <version>1.1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>module-remoting-tests</artifactId>
+    <artifactId>module-remoting-tests-web</artifactId>
     <version>${version.module-remoting-tests}</version>
     <packaging>war</packaging>
-    <name>EL4J module for remoting tests</name>
+    <name>EL4J web module for remoting tests</name>
     <description>
-        Test module for remoting modules of the EL4J framework.
+        Test web module for remoting modules of the EL4J framework.
     </description>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
+                <artifactId>maven-jar-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>integration-test</phase>
                         <goals>
-                            <goal>test</goal>
+                            <goal>jar</goal>
                         </goals>
                     </execution>
                 </executions>
