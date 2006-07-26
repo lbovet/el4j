@@ -30,7 +30,7 @@ import ch.elca.el4j.services.gui.richclient.executors.displayable.ExecutorDispla
 import ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm;
 import ch.elca.el4j.services.gui.richclient.utils.Services;
 import ch.elca.el4j.services.gui.richclient.views.DialogPageView;
-import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcherRegistry;
+import ch.elca.el4j.services.persistence.generic.RepositoryAgency;
 import ch.elca.el4j.services.persistence.generic.repo.ConvenientGenericRepository;
 import ch.elca.el4j.services.persistence.generic.repo.SimpleGenericRepository;
 import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
@@ -282,7 +282,7 @@ public class Edit extends AbstractGenericView {
         
         GenericComponent gc = new GenericComponent();
         Executor<T> exec = new Executor<T>(); 
-        exec.m_repository = Services.get(LazyRepositoryWatcherRegistry.class)
+        exec.m_repository = Services.get(RepositoryAgency.class)
                                     .getFor(clazz);
         exec.setBeanPropertiesForms(new BeanPropertiesForm[] {form});
         exec.setDisplayable(gc);

@@ -26,7 +26,7 @@ import org.springframework.binding.form.FormModel;
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
 import ch.elca.el4j.services.gui.richclient.forms.binding.swing.AbstractDynamicListBinding;
 import ch.elca.el4j.services.gui.richclient.utils.Services;
-import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcherRegistry;
+import ch.elca.el4j.services.persistence.generic.RepositoryAgency;
 
 /**
  * Dynmaic binding list for keywords.
@@ -58,7 +58,7 @@ public class KeywordDynamicListBinding extends AbstractDynamicListBinding {
      * {@inheritDoc}
      */
     protected List getActualSelectableItems() {
-        return Services.get(LazyRepositoryWatcherRegistry.class)
+        return Services.get(RepositoryAgency.class)
                        .getFor(KeywordDto.class)
                        .findAll();
     }

@@ -20,7 +20,7 @@ import ch.elca.el4j.apps.keyword.dto.KeywordDto;
 import ch.elca.el4j.apps.refdb.gui.support.RefdbSchemas;
 import ch.elca.el4j.services.gui.richclient.executors.convenience.AbstractBeanNewExecutor;
 import ch.elca.el4j.services.gui.richclient.utils.Services;
-import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcherRegistry;
+import ch.elca.el4j.services.persistence.generic.RepositoryAgency;
 import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
 
 /**
@@ -49,7 +49,7 @@ public class KeywordNewExecutor extends AbstractBeanNewExecutor {
      */
     protected PrimaryKeyObject saveBean(PrimaryKeyObject newBean) {
         KeywordDto newKeyword = (KeywordDto) newBean;
-        return Services.get(LazyRepositoryWatcherRegistry.class)
+        return Services.get(RepositoryAgency.class)
                        .getFor(KeywordDto.class)
                        .saveOrUpdate(newKeyword);
     }

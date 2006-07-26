@@ -18,13 +18,12 @@ package ch.elca.el4j.services.gui.richclient.commands;
 
 import org.springframework.richclient.command.support.ApplicationWindowAwareCommand;
 
-import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcherRegistry;
+import ch.elca.el4j.services.persistence.generic.RepositoryAgency;
 
 import static ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier.FUZZY_CHANGE;
 
 /**
- * A command to request an refreshing data loaded using a lazy repository
- * watcher registry. 
+ * A command to request refreshing a {@link RepositoryAgency}'s data.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -36,23 +35,20 @@ import static ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNot
  * @author Adrian Moos (AMS)
  */
 public class RepositoryRefreshCommand extends ApplicationWindowAwareCommand {
-    /**
-     * The lazy repository watcher registry the components to be refreshed
-     * use.
-     */
-    protected LazyRepositoryWatcherRegistry m_watcherRegistry;
+    /** The repository agency  used by the components to be refreshed. */
+    protected RepositoryAgency m_agency;
     
     /**
      * Default constructor.
      */
-    public RepositoryRefreshCommand(LazyRepositoryWatcherRegistry reg) {
+    public RepositoryRefreshCommand(RepositoryAgency agency) {
         super("refreshCommand");
-        m_watcherRegistry = reg;
+        m_agency = agency;
     }
     
     /** {@inheritDoc} */
     @Override
     protected void doExecuteCommand() {
-        m_watcherRegistry.process(FUZZY_CHANGE);
+        m_agency.process(FUZZY_CHANGE);
     }
 }

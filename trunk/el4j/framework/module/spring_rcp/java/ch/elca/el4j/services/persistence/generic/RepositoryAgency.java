@@ -16,16 +16,12 @@
  */
 package ch.elca.el4j.services.persistence.generic;
 
-import ch.elca.el4j.services.persistence.generic.repo.IdentityFixedRepository;
+import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeListener;
+import ch.elca.el4j.services.persistence.generic.repo.RepositoryRegistry;
 
 /**
- * Instances intercept access to the repository and broadcast concurrent 
- * changes discovered during such accesses to all registered observers, thereby
- * providing them with consistent information. Note that the notfications need 
- * not reflect the current state of the database,
- * though they'll strive to be as current as possible.
- * 
- * @param <T> The type of entities accessible through this view.
+ * A registry for {@link RepositoryAgent}s relaying change notifications
+ * to the approapriate notifiers.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -36,8 +32,7 @@ import ch.elca.el4j.services.persistence.generic.repo.IdentityFixedRepository;
  *
  * @author Adrian Moos (AMS)
  */
-public interface LazyRepositoryWatcher<T> 
-        extends IdentityFixedRepository<T>,
-                HierarchyRepositoryChangeNotifier { 
-    
+public interface RepositoryAgency 
+         extends RepositoryRegistry,
+                 RepositoryChangeListener {    
 }

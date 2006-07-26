@@ -81,15 +81,15 @@
     	<property name="services">
     		<map>
     			<entry>
-    				<key><value>ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcherRegistry</value></key>
-    				<ref bean="repoWatcherRegistry"/>
+    				<key><value>ch.elca.el4j.services.persistence.generic.RepositoryAgency</value></key>
+    				<ref bean="repoAgency"/>
     			</entry>
     		</map>
     	</property>
    	</bean>
    	
-   	<bean id="repoWatcherRegistry"
-   		class="ch.elca.el4j.services.persistence.generic.impl.DefaultLazyRepositoryWatcherRegistry">
+   	<bean id="repoAgency"
+   		class="ch.elca.el4j.services.persistence.generic.impl.DefaultRepositoryAgency">
    		<constructor-arg><ref bean="identityFixer"/></constructor-arg>
    		<constructor-arg><ref bean="repoRegistry"/></constructor-arg>
    	</bean>

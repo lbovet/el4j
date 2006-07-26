@@ -25,8 +25,8 @@ import org.springframework.aop.support.DelegatingIntroductionInterceptor;
 import org.springframework.dao.OptimisticLockingFailureException;
 
 import ch.elca.el4j.services.persistence.generic.HierarchyRepositoryChangeNotifier;
-import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcher;
-import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcherRegistry;
+import ch.elca.el4j.services.persistence.generic.RepositoryAgency;
+import ch.elca.el4j.services.persistence.generic.RepositoryAgent;
 import ch.elca.el4j.services.persistence.generic.repo.AbstractIdentityFixer;
 import ch.elca.el4j.services.persistence.generic.repo.IdentityFixedRepository;
 import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier.Change;
@@ -37,7 +37,7 @@ import static ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNot
 
 /**
  * Wraps a repository registry's repositories with 
- * {@link LazyRepositoryWatcher}.
+ * {@link RepositoryAgent}.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -48,8 +48,8 @@ import static ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNot
  *
  * @author Adrian Moos (AMS)
  */
-public class DefaultLazyRepositoryWatcherRegistry 
-    implements LazyRepositoryWatcherRegistry {
+public class DefaultRepositoryAgency 
+    implements RepositoryAgency {
 
     /**
      * The backing registry.
@@ -64,15 +64,15 @@ public class DefaultLazyRepositoryWatcherRegistry
     /** 
      * The already created repository watchers.
      */
-    protected Map<Class<?>, LazyRepositoryWatcher<?>> m_repWatchers 
-        = new HashMap<Class<?>, LazyRepositoryWatcher<?>>();
+    protected Map<Class<?>, RepositoryAgent<?>> m_repWatchers 
+        = new HashMap<Class<?>, RepositoryAgent<?>>();
     
     
     /**
      * Constructor.
      * @param backing the backing registry.
      */
-    public DefaultLazyRepositoryWatcherRegistry(AbstractIdentityFixer ifixer,
+    public DefaultRepositoryAgency(AbstractIdentityFixer ifixer,
                                                 RepositoryRegistry backing) {
         m_backing = backing;
         ifixer.getChangeNotifier().subscribe(this);
@@ -82,23 +82,23 @@ public class DefaultLazyRepositoryWatcherRegistry
 
     /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
-    public <T> LazyRepositoryWatcher<T> getFor(Class<T> entityType) {
-        LazyRepositoryWatcher<T> rep
-            = (LazyRepositoryWatcher<T>)
+    public <T> RepositoryAgent<T> getFor(Class<T> entityType) {
+        RepositoryAgent<T> rep
+            = (RepositoryAgent<T>)
                 m_repWatchers.get(entityType);
         if (rep == null) {
             ProxyFactory pf = new ProxyFactory();
             pf.setProxyTargetClass(true);
             pf.addAdvice(
                 new WatcherIntroducer(
-                    LazyRepositoryWatcher.class,
+                    RepositoryAgent.class,
                     new DefaultHierarchyRepositoryChangeNotifier<T>(entityType)
                 )
             );
             pf.addAdvice(m_identityFixerAdvice);
             pf.setTarget(m_backing.getFor(entityType));
             
-            rep = (LazyRepositoryWatcher<T>) pf.getProxy();
+            rep = (RepositoryAgent<T>) pf.getProxy();
             m_repWatchers.put(entityType, rep);
         }
         return rep;
@@ -108,7 +108,7 @@ public class DefaultLazyRepositoryWatcherRegistry
      * Asks all repositories to announce this change if they are responsible.
      */
     public void process(Change change) {
-        for (LazyRepositoryWatcher<?> w : m_repWatchers.values()) {
+        for (RepositoryAgent<?> w : m_repWatchers.values()) {
             w.announceIfResponsible(change);
         }
     }
@@ -126,7 +126,7 @@ public class DefaultLazyRepositoryWatcherRegistry
          */
         @SuppressWarnings("unchecked")
         public WatcherIntroducer(
-                Class<? extends LazyRepositoryWatcher> intf,
+                Class<? extends RepositoryAgent> intf,
                 HierarchyRepositoryChangeNotifier cn) {
             super(cn);
             publishedInterfaces.add(intf);      

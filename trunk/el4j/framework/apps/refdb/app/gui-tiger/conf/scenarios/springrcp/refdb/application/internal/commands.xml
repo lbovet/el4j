@@ -121,7 +121,7 @@
     
     <bean id="refreshCommand"
     	class="ch.elca.el4j.services.gui.richclient.commands.RepositoryRefreshCommand">
-    	<constructor-arg><ref bean="repoWatcherRegistry"/></constructor-arg>
+    	<constructor-arg><ref bean="repoAgency"/></constructor-arg>
   	</bean>
     
     <bean id="helpContentsCommand" 
