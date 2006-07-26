@@ -25,7 +25,7 @@
                 <artifactId>maven-eclipse-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
+                <groupId>ch.elca.el4j.plugins</groupId>
                 <artifactId>maven-manifest-decorator-plugin</artifactId>
             </plugin>
         </plugins>
