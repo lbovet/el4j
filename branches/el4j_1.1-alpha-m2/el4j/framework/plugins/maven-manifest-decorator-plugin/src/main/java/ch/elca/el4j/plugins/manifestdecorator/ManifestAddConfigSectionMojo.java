@@ -107,10 +107,9 @@ public class ManifestAddConfigSectionMojo extends AbstractMojo {
      */
     public void execute() throws MojoExecutionException {
         String packaging = project.getPackaging();
-        if (!StringUtils.hasText(packaging) || !packaging.contains("jar")) {
-            getLog().info("Packaging of project " + project.getGroupId() + ":" 
-                + project.getArtifactId() 
-                + " is not set to 'jar'. Project will be skipped!");
+        if (!StringUtils.hasText(packaging) || packaging.contains("pom")) {
+            getLog().info("No manifest config section property creation for "
+                + "pom project.");
             return;
         }
         
