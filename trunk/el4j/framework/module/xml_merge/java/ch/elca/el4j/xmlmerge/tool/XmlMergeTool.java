@@ -134,9 +134,7 @@ public class XmlMergeTool {
      */
     public static void usage() {
         System.err
-            .println("java -cp xmlmerge.jar;jdom.jar;jaxen-full.jar;"
-                + "saxpath.jar;[dtdparser121.jar] ch.elca.el4j.xmlmerge.tool."
-                + "Main [-config <config-file>] file1 file2 [file3 ...]");
+           .println("xmlmerge [-config <config-file>] file1 file2 [file3 ...]");
         System.exit(1);
     }
 }
