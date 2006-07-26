@@ -16,9 +16,7 @@
  */
 package ch.elca.el4j.services.persistence.generic;
 
-import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier;
-import ch.elca.el4j.services.persistence.generic.repo.SimpleGenericRepository;
-
+import ch.elca.el4j.services.persistence.generic.repo.IdentityFixedRepository;
 
 /**
  * Instances intercept access to the repository and broadcast concurrent 
@@ -38,12 +36,8 @@ import ch.elca.el4j.services.persistence.generic.repo.SimpleGenericRepository;
  *
  * @author Adrian Moos (AMS)
  */
-public interface LazyRepositoryWatcher<T> extends SimpleGenericRepository<T>,
-                                                  RepositoryChangeNotifier { 
+public interface LazyRepositoryWatcher<T> 
+        extends IdentityFixedRepository<T>,
+                HierarchyRepositoryChangeNotifier { 
     
-    /**
-     * Announces {@code change} if this watcher is responsible
-     * for announcing it, otherwise it simply returns.
-     */
-    void announceIfResponsible(Change change);
 }

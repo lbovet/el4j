@@ -19,12 +19,20 @@ package ch.elca.el4j.services.persistence.generic.impl;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.aopalliance.intercept.MethodInvocation;
+import org.springframework.aop.framework.ProxyFactory;
+import org.springframework.aop.support.DelegatingIntroductionInterceptor;
+import org.springframework.dao.OptimisticLockingFailureException;
+
+import ch.elca.el4j.services.persistence.generic.HierarchyRepositoryChangeNotifier;
 import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcher;
 import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcherRegistry;
 import ch.elca.el4j.services.persistence.generic.repo.AbstractIdentityFixer;
 import ch.elca.el4j.services.persistence.generic.repo.IdentityFixedRepository;
 import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier.Change;
 import ch.elca.el4j.services.persistence.generic.repo.RepositoryRegistry;
+
+import static ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier.FUZZY_CHANGE;
 
 /**
  * Wraps a repository registry's repositories with 
@@ -78,24 +86,64 @@ public class DefaultLazyRepositoryWatcherRegistry
             = (LazyRepositoryWatcher<T>)
                 m_repWatchers.get(entityType);
         if (rep == null) {
-            rep = new DefaultLazyRepositoryWatcher<T>(
-                this,
-                (IdentityFixedRepository<T>) 
-                    m_identityFixerAdvice.decorate(
-                        m_backing.getFor(entityType)
-                    )
+            ProxyFactory pf = new ProxyFactory();
+            pf.setProxyTargetClass(true);
+            pf.addAdvice(
+                new WatcherIntroducer(
+                    LazyRepositoryWatcher.class,
+                    new DefaultHierarchyRepositoryChangeNotifier<T>(entityType)
+                )
             );
+            pf.addAdvice(m_identityFixerAdvice);
+            pf.setTarget(m_backing.getFor(entityType));
+            
+            rep = (LazyRepositoryWatcher<T>) pf.getProxy();
             m_repWatchers.put(entityType, rep);
         }
         return rep;
     }
 
     /** 
-     * Asks all repositories to announce this change.
+     * Asks all repositories to announce this change if they are responsible.
      */
     public void process(Change change) {
         for (LazyRepositoryWatcher<?> w : m_repWatchers.values()) {
             w.announceIfResponsible(change);
+        }
+    }
+    
+    /**
+     * Introduces a watcher that automatically reloads beans if a concurrent
+     * modification is detected.
+     */
+    protected class WatcherIntroducer
+            extends DelegatingIntroductionInterceptor {
+        
+        /**
+         * Constructor.
+         * @param intf The interface to be introduced.
+         */
+        @SuppressWarnings("unchecked")
+        public WatcherIntroducer(
+                Class<? extends LazyRepositoryWatcher> intf,
+                HierarchyRepositoryChangeNotifier cn) {
+            super(cn);
+            publishedInterfaces.add(intf);      
+        }
+        
+        /** {@inheritDoc} */
+        public Object invoke(MethodInvocation invocation) throws Throwable {
+            if (isMethodOnIntroducedInterface(invocation)) {
+                return super.invoke(invocation);
+            } else {
+                try {
+                    // TODO: fire notifications on deletion
+                    return invocation.proceed();
+                } catch (OptimisticLockingFailureException e) {
+                    process(FUZZY_CHANGE);
+                    throw e;
+                }
+            }
         }
     }
 }
