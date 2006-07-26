@@ -16,6 +16,7 @@
  */
 package ch.elca.el4j.apps.refdb.gui.executors;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
@@ -51,9 +52,14 @@ public class KeywordDeleteExecutor
      */
     @Override
     protected void deleteBeans(List<KeywordDto> beans) {
+        ArrayList<Object> keys = new ArrayList<Object>(); 
+        for (PrimaryKeyObject pko : beans) {
+            keys.add(pko.getKeyAsObject());
+        }
+        
         ReferenceService referenceService = ServiceBroker.getReferenceService();
-        referenceService.removeKeywords(beans);
-    }        
+        referenceService.removeKeywords(keys);
+    }
             
     /**
      * {@inheritDoc}
