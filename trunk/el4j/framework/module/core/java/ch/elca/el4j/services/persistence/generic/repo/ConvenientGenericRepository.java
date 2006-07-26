@@ -86,5 +86,6 @@ public interface ConvenientGenericRepository<T, ID extends Serializable>
      * @throws DataAccessException
      *             If general data access problem occurred
      */
-    void delete(ID id) throws DataAccessException;
+    void delete(ID id) throws DataIntegrityViolationException, 
+                              DataAccessException;
 }
