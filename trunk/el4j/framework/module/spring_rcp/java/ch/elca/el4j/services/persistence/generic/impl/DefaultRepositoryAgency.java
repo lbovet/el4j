@@ -62,9 +62,9 @@ public class DefaultRepositoryAgency
     protected AbstractIdentityFixer.GenericInterceptor m_identityFixerAdvice;
     
     /** 
-     * The already created repository watchers.
+     * The already created agents.
      */
-    protected Map<Class<?>, RepositoryAgent<?>> m_repWatchers 
+    protected Map<Class<?>, RepositoryAgent<?>> m_agents 
         = new HashMap<Class<?>, RepositoryAgent<?>>();
     
     
@@ -85,12 +85,12 @@ public class DefaultRepositoryAgency
     public <T> RepositoryAgent<T> getFor(Class<T> entityType) {
         RepositoryAgent<T> rep
             = (RepositoryAgent<T>)
-                m_repWatchers.get(entityType);
+                m_agents.get(entityType);
         if (rep == null) {
             ProxyFactory pf = new ProxyFactory();
             pf.setProxyTargetClass(true);
             pf.addAdvice(
-                new WatcherIntroducer(
+                new AgentIntroducer(
                     RepositoryAgent.class,
                     new DefaultHierarchyRepositoryChangeNotifier<T>(entityType)
                 )
@@ -99,7 +99,7 @@ public class DefaultRepositoryAgency
             pf.setTarget(m_backing.getFor(entityType));
             
             rep = (RepositoryAgent<T>) pf.getProxy();
-            m_repWatchers.put(entityType, rep);
+            m_agents.put(entityType, rep);
         }
         return rep;
     }
@@ -108,16 +108,16 @@ public class DefaultRepositoryAgency
      * Asks all repositories to announce this change if they are responsible.
      */
     public void process(Change change) {
-        for (RepositoryAgent<?> w : m_repWatchers.values()) {
+        for (RepositoryAgent<?> w : m_agents.values()) {
             w.announceIfResponsible(change);
         }
     }
     
     /**
-     * Introduces a watcher that automatically reloads beans if a concurrent
+     * Introduces an agent that automatically reloads beans if a concurrent
      * modification is detected.
      */
-    protected class WatcherIntroducer
+    protected class AgentIntroducer
             extends DelegatingIntroductionInterceptor {
         
         /**
@@ -125,7 +125,7 @@ public class DefaultRepositoryAgency
          * @param intf The interface to be introduced.
          */
         @SuppressWarnings("unchecked")
-        public WatcherIntroducer(
+        public AgentIntroducer(
                 Class<? extends RepositoryAgent> intf,
                 HierarchyRepositoryChangeNotifier cn) {
             super(cn);
