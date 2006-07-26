@@ -18,6 +18,18 @@ package ch.elca.el4j.services.persistence.generic;
 
 import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier;
 
+/**
+ * A RepositoryChangeNotifier with a sense of responsibility ;-)  .
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Adrian Moos (AMS)
+ */
 public interface HierarchyRepositoryChangeNotifier
         extends RepositoryChangeNotifier {
 
