@@ -40,8 +40,10 @@ import ch.elca.el4j.services.search.QueryObject;
  * );</script>
  *
  * @author Adrian Moos (AMS)
+ * @deprecated use {@link AbstractIdentityFixer.GenericInterceptor} instead.
  * @see AbstractIdentityFixer
  */
+@Deprecated
 public class IdentityFixedRepository<T> implements SimpleGenericRepository<T> {
     /** The fixer to be used. */
     AbstractIdentityFixer m_fixer;
