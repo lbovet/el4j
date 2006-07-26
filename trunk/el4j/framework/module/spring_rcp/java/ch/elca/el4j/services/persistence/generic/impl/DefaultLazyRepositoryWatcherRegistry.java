@@ -30,6 +30,7 @@ import ch.elca.el4j.services.persistence.generic.LazyRepositoryWatcherRegistry;
 import ch.elca.el4j.services.persistence.generic.repo.AbstractIdentityFixer;
 import ch.elca.el4j.services.persistence.generic.repo.IdentityFixedRepository;
 import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier.Change;
+import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier.EntityDeleted;
 import ch.elca.el4j.services.persistence.generic.repo.RepositoryRegistry;
 
 import static ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier.FUZZY_CHANGE;
@@ -137,8 +138,16 @@ public class DefaultLazyRepositoryWatcherRegistry
                 return super.invoke(invocation);
             } else {
                 try {
-                    // TODO: fire notifications on deletion
-                    return invocation.proceed();
+                    Object retVal = invocation.proceed();
+                    // TODO: fire notifications for cascadingly deleted entities
+                    //       and generify detection of delete methods.
+                    //       (have them return the set of deleted objects?)
+                    if ("delete".equals(invocation.getMethod().getName())) {
+                        EntityDeleted ed = new EntityDeleted();
+                        ed.changee = invocation.getArguments()[0];
+                        process(ed);
+                    }
+                    return retVal;
                 } catch (OptimisticLockingFailureException e) {
                     process(FUZZY_CHANGE);
                     throw e;
