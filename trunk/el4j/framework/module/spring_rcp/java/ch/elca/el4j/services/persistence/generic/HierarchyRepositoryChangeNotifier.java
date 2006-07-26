@@ -34,7 +34,7 @@ public interface HierarchyRepositoryChangeNotifier
         extends RepositoryChangeNotifier {
 
     /**
-     * Announces {@code change} if this watcher is responsible
+     * Announces {@code change} if this notifier is responsible
      * for announcing it, otherwise it simply returns.
      */
     void announceIfResponsible(Change change);
