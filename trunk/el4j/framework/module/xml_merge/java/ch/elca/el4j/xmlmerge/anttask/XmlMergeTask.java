@@ -58,7 +58,7 @@ import ch.elca.el4j.xmlmerge.config.PropertyXPathConfigurer;
  * <pre>
  *   &lt;target name="test-task">
  *       &lt;taskdef name="xmlmerge" classname="ch.elca.el4j.xmlmerge.anttask.XmlMergeTask"
- *           classpath="xmlmerge.jar;jdom.jar;jaxen-full.jar;saxpath.jar "/>
+ *           classpath="module-xml_merge.jar;jdom.jar;jaxen.jar;saxpath.jar "/>
  *       
  *       &lt;xmlmerge dest="out.xml" conf="test.properties">
  *           &lt;fileset dir="test">

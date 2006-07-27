@@ -3,14 +3,23 @@
 	xmlns:ant="antlib:org.apache.tools.ant">
 	<module name="module-xml_merge">
 
-		<attribute name="distribution.name" value="xmlmerge"/>
-		<attribute name="runtime.runnable" value="true" />
-		<attribute name="runtime.class"
-			value="ch.elca.el4j.xmlmerge.tool.XmlMergeTool" />
-		<attribute name="runtime.command.creator"
-			value="runtime.command.creator.basic" />
-		<hook name="runtime.[module].[eu]"
-			target="runtime.hook.cmdline.arguments" />
+		<eu name="console">
+			<attribute name="distribution.name" value="xmlmerge"/>
+			<attribute name="runtime.runnable" value="true" />
+			<attribute name="runtime.class"
+				value="ch.elca.el4j.xmlmerge.tool.XmlMergeTool" />
+			<attribute name="runtime.command.creator"
+				value="runtime.command.creator.basic" />
+			<hook name="runtime.[module].[eu]"
+				target="runtime.hook.cmdline.arguments" />
+		</eu>
+		
+		<eu name="web">
+			<attribute name="runtime.runnable" value="true"/>
+        	<attribute name="j2ee.war.application" value="xmlmerge"/>
+        	<attribute name="runtime.command.creator"
+            	value="runtime.command.creator.web"/>
+		</eu>
 
 		<attribute name="set" value="framework-modules" />
 		<dependency module="module-core" />
