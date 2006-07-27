@@ -11,16 +11,16 @@
 
     <parent>
         <groupId>ch.elca.el4j.tests</groupId>
-        <artifactId>el4j-framework-tests</artifactId>
+        <artifactId>el4j-framework-tests-core</artifactId>
         <version>1.1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>module-core-tests</artifactId>
+    <artifactId>module-core_integration_parent-tests</artifactId>
     <version>${version.module-core}</version>
     <packaging>jar</packaging>
-    <name>EL4J module core tests</name>
+    <name>EL4J module core integration tests - parent</name>
     <description>
-        Test module for module core of the EL4J framework.
+        Parent integration test module for module core of the EL4J framework.
     </description>
     <build>
     </build>
