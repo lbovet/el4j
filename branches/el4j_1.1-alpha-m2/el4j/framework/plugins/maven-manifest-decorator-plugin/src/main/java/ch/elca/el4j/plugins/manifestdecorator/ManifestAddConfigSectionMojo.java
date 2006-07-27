@@ -84,6 +84,14 @@ public class ManifestAddConfigSectionMojo extends AbstractMojo {
     protected String separator;
 
     /**
+     * Packaging name for normal jars.
+     *
+     * @parameter expression="${packagingNameJar}" default-value="jar"
+     * @required
+     */
+    protected String packagingNameJar;
+    
+    /**
      * Packaging name for test jars.
      *
      * @parameter expression="${packagingNameTestJar}" default-value="test-jar"
@@ -106,8 +114,9 @@ public class ManifestAddConfigSectionMojo extends AbstractMojo {
      * {@inheritDoc}
      */
     public void execute() throws MojoExecutionException {
-        String packaging = project.getPackaging();
-        if (!StringUtils.hasText(packaging) || packaging.contains("pom")) {
+        String projectPackaging = project.getPackaging();
+        if (!StringUtils.hasText(projectPackaging) 
+            || projectPackaging.contains("pom")) {
             getLog().info("No manifest config section property creation for "
                 + "pom project.");
             return;
@@ -117,7 +126,7 @@ public class ManifestAddConfigSectionMojo extends AbstractMojo {
          * Create the id for the current module.
          */
         String manifestModule = project.getGroupId() + ":" 
-            + project.getArtifactId() + ":" + packaging;
+            + project.getArtifactId() + ":" + packagingNameJar;
         String manifestTestModule = project.getGroupId() + ":" 
             + project.getArtifactId() + ":" + packagingNameTestJar;
         
