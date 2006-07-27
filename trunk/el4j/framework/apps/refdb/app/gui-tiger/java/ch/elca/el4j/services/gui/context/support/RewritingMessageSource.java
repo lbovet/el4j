@@ -34,7 +34,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.util.StringUtils;
 
-import ch.elca.el4j.services.gui.context.support.MessageRewriter.Rule;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
