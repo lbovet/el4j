@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.services.gui.context.support;
+package ch.elca.el4j.services.i18n;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
