@@ -7,7 +7,7 @@ following steps:
   ant jars.rec.module.module-xml_merge
 
 # Create an executable distribution of the xml_merge module:
-  ant create.distribution.module.module-xml_merge
+  create.distribution.module.eu.module-xml_merge.console
   
 # The executable distribution can be found in the module-xml_merge-default 
   folder under <EL4J_HOME>/external/framework/dist/distribution. You can copy 
