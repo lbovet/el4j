@@ -21,11 +21,11 @@ import java.util.List;
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
 import ch.elca.el4j.apps.lightrefdb.dom.Keyword;
 import ch.elca.el4j.apps.refdb.gui.support.RefdbSchemas;
+import ch.elca.el4j.services.gui.richclient.executors.convenience.AbstractBeanDeleteExecutor;
 import ch.elca.el4j.services.gui.richclient.utils.Services;
 import ch.elca.el4j.services.persistence.generic.RepositoryAgency;
 import ch.elca.el4j.services.persistence.generic.repo.ConvenientGenericRepository;
 import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
-import ch.elca.el4j.services.richclient.components.executors.AbstractBeanDeleteExecutor;
 
 /**
  * Executor to delete keywords.
