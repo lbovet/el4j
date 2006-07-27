@@ -38,7 +38,7 @@ import static java.lang.Character.toUpperCase;
  *
  * @author Adrian Moos (AMS)
  */
-public class Utilities implements MessageRewriter.Rule {
+public class RewritingUtilities implements MessageRewriter.Rule {
     /** A utility function. */
     protected abstract static class Function {
         /** The function's name. */
@@ -85,7 +85,7 @@ public class Utilities implements MessageRewriter.Rule {
      * Creates a utility function package called {@code Utils} and 
      * adds default utility functions.
      */
-    public Utilities() {
+    public RewritingUtilities() {
         this("Utils.");
     }
     
@@ -93,7 +93,7 @@ public class Utilities implements MessageRewriter.Rule {
      * Constructor. Adds default utility functions.
      * @param packageName the package name as used to form keys.
      */
-    public Utilities(String packageName) {
+    public RewritingUtilities(String packageName) {
         m_requiredPrefix = packageName;
         for (Function f : s_defaultFunctions) {
             add(f);

@@ -25,7 +25,7 @@
         <property name="additionalRules">
         	<list>
         		<ref bean="fieldTypeResolver"/>
-        		<bean class="ch.elca.el4j.services.richclient.naming.Utilities"/>
+        		<bean class="ch.elca.el4j.services.richclient.naming.RewritingUtilities"/>
         	</list>
         </property>
     </bean>
