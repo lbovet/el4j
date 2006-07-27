@@ -20,11 +20,10 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.context.support.MessageSourceAccessor;
-import org.springframework.util.StringUtils;
 
 import ch.elca.el4j.core.exceptions.MisconfigurationRTException;
-import ch.elca.el4j.services.dom.info.EntityType;
-import ch.elca.el4j.services.dom.info.Property;
+import ch.elca.el4j.util.dom.reflect.EntityType;
+import ch.elca.el4j.util.dom.reflect.Property;
 
 
 
@@ -41,15 +40,15 @@ import ch.elca.el4j.services.dom.info.Property;
  *
  * @author Adrian Moos (AMS)
  */
-public class Naming {
+public class MessageProvider {
     /** the default Naming. */
-    private static Naming s_instance;
+    private static MessageProvider s_instance;
     
     /** the backing message source. */
     MessageSourceAccessor m_source;
 
     /** @param ms the backing message source */
-    public Naming(MessageSource ms) {
+    public MessageProvider(MessageSource ms) {
         m_source = new MessageSourceAccessor(ms);
     }
     
@@ -260,7 +259,7 @@ public class Naming {
     }
     
     /** returns the registered default naming. */
-    public static Naming instance() {
+    public static MessageProvider instance() {
         if (s_instance == null) {
             throw new MisconfigurationRTException(
                 "no default Naming was registered"
@@ -270,7 +269,7 @@ public class Naming {
     }
     
     /** registers the default naming instance. */
-    public static void setInstance(Naming n) {
+    public static void setInstance(MessageProvider n) {
         s_instance = n;
     }
 }
