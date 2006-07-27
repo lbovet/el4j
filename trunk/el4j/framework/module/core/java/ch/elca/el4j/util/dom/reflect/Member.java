@@ -14,13 +14,12 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.services.dom.info;
+package ch.elca.el4j.util.dom.reflect;
 
-import java.lang.reflect.Method;
+import ch.elca.el4j.util.collections.helpers.Function;
 
-/** represents an operation. Operations are declared using public methods (
- * that are neither getters nor setters). 
- * 
+/** represents a type's member.
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -30,16 +29,24 @@ import java.lang.reflect.Method;
  *
  * @author Adrian Moos (AMS)
  */
-public class Operation extends Member {
-    /**
-     * Constructor.
-     * @param declaring the declaring type.
-     * @param m the implementing method.
-     */
-    Operation(EntityType declaring, Method m) {
-        super(
-            declaring,
-            m.getName()
-        );
+public abstract class Member {
+    /** Maps a member to its name. */
+    static final Function<Member, String> toName
+        = new Function<Member, String>() {
+            public String apply(Member d) {
+                return d.name;
+            }
+        };
+    
+    /** the entity type declaring this member. */
+    public final EntityType declaringType;
+    
+    /** this member's name. */
+    public final String name;
+    
+    /***/
+    Member(EntityType declaring, String n) {
+        declaringType = declaring;
+        name = n;
     }
 }

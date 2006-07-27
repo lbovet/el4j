@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.services.dom.annotations;
+package ch.elca.el4j.util.dom.annotations;
 
 import java.lang.annotation.*;
 

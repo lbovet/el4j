@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.services.dom.info;
+package ch.elca.el4j.util.dom.reflect;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
