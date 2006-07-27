@@ -264,19 +264,8 @@
                             <type>existing</type>
                             <home>${jee-web.home}</home>
                         </configuration>
-                        <!--<deployer>
-                            <deployables>
-                                <deployable>
-                                    <location>${jee-web.war.location}</location>
-                                    <properties>
-                                        <context>${jee-web.context}</context>
-                                    </properties>
-                                </deployable>
-                            </deployables>
-                        </deployer>
-                    --></configuration>
+                    </configuration>
                 </plugin>
-            
             
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
