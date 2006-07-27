@@ -509,12 +509,13 @@
 
             <!-- module-core -->
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-core</artifactId>
                 <version>${version.module-core}</version>
+                <type>jar</type>
             </dependency>
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-core</artifactId>
                 <version>${version.module-core}</version>
                 <type>test-jar</type>
@@ -523,12 +524,13 @@
             
             <!-- module-daemon_manager -->
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-daemon_manager</artifactId>
                 <version>${version.module-daemon_manager}</version>
+                <type>jar</type>
             </dependency>
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-daemon_manager</artifactId>
                 <version>${version.module-daemon_manager}</version>
                 <type>test-jar</type>
@@ -537,12 +539,13 @@
             
             <!-- module-env -->
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-env</artifactId>
                 <version>${version.module-env}</version>
+                <type>jar</type>
             </dependency>
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-env</artifactId>
                 <version>${version.module-env}</version>
                 <type>test-jar</type>
@@ -551,12 +554,13 @@
             
             <!-- module-exception_handling -->
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-exception_handling</artifactId>
                 <version>${version.module-exception_handling}</version>
+                <type>jar</type>
             </dependency>
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-exception_handling</artifactId>
                 <version>${version.module-exception_handling}</version>
                 <type>test-jar</type>
@@ -565,12 +569,13 @@
             
             <!-- module-hibernate -->
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-hibernate</artifactId>
                 <version>${version.module-hibernate}</version>
+                <type>jar</type>
             </dependency>
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-hibernate</artifactId>
                 <version>${version.module-hibernate}</version>
                 <type>test-jar</type>
@@ -579,12 +584,13 @@
             
             <!-- module-ibatis -->
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-ibatis</artifactId>
                 <version>${version.module-ibatis}</version>
+                <type>jar</type>
             </dependency>
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-ibatis</artifactId>
                 <version>${version.module-ibatis}</version>
                 <type>test-jar</type>
@@ -593,12 +599,13 @@
             
             <!-- module-jmx -->
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-jmx</artifactId>
                 <version>${version.module-jmx}</version>
+                <type>jar</type>
             </dependency>
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-jmx</artifactId>
                 <version>${version.module-jmx}</version>
                 <type>test-jar</type>
@@ -607,26 +614,63 @@
             
             <!-- module-light_statistics -->
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
-                <artifactId>module-light_statistics</artifactId>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-light_statistics-common</artifactId>
                 <version>${version.module-light_statistics}</version>
+                <type>jar</type>
             </dependency>
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
-                <artifactId>module-light_statistics</artifactId>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-light_statistics-common</artifactId>
                 <version>${version.module-light_statistics}</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
-            
-            <!-- module-remoting_core -->
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
-                <artifactId>module-remoting_core</artifactId>
-                <version>${version.module-remoting_core}</version>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-light_statistics-jmx</artifactId>
+                <version>${version.module-light_statistics}</version>
+                <type>jar</type>
             </dependency>
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-light_statistics-jmx</artifactId>
+                <version>${version.module-light_statistics}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-light_statistics-web</artifactId>
+                <version>${version.module-light_statistics}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-light_statistics-web</artifactId>
+                <version>${version.module-light_statistics}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-light_statistics-web</artifactId>
+                <version>${version.module-light_statistics}</version>
+                <type>war</type>
+                <scope>provided</scope>
+            </dependency>
+            
+            
+                        
+            <!-- module-remoting_core -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-remoting_core</artifactId>
+                <version>${version.module-remoting_core}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-remoting_core</artifactId>
                 <version>${version.module-remoting_core}</version>
                 <type>test-jar</type>
@@ -635,12 +679,13 @@
             
             <!-- module-remoting_caucho -->
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-remoting_caucho</artifactId>
                 <version>${version.module-remoting_caucho}</version>
+                <type>jar</type>
             </dependency>
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-remoting_caucho</artifactId>
                 <version>${version.module-remoting_caucho}</version>
                 <type>test-jar</type>
@@ -649,12 +694,13 @@
             
             <!-- module-remoting_soap -->
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-remoting_soap</artifactId>
                 <version>${version.module-remoting_soap}</version>
+                <type>jar</type>
             </dependency>
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-remoting_soap</artifactId>
                 <version>${version.module-remoting_soap}</version>
                 <type>test-jar</type>
@@ -663,12 +709,13 @@
             
             <!-- module-remoting_ejb -->
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-remoting_ejb</artifactId>
                 <version>${version.module-remoting_ejb}</version>
+                <type>jar</type>
             </dependency>
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-remoting_ejb</artifactId>
                 <version>${version.module-remoting_ejb}</version>
                 <type>test-jar</type>
@@ -677,12 +724,13 @@
             
             <!-- module-security -->
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-security</artifactId>
                 <version>${version.module-security}</version>
+                <type>jar</type>
             </dependency>
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-security</artifactId>
                 <version>${version.module-security}</version>
                 <type>test-jar</type>
@@ -691,12 +739,13 @@
             
             <!-- module-spring_rcp -->
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-spring_rcp</artifactId>
                 <version>${version.module-spring_rcp}</version>
+                <type>jar</type>
             </dependency>
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-spring_rcp</artifactId>
                 <version>${version.module-spring_rcp}</version>
                 <type>test-jar</type>
@@ -705,16 +754,24 @@
             
             <!-- module-web -->
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-web</artifactId>
                 <version>${version.module-web}</version>
+                <type>jar</type>
             </dependency>
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-web</artifactId>
                 <version>${version.module-web}</version>
                 <type>test-jar</type>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-web</artifactId>
+                <version>${version.module-web}</version>
+                <type>war</type>
+                <scope>provided</scope>
             </dependency>
             
             
