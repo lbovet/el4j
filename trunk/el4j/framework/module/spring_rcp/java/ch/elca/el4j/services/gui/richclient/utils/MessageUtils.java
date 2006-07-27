@@ -31,7 +31,11 @@ import org.springframework.util.StringUtils;
  * );</script>
  *
  * @author Martin Zeltner (MZE)
+ * @deprecated Use {@link ch.elca.el4j.services.i18n.MessageProvider} in
+ *             combination with {@link 
+ *             ch.elca.el4j.services.i18n.RewritingMessageSource} instead.
  */
+@Deprecated
 public final class MessageUtils {
     /**
      * Hide default constructor.
