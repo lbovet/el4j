@@ -41,7 +41,8 @@ public final class ActionRegister {
      * Map of daemon array lists. The key is the action the daemon was 
      * registered.
      */
-    private static final Map DAEMON_ACTION_LIST = new HashMap();
+    private static final Map<DaemonAction, List<Daemon>> DAEMON_ACTION_LIST 
+        = new HashMap<DaemonAction, List<Daemon>>();
     
     /**
      * Hide default constructor.
@@ -58,11 +59,11 @@ public final class ActionRegister {
         Daemon target, DaemonAction action) {
         Reject.ifNull(target);
         Reject.ifNull(action);
-        List internalList;
+        List<Daemon> internalList;
         if (DAEMON_ACTION_LIST.containsKey(action)) {
-            internalList = (List) DAEMON_ACTION_LIST.get(action);
+            internalList = DAEMON_ACTION_LIST.get(action);
         } else {
-            internalList = new ArrayList();
+            internalList = new ArrayList<Daemon>();
             DAEMON_ACTION_LIST.put(action, internalList);
         }
         internalList.add(target);
@@ -75,11 +76,18 @@ public final class ActionRegister {
      */
     public static synchronized List getDaemonsByAction(DaemonAction action) {
         Reject.ifNull(action);
-        List daemonList = new ArrayList();
-        List internalList = (List) DAEMON_ACTION_LIST.get(action);
+        List<Daemon> daemonList = new ArrayList<Daemon>();
+        List<Daemon> internalList = DAEMON_ACTION_LIST.get(action);
         if (internalList != null) {
             daemonList.addAll(internalList);
         }
         return daemonList;
+    }
+    
+    /**
+     * Clears all daemon actions.
+     */
+    public static synchronized void clearDaemonActions() {
+        DAEMON_ACTION_LIST.clear();
     }
 }

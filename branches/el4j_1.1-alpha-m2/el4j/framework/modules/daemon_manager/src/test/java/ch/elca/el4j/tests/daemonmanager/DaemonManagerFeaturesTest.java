@@ -99,6 +99,8 @@ public class DaemonManagerFeaturesTest extends TestCase {
      */
     public void testDaemonManagerWithOrderedDaemons()
         throws InterruptedException {
+        ActionRegister.clearDaemonActions();
+        
         DaemonManagerImpl daemonManager = createDaemonManagerOne();
         Set daemons = daemonManager.getDaemons();
         assertEquals("Number of daemon incorrect.", 36, daemons.size());
