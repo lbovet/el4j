@@ -19,6 +19,7 @@ package ch.elca.el4j.services.richclient.naming;
 import org.springframework.beans.factory.InitializingBean;
 
 import ch.elca.el4j.services.dom.info.EntityType;
+import ch.elca.el4j.services.gui.context.support.MessageRewriter;
 import ch.elca.el4j.util.codingsupport.Reject;
 import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
 
