@@ -29,6 +29,9 @@ import ch.elca.el4j.services.gui.richclient.models.BeanTableModel;
 import ch.elca.el4j.services.gui.richclient.utils.Services;
 import ch.elca.el4j.services.gui.richclient.views.AbstractBeanTableView;
 import ch.elca.el4j.services.persistence.generic.RepositoryAgency;
+import ch.elca.el4j.services.persistence.generic.RepositoryAgent;
+import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeListener;
+import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier;
 import ch.elca.el4j.services.richclient.naming.Naming;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.Reject;
@@ -39,8 +42,6 @@ import ch.elca.el4j.util.collections.impl.ExtendedArrayList;
 import ch.elca.el4j.util.observer.ObservableValue;
 import ch.elca.el4j.util.observer.ValueObserver;
 import ch.elca.el4j.util.observer.impl.SettableObservableValue;
-
-
 
 
 /**
@@ -140,19 +141,46 @@ public class Table extends AbstractGenericView {
     }
     
     /***/
-    class GenericComponent extends AbstractBeanTableView 
-        implements ValueObserver<QueryObject> {
+    class GenericComponent<T> extends AbstractBeanTableView 
+            implements ValueObserver<QueryObject>,
+                       RepositoryChangeListener {
         
-        /** updates the set of displayed entities.
-         * @param q the new filter query */
+        /** The agent for accessing the persistence layer. */
+        private RepositoryAgent<T> m_repositoryAgent;
+        
+        /** Whether this component is currently refreshing. */ 
+        private boolean m_refreshing;
+        
+        /**
+         * Constructor.
+         * @param cls the representation class for the entities 
+         * shown in this view.
+         */
+        public GenericComponent(Class<T> cls) {
+            m_repositoryAgent = Services.get(RepositoryAgency.class)
+                                        .getFor(cls);
+        }
+            
+        
+        /**
+         * Updates the set of displayed entities.
+         * @param q the new filter query
+         */
         public void changed(QueryObject q) {
             Reject.ifNull(q);
             if (isControlCreated()) {
+                m_refreshing = true;
                 setBeans(
-                    Services.get(RepositoryAgency.class)
-                            .getFor(m_type.clazz)
-                            .findByQuery(q)
+                    m_repositoryAgent.findByQuery(q)
                 );
+                m_refreshing = false;
+            }
+        }
+
+        /** Updates the set of displayed entities. */
+        public void changed(RepositoryChangeNotifier.Change change) {
+            if (!m_refreshing) {
+                changed(filter.get());
             }
         }
 
@@ -161,11 +189,13 @@ public class Table extends AbstractGenericView {
         public void componentOpened() {
             super.componentOpened();
             filter.subscribe(this);
+            m_repositoryAgent.subscribe(this);
         }
 
         /***/
         @Override
         public void componentClosed() {
+            m_repositoryAgent.unsubscribe(this);
             filter.unsubscribe(this);
             super.componentClosed();
         }
@@ -201,7 +231,7 @@ public class Table extends AbstractGenericView {
         m_model.setBeanClass(m_type.clazz);
         m_awaker.awaken(m_model);
         
-        GenericComponent gc = new GenericComponent();
+        GenericComponent gc = new GenericComponent<T>(clazz);
         gc.setBeanTableModel(m_model);
         gc.setBeanExecutors(executors.toArray(AbstractBeanExecutor.class));
         return configure(new Descriptor(gc));

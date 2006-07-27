@@ -49,6 +49,6 @@ public class RepositoryRefreshCommand extends ApplicationWindowAwareCommand {
     /** {@inheritDoc} */
     @Override
     protected void doExecuteCommand() {
-        m_agency.process(FUZZY_CHANGE);
+        m_agency.changed(FUZZY_CHANGE);
     }
 }

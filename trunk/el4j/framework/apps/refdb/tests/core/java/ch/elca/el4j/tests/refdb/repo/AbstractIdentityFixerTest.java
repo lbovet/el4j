@@ -154,7 +154,7 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
         Change m_change;
         
         /** {@inheritDoc} */
-        public void process(Change change) {
+        public void changed(Change change) {
             if (this.m_change == null) {
                 this.m_change = change;
             }

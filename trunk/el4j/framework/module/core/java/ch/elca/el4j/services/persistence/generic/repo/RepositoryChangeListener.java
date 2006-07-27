@@ -30,6 +30,9 @@ package ch.elca.el4j.services.persistence.generic.repo;
  * @see RepositoryChangeNotifier
  */
 public interface RepositoryChangeListener {
-    /** Processes the change notification {@code change}. */
-    void process(RepositoryChangeNotifier.Change change);
+    /** 
+     * Invoked if a repository change was detected.
+     * @param change The change detected.
+     */
+    void changed(RepositoryChangeNotifier.Change change);
 }

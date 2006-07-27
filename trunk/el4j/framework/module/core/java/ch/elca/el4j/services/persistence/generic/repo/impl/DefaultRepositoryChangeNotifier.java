@@ -60,7 +60,7 @@ public class DefaultRepositoryChangeNotifier
         List<RepositoryChangeListener> snapshot
             = new ArrayList<RepositoryChangeListener>(m_listeners);
         for (RepositoryChangeListener cl : snapshot) {
-            cl.process(change);
+            cl.changed(change);
         }
     }
 }

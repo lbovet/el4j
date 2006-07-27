@@ -107,7 +107,7 @@ public class DefaultRepositoryAgency
     /** 
      * Asks all repositories to announce this change if they are responsible.
      */
-    public void process(Change change) {
+    public void changed(Change change) {
         for (RepositoryAgent<?> w : m_agents.values()) {
             w.announceIfResponsible(change);
         }
@@ -145,11 +145,11 @@ public class DefaultRepositoryAgency
                     if ("delete".equals(invocation.getMethod().getName())) {
                         EntityDeleted ed = new EntityDeleted();
                         ed.changee = invocation.getArguments()[0];
-                        process(ed);
+                        changed(ed);
                     }
                     return retVal;
                 } catch (OptimisticLockingFailureException e) {
-                    process(FUZZY_CHANGE);
+                    changed(FUZZY_CHANGE);
                     throw e;
                 }
             }
