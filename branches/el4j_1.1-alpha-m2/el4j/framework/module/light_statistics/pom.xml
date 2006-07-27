@@ -9,72 +9,31 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
 
-
-    <!-- TODO: CLEANUP!!!! -->
-    <!-- See:
-        <!- - eu jmx enables JMX and supplies the JAMonAdmin.jsp (only useful in web applications). - ->
-        <eu name="jmx"/>
-        <dependency eu="jmx" module="module-jmx"/>
-        
-        <!- - eu jmx just supplies the JAMonAdmin.jsp (only useful in web applications). - ->
-        <eu name="web">
-            <attribute name="compile.jar.excludes" value="**/JAMonReporter*,mandatory/jamon-jmx.xml,scenarios/access/*jmx*"/>
-        </eu>
-     -->
-
     <parent>
         <groupId>ch.elca.el4j</groupId>
         <artifactId>el4j-framework-modules</artifactId>
         <version>1.1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>module-light_statistics</artifactId>
-    <version>${version.module-light_statistics}</version>
+    <artifactId>el4j-framework-module-light_statistics</artifactId>
     <packaging>pom</packaging>
     <name>EL4J module light statistics</name>
     <description>
         Module light statistics of the EL4J framework.
     </description>
-    <build>
-        <!-- Temporary used until definitive movement to Maven2. -->
-        <resources>
-            <resource>
-                <directory>../../../module/light_statistics/conf</directory>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-                <directory>../../../tests/light_statistics/conf</directory>
-            </testResource>
-        </testResources>
-        <sourceDirectory>../../../module/light_statistics/java</sourceDirectory>
-        <testSourceDirectory>../../../tests/light_statistics/java</testSourceDirectory>
-        
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <warSourceDirectory>../../../module/light_statistics/webapp</warSourceDirectory>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
     <modules>
+        <module>common</module>
         <module>jmx</module>
+        <module>web</module>
     </modules>
-    <dependencies>
-        <!-- EL4J framework modules -->
-        <dependency>
-            <groupId>ch.elca.el4j</groupId>
-            <artifactId>module-core</artifactId>
-        </dependency>
-    
-        <!-- Third party tools -->
-        <dependency>
-            <groupId>com.jamonapi</groupId>
-            <artifactId>jamon</artifactId>
-            <version>[1.0]</version>
-        </dependency>
-    </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>ch.elca.el4j</groupId>
+                <artifactId>module-light_statistics-common</artifactId>
+                <version>${version.module-light_statistics}</version>
+                <type>jar</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

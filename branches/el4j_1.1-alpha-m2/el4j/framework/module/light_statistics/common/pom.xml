@@ -15,22 +15,25 @@
         <version>1.1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>module-light_statistics-jmx</artifactId>
+    <artifactId>module-light_statistics-common</artifactId>
     <version>${version.module-light_statistics}</version>
     <packaging>jar</packaging>
-    <name>EL4J module light statistics for JMX</name>
+    <name>EL4J module light statistics common</name>
     <description>
-        Module light statistics for JMX of the EL4J framework.
+        Module light statistics, common parts of the EL4J framework.
     </description>
     <dependencies>
         <!-- EL4J framework modules -->
         <dependency>
             <groupId>ch.elca.el4j</groupId>
-            <artifactId>module-light_statistics-common</artifactId>
+            <artifactId>module-core</artifactId>
         </dependency>
+    
+        <!-- Third party tools -->
         <dependency>
-            <groupId>ch.elca.el4j</groupId>
-            <artifactId>module-jmx</artifactId>
+            <groupId>com.jamonapi</groupId>
+            <artifactId>jamon</artifactId>
+            <version>[1.0]</version>
         </dependency>
     </dependencies>
 </project>
