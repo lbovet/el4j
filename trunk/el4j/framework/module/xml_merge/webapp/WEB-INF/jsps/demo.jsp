@@ -40,8 +40,6 @@ Configuration<br>
 <li>INSERT - Inserts the element after existing <br>elements with the same name<br>(use with <tt>matcher.default=SKIP</tt>)
 </ul>
 
-<a href="doc">Javadocs</a>
-
 </td>
 <td></td>
 <td valign=top>

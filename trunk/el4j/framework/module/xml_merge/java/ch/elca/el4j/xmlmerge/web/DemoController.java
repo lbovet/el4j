@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.xmlmerge.demo;
+package ch.elca.el4j.xmlmerge.web;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +30,7 @@ import ch.elca.el4j.xmlmerge.config.ConfigurableXmlMerge;
 import ch.elca.el4j.xmlmerge.config.PropertyXPathConfigurer;
 
 /**
- * Spring controller for the online demo.
+ * Spring controller for the XmlMerge web application.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$$URL$$",
@@ -112,7 +112,7 @@ public class DemoController implements Controller {
         model.put("conf", conf.trim());
         model.put("result", result.trim());
 
-        return new ModelAndView("/demo.jsp", model);
+        return new ModelAndView("demo", model);
     }
 
 }
