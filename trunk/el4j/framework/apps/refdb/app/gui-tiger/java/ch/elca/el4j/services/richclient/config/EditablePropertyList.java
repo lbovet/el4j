@@ -18,7 +18,7 @@ package ch.elca.el4j.services.richclient.config;
 
 import java.util.List;
 
-import ch.elca.el4j.services.dom.info.EntityType;
+import ch.elca.el4j.util.dom.reflect.EntityType;
 
 /**
  * A {@link DisplayablePropertyList} that permits to conveniently

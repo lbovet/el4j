@@ -20,10 +20,10 @@ import org.springframework.richclient.application.PageComponent;
 import org.springframework.richclient.application.View;
 import org.springframework.richclient.application.ViewDescriptor;
 
-import ch.elca.el4j.services.dom.info.EntityType;
+import ch.elca.el4j.util.dom.reflect.EntityType;
 import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.AbstractGroupPageComponentDescriptor;
 import ch.elca.el4j.services.gui.richclient.views.descriptors.impl.AbstractViewDescriptor;
-import ch.elca.el4j.services.i18n.Naming;
+import ch.elca.el4j.services.i18n.MessageProvider;
 import ch.elca.el4j.services.richclient.context.AwakingContext;
 import ch.elca.el4j.util.codingsupport.Reject;
 
@@ -83,7 +83,7 @@ public abstract class AbstractGenericView extends AbstractComponent {
     protected <T extends AbstractGroupPageComponentDescriptor>
     T configure(T d) {
         d.setTitle(
-            Naming.instance().forView(schema, m_type).get("title")
+            MessageProvider.instance().forView(schema, m_type).get("title")
         );
         d.setImage(m_awaker.getImages().getImage(m_type, schema, "image"));
         m_awaker.awaken(d);

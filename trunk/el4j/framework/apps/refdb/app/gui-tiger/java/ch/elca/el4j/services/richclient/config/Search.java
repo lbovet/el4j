@@ -20,8 +20,8 @@ import java.util.Map;
 
 import org.springframework.richclient.application.ViewDescriptor;
 
-import ch.elca.el4j.services.dom.info.EntityType;
-import ch.elca.el4j.services.dom.info.Property;
+import ch.elca.el4j.util.dom.reflect.EntityType;
+import ch.elca.el4j.util.dom.reflect.Property;
 import ch.elca.el4j.services.gui.search.AbstractSearchItem;
 import ch.elca.el4j.services.gui.search.ComparisonSearchItem;
 import ch.elca.el4j.services.gui.search.LikeSearchItem;

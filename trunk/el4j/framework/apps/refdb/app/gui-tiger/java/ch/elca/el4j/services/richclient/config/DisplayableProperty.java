@@ -16,7 +16,7 @@
  */
 package ch.elca.el4j.services.richclient.config;
 
-import ch.elca.el4j.services.dom.info.Property;
+import ch.elca.el4j.util.dom.reflect.Property;
 
 /**
  * a proxy permitting to configure and query a {@link ch.elca.el4j.services.dom.info.Property}'s 

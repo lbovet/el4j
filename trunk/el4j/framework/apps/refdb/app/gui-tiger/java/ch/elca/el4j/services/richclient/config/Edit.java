@@ -24,7 +24,7 @@ import org.springframework.binding.form.support.DefaultFieldMetadata;
 import org.springframework.richclient.application.ViewDescriptor;
 import org.springframework.richclient.dialog.DialogPage;
 
-import ch.elca.el4j.services.dom.info.Property;
+import ch.elca.el4j.util.dom.reflect.Property;
 import ch.elca.el4j.services.gui.richclient.executors.convenience.AbstractBeanPropertiesExecutor;
 import ch.elca.el4j.services.gui.richclient.executors.displayable.ExecutorDisplayable;
 import ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm;

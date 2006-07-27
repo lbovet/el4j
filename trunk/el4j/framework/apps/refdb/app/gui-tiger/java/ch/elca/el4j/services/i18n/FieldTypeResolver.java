@@ -18,7 +18,7 @@ package ch.elca.el4j.services.i18n;
 
 import org.springframework.beans.factory.InitializingBean;
 
-import ch.elca.el4j.services.dom.info.EntityType;
+import ch.elca.el4j.util.dom.reflect.EntityType;
 import ch.elca.el4j.services.i18n.MessageRewriter;
 import ch.elca.el4j.util.codingsupport.Reject;
 import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;

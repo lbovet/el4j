@@ -24,7 +24,7 @@ import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.richclient.image.ImageSource;
 
 import ch.elca.el4j.services.i18n.Images;
-import ch.elca.el4j.services.i18n.Naming;
+import ch.elca.el4j.services.i18n.MessageProvider;
 
 
 /**
@@ -57,7 +57,7 @@ public class AwakingContext implements Awaker {
      * @param backingContext .*/
     public AwakingContext(ApplicationContext backingContext) {
         m_backingContext = backingContext;
-        Naming.setInstance(new Naming(backingContext));
+        MessageProvider.setInstance(new MessageProvider(backingContext));
         m_images = new Images(
             (ImageSource) m_backingContext.getBean(
                 "imageSource",

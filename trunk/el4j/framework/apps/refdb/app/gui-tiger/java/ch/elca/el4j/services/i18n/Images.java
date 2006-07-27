@@ -21,7 +21,7 @@ import java.awt.Image;
 import org.springframework.richclient.image.ImageSource;
 import org.springframework.richclient.image.NoSuchImageResourceException;
 
-import ch.elca.el4j.services.dom.info.EntityType;
+import ch.elca.el4j.util.dom.reflect.EntityType;
 import ch.elca.el4j.util.codingsupport.annotations.Preliminary;
 
 
@@ -58,7 +58,7 @@ public class Images {
         String lkey = schema + "." + key;
         try {
             return m_source.getImage(
-                lkey + "." + Naming.instance().keyFor(entityType)
+                lkey + "." + MessageProvider.instance().keyFor(entityType)
             );
         } catch (NoSuchImageResourceException e) {
             return m_source.getImage(lkey);

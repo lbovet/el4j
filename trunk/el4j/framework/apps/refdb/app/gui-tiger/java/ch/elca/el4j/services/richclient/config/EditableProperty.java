@@ -16,7 +16,7 @@
  */
 package ch.elca.el4j.services.richclient.config;
 
-import ch.elca.el4j.services.dom.info.Property;
+import ch.elca.el4j.util.dom.reflect.Property;
 
 /**
  * A {@link DisplayableProperty} that also permits to configure a property's

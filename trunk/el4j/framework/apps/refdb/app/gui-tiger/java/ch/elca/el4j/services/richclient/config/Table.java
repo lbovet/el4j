@@ -28,7 +28,7 @@ import ch.elca.el4j.services.gui.richclient.executors.SelectAllBeanExecutor;
 import ch.elca.el4j.services.gui.richclient.models.BeanTableModel;
 import ch.elca.el4j.services.gui.richclient.utils.Services;
 import ch.elca.el4j.services.gui.richclient.views.AbstractBeanTableView;
-import ch.elca.el4j.services.i18n.Naming;
+import ch.elca.el4j.services.i18n.MessageProvider;
 import ch.elca.el4j.services.persistence.generic.RepositoryAgency;
 import ch.elca.el4j.services.persistence.generic.RepositoryAgent;
 import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeListener;
@@ -123,7 +123,7 @@ public class Table extends AbstractGenericView {
             m_columnNames = visible.mapped(
                 new Function<DisplayableProperty, String>() {
                     public String apply(DisplayableProperty d) {
-                        return Naming.instance().getFieldFaceProperty(
+                        return MessageProvider.instance().getFieldFaceProperty(
                             schema,
                             d.prop,
                             "displayName"

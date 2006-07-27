@@ -21,12 +21,12 @@ import javax.swing.JToggleButton;
 
 import org.springframework.binding.form.FormModel;
 
-import ch.elca.el4j.services.dom.info.EntityType;
-import ch.elca.el4j.services.dom.info.Property;
+import ch.elca.el4j.util.dom.reflect.EntityType;
+import ch.elca.el4j.util.dom.reflect.Property;
 import ch.elca.el4j.services.gui.richclient.forms.binding.swing.AbstractSwingBinding;
 import ch.elca.el4j.services.gui.richclient.forms.binding.swing.ThreeStateBooleanJPanel;
 import ch.elca.el4j.services.gui.search.AbstractSearchItem;
-import ch.elca.el4j.services.i18n.Naming;
+import ch.elca.el4j.services.i18n.MessageProvider;
 import ch.elca.el4j.util.codingsupport.Reject;
 import ch.elca.el4j.util.registy.impl.StringMapBackedRegistry;
 
@@ -87,7 +87,7 @@ public class ThreeStateBooleanBinding extends AbstractSwingBinding {
             m_searchItem.getTargetProperty()
         );
                     
-        Naming msgs = Naming.instance();
+        MessageProvider msgs = MessageProvider.instance();
         configure(
             control.getTrueButton(),
             msgs.forConstantValue(property, "true")
@@ -109,7 +109,7 @@ public class ThreeStateBooleanBinding extends AbstractSwingBinding {
      * @param button the button to configure
      * @param msgs the message source to use
      */
-    protected void configure(JToggleButton button, Naming.Fetcher msgs) {
+    protected void configure(JToggleButton button, MessageProvider.Fetcher msgs) {
         button.setText(msgs.get("displayName"));
         button.setToolTipText(msgs.get("description"));
     }

@@ -19,14 +19,11 @@ package ch.elca.el4j.services.richclient.components.dialogs;
 import org.springframework.richclient.application.PageComponent;
 import org.springframework.util.Assert;
 
-import ch.elca.el4j.apps.keyword.dto.KeywordDto;
-import ch.elca.el4j.apps.lightrefdb.dom.Keyword;
-import ch.elca.el4j.apps.lightrefdb.dom.Reference;
-import ch.elca.el4j.services.dom.info.EntityType;
+import ch.elca.el4j.util.dom.reflect.EntityType;
 import ch.elca.el4j.services.gui.richclient.executors.AbstractBeanExecutor;
 import ch.elca.el4j.services.gui.richclient.executors.AbstractConfirmBeanExecutor;
 import ch.elca.el4j.services.gui.richclient.presenters.BeanPresenter;
-import ch.elca.el4j.services.i18n.Naming;
+import ch.elca.el4j.services.i18n.MessageProvider;
 import ch.elca.el4j.util.codingsupport.Reject;
 import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
 
@@ -74,7 +71,7 @@ public class BeanConfirmationDialog extends
         }
         
         // Sets the title and confirmation message on this dialog.        
-        Naming.Fetcher msgs = Naming.instance().forConfirmation(
+        MessageProvider.Fetcher msgs = MessageProvider.instance().forConfirmation(
             confirmBeanExecutor.getId(),
             EntityType.get(beans[0].getClass()),
             beans.length

@@ -18,7 +18,7 @@ package ch.elca.el4j.apps.lightrefdb.dom;
 
 import javax.persistence.Entity;
 
-import ch.elca.el4j.services.dom.annotations.MemberOrder;
+import ch.elca.el4j.util.dom.annotations.MemberOrder;
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 
 /** 

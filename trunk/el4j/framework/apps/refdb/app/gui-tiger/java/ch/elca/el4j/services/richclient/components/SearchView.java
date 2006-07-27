@@ -41,8 +41,8 @@ import org.springframework.richclient.util.GuiStandardUtils;
 import org.springframework.richclient.util.SpringLayoutUtils;
 import org.springframework.util.StringUtils;
 
-import ch.elca.el4j.services.dom.info.EntityType;
-import ch.elca.el4j.services.dom.info.Property;
+import ch.elca.el4j.util.dom.reflect.EntityType;
+import ch.elca.el4j.util.dom.reflect.Property;
 import ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm;
 import ch.elca.el4j.services.gui.richclient.support.DynaBeanPropertyAccessStrategy;
 import ch.elca.el4j.services.gui.richclient.support.FieldUserMetadataProvider;

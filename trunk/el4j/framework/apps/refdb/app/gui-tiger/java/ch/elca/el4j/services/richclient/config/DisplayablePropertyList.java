@@ -19,8 +19,8 @@ package ch.elca.el4j.services.richclient.config;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
-import ch.elca.el4j.services.dom.info.EntityType;
-import ch.elca.el4j.services.dom.info.Property;
+import ch.elca.el4j.util.dom.reflect.EntityType;
+import ch.elca.el4j.util.dom.reflect.Property;
 import ch.elca.el4j.util.collections.TransformedList;
 import ch.elca.el4j.util.collections.helpers.Filter;
 import ch.elca.el4j.util.collections.helpers.Function;
