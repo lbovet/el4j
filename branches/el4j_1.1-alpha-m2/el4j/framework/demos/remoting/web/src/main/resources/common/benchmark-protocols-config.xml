@@ -20,10 +20,10 @@
     </bean>
     <bean id="httpInvokerProtocol" class="ch.elca.el4j.services.remoting.protocol.HttpInvoker">
         <property name="serviceHost">
-            <value>${j2ee-web.host}</value>
+            <value>${jee-web.host}</value>
         </property>
         <property name="servicePort">
-            <value>${j2ee-web.port}</value>
+            <value>${jee-web.port}</value>
         </property>
         <property name="contextPath">
             <value>module-remoting-demos-web</value>
@@ -34,10 +34,10 @@
     </bean>
     <bean id="hessianProtocol" class="ch.elca.el4j.services.remoting.protocol.Hessian">
         <property name="serviceHost">
-            <value>${j2ee-web.host}</value>
+            <value>${jee-web.host}</value>
         </property>
         <property name="servicePort">
-            <value>${j2ee-web.port}</value>
+            <value>${jee-web.port}</value>
         </property>
         <property name="contextPath">
             <value>module-remoting-demos-web</value>
@@ -48,10 +48,10 @@
     </bean>
     <bean id="burlapProtocol" class="ch.elca.el4j.services.remoting.protocol.Burlap">
         <property name="serviceHost">
-            <value>${j2ee-web.host}</value>
+            <value>${jee-web.host}</value>
         </property>
         <property name="servicePort">
-            <value>${j2ee-web.port}</value>
+            <value>${jee-web.port}</value>
         </property>
         <property name="contextPath">
             <value>module-remoting-demos-web</value>
@@ -63,10 +63,10 @@
 
     <bean id="soapProtocol" class="ch.elca.el4j.services.remoting.protocol.Soap">
         <property name="serviceHost">
-            <value>${j2ee-web.host}</value>
+            <value>${jee-web.host}</value>
         </property>
         <property name="servicePort">
-            <value>${j2ee-web.port}</value>
+            <value>${jee-web.port}</value>
         </property>
         <property name="contextPath">
             <value>module-remoting-demos-web</value>

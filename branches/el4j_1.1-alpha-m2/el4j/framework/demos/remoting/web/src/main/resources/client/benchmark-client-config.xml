@@ -87,7 +87,7 @@
             <value>ch.elca.el4j.demos.remoting.Calculator</value>
         </property>
         <property name="serviceUrl">
-            <value>http://${j2ee-web.host}:${j2ee-web.port}/module-remoting-demos-web/Calculator.HessianWithoutContext.Benchmark</value>
+            <value>http://${jee-web.host}:${jee-web.port}/module-remoting-demos-web/Calculator.HessianWithoutContext.Benchmark</value>
         </property>
     </bean>
     <bean id="burlapWithoutContextCalculator" class="org.springframework.remoting.caucho.BurlapProxyFactoryBean">
@@ -95,7 +95,7 @@
             <value>ch.elca.el4j.demos.remoting.Calculator</value>
         </property>
         <property name="serviceUrl">
-            <value>http://${j2ee-web.host}:${j2ee-web.port}/module-remoting-demos-web/Calculator.BurlapWithoutContext.Benchmark</value>
+            <value>http://${jee-web.host}:${jee-web.port}/module-remoting-demos-web/Calculator.BurlapWithoutContext.Benchmark</value>
         </property>
     </bean>
 </beans>
