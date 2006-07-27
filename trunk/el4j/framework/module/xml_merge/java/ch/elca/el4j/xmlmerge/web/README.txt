@@ -7,5 +7,4 @@ following steps:
 # Deploy the demo application into Tomcat:
   ant deploy.war.module.eu.module-xml_merge.web
 
-# Open in http://localhost:8080/xmlmerge/demo a browser to launch the
-  web demo 
+# Open http://localhost:8080/xmlmerge/demo in a browser.
