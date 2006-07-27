@@ -230,7 +230,7 @@ public class MessageRewriter {
     }
 
     /** Represents a rewriting rule. */
-    static interface Rule {
+    public static interface Rule {
         /**
          * Attempts to rewrite the key with this rule and the provided
          * user arguments. If successful, the resolved message is appended to

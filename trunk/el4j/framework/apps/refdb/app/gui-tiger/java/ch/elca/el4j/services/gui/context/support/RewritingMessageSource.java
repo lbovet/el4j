@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.services.richclient.naming;
+package ch.elca.el4j.services.gui.context.support;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -34,6 +34,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.util.StringUtils;
 
+import ch.elca.el4j.services.richclient.naming.MessageRewriter;
+import ch.elca.el4j.services.richclient.naming.MessageRewriter.Rule;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**

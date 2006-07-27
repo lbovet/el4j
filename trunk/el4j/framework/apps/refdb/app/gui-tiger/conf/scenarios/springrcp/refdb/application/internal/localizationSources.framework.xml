@@ -7,7 +7,7 @@
         Listed in service registry.
     -->
     <bean id="messageSource"
-        class="ch.elca.el4j.services.richclient.naming.RewritingMessageSource">
+        class="ch.elca.el4j.services.gui.context.support.RewritingMessageSource">
         <property name="basenames">
             <list>
                 <!--

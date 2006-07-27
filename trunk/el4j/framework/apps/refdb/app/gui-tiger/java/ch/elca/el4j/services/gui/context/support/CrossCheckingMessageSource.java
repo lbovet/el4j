@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.services.richclient.naming;
+package ch.elca.el4j.services.gui.context.support;
 
 import java.util.Locale;
 
