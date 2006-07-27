@@ -24,17 +24,14 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-eclipse-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>ch.elca.el4j.plugins</groupId>
-                <artifactId>maven-manifest-decorator-plugin</artifactId>
-            </plugin>
         </plugins>
     </build>
     <modules>
-<!--        <module>plugins</module>-->
-<!--        <module>modules</module>-->
-<!--        <module>demos</module>-->
-    </modules>
+        <module>plugins</module>
+        <module>modules</module>
+        <module>tests</module>
+        <!--<module>demos</module>
+    --></modules>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
