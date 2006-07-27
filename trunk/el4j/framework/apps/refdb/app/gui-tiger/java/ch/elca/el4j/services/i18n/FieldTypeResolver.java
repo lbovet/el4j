@@ -14,12 +14,12 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.services.richclient.naming;
+package ch.elca.el4j.services.i18n;
 
 import org.springframework.beans.factory.InitializingBean;
 
 import ch.elca.el4j.services.dom.info.EntityType;
-import ch.elca.el4j.services.gui.context.support.MessageRewriter;
+import ch.elca.el4j.services.i18n.MessageRewriter;
 import ch.elca.el4j.util.codingsupport.Reject;
 import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
 

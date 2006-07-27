@@ -23,8 +23,8 @@ import org.springframework.richclient.application.ViewDescriptor;
 import ch.elca.el4j.services.dom.info.EntityType;
 import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.AbstractGroupPageComponentDescriptor;
 import ch.elca.el4j.services.gui.richclient.views.descriptors.impl.AbstractViewDescriptor;
+import ch.elca.el4j.services.i18n.Naming;
 import ch.elca.el4j.services.richclient.context.AwakingContext;
-import ch.elca.el4j.services.richclient.naming.Naming;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 

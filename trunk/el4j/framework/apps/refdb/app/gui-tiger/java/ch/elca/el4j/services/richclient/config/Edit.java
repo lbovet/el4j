@@ -30,11 +30,11 @@ import ch.elca.el4j.services.gui.richclient.executors.displayable.ExecutorDispla
 import ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm;
 import ch.elca.el4j.services.gui.richclient.utils.Services;
 import ch.elca.el4j.services.gui.richclient.views.DialogPageView;
+import ch.elca.el4j.services.i18n.SimpleFieldFaceSource;
 import ch.elca.el4j.services.persistence.generic.RepositoryAgency;
 import ch.elca.el4j.services.persistence.generic.repo.ConvenientGenericRepository;
 import ch.elca.el4j.services.persistence.generic.repo.SimpleGenericRepository;
 import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
-import ch.elca.el4j.services.richclient.naming.SimpleFieldFaceSource;
 import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
 import ch.elca.el4j.util.codingsupport.annotations.Preliminary;
 import ch.elca.el4j.util.collections.ExtendedList;

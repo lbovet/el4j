@@ -26,7 +26,7 @@ import ch.elca.el4j.services.dom.info.Property;
 import ch.elca.el4j.services.gui.richclient.forms.binding.swing.AbstractSwingBinding;
 import ch.elca.el4j.services.gui.richclient.forms.binding.swing.ThreeStateBooleanJPanel;
 import ch.elca.el4j.services.gui.search.AbstractSearchItem;
-import ch.elca.el4j.services.richclient.naming.Naming;
+import ch.elca.el4j.services.i18n.Naming;
 import ch.elca.el4j.util.codingsupport.Reject;
 import ch.elca.el4j.util.registy.impl.StringMapBackedRegistry;
 

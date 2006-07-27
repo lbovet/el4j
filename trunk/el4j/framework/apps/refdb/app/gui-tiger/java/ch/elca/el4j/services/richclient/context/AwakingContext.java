@@ -23,8 +23,8 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.richclient.image.ImageSource;
 
-import ch.elca.el4j.services.richclient.naming.Images;
-import ch.elca.el4j.services.richclient.naming.Naming;
+import ch.elca.el4j.services.i18n.Images;
+import ch.elca.el4j.services.i18n.Naming;
 
 
 /**

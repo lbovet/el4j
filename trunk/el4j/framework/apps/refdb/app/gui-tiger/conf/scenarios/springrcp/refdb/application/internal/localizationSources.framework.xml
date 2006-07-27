@@ -7,7 +7,7 @@
         Listed in service registry.
     -->
     <bean id="messageSource"
-        class="ch.elca.el4j.services.gui.context.support.RewritingMessageSource">
+        class="ch.elca.el4j.services.i18n.RewritingMessageSource">
         <property name="basenames">
             <list>
                 <!--
@@ -25,13 +25,13 @@
         <property name="additionalRules">
         	<list>
         		<ref bean="fieldTypeResolver"/>
-        		<bean class="ch.elca.el4j.services.gui.context.support.RewritingUtilities"/>
+        		<bean class="ch.elca.el4j.services.i18n.RewritingUtilities"/>
         	</list>
         </property>
     </bean>
 
 	<bean id="fieldTypeResolver"
-	    class="ch.elca.el4j.services.richclient.naming.FieldTypeResolver">
+	    class="ch.elca.el4j.services.i18n.FieldTypeResolver">
 		<!-- The names of the packages containing dom classes,
 		     {@code domPackages}, must set using a property configurer
 		-->

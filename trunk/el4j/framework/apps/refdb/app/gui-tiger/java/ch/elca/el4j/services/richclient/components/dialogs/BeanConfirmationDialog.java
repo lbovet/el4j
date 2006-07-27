@@ -26,7 +26,7 @@ import ch.elca.el4j.services.dom.info.EntityType;
 import ch.elca.el4j.services.gui.richclient.executors.AbstractBeanExecutor;
 import ch.elca.el4j.services.gui.richclient.executors.AbstractConfirmBeanExecutor;
 import ch.elca.el4j.services.gui.richclient.presenters.BeanPresenter;
-import ch.elca.el4j.services.richclient.naming.Naming;
+import ch.elca.el4j.services.i18n.Naming;
 import ch.elca.el4j.util.codingsupport.Reject;
 import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
 
