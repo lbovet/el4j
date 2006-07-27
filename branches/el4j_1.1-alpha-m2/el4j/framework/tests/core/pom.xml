@@ -27,12 +27,12 @@
     <dependencies>
         <!-- EL4J framework modules -->
         <dependency>
-            <groupId>ch.elca.el4j</groupId>
+            <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-core</artifactId>
             <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>ch.elca.el4j</groupId>
+            <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-core</artifactId>
             <type>test-jar</type>
             <scope>test</scope>

@@ -10,7 +10,7 @@
     <!-- Author: $Author$ -->
 
     <parent>
-        <groupId>ch.elca.el4j</groupId>
+        <groupId>ch.elca.el4j.modules</groupId>
         <artifactId>el4j-framework-modules</artifactId>
         <version>1.1.0-SNAPSHOT</version>
     </parent>
@@ -29,7 +29,7 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>ch.elca.el4j</groupId>
+                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-light_statistics-common</artifactId>
                 <version>${version.module-light_statistics}</version>
                 <type>jar</type>
