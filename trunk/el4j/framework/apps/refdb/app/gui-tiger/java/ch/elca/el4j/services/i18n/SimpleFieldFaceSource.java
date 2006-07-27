@@ -22,6 +22,7 @@ import org.springframework.binding.form.FormModel;
 import org.springframework.binding.form.support.MessageSourceFieldFaceSource;
 import org.springframework.richclient.application.View;
 
+import ch.elca.el4j.services.richclient.config.AbstractGenericView;
 import ch.elca.el4j.util.codingsupport.Reject;
 import ch.elca.el4j.util.dom.reflect.Property;
 import ch.elca.el4j.util.registy.Registry;

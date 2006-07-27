@@ -41,7 +41,7 @@ import ch.elca.el4j.util.dom.reflect.Property;
  * @author Adrian Moos (AMS)
  */
 public class MessageProvider {
-    /** the default Naming. */
+    /** the default MessageProvider. */
     private static MessageProvider s_instance;
     
     /** the backing message source. */
@@ -258,17 +258,17 @@ public class MessageProvider {
         }
     }
     
-    /** returns the registered default naming. */
+    /** Returns the registered default MessageProvider. */
     public static MessageProvider instance() {
         if (s_instance == null) {
             throw new MisconfigurationRTException(
-                "no default Naming was registered"
+                "no default MessageProvider was registered"
             );
         }
         return s_instance;
     }
     
-    /** registers the default naming instance. */
+    /** Registers the default MessageProvider. */
     public static void setInstance(MessageProvider n) {
         s_instance = n;
     }
