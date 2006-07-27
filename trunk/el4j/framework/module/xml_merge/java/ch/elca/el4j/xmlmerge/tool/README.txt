@@ -1,16 +1,19 @@
 To be able to use XmlMerge as a command-line tool, you have to execute the 
 following steps:
 
-- Go to <EL4J_HOME>/external/framework
+# Go to <EL4J_HOME>/external/framework
 
-- Create an executable distribution of the xml_merge module:
+# Recursively compile all required targets files:
+  ant jars.rec.module.module-xml_merge
+
+# Create an executable distribution of the xml_merge module:
   ant create.distribution.module.module-xml_merge
   
-- The executable distribution can be found in the module-xml_merge-default 
+# The executable distribution can be found in the module-xml_merge-default 
   folder under <EL4J_HOME>/external/framework/dist/distribution. You can copy 
   this folder to any location you want.
   
-- To be able to execute the command-line tool from your desired location, you
+# To be able to execute the command-line tool from your desired location, you
   have to add the location containing the executable distribution your PATH
   environment variable:
   
@@ -23,7 +26,7 @@ following steps:
     module-xml_merge-default folder:
     export PATH=$PATH:"<YOUR_LOCATION>/module-xml_merge-default" 
   
-- You can now launch the command-line tool from any location by launching the
+# You can now launch the command-line tool from any location by launching the
   xmlmerge script:
   xmlmerge [-config <config-file>] file1 file2 [file3 ...]
   
