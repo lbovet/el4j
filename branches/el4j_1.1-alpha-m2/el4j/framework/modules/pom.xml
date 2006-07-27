@@ -22,6 +22,14 @@
     <description>
         Modules of the EL4J framework.
     </description>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>ch.elca.el4j.plugins</groupId>
+                <artifactId>maven-manifest-decorator-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
     <modules>
         <module>core</module>
         <module>daemon_manager</module>
