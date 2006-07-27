@@ -28,7 +28,7 @@
     </modules>
     <dependencyManagement>
         <dependencies>
-            <!-- module-remoting-tests -->
+            <!-- module-remoting-tests-web -->
             <dependency>
                 <groupId>ch.elca.el4j.tests</groupId>
                 <artifactId>module-remoting-tests-web</artifactId>
