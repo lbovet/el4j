@@ -20,6 +20,7 @@
 package ch.elca.el4j.xmlmerge;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,9 +32,11 @@ import java.util.Properties;
 import org.jdom.Element;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
+import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.xmlmerge.action.CompleteAction;
 import ch.elca.el4j.xmlmerge.action.OrderedMergeAction;
 import ch.elca.el4j.xmlmerge.config.AttributeMergeConfigurer;
@@ -284,10 +287,14 @@ public class DefaultMergeTest extends TestCase {
      *             If an error occurs during the test
      */
     public void testSpringResource() throws Exception {
-        BeanFactory bf = new XmlBeanFactory(new ClassPathResource(
-            "ch/elca/el4j/xmlmerge/spring.xml"));
-       
-        Resource r = (Resource) bf.getBean("merged");
+        
+        ApplicationContext appContext = new ModuleApplicationContext(
+            new String[] { 
+                "classpath*:mandatory/*.xml",
+                "classpath*:template/xmlmerge-config.xml"
+            }, null, false, null);
+        
+        Resource r = (Resource) appContext.getBean("merged");
 
         InputStream in = r.getInputStream();
 
@@ -339,6 +346,11 @@ public class DefaultMergeTest extends TestCase {
         
         in.close();                
         out.close();        
+        
+        File outputFile = new File("out2.xml");
+        if (outputFile.exists()) {
+            outputFile.delete();
+        }
         
     }
     

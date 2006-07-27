@@ -17,8 +17,6 @@
 
 package ch.elca.el4j.xmlmerge;
 
-import java.io.File;
-
 import ch.elca.el4j.xmlmerge.tool.XmlMergeTool;
 
 // Checkstyle: MagicNumber off

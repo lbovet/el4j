@@ -3,6 +3,8 @@
     <module name="module-xml_merge-tests">
         <attribute name="set" value="framework-tests"/>
         <attribute name="junit.runnable" value="true"/>
-        <dependency module="module-xml_merge"/>
+        <dependency module="module-xml_merge">
+        	<mapping target="console"/>
+        </dependency>
     </module>
 </ant:project>
