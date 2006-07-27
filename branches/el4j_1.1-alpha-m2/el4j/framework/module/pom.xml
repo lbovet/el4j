@@ -29,7 +29,7 @@
         <module>hibernate</module>
         <module>ibatis</module>
         <module>jmx</module>
-<!--        <module>light_statistics</module>-->
+        <module>light_statistics</module>
         <module>remoting_core</module>
         <module>remoting_caucho</module>
         <module>remoting_soap</module>
