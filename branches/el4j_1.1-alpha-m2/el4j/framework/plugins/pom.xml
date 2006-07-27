@@ -22,14 +22,6 @@
     <description>
         Plugins of the EL4J framework.
     </description>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-eclipse-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
     <modules>
         <module>maven-repohelper-plugin</module>
         <module>maven-manifest-decorator-plugin</module>
