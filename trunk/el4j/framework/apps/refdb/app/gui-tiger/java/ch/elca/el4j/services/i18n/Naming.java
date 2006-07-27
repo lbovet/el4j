@@ -29,7 +29,8 @@ import ch.elca.el4j.services.dom.info.Property;
 
 
 /**
- * provides localized names and descriptions for DOM elements.
+ * Provides messages to components, encapsulating the message key generation
+ * strategy in use.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -59,56 +60,6 @@ public class Naming {
     protected String keyFor(EntityType t) {
         return t.name;
     }
-    
-       
-    /**
-     * 
-     * @param p    the model property 
-     * @param key  the visible property
-     * @param def  the visible property's default message or
-     *             <code>null</code> if there is none
-     * @return     the resolved message, or <code>null</code> if none could
-     *             be found
-     */
-    protected String get(Property p, String key, String def) {
-        try {
-            return m_source.getMessage(new DefaultMessageSourceResolvable(
-                new String[] {
-                    keyFor(p.declaringType) + "." + p.name + "." + key,
-                    p.name + "." + key
-                },
-                new Object[] {
-                    p.declaringType.name
-                },
-                def
-            ));
-        } catch (NoSuchMessageException e) {
-            return null;
-        }
-    }
-    
-    /**
-     * returns <code>p</code>'s localized name.
-     * @param p .
-     * @return .
-     */
-    public String getName(Property p) {
-        // AMS: Personally, I find the key "displayName" a bit verbose 
-        // ("Name" would suffice imho), but imho it's not worth creating
-        // an incompatibility over.
-        return get(p, "displayName", StringUtils.capitalize(p.name));
-    }
-    
-    /**
-     * returns <code>p</code>'s localized description, or <code>null</code>
-     * if no description is available.
-     * @param p .
-     * @return .
-     */    
-    public String getDescription(Property p) {
-        return get(p, "description", "");
-    }
-    
     
     /** 
      * Returns a message provider for the constant value {@code value} of
