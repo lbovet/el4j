@@ -54,18 +54,17 @@ public class KeywordDeleteExecutor
         ReferenceService referenceService = ServiceBroker.getReferenceService();
         referenceService.removeKeywords(keys);
     }
-            
-    /**
-     * {@inheritDoc}
-     */
-    protected PrimaryKeyObject getBeanByKey(Object key) throws Exception {
-        int intKey = ((Number) key).intValue();
+
+    /** {@inheritDoc} */
+    @Override
+    protected KeywordDto reloadBean(KeywordDto entity) throws Exception {
+        int intKey = entity.getKey();
         ReferenceService referenceService 
             = ServiceBroker.getReferenceService();
-        PrimaryKeyObject newBean 
+        KeywordDto newBean 
             = referenceService.getKeywordByKey(intKey);
         return newBean;
-    }    
+    }
 
     /**
      * {@inheritDoc}
@@ -73,5 +72,4 @@ public class KeywordDeleteExecutor
     public String getSchema() {
         return RefdbSchemas.KEYWORD;
     }
-
 }

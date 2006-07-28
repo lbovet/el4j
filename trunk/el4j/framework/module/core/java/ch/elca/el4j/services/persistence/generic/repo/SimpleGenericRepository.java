@@ -16,6 +16,7 @@
  */
 package ch.elca.el4j.services.persistence.generic.repo;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
@@ -99,10 +100,11 @@ public interface SimpleGenericRepository<T> {
         DataIntegrityViolationException, OptimisticLockingFailureException;
 
     /**
-     * Deletes the given domain object.
+     * Deletes the given domain objects. This method executed in a single
+     * transaction.
      * 
-     * @param entity
-     *             The domain object to delete
+     * @param entities
+     *             The domain objects to delete.
      * @throws DataAccessException
      *             If general data access problem occurred
      * @throws DataIntegrityViolationException
@@ -111,6 +113,6 @@ public interface SimpleGenericRepository<T> {
      * @throws OptimisticLockingFailureException
      *             If domain object has been modified in the meantime   
      */
-    void delete(T entity)  throws DataAccessException,
+    void delete(Collection<T> entities)  throws DataAccessException,
         DataIntegrityViolationException, OptimisticLockingFailureException;
 }

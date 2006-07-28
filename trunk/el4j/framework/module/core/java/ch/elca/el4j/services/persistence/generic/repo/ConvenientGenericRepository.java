@@ -22,6 +22,7 @@ import java.util.List;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.OptimisticLockingFailureException;
 
 /**
  * Extends the SimpleGenericRepository with a few convenience methods.
@@ -88,4 +89,20 @@ public interface ConvenientGenericRepository<T, ID extends Serializable>
      */
     void delete(ID id) throws DataIntegrityViolationException, 
                               DataAccessException;
+    
+    /**
+     * Deletes the given domain object.
+     * 
+     * @param entity
+     *             The domain object to delete
+     * @throws DataAccessException
+     *             If general data access problem occurred
+     * @throws DataIntegrityViolationException
+     *             If domain object could not be deleted due to a data
+     *             integrity violation 
+     * @throws OptimisticLockingFailureException
+     *             If domain object has been modified in the meantime   
+     */
+    void delete(T entity)  throws DataAccessException,
+        DataIntegrityViolationException, OptimisticLockingFailureException;
 }

@@ -17,6 +17,7 @@
 package ch.elca.el4j.services.persistence.generic.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
@@ -63,9 +64,9 @@ public class IdentityFixedRepository<T> implements SimpleGenericRepository<T> {
     }
     
     /** {@inheritDoc} */
-    public void delete(T entity) throws DataAccessException,
+    public void delete(Collection<T> entities) throws DataAccessException,
         DataIntegrityViolationException, OptimisticLockingFailureException {
-        m_backing.delete(entity);
+        m_backing.delete(entities);
     }
 
     /** 

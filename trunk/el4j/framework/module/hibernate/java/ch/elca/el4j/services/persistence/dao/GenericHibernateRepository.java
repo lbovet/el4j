@@ -18,6 +18,7 @@
 package ch.elca.el4j.services.persistence.dao;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import org.hibernate.LockMode;
@@ -169,5 +170,11 @@ public class GenericHibernateRepository<T, ID extends Serializable>
         getHibernateTemplate().delete(
             findById(id, false)
         );
+    }
+
+    /** {@inheritDoc} */
+    public void delete(Collection<T> entities) throws DataAccessException,
+            DataIntegrityViolationException, OptimisticLockingFailureException {
+        getHibernateTemplate().deleteAll(entities);
     }
 }

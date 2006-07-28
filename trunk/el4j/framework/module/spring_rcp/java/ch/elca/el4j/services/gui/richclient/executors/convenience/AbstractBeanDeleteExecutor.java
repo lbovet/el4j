@@ -16,6 +16,7 @@
  */
 package ch.elca.el4j.services.gui.richclient.executors.convenience;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,7 +26,6 @@ import org.springframework.util.StringUtils;
 import ch.elca.el4j.services.gui.richclient.executors.AbstractConfirmBeanExecutor;
 import ch.elca.el4j.services.gui.richclient.presenters.BeanPresenter;
 import ch.elca.el4j.services.gui.richclient.utils.DialogUtils;
-import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
@@ -40,7 +40,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  *
  * @author Martin Zeltner (MZE)
  */
-public abstract class AbstractBeanDeleteExecutor<T extends PrimaryKeyObject> 
+public abstract class AbstractBeanDeleteExecutor<T> 
     extends AbstractConfirmBeanExecutor {
     
     /** Constructor. */
@@ -94,14 +94,12 @@ public abstract class AbstractBeanDeleteExecutor<T extends PrimaryKeyObject>
         BeanPresenter beanPresenter = getBeanPresenter();
         
         List<T> beans = getBeans();
-        PrimaryKeyObject[] actualizedBeans = new PrimaryKeyObject[beans.size()];
-        for (int i = 0; i < beans.size(); i++) {
-            PrimaryKeyObject oldBean = beans.get(i);
+        List<T> updatedBeans = new ArrayList<T>();
+        for (T oldBean : beans) {
             try {
-                Object key = oldBean.getKeyAsObject();
-                PrimaryKeyObject newBean = getBeanByKey(key);
+                T newBean = reloadBean(oldBean);
                 beanPresenter.replaceBean(oldBean, newBean);
-                actualizedBeans[i] = newBean;
+                updatedBeans.add(newBean);
             } catch (Exception ex) {
                 beanPresenter.removeBean(oldBean);
             }
@@ -111,8 +109,7 @@ public abstract class AbstractBeanDeleteExecutor<T extends PrimaryKeyObject>
         // will be added to or removed from data list. Otherwise already 
         // made selections will be lost!
         beanPresenter.clearSelection();
-        for (int i = 0; i < actualizedBeans.length; i++) {
-            PrimaryKeyObject newBean = actualizedBeans[i];
+        for (T newBean : updatedBeans) {
             beanPresenter.selectBeanAdditionally(newBean);
         }
         
@@ -135,6 +132,12 @@ public abstract class AbstractBeanDeleteExecutor<T extends PrimaryKeyObject>
         return commandId;
     }
     
+    /** {@inheritDoc} */
+    @Override
+    public String getSchema() {
+        return "delete";
+    }
+
     /**
      * Deletes beans with the given keys.
      * 
@@ -143,10 +146,8 @@ public abstract class AbstractBeanDeleteExecutor<T extends PrimaryKeyObject>
     protected abstract void deleteBeans(List<T> beans);
     
     /**
-     * @param key Used to lookup the bean.
-     * @return Returns the bean with given key.
+     * @return Returns the most current version of this entity.
      * @throws Exception If bean could not be fetched.
      */
-    protected abstract PrimaryKeyObject getBeanByKey(Object key) 
-        throws Exception;
+    protected abstract T reloadBean(T entity) throws Exception;
 }

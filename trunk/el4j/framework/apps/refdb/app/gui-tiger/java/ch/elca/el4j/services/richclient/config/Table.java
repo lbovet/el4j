@@ -21,10 +21,9 @@ import java.util.Collection;
 
 import org.springframework.richclient.application.ViewDescriptor;
 
-import ch.elca.el4j.apps.lightrefdb.dom.Keyword;
-import ch.elca.el4j.apps.refdb.gui.executors.KeywordDeleteExecutor;
 import ch.elca.el4j.services.gui.richclient.executors.AbstractBeanExecutor;
 import ch.elca.el4j.services.gui.richclient.executors.SelectAllBeanExecutor;
+import ch.elca.el4j.services.gui.richclient.executors.convenience.GenericBeanDeleteExecutor;
 import ch.elca.el4j.services.gui.richclient.models.BeanTableModel;
 import ch.elca.el4j.services.gui.richclient.utils.Services;
 import ch.elca.el4j.services.gui.richclient.views.AbstractBeanTableView;
@@ -91,12 +90,14 @@ public class Table extends AbstractGenericView {
     private Model m_model;
 
     /** see source. @param c . */
-    public Table(Class<?> c) {
+    public <T> Table(Class<T> c) {
         super(c);
         properties = new EditablePropertyList(m_type);
 
-        // Kludge to account for non-generic persistence
-        delete = c.equals(Keyword.class) ? new KeywordDeleteExecutor() : null;
+        RepositoryAgent<T> agent = Services.get(RepositoryAgency.class)
+                                           .getFor(c);
+        
+        delete = new GenericBeanDeleteExecutor<T>(agent);
         selectAll = new SelectAllBeanExecutor();
         //inspect = new PropertiesExecutor(t);
         //inspect.properties = new EditablePropertyList(t);
