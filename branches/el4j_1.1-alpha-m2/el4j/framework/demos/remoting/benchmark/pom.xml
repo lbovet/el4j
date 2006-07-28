@@ -41,11 +41,6 @@
         </dependency>
     </dependencies>
     <build>
-        <testSourceDirectory>src/it</testSourceDirectory>
-
-        <!-- We need to force the compiler plugin to compile tests and the surefire plugin to execute
-            them because we're using a pom packaging that doesn't have those mapped in its lifecycle.
-            A better solution would be for m2 to define a default integration-test lifecycle -->
         <plugins>
             <plugin>
                 <groupId>org.codehaus.cargo</groupId>
