@@ -31,9 +31,6 @@ package ch.elca.el4j.tests.env;
  */
 public class ServletContainer {
 
-    /** Whether the deployment unit is packed or not. */
-    private boolean m_unpacked;
-    
     /** The container's name. */
     private String m_container;
     
@@ -72,22 +69,5 @@ public class ServletContainer {
      */
     public void setPort(int port) {
         m_port = port;
-    }
-
-    /**
-     * @return Returns whether the deployment unit is unpacked.
-     */
-    public boolean isUnpacked() {
-        return m_unpacked;
-    }
-
-    /**
-     * Sets whether the deployment units is unpacked. 
-     * 
-     * @param unpacked
-     *      <code>true</code> for unpacked, <code>false</code> for packed.
-     */
-    public void setUnpacked(boolean unpacked) {
-        m_unpacked = unpacked;
     }
 }

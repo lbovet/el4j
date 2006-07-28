@@ -4,8 +4,7 @@
 
 <beans>
     <bean id="servletContainer" class="ch.elca.el4j.tests.env.ServletContainer">
-        <property name="unpacked"><value>${j2ee-war.unpacked}</value></property>
-        <property name="container"><value>${j2ee-web.container}</value></property>
-        <property name="port"><value>${j2ee-web.port}</value></property>
+        <property name="container"><value>${jee-web.containerId}</value></property>
+        <property name="port"><value>${jee-web.port}</value></property>
     </bean>
 </beans>
