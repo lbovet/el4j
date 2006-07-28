@@ -233,8 +233,6 @@
                     <artifactId>maven-source-plugin</artifactId>
                     <version>2.0.1</version>
                 </plugin>
-                
-                
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
@@ -245,28 +243,6 @@
                         <archiveClasses>false</archiveClasses>
                     </configuration>
                 </plugin>
-                <plugin>
-                    <groupId>org.codehaus.cargo</groupId>
-                    <artifactId>cargo-maven2-plugin</artifactId>
-                    <version>0.3-SNAPSHOT</version>
-                    <configuration>
-                        <wait>${jee-web.wait}</wait>
-                        <container>
-                            <containerId>${jee-web.containerId}</containerId>
-                            <zipUrlInstaller>
-                                <url>${jee-web.zipDownloadUrl}</url>
-                                <installDir>${jee-web.installDir}</installDir>
-                            </zipUrlInstaller>
-                            <!--log>${jee-web.cargo.log.file}</log>
-                            <output>${jee-web.container.log.file}</output-->
-                        </container>
-                        <configuration>
-                            <type>existing</type>
-                            <home>${jee-web.home}</home>
-                        </configuration>
-                    </configuration>
-                </plugin>
-            
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
@@ -296,6 +272,36 @@
                             https://svn.sourceforge.net/svnroot/el4j/tags/
                         </tagBase>
                     </configuration>
+                </plugin>
+
+                <!-- Deployment -->
+                <plugin>
+                    <groupId>org.codehaus.cargo</groupId>
+                    <artifactId>cargo-maven2-plugin</artifactId>
+                    <version>0.3-SNAPSHOT</version>
+                    <configuration>
+                        <wait>${jee-web.wait}</wait>
+                        <container>
+                            <containerId>${jee-web.containerId}</containerId>
+                            <zipUrlInstaller>
+                                <url>${jee-web.zipDownloadUrl}</url>
+                                <installDir>${jee-web.installDir}</installDir>
+                            </zipUrlInstaller>
+                            <!--log>${jee-web.cargo.log.file}</log-->
+                            <!--output>${jee-web.container.log.file}</output-->
+                        </container>
+                        <configuration>
+                            <type>existing</type>
+                            <home>${jee-web.home}</home>
+                        </configuration>
+                    </configuration>
+                </plugin>
+
+                <!-- Execution -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>1.0.1</version>
                 </plugin>
 
                 <!-- IDE -->
@@ -1010,5 +1016,8 @@
         <version.module-remoting-tests>
             1.0-alpha1
         </version.module-remoting-tests>
+        <version.module-remoting-demos>
+            1.0-alpha1
+        </version.module-remoting-demos>
     </properties>
 </project>
