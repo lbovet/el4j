@@ -30,8 +30,8 @@
         <module>plugins</module>
         <module>modules</module>
         <module>tests</module>
-        <!--<module>demos</module>
-    --></modules>
+        <module>demos</module>
+    </modules>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
