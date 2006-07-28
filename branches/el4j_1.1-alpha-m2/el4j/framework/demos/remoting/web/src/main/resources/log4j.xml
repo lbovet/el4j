@@ -26,21 +26,26 @@
 
 
     <logger name="ch.elca.el4j">
-        <level value="ALL"/>
-    </logger>
-    
-    <logger name="ch.elca.el4j.services.remoting">
         <level value="WARN"/>
-    </logger>
-    
-    <logger name="ch.elca.el4j.demos.remoting">
-        <level value="WARN"/>
-    </logger>
-
-    <logger name="attrib">
-        <level value="ALL"/>
     </logger>    
 
+    <logger name="org.springframework">
+        <level value="WARN"/>
+    </logger>    
+
+    <logger name="org.apache.axis">
+        <level value="INFO"/>
+    </logger>
+    <logger name="org.apache.axis.i18n">
+        <level value="WARN"/>
+    </logger>
+    <logger name="org.apache.axis.utils.NSStack">
+        <level value="WARN"/>
+    </logger>
+    <logger name="org.apache.axis.encoding.SerializationContext">
+        <level value="WARN"/>
+    </logger>
+    
     <logger name="org.apache.log4j">
         <level value="WARN"/>
     </logger>

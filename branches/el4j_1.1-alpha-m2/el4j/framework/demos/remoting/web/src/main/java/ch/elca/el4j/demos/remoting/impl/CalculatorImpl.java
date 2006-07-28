@@ -17,6 +17,11 @@
 
 package ch.elca.el4j.demos.remoting.impl;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import com.caucho.hessian.server.HessianSkeleton;
+
 import ch.elca.el4j.demos.remoting.Calculator;
 import ch.elca.el4j.demos.remoting.CalculatorException;
 
@@ -35,6 +40,15 @@ import ch.elca.el4j.demos.remoting.CalculatorException;
  */
 public class CalculatorImpl implements Calculator {
 
+    /**
+     * Constructor added due to exception logging flood with jdk logging
+     * and Hessian.
+     */
+    public CalculatorImpl() {
+        String loggerName = HessianSkeleton.class.getName();
+        Logger.getLogger(loggerName).setLevel(Level.SEVERE);
+    }
+    
     /**
      * {@inheritDoc}
      */

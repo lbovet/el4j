@@ -19,10 +19,19 @@
     <artifactId>el4j-framework-demos</artifactId>
     <packaging>pom</packaging>
     <name>EL4J framework demos</name>
-    <description>
-        Demos for modules of the EL4J framework.
-    </description>
+    <description>Demos for modules of the EL4J framework.</description>
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>ch.elca.el4j.plugins</groupId>

@@ -24,19 +24,19 @@
     </description>
     <modules>
         <module>web</module>
-        <module>functional-demo</module>
+        <module>benchmark</module>
     </modules>
     <dependencyManagement>
         <dependencies>
-            <!-- module-remoting-tests -->
+            <!-- module-remoting-demos-web  -->
             <dependency>
-                <groupId>ch.elca.el4j.tests</groupId>
+                <groupId>ch.elca.el4j.demos</groupId>
                 <artifactId>module-remoting-demos-web</artifactId>
                 <version>${version.module-remoting-demos}</version>
                 <type>jar</type>
             </dependency>
             <dependency>
-                <groupId>ch.elca.el4j.tests</groupId>
+                <groupId>ch.elca.el4j.demos</groupId>
                 <artifactId>module-remoting-demos-web</artifactId>
                 <version>${version.module-remoting-demos}</version>
                 <type>war</type>
