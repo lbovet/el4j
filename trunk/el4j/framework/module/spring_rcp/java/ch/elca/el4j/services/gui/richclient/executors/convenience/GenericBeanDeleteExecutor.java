@@ -19,8 +19,21 @@ package ch.elca.el4j.services.gui.richclient.executors.convenience;
 import java.util.List;
 
 import ch.elca.el4j.services.persistence.generic.RepositoryAgent;
-import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
 
+/**
+ * A generic executor to delete beans managed by a RepositoryAgent.
+ * 
+ * @param <T> The type of entities this executor can delete.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Adrian Moos (AMS)
+ */
 public class GenericBeanDeleteExecutor<T> 
         extends AbstractBeanDeleteExecutor<T> {
 
@@ -35,11 +48,13 @@ public class GenericBeanDeleteExecutor<T>
         m_agent = agent;
     }
     
+    /** {@inheritDoc} */
     @Override
     protected void deleteBeans(List<T> beans) {
         m_agent.delete(beans);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected T reloadBean(T entity) throws Exception {
         return m_agent.refresh(entity);

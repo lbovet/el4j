@@ -30,6 +30,8 @@ import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
  * Abstract executor to delete beans.
+ * 
+ * @param <T> The representation type of the beans this executor can delete.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -39,21 +41,22 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * );</script>
  *
  * @author Martin Zeltner (MZE)
+ * @author Adrian Moos (AMS)
  */
 public abstract class AbstractBeanDeleteExecutor<T> 
     extends AbstractConfirmBeanExecutor {
-    
-    /** Constructor. */
-    public AbstractBeanDeleteExecutor() {
-        // subclasses may override this by calling setId as well.
-        setId("delete");
-    }
     
     /**
      * Are the beans that should be deleted.
      */
     private List<T> m_beans;
 
+    /** Constructor. */
+    public AbstractBeanDeleteExecutor() {
+        // subclasses may override this by calling setId as well.
+        setId("delete");
+    }
+    
     /**
      * @return Returns the beans that should be deleted.
      */
