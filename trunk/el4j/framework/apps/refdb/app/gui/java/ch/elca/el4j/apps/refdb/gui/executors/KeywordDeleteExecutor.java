@@ -40,12 +40,6 @@ import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
  */
 public class KeywordDeleteExecutor 
     extends AbstractBeanDeleteExecutor<KeywordDto> {
-    /**
-     * Default constructor.
-     */
-    public KeywordDeleteExecutor() {
-        setId("keywordDelete");
-    }
     
     /**
      * {@inheritDoc}

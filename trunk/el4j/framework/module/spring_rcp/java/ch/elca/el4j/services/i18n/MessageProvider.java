@@ -47,7 +47,10 @@ public class MessageProvider {
     /** the backing message source. */
     MessageSourceAccessor m_source;
 
-    /** @param ms the backing message source */
+    /**
+     * Constructor. 
+     * @param ms the backing message source
+     */
     public MessageProvider(MessageSource ms) {
         m_source = new MessageSourceAccessor(ms);
     }
@@ -58,6 +61,17 @@ public class MessageProvider {
      */
     protected String keyFor(EntityType t) {
         return t.name;
+    }
+    
+    /** 
+     * Convenience method to register this instance as default. This is 
+     * provided for spring configurion of the default provider.
+     * @param b whether to register this instance as default.
+     */
+    public void setAsDefault(boolean b) {
+        if (b) {
+            setInstance(this);
+        }
     }
     
     /** 
@@ -75,7 +89,6 @@ public class MessageProvider {
             + value            
         );
     }
-    
     
     /**
      * Returns a message source for confirmation strings.

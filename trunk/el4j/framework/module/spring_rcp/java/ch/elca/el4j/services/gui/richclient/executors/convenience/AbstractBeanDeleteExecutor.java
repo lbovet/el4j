@@ -42,6 +42,13 @@ import ch.elca.el4j.util.codingsupport.Reject;
  */
 public abstract class AbstractBeanDeleteExecutor<T extends PrimaryKeyObject> 
     extends AbstractConfirmBeanExecutor {
+    
+    /** Constructor. */
+    public AbstractBeanDeleteExecutor() {
+        // subclasses may override this by calling setId as well.
+        setId("delete");
+    }
+    
     /**
      * Are the beans that should be deleted.
      */

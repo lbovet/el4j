@@ -39,6 +39,8 @@
 			</list>
 		</property>
 	</bean>
+	
+	<!-- Applications should define their default message provider. -->
 
     <!-- 
         Sends all application events to every registered application listener.
