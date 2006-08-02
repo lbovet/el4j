@@ -270,6 +270,7 @@ public class Soap extends AbstractInetSocketAddressWebProtocol
          */
         StaticApplicationContext appContext = new StaticApplicationContext(
                 m_parentApplicationContext);
+        registerChildApplicationContext(appContext);
         MutablePropertyValues proxyProps = new MutablePropertyValues();
 
         proxyProps.addPropertyValue("serviceInterface",
@@ -311,6 +312,8 @@ public class Soap extends AbstractInetSocketAddressWebProtocol
         
         s_logger.info("Bean '" + NEW_PROXY_BEAN_NAME 
             + "' registered with following properties:\n" + proxyProps);
+        
+        appContext.refresh();
         
         Object newBean = null;
         try {

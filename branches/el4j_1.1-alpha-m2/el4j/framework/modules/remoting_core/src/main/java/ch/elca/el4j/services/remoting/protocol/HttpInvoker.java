@@ -47,11 +47,13 @@ public class HttpInvoker  extends AbstractInetSocketAddressWebProtocol {
             Class serviceInterfaceWithContext) {
         StaticApplicationContext appContext = new StaticApplicationContext(
                 m_parentApplicationContext);
+        registerChildApplicationContext(appContext);
         MutablePropertyValues props = new MutablePropertyValues();
         props.addPropertyValue("serviceInterface", serviceInterfaceWithContext);
         props.addPropertyValue("serviceUrl", generateUrl(proxyBean));
         appContext.registerSingleton("httpInvokerProxyBeanGen", 
             getProxyObjectType(), props);
+        appContext.refresh();
         return appContext.getBean("httpInvokerProxyBeanGen");
     }
 
@@ -62,11 +64,13 @@ public class HttpInvoker  extends AbstractInetSocketAddressWebProtocol {
             Class serviceInterfaceWithContext, Object serviceProxy) {
         StaticApplicationContext appContext = new StaticApplicationContext(
                 m_parentApplicationContext);
+        registerChildApplicationContext(appContext);
         MutablePropertyValues props = new MutablePropertyValues();
         props.addPropertyValue("service", serviceProxy);
         props.addPropertyValue("serviceInterface", serviceInterfaceWithContext);
         appContext.registerSingleton("httpInvokerExporterBeanGen",
                 getExporterObjectType(), props);
+        appContext.refresh();
         return appContext.getBean("httpInvokerExporterBeanGen");
     }
 

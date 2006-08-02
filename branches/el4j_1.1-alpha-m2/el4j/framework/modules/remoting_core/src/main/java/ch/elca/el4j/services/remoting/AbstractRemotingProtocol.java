@@ -17,6 +17,10 @@
 
 package ch.elca.el4j.services.remoting;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -37,7 +41,7 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
  * @author Martin Zeltner (MZE)
  */
 public abstract class AbstractRemotingProtocol implements
-        ApplicationContextAware, InitializingBean {
+        ApplicationContextAware, InitializingBean, DisposableBean {
     /**
      * With this ApplicationContext the current bean has been created.
      */
@@ -53,6 +57,12 @@ public abstract class AbstractRemotingProtocol implements
      * used if it is really necessary.
      */
     private ProtocolSpecificConfiguration m_protocolSpecificConfiguration;
+    
+    /**
+     * Set of child application contexts.
+     */
+    private Set<ApplicationContext> m_chlidApplicationContexts
+        = new LinkedHashSet<ApplicationContext>();
 
     /**
      * @return Returns the implicitContextPassingRegistry.
@@ -219,5 +229,50 @@ public abstract class AbstractRemotingProtocol implements
     public void checkRemotingProxy(RemotingProxyFactoryBean proxyFactory) 
         throws Exception {
         // do nothing
+    }
+    
+    /**
+     * Destroys the child app contexts if they are disposable.
+     * 
+     * {@inheritDoc}
+     */
+    public void destroy() throws Exception {
+        Set<ApplicationContext> contexts = getChlidApplicationContexts();
+        for (ApplicationContext context : contexts) {
+            if (context instanceof DisposableBean) {
+                DisposableBean disposableBean = (DisposableBean) context;
+                disposableBean.destroy();
+            }
+        }
+    }
+    
+    /**
+     * Registers the given app context as child.
+     * 
+     * @param applicationContext To register.
+     * @return Returns <code>true</code> if registration was successfully.
+     */
+    protected boolean registerChildApplicationContext(
+        ApplicationContext applicationContext) {
+        return m_chlidApplicationContexts.add(applicationContext);
+    }
+    
+    /**
+     * Unregisters the given app context as child.
+     * 
+     * @param applicationContext To unregister.
+     * @return Returns <code>true</code> if unregistration was successfully.
+     */
+    protected boolean unregisterChildApplicationContext(
+        ApplicationContext applicationContext) {
+        return m_chlidApplicationContexts.remove(applicationContext);
+    }
+    
+    /**
+     * @return Returns the set of the registered child app contexts. 
+     */
+    public Set<ApplicationContext> getChlidApplicationContexts() {
+        return new LinkedHashSet<ApplicationContext>(
+            m_chlidApplicationContexts);
     }
 }

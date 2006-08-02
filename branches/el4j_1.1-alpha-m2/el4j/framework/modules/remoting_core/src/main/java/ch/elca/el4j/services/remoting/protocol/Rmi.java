@@ -47,11 +47,13 @@ public class Rmi extends AbstractInetSocketAddressProtocol {
             Class serviceInterfaceWithContext) {
         StaticApplicationContext appContext = new StaticApplicationContext(
                 m_parentApplicationContext);
+        registerChildApplicationContext(appContext);
         MutablePropertyValues props = new MutablePropertyValues();
         props.addPropertyValue("serviceInterface", serviceInterfaceWithContext);
         props.addPropertyValue("serviceUrl", generateUrl(proxyBean));
         appContext.registerSingleton("rmiProxyBeanGen", getProxyObjectType(),
                 props);
+        appContext.refresh();
         return appContext.getBean("rmiProxyBeanGen");
     }
 
@@ -62,6 +64,7 @@ public class Rmi extends AbstractInetSocketAddressProtocol {
             Class serviceInterfaceWithContext, Object serviceProxy) {
         StaticApplicationContext appContext = new StaticApplicationContext(
                 m_parentApplicationContext);
+        registerChildApplicationContext(appContext);
         MutablePropertyValues props = new MutablePropertyValues();
         props.addPropertyValue("service", serviceProxy);
         props.addPropertyValue("serviceInterface", serviceInterfaceWithContext);
@@ -70,6 +73,7 @@ public class Rmi extends AbstractInetSocketAddressProtocol {
 
         appContext.registerSingleton("rmiExporterBeanGen",
                 getExporterObjectType(), props);
+        appContext.refresh();
         return appContext.getBean("rmiExporterBeanGen");
     }
 

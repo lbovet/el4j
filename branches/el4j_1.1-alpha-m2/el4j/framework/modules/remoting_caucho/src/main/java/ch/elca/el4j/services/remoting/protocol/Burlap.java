@@ -46,13 +46,14 @@ public class Burlap extends AbstractInetSocketAddressWebProtocol {
             Class serviceInterfaceWithContext) {
         StaticApplicationContext appContext = new StaticApplicationContext(
                 m_parentApplicationContext);
+        registerChildApplicationContext(appContext);
         MutablePropertyValues proxyProps = new MutablePropertyValues();
         proxyProps.addPropertyValue("serviceInterface",
                 serviceInterfaceWithContext);
         proxyProps.addPropertyValue("serviceUrl", generateUrl(proxyBean));
         appContext.registerSingleton("burlapProxyBeanGen",
                 getProxyObjectType(), proxyProps);
-
+        appContext.refresh();
         return appContext.getBean("burlapProxyBeanGen");
     }
 
@@ -63,11 +64,13 @@ public class Burlap extends AbstractInetSocketAddressWebProtocol {
             Class serviceInterfaceWithContext, Object serviceProxy) {
         StaticApplicationContext appContext = new StaticApplicationContext(
                 m_parentApplicationContext);
+        registerChildApplicationContext(appContext);
         MutablePropertyValues props = new MutablePropertyValues();
         props.addPropertyValue("service", serviceProxy);
         props.addPropertyValue("serviceInterface", serviceInterfaceWithContext);
         appContext.registerSingleton("burlapExporterBeanGen",
                 getExporterObjectType(), props);
+        appContext.refresh();
         return appContext.getBean("burlapExporterBeanGen");
     }
 

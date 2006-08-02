@@ -47,13 +47,14 @@ public class Hessian extends AbstractInetSocketAddressWebProtocol {
             Class serviceInterfaceWithContext) {
         StaticApplicationContext appContext = new StaticApplicationContext(
                 m_parentApplicationContext);
+        registerChildApplicationContext(appContext);
         MutablePropertyValues proxyProps = new MutablePropertyValues();
         proxyProps.addPropertyValue("serviceInterface",
                 serviceInterfaceWithContext);
         proxyProps.addPropertyValue("serviceUrl", generateUrl(proxyBean));
         appContext.registerSingleton("hessianProxyBeanGen",
                 getProxyObjectType(), proxyProps);
-
+        appContext.refresh();
         return appContext.getBean("hessianProxyBeanGen");
     }
 
@@ -64,11 +65,13 @@ public class Hessian extends AbstractInetSocketAddressWebProtocol {
             Class serviceInterfaceWithContext, Object serviceProxy) {
         StaticApplicationContext appContext = new StaticApplicationContext(
                 m_parentApplicationContext);
+        registerChildApplicationContext(appContext);
         MutablePropertyValues props = new MutablePropertyValues();
         props.addPropertyValue("service", serviceProxy);
         props.addPropertyValue("serviceInterface", serviceInterfaceWithContext);
         appContext.registerSingleton("hessianExporterBeanGen",
                 getExporterObjectType(), props);
+        appContext.refresh();
         return appContext.getBean("hessianExporterBeanGen");
     }
 
