@@ -28,7 +28,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
@@ -135,7 +135,7 @@ public class RemotingBenchmark {
     /**
      * This is the application context to work with.
      */
-    private ApplicationContext m_appContext;
+    private ConfigurableApplicationContext m_appContext;
 
     /**
      * This list contains the test results.
@@ -194,11 +194,16 @@ public class RemotingBenchmark {
             System.out.println("done.");
         }
         b.printTestResults();
-        
-        /**
-         * Exit jvm with code 0 to stop rmi registry too.
-         */
-        System.exit(0);
+        b.close();
+    }
+
+    /**
+     * Closes all related parts.
+     */
+    protected void close() {
+        if (m_appContext != null) {
+            m_appContext.close();
+        }
     }
 
     /**
