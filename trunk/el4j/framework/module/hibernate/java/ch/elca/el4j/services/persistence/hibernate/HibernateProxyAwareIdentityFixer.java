@@ -164,6 +164,9 @@ public class HibernateProxyAwareIdentityFixer
 
     /** {@inheritDoc} */
     @Override
+    // TODO: get rid of dependency to hibernate.jar (e.g. by duplicating the 
+    // code in isInitialized while referring to types by name and reflection) 
+    // and move this into a more appropriate module.
     protected boolean immutableValue(Object o) {
         boolean iv;
         if (o == null) {
