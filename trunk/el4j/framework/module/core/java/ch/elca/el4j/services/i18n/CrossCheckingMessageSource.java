@@ -33,7 +33,8 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * <h4> Usage </h4>
  * Replace the message source in the spring configuration with an instance of 
  * this class (leaving the basenames-assignment intact) and configure the
- * types to be compared using {@link #types}. This class will then resolve every
+ * types to be compared using {@link #m_types}. This class will then resolve 
+ * every
  * message it is asked to resolve from both sources, and {@code assert} they
  * agree about the message's value. (You should therefore enable assertions ...)
  *

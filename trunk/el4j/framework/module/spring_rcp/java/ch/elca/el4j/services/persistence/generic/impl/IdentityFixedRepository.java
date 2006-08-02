@@ -41,7 +41,8 @@ import ch.elca.el4j.services.search.QueryObject;
  * );</script>
  *
  * @author Adrian Moos (AMS)
- * @deprecated use {@link AbstractIdentityFixer.GenericInterceptor} instead.
+ * @deprecated use {@link ch.elca.el4j.services.persistence.generic.repo
+ * .AbstractIdentityFixer.GenericInterceptor} instead.
  * @see AbstractIdentityFixer
  */
 @Deprecated

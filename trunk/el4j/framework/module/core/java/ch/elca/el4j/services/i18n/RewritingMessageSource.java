@@ -65,8 +65,7 @@ public class RewritingMessageSource implements MessageSource {
     
     /**
      * Like {@link
-     * org.springframework.context.support.ResourceBundleMessageSource
-     * #setBasenames(String[]).
+     * org.springframework.context.support.ResourceBundleMessageSource#setBasenames(String[])}.
      */
     public void setBasenames(String... basenames) {
         m_basenames = basenames;

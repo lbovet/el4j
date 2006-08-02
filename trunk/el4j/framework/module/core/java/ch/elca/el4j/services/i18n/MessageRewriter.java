@@ -574,7 +574,8 @@ public class MessageRewriter {
     
     /** resolves the value of the provided key with the provided user
      * arguments and appends the result to target, or throws 
-     * a {@link NoDefinitionException} if no rule applies to the key.
+     * a {@link NoDefinitionException} if no rule applies to the
+     * key.
      * @param key .
      * @param arguments the user arguments. must not be null, but may be empty.
      * @param target .
@@ -642,7 +643,7 @@ public class MessageRewriter {
     /** 
      * thrown to indicate that there is no matching rule for the requested key.
      **/
-    static class NoDefinitionException extends NoSuchMessageException {
+    public static class NoDefinitionException extends NoSuchMessageException {
         /***/
         String m_key;
         
