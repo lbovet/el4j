@@ -86,7 +86,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <configuration>
                     <mainClass>ch.elca.el4j.demos.remoting.benchmark.RemotingBenchmark</mainClass>
-                    <keepAlive>true</keepAlive>
+                    <keepAlive>false</keepAlive>
                 </configuration>
                 <executions>
                     <execution>
