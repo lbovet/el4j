@@ -41,8 +41,6 @@ import org.springframework.richclient.util.GuiStandardUtils;
 import org.springframework.richclient.util.SpringLayoutUtils;
 import org.springframework.util.StringUtils;
 
-import ch.elca.el4j.util.dom.reflect.EntityType;
-import ch.elca.el4j.util.dom.reflect.Property;
 import ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm;
 import ch.elca.el4j.services.gui.richclient.support.DynaBeanPropertyAccessStrategy;
 import ch.elca.el4j.services.gui.richclient.support.FieldUserMetadataProvider;
@@ -54,6 +52,8 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.AbstractCriteria;
 import ch.elca.el4j.util.codingsupport.Reject;
+import ch.elca.el4j.util.dom.reflect.EntityType;
+import ch.elca.el4j.util.dom.reflect.Property;
 import ch.elca.el4j.util.registy.impl.StringMapBackedRegistry;
 
 /**

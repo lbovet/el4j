@@ -20,8 +20,6 @@ import java.util.Map;
 
 import org.springframework.richclient.application.ViewDescriptor;
 
-import ch.elca.el4j.util.dom.reflect.EntityType;
-import ch.elca.el4j.util.dom.reflect.Property;
 import ch.elca.el4j.services.gui.search.AbstractSearchItem;
 import ch.elca.el4j.services.gui.search.ComparisonSearchItem;
 import ch.elca.el4j.services.gui.search.LikeSearchItem;
@@ -30,6 +28,8 @@ import ch.elca.el4j.services.richclient.components.SearchView;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.annotations.Preliminary;
 import ch.elca.el4j.util.collections.helpers.Function;
+import ch.elca.el4j.util.dom.reflect.EntityType;
+import ch.elca.el4j.util.dom.reflect.Property;
 import ch.elca.el4j.util.observer.impl.SettableObservableValue;
 import ch.elca.el4j.util.registy.impl.StringMapBackedRegistry;
 

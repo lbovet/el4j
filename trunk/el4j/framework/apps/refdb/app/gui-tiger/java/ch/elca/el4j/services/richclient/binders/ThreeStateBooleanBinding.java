@@ -21,13 +21,13 @@ import javax.swing.JToggleButton;
 
 import org.springframework.binding.form.FormModel;
 
-import ch.elca.el4j.util.dom.reflect.EntityType;
-import ch.elca.el4j.util.dom.reflect.Property;
 import ch.elca.el4j.services.gui.richclient.forms.binding.swing.AbstractSwingBinding;
 import ch.elca.el4j.services.gui.richclient.forms.binding.swing.ThreeStateBooleanJPanel;
 import ch.elca.el4j.services.gui.search.AbstractSearchItem;
 import ch.elca.el4j.services.i18n.MessageProvider;
 import ch.elca.el4j.util.codingsupport.Reject;
+import ch.elca.el4j.util.dom.reflect.EntityType;
+import ch.elca.el4j.util.dom.reflect.Property;
 import ch.elca.el4j.util.registy.impl.StringMapBackedRegistry;
 
 /**

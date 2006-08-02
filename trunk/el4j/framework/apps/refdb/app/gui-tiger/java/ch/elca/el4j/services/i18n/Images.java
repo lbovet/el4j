@@ -21,9 +21,8 @@ import java.awt.Image;
 import org.springframework.richclient.image.ImageSource;
 import org.springframework.richclient.image.NoSuchImageResourceException;
 
-import ch.elca.el4j.util.dom.reflect.EntityType;
 import ch.elca.el4j.util.codingsupport.annotations.Preliminary;
-
+import ch.elca.el4j.util.dom.reflect.EntityType;
 
 
 /**
