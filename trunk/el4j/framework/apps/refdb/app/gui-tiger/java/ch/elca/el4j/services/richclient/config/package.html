@@ -31,15 +31,15 @@ some properties (e.g. an edit view's active bean) represent mutable aspects
 of a component. Instead of directly installing a value into these fields, we
 merely install a value holder, whose value is permitted to change at display
 time. Since changes must be propagated to the widgets, these holders are of type
-{@link util.Observable}. Note that it is permitted to install the same observable 
-in various fields to represent common state:
+{@link ch.elca.el4j.util.observer.ObservableValue}. Note that it is permitted to
+install the same observable in various fields to represent common state:
 
 <pre>new Table(Person.class) {{
 	filter = personSearch.query;
 }}</pre>
 
 More complex depedencies among such properties can be expressed using
-{@link util.Rule}.
+{@link ch.elca.el4j.util.observer.impl.LiveValue LiveValues}.
 
 <h3>Implementation Note</h3>
 Since elements must create objects usually managed by a Spring Context, a

@@ -60,6 +60,7 @@ public class RefDbGui extends Gui {
         }});
     }}
     
+    // experimental, not supported by components yet.
     class ReferencePropertiesDialog extends Dialog {{
         components.add(
             new Edit(Reference.class) {{

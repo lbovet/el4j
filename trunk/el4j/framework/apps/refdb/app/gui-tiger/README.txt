@@ -41,4 +41,4 @@ Maturity (or lack thereof ;) )
 
 To accelerate the construction of this prototype, we have concentrated on the configuration interface. In particular, remoting the repository is currently broken.
 
-We have yet to provide the full capabilities of refdb; the impossibility to create/delete entities is particularly annoying.
+We have yet to provide the full capabilities of refdb; the impossibility to create entities is particularly annoying.

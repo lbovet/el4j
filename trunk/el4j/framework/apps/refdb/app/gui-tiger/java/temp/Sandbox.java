@@ -16,44 +16,23 @@
  */
 package temp;
 
-import org.aopalliance.intercept.MethodInvocation;
-import org.springframework.aop.IntroductionInterceptor;
-import org.springframework.aop.framework.ProxyFactory;
-import org.springframework.aop.support.IntroductionInfoSupport;
+import ch.elca.el4j.services.persistence.generic.repo.AbstractIdentityFixer;
+import ch.elca.el4j.services.persistence.generic.repo.IdentityFixedRepository;
+import ch.elca.el4j.services.persistence.generic.repo.SimpleGenericRepository;
+import ch.elca.el4j.services.persistence.hibernate.HibernateProxyAwareIdentityFixer;
 
 public class Sandbox {
-    static interface X {
+    static AbstractIdentityFixer identityFixer 
+        = new HibernateProxyAwareIdentityFixer();
+    
+    static AbstractIdentityFixer.GenericInterceptor interceptor 
+        = identityFixer.new GenericInterceptor(IdentityFixedRepository.class);
+    
+    @SuppressWarnings("unchecked")
+    static <T> IdentityFixedRepository<T> fix(
+        SimpleGenericRepository<T> identityManglingRepo) {
         
-    }
-    
-    public static class RealX implements X { } 
-    
-    static interface Y extends X {
-        void foo();
-    }
-    
-    static class Z extends IntroductionInfoSupport implements IntroductionInterceptor {
-        Z() {
-            publishedInterfaces.add(Y.class);
-        }
-        
-        public Object invoke(MethodInvocation invocation) throws Throwable {
-            System.out.println(invocation);
-            return null;
-        }
-    }
-    
-    static void proxy(X x) {
-        ProxyFactory pf = new ProxyFactory();
-        pf.setTarget(x);
-        pf.setProxyTargetClass(true);
-        pf.addAdvice(new Z());
-        ((Y) pf.getProxy()).foo();
-        
-        
-    }
-    
-    public static void main(String[] args) throws Exception {
-        proxy(new RealX());
+        return (IdentityFixedRepository<T>)
+            interceptor.decorate(identityManglingRepo);
     }
 }

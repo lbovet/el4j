@@ -32,8 +32,10 @@ import ch.elca.el4j.services.persistence.generic.RepositoryAgency;
 import ch.elca.el4j.services.persistence.generic.RepositoryAgent;
 import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeListener;
 import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier;
+import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier.EntityDeleted;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.Reject;
+import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
 import ch.elca.el4j.util.collections.ExtendedList;
 import ch.elca.el4j.util.collections.ExtendedWritableList;
 import ch.elca.el4j.util.collections.helpers.Function;
@@ -58,8 +60,6 @@ import ch.elca.el4j.util.observer.impl.SettableObservableValue;
  * @author Adrian Moos (AMS)
  */
 
-// TODO: Have repository notify us about changed beans and refresh the control
-// on update.
 // TODO: fuse this.selection with swings selection model
 public class Table extends AbstractGenericView {
     /** specifies which properties are shown and which are changeable. */
@@ -179,9 +179,16 @@ public class Table extends AbstractGenericView {
         }
 
         /** Updates the set of displayed entities. */
+        @ImplementationAssumption(
+            "at most one thread is accessing the repository at any given time.")
         public void changed(RepositoryChangeNotifier.Change change) {
-            if (!m_refreshing) {
-                changed(filter.get());
+            if (change instanceof EntityDeleted) {
+                Object deletee = ((EntityDeleted) change).changee;
+                removeBean(deletee);
+            } else {
+                if (!m_refreshing) {
+                    changed(filter.get());
+                }
             }
         }
 
