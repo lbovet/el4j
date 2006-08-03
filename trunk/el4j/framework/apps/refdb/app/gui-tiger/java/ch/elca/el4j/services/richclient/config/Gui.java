@@ -1,5 +1,3 @@
-package ch.elca.el4j.services.richclient.config;
-
 /*
  * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
  * the spring framework, http://el4j.sf.net
@@ -16,21 +14,15 @@ package ch.elca.el4j.services.richclient.config;
  *
  * For alternative licensing, please contact info@elca.ch
  */
+package ch.elca.el4j.services.richclient.config;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import ch.elca.el4j.apps.lightrefdb.dom.Keyword;
-import ch.elca.el4j.apps.lightrefdb.dom.Reference;
-import ch.elca.el4j.services.gui.richclient.utils.Services;
-import ch.elca.el4j.services.persistence.generic.RepositoryAgency;
-import ch.elca.el4j.services.persistence.generic.repo.SimpleGenericRepository;
 import ch.elca.el4j.services.richclient.context.AwakingContext;
 import ch.elca.el4j.util.collections.ExtendedWritableList;
 import ch.elca.el4j.util.collections.impl.ExtendedArrayList;
-
-
 
 /** Abstract superclass to application GUIs. 
  * 
@@ -48,7 +40,6 @@ import ch.elca.el4j.util.collections.impl.ExtendedArrayList;
  *
  * @author Adrian Moos (AMS)
  */
-
 public abstract class Gui implements InitializingBean, ApplicationContextAware {
     /***/
     public ExtendedWritableList<Window> windows 
@@ -59,7 +50,7 @@ public abstract class Gui implements InitializingBean, ApplicationContextAware {
     
     /***/
     protected Gui() {
-        test();
+//        test();
         System.out.println("Gui is beeing configured.");
     }
     
@@ -92,27 +83,27 @@ public abstract class Gui implements InitializingBean, ApplicationContextAware {
         w.init(m_context);
     }
     
-    /** place to put tests during testing. */
-    void test() {
-        SimpleGenericRepository<Reference> refrepo
-            = Services.get(RepositoryAgency.class)
-                      .getFor(Reference.class);
-
-        if (refrepo.findAll().size() == 0) {
-            Reference ref = new Reference();
-            ref.setName("Hibernate in Action");
-            ref.setDescription("");
-            refrepo.saveOrUpdate(ref);
-        }
-
-        SimpleGenericRepository<Keyword> kwrepo
-            = Services.get(RepositoryAgency.class)
-                      .getFor(Keyword.class);
-        
-        if (kwrepo.findAll().size() == 0) {
-            Keyword kw = new Keyword();
-            kw.setName("persistence");
-            kwrepo.saveOrUpdate(kw);            
-        }
-    }
+//    /** place to put tests during testing. */
+//    void test() {
+//        SimpleGenericRepository<Reference> refrepo
+//            = Services.get(RepositoryAgency.class)
+//                      .getFor(Reference.class);
+//
+//        if (refrepo.findAll().size() == 0) {
+//            Reference ref = new Reference();
+//            ref.setName("Hibernate in Action");
+//            ref.setDescription("");
+//            refrepo.saveOrUpdate(ref);
+//        }
+//
+//        SimpleGenericRepository<Keyword> kwrepo
+//            = Services.get(RepositoryAgency.class)
+//                      .getFor(Keyword.class);
+//        
+//        if (kwrepo.findAll().size() == 0) {
+//            Keyword kw = new Keyword();
+//            kw.setName("persistence");
+//            kwrepo.saveOrUpdate(kw);            
+//        }
+//    }
 }
