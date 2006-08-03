@@ -1,4 +1,3 @@
-package ch.elca.el4j.apps.lightrefdb.gui;
 /*
  * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
  * the spring framework, http://el4j.sf.net
@@ -15,6 +14,7 @@ package ch.elca.el4j.apps.lightrefdb.gui;
  *
  * For alternative licensing, please contact info@elca.ch
  */
+package ch.elca.el4j.apps.lightrefdb.gui;
 
 import ch.elca.el4j.apps.lightrefdb.dom.*;
 import ch.elca.el4j.services.richclient.config.*;
