@@ -266,6 +266,8 @@ public class ModernApplicationLauncher {
                 = (Application) m_rootApplicationContext.getBean(
                     APPLICATION_BEAN_ID, Application.class);
             
+            application.getLifecycleAdvisor().onPreStartup();
+            
             // make sure the Gui is created.
             m_rootApplicationContext.getBean("gui", Gui.class);
             
