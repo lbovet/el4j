@@ -233,11 +233,12 @@ public class ModernApplicationLauncher {
      * lifecycle begins.
      */
     private void launchMyRichClient() {
+        boolean splashScreenDisplayed = false;
         /**
          * If startup context exists display splash screen.
          */
         if (m_startupContext != null) {
-            displaySplashScreen(m_startupContext);
+            splashScreenDisplayed = displaySplashScreen(m_startupContext);
         }
         
         /**
@@ -252,8 +253,9 @@ public class ModernApplicationLauncher {
          * If startup context is not available, lookup the splash screen in 
          * root application context.
          */
-        if (m_startupContext != null) {
-            displaySplashScreen(m_rootApplicationContext);
+        if (!splashScreenDisplayed) {
+            splashScreenDisplayed 
+                = displaySplashScreen(m_rootApplicationContext);
         }
 
         /**
@@ -265,19 +267,19 @@ public class ModernApplicationLauncher {
                     APPLICATION_BEAN_ID, Application.class);
             
             // make sure the Gui is created.
-            m_rootApplicationContext.getBean("Gui", Gui.class);
+            m_rootApplicationContext.getBean("gui", Gui.class);
             
             application.getLifecycleAdvisor().onPostStartup();
         } catch (NoSuchBeanDefinitionException e) {
-            s_logger.error("A single "
-                + "org.springframework.richclient.Application bean definition "
-                + "must be defined in the main application context", e);
+            s_logger.error("A single " + Application.class.getName()
+                + " bean with name '" + APPLICATION_BEAN_ID
+                + "' must be defined in the main application context.", e);
             throw e;
         } catch (RuntimeException e) {
             s_logger.error(
-                "Exception occured initializing Application bean", e);
+                "Exception occured initializing the application bean.", e);
             throw new ApplicationException(
-                "Unable to start rich client application", e);
+                "Unable to start richclient application.", e);
         } finally {
             destroySplashScreen();
             s_logger.debug("Launcher thread exiting.");
@@ -289,14 +291,16 @@ public class ModernApplicationLauncher {
      * 
      * @param beanFactory
      *            Is the bean factory where to get the spalsh screen bean.
+     * @return Returns <code>true</code> if splash screen could be displayed.
      */
-    private void displaySplashScreen(BeanFactory beanFactory) {
+    private boolean displaySplashScreen(BeanFactory beanFactory) {
         try {
             if (beanFactory.containsBean(SPLASH_SCREEN_BEAN_ID)) {
-                this.m_splashScreen = (SplashScreen) beanFactory.getBean(
+                m_splashScreen = (SplashScreen) beanFactory.getBean(
                     SPLASH_SCREEN_BEAN_ID, SplashScreen.class);
                 s_logger.debug("Displaying application splash screen.");
-                this.m_splashScreen.splash();
+                m_splashScreen.splash();
+                return true;
             } else {
                 s_logger.debug("No splash screen bean found.");
             }
@@ -304,6 +308,7 @@ public class ModernApplicationLauncher {
             s_logger.warn(
                 "Unable to load and display startup splash screen.", e);
         }
+        return false;
     }
 
     /**
