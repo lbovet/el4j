@@ -27,6 +27,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 import org.hibernate.Hibernate;
+import org.hibernate.collection.PersistentCollection;
+import org.hibernate.proxy.HibernateProxy;
 
 import ch.elca.el4j.services.persistence.generic.repo.AbstractIdentityFixer;
 import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
@@ -164,11 +166,6 @@ public class HibernateProxyAwareIdentityFixer
 
     /** {@inheritDoc} */
     @Override
-    @ImplementationAssumption(
-        "no initialized proxies have the wrong dynamic type")
-    // at the time of writing, the preceeding may be violated for entities
-    // whose supertype is an entity type as well, that are first proxied and
-    // subsequently initialized.
     // TODO: get rid of dependency to hibernate.jar (e.g. by duplicating the 
     // code in isInitialized while referring to types by name and reflection) 
     // and move this into a more appropriate module.
@@ -176,7 +173,15 @@ public class HibernateProxyAwareIdentityFixer
         boolean iv;
         if (o == null) {
             iv = true;
-        } else if (!Hibernate.isInitialized(o)) {
+        } else if (o instanceof HibernateProxy
+                || o instanceof PersistentCollection) {
+            // Proxies use another layout for their state. Moreover, they 
+            // violate ID's implementation assumption. Therefore, they are not 
+            // fixed.
+            // TODO: fix that. (at the time of writing, proxies may not 
+            // implement their entity type if the proxy is created in a request 
+            // for the super entity type (and subsequently initialized), 
+            // precluding identity fixing)
             iv = true;
         } else if (o.getClass().isAnnotationPresent(Entity.class)) { 
             iv = false;
