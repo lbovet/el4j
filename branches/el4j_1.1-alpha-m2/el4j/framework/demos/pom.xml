@@ -41,5 +41,6 @@
     </build>
     <modules>
         <module>remoting</module>
+        <module>light_statistics</module>
     </modules>
 </project>
