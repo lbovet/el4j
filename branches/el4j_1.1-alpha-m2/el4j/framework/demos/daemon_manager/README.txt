@@ -1,14 +1,13 @@
-# show all the available targets:
-ant -p
-# recursively compile all required targets files:
-ant jars.rec.module.module-daemon_manager-demos
+# compile & install all required targets files:
+mvn install
 
-# start the eu execution unit (eu) with the controller: (in console 1):
-ant start.module.eu.module-daemon_manager-demos.controller
+# start the controller: (in console 1):
+cd controller
+mvn exec:java
 
-# get information abou the running daemons via the console application (in console 2):
-ant -Dargs="information" start.module.eu.module-daemon_manager-demos.console
+# get information about the running daemons via the console application (in console 2):
+cd console
+mvn exec:java -Dexec.arguments="information"
 
 # stop the daemons via the console application (in console 2):
-ant -Dargs="information" start.module.eu.module-daemon_manager-demos.console
-
+mvn exec:java -Dexec.arguments="stop"

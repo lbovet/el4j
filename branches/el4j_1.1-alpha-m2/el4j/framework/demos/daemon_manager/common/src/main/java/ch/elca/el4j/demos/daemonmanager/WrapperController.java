@@ -38,10 +38,15 @@ import ch.elca.el4j.services.daemonmanager.impl.AbstractDaemonManagerController;
  */
 public class WrapperController extends AbstractDaemonManagerController {
     /**
+     * Application context.
+     */
+    protected ModuleApplicationContext appContext;
+    
+    /**
      * {@inheritDoc}
      */
     protected DaemonManager createDaemonManager() {
-        ModuleApplicationContext appContext = new ModuleApplicationContext(
+        appContext = new ModuleApplicationContext(
             Controller.INCLUSIVE_CONFIG_LOCATION,
             Controller.ALLOW_BEAN_DEFINITION_OVERRIDING);
         DaemonManager daemonManager 
@@ -54,7 +59,9 @@ public class WrapperController extends AbstractDaemonManagerController {
      * {@inheritDoc}
      */
     protected void postGracefullyTerminated() {
-        System.exit(EXIT_CODE_GRACEFULLY_TERMINATED);
+        if (appContext != null) {
+            appContext.close();
+        }
     }
     
     /**
