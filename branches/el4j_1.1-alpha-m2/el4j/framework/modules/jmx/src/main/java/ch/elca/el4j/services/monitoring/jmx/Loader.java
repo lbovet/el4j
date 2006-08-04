@@ -35,7 +35,12 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.util.Assert;
 
 import ch.elca.el4j.core.exceptions.BaseException;
 import ch.elca.el4j.core.exceptions.BaseRTException;
@@ -56,7 +61,8 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * 
  * @author Raphael Boog (RBO)
  */
-public class Loader implements ApplicationContextAware, InitializingBean {
+public class Loader implements ApplicationContextAware, InitializingBean, 
+    ApplicationListener {
 
     /**
      * A map containing the MBean Server as key and the JvmMB as value.
@@ -87,7 +93,13 @@ public class Loader implements ApplicationContextAware, InitializingBean {
     /**
      * The Application Context having instantiated this loader.
      */
-    private ApplicationContext m_applicationContext;
+    private ConfigurableApplicationContext m_applicationContext;
+    
+    /**
+     * Flag to tell if in method <code>afterPropertiesSet</code> this bean 
+     * should be initialized. Default is set to <code>false</code>.
+     */
+    private boolean m_initAfterPropertiesSet = false;
 
     /**
      * Returns the MBean Server of this ApplicationContext.
@@ -224,8 +236,10 @@ public class Loader implements ApplicationContextAware, InitializingBean {
      *            ApplicationContextAware
      */
     public void setApplicationContext(ApplicationContext applicationContext) {
-
-        this.m_applicationContext = applicationContext;
+        Assert.isInstanceOf(ConfigurableApplicationContext.class, 
+            applicationContext);
+        this.m_applicationContext 
+            = (ConfigurableApplicationContext) applicationContext;
 
     }
 
@@ -234,30 +248,68 @@ public class Loader implements ApplicationContextAware, InitializingBean {
      * 
      * @return The Application Context containing this loader object
      */
-    public ApplicationContext getApplicationContext() {
+    public ConfigurableApplicationContext getApplicationContext() {
         return m_applicationContext;
+    }
+
+    /**
+     * @return Returns the initAfterPropertiesSet.
+     */
+    public final boolean isInitAfterPropertiesSet() {
+        return m_initAfterPropertiesSet;
+    }
+
+    /**
+     * @param initAfterPropertiesSet Is the initAfterPropertiesSet to set.
+     */
+    public final void setInitAfterPropertiesSet(boolean initAfterPropertiesSet) {
+        m_initAfterPropertiesSet = initAfterPropertiesSet;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see #init()
+     */
+    public void afterPropertiesSet() throws BaseException {
+        if (isInitAfterPropertiesSet()) {
+            init();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see #init()
+     */
+    public void onApplicationEvent(ApplicationEvent event) {
+        if (event instanceof ContextRefreshedEvent 
+            && ((ContextRefreshedEvent)event).getSource() 
+                == getApplicationContext()) {
+            try {
+                init();
+            } catch (BaseException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     /**
      * Creates the "Real World" image of the given Application Context by
      * setting up the corresponding JMX objects.
      * 
-     * @throws BaseException
-     *             Rethrows the BaseException thrown by setJvmMB() and
-     *             m_acMB.init()
+     * @throws BaseException On failure.
      */
-    public void afterPropertiesSet() throws BaseException {
-
+    protected void init() throws BaseException {
         // Set the JVM MBean to this Application Context.
         setJvmMB();
 
         // Create the Application Context proxy.
         m_acMB = new ApplicationContextMB(m_applicationContext,
-            ((AbstractApplicationContext) m_applicationContext)
-                .getBeanFactory(), m_server, m_jvmmb);
-
+            m_applicationContext.getBeanFactory(), 
+            m_server, m_jvmmb);
+        
         // Initialize the Application Context proxy.
         m_acMB.init();
-
     }
 }
