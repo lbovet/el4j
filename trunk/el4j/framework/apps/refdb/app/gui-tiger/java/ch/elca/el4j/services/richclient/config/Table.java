@@ -33,6 +33,7 @@ import ch.elca.el4j.services.persistence.generic.RepositoryAgent;
 import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeListener;
 import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier;
 import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier.EntityDeleted;
+import ch.elca.el4j.services.richclient.components.EntityCreator;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.Reject;
 import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
@@ -69,6 +70,9 @@ public class Table extends AbstractGenericView {
     public ExtendedWritableList<AbstractBeanExecutor> executors 
         = new ExtendedArrayList<AbstractBeanExecutor>();
     
+    
+    public EntityCreator create;
+    
     /** the delete executor. */
     public AbstractBeanExecutor delete;
     
@@ -97,11 +101,12 @@ public class Table extends AbstractGenericView {
         RepositoryAgent<T> agent = Services.get(RepositoryAgency.class)
                                            .getFor(c);
         
+        create = new EntityCreator<T>(c);
         delete = new GenericBeanDeleteExecutor<T>(agent);
         selectAll = new SelectAllBeanExecutor();
         //inspect = new PropertiesExecutor(t);
         //inspect.properties = new EditablePropertyList(t);
-        executors.add(delete, selectAll);        
+        executors.add(create, delete, selectAll);        
     }
 
     // Vision: merge the lookup code into BeanTableModel, 

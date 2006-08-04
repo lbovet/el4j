@@ -18,7 +18,7 @@ package ch.elca.el4j.apps.lightrefdb.gui;
 
 import ch.elca.el4j.apps.lightrefdb.dom.*;
 import ch.elca.el4j.services.richclient.config.*;
-import ch.elca.el4j.util.observer.impl.LiveValueFactory;
+import static ch.elca.el4j.util.observer.impl.LiveValueFactory.*;
 
 
 public class RefDbGui extends Gui {    
@@ -35,7 +35,10 @@ public class RefDbGui extends Gui {
                         }},
                         new Edit(Keyword.class) {{
                             //properties.lock("name");
-                            current = LiveValueFactory.theElementIn(kt.selection);
+                            current = shadow(
+                                theElementIn(kt.selection),
+                                kt.create.outlet
+                            );
                         }}
                     );
                 }},
@@ -47,10 +50,13 @@ public class RefDbGui extends Gui {
                         rt = new Table(Reference.class) {{
                             filter=rs.query;
                             properties.hide("keywords");
-                            executors.remove(delete);
+                            //executors.remove(delete);
                         }},
                         new Edit(Reference.class) {{
-                            current = LiveValueFactory.theElementIn(rt.selection);
+                            current = shadow(
+                                theElementIn(rt.selection),
+                                rt.create.outlet
+                            );
                             properties.hide("keywords");
                             properties.lock("whenInserted");
                         }}
