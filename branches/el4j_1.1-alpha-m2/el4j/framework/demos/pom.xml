@@ -42,5 +42,6 @@
     <modules>
         <module>remoting</module>
         <module>light_statistics</module>
+        <module>daemon_manager</module>
     </modules>
 </project>
