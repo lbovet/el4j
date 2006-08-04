@@ -37,7 +37,6 @@
         <dependency>
             <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-jmx</artifactId>
-            <version>${version.module-jmx}</version>
             <type>jar</type>
         </dependency>
     </dependencies>

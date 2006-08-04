@@ -24,22 +24,27 @@
         Demo common module for daemon manager module of the EL4J framework.
     </description>
     <dependencies>
-        <!-- module-daemon_manager -->
         <dependency>
             <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-daemon_manager</artifactId>
             <type>jar</type>
         </dependency>
+        <!-- Contains the actor daemon used for demo -->
         <dependency>
             <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-daemon_manager</artifactId>
             <type>test-jar</type>
+            <scope>runtime</scope>
         </dependency>
-        
-        <!-- module-remoting_core -->
+
         <dependency>
             <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-remoting_core</artifactId>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-env</artifactId>
             <type>jar</type>
         </dependency>
     </dependencies>
