@@ -23,13 +23,13 @@ import org.springframework.core.closure.Constraint;
 import org.springframework.rules.Rules;
 import org.springframework.rules.support.DefaultRulesSource;
 
-import ch.elca.el4j.apps.keyword.dto.KeywordDto;
+import ch.elca.el4j.apps.lightrefdb.dom.Book;
+import ch.elca.el4j.apps.lightrefdb.dom.FormalPublication;
+import ch.elca.el4j.apps.lightrefdb.dom.Keyword;
+import ch.elca.el4j.apps.lightrefdb.dom.Link;
 import ch.elca.el4j.apps.refdb.dto.AnnotationDto;
-import ch.elca.el4j.apps.refdb.dto.BookDto;
 import ch.elca.el4j.apps.refdb.dto.FileDescriptorView;
 import ch.elca.el4j.apps.refdb.dto.FileDto;
-import ch.elca.el4j.apps.refdb.dto.FormalPublicationDto;
-import ch.elca.el4j.apps.refdb.dto.LinkDto;
 
 /**
  * Validation rules source for the reference database application.
@@ -67,7 +67,7 @@ public class RefdbValidationRulesSource extends DefaultRulesSource {
          * Default constructor.
          */
         public KeywordRules() {
-            super(KeywordDto.class);
+            super(Keyword.class);
         }
 
         /**
@@ -151,7 +151,7 @@ public class RefdbValidationRulesSource extends DefaultRulesSource {
          * Default constructor.
          */
         public LinkRules() {
-            super(LinkDto.class);
+            super(Link.class);
         }
 
         /**
@@ -183,7 +183,7 @@ public class RefdbValidationRulesSource extends DefaultRulesSource {
          * Default constructor.
          */
         public FormalPublicationRules() {
-            super(FormalPublicationDto.class);
+            super(FormalPublication.class);
         }
 
         /**
@@ -221,7 +221,7 @@ public class RefdbValidationRulesSource extends DefaultRulesSource {
          * Default constructor.
          */
         public BookRules() {
-            super(BookDto.class);
+            super(Book.class);
         }
 
         /**
