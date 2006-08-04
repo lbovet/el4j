@@ -65,8 +65,9 @@ public final class LiveValueFactory {
      * @param upper .
      * @return .
      */
-    static <T> LiveValue<T> shadow(final ObservableValue<? extends T> lower,
-                                   final ObservableValue<? extends T> upper) {
+    public static <T> 
+    LiveValue<T> shadow(final ObservableValue<? extends T> lower,
+                        final ObservableValue<? extends T> upper) {
         return new LiveValue<T>(new Computable<T>() {
             public T is() {
                 if (upper.get() == null) {
