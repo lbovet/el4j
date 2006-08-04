@@ -18,12 +18,13 @@ package ch.elca.el4j.services.i18n;
 
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.binding.form.FormModel;
 import org.springframework.binding.form.support.MessageSourceFieldFaceSource;
 import org.springframework.richclient.application.View;
 
 import ch.elca.el4j.services.richclient.config.AbstractGenericView;
-import ch.elca.el4j.util.codingsupport.Reject;
 import ch.elca.el4j.util.dom.reflect.Property;
 import ch.elca.el4j.util.registy.Registry;
 import ch.elca.el4j.util.registy.impl.StringMapBackedRegistry;
@@ -44,6 +45,9 @@ public class SimpleFieldFaceSource extends MessageSourceFieldFaceSource {
     /** The default instance. */
     private static SimpleFieldFaceSource s_instance 
         = new SimpleFieldFaceSource();
+    
+    /** The logger. */
+    protected Log m_logger = LogFactory.getLog(getClass());
     
     /** Constructor for subclasses. */
     protected SimpleFieldFaceSource() { }
@@ -70,8 +74,15 @@ public class SimpleFieldFaceSource extends MessageSourceFieldFaceSource {
             kind = gv.schema;
         } else {
             View v = registry.get(View.class);
-            Reject.ifNull(v, "required metadata is missing");
-            kind = v.getId();
+            if (v != null) {
+                kind = v.getId();
+            } else {
+                // this really shouldn't happen, but ...
+                m_logger.warn(
+                    "required metadata is missing, returning " 
+                    + formPropertyPath);
+                return formPropertyPath;
+            }
         }
         
         return MessageProvider.instance().getFieldFaceProperty(
