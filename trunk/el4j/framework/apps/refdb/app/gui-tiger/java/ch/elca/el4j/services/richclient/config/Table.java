@@ -71,7 +71,7 @@ public class Table extends AbstractGenericView {
         = new ExtendedArrayList<AbstractBeanExecutor>();
     
     
-    public EntityCreator create;
+    public EntityCreator<?> create;
     
     /** the delete executor. */
     public AbstractBeanExecutor delete;
