@@ -188,7 +188,8 @@ public class Edit extends AbstractGenericView {
             super.initializeFormModelAndDialogPage(bean);
             // HACK: implementation dependent downcast. Spring RCP's public API
             // does not permit to configure the localization provider used.
-            // Change request submitted to Spring RCP team (RCP 389) pending.
+            // Change request submitted to Spring RCP team pending, see
+            // http://opensource.atlassian.com/projects/spring/browse/RCP-389
             AbstractFormModel fm = (AbstractFormModel) getFormModel();
             fm.setFieldFaceSource(
                 SimpleFieldFaceSource.instance()
