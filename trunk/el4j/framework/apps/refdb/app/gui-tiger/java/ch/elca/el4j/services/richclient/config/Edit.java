@@ -188,6 +188,7 @@ public class Edit extends AbstractGenericView {
             super.initializeFormModelAndDialogPage(bean);
             // HACK: implementation dependent downcast. Spring RCP's public API
             // does not permit to configure the localization provider used.
+            // Change request submitted to Spring RCP team (RCP 389) pending.
             AbstractFormModel fm = (AbstractFormModel) getFormModel();
             fm.setFieldFaceSource(
                 SimpleFieldFaceSource.instance()
@@ -195,7 +196,11 @@ public class Edit extends AbstractGenericView {
 
             for (DisplayableProperty ep : m_visible) {
                 // HACK: Implementation dependent downcast.
-                //       The public api does not permit to set user metadata.
+                //       The public api does not permit to set user metadata
+                //       for an already created form model.
+                // This should be done by providing a property metadata access
+                // strategy to maintain propert initialization order.
+                // (getting field metadata already creates the value model)
                 DefaultFieldMetadata metadata 
                     = ((DefaultFieldMetadata) 
                         fm.getFieldMetadata(ep.prop.name));
