@@ -182,7 +182,28 @@ public class RewritingMessageSource implements MessageSource {
     /** {@inheritDoc} */
     public String getMessage(String code, Object[] args, Locale locale)
         throws NoSuchMessageException {
-        return getRewriter(locale).resolve(code, args);
+        
+        // All message sources provided by spring resolve 
+        // MessageSourceResolvables passed in args, see
+        // AbstractMessageSource.resolveArguments
+        // This is not prescribed by the interface, but silently assumed in
+        // various places, so we do it, too.
+        Object[] resolvedArgs;
+        if (args == null) {
+            resolvedArgs = null;
+        } else {
+            resolvedArgs = new Object[args.length];
+            for (int i = 0; i < args.length; i++) {
+                if (args[i] instanceof MessageSourceResolvable) {
+                    resolvedArgs[i] = getMessage(
+                        (MessageSourceResolvable) args[i], locale);
+                } else {
+                    resolvedArgs[i] = args[i];
+                }
+            }
+        }
+        
+        return getRewriter(locale).resolve(code, resolvedArgs);
     }
 
     /** {@inheritDoc} */
