@@ -52,6 +52,7 @@ public final class MainStandalone {
             "classpath*:scenarios/db/raw/*.xml",
             "classpath*:scenarios/dataaccess/hibernate/*-repository-hibernate-config.xml",
             "classpath*:scenarios/dataaccess/hibernate/hibernate*.xml",
+            "classpath:scenarios/remoting/disabled/*.xml",
             "classpath:scenarios/springrcp/refdb/application/*.xml"
         };
         MainCommon.launchApplication(startupContext, applicationContexts);
