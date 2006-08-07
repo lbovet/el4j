@@ -117,6 +117,8 @@ public class DefaultRepositoryAgency
     /**
      * Introduces an agent that automatically reloads beans if a concurrent
      * modification is detected.
+     * 
+     * @see RepositoryAgent
      */
     protected class AgentIntroducer
             extends DelegatingIntroductionInterceptor {
