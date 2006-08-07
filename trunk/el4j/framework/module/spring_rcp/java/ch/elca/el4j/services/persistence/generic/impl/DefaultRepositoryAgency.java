@@ -16,6 +16,8 @@
  */
 package ch.elca.el4j.services.persistence.generic.impl;
 
+import static ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier.FUZZY_CHANGE;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,11 +31,10 @@ import ch.elca.el4j.services.persistence.generic.RepositoryAgency;
 import ch.elca.el4j.services.persistence.generic.RepositoryAgent;
 import ch.elca.el4j.services.persistence.generic.repo.AbstractIdentityFixer;
 import ch.elca.el4j.services.persistence.generic.repo.IdentityFixedRepository;
+import ch.elca.el4j.services.persistence.generic.repo.RepositoryRegistry;
+import ch.elca.el4j.services.persistence.generic.repo.SimpleGenericRepository;
 import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier.Change;
 import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier.EntityDeleted;
-import ch.elca.el4j.services.persistence.generic.repo.RepositoryRegistry;
-
-import static ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier.FUZZY_CHANGE;
 
 /**
  * Wraps a repository registry's repositories with 
@@ -87,16 +88,16 @@ public class DefaultRepositoryAgency
             = (RepositoryAgent<T>)
                 m_agents.get(entityType);
         if (rep == null) {
-            ProxyFactory pf = new ProxyFactory();
-            pf.setProxyTargetClass(true);
+            SimpleGenericRepository target = m_backing.getFor(entityType);
+            ProxyFactory pf = new ProxyFactory(target);
+            pf.addInterface(RepositoryAgent.class);
+            pf.setProxyTargetClass(false);
             pf.addAdvice(
                 new AgentIntroducer(
-                    RepositoryAgent.class,
                     new DefaultHierarchyRepositoryChangeNotifier<T>(entityType)
                 )
             );
             pf.addAdvice(m_identityFixerAdvice);
-            pf.setTarget(m_backing.getFor(entityType));
             
             rep = (RepositoryAgent<T>) pf.getProxy();
             m_agents.put(entityType, rep);
@@ -122,14 +123,11 @@ public class DefaultRepositoryAgency
         
         /**
          * Constructor.
-         * @param intf The interface to be introduced.
+         * @param cn Change notifier to intercept the client side proxy.
          */
         @SuppressWarnings("unchecked")
-        public AgentIntroducer(
-                Class<? extends RepositoryAgent> intf,
-                HierarchyRepositoryChangeNotifier cn) {
+        public AgentIntroducer(HierarchyRepositoryChangeNotifier cn) {
             super(cn);
-            publishedInterfaces.add(intf);      
         }
         
         /** {@inheritDoc} */
