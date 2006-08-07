@@ -173,16 +173,20 @@ public class HibernateProxyAwareIdentityFixer
         boolean iv;
         if (o == null) {
             iv = true;
-        } else if (o instanceof HibernateProxy
-                || o instanceof PersistentCollection) {
+        } else if (o instanceof HibernateProxy) {
             // Proxies use another layout for their state. Moreover, they 
             // violate ID's implementation assumption. Therefore, they are not 
             // fixed.
             // TODO: fix that. (at the time of writing, proxies may not 
             // implement their entity type if the proxy is created in a request 
-            // for the super entity type (and subsequently initialized), 
+            // for the super entity type (even if initialized subsequently), 
             // precluding identity fixing)
             iv = true;
+        } else if (o instanceof PersistentCollection) {
+            // materialized collections are anonymous, 
+            // lazy ones are treated as immutable values (their state can't be 
+            // accessed anyway)
+            iv = !((PersistentCollection) o).wasInitialized();
         } else if (o.getClass().isAnnotationPresent(Entity.class)) { 
             iv = false;
         } else if (o instanceof Iterable) {
