@@ -395,7 +395,7 @@ public abstract class AbstractIdentityFixer {
         @SuppressWarnings("unchecked")
         public Object decorate(Object o) {
             ProxyFactory pf = new ProxyFactory(o);
-            pf.setProxyTargetClass(true);
+            pf.setProxyTargetClass(false);
             pf.addAdvice(this);                
             return pf.getProxy();
         }
