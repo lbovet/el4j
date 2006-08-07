@@ -28,19 +28,4 @@
     	<property name="persistentClass"><value>ch.elca.el4j.apps.lightrefdb.dom.Reference</value></property>
     	<property name="sessionFactory"><ref bean="sessionFactory"/></property>
     </bean>
-    
-	<bean id="repoRegistry"
-    	class="ch.elca.el4j.services.persistence.dao.HibernateRepositoryRegistry">
-    	
-    	<property name="sessionFactory"><ref bean="sessionFactory"/></property>
-    	<property name="repos">
-    		<list>
-    			<ref bean="keywordRepo"/>
-    			<ref bean="referenceRepo"/>
-       		</list>
-    	</property>
-    </bean>
-    
-    <bean id="identityFixer"
-    	class="ch.elca.el4j.services.persistence.hibernate.HibernateProxyAwareIdentityFixer"/>    	
 </beans>
