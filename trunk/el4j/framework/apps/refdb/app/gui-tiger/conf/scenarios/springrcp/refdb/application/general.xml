@@ -96,5 +96,5 @@
         
     <!-- and last, but certainly not least, the actual GUI: -->
     <bean id="gui"
-    	class="ch.elca.el4j.apps.lightrefdb.gui.RefDbGui" lazy-init="false"/>
+    	class="ch.elca.el4j.apps.lightrefdb.gui.RefDbGui" lazy-init="true"/>
 </beans>
