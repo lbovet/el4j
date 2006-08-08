@@ -61,16 +61,6 @@
             <timezone>+1</timezone>
         </developer>
         <developer>
-            <id>elca-ams</id>
-            <name>Adrian Moos</name>
-            <email/>
-            <roles>
-                <role>Intern</role>
-                <role>Java developer</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-        <developer>
             <id>rashid_w</id>
             <name>Rashid Waraich</name>
             <email/>
