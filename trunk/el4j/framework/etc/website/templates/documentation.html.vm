@@ -41,6 +41,16 @@
                 </a>
             </li>
         </ul>
+        
+        <h2>Articles</h2>
+        <ul>
+            <li>
+                <a href="docs/pdf/IdentityFixerAnnouncement.pdf">
+                    Article about the identity fixer that is an interceptor
+                    to prevent duplicating the same logical objects multiple times
+                </a>
+            </li>
+        </ul>
 
         <h2>Release notes</h2>
         <p>
