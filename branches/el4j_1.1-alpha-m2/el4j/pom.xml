@@ -791,6 +791,62 @@
             
             
             <!-- **************************** -->
+            <!-- * Application dependencies *-->
+            <!-- **************************** -->
+            
+            <!-- Common modules -->
+            <dependency>
+                <groupId>ch.elca.el4j.apps</groupId>
+                <artifactId>common-database</artifactId>
+                <version>${version.common-database}</version>
+                <type>jar</type>
+            </dependency>
+            
+            <!-- Keyword -->
+            <dependency>
+                <groupId>ch.elca.el4j.apps</groupId>
+                <artifactId>keyword-core-interface</artifactId>
+                <version>${version.application-keyword}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.apps</groupId>
+                <artifactId>keyword-core-impl</artifactId>
+                <version>${version.application-keyword}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.apps</groupId>
+                <artifactId>keyword-core-impl</artifactId>
+                <version>${version.application-keyword}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            
+            <!-- RefDb -->
+            <dependency>
+                <groupId>ch.elca.el4j.apps</groupId>
+                <artifactId>refdb-core-interface</artifactId>
+                <version>${version.application-refdb}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.apps</groupId>
+                <artifactId>refdb-core-impl</artifactId>
+                <version>${version.application-refdb}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.apps</groupId>
+                <artifactId>refdb-core-impl</artifactId>
+                <version>${version.application-refdb}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            
+            
+            
+            <!-- **************************** -->
             <!-- *    Other dependencies    *-->
             <!-- **************************** -->
             
