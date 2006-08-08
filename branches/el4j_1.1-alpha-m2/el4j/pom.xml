@@ -413,18 +413,23 @@
         </plugins>
     </reporting>
     <profiles>
+        <!-- JUnit -->
         <profile>
             <id>notests</id>
             <properties>
                 <maven.test.skip>true</maven.test.skip>
             </properties>
         </profile>
+        
+        <!-- Eclipse -->
         <profile>
             <id>sources</id>
             <properties>
                 <downloadSources>true</downloadSources>
             </properties>
         </profile>
+        
+        <!-- RMI -->
         <profile>
             <id>rmi</id>
             <activation>
@@ -435,6 +440,8 @@
                 <rmi.port>8099</rmi.port>
             </properties>
         </profile>
+        
+        <!-- Web -->
         <profile>
             <id>war.exploded</id>
             <activation>
@@ -477,6 +484,24 @@
             </properties>
         </profile>
         
+        <!-- DB -->
+        <profile>
+            <id>db2</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <db.name>db2</db.name>
+            </properties>
+        </profile>
+        <profile>
+            <id>oracle</id>
+            <properties>
+                <db.name>oracle</db.name>
+            </properties>
+        </profile>
+        
+        <!-- Repositories -->
         <profile>
             <id>el4j-internal</id>
             <distributionManagement>
