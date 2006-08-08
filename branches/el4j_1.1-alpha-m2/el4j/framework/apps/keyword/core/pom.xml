@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <parent>
+        <groupId>ch.elca.el4j.apps</groupId>
+        <artifactId>el4j-framework-apps-keyword</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>el4j-framework-apps-keyword-core</artifactId>
+    <packaging>pom</packaging>
+    <name>EL4J framework keyword core application</name>
+    <description>Keyword core application of the EL4J framework.</description>
+    <build>
+        <!-- Support for Commons Attributes -->
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>commons-attributes-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+    <modules>
+        <module>interface</module>
+        <module>impl</module>
+        <module>tests</module>
+    </modules>
+</project>
