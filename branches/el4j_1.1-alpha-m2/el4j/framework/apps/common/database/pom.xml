@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <parent>
+        <groupId>ch.elca.el4j.apps</groupId>
+        <artifactId>el4j-framework-apps-common</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>ch.elca.el4j.apps</groupId>
+    <artifactId>common-database</artifactId>
+    <version>${version.common-database}</version>
+    <packaging>jar</packaging>
+    <name>EL4J framework applications - common database module</name>
+    <description>Common database module of the EL4J framework.</description>
+    <dependencies>
+        <!-- DBCP libraries -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-dbcp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool</artifactId>
+        </dependency>
+        
+        <!-- Universal IBM driver -->
+        <dependency>
+            <groupId>com.ibm</groupId>
+            <artifactId>db2jcc</artifactId>
+            <version>20040819</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.ibm</groupId>
+            <artifactId>db2jcc_license_c</artifactId>
+            <version>20040819</version>
+            <scope>runtime</scope>
+        </dependency>
+        
+        <!-- Oracle driver -->
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc14_g</artifactId>
+            <version>10.2.0.1.0</version>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+</project>
