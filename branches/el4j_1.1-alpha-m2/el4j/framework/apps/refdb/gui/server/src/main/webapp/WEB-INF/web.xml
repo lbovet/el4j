@@ -25,6 +25,10 @@
                 classpath:scenarios/remoting/server/web/*.xml
             </param-value>
         </init-param>
+        <init-param>
+            <param-name>mergeWithOuterResources</param-name>
+            <param-value>true</param-value>
+        </init-param>        
         <load-on-startup>100</load-on-startup>
     </servlet>
     
