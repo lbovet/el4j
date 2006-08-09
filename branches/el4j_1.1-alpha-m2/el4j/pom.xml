@@ -219,9 +219,38 @@
                     </executions>
                 </plugin>
                 <plugin>
+                    <groupId>ch.elca.el4j.plugins</groupId>
+                    <artifactId>maven-manifest-decorator-plugin</artifactId>
+                    <version>${version.maven-manifest-decorator-plugin}</version>
+                    <executions>
+                        <execution>
+                            <!--
+                                Due to bug that goals are not executed in the
+                                defined order in the same phase the goal below
+                                must be executed before the package phase!
+                                Please see: http://jira.codehaus.org/browse/MNG-2258
+                            -->
+                            <phase>test</phase>
+                            <goals>
+                                <goal>manifest-prepare-config-section</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
                     <version>2.0.1</version>
+                    <executions>
+                        <execution>
+                            <id>createSourceJars</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>jar</goal>
+                                <goal>test-jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -299,12 +328,34 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-eclipse-plugin</artifactId>
                     <version>2.2</version>
+                    <configuration>
+                        <additionalProjectnatures>
+                            <projectnature>de.mvmsoft.checkclipse.CheckclipseNature</projectnature>
+                        </additionalProjectnatures>
+                        <additionalBuildcommands>
+                            <buildcommand>de.mvmsoft.checkclipse.CheckclipseBuilder</buildcommand>
+                        </additionalBuildcommands>
+                    </configuration>
                     <executions>
                         <execution>
                             <id>actualizeEclipseProjects</id>
                             <phase>install</phase>
                             <goals>
                                 <goal>eclipse</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>ch.elca.el4j.plugins</groupId>
+                    <artifactId>maven-checkclipse-helper-plugin</artifactId>
+                    <version>${version.maven-checkclipse-helper-plugin}</version>
+                    <executions>
+                        <execution>
+                            <id>actualizeEclipseProjects</id>
+                            <phase>install</phase>
+                            <goals>
+                                <goal>checkclipse-config-settings</goal>
                             </goals>
                         </execution>
                     </executions>
@@ -346,30 +397,11 @@
                     </configuration>
                 </plugin>
 
-                <!-- EL4J specific plugins -->
+                <!-- Further EL4J specific plugins -->
                 <plugin>
                     <groupId>ch.elca.el4j.plugins</groupId>
                     <artifactId>maven-repohelper-plugin</artifactId>
                     <version>${version.maven-repohelper-plugin}</version>
-                </plugin>
-                <plugin>
-                    <groupId>ch.elca.el4j.plugins</groupId>
-                    <artifactId>maven-manifest-decorator-plugin</artifactId>
-                    <version>${version.maven-manifest-decorator-plugin}</version>
-                    <executions>
-                        <execution>
-                            <!--
-                                Due to bug that goals are not executed in the
-                                defined order in the same phase the goal below
-                                must be executed before the package phase!
-                                Please see: http://jira.codehaus.org/browse/MNG-2258
-                            -->
-                            <phase>test</phase>
-                            <goals>
-                                <goal>manifest-prepare-config-section</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -1056,6 +1088,9 @@
         <version.maven-manifest-decorator-plugin>
             1.0-alpha1
         </version.maven-manifest-decorator-plugin>
+        <version.maven-checkclipse-helper-plugin>
+            1.0-alpha1
+        </version.maven-checkclipse-helper-plugin>
         
         <!-- EL4J framework module version numbers -->
         <version.module-core>
