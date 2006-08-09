@@ -20,9 +20,10 @@
     <name>EL4J framework</name>
     <build>
         <plugins>
+            <!-- Packaging -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-eclipse-plugin</artifactId>
+                <artifactId>maven-source-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

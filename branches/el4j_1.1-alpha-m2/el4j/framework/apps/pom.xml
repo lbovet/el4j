@@ -22,9 +22,20 @@
     <description>Applications of the EL4J framework.</description>
     <build>
         <plugins>
+            <!-- Packaging -->
             <plugin>
                 <groupId>ch.elca.el4j.plugins</groupId>
                 <artifactId>maven-manifest-decorator-plugin</artifactId>
+            </plugin>
+            
+            <!-- IDE -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>ch.elca.el4j.plugins</groupId>
+                <artifactId>maven-checkclipse-helper-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
