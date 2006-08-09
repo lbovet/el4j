@@ -44,7 +44,7 @@
     </build>
     
     <!--
-        These problems where added due to problem passing argument by system
+        These profiles where added due to problem passing argument by system
         property. See following JIRA issue for more information:
         http://jira.codehaus.org/browse/MEXEC-5
      -->
