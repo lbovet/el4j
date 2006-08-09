@@ -109,11 +109,22 @@ public class CheckclipseConfigSettingsMojo extends AbstractMojo {
         }
         getLog().info(
             "Writing file " + settingsConfigFilePath.getAbsolutePath());
+        
+        // Create dir of config file if it does not exist
+        String filePath = settingsConfigFilePath.getPath();
+        String dirPath = filePath.substring(0, 
+            filePath.lastIndexOf(java.io.File.separatorChar));
+        java.io.File dir = new java.io.File(dirPath);
+        if (!dir.isDirectory()) {
+            getLog().info("Directory " + dir.getAbsolutePath() + " does not "
+                + "exist. Will try to create it.");
+            dir.mkdirs();
+        }
+        
         Properties props = new Properties();
         props.setProperty("enabled", Boolean.toString(enableCheckclipse));
         props.setProperty("projectclassloader", 
             Boolean.toString(useProjectClassloader));
-        
         try {
             m_persister.store(props, 
                 new FileOutputStream(settingsConfigFilePath),
