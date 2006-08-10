@@ -99,9 +99,11 @@
                 <directory>src/main/resources</directory>
                 <filtering>false</filtering>
             </resource>
+            
+            <!-- Used for the environment support of EL4J -->
             <resource>
-                <directory>src/main/env</directory>
-                <filtering>true</filtering>
+                <directory>target/env</directory>
+                <filtering>false</filtering>
             </resource>
         </resources>
         <testResources>
@@ -109,9 +111,11 @@
                 <directory>src/test/resources</directory>
                 <filtering>false</filtering>
             </testResource>
+            
+            <!-- Used for the environment support of EL4J -->
             <testResource>
-                <directory>src/test/env</directory>
-                <filtering>true</filtering>
+                <directory>target/env-test</directory>
+                <filtering>false</filtering>
             </testResource>
         </testResources>
         <pluginManagement>
@@ -137,6 +141,19 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>2.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>ch.elca.el4j.plugins</groupId>
+                    <artifactId>maven-env-support-plugin</artifactId>
+                    <version>${version.maven-env-support-plugin}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>resources</goal>
+                                <goal>testResources</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -1091,6 +1108,9 @@
         <version.maven-checkclipse-helper-plugin>
             1.0-alpha1
         </version.maven-checkclipse-helper-plugin>
+        <version.maven-env-support-plugin>
+            1.0-alpha1
+        </version.maven-env-support-plugin>
         
         <!-- EL4J framework module version numbers -->
         <version.module-core>
