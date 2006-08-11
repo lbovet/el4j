@@ -17,6 +17,7 @@
         <attribute name="set" value="framework-tests"/>
         <dependency module="module-remoting_caucho"/>
         <dependency module="module-remoting_soap"/>
+        <dependency module="module-remoting_xfire"/>
         <dependency module="module-env"/>
         <dependency module="module-web"/>
     </module>
