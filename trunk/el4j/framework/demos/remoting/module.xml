@@ -22,5 +22,6 @@
         <dependency module="module-env"/>
         <dependency module="module-remoting_caucho"/>
         <dependency module="module-remoting_soap"/>
-    </module>
+        <dependency module="module-remoting_xfire"/>
+      </module>
 </ant:project>
