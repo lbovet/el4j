@@ -18,7 +18,7 @@
             <value>Calculator.RmiWithContext.Benchmark</value>
         </property>
     </bean>
-    <bean id="httpInvokerWithContextCalculator" class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
+        <bean id="httpInvokerWithContextCalculator" class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
         <property name="remoteProtocol">
             <ref bean="httpInvokerProtocol" />
         </property>
@@ -27,6 +27,17 @@
         </property>
         <property name="serviceName">
             <value>Calculator.HttpInvokerWithContext.Benchmark</value>
+        </property>
+    </bean>
+    <bean id="xFireWithContextCalculator" class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
+        <property name="remoteProtocol">
+            <ref bean="xFireProtocol" />
+        </property>
+        <property name="serviceInterface">
+            <value>ch.elca.el4j.demos.remoting.Calculator</value>
+        </property>
+        <property name="serviceName">
+            <value>xFireCalculatorServiceWithContext</value>
         </property>
     </bean>
     <bean id="hessianWithContextCalculator" class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
@@ -71,7 +82,7 @@
             <value>rmi://${rmi.host}:${rmi.port}/Calculator.RmiWithoutContext.Benchmark</value>
         </property>
     </bean>
-    <bean id="httpInvokerWithoutContextCalculator" class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
+        <bean id="httpInvokerWithoutContextCalculator" class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
         <property name="remoteProtocol">
             <ref bean="httpInvokerProtocol" />
         </property>
@@ -82,6 +93,14 @@
             <value>Calculator.HttpInvokerWithContext.Benchmark</value>
         </property>
     </bean>
+    <bean id="xFireWithoutContextCalculator" class="org.codehaus.xfire.spring.remoting.XFireClientFactoryBean">
+		<property name="serviceClass">
+			<value>ch.elca.el4j.demos.remoting.Calculator</value>
+		</property>
+		<property name="wsdlDocumentUrl">
+			<value>http://${j2ee-web.host}:${j2ee-web.port}/module-remoting-demos-web/xFireCalculatorServiceWithoutContext?wsdl</value>
+		</property>
+	</bean>
     <bean id="hessianWithoutContextCalculator" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
         <property name="serviceInterface">
             <value>ch.elca.el4j.demos.remoting.Calculator</value>
