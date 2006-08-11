@@ -28,6 +28,7 @@ package ch.elca.el4j.demos.remoting.benchmark;
  * );</script>
  *
  * @author Martin Zeltner (MZE)
+ * @author Rashid Waraich (RWA)
  */
 public class RemotingBenchmarkResult {
     /**
@@ -44,6 +45,11 @@ public class RemotingBenchmarkResult {
      * Average time in seconds for method "countNumberOfUppercaseLetters".
      */
     private double m_averageCountNumberOfUppercaseLetters;
+    
+    /**
+     * Average time in seconds for method "addComplexNumbers".
+     */
+    private double m_averageAddComplexNumbers;    
     
     /**
      * This is the name of the bean.
@@ -112,5 +118,13 @@ public class RemotingBenchmarkResult {
      */
     public void setAverageThrowMeAnException(double averageThrowMeAnException) {
         m_averageThrowMeAnException = averageThrowMeAnException;
+    }
+
+    public double getAverageAddComplexNumbers() {
+        return m_averageAddComplexNumbers;
+    }
+
+    public void setAverageAddComplexNumbers(double averageAddComplexNumbers) {
+        m_averageAddComplexNumbers = averageAddComplexNumbers;
     }
 }

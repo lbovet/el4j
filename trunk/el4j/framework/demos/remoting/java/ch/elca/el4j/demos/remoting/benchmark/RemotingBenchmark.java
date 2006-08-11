@@ -36,6 +36,7 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.core.exceptions.BaseRTException;
 import ch.elca.el4j.demos.remoting.Calculator;
 import ch.elca.el4j.demos.remoting.CalculatorException;
+import ch.elca.el4j.demos.remoting.ComplexNumber;
 
 //Checkstyle: UncommentedMain off
 
@@ -59,6 +60,7 @@ import ch.elca.el4j.demos.remoting.CalculatorException;
  * );</script>
  *
  * @author Martin Zeltner (MZE)
+ * @author Rashid Waraich (RWA)
  */
 public class RemotingBenchmark {
     /**
@@ -121,12 +123,15 @@ public class RemotingBenchmark {
     /**
      * These are the tests, which has to be run.
      */
-    private static String[] s_tests = {"rmiWithoutContextCalculator",
-        "rmiWithContextCalculator", "hessianWithoutContextCalculator",
-        "hessianWithContextCalculator", "burlapWithoutContextCalculator",
-        "burlapWithContextCalculator", "soapWithContextCalculator",
-        "httpInvokerWithoutContextCalculator",
-        "httpInvokerWithContextCalculator"};
+    private static String[] s_tests = {
+        "rmiWithoutContextCalculator", "rmiWithContextCalculator", 
+        "hessianWithoutContextCalculator", "hessianWithContextCalculator", 
+        "burlapWithoutContextCalculator", "burlapWithContextCalculator", 
+        "soapWithContextCalculator", "httpInvokerWithoutContextCalculator",
+        "httpInvokerWithContextCalculator", 
+        "xFireWithoutContextCalculator",
+        "xFireWithContextCalculator"
+    };
 
     /**
      * This member contains the large text. It will be used for testing.
@@ -143,6 +148,12 @@ public class RemotingBenchmark {
      */
     private List m_benchmarkResults = new LinkedList();
 
+    /**
+     * Contains StackTraceElements of exceptions, which occured during the
+     * benchmark.
+     */
+    private static LinkedList stackTraceElements=new LinkedList();
+   
     /**
      * In this constructor a big text file will be loaded and an application
      * context will be created.
@@ -195,13 +206,36 @@ public class RemotingBenchmark {
             System.out.println("done.");
         }
         b.printTestResults();
+        printStackTrace();
         
         /**
          * Exit jvm with code 0 to stop rmi registry too.
          */
         System.exit(0);
     }
-
+    
+    /**
+     * Print exceptions which occured during the benchmark.
+     */
+    private static void printStackTrace() {
+        int noOfStackTraces = stackTraceElements.size();
+        StackTraceElement[] currentTrace;
+        
+        if (noOfStackTraces > 0) {
+            System.out.println("The following exceptions "
+                + "occured during benchmark excecution:");
+        }
+ 
+        for (int i = 0; i < noOfStackTraces; i++) {
+            currentTrace
+                = ((StackTraceElement[]) stackTraceElements.removeFirst());
+            for (int j = 0; j < currentTrace.length; j++) {
+                System.out.println(currentTrace[j]);
+            }
+            System.out.println();
+        }
+    }
+    
     /**
      * This method prints the test results on console.
      */
@@ -247,6 +281,17 @@ public class RemotingBenchmark {
         System.out.print(appendSpacesOnString("", LEGEND_INTENTION));
         System.out.println("Method 3: int "
             + "countNumberOfUppercaseLetters(String textOfSize60kB)");
+        System.out.print(appendSpacesOnString("", LEGEND_INTENTION));
+        System.out.println("Method 4: ComplexNumber "
+            + "add(ComplexNumber cn1,ComplexNumber cn2)");
+        System.out.println();
+        System.out.print(appendSpacesOnString("", LEGEND_INTENTION));
+        System.out.println("A value of '-1.0' in the table above means "
+            + "that the corresponding benchmark did");
+        System.out.print(appendSpacesOnString("", LEGEND_INTENTION));
+        System.out.println("not succeed. In "
+            + "that case the stack trace(s) can be found below.");        
+        System.out.println();      
     }
 
     /**
@@ -277,6 +322,11 @@ public class RemotingBenchmark {
         header.append(' ');
         header.append(
             appendSpacesOnString("*Method 3 [ms]*", columnSizeTime));
+        header.append(' ');
+        header.append(verticalCharacter);
+        header.append(' ');
+        header.append(
+            appendSpacesOnString("*Method 4 [ms]*", columnSizeTime));
         header.append(' ');
         header.append(verticalCharacter);
         return header.toString();
@@ -317,12 +367,18 @@ public class RemotingBenchmark {
             columnSizeTime));
         line.append(' ');
         line.append(verticalCharacter);
+        line.append(' ');
+        line.append(appendSpacesOnString(
+            df.format(r.getAverageAddComplexNumbers()), 
+            columnSizeTime));
+        line.append(' ');
+        line.append(verticalCharacter);
         return line.toString();
     }
 
     /**
-     * This method adds spaces to a string, but until the string has reached the
-     * maximal length.
+     * This method adds spaces to a string, but until the string has 
+     * reached the maximal length.
      * 
      * @param s
      *            Is the string which must be appended with spaces.
@@ -346,15 +402,65 @@ public class RemotingBenchmark {
      */
     private void executeTest(String beanName) {
         Calculator calc = (Calculator) m_appContext.getBean(beanName);
-        warmupTest(calc);
-        double averageGetArea 
-            = executeTestMethodGetArea(calc);
-        double averageThrowMeAnException 
-            = executeTestMethodThrowMeAnException(calc);
-        double averageCountNumberOfUppercaseLetters 
-            = executeTestMethodCountNumberOfUppercaseLetters(calc);
+        
+        double averageGetArea = 0;
+        double averageThrowMeAnException = 0;
+        double averageCountNumberOfUppercaseLetters = 0;
+        double averageAddComplexNumbers = 0;
+        
+        try {
+            warmupTest(calc);
+        } catch (Exception e) {
+            addStackTraceElements(e.getStackTrace());
+        }
+        
+        try {
+            averageGetArea = executeTestMethodGetArea(calc);
+        } catch (Exception e) {
+            addStackTraceElements(e.getStackTrace());
+            // -1.0 indicates error in the test
+            averageGetArea = -1.0; 
+        }        
+        
+        try {
+            averageThrowMeAnException 
+                = executeTestMethodThrowMeAnException(calc);
+        } catch (Exception e) {
+            addStackTraceElements(e.getStackTrace());
+            // -1.0 indicates error in the test
+            averageThrowMeAnException  = -1.0; 
+        } 
+        
+        try {
+            averageCountNumberOfUppercaseLetters
+                = executeTestMethodCountNumberOfUppercaseLetters(calc);
+        } catch (Exception e) {
+            addStackTraceElements(e.getStackTrace());
+            // -1.0 indicates error in the test
+            averageCountNumberOfUppercaseLetters = -1.0; 
+        }        
+        
+        try {
+            averageAddComplexNumbers = executeTestAddComplexNumbers(calc);
+        } catch (Exception e) {
+            addStackTraceElements(e.getStackTrace());
+            // -1.0 indicates error in the test
+            averageAddComplexNumbers = -1.0; 
+        } 
+                
         addTestResults(beanName, averageGetArea, averageThrowMeAnException,
-                averageCountNumberOfUppercaseLetters);
+                averageCountNumberOfUppercaseLetters, averageAddComplexNumbers);
+    }
+    
+    /**
+     * This method adds StackTraceElements to the global "stackTraceElements"
+     * list.
+     * 
+     * @param stackTraceElem
+     *              The StackTraceElements to be added to the global list.
+     */           
+    private void addStackTraceElements(StackTraceElement[] stackTraceElem){
+        stackTraceElements.addLast(stackTraceElem);
     }
 
     /**
@@ -369,15 +475,21 @@ public class RemotingBenchmark {
      * @param averageCountNumberOfUppercaseLetters
      *            Is the mesured time for method
      *            'countNumberOfUppercaseLetters'.
+     * @param averageAddComplexNumbers
+     *            Is the mesured time for method
+     *            'addComplexNumbers'.             
      */
     private void addTestResults(String beanName, double averageGetArea,
             double averageThrowMeAnException,
-            double averageCountNumberOfUppercaseLetters) {
+            double averageCountNumberOfUppercaseLetters, 
+            double averageAddComplexNumbers) {
         RemotingBenchmarkResult result = new RemotingBenchmarkResult(beanName);
         result.setAverageGetArea(averageGetArea);
         result.setAverageThrowMeAnException(averageThrowMeAnException);
         result.setAverageCountNumberOfUppercaseLetters(
             averageCountNumberOfUppercaseLetters);
+        result.setAverageAddComplexNumbers(
+            averageAddComplexNumbers);
         m_benchmarkResults.add(result);
     }
 
@@ -466,5 +578,30 @@ public class RemotingBenchmark {
         long stop = System.currentTimeMillis();
         return (stop - start) / (double) TEST_REPETITION_COUNT;
     }
+    
+    /**
+     * This method executes the test for method "countNumberOfUppercaseLetters"
+     * TEST_REPETITION_COUNT times and returns the average execution time.
+     * 
+     * @param calc
+     *            Is the object to do operations on it.
+     * @return Returns the average execution time.
+     */
+    private double executeTestAddComplexNumbers(
+            Calculator calc) {
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < TEST_REPETITION_COUNT; i++) {
+            ComplexNumber cn1 = new ComplexNumber(1 , 3);
+            ComplexNumber cn2 = new ComplexNumber(5 , 1);
+            ComplexNumber result = calc.add(cn1 , cn2);
+            if (result.getReal() != 6 || result.getImag() != 4) {
+                throw new BaseRTException("Benchmark is corrupted!");
+            }
+        }
+        long stop = System.currentTimeMillis();
+        return (stop - start) / (double) TEST_REPETITION_COUNT;
+    }
+    
 }
+
 //Checkstyle: UncommentedMain on
