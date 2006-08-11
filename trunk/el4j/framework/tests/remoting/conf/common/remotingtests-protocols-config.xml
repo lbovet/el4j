@@ -6,6 +6,7 @@
     <!-- URL: $URL$ -->
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
+    <import resource="classpath:org/codehaus/xfire/spring/xfire.xml"/>
     
     <bean id="rmiProtocol" class="ch.elca.el4j.services.remoting.protocol.Rmi">
         <property name="serviceHost">
@@ -33,8 +34,29 @@
         <property name="implicitContextPassingRegistry">
             <ref local="implicitContextPassingRegistry" />
         </property>
-    </bean>    
-    
+    </bean>
+        
+    <bean id="xFireProtocol" class="ch.elca.el4j.services.remoting.protocol.XFire">
+        <property name="serviceHost">
+            <value>${j2ee-web.host}</value>
+        </property>
+        <property name="servicePort">
+            <value>${j2ee-web.port}</value>
+        </property>
+        <property name="contextPath">
+            <value>module-remoting-tests-web</value>
+        </property>
+        <property name="implicitContextPassingRegistry">
+            <ref local="implicitContextPassingRegistry" />
+        </property>
+		<property name="xfire">
+            <ref bean="xfire"/>
+        </property>
+        <property name="serviceFactory">
+        	<ref bean="xfire.serviceFactory"/>
+        </property>    
+    </bean>
+
     <bean id="hessianProtocol" class="ch.elca.el4j.services.remoting.protocol.Hessian">
         <property name="serviceHost">
             <value>${j2ee-web.host}</value>
