@@ -11,6 +11,7 @@
     <import resource="classpath:server/web/remotingtests-hessian-server-config.xml"/>
     <import resource="classpath:server/web/remotingtests-soap-server-config.xml"/>
     <import resource="classpath:server/web/remotingtests-httpinvoker-server-config.xml"/>
+    <import resource="classpath:server/web/remotingtests-xfire-server-config.xml"/>
     <import resource="classpath:mandatory/env.xml"/>
     
     <bean id="beanNameHandlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
