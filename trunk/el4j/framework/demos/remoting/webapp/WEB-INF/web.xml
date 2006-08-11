@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" version="2.4">
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd http://java.sun.com/dtd/web-app_2_3.dtd" version="2.4">
 
     <!-- Version: $Revision$ -->
     <!-- URL: $URL$ -->
@@ -44,4 +44,28 @@
         <servlet-name>benchmark</servlet-name>
         <url-pattern>*.Benchmark</url-pattern>
     </servlet-mapping>
+    
+    <!-- Used by xFire benchmark -->   
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath:org/codehaus/xfire/spring/xfire.xml
+		</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<servlet>
+		<servlet-name>xfire</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>xfire</servlet-name>
+		<url-pattern>/xFireCalculatorServiceWithContext</url-pattern>
+	</servlet-mapping>
+		<servlet-mapping>
+		<servlet-name>xfire</servlet-name>
+		<url-pattern>/xFireCalculatorServiceWithoutContext</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
