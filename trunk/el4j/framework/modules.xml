@@ -10,6 +10,7 @@
     <include file="module/remoting_caucho/module.xml"/>
     <include file="module/remoting_soap/module.xml"/>
     <include file="module/remoting_ejb/module.xml"/>
+    <include file="module/remoting_xfire/module.xml"/>
     <include file="module/jmx/module.xml"/>
     <include file="module/security/module.xml"/>
     <include file="module/light_statistics/module.xml"/>
