@@ -207,7 +207,6 @@ public class JvmMB implements JvmMBMBean {
             cells[i+1][4]=threads[i].getThreadGroup().getName();
             cells[i+1][5]=Integer.toString(threads[i].getPriority());
             cells[i+1][6]=stackTraceElementsToString(threads[i].getStackTrace());
-            System.out.println(stackTraceElementsToString(threads[i].getStackTrace()));
         }
         
         return JmxHtmlFormatter.getHtmlTable(cells);
