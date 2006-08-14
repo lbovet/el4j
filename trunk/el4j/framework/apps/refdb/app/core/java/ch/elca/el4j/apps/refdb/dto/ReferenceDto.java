@@ -24,10 +24,10 @@ import java.util.Set;
 
 import javax.persistence.Entity;
 
+import org.hibernate.validator.AssertTrue;
 import org.hibernate.validator.NotNull;
 
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
-import ch.elca.el4j.services.persistence.hibernate.validation.CustomValidation;
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
 /**
@@ -43,7 +43,6 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  * @author Martin Zeltner (MZE)
  */
 @Entity
-@CustomValidation()
 public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * Name of the reference (book title, ...).
@@ -327,10 +326,13 @@ public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
     }
     
     /**
-     * Validates the reference.
+     * Validates the reference. Should always be true.
      * @return true if the reference is valid, false otherwise
      */
-    public boolean validate() {
+    @AssertTrue
+    public boolean invariant() {
+        // Ensure that the creation date of the referenced document is
+        // smaller than its insertion date. 
         if (getDate() != null) {
             return (getDate().getTime() <= getWhenInserted().getTime());
         }

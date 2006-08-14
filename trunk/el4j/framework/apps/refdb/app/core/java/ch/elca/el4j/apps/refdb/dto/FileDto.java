@@ -20,6 +20,8 @@ import java.util.Arrays;
 
 import javax.persistence.Entity;
 
+import org.hibernate.validator.NotNull;
+
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
@@ -71,6 +73,7 @@ public class FileDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * @return Returns the content.
      */
+    @NotNull
     public byte[] getContent() {
         return m_content;
     }
@@ -86,6 +89,7 @@ public class FileDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * @return Returns the mimeType
      */
+    @NotNull
     public String getMimeType() {
         return m_mimeType;
     }
@@ -101,6 +105,7 @@ public class FileDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * @return Returns the name
      */
+    @NotNull
     public String getName() {
         return m_name;
     }
@@ -116,6 +121,7 @@ public class FileDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * @return Returns the size of the content in bytes.
      */
+    @NotNull
     public int getSize() {
         if (m_content != null && m_size <= 0) {
             m_size = m_content.length;
@@ -134,6 +140,7 @@ public class FileDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * @return Returns the key to reference.
      */
+    @NotNull
     public int getKeyToReference() {
         return m_keyToReference;
     }

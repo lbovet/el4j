@@ -20,6 +20,8 @@ import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 
+import org.hibernate.validator.NotNull;
+
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
@@ -73,6 +75,7 @@ public class AnnotationDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * @return Returns the annotator.
      */
+    @NotNull
     public String getAnnotator() {
         return m_annotator;
     }
@@ -88,6 +91,7 @@ public class AnnotationDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * @return Returns the content.
      */
+    @NotNull
     public String getContent() {
         return m_content;
     }
@@ -103,6 +107,7 @@ public class AnnotationDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * @return Returns the grade.
      */
+    @NotNull
     public int getGrade() {
         return m_grade;
     }
@@ -118,6 +123,7 @@ public class AnnotationDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * @return Returns the m_whenInserted.
      */
+    @NotNull
     public Timestamp getWhenInserted() {
         if (m_whenInserted == null) {
             m_whenInserted = new Timestamp(System.currentTimeMillis());
@@ -136,6 +142,7 @@ public class AnnotationDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * @return Returns the key to reference.
      */
+    @NotNull
     public int getKeyToReference() {
         return m_keyToReference;
     }
