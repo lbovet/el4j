@@ -31,6 +31,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.StaticApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.core.exceptions.BaseException;
@@ -156,6 +157,11 @@ public class ApplicationContextMB implements ApplicationContextMBMBean {
 
         m_springBeanMB = new SpringBeanMB[cnt];
 
+        // Create and initialized a Log4jConfig object.
+        Log4jConfig logConfig = new Log4jConfig("log4jConfig", this,
+            m_applicationContext, m_beanFactory, m_mBeanServer);
+        logConfig.init();
+     
         // Create the proxies of the SpringBeans loaded by this Application
         // Context.
         for (int i = 0; i < cnt; i++) {
