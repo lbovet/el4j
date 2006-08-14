@@ -30,6 +30,7 @@ import javax.management.ObjectName;
  * );</script>
  * 
  * @author Raphael Boog (RBO)
+ * @author Rashid Waraich (RWA)
  */
 public interface JvmMBMBean {
 
@@ -46,4 +47,11 @@ public interface JvmMBMBean {
      * @return The Application Context proxies in this JVM.
      */
     ObjectName[] getApplicationContexts();
+    
+    /**
+     * An HTML table is created, which lists all Threads and
+     * their property values.
+     * @return
+     */
+    public String showThreadTable();
 }

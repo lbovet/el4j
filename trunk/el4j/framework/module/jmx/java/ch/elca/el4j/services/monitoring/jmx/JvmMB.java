@@ -19,6 +19,7 @@ package ch.elca.el4j.services.monitoring.jmx;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -40,13 +41,14 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * );</script>
  * 
  * @author Raphael Boog (RBO)
+ * @author Rashid Waraich (RWA)
  */
 public class JvmMB implements JvmMBMBean {
 
     /**
      * The domain of the JVM proxy as it will be registered at the MBean Server.
      */
-    public static final String JVM_DOMAIN = "JVM-monitor";
+    public static final String JVM_DOMAIN = "JVM";
 
     /**
      * The counter on the number of JVMs.
@@ -137,7 +139,7 @@ public class JvmMB implements JvmMBMBean {
      */
     public void setObjectName() {
 
-        String name = JVM_DOMAIN + ":name=root " + getInstanceCounter();
+        String name = JVM_DOMAIN + ":name=jvmRootMonitor " + getInstanceCounter();
 
         try {
             m_objectName = new ObjectName(name);
@@ -179,4 +181,69 @@ public class JvmMB implements JvmMBMBean {
         }
 
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public String showThreadTable() {
+        String result=null;
+        
+        Thread[] threads=getAllThreads();
+        String[][] cells=new String[threads.length+1][7];
+        
+        cells[0][0]="Thread Id";
+        cells[0][1]="Name";
+        cells[0][2]="isDeamon";
+        cells[0][3]="State";
+        cells[0][4]="Thread Group";
+        cells[0][5]="Priority";
+        cells[0][6]="Stack Trace";
+        
+        for (int i=0; i<threads.length;i++){
+            cells[i+1][0]=Long.toString(threads[i].getId());
+            cells[i+1][1]=threads[i].getName();
+            cells[i+1][2]=Boolean.toString(threads[i].isDaemon());
+            cells[i+1][3]=threads[i].getState().toString();
+            cells[i+1][4]=threads[i].getThreadGroup().getName();
+            cells[i+1][5]=Integer.toString(threads[i].getPriority());
+            cells[i+1][6]=stackTraceElementsToString(threads[i].getStackTrace());
+            System.out.println(stackTraceElementsToString(threads[i].getStackTrace()));
+        }
+        
+        return JmxHtmlFormatter.getHtmlTable(cells);
+    }
+    
+    
+    
+    private String stackTraceElementsToString(StackTraceElement[] trace){
+        String result="";
+        
+        for (int i=0; i<trace.length;i++){
+            result=result.concat(trace[i].toString());
+        }
+        
+        return result;
+    }
+    
+    
+    private Thread[] getAllThreads(){
+        Iterator iter=Thread.getAllStackTraces().keySet().iterator();
+        
+        LinkedList threadPool=new LinkedList();
+        while (iter.hasNext()){
+            threadPool.add(iter.next());
+        }
+       
+        Object[] array = threadPool.toArray();
+        Thread[] threads = new Thread[array.length];
+            for (int j = 0; j < array.length; j++) {
+                threads[j] = (Thread) array[j];
+            }
+        
+        return threads;
+    }
+    
+    
+    
+    
 }
