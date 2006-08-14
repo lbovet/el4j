@@ -17,6 +17,7 @@
 
 package ch.elca.el4j.services.monitoring.jmx;
 
+import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -26,6 +27,7 @@ import java.util.Set;
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.MBeanRegistrationException;
 import javax.management.MBeanServer;
+import javax.management.MalformedObjectNameException;
 import javax.management.NotCompliantMBeanException;
 import javax.management.ObjectInstance;
 import javax.management.ObjectName;
@@ -55,6 +57,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * );</script>
  * 
  * @author Raphael Boog (RBO)
+ * @author Rashid Waraich (RWA)
  */
 public class Loader implements ApplicationContextAware, InitializingBean {
 
@@ -106,6 +109,14 @@ public class Loader implements ApplicationContextAware, InitializingBean {
      */
     public void setServer(MBeanServer server) {
         this.m_server = server;
+        String jreVersion=System.getProperty("java.version");
+        
+        // execute the following code only on a
+        // JRE, with version >= 1.5
+        if (jreVersion.startsWith("1.5")){
+            s_logger.info("Registering Jdk 1.5 Mbean");
+            registerJdk15Mbean(m_server);
+        }
     }
 
     /**
@@ -259,5 +270,51 @@ public class Loader implements ApplicationContextAware, InitializingBean {
         // Initialize the Application Context proxy.
         m_acMB.init();
 
+    }
+    
+    protected static void registerJdk15Mbean(MBeanServer ms) {
+        try {
+            ms.registerMBean(ManagementFactory.getClassLoadingMXBean(), 
+                             new ObjectName(ManagementFactory.CLASS_LOADING_MXBEAN_NAME));
+            
+            ms.registerMBean(ManagementFactory.getThreadMXBean(), 
+                     new ObjectName(ManagementFactory.THREAD_MXBEAN_NAME));
+            
+            ms.registerMBean(ManagementFactory.getRuntimeMXBean(), 
+                     new ObjectName(ManagementFactory.RUNTIME_MXBEAN_NAME));
+            ms.registerMBean(ManagementFactory.getOperatingSystemMXBean(), 
+                     new ObjectName(ManagementFactory.OPERATING_SYSTEM_MXBEAN_NAME));
+            ms.registerMBean(ManagementFactory.getMemoryMXBean(), 
+                     new ObjectName(ManagementFactory.MEMORY_MXBEAN_NAME));
+            ms.registerMBean(ManagementFactory.getCompilationMXBean(), 
+                     new ObjectName(ManagementFactory.COMPILATION_MXBEAN_NAME));
+
+            int i=0;
+            for (Object o: ManagementFactory.getGarbageCollectorMXBeans()) {
+                ms.registerMBean(o, new ObjectName(ManagementFactory.GARBAGE_COLLECTOR_MXBEAN_DOMAIN_TYPE+",num="+(i++)) );
+            }
+                
+            i=0;
+            for (Object o: ManagementFactory.getMemoryManagerMXBeans()) {
+                ms.registerMBean(o, new ObjectName(ManagementFactory.MEMORY_MANAGER_MXBEAN_DOMAIN_TYPE+",num="+(i++)) );
+            }
+
+            i=0;
+            for (Object o: ManagementFactory.getMemoryPoolMXBeans()) {
+                ms.registerMBean(o, new ObjectName(ManagementFactory.MEMORY_POOL_MXBEAN_DOMAIN_TYPE+",num="+(i++)) );
+            }
+
+            
+        } catch (InstanceAlreadyExistsException e1) {
+            e1.printStackTrace();
+        } catch (MBeanRegistrationException e1) {
+            e1.printStackTrace();
+        } catch (NotCompliantMBeanException e1) {
+            e1.printStackTrace();
+        } catch (MalformedObjectNameException e1) {
+            e1.printStackTrace();
+        } catch (NullPointerException e1) {
+            e1.printStackTrace();
+        }
     }
 }
