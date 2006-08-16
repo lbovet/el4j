@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="EL4J">
+    <bannerLeft>
+        <name>EL4J Logo</name>
+        <href>index.html</href>
+        <src>images/el4j_logo.gif</src>
+    </bannerLeft>
+    <bannerRight>
+        <name>ELCA - We make it work.</name>
+        <href>http://www.elca.ch</href>
+        <src>images/elca_banner-we_make_it_work.jpg</src>
+    </bannerRight>
+    <publishDate format="dd MMM yyyy" />
+    <skin>
+        <groupId>ch.elca.el4j</groupId>
+        <artifactId>el4j-skin</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+    </skin>
+    <body>
+        <head>
+            <link rel="icon"
+                href="/favicon.ico"
+                type="image/x-icon" />
+            <link rel="shortcut icon"
+                href="/favicon.ico"
+                type="image/x-icon" />
+        </head>
+        <links>
+            <item name="EL4Ant"
+                href="http://el4ant.sourceforge.net" />
+            <item name="EL4NET"
+                href="http://el4net.sourceforge.net" />
+            <item name="IIOP.NET"
+                href="http://iiop-net.sourceforge.net" />
+            <item name="ELCA"
+                href="http://www.elca.ch" />
+        </links>
+        <menu name="EL4J">
+            <item name="Overview"
+                href="index.html" />
+            <item name="News"
+                href="news.html" />
+            <item name="License"
+                href="license.html" />
+            <item name="SF Project Page"
+                href="http://sourceforge.net/projects/el4j/" />
+        </menu>
+        <menu name="Download">
+            <item name="Sources"
+                href="source-repository.html" />
+            <item name="Binaries"
+                href="http://sourceforge.net/project/showfiles.php?group_id=147215" />
+        </menu>
+        <menu name="Documentation">
+            <item name="General"
+                href="documentation.html" />
+            <item name="FAQ"
+                href="faq.html" />
+        </menu>
+        <menu name="Support">
+            <item name="General"
+                href="support.html" />
+            <item name="Mailing Lists"
+                href="mail-lists.html" />
+            <item name="Issue Tracking"
+                href="issue-tracking.html" />
+        </menu>
+        <menu ref="reports" />
+        <menu name="More about EL4J">
+            <item name="Reference Projects"
+                href="reference_projects.html" />
+            <item name="Related Projects"
+                href="related_projects.html" />
+            <item name="Sponsor"
+                href="sponsor.html" />
+        </menu>
+    </body>
+</project>

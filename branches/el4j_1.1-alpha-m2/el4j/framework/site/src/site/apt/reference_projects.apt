@@ -1,0 +1,13 @@
+ -----
+ EL4J, the Extension Library for the J2EE - Reference Projects
+ -----
+ -----
+ 15 Aug 2006
+ -----
+
+Reference Projects
+
+  Within ELCA, EL4J has been used for 16 projects so far. The project sizes
+  and domains vary a lot. They include a soft real-time application to supervise
+  vehicles, several administration-support applications of the public and 
+  private sector or an user-interface for a bi-temporal database.

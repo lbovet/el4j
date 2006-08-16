@@ -1,0 +1,47 @@
+ -----
+ EL4J, the Extension Library for the J2EE - Overview
+ -----
+ -----
+ 15 Aug 2006
+ -----
+
+Overview
+
+  EL4J, the Extension Library for the J2EE, adds incremental improvements to
+  the Spring Java framework ({{http://www.springframework.org/}}).
+
+  Among the improvements are:
+  
+    * The ability to split applications in modules
+    
+      * A module can consist of code, jar-files and configurations with 
+        transitive dependencies
+        
+      * A module can automatically enable its spring configuration when 
+        it is present in the CLASSPATH
+        
+    * Simplified remoting
+    
+      * Remote a POJO as SLSB or SFSB, remote a POJO via SOAP
+      
+      * Optional implicit context passing to cleanly add technical 
+        context with remote method invocations (e.g. to add a 
+        security principal or the sub-company on whose behalf a 
+        request is being made)
+        
+    * A light daemon manager service
+    
+    * Various other improvements
+    
+      * Make the active beans and their configuration visible in JMX
+      
+      * A light exception handling framework that implements a safety facade
+      
+      * Packaging and little enhancements of Spring RCP
+      
+
+  The following components make up EL4J:
+  
+[images/el4j-overview.gif] EL4J-Overview
+  
+  For more information {{{documentation.html}see documentation}}.

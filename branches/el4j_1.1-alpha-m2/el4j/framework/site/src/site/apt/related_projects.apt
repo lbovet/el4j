@@ -1,0 +1,18 @@
+ -----
+ EL4J, the Extension Library for the J2EE - Related Projects
+ -----
+ -----
+ 15 Aug 2006
+ -----
+
+Related Projects
+
+  * {{{http://el4ant.sourceforge.net}<<EL4Ant>>}} - 
+    A light build system based on Ant with transitive dependencies and plugins. 
+
+  * {{{http://el4net.sourceforge.net}<<EL4NET>>}} - 
+    The Extension Library for the .NET framework.
+
+  * {{{http://iiop-net.sourceforge.net}<<IIOP.NET>>}} - 
+    The light IIOP interoperability solution, connecting e.g. J2EE and .NET 
+    applications in an efficient way.

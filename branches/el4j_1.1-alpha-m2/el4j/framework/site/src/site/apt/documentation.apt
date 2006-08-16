@@ -1,0 +1,41 @@
+ -----
+ EL4J, the Extension Library for the J2EE - Documentation
+ -----
+ -----
+ 15 Aug 2006
+ -----
+
+Documentation
+
+* EL4J core documentation
+
+    * {{{docs/pdf/EL4J_IntroductionArticle1.pdf}
+      EL4J Introduction Article (PDF)}}
+    
+    * {{{docs/pdf/ReferenceDoc.pdf}
+      EL4J Reference Documentation (PDF)}}
+    
+    * {{{docs/pdf/EL4AntQuickReferenceSheet_v1_0.pdf}
+      Quick Reference Sheet for the old build system (EL4Ant) (PDF)}}
+
+    * Full documentation of the old build system (EL4Ant -
+      {{{http://el4ant.sf.net/documentation.html}link to EL4Ant}})
+
+* Presentations
+
+    * {{{docs/pdf/EL4JFeatures.pdf}
+      Short presentation with essential features of EL4J (PDF)}}
+    
+    * {{{http://www.jugs.ch/html/events/slides/050830_LightDiContainer.pdf}
+      A presentation on Spring at JUGS, with a section on EL4J (PDF)}}
+
+* Release notes
+
+  Release notes directly from the 
+  {{{http://svn.sourceforge.net/viewcvs.cgi/*checkout*/el4j/trunk/el4j/etc/ReleaseNotes.txt}
+  sourceforge subversion repository}}.
+
+* Framework API
+
+  <<TODO: Link javadoc>>
+
