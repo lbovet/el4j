@@ -70,6 +70,11 @@ public class Log4jConfig implements Log4jConfigMBean {
     public static final String JVM_DOMAIN = "JVM";
 
     /**
+     * 
+     */
+    public static final String LOG4J_JMX_LOADER = "log4jJmxLoader";    
+    
+    /**
      * Private logger of this class.
      */
     private static Log s_logger = LogFactory.getLog(SpringBeanMB.class);
@@ -156,7 +161,7 @@ public class Log4jConfig implements Log4jConfigMBean {
 
         // read-out the appenders list from the DeafultLog4jJmxLoader bean.
         setAppendersPool(((Log4jJmxLoader) appContext
-            .getBean("DefaultLog4jJmxLoader")).getAppenders());
+            .getBean(LOG4J_JMX_LOADER)).getAppenders());
     }
 
     /**
