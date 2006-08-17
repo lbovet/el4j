@@ -234,10 +234,45 @@
   #end
 #end
 
-#macro ( poweredByLogo $name $href $img )
-    <a href="$href" title="$name" class="poweredBy">
-        <img alt="$name" src="$img"/>
-    </a>
+#macro ( poweredByLogo $poweredBy )
+    #if( $poweredBy )
+        #foreach ($item in $poweredBy)
+            #if( $item.href )
+                #set ( $href = $PathTool.calculateLink( $item.href, $relativePath ) )
+                #set ( $href = $href.replaceAll( "\\", "/" ) )
+            #else
+                #set ( $href="http://maven.apache.org/" )
+            #end
+
+            #if( $item.name )
+                #set ( $name = $item.name )
+            #else
+                #set ( $name = $i18n.getString( "site-renderer", $locale, "template.builtby" )  )
+                #set ( $name = "${name} Maven"  )
+            #end
+
+            #if( $item.img )
+                #set ( $img = $item.img )
+            #else
+                #set ( $img = "images/logos/maven-feather.png" )
+            #end
+
+            <a href="$href" title="$name" class="poweredBy">
+              #set ( $img = $PathTool.calculateLink( $img, $relativePath ) )
+              #set ( $img = $img.replaceAll( "\\", "/" ) )
+              <img alt="$name" src="$img" />
+            </a>
+        #end
+        #if( $poweredBy.isEmpty() )
+          <a href="http://maven.apache.org/" title="$i18n.getString( "site-renderer", $locale, "template.builtby" ) Maven" class="poweredBy">
+            <img alt="$i18n.getString( "site-renderer", $locale, "template.builtby" ) Maven" src="$relativePath/images/logos/maven-feather.png"></img>
+          </a>
+        #end
+    #else
+        <a href="http://maven.apache.org/" title="$i18n.getString( "site-renderer", $locale, "template.builtby" ) Maven" class="poweredBy">
+          <img alt="$i18n.getString( "site-renderer", $locale, "template.builtby" ) Maven" src="$relativePath/images/logos/maven-feather.png"></img>
+        </a>
+    #end
 #end
 
 <html>
@@ -282,9 +317,7 @@
       <div id="navcolumn">
        #publishDate( "navigation-top" $decoration.publishDate $decoration.version )
        #mainMenu( $decoration.body.menus )
-       #poweredByLogo( "SourceForge.net" "http://sourceforge.net/" "http://sourceforge.net/sflogo.php?group_id=147215&amp;type=2")
-       #poweredByLogo( "Built by Maven 2" "http://maven.apache.org/" "$relativePath/images/logos/maven-feather.png" )
-       #poweredByLogo( "Valid XHTML 1.0 Transitional" "http://validator.w3.org/" "$relativePath/images/logos/valid-xhtml10.png" )
+       #poweredByLogo( $decoration.poweredBy )
        #publishDate( "navigation-bottom" $decoration.publishDate $decoration.version )
       </div>
     </div>
