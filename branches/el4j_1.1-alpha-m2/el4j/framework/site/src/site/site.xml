@@ -16,7 +16,7 @@
         <href>http://www.elca.ch</href>
         <src>images/elca_banner-we_make_it_work.jpg</src>
     </bannerRight>
-    <publishDate format="dd MMM yyyy" />
+    <publishDate format="dd MMMM yyyy HH:mm" />
     <skin>
         <groupId>ch.elca.el4j</groupId>
         <artifactId>el4j-skin</artifactId>
@@ -81,4 +81,16 @@
                 href="sponsor.html" />
         </menu>
     </body>
+    <poweredBy>
+        <logo name="SourceForge.net" 
+            href="http://sourceforge.net/" 
+            img="http://sourceforge.net/sflogo.php?group_id=147215&amp;amp;type=2"/>
+        <logo name="Built by Maven 2" 
+            href="http://maven.apache.org/" 
+            img="images/logos/maven-feather.png"/>
+        <logo 
+            name="Valid XHTML 1.0 Transitional" 
+            href="http://validator.w3.org/" 
+            img="images/logos/valid-xhtml10.png"/>
+    </poweredBy>
 </project>
