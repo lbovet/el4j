@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project name="EL4J - ${project.name}">
+<project name="EL4J">
 
     <!-- Version: $Revision$ -->
     <!-- URL: $URL$ -->
@@ -41,7 +41,6 @@
             <item name="ELCA"
                 href="http://www.elca.ch" />
         </links>
-        <menu name="${project.name}" />
         <menu ref="parent" />
         <menu ref="modules" />
         <menu ref="reports" />
