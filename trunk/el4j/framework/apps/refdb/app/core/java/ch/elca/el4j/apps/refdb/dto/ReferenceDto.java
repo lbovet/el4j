@@ -326,7 +326,7 @@ public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
     }
     
     /**
-     * Validates the reference. Should always be true.
+     * Checks whether the reference is valid. Should always be true.
      * @return true if the reference is valid, false otherwise
      */
     @AssertTrue
