@@ -11,10 +11,10 @@
         <dependency jar="saaj-1.2.jar"/>
         <dependency jar="javamail-1.3.2.jar"/>
         <dependency jar="wsdl4j-1.5.1.jar"/>
-        <dependency jar="axis-1.2.1.jar"/>
+        <dependency jar="axis-1.3.jar"/>
         <dependency jar="axis-ant-1.2.1.jar"/>
         <dependency jar="commons-discovery-0.2.jar"/>
-        <dependency jar="commons-httpclient-3.0-rc2.jar"/>
+        <dependency jar="commons-httpclient-3.0.1.jar"/>
         <dependency jar="activation-1.0.2.jar"/>
         <dependency jar="servlet-api-2.4.jar"/>
     </module>

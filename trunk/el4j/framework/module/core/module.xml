@@ -4,16 +4,17 @@
         <attribute name="set" value="framework-modules"/>
         <attribute name="binrelease.version" value="1.5-rc2"/>
         <dependency jar="spring-1.2.8.jar"/>
-        <dependency jar="commons-logging-1.0.4.jar"/>
-        <dependency jar="log4j-1.2.11.jar"/>
+        <!-- <dependency jar="spring-2.0-rc3.jar"/> -->
+        <dependency jar="commons-logging-1.1.jar"/>
+        <dependency jar="log4j-1.2.13.jar"/>
         <dependency jar="bcel-5.1.jar"/>
-        <dependency jar="cglib-nodep-2.1_2.jar"/>
+        <dependency jar="cglib-nodep-2.1_3.jar"/>
         <dependency jar="jdom-1.0.jar"/>
         <dependency jar="commons-lang-2.1.jar"/>
-        <dependency jar="commons-collections-3.1.jar"/>
+        <dependency jar="commons-collections-3.2.jar"/>
         <dependency jar="commons-attributes-api-el4ant_20051129.jar"/>
-        <dependency jar="easymock-1.1.jar"/>
-        <dependency jar="easymockclassextension-1.1.jar"/>
+        <dependency jar="easymock-1.2.jar"/>
+        <dependency jar="easymockclassextension-1.2.jar"/>
         <dependency jar="which4j-0.21.jar"/>
 
         <!-- annotations for generic persistence support -->
