@@ -70,9 +70,19 @@ public class Log4jConfig implements Log4jConfigMBean {
     public static final String JVM_DOMAIN = "JVM";
 
     /**
-     * 
+     * The name of the 'log4jJmxLoader' bean.
      */
-    public static final String LOG4J_JMX_LOADER = "log4jJmxLoader";    
+    public static final String LOG4J_JMX_LOADER = "log4jJmxLoader";
+    
+    /**
+     * The instance counter of this object.
+     */
+    private int m_instanceCounter;
+    
+    /**
+     * The counter on the number of JVMs.
+     */
+    private static int s_counter = 1;
     
     /**
      * Private logger of this class.
@@ -168,6 +178,10 @@ public class Log4jConfig implements Log4jConfigMBean {
      * {@inheritDoc}
      */
     public void init() throws BaseException {
+        
+        // Set the instanceCounter.
+        setInstanceCounter();
+        
         // Set the object name of this object.
         setObjectName();
 
@@ -223,8 +237,9 @@ public class Log4jConfig implements Log4jConfigMBean {
      */
     public void setObjectName() {
 
-        String name = JVM_DOMAIN + ":name=" + getName();
-
+        String name = JVM_DOMAIN + ":name=log4jConfig " + getInstanceCounter();
+//        String name = JVM_DOMAIN + ":name="+ getName() + " " + getInstanceCounter();
+        
         try {
             m_objectName = new ObjectName(name);
         } catch (MalformedObjectNameException e) {
@@ -411,5 +426,28 @@ public class Log4jConfig implements Log4jConfigMBean {
         } else {
             return null;
         }
+    }
+    
+    /**
+     * The getter method for the instanceCounter member.
+     * 
+     * @return The instanceCounter member
+     */
+    public int getInstanceCounter() {
+        return m_instanceCounter;
+    }
+
+    /**
+     * Save the class variable s_counter to an instance member and increment the
+     * class variable by 1.
+     *  
+     */
+    public void setInstanceCounter() {
+
+        synchronized (getClass()) {
+            m_instanceCounter = s_counter;
+            s_counter++;
+        }
+
     }
 }
