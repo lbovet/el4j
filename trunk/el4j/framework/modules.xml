@@ -40,7 +40,7 @@
     <include file="tests/core/module.xml"/>
     <include file="tests/core_integration/module.xml"/>
     <include file="tests/remoting/module.xml"/>
-    <include file="tests/remoting_ejb/module.xml"/>
+    <!--<include file="tests/remoting_ejb/module.xml"/>-->
     <include file="tests/jmx/module.xml"/>
     <include file="tests/security/module.xml"/>
     <include file="tests/exception_handling/module.xml"/>
