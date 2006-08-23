@@ -563,7 +563,7 @@
     <repositories>
         <repository>
             <snapshots>
-                <enabled>false</enabled>
+                <enabled>true</enabled>
             </snapshots>
             <id>el4jModuleRepositoryExternal</id>
             <name>External repository of the EL4J project</name>
@@ -571,7 +571,7 @@
         </repository>
         <repository>
             <snapshots>
-                <enabled>false</enabled>
+                <enabled>true</enabled>
             </snapshots>
             <id>el4jModuleRepositoryInternal</id>
             <name>Internal repository of the EL4J project</name>
@@ -581,7 +581,7 @@
     <pluginRepositories>
         <pluginRepository>
             <snapshots>
-                <enabled>false</enabled>
+                <enabled>true</enabled>
             </snapshots>
             <id>el4jPluginRepositoryExternal</id>
             <name>External repository of the EL4J project</name>
