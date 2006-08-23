@@ -1,0 +1,1175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <groupId>ch.elca.el4j</groupId>
+    <artifactId>el4j</artifactId>
+    <packaging>pom</packaging>
+    <name>EL4J</name>
+    <version>1.1.0-SNAPSHOT</version>
+    <description>
+        EL4J, the Extension Library for the J2EE, adds incremental improvements
+        to the Spring Java framework (http://www.springframework.org/).
+    </description>
+    <issueManagement>
+        <system>Sourceforge</system>
+        <url>http://sourceforge.net/tracker/?group_id=147215&amp;amp;atid=779814</url>
+    </issueManagement>
+    <inceptionYear>2005</inceptionYear>
+    <mailingLists>
+        <mailingList>
+            <name>Version control commits</name>
+            <subscribe>https://lists.sourceforge.net/lists/listinfo/el4j-commits</subscribe>
+            <unsubscribe>https://lists.sourceforge.net/lists/listinfo/el4j-commits</unsubscribe>
+            <post>el4j-commits@lists.sourceforge.net</post>
+            <archive>http://sourceforge.net/mailarchive/forum.php?forum=el4j-commits</archive>
+        </mailingList>
+    </mailingLists>
+    <developers>
+        <developer>
+            <id>poser55</id>
+            <name>Philipp Oser</name>
+            <email/>
+            <roles>
+                <role>Project leader</role>
+                <role>Java developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <id>swisswheel</id>
+            <name>Martin Zeltner</name>
+            <email/>
+            <roles>
+                <role>Java developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <id>mathey</id>
+            <name>Alex Mathey</name>
+            <roles>
+                <role>Java developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <id>rashid_w</id>
+            <name>Rashid Waraich</name>
+            <email/>
+            <roles>
+                <role>Intern</role>
+                <role>Java developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
+    <contributors/>
+    <licenses>
+        <license>
+            <name>GPL version 2.0</name>
+            <url>http://www.gnu.org/licenses/gpl.txt</url>
+        </license>
+    </licenses>
+    <scm>
+        <connection>
+            scm:svn:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/
+        </connection>
+        <developerConnection>
+            scm:svn:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/
+        </developerConnection>
+        <url>
+            http://svn.sourceforge.net/viewcvs.cgi/el4j/trunk/el4j/
+        </url>
+    </scm>
+    <organization>
+        <name>ELCA</name>
+        <url>http://www.elca.ch</url>
+    </organization>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+            </resource>
+            
+            <!-- Used for the environment support of EL4J -->
+            <resource>
+                <directory>target/env</directory>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>false</filtering>
+            </testResource>
+            
+            <!-- Used for the environment support of EL4J -->
+            <testResource>
+                <directory>target/env-test</directory>
+                <filtering>false</filtering>
+            </testResource>
+        </testResources>
+        <defaultGoal>install</defaultGoal>
+        <pluginManagement>
+            <plugins>
+                <!--
+                    Last time synchronized with the latest plugin releases:
+                    2006-06-06
+                    See http://news.gmane.org/gmane.comp.apache.maven.announce
+                -->
+
+                <!-- Building -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-help-plugin</artifactId>
+                    <version>2.0.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>2.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>ch.elca.el4j.plugins</groupId>
+                    <artifactId>maven-env-support-plugin</artifactId>
+                    <version>${version.maven-env-support-plugin}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>resources</goal>
+                                <goal>testResources</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.0.1</version>
+                    <configuration>
+                        <source>1.5</source>
+                        <target>1.5</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>commons-attributes-maven-plugin</artifactId>
+                    <version>1.0</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>compile</goal>
+                                <goal>test-compile</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.2</version>
+                    <configuration>
+                        <testFailureIgnore>false</testFailureIgnore>
+                        <forkMode>never</forkMode>
+                        <includes>
+                            <include>**/*Test.java</include>
+                        </includes>
+                        <excludes>
+                            <exclude>**/Abstract*</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+
+                <!-- Packaging -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.1-SNAPSHOT</version>
+                    <configuration>
+                        <archive>
+                            <manifestSections>
+                                <manifestSection>
+                                    <name>el4j-config</name>
+                                    <manifestEntries>
+                                        <Module>${el4j-config.module}</Module>
+                                        <Files>${el4j-config.files}</Files>
+                                        <Dependencies>${el4j-config.dependencies}</Dependencies>
+                                    </manifestEntries>
+                                </manifestSection>
+                            </manifestSections>
+                        </archive>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>createTestJar</id>
+                            <goals>
+                                <goal>test-jar</goal>
+                            </goals>
+                            <configuration>
+                                <archive>
+                                    <manifestSections>
+                                        <manifestSection>
+                                            <name>el4j-config</name>
+                                            <manifestEntries>
+                                                <Module>${el4j-config.testmodule}</Module>
+                                                <Files>${el4j-config.testfiles}</Files>
+                                                <Dependencies>${el4j-config.testdependencies}</Dependencies>
+                                            </manifestEntries>
+                                        </manifestSection>
+                                    </manifestSections>
+                                </archive>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>ch.elca.el4j.plugins</groupId>
+                    <artifactId>maven-manifest-decorator-plugin</artifactId>
+                    <version>${version.maven-manifest-decorator-plugin}</version>
+                    <executions>
+                        <execution>
+                            <!--
+                                Due to bug that goals are not executed in the
+                                defined order in the same phase the goal below
+                                must be executed before the package phase!
+                                Please see: http://jira.codehaus.org/browse/MNG-2258
+                            -->
+                            <phase>test</phase>
+                            <goals>
+                                <goal>manifest-prepare-config-section</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.0.1</version>
+                    <executions>
+                        <execution>
+                            <id>createSourceJars</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>jar</goal>
+                                <goal>test-jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>2.1-SNAPSHOT</version>
+                    <configuration>
+                        <warName>${jee-web.war.name}</warName>
+                        <webappDirectory>${jee-web.webapp.directory}</webappDirectory>
+                        <archiveClasses>false</archiveClasses>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>2.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-archetype-plugin</artifactId>
+                    <version>1.0-alpha-4</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>2.2-SNAPSHOT</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>2.0-beta-4</version>
+                    <configuration>
+                        <tagBase>
+                            https://svn.sourceforge.net/svnroot/el4j/tags/
+                        </tagBase>
+                    </configuration>
+                </plugin>
+
+                <!-- Deployment -->
+                <plugin>
+                    <groupId>org.codehaus.cargo</groupId>
+                    <artifactId>cargo-maven2-plugin</artifactId>
+                    <version>0.3-SNAPSHOT</version>
+                    <configuration>
+                        <wait>${jee-web.wait}</wait>
+                        <container>
+                            <containerId>${jee-web.containerId}</containerId>
+                            <zipUrlInstaller>
+                                <url>${jee-web.zipDownloadUrl}</url>
+                                <installDir>${jee-web.installDir}</installDir>
+                            </zipUrlInstaller>
+                            <!--log>${jee-web.cargo.log.file}</log-->
+                            <!--output>${jee-web.container.log.file}</output-->
+                        </container>
+                        <configuration>
+                            <type>existing</type>
+                            <home>${jee-web.home}</home>
+                        </configuration>
+                    </configuration>
+                </plugin>
+
+                <!-- Execution -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>1.0.1</version>
+                </plugin>
+
+                <!-- IDE -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-eclipse-plugin</artifactId>
+                    <version>2.2</version>
+                    <configuration>
+                        <additionalProjectnatures>
+                            <projectnature>de.mvmsoft.checkclipse.CheckclipseNature</projectnature>
+                        </additionalProjectnatures>
+                        <additionalBuildcommands>
+                            <buildcommand>de.mvmsoft.checkclipse.CheckclipseBuilder</buildcommand>
+                        </additionalBuildcommands>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>actualizeEclipseProjects</id>
+                            <phase>install</phase>
+                            <goals>
+                                <goal>eclipse</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>ch.elca.el4j.plugins</groupId>
+                    <artifactId>maven-checkclipse-helper-plugin</artifactId>
+                    <version>${version.maven-checkclipse-helper-plugin}</version>
+                    <executions>
+                        <execution>
+                            <id>actualizeEclipseProjects</id>
+                            <phase>install</phase>
+                            <goals>
+                                <goal>checkclipse-config-settings</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <!-- Site -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>2.0-SNAPSHOT</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>2.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.0</version>
+                    <configuration>
+                        <stylesheetfile>${el4j.home}/external/framework/etc/javadoc/stylesheet.css</stylesheetfile>
+                        <aggregate>true</aggregate>
+                        <links>
+                            <link>http://java.sun.com/j2se/1.5.0/docs/api</link>
+                        </links>
+                        
+                        <!-- TODO: Make link to SVN work.
+                        <header><![CDATA[<script type="text/javascript">function removeKeyword(str) {i = str.indexOf(":");str = str.substring(i+1);i = str.length;str = str.substring(0, i-1);return str;}function removeHead (str) {v=str.substring(42);return v.substring(0, v.length-2);}function printFileStatus (url_kw,revision_kw,date_kw,author_kw) {document.write ("<br/><dl><dt><b>File-location:</b><dd><a href=\"http://svn.sourceforge.net/viewcvs.cgi/");document.write(removeHead(url_kw));document.write("\">");document.write(removeHead(url_kw));document.write("</a></dl>");document.write ("<dl><dt><b>Last check-in date </b>");document.write(removeKeyword(date_kw));document.write("<b> by </b>");document.write(removeKeyword(author_kw));document.write("<b> for revision </b>");document.write(removeKeyword(revision_kw));document.write("</a></dl>");}</script>]]></header>-->
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-report-plugin</artifactId>
+                    <version>2.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jxr-plugin</artifactId>
+                    <version>2.0</version>
+                    <configuration>
+                        <aggregate>true</aggregate>
+                        <!-- TODO: Create a nice css.
+                        <stylesheet>${el4j.home}/external/framework/etc/javadoc/stylesheet.css</stylesheet>
+                        -->
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>2.1</version>
+                    <configuration>
+                        <configLocation>${el4j.home}/external/framework/etc/checkstyle/checks.xml</configLocation>
+                        <enableRSS>false</enableRSS>
+                        <enableRulesSummary>false</enableRulesSummary>
+                    </configuration>
+                </plugin>
+
+                <!-- Further EL4J specific plugins -->
+                <plugin>
+                    <groupId>ch.elca.el4j.plugins</groupId>
+                    <artifactId>maven-repohelper-plugin</artifactId>
+                    <version>${version.maven-repohelper-plugin}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <extensions>
+            <!-- Transport -->
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ftp</artifactId>
+                <version>1.0-beta-1</version>
+            </extension>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh-external</artifactId>
+                <version>1.0-beta-1</version>
+            </extension>
+        </extensions>
+    </build>
+    <modules>
+        <module>skin</module>
+        <module>framework</module>
+        <!--module>helloworld</module-->
+    </modules>
+    <profiles>
+        <!-- JUnit -->
+        <profile>
+            <id>notests</id>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+            </properties>
+        </profile>
+        
+        <!-- Eclipse -->
+        <profile>
+            <id>sources</id>
+            <properties>
+                <downloadSources>true</downloadSources>
+            </properties>
+        </profile>
+        
+        <!-- RMI -->
+        <profile>
+            <id>rmi</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <rmi.host>localhost</rmi.host>
+                <rmi.port>8099</rmi.port>
+            </properties>
+        </profile>
+        
+        <!-- Web -->
+        <profile>
+            <id>war.exploded</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <jee-web.host>localhost</jee-web.host>
+                <jee-web.port>8080</jee-web.port>
+                <jee-web.war.name>${project.build.finalName}</jee-web.war.name>
+                <jee-web.webapp.directory>${project.build.directory}/exploded-wars/${jee-web.war.name}</jee-web.webapp.directory>
+                <jee-web.war.location>${jee-web.webapp.directory}</jee-web.war.location>
+                <jee-web.context>${project.artifactId}</jee-web.context>
+                <jee-web.wait>true</jee-web.wait>
+            </properties>
+        </profile>
+        <profile>
+            <id>war.packed</id>
+            <properties>
+                <jee-web.host>localhost</jee-web.host>
+                <jee-web.port>8080</jee-web.port>
+                <jee-web.war.name>${project.build.finalName}</jee-web.war.name>
+                <jee-web.webapp.directory>${project.build.directory}/exploded-wars/${jee-web.war.name}</jee-web.webapp.directory>
+                <jee-web.war.location>${project.build.directory}/${jee-web.war.name}.war</jee-web.war.location>
+                <jee-web.context>${project.artifactId}</jee-web.context>
+                <jee-web.wait>true</jee-web.wait>
+            </properties>
+        </profile>
+        <profile>
+            <id>tomcat5x</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <jee-web.containerId>tomcat5x</jee-web.containerId>
+                <jee-web.zipDownloadUrl>${tomcat5x.zipDownloadUrl}</jee-web.zipDownloadUrl>
+                <jee-web.installDir>${tomcat5x.basedir}</jee-web.installDir>
+                <jee-web.home>${tomcat5x.home}</jee-web.home>
+                <jee-web.container.log.file>${tomcat5x.container.log.file}</jee-web.container.log.file>
+                <jee-web.cargo.log.file>${tomcat5x.cargo.log.file}</jee-web.cargo.log.file>
+            </properties>
+        </profile>
+        
+        <!-- DB -->
+        <profile>
+            <id>db2</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <db.name>db2</db.name>
+            </properties>
+        </profile>
+        <profile>
+            <id>oracle</id>
+            <properties>
+                <db.name>oracle</db.name>
+            </properties>
+        </profile>
+        
+        <!-- Repositories -->
+        <profile>
+            <id>el4j-internal</id>
+            <distributionManagement>
+                <repository>
+                    <id>sshLeaffy</id>
+                    <name>Internal EL4J repository</name>
+                    <url>scp://leaffy.elca.ch/java/maven2repository</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>el4jModuleRepositoryExternal</id>
+            <name>External repository of the EL4J project</name>
+            <url>http://el4.elca-services.ch/el4j/maven2repository</url>
+        </repository>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>el4jModuleRepositoryInternal</id>
+            <name>Internal repository of the EL4J project</name>
+            <url>http://leaffy.elca.ch/java/maven2repository</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>el4jPluginRepositoryExternal</id>
+            <name>External repository of the EL4J project</name>
+            <url>http://el4.elca-services.ch/el4j/maven2repository</url>
+        </pluginRepository>
+    </pluginRepositories>
+    <dependencyManagement>
+        <dependencies>
+            <!-- **************************** -->
+            <!-- *  EL4J framework modules  *-->
+            <!-- **************************** -->
+
+            <!-- module-core -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-core</artifactId>
+                <version>${version.module-core}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-core</artifactId>
+                <version>${version.module-core}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            
+            <!-- module-daemon_manager -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-daemon_manager</artifactId>
+                <version>${version.module-daemon_manager}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-daemon_manager</artifactId>
+                <version>${version.module-daemon_manager}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            
+            <!-- module-env -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-env</artifactId>
+                <version>${version.module-env}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-env</artifactId>
+                <version>${version.module-env}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            
+            <!-- module-exception_handling -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-exception_handling</artifactId>
+                <version>${version.module-exception_handling}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-exception_handling</artifactId>
+                <version>${version.module-exception_handling}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            
+            <!-- module-hibernate -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-hibernate</artifactId>
+                <version>${version.module-hibernate}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-hibernate</artifactId>
+                <version>${version.module-hibernate}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            
+            <!-- module-ibatis -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-ibatis</artifactId>
+                <version>${version.module-ibatis}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-ibatis</artifactId>
+                <version>${version.module-ibatis}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            
+            <!-- module-jmx -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-jmx</artifactId>
+                <version>${version.module-jmx}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-jmx</artifactId>
+                <version>${version.module-jmx}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            
+            <!-- module-light_statistics -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-light_statistics-common</artifactId>
+                <version>${version.module-light_statistics}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-light_statistics-common</artifactId>
+                <version>${version.module-light_statistics}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-light_statistics-jmx</artifactId>
+                <version>${version.module-light_statistics}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-light_statistics-jmx</artifactId>
+                <version>${version.module-light_statistics}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-light_statistics-web</artifactId>
+                <version>${version.module-light_statistics}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-light_statistics-web</artifactId>
+                <version>${version.module-light_statistics}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-light_statistics-web</artifactId>
+                <version>${version.module-light_statistics}</version>
+                <type>war</type>
+                <scope>provided</scope>
+            </dependency>
+            
+            
+                        
+            <!-- module-remoting_core -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-remoting_core</artifactId>
+                <version>${version.module-remoting_core}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-remoting_core</artifactId>
+                <version>${version.module-remoting_core}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            
+            <!-- module-remoting_caucho -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-remoting_caucho</artifactId>
+                <version>${version.module-remoting_caucho}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-remoting_caucho</artifactId>
+                <version>${version.module-remoting_caucho}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            
+            <!-- module-remoting_soap -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-remoting_soap</artifactId>
+                <version>${version.module-remoting_soap}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-remoting_soap</artifactId>
+                <version>${version.module-remoting_soap}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            
+            <!-- module-remoting_ejb -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-remoting_ejb</artifactId>
+                <version>${version.module-remoting_ejb}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-remoting_ejb</artifactId>
+                <version>${version.module-remoting_ejb}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            
+            <!-- module-security -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-security</artifactId>
+                <version>${version.module-security}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-security</artifactId>
+                <version>${version.module-security}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            
+            <!-- module-spring_rcp -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-spring_rcp</artifactId>
+                <version>${version.module-spring_rcp}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-spring_rcp</artifactId>
+                <version>${version.module-spring_rcp}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            
+            <!-- module-web -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-web</artifactId>
+                <version>${version.module-web}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-web</artifactId>
+                <version>${version.module-web}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-web</artifactId>
+                <version>${version.module-web}</version>
+                <type>war</type>
+                <scope>provided</scope>
+            </dependency>
+            
+            
+            <!-- **************************** -->
+            <!-- * Application dependencies *-->
+            <!-- **************************** -->
+            
+            <!-- Common modules -->
+            <dependency>
+                <groupId>ch.elca.el4j.apps</groupId>
+                <artifactId>common-database</artifactId>
+                <version>${version.common-database}</version>
+                <type>jar</type>
+            </dependency>
+            
+            <!-- Keyword -->
+            <dependency>
+                <groupId>ch.elca.el4j.apps</groupId>
+                <artifactId>keyword-core-interface</artifactId>
+                <version>${version.application-keyword}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.apps</groupId>
+                <artifactId>keyword-core-impl</artifactId>
+                <version>${version.application-keyword}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.apps</groupId>
+                <artifactId>keyword-core-impl</artifactId>
+                <version>${version.application-keyword}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            
+            <!-- RefDb -->
+            <dependency>
+                <groupId>ch.elca.el4j.apps</groupId>
+                <artifactId>refdb-core-interface</artifactId>
+                <version>${version.application-refdb}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.apps</groupId>
+                <artifactId>refdb-core-impl</artifactId>
+                <version>${version.application-refdb}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.apps</groupId>
+                <artifactId>refdb-core-impl</artifactId>
+                <version>${version.application-refdb}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            
+            
+            
+            <!-- **************************** -->
+            <!-- *    Other dependencies    *-->
+            <!-- **************************** -->
+            
+            <!-- Testing -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>[3.8.2]</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- Springframework -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring</artifactId>
+                <version>[1.2.8]</version>
+            </dependency>
+
+            <!-- Apache Commons Projects -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-attributes-api</artifactId>
+                <version>[2.1]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-attributes-compiler</artifactId>
+                <version>[2.1]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-attributes-plugin</artifactId>
+                <version>[2.1]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>[1.7.0]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>[1.3]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>[3.2]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-configuration</artifactId>
+                <version>[1.2]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-daemon</artifactId>
+                <version>[1.0.1]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-dbcp</artifactId>
+                <version>[1.2.1]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-digester</artifactId>
+                <version>[1.7]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-discovery</artifactId>
+                <version>[0.2]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-email</artifactId>
+                <version>[1.0]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>[1.1.1]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-httpclient</artifactId>
+                <version>[3.0.1]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>[1.2]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>[2.1]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>[1.1]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-logging-api</artifactId>
+                <version>[1.1]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-logging-adapters</artifactId>
+                <version>[1.1]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-math</artifactId>
+                <version>[1.1]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-net</artifactId>
+                <version>[1.4.1]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool</artifactId>
+                <version>[1.3]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-primitives</artifactId>
+                <version>[1.0]</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-validator</artifactId>
+                <version>[1.3.0]</version>
+            </dependency>
+
+            <!-- Apache projects -->
+            <dependency>
+                <groupId>org.apache.oro</groupId>
+                <artifactId>jakarta-oro</artifactId>
+                <version>[2.0.8]</version>
+            </dependency>
+
+            <!-- SourceForge projects -->
+            <dependency>
+                <groupId>net.sf.ehcache</groupId>
+                <artifactId>ehcache</artifactId>
+                <version>[1.2]</version>
+            </dependency>
+
+            <!-- Servlet APIs -->
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+                <version>[2.4]</version>
+                <scope>provided</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+    <distributionManagement>
+        <repository>
+            <id>ftpEl4ElcaServices</id>
+            <name>FTP server ELCA services for EL4 projects</name>
+            <url>ftp://el4.elca-services.ch/htdocs/el4j/maven2repository/</url>
+        </repository>
+        <site>
+            <id>pcmzeSite</id>
+            <name>Local website tryout location of MZE.</name>
+            <url>scp://pcmze/maven2site</url>
+        </site>
+    </distributionManagement>
+    <properties>
+        <!-- EL4J framework plugin version numbers -->
+        <version.maven-repohelper-plugin>
+            1.0-alpha1
+        </version.maven-repohelper-plugin>
+        <version.maven-manifest-decorator-plugin>
+            1.0-alpha1
+        </version.maven-manifest-decorator-plugin>
+        <version.maven-checkclipse-helper-plugin>
+            1.0-alpha1
+        </version.maven-checkclipse-helper-plugin>
+        <version.maven-env-support-plugin>
+            1.0-alpha1
+        </version.maven-env-support-plugin>
+        
+        <!-- EL4J framework module version numbers -->
+        <version.module-core>
+            1.5-alpha1
+        </version.module-core>
+        <version.module-daemon_manager>
+            1.4-alpha1
+        </version.module-daemon_manager>
+        <version.module-env>
+            1.3-alpha1
+        </version.module-env>
+        <version.module-exception_handling>
+            1.1-alpha1
+        </version.module-exception_handling>
+        <version.module-hibernate>
+            1.2-alpha1
+        </version.module-hibernate>
+        <version.module-ibatis>
+            1.1-alpha1
+        </version.module-ibatis>
+        <version.module-jmx>
+            1.3-alpha1
+        </version.module-jmx>
+        <version.module-light_statistics>
+            1.1-alpha1
+        </version.module-light_statistics>
+        <version.module-remoting_core>
+            2.1-alpha1
+        </version.module-remoting_core>
+        <version.module-remoting_caucho>
+            2.1-alpha1
+        </version.module-remoting_caucho>
+        <version.module-remoting_soap>
+            2.1-alpha1
+        </version.module-remoting_soap>
+        <version.module-remoting_ejb>
+            2.1-alpha1
+        </version.module-remoting_ejb>
+        <version.module-security>
+            1.2-alpha1
+        </version.module-security>
+        <version.module-spring_rcp>
+            1.3-alpha1
+        </version.module-spring_rcp>
+        <version.module-web>
+            1.4-alpha1
+        </version.module-web>
+        <version.module-remoting-tests>
+            1.0-alpha1
+        </version.module-remoting-tests>
+        <version.module-remoting-demos>
+            1.0-alpha1
+        </version.module-remoting-demos>
+        <version.common-database>
+            1.3-alpha1
+        </version.common-database>
+        <version.application-keyword>
+            2.1-alpha1
+        </version.application-keyword>
+        <version.application-refdb>
+            2.1-alpha1
+        </version.application-refdb>
+    </properties>
+</project>
