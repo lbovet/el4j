@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<ant:project name="el4j" xmlns="antlib:ch.elca.el4ant"
+    xmlns:ant="antlib:org.apache.tools.ant">
+    <module name="module-remoting_caucho">
+        <attribute name="set" value="framework-modules"/>
+        <attribute name="binrelease.version" value="2.1-rc0"/>
+        <dependency module="module-remoting_core"/>
+
+        <!-- Hessian protocol -->
+        <dependency jar="hessian-3.0.13.jar"/>
+
+        <!-- Burlap protocol -->
+        <dependency jar="burlap-2.1.12.jar"/>
+    </module>
+</ant:project>

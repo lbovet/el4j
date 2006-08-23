@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!-- $Version$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+
+    <bean id="referenceService"
+        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager">
+        	<ref bean="transactionManager"/>
+        </property>
+        <property name="target">
+        	<ref local="referenceServiceTarget"/>
+        </property>
+        <property name="transactionAttributeSource">
+    		<bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
+  		</property>
+    </bean>
+    
+    <bean id="referenceServiceTarget" 
+        class="ch.elca.el4j.apps.refdb.service.impl.DefaultReferenceService">
+        <property name="referenceDao">
+            <ref local="referenceDao"/>
+        </property>
+    </bean>
+    
+    <bean id="referenceDao" 
+        class="ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateReferenceDao">
+       <property name="sessionFactory">
+            <ref bean="sessionFactory"/>
+       </property>
+    </bean>
+    
+    <!-- Hibernate Session Factory Bean -->
+    <!-- <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="mappingResources">
+            <list>
+                <value>hibernate/Keyword.hbm.xml</value>
+                <value>hibernate/Annotation.hbm.xml</value>
+                <value>hibernate/Book.hbm.xml</value>
+                <value>hibernate/File.hbm.xml</value>
+                <value>hibernate/FileDescriptorView.hbm.xml</value>
+                <value>hibernate/FormalPublication.hbm.xml</value>
+                <value>hibernate/Link.hbm.xml</value>
+                <value>hibernate/Reference.hbm.xml</value>
+                <value>hibernate/ReferenceKeywordRelationship.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${databaseDialect}</prop>
+                <prop key="hibernate.max_fetch_depth">3</prop>
+            </props>
+        </property>
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+    </bean>
+   -->
+   
+   <!-- Property merge configurer for the refdb application's SessionFactory
+    	properties-->
+    <bean id="refdbCoreDataaccessHibernatePropertyConfigurer" 
+        class="ch.elca.el4j.core.config.ListPropertyMergeConfigurer">
+        <property name="location">
+            <value>classpath:scenarios/dataaccess/hibernate/refdbCoreSessionFactory.properties</value>
+        </property>
+    </bean>
+
+</beans>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<ant:project name="el4j" xmlns="antlib:ch.elca.el4ant"
+	xmlns:ant="antlib:org.apache.tools.ant">
+	<module name="module-xml_merge">
+
+		<eu name="console">
+			<attribute name="distribution.name" value="xmlmerge"/>
+			<attribute name="runtime.runnable" value="true" />
+			<attribute name="runtime.class"
+				value="ch.elca.el4j.xmlmerge.tool.XmlMergeTool" />
+			<attribute name="runtime.command.creator"
+				value="runtime.command.creator.basic" />
+			<hook name="runtime.[module].[eu]"
+				target="runtime.hook.cmdline.arguments" />
+		</eu>
+		
+		<eu name="web">
+			<attribute name="runtime.runnable" value="true"/>
+        	<attribute name="j2ee.war.application" value="xmlmerge"/>
+        	<attribute name="runtime.command.creator"
+            	value="runtime.command.creator.web"/>
+		</eu>
+
+		<attribute name="set" value="framework-modules" />
+		<dependency module="module-core" />
+		<dependency jar="jaxen-1.1-beta-8.jar" />
+		<dependency jar="saxpath-1.0.jar" />
+		<dependency jar="dtdparser-1.2.1.jar" />
+		<dependency jar="servlet-api-2.4.jar" />
+		<dependency jar="ant-1.6.5.jar" />
+	</module>
+</ant:project>

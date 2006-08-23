@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" 
+    xmlns:ant="antlib:org.apache.tools.ant">
+
+    <!-- Hooks. -->
+    <plugin name="cmdline-arguments-runtime-hook" 
+        file="etc/hooks/cmdline-arguments-runtime-hook.xml"/>
+    <plugin name="manifest-config-section-hook"
+        file="etc/hooks/manifest-config-section-hook.xml"/>
+
+</ant:project>

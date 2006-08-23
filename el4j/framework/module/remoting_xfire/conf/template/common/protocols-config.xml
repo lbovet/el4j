@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+    Spring bean configuration file to setup hessian and burlap.
+-->
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <bean id="xFireProtocol" class="ch.elca.el4j.services.remoting.protocol.XFire">
+        <property name="serviceHost">
+            <value>${j2ee-web.host}</value>
+        </property>
+        <property name="servicePort">
+            <value>${j2ee-web.port}</value>
+        </property>
+        <property name="contextPath">
+            <value>module-remoting-demos-web</value>
+        </property>
+        <property name="implicitContextPassingRegistry">
+            <ref local="implicitContextPassingRegistry" />
+        </property>
+		<property name="xfire">
+            <ref bean="xfire"/>
+        </property>
+        <property name="serviceFactory">
+        	<ref bean="xfire.serviceFactory"/>
+        </property>    
+    </bean>
+
+    <bean id="implicitContextPassingRegistry" class="ch.elca.el4j.tests.remoting.service.TestImplicitContextPassingRegistry" />
+</beans>

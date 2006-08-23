@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" xmlns:ant="antlib:org.apache.tools.ant">
+    <module name="module-hibernate">
+    	
+    	<!--  Working set -->
+        <attribute name="set" value="framework-modules"/>
+        
+        <!-- Binary release -->
+        <attribute name="binrelease.version" value="1.2-rc1"/>
+        
+        <!-- Module dependencies -->
+        <dependency module="module-core" />
+        
+         <!-- Jar dependencies -->
+        <dependency jar="hibernate-3.2.0.CR2.jar"/>
+        <dependency jar="hibernate-annotations-3.2.0.CR1.jar"/>
+        <dependency jar="dom4j-1.6.1.jar"/>
+        <dependency jar="jta-1.0.1b.jar"/>
+        <dependency jar="antlr-2.7.6.jar"/>
+        <dependency jar="ehcache-1.2.1.jar"/>
+        <!-- 
+        	dependency ejb3-persistence-3.xxxxxx.jar is declared in module core
+       	 -->
+    </module>
+</ant:project>

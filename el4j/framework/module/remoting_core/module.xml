@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<ant:project name="el4j" xmlns="antlib:ch.elca.el4ant"
+    xmlns:ant="antlib:org.apache.tools.ant">
+    <module name="module-remoting_core">
+        <attribute name="set" value="framework-modules"/>
+        <attribute name="binrelease.version" value="2.1-rc0"/>
+        <dependency module="module-core"/>
+    </module>
+</ant:project>

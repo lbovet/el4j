@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+    <import resource="classpath:org/codehaus/xfire/spring/xfire.xml"/>
+    
+    <bean id="rmiProtocol" class="ch.elca.el4j.services.remoting.protocol.Rmi">
+        <property name="serviceHost">
+            <value>${rmi.host}</value>
+        </property>
+        <property name="servicePort">
+            <value>${rmi.port}</value>
+        </property>
+        <property name="implicitContextPassingRegistry">
+            <ref local="implicitContextPassingRegistry" />
+        </property>
+    </bean>
+    <bean id="httpInvokerProtocol" class="ch.elca.el4j.services.remoting.protocol.HttpInvoker">
+        <property name="serviceHost">
+            <value>${j2ee-web.host}</value>
+        </property>
+        <property name="servicePort">
+            <value>${j2ee-web.port}</value>
+        </property>
+        <property name="contextPath">
+            <value>module-remoting-demos-web</value>
+        </property>
+        <property name="implicitContextPassingRegistry">
+            <ref local="implicitContextPassingRegistry" />
+        </property>
+    </bean>
+    <bean id="xFireProtocol" class="ch.elca.el4j.services.remoting.protocol.XFire">
+        <property name="serviceHost">
+            <value>${j2ee-web.host}</value>
+        </property>
+        <property name="servicePort">
+            <value>${j2ee-web.port}</value>
+        </property>
+        <property name="contextPath">
+            <value>module-remoting-demos-web</value>
+        </property>
+        <property name="implicitContextPassingRegistry">
+            <ref local="implicitContextPassingRegistry" />
+        </property>
+		<property name="xfire">
+            <ref bean="xfire"/>
+        </property>
+        <property name="serviceFactory">
+        	<ref bean="xfire.serviceFactory"/>
+        </property>    
+    </bean>
+    <bean id="hessianProtocol" class="ch.elca.el4j.services.remoting.protocol.Hessian">
+        <property name="serviceHost">
+            <value>${j2ee-web.host}</value>
+        </property>
+        <property name="servicePort">
+            <value>${j2ee-web.port}</value>
+        </property>
+        <property name="contextPath">
+            <value>module-remoting-demos-web</value>
+        </property>
+        <property name="implicitContextPassingRegistry">
+            <ref local="implicitContextPassingRegistry" />
+        </property>
+    </bean>
+    <bean id="burlapProtocol" class="ch.elca.el4j.services.remoting.protocol.Burlap">
+        <property name="serviceHost">
+            <value>${j2ee-web.host}</value>
+        </property>
+        <property name="servicePort">
+            <value>${j2ee-web.port}</value>
+        </property>
+        <property name="contextPath">
+            <value>module-remoting-demos-web</value>
+        </property>
+        <property name="implicitContextPassingRegistry">
+            <ref local="implicitContextPassingRegistry" />
+        </property>
+    </bean>
+
+    <bean id="soapProtocol" class="ch.elca.el4j.services.remoting.protocol.Soap">
+        <property name="serviceHost">
+            <value>${j2ee-web.host}</value>
+        </property>
+        <property name="servicePort">
+            <value>${j2ee-web.port}</value>
+        </property>
+        <property name="contextPath">
+            <value>module-remoting-demos-web</value>
+        </property>
+        <property name="protocolSpecificConfiguration">
+            <ref local="soapProtocolSpecificConfiguration"/>
+        </property>
+        <property name="implicitContextPassingRegistry">
+            <ref local="implicitContextPassingRegistry" />
+        </property>
+    </bean>
+    
+    <bean id="soapProtocolSpecificConfiguration" 
+          class="ch.elca.el4j.services.remoting.protocol.soap.SoapSpecificConfiguration">
+        <property name="typeMappings">
+            <list>
+                <bean class="ch.elca.el4j.services.remoting.protocol.soap.axis.encoding.BeanTypeMapping">
+                    <property name="types">
+                        <list>
+                            <value>ch.elca.el4j.demos.remoting.ComplexNumber</value>
+                        </list>
+                    </property>            
+                </bean>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="implicitContextPassingRegistry" class="ch.elca.el4j.demos.remoting.TestImplicitContextPassingRegistry" />
+</beans>

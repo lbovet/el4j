@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <bean id="daemonA" singleton="false"
+        class="ch.elca.el4j.tests.daemonmanager.helpers.ActorDaemon">
+        <property name="identification" value="Daemon A"/>
+        <property name="minPeriodicity" value="1800"/>
+        <property name="simulateDurationOfOneJobRunMin" value="500"/>
+        <property name="simulateDurationOfOneJobRunMax" value="1500"/>
+        <property name="order" value="100"/>
+    </bean>
+
+    <bean id="daemonB" singleton="false"
+        class="ch.elca.el4j.tests.daemonmanager.helpers.ActorDaemon">
+        <property name="identification" value="Daemon B"/>
+        <property name="minPeriodicity" value="5225"/>
+        <property name="simulateDurationOfOneJobRunMin" value="250"/>
+        <property name="simulateDurationOfOneJobRunMax" value="4500"/>
+        <property name="order" value="200"/>
+    </bean>
+
+    <bean id="daemonC" singleton="false"
+        class="ch.elca.el4j.tests.daemonmanager.helpers.ActorDaemon">
+        <property name="identification" value="Daemon C"/>
+        <property name="minPeriodicity" value="8888"/>
+        <property name="simulateDurationOfOneJobRunMin" value="3000"/>
+        <property name="simulateDurationOfOneJobRunMax" value="7000"/>
+    </bean>
+    
+    <bean id="daemonD" singleton="false"
+        class="ch.elca.el4j.tests.daemonmanager.helpers.ActorDaemon">
+        <property name="identification" value="Daemon D"/>
+        <property name="sleepTimeAfterJob" value="3000"/>
+        <property name="simulateDurationOfOneJobRunMin" value="100"/>
+        <property name="simulateDurationOfOneJobRunMax" value="200"/>
+        <property name="order" value="600"/>
+    </bean>
+</beans>

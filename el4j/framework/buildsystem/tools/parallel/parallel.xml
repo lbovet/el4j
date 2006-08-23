@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!-- EL4Ant plugin definition -->
+<project name="parallel" 
+    xmlns:antcontrib="antlib:net.sf.antcontrib" 
+    xmlns:el4ant="antlib:ch.elca.el4ant">
+    <description>
+        Initializes all possible parallel contributions.
+    </description>
+
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <target name="configure" description="[C] Configure parallel plugin">
+        <property name="plugin.parallel.jar" 
+            value="${buildsystem.dist.directory}/tools-parallel.jar" />
+
+        <el4ant:buildplugin jarfile="${plugin.parallel.jar}">
+            <fileset dir="${configure.plugin.dir}">
+                <include name="*.xml" />
+            </fileset>
+            <!-- Optional element for the jar Manifest file -->
+            <manifest>
+                <attribute name="Implementation-Title" value="Parallel Plugin" />
+                <attribute name="Implementation-Vendor" value="ELCA Informatique SA" />
+                <attribute name="Build-Date" value="${TODAY}" />
+                <attribute name="Built-By" value="${user.name}" />
+            </manifest>
+            <plugin name="parallel" file="parallel.xml" />
+            <plugin name="parallel-web" file="parallel-web.xml" />
+            <plugin name="parallel-ejb" file="parallel-ejb.xml" />
+        </el4ant:buildplugin>
+
+        <el4ant:plugin name="parallel-web" 
+            file="buildsystem/tools/parallel/parallel-web.xml" />
+        <el4ant:plugin name="parallel-ejb" 
+            file="buildsystem/tools/parallel/parallel-ejb.xml" />
+    </target>
+</project>

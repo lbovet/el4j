@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" 
+    xmlns:ant="antlib:org.apache.tools.ant">
+
+    <module name="refdb-core">
+        <!-- Execution unit for thin clients -->
+        <eu name="interface">
+            <attribute name="compile.jar.excludes"
+                value="**/impl/**,**/ibatis/**,**/mandatory/**"/>
+        </eu>
+        <!-- Execution unit for fat clients  -->
+        <eu name="implementation">
+            <attribute name="compile.jar.excludes" value=""/>
+        </eu>
+
+        <!-- Working set -->
+        <attribute name="set" value="application-modules"/>
+        
+        <!-- Binary version -->
+        <attribute name="binrelease.version" value="2.1-rc0"/>
+
+        <!-- Commons attributes are disabled, since they are not compatible
+             with Java 1.5 -->
+        <!--  <attribute name="commons-attributes.enable" value="true"/> -->
+        
+        <!-- Module dependencies -->
+        <dependency module="keyword-core" inheritEuList="true"/>
+    </module>
+    
+</ant:project>
