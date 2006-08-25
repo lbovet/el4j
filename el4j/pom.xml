@@ -458,6 +458,7 @@
         <module>skin</module>
         <module>framework</module>
         <!--module>helloworld</module-->
+        <module>helpers</module>
     </modules>
     <profiles>
         <!-- JUnit -->
@@ -546,18 +547,6 @@
             <properties>
                 <db.name>oracle</db.name>
             </properties>
-        </profile>
-        
-        <!-- Repositories -->
-        <profile>
-            <id>el4j-internal</id>
-            <distributionManagement>
-                <repository>
-                    <id>sshLeaffy</id>
-                    <name>Internal EL4J repository</name>
-                    <url>scp://leaffy.elca.ch/java/maven2repository</url>
-                </repository>
-            </distributionManagement>
         </profile>
     </profiles>
     <repositories>
@@ -1085,10 +1074,12 @@
     </dependencyManagement>
     <distributionManagement>
         <repository>
-            <id>ftpEl4ElcaServices</id>
-            <name>FTP server ELCA services for EL4 projects</name>
-            <url>ftp://el4.elca-services.ch/htdocs/el4j/maven2repository/</url>
+            <id>${distmgt.repository.id.external}</id>
+            <name>${distmgt.repository.name.external}</name>
+            <url>${distmgt.repository.url.external}</url>
         </repository>
+        
+        <!-- For testing only! -->
         <site>
             <id>pcmzeSite</id>
             <name>Local website tryout location of MZE.</name>
@@ -1096,6 +1087,17 @@
         </site>
     </distributionManagement>
     <properties>
+        <!-- Distribution mgt repository ids, names and urls -->
+        <distmgt.repository.id.external>ftpEl4ElcaServices</distmgt.repository.id.external>
+        <distmgt.repository.name.external>FTP server ELCA services for EL4 projects</distmgt.repository.name.external>
+        <distmgt.repository.url.external>ftp://el4.elca-services.ch/htdocs/el4j/maven2repository/</distmgt.repository.url.external>
+
+        <distmgt.repository.id.internal>sshLeaffy</distmgt.repository.id.internal>
+        <distmgt.repository.name.internal>Internal EL4J repository</distmgt.repository.name.internal>
+        <distmgt.repository.url.internal>scp://leaffy/home/java/maven2repository</distmgt.repository.url.internal>
+
+    
+    
         <!-- EL4J framework plugin version numbers -->
         <version.maven-repohelper-plugin>
             1.0-alpha1

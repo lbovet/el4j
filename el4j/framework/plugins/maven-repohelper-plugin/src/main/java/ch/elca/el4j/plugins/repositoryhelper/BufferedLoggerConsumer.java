@@ -16,10 +16,13 @@
  */
 package ch.elca.el4j.plugins.repositoryhelper;
 
+import org.apache.maven.plugin.logging.Log;
 import org.codehaus.plexus.util.cli.StreamConsumer;
+import org.springframework.util.Assert;
 
 /**
- * Stream consumer to buffer output in a string buffer.
+ * Stream consumer to buffer output in a string buffer and directly log it
+ * on level "info".
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -30,7 +33,7 @@ import org.codehaus.plexus.util.cli.StreamConsumer;
  *
  * @author Martin Zeltner (MZE)
  */
-public class StringBufferConsumer implements StreamConsumer {
+public class BufferedLoggerConsumer implements StreamConsumer {
     /**
      * Get os specific line separator.
      */
@@ -41,12 +44,28 @@ public class StringBufferConsumer implements StreamConsumer {
      * Buffers the output.
      */
     protected final StringBuffer m_stringBuffer = new StringBuffer();
+    
+    /**
+     * Is the consuming logger.
+     */
+    protected final Log m_log;
+    
+    /**
+     * Constructor.
+     * 
+     * @param log Is the logger used to consume lines.
+     */
+    public BufferedLoggerConsumer(Log log) {
+        Assert.notNull(log);
+        m_log = log;
+    }
 
     /**
      * {@inheritDoc}
      */
     public void consumeLine(String line) {
         m_stringBuffer.append(line + LINE_SEPARATOR);
+        m_log.info(line);
     }
     
     /**
