@@ -41,22 +41,13 @@ import junit.framework.TestCase;
  */
 public class GenericAttributesTest extends TestCase {
     /**
-     * QDox library (usde by Common Attributes Compiler) 
-     * does not support Generics.
-     * Tests are disabled for now. 
-     * TODO: reenable tests
-     */
-    public void testDisabledDueToJDK5Annotations() {}
-    
-    
-    /**
      * This test loads an application context with an AutoProxy, a
      * GenericAttributeAdvisor and a class with declared attributes. The
      * interceptor will be injected via contructor argument to the advisor. It
      * calculates the result of a calculation which is only correct if the
      * interception worked correctly.
      */
-    public void xtestInterceptorInjectedViaConstructor() {
+    public void testInterceptorInjectedViaConstructor() {
 
         ApplicationContext ac = new ClassPathXmlApplicationContext(
             "classpath:util/attributes/beansViaConstructor.xml");
@@ -79,7 +70,7 @@ public class GenericAttributesTest extends TestCase {
      * calculates the result of a calculation which is only correct if the
      * interception worked correctly.
      */
-    public void xtestInterceptorInjectedViaSetter() {
+    public void testInterceptorInjectedViaSetter() {
 
         ApplicationContext ac = new ClassPathXmlApplicationContext(
             "classpath:util/attributes/beansViaSetter.xml");
@@ -101,7 +92,7 @@ public class GenericAttributesTest extends TestCase {
      * other tests. It calculates the result of a calculation which is only
      * correct if the interception worked correctly.
      */
-    public void xtestConfiguredAttributeSource() {
+    public void testConfiguredAttributeSource() {
 
         ApplicationContext ac = new ClassPathXmlApplicationContext(
             "classpath:util/attributes/beansWithConfiguredAttributeSource.xml");
@@ -124,7 +115,7 @@ public class GenericAttributesTest extends TestCase {
      * first. Therefore, in our case, "exampleInterceptorTwo" has to be the real
      * interceptor for the target method.
      */
-    public void xtestTwoAdvisors() {
+    public void testTwoAdvisors() {
 
         ApplicationContext ac = new ClassPathXmlApplicationContext(
             "classpath:util/attributes/beansTwoAdvisors.xml");
@@ -145,7 +136,7 @@ public class GenericAttributesTest extends TestCase {
      * GenericAttributeAdvisor, a class with declared attributes, but no
      * interceptor are defined. This test checks whether an exception is thrown.
      */
-    public void xtestAdvisorWithNoInterceptor() {
+    public void testAdvisorWithNoInterceptor() {
         // Checkstyle: EmptyBlock off
         try {
             new ClassPathXmlApplicationContext(
@@ -163,7 +154,7 @@ public class GenericAttributesTest extends TestCase {
      * intercepting Attributes are defined. This test checks whether an
      * exception is thrown.
      */
-    public void xtestAdvisorWithNoInterceptingAttributes() {
+    public void testAdvisorWithNoInterceptingAttributes() {
         // Checkstyle: EmptyBlock off
         try {
             new ClassPathXmlApplicationContext(
