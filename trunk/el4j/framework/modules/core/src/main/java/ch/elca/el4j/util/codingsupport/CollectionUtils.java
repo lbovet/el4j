@@ -33,8 +33,11 @@ import org.apache.commons.logging.LogFactory;
 
 import ch.elca.el4j.util.collections.ExtendedReorderableList;
 import ch.elca.el4j.util.collections.FilteredList;
+import ch.elca.el4j.util.collections.TransformedList;
 import ch.elca.el4j.util.collections.helpers.Filter;
+import ch.elca.el4j.util.collections.helpers.Function;
 import ch.elca.el4j.util.collections.impl.DefaultFilteredList;
+import ch.elca.el4j.util.collections.impl.DefaultTransformedList;
 
 /**
  * This class supports methods to handle with collections. It covers only gaps
@@ -214,18 +217,6 @@ public final class CollectionUtils {
         }
     }
     
-    /**
-     * Copies the list's contents to an array.
-     * @param <T> the arrays element type 
-     * @param list the list to copy
-     * @param c the element type for the new array
-     * @return an new array containing this list's contents
-     */
-    @SuppressWarnings("unchecked")
-    public static <T> T[] toArray(List<? extends T> list, Class<T> c) {
-        return list.toArray((T[]) Array.newInstance(c, list.size()));
-    }
-    
     /** swaps the elements at locations {@code i} and {@code j}. 
      * If this list is a {@link ExtendedReorderableList}, its swap method
      * is invoked, otherwise, set/get is used.
@@ -259,6 +250,18 @@ public final class CollectionUtils {
     }
     
     /**
+     * Copies the list's contents to an array.
+     * @param <T> the arrays element type 
+     * @param list the list to copy
+     * @param c the element type for the new array
+     * @return an new array containing this list's contents
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T[] toArray(List<? extends T> list, Class<T> c) {
+        return list.toArray((T[]) Array.newInstance(c, list.size()));
+    }
+    
+    /**
      *  returns a filtered view on {@code list}.
      * @param <T> .
      * @param list see above
@@ -268,5 +271,16 @@ public final class CollectionUtils {
     public static <T> FilteredList<T> filtered(List<? extends T> list, 
                                                Filter<? super T> filter) {
         return new DefaultFilteredList<T>(list, filter);
+    }
+    
+    /**
+     * Convenience method returning a {@link TransformedList} view to the
+     * supplied list.
+     * @param function the transformation function to apply to each element 
+     * @return see above
+     */
+    public static <T, O> TransformedList<T, O> mapped(List<T> list, 
+        Function<? super T, O> function) {
+        return new DefaultTransformedList<T, O>(list, function);
     }
 }

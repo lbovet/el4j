@@ -35,41 +35,47 @@ import ch.elca.el4j.util.observer.ObservableValue;
 public final class LiveValueFactory {
     /** This class can not be instantiated. */
     private LiveValueFactory() { }
-    
+        
     /** 
      * Returns a LiveValue backed by a Collection that yields the collection's
      * unique element or <code>null</code> if there is no such element.
+     * 
      * @param oc the backing collection
      * @return see above. 
      */
-    public static <T> LiveValue<T> theElementIn(
-        ObservableValue<Collection<T>> oc) {
-        
-        return new LiveValue<T>(new UniqueElementIn<T>(oc));
+    public static
+        <T, OC extends ObservableValue<? extends Collection<? extends T>>> 
+    LiveValue<T> theElementIn(final OC oc) {
+        return new LiveValue<T>(new Computable<T>() {
+            public T is() {
+                Collection<? extends T> c = oc.get();
+                if (c == null || c.size() != 1) {
+                    return null;
+                } else {
+                    return c.iterator().next();
+                }
+            }            
+        });
     }
     
-    /** see {@link LiveValueFactory#theElementIn(AbstractObservableValue)}. */
-    private static class UniqueElementIn<T> implements Computable<T> {
-        /** The backing collection. */
-        ObservableValue<Collection<T>> m_oc;
-        
-        /** Constructor. */
-        UniqueElementIn(ObservableValue<Collection<T>> oc) {
-            this.m_oc = oc;
-        }
-        
-        /** 
-         * returns the backing collection's unique element,
-         * or {@code null} if there is no such element.
-         * @return see above.
-         */
-        public T is() {
-            Collection<? extends T> c = m_oc.get();
-            if (c == null || c.size() != 1) {
-                return null;
-            } else {
-                return c.iterator().next();
+    /**
+     * Returns a LiveValue that yields the value of {@code upper} 
+     * if it is not {@code null}, or the value of {@code lower} otherwise.
+     * @param lower . 
+     * @param upper .
+     * @return .
+     */
+    public static <T> 
+    LiveValue<T> shadow(final ObservableValue<? extends T> lower,
+                        final ObservableValue<? extends T> upper) {
+        return new LiveValue<T>(new Computable<T>() {
+            public T is() {
+                if (upper.get() == null) {
+                    return lower.get();
+                } else {
+                    return upper.get();
+                }
             }
-        }
-    }    
+        });
+    }
 }
