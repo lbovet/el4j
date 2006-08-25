@@ -33,6 +33,7 @@ import org.springframework.beans.PropertyValue;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.PropertyOverrideConfigurer;
+import org.springframework.beans.propertyeditors.StringArrayPropertyEditor;
 import org.springframework.core.io.Resource;
 import org.springframework.util.DefaultPropertiesPersister;
 import org.springframework.util.PropertiesPersister;
@@ -326,12 +327,16 @@ public class ListPropertyMergeConfigurer extends PropertyOverrideConfigurer {
          * Read the existing property value.
          */
         BeanWrapperImpl beanWrapper = new BeanWrapperImpl();
+        /*
+         * beanWrapper.registerCustomEditor(String[].class, new
+         * StringArrayPropertyEditor());
+         */
         BeanDefinition beanDefinition = factory.getBeanDefinition(beanName);
-        MutablePropertyValues mutablePropertyValues 
-            = beanDefinition.getPropertyValues();
-        PropertyValue propertyValue 
-            = mutablePropertyValues.getPropertyValue(property);
-        
+        MutablePropertyValues mutablePropertyValues = beanDefinition
+            .getPropertyValues();
+        PropertyValue propertyValue = mutablePropertyValues
+            .getPropertyValue(property);
+
         /**
          * Fill the old values from property into list.
          */
@@ -341,13 +346,16 @@ public class ListPropertyMergeConfigurer extends PropertyOverrideConfigurer {
             if (valueObject instanceof Collection) {
                 oldValueList.addAll((Collection) valueObject);
             } else {
-                String[] oldValues 
-                    = (String[]) beanWrapper.doTypeConversionIfNecessary(
-                        valueObject, String[].class);
+                /*
+                 * String[] oldValues = (String[])
+                 * beanWrapper.convertIfNecessary( valueObject, String[].class);
+                 */
+                String[] oldValues = (String[]) beanWrapper
+                    .doTypeConversionIfNecessary(valueObject, String[].class);
                 for (int i = 0; i < oldValues.length; i++) {
                     String oldValue = oldValues[i];
-                    oldValueList.add(
-                        oldValue != null ? oldValue.trim() : oldValue);
+                    oldValueList.add(oldValue != null ? oldValue.trim()
+                        : oldValue);
                 }
             }
         }
@@ -356,9 +364,11 @@ public class ListPropertyMergeConfigurer extends PropertyOverrideConfigurer {
          * Fill the new values into list.
          */
         List newValueList = new ArrayList();
-        String[] newValues 
-            = (String[]) beanWrapper.doTypeConversionIfNecessary(value,
-                String[].class);
+        /*String[] newValues
+            = (String[]) beanWrapper.convertIfNecessary(value,
+                String[].class);*/
+        String[] newValues = (String[]) beanWrapper
+            .doTypeConversionIfNecessary(value, String[].class);
         for (int i = 0; i < newValues.length; i++) {
             String newValue = newValues[i];
             newValueList.add(

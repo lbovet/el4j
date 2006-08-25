@@ -321,4 +321,11 @@ public class ListResourcePatternResolverDecorator
         String s = StringUtils.arrayToCommaDelimitedString(array);
         s_logger.debug(msg + " [" + s + "]");
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    /*public ClassLoader getClassLoader() {
+        return m_patternResolver.getClassLoader();
+    }*/
 }
