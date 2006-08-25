@@ -93,5 +93,12 @@
             <artifactId>which4j</artifactId>
             <version>[0.21]</version>
         </dependency>
+        
+        <!-- Annotations for generic persistence support. -->
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>ejb3-persistence</artifactId>
+            <version>[3.1beta7]</version>
+        </dependency>
     </dependencies>
 </project>
