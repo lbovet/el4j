@@ -99,7 +99,7 @@
                 <directory>src/main/resources</directory>
                 <filtering>false</filtering>
             </resource>
-            
+
             <!-- Used for the environment support of EL4J -->
             <resource>
                 <directory>target/env</directory>
@@ -111,7 +111,7 @@
                 <directory>src/test/resources</directory>
                 <filtering>false</filtering>
             </testResource>
-            
+
             <!-- Used for the environment support of EL4J -->
             <testResource>
                 <directory>target/env-test</directory>
@@ -407,7 +407,7 @@
                         <links>
                             <link>http://java.sun.com/j2se/1.5.0/docs/api</link>
                         </links>
-                        
+
                         <!-- TODO: Make link to SVN work.
                         <header><![CDATA[<script type="text/javascript">function removeKeyword(str) {i = str.indexOf(":");str = str.substring(i+1);i = str.length;str = str.substring(0, i-1);return str;}function removeHead (str) {v=str.substring(42);return v.substring(0, v.length-2);}function printFileStatus (url_kw,revision_kw,date_kw,author_kw) {document.write ("<br/><dl><dt><b>File-location:</b><dd><a href=\"http://svn.sourceforge.net/viewcvs.cgi/");document.write(removeHead(url_kw));document.write("\">");document.write(removeHead(url_kw));document.write("</a></dl>");document.write ("<dl><dt><b>Last check-in date </b>");document.write(removeKeyword(date_kw));document.write("<b> by </b>");document.write(removeKeyword(author_kw));document.write("<b> for revision </b>");document.write(removeKeyword(revision_kw));document.write("</a></dl>");}</script>]]></header>-->
                     </configuration>
@@ -475,7 +475,7 @@
                 <maven.test.skip>true</maven.test.skip>
             </properties>
         </profile>
-        
+
         <!-- Eclipse -->
         <profile>
             <id>sources</id>
@@ -483,7 +483,7 @@
                 <downloadSources>true</downloadSources>
             </properties>
         </profile>
-        
+
         <!-- RMI -->
         <profile>
             <id>rmi</id>
@@ -495,7 +495,7 @@
                 <rmi.port>8099</rmi.port>
             </properties>
         </profile>
-        
+
         <!-- Web -->
         <profile>
             <id>war.exploded</id>
@@ -538,7 +538,7 @@
                 <jee-web.cargo.log.file>${tomcat5x.cargo.log.file}</jee-web.cargo.log.file>
             </properties>
         </profile>
-        
+
         <!-- DB -->
         <profile>
             <id>db2</id>
@@ -604,7 +604,7 @@
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
-            
+
             <!-- module-daemon_manager -->
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
@@ -619,7 +619,7 @@
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
-            
+
             <!-- module-env -->
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
@@ -634,7 +634,7 @@
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
-            
+
             <!-- module-exception_handling -->
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
@@ -649,7 +649,7 @@
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
-            
+
             <!-- module-hibernate -->
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
@@ -664,7 +664,7 @@
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
-            
+
             <!-- module-ibatis -->
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
@@ -679,7 +679,7 @@
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
-            
+
             <!-- module-jmx -->
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
@@ -694,7 +694,7 @@
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
-            
+
             <!-- module-light_statistics -->
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
@@ -742,9 +742,9 @@
                 <type>war</type>
                 <scope>provided</scope>
             </dependency>
-            
-            
-                        
+
+
+
             <!-- module-remoting_core -->
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
@@ -759,7 +759,7 @@
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
-            
+
             <!-- module-remoting_caucho -->
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
@@ -771,6 +771,21 @@
                 <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-remoting_caucho</artifactId>
                 <version>${version.module-remoting_caucho}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- module-remoting_xfire -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-remoting_xfire</artifactId>
+                <version>${version.module-remoting_xfire}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-remoting_xfire</artifactId>
+                <version>${version.module-remoting_xfire}</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
@@ -789,7 +804,7 @@
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
-            
+
             <!-- module-remoting_ejb -->
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
@@ -804,7 +819,7 @@
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
-            
+
             <!-- module-security -->
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
@@ -819,7 +834,7 @@
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
-            
+
             <!-- module-spring_rcp -->
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
@@ -834,7 +849,7 @@
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
-            
+
             <!-- module-web -->
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
@@ -856,12 +871,12 @@
                 <type>war</type>
                 <scope>provided</scope>
             </dependency>
-            
-            
+
+
             <!-- **************************** -->
             <!-- * Application dependencies *-->
             <!-- **************************** -->
-            
+
             <!-- Common modules -->
             <dependency>
                 <groupId>ch.elca.el4j.apps</groupId>
@@ -869,7 +884,7 @@
                 <version>${version.common-database}</version>
                 <type>jar</type>
             </dependency>
-            
+
             <!-- Keyword -->
             <dependency>
                 <groupId>ch.elca.el4j.apps</groupId>
@@ -890,7 +905,7 @@
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
-            
+
             <!-- RefDb -->
             <dependency>
                 <groupId>ch.elca.el4j.apps</groupId>
@@ -911,13 +926,13 @@
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
-            
-            
-            
+
+
+
             <!-- **************************** -->
             <!-- *    Other dependencies    *-->
             <!-- **************************** -->
-            
+
             <!-- Testing -->
             <dependency>
                 <groupId>junit</groupId>
@@ -1085,7 +1100,7 @@
             <name>${distmgt.repository.name.external}</name>
             <url>${distmgt.repository.url.external}</url>
         </repository>
-        
+
         <!-- For testing only! -->
         <site>
             <id>pcmzeSite</id>
@@ -1103,8 +1118,8 @@
         <distmgt.repository.name.internal>Internal EL4J repository</distmgt.repository.name.internal>
         <distmgt.repository.url.internal>scp://leaffy/home/java/maven2repository</distmgt.repository.url.internal>
 
-    
-    
+
+
         <!-- EL4J framework plugin version numbers -->
         <version.maven-repohelper-plugin>
             1.0-alpha1
@@ -1118,7 +1133,7 @@
         <version.maven-env-support-plugin>
             1.0-alpha1
         </version.maven-env-support-plugin>
-        
+
         <!-- EL4J framework module version numbers -->
         <version.module-core>
             1.5-alpha1
@@ -1153,6 +1168,9 @@
         <version.module-remoting_soap>
             2.1-alpha1
         </version.module-remoting_soap>
+        <version.module-remoting_xfire>
+            2.1-alpha1
+        </version.module-remoting_xfire>
         <version.module-remoting_ejb>
             2.1-alpha1
         </version.module-remoting_ejb>
