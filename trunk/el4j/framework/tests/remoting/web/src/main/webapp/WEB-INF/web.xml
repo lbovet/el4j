@@ -12,16 +12,11 @@
         <servlet-class>
             ch.elca.el4j.web.context.ModuleDispatcherServlet
         </servlet-class>
-        <!-- here: the init parameters are used for testing purposes only -->
-        <init-param>
+        <!--<init-param>
             <param-name>inclusiveLocations</param-name>
             <param-value>WEB-INF/remotingtests-servlet.xml</param-value>
         </init-param>
-        <init-param>
-            <param-name>exclusiveLocations</param-name>
-            <param-value>foobar.xml</param-value>
-        </init-param>
-        <load-on-startup>100</load-on-startup>
+        --><load-on-startup>100</load-on-startup>
     </servlet>
     
     <!-- Used by Soap(Axis) test -->
@@ -47,8 +42,8 @@
         <!-- Default to 5 minute session timeouts -->
         <session-timeout>5</session-timeout>
     </session-config>
-    
-    <!-- Used by Hessian and Burlap tests -->    
+        
+    <!-- Used by Hessian, Burlap and xFire tests -->    
     <servlet-mapping>
         <servlet-name>remotingtests</servlet-name>
         <url-pattern>*.Remotingtests</url-pattern>
