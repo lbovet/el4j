@@ -53,7 +53,7 @@ public class BeanTableModel extends BaseTableModel
     /**
      * Is the bean the model is made for.
      */
-    private Class m_beanClass;
+    private Class<?> m_beanClass;
     
     /**
      * Is an instance of the given bean class.
@@ -170,7 +170,7 @@ public class BeanTableModel extends BaseTableModel
     /**
      * @return Returns the beanClass.
      */
-    public final Class getBeanClass() {
+    public final Class<?> getBeanClass() {
         return m_beanClass;
     }
 
@@ -207,7 +207,7 @@ public class BeanTableModel extends BaseTableModel
     /**
      * @return Returns the columnClasses.
      */
-    public final Class[] getColumnClasses() {
+    public final Class<?>[] getColumnClasses() {
         return m_columnClasses;
     }
 

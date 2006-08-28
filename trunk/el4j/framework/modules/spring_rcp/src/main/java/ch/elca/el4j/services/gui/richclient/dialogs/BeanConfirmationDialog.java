@@ -27,9 +27,10 @@ import ch.elca.el4j.services.gui.richclient.executors.AbstractConfirmBeanExecuto
 import ch.elca.el4j.services.gui.richclient.executors.action.ExecutorAction;
 import ch.elca.el4j.services.gui.richclient.executors.displayable.ExecutorDisplayable;
 import ch.elca.el4j.services.gui.richclient.presenters.BeanPresenter;
-import ch.elca.el4j.services.gui.richclient.utils.DialogUtils;
-import ch.elca.el4j.services.gui.richclient.utils.MessageUtils;
+import ch.elca.el4j.services.i18n.MessageProvider;
 import ch.elca.el4j.util.codingsupport.Reject;
+import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
+import ch.elca.el4j.util.dom.reflect.EntityType;
 
 /**
  * Confirmation dialog used for beans.
@@ -141,6 +142,8 @@ public class BeanConfirmationDialog extends ConfirmationDialog
     /**
      * {@inheritDoc}
      */
+    @ImplementationAssumption(
+        "Super types of entity types are not entity types themselves.")
     public void configure(AbstractBeanExecutor executor) {
         Assert.isInstanceOf(AbstractConfirmBeanExecutor.class, executor);
         
@@ -161,16 +164,15 @@ public class BeanConfirmationDialog extends ConfirmationDialog
             setParent(pageComponent.getContext().getWindow().getControl());
         }
         
-        // Sets the title and confirmation message on this dialog.
-        String code = confirmBeanExecutor.getId();
-        int multiplicity = beans.length;
-        String decoratedCode = DialogUtils.decorateCode(code, multiplicity);
-        String confirmationMessage = MessageUtils.getMessage(
-            decoratedCode + ".message");
-        String title = MessageUtils.getMessage(
-            decoratedCode + ".title");
-        setConfirmationMessage(confirmationMessage);
-        setTitle(title);
+        // Sets the title and confirmation message on this dialog.        
+        MessageProvider.Fetcher msgs 
+            = MessageProvider.instance().forConfirmation(
+                confirmBeanExecutor.getId(),
+                EntityType.get(beans[0].getClass()),
+                beans.length
+            );
+        setConfirmationMessage(msgs.get("message"));
+        setTitle(msgs.get("title"));
     }
 
     /**
