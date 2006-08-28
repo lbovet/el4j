@@ -63,7 +63,8 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
         Reject.ifEmpty(objectName, "The name of the persistent object type "
             + "must not be empty.");
         Object result = get(entityClass, new Integer(id));
-        if (result == null) {
+        
+        if (result == null || !(entityClass.isInstance(result))) {
             String message = "The desired " + objectName + " does not exist.";
             CoreNotificationHelper.notifyDataRetrievalFailure(message,
                 objectName);
