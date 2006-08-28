@@ -362,6 +362,13 @@
                                 <goal>eclipse</goal>
                             </goals>
                         </execution>
+                        <execution>
+                            <id>cleanEclipseProjects</id>
+                            <phase>clean</phase>
+                            <goals>
+                                <goal>clean</goal>
+                            </goals>
+                        </execution>
                     </executions>
                 </plugin>
                 <plugin>
@@ -1059,7 +1066,7 @@
             <dependency>
                 <groupId>net.sf.ehcache</groupId>
                 <artifactId>ehcache</artifactId>
-                <version>[1.2]</version>
+                <version>[1.2.2]</version>
             </dependency>
 
             <!-- Servlet APIs -->
