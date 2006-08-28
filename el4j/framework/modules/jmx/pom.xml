@@ -50,7 +50,7 @@
         <dependency>
             <groupId>javax.management</groupId>
             <artifactId>jmxtools</artifactId>
-            <version>[1.4.2]</version>
+            <version>[1.4.2_el4j_20060814_daemon_patch]</version>
         </dependency>
     </dependencies>
 </project>
