@@ -1162,12 +1162,24 @@
         <version.module-spring_rcp>
             1.3-alpha1
         </version.module-spring_rcp>
+        <version.module-tcp_forwarder>
+			1.0-alpha1
+        </version.module-tcp_forwarder>
         <version.module-web>
             1.4-alpha1
         </version.module-web>
+        <version.module-webtest>
+			1.0-alpha1
+        </version.module-webtest>
+        <version.module-xml_merge>
+			1.0-alpha1
+        </version.module-xml_merge>
         <version.module-remoting-tests>
             1.0-alpha1
         </version.module-remoting-tests>
+        <version.module-tcp_forwarder-tests>
+			1.0-alpha1
+        </version.module-tcp_forwarder-tests>
         <version.module-remoting-demos>
             1.0-alpha1
         </version.module-remoting-demos>

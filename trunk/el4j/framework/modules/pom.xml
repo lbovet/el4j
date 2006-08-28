@@ -29,13 +29,13 @@
                 <groupId>ch.elca.el4j.plugins</groupId>
                 <artifactId>maven-env-support-plugin</artifactId>
             </plugin>
-            
+
             <!-- Packaging -->
             <plugin>
                 <groupId>ch.elca.el4j.plugins</groupId>
                 <artifactId>maven-manifest-decorator-plugin</artifactId>
             </plugin>
-            
+
             <!-- IDE -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -62,7 +62,10 @@
         <!--module>remoting_ejb</module-->
         <module>security</module>
         <module>spring_rcp</module>
+        <module>tcp_forwarder</module>
         <module>web</module>
+        <module>webtest</module>
+        <module>xml_merge</module>
     </modules>
     <reporting>
         <plugins>
