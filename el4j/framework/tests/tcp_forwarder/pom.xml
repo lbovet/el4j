@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- $Version$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+
+    <parent>
+        <groupId>ch.elca.el4j.tests</groupId>
+        <artifactId>el4j-framework-tests</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>module-tcp_forwarder-tests</artifactId>
+    <version>${version.module-tcp_forwarder-tests}</version>
+    <packaging>jar</packaging>
+    <name>EL4J module tcp forwarder tests</name>
+	<description>
+			Test module for tcp forwarder module of the EL4J framework.
+	</description>
+	<dependencies>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-tcp_forwarder</artifactId>
+			<version>${version.module-tcp_forwarder}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-webtest</artifactId>
+			<version>${version.module-webtest}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.apps</groupId>
+			<artifactId>keyword-core-tests</artifactId>
+			<version>${version.application-keyword}</version>
+		</dependency>
+	</dependencies>
+</project>
