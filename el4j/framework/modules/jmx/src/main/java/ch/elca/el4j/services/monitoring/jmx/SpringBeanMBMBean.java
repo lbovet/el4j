@@ -21,16 +21,13 @@ import javax.management.ObjectName;
 
 /**
  * The interface of the proxy class for all the beans loaded in the
- * ApplicationContext.
- * 
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * ApplicationContext. <script type="text/javascript">printFileStatus ("$URL:
+ * https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/module/jmx/java/ch/elca/el4j/services/monitoring/jmx/SpringBeanMBMBean.java
+ * $", "$Revision$", "$Date: 2006-03-13 14:15:43 +0100 (Mo, 13 Mrz 2006)
+ * $", "$Author$" );</script>
  * 
  * @author Raphael Boog (RBO)
+ * @author Rashid Waraich (RWA)
  */
 public interface SpringBeanMBMBean {
 
@@ -77,4 +74,18 @@ public interface SpringBeanMBMBean {
      * @return Returns if the referenced bean is a singleton
      */
     boolean getIsSingleton();
+
+    /**
+     * Returns the interceptor class names of the referenced bean.
+     * 
+     * @return Returns the interceptor class names of the referenced bean.
+     */
+    String[] getInterceptors();
+
+    /**
+     * Returns whether the referenced bean is proxied or not.
+     * 
+     * @return Returns whether the referenced bean is proxied or not.
+     */
+    boolean getIsProxied();
 }

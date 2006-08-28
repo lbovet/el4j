@@ -17,6 +17,7 @@
 
 package ch.elca.el4j.services.monitoring.jmx;
 
+import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -26,6 +27,7 @@ import java.util.Set;
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.MBeanRegistrationException;
 import javax.management.MBeanServer;
+import javax.management.MalformedObjectNameException;
 import javax.management.NotCompliantMBeanException;
 import javax.management.ObjectInstance;
 import javax.management.ObjectName;
@@ -50,16 +52,14 @@ import ch.elca.el4j.util.codingsupport.Reject;
 /**
  * Entry point for the JMX package. If this bean is defined in an Application
  * Context, then it will set up the whole JMX world by creating the proxies and
- * setting the corresponding references.
- * 
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
+ * setting the corresponding references. <script
+ * type="text/javascript">printFileStatus ("$URL:
+ * https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/module/jmx/java/ch/elca/el4j/services/monitoring/jmx/Loader.java
+ * $", "$Revision$", "$Date: 2006-08-14 11:10:54 +0200 (Mo, 14 Aug 2006)
+ * $", "$Author$" );</script>
  * 
  * @author Raphael Boog (RBO)
+ * @author Rashid Waraich (RWA)
  */
 public class Loader implements ApplicationContextAware, InitializingBean, 
     ApplicationListener {
@@ -130,6 +130,7 @@ public class Loader implements ApplicationContextAware, InitializingBean,
      *             in case the registration at the MBean Server failed
      */
     protected void setJvmMB() throws BaseException {
+        String jreVersion = System.getProperty("java.version");
 
         // Since we access the static member s_jvmMBs, this block is
         // synchronized.
@@ -139,9 +140,45 @@ public class Loader implements ApplicationContextAware, InitializingBean,
             ObjectName[] jvms = getObjectNames(this.m_server, JvmMB.JVM_DOMAIN,
                 null, null);
 
+            // Remove names of Log4jConfig beans from the jvms-array.
+            // Because the JVM_DOMAIN was made under the assumption, that
+            // the JVM_DOMAIn will only contain JVM's. But this assuption
+            // is not true anymore, therefor the following tests would fail
+            // if non-JVM beans are not removed from the jvms-array.
+
+            int arrayLength = 0;
+
+            for (int i = 0; i < jvms.length; i++) {
+                if (jvms[i].getCanonicalName().contains("log4jConfig")) {
+                    jvms[i] = null;
+                } else {
+                    arrayLength++;
+                }
+            }
+
+            ObjectName[] jvmsTemp = new ObjectName[arrayLength];
+            int j = 0;
+
+            for (int i = 0; i < jvms.length; i++) {
+                if (jvms[i] != null) {
+                    jvmsTemp[j] = jvms[i];
+                    j++;
+                }
+            }
+
+            jvms = jvmsTemp;
+
             // In case there is no MBean in the JVM_DOMAIN, we create one and
             // register it at the MBean Server.
             if (jvms.length == 0) {
+
+                // execute the following code only on a
+                // JRE, with version >= 1.5
+                if (jreVersion.startsWith("1.5")) {
+                    s_logger.info("Registering Jdk 1.5 Mbean");
+                    registerJdk15Mbean(m_server);
+                }
+
                 m_jvmmb = new JvmMB();
                 s_jvmMBs.put(m_server, m_jvmmb);
                 try {
@@ -166,9 +203,9 @@ public class Loader implements ApplicationContextAware, InitializingBean,
                 // reference to it in this loader.
                 m_jvmmb = (JvmMB) s_jvmMBs.get(m_server);
                 if (m_jvmmb == null) {
-                    CoreNotificationHelper.notifyMisconfiguration(
-                            "Error in Mapping: No JVM defined on this"
-                            + " MBean Server.");
+                    CoreNotificationHelper
+                        .notifyMisconfiguration("Error in Mapping: "
+                               + "No JVM defined on this MBean Server.");
                 }
             } else {
                 // In case there is more than one JVM proxy registered at this
@@ -202,7 +239,7 @@ public class Loader implements ApplicationContextAware, InitializingBean,
         Set mBeansSet = server.queryMBeans(null, null);
 
         Reject.ifNull(mBeansSet, "The 'queryMBeans(ObjectName, QueryExp)' "
-                + "method on the MBeanServer returned null.");
+            + "method on the MBeanServer returned null.");
 
         ArrayList relatedBeans = new ArrayList();
 
@@ -311,5 +348,59 @@ public class Loader implements ApplicationContextAware, InitializingBean,
         
         // Initialize the Application Context proxy.
         m_acMB.init();
+    }
+    /**
+     * Registers JDK 1.5 MBeans.
+     * @param ms The MBeanServer.
+     */
+    protected static void registerJdk15Mbean(MBeanServer ms) {
+        try {
+            ms.registerMBean(ManagementFactory.getClassLoadingMXBean(),
+                new ObjectName(ManagementFactory.CLASS_LOADING_MXBEAN_NAME));
+
+            ms.registerMBean(ManagementFactory.getThreadMXBean(),
+                new ObjectName(ManagementFactory.THREAD_MXBEAN_NAME));
+
+            ms.registerMBean(ManagementFactory.getRuntimeMXBean(),
+                new ObjectName(ManagementFactory.RUNTIME_MXBEAN_NAME));
+            ms.registerMBean(ManagementFactory.getOperatingSystemMXBean(),
+                new ObjectName(ManagementFactory.OPERATING_SYSTEM_MXBEAN_NAME));
+            ms.registerMBean(ManagementFactory.getMemoryMXBean(),
+                new ObjectName(ManagementFactory.MEMORY_MXBEAN_NAME));
+            ms.registerMBean(ManagementFactory.getCompilationMXBean(),
+                new ObjectName(ManagementFactory.COMPILATION_MXBEAN_NAME));
+
+            int i = 0;
+            for (Object o : ManagementFactory.getGarbageCollectorMXBeans()) {
+                ms.registerMBean(o, new ObjectName(
+                    ManagementFactory.GARBAGE_COLLECTOR_MXBEAN_DOMAIN_TYPE
+                        + ",num=" + (i++)));
+            }
+
+            i = 0;
+            for (Object o : ManagementFactory.getMemoryManagerMXBeans()) {
+                ms.registerMBean(o, new ObjectName(
+                    ManagementFactory.MEMORY_MANAGER_MXBEAN_DOMAIN_TYPE
+                        + ",num=" + (i++)));
+            }
+
+            i = 0;
+            for (Object o : ManagementFactory.getMemoryPoolMXBeans()) {
+                ms.registerMBean(o, new ObjectName(
+                    ManagementFactory.MEMORY_POOL_MXBEAN_DOMAIN_TYPE + ",num="
+                        + (i++)));
+            }
+
+        } catch (InstanceAlreadyExistsException e1) {
+            e1.printStackTrace();
+        } catch (MBeanRegistrationException e1) {
+            e1.printStackTrace();
+        } catch (NotCompliantMBeanException e1) {
+            e1.printStackTrace();
+        } catch (MalformedObjectNameException e1) {
+            e1.printStackTrace();
+        } catch (NullPointerException e1) {
+            e1.printStackTrace();
+        }
     }
 }
