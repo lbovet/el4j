@@ -66,6 +66,11 @@
         </dependency>
         <dependency>
             <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-remoting_xfire</artifactId>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-remoting_soap</artifactId>
             <type>jar</type>
         </dependency>
