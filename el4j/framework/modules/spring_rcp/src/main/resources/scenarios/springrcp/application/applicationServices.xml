@@ -15,25 +15,32 @@
 
     <!-- Application Service Registry -->
     <bean id="applicationServices" singleton="true"
-      class="org.springframework.richclient.application.support.DefaultApplicationServices">
-      <property name="applicationObjectConfigurerId"><idref bean="applicationObjectConfigurer"/></property>
-      <property name="binderSelectionStrategy" ref="binderSelectionStrategy"/>
-      <property name="componentFactory" ref="componentFactory"/>
-      <property name="conversionService" ref="conversionService"/>
-      <property name="fieldFaceSource" ref="formFieldFaceSource"/>
-      <property name="formComponentInterceptorFactory" ref="formComponentInterceptorFactory"/>
-      <property name="imageSource" ref="imageSource"/>
-      <property name="messageSource" ref="messageSource"/>
-      <property name="rulesSource" ref="rulesSource"/>
-      <property name="registryEntries">
-          <map>
-              <entry>
-                  <key><value>org.springframework.context.event.ApplicationEventMulticaster</value></key>
-                  <idref bean="applicationEventMulticaster"/>
-              </entry>
-          </map>          
-      </property>
-    </bean>
+        class="ch.elca.el4j.services.gui.richclient.support.ExtendableApplicationServices">
+		<property name="applicationObjectConfigurerId"><idref bean="applicationObjectConfigurer"/></property>
+		<property name="binderSelectionStrategy" ref="binderSelectionStrategy"/>
+		<property name="componentFactory" ref="componentFactory"/>
+		<property name="conversionService" ref="conversionService"/>
+		<property name="fieldFaceSource" ref="formFieldFaceSource"/>
+		<property name="formComponentInterceptorFactory" ref="formComponentInterceptorFactory"/>
+		<property name="imageSource" ref="imageSource"/>
+		<property name="messageSource" ref="messageSource"/>
+		<property name="rulesSource" ref="rulesSource"/>
+		<property name="registryEntries">
+         	<map>
+            	<entry>
+                 	<key><value>org.springframework.context.event.ApplicationEventMulticaster</value></key>
+					<idref bean="applicationEventMulticaster"/>
+				</entry>
+			</map>          
+		</property>
+		<property name="extenderNames">
+			<list>
+				<value>servicesExtender</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Applications should define their default message provider. -->
 
     <!-- 
         Sends all application events to every registered application listener.
