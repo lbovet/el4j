@@ -54,6 +54,7 @@ public class LibraryInstallerMojo extends AbstractLibraryAdderMojo {
         if (StringUtils.hasText(classifier)) {
             cmd.createArgument().setValue("-Dclassifier=" + classifier);
         }
+        cmd.createArgument().setValue("-DgeneratePom=true");
     }
     
     /**
