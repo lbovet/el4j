@@ -50,6 +50,7 @@
     <modules>
         <module>core</module>
         <module>remoting</module>
+        <module>tcp_forwarder</module>
     </modules>
     <reporting>
         <plugins>
