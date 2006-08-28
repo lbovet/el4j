@@ -12,6 +12,7 @@
     <import resource="classpath:server/web/benchmark-hessian-server-config.xml"/>
     <import resource="classpath:server/web/benchmark-burlap-server-config.xml"/>
     <import resource="classpath:server/web/benchmark-httpinvoker-server-config.xml"/>
+    <import resource="classpath:server/web/benchmark-xfire-server-config.xml"/>
     <import resource="classpath:server/web/benchmark-soap-server-config.xml"/>
     
     <bean id="beanNameHandlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>

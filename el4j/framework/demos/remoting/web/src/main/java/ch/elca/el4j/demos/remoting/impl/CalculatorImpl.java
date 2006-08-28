@@ -24,7 +24,7 @@ import com.caucho.hessian.server.HessianSkeleton;
 
 import ch.elca.el4j.demos.remoting.Calculator;
 import ch.elca.el4j.demos.remoting.CalculatorException;
-
+import ch.elca.el4j.demos.remoting.ComplexNumber;
 
 /**
  * This class is the implementation of the calculator.
@@ -37,12 +37,14 @@ import ch.elca.el4j.demos.remoting.CalculatorException;
  * );</script>
  *
  * @author Martin Zeltner (MZE)
+ * @author Rashid Waraich (RWA)
  */
 public class CalculatorImpl implements Calculator {
 
     /**
      * Constructor added due to exception logging flood with jdk logging
-     * and Hessian.
+     * and Hessian. Further, default constructor inserted for Aegis (xfire), as
+     * it requires always a no-argument constructor also.
      */
     public CalculatorImpl() {
         String loggerName = HessianSkeleton.class.getName();
@@ -55,14 +57,14 @@ public class CalculatorImpl implements Calculator {
     public double getArea(double a, double b) {
         return a * b;
     }
-
+    
     /**
      * {@inheritDoc}
      */
     public void throwMeAnException() throws CalculatorException {
         throw new CalculatorException();
     }
-
+    
     /**
      * {@inheritDoc}
      */
@@ -79,5 +81,15 @@ public class CalculatorImpl implements Calculator {
             }
         }
         return numberOfUppercaseLetters;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public ComplexNumber add(ComplexNumber cn1, ComplexNumber cn2) {
+        ComplexNumber result = new ComplexNumber(0, 0);
+        result.setReal(cn1.getReal() + cn2.getReal());
+        result.setImag(cn1.getImag() + cn2.getImag());
+        return result;
     }
 }
