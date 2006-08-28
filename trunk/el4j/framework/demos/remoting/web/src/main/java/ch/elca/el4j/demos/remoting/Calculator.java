@@ -18,6 +18,7 @@
 package ch.elca.el4j.demos.remoting;
 
 
+
 /**
  * This interface is a calculator.
  *
@@ -29,7 +30,9 @@ package ch.elca.el4j.demos.remoting;
  * );</script>
  *
  * @author Martin Zeltner (MZE)
+ * @author Rashid Waraich (RWA)
  */
+
 public interface Calculator {
     /**
      * This method calculates the area of a rectangle.
@@ -56,4 +59,15 @@ public interface Calculator {
      * @return Returns the number of uppercase letters.
      */
     public int countNumberOfUppercaseLetters(String text);
+    
+    /**
+     * This method adds two complex numbers.
+     * 
+     * @param cn1
+     *              The first ComplexNumber
+     * @param cn2
+     *              The second ComplexNumber
+     * @return Returns the sum of the ComplexNumbers
+     */
+    public ComplexNumber add(ComplexNumber cn1, ComplexNumber cn2);
 }

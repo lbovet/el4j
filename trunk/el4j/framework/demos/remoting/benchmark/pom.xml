@@ -43,60 +43,79 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.cargo</groupId>
-                <artifactId>cargo-maven2-plugin</artifactId>
-                <configuration>
-                    <wait>false</wait>
-                    <deployer>
-                        <deployables>
-                            <deployable>
-                                <groupId>ch.elca.el4j.demos</groupId>
-                                <artifactId>module-remoting-demos-web</artifactId>
-                                <type>war</type>
-                                <properties>
-                                    <context>module-remoting-demos-web</context>
-                                </properties>
-                                <pingURL>http://${jee-web.host}:${jee-web.port}/module-remoting-demos-web</pingURL>
-                                <pingTimeout>120000</pingTimeout>
-                                <checkType>true</checkType>
-                            </deployable>
-                        </deployables>
-                    </deployer>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>start-container</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>start</goal>
-                            <goal>deploy</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>stop-container</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>stop</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <configuration>
                     <mainClass>ch.elca.el4j.demos.remoting.benchmark.RemotingBenchmark</mainClass>
                     <keepAlive>false</keepAlive>
                 </configuration>
-                <executions>
-                    <execution>
-                        <phase>integration-test</phase>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>manuel</id>
+        </profile>
+        <profile>
+            <id>auto</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <configuration>
+                            <wait>false</wait>
+                            <deployer>
+                                <deployables>
+                                    <deployable>
+                                        <groupId>ch.elca.el4j.demos</groupId>
+                                        <artifactId>module-remoting-demos-web</artifactId>
+                                        <type>war</type>
+                                        <properties>
+                                            <context>module-remoting-demos-web</context>
+                                        </properties>
+                                        <pingURL>http://${jee-web.host}:${jee-web.port}/module-remoting-demos-web</pingURL>
+                                        <pingTimeout>120000</pingTimeout>
+                                        <checkType>true</checkType>
+                                    </deployable>
+                                </deployables>
+                            </deployer>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>start-container</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>start</goal>
+                                    <goal>deploy</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>stop-container</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>integration-test</phase>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
