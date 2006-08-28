@@ -24,8 +24,11 @@ import javax.management.MalformedObjectNameException;
 import javax.management.NotCompliantMBeanException;
 import javax.management.ObjectName;
 
+import org.aopalliance.intercept.Interceptor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.aop.framework.Advised;
+import org.springframework.aop.framework.adapter.DefaultAdvisorAdapterRegistry;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.PropertyValue;
 import org.springframework.beans.factory.BeanFactory;
@@ -48,6 +51,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * );</script>
  * 
  * @author Raphael Boog (RBO)
+ * @author Rashid Waraich (RWA)
  */
 public class SpringBeanMB implements SpringBeanMBMBean {
 
@@ -279,6 +283,36 @@ public class SpringBeanMB implements SpringBeanMBMBean {
      */
     public boolean getIsSingleton() {
         return m_applicationContext.isSingleton(getName());
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public String[] getInterceptors() {
+        String[] interceptorNames = null;
+        
+        Object target =  m_applicationContext.getBean(m_name);
+        if (target instanceof Advised) {
+            Advised advised = (Advised) target;
+            interceptorNames = new String[advised.getAdvisors().length];
+            for (int i = 0; i < advised.getAdvisors().length; i++) {
+                interceptorNames[i] 
+                    = advised.getAdvisors()[i].getAdvice().getClass().getName();
+            }
+        }
+        
+        return interceptorNames;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean getIsProxied() {
+        Object target =  m_applicationContext.getBean(m_name);
+        if (target instanceof Advised) {
+            return true;
+        }
+        return false;
     }
 
 }

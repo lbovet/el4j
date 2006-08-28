@@ -1,7 +1,7 @@
 /*
  * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
  * the spring framework, http://el4j.sf.net
- * Copyright (C) 2005 by ELCA Informatique SA, Av. de la Harpe 22-24,
+ * Copyright (C) 2006 by ELCA Informatique SA, Av. de la Harpe 22-24,
  * 1000 Lausanne, Switzerland, http://www.elca.ch
  *
  * EL4J is published under the GNU General Public License (GPL) Version 2.0.
@@ -14,44 +14,45 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-
 package ch.elca.el4j.services.monitoring.jmx;
 
-import javax.management.ObjectName;
-
+import java.util.HashMap;
 /**
- * The interface of the proxy class for the JVM.
  * 
+ * This class is ...
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
- * @author Raphael Boog (RBO)
+ *
  * @author Rashid Waraich (RWA)
  */
-public interface JvmMBMBean {
+public class Log4jJmxLoader {
 
     /**
-     * Returns the system properties of this JVM in a String array.
-     * 
-     * @return The system properties of this JVM
+     * Here the appenders are stored.
      */
-    String[] getSystemProperties();
+    private HashMap m_appenders;
 
     /**
-     * Returns all the Application Context proxies in this JVM.
+     * Getter Method for appenders List.
      * 
-     * @return The Application Context proxies in this JVM.
+     * @return The appenders.
      */
-    ObjectName[] getApplicationContexts();
-    
+    public HashMap getAppenders() {
+        return m_appenders;
+    }
+
     /**
-     * An HTML table is created, which lists all Threads and
-     * their property values.
-     * @return
+     * Setter Method for appenders List.
+     * 
+     * @param appenders
+     *            The appenders.
      */
-    public String showThreadTable();
+    public void setAppenders(HashMap appenders) {
+        this.m_appenders = appenders;
+    }
 }
