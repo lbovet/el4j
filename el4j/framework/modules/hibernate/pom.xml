@@ -35,7 +35,12 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate</artifactId>
-            <version>[3.1.2]</version>
+            <version>[3.2.0.cr4]</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-annotations</artifactId>
+            <version>[3.2.0.cr1]</version>
         </dependency>
         <dependency>
             <groupId>org.dom4j</groupId>
