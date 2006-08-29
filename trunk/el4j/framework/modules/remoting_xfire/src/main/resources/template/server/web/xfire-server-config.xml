@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans>
-    
+
     <!-- Version: $Revision$ -->
     <!-- URL: $URL$ -->
     <!-- Date: $Date$ -->
@@ -9,7 +9,7 @@
     
     <import resource="classpath:template/common/protocols-config.xml"/>
     
-    <bean id="calculator" class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
+    <bean id="xfireWithContextCalculatorExporter" class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
         <property name="remoteProtocol">
             <ref bean="xFireProtocol" />
         </property>
@@ -19,7 +19,10 @@
         <property name="serviceName">
             <value>Calculator.XFire.Remotingtemplate</value>
         </property>
+        <property name="service">
+            <idref bean="xfireCalculatorImpl"/>
+        </property>
     </bean>
+
+    <bean id="xfireCalculatorImpl" class="ch.elca.el4j.tests.remoting.service.impl.CalculatorImpl" />
 </beans>
-
-
