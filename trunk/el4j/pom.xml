@@ -698,19 +698,6 @@
             <!-- module-light_statistics -->
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
-                <artifactId>module-light_statistics-common</artifactId>
-                <version>${version.module-light_statistics}</version>
-                <type>jar</type>
-            </dependency>
-            <dependency>
-                <groupId>ch.elca.el4j.modules</groupId>
-                <artifactId>module-light_statistics-common</artifactId>
-                <version>${version.module-light_statistics}</version>
-                <type>test-jar</type>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-light_statistics-jmx</artifactId>
                 <version>${version.module-light_statistics}</version>
                 <type>jar</type>
@@ -850,6 +837,21 @@
                 <scope>test</scope>
             </dependency>
 
+            <!-- module-tcp_forwarder -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-tcp_forwarder</artifactId>
+                <version>${version.module-tcp_forwarder}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-tcp_forwarder</artifactId>
+                <version>${version.module-tcp_forwarder}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
             <!-- module-web -->
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
@@ -872,6 +874,56 @@
                 <scope>provided</scope>
             </dependency>
 
+            <!-- module-webtest -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-webtest</artifactId>
+                <version>${version.module-webtest}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-webtest</artifactId>
+                <version>${version.module-webtest}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- module-xml_merge -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-xml_merge-console</artifactId>
+                <version>${version.module-xml_merge}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-xml_merge-console</artifactId>
+                <version>${version.module-xml_merge}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-xml_merge-web</artifactId>
+                <version>${version.module-xml_merge}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-xml_merge-web</artifactId>
+                <version>${version.module-xml_merge}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-xml_merge-web</artifactId>
+                <version>${version.module-xml_merge}</version>
+                <type>war</type>
+                <scope>provided</scope>
+            </dependency>
+            
 
             <!-- **************************** -->
             <!-- * Application dependencies *-->
@@ -900,7 +952,7 @@
             </dependency>
             <dependency>
                 <groupId>ch.elca.el4j.apps</groupId>
-                <artifactId>keyword-core-impl</artifactId>
+                <artifactId>keyword-core-tests</artifactId>
                 <version>${version.application-keyword}</version>
                 <type>test-jar</type>
                 <scope>test</scope>
@@ -921,7 +973,7 @@
             </dependency>
             <dependency>
                 <groupId>ch.elca.el4j.apps</groupId>
-                <artifactId>refdb-core-impl</artifactId>
+                <artifactId>refdb-core-tests</artifactId>
                 <version>${version.application-refdb}</version>
                 <type>test-jar</type>
                 <scope>test</scope>
@@ -1088,7 +1140,7 @@
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>servlet-api</artifactId>
-                <version>[2.4]</version>
+                <version>[2.5]</version>
                 <scope>provided</scope>
             </dependency>
 
