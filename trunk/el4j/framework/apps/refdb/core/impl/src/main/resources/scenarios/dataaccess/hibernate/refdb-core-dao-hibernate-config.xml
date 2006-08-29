@@ -8,12 +8,26 @@
     <!-- $Date$ -->
     <!-- $Author$ -->
 
-    <bean id="referenceService" 
+    <bean id="referenceService"
+        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager">
+        	<ref bean="transactionManager"/>
+        </property>
+        <property name="target">
+        	<ref local="referenceServiceTarget"/>
+        </property>
+        <property name="transactionAttributeSource">
+    		<bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
+  		</property>
+    </bean>
+    
+    <bean id="referenceServiceTarget" 
         class="ch.elca.el4j.apps.refdb.service.impl.DefaultReferenceService">
         <property name="referenceDao">
             <ref local="referenceDao"/>
         </property>
     </bean>
+    
     <bean id="referenceDao" 
         class="ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateReferenceDao">
        <property name="sessionFactory">

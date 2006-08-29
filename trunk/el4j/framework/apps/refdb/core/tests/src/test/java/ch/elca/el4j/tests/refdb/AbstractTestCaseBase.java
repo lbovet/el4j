@@ -52,25 +52,6 @@ public abstract class AbstractTestCaseBase extends TestCase {
         = LogFactory.getLog(AbstractTestCaseBase.class);
 
     /**
-     * String array to point to the used configuration files.
-     */
-    /*
-    private String[] m_includeConfigLocations = {
-        "classpath:optional/interception/methodTracing.xml",
-        "classpath*:mandatory/*.xml",
-        "classpath*:scenarios/db/raw/*.xml",
-        "classpath*:scenarios/dataaccess/ibatis/*.xml",
-        "classpath:optional/interception/transactionCommonsAttributes.xml" };
-    */
-
-    /**
-     * String array to declare files which should not be used.
-     */
-    /*
-    private String[] m_excludeConfigLocations = null;
-    */
-
-    /**
      * Application context to load beans.
      */
     private ApplicationContext m_applicationContext;
@@ -90,15 +71,6 @@ public abstract class AbstractTestCaseBase extends TestCase {
      */
     private ReferenceService m_referenceService;
 
-    /**
-     * Default constructor. Loads the application context.
-     */
-    /*protected AbstractTestCaseBase() {
-        m_applicationContext = new ModuleApplicationContext(
-                m_includeConfigLocations, m_excludeConfigLocations, false,
-                (ApplicationContext) null);
-    }*/
-    
     /**
      * Hide default constructor.
      */
@@ -217,7 +189,7 @@ public abstract class AbstractTestCaseBase extends TestCase {
     }
     
     /**
-     * @return Returns the referenceDao.
+     * @return Returns the reference service.
      */
     protected ReferenceService getReferenceService() {
         if (m_referenceService == null) {

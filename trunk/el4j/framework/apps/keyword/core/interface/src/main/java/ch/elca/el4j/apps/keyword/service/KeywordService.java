@@ -23,6 +23,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException;
+import org.springframework.transaction.annotation.Transactional;
 
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
 import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
@@ -42,6 +43,7 @@ import ch.elca.el4j.services.search.QueryObject;
  * @author Martin Zeltner (MZE)
  */
 public interface KeywordService {
+    
     /**
      * Get keyword by primary key.
      * 
@@ -51,7 +53,7 @@ public interface KeywordService {
      * @throws DataAccessException
      *             If general data access problem occurred.
      * @throws DataRetrievalFailureException
-     *             If keyword could not be retrieved.
+     *             If keyword could not be retrieved.           
      */
     public KeywordDto getKeywordByKey(int key)
         throws DataAccessException, DataRetrievalFailureException;
@@ -104,11 +106,9 @@ public interface KeywordService {
      *             If keyword could not be inserted.
      * @throws OptimisticLockingFailureException
      *             If keyword has been modificated in the meantime.
-     * 
-     * @@attrib.transaction.RollbackRule(DataAccessException.class)
-     * @@attrib.transaction.RollbackRuleOnRuntimeException()
-     * @@attrib.transaction.RollbackRuleOnError()
      */
+    @Transactional(rollbackFor = {DataAccessException.class,
+            RuntimeException.class, Error.class })
     public KeywordDto saveKeyword(KeywordDto keyword)
         throws DataAccessException, InsertionFailureException, 
             OptimisticLockingFailureException;
@@ -122,11 +122,9 @@ public interface KeywordService {
      *             If general data access problem occurred.
      * @throws JdbcUpdateAffectedIncorrectNumberOfRowsException
      *             If keyword could not be deleted.
-     * 
-     * @@attrib.transaction.RollbackRule(DataAccessException.class)
-     * @@attrib.transaction.RollbackRuleOnRuntimeException()
-     * @@attrib.transaction.RollbackRuleOnError()
      */
+    @Transactional(rollbackFor = {DataAccessException.class,
+            RuntimeException.class, Error.class })
     public void removeKeyword(int key) throws DataAccessException,
         JdbcUpdateAffectedIncorrectNumberOfRowsException;
     
@@ -139,11 +137,10 @@ public interface KeywordService {
      *             If general data access problem occurred.
      * @throws JdbcUpdateAffectedIncorrectNumberOfRowsException
      *             If a keyword could not be deleted.
-     * 
-     * @@attrib.transaction.RollbackRule(DataAccessException.class)
-     * @@attrib.transaction.RollbackRuleOnRuntimeException()
-     * @@attrib.transaction.RollbackRuleOnError()
      */
-    public void removeKeywords(Collection keys) throws DataAccessException,
+    @Transactional(rollbackFor = {DataAccessException.class,
+            RuntimeException.class, Error.class })
+    public void removeKeywords(Collection<?> keys) 
+        throws DataAccessException,
         JdbcUpdateAffectedIncorrectNumberOfRowsException;
 }

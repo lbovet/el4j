@@ -19,6 +19,11 @@
     <!-- Are binders for gui components with data models. -->
     <import resource="classpath:scenarios/springrcp/application/componentBinders.xml"/>
     
+    <!-- Default MessageProvider -->
+    <bean class="ch.elca.el4j.services.i18n.OldStyleMessageProvider">
+    	<constructor-arg><ref bean="messageSource"/></constructor-arg>
+    	<property name="asDefault"><value>true</value></property>
+    </bean>
     
     
     <!-- Property overrider for general purpose. -->

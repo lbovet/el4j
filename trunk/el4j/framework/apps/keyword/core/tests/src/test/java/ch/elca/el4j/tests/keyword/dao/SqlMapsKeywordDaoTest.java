@@ -4,8 +4,8 @@
  * Copyright (C) 2006 by ELCA Informatique SA, Av. de la Harpe 22-24,
  * 1000 Lausanne, Switzerland, http://www.elca.ch
  *
- * This program is published under the GNU General Public License (GPL) license.
- * http://www.gnu.org/licenses/gpl.txt
+ * EL4J is published under the GNU General Public License (GPL) Version 2.0.
+ * http://www.gnu.org/licenses/
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -14,11 +14,11 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.tests.refdb;
+package ch.elca.el4j.tests.keyword.dao;
+
 
 /**
- * 
- * Test case for <code>SqlMapReferenceDao</code>.
+ * Test class for <code>KeywordDao</code> with IBatis SqlMaps.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -27,10 +27,9 @@ package ch.elca.el4j.tests.refdb;
  *    "$Author$"
  * );</script>
  *
- * @author Alex Mathey (AMA)
+ * @author Martin Zeltner (MZE)
  */
-public class SqlMapsReferenceDaoTest extends AbstractReferenceDaoTest {
-
+public class SqlMapsKeywordDaoTest extends AbstractKeywordDaoTest {
     /**
      * {@inheritDoc}
      */
@@ -40,14 +39,13 @@ public class SqlMapsReferenceDaoTest extends AbstractReferenceDaoTest {
             "classpath*:mandatory/*.xml",
             "classpath*:scenarios/db/raw/*.xml",
             "classpath*:scenarios/dataaccess/ibatis/*.xml",
-            "classpath:optional/interception/transactionCommonsAttributes.xml"};
+            "classpath*:optional/interception/transactionJava5Annotations.xml"};
     }
-    
+
     /**
      * {@inheritDoc}
      */
     protected String[] getExcludeConfigLocations() {
         return null;
     }
-
 }

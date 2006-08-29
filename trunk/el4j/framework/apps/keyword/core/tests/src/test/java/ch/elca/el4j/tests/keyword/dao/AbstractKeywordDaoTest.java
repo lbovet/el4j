@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.tests.keyword;
+package ch.elca.el4j.tests.keyword.dao;
 
 import java.util.Iterator;
 import java.util.List;
@@ -29,11 +29,12 @@ import ch.elca.el4j.apps.keyword.dao.KeywordDao;
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.LikeCriteria;
+import ch.elca.el4j.tests.keyword.AbstractTestCaseBase;
 
 // Checkstyle: MagicNumber off
 
 /**
- * Abstract test case for keyword application.
+ * Abstract test case for <code>KeywordDao</code>.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -44,12 +45,12 @@ import ch.elca.el4j.services.search.criterias.LikeCriteria;
  *
  * @author Martin Zeltner (MZE)
  */
-public abstract class AbstractKeywordServiceTest extends AbstractTestCaseBase {
+public abstract class AbstractKeywordDaoTest extends AbstractTestCaseBase {
     /**
      * Private logger.
      */
     private static Log s_logger 
-        = LogFactory.getLog(AbstractKeywordServiceTest.class);
+        = LogFactory.getLog(AbstractKeywordDaoTest.class);
 
     /**
      * Keyword dao. Created by application context.
@@ -59,7 +60,7 @@ public abstract class AbstractKeywordServiceTest extends AbstractTestCaseBase {
     /**
      * Hide default constructor.
      */
-    protected AbstractKeywordServiceTest() { }
+    protected AbstractKeywordDaoTest() { }
     
     /**
      * @return Returns the keywordDao.
@@ -236,7 +237,6 @@ public abstract class AbstractKeywordServiceTest extends AbstractTestCaseBase {
     /**
      * This test inserts five keywords and does different searchs on it.
      */
-    
     public void testSearchKeywords() {
         KeywordDao dao = getKeywordDao();
         KeywordDto keyword = new KeywordDto();
@@ -308,5 +308,6 @@ public abstract class AbstractKeywordServiceTest extends AbstractTestCaseBase {
             }
         }
     }
+    
 }
 //Checkstyle: MagicNumber on

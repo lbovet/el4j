@@ -22,6 +22,11 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Entity;
+
+import org.hibernate.validator.AssertTrue;
+import org.hibernate.validator.NotNull;
+
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
@@ -37,6 +42,7 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  *
  * @author Martin Zeltner (MZE)
  */
+@Entity
 public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * Name of the reference (book title, ...).
@@ -176,6 +182,7 @@ public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * @return Returns the name.
      */
+    @NotNull
     public String getName() {
         return m_name;
     }
@@ -206,6 +213,7 @@ public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * @return Returns the whenInserted.
      */
+    @NotNull
     public Timestamp getWhenInserted() {
         if (m_whenInserted == null) {
             m_whenInserted = new Timestamp(System.currentTimeMillis());
@@ -316,5 +324,20 @@ public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
             return false;
         }
     }
+    
+    /**
+     * Checks whether the reference is valid. Should always be true.
+     * @return true if the reference is valid, false otherwise
+     */
+    @AssertTrue
+    public boolean invariant() {
+        // Ensure that the creation date of the referenced document is
+        // smaller than its insertion date. 
+        if (getDate() != null) {
+            return (getDate().getTime() <= getWhenInserted().getTime());
+        }
+        return true;
+    }
+    
 }
 

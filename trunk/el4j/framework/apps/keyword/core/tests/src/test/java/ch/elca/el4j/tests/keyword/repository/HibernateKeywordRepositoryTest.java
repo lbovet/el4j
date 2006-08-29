@@ -14,11 +14,11 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.tests.keyword;
+package ch.elca.el4j.tests.keyword.repository;
 
 /**
  * 
- * Test class for keyword application with Hibernate.
+ * Test class for <code>KeywordHibernateRepository</code>.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -29,7 +29,9 @@ package ch.elca.el4j.tests.keyword;
  *
  * @author Alex Mathey (AMA)
  */
-public class HibernateKeywordServiceTest extends AbstractKeywordServiceTest {
+public class HibernateKeywordRepositoryTest
+    extends AbstractKeywordRepositoryTest {
+    
     /**
      * {@inheritDoc}
      */
@@ -39,13 +41,16 @@ public class HibernateKeywordServiceTest extends AbstractKeywordServiceTest {
             "classpath*:mandatory/*.xml",
             "classpath*:scenarios/db/raw/*.xml",
             "classpath*:scenarios/dataaccess/hibernate/*.xml",
-            "classpath:optional/interception/transactionCommonsAttributes.xml"};
+            "classpath*:optional/interception/transactionJava5Annotations.xml"};
     }
 
     /**
      * {@inheritDoc}
      */
     protected String[] getExcludeConfigLocations() {
-        return null;
+        return new String[] {
+            "classpath*:scenarios/dataaccess/hibernate/keyword-core-dao-hibernate-config.xml"
+        };
     }
+    
 }

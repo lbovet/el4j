@@ -50,8 +50,9 @@ public final class MainStandalone {
             "classpath*:mandatory/*.xml",
             "classpath*:scenarios/db/raw/*.xml",
             //"classpath*:scenarios/dataaccess/ibatis/*.xml",
-            "classpath*:scenarios/dataaccess/hibernate/*.xml",
-            "classpath:optional/interception/transactionCommonsAttributes.xml",
+            "classpath*:scenarios/dataaccess/hibernate/hibernate*.xml",
+            "classpath*:scenarios/dataaccess/hibernate/*-dao-hibernate-config.xml",
+            "classpath*:optional/interception/transactionJava5Annotations.xml",
             "classpath:scenarios/springrcp/refdb/application/*.xml"
         };
         MainCommon.launchApplication(startupContext, applicationContexts);
