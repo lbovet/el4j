@@ -37,21 +37,19 @@ import ch.elca.el4j.services.persistence.hibernate.HibernateProxyAwareIdentityFi
 public class HibernateIdentityFixerTest extends AbstractIdentityFixerTest {
     /** {@inheritDoc} */
     @Override
-    protected String[] getExcludeConfigLocations() {
+    protected String[] getIncludeConfigLocations() {
         return new String[] {
-            "classpath*:scenarios/dataaccess/hibernate/keyword-core-repository-hibernate-config.xml"
-        };
+            "classpath*:mandatory/*.xml",
+            "classpath*:scenarios/db/raw/*.xml",
+            "classpath*:scenarios/dataaccess/hibernate/*.xml",
+            "classpath*:scenarios/dataaccess/hibernate/repository/*.xml",
+            "classpath*:optional/interception/transactionJava5Annotations.xml"};
     }
 
     /** {@inheritDoc} */
     @Override
-    protected String[] getIncludeConfigLocations() {
-        return new String[] {
-            "classpath:optional/interception/methodTracing.xml",
-            "classpath*:mandatory/*.xml",
-            "classpath*:scenarios/db/raw/*.xml",
-            "classpath*:scenarios/dataaccess/hibernate/*.xml",
-            "classpath*:optional/interception/transactionJava5Annotations.xml"};
+    protected String[] getExcludeConfigLocations() {
+        return null;
     }
 
     /** {@inheritDoc} */
