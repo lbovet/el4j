@@ -44,14 +44,13 @@
     </build>
     
 	<!--
-        These profiles where added due to problem passing argument by system
-        property. See following JIRA issue for more information:
+        This profile was added only as example due to problem passing argument
+        by system property. See following JIRA issue for more information:
         http://jira.codehaus.org/browse/MEXEC-5
      -->
-         
     <profiles>
         <profile>
-            <id>information</id>
+            <id>example</id>
             <build>
                 <plugins>
                     <plugin>
@@ -59,39 +58,9 @@
                         <artifactId>exec-maven-plugin</artifactId>
                         <configuration>
                             <arguments>
-                                <argument>information</argument>
-                            </arguments>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>reconfigure</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <configuration>
-                            <arguments>
-                                <argument>reconfigure</argument>
-                            </arguments>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>stop</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <configuration>
-                            <arguments>
-                                <argument>stop</argument>
+                                <argument>file1.xml</argument>
+                                <argument>file2.xml</argument>
+                                <argument>file3.xml</argument>
                             </arguments>
                         </configuration>
                     </plugin>
