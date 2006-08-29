@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.tests.refdb;
+package ch.elca.el4j.tests.refdb.dao;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -34,6 +34,7 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import ch.elca.el4j.apps.refdb.dao.ReferenceDao;
 import ch.elca.el4j.apps.refdb.dto.AnnotationDto;
 import ch.elca.el4j.apps.refdb.dto.FileDto;
+import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
 
 // Checkstyle: MagicNumber off
 

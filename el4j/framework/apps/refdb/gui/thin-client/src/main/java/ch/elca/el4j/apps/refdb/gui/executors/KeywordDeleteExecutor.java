@@ -16,8 +16,10 @@
  */
 package ch.elca.el4j.apps.refdb.gui.executors;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import ch.elca.el4j.apps.keyword.dto.KeywordDto;
 import ch.elca.el4j.apps.refdb.gui.brokers.ServiceBroker;
 import ch.elca.el4j.apps.refdb.gui.support.RefdbSchemas;
 import ch.elca.el4j.apps.refdb.service.ReferenceService;
@@ -36,33 +38,33 @@ import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
  *
  * @author Martin Zeltner (MZE)
  */
-public class KeywordDeleteExecutor extends AbstractBeanDeleteExecutor {
-    /**
-     * Default constructor.
-     */
-    public KeywordDeleteExecutor() {
-        setId("keywordDelete");
-    }
+public class KeywordDeleteExecutor 
+    extends AbstractBeanDeleteExecutor<KeywordDto> {
     
     /**
      * {@inheritDoc}
      */
-    protected void deleteBeansByKey(List keys) {
+    @Override
+    protected void deleteBeans(List<KeywordDto> beans) {
+        ArrayList<Object> keys = new ArrayList<Object>(); 
+        for (PrimaryKeyObject pko : beans) {
+            keys.add(pko.getKeyAsObject());
+        }
+        
         ReferenceService referenceService = ServiceBroker.getReferenceService();
         referenceService.removeKeywords(keys);
     }
-    
-    /**
-     * {@inheritDoc}
-     */
-    protected PrimaryKeyObject getBeanByKey(Object key) throws Exception {
-        int intKey = ((Number) key).intValue();
+
+    /** {@inheritDoc} */
+    @Override
+    protected KeywordDto reloadBean(KeywordDto entity) throws Exception {
+        int intKey = entity.getKey();
         ReferenceService referenceService 
             = ServiceBroker.getReferenceService();
-        PrimaryKeyObject newBean 
+        KeywordDto newBean 
             = referenceService.getKeywordByKey(intKey);
         return newBean;
-    }    
+    }
 
     /**
      * {@inheritDoc}

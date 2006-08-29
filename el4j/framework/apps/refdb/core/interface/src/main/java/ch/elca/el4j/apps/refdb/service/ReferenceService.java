@@ -22,6 +22,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import ch.elca.el4j.apps.keyword.service.KeywordService;
 import ch.elca.el4j.apps.refdb.dto.AnnotationDto;
@@ -107,11 +109,9 @@ public interface ReferenceService extends KeywordService {
      *             If annotation could not be inserted.
      * @throws OptimisticLockingFailureException
      *             If annotation has been modificated in the meantime.
-     * 
-     * @@attrib.transaction.RollbackRule(DataAccessException.class)
-     * @@attrib.transaction.RollbackRuleOnRuntimeException()
-     * @@attrib.transaction.RollbackRuleOnError()
      */
+    @Transactional(rollbackFor = {DataAccessException.class,
+            RuntimeException.class, Error.class })
     public AnnotationDto saveAnnotation(AnnotationDto annotation)
         throws DataAccessException, InsertionFailureException, 
             OptimisticLockingFailureException;
@@ -125,11 +125,9 @@ public interface ReferenceService extends KeywordService {
      *             If general data access problem occurred.
      * @throws JdbcUpdateAffectedIncorrectNumberOfRowsException
      *             If annotation could not be deleted.
-     * 
-     * @@attrib.transaction.RollbackRule(DataAccessException.class)
-     * @@attrib.transaction.RollbackRuleOnRuntimeException()
-     * @@attrib.transaction.RollbackRuleOnError()
      */
+    @Transactional(rollbackFor = {DataAccessException.class,
+            RuntimeException.class, Error.class })
     public void removeAnnotation(int key) throws DataAccessException,
         JdbcUpdateAffectedIncorrectNumberOfRowsException;
 
@@ -191,11 +189,9 @@ public interface ReferenceService extends KeywordService {
      *             If file could not be inserted.
      * @throws OptimisticLockingFailureException
      *             If file has been modificated in the meantime.
-     * 
-     * @@attrib.transaction.RollbackRule(DataAccessException.class)
-     * @@attrib.transaction.RollbackRuleOnRuntimeException()
-     * @@attrib.transaction.RollbackRuleOnError()
      */
+    @Transactional(rollbackFor = {DataAccessException.class,
+            RuntimeException.class, Error.class })
     public FileDto saveFile(FileDto file)
         throws DataAccessException, InsertionFailureException, 
             OptimisticLockingFailureException;
@@ -209,11 +205,9 @@ public interface ReferenceService extends KeywordService {
      *             If general data access problem occurred.
      * @throws JdbcUpdateAffectedIncorrectNumberOfRowsException
      *             If file could not be deleted.
-     * 
-     * @@attrib.transaction.RollbackRule(DataAccessException.class)
-     * @@attrib.transaction.RollbackRuleOnRuntimeException()
-     * @@attrib.transaction.RollbackRuleOnError()
      */
+    @Transactional(rollbackFor = {DataAccessException.class,
+            RuntimeException.class, Error.class })
     public void removeFile(int key) throws DataAccessException,
         JdbcUpdateAffectedIncorrectNumberOfRowsException;
 
@@ -242,11 +236,9 @@ public interface ReferenceService extends KeywordService {
      *             If file has been modificated in the meantime.
      * @throws DataRetrievalFailureException
      *             If file could not be retrieved.
-     * 
-     * @@attrib.transaction.RollbackRule(DataAccessException.class)
-     * @@attrib.transaction.RollbackRuleOnRuntimeException()
-     * @@attrib.transaction.RollbackRuleOnError()
      */
+    @Transactional(rollbackFor = {DataAccessException.class,
+            RuntimeException.class, Error.class })
     public FileDescriptorView modifyFileDescriptorView(
         FileDescriptorView fileView)
         throws DataAccessException, OptimisticLockingFailureException,
@@ -265,11 +257,9 @@ public interface ReferenceService extends KeywordService {
      *             If file could not be inserted.
      * @throws OptimisticLockingFailureException
      *             If file has been modificated in the meantime.
-     * 
-     * @@attrib.transaction.RollbackRule(DataAccessException.class)
-     * @@attrib.transaction.RollbackRuleOnRuntimeException()
-     * @@attrib.transaction.RollbackRuleOnError()
      */
+    @Transactional(rollbackFor = {DataAccessException.class,
+            RuntimeException.class, Error.class })
     public FileDescriptorView saveFileAndReturnFileDescriptorView(FileDto file)
         throws DataAccessException, InsertionFailureException, 
             OptimisticLockingFailureException;
@@ -284,8 +274,6 @@ public interface ReferenceService extends KeywordService {
      *             If general data access problem occurred.
      * @throws DataRetrievalFailureException
      *             If link could not be retrieved.
-     * 
-     * @@attrib.transaction.SupportsReadOnly()
      */
     public ReferenceDto getReferenceByKey(int key)
         throws DataAccessException, DataRetrievalFailureException;
@@ -298,8 +286,6 @@ public interface ReferenceService extends KeywordService {
      * @return Returns a list with references. Returns never <code>null</code>.
      * @throws DataAccessException
      *             If general data access problem occurred.
-     *             
-     * @@attrib.transaction.SupportsReadOnly()            
      */
     public List getReferencesByName(String name) throws DataAccessException;
 
@@ -310,8 +296,6 @@ public interface ReferenceService extends KeywordService {
      *         <code>null</code>.
      * @throws DataAccessException
      *             If general data access problem occurred.
-     *             
-     * @@attrib.transaction.SupportsReadOnly()            
      */
     public List getAllReferences() throws DataAccessException;
 
@@ -340,11 +324,9 @@ public interface ReferenceService extends KeywordService {
      *             If reference could not be inserted.
      * @throws OptimisticLockingFailureException
      *             If reference has been modificated in the meantime.
-     * 
-     * @@attrib.transaction.RollbackRule(DataAccessException.class)
-     * @@attrib.transaction.RollbackRuleOnRuntimeException()
-     * @@attrib.transaction.RollbackRuleOnError()
      */
+    @Transactional(rollbackFor = {DataAccessException.class,
+            RuntimeException.class, Error.class })
     public ReferenceDto saveReference(ReferenceDto reference)
         throws DataAccessException, InsertionFailureException, 
             OptimisticLockingFailureException;
@@ -358,11 +340,9 @@ public interface ReferenceService extends KeywordService {
      *             If general data access problem occurred.
      * @throws JdbcUpdateAffectedIncorrectNumberOfRowsException
      *             If reference could not be deleted.
-     * 
-     * @@attrib.transaction.RollbackRule(DataAccessException.class)
-     * @@attrib.transaction.RollbackRuleOnRuntimeException()
-     * @@attrib.transaction.RollbackRuleOnError()
      */
+    @Transactional(rollbackFor = {DataAccessException.class,
+            RuntimeException.class, Error.class })
     public void removeReference(int key) throws DataAccessException,
         JdbcUpdateAffectedIncorrectNumberOfRowsException;
 }

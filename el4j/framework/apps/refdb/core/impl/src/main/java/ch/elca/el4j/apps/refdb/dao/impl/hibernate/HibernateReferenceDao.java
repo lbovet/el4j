@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.hibernate.Hibernate;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Expression;
 import org.springframework.dao.DataAccessException;
@@ -213,7 +212,7 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
         DataRetrievalFailureException {
         LinkDto link = (LinkDto) getConvenienceHibernateTemplate()
             .getByIdStrong(LinkDto.class, key, Constants.LINK);
-        Hibernate.initialize(link.getKeywords());    
+        getConvenienceHibernateTemplate().initialize(link.getKeywords());    
         return link;
     }
     
@@ -227,7 +226,8 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
             .findByNamedParam(queryString, "name", name);
         Iterator it = result.iterator();
         while (it.hasNext()) {
-            Hibernate.initialize(((LinkDto) it.next()).getKeywords());
+            getConvenienceHibernateTemplate().initialize(((LinkDto) it.next())
+                .getKeywords());
         }
         return result;
     }
@@ -322,7 +322,8 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
             = (FormalPublicationDto) getConvenienceHibernateTemplate()
                 .getByIdStrong(FormalPublicationDto.class, key,
                     Constants.FORMAL_PUBLICATION);
-        Hibernate.initialize(formalPublication.getKeywords());    
+        getConvenienceHibernateTemplate().initialize(formalPublication
+            .getKeywords());    
         return formalPublication;
     }
     
@@ -342,7 +343,8 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
         while (it.hasNext()) {
             currentPublication = (FormalPublicationDto) it.next();
             if (!(currentPublication instanceof BookDto)) {
-                Hibernate.initialize(currentPublication.getKeywords());
+                getConvenienceHibernateTemplate().initialize(currentPublication
+                    .getKeywords());
                 finalResult.add(currentPublication);
             } 
         }
@@ -462,7 +464,7 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
             = (BookDto) getConvenienceHibernateTemplate()
                 .getByIdStrong(BookDto.class, key,
                     Constants.BOOK);
-        Hibernate.initialize(book.getKeywords());    
+        getConvenienceHibernateTemplate().initialize(book.getKeywords());    
         return book;    
     }
     
@@ -476,7 +478,8 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
             .findByNamedParam(queryString, "name", name);
         Iterator it = result.iterator();
         while (it.hasNext()) {
-            Hibernate.initialize(((BookDto) it.next()).getKeywords());
+            getConvenienceHibernateTemplate().initialize(((BookDto) it.next()).
+                getKeywords());
         }
         return result;
     }

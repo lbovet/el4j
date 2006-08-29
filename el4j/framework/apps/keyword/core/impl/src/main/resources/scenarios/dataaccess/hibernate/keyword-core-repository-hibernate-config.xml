@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+    
+<beans>
+	<!-- $Version$ -->
+	<!-- $Source$ -->
+	<!-- $Date$ -->
+	<!-- $Author$ -->
+	 
+	<bean id="keywordService"
+        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager">
+        	<ref bean="transactionManager"/>
+        </property>
+        <property name="target">
+        	<ref local="keywordServiceTarget"/>
+        </property>
+        <property name="transactionAttributeSource">
+    		<bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
+  		</property>
+    </bean>
+    
+    <bean id="keywordServiceTarget"
+	 	class="ch.elca.el4j.apps.keyword.service.impl.KeywordRepositoryService">
+	 	<property name="repositoryRegistry">
+	 		<ref local="repositoryRegistry"/>
+	 	</property>
+	 </bean>
+	   
+	<bean id="repositoryRegistry"
+		class="ch.elca.el4j.apps.keyword.repository.impl.hibernate.HibernateKeywordRepositoryRegistry">
+		<property name="sessionFactory">
+			<ref local="sessionFactory"/>
+		</property>
+	</bean>
+	
+	<!-- Hibernate Session Factory Bean -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="mappingResources">
+            <list>
+                <value>hibernate/Keyword.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${databaseDialect}</prop>
+                <prop key="hibernate.max_fetch_depth">3</prop>
+            </props>
+        </property>
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+    </bean>
+	
+</beans>

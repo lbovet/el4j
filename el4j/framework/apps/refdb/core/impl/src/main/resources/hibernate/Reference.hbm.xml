@@ -54,7 +54,7 @@
         </set>
         
         <set name="keywords" table="REFERENCEKEYWORDRELATIONSHIPS"
-        	cascade="save-update">
+        	cascade="save-update" lazy="false">
         	<key column="KEYREFERENCE"/>
         	<many-to-many class="ch.elca.el4j.apps.keyword.dto.KeywordDto"
         		column="KEYKEYWORD"/>

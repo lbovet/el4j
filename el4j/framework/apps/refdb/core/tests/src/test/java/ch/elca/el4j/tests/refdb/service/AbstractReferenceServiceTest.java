@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.tests.refdb;
+package ch.elca.el4j.tests.refdb.service;
 
 import java.sql.Date;
 import java.util.Calendar;
@@ -40,6 +40,7 @@ import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.ComparisonCriteria;
 import ch.elca.el4j.services.search.criterias.IncludeCriteria;
 import ch.elca.el4j.services.search.criterias.LikeCriteria;
+import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
 
 // Checkstyle: MagicNumber off
 
