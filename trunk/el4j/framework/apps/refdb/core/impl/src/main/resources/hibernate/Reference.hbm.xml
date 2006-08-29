@@ -38,7 +38,7 @@
             <column name="DOCUMENTDATE"/>
         </property>
         
-        <set name="annotations" cascade="all-delete-orphan">
+        <!--<set name="annotations" cascade="all-delete-orphan">
         	<key column="KEYTOREFERENCE"/>
         	<one-to-many class="ch.elca.el4j.apps.refdb.dto.AnnotationDto"/>
         </set>
@@ -53,7 +53,7 @@
         	<one-to-many class="ch.elca.el4j.apps.refdb.dto.FileDescriptorView"/>
         </set>
         
-        <set name="keywords" table="REFERENCEKEYWORDRELATIONSHIPS"
+        --><set name="keywords" table="REFERENCEKEYWORDRELATIONSHIPS"
         	cascade="save-update" lazy="false">
         	<key column="KEYREFERENCE"/>
         	<many-to-many class="ch.elca.el4j.apps.keyword.dto.KeywordDto"
@@ -98,7 +98,5 @@
         			<column name="ISBNNUMBER"/>
         	</property>
         </joined-subclass>
-        
 	</class>
-
 </hibernate-mapping>
