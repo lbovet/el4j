@@ -19,15 +19,6 @@
     <packaging>pom</packaging>
     <name>EL4J framework refdb core application</name>
     <description>RefDb core application of the EL4J framework.</description>
-    <build>
-        <!-- Support for Commons Attributes -->
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>commons-attributes-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
     <modules>
         <module>interface</module>
         <module>impl</module>
