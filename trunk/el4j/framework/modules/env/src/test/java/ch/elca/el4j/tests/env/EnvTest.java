@@ -18,7 +18,8 @@
 package ch.elca.el4j.tests.env;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import ch.elca.el4j.core.context.ModuleApplicationContext;
 
 import junit.framework.TestCase;
 
@@ -35,31 +36,27 @@ import junit.framework.TestCase;
  * @author Andreas Bur (ABU)
  */
 public class EnvTest extends TestCase {
-
-    /** The configuration location. */
-    public static final String CONFIG = "classpath*:mandatory/*";
-    
-    /** The test bean's name. */
-    public static final String CONTAINER_BEAN = "servletContainer";
-
     /** The highest transport protocol port number. */ 
     // Checkstyle: MagicNumber off
     private static final int MAX_PORT = 1 << 16 - 1;
     // Checkstyle: MagicNumber on
     
     /** The application context. */
-    private ApplicationContext m_appContext;
+    private final ApplicationContext m_appContext;
     
     /** The container instance. */
-    private ServletContainer m_container;
+    private final ServletContainer m_container;
     
     /**
      * Default constructor.
      */
     public EnvTest() {
-        m_appContext = new ClassPathXmlApplicationContext(CONFIG);
+        m_appContext = new ModuleApplicationContext(new String[] {
+            "classpath*:mandatory/*.xml", "classpath:envtest/environment.xml"}, 
+            false);
         
-        m_container = (ServletContainer) m_appContext.getBean(CONTAINER_BEAN);
+        m_container 
+            = (ServletContainer) m_appContext.getBean("servletContainer");
     }
 
     /**
