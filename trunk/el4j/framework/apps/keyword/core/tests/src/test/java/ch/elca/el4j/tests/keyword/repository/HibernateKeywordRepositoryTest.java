@@ -41,6 +41,7 @@ public class HibernateKeywordRepositoryTest
             "classpath*:mandatory/*.xml",
             "classpath*:scenarios/db/raw/*.xml",
             "classpath*:scenarios/dataaccess/hibernate/*.xml",
+            "classpath*:scenarios/dataaccess/hibernate/repository/*.xml",
             "classpath*:optional/interception/transactionJava5Annotations.xml"};
     }
 
@@ -48,9 +49,7 @@ public class HibernateKeywordRepositoryTest
      * {@inheritDoc}
      */
     protected String[] getExcludeConfigLocations() {
-        return new String[] {
-            "classpath*:scenarios/dataaccess/hibernate/keyword-core-dao-hibernate-config.xml"
-        };
+        return null;
     }
     
 }
