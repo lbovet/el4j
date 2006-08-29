@@ -27,17 +27,15 @@
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-tcp_forwarder</artifactId>
-			<version>${version.module-tcp_forwarder}</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-webtest</artifactId>
-			<version>${version.module-webtest}</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.elca.el4j.apps</groupId>
 			<artifactId>keyword-core-tests</artifactId>
-			<version>${version.application-keyword}</version>
+            <type>test-jar</type>
 		</dependency>
 	</dependencies>
 </project>
