@@ -39,10 +39,10 @@ public class HibernateReferenceServiceTest extends
      */
     protected String[] getIncludeConfigLocations() {
         return new String[] {
-            "classpath:optional/interception/methodTracing.xml",
             "classpath*:mandatory/*.xml",
             "classpath*:scenarios/db/raw/*.xml",
             "classpath*:scenarios/dataaccess/hibernate/*.xml",
+            "classpath*:scenarios/dataaccess/hibernate/repository/*.xml",
             "classpath*:optional/interception/transactionJava5Annotations.xml"};
     }
     
@@ -50,9 +50,7 @@ public class HibernateReferenceServiceTest extends
      * {@inheritDoc}
      */
     protected String[] getExcludeConfigLocations() {
-        return new String[] {
-            "classpath*:scenarios/dataaccess/hibernate/keyword-core-repository-hibernate-config.xml"
-        };
+        return null;
     }
      
 }

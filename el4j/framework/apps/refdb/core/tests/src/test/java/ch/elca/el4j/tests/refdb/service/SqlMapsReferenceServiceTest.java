@@ -38,7 +38,6 @@ public class SqlMapsReferenceServiceTest extends AbstractReferenceServiceTest {
      */
     protected String[] getIncludeConfigLocations() {
         return new String[] {
-            "classpath:optional/interception/methodTracing.xml",
             "classpath*:mandatory/*.xml",
             "classpath*:scenarios/db/raw/*.xml",
             "classpath*:scenarios/dataaccess/ibatis/*.xml",
