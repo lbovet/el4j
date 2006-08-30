@@ -15,18 +15,18 @@
         <version>1.1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>refdb-gui-tiger-standalone-client</artifactId>
+    <artifactId>refdb-gui-tiger-thin-client</artifactId>
     <version>${version.application-refdb}</version>
     <packaging>jar</packaging>
-    <name>EL4J framework applications - refdb gui tiger standalone-client</name>
-    <description>RefDb gui tiger standalone-client module of the EL4J framework.</description>
+    <name>EL4J framework applications - refdb gui tiger thin-client</name>
+    <description>RefDb gui tiger thin-client module of the EL4J framework.</description>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>ch.elca.el4j.apps.refdb.gui.MainStandalone</mainClass>
+                    <mainClass>ch.elca.el4j.apps.refdb.gui.MainDistributed</mainClass>
                     <keepAlive>true</keepAlive>
                 </configuration>
             </plugin>
@@ -35,12 +35,18 @@
     <dependencies>
         <dependency>
             <groupId>ch.elca.el4j.apps</groupId>
-            <artifactId>refdb-gui-tiger-server</artifactId>
+            <artifactId>refdb-core-interface</artifactId>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>ch.elca.el4j.apps</groupId>
-            <artifactId>refdb-gui-tiger-thin-client</artifactId>
+            <artifactId>refdb-gui-tiger-common</artifactId>
+            <type>jar</type>
+        </dependency>
+                
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-spring_rcp</artifactId>
             <type>jar</type>
         </dependency>
     </dependencies>

@@ -20,7 +20,7 @@ package ch.elca.el4j.apps.refdb.gui;
 // Checkstyle: UncommentedMain off
 
 /**
- * This class is used to start the RefDB-Application in standalone mode.
+ * This class is used to start the RefDB-Application in distributed mode.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -31,12 +31,12 @@ package ch.elca.el4j.apps.refdb.gui;
  *
  * @author Martin Zeltner (MZE)
  */
-public final class MainStandalone {
+public final class MainDistributed {
     /**
      * Hide default constructor.
      */
-    private MainStandalone() { }
-
+    private MainDistributed() { }
+    
     /**
      * Start method.
      * 
@@ -48,11 +48,7 @@ public final class MainStandalone {
             = "classpath:scenarios/springrcp/refdb/startup/*.xml";
         String[] applicationContexts = {
             "classpath*:mandatory/*.xml",
-            "classpath*:scenarios/db/raw/*.xml",
-            "classpath*:scenarios/dataaccess/hibernate/*.xml",
-            "classpath*:scenarios/dataaccess/hibernate/repository/*.xml",
-            "classpath*:scenarios/remoting/disabled/*.xml",
-            "classpath*:optional/interception/transactionJava5Annotations.xml",
+            "classpath:scenarios/remoting/client/*.xml",
             "classpath:scenarios/springrcp/refdb/application/*.xml"
         };
         MainCommon.launchApplication(startupContext, applicationContexts);
