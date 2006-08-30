@@ -16,67 +16,14 @@
         <version>1.1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>module-xml_merge-web</artifactId>
-    <version>${version.module-xml_merge}</version>
-    <packaging>war</packaging>
+    <artifactId>el4j-framework-module-xml_merge-web</artifactId>
+    <packaging>pom</packaging>
 	<name>EL4J web module for XmlMerge</name>
     <description>
         Web application module for XmlMerge module of the EL4J framework.
     </description>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <allowOverrideProjectArtifact>false</allowOverrideProjectArtifact>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.cargo</groupId>
-                <artifactId>cargo-maven2-plugin</artifactId>
-                <configuration>
-                    <deployer>
-                        <deployables>
-                            <deployable>
-                                <location>${jee-web.war.location}</location>
-                                <properties>
-                                    <context>${jee-web.context}</context>
-                                </properties>
-                            </deployable>
-                        </deployables>
-                    </deployer>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-    <dependencies>
-        <dependency>
-            <groupId>ch.elca.el4j.modules</groupId>
-            <artifactId>module-xml_merge-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.elca.el4j.modules</groupId>
-            <artifactId>module-web</artifactId>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-        </dependency>
-    </dependencies>
-    <properties>
-    	<!-- 
-    		This property overrides the default j2ee-web.context property
-    	    defined in the pom.xml file of the external folder.
-     	-->
-    	<jee-web.context>xmlmerge</jee-web.context>
-    </properties>
+    <modules>
+        <module>jar</module>
+        <module>war</module>
+    </modules>
 </project>
