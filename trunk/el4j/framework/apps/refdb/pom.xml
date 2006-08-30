@@ -22,5 +22,6 @@
     <modules>
         <module>core</module>
         <module>gui</module>
+        <module>gui-tiger</module>
     </modules>
 </project>
