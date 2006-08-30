@@ -26,12 +26,11 @@
     <dependencies>
         <dependency>
             <groupId>ch.elca.el4j.tests</groupId>
-            <artifactId>module-remoting-tests-web</artifactId>
-            <type>jar</type>
+            <artifactId>module-remoting-tests-web-jar</artifactId>
         </dependency>
         <dependency>
             <groupId>ch.elca.el4j.tests</groupId>
-            <artifactId>module-remoting-tests-web</artifactId>
+            <artifactId>module-remoting-tests-web-war</artifactId>
             <type>war</type>
         </dependency>
         <dependency>
@@ -59,7 +58,7 @@
                                 <deployables>
                                     <deployable>
                                         <groupId>ch.elca.el4j.tests</groupId>
-                                        <artifactId>module-remoting-tests-web</artifactId>
+                                        <artifactId>module-remoting-tests-web-war</artifactId>
                                         <type>war</type>
                                         <properties>
                                             <context>module-remoting-tests-web</context>

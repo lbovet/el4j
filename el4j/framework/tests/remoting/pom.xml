@@ -31,13 +31,13 @@
             <!-- module-remoting-tests-web -->
             <dependency>
                 <groupId>ch.elca.el4j.tests</groupId>
-                <artifactId>module-remoting-tests-web</artifactId>
+                <artifactId>module-remoting-tests-web-jar</artifactId>
                 <version>${version.module-remoting-tests}</version>
                 <type>jar</type>
             </dependency>
             <dependency>
                 <groupId>ch.elca.el4j.tests</groupId>
-                <artifactId>module-remoting-tests-web</artifactId>
+                <artifactId>module-remoting-tests-web-war</artifactId>
                 <version>${version.module-remoting-tests}</version>
                 <type>war</type>
                 <scope>provided</scope>
