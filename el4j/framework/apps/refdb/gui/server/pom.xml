@@ -15,66 +15,12 @@
         <version>1.1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>refdb-gui-server</artifactId>
-    <version>${version.application-refdb}</version>
-    <packaging>war</packaging>
+    <artifactId>el4j-framework-apps-refdb-gui-server</artifactId>
+    <packaging>pom</packaging>
     <name>EL4J framework applications - refdb gui server</name>
     <description>RefDb gui server module of the EL4J framework.</description>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <allowOverrideProjectArtifact>false</allowOverrideProjectArtifact>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.cargo</groupId>
-                <artifactId>cargo-maven2-plugin</artifactId>
-                <configuration>
-                    <deployer>
-                        <deployables>
-                            <deployable>
-                                <location>${jee-web.war.location}</location>
-                                <properties>
-                                    <context>${jee-web.context}</context>
-                                </properties>
-                            </deployable>
-                        </deployables>
-                    </deployer>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-    <dependencies>
-        <dependency>
-            <groupId>ch.elca.el4j.apps</groupId>
-            <artifactId>refdb-core-impl</artifactId>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>ch.elca.el4j.apps</groupId>
-            <artifactId>refdb-gui-common</artifactId>
-            <type>jar</type>
-        </dependency>
-                
-        <dependency>
-            <groupId>ch.elca.el4j.apps</groupId>
-            <artifactId>common-database</artifactId>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>ch.elca.el4j.modules</groupId>
-            <artifactId>module-web</artifactId>
-            <type>jar</type>
-        </dependency>
-    </dependencies>
+    <modules>
+        <module>jar</module>
+        <module>war</module>
+    </modules>
 </project>
