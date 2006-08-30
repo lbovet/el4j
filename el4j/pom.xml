@@ -713,21 +713,8 @@
                 <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-light_statistics-web</artifactId>
                 <version>${version.module-light_statistics}</version>
-                <type>jar</type>
-            </dependency>
-            <dependency>
-                <groupId>ch.elca.el4j.modules</groupId>
-                <artifactId>module-light_statistics-web</artifactId>
-                <version>${version.module-light_statistics}</version>
-                <type>test-jar</type>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>ch.elca.el4j.modules</groupId>
-                <artifactId>module-light_statistics-web</artifactId>
-                <version>${version.module-light_statistics}</version>
                 <type>war</type>
-                <scope>provided</scope>
+                <scope>runtime</scope>
             </dependency>
 
 
@@ -855,23 +842,23 @@
             <!-- module-web -->
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
-                <artifactId>module-web</artifactId>
+                <artifactId>module-web-jar</artifactId>
                 <version>${version.module-web}</version>
                 <type>jar</type>
             </dependency>
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
-                <artifactId>module-web</artifactId>
+                <artifactId>module-web-jar</artifactId>
                 <version>${version.module-web}</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
-                <artifactId>module-web</artifactId>
+                <artifactId>module-web-war</artifactId>
                 <version>${version.module-web}</version>
                 <type>war</type>
-                <scope>provided</scope>
+                <scope>runtime</scope>
             </dependency>
 
             <!-- module-webtest -->
@@ -905,23 +892,23 @@
             </dependency>
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
-                <artifactId>module-xml_merge-web</artifactId>
+                <artifactId>module-xml_merge-web-jar</artifactId>
                 <version>${version.module-xml_merge}</version>
                 <type>jar</type>
             </dependency>
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
-                <artifactId>module-xml_merge-web</artifactId>
+                <artifactId>module-xml_merge-web-jar</artifactId>
                 <version>${version.module-xml_merge}</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
-                <artifactId>module-xml_merge-web</artifactId>
+                <artifactId>module-xml_merge-web-war</artifactId>
                 <version>${version.module-xml_merge}</version>
                 <type>war</type>
-                <scope>provided</scope>
+                <scope>runtime</scope>
             </dependency>
             
 
