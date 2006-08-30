@@ -26,12 +26,11 @@
     <dependencies>
         <dependency>
             <groupId>ch.elca.el4j.demos</groupId>
-            <artifactId>module-remoting-demos-web</artifactId>
-            <type>jar</type>
+            <artifactId>module-remoting-demos-web-jar</artifactId>
         </dependency>
         <dependency>
             <groupId>ch.elca.el4j.demos</groupId>
-            <artifactId>module-remoting-demos-web</artifactId>
+            <artifactId>module-remoting-demos-web-war</artifactId>
             <type>war</type>
         </dependency>
         <dependency>
@@ -72,7 +71,7 @@
                                 <deployables>
                                     <deployable>
                                         <groupId>ch.elca.el4j.demos</groupId>
-                                        <artifactId>module-remoting-demos-web</artifactId>
+                                        <artifactId>module-remoting-demos-web-war</artifactId>
                                         <type>war</type>
                                         <properties>
                                             <context>module-remoting-demos-web</context>

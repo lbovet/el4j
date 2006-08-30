@@ -31,13 +31,13 @@
             <!-- module-remoting-demos-web  -->
             <dependency>
                 <groupId>ch.elca.el4j.demos</groupId>
-                <artifactId>module-remoting-demos-web</artifactId>
+                <artifactId>module-remoting-demos-web-jar</artifactId>
                 <version>${version.module-remoting-demos}</version>
                 <type>jar</type>
             </dependency>
             <dependency>
                 <groupId>ch.elca.el4j.demos</groupId>
-                <artifactId>module-remoting-demos-web</artifactId>
+                <artifactId>module-remoting-demos-web-war</artifactId>
                 <version>${version.module-remoting-demos}</version>
                 <type>war</type>
                 <scope>provided</scope>
