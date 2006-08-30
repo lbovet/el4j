@@ -327,10 +327,8 @@ public class ListPropertyMergeConfigurer extends PropertyOverrideConfigurer {
          * Read the existing property value.
          */
         BeanWrapperImpl beanWrapper = new BeanWrapperImpl();
-        /*
-         * beanWrapper.registerCustomEditor(String[].class, new
-         * StringArrayPropertyEditor());
-         */
+        beanWrapper.registerCustomEditor(String[].class, new
+        StringArrayPropertyEditor());
         BeanDefinition beanDefinition = factory.getBeanDefinition(beanName);
         MutablePropertyValues mutablePropertyValues = beanDefinition
             .getPropertyValues();
@@ -346,12 +344,12 @@ public class ListPropertyMergeConfigurer extends PropertyOverrideConfigurer {
             if (valueObject instanceof Collection) {
                 oldValueList.addAll((Collection) valueObject);
             } else {
-                /*
-                 * String[] oldValues = (String[])
-                 * beanWrapper.convertIfNecessary( valueObject, String[].class);
-                 */
-                String[] oldValues = (String[]) beanWrapper
-                    .doTypeConversionIfNecessary(valueObject, String[].class);
+                
+                 String[] oldValues = (String[]) beanWrapper.convertIfNecessary(
+                    valueObject, String[].class);
+                 
+                /*String[] oldValues = (String[]) beanWrapper
+                    .doTypeConversionIfNecessary(valueObject, String[].class);*/
                 for (int i = 0; i < oldValues.length; i++) {
                     String oldValue = oldValues[i];
                     oldValueList.add(oldValue != null ? oldValue.trim()
@@ -364,11 +362,12 @@ public class ListPropertyMergeConfigurer extends PropertyOverrideConfigurer {
          * Fill the new values into list.
          */
         List newValueList = new ArrayList();
-        /*String[] newValues
-            = (String[]) beanWrapper.convertIfNecessary(value,
-                String[].class);*/
-        String[] newValues = (String[]) beanWrapper
-            .doTypeConversionIfNecessary(value, String[].class);
+        String[] newValues = (String[]) beanWrapper.convertIfNecessary(value,
+            String[].class);
+        /*
+         * String[] newValues = (String[]) beanWrapper
+         * .doTypeConversionIfNecessary(value, String[].class);
+         */
         for (int i = 0; i < newValues.length; i++) {
             String newValue = newValues[i];
             newValueList.add(

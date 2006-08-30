@@ -35,7 +35,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring</artifactId>
-            <version>[1.2.8]</version>
+            <version>[2.0-rc4-snapshot-patched-el4j-20060830]</version>
         </dependency>
         
         <!--
