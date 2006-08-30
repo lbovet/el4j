@@ -10,10 +10,10 @@
     
     <!-- Property merge configurer for the refdb application's SessionFactory
     	properties-->
-    <bean id="refdbCoreDataaccessHibernatePropertyConfigurer" 
-        class="ch.elca.el4j.core.config.ListPropertyMergeConfigurer">
+    <bean id="refdbGuiTigerDataaccessHibernatePropertyConfigurer" 
+        class="org.springframework.beans.factory.config.PropertyOverrideConfigurer">
         <property name="location">
-            <value>classpath:scenarios/dataaccess/hibernate/refdbCoreSessionFactory.properties</value>
+            <value>classpath:scenarios/dataaccess/hibernate/refdbGuiTigerSessionFactory.properties</value>
         </property>
     </bean>
 
