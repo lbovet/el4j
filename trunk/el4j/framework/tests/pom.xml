@@ -49,6 +49,7 @@
     </build>
     <modules>
         <module>core</module>
+        <module>env</module>
         <module>remoting</module>
         <module>tcp_forwarder</module>
     </modules>
