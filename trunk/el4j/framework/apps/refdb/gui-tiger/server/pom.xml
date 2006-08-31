@@ -16,7 +16,6 @@
     </parent>
 
     <artifactId>el4j-framework-apps-refdb-gui-tiger-server</artifactId>
-    <version>${version.application-refdb}</version>
     <packaging>pom</packaging>
     <name>EL4J framework applications - refdb gui tiger server</name>
     <description>RefDb gui tiger server module of the EL4J framework.</description>
