@@ -24,12 +24,10 @@
         <dependency>
             <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-env</artifactId>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-remoting_caucho</artifactId>
-            <type>jar</type>
         </dependency>
     </dependencies>
 </project>
