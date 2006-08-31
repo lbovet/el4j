@@ -28,7 +28,7 @@
         <!-- EL4J framework modules -->
         <dependency>
             <groupId>ch.elca.el4j.modules</groupId>
-            <artifactId>module-web</artifactId>
+            <artifactId>module-web-jar</artifactId>
         </dependency>
     
         <!-- Third party tools -->
