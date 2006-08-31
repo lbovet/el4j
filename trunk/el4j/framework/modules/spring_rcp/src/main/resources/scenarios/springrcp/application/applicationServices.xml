@@ -98,12 +98,14 @@
     <bean id="formatterLocator"
         class="org.springframework.binding.format.support.SimpleFormatterLocator">
         <property name="defaultDateStyle">
-            <bean name="org.springframework.binding.format.Style.SHORT"
-                class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean"/>
+            <bean class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">
+	            <property name="staticField" value="org.springframework.binding.format.Style.SHORT"/>
+            </bean>
         </property>
         <property name="defaultTimeStyle">
-            <bean name="org.springframework.binding.format.Style.SHORT"
-                class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean"/>
+            <bean class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">
+                <property name="staticField" value="org.springframework.binding.format.Style.SHORT"/>
+            </bean>
         </property>
     </bean>
 
