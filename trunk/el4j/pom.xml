@@ -36,7 +36,6 @@
         <developer>
             <id>poser55</id>
             <name>Philipp Oser</name>
-            <email/>
             <roles>
                 <role>Project leader</role>
                 <role>Java developer</role>
@@ -46,7 +45,6 @@
         <developer>
             <id>swisswheel</id>
             <name>Martin Zeltner</name>
-            <email/>
             <roles>
                 <role>Java developer</role>
             </roles>
@@ -61,17 +59,40 @@
             <timezone>+1</timezone>
         </developer>
         <developer>
-            <id>rashid_w</id>
-            <name>Rashid Waraich</name>
-            <email/>
+            <id>fsuess</id>
+            <name>Florian Suess</name>
             <roles>
-                <role>Intern</role>
                 <role>Java developer</role>
             </roles>
             <timezone>+1</timezone>
         </developer>
     </developers>
-    <contributors/>
+    <contributors>
+        <contributor>
+            <name>Andreas Bur</name>
+            <roles>
+                <role>Ex-Intern</role>
+                <role>Java developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </contributor>
+        <contributor>
+            <name>Adrian Moos</name>
+            <roles>
+                <role>Ex-Intern</role>
+                <role>Java developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </contributor>
+        <contributor>
+            <name>Rashid Waraich</name>
+            <roles>
+                <role>Ex-Intern</role>
+                <role>Java developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </contributor>
+    </contributors>
     <licenses>
         <license>
             <name>GPL version 2.0</name>
