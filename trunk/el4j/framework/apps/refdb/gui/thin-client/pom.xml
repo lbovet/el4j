@@ -36,18 +36,15 @@
         <dependency>
             <groupId>ch.elca.el4j.apps</groupId>
             <artifactId>refdb-core-interface</artifactId>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>ch.elca.el4j.apps</groupId>
             <artifactId>refdb-gui-common</artifactId>
-            <type>jar</type>
         </dependency>
                 
         <dependency>
             <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-spring_rcp</artifactId>
-            <type>jar</type>
         </dependency>
     </dependencies>
 </project>
