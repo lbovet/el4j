@@ -35,13 +35,11 @@
     <dependencies>
         <dependency>
             <groupId>ch.elca.el4j.apps</groupId>
-            <artifactId>refdb-gui-server</artifactId>
-            <type>jar</type>
+            <artifactId>refdb-gui-server-jar</artifactId>
         </dependency>
         <dependency>
             <groupId>ch.elca.el4j.apps</groupId>
             <artifactId>refdb-gui-thin-client</artifactId>
-            <type>jar</type>
         </dependency>
     </dependencies>
 </project>
