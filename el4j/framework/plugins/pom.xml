@@ -27,6 +27,7 @@
         <module>maven-env-support-plugin</module>
         <module>maven-repohelper-plugin</module>
         <module>maven-manifest-decorator-plugin</module>
+        <module>maven-file-collector-plugin</module>
     </modules>
     <dependencyManagement>
         <dependencies>
