@@ -26,7 +26,6 @@ import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import org.hibernate.Hibernate;
 import org.hibernate.collection.PersistentCollection;
 import org.hibernate.proxy.HibernateProxy;
 
