@@ -49,6 +49,7 @@ public class HibernateKeywordRepositoryRegistry
     
     /**
      * Returns the keyword repository.
+     * @return The keyword repository
      */
     @SuppressWarnings("unchecked")
     public HibernateKeywordRepository getForKeyword() {
