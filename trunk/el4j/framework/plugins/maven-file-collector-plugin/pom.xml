@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+    
+    <parent>
+        <groupId>ch.elca.el4j.plugins</groupId>
+        <artifactId>el4j-framework-plugins</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+    </parent>
+    
+    <artifactId>maven-file-collector-plugin</artifactId>
+    <packaging>maven-plugin</packaging>
+    <version>${version.maven-file-collector-plugin}</version>
+    <name>Collector for files</name>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <configuration>
+                    <!--
+                        Note: This is to allow typing "mvn collector:[goalname]" 
+                        without having to type the fully qualified name on the 
+                        command line.
+                    -->
+                    <goalPrefix>collector</goalPrefix>
+                </configuration>
+            </plugin>
+            
+            <!-- IDE -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>ch.elca.el4j.plugins</groupId>
+                <artifactId>maven-checkclipse-helper-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-project</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-utils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-logging-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections</artifactId>
+        </dependency>
+    </dependencies>
+</project>
