@@ -26,6 +26,10 @@ package ch.elca.el4j.services.monitoring.jmx;
  * @author Rashid Waraich (RWA)
  */
 public class JmxHtmlFormatter {
+    /**
+     * Hide default constructor.
+     */
+    protected JmxHtmlFormatter() { }
 
     /**
      * This method creates an Html from a two dimentional String array (first
@@ -95,7 +99,9 @@ public class JmxHtmlFormatter {
      *            The log-level of the logger.
      * @return An HTML embeddable version of the XML tag.
      */
-    public static String getXmlLog4jConfigString(String category, String level) {
+    public static String getXmlLog4jConfigString(
+        String category, String level) {
+        
         String result = "";
 
         result = openTagPre(result);
