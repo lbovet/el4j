@@ -20,10 +20,10 @@ package ch.elca.el4j.xmlmerge.matcher;
  * Constants for built-in matchers.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$$URL$$",
- *    "$$Revision$$",
- *    "$$Date$$",
- *    "$$Author$$"
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
  * );</script>
  * 
  * @author Laurent Bovet (LBO)

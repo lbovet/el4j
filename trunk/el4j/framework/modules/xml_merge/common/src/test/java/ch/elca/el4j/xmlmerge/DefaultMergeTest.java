@@ -30,10 +30,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.jdom.Element;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;

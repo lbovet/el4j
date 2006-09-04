@@ -26,10 +26,10 @@ import ch.elca.el4j.xmlmerge.matcher.TagMatcher;
  * Gathers the operation factory-related behaviour and a default configuration.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$$URL$$",
- *    "$$Revision$$",
- *    "$$Date$$",
- *    "$$Author$$"
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
  * );</script>
  * 
  * @author Laurent Bovet (LBO)
