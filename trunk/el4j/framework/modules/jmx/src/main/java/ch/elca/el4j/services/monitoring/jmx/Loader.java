@@ -41,7 +41,6 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.util.Assert;
 
 import ch.elca.el4j.core.exceptions.BaseException;

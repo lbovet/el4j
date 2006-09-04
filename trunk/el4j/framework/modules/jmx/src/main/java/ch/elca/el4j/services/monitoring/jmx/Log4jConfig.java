@@ -22,7 +22,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 import javax.management.InstanceAlreadyExistsException;
@@ -31,16 +30,7 @@ import javax.management.MBeanServer;
 import javax.management.MalformedObjectNameException;
 import javax.management.NotCompliantMBeanException;
 import javax.management.ObjectName;
-import javax.management.openmbean.CompositeType;
-import javax.management.openmbean.OpenType;
-import javax.management.openmbean.SimpleType;
-import javax.management.openmbean.TabularData;
-import javax.management.openmbean.TabularDataSupport;
-import javax.management.openmbean.TabularType;
 
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.StaticApplicationContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Appender;
@@ -48,6 +38,9 @@ import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.helpers.Loader;
 import org.apache.log4j.helpers.OptionConverter;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.StaticApplicationContext;
 
 import ch.elca.el4j.core.exceptions.BaseException;
 import ch.elca.el4j.core.exceptions.BaseRTException;
