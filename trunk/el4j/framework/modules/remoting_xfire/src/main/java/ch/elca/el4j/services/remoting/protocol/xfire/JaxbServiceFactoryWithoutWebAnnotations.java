@@ -18,7 +18,8 @@ package ch.elca.el4j.services.remoting.protocol.xfire;
 
 import org.codehaus.xfire.XFireFactory;
 import org.codehaus.xfire.aegis.AegisBindingProvider;
-import org.codehaus.xfire.jaxb2.*;
+import org.codehaus.xfire.jaxb2.JaxbTypeRegistry;
+import org.codehaus.xfire.jaxb2.JaxbWSDLBuilderFactory;
 import org.codehaus.xfire.service.binding.ObjectServiceFactory;
 import org.codehaus.xfire.transport.TransportManager;
 
