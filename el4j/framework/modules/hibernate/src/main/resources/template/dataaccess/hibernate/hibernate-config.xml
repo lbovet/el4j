@@ -81,6 +81,9 @@
 				<prop key="hibernate.max_fetch_depth">3</prop>
 			</props>
 		</property>
+        	<property name="useTransactionAwareDataSource">
+        		<value>true</value>
+        	</property>
 		<property name="dataSource">
 			<ref bean="dataSource" />
 		</property>
