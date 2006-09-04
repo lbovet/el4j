@@ -18,7 +18,7 @@ package ch.elca.el4j.services.gui.richclient.executors.convenience;
 
 import java.util.List;
 
-import ch.elca.el4j.services.persistence.generic.RepositoryAgent;
+import ch.elca.el4j.services.persistence.generic.DaoAgent;
 
 /**
  * A generic executor to delete beans managed by a RepositoryAgent.
@@ -38,13 +38,13 @@ public class GenericBeanDeleteExecutor<T>
         extends AbstractBeanDeleteExecutor<T> {
 
     /** The agent that should be used to carry out the operation. */
-    private RepositoryAgent<T> m_agent;
+    private DaoAgent<T> m_agent;
     
     /**
      * Constructor.
      * @param agent see {@link #m_agent}
      */
-    public GenericBeanDeleteExecutor(RepositoryAgent<T> agent) {
+    public GenericBeanDeleteExecutor(DaoAgent<T> agent) {
         m_agent = agent;
     }
     
