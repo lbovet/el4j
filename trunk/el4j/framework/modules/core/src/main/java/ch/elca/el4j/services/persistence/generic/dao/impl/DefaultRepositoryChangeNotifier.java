@@ -14,13 +14,13 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.services.persistence.generic.repo.impl;
+package ch.elca.el4j.services.persistence.generic.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeListener;
-import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier;
+import ch.elca.el4j.services.persistence.generic.dao.RepositoryChangeListener;
+import ch.elca.el4j.services.persistence.generic.dao.RepositoryChangeNotifier;
 
 /**
  * A default implementation with no notable features.

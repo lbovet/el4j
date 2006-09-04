@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.services.persistence.generic.repo.annotations;
+package ch.elca.el4j.services.persistence.generic.dao.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -46,7 +46,7 @@ import java.lang.annotation.Target;
  *overriding/implementing a method; such annotations must therefore be provided
  *manually.
  *
- * @see ch.elca.el4j.services.persistence.generic.repo.AbstractIdentityFixer
+ * @see ch.elca.el4j.services.persistence.generic.dao.AbstractIdentityFixer
  *
  *<script type="text/javascript">printFileStatus
  *   ("$URL$",
