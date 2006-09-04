@@ -16,10 +16,17 @@
  */
 package ch.elca.el4j.tcpred;
 
-import java.io.*;
-import java.net.*;
-import java.nio.*;
-import java.nio.channels.*;
+import java.io.IOException;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
+import java.nio.channels.ClosedChannelException;
+import java.nio.channels.SelectableChannel;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -195,15 +202,7 @@ public class TcpForwarder implements Runnable {
     }
 
     /**
-     * 
      * This class represents a connection receiver.
-     *
-     * <script type="text/javascript">printFileStatus
-     *   ("$URL$",
-     *    "$Revision$",
-     *    "$Date$",
-     *    "$Author$"
-     * );</script>
      *
      * @author Alex Mathey (AMA)
      */
