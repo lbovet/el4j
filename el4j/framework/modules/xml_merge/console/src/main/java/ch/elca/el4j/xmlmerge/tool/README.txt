@@ -1,13 +1,15 @@
 To be able to use XmlMerge as a command-line tool, you have to execute the 
 following steps:
 
-# Go to <EL4J_HOME>/external/framework
-
-# Recursively compile all required targets files:
-  ant jars.rec.module.module-xml_merge
+# compile & install all required target files:
+mvn install
 
 # Create an executable distribution of the xml_merge module:
-  create.distribution.module.eu.module-xml_merge.console
+TODO: A special plugin must be written to generate the shell and bat scripts.
+
+TODO: The following description must be rewritten in terms of this special plugin:
+
+create.distribution.module.eu.module-xml_merge.console
   
 # The executable distribution can be found in the module-xml_merge-default 
   folder under <EL4J_HOME>/external/framework/dist/distribution. You can copy 
