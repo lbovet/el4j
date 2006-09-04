@@ -103,6 +103,10 @@
         <property name="testWhileIdle">
             <value>false</value>
         </property>
+	<!-- Auto commits are switched off -->
+         <property name="defaultAutoCommit">
+        	<value>false</value>
+        </property>                
     </bean>
 
     <!-- The transactionmanager to use for regular non JTA datasource -->
