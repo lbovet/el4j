@@ -17,8 +17,11 @@
 package ch.elca.el4j.services.persistence.generic.dao;
 
 /**
- * This object receives change notifications from repository change notifiers.
- * 
+ * A DAO guaranteeing uniqueness of representatives.
+ *
+ * @param <T> see supertype
+ * @see AbstractIdentityFixer
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -27,12 +30,7 @@ package ch.elca.el4j.services.persistence.generic.dao;
  * );</script>
  *
  * @author Adrian Moos (AMS)
- * @see RepositoryChangeNotifier
  */
-public interface RepositoryChangeListener {
-    /** 
-     * Invoked if a repository change was detected.
-     * @param change The change detected.
-     */
-    void changed(RepositoryChangeNotifier.Change change);
+public interface IdentityFixedDao<T> extends GenericDao<T> {
+
 }

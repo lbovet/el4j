@@ -28,7 +28,7 @@ import ch.elca.el4j.services.search.QueryObject;
 
 /**
  *
- * This interface serves as generic access to storage repositories. It is the
+ * This interface serves as generic access to storage DAOs. It is the
  * interface for the DDD-Book's Repository pattern. The repository pattern is
  * similar to the DAO pattern, but a bit more generic. This interface can be
  * implemented in a generic way and can be extended in case a user needs more
@@ -42,15 +42,15 @@ import ch.elca.el4j.services.search.QueryObject;
  * );</script>
  *
  * @param <T>
- *            The domain class the repository is responsible for
+ *            The domain class the DAO is responsible for
  *
  * @author Philipp Oser (POS)
  * @author Alex Mathey (AMA)
  * @author Adrian Moos (AMS)
  */
-public interface SimpleGenericRepository<T> {
+public interface GenericDao<T> {
     /**
-     * @return Returns the domain class this repository is responsible for.
+     * @return Returns the domain class this DAO is responsible for.
      */
     public Class<T> getPersistentClass();    
     
@@ -77,7 +77,12 @@ public interface SimpleGenericRepository<T> {
     List<T> findAll() throws DataAccessException;   
     
     /**
-     * Re-reads the state of the given entity from the underlying database. 
+     * Re-reads the state of the given domain object from the underlying
+     * database.
+     * 
+     * @param entity
+     *            The domain object to re-read the state of
+     * @return The refreshed entity
      */
     T refresh(T entity);
 
