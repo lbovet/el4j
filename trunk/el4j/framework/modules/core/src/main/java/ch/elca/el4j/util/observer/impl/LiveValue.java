@@ -16,6 +16,10 @@
  */
 package ch.elca.el4j.util.observer.impl;
 
+import static ch.elca.el4j.util.observer.impl.LiveValue.Currency.current;
+import static ch.elca.el4j.util.observer.impl.LiveValue.Currency.dirty;
+import static ch.elca.el4j.util.observer.impl.LiveValue.Currency.updating;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -80,7 +84,7 @@ public class LiveValue<T> extends AbstractObservableValue<T>
     static LiveValue<?> s_updating;
 
     /** a cached value's degree of currency. */
-    private enum Currency {
+    protected enum Currency {
         /** the cached value is outdated. */                  
         dirty,
         
