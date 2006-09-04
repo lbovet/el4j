@@ -16,11 +16,11 @@
  */
 package ch.elca.el4j.services.gui.richclient.commands;
 
+import static ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.FUZZY_CHANGE;
+
 import org.springframework.richclient.command.support.ApplicationWindowAwareCommand;
 
 import ch.elca.el4j.services.persistence.generic.DaoAgency;
-
-import static ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.FUZZY_CHANGE;
 
 /**
  * A command to request refreshing a {@link DaoAgency}'s data.
