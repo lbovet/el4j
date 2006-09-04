@@ -33,10 +33,10 @@ import ch.elca.el4j.xmlmerge.config.PropertyXPathConfigurer;
  * Spring controller for the XmlMerge web application.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$$URL$$",
- *    "$$Revision$$",
- *    "$$Date$$",
- *    "$$Author$$"
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
  * );</script>
  * 
  * @author Laurent Bovet (LBO)
