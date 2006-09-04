@@ -14,15 +14,15 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.services.persistence.generic.repo.impl;
+package ch.elca.el4j.services.persistence.generic.dao.impl;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.InitializingBean;
 
-import ch.elca.el4j.services.persistence.generic.repo.RepositoryRegistry;
-import ch.elca.el4j.services.persistence.generic.repo.SimpleGenericRepository;
+import ch.elca.el4j.services.persistence.generic.dao.RepositoryRegistry;
+import ch.elca.el4j.services.persistence.generic.dao.SimpleGenericRepository;
 
 /**
  * A RepositoryRegistry where repositories can be registered. This class
