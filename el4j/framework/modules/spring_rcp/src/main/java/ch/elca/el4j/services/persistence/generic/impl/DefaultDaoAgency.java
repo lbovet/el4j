@@ -16,8 +16,7 @@
  */
 package ch.elca.el4j.services.persistence.generic.impl;
 
-import static ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier
-    .FUZZY_CHANGE;
+import static ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.FUZZY_CHANGE;
 
 import java.util.HashMap;
 import java.util.Map;

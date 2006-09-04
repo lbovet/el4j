@@ -16,9 +16,10 @@
  */
 package ch.elca.el4j.services.i18n;
 
-import org.springframework.context.MessageSource;
 import static org.springframework.util.StringUtils.capitalize;
 import static org.springframework.util.StringUtils.uncapitalize;
+
+import org.springframework.context.MessageSource;
 
 import ch.elca.el4j.services.gui.richclient.utils.DialogUtils;
 import ch.elca.el4j.util.dom.reflect.EntityType;
