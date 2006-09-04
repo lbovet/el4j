@@ -30,10 +30,10 @@ import ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm;
 import ch.elca.el4j.services.gui.richclient.utils.Services;
 import ch.elca.el4j.services.gui.richclient.views.DialogPageView;
 import ch.elca.el4j.services.i18n.SimpleFieldFaceSource;
-import ch.elca.el4j.services.persistence.generic.RepositoryAgency;
+import ch.elca.el4j.services.persistence.generic.DaoAgency;
+import ch.elca.el4j.services.persistence.generic.dao.ConvenientGenericDao;
+import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
 import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
-import ch.elca.el4j.services.persistence.generic.repo.ConvenientGenericRepository;
-import ch.elca.el4j.services.persistence.generic.repo.SimpleGenericRepository;
 import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
 import ch.elca.el4j.util.codingsupport.annotations.Preliminary;
 import ch.elca.el4j.util.collections.ExtendedList;
@@ -90,7 +90,7 @@ public class Edit extends AbstractGenericView {
         ///////////////////////
         
         /** The repository to be used. */
-        SimpleGenericRepository<T> m_repository;
+        GenericDao<T> m_repository;
 
         /**
          * {@inheritDoc}
@@ -107,7 +107,7 @@ public class Edit extends AbstractGenericView {
         @Override
         protected PrimaryKeyObject getBeanByKey(Object key) throws Exception {
             return (PrimaryKeyObject) 
-                ((ConvenientGenericRepository<T, Integer>) m_repository)
+                ((ConvenientGenericDao<T, Integer>) m_repository)
                     .findById((Integer) key, false);
         }
         
@@ -288,7 +288,7 @@ public class Edit extends AbstractGenericView {
         
         GenericComponent gc = new GenericComponent();
         Executor<T> exec = new Executor<T>(); 
-        exec.m_repository = Services.get(RepositoryAgency.class)
+        exec.m_repository = Services.get(DaoAgency.class)
                                     .getFor(clazz);
         exec.setBeanPropertiesForms(new BeanPropertiesForm[] {form});
         exec.setDisplayable(gc);

@@ -28,11 +28,11 @@ import ch.elca.el4j.services.gui.richclient.models.BeanTableModel;
 import ch.elca.el4j.services.gui.richclient.utils.Services;
 import ch.elca.el4j.services.gui.richclient.views.AbstractBeanTableView;
 import ch.elca.el4j.services.i18n.MessageProvider;
-import ch.elca.el4j.services.persistence.generic.RepositoryAgency;
-import ch.elca.el4j.services.persistence.generic.RepositoryAgent;
-import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeListener;
-import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier;
-import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier.EntityDeleted;
+import ch.elca.el4j.services.persistence.generic.DaoAgency;
+import ch.elca.el4j.services.persistence.generic.DaoAgent;
+import ch.elca.el4j.services.persistence.generic.dao.DaoChangeListener;
+import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier;
+import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.EntityDeleted;
 import ch.elca.el4j.services.richclient.components.EntityCreator;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.Reject;
@@ -98,7 +98,7 @@ public class Table extends AbstractGenericView {
         super(c);
         properties = new EditablePropertyList(m_type);
 
-        RepositoryAgent<T> agent = Services.get(RepositoryAgency.class)
+        DaoAgent<T> agent = Services.get(DaoAgency.class)
                                            .getFor(c);
         
         create = new EntityCreator<T>(c);
@@ -149,10 +149,10 @@ public class Table extends AbstractGenericView {
     /***/
     class GenericComponent<T> extends AbstractBeanTableView 
             implements ValueObserver<QueryObject>,
-                       RepositoryChangeListener {
+                       DaoChangeListener {
         
         /** The agent for accessing the persistence layer. */
-        private RepositoryAgent<T> m_repositoryAgent;
+        private DaoAgent<T> m_daoAgent;
         
         /** Whether this component is currently refreshing. */ 
         private boolean m_refreshing;
@@ -163,7 +163,7 @@ public class Table extends AbstractGenericView {
          * shown in this view.
          */
         public GenericComponent(Class<T> cls) {
-            m_repositoryAgent = Services.get(RepositoryAgency.class)
+            m_daoAgent = Services.get(DaoAgency.class)
                                         .getFor(cls);
         }
             
@@ -177,7 +177,7 @@ public class Table extends AbstractGenericView {
             if (isControlCreated()) {
                 m_refreshing = true;
                 setBeans(
-                    m_repositoryAgent.findByQuery(q)
+                    m_daoAgent.findByQuery(q)
                 );
                 m_refreshing = false;
             }
@@ -186,9 +186,9 @@ public class Table extends AbstractGenericView {
         /** Updates the set of displayed entities. */
         @ImplementationAssumption(
             "at most one thread is accessing the repository at any given time.")
-        public void changed(RepositoryChangeNotifier.Change change) {
+        public void changed(DaoChangeNotifier.Change change) {
             if (change instanceof EntityDeleted) {
-                Object deletee = ((EntityDeleted) change).changee;
+                Object deletee = ((EntityDeleted) change).getChangee();
                 removeBean(deletee);
             } else {
                 if (!m_refreshing) {
@@ -202,13 +202,13 @@ public class Table extends AbstractGenericView {
         public void componentOpened() {
             super.componentOpened();
             filter.subscribe(this);
-            m_repositoryAgent.subscribe(this);
+            m_daoAgent.subscribe(this);
         }
 
         /***/
         @Override
         public void componentClosed() {
-            m_repositoryAgent.unsubscribe(this);
+            m_daoAgent.unsubscribe(this);
             filter.unsubscribe(this);
             super.componentClosed();
         }
