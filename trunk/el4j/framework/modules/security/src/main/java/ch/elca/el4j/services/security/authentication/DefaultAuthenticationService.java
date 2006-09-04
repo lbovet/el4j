@@ -17,12 +17,11 @@
 package ch.elca.el4j.services.security.authentication;
 
 
+import org.acegisecurity.Authentication;
+import org.acegisecurity.AuthenticationManager;
 import org.springframework.beans.factory.InitializingBean;
 
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
-
-import org.acegisecurity.Authentication;
-import org.acegisecurity.AuthenticationManager;
 
 /**
  * Default implementation of <code>AuthenticationService</code> used for
