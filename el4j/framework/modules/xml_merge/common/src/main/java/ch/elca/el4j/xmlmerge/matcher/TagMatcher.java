@@ -24,10 +24,10 @@ import ch.elca.el4j.xmlmerge.Matcher;
  * Compares the qualified name of elements.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$$URL$$",
- *    "$$Revision$$",
- *    "$$Date$$",
- *    "$$Author$$"
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
  * );</script>
  * 
  * @author Laurent Bovet (LBO)

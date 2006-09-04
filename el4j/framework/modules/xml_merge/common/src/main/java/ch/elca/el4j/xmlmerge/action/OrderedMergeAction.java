@@ -40,10 +40,10 @@ import ch.elca.el4j.xmlmerge.MergeAction;
  * contents are in the same order in both elements.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$$URL$$",
- *    "$$Revision$$",
- *    "$$Date$$",
- *    "$$Author$$"
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
  * );</script>
  * 
  * @author Laurent Bovet (LBO)

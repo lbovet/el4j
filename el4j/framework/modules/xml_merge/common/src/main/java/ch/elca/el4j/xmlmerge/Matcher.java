@@ -22,10 +22,10 @@ import org.jdom.Element;
  * Compares two elements to know if they correspond for merging.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$$URL$$",
- *    "$$Revision$$",
- *    "$$Date$$",
- *    "$$Author$$"
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
  * );</script>
  * 
  * @author Laurent Bovet (LBO)
