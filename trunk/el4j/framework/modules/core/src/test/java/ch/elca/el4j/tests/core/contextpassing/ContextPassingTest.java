@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ch.elca.el4j.core.contextpassing.DefaultImplicitContextPassingRegistry;
+
 import junit.framework.TestCase;
 
 /**

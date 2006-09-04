@@ -30,7 +30,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
-import ch.elca.el4j.core.exceptions.BaseRTException;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 
 /**

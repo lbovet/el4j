@@ -16,12 +16,12 @@
  */
 package ch.elca.el4j.services.i18n;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static java.lang.Character.isWhitespace;
 import static java.lang.Character.toLowerCase;
 import static java.lang.Character.toUpperCase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A rewriting rule providing a set of utility functions. The keys accepted

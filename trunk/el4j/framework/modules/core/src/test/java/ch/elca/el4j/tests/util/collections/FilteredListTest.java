@@ -21,7 +21,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-
 import ch.elca.el4j.util.codingsupport.CollectionUtils;
 import ch.elca.el4j.util.collections.FilteredList;
 import ch.elca.el4j.util.collections.helpers.Filter;

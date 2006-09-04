@@ -16,6 +16,9 @@
  */
 package ch.elca.el4j.services.i18n;
 
+import static java.lang.Character.isDigit;
+import static java.lang.Character.isWhitespace;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -29,9 +32,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static java.lang.Character.isDigit;
-import static java.lang.Character.isWhitespace;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
