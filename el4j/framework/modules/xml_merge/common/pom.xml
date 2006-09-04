@@ -49,10 +49,10 @@
         <dependency>
             <groupId>org.apache.tools.ant</groupId>
             <artifactId>ant</artifactId>
+            <version>[1.6.5]</version>
         </dependency>
     </dependencies>
 </project>
-
 
 
 
