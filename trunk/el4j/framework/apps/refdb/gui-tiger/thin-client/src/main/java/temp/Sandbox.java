@@ -16,9 +16,9 @@
  */
 package temp;
 
-import ch.elca.el4j.services.persistence.generic.repo.AbstractIdentityFixer;
-import ch.elca.el4j.services.persistence.generic.repo.IdentityFixedRepository;
-import ch.elca.el4j.services.persistence.generic.repo.SimpleGenericRepository;
+import ch.elca.el4j.services.persistence.generic.dao.AbstractIdentityFixer;
+import ch.elca.el4j.services.persistence.generic.dao.IdentityFixedDao;
+import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
 import ch.elca.el4j.services.persistence.hibernate.HibernateProxyAwareIdentityFixer;
 
 public class Sandbox {
@@ -26,13 +26,13 @@ public class Sandbox {
         = new HibernateProxyAwareIdentityFixer();
     
     static AbstractIdentityFixer.GenericInterceptor interceptor 
-        = identityFixer.new GenericInterceptor(IdentityFixedRepository.class);
+        = identityFixer.new GenericInterceptor(IdentityFixedDao.class);
     
     @SuppressWarnings("unchecked")
-    static <T> IdentityFixedRepository<T> fix(
-        SimpleGenericRepository<T> identityManglingRepo) {
+    static <T> IdentityFixedDao<T> fix(
+        GenericDao<T> identityManglingRepo) {
         
-        return (IdentityFixedRepository<T>)
+        return (IdentityFixedDao<T>)
             interceptor.decorate(identityManglingRepo);
     }
 }
