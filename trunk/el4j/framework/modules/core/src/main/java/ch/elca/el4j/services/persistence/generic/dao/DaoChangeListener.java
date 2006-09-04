@@ -17,8 +17,8 @@
 package ch.elca.el4j.services.persistence.generic.dao;
 
 /**
- * A registry for repositories.
- *
+ * This object receives change notifications from DAO change notifiers.
+ * 
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -27,10 +27,12 @@ package ch.elca.el4j.services.persistence.generic.dao;
  * );</script>
  *
  * @author Adrian Moos (AMS)
+ * @see DaoChangeNotifier
  */
-public interface RepositoryRegistry {
-    /**
-     * Returns the generic repository for entities of type {@code entityType}.
+public interface DaoChangeListener {
+    /** 
+     * Invoked if a DAO change was detected.
+     * @param change The change detected.
      */
-    <T> SimpleGenericRepository<T> getFor(Class<T> entityType);
+    void changed(DaoChangeNotifier.Change change);
 }

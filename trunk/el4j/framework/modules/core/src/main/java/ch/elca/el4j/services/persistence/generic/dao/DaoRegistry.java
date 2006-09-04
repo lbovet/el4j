@@ -17,10 +17,7 @@
 package ch.elca.el4j.services.persistence.generic.dao;
 
 /**
- * A repository guaranteeing uniqueness of representatives.
- *
- * @param <T> see supertype
- * @see AbstractIdentityFixer
+ * A registry for DAOs.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -31,6 +28,13 @@ package ch.elca.el4j.services.persistence.generic.dao;
  *
  * @author Adrian Moos (AMS)
  */
-public interface IdentityFixedRepository<T> extends SimpleGenericRepository<T> {
-
+public interface DaoRegistry {
+    /**
+     * Returns the generic DAO for entities of type {@code entityType}.
+     * 
+     * @param entityType
+     *            The type for which a generic DAO will be returned
+     * @return A generic DAO for the given type
+     */
+    <T> GenericDao<T> getFor(Class<T> entityType);
 }

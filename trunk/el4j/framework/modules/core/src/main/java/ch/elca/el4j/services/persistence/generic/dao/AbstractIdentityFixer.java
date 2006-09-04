@@ -36,9 +36,9 @@ import org.springframework.aop.IntroductionInterceptor;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.support.IntroductionInfoSupport;
 
-import ch.elca.el4j.services.persistence.generic.dao.RepositoryChangeNotifier.NewEntityState;
+import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.NewEntityState;
 import ch.elca.el4j.services.persistence.generic.dao.annotations.ReturnsUnchangedParameter;
-import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultRepositoryChangeNotifier;
+import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoChangeNotifier;
 
 /**
  * Fixes object identities mangled by loosing ORM context or by remoting.
@@ -121,7 +121,7 @@ public abstract class AbstractIdentityFixer {
     int m_traceIndentation = 0;
     
     /** The notifier for broadcasting changes. */
-    RepositoryChangeNotifier m_changeNotifier;
+    DaoChangeNotifier m_changeNotifier;
     
     /** 
      * The representatives, keyed by their id.
@@ -135,7 +135,7 @@ public abstract class AbstractIdentityFixer {
      * ;-)
      */
     public AbstractIdentityFixer() {
-        this(new DefaultRepositoryChangeNotifier());
+        this(new DefaultDaoChangeNotifier());
     }
     
     /**
@@ -143,7 +143,7 @@ public abstract class AbstractIdentityFixer {
      * @param changeNotifier The notifier for broadcasting changes.
      */
     @SuppressWarnings("unchecked")
-    public AbstractIdentityFixer(RepositoryChangeNotifier changeNotifier) {
+    public AbstractIdentityFixer(DaoChangeNotifier changeNotifier) {
         m_changeNotifier = changeNotifier;
         m_representatives = new ReferenceMap(
             AbstractReferenceMap.HARD, AbstractReferenceMap.WEAK);
@@ -154,13 +154,15 @@ public abstract class AbstractIdentityFixer {
      * you can subscribe to change messages there.
      * @return see above
      */
-    public RepositoryChangeNotifier getChangeNotifier() {
+    public DaoChangeNotifier getChangeNotifier() {
         return m_changeNotifier;
     }
     
     
     /**
      * Returns a list of all non-static fields of class {@code c}.
+     * @param c The concerned class
+     * @return A list of all non-static fields of the given class 
      */
     protected static List<Field> instanceFields(Class<?> c) {
         List<Field> fs = new ArrayList<Field>();
@@ -300,7 +302,7 @@ public abstract class AbstractIdentityFixer {
 
         // notify state change
         NewEntityState e = new NewEntityState();
-        e.changee = attached;
+        e.setChangee(attached);
         m_changeNotifier.announce(e);
         
         return attached;
@@ -330,17 +332,21 @@ public abstract class AbstractIdentityFixer {
         ); 
     }
     
-    /** 
-     * Returns the globally unique, logical id for the provided object, or 
-     * {@code null}, if it has no id (yet), or {@link #ANONYMOUS} is this object
-     * is of value type. {@code o} may be null, point to an ordinary object or
-     * to an array.
+    /**
+     * Returns the globally unique, logical id for the provided object, or
+     * {@code null}, if it has no id (yet), or {@link #ANONYMOUS} is this
+     * object is of value type. {@code o} may be null, point to an ordinary
+     * object or to an array.
+     * <p>
+     * The ID objects returned by this method must be value-comparable using
+     * {@code equals} (which implies that hashCode must be overridden as well).
+     * To permit garbage-collection, ids refering to the object they identify
+     * should do so with weak references.
      * 
-     * <p>The ID objects returned by this method 
-     * must be value-comparable using {@code equals} 
-     * (which implies that hashCode must be overridden as well).
-     * To permit garbage-collection, ids refering to the object they
-     * identify should do so with weak references.
+     * @param o
+     *            The object for which a globally unique, logical id will be
+     *            returned
+     * @return A globally unique, logical ID object for the given object
      */
     // Keys become eligible for collection shortly after the object they 
     // identify becomes is weakly reachable (because the latter triggers removal
@@ -349,9 +355,14 @@ public abstract class AbstractIdentityFixer {
     
     /**
      * Returns whether the given reference represents an immutable value, either
-     * because it really is a value ({@code null}) or because the referenced 
-     * object's identity is not accessed and its state is not modified. 
+     * because it really is a value ({@code null}) or because the referenced
+     * object's identity is not accessed and its state is not modified.
      * {@code o} may be null, point to an ordinary object or to an array.
+     * 
+     * @param o
+     *            The concerned object
+     * @return <code>True</code> if the given object represents an immutable
+     *         value, <code>false</code> otherwise
      */
     protected abstract boolean immutableValue(Object o);
     
@@ -444,8 +455,14 @@ public abstract class AbstractIdentityFixer {
         IdentityHashMap<Object, Integer> m_seen 
             = new IdentityHashMap<Object, Integer>();
         
-        /** 
+        /**
          * Prints {code o}'s class and id to {@code toAppendTo}.
+         * 
+         * @param obj
+         *            The concerned object
+         * @param toAppendTo
+         *            The StringBuilder to which the object's class and id will
+         *            be printed
          * @return {@code toAppendTo} (for call chaining)
          */
         public StringBuilder format(Object obj, StringBuilder toAppendTo) {

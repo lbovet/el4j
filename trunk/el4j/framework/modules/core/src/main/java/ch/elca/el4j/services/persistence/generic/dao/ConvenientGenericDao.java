@@ -25,7 +25,7 @@ import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
 /**
- * Extends the SimpleGenericRepository with a few convenience methods.
+ * Extends the SimpleGenericDao with a few convenience methods.
  * 
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -35,15 +35,15 @@ import org.springframework.dao.OptimisticLockingFailureException;
  * );</script>
  *
  * @param <T>
- *            The domain class the repository is responsible for
+ *            The domain class the DAO is responsible for
  * @param <ID>
  *            The type of the domain class' identifier
  *
  * @author Philipp Oser (POS)
  * @author Alex Mathey (AMA)
  */
-public interface ConvenientGenericRepository<T, ID extends Serializable> 
-         extends SimpleGenericRepository<T> {
+public interface ConvenientGenericDao<T, ID extends Serializable> 
+         extends GenericDao<T> {
     
     /**
      * Retrieves a domain object by identifier.
