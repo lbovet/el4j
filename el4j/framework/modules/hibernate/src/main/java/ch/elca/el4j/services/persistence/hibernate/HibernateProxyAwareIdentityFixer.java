@@ -29,7 +29,7 @@ import javax.persistence.Id;
 import org.hibernate.collection.PersistentCollection;
 import org.hibernate.proxy.HibernateProxy;
 
-import ch.elca.el4j.services.persistence.generic.repo.AbstractIdentityFixer;
+import ch.elca.el4j.services.persistence.generic.dao.AbstractIdentityFixer;
 import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
 
 /**
@@ -87,7 +87,7 @@ public class HibernateProxyAwareIdentityFixer
         public boolean equals(Object obj) {
             if (obj instanceof ID) {
                 ID other = (ID) obj;
-                return m_clazz.      equals(other.m_clazz)
+                return m_clazz.equals(other.m_clazz)
                     && m_hibernateId.equals(other.m_hibernateId);
             } else {
                 return false;
