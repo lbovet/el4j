@@ -19,47 +19,51 @@ package ch.elca.el4j.services.persistence.generic.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.elca.el4j.services.persistence.generic.dao.RepositoryChangeListener;
-import ch.elca.el4j.services.persistence.generic.dao.RepositoryChangeNotifier;
+import ch.elca.el4j.services.persistence.generic.dao.DaoChangeListener;
+import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier;
 
 /**
  * A default implementation with no notable features.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
+ *   ("$URL:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/core/src/main/java/ch/elca/el4j/services/persistence/generic/dao/impl/DefaultRepositoryChangeNotifier.java $",
+ *    "$Revision:1040 $",
+ *    "$Date:2006-09-04 09:11:56 +0000 (Mo, 04 Sep 2006) $",
+ *    "$Author:mathey $"
  * );</script>
  *
  * @author Adrian Moos (AMS)
  */
-public class DefaultRepositoryChangeNotifier 
-           implements RepositoryChangeNotifier {
+public class DefaultDaoChangeNotifier 
+           implements DaoChangeNotifier {
 
-    /** The presently subscribed listeners. */
-    protected List<RepositoryChangeListener> m_listeners
-        = new ArrayList<RepositoryChangeListener>();
-    
-    /** 
-     * Causes {@code cl} to receive future change notifications.
+    /**
+     * The presently subscribed listeners.
      */
-    public void subscribe(RepositoryChangeListener cl) {
+    protected List<DaoChangeListener> m_listeners
+        = new ArrayList<DaoChangeListener>();
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void subscribe(DaoChangeListener cl) {
         m_listeners.add(cl);
     }
     
-    /** 
-     * Causes {@code cl} not to receive future change notifications.
+    /**
+     * {@inheritDoc}
      */
-    public void unsubscribe(RepositoryChangeListener cl) {
+    public void unsubscribe(DaoChangeListener cl) {
         m_listeners.remove(cl);
     }
     
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public void announce(Change change) {
-        List<RepositoryChangeListener> snapshot
-            = new ArrayList<RepositoryChangeListener>(m_listeners);
-        for (RepositoryChangeListener cl : snapshot) {
+        List<DaoChangeListener> snapshot
+            = new ArrayList<DaoChangeListener>(m_listeners);
+        for (DaoChangeListener cl : snapshot) {
             cl.changed(change);
         }
     }
