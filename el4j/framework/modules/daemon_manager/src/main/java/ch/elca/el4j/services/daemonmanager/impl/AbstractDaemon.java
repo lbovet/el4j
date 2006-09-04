@@ -33,7 +33,6 @@ import ch.elca.el4j.services.daemonmanager.exceptions.DaemonCausedRTException;
 import ch.elca.el4j.services.daemonmanager.exceptions.DaemonNotStartedRTException;
 import ch.elca.el4j.services.monitoring.notification.DaemonManagerNotificationHelper;
 import ch.elca.el4j.util.codingsupport.NumberUtils;
-import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
  * This class is the standard implementation of a daemon. Below you can find 
