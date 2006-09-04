@@ -19,21 +19,17 @@ package ch.elca.el4j.services.remoting.protocol;
 
 import java.util.HashMap;
 
-import org.springframework.beans.MutablePropertyValues;
-import org.springframework.context.support.StaticApplicationContext;
+import org.codehaus.xfire.jaxb2.JaxbServiceFactory;
+import org.codehaus.xfire.service.ServiceFactory;
 import org.codehaus.xfire.spring.remoting.XFireClientFactoryBean;
 import org.codehaus.xfire.spring.remoting.XFireExporter;
-import org.codehaus.xfire.service.ServiceFactory;
+import org.springframework.beans.MutablePropertyValues;
+import org.springframework.context.support.StaticApplicationContext;
+import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 
-import ch.elca.el4j.core.context.ModuleApplicationContext;
-//import ch.elca.el4j.demos.remoting.Calculator;
 import ch.elca.el4j.services.remoting.AbstractRemotingBase;
 import ch.elca.el4j.services.remoting.RemotingProxyFactoryBean;
 import ch.elca.el4j.services.remoting.RemotingServiceExporter;
-import ch.elca.el4j.services.remoting.ServerContextInvocationHandler;
-import ch.elca.el4j.services.remoting.protocol.AbstractInetSocketAddressWebProtocol;
-import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
-import org.codehaus.xfire.jaxb2.JaxbServiceFactory;
 
 
 /**
