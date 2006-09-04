@@ -18,6 +18,7 @@
 package ch.elca.el4j.tests.util.codingsupport;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import ch.elca.el4j.util.codingsupport.Reject;

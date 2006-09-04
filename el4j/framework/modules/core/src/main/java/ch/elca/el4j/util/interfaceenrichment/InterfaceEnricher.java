@@ -21,8 +21,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Array;
 
-import net.sf.cglib.core.ReflectUtils;
-
 import org.apache.bcel.Repository;
 import org.apache.bcel.classfile.ExceptionTable;
 import org.apache.bcel.classfile.JavaClass;
@@ -35,6 +33,8 @@ import org.apache.bcel.generic.ObjectType;
 import org.apache.bcel.generic.Type;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import net.sf.cglib.core.ReflectUtils;
 
 /**
  * This class generates an <em>enriched</em> shadow interface for an existing

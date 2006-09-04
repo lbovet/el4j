@@ -16,7 +16,10 @@
  */
 package ch.elca.el4j.util.dom.annotations;
 
-import java.lang.annotation.*;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /** 
  * lists all members of this entity type, in order.

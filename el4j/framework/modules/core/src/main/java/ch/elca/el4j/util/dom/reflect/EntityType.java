@@ -25,12 +25,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ch.elca.el4j.util.dom.annotations.MemberOrder;
 import ch.elca.el4j.util.codingsupport.CollectionUtils;
 import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
 import ch.elca.el4j.util.collections.ExtendedWritableList;
 import ch.elca.el4j.util.collections.helpers.Function;
 import ch.elca.el4j.util.collections.impl.ExtendedArrayList;
+import ch.elca.el4j.util.dom.annotations.MemberOrder;
 
 /**
  * Represents an entity type. Instances are obtained using {@link #get(Class)}.
