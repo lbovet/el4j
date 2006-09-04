@@ -17,7 +17,7 @@
 
 //Checkstyle: MagicNumber off
 
-package ch.elca.el4j.xmlmerge;
+package ch.elca.el4j.tests.xmlmerge;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -34,13 +34,17 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
-import ch.elca.el4j.xmlmerge.action.CompleteAction;
-import ch.elca.el4j.xmlmerge.action.OrderedMergeAction;
-import ch.elca.el4j.xmlmerge.config.AttributeMergeConfigurer;
-import ch.elca.el4j.xmlmerge.config.ConfigurableXmlMerge;
-import ch.elca.el4j.xmlmerge.config.PropertyXPathConfigurer;
-import ch.elca.el4j.xmlmerge.factory.XPathOperationFactory;
-import ch.elca.el4j.xmlmerge.merge.DefaultXmlMerge;
+import ch.elca.el4j.services.xmlmerge.Configurer;
+import ch.elca.el4j.services.xmlmerge.Matcher;
+import ch.elca.el4j.services.xmlmerge.MergeAction;
+import ch.elca.el4j.services.xmlmerge.XmlMerge;
+import ch.elca.el4j.services.xmlmerge.action.CompleteAction;
+import ch.elca.el4j.services.xmlmerge.action.OrderedMergeAction;
+import ch.elca.el4j.services.xmlmerge.config.AttributeMergeConfigurer;
+import ch.elca.el4j.services.xmlmerge.config.ConfigurableXmlMerge;
+import ch.elca.el4j.services.xmlmerge.config.PropertyXPathConfigurer;
+import ch.elca.el4j.services.xmlmerge.factory.XPathOperationFactory;
+import ch.elca.el4j.services.xmlmerge.merge.DefaultXmlMerge;
 
 import junit.framework.TestCase;
 
