@@ -17,6 +17,7 @@
 package ch.elca.el4j.services.persistence.generic;
 
 import ch.elca.el4j.services.persistence.generic.dao.IdentityFixedDao;
+import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
 
 /**
  * Instances can access the DAO and broadcast any changes discovered during such
@@ -34,7 +35,7 @@ import ch.elca.el4j.services.persistence.generic.dao.IdentityFixedDao;
  *
  * @author Adrian Moos (AMS)
  */
-public interface DaoAgent<T> 
+public interface DaoAgent<T extends PrimaryKeyOptimisticLockingObject> 
          extends IdentityFixedDao<T>,
                  HierarchyDaoChangeNotifier { 
     

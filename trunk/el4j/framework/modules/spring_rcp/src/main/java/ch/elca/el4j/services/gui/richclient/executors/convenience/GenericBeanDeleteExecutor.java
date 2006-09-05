@@ -19,6 +19,7 @@ package ch.elca.el4j.services.gui.richclient.executors.convenience;
 import java.util.List;
 
 import ch.elca.el4j.services.persistence.generic.DaoAgent;
+import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
 
 /**
  * A generic executor to delete beans managed by a RepositoryAgent.
@@ -34,7 +35,8 @@ import ch.elca.el4j.services.persistence.generic.DaoAgent;
  *
  * @author Adrian Moos (AMS)
  */
-public class GenericBeanDeleteExecutor<T> 
+public class GenericBeanDeleteExecutor<T
+    extends PrimaryKeyOptimisticLockingObject> 
         extends AbstractBeanDeleteExecutor<T> {
 
     /** The agent that should be used to carry out the operation. */

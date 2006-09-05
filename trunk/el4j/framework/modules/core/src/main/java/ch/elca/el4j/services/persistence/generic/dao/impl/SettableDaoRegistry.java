@@ -23,6 +23,7 @@ import org.springframework.beans.factory.InitializingBean;
 
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
+import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
 
 /**
  * A DaoRegistry where DAOs can be registered. This class also provides an
@@ -90,7 +91,8 @@ public class SettableDaoRegistry<D extends GenericDao<?>>
 
     /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
-    public <T> GenericDao<T> getFor(Class<T> entityType) {
+    public <T extends PrimaryKeyOptimisticLockingObject> GenericDao<T> 
+    getFor(Class<T> entityType) {
         return (GenericDao<T>) m_daos.get(entityType);
     }
 

@@ -26,6 +26,7 @@ import org.springframework.util.StringUtils;
 import ch.elca.el4j.services.gui.richclient.executors.AbstractConfirmBeanExecutor;
 import ch.elca.el4j.services.gui.richclient.presenters.BeanPresenter;
 import ch.elca.el4j.services.gui.richclient.utils.DialogUtils;
+import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
@@ -43,7 +44,8 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * @author Martin Zeltner (MZE)
  * @author Adrian Moos (AMS)
  */
-public abstract class AbstractBeanDeleteExecutor<T> 
+public abstract class AbstractBeanDeleteExecutor<T
+    extends PrimaryKeyOptimisticLockingObject> 
     extends AbstractConfirmBeanExecutor {
     
     /**

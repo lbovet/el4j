@@ -24,6 +24,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
 import ch.elca.el4j.services.persistence.generic.dao.annotations.ReturnsUnchangedParameter;
+import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
 import ch.elca.el4j.services.search.QueryObject;
 
 /**
@@ -42,13 +43,13 @@ import ch.elca.el4j.services.search.QueryObject;
  * );</script>
  *
  * @param <T>
- *            The domain class the DAO is responsible for
+ *            The generic type of the domain class the DAO is responsible for
  *
  * @author Philipp Oser (POS)
  * @author Alex Mathey (AMA)
  * @author Adrian Moos (AMS)
  */
-public interface GenericDao<T> {
+public interface GenericDao<T extends PrimaryKeyOptimisticLockingObject> {
     /**
      * @return Returns the domain class this DAO is responsible for.
      */

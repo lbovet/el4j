@@ -26,6 +26,7 @@ import org.springframework.dao.OptimisticLockingFailureException;
 
 import ch.elca.el4j.services.persistence.generic.dao.AbstractIdentityFixer;
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
+import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
 import ch.elca.el4j.services.search.QueryObject;
 
 /**
@@ -46,7 +47,8 @@ import ch.elca.el4j.services.search.QueryObject;
  * @see AbstractIdentityFixer
  */
 @Deprecated
-public class IdentityFixedDaoImpl<T> implements GenericDao<T> {
+public class IdentityFixedDaoImpl<T extends PrimaryKeyOptimisticLockingObject> 
+    implements GenericDao<T> {
     /** The fixer to be used. */
     AbstractIdentityFixer m_fixer;
     
