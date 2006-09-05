@@ -90,4 +90,48 @@
             </plugin>
         </plugins>
     </reporting>
+    <profiles>
+        <profile>
+            <id>generate-javadoc_set-framework-modules</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>ch.elca.el4j.plugins</groupId>
+                        <artifactId>maven-file-collector-plugin</artifactId>
+                        <configuration>
+                            <rootSourceDirectory>${basedir}</rootSourceDirectory>
+                            <sourceDirectoryPatterns>**/src/main/java</sourceDirectoryPatterns>
+                            <sourceFilePatterns>**/*.java,**/*.html</sourceFilePatterns>
+                            <targetDirectory>${aggregated.files.output.directory}</targetDirectory>
+                            <allowOverwrite>false</allowOverwrite>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>copy-java-sources_set-framework-modules</id>
+                                <phase>pre-site</phase>
+                                <goals>
+                                    <goal>aggregate-files</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <configuration>
+                            <sourcepath>${aggregated.files.output.directory}</sourcepath>
+                            <reportOutputDirectory>${javadoc.output.directory}</reportOutputDirectory>
+                            <doctitle>${javadoc.title}</doctitle>
+                            <windowtitle>${javadoc.title}</windowtitle>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <properties>
+                <aggregated.files.output.directory>${path.framework.site.build.directory}/aggregated-files/${set.framework-modules}</aggregated.files.output.directory>
+                <javadoc.output.directory>${path.framework.site.build.directory}/site/${set.framework-modules}/apidocs</javadoc.output.directory>
+                <javadoc.title>${javadoc.title.set.framework-modules}</javadoc.title>
+            </properties>
+        </profile>
+    </profiles>
 </project>
