@@ -226,7 +226,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>2.1-SNAPSHOT</version>
+                    <version>2.1</version>
                     <configuration>
                         <archive>
                             <manifestSections>
@@ -301,7 +301,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
-                    <version>2.1-SNAPSHOT</version>
+                    <version>2.0.1</version>
                     <configuration>
                         <warName>${jee-web.war.name}</warName>
                         <webappDirectory>${jee-web.webapp.directory}</webappDirectory>
@@ -321,7 +321,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-install-plugin</artifactId>
-                    <version>2.2-SNAPSHOT</version>
+                    <version>2.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -418,7 +418,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
-                    <version>2.0-SNAPSHOT</version>
+                    <version>2.0-beta-5</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -428,14 +428,16 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>2.0</version>
+                    <version>2.1-SNAPSHOT</version>
                     <configuration>
                         <stylesheetfile>${el4j.home}/external/framework/etc/javadoc/stylesheet.css</stylesheetfile>
+                        <source>1.5</source>
                         <aggregate>true</aggregate>
+                        <show>protected</show>
                         <links>
                             <link>http://java.sun.com/j2se/1.5.0/docs/api</link>
+                            <link>http://static.springframework.org/spring/docs/2.0.x/api</link>
                         </links>
-                        <source>1.5</source>
 
                         <!-- TODO: Make link to SVN work.
                         <header><![CDATA[<script type="text/javascript">function removeKeyword(str) {i = str.indexOf(":");str = str.substring(i+1);i = str.length;str = str.substring(0, i-1);return str;}function removeHead (str) {v=str.substring(42);return v.substring(0, v.length-2);}function printFileStatus (url_kw,revision_kw,date_kw,author_kw) {document.write ("<br/><dl><dt><b>File-location:</b><dd><a href=\"http://svn.sourceforge.net/viewcvs.cgi/");document.write(removeHead(url_kw));document.write("\">");document.write(removeHead(url_kw));document.write("</a></dl>");document.write ("<dl><dt><b>Last check-in date </b>");document.write(removeKeyword(date_kw));document.write("<b> by </b>");document.write(removeKeyword(author_kw));document.write("<b> for revision </b>");document.write(removeKeyword(revision_kw));document.write("</a></dl>");}</script>]]></header>-->
