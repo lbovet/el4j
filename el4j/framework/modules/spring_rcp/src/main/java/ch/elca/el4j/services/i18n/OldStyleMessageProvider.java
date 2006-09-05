@@ -16,10 +16,8 @@
  */
 package ch.elca.el4j.services.i18n;
 
-import static org.springframework.util.StringUtils.capitalize;
-import static org.springframework.util.StringUtils.uncapitalize;
-
 import org.springframework.context.MessageSource;
+import org.springframework.util.StringUtils;
 
 import ch.elca.el4j.services.gui.richclient.utils.DialogUtils;
 import ch.elca.el4j.util.dom.reflect.EntityType;
@@ -40,7 +38,8 @@ import ch.elca.el4j.util.dom.reflect.EntityType;
 @Deprecated
 public class OldStyleMessageProvider extends MessageProvider {
     /**
-     * Constructor
+     * Constructor.
+     * 
      * @param ms the message source to use
      */
     public OldStyleMessageProvider(MessageSource ms) {
@@ -49,14 +48,19 @@ public class OldStyleMessageProvider extends MessageProvider {
 
     /** {@inheritDoc} */
     @Override
-    public Fetcher forConfirmation(String action, EntityType type, int multiplicity) {
+    public Fetcher forConfirmation(String action, EntityType type, 
+        int multiplicity) {
+        
         String typeName = type.name;
-        if (typeName.endsWith("Dto")) {
-            typeName = typeName.substring(0, typeName.length() - 3);
+        final String NAME_SUFFIX = "Dto";
+        if (typeName.endsWith(NAME_SUFFIX)) {
+            typeName = typeName.substring(
+                0, typeName.length() - NAME_SUFFIX.length());
         }
         
         String decoratedCode = DialogUtils.decorateCode(
-            uncapitalize(typeName) + capitalize(action), multiplicity);
+            StringUtils.uncapitalize(typeName) + StringUtils.capitalize(action),
+            multiplicity);
         return new PrefixFetcher(prefixes(decoratedCode));
     }
 }

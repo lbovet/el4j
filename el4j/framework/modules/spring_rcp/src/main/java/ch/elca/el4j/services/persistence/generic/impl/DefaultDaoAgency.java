@@ -16,8 +16,6 @@
  */
 package ch.elca.el4j.services.persistence.generic.impl;
 
-import static ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.FUZZY_CHANGE;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,11 +28,12 @@ import ch.elca.el4j.services.persistence.generic.DaoAgency;
 import ch.elca.el4j.services.persistence.generic.DaoAgent;
 import ch.elca.el4j.services.persistence.generic.HierarchyDaoChangeNotifier;
 import ch.elca.el4j.services.persistence.generic.dao.AbstractIdentityFixer;
+import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier;
+import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.Change;
+import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.EntityDeleted;
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
 import ch.elca.el4j.services.persistence.generic.dao.IdentityFixedDao;
-import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.Change;
-import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.EntityDeleted;
 
 /**
  * Wraps a DAO registry's daos with {@link DaoAgent}.
@@ -152,7 +151,7 @@ public class DefaultDaoAgency
                     }
                     return retVal;
                 } catch (OptimisticLockingFailureException e) {
-                    changed(FUZZY_CHANGE);
+                    changed(DaoChangeNotifier.FUZZY_CHANGE);
                     throw e;
                 }
             }
