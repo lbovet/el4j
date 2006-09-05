@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.webtest.example;
+package ch.elca.el4j.web.webtest.example;
 
 import net.sourceforge.jwebunit.TestingEngineRegistry;
 import net.sourceforge.jwebunit.WebTestCase;
