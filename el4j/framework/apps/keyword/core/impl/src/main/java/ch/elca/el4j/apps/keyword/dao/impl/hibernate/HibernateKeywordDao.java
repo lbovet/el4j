@@ -18,23 +18,16 @@ package ch.elca.el4j.apps.keyword.dao.impl.hibernate;
 
 import java.util.List;
 
-import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
-import org.springframework.dao.OptimisticLockingFailureException;
-import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException;
 
-import ch.elca.el4j.apps.keyword.Constants;
 import ch.elca.el4j.apps.keyword.dao.KeywordDao;
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
-import ch.elca.el4j.services.persistence.dao.ConvenienceHibernateDaoSupport;
-import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
-import ch.elca.el4j.services.persistence.hibernate.criteria.CriteriaTransformer;
-import ch.elca.el4j.services.search.QueryObject;
+import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
 
 /**
  * 
- * Implementation of the keyword dao using Hibernate.
+ * Implementation of the keyword dao which is using Hibernate.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -45,73 +38,32 @@ import ch.elca.el4j.services.search.QueryObject;
  *
  * @author Alex Mathey (AMA)
  */
-public class HibernateKeywordDao extends ConvenienceHibernateDaoSupport 
+public class HibernateKeywordDao
+    extends GenericHibernateDao<KeywordDto, Integer>
     implements KeywordDao {
-
-    /**
-     * {@inheritDoc}
-     */
-    public KeywordDto getKeywordByKey(int key) throws DataAccessException,
-        DataRetrievalFailureException {
     
-        return (KeywordDto) getConvenienceHibernateTemplate()
-            .getByIdStrong(KeywordDto.class, key, Constants.KEYWORD);
+    /**
+     * Creates a new HibernateKeywordDao instance.
+     */
+    public HibernateKeywordDao() {
+        setPersistentClass(KeywordDto.class);
     }
-
+    
     /**
      * {@inheritDoc}
      */
-    public KeywordDto getKeywordByName(String name) throws DataAccessException,
-        DataRetrievalFailureException {
-      
+    public KeywordDto getKeywordByName(String name)
+        throws DataAccessException, DataRetrievalFailureException {
+        
         String queryString = "from KeywordDto keyword where name = :name";
-        
-        return (KeywordDto) getConvenienceHibernateTemplate()
-            .findByNamedParamStrong(queryString, "name", name,
-                Constants.KEYWORD);
+                
+        List keywordList = getHibernateTemplate()
+            .findByNamedParam(queryString, "name", name);
+        if (keywordList.isEmpty()) {
+            throw new DataRetrievalFailureException("The desired keyword could"
+                + " not be retrieved.");
+        } else {
+            return (KeywordDto) keywordList.get(0);
+        }
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public List getAllKeywords() throws DataAccessException {
-        return getConvenienceHibernateTemplate().find("from KeywordDto");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public List searchKeywords(QueryObject query) throws DataAccessException {
-       
-        DetachedCriteria hibernateCriteria = CriteriaTransformer
-            .transform(query, KeywordDto.class); 
-            
-        // Execute Hibernate criteria query and return the list of KeywordDto
-        // objects returned by the query.
-        return getConvenienceHibernateTemplate().
-            findByCriteria(hibernateCriteria);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public KeywordDto saveKeyword(KeywordDto keyword)
-        throws DataAccessException, InsertionFailureException,
-        OptimisticLockingFailureException {
-        
-        getConvenienceHibernateTemplate().saveOrUpdateStrong(keyword,
-            Constants.KEYWORD);
-        return keyword;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void removeKeyword(int key) throws DataAccessException,
-        JdbcUpdateAffectedIncorrectNumberOfRowsException {
-        
-        getConvenienceHibernateTemplate().deleteStrong(KeywordDto.class, key,
-            Constants.KEYWORD);
-    }
-
 }

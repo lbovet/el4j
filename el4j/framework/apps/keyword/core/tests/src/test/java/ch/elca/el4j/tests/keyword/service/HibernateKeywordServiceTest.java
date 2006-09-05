@@ -14,11 +14,11 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.tests.keyword.repository;
+package ch.elca.el4j.tests.keyword.service;
 
 /**
  * 
- * Test class for <code>KeywordHibernateRepository</code>.
+ * Hibernate-specific test class for <code>KeywordService</code>.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -29,9 +29,9 @@ package ch.elca.el4j.tests.keyword.repository;
  *
  * @author Alex Mathey (AMA)
  */
-public class HibernateKeywordRepositoryTest
-    extends AbstractKeywordRepositoryTest {
-    
+public class HibernateKeywordServiceTest
+    extends AbstractKeywordServiceTest {
+
     /**
      * {@inheritDoc}
      */
@@ -40,7 +40,6 @@ public class HibernateKeywordRepositoryTest
             "classpath*:mandatory/*.xml",
             "classpath*:scenarios/db/raw/*.xml",
             "classpath*:scenarios/dataaccess/hibernate/*.xml",
-            "classpath*:scenarios/dataaccess/hibernate/repository/*.xml",
             "classpath*:optional/interception/transactionJava5Annotations.xml"};
     }
 

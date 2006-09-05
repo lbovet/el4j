@@ -22,14 +22,14 @@
     </bean>
     
     <bean id="keywordServiceTarget"
-	 	class="ch.elca.el4j.apps.keyword.service.impl.KeywordRepositoryService">
-	 	<property name="repositoryRegistry">
-	 		<ref local="repositoryRegistry"/>
+	 	class="ch.elca.el4j.apps.keyword.service.impl.DefaultKeywordService">
+	 	<property name="daoRegistry">
+	 		<ref local="daoRegistry"/>
 	 	</property>
 	 </bean>
 	   
-	<bean id="repositoryRegistry"
-		class="ch.elca.el4j.apps.keyword.repository.impl.hibernate.HibernateKeywordRepositoryRegistry">
+	<bean id="daoRegistry"
+		class="ch.elca.el4j.apps.keyword.dao.impl.hibernate.HibernateKeywordDaoRegistry">
 		<property name="sessionFactory">
 			<ref local="sessionFactory"/>
 		</property>

@@ -16,10 +16,9 @@
  */
 package ch.elca.el4j.tests.keyword.dao;
 
-
 /**
  * 
- * Test class for <code>KeywordDao</code> with Hibernate.
+ * Test class for <code>HibernateKeywordDao</code>.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -30,7 +29,9 @@ package ch.elca.el4j.tests.keyword.dao;
  *
  * @author Alex Mathey (AMA)
  */
-public class HibernateKeywordDaoTest extends AbstractKeywordDaoTest {
+public class HibernateKeywordDaoTest
+    extends AbstractKeywordDaoTest {
+    
     /**
      * {@inheritDoc}
      */
@@ -39,7 +40,6 @@ public class HibernateKeywordDaoTest extends AbstractKeywordDaoTest {
             "classpath*:mandatory/*.xml",
             "classpath*:scenarios/db/raw/*.xml",
             "classpath*:scenarios/dataaccess/hibernate/*.xml",
-            "classpath*:scenarios/dataaccess/hibernate/dao/*.xml",
             "classpath*:optional/interception/transactionJava5Annotations.xml"};
     }
 
@@ -49,4 +49,5 @@ public class HibernateKeywordDaoTest extends AbstractKeywordDaoTest {
     protected String[] getExcludeConfigLocations() {
         return null;
     }
+    
 }

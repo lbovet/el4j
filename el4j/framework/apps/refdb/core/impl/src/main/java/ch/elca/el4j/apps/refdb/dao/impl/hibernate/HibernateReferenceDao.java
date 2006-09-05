@@ -57,21 +57,21 @@ import ch.elca.el4j.util.codingsupport.Reject;
  *
  * @author Alex Mathey (AMA)
  */
-public class HibernateReferenceDao extends HibernateKeywordDao implements
-    ReferenceDao {
+public class HibernateReferenceDao /*extends HibernateKeywordDao implements
+    ReferenceDao*/ {
 
     /**
      * {@inheritDoc}
      */
-    public AnnotationDto getAnnotationByKey(int key)
+    /*public AnnotationDto getAnnotationByKey(int key)
         throws DataAccessException, DataRetrievalFailureException {
         return (AnnotationDto) getConvenienceHibernateTemplate()
             .getByIdStrong(AnnotationDto.class, key, Constants.ANNOTATION);
-    }
+    }*/
 
     /**
      * {@inheritDoc}
-     */
+     *//*
     public List getAnnotationsByAnnotator(String annotator)
         throws DataAccessException {
         Reject.ifEmpty(annotator);
@@ -81,9 +81,9 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
             .findByNamedParam(queryString, "annotator", annotator);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List getAnnotationsByReference(int key) throws DataAccessException {
         String queryString
             = "from AnnotationDto annotation where keyToReference = :key";
@@ -91,16 +91,16 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
             .findByNamedParam(queryString, "key", new Integer(key));
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List getAllAnnotations() throws DataAccessException {
         return getConvenienceHibernateTemplate().find("from AnnotationDto");
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public AnnotationDto saveAnnotation(AnnotationDto annotation)
         throws DataAccessException, InsertionFailureException,
         OptimisticLockingFailureException {
@@ -110,27 +110,27 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
         return annotation;
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public void removeAnnotation(int key) throws DataAccessException,
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
         getConvenienceHibernateTemplate().deleteStrong(AnnotationDto.class, key,
             Constants.ANNOTATION);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public FileDto getFileByKey(int key) throws DataAccessException,
         DataRetrievalFailureException {
         return (FileDto) getConvenienceHibernateTemplate()
             .getByIdStrong(FileDto.class, key, Constants.FILE);
     }
     
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List getFilesByName(String name) throws DataAccessException {
         Reject.ifEmpty(name);
         String queryString
@@ -139,9 +139,9 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
             .findByNamedParam(queryString, "name", name);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List getFilesByReference(int key) throws DataAccessException {
         String queryString
             = "from FileDto file where keyToReference = :key";
@@ -149,16 +149,16 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
             .findByNamedParam(queryString, "key", new Integer(key));
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List getAllFiles() throws DataAccessException {
         return getConvenienceHibernateTemplate().find("from FileDto");
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public FileDto saveFile(FileDto file) throws DataAccessException,
         InsertionFailureException, OptimisticLockingFailureException {
         Reject.ifNull(file);
@@ -167,18 +167,18 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
         return file;
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public void removeFile(int key) throws DataAccessException,
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
         getConvenienceHibernateTemplate().deleteStrong(FileDto.class, key,
             Constants.FILE);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List getFileDescriptorViewsByReference(int key)
         throws DataAccessException {
         String queryString
@@ -188,9 +188,9 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
             .findByNamedParam(queryString, "key", new Integer(key));
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public FileDescriptorView modifyFileDescriptorView(
         FileDescriptorView fileView) throws DataAccessException,
         OptimisticLockingFailureException, DataRetrievalFailureException {
@@ -205,9 +205,9 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
         return fileView;
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public LinkDto getLinkByKey(int key) throws DataAccessException,
         DataRetrievalFailureException {
         LinkDto link = (LinkDto) getConvenienceHibernateTemplate()
@@ -216,9 +216,9 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
         return link;
     }
     
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List getLinksByName(String name) throws DataAccessException {
         Reject.ifEmpty(name);
         String queryString = "from LinkDto link where name = :name";
@@ -232,17 +232,17 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
         return result;
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List getAllLinks() throws DataAccessException {
         return getConvenienceHibernateTemplate().find("from LinkDto link "
             + "left join fetch link.keywords");
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List searchLinks(QueryObject query) throws DataAccessException {
         DetachedCriteria hibernateCriteria = CriteriaTransformer
             .transform(query,
@@ -292,9 +292,9 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
         }
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public LinkDto saveLink(LinkDto link) throws DataAccessException,
         InsertionFailureException, OptimisticLockingFailureException {
         Reject.ifNull(link);
@@ -303,9 +303,9 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
         return link;
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public void removeLink(int key) throws DataAccessException,
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
         getConvenienceHibernateTemplate().deleteStrong(LinkDto.class, key,
@@ -313,9 +313,9 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
 
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public FormalPublicationDto getFormalPublicationByKey(int key)
         throws DataAccessException, DataRetrievalFailureException {
         FormalPublicationDto formalPublication
@@ -327,9 +327,9 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
         return formalPublication;
     }
     
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List getFormalPublicationsByName(String name)
         throws DataAccessException {
         Reject.ifEmpty(name);
@@ -351,9 +351,9 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
         return finalResult;
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List getAllFormalPublications() throws DataAccessException {
         List result = getConvenienceHibernateTemplate()
             .find("from FormalPublicationDto formalPublication left join "
@@ -371,9 +371,9 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
         return finalResult;
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List searchFormalPublications(QueryObject query)
         throws DataAccessException {
         
@@ -434,9 +434,9 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
         return finalResult;
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public FormalPublicationDto saveFormalPublication(
         FormalPublicationDto formalPublication) throws DataAccessException,
         InsertionFailureException, OptimisticLockingFailureException {
@@ -446,18 +446,18 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
         return formalPublication;
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public void removeFormalPublication(int key) throws DataAccessException,
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
         getConvenienceHibernateTemplate().deleteStrong(
             FormalPublicationDto.class, key, Constants.FORMAL_PUBLICATION);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public BookDto getBookByKey(int key) throws DataAccessException,
         DataRetrievalFailureException {
         BookDto book
@@ -468,9 +468,9 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
         return book;    
     }
     
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List getBooksByName(String name) throws DataAccessException {
         Reject.ifEmpty(name);
         String queryString = "from BookDto book where name = :name";
@@ -484,17 +484,17 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
         return result;
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List getAllBooks() throws DataAccessException {
         return getConvenienceHibernateTemplate().find("from BookDto book "
             + "left join fetch book.keywords");
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List searchBooks(QueryObject query) throws DataAccessException {
         
         DetachedCriteria hibernateCriteria = CriteriaTransformer
@@ -545,9 +545,9 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
         }
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public BookDto saveBook(BookDto book) throws DataAccessException,
         InsertionFailureException, OptimisticLockingFailureException {
         Reject.ifNull(book);
@@ -556,20 +556,20 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
         return book;
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public void removeBook(int key) throws DataAccessException,
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
         getConvenienceHibernateTemplate().deleteStrong(BookDto.class, key,
             Constants.BOOK);
     }
 
-    /**
+    *//**
      * Checkas whether the given list contains at least one IncludeCriteria. 
      * @param criteriaList list of criteria
      * @return true if the list contains at least one IncludeCriteria
-     */
+     *//*
     private boolean containsIncludeCriteria(List criteriaList) {
         Iterator it = criteriaList.iterator();
         while (it.hasNext()) {
@@ -578,6 +578,6 @@ public class HibernateReferenceDao extends HibernateKeywordDao implements
             }
         }
         return false;
-    }
+    }*/
     
 }

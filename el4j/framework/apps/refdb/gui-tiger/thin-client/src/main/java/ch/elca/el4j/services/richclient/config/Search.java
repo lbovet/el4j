@@ -24,6 +24,7 @@ import ch.elca.el4j.services.gui.search.AbstractSearchItem;
 import ch.elca.el4j.services.gui.search.ComparisonSearchItem;
 import ch.elca.el4j.services.gui.search.LikeSearchItem;
 import ch.elca.el4j.services.i18n.SimpleFieldFaceSource;
+import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
 import ch.elca.el4j.services.richclient.components.SearchView;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.annotations.Preliminary;
@@ -47,7 +48,7 @@ import ch.elca.el4j.util.registy.impl.StringMapBackedRegistry;
  * @author Adrian Moos (AMS)
  */
 // TODO: Why is this a View?
-public class Search extends AbstractGenericView {
+public class Search<T extends PrimaryKeyOptimisticLockingObject> extends AbstractGenericView<T> {
     /** holds the query represented by this search form. */
     public final SettableObservableValue<QueryObject> query;
     
@@ -152,7 +153,7 @@ public class Search extends AbstractGenericView {
 
     /** {@inheritDoc} */
     @Override
-    protected <T> ViewDescriptor createDescriptor(Class<T> clazz) {
+    protected <T extends PrimaryKeyOptimisticLockingObject> ViewDescriptor createDescriptor(Class<T> clazz) {
         return configure(new Descriptor(new GenericComponent()));
     }
 }

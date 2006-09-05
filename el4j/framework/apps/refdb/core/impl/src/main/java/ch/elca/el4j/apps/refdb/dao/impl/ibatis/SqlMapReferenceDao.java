@@ -55,21 +55,21 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * 
  * @author Martin Zeltner (MZE)
  */
-public class SqlMapReferenceDao extends SqlMapKeywordDao 
-    implements ReferenceDao {
+public class SqlMapReferenceDao /*extends SqlMapKeywordDao 
+    implements ReferenceDao*/ {
 
     /**
      * {@inheritDoc}
-     */
+     *//*
     public void removeKeyword(int key)
         throws DataAccessException, DataRetrievalFailureException {
         removeAllReferenceKeywordRelationshipsByKeyword(key);
         super.removeKeyword(key);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public AnnotationDto getAnnotationByKey(int key)
         throws DataAccessException, DataRetrievalFailureException {
         return (AnnotationDto) getConvenienceSqlMapClientTemplate()
@@ -77,9 +77,9 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
                 Constants.ANNOTATION);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List getAnnotationsByAnnotator(String annotator)
         throws DataAccessException {
         Reject.ifEmpty(annotator);
@@ -88,27 +88,27 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
         return CollectionUtils.asList(result);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List getAnnotationsByReference(int key) throws DataAccessException {
         List result = getSqlMapClientTemplate().queryForList(
             "getAnnotationsByReference", new Integer(key));
         return CollectionUtils.asList(result);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List getAllAnnotations() throws DataAccessException {
         List result = getSqlMapClientTemplate().queryForList(
             "getAllAnnotations", null);
         return CollectionUtils.asList(result);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public AnnotationDto saveAnnotation(AnnotationDto annotation)
         throws DataAccessException, InsertionFailureException, 
             OptimisticLockingFailureException {
@@ -118,9 +118,9 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
         return annotation;
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public void removeAnnotation(int key) 
         throws DataAccessException,
             JdbcUpdateAffectedIncorrectNumberOfRowsException {
@@ -128,9 +128,9 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
             new Integer(key), 1, Constants.ANNOTATION);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public FileDto getFileByKey(int key)
         throws DataAccessException, DataRetrievalFailureException {
         return (FileDto) getConvenienceSqlMapClientTemplate()
@@ -138,9 +138,9 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
                 Constants.FILE);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List getFilesByName(String name) throws DataAccessException {
         Reject.ifEmpty(name);
         List result = getSqlMapClientTemplate().queryForList(
@@ -148,27 +148,27 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
         return CollectionUtils.asList(result);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List getFilesByReference(int key) throws DataAccessException {
         List result = getSqlMapClientTemplate().queryForList(
             "getFilesByReference", new Integer(key));
         return CollectionUtils.asList(result);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List getAllFiles() throws DataAccessException {
         List result = getSqlMapClientTemplate().queryForList(
             "getAllFiles", null);
         return CollectionUtils.asList(result);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public FileDto saveFile(FileDto file) 
         throws DataAccessException, InsertionFailureException, 
             OptimisticLockingFailureException {
@@ -178,18 +178,18 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
         return file;
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public void removeFile(int key) throws DataAccessException,
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
         getConvenienceSqlMapClientTemplate().delete(
             new Integer(key), 1, Constants.FILE);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List getFileDescriptorViewsByReference(int key)
         throws DataAccessException {
         List result = getSqlMapClientTemplate().queryForList(
@@ -197,9 +197,9 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
         return CollectionUtils.asList(result);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public FileDescriptorView modifyFileDescriptorView(
         FileDescriptorView fileView) throws DataAccessException, 
         OptimisticLockingFailureException, DataRetrievalFailureException {
@@ -214,7 +214,7 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
         return fileView;
     }
 
-    /**
+    *//**
      * Get a reference by key.
      * 
      * @param type
@@ -226,7 +226,7 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
      *             If general data access problem occurred.
      * @throws DataRetrievalFailureException
      *             If reference could not be retrieved.
-     */
+     *//*
     private ReferenceDto getReferenceByKey(String type, int key)
         throws DataAccessException, DataRetrievalFailureException {
         Reject.ifEmpty(type);
@@ -235,7 +235,7 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
                 type);
     }
 
-    /**
+    *//**
      * Get references by name.
      * 
      * @param type
@@ -245,7 +245,7 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
      * @return Returns a list with references.
      * @throws DataAccessException
      *             If general data access problem occurred.
-     */
+     *//*
     private List getReferencesByName(String type, String name)
         throws DataAccessException {
         Reject.ifEmpty(type);
@@ -255,7 +255,7 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
         return CollectionUtils.asList(result);
     }
 
-    /**
+    *//**
      * Get all references.
      * 
      * @param type
@@ -263,7 +263,7 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
      * @return Returns a list with references.
      * @throws DataAccessException
      *             If general data access problem occurred.
-     */
+     *//*
     private List getAllReferences(String type) throws DataAccessException {
         Reject.ifEmpty(type);
         List result = getSqlMapClientTemplate().queryForList(
@@ -271,7 +271,7 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
         return CollectionUtils.asList(result);
     }
 
-    /**
+    *//**
      * Search for references.
      * 
      * @param type
@@ -281,7 +281,7 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
      * @return Returns a list with references.
      * @throws DataAccessException
      *             If general data access problem occurred.
-     */
+     *//*
     private List searchReferences(String type, QueryObject query) 
         throws DataAccessException {
         Reject.ifEmpty(type);
@@ -291,7 +291,7 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
         return CollectionUtils.asList(result);
     }
 
-    /**
+    *//**
      * Save reference. If reference is new, viz is has no primary key, it will
      * be inserted. Otherwise, the reference will be updated.
      * 
@@ -306,7 +306,7 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
      *             If link could not be inserted.
      * @throws OptimisticLockingFailureException
      *             If link has been modificated in the meantime.
-     */
+     *//*
     private ReferenceDto saveReference(String type, ReferenceDto reference)
         throws DataAccessException, InsertionFailureException, 
             OptimisticLockingFailureException {
@@ -343,10 +343,10 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
             mustIncreaseOptimisticLockingVersion = true;
         }
 
-        /**
+        *//**
          * Remove all old keyword references to the saved reference and set them
          * new.
-         */
+         *//*
         removeAllReferenceKeywordRelationshipsByReference(reference.getKey());
         Set set = reference.getKeywords();
         if (set != null) {
@@ -358,16 +358,16 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
             }
         }
 
-        /**
+        *//**
          * Increase optimistic locking version if necessary.
-         */
+         *//*
         if (mustIncreaseOptimisticLockingVersion) {
             reference.increaseOptimisticLockingVersion();
         }
         return reference;
     }
 
-    /**
+    *//**
      * Remove reference.
      * 
      * @param type
@@ -378,7 +378,7 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
      *             If general data access problem occurred.
      * @throws JdbcUpdateAffectedIncorrectNumberOfRowsException
      *             If link could not be deleted.
-     */
+     *//*
     private void removeReference(String type, int key)
         throws DataAccessException,
             JdbcUpdateAffectedIncorrectNumberOfRowsException {
@@ -390,88 +390,88 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
             new Integer(key), 1, Constants.REFERENCE);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public LinkDto getLinkByKey(int key) throws DataAccessException, 
         DataRetrievalFailureException {
         return (LinkDto) getReferenceByKey(Constants.LINK, key);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List getLinksByName(String name) throws DataAccessException {
         return getReferencesByName(Constants.LINK, name);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List getAllLinks() throws DataAccessException {
         return getAllReferences(Constants.LINK);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List searchLinks(QueryObject query)
         throws DataAccessException {
         return searchReferences(Constants.LINK, query);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public LinkDto saveLink(LinkDto link) 
         throws DataAccessException, InsertionFailureException, 
             OptimisticLockingFailureException {
         return (LinkDto) saveReference(Constants.LINK, link);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public void removeLink(int key) throws DataAccessException,
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
         removeReference(Constants.LINK, key);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public FormalPublicationDto getFormalPublicationByKey(int key)
         throws DataAccessException, DataRetrievalFailureException {
         return (FormalPublicationDto) getReferenceByKey(
             Constants.FORMAL_PUBLICATION, key);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List getFormalPublicationsByName(String name)
         throws DataAccessException {
         return getReferencesByName(Constants.FORMAL_PUBLICATION, name);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List getAllFormalPublications() throws DataAccessException {
         return getAllReferences(Constants.FORMAL_PUBLICATION);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List searchFormalPublications(QueryObject query)
         throws DataAccessException {
         return searchReferences(Constants.FORMAL_PUBLICATION, query);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public FormalPublicationDto saveFormalPublication(
         FormalPublicationDto formalPublication)
         throws DataAccessException, InsertionFailureException, 
@@ -480,62 +480,62 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
             Constants.FORMAL_PUBLICATION, formalPublication);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public void removeFormalPublication(int key)
         throws DataAccessException,
             JdbcUpdateAffectedIncorrectNumberOfRowsException {
         removeReference(Constants.FORMAL_PUBLICATION, key);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public BookDto getBookByKey(int key) throws DataAccessException, 
         DataRetrievalFailureException {
         return (BookDto) getReferenceByKey(Constants.BOOK, key);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List getBooksByName(String name) throws DataAccessException {
         return getReferencesByName(Constants.BOOK, name);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List getAllBooks() throws DataAccessException {
         return getAllReferences(Constants.BOOK);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public List searchBooks(QueryObject query)
         throws DataAccessException {
         return searchReferences(Constants.BOOK, query);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public BookDto saveBook(BookDto book) throws DataAccessException, 
         InsertionFailureException, OptimisticLockingFailureException {
         return (BookDto) saveReference(Constants.BOOK, book);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public void removeBook(int key) throws DataAccessException,
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
         removeReference(Constants.BOOK, key);
     }
 
-    /**
+    *//**
      * This method adds a relation between the given reference and keyword.
      * 
      * @param referenceKey
@@ -546,7 +546,7 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
      *             If general data access problem occurred.
      * @throws InsertionFailureException
      *             If reference could not be inserted.
-     */
+     *//*
     private void addReferenceKeywordRelationship(
         int referenceKey, int keywordKey) throws DataAccessException, 
             InsertionFailureException {
@@ -563,7 +563,7 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
         }
     }
 
-    /**
+    *//**
      * This method removes all relationships between the given reference and a
      * keyword.
      * 
@@ -571,7 +571,7 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
      *            Is the reference key where keyword relations must be removed.
      * @throws DataAccessException
      *             If general data access problem occurred.
-     */
+     *//*
     private void removeAllReferenceKeywordRelationshipsByReference(
         int referenceKey) throws DataAccessException {
         getConvenienceSqlMapClientTemplate().delete(
@@ -579,7 +579,7 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
             new Integer(referenceKey));
     }
 
-    /**
+    *//**
      * This method removes all relationships between a reference and the given
      * keyword.
      * 
@@ -587,11 +587,11 @@ public class SqlMapReferenceDao extends SqlMapKeywordDao
      *            Is the keyword key where reference relations must be removed.
      * @throws DataAccessException
      *             If general data access problem occurred.
-     */
+     *//*
     private void removeAllReferenceKeywordRelationshipsByKeyword(
             int keywordKey) throws DataAccessException {
         getConvenienceSqlMapClientTemplate().delete(
             "deleteAllReferenceKeywordRelationshipsByKeyword",
             new Integer(keywordKey));
-    }
+    }*/
 }

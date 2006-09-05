@@ -14,12 +14,12 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.apps.keyword.repository;
+package ch.elca.el4j.apps.keyword.dao;
 
-import ch.elca.el4j.services.persistence.generic.repo.RepositoryRegistry;
+import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 
 /**
- * A repository registry for the keyword application.
+ * A DAO registry for the keyword application.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -30,9 +30,11 @@ import ch.elca.el4j.services.persistence.generic.repo.RepositoryRegistry;
  *
  * @author Adrian Moos (AMS)
  */
-public interface KeywordRepositoryRegistry extends RepositoryRegistry {
+public interface KeywordDaoRegistry extends DaoRegistry {
     /**
-     * Returns the keyword repository.
+     * Returns a keyword DAO.
+     * 
+     * @return A keyword DAO
      */
-    KeywordRepository getForKeyword();
+    KeywordDao getForKeyword();
 }

@@ -22,13 +22,13 @@ import java.util.Set;
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
 import ch.elca.el4j.apps.refdb.dto.BookDto;
 import ch.elca.el4j.apps.refdb.dto.ReferenceDto;
-import ch.elca.el4j.services.persistence.generic.repo.AbstractIdentityFixer;
-import ch.elca.el4j.services.persistence.generic.repo.IdentityFixedRepository;
-import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeListener;
-import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier.Change;
-import ch.elca.el4j.services.persistence.generic.repo.RepositoryChangeNotifier.NewEntityState;
-import ch.elca.el4j.services.persistence.generic.repo.RepositoryRegistry;
-import ch.elca.el4j.services.persistence.generic.repo.SimpleGenericRepository;
+import ch.elca.el4j.services.persistence.generic.dao.AbstractIdentityFixer;
+import ch.elca.el4j.services.persistence.generic.dao.DaoChangeListener;
+import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
+import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
+import ch.elca.el4j.services.persistence.generic.dao.IdentityFixedDao;
+import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.Change;
+import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.NewEntityState;
 import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
 
 /**
@@ -44,34 +44,34 @@ import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
  *
  * @author Adrian Moos (AMS)
  */
-public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
-    /** The repository registry to be used in tests. */
-    protected RepositoryRegistry m_repoRegistry;
+public abstract class AbstractIdentityFixerTest /*extends AbstractTestCaseBase*/ {
+    /** The repository registry to be used in tests. *//*
+    protected DaoRegistry m_repoRegistry;
     
-    /** The identity fixer to be tested. */
+    *//** The identity fixer to be tested. *//*
     protected AbstractIdentityFixer m_fixer;
 
-    /***/
-    private IdentityFixedRepository<KeywordDto> m_keywordRepo;
-    /***/
-    private IdentityFixedRepository<ReferenceDto> m_refRepo;
+    *//***//*
+    private IdentityFixedDao<KeywordDto> m_keywordRepo;
+    *//***//*
+    private IdentityFixedDao<ReferenceDto> m_refRepo;
 
-    /**
+    *//**
      * Returns the identity fixing proxy for the repository that is responsible
      * for entities of type {@code T}.
-     */
+     *//*
     @SuppressWarnings("unchecked")
     private <T> 
-    IdentityFixedRepository<T> identityFixedRepoFor(Class<T> c) {
-        return (IdentityFixedRepository<T>) m_fixer.new GenericInterceptor(
-                IdentityFixedRepository.class
+    IdentityFixedDao<T> identityFixedRepoFor(Class<T> c) {
+        return (IdentityFixedDao<T>) m_fixer.new GenericInterceptor(
+                IdentityFixedDao.class
             ).decorate(
                 m_repoRegistry.getFor(c)
             );
     }
     
 
-    /** {@inheritDoc} */
+    *//** {@inheritDoc} *//*
     @Override
     protected void setUp() throws Exception {
         super.setUp();
@@ -79,7 +79,7 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
         m_refRepo =     identityFixedRepoFor(ReferenceDto.class);
     }
     
-    /***/
+    *//***//*
     public void testSaveFind() {
         KeywordDto kw = new KeywordDto();
         kw.setName("test");
@@ -98,11 +98,11 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
         );
     }
     
-    /** 
+    *//** 
      * Tests saving an entity with associations, checks proper handling
      * of subtyping relationships among entities and change notification for
      * attached entities.
-     */
+     *//*
     public void testAssociationsAndDynamicTypeAndChangeNotifications() {
         KeywordDto kw = new KeywordDto();
         kw.setName("hibernate");
@@ -127,7 +127,7 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
             rec.m_change instanceof NewEntityState
         );
         assertEquals(
-            "wrong changee", kw, ((NewEntityState) rec.m_change).changee);
+            "wrong changee", kw, ((NewEntityState) rec.m_change).getChangee());
         assertSame(hia, ref);
         assertTrue(
             "wrong dynamic type", ref instanceof BookDto);
@@ -137,27 +137,27 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
         assertEquals("state not propagated", kwn.getName(), "Another name");
     }
     
-    /** Renames the only keyword to "another name". */
+    *//** Renames the only keyword to "another name". *//*
     private void renameKeyword() {
-        SimpleGenericRepository<KeywordDto> otherKeywordRepo
+        GenericDao<KeywordDto> otherKeywordRepo
             = m_repoRegistry.getFor(KeywordDto.class);
         KeywordDto okw = otherKeywordRepo.findAll().iterator().next();
         okw.setName("Another name");
         otherKeywordRepo.saveOrUpdate(okw);
     }
     
-    /** Records the first change notification received. */
+    *//** Records the first change notification received. *//*
     // the order of update notifications is not specified. This test depends on
     // it only to keep the implementation simple.
-    private class UpdateRecorder implements RepositoryChangeListener {
-        /** the first change recorded, or null if there wasn't any so far. */
+    private class UpdateRecorder implements DaoChangeListener {
+        *//** the first change recorded, or null if there wasn't any so far. *//*
         Change m_change;
         
-        /** {@inheritDoc} */
+        *//** {@inheritDoc} *//*
         public void changed(Change change) {
             if (this.m_change == null) {
                 this.m_change = change;
             }
         }
-    }
+    }*/
 }
