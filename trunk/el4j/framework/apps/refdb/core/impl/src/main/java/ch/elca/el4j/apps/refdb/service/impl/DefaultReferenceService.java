@@ -54,50 +54,50 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * 
  * @author Martin Zeltner (MZE)
  */
-public class DefaultReferenceService extends DefaultKeywordService
-    implements ReferenceService {
+public class DefaultReferenceService /*extends DefaultKeywordService
+    implements ReferenceService*/ {
     /**
      * Inner reference to the working dao.
      */
-    private ReferenceDao m_referenceDao;
+    /*private ReferenceDao m_referenceDao;
 
-    /**
+    *//**
      * @return Returns the referenceDao.
-     */
+     *//*
     public ReferenceDao getReferenceDao() {
         return m_referenceDao;
     }
 
-    /**
+    *//**
      * @param referenceDao
      *            The referenceDao to set.
-     */
+     *//*
     public void setReferenceDao(ReferenceDao referenceDao) {
         m_referenceDao = referenceDao;
         setKeywordDao(referenceDao);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     public void afterPropertiesSet() throws Exception {
         super.afterPropertiesSet();
         CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
             getReferenceDao(), "referenceDao", this);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public AnnotationDto getAnnotationByKey(int key)
         throws DataAccessException, DataRetrievalFailureException {
         return getReferenceDao().getAnnotationByKey(key);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List getAnnotationsByAnnotator(String annotator)
         throws DataAccessException {
@@ -105,25 +105,25 @@ public class DefaultReferenceService extends DefaultKeywordService
         return getReferenceDao().getAnnotationsByAnnotator(annotator);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List getAnnotationsByReference(int key) throws DataAccessException {
         return getReferenceDao().getAnnotationsByReference(key);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List getAllAnnotations() throws DataAccessException {
         return getReferenceDao().getAllAnnotations();
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     @Transactional(propagation = Propagation.REQUIRED)
     public AnnotationDto saveAnnotation(AnnotationDto annotation)
         throws DataAccessException, InsertionFailureException, 
@@ -132,52 +132,52 @@ public class DefaultReferenceService extends DefaultKeywordService
         return getReferenceDao().saveAnnotation(annotation);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     @Transactional(propagation = Propagation.REQUIRED)
     public void removeAnnotation(int key) throws DataAccessException, 
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
         getReferenceDao().removeAnnotation(key);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public FileDto getFileByKey(int key) throws DataAccessException, 
         DataRetrievalFailureException {
         return getReferenceDao().getFileByKey(key);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List getFilesByName(String name) throws DataAccessException {
         Reject.ifEmpty(name);
         return getReferenceDao().getFilesByName(name);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List getFilesByReference(int key) throws DataAccessException {
         return getReferenceDao().getFilesByReference(key);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List getAllFiles() throws DataAccessException {
         return getReferenceDao().getAllFiles();
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     @Transactional(propagation = Propagation.REQUIRED)
     public FileDto saveFile(FileDto file) throws DataAccessException, 
         InsertionFailureException, OptimisticLockingFailureException {
@@ -185,27 +185,27 @@ public class DefaultReferenceService extends DefaultKeywordService
         return getReferenceDao().saveFile(file);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     @Transactional(propagation = Propagation.REQUIRED)
     public void removeFile(int key) throws DataAccessException, 
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
         getReferenceDao().removeFile(key);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List getFileDescriptorViewsByReference(int key)
         throws DataAccessException {
         return getReferenceDao().getFileDescriptorViewsByReference(key);
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     @Transactional(propagation = Propagation.REQUIRED)
     public FileDescriptorView modifyFileDescriptorView(
         FileDescriptorView fileView) throws DataAccessException, 
@@ -214,9 +214,9 @@ public class DefaultReferenceService extends DefaultKeywordService
         return getReferenceDao().modifyFileDescriptorView(fileView);
     }
 
-    /**
+    *//**
      * {@inheritDoc}      
-     */
+     *//*
     @Transactional(propagation = Propagation.REQUIRED)
     public FileDescriptorView saveFileAndReturnFileDescriptorView(FileDto file)
         throws DataAccessException, InsertionFailureException, 
@@ -240,9 +240,9 @@ public class DefaultReferenceService extends DefaultKeywordService
         return fileView;
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public ReferenceDto getReferenceByKey(int key)
         throws DataAccessException, DataRetrievalFailureException {
@@ -273,9 +273,9 @@ public class DefaultReferenceService extends DefaultKeywordService
         return reference;
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public List getReferencesByName(String name) throws DataAccessException {
         Reject.ifEmpty(name);
@@ -294,9 +294,9 @@ public class DefaultReferenceService extends DefaultKeywordService
         return list;
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List getAllReferences() throws DataAccessException {
         List listLinks 
@@ -313,9 +313,9 @@ public class DefaultReferenceService extends DefaultKeywordService
         return list;
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)    
     public List searchReferences(QueryObject query)
         throws DataAccessException {
@@ -333,9 +333,9 @@ public class DefaultReferenceService extends DefaultKeywordService
         return list;
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     @Transactional(propagation = Propagation.REQUIRED)
     public ReferenceDto saveReference(ReferenceDto reference)
         throws DataAccessException, InsertionFailureException, 
@@ -361,9 +361,9 @@ public class DefaultReferenceService extends DefaultKeywordService
         return newReference;
     }
 
-    /**
+    *//**
      * {@inheritDoc}
-     */
+     *//*
     @Transactional(propagation = Propagation.REQUIRED)
     public void removeReference(int key) throws DataAccessException, 
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
@@ -391,5 +391,5 @@ public class DefaultReferenceService extends DefaultKeywordService
                 .notifyJdbcUpdateAffectedIncorrectNumberOfRows(
                     Constants.REFERENCE, "deleteReferenceType", 1, 0);
         }
-    }
+    }*/
 }

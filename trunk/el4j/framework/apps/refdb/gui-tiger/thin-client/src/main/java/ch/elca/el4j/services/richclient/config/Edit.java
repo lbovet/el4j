@@ -34,6 +34,7 @@ import ch.elca.el4j.services.persistence.generic.DaoAgency;
 import ch.elca.el4j.services.persistence.generic.dao.ConvenientGenericDao;
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
 import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
+import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
 import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
 import ch.elca.el4j.util.codingsupport.annotations.Preliminary;
 import ch.elca.el4j.util.collections.ExtendedList;
@@ -59,7 +60,7 @@ import ch.elca.el4j.util.observer.impl.SettableObservableValue;
  *
  * @author Adrian Moos (AMS)
  */
-public class Edit extends AbstractGenericView {
+public class Edit<T extends PrimaryKeyOptimisticLockingObject> extends AbstractGenericView<T> {
     /** specifies which properties are shown and which are changeable. */
     public EditablePropertyList properties;
     
@@ -84,7 +85,7 @@ public class Edit extends AbstractGenericView {
     }
     
     /***/
-    class Executor<T> extends AbstractBeanPropertiesExecutor {
+    class Executor<T extends PrimaryKeyOptimisticLockingObject> extends AbstractBeanPropertiesExecutor {
         ///////////////////////
         // persistence logic
         ///////////////////////
@@ -273,7 +274,7 @@ public class Edit extends AbstractGenericView {
      * {@inheritDoc}
      */
     @Override
-    protected <T> ViewDescriptor createDescriptor(Class<T> clazz) {
+    protected <T extends PrimaryKeyOptimisticLockingObject> ViewDescriptor createDescriptor(Class<T> clazz) {
         m_visible = properties.m_eprops
             .filtered(DisplayablePropertyList.s_visibles);
 

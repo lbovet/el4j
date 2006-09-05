@@ -14,16 +14,15 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.apps.keyword.repository.impl.hibernate;
+package ch.elca.el4j.apps.keyword.dao.impl.ibatis;
 
+import ch.elca.el4j.apps.keyword.dao.KeywordDaoRegistry;
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
-import ch.elca.el4j.apps.keyword.repository.KeywordRepositoryRegistry;
-import ch.elca.el4j.services.persistence.dao.GenericHibernateRepository;
-import ch.elca.el4j.services.persistence.dao.HibernateRepositoryRegistry;
+import ch.elca.el4j.services.persistence.ibatis.dao.GenericSqlMapDao;
+import ch.elca.el4j.services.persistence.ibatis.dao.SqlMapDaoRegistry;
 
 /**
- * Repository registry for the keyword-application with hibernate-backed
- * persistence.
+ * DAO registry for the keyword application with iBatis-backed persistence.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -32,29 +31,29 @@ import ch.elca.el4j.services.persistence.dao.HibernateRepositoryRegistry;
  *    "$Author$"
  * );</script>
  *
- * @author Adrian Moos (AMS)
+ * @author Alex Mathey (AMA)
  */
-public class HibernateKeywordRepositoryRegistry 
-    extends HibernateRepositoryRegistry 
-    implements KeywordRepositoryRegistry {
+public class SqlMapKeywordDaoRegistry extends SqlMapDaoRegistry 
+    implements KeywordDaoRegistry {
 
     /**
      * Constructor.
      */
-    protected HibernateKeywordRepositoryRegistry() {
-        super.setRepos(
-            new HibernateKeywordRepository()
+    protected SqlMapKeywordDaoRegistry() {
+        super.setDaos(
+            new SqlMapKeywordDao()
         );
     }
     
     /**
-     * Returns the keyword repository.
-     * @return The keyword repository
+     * Returns the keyword DAO.
+     * 
+     * @return The keyword DAO
      */
     @SuppressWarnings("unchecked")
-    public HibernateKeywordRepository getForKeyword() {
-        return (HibernateKeywordRepository) 
-            (GenericHibernateRepository<KeywordDto, Integer>)
-            getFor(KeywordDto.class);
+    public SqlMapKeywordDao getForKeyword() {
+        return (SqlMapKeywordDao) (GenericSqlMapDao<KeywordDto, Integer>)
+        getFor(KeywordDto.class);
     }
+    
 }

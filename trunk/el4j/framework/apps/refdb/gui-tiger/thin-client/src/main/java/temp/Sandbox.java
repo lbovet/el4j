@@ -19,6 +19,7 @@ package temp;
 import ch.elca.el4j.services.persistence.generic.dao.AbstractIdentityFixer;
 import ch.elca.el4j.services.persistence.generic.dao.IdentityFixedDao;
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
+import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
 import ch.elca.el4j.services.persistence.hibernate.HibernateProxyAwareIdentityFixer;
 
 public class Sandbox {
@@ -29,7 +30,7 @@ public class Sandbox {
         = identityFixer.new GenericInterceptor(IdentityFixedDao.class);
     
     @SuppressWarnings("unchecked")
-    static <T> IdentityFixedDao<T> fix(
+    static <T extends PrimaryKeyOptimisticLockingObject> IdentityFixedDao<T> fix(
         GenericDao<T> identityManglingRepo) {
         
         return (IdentityFixedDao<T>)
