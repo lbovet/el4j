@@ -25,6 +25,7 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.project.MavenProject;
 import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -90,12 +91,37 @@ public class AggregateFilesMojo extends AbstractMojo {
      * @required
      */
     protected boolean allowOverwrite;
+    
+    /**
+     * Flag to indicate if child projects should be visited.
+     * 
+     * @parameter expression="${aggregate.visitChildProjects}"
+     *            default-value="false"
+     * @required
+     */
+    protected boolean visitChildProjects;
+    
+    /**
+     * The Maven project.
+     *
+     * @parameter expression="${project}"
+     * @readonly
+     */
+    protected MavenProject project;
     // Checkstyle: MemberName on
     
     /**
      * {@inheritDoc}
      */
     public void execute() throws MojoExecutionException, MojoFailureException {
+        Log log = getLog();
+        if (!visitChildProjects
+            && project != null && !project.isExecutionRoot()) {
+            log.info("Current project is a child project. "
+                + "Execution will be skipped.");
+            return;
+        }
+        
         // rootSourceDirectory checks
         Assert.isTrue(rootSourceDirectory != null 
             && rootSourceDirectory.isDirectory() 
@@ -122,7 +148,6 @@ public class AggregateFilesMojo extends AbstractMojo {
         Assert.notNull(targetDirectory, "No target directory given!");
         targetDirectory.mkdirs();
 
-        Log log = getLog();
         PathMatchingResourcePatternResolver resolver 
             = new PathMatchingResourcePatternResolver(
                 new FileSystemResourceLoader());
