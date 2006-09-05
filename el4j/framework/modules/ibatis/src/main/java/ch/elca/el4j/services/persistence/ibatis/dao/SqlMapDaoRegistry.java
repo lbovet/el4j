@@ -16,6 +16,44 @@
  */
 package ch.elca.el4j.services.persistence.ibatis.dao;
 
-public class SqlMapDaoRegistry {
+import java.io.Serializable;
 
+import ch.elca.el4j.services.persistence.generic.dao.impl.SettableDaoRegistry;
+import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
+
+/**
+ * 
+ * A DAO registry for SqlMap DAOs. DAOs are configured upon registration.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Alex Mathey (AMA)
+ */
+public class SqlMapDaoRegistry extends
+    SettableDaoRegistry<GenericSqlMapDao<?, ?>> {
+     
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public <T extends PrimaryKeyOptimisticLockingObject> GenericSqlMapDao<T, ?>
+    getFor(Class<T> entityType) {
+
+        GenericSqlMapDao<T, ?> sd = (GenericSqlMapDao<T, ?>) super
+            .getFor(entityType);
+
+        if (sd == null) {
+            sd = new GenericSqlMapDao<T, Serializable>();
+            sd.setPersistentClass(entityType);
+            register(sd);
+        }
+
+        return sd;
+    }
+  
 }

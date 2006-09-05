@@ -32,6 +32,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ch.elca.el4j.services.persistence.generic.dao.ConvenientGenericDao;
 import ch.elca.el4j.services.persistence.generic.dao.annotations.ReturnsUnchangedParameter;
+import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
 import ch.elca.el4j.services.persistence.hibernate.criteria.CriteriaTransformer;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.Reject;
@@ -42,10 +43,10 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * interface.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
+ *   ("$URL:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/hibernate/src/main/java/ch/elca/el4j/services/persistence/hibernate/dao/GenericHibernateDao.java $",
+ *    "$Revision:1059 $",
+ *    "$Date:2006-09-04 13:33:11 +0000 (Mo, 04 Sep 2006) $",
+ *    "$Author:mathey $"
  * );</script>
  *
  * @param <T>
@@ -56,7 +57,8 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * @author Philipp Oser (POS)
  * @author Alex Mathey (AMA)
  */
-public class GenericHibernateDao<T, ID extends Serializable>
+public class GenericHibernateDao<T extends PrimaryKeyOptimisticLockingObject,
+    ID extends Serializable>
     extends HibernateDaoSupport
     implements ConvenientGenericDao<T, ID>, InitializingBean {
     

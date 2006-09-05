@@ -24,6 +24,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
+import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
+
 /**
  * Extends the SimpleGenericDao with a few convenience methods.
  * 
@@ -35,15 +37,16 @@ import org.springframework.dao.OptimisticLockingFailureException;
  * );</script>
  *
  * @param <T>
- *            The domain class the DAO is responsible for
+ *            The generic type of the domain class the DAO is responsible for
  * @param <ID>
- *            The type of the domain class' identifier
+ *            The generic type of the domain class' identifier
  *
  * @author Philipp Oser (POS)
  * @author Alex Mathey (AMA)
  */
-public interface ConvenientGenericDao<T, ID extends Serializable> 
-         extends GenericDao<T> {
+public interface ConvenientGenericDao<T 
+    extends PrimaryKeyOptimisticLockingObject, ID extends Serializable>
+    extends GenericDao<T> {
     
     /**
      * Retrieves a domain object by identifier.

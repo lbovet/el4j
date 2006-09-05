@@ -18,6 +18,7 @@ package ch.elca.el4j.services.persistence.generic;
 
 import ch.elca.el4j.services.persistence.generic.dao.DaoChangeListener;
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
+import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
 
 /**
  * A registry for {@link DaoAgent}s relaying change notifications
@@ -43,5 +44,5 @@ public interface DaoAgency
      * @param entityType The entity type for which a DAO agent will be returned
      * @return A DAO agent for the given entity type  
      */
-    <T> DaoAgent<T> getFor(Class<T> entityType);
+    <T extends PrimaryKeyOptimisticLockingObject> DaoAgent<T> getFor(Class<T> entityType);
 }

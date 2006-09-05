@@ -34,6 +34,7 @@ import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.EntityDel
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
 import ch.elca.el4j.services.persistence.generic.dao.IdentityFixedDao;
+import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
 
 /**
  * Wraps a DAO registry's daos with {@link DaoAgent}.
@@ -83,7 +84,7 @@ public class DefaultDaoAgency
 
     /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
-    public <T> DaoAgent<T> getFor(Class<T> entityType) {
+    public <T extends PrimaryKeyOptimisticLockingObject> DaoAgent<T> getFor(Class<T> entityType) {
         DaoAgent<T> agent
             = (DaoAgent<T>)
                 m_agents.get(entityType);

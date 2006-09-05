@@ -21,6 +21,7 @@ import java.io.Serializable;
 import org.hibernate.SessionFactory;
 
 import ch.elca.el4j.services.persistence.generic.dao.impl.SettableDaoRegistry;
+import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
 
 /**
  * A DAO registry for Hibernate DAOs. DAOs are configured upon registration
@@ -69,7 +70,8 @@ public class HibernateDaoRegistry
 
     /** {@inheritDoc} */
     @Override
-    public <T> GenericHibernateDao<T, ?> getFor(Class<T> entityType) {
+    public <T extends PrimaryKeyOptimisticLockingObject> 
+    GenericHibernateDao<T, ?> getFor(Class<T> entityType) {
 
         GenericHibernateDao<T, ?> hd 
             = (GenericHibernateDao<T, ?>)
