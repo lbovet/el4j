@@ -65,7 +65,6 @@
                                         </properties>
                                         <pingURL>http://${jee-web.host}:${jee-web.port}/module-remoting-tests-web</pingURL>
                                         <pingTimeout>120000</pingTimeout>
-                                        <checkType>true</checkType>
                                     </deployable>
                                 </deployables>
                             </deployer>
