@@ -54,10 +54,10 @@ import junit.framework.TestCase;
  * <code>DefaultXmlMerge</code> instance.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
+ *   ("$URL:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/xml_merge/common/src/test/java/ch/elca/el4j/tests/xmlmerge/DefaultMergeTest.java $",
+ *    "$Revision:1078 $",
+ *    "$Date:2006-09-04 16:40:08 +0000 (Mo, 04 Sep 2006) $",
+ *    "$Author:mathey $"
  * );</script>
  *
  * @author Laurent Bovet (LBO)
@@ -500,10 +500,10 @@ public class DefaultMergeTest extends TestCase {
      * elements match only if their tag name is "servlet-name".
      *
      * <script type="text/javascript">printFileStatus
-     *   ("$URL$",
-     *    "$Revision$",
-     *    "$Date$",
-     *    "$Author$"
+     *   ("$URL:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/xml_merge/common/src/test/java/ch/elca/el4j/tests/xmlmerge/DefaultMergeTest.java $",
+     *    "$Revision:1078 $",
+     *    "$Date:2006-09-04 16:40:08 +0000 (Mo, 04 Sep 2006) $",
+     *    "$Author:mathey $"
      * );</script>
      *
      * @author Laurent Bovet (LBO)
@@ -590,7 +590,7 @@ public class DefaultMergeTest extends TestCase {
         };
         
         String conf = "xpath.path1=/web-app/servlet" + NL
-                + "matcher.path1=ch.elca.el4j.xmlmerge."
+                + "matcher.path1=ch.elca.el4j.tests.xmlmerge."
                 + "DefaultMergeTest$ServletNameMatcher" + NL
                 + "xpath.path2=/web-app/servlet/servlet-name" + NL
                 + "action.path2=PRESERVE" + NL
