@@ -301,7 +301,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
-                    <version>2.0.1</version>
+                    <version>2.0.2-20060907.100703-1</version>
                     <configuration>
                         <warName>${jee-web.war.name}</warName>
                         <webappDirectory>${jee-web.webapp.directory}</webappDirectory>
@@ -343,7 +343,7 @@
                 <plugin>
                     <groupId>org.codehaus.cargo</groupId>
                     <artifactId>cargo-maven2-plugin</artifactId>
-                    <version>0.3-SNAPSHOT</version>
+                    <version>0.3-20060907.134328-2</version>
                     <configuration>
                         <wait>${jee-web.wait}</wait>
                         <container>
@@ -418,17 +418,22 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
-                    <version>2.0-beta-5</version>
+                    <version>2.0-20060907.091343-1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
-                    <version>2.0</version>
+                    <!--
+                        Do not define the version here because Maven will
+                        try to use another version anyway. Define it in reporting
+                        section.
+                    -->
+                    <!--version>2.0.1</version-->
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>2.1-SNAPSHOT</version>
+                    <version>2.1-20060907.065424-2</version>
                     <configuration>
                         <stylesheetfile>${el4j.home}/external/framework/etc/javadoc/stylesheet.css</stylesheetfile>
                         <source>1.5</source>
@@ -595,31 +600,122 @@
     <repositories>
         <repository>
             <snapshots>
-                <enabled>true</enabled>
+                <enabled>false</enabled>
             </snapshots>
-            <id>el4jModuleRepositoryExternal</id>
-            <name>External repository of the EL4J project</name>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <id>el4jReleaseRepositoryExternal</id>
+            <name>External release repository of the EL4J project</name>
             <url>http://el4.elca-services.ch/el4j/maven2repository</url>
+        </repository>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <id>el4jReleaseRepositoryInternal</id>
+            <name>Internal release repository of the EL4J project</name>
+            <url>http://leaffy.elca.ch/java/maven2repository</url>
         </repository>
         <repository>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
-            <id>el4jModuleRepositoryInternal</id>
-            <name>Internal repository of the EL4J project</name>
-            <url>http://leaffy.elca.ch/java/maven2repository</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <id>el4jSnapshotRepositoryExternal</id>
+            <name>External snapshot repository of the EL4J project</name>
+            <url>http://el4.elca-services.ch/el4j/maven2snapshots</url>
         </repository>
+        <!--
+            Internal snapshot repository commented because it is currently empty.
+            ==> Faster build-process
+        -->
+        <!--repository>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <id>el4jSnapshotRepositoryInternal</id>
+            <name>Internal snapshot repository of the EL4J project</name>
+            <url>http://leaffy.elca.ch/java/maven2snapshots</url>
+        </repository-->
     </repositories>
     <pluginRepositories>
         <pluginRepository>
             <snapshots>
-                <enabled>true</enabled>
+                <enabled>false</enabled>
             </snapshots>
-            <id>el4jPluginRepositoryExternal</id>
-            <name>External repository of the EL4J project</name>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <id>el4jReleasePluginRepositoryExternal</id>
+            <name>External release repository of the EL4J project</name>
             <url>http://el4.elca-services.ch/el4j/maven2repository</url>
         </pluginRepository>
+        <pluginRepository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <id>el4jReleasePluginRepositoryInternal</id>
+            <name>Internal release repository of the EL4J project</name>
+            <url>http://leaffy.elca.ch/java/maven2repository</url>
+        </pluginRepository>
+        <pluginRepository>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <id>el4jSnapshotPluginRepositoryExternal</id>
+            <name>External snapshot repository of the EL4J project</name>
+            <url>http://el4.elca-services.ch/el4j/maven2snapshots</url>
+        </pluginRepository>
+        <!--
+            Internal snapshot repository commented because it is currently empty.
+            ==> Faster build-process
+        -->
+        <!--pluginRepository>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <id>el4jSnapshotPluginRepositoryInternal</id>
+            <name>Internal snapshot repository of the EL4J project</name>
+            <url>http://leaffy.elca.ch/java/maven2snapshots</url>
+        </pluginRepository-->
     </pluginRepositories>
+    <distributionManagement>
+        <repository>
+            <id>${distmgt.repository.id.external}</id>
+            <name>${distmgt.repository.name.external}</name>
+            <url>${distmgt.repository.url.external}</url>
+        </repository>
+        <snapshotRepository>
+            <id>${distmgt.snapshot-repository.id.external}</id>
+            <name>${distmgt.snapshot-repository.name.external}</name>
+            <url>${distmgt.snapshot-repository.url.external}</url>        
+        </snapshotRepository>
+
+        <!-- For testing only! -->
+        <site>
+            <id>pcmzeSite</id>
+            <name>Local website tryout location of MZE.</name>
+            <url>scp://pcmze/maven2site</url>
+        </site>
+    </distributionManagement>
     <dependencyManagement>
         <dependencies>
             <!-- **************************** -->
@@ -1176,124 +1272,118 @@
 
         </dependencies>
     </dependencyManagement>
-    <distributionManagement>
-        <repository>
-            <id>${distmgt.repository.id.external}</id>
-            <name>${distmgt.repository.name.external}</name>
-            <url>${distmgt.repository.url.external}</url>
-        </repository>
-
-        <!-- For testing only! -->
-        <site>
-            <id>pcmzeSite</id>
-            <name>Local website tryout location of MZE.</name>
-            <url>scp://pcmze/maven2site</url>
-        </site>
-    </distributionManagement>
     <properties>
         <!-- Distribution mgt repository ids, names and urls -->
         <distmgt.repository.id.external>ftpEl4ElcaServices</distmgt.repository.id.external>
-        <distmgt.repository.name.external>FTP server ELCA services for EL4 projects</distmgt.repository.name.external>
-        <distmgt.repository.url.external>ftp://el4.elca-services.ch/htdocs/el4j/maven2repository/</distmgt.repository.url.external>
+        <distmgt.repository.name.external>External EL4J repository</distmgt.repository.name.external>
+        <distmgt.repository.url.external>ftp://el4.elca-services.ch/htdocs/el4j/maven2repository</distmgt.repository.url.external>
 
         <distmgt.repository.id.internal>sshLeaffy</distmgt.repository.id.internal>
         <distmgt.repository.name.internal>Internal EL4J repository</distmgt.repository.name.internal>
         <distmgt.repository.url.internal>scp://leaffy/home/java/maven2repository</distmgt.repository.url.internal>
 
+        <distmgt.snapshot-repository.id.external>ftpEl4ElcaServicesSnapshot</distmgt.snapshot-repository.id.external>
+        <distmgt.snapshot-repository.name.external>External EL4J snapshot repository</distmgt.snapshot-repository.name.external>
+        <distmgt.snapshot-repository.url.external>ftp://el4.elca-services.ch/htdocs/el4j/maven2snapshots</distmgt.snapshot-repository.url.external>
+
+        <distmgt.snapshot-repository.id.internal>sshLeaffySnapshot</distmgt.snapshot-repository.id.internal>
+        <distmgt.snapshot-repository.name.internal>Internal EL4J snapshot repository</distmgt.snapshot-repository.name.internal>
+        <distmgt.snapshot-repository.url.internal>scp://leaffy/home/java/maven2snapshots</distmgt.snapshot-repository.url.internal>
+
 
 
         <!-- EL4J framework plugin version numbers -->
         <version.maven-repohelper-plugin>
-            1.0-alpha1
+            1.0-SNAPSHOT
         </version.maven-repohelper-plugin>
         <version.maven-manifest-decorator-plugin>
-            1.0-alpha1
+            1.0-SNAPSHOT
         </version.maven-manifest-decorator-plugin>
         <version.maven-checkclipse-helper-plugin>
-            1.0-alpha1
+            1.0-SNAPSHOT
         </version.maven-checkclipse-helper-plugin>
         <version.maven-env-support-plugin>
-            1.0-alpha1
+            1.0-SNAPSHOT
         </version.maven-env-support-plugin>
         <version.maven-file-collector-plugin>
-            1.0-alpha1
+            1.0-SNAPSHOT
         </version.maven-file-collector-plugin>
 
         <!-- EL4J framework module version numbers -->
         <version.module-core>
-            1.5-alpha1
+            1.5-SNAPSHOT
         </version.module-core>
         <version.module-daemon_manager>
-            1.4-alpha1
+            1.4-SNAPSHOT
         </version.module-daemon_manager>
         <version.module-env>
-            1.3-alpha1
+            1.3-SNAPSHOT
         </version.module-env>
         <version.module-exception_handling>
-            1.1-alpha1
+            1.1-SNAPSHOT
         </version.module-exception_handling>
         <version.module-hibernate>
-            1.2-alpha1
+            1.2-SNAPSHOT
         </version.module-hibernate>
         <version.module-ibatis>
-            1.1-alpha1
+            1.1-SNAPSHOT
         </version.module-ibatis>
         <version.module-jmx>
-            1.3-alpha1
+            1.3-SNAPSHOT
         </version.module-jmx>
         <version.module-light_statistics>
-            1.1-alpha1
+            1.1-SNAPSHOT
         </version.module-light_statistics>
         <version.module-remoting_core>
-            2.1-alpha1
+            2.1-SNAPSHOT
         </version.module-remoting_core>
         <version.module-remoting_caucho>
-            2.1-alpha1
+            2.1-SNAPSHOT
         </version.module-remoting_caucho>
         <version.module-remoting_soap>
-            2.1-alpha1
+            2.1-SNAPSHOT
         </version.module-remoting_soap>
         <version.module-remoting_xfire>
-            2.1-alpha1
+            2.1-SNAPSHOT
         </version.module-remoting_xfire>
         <version.module-remoting_ejb>
-            2.1-alpha1
+            2.1-SNAPSHOT
         </version.module-remoting_ejb>
         <version.module-security>
-            1.2-alpha1
+            1.2-SNAPSHOT
         </version.module-security>
         <version.module-spring_rcp>
-            1.3-alpha1
+            1.3-SNAPSHOT
         </version.module-spring_rcp>
         <version.module-tcp_forwarder>
-			1.0-alpha1
+			1.0-SNAPSHOT
         </version.module-tcp_forwarder>
         <version.module-web>
-            1.4-alpha1
+            1.4-SNAPSHOT
         </version.module-web>
         <version.module-webtest>
-			1.0-alpha1
+			1.0-SNAPSHOT
         </version.module-webtest>
         <version.module-xml_merge>
-			1.0-alpha1
+			1.0-SNAPSHOT
         </version.module-xml_merge>
         <version.module-remoting-tests>
-            1.0-alpha1
+            1.0-SNAPSHOT
         </version.module-remoting-tests>
         <version.module-tcp_forwarder-tests>
-			1.0-alpha1
+			1.0-SNAPSHOT
         </version.module-tcp_forwarder-tests>
         <version.module-remoting-demos>
-            1.0-alpha1
+            1.0-SNAPSHOT
         </version.module-remoting-demos>
         <version.common-database>
-            1.3-alpha1
+            1.3-SNAPSHOT
         </version.common-database>
         <version.application-keyword>
-            2.1-alpha1
+            2.1-SNAPSHOT
         </version.application-keyword>
         <version.application-refdb>
-            2.1-alpha1
+            2.1-SNAPSHOT
         </version.application-refdb>
     </properties>
 </project>
