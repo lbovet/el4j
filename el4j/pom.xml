@@ -301,6 +301,10 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
+                    <!--
+                        Due to bugs fix built snapshot version is used.
+                           * maven-war-plugin (revision 429069)
+                    -->
                     <version>2.0.2-20060907.100703-1</version>
                     <configuration>
                         <warName>${jee-web.war.name}</warName>
@@ -343,6 +347,10 @@
                 <plugin>
                     <groupId>org.codehaus.cargo</groupId>
                     <artifactId>cargo-maven2-plugin</artifactId>
+                    <!--
+                        Due to bugs fix built snapshot version is used.
+                           * cargo-maven2-plugin (revision 1180 + patch http://jira.codehaus.org/browse/CARGO-411)
+                    -->
                     <version>0.3-20060907.134328-2</version>
                     <configuration>
                         <wait>${jee-web.wait}</wait>
@@ -418,6 +426,11 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
+                    <!--
+                        Due to bugs fix built snapshot version is used.
+                           * maven-site-plugin (revision 433356)
+                           * doxia (revision 434153)
+                    -->
                     <version>2.0-20060907.091343-1</version>
                 </plugin>
                 <plugin>
@@ -433,6 +446,10 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
+                    <!--
+                        Due to bugs fix built snapshot version is used.
+                           * maven-javadoc-plugin (revision 439622)
+                    -->
                     <version>2.1-20060907.065424-2</version>
                     <configuration>
                         <stylesheetfile>${el4j.home}/external/framework/etc/javadoc/stylesheet.css</stylesheetfile>
