@@ -17,8 +17,6 @@
 
 package ch.elca.el4j.services.remoting.protocol;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.context.support.StaticApplicationContext;
 import org.springframework.remoting.rmi.RmiProxyFactoryBean;
@@ -41,11 +39,6 @@ import ch.elca.el4j.services.remoting.RemotingServiceExporter;
  * @author Martin Zeltner (MZE)
  */
 public class Rmi extends AbstractInetSocketAddressProtocol {
-    /**
-     * Private logger.
-     */
-    private static Log s_logger = LogFactory.getLog(Rmi.class);
-
     /**
      * {@inheritDoc}
      */
@@ -109,20 +102,5 @@ public class Rmi extends AbstractInetSocketAddressProtocol {
         sb.append("/");
         sb.append(remoteManager.getServiceName());
         return sb.toString();
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void checkRemotingExporter(RemotingServiceExporter serviceExporter)
-        throws Exception {
-        
-        super.checkRemotingExporter(serviceExporter);
-        if (serviceExporter.isSingleton()) {
-            s_logger.info("Service exporter bean '" 
-                + serviceExporter.getBeanName() 
-                + "' is singleton. Will now pre-instantiate exporter object.");
-            serviceExporter.getObject();
-        }
     }
 }

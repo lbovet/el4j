@@ -20,6 +20,8 @@ package ch.elca.el4j.services.remoting;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
@@ -42,6 +44,12 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
  */
 public abstract class AbstractRemotingProtocol implements
         ApplicationContextAware, InitializingBean, DisposableBean {
+    /**
+     * Private logger.
+     */
+    private static Log s_logger 
+        = LogFactory.getLog(AbstractRemotingProtocol.class);
+
     /**
      * With this ApplicationContext the current bean has been created.
      */
@@ -201,7 +209,8 @@ public abstract class AbstractRemotingProtocol implements
     
     /**
      * Checks whether the service exporter is configured properly to be used
-     * with this protocol. Does nothing by default.
+     * with this protocol. Pre-instantiates the object of the given exporter
+     * if it is singleton. This was the default behaviour in SPring 1.2.x.
      * Subclasses may override this behaviour. 
      * 
      * @param serviceExporter
@@ -212,7 +221,13 @@ public abstract class AbstractRemotingProtocol implements
      */
     public void checkRemotingExporter(RemotingServiceExporter serviceExporter)
         throws Exception {
-        // do nothing
+        if (serviceExporter.isSingleton()) {
+            s_logger.info("Service exporter bean '" 
+                + serviceExporter.getBeanName() + "' is a singleton. Will now "
+                + "pre-instantiate exporter object like it was done in "
+                + "Spring 1.2.x.");
+            serviceExporter.getObject();
+        }
     }
     
     /**
