@@ -521,9 +521,8 @@
     </build>
     <modules>
         <module>skin</module>
-        <module>framework</module>
-        <!--module>helloworld</module-->
         <module>helpers</module>
+        <module>framework</module>
     </modules>
     <profiles>
         <!-- JUnit -->
