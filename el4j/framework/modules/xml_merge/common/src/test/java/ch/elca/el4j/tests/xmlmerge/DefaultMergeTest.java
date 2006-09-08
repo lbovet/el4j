@@ -333,7 +333,12 @@ public class DefaultMergeTest extends TestCase {
                 this.getClass().getResourceAsStream("sqlmap1.xml"), 
                 this.getClass().getResourceAsStream("sqlmap2.xml") };
                 
-        OutputStream out = new FileOutputStream("out2.xml");
+        
+        File outputFile 
+            = File.createTempFile("xml-merge-common-tests", "out2.xml");
+        outputFile.deleteOnExit();
+        
+        OutputStream out = new FileOutputStream(outputFile);
         
         Properties props = new Properties();
         props.load(this.getClass().getResourceAsStream("test-dtd.properties"));
@@ -347,12 +352,6 @@ public class DefaultMergeTest extends TestCase {
         
         in.close();                
         out.close();        
-        
-        File outputFile = new File("out2.xml");
-        if (outputFile.exists()) {
-            outputFile.delete();
-        }
-        
     }
     
     /**
