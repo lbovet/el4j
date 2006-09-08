@@ -75,49 +75,4 @@
             </plugin>
         </plugins>
     </reporting>
-    <profiles>
-        <profile>
-            <id>generate-javadoc_set-framework-tests</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>ch.elca.el4j.plugins</groupId>
-                        <artifactId>maven-file-collector-plugin</artifactId>
-                        <configuration>
-                            <rootSourceDirectory>${basedir}/..</rootSourceDirectory>
-                            <sourceDirectoryPatterns>modules/**/src/test/java,tests/**/src/main/java,tests/**/src/test/java</sourceDirectoryPatterns>
-                            <sourceFilePatterns>**/*.java,**/*.html</sourceFilePatterns>
-                            <targetDirectory>${aggregated.files.output.directory}</targetDirectory>
-                            <allowOverwrite>false</allowOverwrite>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>copy-java-sources_set-framework-tests</id>
-                                <phase>pre-site</phase>
-                                <goals>
-                                    <goal>aggregate-files</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <configuration>
-                            <sourcepath>${aggregated.files.output.directory}</sourcepath>
-                            <reportOutputDirectory>${javadoc.output.directory}</reportOutputDirectory>
-                            <doctitle>${javadoc.title}</doctitle>
-                            <windowtitle>${javadoc.title}</windowtitle>
-                            <show>private</show>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-            <properties>
-                <aggregated.files.output.directory>${path.framework.site.build.directory}/aggregated-files/${set.framework-tests}</aggregated.files.output.directory>
-                <javadoc.output.directory>${path.framework.site.build.directory}/site/${set.framework-tests}/apidocs</javadoc.output.directory>
-                <javadoc.title>${javadoc.title.set.framework-tests}</javadoc.title>
-            </properties>
-        </profile>
-    </profiles>
 </project>
