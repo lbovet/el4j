@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.tests.tcpred;
+package ch.elca.el4j.tests.tcpforwarder;
 
 import java.net.Inet4Address;
 import java.net.InetSocketAddress;
@@ -29,7 +29,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import ch.elca.el4j.apps.keyword.dto.KeywordDto;
 import ch.elca.el4j.apps.keyword.service.KeywordService;
 import ch.elca.el4j.core.context.ModuleApplicationContext;
-import ch.elca.el4j.services.tcpred.TcpForwarder;
+import ch.elca.el4j.services.tcpforwarder.TcpForwarder;
 import ch.elca.el4j.util.env.EnvPropertiesUtils;
 
 import junit.framework.TestCase;

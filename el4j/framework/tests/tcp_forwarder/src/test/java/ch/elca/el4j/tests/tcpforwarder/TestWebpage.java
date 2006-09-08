@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.tests.tcpred;
+package ch.elca.el4j.tests.tcpforwarder;
 
 import java.net.Inet4Address;
 import java.net.InetSocketAddress;
@@ -23,7 +23,7 @@ import java.net.SocketAddress;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import ch.elca.el4j.services.tcpred.TcpForwarder;
+import ch.elca.el4j.services.tcpforwarder.TcpForwarder;
 
 import net.sourceforge.jwebunit.TestingEngineRegistry;
 import net.sourceforge.jwebunit.WebTestCase;
