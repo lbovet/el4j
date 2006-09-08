@@ -8,6 +8,21 @@
     <!-- URL: $URL$ -->
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
+    
+    <!--
+       =====================================================================
+       Used version of Maven 2:
+       URL: https://svn.apache.org/repos/asf/maven/components/trunk
+       Revision: 440634
+       
+       + Patch http://jira.codehaus.org/browse/MNG-1412
+            To fix this issue just replace every occurence of 
+            java.util.HashSet with java.util.LinkedHashSet and
+            java.util.HashMap with java.util.LinkedHashMap in component
+            artifacts "maven-project", "maven-artifact" and
+            "maven-artifact-manager".
+       =====================================================================
+    -->
 
     <groupId>ch.elca.el4j</groupId>
     <artifactId>el4j</artifactId>
