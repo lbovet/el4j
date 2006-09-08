@@ -28,7 +28,6 @@
         </plugins>
     </build>
     <modules>
-        <module>plugins</module>
         <module>modules</module>
         <module>apps</module>
         <module>tests</module>
@@ -255,49 +254,6 @@
                 <javadoc.title>${javadoc.title.set.framework-demos}</javadoc.title>
             </properties>
         </profile>
-        <profile>
-            <id>generate.doc.set.framework-plugins</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>ch.elca.el4j.plugins</groupId>
-                        <artifactId>maven-file-collector-plugin</artifactId>
-                        <configuration>
-                            <rootSourceDirectory>${basedir}/plugins</rootSourceDirectory>
-                            <sourceDirectoryPatterns>**/src/main/java,**/src/test/java</sourceDirectoryPatterns>
-                            <sourceFilePatterns>**/*.java,**/*.html</sourceFilePatterns>
-                            <targetDirectory>${aggregated.files.output.directory}</targetDirectory>
-                            <allowOverwrite>false</allowOverwrite>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>copy-java-sources_set-framework-plugins</id>
-                                <phase>pre-site</phase>
-                                <goals>
-                                    <goal>aggregate-files</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <configuration>
-                            <sourcepath>${aggregated.files.output.directory}</sourcepath>
-                            <reportOutputDirectory>${javadoc.output.directory}</reportOutputDirectory>
-                            <doctitle>${javadoc.title}</doctitle>
-                            <windowtitle>${javadoc.title}</windowtitle>
-                            <show>private</show>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-            <properties>
-                <aggregated.files.output.directory>${path.framework.site.build.directory}/aggregated-files/${set.framework-plugins}</aggregated.files.output.directory>
-                <javadoc.output.directory>${path.framework.site.build.directory}/site/${set.framework-plugins}/apidocs</javadoc.output.directory>
-                <javadoc.title>${javadoc.title.set.framework-plugins}</javadoc.title>
-            </properties>
-        </profile>
     </profiles>
     <properties>
         <!-- Sets values -->
@@ -305,13 +261,11 @@
         <set.framework-applications>framework-applications</set.framework-applications>
         <set.framework-tests>framework-tests</set.framework-tests>
         <set.framework-demos>framework-demos</set.framework-demos>
-        <set.framework-plugins>framework-plugins</set.framework-plugins>
         
         <javadoc.title.set.framework-modules>EL4J framework modules ${project.version} API</javadoc.title.set.framework-modules>
         <javadoc.title.set.framework-applications>EL4J framework applications ${project.version} API</javadoc.title.set.framework-applications>
         <javadoc.title.set.framework-tests>EL4J framework tests ${project.version} API</javadoc.title.set.framework-tests>
         <javadoc.title.set.framework-demos>EL4J framework demos ${project.version} API</javadoc.title.set.framework-demos>
-        <javadoc.title.set.framework-plugins>EL4J framework plugins ${project.version} API</javadoc.title.set.framework-plugins>
         
         <!-- General properties -->
         <path.framework.site.build.directory>${el4j.home}/external/framework/site/target</path.framework.site.build.directory>

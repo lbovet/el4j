@@ -541,6 +541,7 @@
     <modules>
         <module>skin</module>
         <module>helpers</module>
+        <module>plugins</module>
         <module>framework</module>
     </modules>
     <profiles>
