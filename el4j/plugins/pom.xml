@@ -11,17 +11,26 @@
     
     <parent>
         <groupId>ch.elca.el4j</groupId>
-        <artifactId>el4j-framework</artifactId>
+        <artifactId>el4j</artifactId>
         <version>1.1.0-SNAPSHOT</version>
     </parent>
     
     <groupId>ch.elca.el4j.plugins</groupId>
-    <artifactId>el4j-framework-plugins</artifactId>
+    <artifactId>el4j-plugins</artifactId>
     <packaging>pom</packaging>
-    <name>EL4J framework plugins</name>
+    <name>EL4J plugins</name>
     <description>
-        Plugins of the EL4J framework.
+        Maven 2 plugins of EL4J.
     </description>
+    <build>
+        <plugins>
+            <!-- Packaging -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
     <modules>
         <module>maven-checkclipse-helper-plugin</module>
         <module>maven-env-support-plugin</module>
@@ -29,6 +38,12 @@
         <module>maven-manifest-decorator-plugin</module>
         <module>maven-file-collector-plugin</module>
     </modules>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+    </dependencies>
     <dependencyManagement>
         <dependencies>
             <dependency>
