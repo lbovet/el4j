@@ -39,15 +39,15 @@ import junit.framework.TestCase;
  * This class tests whether Spring can start if there is no database connection.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
+ *   ("$URL:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/tests/tcp_forwarder/src/test/java/ch/elca/el4j/tests/tcpforwarder/SpringStartupTest.java $",
+ *    "$Revision:1114 $",
+ *    "$Date:2006-09-08 09:39:24 +0000 (Fr, 08 Sep 2006) $",
+ *    "$Author:swisswheel $"
  * );</script>
  *
  * @author Alex Mathey (AMA)
  */
-public class TestSpringStartup extends TestCase {
+public class SpringStartupTest extends TestCase {
     
     
     
@@ -81,7 +81,7 @@ public class TestSpringStartup extends TestCase {
      * Private logger.
      */
     private static Log s_logger 
-        = LogFactory.getLog(TestSpringStartup.class);
+        = LogFactory.getLog(SpringStartupTest.class);
     
     /**
      * Application context to load beans.
