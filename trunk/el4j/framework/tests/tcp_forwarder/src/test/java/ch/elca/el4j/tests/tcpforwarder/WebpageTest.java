@@ -32,16 +32,16 @@ import net.sourceforge.jwebunit.WebTestCase;
  * This class tests the tcp redirector to connect to a web page.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
+ *   ("$URL:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/tests/tcp_forwarder/src/test/java/ch/elca/el4j/tests/tcpforwarder/WebpageTest.java $",
+ *    "$Revision:1114 $",
+ *    "$Date:2006-09-08 09:39:24 +0000 (Fr, 08 Sep 2006) $",
+ *    "$Author:swisswheel $"
  * );</script>
  *
  * @author Florian Suess (FLS)
  * @author Alex Mathey (AMA)
  */
-public class TestWebpage extends WebTestCase {
+public class WebpageTest extends WebTestCase {
  
     /**
      * Delay between the single test steps (in milliseconds).
@@ -67,7 +67,7 @@ public class TestWebpage extends WebTestCase {
      * Private logger.
      */
     private static Log s_logger 
-        = LogFactory.getLog(TestWebpage.class);
+        = LogFactory.getLog(WebpageTest.class);
     
     /**
      * Help variable to test if an exception occured.
