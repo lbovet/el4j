@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.services.tcpred;
+package ch.elca.el4j.services.tcpforwarder;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
