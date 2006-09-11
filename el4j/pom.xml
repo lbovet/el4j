@@ -456,11 +456,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
                     <!--
-                        Do not define the version here because Maven will
+                        Not really useful to define the version here because Maven will
                         try to use another version anyway. Define it in reporting
                         section.
                     -->
-                    <!--version>2.0.1</version-->
+                    <version>${version.maven-project-info-reports-plugin}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -1422,5 +1422,8 @@
         <version.application-refdb>
             2.1-SNAPSHOT
         </version.application-refdb>
+        
+        <!-- Maven plugin versions. Needed due to false dep mgt. -->
+        <version.maven-project-info-reports-plugin>2.0.1</version.maven-project-info-reports-plugin>
     </properties>
 </project>

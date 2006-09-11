@@ -28,26 +28,4 @@
         <module>remoting</module>
         <module>tcp_forwarder</module>
     </modules>
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <reportSets>
-                    <reportSet>
-                        <id>standardReports</id>
-                        <reports>
-                            <report>dependencies</report>
-                            <report>dependency-convergence</report>
-                            <report>issue-tracking</report>
-                            <report>mailing-list</report>
-                            <report>summary</report>
-                            <report>project-team</report>
-                            <report>index</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
-        </plugins>
-    </reporting>
 </project>
