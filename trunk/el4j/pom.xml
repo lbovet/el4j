@@ -543,6 +543,7 @@
         <module>helpers</module>
         <module>plugins</module>
         <module>framework</module>
+        <module>site</module>
     </modules>
     <profiles>
         <!-- JUnit -->
