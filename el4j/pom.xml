@@ -471,7 +471,7 @@
                     -->
                     <version>2.1-20060907.065424-2</version>
                     <configuration>
-                        <stylesheetfile>${el4j.home}/external/framework/etc/javadoc/stylesheet.css</stylesheetfile>
+                        <stylesheetfile>${el4j.home}/external/etc/javadoc/stylesheet.css</stylesheetfile>
                         <source>1.5</source>
                         <aggregate>true</aggregate>
                         <show>protected</show>
@@ -496,7 +496,7 @@
                     <configuration>
                         <aggregate>true</aggregate>
                         <!-- TODO: Create a nice css.
-                        <stylesheet>${el4j.home}/external/framework/etc/javadoc/stylesheet.css</stylesheet>
+                        <stylesheet>${el4j.home}/external/etc/javadoc/stylesheet.css</stylesheet>
                         -->
                     </configuration>
                 </plugin>
@@ -505,7 +505,7 @@
                     <artifactId>maven-checkstyle-plugin</artifactId>
                     <version>2.1</version>
                     <configuration>
-                        <configLocation>${el4j.home}/external/framework/etc/checkstyle/checks.xml</configLocation>
+                        <configLocation>${el4j.home}/external/etc/checkstyle/checks.xml</configLocation>
                         <enableRSS>false</enableRSS>
                         <enableRulesSummary>false</enableRulesSummary>
                     </configuration>
