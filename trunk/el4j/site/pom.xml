@@ -25,4 +25,27 @@
 
     <!-- TODO: Collect site stuff. -->
 
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <!--
+                    Version must be defined here because Maven has already 
+                    defined the version somewhere in the reporting section.
+                -->
+                <version>${version.maven-project-info-reports-plugin}</version>
+                <reportSets>
+                    <reportSet>
+                        <id>standardReports</id>
+                        <reports>
+                            <report>issue-tracking</report>
+                            <report>mailing-list</report>
+                            <report>project-team</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>

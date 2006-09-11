@@ -88,14 +88,18 @@
                     Version must be defined here because Maven has already 
                     defined the version somewhere in the reporting section.
                 -->
-                <version>2.0.1</version>
+                <version>${version.maven-project-info-reports-plugin}</version>
                 <reportSets>
                     <reportSet>
                         <id>standardReports</id>
                         <reports>
+                            <report>dependencies</report>
+                            <report>dependency-convergence</report>
                             <report>issue-tracking</report>
                             <report>mailing-list</report>
+                            <report>summary</report>
                             <report>project-team</report>
+                            <report>index</report>
                         </reports>
                     </reportSet>
                 </reportSets>
