@@ -31,7 +31,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.Assert;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.util.PathMatcher;
 import org.springframework.util.StringUtils;
 
@@ -64,7 +63,6 @@ public class AggregateFilesMojo extends AbstractMojo {
      * find source files.
      * 
      * @parameter expression="${aggregate.sourceDirectoryIncludePatterns}"
-     * @required
      */
     protected String sourceDirectoryIncludePatterns;
     
@@ -248,7 +246,7 @@ public class AggregateFilesMojo extends AbstractMojo {
     }
 
     /**
-     * Resolves the source directories.
+     * Resolves the source files.
      * 
      * @param resolver Is the resolver used for file lookup.
      * @param sourceDirectories Are the src dirs where to lookup files.
@@ -314,7 +312,7 @@ public class AggregateFilesMojo extends AbstractMojo {
                         + sourceDirectoryString + "' by using pattern '" 
                         + filePattern + "'.");
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new MojoExecutionException(
                     "Exception occured while lookup/copying source files.", e);
             }
@@ -328,10 +326,10 @@ public class AggregateFilesMojo extends AbstractMojo {
      * @param relativeFilePath Is the relative path to copy.
      * @return Returns the copied file.
      * @throws MojoExecutionException On any execution exception.
-     * @throws IOException On any copy problems. 
+     * @throws FileException On any copy problems. 
      */
     protected File copyFile(File sourceFile, String relativeFilePath)
-        throws MojoExecutionException, IOException {
+        throws MojoExecutionException, FileException {
         File targetFile 
             = new File(targetDirectory, relativeFilePath);
         if (!allowOverwrite && targetFile.exists()) {
@@ -348,7 +346,15 @@ public class AggregateFilesMojo extends AbstractMojo {
         }
 
         // Copy file.
-        FileCopyUtils.copy(sourceFile, targetFile);
+        if (sourceFile.isFile()) {
+            FileModification.copyFile(sourceFile, targetFile, allowOverwrite);
+        } else if (sourceFile.isDirectory()) {
+            FileModification.copyDir(sourceFile, targetFileDir, allowOverwrite);
+        } else {
+            throw new FileException("Copying failed. Given source {0} is not "
+                + "a file nor a directory.",
+                new Object[] {sourceFile.getPath()});
+        }
         
         return targetFile;
     }
