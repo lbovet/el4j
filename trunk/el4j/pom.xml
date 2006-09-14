@@ -491,9 +491,11 @@
                         Due to bugs fix built snapshot version is used.
                            * maven-surefire-report-plugin (revision 439746 
                                + patch http://jira.codehaus.org/browse/MSUREFIREREP-28
-                               + patch http://jira.codehaus.org/browse/MSUREFIREREP-29)
+                               + patch http://jira.codehaus.org/browse/MSUREFIREREP-29
+                               + patch http://jira.codehaus.org/browse/MSUREFIREREP-30
+                               + patch http://jira.codehaus.org/browse/MSUREFIREREP-31)
                     -->
-                    <version>2.1-20060913.150415-1</version>
+                    <version>2.1-20060914.104220-2</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
