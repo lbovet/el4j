@@ -19,7 +19,7 @@
     <artifactId>module-xml_merge-console</artifactId>
     <version>${version.module-xml_merge}</version>
     <packaging>jar</packaging>
-    <name>EL4J console module for XmlMerge</name>
+    <name>EL4J module XmlMerge console</name>
     <description>
         Console application module for XmlMerge module of the EL4J framework.
     </description>

@@ -18,7 +18,7 @@
     <artifactId>module-web-war</artifactId>
     <version>${version.module-web}</version>
     <packaging>war</packaging>
-    <name>EL4J module web - war part</name>
+    <name>EL4J module web - war</name>
     <description>
        War part of module web of the EL4J framework.
     </description>

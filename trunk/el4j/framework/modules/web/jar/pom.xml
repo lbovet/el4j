@@ -18,7 +18,7 @@
     <artifactId>module-web-jar</artifactId>
     <version>${version.module-web}</version>
     <packaging>jar</packaging>
-    <name>EL4J module web - jar part</name>
+    <name>EL4J module web - jar</name>
     <description>
        Jar part of module web of the EL4J framework.
     </description>

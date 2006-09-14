@@ -18,7 +18,7 @@
 
     <artifactId>el4j-framework-module-xml_merge-web</artifactId>
     <packaging>pom</packaging>
-	<name>EL4J web module for XmlMerge</name>
+	<name>EL4J module XmlMerge for web</name>
     <description>
         Web application module for XmlMerge module of the EL4J framework.
     </description>

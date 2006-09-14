@@ -18,7 +18,7 @@
     <artifactId>module-exception_handling</artifactId>
     <version>${version.module-exception_handling}</version>
     <packaging>jar</packaging>
-    <name>EL4J module exception_handling</name>
+    <name>EL4J module exception handling</name>
     <description>
         Module exception_handling of the EL4J framework.
     </description>

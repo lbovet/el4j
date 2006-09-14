@@ -17,7 +17,7 @@
     
     <artifactId>el4j-external-upload-helper</artifactId>
     <packaging>pom</packaging>
-    <name>EL4J external upload helper</name>
+    <name>EL4J helper upload external</name>
     
     <build>
         <pluginManagement>
