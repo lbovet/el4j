@@ -10,32 +10,48 @@ Documentation
 * EL4J core documentation
 
     * {{{docs/pdf/EL4J_IntroductionArticle1.pdf}
-      EL4J Introduction Article (PDF)}}
+      EL4J Introduction Article for Spring Architects (PDF)}}
+    
+    * {{{http://www.elca.ch/resources/EL4J.pdf}
+      EL4J Introduction Article (in German) (PDF)}}
     
     * {{{docs/pdf/ReferenceDoc.pdf}
       EL4J Reference Documentation (PDF)}}
     
-    * {{{docs/pdf/EL4AntQuickReferenceSheet_v1_0.pdf}
-      Quick Reference Sheet for the old build system (EL4Ant) (PDF)}}
+    * EL4J Annotation Cheat Sheets {{{docs/pdf/ejb3.0-persistence-anno-cheat_v1_0.pdf} Standard }} 
+       {{{docs/pdf/el4j-anno-cheat_v1_0.pdf} EL4J-Additions }}  
+      
+    * (Legacy) {{{docs/pdf/EL4AntQuickReferenceSheet_v1_0.pdf}
+       Quick Reference Sheet for the old build system (EL4Ant) (PDF)}}
 
-    * Full documentation of the old build system (EL4Ant -
+    * (Legacy) Full documentation of the old build system (EL4Ant -
       {{{http://el4ant.sf.net/documentation.html}link to EL4Ant}})
 
-* Presentations
+* Presentations/ Marketing/ Blogs
 
-    * {{{docs/pdf/EL4JFeatures.pdf}
-      Short presentation with essential features of EL4J (PDF)}}
+    * {{{docs/pdf/progressiveEl4JDatasheet_v0_8.pdf}
+      Emerging Datasheet (TBD: replace with final version) }}
     
+    * {{{docs/pdf/...}
+      A presentation about our use of Maven: TBD (PDF)}}    
+      
     * {{{http://www.jugs.ch/html/events/slides/050830_LightDiContainer.pdf}
-      A presentation on Spring at JUGS, with a section on EL4J (PDF)}}
+      A Spring presentation at JUG Switzerland, with a section on EL4J (PDF)}}    
+      
+    * Blogs: {{{http://philhoser.blogspot.com/}
+      Philipp's Blog}}
 
+    * (A bit dated) {{{docs/pdf/EL4JFeatures.pdf}
+      Short presentation with essential features of EL4J (PDF)}}
+
+      
 * Release notes
 
   Release notes directly from the 
   {{{http://svn.sourceforge.net/viewcvs.cgi/*checkout*/el4j/trunk/el4j/etc/ReleaseNotes.txt}
   sourceforge subversion repository}}.
 
-* Framework documentations
+* Generated framework documentation
 
 *----------------------------+-------------------*----------------*
 | <<Documentation sets>>     | <<Javadoc>>       | <<Xref>>
