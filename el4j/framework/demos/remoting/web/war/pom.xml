@@ -19,7 +19,7 @@
     <artifactId>module-remoting-demos-web-war</artifactId>
     <version>${version.module-remoting-demos}</version>
     <packaging>war</packaging>
-    <name>EL4J web module for remoting demos - war part</name>
+    <name>EL4J demo remoting web - war</name>
     <description>
         War part of demo web module for remoting modules of the EL4J framework.
     </description>

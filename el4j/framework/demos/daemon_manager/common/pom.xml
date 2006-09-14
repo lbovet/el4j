@@ -19,7 +19,7 @@
     <artifactId>module-daemon_manager-demos-common</artifactId>
     <version>${version.module-daemon_manager}</version>
     <packaging>jar</packaging>
-    <name>EL4J common module for daemon manager demos</name>
+    <name>EL4J demo daemon manager common</name>
     <description>
         Demo common module for daemon manager module of the EL4J framework.
     </description>

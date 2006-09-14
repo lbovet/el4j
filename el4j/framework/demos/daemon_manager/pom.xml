@@ -18,7 +18,7 @@
 
     <artifactId>el4j-framework-demos-daemon_manager</artifactId>
     <packaging>pom</packaging>
-    <name>EL4J modules for daemon manager demos</name>
+    <name>EL4J demo daemon manager</name>
     <description>
         Demo modules for daemon manager module of the EL4J framework.
     </description>
