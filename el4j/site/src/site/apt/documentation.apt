@@ -35,7 +35,17 @@ Documentation
   {{{http://svn.sourceforge.net/viewcvs.cgi/*checkout*/el4j/trunk/el4j/etc/ReleaseNotes.txt}
   sourceforge subversion repository}}.
 
-* Framework API
+* Framework documentations
 
-  <<TODO: Link javadoc>>
+*----------------------------+-------------------*----------------*
+| <<Documentation sets>>     | <<Javadoc>>       | <<Xref>>
+*----------------------------+-------------------*----------------*
+| Framework modules          | {{{framework-modules/apidocs/index.html}Javadoc}} | {{{framework-modules/xref/index.html}Xref}}
+*----------------------------+-------------------*----------------*  
+| Framework applications     | {{{framework-applications/apidocs/index.html}Javadoc}} | {{{framework-applications/xref/index.html}Xref}}
+*----------------------------+-------------------*----------------*  
+| Framework tests            | {{{framework-tests/apidocs/index.html}Javadoc}} | {{{framework-tests/xref/index.html}Xref}}
+*----------------------------+-------------------*----------------*  
+| Framework demos            | {{{framework-demos/apidocs/index.html}Javadoc}} | {{{framework-demos/xref/index.html}Xref}}
+*----------------------------+-------------------*----------------*  
 
