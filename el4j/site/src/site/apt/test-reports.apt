@@ -1,0 +1,14 @@
+ -----
+ Test reports
+ -----
+ -----
+ 12 Sep 2006
+ -----
+
+Test reports
+
+*----------------------------+-------------------*
+| <<Test environment>>       | <<Test report>>
+*----------------------------+-------------------*
+| Tomcat 5 and Derby 10      | {{{surefire-report-tomcat5-derby10.html}Test report}}
+*----------------------------+-------------------* 
