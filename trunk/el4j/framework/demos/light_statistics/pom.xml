@@ -19,7 +19,7 @@
     <artifactId>module-light_statistics-demos</artifactId>
     <version>${version.module-light_statistics}</version>
     <packaging>jar</packaging>
-    <name>EL4J module light statistics demos</name>
+    <name>EL4J demo light statistics</name>
     <description>
         Demos for light statistic modules of the EL4J framework.
     </description>

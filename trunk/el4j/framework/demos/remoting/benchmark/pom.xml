@@ -19,7 +19,7 @@
     <artifactId>module-remoting-demos-benchmark</artifactId>
     <version>${version.module-remoting-demos}</version>
     <packaging>jar</packaging>
-    <name>EL4J module remoting benchmark</name>
+    <name>EL4J demo remoting benchmark</name>
     <description>
         Benchmark for remoting modules of the EL4J framework.
     </description>

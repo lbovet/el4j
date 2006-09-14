@@ -18,7 +18,7 @@
 
     <artifactId>el4j-framework-demos-remoting</artifactId>
     <packaging>pom</packaging>
-    <name>EL4J module for remoting demos</name>
+    <name>EL4J demo remoting</name>
     <description>
         Demo module for remoting modules of the EL4J framework.
     </description>
