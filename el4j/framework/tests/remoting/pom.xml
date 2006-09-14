@@ -18,7 +18,7 @@
 
     <artifactId>el4j-framework-tests-remoting</artifactId>
     <packaging>pom</packaging>
-    <name>EL4J module for remoting tests</name>
+    <name>EL4J test remoting</name>
     <description>
         Test module for remoting modules of the EL4J framework.
     </description>
