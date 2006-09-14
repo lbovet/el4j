@@ -123,7 +123,7 @@
                     </execution>
                 </executions>
             </plugin>
-            --><plugin>
+            <plugin>
                 <groupId>ch.elca.el4j.plugins</groupId>
                 <artifactId>maven-file-collector-plugin</artifactId>
                 <executions>
@@ -155,7 +155,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
     <reporting>
@@ -182,7 +182,20 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
+                <configuration>
+                    <linkXRef>true</linkXRef>
+                    <xrefLocation>target/site/framework-tests/xref</xrefLocation>
+                    <outputName>${surefire-report.name.tomcat5-derby10}</outputName>
+                    <windowTitle>${surefire-report.title.tomcat5-derby10}</windowTitle>
+                    <docTitle>${surefire-report.title.tomcat5-derby10}</docTitle>
+                    <docDescription>${surefire-report.description.tomcat5-derby10}</docDescription>
+                </configuration>
             </plugin>
         </plugins>
     </reporting>
+    <properties>
+        <surefire-report.name.tomcat5-derby10>surefire-report-tomcat5-derby10</surefire-report.name.tomcat5-derby10>
+        <surefire-report.title.tomcat5-derby10>Surefire Test Report - Tomcat 5 and Derby 10</surefire-report.title.tomcat5-derby10>
+        <surefire-report.description.tomcat5-derby10>The following document contains the summarized test results of test profile with Tomcat 5 as webserver and Derby 10 as database.</surefire-report.description.tomcat5-derby10>
+    </properties>
 </project>
