@@ -17,7 +17,7 @@
 
     <artifactId>el4j-framework-apps-refdb-core</artifactId>
     <packaging>pom</packaging>
-    <name>EL4J framework refdb core application</name>
+    <name>EL4J application refdb core</name>
     <description>RefDb core application of the EL4J framework.</description>
     <modules>
         <module>interface</module>

@@ -18,7 +18,7 @@
     <artifactId>refdb-gui-tiger-common</artifactId>
     <version>${version.application-refdb}</version>
     <packaging>jar</packaging>
-    <name>EL4J framework applications - refdb gui tiger common</name>
+    <name>EL4J application refdb gui tiger common</name>
     <description>RefDb gui tiger common module of the EL4J framework.</description>
     <dependencies>
         <dependency>

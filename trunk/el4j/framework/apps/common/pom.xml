@@ -17,7 +17,7 @@
 
     <artifactId>el4j-framework-apps-common</artifactId>
     <packaging>pom</packaging>
-    <name>EL4J framework applications - common modules</name>
+    <name>EL4J application common modules</name>
     <description>Common application modules of the EL4J framework.</description>
     <modules>
         <module>database</module>

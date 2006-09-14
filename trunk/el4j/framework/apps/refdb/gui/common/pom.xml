@@ -18,7 +18,7 @@
     <artifactId>refdb-gui-common</artifactId>
     <version>${version.application-refdb}</version>
     <packaging>jar</packaging>
-    <name>EL4J framework applications - refdb gui common</name>
+    <name>EL4J application refdb gui common</name>
     <description>RefDb gui common module of the EL4J framework.</description>
     <dependencies>
         <dependency>

@@ -18,7 +18,7 @@
     <artifactId>refdb-gui-tiger-standalone-client</artifactId>
     <version>${version.application-refdb}</version>
     <packaging>jar</packaging>
-    <name>EL4J framework applications - refdb gui tiger standalone-client</name>
+    <name>EL4J application refdb gui tiger standalone-client</name>
     <description>RefDb gui tiger standalone-client module of the EL4J framework.</description>
     <build>
         <plugins>

@@ -17,7 +17,7 @@
 
     <artifactId>el4j-framework-apps-refdb-gui-server</artifactId>
     <packaging>pom</packaging>
-    <name>EL4J framework applications - refdb gui server</name>
+    <name>EL4J application refdb gui server</name>
     <description>RefDb gui server module of the EL4J framework.</description>
     <modules>
         <module>jar</module>

@@ -17,7 +17,7 @@
 
     <artifactId>el4j-framework-apps-refdb-gui-tiger</artifactId>
     <packaging>pom</packaging>
-    <name>EL4J framework refdb gui tiger application</name>
+    <name>EL4J application refdb gui tiger</name>
     <description>RefDb gui tiger application of the EL4J framework.</description>
     <modules>
         <module>common</module>

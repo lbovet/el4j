@@ -18,7 +18,7 @@
     <artifactId>refdb-gui-standalone-client</artifactId>
     <version>${version.application-refdb}</version>
     <packaging>jar</packaging>
-    <name>EL4J framework applications - refdb gui standalone-client</name>
+    <name>EL4J application refdb gui standalone-client</name>
     <description>RefDb gui standalone-client module of the EL4J framework.</description>
     <build>
         <plugins>
