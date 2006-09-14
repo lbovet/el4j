@@ -11,6 +11,7 @@ Overview
   the Spring Java framework ({{http://www.springframework.org/}}).
 
   Among the improvements are:
+    * Template applications to get rapidly started
   
     * The ability to split applications in modules
     
@@ -20,7 +21,7 @@ Overview
       * A module can automatically enable its spring configuration when 
         it is present in the CLASSPATH
         
-    * Simplified remoting
+    * Simplified and more homogenized remoting
     
       * Remote a POJO as SLSB or SFSB, remote a POJO via SOAP
       
@@ -29,7 +30,7 @@ Overview
         security principal or the sub-company on whose behalf a 
         request is being made)
         
-    * A light daemon manager service
+    * A light daemon manager service for critical daemons
     
     * Various other improvements
     
@@ -42,6 +43,6 @@ Overview
 
   The following components make up EL4J:
   
-[images/el4j-overview.gif] EL4J-Overview
+[images/el4j11Stack.gif] EL4J-Overview
   
   For more information {{{documentation.html}see documentation}}.
