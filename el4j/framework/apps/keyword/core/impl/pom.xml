@@ -18,7 +18,7 @@
     <artifactId>keyword-core-impl</artifactId>
     <version>${version.application-keyword}</version>
     <packaging>jar</packaging>
-    <name>EL4J framework applications - keyword core impl</name>
+    <name>EL4J application keyword core impl</name>
     <description>Keyword core implementation module of the EL4J framework.</description>
     <dependencies>
         <dependency>

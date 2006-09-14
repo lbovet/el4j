@@ -17,7 +17,7 @@
 
     <artifactId>el4j-framework-apps-keyword</artifactId>
     <packaging>pom</packaging>
-    <name>EL4J framework keyword application</name>
+    <name>EL4J application keyword</name>
     <description>Keyword application of the EL4J framework.</description>
     <modules>
         <module>core</module>

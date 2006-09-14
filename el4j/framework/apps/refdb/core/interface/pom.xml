@@ -18,7 +18,7 @@
     <artifactId>refdb-core-interface</artifactId>
     <version>${version.application-refdb}</version>
     <packaging>jar</packaging>
-    <name>EL4J framework applications - refdb core interface</name>
+    <name>EL4J application refdb core interface</name>
     <description>RefDb core interface module of the EL4J framework.</description>
     <dependencies>
         <dependency>

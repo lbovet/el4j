@@ -18,7 +18,7 @@
     <artifactId>common-database</artifactId>
     <version>${version.common-database}</version>
     <packaging>jar</packaging>
-    <name>EL4J framework applications - common database module</name>
+    <name>EL4J application common module database</name>
     <description>Common database module of the EL4J framework.</description>
     <dependencies>
         <!-- DBCP libraries -->

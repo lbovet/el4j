@@ -18,7 +18,7 @@
     <artifactId>refdb-gui-tiger-server-jar</artifactId>
     <version>${version.application-refdb}</version>
     <packaging>jar</packaging>
-    <name>EL4J framework applications - refdb gui tiger server - jar part</name>
+    <name>EL4J application refdb gui tiger server - jar</name>
     <description>Jar part of RefDb gui tiger server module of the EL4J framework.</description>
     <dependencies>
         <dependency>
