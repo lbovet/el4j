@@ -159,7 +159,6 @@ th {
     font-family         : inherit;
     font-size           : 8pt;
     font-weight         : bold;
-    text-align          : center;
     padding-left        : 5px;
     padding-right       : 5px;
     padding-top         : 3px;
@@ -178,7 +177,6 @@ td {
     font-family         : inherit;
     font-size           : 10pt;
     font-weight         : inherit;
-    text-align          : center;
     padding-left        : 5px;
     padding-right       : 5px;
     padding-top         : 3px;
