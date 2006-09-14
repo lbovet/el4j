@@ -19,7 +19,7 @@
     <artifactId>module-remoting-tests-functional_tests</artifactId>
     <version>${version.module-remoting-tests}</version>
     <packaging>jar</packaging>
-    <name>EL4J module remoting functional tests</name>
+    <name>EL4J test remoting functional</name>
     <description>
         Test module for functional tests of remoting modules of the EL4J framework.
     </description>

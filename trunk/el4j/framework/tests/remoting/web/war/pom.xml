@@ -19,7 +19,7 @@
     <artifactId>module-remoting-tests-web-war</artifactId>
     <version>${version.module-remoting-tests}</version>
     <packaging>war</packaging>
-    <name>EL4J web module for remoting tests - war part</name>
+    <name>EL4J test remoting web - war</name>
     <description>
         War part of test web module for remoting modules of the EL4J framework.
     </description>

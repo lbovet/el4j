@@ -18,7 +18,7 @@
     <artifactId>module-core_integration_child-tests</artifactId>
     <version>${version.module-core}</version>
     <packaging>jar</packaging>
-    <name>EL4J module core integration tests - child</name>
+    <name>EL4J test core integration - child</name>
     <description>
         Child integration test module for module core of the EL4J framework.
     </description>

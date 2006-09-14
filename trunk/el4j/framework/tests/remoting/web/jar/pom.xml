@@ -19,7 +19,7 @@
     <artifactId>module-remoting-tests-web-jar</artifactId>
     <version>${version.module-remoting-tests}</version>
     <packaging>jar</packaging>
-    <name>EL4J web module for remoting tests - jar part</name>
+    <name>EL4J test remoting web - jar</name>
     <description>
         Jar part of test web module for remoting modules of the EL4J framework.
     </description>

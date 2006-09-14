@@ -18,7 +18,7 @@
     <artifactId>module-core_integration_parent-tests</artifactId>
     <version>${version.module-core}</version>
     <packaging>jar</packaging>
-    <name>EL4J module core integration tests - parent</name>
+    <name>EL4J test core integration - parent</name>
     <description>
         Parent integration test module for module core of the EL4J framework.
     </description>

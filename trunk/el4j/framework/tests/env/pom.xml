@@ -18,7 +18,7 @@
     <artifactId>module-env-tests</artifactId>
     <version>${version.module-env}</version>
     <packaging>jar</packaging>
-    <name>EL4J module env tests</name>
+    <name>EL4J test env</name>
     <description>
         Tests for module env of the EL4J framework.
     </description>

@@ -18,7 +18,7 @@
 
     <artifactId>el4j-framework-tests-core</artifactId>
     <packaging>pom</packaging>
-    <name>EL4J module for special core tests</name>
+    <name>EL4J test core</name>
     <description>
         Special test module for core module of the EL4J framework.
     </description>

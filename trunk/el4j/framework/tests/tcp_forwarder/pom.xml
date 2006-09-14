@@ -19,7 +19,7 @@
     <artifactId>module-tcp_forwarder-tests</artifactId>
     <version>${version.module-tcp_forwarder-tests}</version>
     <packaging>jar</packaging>
-    <name>EL4J module tcp forwarder tests</name>
+    <name>EL4J test tcp forwarder</name>
     <description>
         Test module for tcp forwarder module of the EL4J framework.
     </description>
