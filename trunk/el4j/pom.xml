@@ -466,10 +466,15 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <!--
+                        Not really useful to define the version here because Maven will
+                        try to use another version anyway. Define it in reporting
+                        section.
+                    -->
+                    <!--
                         Due to bugs fix built snapshot version is used.
                            * maven-javadoc-plugin (revision 439622)
                     -->
-                    <version>2.1-20060907.065424-2</version>
+                    <version>${version.maven-javadoc-plugin}</version>
                     <configuration>
                         <stylesheetfile>${el4j.home}/external/etc/javadoc/stylesheet.css</stylesheetfile>
                         <source>1.5</source>
@@ -488,6 +493,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-report-plugin</artifactId>
                     <!--
+                        Not really useful to define the version here because Maven will
+                        try to use another version anyway. Define it in reporting
+                        section.
+                    -->
+                    <!--
                         Due to bugs fix built snapshot version is used.
                            * maven-surefire-report-plugin (revision 439746 
                                + patch http://jira.codehaus.org/browse/MSUREFIREREP-28
@@ -495,16 +505,21 @@
                                + patch http://jira.codehaus.org/browse/MSUREFIREREP-30
                                + patch http://jira.codehaus.org/browse/MSUREFIREREP-31)
                     -->
-                    <version>2.1-20060914.104220-2</version>
+                    <version>${version.maven-surefire-report-plugin}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jxr-plugin</artifactId>
                     <!--
+                        Not really useful to define the version here because Maven will
+                        try to use another version anyway. Define it in reporting
+                        section.
+                    -->
+                    <!--
                         Due to bugs fix built snapshot version is used.
                            * maven-jxr-plugin (revision 433277 + patch http://jira.codehaus.org/browse/MJXR-15)
                     -->
-                    <version>2.1-20060911.142523-1</version>
+                    <version>${version.maven-jxr-plugin}</version>
                     <configuration>
                         <aggregate>true</aggregate>
                     </configuration>
@@ -512,12 +527,22 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>2.1</version>
+                    <!--
+                        Not really useful to define the version here because Maven will
+                        try to use another version anyway. Define it in reporting
+                        section.
+                    -->
+                    <version>${version.maven-checkstyle-plugin}</version>
                     <configuration>
                         <configLocation>${el4j.home}/external/etc/checkstyle/checks.xml</configLocation>
                         <enableRSS>false</enableRSS>
                         <enableRulesSummary>false</enableRulesSummary>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>taglist-maven-plugin</artifactId>
+                    <version>2.0</version>
                 </plugin>
 
                 <!-- Further EL4J specific plugins -->
@@ -1434,5 +1459,9 @@
         
         <!-- Maven plugin versions. Needed due to false dep mgt. -->
         <version.maven-project-info-reports-plugin>2.0.1</version.maven-project-info-reports-plugin>
+        <version.maven-checkstyle-plugin>2.1</version.maven-checkstyle-plugin>
+        <version.maven-surefire-report-plugin>2.1-20060914.104220-2</version.maven-surefire-report-plugin>
+        <version.maven-javadoc-plugin>2.1-20060907.065424-2</version.maven-javadoc-plugin>
+        <version.maven-jxr-plugin>2.1-20060911.142523-1</version.maven-jxr-plugin>
     </properties>
 </project>
