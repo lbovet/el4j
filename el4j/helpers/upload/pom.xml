@@ -17,7 +17,7 @@
     
     <artifactId>el4j-upload-helpers</artifactId>
     <packaging>pom</packaging>
-    <name>EL4J upload helpers</name>
+    <name>EL4J helper upload</name>
     <modules>
         <module>external</module>
         <module>internal</module>

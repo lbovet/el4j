@@ -18,7 +18,7 @@
     <artifactId>module-light_statistics-web-war</artifactId>
     <version>${version.module-light_statistics}</version>
     <packaging>war</packaging>
-    <name>EL4J module light statistics for web - war part</name>
+    <name>EL4J module light statistics for web - war</name>
     <description>
         War part of module light statistics for web of the EL4J framework.
     </description>

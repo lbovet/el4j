@@ -19,7 +19,7 @@
     <artifactId>module-xml_merge-web-jar</artifactId>
     <version>${version.module-xml_merge}</version>
     <packaging>jar</packaging>
-	<name>EL4J web module for XmlMerge - jar part</name>
+	<name>EL4J module XmlMerge for web - jar</name>
     <description>
         Jar part of web XmlMerge module of the EL4J framework.
     </description>

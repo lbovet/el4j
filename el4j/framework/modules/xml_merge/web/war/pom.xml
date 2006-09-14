@@ -19,7 +19,7 @@
     <artifactId>module-xml_merge-web-war</artifactId>
     <version>${version.module-xml_merge}</version>
     <packaging>war</packaging>
-	<name>EL4J web module for XmlMerge - war part</name>
+	<name>EL4J module XmlMerge for web - war</name>
     <description>
         War part of web XmlMerge module of the EL4J framework.
     </description>
