@@ -4,8 +4,11 @@
 <beans>
     <bean id="ConfigurationTest" 
         class="ch.elca.el4j.core.config.ListPropertyMergeConfigurer">
-        <property name="location">
-            <value>core/config/TwoValuesList.properties</value>
+        <property name="locations">
+            <list>
+                <value>scenarios/core/config/OneValueList.properties</value>
+                <value>scenarios/core/config/TwoValuesList.properties</value>
+            </list>
         </property>
     </bean>
     <bean id="ListTest" class="ch.elca.el4j.tests.core.config.ListClass">

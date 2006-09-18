@@ -19,7 +19,8 @@ package ch.elca.el4j.tests.util.attributes;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import ch.elca.el4j.core.context.ModuleApplicationContext;
 
 import junit.framework.TestCase;
 
@@ -49,8 +50,9 @@ public class GenericAttributesTest extends TestCase {
      */
     public void testInterceptorInjectedViaConstructor() {
 
-        ApplicationContext ac = new ClassPathXmlApplicationContext(
-            "classpath:util/attributes/beansViaConstructor.xml");
+        ApplicationContext ac = new ModuleApplicationContext(
+            "classpath:scenarios/util/attributes/beansViaConstructor.xml", 
+            false);
 
         Foo foo = (Foo) ac.getBean("foo");
 
@@ -72,8 +74,8 @@ public class GenericAttributesTest extends TestCase {
      */
     public void testInterceptorInjectedViaSetter() {
 
-        ApplicationContext ac = new ClassPathXmlApplicationContext(
-            "classpath:util/attributes/beansViaSetter.xml");
+        ApplicationContext ac = new ModuleApplicationContext(
+            "classpath:scenarios/util/attributes/beansViaSetter.xml", false);
 
         Foo foo = (Foo) ac.getBean("foo");
 
@@ -94,8 +96,9 @@ public class GenericAttributesTest extends TestCase {
      */
     public void testConfiguredAttributeSource() {
 
-        ApplicationContext ac = new ClassPathXmlApplicationContext(
-            "classpath:util/attributes/beansWithConfiguredAttributeSource.xml");
+        ApplicationContext ac = new ModuleApplicationContext(
+            "classpath:scenarios/util/attributes/" 
+            + "beansWithConfiguredAttributeSource.xml", false);
 
         Foo foo = (Foo) ac.getBean("foo");
 
@@ -117,8 +120,8 @@ public class GenericAttributesTest extends TestCase {
      */
     public void testTwoAdvisors() {
 
-        ApplicationContext ac = new ClassPathXmlApplicationContext(
-            "classpath:util/attributes/beansTwoAdvisors.xml");
+        ApplicationContext ac = new ModuleApplicationContext(
+            "classpath:scenarios/util/attributes/beansTwoAdvisors.xml", false);
 
         Foo foo = (Foo) ac.getBean("foo");
 
@@ -139,8 +142,9 @@ public class GenericAttributesTest extends TestCase {
     public void testAdvisorWithNoInterceptor() {
         // Checkstyle: EmptyBlock off
         try {
-            new ClassPathXmlApplicationContext(
-                "classpath:util/attributes/beansNoInterceptor.xml");
+            new ModuleApplicationContext(
+                "classpath:scenarios/util/attributes/beansNoInterceptor.xml", 
+                false);
             fail("A BaseException should have been thrown.");
         } catch (BeansException e) {
             // Expected behaviour
@@ -157,8 +161,9 @@ public class GenericAttributesTest extends TestCase {
     public void testAdvisorWithNoInterceptingAttributes() {
         // Checkstyle: EmptyBlock off
         try {
-            new ClassPathXmlApplicationContext(
-                "classpath:util/attributes/beansNoInterceptingAttributes.xml");
+            new ModuleApplicationContext(
+                "classpath:scenarios/util/attributes/" 
+                + "beansNoInterceptingAttributes.xml", false);
             fail("A BaseRTException should have been thrown");
         } catch (Exception e) {
             // Expected behaviour
@@ -174,8 +179,9 @@ public class GenericAttributesTest extends TestCase {
      */
     public void xtestInterceptorInjectedViaConstructorInnerClassAsParameter() {
 
-        ApplicationContext ac = new ClassPathXmlApplicationContext(
-            "classpath:util/attributes/beansViaConstructor.xml");
+        ApplicationContext ac = new ModuleApplicationContext(
+            "classpath:scenarios/util/attributes/beansViaConstructor.xml", 
+            false);
 
         Foo foo = (Foo) ac.getBean("foo");
 

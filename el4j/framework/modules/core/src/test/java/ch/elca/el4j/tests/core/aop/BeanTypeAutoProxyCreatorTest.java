@@ -17,7 +17,9 @@
 
 package ch.elca.el4j.tests.core.aop;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.ApplicationContext;
+
+import ch.elca.el4j.core.context.ModuleApplicationContext;
 
 import junit.framework.TestCase;
 
@@ -38,7 +40,7 @@ import junit.framework.TestCase;
 public class BeanTypeAutoProxyCreatorTest extends TestCase {
 
     /** The application context. */
-    private ClassPathXmlApplicationContext m_appContext;
+    private ApplicationContext m_appContext;
     
     /** The interceptor that intercepts all <code>doitA</code> invocations. */
     private ShortcutInterceptor m_shortcutA;
@@ -50,8 +52,10 @@ public class BeanTypeAutoProxyCreatorTest extends TestCase {
      * Default constructor.
      */
     public BeanTypeAutoProxyCreatorTest() {
-        m_appContext = new ClassPathXmlApplicationContext(
-            "core/aop/testBeansForBeanTypeAutoProxyCreator.xml");
+        m_appContext = new ModuleApplicationContext(
+                "classpath:scenarios/core/aop/" 
+                + "testBeansForBeanTypeAutoProxyCreator.xml",
+                false);
         m_shortcutA = (ShortcutInterceptor) m_appContext.getBean(
                 "shortcutInterceptorA");
         m_shortcutB = (ShortcutInterceptor) m_appContext.getBean(

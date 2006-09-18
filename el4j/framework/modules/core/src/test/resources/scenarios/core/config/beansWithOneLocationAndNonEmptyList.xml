@@ -5,7 +5,7 @@
     <bean id="ConfigurationTest" 
         class="ch.elca.el4j.core.config.ListPropertyMergeConfigurer">
         <property name="location">
-            <value>core/config/UndefinedBean.properties</value>
+            <value>scenarios/core/config/OneValueList.properties</value>
         </property>
     </bean>
     <bean id="ListTest" class="ch.elca.el4j.tests.core.config.ListClass">

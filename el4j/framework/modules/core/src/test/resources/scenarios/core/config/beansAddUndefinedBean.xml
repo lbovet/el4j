@@ -5,12 +5,10 @@
     <bean id="ConfigurationTest" 
         class="ch.elca.el4j.core.config.ListPropertyMergeConfigurer">
         <property name="location">
-            <value>core/config/TwoListsWithOneValueEach.properties</value>
+            <value>scenarios/core/config/UndefinedBean.properties</value>
         </property>
     </bean>
     <bean id="ListTest" class="ch.elca.el4j.tests.core.config.ListClass">
-    </bean>
-    <bean id="ListTest2" class="ch.elca.el4j.tests.core.config.ListClass">
         <property name="listTest">
             <list>
                 <value>item 0</value>

@@ -46,19 +46,20 @@ public class ModuleApplicationContextTest extends TestCase {
         = LogFactory.getLog(ModuleApplicationContextTest.class);
     
     /** Test configuration. */
-    String m_fileName1 = "classpath:/core/context/beans1.xml";
+    String m_fileName1 = "classpath:scenarios/core/context/beans1.xml";
 
     /** Test configuration. */
-    String m_fileName2 = "classpath:/core/context/beans2.xml";
+    String m_fileName2 = "classpath:scenarios/core/context/beans2.xml";
 
     /** Test configuration. */
-    String m_fileName3 = "classpath:/core/context/beans3.xml";
+    String m_fileName3 = "classpath:scenarios/core/context/beans3.xml";
 
     /** Test configuration. */
-    String m_allFileNamesInClasspath = "classpath:/core/context/*.xml";
+    String m_allFileNamesInClasspath = "classpath:scenarios/core/context/*.xml";
 
     /** Test configuration. */
-    String m_allFileNamesInBothClasspaths = "classpath:/core/context/**/*.xml";
+    String m_allFileNamesInBothClasspaths 
+        = "classpath:scenarios/core/context/**/*.xml";
 
     /** Mandatory configurations. */
     String m_mandatoryFiles = "classpath*:mandatory/*.xml";

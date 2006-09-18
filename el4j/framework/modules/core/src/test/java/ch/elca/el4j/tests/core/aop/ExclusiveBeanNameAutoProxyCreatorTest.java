@@ -63,31 +63,32 @@ public class ExclusiveBeanNameAutoProxyCreatorTest extends TestCase {
     
     /** Configuration without any beans to exclude. */
     private static final String EMPTY_EXCLUSIVE_CONFIG
-        = "classpath:core/aop/emptyExclusiveList.xml";
+        = "classpath:scenarios/core/aop/emptyExclusiveList.xml";
     
     /** Configuration that exclude all beans. */
     private static final String EXCLUDE_ALL_CONFIG
-        = "classpath:core/aop/excludeAll.xml";
+        = "classpath:scenarios/core/aop/excludeAll.xml";
     
     /** Configuration that excludes only bean 'foobar'. */
     private static final String INCLUDE_ALL_BUT_FOOBAR_CONFIG
-        = "classpath:core/aop/includeAllButFoobar.xml";
+        = "classpath:scenarios/core/aop/includeAllButFoobar.xml";
     
     /** Configuration that includes all beans but those beginning with 'foo'. */
     private static final String INCLUDE_ALL_BUT_FOO_PREFIX_CONFIG
-        = "classpath:core/aop/includeAllButFooPrefix.xml";
+        = "classpath:scenarios/core/aop/includeAllButFooPrefix.xml";
     
     /** Configuration that includes all beans but those ending with 'bar'. */
     private static final String INCLUDE_ALL_BUT_BAR_SUFFIX_CONFIG
-        = "classpath:core/aop/includeAllButBarSuffix.xml";
+        = "classpath:scenarios/core/aop/includeAllButBarSuffix.xml";
     
     /**
      * Configuration that includes all beans starting with 'bean' but those
      * ending with 'a'.
      */
     private static final String 
-        INCLUDE_ALL_STARTING_WITH_BEAN_BUT_SUFFIX_A_CONFIG
-        = "classpath:core/aop/includeAllStartingWithBeanButSuffixA.xml";
+    INCLUDE_ALL_STARTING_WITH_BEAN_BUT_SUFFIX_A_CONFIG 
+        = "classpath:scenarios/core/aop/" 
+        + "includeAllStartingWithBeanButSuffixA.xml";
     
     /**
      * Tests the configuration that doesn't exclude any beans.
