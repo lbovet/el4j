@@ -20,9 +20,9 @@ package ch.elca.el4j.tests.core.beans;
 import java.util.Map;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import ch.elca.el4j.core.beans.BeanLocator;
+import ch.elca.el4j.core.context.ModuleApplicationContext;
 
 import junit.framework.TestCase;
 
@@ -47,7 +47,8 @@ public class BeanLocatorTest extends TestCase {
      * Default constructor.
      */
     public BeanLocatorTest() {
-        m_appContext = new ClassPathXmlApplicationContext("core/beans/*.xml");
+        m_appContext = new ModuleApplicationContext(
+            "classpath:scenarios/core/beans/*.xml", false);
     }
 
     /**

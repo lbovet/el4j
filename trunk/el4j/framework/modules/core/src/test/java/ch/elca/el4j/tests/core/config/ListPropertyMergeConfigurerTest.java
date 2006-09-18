@@ -19,7 +19,8 @@ package ch.elca.el4j.tests.core.config;
 
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import ch.elca.el4j.core.context.ModuleApplicationContext;
 
 import junit.framework.TestCase;
 
@@ -42,8 +43,9 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
      * empty and checks if the value is set correctly.
      */
     public void testAddValuesFromOneLocationToEmptyList() {
-        ApplicationContext ac = new ClassPathXmlApplicationContext(
-                "classpath:/core/config/beansWithOneLocationAndEmptyList.xml");
+        ApplicationContext ac = new ModuleApplicationContext(
+                "classpath:scenarios/core/config/" 
+                + "beansWithOneLocationAndEmptyList.xml", false);
 
         ListClass listTest = (ListClass) ac.getBean("ListTest");
 
@@ -61,9 +63,9 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
      *  
      */
     public void testAddValuesFromOneLocationToNonEmptyList() {
-        ApplicationContext ac = new ClassPathXmlApplicationContext(
-                "classpath:/core/config/"
-                + "beansWithOneLocationAndNonEmptyList.xml");
+        ApplicationContext ac = new ModuleApplicationContext(
+                "classpath:scenarios/core/config/"
+                + "beansWithOneLocationAndNonEmptyList.xml", false);
 
         ListClass listTest = (ListClass) ac.getBean("ListTest");
 
@@ -84,9 +86,9 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
      *  
      */
     public void testAddValuesFromOneLocationWithTwoListValuesToNonEmptyList() {
-        ApplicationContext ac = new ClassPathXmlApplicationContext(
-                "classpath:/core/config/"
-                + "beansWithOneLocationWithTwoValuesList.xml");
+        ApplicationContext ac = new ModuleApplicationContext(
+                "classpath:scenarios/core/config/"
+                + "beansWithOneLocationWithTwoValuesList.xml", false);
 
         ListClass listTest = (ListClass) ac.getBean("ListTest");
 
@@ -113,9 +115,9 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
      *  
      */
     public void testAddValuesFromTwoLocationsToNonEmptyList() {
-        ApplicationContext ac = new ClassPathXmlApplicationContext(
-                "classpath:/core/config/"
-                + "beansWithTwoLocationsAndNonEmptyList.xml");
+        ApplicationContext ac = new ModuleApplicationContext(
+                "classpath:scenarios/core/config/"
+                + "beansWithTwoLocationsAndNonEmptyList.xml", false);
 
         ListClass listTest = (ListClass) ac.getBean("ListTest");
 
@@ -143,8 +145,9 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
      *  
      */
     public void testAddValuesFromOneLocationToTwoLists() {
-        ApplicationContext ac = new ClassPathXmlApplicationContext(
-                "classpath:/core/config/beansTwoListsWithOneLocation.xml");
+        ApplicationContext ac = new ModuleApplicationContext(
+                "classpath:scenarios/core/config/" 
+                + "beansTwoListsWithOneLocation.xml", false);
 
         ListClass listTest = (ListClass) ac.getBean("ListTest");
         ListClass listTest2 = (ListClass) ac.getBean("ListTest2");
@@ -174,8 +177,9 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
      *  
      */
     public void testAddValuesThenOverrideThenAddValue() {
-        ApplicationContext ac = new ClassPathXmlApplicationContext(
-                "classpath:/core/config/beansWithOverriding.xml");
+        ApplicationContext ac = new ModuleApplicationContext(
+                "classpath:scenarios/core/config/" 
+                + "beansWithOverriding.xml", false);
 
         ListClass listTest = (ListClass) ac.getBean("ListTest");
 
@@ -196,8 +200,9 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
      *  
      */
     public void testAddValuesFromEmptyPropertyFile() {
-        ApplicationContext ac = new ClassPathXmlApplicationContext(
-                "classpath:/core/config/beansWithEmptyLocation.xml");
+        ApplicationContext ac = new ModuleApplicationContext(
+                "classpath:scenarios/core/config/" 
+                + "beansWithEmptyLocation.xml", false);
 
         ListClass listTest = (ListClass) ac.getBean("ListTest");
 
@@ -216,8 +221,9 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
     public void testAddValuesToUndefinedBean() {
         // Checkstyle: EmptyBlock off
         try {
-            new ClassPathXmlApplicationContext(
-                    "classpath:/core/config/beansAddUndefinedBean.xml");
+            new ModuleApplicationContext(
+                    "classpath:scenarios/core/config/" 
+                    + "beansAddUndefinedBean.xml", false);
             fail("Should raise an exception.");
         } catch (BeanInitializationException e) { }
         // Checkstyle: EmptyBlock on

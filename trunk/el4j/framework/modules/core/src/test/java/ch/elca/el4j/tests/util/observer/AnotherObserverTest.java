@@ -103,7 +103,7 @@ public class AnotherObserverTest extends TestCase
     
     /** tests update propagation. */
     public void testUpdate() {
-        assertEquals("to do" ,0, m_notified);
+        assertEquals("to do" , 0, m_notified);
 
         m_last.subscribe(this);
         assertEquals(0, (int) m_last.get());
