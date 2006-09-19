@@ -28,8 +28,8 @@ import org.acegisecurity.providers.TestingAuthenticationToken;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.tests.security.sample.SampleService;
 
 import junit.framework.TestCase;
@@ -65,8 +65,8 @@ public class AuthorizationLocalTest extends TestCase {
      */
     private String[] m_configLocations = new String[] {
         "classpath:optional/security-attributes.xml",
-        "classpath:server/applicationContextTest.xml",
-        "classpath:services/sampleService.xml"};
+        "classpath:scenarios/server/applicationContextTest.xml",
+        "classpath:scenarios/services/sampleService.xml"};
 
     /**
      * Application context.
@@ -81,7 +81,7 @@ public class AuthorizationLocalTest extends TestCase {
     public void testMethodCallWithoutLogin() throws Exception {
 
         s_logger.debug("Loading Application Context.");
-        m_ac = new ClassPathXmlApplicationContext(m_configLocations);
+        m_ac = new ModuleApplicationContext(m_configLocations, false);
         s_logger.debug("Application Context loaded.");
 
         try {
@@ -103,7 +103,7 @@ public class AuthorizationLocalTest extends TestCase {
     public void testCorrectAuthorization() throws Exception {
 
         s_logger.debug("Loading Application Context.");
-        m_ac = new ClassPathXmlApplicationContext(m_configLocations);
+        m_ac = new ModuleApplicationContext(m_configLocations, false);
         s_logger.debug("Application Context loaded.");
 
         createSecureContext("server", "server", METHOD_ACCESS_ROLE);
@@ -122,7 +122,7 @@ public class AuthorizationLocalTest extends TestCase {
     public void testCorrectAuthorizationAfterLogoutNoAccess() throws Exception {
 
         s_logger.debug("Loading Application Context.");
-        m_ac = new ClassPathXmlApplicationContext(m_configLocations);
+        m_ac = new ModuleApplicationContext(m_configLocations, false);
         s_logger.debug("Application Context loaded.");
 
         createSecureContext("server", "server", METHOD_ACCESS_ROLE);
@@ -150,7 +150,7 @@ public class AuthorizationLocalTest extends TestCase {
     public void testFailedAuthorization() throws Exception {
 
         s_logger.debug("Loading Application Context.");
-        m_ac = new ClassPathXmlApplicationContext(m_configLocations);
+        m_ac = new ModuleApplicationContext(m_configLocations, false);
         s_logger.debug("Application Context loaded.");
 
         createSecureContext("server", "server", "WRONG_ROLE");
@@ -172,7 +172,7 @@ public class AuthorizationLocalTest extends TestCase {
     public void testFailedAuthentication() throws Exception {
 
         s_logger.debug("Loading Application Context.");
-        m_ac = new ClassPathXmlApplicationContext(m_configLocations);
+        m_ac = new ModuleApplicationContext(m_configLocations, false);
         s_logger.debug("Application Context loaded.");
 
         createSecureContext("server", "wrong_credential", "SOME_ROLE");

@@ -26,8 +26,8 @@ import org.acegisecurity.providers.TestingAuthenticationToken;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.security.authentication.AuthenticationService;
 import ch.elca.el4j.tests.security.sample.SampleService;
 import ch.elca.el4j.tests.security.server.AuthorizationServer;
@@ -70,18 +70,18 @@ public class AuthorizationDistributedTest extends TestCase {
      */
     private String[] m_configLocationsServer = new String[] {
         "classpath:optional/security-attributes.xml",
-        "classpath:services/sampleService.xml",
-        "classpath:server/applicationContextTest.xml",
+        "classpath:scenarios/services/sampleService.xml",
+        "classpath:scenarios/server/applicationContextTest.xml",
         "classpath:scenarios/securityscope/distributed-security"
             + "-scope-server.xml",
         "classpath:optional/rmi-protocol-config.xml",
-        "classpath:services/serviceExporter.xml"};
+        "classpath:scenarios/services/serviceExporter.xml"};
 
     /**
      * Client config locations.
      */
     private String[] m_configLocationsClient = new String[] {
-        "classpath:services/serviceProxy.xml",
+        "classpath:scenarios/services/serviceProxy.xml",
         "classpath:scenarios/securityscope/"
             + "distributed-security-scope-client.xml",
         "classpath:optional/rmi-protocol-config.xml"};
@@ -101,7 +101,7 @@ public class AuthorizationDistributedTest extends TestCase {
         AuthorizationServer.main(m_configLocationsServer);
         s_logger.debug("Server started. Loading client context.");
 
-        m_ac = new ClassPathXmlApplicationContext(m_configLocationsClient);
+        m_ac = new ModuleApplicationContext(m_configLocationsClient, false);
         s_logger.debug("Client context loaded.");
 
         try {
@@ -124,7 +124,7 @@ public class AuthorizationDistributedTest extends TestCase {
         AuthorizationServer.main(m_configLocationsServer);
         s_logger.debug("Server started. Loading client context.");
 
-        m_ac = new ClassPathXmlApplicationContext(m_configLocationsClient);
+        m_ac = new ModuleApplicationContext(m_configLocationsClient, false);
         s_logger.debug("Client context loaded.");
 
         createSecureContext("server", "server", METHOD_ACCESS_ROLE);
@@ -144,7 +144,7 @@ public class AuthorizationDistributedTest extends TestCase {
         AuthorizationServer.main(m_configLocationsServer);
         s_logger.debug("Server started. Loading client context.");
 
-        m_ac = new ClassPathXmlApplicationContext(m_configLocationsClient);
+        m_ac = new ModuleApplicationContext(m_configLocationsClient, false);
         s_logger.debug("Client context loaded.");
 
         createSecureContext("server", "server", METHOD_ACCESS_ROLE);
@@ -173,7 +173,7 @@ public class AuthorizationDistributedTest extends TestCase {
         AuthorizationServer.main(m_configLocationsServer);
         s_logger.debug("Server started. Loading client context.");
 
-        m_ac = new ClassPathXmlApplicationContext(m_configLocationsClient);
+        m_ac = new ModuleApplicationContext(m_configLocationsClient, false);
         s_logger.debug("Client context loaded.");
 
         createSecureContext("test4", "test4", "ROLE_NO_PERMISSION");
@@ -197,7 +197,7 @@ public class AuthorizationDistributedTest extends TestCase {
         AuthorizationServer.main(m_configLocationsServer);
         s_logger.debug("Server started. Loading client context.");
 
-        m_ac = new ClassPathXmlApplicationContext(m_configLocationsClient);
+        m_ac = new ModuleApplicationContext(m_configLocationsClient, false);
         s_logger.debug("Client context loaded.");
 
         try {
