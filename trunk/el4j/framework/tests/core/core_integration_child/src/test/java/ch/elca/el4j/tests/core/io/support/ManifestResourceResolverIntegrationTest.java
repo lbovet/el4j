@@ -54,35 +54,35 @@ public class ManifestResourceResolverIntegrationTest
     
     /** A configuration file from module core-tests. */
     public static final String CONFIG_CORE_TESTS_1
-        = "core/aop/testBeansForBeanTypeAutoProxyCreator.xml";
+        = "scenarios/core/aop/testBeansForBeanTypeAutoProxyCreator.xml";
     /** A configuration file from module core-tests. */
     public static final String CONFIG_CORE_TESTS_2
-        = "core/config/beansAddUndefinedBean.xml";
+        = "scenarios/core/config/beansAddUndefinedBean.xml";
     /** A configuration file from module core-tests. */
     public static final String CONFIG_CORE_TESTS_3
-        = "core/io/support/a.xml";
+        = "scenarios/core/io/support/a.xml";
     /** A configuration file from module core-tests. */
     public static final String CONFIG_CORE_TESTS_4
-        = "core/io/support/ab.xml";
+        = "scenarios/core/io/support/ab.xml";
     /** A configuration file from module core-tests. */
     public static final String CONFIG_CORE_TESTS_5
-        = "core/io/support/b.xml";
+        = "scenarios/core/io/support/b.xml";
     /** A configuration file from module core-tests. */
     public static final String CONFIG_CORE_TESTS_6
-        = "core/io/support/optional/a.xml";
+        = "scenarios/core/io/support/optional/a.xml";
     
     /** A configuration file from module core_integration-tests. */
     public static final String CONFIG_CORE_INTEGRATION_TESTS_1
-        = "core/io/integration/a.xml";
+        = "scenarios/core/io/integration/a.xml";
     /** A configuration file from module core_integration-tests. */
     public static final String CONFIG_CORE_INTEGRATION_TESTS_2
-        = "core/io/integration/ab.xml";
+        = "scenarios/core/io/integration/ab.xml";
     /** A configuration file from module core_integration-tests. */
     public static final String CONFIG_CORE_INTEGRATION_TESTS_3
-        = "core/io/integration/b.xml";
+        = "scenarios/core/io/integration/b.xml";
     /** A configuration file from module core_integration-tests. */
     public static final String CONFIG_CORE_INTEGRATION_TESTS_4
-        = "core/io/integration/c.xml";
+        = "scenarios/core/io/integration/c.xml";
     
     /** Configuration files form the module core. */
     public static final String[] CONFIG_CORE = {
@@ -154,7 +154,7 @@ public class ManifestResourceResolverIntegrationTest
      */
     public void testGetSingleResourceWithPattern() throws IOException {
         Resource[] r = m_resolver.getResources(
-                "classpath:core/io/**/ab.xml");
+                "classpath:scenarios/core/io/**/ab.xml");
         assertEquals("Returned wrong number of resources", 1, r.length);
         System.out.println(r[0].getFilename());
     }
@@ -167,7 +167,7 @@ public class ManifestResourceResolverIntegrationTest
      */
     public void testQuestionMarkPattern() throws IOException {
         Resource[] r = m_resolver.getResources(
-                "classpath:core/io/support/a?.xml");
+                "classpath:scenarios/core/io/support/a?.xml");
         assertEquals("Returned wrong number of resources", 1, r.length);
         System.out.println(r[0].getFilename());
     }
@@ -192,7 +192,7 @@ public class ManifestResourceResolverIntegrationTest
      */
     public void testLocalResource() throws IOException {
         Resource[] r = m_resolver.getResources(
-                "classpath*:core/io/integration/*.xml");
+                "classpath*:scenarios/core/io/integration/*.xml");
         // Checkstyle: MagicNumber off
         assertEquals(4, r.length);
         // Checkstyle: MagicNumber on
@@ -206,7 +206,7 @@ public class ManifestResourceResolverIntegrationTest
      *      If an I/O error occurs.
      */
     public void testGetAllIntegrationResources() throws IOException {
-        checkResources("classpath*:core/io/integration/*.xml",
+        checkResources("classpath*:scenarios/core/io/integration/*.xml",
                 CONFIG_CORE_INTEGRATION_TESTS);
     }
     
@@ -217,7 +217,7 @@ public class ManifestResourceResolverIntegrationTest
      *      If an I/O error occurs.
      */
     public void testGetAllResourcesEndingWithA() throws IOException {
-        checkResources("classpath*:core/**/*a.xml",
+        checkResources("classpath*:scenarios/core/**/*a.xml",
                 new String[] {CONFIG_CORE_TESTS_3, CONFIG_CORE_TESTS_6,
                     CONFIG_CORE_INTEGRATION_TESTS_1});
     }

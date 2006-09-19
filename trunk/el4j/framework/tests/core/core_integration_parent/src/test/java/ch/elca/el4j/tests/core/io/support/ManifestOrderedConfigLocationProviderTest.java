@@ -37,13 +37,13 @@ public class ManifestOrderedConfigLocationProviderTest
 
     /** Some configuration files. */
     public static final String[] LOCATIONS = {
-        "core/io/support/mandatory/1.xml",
-        "core/io/support/mandatory/2.xml",
-        "core/io/support/mandatory/3.xml",
-        "core/io/support/optional/a.xml",
-        "core/io/support/a.xml",
-        "core/io/support/ab.xml",
-        "core/io/support/b.xml"
+        "scenarios/core/io/support/mandatory/1.xml",
+        "scenarios/core/io/support/mandatory/2.xml",
+        "scenarios/core/io/support/mandatory/3.xml",
+        "scenarios/core/io/support/optional/a.xml",
+        "scenarios/core/io/support/a.xml",
+        "scenarios/core/io/support/ab.xml",
+        "scenarios/core/io/support/b.xml"
     };
     
     /**
