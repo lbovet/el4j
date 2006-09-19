@@ -1,28 +1,28 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans>
-    
+
     <!-- Version: $Revision$ -->
     <!-- URL: $URL$ -->
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
     
-    <import resource="classpath:common/remotingtests-web-protocols-config.xml"/>
+    <import resource="classpath:scenarios/common/remotingtests-web-protocols-config.xml"/>
     
-    <bean id="burlapCalculatorExporter" class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
+    <bean id="xfireWithContextCalculatorExporter" class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
         <property name="remoteProtocol">
-            <ref bean="burlapProtocol" />
+            <ref bean="xFireProtocol" />
         </property>
         <property name="serviceInterface">
             <value>ch.elca.el4j.tests.remoting.service.Calculator</value>
         </property>
         <property name="serviceName">
-            <value>Calculator.Burlap.Remotingtests</value>
+            <value>Calculator.XFire.Remotingtests</value>
         </property>
         <property name="service">
-            <idref bean="burlapCalculatorImpl"/>
+            <idref bean="xfireCalculatorImpl"/>
         </property>
     </bean>
-    
-    <bean id="burlapCalculatorImpl" class="ch.elca.el4j.tests.remoting.service.impl.CalculatorImpl" />
+
+    <bean id="xfireCalculatorImpl" class="ch.elca.el4j.tests.remoting.service.impl.CalculatorImpl" />
 </beans>

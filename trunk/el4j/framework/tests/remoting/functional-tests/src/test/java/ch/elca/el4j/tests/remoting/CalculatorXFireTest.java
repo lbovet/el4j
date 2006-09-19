@@ -19,15 +19,11 @@ package ch.elca.el4j.tests.remoting;
 
 import java.util.Arrays;
 
+import org.springframework.context.ApplicationContext;
+
 import ch.elca.el4j.core.context.ModuleApplicationContext;
-import ch.elca.el4j.services.remoting.protocol.soap.SoapHelper;
 import ch.elca.el4j.tests.remoting.service.Calculator;
-import ch.elca.el4j.tests.remoting.service.CalculatorException;
 import ch.elca.el4j.tests.remoting.service.CalculatorValueObject;
-import ch.elca.el4j.tests.remoting.service.SpecialCalculatorException;
-import ch.elca.el4j.tests.remoting.service.soap.ExceptionThrower;
-import ch.elca.el4j.tests.remoting.service.soap.RemoteExceptionWithData;
-import ch.elca.el4j.tests.remoting.service.soap.impl.ExceptionThrowerImpl;
 
 import junit.framework.TestCase;
 
@@ -58,10 +54,11 @@ public class CalculatorXFireTest extends TestCase {
      * {@inheritDoc}
      */
     public void setUp() {
-        ModuleApplicationContext appContext 
+        ApplicationContext appContext 
             = new ModuleApplicationContext(
                 new String[] {"classpath*:mandatory/*.xml",
-                "client/remotingtests-xfire-client-config.xml"}, true);
+                    "scenarios/client/remotingtests-xfire-client-config.xml"}, 
+                    true);
         m_calc 
             = (Calculator) appContext.getBean("calculator");
     }

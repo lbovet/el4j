@@ -16,6 +16,8 @@
  */
 package ch.elca.el4j.tests.remoting;
 
+import org.springframework.context.ApplicationContext;
+
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 
 /**
@@ -34,11 +36,11 @@ public class CalculatorRmiTest extends AbstractCalculatorTest {
     /**
      * {@inheritDoc}
      */
-    ModuleApplicationContext getContext() {
+    ApplicationContext getContext() {
         return  new ModuleApplicationContext(
             new String[] {"classpath*:mandatory/*.xml",
-                "server/app/remotingtests-rmi-server-config.xml",
-                "client/remotingtests-rmi-client-config.xml"},
+                "scenarios/server/app/remotingtests-rmi-server-config.xml",
+                "scenarios/client/remotingtests-rmi-client-config.xml"},
                 true);
     }
 }
