@@ -41,29 +41,26 @@ public final class ActorRole extends AbstractDefaultEnum {
     /**
      * Actor which throws a <code>DaemonCausedRTException</code> while init.
      */
-    public static final ActorRole 
-        THROWS_DAEMON_CAUSED_EXCEPTION_WHILE_INIT 
+    public static final ActorRole THROWS_DAEMON_CAUSED_EXCEPTION_WHILE_INIT 
         = new ActorRole("THROWS_DAEMON_CAUSED_EXCEPTION_WHILE_INIT", 2);
 
     /**
      * Actor which throws no <code>DaemonCausedRTException</code> while init.
      */
-    public static final ActorRole 
-        THROWS_NO_DAEMON_CAUSED_EXCEPTION_WHILE_INIT 
+    public static final ActorRole THROWS_NO_DAEMON_CAUSED_EXCEPTION_WHILE_INIT 
         = new ActorRole("THROWS_NO_DAEMON_CAUSED_EXCEPTION_WHILE_INIT", 3);
 
     /**
      * Actor which throws a <code>DaemonCausedRTException</code> while job run.
      */
-    public static final ActorRole 
-        THROWS_DAEMON_CAUSED_EXCEPTION_WHILE_JOB_RUN 
+    public static final ActorRole THROWS_DAEMON_CAUSED_EXCEPTION_WHILE_JOB_RUN 
         = new ActorRole("THROWS_DAEMON_CAUSED_EXCEPTION_WHILE_JOB_RUN", 4);
 
     /**
      * Actor which throws no <code>DaemonCausedRTException</code> while job run.
      */
     public static final ActorRole 
-        THROWS_NO_DAEMON_CAUSED_EXCEPTION_WHILE_JOB_RUN 
+    THROWS_NO_DAEMON_CAUSED_EXCEPTION_WHILE_JOB_RUN 
         = new ActorRole("THROWS_NO_DAEMON_CAUSED_EXCEPTION_WHILE_JOB_RUN", 5);
 
     /**
@@ -71,7 +68,7 @@ public final class ActorRole extends AbstractDefaultEnum {
      * reconfigure.
      */
     public static final ActorRole 
-        THROWS_DAEMON_CAUSED_EXCEPTION_WHILE_RECONFIGURE 
+    THROWS_DAEMON_CAUSED_EXCEPTION_WHILE_RECONFIGURE 
         = new ActorRole("THROWS_DAEMON_CAUSED_EXCEPTION_WHILE_RECONFIGURE", 6);
 
     /**
@@ -79,14 +76,13 @@ public final class ActorRole extends AbstractDefaultEnum {
      * reconfigure.
      */
     public static final ActorRole 
-        THROWS_NO_DAEMON_CAUSED_EXCEPTION_WHILE_RECONFIGURE = new ActorRole(
+    THROWS_NO_DAEMON_CAUSED_EXCEPTION_WHILE_RECONFIGURE = new ActorRole(
             "THROWS_NO_DAEMON_CAUSED_EXCEPTION_WHILE_RECONFIGURE", 7);
 
     /**
      * Actor which throws a <code>DaemonCausedRTException</code> while clean up.
      */
-    public static final ActorRole 
-        THROWS_DAEMON_CAUSED_EXCEPTION_WHILE_CLEAN_UP 
+    public static final ActorRole THROWS_DAEMON_CAUSED_EXCEPTION_WHILE_CLEAN_UP 
         = new ActorRole("THROWS_DAEMON_CAUSED_EXCEPTION_WHILE_CLEAN_UP", 8);
 
     /**
@@ -94,7 +90,7 @@ public final class ActorRole extends AbstractDefaultEnum {
      * up.
      */
     public static final ActorRole 
-        THROWS_NO_DAEMON_CAUSED_EXCEPTION_WHILE_CLEAN_UP 
+    THROWS_NO_DAEMON_CAUSED_EXCEPTION_WHILE_CLEAN_UP 
         = new ActorRole("THROWS_NO_DAEMON_CAUSED_EXCEPTION_WHILE_CLEAN_UP", 9);
 
     /**
