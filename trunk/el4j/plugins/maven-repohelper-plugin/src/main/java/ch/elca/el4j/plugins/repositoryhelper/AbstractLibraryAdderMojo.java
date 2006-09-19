@@ -245,18 +245,16 @@ public abstract class AbstractLibraryAdderMojo extends AbstractMojo {
          * Execute commandline.
          */
         int result = -1;
-        String output;
         BufferedLoggerConsumer blg = new BufferedLoggerConsumer(getLog());
         try {
             result = CommandLineUtils.executeCommandLine(
                 cmd, blg, blg);
         } catch (CommandLineException e) {
             throw new MojoExecutionException(e.getMessage(), e);
-        } finally {
-            output = blg.toString();
-            getLog().info(output);
         }
-        if (result != 0 || !output.contains("BUILD SUCCESSFUL")) {
+        
+        String output = blg.toString();
+        if (result != 0 || output.contains("BUILD ERROR")) {
             throw new MojoExecutionException(
                 "It was not possible to " + getActionVerb() 
                 + " file with path '" 
