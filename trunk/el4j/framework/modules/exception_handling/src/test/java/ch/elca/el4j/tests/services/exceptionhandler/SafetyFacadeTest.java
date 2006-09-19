@@ -17,7 +17,9 @@
 
 package ch.elca.el4j.tests.services.exceptionhandler;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.ApplicationContext;
+
+import ch.elca.el4j.core.context.ModuleApplicationContext;
 
 import junit.framework.TestCase;
 
@@ -39,7 +41,7 @@ import junit.framework.TestCase;
 public class SafetyFacadeTest extends TestCase {
 
     /** The application context. */
-    private ClassPathXmlApplicationContext m_appContext;
+    private ApplicationContext m_appContext;
     
     /** The bean that is guarded by the security facade. */
     private A m_a;
@@ -51,8 +53,8 @@ public class SafetyFacadeTest extends TestCase {
      * Default constructor.
      */
     public SafetyFacadeTest() {
-        m_appContext = new ClassPathXmlApplicationContext(
-            "services/exceptionhandler/safetyFacadeTest.xml");
+        m_appContext = new ModuleApplicationContext(
+            "scenarios/services/exceptionhandler/safetyFacadeTest.xml", false);
         
         m_a = (A) m_appContext.getBean("A");
         m_unsafeA = (A) m_appContext.getBean("unsafeA");
