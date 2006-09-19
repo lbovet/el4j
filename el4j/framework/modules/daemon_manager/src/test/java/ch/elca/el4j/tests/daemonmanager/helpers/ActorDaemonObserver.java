@@ -59,14 +59,14 @@ public class ActorDaemonObserver implements DaemonObserver {
      * <code>terminatedExceptionally</code>.
      */
     private Throwable 
-        m_throwedThrowableInTerminatedExceptionally = null;
+    m_throwedThrowableInTerminatedExceptionally = null;
     
     /**
      * Contains the throwed <code>DaemonCausedRTException</code> of method 
      * <code>exceptionOccurred</code>.
      */
     private DaemonCausedRTException 
-        m_throwedDaemonCausedExceptionInExceptionOccurred = null;
+    m_throwedDaemonCausedExceptionInExceptionOccurred = null;
     
     /**
      * {@inheritDoc}

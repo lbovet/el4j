@@ -23,6 +23,7 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.daemonmanager.Daemon;
@@ -279,10 +280,11 @@ public class DaemonManagerFeaturesTest extends TestCase {
      * @return Returns created daemon manager.
      */
     private DaemonManagerImpl createDaemonManagerOne() {
-        ModuleApplicationContext appContext = new ModuleApplicationContext(
+        ApplicationContext appContext = new ModuleApplicationContext(
             new String[] {"classpath*:mandatory/*.xml", 
-                "daemon_manager_tests/testDaemonManagers.xml", 
-                "daemon_manager_tests/testCorrectDaemons.xml"}, false);
+                "scenarios/daemon_manager_tests/testDaemonManagers.xml", 
+                "scenarios/daemon_manager_tests/testCorrectDaemons.xml"}, 
+                false);
         DaemonManagerImpl daemonManager 
             = (DaemonManagerImpl) appContext.getBean("daemonManagerOne");
         return daemonManager;
@@ -292,10 +294,10 @@ public class DaemonManagerFeaturesTest extends TestCase {
      * @return Returns created bad daemon manager one.
      */
     private DaemonManagerImpl createBadDaemonManagerOne() {
-        ModuleApplicationContext appContext = new ModuleApplicationContext(
+        ApplicationContext appContext = new ModuleApplicationContext(
             new String[] {"classpath*:mandatory/*.xml", 
-                "daemon_manager_tests/testDaemonManagers.xml", 
-                "daemon_manager_tests/testBadDaemons.xml"}, false);
+                "scenarios/daemon_manager_tests/testDaemonManagers.xml", 
+                "scenarios/daemon_manager_tests/testBadDaemons.xml"}, false);
         DaemonManagerImpl daemonManager 
             = (DaemonManagerImpl) appContext.getBean("daemonManagerOne");
         return daemonManager;
