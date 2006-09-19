@@ -16,6 +16,8 @@
  */
 package ch.elca.el4j.tests.remoting;
 
+import org.springframework.context.ApplicationContext;
+
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 
 /**
@@ -35,9 +37,10 @@ public class CalculatorHttpInvokerTest extends AbstractCalculatorTest {
     /**
      * {@inheritDoc}
      */
-    ModuleApplicationContext getContext() {
+    ApplicationContext getContext() {
         return  new ModuleApplicationContext(
             new String[] {"classpath*:mandatory/*.xml",
-                "client/remotingtests-httpinvoker-client-config.xml"}, true);
+                "scenarios/client/remotingtests-httpinvoker-client-config.xml"},
+                true);
     }
 }

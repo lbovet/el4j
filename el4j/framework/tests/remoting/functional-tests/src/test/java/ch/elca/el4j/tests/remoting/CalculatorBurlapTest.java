@@ -15,6 +15,8 @@
  * For alternative licensing, please contact info@elca.ch
  */
 package ch.elca.el4j.tests.remoting;
+import org.springframework.context.ApplicationContext;
+
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 
 /**
@@ -35,9 +37,10 @@ public class CalculatorBurlapTest extends AbstractCalculatorTest {
     /**
      * {@inheritDoc}
      */
-    ModuleApplicationContext getContext() {
+    ApplicationContext getContext() {
         return  new ModuleApplicationContext(
             new String[] {"classpath*:mandatory/*.xml",
-                "client/remotingtests-burlap-client-config.xml"}, true);
+                "scenarios/client/remotingtests-burlap-client-config.xml"}, 
+                true);
     }
 }

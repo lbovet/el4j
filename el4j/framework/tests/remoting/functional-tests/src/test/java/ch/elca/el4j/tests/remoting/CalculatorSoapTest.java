@@ -19,6 +19,8 @@ package ch.elca.el4j.tests.remoting;
 
 import java.util.Arrays;
 
+import org.springframework.context.ApplicationContext;
+
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.remoting.protocol.soap.SoapHelper;
 import ch.elca.el4j.tests.remoting.service.Calculator;
@@ -63,10 +65,11 @@ public class CalculatorSoapTest extends TestCase {
      * {@inheritDoc}
      */
     public void setUp() {
-        ModuleApplicationContext appContext 
+        ApplicationContext appContext 
             = new ModuleApplicationContext(
                 new String[] {"classpath*:mandatory/*.xml",
-                    "client/remotingtests-soap-client-config.xml"}, true);
+                    "scenarios/client/remotingtests-soap-client-config.xml"}, 
+                    true);
         m_calc 
             = (Calculator) appContext.getBean("calculator");
         m_soapExceptionThrower 

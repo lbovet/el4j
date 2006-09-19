@@ -7,17 +7,17 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
     
-    <import resource="classpath:common/remotingtests-web-protocols-config.xml"/>
+    <import resource="classpath:scenarios/common/remotingtests-web-protocols-config.xml"/>
     
     <bean id="calculator" class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
         <property name="remoteProtocol">
-            <ref bean="httpInvokerProtocol" />
+            <ref bean="burlapProtocol" />
         </property>
         <property name="serviceInterface">
             <value>ch.elca.el4j.tests.remoting.service.Calculator</value>
         </property>
         <property name="serviceName">
-            <value>Calculator.HttpInvoker.Remotingtests</value>
+            <value>Calculator.Burlap.Remotingtests</value>
         </property>
     </bean>
 </beans>

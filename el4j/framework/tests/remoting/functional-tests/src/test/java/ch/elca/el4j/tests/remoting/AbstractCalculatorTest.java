@@ -18,10 +18,11 @@ package ch.elca.el4j.tests.remoting;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.ApplicationContext;
 
-import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.tests.remoting.service.Calculator;
 import ch.elca.el4j.tests.remoting.service.CalculatorException;
+
 import junit.framework.TestCase;
 
 /**
@@ -53,7 +54,7 @@ public abstract class AbstractCalculatorTest extends TestCase {
      * {@inheritDoc}
      */
     public void setUp() {
-        ModuleApplicationContext appContext = getContext();
+        ApplicationContext appContext = getContext();
         m_calc = (Calculator) appContext.getBean("calculator");
     }
 
@@ -61,7 +62,7 @@ public abstract class AbstractCalculatorTest extends TestCase {
      * Gives back the Context of the test.
      * @return Returns the mApplicationContext
      */    
-    abstract ModuleApplicationContext getContext();
+    abstract ApplicationContext getContext();
    
     /**
      * This test tests the area calculation method.
