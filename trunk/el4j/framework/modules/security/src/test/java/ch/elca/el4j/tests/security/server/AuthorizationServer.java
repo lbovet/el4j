@@ -17,7 +17,8 @@
 package ch.elca.el4j.tests.security.server;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import ch.elca.el4j.core.context.ModuleApplicationContext;
 
 // Checkstyle: UncommentedMain off
 
@@ -50,7 +51,7 @@ public class AuthorizationServer {
      *      Command line parameters.
      */
     public static void main(String[] args) {
-        s_appContext = new ClassPathXmlApplicationContext(args);
+        s_appContext = new ModuleApplicationContext(args, false);
         String[] str = s_appContext.getBeanDefinitionNames();
         for (int i = 0; i < str.length; i++) {
             System.out.println(str[i]);

@@ -26,7 +26,9 @@ import org.apache.commons.logging.LogFactory;
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
- *   "$Revision$", "$Date$", "$Author$"
+ *    "$Revision$", 
+ *    "$Date$", 
+ *    "$Author$"
  * );</script>
  * 
  * @author Andreas Pfenninger (APR)

@@ -22,7 +22,9 @@ package ch.elca.el4j.tests.security.sample;
  * 
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
- *   "$Revision$", "$Date$", "$Author$"
+ *    "$Revision$", 
+ *    "$Date$", 
+ *    "$Author$"
  * );</script>
  * 
  * @author Andreas Pfenninger (APR)
