@@ -52,7 +52,8 @@ public class EnvTest extends TestCase {
      */
     public EnvTest() {
         m_appContext = new ModuleApplicationContext(new String[] {
-            "classpath*:mandatory/*.xml", "classpath:envtest/environment.xml"}, 
+            "classpath*:mandatory/*.xml", 
+            "classpath:scenarios/envtest/environment.xml"}, 
             false);
         
         m_container 

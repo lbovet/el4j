@@ -24,10 +24,10 @@ import ch.elca.el4j.util.codingsupport.PropertiesHelper;
  * This class provides access to the currently used environment properties.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$$URL$$",
- *    "$$Revision$$",
- *    "$$Date$$",
- *    "$$Author$$"
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
  * );</script>
  *
  * @author Alex Mathey (AMA)
