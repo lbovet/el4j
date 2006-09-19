@@ -17,8 +17,9 @@
 
 package ch.elca.el4j.tests.services.exceptionhandler;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.ApplicationContext;
 
+import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.exceptionhandler.ContextExceptionHandlerInterceptor;
 import ch.elca.el4j.services.exceptionhandler.MissingContextException;
 
@@ -39,7 +40,7 @@ import junit.framework.TestCase;
 public class ContextExceptionHandlerTest extends TestCase {
 
     /** The application context. */
-    private ClassPathXmlApplicationContext m_appContext;
+    private ApplicationContext m_appContext;
     
     /** The bean that is guarded by the security facade. */
     private A m_a;
@@ -48,9 +49,9 @@ public class ContextExceptionHandlerTest extends TestCase {
      * Default constructor.
      */
     public ContextExceptionHandlerTest() {
-        m_appContext = new ClassPathXmlApplicationContext(
-                "services/exceptionhandler/contextExceptionHandlerTest.xml");
-        
+        m_appContext = new ModuleApplicationContext(
+            "scenarios/services/exceptionhandler/" 
+            + "contextExceptionHandlerTest.xml", false);
         m_a = (A) m_appContext.getBean("A");
     }
     
