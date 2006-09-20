@@ -27,9 +27,9 @@ import ch.elca.el4j.apps.lightrefdb.dom.Book;
 import ch.elca.el4j.apps.lightrefdb.dom.FormalPublication;
 import ch.elca.el4j.apps.lightrefdb.dom.Keyword;
 import ch.elca.el4j.apps.lightrefdb.dom.Link;
-import ch.elca.el4j.apps.refdb.dto.AnnotationDto;
-import ch.elca.el4j.apps.refdb.dto.FileDescriptorView;
-import ch.elca.el4j.apps.refdb.dto.FileDto;
+import ch.elca.el4j.apps.refdb.dom.Annotation;
+import ch.elca.el4j.apps.refdb.dom.FileDescriptorView;
+import ch.elca.el4j.apps.refdb.dom.File;
 
 /**
  * Validation rules source for the reference database application.
@@ -53,7 +53,7 @@ public class RefdbValidationRulesSource extends DefaultRulesSource {
         addRules(new FormalPublicationRules());
         addRules(new BookRules());
         addRules(new AnnotationRules());
-        addRules(new FileDescriptorViewRules(FileDto.class));
+        addRules(new FileDescriptorViewRules(File.class));
         addRules(new FileDescriptorViewRules(FileDescriptorView.class));
     }
     
@@ -253,7 +253,7 @@ public class RefdbValidationRulesSource extends DefaultRulesSource {
          * Default constructor.
          */
         public AnnotationRules() {
-            super(AnnotationDto.class);
+            super(Annotation.class);
         }
 
         /**

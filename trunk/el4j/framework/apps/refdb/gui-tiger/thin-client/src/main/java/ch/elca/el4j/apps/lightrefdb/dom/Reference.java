@@ -23,9 +23,9 @@ import java.util.Set;
 
 import javax.persistence.Entity;
 
-import ch.elca.el4j.apps.refdb.dto.AnnotationDto;
-import ch.elca.el4j.apps.refdb.dto.FileDescriptorView;
-import ch.elca.el4j.apps.refdb.dto.FileDto;
+import ch.elca.el4j.apps.refdb.dom.Annotation;
+import ch.elca.el4j.apps.refdb.dom.FileDescriptorView;
+import ch.elca.el4j.apps.refdb.dom.File;
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 import ch.elca.el4j.util.dom.annotations.MemberOrder;
 
@@ -86,13 +86,13 @@ public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
      * Set of annotations for this reference (only used if Hibernate is used to
      * perform ORM).
      */
-    private Set<AnnotationDto> m_annotations;
+    private Set<Annotation> m_annotations;
     
     /**
      * Set of files for this reference (only used if Hibernate is used to
      * perform ORM).
      */
-    private Set<FileDto> m_files;
+    private Set<File> m_files;
     
     /**
      * Set of file descriptor views for this reference (only used if Hibernate
@@ -166,9 +166,9 @@ public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
     public void setKeywords(Set<Keyword> keywords) { this.keywords = keywords; }
     
     /***/
-    public Set<AnnotationDto> getAnnotations() { return m_annotations; }
+    public Set<Annotation> getAnnotations() { return m_annotations; }
     /***/
-    public void setAnnotations(Set<AnnotationDto> annotations) {
+    public void setAnnotations(Set<Annotation> annotations) {
         m_annotations = annotations;
     }
     
@@ -183,7 +183,7 @@ public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
     }
 
     /***/
-    public Set<FileDto> getFiles() { return m_files; }
+    public Set<File> getFiles() { return m_files; }
     /***/
-    public void setFiles(Set<FileDto> files) { m_files = files; }
+    public void setFiles(Set<File> files) { m_files = files; }
 }

@@ -34,7 +34,6 @@ import ch.elca.el4j.services.persistence.generic.DaoAgency;
 import ch.elca.el4j.services.persistence.generic.dao.ConvenientGenericDao;
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
 import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
-import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
 import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
 import ch.elca.el4j.util.codingsupport.annotations.Preliminary;
 import ch.elca.el4j.util.collections.ExtendedList;
@@ -60,7 +59,7 @@ import ch.elca.el4j.util.observer.impl.SettableObservableValue;
  *
  * @author Adrian Moos (AMS)
  */
-public class Edit<T extends PrimaryKeyOptimisticLockingObject> extends AbstractGenericView<T> {
+public class Edit extends AbstractGenericView {
     /** specifies which properties are shown and which are changeable. */
     public EditablePropertyList properties;
     
@@ -85,7 +84,7 @@ public class Edit<T extends PrimaryKeyOptimisticLockingObject> extends AbstractG
     }
     
     /***/
-    class Executor<T extends PrimaryKeyOptimisticLockingObject> extends AbstractBeanPropertiesExecutor {
+    class Executor<T> extends AbstractBeanPropertiesExecutor {
         ///////////////////////
         // persistence logic
         ///////////////////////
@@ -109,7 +108,7 @@ public class Edit<T extends PrimaryKeyOptimisticLockingObject> extends AbstractG
         protected PrimaryKeyObject getBeanByKey(Object key) throws Exception {
             return (PrimaryKeyObject) 
                 ((ConvenientGenericDao<T, Integer>) m_repository)
-                    .findById((Integer) key, false);
+                    .findById((Integer) key);
         }
         
         /**
@@ -274,7 +273,7 @@ public class Edit<T extends PrimaryKeyOptimisticLockingObject> extends AbstractG
      * {@inheritDoc}
      */
     @Override
-    protected <T extends PrimaryKeyOptimisticLockingObject> ViewDescriptor createDescriptor(Class<T> clazz) {
+    protected <T> ViewDescriptor createDescriptor(Class<T> clazz) {
         m_visible = properties.m_eprops
             .filtered(DisplayablePropertyList.s_visibles);
 
