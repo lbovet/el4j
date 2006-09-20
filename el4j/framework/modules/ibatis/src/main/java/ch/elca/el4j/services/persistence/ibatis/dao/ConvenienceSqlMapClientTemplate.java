@@ -189,4 +189,37 @@ public class ConvenienceSqlMapClientTemplate extends SqlMapClientTemplate {
                     statementName, requiredRowsAffected, actualRowsAffected);
         }
     }
+    
+    /**
+     * Deletes an object in a strong way. This method does the same as method
+     * <code>delete(java.lang.String, java.lang.Object)</code> of the
+     * underlying class, and in addition to this method, it throws an
+     * <code>OptimisticLockingFailureException</code> in case of an optimistic
+     * locking failure.
+     * 
+     * @param statementName
+     *            Is the name of the SQL DELETE statement to execute
+     * @param parameterObject
+     *            Is the parameter object
+     * @param objectName
+     *            Is the name of the given object type.
+     */
+    public void deleteStrong(String statementName, Object parameterObject,
+        final String objectName) {
+        int count = delete(statementName, parameterObject);
+        if (count != 1) {
+            String message;
+            if (parameterObject instanceof PrimaryKeyObject) {
+                PrimaryKeyObject primaryKeyObject = (PrimaryKeyObject) parameterObject;
+                message = objectName + " with key "
+                    + primaryKeyObject.getKeyAsObject()
+                    + " was modified or deleted in the meantime.";
+            } else {
+                message = objectName
+                    + " was modified or deleted in the meantime.";
+            }
+            CoreNotificationHelper.notifyOptimisticLockingFailure(message,
+                objectName);
+        }
+    }
 }
