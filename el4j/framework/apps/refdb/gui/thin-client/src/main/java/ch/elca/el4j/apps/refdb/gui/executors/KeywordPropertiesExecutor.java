@@ -16,10 +16,10 @@
  */
 package ch.elca.el4j.apps.refdb.gui.executors;
 
-import ch.elca.el4j.apps.keyword.dto.KeywordDto;
+import ch.elca.el4j.apps.keyword.dao.KeywordDao;
+import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.apps.refdb.gui.brokers.ServiceBroker;
 import ch.elca.el4j.apps.refdb.gui.support.RefdbSchemas;
-import ch.elca.el4j.apps.refdb.service.ReferenceService;
 import ch.elca.el4j.services.gui.richclient.executors.convenience.AbstractBeanPropertiesExecutor;
 import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
 
@@ -47,9 +47,9 @@ public class KeywordPropertiesExecutor extends AbstractBeanPropertiesExecutor {
      * {@inheritDoc}
      */
     protected PrimaryKeyObject saveBean(PrimaryKeyObject givenBean) {
-        KeywordDto givenKeyword = (KeywordDto) givenBean;
-        ReferenceService referenceService = ServiceBroker.getReferenceService();
-        return referenceService.saveKeyword(givenKeyword);
+        Keyword givenKeyword = (Keyword) givenBean;
+        KeywordDao keywordDao = ServiceBroker.getKeywordDao();
+        return keywordDao.saveOrUpdate(givenKeyword);
     }
 
     /**
@@ -57,9 +57,8 @@ public class KeywordPropertiesExecutor extends AbstractBeanPropertiesExecutor {
      */
     protected PrimaryKeyObject getBeanByKey(Object key) throws Exception {
         int intKey = ((Number) key).intValue();
-        ReferenceService referenceService 
-            = ServiceBroker.getReferenceService();
-        return referenceService.getKeywordByKey(intKey);
+        KeywordDao keywordDao = ServiceBroker.getKeywordDao();
+        return keywordDao.findById(intKey);
     }
 
     /**

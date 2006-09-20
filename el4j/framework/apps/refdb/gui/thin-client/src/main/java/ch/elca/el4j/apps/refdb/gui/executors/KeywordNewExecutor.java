@@ -16,10 +16,10 @@
  */
 package ch.elca.el4j.apps.refdb.gui.executors;
 
-import ch.elca.el4j.apps.keyword.dto.KeywordDto;
+import ch.elca.el4j.apps.keyword.dao.KeywordDao;
+import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.apps.refdb.gui.brokers.ServiceBroker;
 import ch.elca.el4j.apps.refdb.gui.support.RefdbSchemas;
-import ch.elca.el4j.apps.refdb.service.ReferenceService;
 import ch.elca.el4j.services.gui.richclient.executors.convenience.AbstractBeanNewExecutor;
 import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
 
@@ -48,16 +48,16 @@ public class KeywordNewExecutor extends AbstractBeanNewExecutor {
      * {@inheritDoc}
      */
     protected PrimaryKeyObject saveBean(PrimaryKeyObject newBean) {
-        KeywordDto newKeyword = (KeywordDto) newBean;
-        ReferenceService referenceService = ServiceBroker.getReferenceService();
-        return referenceService.saveKeyword(newKeyword);
+        Keyword newKeyword = (Keyword) newBean;
+        KeywordDao keywordDao = ServiceBroker.getKeywordDao();
+        return keywordDao.saveOrUpdate(newKeyword);
     }
     
     /**
      * {@inheritDoc}
      */
     protected Object createNewBean() {
-        return new KeywordDto();
+        return new Keyword();
     }
 
     /**

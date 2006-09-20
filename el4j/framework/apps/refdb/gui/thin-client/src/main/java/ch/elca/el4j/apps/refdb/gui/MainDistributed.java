@@ -17,6 +17,7 @@
 
 package ch.elca.el4j.apps.refdb.gui;
 
+
 // Checkstyle: UncommentedMain off
 
 /**
@@ -46,12 +47,13 @@ public final class MainDistributed {
     public static void main(String[] args) {
         String startupContext 
             = "classpath:scenarios/springrcp/refdb/startup/*.xml";
-        String[] applicationContexts = {
+        String[] applicationContextPaths = {
             "classpath*:mandatory/*.xml",
+            "classpath*:mandatory/refdb/*.xml",
             "classpath:scenarios/remoting/client/*.xml",
             "classpath:scenarios/springrcp/refdb/application/*.xml"
         };
-        MainCommon.launchApplication(startupContext, applicationContexts);
+        MainCommon.launchApplication(startupContext, applicationContextPaths);
     }
 }
 //Checkstyle: UncommentedMain on

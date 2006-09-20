@@ -19,9 +19,9 @@ package ch.elca.el4j.apps.refdb.gui.views;
 
 import java.util.List;
 
-import ch.elca.el4j.apps.keyword.dto.KeywordDto;
+import ch.elca.el4j.apps.keyword.dao.KeywordDao;
+import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.apps.refdb.gui.brokers.ServiceBroker;
-import ch.elca.el4j.apps.refdb.service.ReferenceService;
 import ch.elca.el4j.services.gui.event.RefreshEvent;
 import ch.elca.el4j.services.gui.richclient.views.AbstractBeanTableView;
 import ch.elca.el4j.services.search.QueryObject;
@@ -45,11 +45,10 @@ public class KeywordView extends AbstractBeanTableView {
      */
     protected void onQueryObjectEvent(QueryObjectEvent event) {
         if (isControlCreated() && isQueryObjectComingFromNeighbour(event)) {
-            QueryObject queryObject = event.getQueryObject(KeywordDto.class);
+            QueryObject queryObject = event.getQueryObject(Keyword.class);
             if (queryObject != null) {
-                ReferenceService referenceService 
-                    = ServiceBroker.getReferenceService();
-                List list = referenceService.searchKeywords(queryObject);
+                KeywordDao keywordDao = ServiceBroker.getKeywordDao();
+                List list = keywordDao.findByQuery(queryObject);
                 setBeans(list);
             }
         }
