@@ -118,6 +118,11 @@
         <property name="sessionFactory">
             <ref bean="sessionFactory"/>
         </property>
-        
+    </bean>
+    
+    <bean id="abstractDao" abstract="true">
+    	<property name="sessionFactory">
+    		<ref bean="sessionFactory"/>
+    	</property>
     </bean>
 </beans>

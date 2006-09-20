@@ -1,6 +1,7 @@
 package ch.elca.el4j.services.persistence.hibernate.dao;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -18,10 +19,10 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * This is a convenience class for the Hibernate template.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
+ *   ("$URL:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/hibernate/src/main/java/ch/elca/el4j/services/persistence/hibernate/dao/ConvenienceHibernateTemplate.java $",
+ *    "$Revision:1059 $",
+ *    "$Date:2006-09-04 13:33:11 +0000 (Mo, 04 Sep 2006) $",
+ *    "$Author:mathey $"
  * );</script>
  *
  * @author Alex Mathey (AMA)
@@ -55,17 +56,18 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
      * @throws org.springframework.dao.DataRetrievalFailureException
      *             in case the persistent instance is null
      */
-    public Object getByIdStrong(Class entityClass, int id,
+    public Object getByIdStrong(Class entityClass, Serializable id,
         final String objectName) throws DataAccessException,
         DataRetrievalFailureException {
 
-        Reject.ifNull(new Integer(id), "The identifier must not be null.");
+        Reject.ifNull(id, "The identifier must not be null.");
         Reject.ifEmpty(objectName, "The name of the persistent object type "
             + "must not be empty.");
-        Object result = get(entityClass, new Integer(id));
+        Object result = get(entityClass, id);
         
         if (result == null || !(entityClass.isInstance(result))) {
-            String message = "The desired " + objectName + " does not exist.";
+            String message = "The desired " + objectName + " could not be"
+                + " retrieved.";
             CoreNotificationHelper.notifyDataRetrievalFailure(message,
                 objectName);
         }
@@ -167,7 +169,7 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
      * @throws org.springframework.dao.DataRetrievalFailureException
      *             in case the persistent instance to delete is null
      */
-    public void deleteStrong(Class entityClass, int id,
+    public void deleteStrong(Class entityClass, Serializable id,
         final String objectName) throws DataRetrievalFailureException {
         Reject.ifEmpty(objectName, "The name of the persistent object type "
             + "must not be empty.");
