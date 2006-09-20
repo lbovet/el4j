@@ -26,7 +26,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import ch.elca.el4j.apps.keyword.dto.KeywordDto;
+import ch.elca.el4j.apps.keyword.dao.KeywordDao;
+import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.apps.keyword.service.KeywordService;
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.tcpforwarder.TcpForwarder;
@@ -113,7 +114,8 @@ public class SpringStartupTest extends TestCase {
      */
     protected String[] getExcludeConfigLocations() {
         return new String[] { 
-            "classpath*:scenarios/dataaccess/hibernate/keyword-core-repository-hibernate-config.xml"
+            "classpath*:scenarios/dataaccess/hibernate/keyword-core-repository-"
+                + "hibernate-config.xml"
         };
     }
 
@@ -155,12 +157,12 @@ public class SpringStartupTest extends TestCase {
         // Cutting the connection to the database
         ti.unplug();
         
-        KeywordService service = null;
+        KeywordDao dao = null;
         
         try {
-            service = (KeywordService) getApplicationContext()
-                .getBean("keywordService");
-            s_logger.debug(service.getClass().getName());
+            dao = (KeywordDao) getApplicationContext()
+                .getBean("keywordDao");
+            s_logger.debug(dao.getClass().getName());
         } catch (Exception e) {
             e.printStackTrace();
             fail("Spring failed to start up...");
@@ -169,22 +171,22 @@ public class SpringStartupTest extends TestCase {
         // Establishing the connection to the database
         ti.plug();
         
-        List<KeywordDto> keywordsList = service.getAllKeywords();
-        for (KeywordDto k : keywordsList) {
-            service.removeKeyword(k.getKey());
+        List<Keyword> keywordsList = dao.findAll();
+        for (Keyword k : keywordsList) {
+            dao.delete(k.getKey());
         }
-        KeywordDto newKeyword = new KeywordDto();
+        Keyword newKeyword = new Keyword();
         newKeyword.setName("NewKeyword");
         newKeyword.setDescription("NewKeyword description");
         
-        service.saveKeyword(newKeyword);
+        dao.saveOrUpdate(newKeyword);
         
-        KeywordDto newKeyword2 = new KeywordDto();
+        Keyword newKeyword2 = new Keyword();
         newKeyword2.setName("NewKeyword");
         newKeyword.setDescription("NewKeyword 2 description");
         
         try {
-            service.saveKeyword(newKeyword2);
+            dao.saveOrUpdate(newKeyword2);
         } catch (DataIntegrityViolationException e) {
             s_logger.debug("Expected exception catched.", e);
         } catch (Exception e) {
