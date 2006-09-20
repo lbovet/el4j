@@ -68,9 +68,9 @@ public class HtmlAdapterFactoryBean implements FactoryBean, InitializingBean {
     
     /**
      * Is the path to the used stylesheet. Default is set to 
-     * <code>jmx/stylesheet.css</code>.
+     * <code>etc/jmx/stylesheet.css</code>.
      */
-    private String m_stylesheetPath = "jmx/stylesheet.css";
+    private String m_stylesheetPath = "etc/jmx/stylesheet.css";
 
     /**
      * The port member.
