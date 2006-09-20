@@ -33,7 +33,6 @@ import ch.elca.el4j.services.persistence.generic.DaoAgent;
 import ch.elca.el4j.services.persistence.generic.dao.DaoChangeListener;
 import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier;
 import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.EntityDeleted;
-import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
 import ch.elca.el4j.services.richclient.components.EntityCreator;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.Reject;
@@ -63,7 +62,7 @@ import ch.elca.el4j.util.observer.impl.SettableObservableValue;
  */
 
 // TODO: fuse this.selection with swings selection model
-public class Table<T extends PrimaryKeyOptimisticLockingObject> extends AbstractGenericView<T> {
+public class Table extends AbstractGenericView {
     /** specifies which properties are shown and which are changeable. */
     public DisplayablePropertyList properties;
     
@@ -95,7 +94,7 @@ public class Table<T extends PrimaryKeyOptimisticLockingObject> extends Abstract
     private Model m_model;
 
     /** see source. @param c . */
-    public <T extends PrimaryKeyOptimisticLockingObject> Table(Class<T> c) {
+    public <T> Table(Class<T> c) {
         super(c);
         properties = new EditablePropertyList(m_type);
 
@@ -148,7 +147,7 @@ public class Table<T extends PrimaryKeyOptimisticLockingObject> extends Abstract
     }
     
     /***/
-    class GenericComponent<T extends PrimaryKeyOptimisticLockingObject> extends AbstractBeanTableView 
+    class GenericComponent<T> extends AbstractBeanTableView 
             implements ValueObserver<QueryObject>,
                        DaoChangeListener {
         
@@ -236,7 +235,7 @@ public class Table<T extends PrimaryKeyOptimisticLockingObject> extends Abstract
      * {@inheritDoc}
      */
     @Override
-    protected <T extends PrimaryKeyOptimisticLockingObject> ViewDescriptor createDescriptor(Class<T> clazz) {
+    protected <T> ViewDescriptor createDescriptor(Class<T> clazz) {
         for (AbstractBeanExecutor e : executors) {
             m_awaker.awaken(e);
         }

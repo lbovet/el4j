@@ -23,7 +23,7 @@ import javax.swing.ListSelectionModel;
 
 import org.springframework.binding.form.FormModel;
 
-import ch.elca.el4j.apps.keyword.dto.KeywordDto;
+import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.services.gui.richclient.forms.binding.swing.AbstractDynamicListBinding;
 import ch.elca.el4j.services.gui.richclient.utils.Services;
 import ch.elca.el4j.services.persistence.generic.DaoAgency;
@@ -59,7 +59,7 @@ public class KeywordDynamicListBinding extends AbstractDynamicListBinding {
      */
     protected List getActualSelectableItems() {
         return Services.get(DaoAgency.class)
-                       .getFor(KeywordDto.class)
+                       .getFor(Keyword.class)
                        .findAll();
     }
 }

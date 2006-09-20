@@ -1,6 +1,11 @@
 RefDbGui Tiger
 ==============
 
+IMPORTANT NOTE:
+---------------
+
+We have not cleaned up the RefDbGui Tiger application yet, and it does not run with the latest release of EL4J. This will be done in a further release.
+
 Purpose
 -------
 

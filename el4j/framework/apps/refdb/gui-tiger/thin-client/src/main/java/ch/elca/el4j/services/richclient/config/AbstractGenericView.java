@@ -23,7 +23,6 @@ import org.springframework.richclient.application.ViewDescriptor;
 import ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.AbstractGroupPageComponentDescriptor;
 import ch.elca.el4j.services.gui.richclient.views.descriptors.impl.AbstractViewDescriptor;
 import ch.elca.el4j.services.i18n.MessageProvider;
-import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
 import ch.elca.el4j.services.richclient.context.AwakingContext;
 import ch.elca.el4j.util.codingsupport.Reject;
 import ch.elca.el4j.util.dom.reflect.EntityType;
@@ -44,7 +43,7 @@ import ch.elca.el4j.util.dom.reflect.EntityType;
  *
  * @author Adrian Moos (AMS)
  */
-public abstract class AbstractGenericView<T extends PrimaryKeyOptimisticLockingObject> extends AbstractComponent {
+public abstract class AbstractGenericView extends AbstractComponent {
     /** this component's schema, i.e. its identifier for message lookups. */
     public String schema = defaultSchema();
     
@@ -73,7 +72,7 @@ public abstract class AbstractGenericView<T extends PrimaryKeyOptimisticLockingO
     @Override
     void init(AwakingContext context) {
         m_awaker = context;
-        m_descriptor = createDescriptor((Class<T>)m_type.clazz);
+        m_descriptor = createDescriptor(m_type.clazz);
     }
     
     /** labels and wakens <code>d</code>. Also returns it (for convenience)
@@ -121,7 +120,7 @@ public abstract class AbstractGenericView<T extends PrimaryKeyOptimisticLockingO
      * this object.
      * @param clazz the domain class for this view's entity type.
      * @return . */
-    protected abstract <T extends PrimaryKeyOptimisticLockingObject> ViewDescriptor createDescriptor(Class<T> clazz);
+    protected abstract <T> ViewDescriptor createDescriptor(Class<T> clazz);
     
     /** {@inheritDoc} */
     ViewDescriptor getDescriptor(AwakingContext context) {
