@@ -25,10 +25,14 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 
-import ch.elca.el4j.apps.refdb.dao.ReferenceDao;
-import ch.elca.el4j.apps.refdb.dto.LinkDto;
-import ch.elca.el4j.apps.refdb.service.ReferenceService;
+import ch.elca.el4j.apps.refdb.dao.AnnotationDao;
+import ch.elca.el4j.apps.refdb.dao.FileDao;
+import ch.elca.el4j.apps.refdb.dao.LinkDao;
+import ch.elca.el4j.apps.refdb.dom.Annotation;
+import ch.elca.el4j.apps.refdb.dom.File;
+import ch.elca.el4j.apps.refdb.dom.Link;
 import ch.elca.el4j.core.context.ModuleApplicationContext;
+import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
 
 import junit.framework.TestCase;
 
@@ -62,15 +66,20 @@ public abstract class AbstractTestCaseBase extends TestCase {
     private DataSource m_dataSource;
 
     /**
-     * Reference dao from refdb. Created by application context.
+     * Link DAO. Created by application context.
      */
-    private ReferenceDao m_referenceDao;
+    private LinkDao m_linkDao;
 
     /**
-     * Reference dao from refdb. Created by application context.
+     * Annotation DAO. Created by application context.
      */
-    private ReferenceService m_referenceService;
-
+    private AnnotationDao m_annotationDao;
+    
+    /**
+     * File DAO. Created by application context.
+     */
+    private FileDao m_fileDao;
+    
     /**
      * Hide default constructor.
      */
@@ -80,7 +89,6 @@ public abstract class AbstractTestCaseBase extends TestCase {
      * @return Returns the applicationContext.
      */
     protected synchronized ApplicationContext getApplicationContext() {
-        //return m_applicationContext;
         if (m_applicationContext == null) {
             m_applicationContext = new ModuleApplicationContext(
                 getIncludeConfigLocations(), getExcludeConfigLocations(), 
@@ -141,6 +149,7 @@ public abstract class AbstractTestCaseBase extends TestCase {
                 "DELETE FROM REFERENCESTABLE");
             con.createStatement().execute(
                 "DELETE FROM KEYWORDS");
+            con.commit();
         } finally {
             if (con != null) {
                 try {
@@ -160,10 +169,10 @@ public abstract class AbstractTestCaseBase extends TestCase {
      * @return Returns the key of the created reference.
      */
     protected int addFakeReference(String name) {
-        LinkDto link = new LinkDto();
+        Link link = new Link();
         link.setName(name);
-        ReferenceDao dao = getReferenceDao();
-        link = dao.saveLink(link);
+        LinkDao dao = getLinkDao();
+        link = dao.saveOrUpdate(link);
         return link.getKey();
     }
     
@@ -177,26 +186,44 @@ public abstract class AbstractTestCaseBase extends TestCase {
     }
     
     /**
-     * @return Returns the referenceDao.
+     * @return Returns the link DAO.
      */
-    protected ReferenceDao getReferenceDao() {
-        if (m_referenceDao == null) {
-            m_referenceDao 
-                = (ReferenceDao) getApplicationContext().getBean(
-                    "referenceDao");
+    protected LinkDao getLinkDao() {
+        if (m_linkDao == null) {
+            DefaultDaoRegistry daoRegistry 
+                = (DefaultDaoRegistry) getApplicationContext()
+                    .getBean("daoRegistry");
+            m_linkDao = (LinkDao) daoRegistry.getFor(Link.class);
         }
-        return m_referenceDao;
+        return m_linkDao;
     }
     
     /**
-     * @return Returns the reference service.
+     * @return Returns the annotation DAO.
      */
-    protected ReferenceService getReferenceService() {
-        if (m_referenceService == null) {
-            m_referenceService 
-                = (ReferenceService) getApplicationContext().getBean(
-                    "referenceService");
+    protected AnnotationDao getAnnotationDao() {
+        if (m_annotationDao == null) {
+            DefaultDaoRegistry daoRegistry 
+                = (DefaultDaoRegistry) getApplicationContext()
+                    .getBean("daoRegistry");
+            m_annotationDao = (AnnotationDao) daoRegistry
+                .getFor(Annotation.class);
         }
-        return m_referenceService;
+        return m_annotationDao;
     }
+    
+    /**
+     * @return Returns the file DAO.
+     */
+    protected FileDao getFileDao() {
+        if (m_fileDao == null) {
+            DefaultDaoRegistry daoRegistry 
+                = (DefaultDaoRegistry) getApplicationContext()
+                    .getBean("daoRegistry");
+            m_fileDao = (FileDao) daoRegistry
+                .getFor(File.class);
+        }
+        return m_fileDao;
+    }
+    
 }
