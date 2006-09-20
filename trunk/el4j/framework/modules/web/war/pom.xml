@@ -40,6 +40,42 @@
                     </deployer>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>ch.elca.el4j.plugins</groupId>
+                <artifactId>maven-file-collector-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>collect-wepapp-resources</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>aggregate-files</goal>
+                        </goals>
+                        <configuration>
+                            <rootSourceDirectory>${basedir}/../../../../skin/src/main/resources</rootSourceDirectory>
+                            <sourceFileIncludePatterns>css/**/*,images/**/*,favicon.ico</sourceFileIncludePatterns>
+                            <sourceFileExcludePatterns>**/.svn,**/.svn/**/*</sourceFileExcludePatterns>
+                            <targetDirectory>${basedir}/src/main/webapp</targetDirectory>
+                            <allowOverwrite>true</allowOverwrite>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${basedir}/src/main/webapp</directory>
+                            <includes>
+                                <include>css</include>
+                                <include>images</include>
+                                <include>favicon.ico</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <dependencies>
