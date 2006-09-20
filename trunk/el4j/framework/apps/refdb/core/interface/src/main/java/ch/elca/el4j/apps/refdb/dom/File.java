@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.apps.refdb.dto;
+package ch.elca.el4j.apps.refdb.dom;
 
 import java.util.Arrays;
 
@@ -22,11 +22,10 @@ import javax.persistence.Entity;
 
 import org.hibernate.validator.NotNull;
 
-import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
 /**
- * Dto for a file.
+ * File domain object.
  * 
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -38,21 +37,22 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  * @author Martin Zeltner (MZE)
  */
 @Entity
-public class FileDto extends AbstractIntKeyIntOptimisticLockingDto {
+public class File extends FileDescriptorView {
+    
     /**
      * Primary key of related reference.
      */
-    private int m_keyToReference;
+    //private int m_keyToReference;
 
     /**
      * Name of the document.
      */
-    private String m_name;
+    //private String m_name;
 
     /**
      * Mime type of the binary content of the file.
      */
-    private String m_mimeType;
+    //private String m_mimeType;
 
     /**
      * Data of the document (typically binary).
@@ -62,13 +62,7 @@ public class FileDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * Size of the content in bytes.
      */
-    private int m_size;
-
-    /**
-     * Reference this file is associated with (only used if
-     * Hibernate is used to perform ORM).
-     */
-    //private ReferenceDto m_reference;
+    //private int m_size;
     
     /**
      * @return Returns the content.
@@ -89,85 +83,68 @@ public class FileDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * @return Returns the mimeType
      */
-    @NotNull
+    /*@NotNull
     public String getMimeType() {
         return m_mimeType;
-    }
+    }*/
 
     /**
      * @param mimeType
      *            The mimeType to set.
      */
-    public void setMimeType(String mimeType) {
+    /*public void setMimeType(String mimeType) {
         m_mimeType = mimeType;
-    }
+    }*/
 
     /**
      * @return Returns the name
      */
-    @NotNull
+    /*@NotNull
     public String getName() {
         return m_name;
-    }
+    }*/
 
     /**
      * @param name
      *            The name to set.
      */
-    public void setName(String name) {
+    /*public void setName(String name) {
         m_name = name;
-    }
+    }*/
 
     /**
      * @return Returns the size of the content in bytes.
      */
-    @NotNull
+    /*@NotNull
     public int getSize() {
         if (m_content != null && m_size <= 0) {
             m_size = m_content.length;
         }
         return m_size;
-    }
+    }*/
 
     /**
      * @param size
      *            The size of the content in bytes.
      */
-    public void setSize(int size) {
+    /*public void setSize(int size) {
         m_size = size;
-    }
+    }*/
 
     /**
      * @return Returns the key to reference.
      */
     @NotNull
-    public int getKeyToReference() {
+    /*public int getKeyToReference() {
         return m_keyToReference;
-    }
+    }*/
 
     /**
      * @param keyToReference
      *            The key to reference to set.
      */
-    public void setKeyToReference(int keyToReference) {
+    /*public void setKeyToReference(int keyToReference) {
         m_keyToReference = keyToReference;
-    }
-
-    /**
-     * @return Returns the reference this file is associated with (only
-     *         used if Hibernate is used to perform ORM).
-     */
-    /*public ReferenceDto getReference() {
-        return m_reference;
-    }*/
-    
-    /**
-     * @param reference
-     *            The reference this file will be associated with (only
-     *            used if Hibernate is used to perform ORM).
-     */
-    /*public void setReference(ReferenceDto reference) {
-        m_reference = reference;
     }*/
     
     /**
@@ -177,17 +154,19 @@ public class FileDto extends AbstractIntKeyIntOptimisticLockingDto {
         return super.hashCode();
     }
     
+
     /**
      * {@inheritDoc}
      */
     public boolean equals(Object object) {
         if (super.equals(object)
-            && object instanceof FileDto) {
-            FileDto other = (FileDto) object;
+            && object instanceof File) {
+            File other = (File) object;
 
-            return m_keyToReference == other.m_keyToReference
-                && ObjectUtils.nullSaveEquals(m_name, other.m_name)
-                && ObjectUtils.nullSaveEquals(m_mimeType, other.m_mimeType)
+            return getKeyToReference() == other.getKeyToReference()
+                && ObjectUtils.nullSaveEquals(getName(), other.getName())
+                && ObjectUtils.nullSaveEquals(getMimeType(), 
+                    other.getMimeType())
                 && Arrays.equals(m_content, other.m_content);
         } else {
             return false;

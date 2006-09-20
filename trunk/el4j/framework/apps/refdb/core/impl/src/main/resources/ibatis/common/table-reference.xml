@@ -12,7 +12,13 @@
     <!-- 
         Reference related invocations
     -->
-    <delete id="deleteReference" parameterClass="int">
+    
+    <delete id="deleteReference">
+        delete from REFERENCESTABLE where KEYID=#key# AND
+        OPTIMISTICLOCKINGVERSION=#optimisticLockingVersion#
+    </delete>
+    
+    <delete id="deleteReferenceById" parameterClass="int">
         delete from REFERENCESTABLE where KEYID=#value#
     </delete>
 </sqlMap>

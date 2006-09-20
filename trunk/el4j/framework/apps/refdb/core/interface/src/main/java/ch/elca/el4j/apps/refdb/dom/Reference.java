@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.apps.refdb.dto;
+package ch.elca.el4j.apps.refdb.dom;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -27,11 +27,14 @@ import javax.persistence.Entity;
 import org.hibernate.validator.AssertTrue;
 import org.hibernate.validator.NotNull;
 
+import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
+import ch.elca.el4j.util.dom.annotations.MemberOrder;
 
 /**
- * This is the base reference class.
+ * Reference domain object. This is the base reference class and describes a
+ * source of information.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -41,9 +44,20 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  * );</script>
  *
  * @author Martin Zeltner (MZE)
+ * @author Alex Mathey (AMA)
  */
+@MemberOrder({
+    "name",
+    "hashValue",
+    "description",
+    "version",
+    "incomplete",
+    "whenInserted",
+    "date",
+    "keywords"
+})
 @Entity
-public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
+public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * Name of the reference (book title, ...).
      */
@@ -85,27 +99,22 @@ public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * Set of keywords for this reference.
      */
-    private Set m_keywords = new HashSet();
+    private Set<Keyword> m_keywords = new HashSet<Keyword>();
 
     /**
-     * Set of annotations for this reference (only used if Hibernate is used to
-     * perform ORM).
+     * Set of annotations for this reference.
      */
-    private Set m_annotations;
+    private Set<Annotation> m_annotations;
     
     /**
-     * Set of files for this reference (only used if Hibernate is used to
-     * perform ORM).
+     * Set of files for this reference.
      */
-    private Set m_files;
+    private Set<File> m_files;
     
     /**
-     * Set of file descriptor views for this reference (only used if Hibernate
-     * is used to perform ORM).
+     * Set of file descriptor views for this reference.
      */
-    private Set m_fileDescriptorViews;
-    
-    
+    private Set<FileDescriptorView> m_fileDescriptorViews;
     
     /**
      * @return Returns the date.
@@ -232,7 +241,7 @@ public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * @return Returns the keywords.
      */
-    public Set getKeywords() {
+    public Set<Keyword> getKeywords() {
         return m_keywords;
     }
 
@@ -240,7 +249,7 @@ public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
      * @param keywords
      *            The keywords to set.
      */
-    public void setKeywords(Set keywords) {
+    public void setKeywords(Set<Keyword> keywords) {
         m_keywords = keywords;
     }
     
@@ -248,7 +257,7 @@ public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
      * @return Returns the set of annotations for this reference (only used if
      *         Hibernate is used to perform ORM).
      */
-    public Set getAnnotations() {
+    public Set<Annotation> getAnnotations() {
         return m_annotations;
     }
     
@@ -257,7 +266,7 @@ public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
      *            The set of annotations for this reference (only used if
      *            Hibernate is used to perform ORM).
      */
-    public void setAnnotations(Set annotations) {
+    public void setAnnotations(Set<Annotation> annotations) {
         m_annotations = annotations;
     }
     
@@ -265,7 +274,7 @@ public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
      * @return Returns the set of files for this reference (only used if
      *         Hibernate is used to perform ORM).
      */
-    public Set getFiles() {
+    public Set<File> getFiles() {
         return m_files;
     }
     
@@ -274,7 +283,7 @@ public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
      *            The set of files for this reference (only used if
      *            Hibernate is used to perform ORM).
      */
-    public void setFiles(Set files) {
+    public void setFiles(Set<File> files) {
         m_files = files;
     }
     
@@ -282,7 +291,7 @@ public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
      * @return Returns the set of file descriptor views for this reference (only
      *         used if Hibernate is used to perform ORM).
      */
-    public Set getFileDescriptorViews() {
+    public Set<FileDescriptorView> getFileDescriptorViews() {
         return m_fileDescriptorViews;
     }
     
@@ -291,7 +300,8 @@ public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
      *            The set of file descriptor views for this reference (only used
      *            if Hibernate is used to perform ORM).
      */
-    public void setFileDescriptorViews(Set fileDescriptorViews) {
+    public void setFileDescriptorViews(Set<FileDescriptorView>
+        fileDescriptorViews) {
         m_fileDescriptorViews = fileDescriptorViews;
     }
 
@@ -307,8 +317,8 @@ public class ReferenceDto extends AbstractIntKeyIntOptimisticLockingDto {
      */
     public boolean equals(Object object) {
         if (super.equals(object)
-            && object instanceof ReferenceDto) {
-            ReferenceDto other = (ReferenceDto) object;
+            && object instanceof Reference) {
+            Reference other = (Reference) object;
 
             return ObjectUtils.nullSaveEquals(m_name, other.m_name)
                 && ObjectUtils.nullSaveEquals(m_hashValue, other.m_hashValue)

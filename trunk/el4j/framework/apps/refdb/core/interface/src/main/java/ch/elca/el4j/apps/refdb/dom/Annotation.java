@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.apps.refdb.dto;
+package ch.elca.el4j.apps.refdb.dom;
 
 import java.sql.Timestamp;
 
@@ -26,7 +26,8 @@ import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimistic
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
 /**
- * Dto for an annotation.
+ * Annotation domain object. This class describes an annotation of a reference
+ * (formal publication, book, ...).
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -38,7 +39,7 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  * @author Martin Zeltner (MZE)
  */
 @Entity
-public class AnnotationDto extends AbstractIntKeyIntOptimisticLockingDto {
+public class Annotation extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * Primary key of related reference.
      */
@@ -66,12 +67,6 @@ public class AnnotationDto extends AbstractIntKeyIntOptimisticLockingDto {
      */
     private Timestamp m_whenInserted;
 
-    /**
-     * Reference this annotation is associated with (only used if
-     * Hibernate is used to perform ORM).
-     */
-    //private ReferenceDto m_reference;
-    
     /**
      * @return Returns the annotator.
      */
@@ -154,23 +149,6 @@ public class AnnotationDto extends AbstractIntKeyIntOptimisticLockingDto {
     public void setKeyToReference(int keyToReference) {
         m_keyToReference = keyToReference;
     }
-    
-    /**
-     * @return Returns the reference this annotation is associated with (only
-     *         used if Hibernate is used to perform ORM).
-     */
-    /*public ReferenceDto getReference() {
-        return m_reference;
-    }*/
-    
-    /**
-     * @param reference
-     *            The reference this annotation will be associated with (only
-     *            used if Hibernate is used to perform ORM).
-     */
-    /*public void setReference(ReferenceDto reference) {
-        m_reference = reference;
-    }*/
 
     /**
      * {@inheritDoc}
@@ -184,8 +162,8 @@ public class AnnotationDto extends AbstractIntKeyIntOptimisticLockingDto {
      */
     public boolean equals(Object object) {
         if (super.equals(object)
-            && object instanceof AnnotationDto) {
-            AnnotationDto other = (AnnotationDto) object;
+            && object instanceof Annotation) {
+            Annotation other = (Annotation) object;
 
             return m_keyToReference == other.m_keyToReference
                 && ObjectUtils.nullSaveEquals(m_annotator, other.m_annotator)

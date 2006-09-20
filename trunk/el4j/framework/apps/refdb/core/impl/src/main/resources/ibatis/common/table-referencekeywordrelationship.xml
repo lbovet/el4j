@@ -13,7 +13,7 @@
         Reference related invocations
     -->
     <resultMap id="referencekeywordrelationship" 
-        class="ch.elca.el4j.apps.refdb.dto.ReferenceKeywordRelationshipDto">
+        class="ch.elca.el4j.apps.refdb.dom.ReferenceKeywordRelationship">
         <result property="keyReference" column="KEYREFERENCE"/>
         <result property="keyKeyword" column="KEYKEYWORD"/>
     </resultMap>

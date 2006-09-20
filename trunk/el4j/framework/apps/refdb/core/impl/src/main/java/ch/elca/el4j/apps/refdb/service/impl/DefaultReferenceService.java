@@ -28,16 +28,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.elca.el4j.apps.keyword.service.impl.DefaultKeywordService;
 import ch.elca.el4j.apps.refdb.Constants;
-import ch.elca.el4j.apps.refdb.dao.ReferenceDao;
-import ch.elca.el4j.apps.refdb.dto.AnnotationDto;
-import ch.elca.el4j.apps.refdb.dto.BookDto;
-import ch.elca.el4j.apps.refdb.dto.FileDescriptorView;
-import ch.elca.el4j.apps.refdb.dto.FileDto;
-import ch.elca.el4j.apps.refdb.dto.FormalPublicationDto;
-import ch.elca.el4j.apps.refdb.dto.LinkDto;
-import ch.elca.el4j.apps.refdb.dto.ReferenceDto;
+import ch.elca.el4j.apps.refdb.dao.BookDao;
+import ch.elca.el4j.apps.refdb.dao.FileDao;
+import ch.elca.el4j.apps.refdb.dao.FormalPublicationDao;
+import ch.elca.el4j.apps.refdb.dao.LinkDao;
+import ch.elca.el4j.apps.refdb.dom.Book;
+import ch.elca.el4j.apps.refdb.dom.File;
+import ch.elca.el4j.apps.refdb.dom.FileDescriptorView;
+import ch.elca.el4j.apps.refdb.dom.FormalPublication;
+import ch.elca.el4j.apps.refdb.dom.Link;
+import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.apps.refdb.service.ReferenceService;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
+import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.Reject;
@@ -53,176 +56,73 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * );</script>
  * 
  * @author Martin Zeltner (MZE)
+ * @author Alex Mathey (AMA)
  */
-public class DefaultReferenceService /*extends DefaultKeywordService
-    implements ReferenceService*/ {
+public class DefaultReferenceService extends DefaultKeywordService
+    implements ReferenceService {
+    
     /**
-     * Inner reference to the working dao.
+     * Constructor.
      */
-    /*private ReferenceDao m_referenceDao;
-
-    *//**
-     * @return Returns the referenceDao.
-     *//*
-    public ReferenceDao getReferenceDao() {
-        return m_referenceDao;
+    public DefaultReferenceService() { }
+    
+    /**
+     * @return Returns the DAO for files.
+     */
+    public FileDao getFileDao() {
+        return (FileDao) getDaoRegistry()
+            .getFor(File.class);
     }
 
-    *//**
-     * @param referenceDao
-     *            The referenceDao to set.
-     *//*
-    public void setReferenceDao(ReferenceDao referenceDao) {
-        m_referenceDao = referenceDao;
-        setKeywordDao(referenceDao);
+    /**
+     * @return Returns the DAO for links.
+     */
+    public LinkDao getLinkDao() {
+        return (LinkDao) getDaoRegistry()
+            .getFor(Link.class);
     }
-
-    *//**
+    
+    /**
+     * @return Returns the DAO for formal publications.
+     */
+    public FormalPublicationDao getFormalPublicationDao() {
+        return (FormalPublicationDao) getDaoRegistry()
+            .getFor(FormalPublication.class);
+    }
+    
+    /**
+     * @return Returns the DAO for books.
+     * @return
+     */
+    public BookDao getBookDao() {
+        return (BookDao) getDaoRegistry()
+            .getFor(Book.class);
+    }
+    
+    /**
      * {@inheritDoc}
-     *//*
+     */
     public void afterPropertiesSet() throws Exception {
         super.afterPropertiesSet();
         CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-            getReferenceDao(), "referenceDao", this);
+            getFileDao(), "fileDao", this);
+        CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+            getLinkDao(), "linkDao", this);
+        CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+            getFormalPublicationDao(), "formalPublicationDao", this);
+        CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+            getBookDao(), "bookDao", this);
     }
 
-    *//**
-     * {@inheritDoc}
-     *//*
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public AnnotationDto getAnnotationByKey(int key)
-        throws DataAccessException, DataRetrievalFailureException {
-        return getReferenceDao().getAnnotationByKey(key);
-    }
-
-    *//**
-     * {@inheritDoc}
-     *//*
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List getAnnotationsByAnnotator(String annotator)
-        throws DataAccessException {
-        Reject.ifEmpty(annotator);
-        return getReferenceDao().getAnnotationsByAnnotator(annotator);
-    }
-
-    *//**
-     * {@inheritDoc}
-     *//*
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List getAnnotationsByReference(int key) throws DataAccessException {
-        return getReferenceDao().getAnnotationsByReference(key);
-    }
-
-    *//**
-     * {@inheritDoc}
-     *//*
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List getAllAnnotations() throws DataAccessException {
-        return getReferenceDao().getAllAnnotations();
-    }
-
-    *//**
-     * {@inheritDoc}
-     *//*
-    @Transactional(propagation = Propagation.REQUIRED)
-    public AnnotationDto saveAnnotation(AnnotationDto annotation)
-        throws DataAccessException, InsertionFailureException, 
-            OptimisticLockingFailureException {
-        Reject.ifNull(annotation);
-        return getReferenceDao().saveAnnotation(annotation);
-    }
-
-    *//**
-     * {@inheritDoc}
-     *//*
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void removeAnnotation(int key) throws DataAccessException, 
-        JdbcUpdateAffectedIncorrectNumberOfRowsException {
-        getReferenceDao().removeAnnotation(key);
-    }
-
-    *//**
-     * {@inheritDoc}
-     *//*
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public FileDto getFileByKey(int key) throws DataAccessException, 
-        DataRetrievalFailureException {
-        return getReferenceDao().getFileByKey(key);
-    }
-
-    *//**
-     * {@inheritDoc}
-     *//*
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List getFilesByName(String name) throws DataAccessException {
-        Reject.ifEmpty(name);
-        return getReferenceDao().getFilesByName(name);
-    }
-
-    *//**
-     * {@inheritDoc}
-     *//*
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List getFilesByReference(int key) throws DataAccessException {
-        return getReferenceDao().getFilesByReference(key);
-    }
-
-    *//**
-     * {@inheritDoc}
-     *//*
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List getAllFiles() throws DataAccessException {
-        return getReferenceDao().getAllFiles();
-    }
-
-    *//**
-     * {@inheritDoc}
-     *//*
-    @Transactional(propagation = Propagation.REQUIRED)
-    public FileDto saveFile(FileDto file) throws DataAccessException, 
-        InsertionFailureException, OptimisticLockingFailureException {
-        Reject.ifNull(file);
-        return getReferenceDao().saveFile(file);
-    }
-
-    *//**
-     * {@inheritDoc}
-     *//*
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void removeFile(int key) throws DataAccessException, 
-        JdbcUpdateAffectedIncorrectNumberOfRowsException {
-        getReferenceDao().removeFile(key);
-    }
-
-    *//**
-     * {@inheritDoc}
-     *//*
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List getFileDescriptorViewsByReference(int key)
-        throws DataAccessException {
-        return getReferenceDao().getFileDescriptorViewsByReference(key);
-    }
-
-    *//**
-     * {@inheritDoc}
-     *//*
-    @Transactional(propagation = Propagation.REQUIRED)
-    public FileDescriptorView modifyFileDescriptorView(
-        FileDescriptorView fileView) throws DataAccessException, 
-            DataRetrievalFailureException, OptimisticLockingFailureException {
-        Reject.ifNull(fileView);
-        return getReferenceDao().modifyFileDescriptorView(fileView);
-    }
-
-    *//**
+    /**
      * {@inheritDoc}      
-     *//*
+     */
     @Transactional(propagation = Propagation.REQUIRED)
-    public FileDescriptorView saveFileAndReturnFileDescriptorView(FileDto file)
+    public FileDescriptorView saveFileAndReturnFileDescriptorView(File file)
         throws DataAccessException, InsertionFailureException, 
             OptimisticLockingFailureException {
         Reject.ifNull(file);
-        FileDto newFile = getReferenceDao().saveFile(file);
+        File newFile = getFileDao().saveOrUpdate(file);
         
         FileDescriptorView fileView = new FileDescriptorView();
         fileView.setKey(
@@ -240,156 +140,133 @@ public class DefaultReferenceService /*extends DefaultKeywordService
         return fileView;
     }
 
-    *//**
+    /**
      * {@inheritDoc}
-     *//*
+     */
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public ReferenceDto getReferenceByKey(int key)
+    public Reference getReferenceByKey(int key)
         throws DataAccessException, DataRetrievalFailureException {
-        ReferenceDto reference = null;
-        boolean referenceExists = false;
-        // Checkstyle: EmptyBlock off
-        try {
-            reference = getReferenceDao().getLinkByKey(key);
-            referenceExists = true;
-        } catch (DataRetrievalFailureException e) { }
-        if (!referenceExists) {
-            try {
-                reference = getReferenceDao().getBookByKey(key);
-                referenceExists = true;
-            } catch (DataRetrievalFailureException e) { }
-        }
-        if (!referenceExists) {
-            try {
-                reference = getReferenceDao().getFormalPublicationByKey(key);
-                referenceExists = true;
-            } catch (DataRetrievalFailureException e) { }
-        }
-        // Checkstyle: EmptyBlock on
-        if (!referenceExists) {
+        Reference reference = null;
+        
+        if (getLinkDao().referenceExists(key)) {
+            reference = getLinkDao().findById(key);
+        } else if (getBookDao().referenceExists(key)) {
+            reference = getBookDao().findById(key);
+        } else if (getFormalPublicationDao().referenceExists(key)) {
+            reference = getFormalPublicationDao().findById(key);
+        } else {
             CoreNotificationHelper.notifyDataRetrievalFailure(
                 Constants.REFERENCE);
         }
         return reference;
     }
 
-    *//**
+    /**
      * {@inheritDoc}
-     *//*
+     */
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-    public List getReferencesByName(String name) throws DataAccessException {
+    public List<Reference> getReferencesByName(String name) 
+        throws DataAccessException {
         Reject.ifEmpty(name);
         
-        List listLinks 
-            = getReferenceDao().getLinksByName(name);
-        List listFormalPublications 
-            = getReferenceDao().getFormalPublicationsByName(name);
-        List listBooks 
-            = getReferenceDao().getBooksByName(name);
+        List<Link> listLinks 
+            = getLinkDao().getByName(name);
+        List<FormalPublication> listFormalPublications 
+            = getFormalPublicationDao().getByName(name);
+        List<Book> listBooks 
+            = getBookDao().getByName(name);
         
-        List list = new LinkedList();
+        List<Reference> list = new LinkedList<Reference>();
         list.addAll(listLinks);
         list.addAll(listFormalPublications);
         list.addAll(listBooks);
         return list;
     }
 
-    *//**
+    /**
      * {@inheritDoc}
-     *//*
+     */
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List getAllReferences() throws DataAccessException {
-        List listLinks 
-            = getReferenceDao().getAllLinks();
-        List listFormalPublications 
-            = getReferenceDao().getAllFormalPublications();
-        List listBooks 
-            = getReferenceDao().getAllBooks();
+    public List<Reference> getAllReferences() throws DataAccessException {
+        List<Link> listLinks 
+            = getLinkDao().findAll();
+        List<FormalPublication> listFormalPublications 
+            = getFormalPublicationDao().findAll();
+        List<Book> listBooks 
+            = getBookDao().findAll();
         
-        List list = new LinkedList();
+        List<Reference> list = new LinkedList<Reference>();
         list.addAll(listLinks);
         list.addAll(listFormalPublications);
         list.addAll(listBooks);
         return list;
     }
 
-    *//**
+    /**
      * {@inheritDoc}
-     *//*
+     */
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)    
-    public List searchReferences(QueryObject query)
+    public List<Reference> searchReferences(QueryObject query)
         throws DataAccessException {
         Reject.ifNull(query);
         
-        List listLinks = getReferenceDao().searchLinks(query);
-        List listFormalPublications 
-            = getReferenceDao().searchFormalPublications(query);
-        List listBooks = getReferenceDao().searchBooks(query);
+        List<Link> listLinks = getLinkDao().findByQuery(query);
+        List<FormalPublication> listFormalPublications 
+            = getFormalPublicationDao().findByQuery(query);
+        List<Book> listBooks = getBookDao().findByQuery(query);
         
-        List list = new LinkedList();
+        List<Reference> list = new LinkedList<Reference>();
         list.addAll(listLinks);
         list.addAll(listFormalPublications);
         list.addAll(listBooks);
         return list;
     }
 
-    *//**
+    /**
      * {@inheritDoc}
-     *//*
+     */
     @Transactional(propagation = Propagation.REQUIRED)
-    public ReferenceDto saveReference(ReferenceDto reference)
+    public Reference saveReference(Reference reference)
         throws DataAccessException, InsertionFailureException, 
             OptimisticLockingFailureException {
         Reject.ifNull(reference);
         
-        ReferenceDto newReference = null;
-        if (reference instanceof LinkDto) {
-            LinkDto link = (LinkDto) reference;
-            newReference = getReferenceDao().saveLink(link);
-        } else if (reference instanceof BookDto) {
-            BookDto book = (BookDto) reference;
-            newReference = getReferenceDao().saveBook(book);
-        } else if (reference instanceof FormalPublicationDto) {
-            FormalPublicationDto formalPublication 
-                = (FormalPublicationDto) reference;
+        Reference newReference = null;
+        if (reference instanceof Link) {
+            Link link = (Link) reference;
+            newReference = getLinkDao().saveOrUpdate(link);
+        } else if (reference instanceof Book) {
+            Book book = (Book) reference;
+            newReference = getBookDao().saveOrUpdate(book);
+        } else if (reference instanceof FormalPublication) {
+            FormalPublication formalPublication 
+                = (FormalPublication) reference;
             newReference 
-                = getReferenceDao().saveFormalPublication(formalPublication);
+                = getFormalPublicationDao().saveOrUpdate(formalPublication);
         } else {
             CoreNotificationHelper.notifyMisconfiguration(
-                "Unknown kind of reference dto.");
+                "Unknown kind of reference.");
         }
         return newReference;
     }
 
-    *//**
+    /**
      * {@inheritDoc}
-     *//*
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     public void removeReference(int key) throws DataAccessException, 
         JdbcUpdateAffectedIncorrectNumberOfRowsException {
-        boolean referenceExists = false;
-        // Checkstyle: EmptyBlock off
-        try {
-            getReferenceDao().removeLink(key);
-            referenceExists = true;
-        } catch (DataAccessException e) { }
-        if (!referenceExists) {
-            try {
-                getReferenceDao().removeBook(key);
-                referenceExists = true;
-            } catch (DataAccessException e) { }
-        }
-        if (!referenceExists) {
-            try {
-                getReferenceDao().removeFormalPublication(key);
-                referenceExists = true;
-            } catch (DataAccessException e) { }
-        }
-        // Checkstyle: EmptyBlock on
-        if (!referenceExists) {
+        
+        if (getLinkDao().referenceExists(key)) {
+            getLinkDao().delete(key);
+        } else if (getBookDao().referenceExists(key)) {
+            getBookDao().delete(key);
+        } else if (getFormalPublicationDao().referenceExists(key)) {
+            getFormalPublicationDao().delete(key);
+        } else {
             CoreNotificationHelper
-                .notifyJdbcUpdateAffectedIncorrectNumberOfRows(
-                    Constants.REFERENCE, "deleteReferenceType", 1, 0);
+            .notifyJdbcUpdateAffectedIncorrectNumberOfRows(
+                Constants.REFERENCE, "deleteReferenceType", 1, 0);
         }
-    }*/
+    }
 }
