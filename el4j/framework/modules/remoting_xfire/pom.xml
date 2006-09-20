@@ -35,17 +35,24 @@
         <dependency>
             <groupId>org.codehaus.xfire</groupId>
             <artifactId>xfire-all</artifactId>
+            <!--
+                Do not upgrade to version 1.2.1. It is buggy. Following bug made
+                me stay on version 1.1.2:
+                   * http://jira.codehaus.org/browse/XFIRE-643
+             -->
             <version>[1.1.2]</version>
         </dependency>
         <dependency>
-            <groupId>javax.activation</groupId>
-            <artifactId>activation</artifactId>
-            <version>[1.1]</version>
+            <groupId>javax.mail</groupId>
+            <artifactId>javamail</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.wsdl</groupId>
             <artifactId>wsdl4j</artifactId>
-            <version>[1.5.2]</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.xml</groupId>
@@ -53,19 +60,29 @@
             <version>[1.0.1]</version>
         </dependency>
         <dependency>
-            <groupId>org.codehaus.stax</groupId>
-            <artifactId>stax</artifactId>
-            <version>[1.2.0]</version>
+            <groupId>com.ctc</groupId>
+            <artifactId>woodstox</artifactId>
+            <version>[2.9.3]</version>
         </dependency>
         <dependency>
             <groupId>org.jaxen</groupId>
             <artifactId>jaxen</artifactId>
-            <version>[1.1-beta-8]</version>
+            <version>[1.1-beta-9]</version>
         </dependency>
         <dependency>
             <groupId>org.apache.xbean</groupId>
             <artifactId>xbean-spring</artifactId>
-            <version>[2.4]</version>
+            <version>[2.5]</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.ws.commons</groupId>
+            <artifactId>xmlschema</artifactId>
+            <version>[1.0.3]</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.jws</groupId>
+            <artifactId>xfire-jsr181-api</artifactId>
+            <version>[1.0-M1]</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
