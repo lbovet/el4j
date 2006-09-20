@@ -102,11 +102,21 @@
         <property name="testWhileIdle">
             <value>false</value>
         </property>
+        <!-- Auto commits are switched off -->
+        <property name="defaultAutoCommit">
+        	<value>false</value>
+        </property>
     </bean>
     <bean id="transactionManager" 
         class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource">
             <ref local="dataSource"/>
+        </property>
+    </bean>
+    
+    <bean id="abstractDao" abstract="true">
+    	<property name="convenienceSqlMapClientTemplate">
+            <ref bean="convenienceSqlMapClientTemplate" />
         </property>
     </bean>
 </beans>
