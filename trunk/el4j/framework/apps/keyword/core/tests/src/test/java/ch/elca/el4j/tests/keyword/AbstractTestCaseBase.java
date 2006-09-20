@@ -121,6 +121,7 @@ public abstract class AbstractTestCaseBase extends TestCase {
                     + "does not exist.");
             }
             con.createStatement().execute("DELETE FROM KEYWORDS");
+            con.commit();
         } finally {
             if (con != null) {
                 try {

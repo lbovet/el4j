@@ -5,7 +5,7 @@
     
 <hibernate-mapping>
 
-	<class name="ch.elca.el4j.apps.keyword.dto.KeywordDto" table="KEYWORDS">
+	<class name="ch.elca.el4j.apps.keyword.dom.Keyword" table="KEYWORDS">
 		<cache usage="read-write"/>
 		<id name="key">
             <column name="KEYID"/>

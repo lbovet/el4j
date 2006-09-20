@@ -14,15 +14,16 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.apps.keyword.dto;
+package ch.elca.el4j.apps.keyword.dom;
 
 import javax.persistence.Entity;
 
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
+import ch.elca.el4j.util.dom.annotations.MemberOrder;
 
 /**
- * Dto for a keyword.
+ * Keyword domain object.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -33,8 +34,12 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  *
  * @author Martin Zeltner (MZE)
  */
+@MemberOrder({
+    "name",
+    "description"
+})
 @Entity
-public class KeywordDto extends AbstractIntKeyIntOptimisticLockingDto {
+public class Keyword extends AbstractIntKeyIntOptimisticLockingDto {
     
     /**
      * This is the name of the keyword.
@@ -88,8 +93,8 @@ public class KeywordDto extends AbstractIntKeyIntOptimisticLockingDto {
      */
     public boolean equals(Object object) {
         if (super.equals(object) 
-            && object instanceof KeywordDto) {
-            KeywordDto other = (KeywordDto) object;
+            && object instanceof Keyword) {
+            Keyword other = (Keyword) object;
             return ObjectUtils.nullSaveEquals(m_name, other.m_name)
                 && ObjectUtils.nullSaveEquals(
                     m_description, other.m_description);

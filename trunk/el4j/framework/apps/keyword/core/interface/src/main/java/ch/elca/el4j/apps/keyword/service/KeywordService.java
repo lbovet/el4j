@@ -17,21 +17,14 @@
 package ch.elca.el4j.apps.keyword.service;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataRetrievalFailureException;
-import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.elca.el4j.apps.keyword.dto.KeywordDto;
-import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
-import ch.elca.el4j.services.search.QueryObject;
-
 /**
- * This interface provides all available business methods, which can be used in
- * presentation layer.
+ * This interface provides the business methods which can be used in the
+ * presentation layer and which are not already present in the underlying DAO.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -41,93 +34,10 @@ import ch.elca.el4j.services.search.QueryObject;
  * );</script>
  *
  * @author Martin Zeltner (MZE)
+ * @author Alex Mathey (AMA)
  */
 public interface KeywordService {
-    
-    /**
-     * Get keyword by primary key.
-     * 
-     * @param key
-     *            Is the primary key.
-     * @return Returns desired keyword.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     * @throws DataRetrievalFailureException
-     *             If keyword could not be retrieved.           
-     */
-    public KeywordDto getKeywordByKey(int key)
-        throws DataAccessException, DataRetrievalFailureException;
-
-    /**
-     * Get keyword by name.
-     * 
-     * @param name
-     *            Is the name of a keyword.
-     * @return Returns desired keyword.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     * @throws DataRetrievalFailureException
-     *             If keyword could not be retrieved.
-     */
-    public KeywordDto getKeywordByName(String name)
-        throws DataAccessException, DataRetrievalFailureException;
-
-    /**
-     * Get all keywords.
-     * 
-     * @return Returns all keywords. Returns never <code>null</code>.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     */
-    public List getAllKeywords() throws DataAccessException;
-
-    /**
-     * Search keywords.
-     * 
-     * @param query
-     *            Is the search query object.
-     * @return Returns a list with keywords. Returns never <code>null</code>.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     */
-    public List searchKeywords(QueryObject query)
-        throws DataAccessException;
-
-    /**
-     * Save keyword. If keyword is new, viz is has no primary key, it will be
-     * inserted. Otherwise, the keyword will be updated.
-     * 
-     * @param keyword
-     *            Is the keyword to save.
-     * @return Returns the saved keyword.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     * @throws InsertionFailureException
-     *             If keyword could not be inserted.
-     * @throws OptimisticLockingFailureException
-     *             If keyword has been modificated in the meantime.
-     */
-    @Transactional(rollbackFor = {DataAccessException.class,
-            RuntimeException.class, Error.class })
-    public KeywordDto saveKeyword(KeywordDto keyword)
-        throws DataAccessException, InsertionFailureException, 
-            OptimisticLockingFailureException;
-
-    /**
-     * Remove keyword. Primary key will be used.
-     * 
-     * @param key
-     *            Is the primary key of the keyword that should be deleted.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     * @throws JdbcUpdateAffectedIncorrectNumberOfRowsException
-     *             If keyword could not be deleted.
-     */
-    @Transactional(rollbackFor = {DataAccessException.class,
-            RuntimeException.class, Error.class })
-    public void removeKeyword(int key) throws DataAccessException,
-        JdbcUpdateAffectedIncorrectNumberOfRowsException;
-    
+       
     /**
      * Remove keywords. Primary key of each keyword will be used.
      * 

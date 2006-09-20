@@ -14,15 +14,11 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.apps.keyword.dao.impl.ibatis;
-
-import ch.elca.el4j.apps.keyword.dao.KeywordDaoRegistry;
-import ch.elca.el4j.apps.keyword.dto.KeywordDto;
-import ch.elca.el4j.services.persistence.ibatis.dao.GenericSqlMapDao;
-import ch.elca.el4j.services.persistence.ibatis.dao.SqlMapDaoRegistry;
+package ch.elca.el4j.tests.keyword.service;
 
 /**
- * DAO registry for the keyword application with iBatis-backed persistence.
+ * 
+ * iBatis-specific test class for <code>KeywordService</code>.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -33,27 +29,26 @@ import ch.elca.el4j.services.persistence.ibatis.dao.SqlMapDaoRegistry;
  *
  * @author Alex Mathey (AMA)
  */
-public class SqlMapKeywordDaoRegistry extends SqlMapDaoRegistry 
-    implements KeywordDaoRegistry {
+public class SqlMapsKeywordServiceTest extends AbstractKeywordServiceTest {
 
     /**
-     * Constructor.
+     * {@inheritDoc}
      */
-    protected SqlMapKeywordDaoRegistry() {
-        super.setDaos(
-            new SqlMapKeywordDao()
-        );
+    protected String[] getIncludeConfigLocations() {
+        return new String[] {
+            "classpath*:mandatory/*.xml",
+            "classpath*:mandatory/keyword/*.xml",
+            "classpath*:scenarios/db/raw/*.xml",
+            "classpath*:scenarios/dataaccess/ibatis/*.xml",
+            "classpath*:scenarios/dataaccess/ibatis/keyword/*.xml",
+            "classpath*:optional/interception/transactionJava5Annotations.xml"};
     }
-    
+
     /**
-     * Returns the keyword DAO.
-     * 
-     * @return The keyword DAO
+     * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
-    public SqlMapKeywordDao getForKeyword() {
-        return (SqlMapKeywordDao) (GenericSqlMapDao<KeywordDto, Integer>)
-        getFor(KeywordDto.class);
+    protected String[] getExcludeConfigLocations() {
+        return null;
     }
     
 }

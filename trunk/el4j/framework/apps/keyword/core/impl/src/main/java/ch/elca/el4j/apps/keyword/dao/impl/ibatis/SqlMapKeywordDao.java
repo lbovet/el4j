@@ -16,25 +16,18 @@
  */
 package ch.elca.el4j.apps.keyword.dao.impl.ibatis;
 
-import java.util.List;
-
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
-import org.springframework.dao.OptimisticLockingFailureException;
-import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import ch.elca.el4j.apps.keyword.Constants;
 import ch.elca.el4j.apps.keyword.dao.KeywordDao;
-import ch.elca.el4j.apps.keyword.dto.KeywordDto;
-import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
-import ch.elca.el4j.services.persistence.ibatis.dao.ConvenienceSqlMapClientDaoSupport;
+import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.services.persistence.ibatis.dao.GenericSqlMapDao;
-import ch.elca.el4j.services.search.QueryObject;
-import ch.elca.el4j.util.codingsupport.CollectionUtils;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
- * Implementation of the keyword dao which is using iBatis SqlMaps.
+ * Implementation of the keyword DAO which is using iBatis sql maps.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -46,75 +39,27 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * @author Martin Zeltner (MZE)
  * @author alex Mathey (AMA)
  */
-public class SqlMapKeywordDao extends GenericSqlMapDao<KeywordDto, Integer> 
+public class SqlMapKeywordDao extends GenericSqlMapDao<Keyword, Integer> 
     implements KeywordDao {
 
     /**
      * Creates a new SqlMapKeywordDao instance.
      */
     public SqlMapKeywordDao() {
-        setPersistentClass(KeywordDto.class);
+        setPersistentClass(Keyword.class);
     }
     
     /**
      * {@inheritDoc}
      */
-    /*public KeywordDto getKeywordByKey(int key)
-        throws DataAccessException, DataRetrievalFailureException {
-        return (KeywordDto) getConvenienceSqlMapClientTemplate()
-            .queryForObjectStrong("getKeywordByKey", new Integer(key), 
-                Constants.KEYWORD);
-    }*/
-
-    /**
-     * {@inheritDoc}
-     */
-    public KeywordDto getKeywordByName(String name)
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public Keyword getKeywordByName(String name)
         throws DataAccessException, DataRetrievalFailureException {
         Reject.ifEmpty(name);
-        return (KeywordDto) getConvenienceSqlMapClientTemplate()
-            .queryForObjectStrong("getKeywordByName", name, Constants.KEYWORD);
+        return (Keyword) getConvenienceSqlMapClientTemplate()
+            .queryForObjectStrong("getKeywordByName", name,
+                getPersistentClassName());
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    /*public List getAllKeywords() throws DataAccessException {
-        List result = getConvenienceSqlMapClientTemplate().queryForList(
-            "getAllKeywords", null);
-        return CollectionUtils.asList(result);
-    }*/
-
-    /**
-     * {@inheritDoc}
-     */
-    /*public List searchKeywords(QueryObject query) 
-        throws DataAccessException {
-        Reject.ifNull(query);
-        List result = getConvenienceSqlMapClientTemplate().queryForList(
-            "searchKeywords", query.getCriteriaList());
-        return CollectionUtils.asList(result);
-    }*/
-
-    /**
-     * {@inheritDoc}
-     */
-    /*public KeywordDto saveKeyword(KeywordDto keyword)
-        throws DataAccessException, InsertionFailureException, 
-            OptimisticLockingFailureException {
-        Reject.ifNull(keyword);
-        getConvenienceSqlMapClientTemplate().insertOrUpdate(
-            keyword, Constants.KEYWORD);
-        return keyword;
-    }*/
-
-    /**
-     * {@inheritDoc}
-     */
-    /*public void removeKeyword(int key)
-        throws DataAccessException,
-            JdbcUpdateAffectedIncorrectNumberOfRowsException {
-        getConvenienceSqlMapClientTemplate().delete(
-            new Integer(key), 1, Constants.KEYWORD);
-    }*/
+    
+    
 }

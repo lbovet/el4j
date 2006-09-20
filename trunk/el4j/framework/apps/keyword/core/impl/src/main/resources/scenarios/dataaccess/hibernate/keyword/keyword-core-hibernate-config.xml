@@ -3,37 +3,13 @@
     "http://www.springframework.org/dtd/spring-beans.dtd">
     
 <beans>
+	
 	<!-- $Version$ -->
 	<!-- $Source$ -->
 	<!-- $Date$ -->
 	<!-- $Author$ -->
 	 
-	<bean id="keywordService"
-        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-        <property name="transactionManager">
-        	<ref bean="transactionManager"/>
-        </property>
-        <property name="target">
-        	<ref local="keywordServiceTarget"/>
-        </property>
-        <property name="transactionAttributeSource">
-    		<bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
-  		</property>
-    </bean>
-    
-    <bean id="keywordServiceTarget"
-	 	class="ch.elca.el4j.apps.keyword.service.impl.DefaultKeywordService">
-	 	<property name="daoRegistry">
-	 		<ref local="daoRegistry"/>
-	 	</property>
-	 </bean>
-	   
-	<bean id="daoRegistry"
-		class="ch.elca.el4j.apps.keyword.dao.impl.hibernate.HibernateKeywordDaoRegistry">
-		<property name="sessionFactory">
-			<ref local="sessionFactory"/>
-		</property>
-	</bean>
+	<bean id="keywordDao" parent="abstractDao" class="ch.elca.el4j.apps.keyword.dao.impl.hibernate.HibernateKeywordDao"/>
 	
 	<!-- Hibernate Session Factory Bean -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
@@ -48,6 +24,9 @@
                 <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
                 <prop key="hibernate.max_fetch_depth">3</prop>
             </props>
+        </property>
+        <property name="useTransactionAwareDataSource">
+        	<value>true</value>
         </property>
         <property name="dataSource">
             <ref bean="dataSource"/>
