@@ -44,8 +44,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * @author Martin Zeltner (MZE)
  * @author Adrian Moos (AMS)
  */
-public abstract class AbstractBeanDeleteExecutor<T
-    extends PrimaryKeyOptimisticLockingObject> 
+public abstract class AbstractBeanDeleteExecutor<T> 
     extends AbstractConfirmBeanExecutor {
     
     /**

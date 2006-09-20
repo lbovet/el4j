@@ -35,8 +35,7 @@ import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLocking
  *
  * @author Adrian Moos (AMS)
  */
-public class GenericBeanDeleteExecutor<T
-    extends PrimaryKeyOptimisticLockingObject> 
+public class GenericBeanDeleteExecutor<T> 
         extends AbstractBeanDeleteExecutor<T> {
 
     /** The agent that should be used to carry out the operation. */
