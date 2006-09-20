@@ -28,11 +28,11 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import ch.elca.el4j.services.persistence.generic.dao.ConvenientGenericDao;
 import ch.elca.el4j.services.persistence.generic.dao.annotations.ReturnsUnchangedParameter;
-import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
 import ch.elca.el4j.services.persistence.hibernate.criteria.CriteriaTransformer;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.Reject;
@@ -57,9 +57,8 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * @author Philipp Oser (POS)
  * @author Alex Mathey (AMA)
  */
-public class GenericHibernateDao<T extends PrimaryKeyOptimisticLockingObject,
-    ID extends Serializable>
-    extends HibernateDaoSupport
+public class GenericHibernateDao<T, ID extends Serializable>
+    extends ConvenienceHibernateDaoSupport
     implements ConvenientGenericDao<T, ID>, InitializingBean {
     
     /**
@@ -91,18 +90,32 @@ public class GenericHibernateDao<T extends PrimaryKeyOptimisticLockingObject,
     }
 
     /**
-     * {@inheritDoc}
-     */
+     * Retrieves a domain object by identifier, optionally obtaining a database
+     * lock for this operation.
+     * 
+     * @param id
+     *            The id of a domain object
+     * @param lock
+     *            Indicates whether a database lock should be obtained for this
+     *            operation        
+     * @throws DataAccessException
+     *             If general data access problem occurred
+     * @throws DataRetrievalFailureException
+     *             If domain object could not be retrieved           
+     * @return The desired domain object
+     */  
     @SuppressWarnings("unchecked")
-    public T findById(ID id, boolean lock) 
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    T findById(ID id, boolean lock)
         throws DataAccessException, DataRetrievalFailureException {
-                
+        
         T entity;
         if (lock) {
-            entity = (T) getHibernateTemplate().get(getPersistentClass(), id,
-                LockMode.UPGRADE);
+            entity = (T) getConvenienceHibernateTemplate()
+                .get(getPersistentClass(), id, LockMode.UPGRADE);
         } else {
-            entity = (T) getHibernateTemplate().get(getPersistentClass(), id);
+            entity = (T) getConvenienceHibernateTemplate()
+                .get(getPersistentClass(), id);
         }
         if (entity == null) {
             throw new DataRetrievalFailureException("The desired domain object"
@@ -110,33 +123,47 @@ public class GenericHibernateDao<T extends PrimaryKeyOptimisticLockingObject,
         }
         return entity;
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressWarnings("unchecked")
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public T findById(ID id) 
+        throws DataAccessException, DataRetrievalFailureException {
+        return (T) getConvenienceHibernateTemplate().getByIdStrong(
+            getPersistentClass(), id, getPersistentClassName());
+    }
 
     /**
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<T> findAll() throws DataAccessException {
         DetachedCriteria criteria = DetachedCriteria
             .forClass(getPersistentClass());
-        return getHibernateTemplate().findByCriteria(criteria);
+        return getConvenienceHibernateTemplate().findByCriteria(criteria);
     }
 
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
+    /*@SuppressWarnings("unchecked")
     public List<T> findByExample(T exampleInstance) throws DataAccessException {
-        return getHibernateTemplate().findByExample(exampleInstance);
-    }
+        return getConvenienceHibernateTemplate().findByExample(exampleInstance);
+    }*/
 
     /**
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<T> findByQuery(QueryObject q) throws DataAccessException {
         DetachedCriteria hibernateCriteria = CriteriaTransformer.transform(q,
             getPersistentClass());
-        return getHibernateTemplate().findByCriteria(hibernateCriteria);
+        return getConvenienceHibernateTemplate()
+            .findByCriteria(hibernateCriteria);
     }
 
     /**
@@ -144,39 +171,56 @@ public class GenericHibernateDao<T extends PrimaryKeyOptimisticLockingObject,
      */
     @ReturnsUnchangedParameter
     @SuppressWarnings("unchecked")
+    @Transactional(propagation = Propagation.REQUIRED)
     public T saveOrUpdate(T entity) throws DataAccessException,
         DataIntegrityViolationException, OptimisticLockingFailureException {
-        getHibernateTemplate().saveOrUpdate(entity);
+        getConvenienceHibernateTemplate().saveOrUpdateStrong(entity, 
+            getPersistentClassName());
         return entity;
     }
 
     /**
      * {@inheritDoc}
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void delete(T entity) throws DataAccessException {
-        getHibernateTemplate().delete(entity);
+        getConvenienceHibernateTemplate().delete(entity);
     }
     
     /**
      * {@inheritDoc}
      */
-    public T refresh(T entity) {
-        getHibernateTemplate().refresh(entity);
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public T refresh(T entity) throws DataAccessException, 
+    DataRetrievalFailureException {
+        getConvenienceHibernateTemplate().refresh(entity);
         return entity;
     }
 
     /**
      * {@inheritDoc}
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void delete(ID id) throws DataAccessException {
-        getHibernateTemplate().delete(
-            findById(id, false)
-        );
+        getConvenienceHibernateTemplate().deleteStrong(getPersistentClass(),
+            id, getPersistentClassName());
     }
 
     /** {@inheritDoc} */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void delete(Collection<T> entities) throws DataAccessException,
             DataIntegrityViolationException, OptimisticLockingFailureException {
-        getHibernateTemplate().deleteAll(entities);
+        getConvenienceHibernateTemplate().deleteAll(entities);
+    }
+    
+    /**
+     * Returns the simple name of the persistent class this DAO is responsible
+     * for.
+     * 
+     * @return The simple name of the persistent class this DAO is responsible
+     *         for.
+     */
+    protected String getPersistentClassName() {
+        return getPersistentClass().getSimpleName();
     }
 }
