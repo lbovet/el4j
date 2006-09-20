@@ -21,10 +21,11 @@ import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.transaction.annotation.Transactional;
 
 import ch.elca.el4j.services.persistence.generic.dao.annotations.ReturnsUnchangedParameter;
-import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
 import ch.elca.el4j.services.search.QueryObject;
 
 /**
@@ -49,7 +50,7 @@ import ch.elca.el4j.services.search.QueryObject;
  * @author Alex Mathey (AMA)
  * @author Adrian Moos (AMS)
  */
-public interface GenericDao<T extends PrimaryKeyOptimisticLockingObject> {
+public interface GenericDao<T> {
     /**
      * @return Returns the domain class this DAO is responsible for.
      */
@@ -83,9 +84,14 @@ public interface GenericDao<T extends PrimaryKeyOptimisticLockingObject> {
      * 
      * @param entity
      *            The domain object to re-read the state of
+     * @throws DataAccessException
+     *             If general data access problem occurred
+     * @throws DataRetrievalFailureException
+     *             If domain object could not be re-read
      * @return The refreshed entity
      */
-    T refresh(T entity);
+    T refresh(T entity) throws DataAccessException, 
+        DataRetrievalFailureException;
 
     /**
      * Saves or updates the given domain object.
@@ -102,6 +108,8 @@ public interface GenericDao<T extends PrimaryKeyOptimisticLockingObject> {
      * @return The saved or updated domain object
      */
     @ReturnsUnchangedParameter
+    @Transactional(rollbackFor = {DataAccessException.class,
+            RuntimeException.class, Error.class })
     T saveOrUpdate(T entity) throws DataAccessException,
         DataIntegrityViolationException, OptimisticLockingFailureException;
 
@@ -119,6 +127,8 @@ public interface GenericDao<T extends PrimaryKeyOptimisticLockingObject> {
      * @throws OptimisticLockingFailureException
      *             If domain object has been modified in the meantime   
      */
+    @Transactional(rollbackFor = {DataAccessException.class,
+            RuntimeException.class, Error.class })
     void delete(Collection<T> entities)  throws DataAccessException,
         DataIntegrityViolationException, OptimisticLockingFailureException;
 }

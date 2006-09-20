@@ -17,14 +17,12 @@
 package ch.elca.el4j.services.persistence.generic.dao;
 
 import java.io.Serializable;
-import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
-
-import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Extends the SimpleGenericDao with a few convenience methods.
@@ -44,27 +42,19 @@ import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLocking
  * @author Philipp Oser (POS)
  * @author Alex Mathey (AMA)
  */
-public interface ConvenientGenericDao<T 
-    extends PrimaryKeyOptimisticLockingObject, ID extends Serializable>
+public interface ConvenientGenericDao<T, ID extends Serializable>
     extends GenericDao<T> {
     
     /**
      * Retrieves a domain object by identifier.
      * 
      * @param id
-     *            The id of a domain object
-     * @param lock
-     *            Indicates whether a database lock should be obtained for this
-     *            operation        
+     * @return
      * @throws DataAccessException
-     *             If general data access problem occurred
      * @throws DataRetrievalFailureException
-     *             If domain object could not be retrieved           
-     * @return The desired domain object
-     */   
-    T findById(ID id, boolean lock)
-        throws DataAccessException, DataRetrievalFailureException;
-
+     */
+    T findById(ID id) throws DataAccessException, DataRetrievalFailureException;
+    
 
     /**
      * Executes a query based on a given example domain object.
@@ -76,7 +66,7 @@ public interface ConvenientGenericDao<T
      *             If general data access problem occurred           
      * @return A list containing 0 or more domain objects
      */
-    List<T> findByExample(T exampleInstance) throws DataAccessException;
+    /*List<T> findByExample(T exampleInstance) throws DataAccessException;*/
     
     /**
      * Deletes the domain object with the given id, disregarding any 
@@ -90,6 +80,8 @@ public interface ConvenientGenericDao<T
      * @throws DataAccessException
      *             If general data access problem occurred
      */
+    @Transactional(rollbackFor = {DataAccessException.class,
+            RuntimeException.class, Error.class })
     void delete(ID id) throws DataIntegrityViolationException, 
                               DataAccessException;
     
@@ -106,6 +98,8 @@ public interface ConvenientGenericDao<T
      * @throws OptimisticLockingFailureException
      *             If domain object has been modified in the meantime   
      */
+    @Transactional(rollbackFor = {DataAccessException.class,
+            RuntimeException.class, Error.class })
     void delete(T entity)  throws DataAccessException,
         DataIntegrityViolationException, OptimisticLockingFailureException;
 }

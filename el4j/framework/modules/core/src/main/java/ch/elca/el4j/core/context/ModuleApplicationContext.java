@@ -183,7 +183,7 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
         
         if (mergeWithOuterResources) {
             /* HACK overrides the pattern resolver of the
-             *      AbastractApplicationContext to perform a customized
+             *      AbstractApplicationContext to perform a customized
              *      initialization.
              */
             m_patternResolver = (ListResourcePatternResolverDecorator)
