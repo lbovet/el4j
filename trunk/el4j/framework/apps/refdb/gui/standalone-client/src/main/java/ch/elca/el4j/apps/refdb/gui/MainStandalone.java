@@ -17,6 +17,7 @@
 
 package ch.elca.el4j.apps.refdb.gui;
 
+
 // Checkstyle: UncommentedMain off
 
 /**
@@ -46,15 +47,15 @@ public final class MainStandalone {
     public static void main(String[] args) {
         String startupContext 
             = "classpath:scenarios/springrcp/refdb/startup/*.xml";
-        String[] applicationContexts = {
+        String[] applicationContextPaths = {
             "classpath*:mandatory/*.xml",
+            "classpath*:mandatory/refdb/*.xml",
             "classpath*:scenarios/db/raw/*.xml",
             "classpath*:scenarios/dataaccess/hibernate/*.xml",
-            "classpath*:scenarios/dataaccess/hibernate/repository/*.xml",
+            "classpath*:scenarios/dataaccess/hibernate/refdb/*.xml",
             "classpath*:optional/interception/transactionJava5Annotations.xml",
-            "classpath:scenarios/springrcp/refdb/application/*.xml"
-        };
-        MainCommon.launchApplication(startupContext, applicationContexts);
+            "classpath:scenarios/springrcp/refdb/application/*.xml"};
+        MainCommon.launchApplication(startupContext, applicationContextPaths);
     }
 }
 //Checkstyle: UncommentedMain on

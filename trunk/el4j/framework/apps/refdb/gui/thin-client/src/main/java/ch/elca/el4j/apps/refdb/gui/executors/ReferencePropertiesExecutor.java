@@ -16,7 +16,7 @@
  */
 package ch.elca.el4j.apps.refdb.gui.executors;
 
-import ch.elca.el4j.apps.refdb.dto.ReferenceDto;
+import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.apps.refdb.gui.brokers.ServiceBroker;
 import ch.elca.el4j.apps.refdb.gui.support.RefdbSchemas;
 import ch.elca.el4j.apps.refdb.service.ReferenceService;
@@ -48,7 +48,7 @@ public class ReferencePropertiesExecutor
      * {@inheritDoc}
      */
     protected PrimaryKeyObject saveBean(PrimaryKeyObject givenBean) {
-        ReferenceDto givenReference = (ReferenceDto) givenBean;
+        Reference givenReference = (Reference) givenBean;
         ReferenceService referenceService = ServiceBroker.getReferenceService();
         return referenceService.saveReference(givenReference);
     }

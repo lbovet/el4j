@@ -20,6 +20,7 @@ package ch.elca.el4j.apps.refdb.gui;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import ch.elca.el4j.core.context.ModuleApplicationContextConfiguration;
 import ch.elca.el4j.services.gui.richclient.ApplicationLauncher;
 import ch.elca.el4j.services.gui.richclient.utils.DialogUtils;
 
@@ -59,6 +60,30 @@ public final class MainCommon {
         String[] applicationContexts) {
         try {
             new ApplicationLauncher(startupContext, applicationContexts);
+        } catch (Exception e) {
+            String message = "Reference-Database-Application exited "
+                + "exceptionally for an unknown reason! See stack trace for "
+                + "details.";
+            s_logger.fatal(message, e);
+            DialogUtils.showErrorMessageDialog(e, null);
+            System.exit(1);
+        }
+    }
+    
+    /**
+     * Start method for the application.
+     * 
+     * @param startupContext
+     *            Is a small spring context used while starting the application.
+     * @param applicationContextConfiguration
+     *            The configuration of the classpath application context
+     */
+    public static void launchApplication(
+        String startupContext,
+        ModuleApplicationContextConfiguration applicationContextConfiguration) {
+        try {
+            new ApplicationLauncher(startupContext,
+                applicationContextConfiguration);
         } catch (Exception e) {
             String message = "Reference-Database-Application exited "
                 + "exceptionally for an unknown reason! See stack trace for "
