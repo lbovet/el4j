@@ -16,8 +16,6 @@
  */
 package ch.elca.el4j.services.persistence.generic.dao;
 
-import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
-
 /**
  * A registry for DAOs.
  *
@@ -29,18 +27,17 @@ import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLocking
  * );</script>
  *
  * @author Adrian Moos (AMS)
+ * @author Alex Mathey (AMA)
  */
 public interface DaoRegistry {
+    
     /**
      * Returns the generic DAO for entities of type {@code entityType}.
      * 
-     * @param <T>
-     *            The generic type of the domain class the registry is
-     *            responsible for
      * @param entityType
      *            The domain class for which a generic DAO will be returned
      * @return A generic DAO for the given type
      */
-    <T extends PrimaryKeyOptimisticLockingObject> GenericDao<T>
-    getFor(Class<T> entityType);
+    public <T> GenericDao<T> getFor(Class<T> entityType);
+    
 }

@@ -16,7 +16,6 @@
  */
 package ch.elca.el4j.services.persistence.generic.dao;
 
-import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
 
 /**
  * A DAO guaranteeing uniqueness of representatives.
@@ -33,7 +32,7 @@ import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLocking
  *
  * @author Adrian Moos (AMS)
  */
-public interface IdentityFixedDao<T extends PrimaryKeyOptimisticLockingObject>
+public interface IdentityFixedDao<T>
     extends GenericDao<T> {
 
 }
