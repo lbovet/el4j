@@ -23,7 +23,7 @@ import java.util.Calendar;
 import org.hibernate.validator.ClassValidator;
 import org.hibernate.validator.InvalidValue;
 
-import ch.elca.el4j.apps.refdb.dto.ReferenceDto;
+import ch.elca.el4j.apps.refdb.dom.Reference;
 
 import junit.framework.TestCase;
 
@@ -52,7 +52,7 @@ public class ReferenceValidationTest extends TestCase {
      * been violated. 
      */
     public void testValidate() {
-        ReferenceDto reference = new ReferenceDto();
+        Reference reference = new Reference();
         reference.setName("Java");
         reference.setDescription("Java related reference");
         Calendar c = Calendar.getInstance();
@@ -61,8 +61,8 @@ public class ReferenceValidationTest extends TestCase {
         c.set(2006, Calendar.JULY, 11);        
         reference.setDate(new Date(c.getTimeInMillis()));
         
-        ClassValidator<ReferenceDto> referenceValidator 
-            = new ClassValidator<ReferenceDto>(ReferenceDto.class);
+        ClassValidator<Reference> referenceValidator 
+            = new ClassValidator<Reference>(Reference.class);
         InvalidValue[] validationMessages = referenceValidator
             .getInvalidValues(reference);
         assertEquals("The number of invalid values returned by the validator"

@@ -14,16 +14,13 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.tests.refdb.repo;
-
-import org.hibernate.SessionFactory;
+package ch.elca.el4j.tests.refdb.idfixer;
 
 import ch.elca.el4j.services.persistence.hibernate.HibernateProxyAwareIdentityFixer;
-import ch.elca.el4j.services.persistence.hibernate.dao.HibernateDaoRegistry;
 
 /**
- * An AbstractIdentityFixerTest using the generic hibernate repository and
- * the HibernateProxyAwareIdentityFilter.
+ * An AbstractIdentityFixerTest using the generic hibernate DAO and
+ * the HibernateProxyAwareIdentityFixer.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -33,36 +30,31 @@ import ch.elca.el4j.services.persistence.hibernate.dao.HibernateDaoRegistry;
  * );</script>
  *
  * @author Adrian Moos (AMS)
+ * @author Alex Mathey (AMA)
  */
-public class HibernateIdentityFixerTest /*extends AbstractIdentityFixerTest*/ {
-    /** {@inheritDoc} *//*
+public class HibernateIdentityFixerTest extends AbstractIdentityFixerTest {
+    /** {@inheritDoc} */
     @Override
     protected String[] getIncludeConfigLocations() {
         return new String[] {
             "classpath*:mandatory/*.xml",
+            "classpath*:mandatory/refdb/*.xml",
             "classpath*:scenarios/db/raw/*.xml",
             "classpath*:scenarios/dataaccess/hibernate/*.xml",
-            "classpath*:scenarios/dataaccess/hibernate/repository/*.xml",
+            "classpath*:scenarios/dataaccess/hibernate/refdb/*.xml",
             "classpath*:optional/interception/transactionJava5Annotations.xml"};
     }
 
-    *//** {@inheritDoc} *//*
+    /** {@inheritDoc} */
     @Override
     protected String[] getExcludeConfigLocations() {
         return null;
     }
 
-    *//** {@inheritDoc} *//*
+    /** {@inheritDoc} */
     @Override
     protected void setUp() throws Exception {
-        SessionFactory sf = (SessionFactory) getApplicationContext().getBean(
-            "sessionFactory");
-
-        HibernateDaoRegistry hrr = new HibernateDaoRegistry();
-        hrr.setSessionFactory(sf);
-        hrr.afterPropertiesSet();
-        m_repoRegistry = hrr;
         m_fixer = new HibernateProxyAwareIdentityFixer();
         super.setUp();
-    }*/
+    }
 }

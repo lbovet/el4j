@@ -31,9 +31,10 @@ import org.springframework.core.io.Resource;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
-import ch.elca.el4j.apps.refdb.dao.ReferenceDao;
-import ch.elca.el4j.apps.refdb.dto.AnnotationDto;
-import ch.elca.el4j.apps.refdb.dto.FileDto;
+import ch.elca.el4j.apps.refdb.dao.AnnotationDao;
+import ch.elca.el4j.apps.refdb.dao.FileDao;
+import ch.elca.el4j.apps.refdb.dom.Annotation;
+import ch.elca.el4j.apps.refdb.dom.File;
 import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
 
 // Checkstyle: MagicNumber off
@@ -61,6 +62,8 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
      * Hide default constructor.
      */
     protected AbstractReferenceDaoTest() { }
+
+    
     
     /**
      * This test inserts an annotation.
@@ -68,13 +71,13 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
     public void testInsertAnnotation() {
         int fakeReferenceKey = addDefaultFakeReference();
         
-        ReferenceDao dao = getReferenceDao();
-        AnnotationDto annotation = new AnnotationDto();
+        AnnotationDao dao = getAnnotationDao();
+        Annotation annotation = new Annotation();
         annotation.setKeyToReference(fakeReferenceKey);
         annotation.setAnnotator("Martin Zeltner");
         annotation.setGrade(8);
         annotation.setContent("This is only a short comment.");
-        dao.saveAnnotation(annotation);
+        dao.saveOrUpdate(annotation);
     }
 
     /**
@@ -84,16 +87,16 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
     public void testInsertGetAnnotationByKey() {
         int fakeReferenceKey = addDefaultFakeReference();
         
-        ReferenceDao dao = getReferenceDao();
-        AnnotationDto annotation = new AnnotationDto();
+        AnnotationDao dao = getAnnotationDao();
+        Annotation annotation = new Annotation();
         annotation.setKeyToReference(fakeReferenceKey);
         annotation.setAnnotator("Hans Bauer");
         annotation.setGrade(1);
         annotation.setContent("This is an comment.");
-        AnnotationDto annotation2 = dao.saveAnnotation(annotation);
-        AnnotationDto annotation3 
-            = dao.getAnnotationByKey(annotation2.getKey());
-        assertEquals("The inserted and read Dtos are not equal", 
+        Annotation annotation2 = dao.saveOrUpdate(annotation);
+        Annotation annotation3 
+            = dao.findById(annotation2.getKey());
+        assertEquals("The inserted and read domain objects are not equal", 
             annotation3, annotation2);
     }
 
@@ -103,18 +106,19 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
     public void testInsertGetAnnotationByAnnotator() {
         int fakeReferenceKey = addDefaultFakeReference();
         
-        ReferenceDao dao = getReferenceDao();
-        AnnotationDto annotation = new AnnotationDto();
+        AnnotationDao dao = getAnnotationDao();
+        Annotation annotation = new Annotation();
         annotation.setKeyToReference(fakeReferenceKey);
         annotation.setAnnotator("Martin Zeltner");
         annotation.setGrade(8);
         annotation.setContent("This is only a short comment.");
-        AnnotationDto annotation2 = dao.saveAnnotation(annotation);
-        List list = dao.getAnnotationsByAnnotator(annotation2.getAnnotator());
+        Annotation annotation2 = dao.saveOrUpdate(annotation);
+        List<Annotation> list = dao
+            .getAnnotationsByAnnotator(annotation2.getAnnotator());
         assertEquals("List contains more than one annotation of annotator '"
             + annotation2.getAnnotator() + "'", 1, list.size());
-        AnnotationDto annotation3 = (AnnotationDto) list.get(0);
-        assertEquals("The inserted and read Dtos are not equal", 
+        Annotation annotation3 = list.get(0);
+        assertEquals("The inserted and read domain objects are not equal", 
             annotation3, annotation2);
     }
 
@@ -126,21 +130,21 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
     public void testInsertGetAllAnnotations() {
         int fakeReferenceKey = addDefaultFakeReference();
         
-        ReferenceDao dao = getReferenceDao();
-        AnnotationDto annotation = new AnnotationDto();
+        AnnotationDao dao = getAnnotationDao();
+        Annotation annotation = new Annotation();
         annotation.setKeyToReference(fakeReferenceKey);
         annotation.setAnnotator("Martin Zeltner");
         annotation.setGrade(8);
         annotation.setContent("This is only a short comment.");
 
-        AnnotationDto annotation2 = new AnnotationDto();
+        Annotation annotation2 = new Annotation();
         annotation2.setKeyToReference(fakeReferenceKey);
         annotation2.setAnnotator("Hans Bauer");
         annotation2.setGrade(1);
         annotation2.setContent("This is an comment.");
-        annotation = dao.saveAnnotation(annotation);
-        annotation2 = dao.saveAnnotation(annotation2);
-        List list = dao.getAllAnnotations();
+        annotation = dao.saveOrUpdate(annotation);
+        annotation2 = dao.saveOrUpdate(annotation2);
+        List<Annotation> list = dao.findAll();
         assertEquals("Wrong number of annotations in DB", 2, list.size());
         assertTrue("First annotation has not been found", 
             list.contains(annotation));
@@ -155,16 +159,16 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
     public void testInsertRemoveAnnotation() {
         int fakeReferenceKey = addDefaultFakeReference();
         
-        ReferenceDao dao = getReferenceDao();
-        AnnotationDto annotation = new AnnotationDto();
+        AnnotationDao dao = getAnnotationDao();
+        Annotation annotation = new Annotation();
         annotation.setKeyToReference(fakeReferenceKey);
         annotation.setAnnotator("Martin Zeltner");
         annotation.setGrade(8);
         annotation.setContent("This is only a short comment.");
-        AnnotationDto annotation2 = dao.saveAnnotation(annotation);
-        dao.removeAnnotation(annotation2.getKey());
+        Annotation annotation2 = dao.saveOrUpdate(annotation);
+        dao.delete(annotation2.getKey());
         try {
-            dao.getAnnotationByKey(annotation2.getKey());
+            dao.findById(annotation2.getKey());
             fail("The removed annotation is still in the DB.");
         } catch (DataRetrievalFailureException e) {
             s_logger.debug("Expected exception catched.", e);
@@ -182,31 +186,31 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
     public void testInsertModificateRemoveAnnotationByTwoPersons() {
         int fakeReferenceKey = addDefaultFakeReference();
         
-        ReferenceDao dao = getReferenceDao();
-        AnnotationDto annotation = new AnnotationDto();
+        AnnotationDao dao = getAnnotationDao();
+        Annotation annotation = new Annotation();
         annotation.setKeyToReference(fakeReferenceKey);
         annotation.setAnnotator("Martin Zeltner");
         annotation.setGrade(8);
         annotation.setContent("This is only a short comment.");
-        dao.saveAnnotation(annotation);
-        AnnotationDto annotation2 
-            = (AnnotationDto) dao.getAnnotationsByAnnotator(
+        dao.saveOrUpdate(annotation);
+        Annotation annotation2 
+            = (Annotation) dao.getAnnotationsByAnnotator(
                 "Martin Zeltner").get(0);
-        AnnotationDto annotation3 
-            = (AnnotationDto) dao.getAnnotationsByAnnotator(
+        Annotation annotation3 
+            = (Annotation) dao.getAnnotationsByAnnotator(
                 "Martin Zeltner").get(0);
         annotation2.setContent("I think it is time to change this comment.");
-        dao.saveAnnotation(annotation2);
+        dao.saveOrUpdate(annotation2);
         annotation3.setContent(
             "I think someone has always the same ideas as me.");
         try {
-            dao.saveAnnotation(annotation3);
+            dao.saveOrUpdate(annotation3);
             fail("The current annotation could be modificated "
                 + "by two persons on the same time.");
         } catch (OptimisticLockingFailureException e) {
             s_logger.debug("Expected exception catched.", e);
         }
-        dao.removeAnnotation(annotation3.getKey());
+        dao.delete(annotation3.getKey());
     }
 
     /**
@@ -269,22 +273,22 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
         
         int fakeReferenceKey = addDefaultFakeReference();
         
-        ReferenceDao dao = getReferenceDao();
-        AnnotationDto annotation = new AnnotationDto();
+        AnnotationDao dao = getAnnotationDao();
+        Annotation annotation = new Annotation();
         annotation.setKeyToReference(fakeReferenceKey);
         annotation.setAnnotator(annotator);
         annotation.setGrade(10);
         annotation.setContent(content);
-        annotation = dao.saveAnnotation(annotation);
-        AnnotationDto annotation2 
-            = (AnnotationDto) dao.getAnnotationsByAnnotator(annotator).get(0);
+        annotation = dao.saveOrUpdate(annotation);
+        Annotation annotation2 
+            = (Annotation) dao.getAnnotationsByAnnotator(annotator).get(0);
 
-        assertEquals("The inserted and read Dtos are not equal", 
+        assertEquals("The inserted and read domain objects are not equal", 
             annotation, annotation2);
 
-        dao.removeAnnotation(annotation.getKey());
+        dao.delete(annotation.getKey());
 
-        List list = dao.getAllAnnotations();
+        List<Annotation> list = dao.findAll();
         assertEquals("The removed annotation is still in the DB.", 
             0, list.size());
     }
@@ -295,14 +299,14 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
     public void testInsertFile() {
         int fakeReferenceKey = addDefaultFakeReference();
         
-        ReferenceDao dao = getReferenceDao();
-        FileDto file = new FileDto();
+        FileDao dao = getFileDao();
+        File file = new File();
         file.setKeyToReference(fakeReferenceKey);
         file.setName("iBatis Developer Guide");
         file.setMimeType("text/plain");
         byte[] content = "This is only a test content.".getBytes();
         file.setContent(content);
-        dao.saveFile(file);
+        dao.saveOrUpdate(file);
     }
 
     /**
@@ -311,16 +315,17 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
     public void testInsertGetFileByKey() {
         int fakeReferenceKey = addDefaultFakeReference();
         
-        ReferenceDao dao = getReferenceDao();
-        FileDto file = new FileDto();
+        FileDao dao = getFileDao();
+        File file = new File();
         file.setKeyToReference(fakeReferenceKey);
         file.setName("iBatis Developer Guide");
         file.setMimeType("text/plain");
         byte[] content = "This is only a test content.".getBytes();
         file.setContent(content);
-        FileDto file2 = dao.saveFile(file);
-        FileDto file3 = dao.getFileByKey(file2.getKey());
-        assertEquals("The inserted and read Dtos are not equal", file3, file2);
+        File file2 = dao.saveOrUpdate(file);
+        File file3 = dao.findById(file2.getKey());
+        assertEquals("The inserted and read domain objects are not equal",
+            file3, file2);
     }
 
     /**
@@ -329,19 +334,20 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
     public void testInsertGetFileByName() {
         int fakeReferenceKey = addDefaultFakeReference();
         
-        ReferenceDao dao = getReferenceDao();
-        FileDto file = new FileDto();
+        FileDao dao = getFileDao();
+        File file = new File();
         file.setKeyToReference(fakeReferenceKey);
         file.setName("iBatis Developer Guide");
         file.setMimeType("text/plain");
         byte[] content = "This is only a test content.".getBytes();
         file.setContent(content);
-        FileDto file2 = dao.saveFile(file);
-        List list = dao.getFilesByName(file2.getName());
+        File file2 = dao.saveOrUpdate(file);
+        List<File> list = dao.getByName(file2.getName());
         assertEquals("List contains more than one file of name '"
             + file2.getName() + "'", 1, list.size());
-        FileDto file3 = (FileDto) list.get(0);
-        assertEquals("The inserted and read Dtos are not equal", file3, file2);
+        File file3 = (File) list.get(0);
+        assertEquals("The inserted and read domain objects are not equal", 
+            file3, file2);
     }
 
     /**
@@ -352,14 +358,14 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
     public void testInsertGetAllFiles() {
         int fakeReferenceKey = addDefaultFakeReference();
         
-        ReferenceDao dao = getReferenceDao();
-        FileDto file = new FileDto();
+        FileDao dao = getFileDao();
+        File file = new File();
         file.setKeyToReference(fakeReferenceKey);
         file.setName("iBatis Developer Guide");
         file.setMimeType("text/plain");
         byte[] content = "This is only a test content.".getBytes();
         file.setContent(content);
-        FileDto file2 = new FileDto();
+        File file2 = new File();
         file2.setKeyToReference(fakeReferenceKey);
         file2.setName("Spring Reference Documentation");
         file2.setMimeType("text/html");
@@ -370,9 +376,9 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
         sb.append("</html>");
         byte[] content2 = sb.toString().getBytes();
         file2.setContent(content2);
-        dao.saveFile(file);
-        dao.saveFile(file2);
-        List list = dao.getAllFiles();
+        dao.saveOrUpdate(file);
+        dao.saveOrUpdate(file2);
+        List<File> list = dao.findAll();
         assertEquals("Wrong number of files in DB", 2, list.size());
         assertTrue("First file has not been found", list.contains(file));
         assertTrue("Second file has not been found", list.contains(file2));
@@ -385,17 +391,17 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
     public void testInsertRemoveFile() {
         int fakeReferenceKey = addDefaultFakeReference();
         
-        ReferenceDao dao = getReferenceDao();
-        FileDto file = new FileDto();
+        FileDao dao = getFileDao();
+        File file = new File();
         file.setKeyToReference(fakeReferenceKey);
         file.setName("iBatis Developer Guide");
         file.setMimeType("text/plain");
         byte[] content = "This is only a test content.".getBytes();
         file.setContent(content);
-        FileDto file2 = dao.saveFile(file);
-        dao.removeFile(file2.getKey());
+        File file2 = dao.saveOrUpdate(file);
+        dao.delete(file2.getKey());
         try {
-            dao.getFileByKey(file2.getKey());
+            dao.findById(file2.getKey());
             fail("The removed file is still in the DB.");
         } catch (DataRetrievalFailureException e) {
             s_logger.debug("Expected exception catched.", e);
@@ -413,32 +419,32 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
     public void testInsertModificateRemoveFileByTwoPersons() {
         int fakeReferenceKey = addDefaultFakeReference();
         
-        ReferenceDao dao = getReferenceDao();
-        FileDto file = new FileDto();
+        FileDao dao = getFileDao();
+        File file = new File();
         file.setKeyToReference(fakeReferenceKey);
         file.setName("iBatis Developer Guide");
         file.setMimeType("text/plain");
         byte[] content = "This is only a test content.".getBytes();
         file.setContent(content);
-        dao.saveFile(file);
+        dao.saveOrUpdate(file);
 
-        FileDto file2 = (FileDto) dao.getFilesByName(
+        File file2 = (File) dao.getByName(
             "iBatis Developer Guide").get(0);
-        FileDto file3 = (FileDto) dao.getFilesByName(
+        File file3 = (File) dao.getByName(
             "iBatis Developer Guide").get(0);
         content = "This is another test content.".getBytes();
         file2.setContent(content);
-        dao.saveFile(file2);
+        dao.saveOrUpdate(file2);
         content = "I think someone has always the same ideas as me.".getBytes();
         file3.setContent(content);
         try {
-            dao.saveFile(file3);
+            dao.saveOrUpdate(file3);
             fail("The current file could be modificated "
                 + "by two persons on the same time.");
         } catch (OptimisticLockingFailureException e) {
             s_logger.debug("Expected exception catched.", e);
         }
-        dao.removeFile(file3.getKey());
+        dao.delete(file3.getKey());
     }
 
     /**
@@ -506,21 +512,22 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 
         int fakeReferenceKey = addDefaultFakeReference();
         
-        ReferenceDao dao = getReferenceDao();
-        FileDto file = new FileDto();
+        FileDao dao = getFileDao();
+        File file = new File();
         file.setKeyToReference(fakeReferenceKey);
         file.setName(name);
         file.setMimeType(mimeType);
         file.setContent(content);
-        file = dao.saveFile(file);
-        FileDto file2 = (FileDto) dao.getFilesByName(name).get(0);
+        file = dao.saveOrUpdate(file);
+        File file2 = (File) dao.getByName(name).get(0);
 
-        assertEquals("The inserted and read Dtos are not equal", file, file2);
+        assertEquals("The inserted and read domain objects are not equal", 
+            file, file2);
 
-        dao.removeFile(file2.getKey());
+        dao.delete(file2.getKey());
 
-        List list = dao.getAllFiles();
-        assertEquals("The removed annotation is still in the DB.", 
+        List<File> list = dao.findAll();
+        assertEquals("The removed file is still in the DB.", 
             0, list.size());
     }
 }

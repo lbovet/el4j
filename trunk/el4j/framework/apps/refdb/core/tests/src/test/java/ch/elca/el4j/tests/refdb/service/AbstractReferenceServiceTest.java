@@ -19,7 +19,6 @@ package ch.elca.el4j.tests.refdb.service;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -27,15 +26,20 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DataAccessException;
 
-import ch.elca.el4j.apps.keyword.dto.KeywordDto;
-import ch.elca.el4j.apps.refdb.dto.AnnotationDto;
-import ch.elca.el4j.apps.refdb.dto.BookDto;
-import ch.elca.el4j.apps.refdb.dto.FileDescriptorView;
-import ch.elca.el4j.apps.refdb.dto.FileDto;
-import ch.elca.el4j.apps.refdb.dto.FormalPublicationDto;
-import ch.elca.el4j.apps.refdb.dto.LinkDto;
-import ch.elca.el4j.apps.refdb.dto.ReferenceDto;
+import ch.elca.el4j.apps.keyword.dao.KeywordDao;
+import ch.elca.el4j.apps.keyword.dom.Keyword;
+import ch.elca.el4j.apps.refdb.dao.AnnotationDao;
+import ch.elca.el4j.apps.refdb.dao.FileDao;
+import ch.elca.el4j.apps.refdb.dao.FileDescriptorViewDao;
+import ch.elca.el4j.apps.refdb.dom.Annotation;
+import ch.elca.el4j.apps.refdb.dom.Book;
+import ch.elca.el4j.apps.refdb.dom.File;
+import ch.elca.el4j.apps.refdb.dom.FileDescriptorView;
+import ch.elca.el4j.apps.refdb.dom.FormalPublication;
+import ch.elca.el4j.apps.refdb.dom.Link;
+import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.apps.refdb.service.ReferenceService;
+import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.ComparisonCriteria;
 import ch.elca.el4j.services.search.criterias.IncludeCriteria;
@@ -56,7 +60,8 @@ import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
  * 
  * @author Martin Zeltner (MZE)
  */
-public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase {
+public abstract class AbstractReferenceServiceTest
+    extends AbstractTestCaseBase {
     /**
      * Private logger.
      */
@@ -64,16 +69,72 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
             .getLog(AbstractReferenceServiceTest.class);
 
     /**
+     * Reference service. Created by application context.
+     */
+    private ReferenceService m_referenceService;
+
+    /**
+     * Keyword DAO. Created by application context.
+     */
+    private KeywordDao m_keywordDao;
+    
+    /**
+     * File descriptor view DAO. Created by application context.
+     */
+    private FileDescriptorViewDao m_fileDescriptorViewDao;
+    
+    /**
      * Hide default constructor.
      */
     protected AbstractReferenceServiceTest() { }
+    
+    /**
+     * @return Returns the reference service.
+     */
+    protected ReferenceService getReferenceService() {
+        if (m_referenceService == null) {
+            m_referenceService 
+                = (ReferenceService) getApplicationContext().getBean(
+                    "referenceService");
+        }
+        return m_referenceService;
+    }
+
+    /**
+     * @return Returns the keyword DAO.
+     */
+    public KeywordDao getKeywordDao() {
+        if (m_keywordDao == null) {
+            DefaultDaoRegistry daoRegistry 
+                = (DefaultDaoRegistry) getApplicationContext()
+                    .getBean("daoRegistry");
+            m_keywordDao = (KeywordDao) daoRegistry
+                .getFor(Keyword.class);
+        }
+        return m_keywordDao;
+    }
+    
+    /**
+     * @return Returns the file descriptor view DAO.
+     */
+    public FileDescriptorViewDao getFileDescriptorViewDao() {
+        if (m_fileDescriptorViewDao == null) {
+            DefaultDaoRegistry daoRegistry 
+                = (DefaultDaoRegistry) getApplicationContext()
+                    .getBean("daoRegistry");
+            m_fileDescriptorViewDao = (FileDescriptorViewDao) daoRegistry
+                .getFor(FileDescriptorView.class);
+        }
+        return m_fileDescriptorViewDao;
+    }
     
     /**
      * This test inserts a link and three keywords.
      */
     public void testInsertLink() {
         ReferenceService service = getReferenceService();
-        LinkDto link = new LinkDto();
+        KeywordDao keywordDao = getKeywordDao();
+        Link link = new Link();
         link.setName("iBatis Data Mapper Developer Guide");
         link.setHashValue("xyz");
         link.setDescription("This page shows you how to develop an "
@@ -85,17 +146,17 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         link.setDate(new Date(c.getTimeInMillis()));
         link.setUrl("http://ibatisnet.sourceforge.net/DevGuide.html");
 
-        KeywordDto keyword = new KeywordDto();
+        Keyword keyword = new Keyword();
         keyword.setName("iBatis");
-        KeywordDto keyword2 = new KeywordDto();
+        Keyword keyword2 = new Keyword();
         keyword2.setName("SqlMap 2.0");
-        KeywordDto keyword3 = new KeywordDto();
+        Keyword keyword3 = new Keyword();
         keyword3.setName("Data mapper");
-        service.saveKeyword(keyword);
-        service.saveKeyword(keyword2);
-        service.saveKeyword(keyword3);
+        keywordDao.saveOrUpdate(keyword);
+        keywordDao.saveOrUpdate(keyword2);
+        keywordDao.saveOrUpdate(keyword3);
 
-        Set listKeywords = new HashSet();
+        Set<Keyword> listKeywords = new HashSet<Keyword>();
         listKeywords.add(keyword);
         listKeywords.add(keyword2);
         listKeywords.add(keyword3);
@@ -106,12 +167,13 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
 
     /**
      * This test adds a link and keywords. Some of the keywords are related with
-     * the link some are not. After that the link will be get by primary key and
-     * compared with the added one. At the end the link will be removed.
+     * the link and some are not. After that the link will be get by primary key
+     * and compared with the added one. At the end the link will be removed.
      */
     public void testInsertGetRemoveLink() {
         ReferenceService service = getReferenceService();
-        LinkDto link = new LinkDto();
+        KeywordDao keywordDao = getKeywordDao();
+        Link link = new Link();
         link.setName("iBatis Data Mapper Developer Guide");
         link.setHashValue("xyz");
         link.setDescription("This page shows you how to develop an "
@@ -123,38 +185,37 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         link.setDate(new Date(c.getTimeInMillis()));
         link.setUrl("http://ibatisnet.sourceforge.net/DevGuide.html");
 
-        KeywordDto keyword = new KeywordDto();
+        Keyword keyword = new Keyword();
         keyword.setName("iBatis");
-        KeywordDto keyword2 = new KeywordDto();
+        Keyword keyword2 = new Keyword();
         keyword2.setName("SqlMap 2.0");
-        KeywordDto keyword3 = new KeywordDto();
+        Keyword keyword3 = new Keyword();
         keyword3.setName("Data mapper");
-        KeywordDto keyword4 = new KeywordDto();
+        Keyword keyword4 = new Keyword();
         keyword4.setName("Dummy");
         keyword4.setDescription("This keyword is not "
             + "assigned to any reference.");
-        service.saveKeyword(keyword);
-        service.saveKeyword(keyword2);
-        service.saveKeyword(keyword3);
-        service.saveKeyword(keyword4);
+        keywordDao.saveOrUpdate(keyword);
+        keywordDao.saveOrUpdate(keyword2);
+        keywordDao.saveOrUpdate(keyword3);
+        keywordDao.saveOrUpdate(keyword4);
 
-        Set listKeywords = new HashSet();
+        Set<Keyword> listKeywords = new HashSet<Keyword>();
         listKeywords.add(keyword);
         listKeywords.add(keyword2);
         listKeywords.add(keyword3);
         link.setKeywords(listKeywords);
 
-        link = (LinkDto) service.saveReference(link);
+        link = (Link) service.saveReference(link);
 
-        LinkDto link2 = (LinkDto) service.getReferenceByKey(link.getKey());
+        Link link2 = (Link) service.getReferenceByKey(link.getKey());
         assertTrue("Links are not equal.", link.equals(link2));
 
-        Set listKeywords2 = link2.getKeywords();
+        Set<Keyword> listKeywords2 = link2.getKeywords();
         assertEquals("There are not three keywords related with the link.", 
             3, listKeywords2.size());
-        Iterator it = listKeywords2.iterator();
-        while (it.hasNext()) {
-            KeywordDto k = (KeywordDto) it.next();
+        
+        for (Keyword k : listKeywords2) {
             if (!(k.equals(keyword) 
                 || k.equals(keyword2) 
                 || k.equals(keyword3))) {
@@ -177,7 +238,8 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
      */
     public void testInsertChangeLink() {
         ReferenceService service = getReferenceService();
-        LinkDto link = new LinkDto();
+        KeywordDao keywordDao = getKeywordDao();
+        Link link = new Link();
         link.setName("iBatis Data Mapper Developer Guide");
         link.setHashValue("xyz");
         link.setDescription("This page shows you how to develop an "
@@ -189,77 +251,75 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         link.setDate(new Date(c.getTimeInMillis()));
         link.setUrl("http://ibatisnet.sourceforge.net/DevGuide.html");
 
-        KeywordDto keyword = new KeywordDto();
+        Keyword keyword = new Keyword();
         keyword.setName("iBatis");
-        KeywordDto keyword2 = new KeywordDto();
+        Keyword keyword2 = new Keyword();
         keyword2.setName("SqlMap 2.0");
-        KeywordDto keyword3 = new KeywordDto();
+        Keyword keyword3 = new Keyword();
         keyword3.setName("Data mapper");
-        KeywordDto keyword4 = new KeywordDto();
+        Keyword keyword4 = new Keyword();
         keyword4.setName("Dummy");
         keyword4.setDescription("This keyword is not "
             + "assigned to any reference.");
-        service.saveKeyword(keyword);
-        service.saveKeyword(keyword2);
-        service.saveKeyword(keyword3);
-        service.saveKeyword(keyword4);
+        keywordDao.saveOrUpdate(keyword);
+        keywordDao.saveOrUpdate(keyword2);
+        keywordDao.saveOrUpdate(keyword3);
+        keywordDao.saveOrUpdate(keyword4);
 
-        Set listKeywords = new HashSet();
+        Set<Keyword> listKeywords = new HashSet<Keyword>();
         listKeywords.add(keyword);
         listKeywords.add(keyword2);
         listKeywords.add(keyword3);
         link.setKeywords(listKeywords);
 
-        link = (LinkDto) service.saveReference(link);
+        link = (Link) service.saveReference(link);
 
         List list = service.getReferencesByName("iBatis Data Mapper "
             + "Developer Guide");
         assertEquals("Not one link with name 'iBatis Data Mapper "
             + "Developer Guide'.", 1, list.size());
-        LinkDto link2 = (LinkDto) list.get(0);
+        Link link2 = (Link) list.get(0);
         assertTrue("Links are not equal.", link.equals(link2));
 
-        Set listKeywords2 = link2.getKeywords();
+        Set<Keyword> listKeywords2 = link2.getKeywords();
         assertEquals("There are not three keywords related with the link.", 
             3, listKeywords2.size());
-        Iterator it = listKeywords2.iterator();
-        while (it.hasNext()) {
-            KeywordDto k = (KeywordDto) it.next();
+        
+        for (Keyword k : listKeywords2) {
             if (!(k.equals(keyword) 
                 || k.equals(keyword2) 
                 || k.equals(keyword3))) {
                 fail("There was an unexpected keyword related with link.");
             }
         }
+        
         listKeywords2.remove(keyword2);
-        KeywordDto keyword5 = new KeywordDto();
+        Keyword keyword5 = new Keyword();
         keyword5.setName("New");
         keyword5.setDescription("A brand new keyword.");
-        keyword5 = service.saveKeyword(keyword5);
+        keyword5 = keywordDao.saveOrUpdate(keyword5);
         listKeywords2.add(keyword5);
 
         link2.setName("iBatis SqlMap 2.0 Developer Guide");
         link2.setKeywords(listKeywords2);
-        link2 = (LinkDto) service.saveReference(link2);
+        link2 = (Link) service.saveReference(link2);
 
-        List emptyList = service.getReferencesByName(
+        List<Reference> emptyList = service.getReferencesByName(
             "iBatis Data Mapper Developer Guide");
         assertEquals("Link with name 'iBatis Data Mapper Developer Guide' "
             + "still exists.", emptyList.size(), 0);
 
-        List list2 = service.getReferencesByName("iBatis SqlMap 2.0 "
+        List<Reference> list2 = service.getReferencesByName("iBatis SqlMap 2.0 "
             + "Developer Guide");
         assertEquals("Not one link with name 'iBatis SqlMap 2.0 "
             + "Developer Guide'.", 1, list2.size());
-        LinkDto link3 = (LinkDto) list.get(0);
+        Link link3 = (Link) list.get(0);
         assertTrue("Links are not equal.", link2.equals(link3));
 
-        Set listKeywords3 = link3.getKeywords();
+        Set<Keyword> listKeywords3 = link3.getKeywords();
         assertEquals("There are not three keywords related with the link.",
             3, listKeywords3.size());
-        Iterator it2 = listKeywords3.iterator();
-        while (it2.hasNext()) {
-            KeywordDto k = (KeywordDto) it2.next();
+        for (Keyword k : listKeywords3) {
             if (!(k.equals(keyword) 
                 || k.equals(keyword3) 
                 || k.equals(keyword5))) {
@@ -273,7 +333,7 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
      */
     public void testGetAllLinks() {
         ReferenceService service = getReferenceService();
-        LinkDto link = new LinkDto();
+        Link link = new Link();
         link.setName("iBatis Data Mapper Developer Guide");
         link.setHashValue("xyz");
         link.setDescription("This page shows you how to develop an "
@@ -284,9 +344,9 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         c.set(2004, Calendar.OCTOBER, 25);
         link.setDate(new Date(c.getTimeInMillis()));
         link.setUrl("http://ibatisnet.sourceforge.net/DevGuide.html");
-        link = (LinkDto) service.saveReference(link);
+        link = (Link) service.saveReference(link);
 
-        LinkDto link2 = new LinkDto();
+        Link link2 = new Link();
         link2.setName("LEO Dictionary English-German");
         link2.setHashValue("leo-en-de");
         link2.setDescription("This is the best online dictionary "
@@ -297,14 +357,12 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         c2.set(2004, Calendar.NOVEMBER, 8);
         link2.setDate(new Date(c.getTimeInMillis()));
         link2.setUrl("http://dict.leo.org/");
-        link2 = (LinkDto) service.saveReference(link2);
+        link2 = (Link) service.saveReference(link2);
 
-        List list = service.getAllReferences();
+        List<Reference> list = service.getAllReferences();
         assertEquals("There are not two links.", 2, list.size());
-        Iterator it = list.iterator();
-        while (it.hasNext()) {
-            LinkDto link3 = (LinkDto) it.next();
-            if (!(link3.equals(link) || link3.equals(link2))) {
+        for (Reference l : list) {
+            if (!(((Link) l).equals(link) || ((Link) l).equals(link2))) {
                 fail("There is an unexpected link.");
             }
         }
@@ -313,7 +371,7 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
 
         list = service.getAllReferences();
         assertEquals("There is not one link.", 1, list.size());
-        LinkDto link4 = (LinkDto) list.get(0);
+        Link link4 = (Link) list.get(0);
         assertTrue("There is an unexpected link.", link4.equals(link2));
     }
 
@@ -322,7 +380,8 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
      */
     public void testInsertFormalPublication() {
         ReferenceService service = getReferenceService();
-        FormalPublicationDto formalPublication = new FormalPublicationDto();
+        KeywordDao keywordDao = getKeywordDao();
+        FormalPublication formalPublication = new FormalPublication();
         formalPublication.setName("iBatis Data Mapper Developer Guide");
         formalPublication.setHashValue("xyz");
         formalPublication.setDescription(
@@ -336,17 +395,17 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         formalPublication.setPublisher("iBatis");
         formalPublication.setPageNum(53);
 
-        KeywordDto keyword = new KeywordDto();
+        Keyword keyword = new Keyword();
         keyword.setName("iBatis");
-        KeywordDto keyword2 = new KeywordDto();
+        Keyword keyword2 = new Keyword();
         keyword2.setName("SqlMap 2.0");
-        KeywordDto keyword3 = new KeywordDto();
+        Keyword keyword3 = new Keyword();
         keyword3.setName("Data mapper");
-        service.saveKeyword(keyword);
-        service.saveKeyword(keyword2);
-        service.saveKeyword(keyword3);
+        keywordDao.saveOrUpdate(keyword);
+        keywordDao.saveOrUpdate(keyword2);
+        keywordDao.saveOrUpdate(keyword3);
 
-        Set listKeywords = new HashSet();
+        Set<Keyword> listKeywords = new HashSet<Keyword>();
         listKeywords.add(keyword);
         listKeywords.add(keyword2);
         listKeywords.add(keyword3);
@@ -363,7 +422,8 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
      */
     public void testInsertGetRemoveFormalPublication() {
         ReferenceService service = getReferenceService();
-        FormalPublicationDto formalPublication = new FormalPublicationDto();
+        KeywordDao keywordDao = getKeywordDao();
+        FormalPublication formalPublication = new FormalPublication();
         formalPublication.setName("iBatis Data Mapper Developer Guide");
         formalPublication.setHashValue("xyz");
         formalPublication.setDescription(
@@ -377,37 +437,35 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         formalPublication.setPublisher("iBatis");
         formalPublication.setPageNum(53);
 
-        KeywordDto keyword = new KeywordDto();
+        Keyword keyword = new Keyword();
         keyword.setName("iBatis");
-        KeywordDto keyword2 = new KeywordDto();
+        Keyword keyword2 = new Keyword();
         keyword2.setName("SqlMap 2.0");
-        KeywordDto keyword3 = new KeywordDto();
+        Keyword keyword3 = new Keyword();
         keyword3.setName("Data mapper");
-        service.saveKeyword(keyword);
-        service.saveKeyword(keyword2);
-        service.saveKeyword(keyword3);
+        keywordDao.saveOrUpdate(keyword);
+        keywordDao.saveOrUpdate(keyword2);
+        keywordDao.saveOrUpdate(keyword3);
 
-        Set listKeywords = new HashSet();
+        Set<Keyword> listKeywords = new HashSet<Keyword>();
         listKeywords.add(keyword);
         listKeywords.add(keyword2);
         listKeywords.add(keyword3);
         formalPublication.setKeywords(listKeywords);
 
         formalPublication 
-            = (FormalPublicationDto) service.saveReference(formalPublication);
+            = (FormalPublication) service.saveReference(formalPublication);
 
-        FormalPublicationDto formalPublication2 
-            = (FormalPublicationDto) service.getReferenceByKey(
+        FormalPublication formalPublication2 
+            = (FormalPublication) service.getReferenceByKey(
                 formalPublication.getKey());
         assertTrue("Formal publications are not equal.", 
             formalPublication.equals(formalPublication2));
 
-        Set listKeywords2 = formalPublication2.getKeywords();
+        Set<Keyword> listKeywords2 = formalPublication2.getKeywords();
         assertEquals("There are not three keywords related with the formal "
             + "publication.", 3, listKeywords2.size());
-        Iterator it = listKeywords2.iterator();
-        while (it.hasNext()) {
-            KeywordDto k = (KeywordDto) it.next();
+        for (Keyword k : listKeywords2) {
             if (!(k.equals(keyword) 
                 || k.equals(keyword2) 
                 || k.equals(keyword3))) {
@@ -417,7 +475,7 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         }
 
         service.removeReference(formalPublication2.getKey());
-        List list = service.getReferencesByName(
+        List<Reference> list = service.getReferencesByName(
             "iBatis Data Mapper Developer Guide");
         assertEquals("There is still a formal publication with "
             + "name 'iBatis Data Mapper Developer Guide'.", list.size(), 0);
@@ -431,7 +489,8 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
      */
     public void testInsertChangeFormalPublication() {
         ReferenceService service = getReferenceService();
-        FormalPublicationDto formalPublication = new FormalPublicationDto();
+        KeywordDao keywordDao = getKeywordDao();
+        FormalPublication formalPublication = new FormalPublication();
         formalPublication.setName("iBatis Data Mapper Developer Guide");
         formalPublication.setHashValue("xyz");
         formalPublication.setDescription(
@@ -445,40 +504,38 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         formalPublication.setPublisher("iBatis");
         formalPublication.setPageNum(53);
 
-        KeywordDto keyword = new KeywordDto();
+        Keyword keyword = new Keyword();
         keyword.setName("iBatis");
-        KeywordDto keyword2 = new KeywordDto();
+        Keyword keyword2 = new Keyword();
         keyword2.setName("SqlMap 2.0");
-        KeywordDto keyword3 = new KeywordDto();
+        Keyword keyword3 = new Keyword();
         keyword3.setName("Data mapper");
-        service.saveKeyword(keyword);
-        service.saveKeyword(keyword2);
-        service.saveKeyword(keyword3);
+        keywordDao.saveOrUpdate(keyword);
+        keywordDao.saveOrUpdate(keyword2);
+        keywordDao.saveOrUpdate(keyword3);
 
-        Set listKeywords = new HashSet();
+        Set<Keyword> listKeywords = new HashSet<Keyword>();
         listKeywords.add(keyword);
         listKeywords.add(keyword2);
         listKeywords.add(keyword3);
         formalPublication.setKeywords(listKeywords);
 
-        formalPublication = (FormalPublicationDto) service.saveReference(
+        formalPublication = (FormalPublication) service.saveReference(
             formalPublication);
 
         List list = service.getReferencesByName(
             "iBatis Data Mapper Developer Guide");
         assertEquals("Not one formal publication with name 'iBatis Data Mapper "
             + "Developer Guide'.", 1, list.size());
-        FormalPublicationDto formalPublication2 
-            = (FormalPublicationDto) list.get(0);
+        FormalPublication formalPublication2 
+            = (FormalPublication) list.get(0);
         assertTrue("Formal publications are not equal.", 
             formalPublication.equals(formalPublication2));
 
-        Set listKeywords2 = formalPublication2.getKeywords();
+        Set<Keyword> listKeywords2 = formalPublication2.getKeywords();
         assertEquals("There are not three keywords related with the formal "
             + "publication.", 3, listKeywords2.size());
-        Iterator it = listKeywords2.iterator();
-        while (it.hasNext()) {
-            KeywordDto k = (KeywordDto) it.next();
+        for (Keyword k : listKeywords2) {
             if (!(k.equals(keyword) 
                 || k.equals(keyword2) 
                 || k.equals(keyword3))) {
@@ -487,37 +544,35 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
             }
         }
         listKeywords2.remove(keyword2);
-        KeywordDto keyword5 = new KeywordDto();
+        Keyword keyword5 = new Keyword();
         keyword5.setName("New");
         keyword5.setDescription("A brand new keyword.");
-        keyword5 = service.saveKeyword(keyword5);
+        keywordDao.saveOrUpdate(keyword5);
         listKeywords2.add(keyword5);
 
         formalPublication2.setName("iBatis SqlMap 2.0 Developer Guide");
         formalPublication2.setKeywords(listKeywords2);
-        formalPublication2 = (FormalPublicationDto) service.saveReference(
+        formalPublication2 = (FormalPublication) service.saveReference(
             formalPublication2);
 
-        List emptyList = service.getReferencesByName(
+        List<Reference> emptyList = service.getReferencesByName(
             "iBatis Data Mapper Developer Guide");
         assertEquals("Formal publication with name 'iBatis Data Mapper "
             + "Developer Guide' still exists.", emptyList.size(), 0);
 
-        List list2 = service.getReferencesByName(
+        List<Reference> list2 = service.getReferencesByName(
             "iBatis SqlMap 2.0 Developer Guide");
         assertEquals("Not one formal publication with name 'iBatis SqlMap 2.0 "
             + "Developer Guide'.", 1, list2.size());
-        FormalPublicationDto formalPublication3 
-            = (FormalPublicationDto) list.get(0);
+        FormalPublication formalPublication3 
+            = (FormalPublication) list.get(0);
         assertTrue("Formal publications are not equal.", 
                 formalPublication2.equals(formalPublication3));
 
-        Set listKeywords3 = formalPublication3.getKeywords();
+        Set<Keyword> listKeywords3 = formalPublication3.getKeywords();
         assertEquals("There are not three keywords related with the formal "
             + "publication.", 3, listKeywords3.size());
-        Iterator it2 = listKeywords3.iterator();
-        while (it2.hasNext()) {
-            KeywordDto k = (KeywordDto) it2.next();
+        for (Keyword k : listKeywords3) {
             if (!(k.equals(keyword) 
                 || k.equals(keyword3) 
                 || k.equals(keyword5))) {
@@ -532,7 +587,7 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
      */
     public void testGetAllFormalPublications() {
         ReferenceService service = getReferenceService();
-        FormalPublicationDto formalPublication = new FormalPublicationDto();
+        FormalPublication formalPublication = new FormalPublication();
         formalPublication.setName("iBatis Data Mapper Developer Guide");
         formalPublication.setHashValue("xyz");
         formalPublication.setDescription(
@@ -545,10 +600,10 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         formalPublication.setAuthorName("Clinton Begin");
         formalPublication.setPublisher("iBatis");
         formalPublication.setPageNum(53);
-        formalPublication = (FormalPublicationDto) service.saveReference(
+        formalPublication = (FormalPublication) service.saveReference(
             formalPublication);
 
-        FormalPublicationDto formalPublication2 = new FormalPublicationDto();
+        FormalPublication formalPublication2 = new FormalPublication();
         formalPublication2.setName("Spring Reference Documentation");
         formalPublication2.setHashValue("asdf");
         formalPublication2.setDescription("This document shows you how to "
@@ -561,17 +616,14 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         formalPublication2.setAuthorName("Rod Johnson");
         formalPublication2.setPublisher("Spring");
         formalPublication2.setPageNum(187);
-        formalPublication2 = (FormalPublicationDto) service.saveReference(
+        formalPublication2 = (FormalPublication) service.saveReference(
             formalPublication2);
 
-        List list = service.getAllReferences();
+        List<Reference> list = service.getAllReferences();
         assertEquals("There are not two formal publications.", 2, list.size());
-        Iterator it = list.iterator();
-        while (it.hasNext()) {
-            FormalPublicationDto formalPublication3 
-                = (FormalPublicationDto) it.next();
-            if (!(formalPublication3.equals(formalPublication) 
-                || formalPublication3.equals(formalPublication2))) {
+        for (Reference f : list) {
+            if (!(((FormalPublication) f).equals(formalPublication) 
+                || ((FormalPublication) f).equals(formalPublication2))) {
                 fail("There is an unexpected formal publication.");
             }
         }
@@ -580,8 +632,8 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
 
         list = service.getAllReferences();
         assertEquals("There is not one formal publication.", 1, list.size());
-        FormalPublicationDto formalPublication4 
-            = (FormalPublicationDto) list.get(0);
+        FormalPublication formalPublication4 
+            = (FormalPublication) list.get(0);
         assertTrue("There is an unexpected formal publication.",
             formalPublication4.equals(formalPublication2));
     }
@@ -591,7 +643,8 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
      */
     public void testInsertBook() {
         ReferenceService service = getReferenceService();
-        BookDto book = new BookDto();
+        KeywordDao keywordDao = getKeywordDao();
+        Book book = new Book();
         book.setName("Expert One-on-One J2EE Development without EJB");
         book.setHashValue("xyz");
         book.setDescription("This book shows you how to develop with "
@@ -606,17 +659,17 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         book.setPageNum(576);
         book.setIsbnNumber("0764558315");
 
-        KeywordDto keyword = new KeywordDto();
+        Keyword keyword = new Keyword();
         keyword.setName("spring");
-        KeywordDto keyword2 = new KeywordDto();
+        Keyword keyword2 = new Keyword();
         keyword2.setName("j2ee");
-        KeywordDto keyword3 = new KeywordDto();
+        Keyword keyword3 = new Keyword();
         keyword3.setName("framework");
-        service.saveKeyword(keyword);
-        service.saveKeyword(keyword2);
-        service.saveKeyword(keyword3);
+        keywordDao.saveOrUpdate(keyword);
+        keywordDao.saveOrUpdate(keyword2);
+        keywordDao.saveOrUpdate(keyword3);
 
-        Set listKeywords = new HashSet();
+        Set<Keyword> listKeywords = new HashSet<Keyword>();
         listKeywords.add(keyword);
         listKeywords.add(keyword2);
         listKeywords.add(keyword3);
@@ -632,7 +685,8 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
      */
     public void testInsertGetRemoveBook() {
         ReferenceService service = getReferenceService();
-        BookDto book = new BookDto();
+        KeywordDao keywordDao = getKeywordDao();
+        Book book = new Book();
         book.setName("Expert One-on-One J2EE Development without EJB");
         book.setHashValue("xyz");
         book.setDescription(
@@ -647,33 +701,32 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         book.setPageNum(576);
         book.setIsbnNumber("0764558315");
 
-        KeywordDto keyword = new KeywordDto();
+        Keyword keyword = new Keyword();
         keyword.setName("spring");
-        KeywordDto keyword2 = new KeywordDto();
+        Keyword keyword2 = new Keyword();
         keyword2.setName("j2ee");
-        KeywordDto keyword3 = new KeywordDto();
+        Keyword keyword3 = new Keyword();
         keyword3.setName("framework");
-        service.saveKeyword(keyword);
-        service.saveKeyword(keyword2);
-        service.saveKeyword(keyword3);
+        keywordDao.saveOrUpdate(keyword);
+        keywordDao.saveOrUpdate(keyword2);
+        keywordDao.saveOrUpdate(keyword3);
 
-        Set listKeywords = new HashSet();
+        Set<Keyword> listKeywords = new HashSet<Keyword>();
         listKeywords.add(keyword);
         listKeywords.add(keyword2);
         listKeywords.add(keyword3);
         book.setKeywords(listKeywords);
 
-        book = (BookDto) service.saveReference(book);
+        book = (Book) service.saveReference(book);
 
-        BookDto book2 = (BookDto) service.getReferenceByKey(book.getKey());
+        Book book2 = (Book) service.getReferenceByKey(book.getKey());
         assertTrue("Books are not equal.", book.equals(book2));
 
-        Set listKeywords2 = book2.getKeywords();
+        Set<Keyword> listKeywords2 = book2.getKeywords();
         assertEquals("There are not three keywords related with the book.", 
             3, listKeywords2.size());
-        Iterator it = listKeywords2.iterator();
-        while (it.hasNext()) {
-            KeywordDto k = (KeywordDto) it.next();
+        
+        for (Keyword k : listKeywords2) {
             if (!(k.equals(keyword) 
                 || k.equals(keyword2) 
                 || k.equals(keyword3))) {
@@ -682,7 +735,7 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         }
 
         service.removeReference(book2.getKey());
-        List list = service.getReferencesByName(
+        List<Reference> list = service.getReferencesByName(
             "Expert One-on-One J2EE Development without EJB");
         assertEquals("There is still a formal publication with name 'Expert "
             + "One-on-One J2EE Development without EJB'.", list.size(), 0);
@@ -696,7 +749,8 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
      */
     public void testInsertChangeBook() {
         ReferenceService service = getReferenceService();
-        BookDto book = new BookDto();
+        KeywordDao keywordDao = getKeywordDao();
+        Book book = new Book();
         book.setName("Expert One-on-One J2EE Development without EJB");
         book.setHashValue("xyz");
         book.setDescription(
@@ -711,37 +765,36 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         book.setPageNum(576);
         book.setIsbnNumber("0764558315");
 
-        KeywordDto keyword = new KeywordDto();
+        Keyword keyword = new Keyword();
         keyword.setName("spring");
-        KeywordDto keyword2 = new KeywordDto();
+        Keyword keyword2 = new Keyword();
         keyword2.setName("j2ee");
-        KeywordDto keyword3 = new KeywordDto();
+        Keyword keyword3 = new Keyword();
         keyword3.setName("framework");
-        service.saveKeyword(keyword);
-        service.saveKeyword(keyword2);
-        service.saveKeyword(keyword3);
+        keywordDao.saveOrUpdate(keyword);
+        keywordDao.saveOrUpdate(keyword2);
+        keywordDao.saveOrUpdate(keyword3);
 
-        Set listKeywords = new HashSet();
+        Set<Keyword> listKeywords = new HashSet<Keyword>();
         listKeywords.add(keyword);
         listKeywords.add(keyword2);
         listKeywords.add(keyword3);
         book.setKeywords(listKeywords);
 
-        book = (BookDto) service.saveReference(book);
+        book = (Book) service.saveReference(book);
 
-        List list = service.getReferencesByName(
+        List<Reference> list = service.getReferencesByName(
             "Expert One-on-One J2EE Development without EJB");
         assertEquals("Not one book with name 'Expert One-on-One "
             + "J2EE Development without EJB'.", 1, list.size());
-        BookDto book2 = (BookDto) list.get(0);
+        Book book2 = (Book) list.get(0);
         assertTrue("Books are not equal.", book.equals(book2));
 
-        Set listKeywords2 = book2.getKeywords();
+        Set<Keyword> listKeywords2 = book2.getKeywords();
         assertEquals("There are not three keywords related with the book.", 
             3, listKeywords2.size());
-        Iterator it = listKeywords2.iterator();
-        while (it.hasNext()) {
-            KeywordDto k = (KeywordDto) it.next();
+        
+        for (Keyword k : listKeywords2) {
             if (!(k.equals(keyword) 
                 || k.equals(keyword2) 
                 || k.equals(keyword3))) {
@@ -749,34 +802,35 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
             }
         }
         listKeywords2.remove(keyword2);
-        KeywordDto keyword5 = new KeywordDto();
+        Keyword keyword5 = new Keyword();
         keyword5.setName("New");
         keyword5.setDescription("A brand new keyword.");
-        keyword5 = service.saveKeyword(keyword5);
+        keyword5 = getKeywordDao().saveOrUpdate(keyword5);
         listKeywords2.add(keyword5);
 
         book2.setName("Springframework - J2EE Development without EJB");
         book2.setKeywords(listKeywords2);
-        book2 = (BookDto) service.saveReference(book2);
+        book2 = (Book) service.saveReference(book2);
 
-        List emptyList = service.getReferencesByName("Expert One-on-One J2EE "
+        List<Reference> emptyList = service
+            .getReferencesByName("Expert One-on-One J2EE "
             + "Development without EJB");
         assertEquals("Formal publication with name 'Expert One-on-One J2EE "
             + "Development without EJB' still exists.", emptyList.size(), 0);
 
-        List list2 = service.getReferencesByName("Springframework - J2EE "
+        List<Reference> list2 = service
+            .getReferencesByName("Springframework - J2EE "
             + "Development without EJB");
         assertEquals("Not one book with name 'Springframework - J2EE "
             + "Development without EJB'.", 1, list2.size());
-        BookDto book3 = (BookDto) list.get(0);
+        Book book3 = (Book) list.get(0);
         assertTrue("Books are not equal.", book2.equals(book3));
 
-        Set listKeywords3 = book3.getKeywords();
+        Set<Keyword> listKeywords3 = book3.getKeywords();
         assertEquals("There are not three keywords related with the book.", 
             3, listKeywords3.size());
-        Iterator it2 = listKeywords3.iterator();
-        while (it2.hasNext()) {
-            KeywordDto k = (KeywordDto) it2.next();
+        
+        for (Keyword k : listKeywords3) {
             if (!(k.equals(keyword) 
                 || k.equals(keyword3) 
                 || k.equals(keyword5))) {
@@ -790,7 +844,7 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
      */
     public void testGetAllBooks() {
         ReferenceService service = getReferenceService();
-        BookDto book = new BookDto();
+        Book book = new Book();
         book.setName("Expert One-on-One J2EE Development without EJB");
         book.setHashValue("xyz");
         book.setDescription(
@@ -804,9 +858,9 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         book.setPublisher("Wrox");
         book.setPageNum(576);
         book.setIsbnNumber("0764558315");
-        book = (BookDto) service.saveReference(book);
+        book = (Book) service.saveReference(book);
 
-        BookDto book2 = new BookDto();
+        Book book2 = new Book();
         book2.setName("The Complete Log4j Manual");
         book2.setHashValue("lkjh");
         book2.setDescription("This book shows you how to use Log4J.");
@@ -819,14 +873,13 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         book2.setPublisher("QOS.ch");
         book2.setPageNum(206);
         book2.setIsbnNumber("2970036908");
-        book2 = (BookDto) service.saveReference(book2);
+        book2 = (Book) service.saveReference(book2);
 
-        List list = service.getAllReferences();
+        List<Reference> list = service.getAllReferences();
         assertEquals("There are not two books.", 2, list.size());
-        Iterator it = list.iterator();
-        while (it.hasNext()) {
-            BookDto book3 = (BookDto) it.next();
-            if (!(book3.equals(book) || book3.equals(book2))) {
+        
+        for (Reference b : list) {
+            if (!(((Book) b).equals(book) || ((Book) b).equals(book2))) {
                 fail("There is an unexpected book.");
             }
         }
@@ -835,63 +888,64 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
 
         list = service.getAllReferences();
         assertEquals("There is not one book.", 1, list.size());
-        BookDto book4 = (BookDto) list.get(0);
+        Book book4 = (Book) list.get(0);
         assertTrue("There is an unexpected book.", book4.equals(book2));
     }
-
+    
     /**
      * This test tries out many possible combinations of searching on
      * references.
      */
     public void testSearchReferences() {
         ReferenceService service = getReferenceService();
-
-        KeywordDto kUml = createAndSaveKeyword(
-            "uml", "Unified modeling language.", service);
-        KeywordDto kLanguage = createAndSaveKeyword(
-            "language", "Program or design language.", service);
-        KeywordDto kJsp = createAndSaveKeyword(
-            "jsp", "Java server pages.", service);
-        KeywordDto kJava = createAndSaveKeyword(
-            "java", "Java program language.", service);
-        KeywordDto kStruts = createAndSaveKeyword(
-            "struts", "Web MVC product.", service);
-        KeywordDto kDictionary = createAndSaveKeyword(
-            "dictionary", "Dictionary.", service);
-        KeywordDto kJ2ee = createAndSaveKeyword(
-            "j2ee", "Java enterprise library.", service);
-        KeywordDto kIbatis = createAndSaveKeyword(
-            "ibatis", "Apache IBatis software.", service);
-        KeywordDto kDeveloperguide = createAndSaveKeyword(
-            "developerguide", "Guide for developers.", service);
-        KeywordDto kBarcode = createAndSaveKeyword(
-            "barcode", "Machine readable string.", service);
-        KeywordDto k2d = createAndSaveKeyword(
-            "2d", "Two dimensions.", service);
-        KeywordDto kEnglish = createAndSaveKeyword(
-            "english", "English language.", service);
-        KeywordDto kGerman = createAndSaveKeyword(
-            "german", "German language.", service);
-        createAndSaveKeyword("zombie", "", service);
+        KeywordDao dao = getKeywordDao();
+        
+        Keyword kUml = createAndSaveKeyword(
+            "uml", "Unified modeling language.", dao);
+        Keyword kLanguage = createAndSaveKeyword(
+            "language", "Program or design language.", dao);
+        Keyword kJsp = createAndSaveKeyword(
+            "jsp", "Java server pages.", dao);
+        Keyword kJava = createAndSaveKeyword(
+            "java", "Java program language.", dao);
+        Keyword kStruts = createAndSaveKeyword(
+            "struts", "Web MVC product.", dao);
+        Keyword kDictionary = createAndSaveKeyword(
+            "dictionary", "Dictionary.", dao);
+        Keyword kJ2ee = createAndSaveKeyword(
+            "j2ee", "Java enterprise library.", dao);
+        Keyword kIbatis = createAndSaveKeyword(
+            "ibatis", "Apache IBatis software.", dao);
+        Keyword kDeveloperguide = createAndSaveKeyword(
+            "developerguide", "Guide for developers.", dao);
+        Keyword kBarcode = createAndSaveKeyword(
+            "barcode", "Machine readable string.", dao);
+        Keyword k2d = createAndSaveKeyword(
+            "2d", "Two dimensions.", dao);
+        Keyword kEnglish = createAndSaveKeyword(
+            "english", "English language.", dao);
+        Keyword kGerman = createAndSaveKeyword(
+            "german", "German language.", dao);
+        createAndSaveKeyword("zombie", "", dao);
         
         
-        BookDto bUmlDistilled = new BookDto();
+        Book bUmlDistilled = new Book();
         bUmlDistilled.setName("UML Distilled");
         bUmlDistilled.setDescription(
             "A brief guide to the standard object modeling language.");
         bUmlDistilled.setIncomplete(false);
-        Set keywordsUmlDistilled = new HashSet();
+        Set<Keyword> keywordsUmlDistilled = new HashSet<Keyword>();
         keywordsUmlDistilled.add(kUml);
         keywordsUmlDistilled.add(kLanguage);
         keywordsUmlDistilled.add(kEnglish);
         bUmlDistilled.setKeywords(keywordsUmlDistilled);
 
-        BookDto bBeginningJsp2 = new BookDto();
+        Book bBeginningJsp2 = new Book();
         bBeginningJsp2.setName("Beginning Jsp 2.0");
         bBeginningJsp2.setDescription(
             "Build Web Applications Using Jsp, Java, and Struts.");
         bBeginningJsp2.setIncomplete(true);
-        Set keywordsBeginningJsp2 = new HashSet();
+        Set<Keyword> keywordsBeginningJsp2 = new HashSet<Keyword>();
         keywordsBeginningJsp2.add(kJ2ee);
         keywordsBeginningJsp2.add(kJava);
         keywordsBeginningJsp2.add(kJsp);
@@ -899,53 +953,53 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         keywordsBeginningJsp2.add(kEnglish);
         bBeginningJsp2.setKeywords(keywordsBeginningJsp2);
 
-        BookDto bZombie = new BookDto();
+        Book bZombie = new Book();
         bZombie.setName("Zombie");
 
-        LinkDto lLeoEngGer = new LinkDto();
+        Link lLeoEngGer = new Link();
         lLeoEngGer.setName("LEO Dictionary English-German");
         lLeoEngGer.setDescription(
             "An online dictionary to translate German to English and reverse.");
         lLeoEngGer.setIncomplete(false);
-        Set keywordsLeoEngGer = new HashSet();
+        Set<Keyword> keywordsLeoEngGer = new HashSet<Keyword>();
         keywordsLeoEngGer.add(kEnglish);
         keywordsLeoEngGer.add(kGerman);
         keywordsLeoEngGer.add(kDictionary);
         keywordsLeoEngGer.add(kLanguage);
         lLeoEngGer.setKeywords(keywordsLeoEngGer);
 
-        LinkDto lJ2eeJsp = new LinkDto();
+        Link lJ2eeJsp = new Link();
         lJ2eeJsp.setName("J2EE - JavaServer Pages Technology");
         lJ2eeJsp.setDescription("JavaServer Pages (JSP) technology provides "
             + "a simplified, fast way to create dynamic web content. "
             + "JSP technology enables rapid development of web-based "
             + "applications that are server- and platform-independent.");
         lJ2eeJsp.setIncomplete(true);
-        Set keywordsJ2eeJsp = new HashSet();
+        Set<Keyword> keywordsJ2eeJsp = new HashSet<Keyword>();
         keywordsJ2eeJsp.add(kJ2ee);
         keywordsJ2eeJsp.add(kJsp);
         keywordsJ2eeJsp.add(kJava);
         keywordsJ2eeJsp.add(kEnglish);
         lJ2eeJsp.setKeywords(keywordsJ2eeJsp);
 
-        FormalPublicationDto fSqlMaps2DevGuide = new FormalPublicationDto();
+        FormalPublication fSqlMaps2DevGuide = new FormalPublication();
         fSqlMaps2DevGuide.setName("iBatis SqlMap 2.0 Developer Guide");
         fSqlMaps2DevGuide.setDescription("This guide shows you how to "
             + "develop an application using SqlMap 2.0.");
         fSqlMaps2DevGuide.setIncomplete(true);
-        Set keywordsSqlMaps2DevGuide = new HashSet();
+        Set<Keyword> keywordsSqlMaps2DevGuide = new HashSet<Keyword>();
         keywordsSqlMaps2DevGuide.add(kJava);
         keywordsSqlMaps2DevGuide.add(kIbatis);
         keywordsSqlMaps2DevGuide.add(kDeveloperguide);
         keywordsSqlMaps2DevGuide.add(kEnglish);
         fSqlMaps2DevGuide.setKeywords(keywordsSqlMaps2DevGuide);
 
-        FormalPublicationDto f2dBarcodePdf417 = new FormalPublicationDto();
+        FormalPublication f2dBarcodePdf417 = new FormalPublication();
         f2dBarcodePdf417.setName("2D barcode PDF417");
         f2dBarcodePdf417.setDescription("Describse who a "
             + "PDF417 2D barcode is built-up.");
         f2dBarcodePdf417.setIncomplete(false);
-        Set keywords2dBarcodePdf417 = new HashSet();
+        Set<Keyword> keywords2dBarcodePdf417 = new HashSet<Keyword>();
         keywords2dBarcodePdf417.add(k2d);
         keywords2dBarcodePdf417.add(kBarcode);
         keywords2dBarcodePdf417.add(kEnglish);
@@ -959,8 +1013,8 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         service.saveReference(fSqlMaps2DevGuide);
         service.saveReference(f2dBarcodePdf417);
 
-        List list;
-        Iterator it;
+        List<Reference> list;
+        //Iterator it;
 
         QueryObject query = new QueryObject();
         list = service.searchReferences(query);
@@ -972,9 +1026,8 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         list = service.searchReferences(query);
         assertEquals("There are not three references for query name='' and "
             + "description='' and incomplete=false.", 3, list.size());
-        it = list.iterator();
-        while (it.hasNext()) {
-            ReferenceDto r = (ReferenceDto) it.next();
+        
+        for (Reference r : list) {
             if (!(r.equals(bUmlDistilled) 
                 || r.equals(lLeoEngGer) 
                 || r.equals(f2dBarcodePdf417))) {
@@ -987,9 +1040,8 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         list = service.searchReferences(query);
         assertEquals("There are not four references for "
             + "query name='2' and description=''.", 4, list.size());
-        it = list.iterator();
-        while (it.hasNext()) {
-            ReferenceDto r = (ReferenceDto) it.next();
+        
+        for (Reference r : list) {
             if (!(r.equals(bBeginningJsp2) || r.equals(lJ2eeJsp)
                 || r.equals(fSqlMaps2DevGuide) 
                 || r.equals(f2dBarcodePdf417))) {
@@ -1003,9 +1055,8 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         list = service.searchReferences(query);
         assertEquals("There are not three references for query name='2' and "
             + "description='' and incomplete=true.", 3, list.size());
-        it = list.iterator();
-        while (it.hasNext()) {
-            ReferenceDto r = (ReferenceDto) it.next();
+        
+        for (Reference r : list) {
             if (!(r.equals(bBeginningJsp2) 
                 || r.equals(lJ2eeJsp) 
                 || r.equals(fSqlMaps2DevGuide))) {
@@ -1019,9 +1070,8 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         list = service.searchReferences(query);
         assertEquals("There are not two references for query name='' and " 
             + "description='deVeLop'.", 2, list.size());
-        it = list.iterator();
-        while (it.hasNext()) {
-            ReferenceDto r = (ReferenceDto) it.next();
+        
+        for (Reference r : list) {
             if (!(r.equals(lJ2eeJsp) || r.equals(fSqlMaps2DevGuide))) {
                 fail("There was an unexpected reference.");
             }
@@ -1033,9 +1083,8 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         list = service.searchReferences(query);
         assertEquals("There was not one reference for "
             + "query name='JAVA' and description='WEB'.", 1, list.size());
-        it = list.iterator();
-        while (it.hasNext()) {
-            ReferenceDto r = (ReferenceDto) it.next();
+        
+        for (Reference r : list) {
             if (!r.equals(lJ2eeJsp)) {
                 fail("There was an unexpected reference.");
             }
@@ -1049,9 +1098,8 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         list = service.searchReferences(query);
         assertEquals("Unexpected number of references with keyword java.", 
             3, list.size());
-        it = list.iterator();
-        while (it.hasNext()) {
-            ReferenceDto r = (ReferenceDto) it.next();
+        
+        for (Reference r : list) {
             if (!(r.equals(bBeginningJsp2) || r.equals(lJ2eeJsp) 
                 || r.equals(fSqlMaps2DevGuide))) {
                 fail("There was an unexpected reference.");
@@ -1068,9 +1116,8 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         assertEquals("Unexpected number of references with keyword java and "
             + "description='WEB'.", 
             2, list.size());
-        it = list.iterator();
-        while (it.hasNext()) {
-            ReferenceDto r = (ReferenceDto) it.next();
+        
+        for (Reference r : list) {
             if (!(r.equals(bBeginningJsp2) || r.equals(lJ2eeJsp))) {
                 fail("There was an unexpected reference.");
             }
@@ -1088,9 +1135,8 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         assertEquals("Unexpected number of references with keyword java, "
             + "keyword struts and description='WEB'.", 
             1, list.size());
-        it = list.iterator();
-        while (it.hasNext()) {
-            ReferenceDto r = (ReferenceDto) it.next();
+        
+        for (Reference r : list) {
             if (!r.equals(bBeginningJsp2)) {
                 fail("There was an unexpected reference.");
             }
@@ -1102,15 +1148,15 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
      * 
      * @param name Is the name of the keyword to create.
      * @param description Is the description of the keyword to create.
-     * @param service Is the service where to save the created keyword.
+     * @param dao Is the dao where to save the created keyword.
      * @return Returns the created and saved keyword.
      */
-    protected KeywordDto createAndSaveKeyword(String name, String description, 
-        ReferenceService service) {
-        KeywordDto keyword = new KeywordDto();
+    protected Keyword createAndSaveKeyword(String name, String description, 
+        KeywordDao dao) {
+        Keyword keyword = new Keyword();
         keyword.setName(name);
         keyword.setDescription(description);
-        return service.saveKeyword(keyword);
+        return dao.saveOrUpdate(keyword);
     }
     
     /**
@@ -1122,7 +1168,11 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
         int fakeReferenceKey = addDefaultFakeReference();
         
         ReferenceService service = getReferenceService();
-        FileDto file = new FileDto();
+        FileDescriptorViewDao fileDescriptorViewDao
+            = getFileDescriptorViewDao();
+        FileDao fileDao = getFileDao();
+        
+        File file = new File();
         file.setKeyToReference(fakeReferenceKey);
         file.setName("iBatis Developer Guide");
         file.setMimeType("text/plain");
@@ -1132,15 +1182,15 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
             = service.saveFileAndReturnFileDescriptorView(file);
 
         fileView.setName("iBatis SqlMap 2.0 Developer Guide");
-        service.modifyFileDescriptorView(fileView);
+        fileDescriptorViewDao.modifyFileDescriptorView(fileView);
 
-        FileDto file2 = (FileDto) service.getFilesByName(
+        File file2 = fileDao.getByName(
             "iBatis SqlMap 2.0 Developer Guide").get(0);
         file.setName("iBatis SqlMap 2.0 Developer Guide");
         assertTrue("Files are not equals.", file.equals(file2));
 
         FileDescriptorView fileView2 
-            = (FileDescriptorView) service.getFileDescriptorViewsByReference(
+            = fileDescriptorViewDao.getByReference(
                 fakeReferenceKey).get(0);
         assertTrue("FileDescriptorViews are not equals.", 
             fileView.equals(fileView2));
@@ -1156,23 +1206,24 @@ public abstract class AbstractReferenceServiceTest extends AbstractTestCaseBase 
      */
     public void testIncompleteAnnotationInsertion() {
         int fakeReferenceKey = addDefaultFakeReference();
+       
+        AnnotationDao annotationDao = getAnnotationDao();
         
-        ReferenceService service = getReferenceService();
-        AnnotationDto annotation = new AnnotationDto();
+        Annotation annotation = new Annotation();
         annotation.setKeyToReference(fakeReferenceKey);
         annotation.setAnnotator("Mister Lazy");
         annotation.setGrade(1);
         // Extra do not add a content.
         annotation.setContent(null);
         try {
-            annotation = service.saveAnnotation(annotation);
+            annotation = annotationDao.saveOrUpdate(annotation);
             fail("An annotation with no content is allowed.");
         } catch (DataAccessException e) {
             s_logger.debug("Expected exception because content of an "
                 + "annotation can not be null.", e);
         }
 
-        List list = service.getAnnotationsByAnnotator("Mister Lazy");
+        List list = annotationDao.getAnnotationsByAnnotator("Mister Lazy");
         assertEquals("There is still an annotation "
             + "with annotator 'Mister Lazy' in database.", list.size(), 0);
     }

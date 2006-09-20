@@ -40,9 +40,10 @@ public class HibernateReferenceServiceTest extends
     protected String[] getIncludeConfigLocations() {
         return new String[] {
             "classpath*:mandatory/*.xml",
+            "classpath*:mandatory/refdb/*.xml",
             "classpath*:scenarios/db/raw/*.xml",
             "classpath*:scenarios/dataaccess/hibernate/*.xml",
-            "classpath*:scenarios/dataaccess/hibernate/repository/*.xml",
+            "classpath*:scenarios/dataaccess/hibernate/refdb/*.xml",
             "classpath*:optional/interception/transactionJava5Annotations.xml"};
     }
     
