@@ -25,8 +25,8 @@ import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
 import ch.elca.el4j.apps.keyword.dao.KeywordDao;
-import ch.elca.el4j.apps.keyword.dao.impl.hibernate.HibernateKeywordDaoRegistry;
-import ch.elca.el4j.apps.keyword.dto.KeywordDto;
+import ch.elca.el4j.apps.keyword.dom.Keyword;
+import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.LikeCriteria;
 import ch.elca.el4j.tests.keyword.AbstractTestCaseBase;
@@ -70,10 +70,10 @@ public abstract class AbstractKeywordDaoTest
      */
     protected KeywordDao getKeywordDao() {
         if (m_keywordDao == null) {
-            HibernateKeywordDaoRegistry daoFactory 
-                = (HibernateKeywordDaoRegistry) getApplicationContext()
+            DefaultDaoRegistry daoRegistry 
+                = (DefaultDaoRegistry) getApplicationContext()
                     .getBean("daoRegistry");
-            m_keywordDao = daoFactory.getForKeyword();
+            m_keywordDao = (KeywordDao) daoRegistry.getFor(Keyword.class);
         }
         return m_keywordDao;
     }
@@ -83,12 +83,12 @@ public abstract class AbstractKeywordDaoTest
      */
     public void testInsertKeywords() {
         KeywordDao dao = getKeywordDao();
-        KeywordDto keyword = new KeywordDto();
+        Keyword keyword = new Keyword();
         keyword.setName("Java");
         keyword.setDescription("Java related documentation");
         keyword = dao.saveOrUpdate(keyword);
 
-        KeywordDto keyword2 = new KeywordDto();
+        Keyword keyword2 = new Keyword();
         keyword2.setName("This is a too large keyword");
         keyword2.setDescription("I'm too long, I'm too long"
                 + "I'm too long, I'm too long" + "I'm too long, I'm too long"
@@ -103,7 +103,7 @@ public abstract class AbstractKeywordDaoTest
             s_logger.debug("Expected exception catched.", e);
         }
         
-        KeywordDto keyword3 = new KeywordDto();
+        Keyword keyword3 = new Keyword();
         keyword3.setName("Java");
         keyword3.setDescription("Once again the same name");
         try {
@@ -113,12 +113,12 @@ public abstract class AbstractKeywordDaoTest
             s_logger.debug("Expected exception catched.", e);
         }
         
-        KeywordDto keyword4 = new KeywordDto();
+        Keyword keyword4 = new Keyword();
         keyword4.setName("KeywordWithoutDescription");
         keyword4.setDescription(null);
         dao.saveOrUpdate(keyword4);
         
-        KeywordDto keyword5 = new KeywordDto();
+        Keyword keyword5 = new Keyword();
         keyword5.setName(null);
         keyword5.setDescription(null);
         try {
@@ -129,7 +129,7 @@ public abstract class AbstractKeywordDaoTest
             s_logger.debug("Expected exception catched.", e);
         }
         
-        KeywordDto keyword6 = new KeywordDto();
+        Keyword keyword6 = new Keyword();
         keyword6.setName(null);
         keyword6.setDescription("A description");
         
@@ -146,13 +146,13 @@ public abstract class AbstractKeywordDaoTest
      */
     public void testGetKeywordById() {
         KeywordDao dao = getKeywordDao();
-        KeywordDto keyword = new KeywordDto();
+        Keyword keyword = new Keyword();
         keyword.setName("Xml");
         keyword.setDescription("Xml related documentation");
-        KeywordDto keyword2 = dao.saveOrUpdate(keyword);
-        KeywordDto keyword3 = dao.findById(keyword2.getKey(), false);
-        assertEquals("The inserted and read Dtos are not equal", keyword2,
-            keyword3);
+        Keyword keyword2 = dao.saveOrUpdate(keyword);
+        Keyword keyword3 = dao.findById(keyword2.getKey());
+        assertEquals("The inserted and read domain objects are not equal", 
+            keyword2, keyword3);
     }
     
     /**
@@ -160,13 +160,13 @@ public abstract class AbstractKeywordDaoTest
      */
     public void testGetKeywordByName() {
         KeywordDao dao = getKeywordDao();
-        KeywordDto keyword = new KeywordDto();
+        Keyword keyword = new Keyword();
         keyword.setName("Xml");
         keyword.setDescription("Xml related documentation");
-        KeywordDto keyword2 = dao.saveOrUpdate(keyword);
-        KeywordDto keyword3 = dao.getKeywordByName(keyword2.getName());
-        assertEquals("The inserted and read Dtos are not equal", keyword3,
-            keyword2);        
+        Keyword keyword2 = dao.saveOrUpdate(keyword);
+        Keyword keyword3 = dao.getKeywordByName(keyword2.getName());
+        assertEquals("The inserted and read domain objects are not equal",
+            keyword3, keyword2);        
     }
     
     /**
@@ -176,18 +176,18 @@ public abstract class AbstractKeywordDaoTest
      */
     public void testFindAllKeywords() {
         KeywordDao dao = getKeywordDao();
-        KeywordDto keyword1 = new KeywordDto();
+        Keyword keyword1 = new Keyword();
         keyword1.setName("Xml");
         keyword1.setDescription("Xml related documentation");
         
-        KeywordDto keyword2 = new KeywordDto();
+        Keyword keyword2 = new Keyword();
         keyword2.setName("Java");
         keyword2.setDescription("Java related documentation");
         
         dao.saveOrUpdate(keyword1);
         dao.saveOrUpdate(keyword2);
         
-        List<KeywordDto> list = dao.findAll();
+        List<Keyword> list = dao.findAll();
         
         assertEquals("Wrong number of keywords in DB", 2, list.size());
         assertTrue("First keyword has not been found", 
@@ -197,18 +197,37 @@ public abstract class AbstractKeywordDaoTest
     }
     
     /**
-     * This test inserts a keyword and removes it. Afterwards that, the keyword
-     * should not be reachable.
+     * This test inserts a keyword and removes it. Afterwards, the keyword
+     * should not be reachable any more.
      */
     public void testDeleteKeyword() {
         KeywordDao dao = getKeywordDao();
-        KeywordDto keyword = new KeywordDto();
+        Keyword keyword = new Keyword();
         keyword.setName("Java");
         keyword.setDescription("Java related documentation");
-        KeywordDto keyword2 = dao.saveOrUpdate(keyword);
+        Keyword keyword2 = dao.saveOrUpdate(keyword);
         dao.delete(keyword2);
         try {
-            dao.findById(keyword2.getKey(), false);
+            dao.findById(keyword2.getKey());
+            fail("The removed keyword is still in the DB.");
+        } catch (DataRetrievalFailureException e) {
+            s_logger.debug("Expected exception catched.", e);
+        }
+    }
+    
+    /**
+     * This test deletes a keyword which is given by its ID. Afterwards, the
+     * keyword should not be reachable any more.
+     */
+    public void testDeleteKeywordById() {
+        KeywordDao dao = getKeywordDao();
+        Keyword keyword = new Keyword();
+        keyword.setName("Java");
+        keyword.setDescription("Java related documentation");
+        Keyword keyword2 = dao.saveOrUpdate(keyword);
+        dao.delete(keyword2.getKey());
+        try {
+            dao.findById(keyword2.getKey());
             fail("The removed keyword is still in the DB.");
         } catch (DataRetrievalFailureException e) {
             s_logger.debug("Expected exception catched.", e);
@@ -224,12 +243,12 @@ public abstract class AbstractKeywordDaoTest
      */
     public void testInsertModifyDeleteKeywordByTwoPeople() {
         KeywordDao dao = getKeywordDao();
-        KeywordDto keyword = new KeywordDto();
+        Keyword keyword = new Keyword();
         keyword.setName("Java");
         keyword.setDescription("Java related documentation");
         dao.saveOrUpdate(keyword);
-        KeywordDto keyword2 = dao.getKeywordByName("Java");
-        KeywordDto keyword3 = dao.getKeywordByName("Java");
+        Keyword keyword2 = dao.getKeywordByName("Java");
+        Keyword keyword3 = dao.getKeywordByName("Java");
         keyword2.setDescription("Java API");
         dao.saveOrUpdate(keyword2);
         keyword3.setDescription("Java API of version 1.5");
@@ -254,19 +273,19 @@ public abstract class AbstractKeywordDaoTest
      */
     public void testSearchKeywords() {
         KeywordDao dao = getKeywordDao();
-        KeywordDto keyword = new KeywordDto();
+        Keyword keyword = new Keyword();
         keyword.setName("Java");
         keyword.setDescription("Java related documentation");
-        KeywordDto keyword2 = new KeywordDto();
+        Keyword keyword2 = new Keyword();
         keyword2.setName("XML");
         keyword2.setDescription("Xml related documentation");
-        KeywordDto keyword3 = new KeywordDto();
+        Keyword keyword3 = new Keyword();
         keyword3.setName("Ghost");
         keyword3.setDescription("");
-        KeywordDto keyword4 = new KeywordDto();
+        Keyword keyword4 = new Keyword();
         keyword4.setName("Chainsaw");
         keyword4.setDescription("Tool of Log4J to filter logfiles");
-        KeywordDto keyword5 = new KeywordDto();
+        Keyword keyword5 = new Keyword();
         keyword5.setName("Zombie");
         keyword5.setDescription("");
         
@@ -279,12 +298,12 @@ public abstract class AbstractKeywordDaoTest
         QueryObject query = new QueryObject();
         query.addCriteria(LikeCriteria.caseInsensitive("description", "%doc%"));
         
-        List<KeywordDto> list = dao.findByQuery(query);
+        List<Keyword> list = dao.findByQuery(query);
         assertEquals(
             "Search for description like 'doc' does not result in two"
             + " keywords.", 2, list.size());
         
-        for (KeywordDto k : list) {
+        for (Keyword k : list) {
             if (!(k.equals(keyword) || k.equals(keyword2))) {
                 fail("Not expected keyword on search for description "
                     + "like 'doc'.");
@@ -297,7 +316,7 @@ public abstract class AbstractKeywordDaoTest
         assertEquals("Search for name like 'host' results not in one keyword.",
             1, list.size());
         
-        for (KeywordDto k : list) {
+        for (Keyword k : list) {
             if (!k.equals(keyword3)) {
                 fail("Not expected keyword on search for name like 'host'.");
             }
@@ -315,7 +334,7 @@ public abstract class AbstractKeywordDaoTest
             "Search for description like 'log4j' results not in one keyword.",
             1, list.size());
         
-        for (KeywordDto k : list) {
+        for (Keyword k : list) {
             if (!k.equals(keyword4)) {
                 fail("Not expected keyword on search for description "
                     + "like 'log4j'.");
@@ -324,33 +343,51 @@ public abstract class AbstractKeywordDaoTest
     }
     
     /**
+     * This test inserts a keyword into the database, then modifies it locally.
+     * Afterwards, the keyword is refreshed in order to synchronize its state 
+     * with the database.
+     */
+    public void testRefreshKeyword() {
+        KeywordDao dao = getKeywordDao();
+        Keyword keyword = new Keyword();
+        keyword.setName("Xml");
+        keyword.setDescription("Xml related documentation");
+        dao.saveOrUpdate(keyword);
+        keyword.setName("Java");
+        keyword = dao.refresh(keyword);
+        assertEquals("The inserted keyword has not been refreshed correctly", 
+            keyword.getName(), "Xml");        
+    }
+    
+    /**
      * This test inserts two keywords and executes a query based on an example
      * keyword on them.
      */
+    /*
     public void testFindByExample() {
         KeywordDao dao = getKeywordDao();
-        KeywordDto keyword = new KeywordDto();
+        Keyword keyword = new Keyword();
         keyword.setName("Java");
         keyword.setDescription("Java related documentation");
         keyword = dao.saveOrUpdate(keyword);
         
-        KeywordDto keyword2 = new KeywordDto();
+        Keyword keyword2 = new Keyword();
         keyword2.setName("C");
         keyword2.setDescription("C related documentation");
         keyword2 = dao.saveOrUpdate(keyword2);
         
-        List<KeywordDto> list = dao.findByExample(keyword);
+        List<Keyword> list = dao.findByExample(keyword);
         assertEquals(
             "Query by example with does not result in one keyword.",
             1, list.size());
         
-        for (KeywordDto k : list) {
+        for (Keyword k : list) {
             if (!k.equals(keyword)) {
                 fail("Not expected keyword on query by example.");
             }
         }
         
-    }
+    }*/
   
 }
 //Checkstyle: MagicNumber on

@@ -19,7 +19,7 @@ package ch.elca.el4j.apps.keyword.dao;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 
-import ch.elca.el4j.apps.keyword.dto.KeywordDto;
+import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.services.persistence.generic.dao.ConvenientGenericDao;
 
 /**
@@ -37,19 +37,19 @@ import ch.elca.el4j.services.persistence.generic.dao.ConvenientGenericDao;
  * @author Alex Mathey (AMA)
  */
 public interface KeywordDao
-    extends ConvenientGenericDao<KeywordDto, Integer> {
+    extends ConvenientGenericDao<Keyword, Integer> {
     
     /**
      * Get keyword by name.
      * 
      * @param name
      *            Is the name of a keyword.
-     * @return Returns desired keyword.
+     * @return Returns the desired keyword.
      * @throws DataAccessException
      *             If general data access problem occurred.
      * @throws DataRetrievalFailureException
      *             If keyword could not be retrieved.
      */
-    public KeywordDto getKeywordByName(String name)
+    public Keyword getKeywordByName(String name)
         throws DataAccessException, DataRetrievalFailureException;
 }

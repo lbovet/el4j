@@ -20,14 +20,16 @@ import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import ch.elca.el4j.apps.keyword.dao.KeywordDao;
-import ch.elca.el4j.apps.keyword.dto.KeywordDto;
+import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
 
 /**
  * 
- * Implementation of the keyword dao which is using Hibernate.
+ * Implementation of the keyword DAO which is using Hibernate.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -39,23 +41,24 @@ import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
  * @author Alex Mathey (AMA)
  */
 public class HibernateKeywordDao
-    extends GenericHibernateDao<KeywordDto, Integer>
+    extends GenericHibernateDao<Keyword, Integer>
     implements KeywordDao {
     
     /**
      * Creates a new HibernateKeywordDao instance.
      */
     public HibernateKeywordDao() {
-        setPersistentClass(KeywordDto.class);
+        setPersistentClass(Keyword.class);
     }
     
     /**
      * {@inheritDoc}
      */
-    public KeywordDto getKeywordByName(String name)
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public Keyword getKeywordByName(String name)
         throws DataAccessException, DataRetrievalFailureException {
         
-        String queryString = "from KeywordDto keyword where name = :name";
+        String queryString = "from Keyword keyword where name = :name";
                 
         List keywordList = getHibernateTemplate()
             .findByNamedParam(queryString, "name", name);
@@ -63,7 +66,7 @@ public class HibernateKeywordDao
             throw new DataRetrievalFailureException("The desired keyword could"
                 + " not be retrieved.");
         } else {
-            return (KeywordDto) keywordList.get(0);
+            return (Keyword) keywordList.get(0);
         }
     }
 }

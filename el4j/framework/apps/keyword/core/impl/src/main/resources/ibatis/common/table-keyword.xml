@@ -13,7 +13,7 @@
         Keyword related invocations
     -->
     <resultMap id="keyword"
-        class="ch.elca.el4j.apps.keyword.dto.KeywordDto">
+        class="ch.elca.el4j.apps.keyword.dom.Keyword">
         <result property="key" column="KEYID" columnIndex="1" />
         <result property="name" column="NAME" columnIndex="2" />
         <result property="description" column="DESCRIPTION" columnIndex="3" />
@@ -68,7 +68,17 @@
         order by NAME
     </select>
 
-    <delete id="deleteKeyword" parameterClass="int">
+	<select id="refreshKeyword" resultMap="keyword">
+		select KEYID, NAME, DESCRIPTION, OPTIMISTICLOCKINGVERSION from KEYWORDS
+            where KEYID = #key#
+	</select>
+
+    <delete id="deleteKeyword">
+        delete from KEYWORDS where KEYID=#key# AND
+        OPTIMISTICLOCKINGVERSION=#optimisticLockingVersion#
+    </delete>
+    
+    <delete id="deleteKeywordById" parameterClass="int">
         delete from KEYWORDS where KEYID=#value#
     </delete>
 </sqlMap>
