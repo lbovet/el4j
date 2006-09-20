@@ -32,8 +32,6 @@
                 type="image/x-icon" />
         </head>
         <links>
-            <item name="EL4Ant"
-                href="http://el4ant.sourceforge.net" />
             <item name="EL4NET"
                 href="http://el4net.sourceforge.net" />
             <item name="IIOP.NET"
