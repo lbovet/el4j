@@ -13,7 +13,7 @@
         Book related invocations
     -->
     <resultMap id="book" 
-        class="ch.elca.el4j.apps.refdb.dto.BookDto">
+        class="ch.elca.el4j.apps.refdb.dom.Book">
         <result property="key" column="KEYID"/>
         <result property="name" column="NAME"/>
         <result property="hashValue" column="HASHVALUE"/>
@@ -53,6 +53,10 @@
             ISBNNUMBER, OPTIMISTICLOCKINGVERSION from BOOKS, REFERENCESTABLE
                 where KEYID=KEYTOREFERENCE
     </statement>
+    
+    <select id="getAllBookKeys" resultClass="java.lang.Integer">
+    	select KEYID from BOOKS, REFERENCESTABLE where KEYID=KEYTOREFERENCE
+    </select>
     
     <select id="searchBooks" resultMap="book" 
         parameterClass="list">
@@ -104,7 +108,12 @@
         order by NAME, DESCRIPTION
     </select>
 
-    <delete id="deleteBook" parameterClass="int">
+	<delete id="deleteBook">
+        delete from BOOKS where KEYID=#key# AND
+        OPTIMISTICLOCKINGVERSION=#optimisticLockingVersion#
+    </delete>
+
+    <delete id="deleteBookById" parameterClass="int">
         delete from BOOKS where KEYTOREFERENCE=#value#
     </delete>
 </sqlMap>

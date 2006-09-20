@@ -5,7 +5,7 @@
     
 <hibernate-mapping>
 
-	<class name="ch.elca.el4j.apps.refdb.dto.ReferenceDto" table="REFERENCESTABLE">
+	<class name="ch.elca.el4j.apps.refdb.dom.Reference" table="REFERENCESTABLE">
 		<cache usage="read-write"/>
 		<id name="key">
             <column name="KEYID"/>
@@ -40,34 +40,34 @@
         
         <!--<set name="annotations" cascade="all-delete-orphan">
         	<key column="KEYTOREFERENCE"/>
-        	<one-to-many class="ch.elca.el4j.apps.refdb.dto.AnnotationDto"/>
+        	<one-to-many class="ch.elca.el4j.apps.refdb.dom.Annotation"/>
         </set>
         
         <set name="files" cascade="all-delete-orphan">
         	<key column="KEYTOREFERENCE"/>
-        	<one-to-many class="ch.elca.el4j.apps.refdb.dto.FileDto"/>
+        	<one-to-many class="ch.elca.el4j.apps.refdb.dom.File"/>
         </set>
         
         <set name="fileDescriptorViews" cascade="all-delete-orphan">
         	<key column="KEYTOREFERENCE"/>
-        	<one-to-many class="ch.elca.el4j.apps.refdb.dto.FileDescriptorView"/>
+        	<one-to-many class="ch.elca.el4j.apps.refdb.dom.FileDescriptorView"/>
         </set>
         
         --><set name="keywords" table="REFERENCEKEYWORDRELATIONSHIPS"
         	cascade="save-update" lazy="false">
         	<key column="KEYREFERENCE"/>
-        	<many-to-many class="ch.elca.el4j.apps.keyword.dto.KeywordDto"
+        	<many-to-many class="ch.elca.el4j.apps.keyword.dom.Keyword"
         		column="KEYKEYWORD"/>
        	</set> 
         
-        <joined-subclass name="ch.elca.el4j.apps.refdb.dto.LinkDto" table="LINKS">
+        <joined-subclass name="ch.elca.el4j.apps.refdb.dom.Link" table="LINKS">
         	<key column="KEYTOREFERENCE"/>
         	<property name="url" type="string">
         		<column name="URL"/>
         	</property>
         </joined-subclass>
         
-        <joined-subclass name="ch.elca.el4j.apps.refdb.dto.FormalPublicationDto"
+        <joined-subclass name="ch.elca.el4j.apps.refdb.dom.FormalPublication"
         	 table="FORMALPUBLICATIONS">
         	<key column="KEYTOREFERENCE"/>
         	<property name="authorName" type="string">
@@ -82,7 +82,7 @@
         	   
         </joined-subclass>
         
-        <joined-subclass name="ch.elca.el4j.apps.refdb.dto.BookDto"
+        <joined-subclass name="ch.elca.el4j.apps.refdb.dom.Book"
         	table="BOOKS">
         	<key column="KEYTOREFERENCE"/>
         	<property name="authorName" type="string">

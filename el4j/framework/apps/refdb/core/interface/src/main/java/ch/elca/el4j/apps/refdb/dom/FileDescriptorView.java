@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.apps.refdb.dto;
+package ch.elca.el4j.apps.refdb.dom;
 
 import javax.persistence.Entity;
 
@@ -24,7 +24,8 @@ import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimistic
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
 /**
- * Dto for a file without the content (only a descriptor).
+ * FileDescriptorView domain object. Domain object for a file without the 
+ * content (only a descriptor).
  * 
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -57,12 +58,6 @@ public class FileDescriptorView extends AbstractIntKeyIntOptimisticLockingDto {
      * Size of the content in bytes.
      */
     private int m_size;
-    
-    /**
-     * Reference this file is associated with (only used if
-     * Hibernate is used to perform ORM).
-     */
-    //private ReferenceDto m_reference;
 
     /**
      * @return Returns the mimeType
@@ -127,23 +122,6 @@ public class FileDescriptorView extends AbstractIntKeyIntOptimisticLockingDto {
     public void setKeyToReference(int keyToReference) {
         m_keyToReference = keyToReference;
     }
-
-    /**
-     * @return Returns the reference this file is associated with (only
-     *         used if Hibernate is used to perform ORM).
-     */
-    /*public ReferenceDto getReference() {
-        return m_reference;
-    }*/
-    
-    /**
-     * @param reference
-     *            The reference this file will be associated with (only
-     *            used if Hibernate is used to perform ORM).
-     */
-    /*public void setReference(ReferenceDto reference) {
-        m_reference = reference;
-    }*/
     
     /**
      * {@inheritDoc}

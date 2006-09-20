@@ -14,14 +14,15 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.apps.refdb.dto;
+package ch.elca.el4j.apps.refdb.dom;
 
 import javax.persistence.Entity;
 
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
 /**
- * This class is a formal publication and describs a book.
+ * Link domain object. This class is a reference and describes an internet link 
+ * (URL).
  * 
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -33,25 +34,25 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  * @author Martin Zeltner (MZE)
  */
 @Entity
-public class BookDto extends FormalPublicationDto {
+public class Link extends Reference {
     /**
-     * ISBN number of a book.
+     * Contains the url of a web page.
      */
-    private String m_isbnNumber;
+    private String m_url;
 
     /**
-     * @return Returns the isbnNumber.
+     * @return Returns the url.
      */
-    public String getIsbnNumber() {
-        return m_isbnNumber;
+    public String getUrl() {
+        return m_url;
     }
 
     /**
-     * @param isbnNumber
-     *            The isbnNumber to set.
+     * @param url
+     *            The url to set.
      */
-    public void setIsbnNumber(String isbnNumber) {
-        this.m_isbnNumber = isbnNumber;
+    public void setUrl(String url) {
+        this.m_url = url;
     }
 
     /**
@@ -66,11 +67,9 @@ public class BookDto extends FormalPublicationDto {
      */
     public boolean equals(Object object) {
         if (super.equals(object)
-            && object instanceof BookDto) {
-            BookDto other = (BookDto) object;
-
-            return ObjectUtils.nullSaveEquals(
-                m_isbnNumber, other.m_isbnNumber);
+            && object instanceof Link) {
+            Link other = (Link) object;
+            return ObjectUtils.nullSaveEquals(m_url, other.m_url);
         } else {
             return false;
         }

@@ -14,12 +14,13 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.apps.refdb.dto;
+package ch.elca.el4j.apps.refdb.dom;
 
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 
 /**
- * This class describs a relationship between a keyword and a reference.
+ * ReferenceKeywordRelationship domain object. This class describes a
+ * relationship between a keyword and a reference.
  * 
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -30,7 +31,7 @@ import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimistic
  * 
  * @author Martin Zeltner (MZE)
  */
-public class ReferenceKeywordRelationshipDto 
+public class ReferenceKeywordRelationship 
     extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * This is the primary key from the keyword.
@@ -84,9 +85,9 @@ public class ReferenceKeywordRelationshipDto
      */
     public boolean equals(Object object) {
         if (super.equals(object)
-            && object instanceof ReferenceKeywordRelationshipDto) {
-            ReferenceKeywordRelationshipDto other 
-                = (ReferenceKeywordRelationshipDto) object;
+            && object instanceof ReferenceKeywordRelationship) {
+            ReferenceKeywordRelationship other 
+                = (ReferenceKeywordRelationship) object;
 
             return m_keyKeyword == other.m_keyKeyword
                 && m_keyReference == other.m_keyReference;

@@ -17,7 +17,7 @@
         alias="clobHandler" />
         
     <resultMap id="annotation"
-        class="ch.elca.el4j.apps.refdb.dto.AnnotationDto">
+        class="ch.elca.el4j.apps.refdb.dom.Annotation">
         <result property="key" column="KEYID"/>
         <result property="keyToReference" column="KEYTOREFERENCE"/>
         <result property="annotator" column="ANNOTATOR"/>
@@ -53,7 +53,12 @@
             OPTIMISTICLOCKINGVERSION from ANNOTATIONS
     </statement>
 
-    <delete id="deleteAnnotation" parameterClass="int">
+	<delete id="deleteAnnotation">
+        delete from ANNOTATIONS where KEYID=#key# AND
+        OPTIMISTICLOCKINGVERSION=#optimisticLockingVersion#
+    </delete>
+
+    <delete id="deleteAnnotationById" parameterClass="int">
         delete from ANNOTATIONS where KEYID=#value#
     </delete>
 </sqlMap>

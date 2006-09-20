@@ -16,7 +16,7 @@
         type="com.ibatis.sqlmap.engine.type.BlobTypeHandlerCallback"
         alias="blobHandler" />
     
-    <resultMap id="file" class="ch.elca.el4j.apps.refdb.dto.FileDto">
+    <resultMap id="file" class="ch.elca.el4j.apps.refdb.dom.File">
         <result property="key" column="KEYID"/>
         <result property="keyToReference" column="KEYTOREFERENCE"/>
         <result property="name" column="NAME"/>
@@ -49,7 +49,12 @@
             OPTIMISTICLOCKINGVERSION from FILES
     </statement>
     
-    <delete id="deleteFile" parameterClass="int">
+    <delete id="deleteFile">
+        delete from FILES where KEYID=#key# AND
+        OPTIMISTICLOCKINGVERSION=#optimisticLockingVersion#
+    </delete>
+    
+    <delete id="deleteFileById" parameterClass="int">
         delete from FILES where KEYID=#value#
     </delete>
     
@@ -57,7 +62,7 @@
         FileDescriptorView related invocations
     -->
     <resultMap id="fileDescriptorView"
-        class="ch.elca.el4j.apps.refdb.dto.FileDescriptorView">
+        class="ch.elca.el4j.apps.refdb.dom.FileDescriptorView">
         <result property="key" column="KEYID"/>
         <result property="keyToReference" column="KEYTOREFERENCE"/>
         <result property="name" column="NAME"/>

@@ -5,7 +5,7 @@
     
 <hibernate-mapping>
 
-	<class name="ch.elca.el4j.apps.refdb.dto.FileDescriptorView" table="FILES">
+	<class name="ch.elca.el4j.apps.refdb.dom.FileDescriptorView" table="FILES">
 		<cache usage="read-write"/>
 		<id name="key">
             <column name="KEYID"/>
@@ -28,10 +28,6 @@
         <property name="size" type="integer">
             <column name="CONTENTSIZE"/>
         </property>
-        <!-- <many-to-one name="reference"
-        			 column="KEYTOREFERENCE"
-        			 class="ch.elca.el4j.apps.refdb.dto.ReferenceDto"
-        			 not-null="true"/> -->
 	</class>
 
 </hibernate-mapping>

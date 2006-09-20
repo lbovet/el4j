@@ -14,14 +14,15 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.apps.refdb.dto;
+package ch.elca.el4j.apps.refdb.dom;
 
 import javax.persistence.Entity;
 
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
 /**
- * This class is a reference and describs a formal publication.
+ * FormalPublication domain object. This class is a reference and describes a
+ * formal publication.
  * 
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -33,7 +34,7 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  * @author Martin Zeltner (MZE)
  */
 @Entity
-public class FormalPublicationDto extends ReferenceDto {
+public class FormalPublication extends Reference {
     /**
      * Name of the author.
      */
@@ -106,8 +107,8 @@ public class FormalPublicationDto extends ReferenceDto {
      */
     public boolean equals(Object object) {
         if (super.equals(object)
-            && object instanceof FormalPublicationDto) {
-            FormalPublicationDto other = (FormalPublicationDto) object;
+            && object instanceof FormalPublication) {
+            FormalPublication other = (FormalPublication) object;
 
             return ObjectUtils.nullSaveEquals(m_authorName, other.m_authorName)
                 && ObjectUtils.nullSaveEquals(m_publisher,  other.m_publisher)

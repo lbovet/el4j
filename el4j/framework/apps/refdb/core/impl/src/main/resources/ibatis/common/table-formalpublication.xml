@@ -13,7 +13,7 @@
         Formal publication related invocations
     -->
     <resultMap id="formalPublication" 
-        class="ch.elca.el4j.apps.refdb.dto.FormalPublicationDto">
+        class="ch.elca.el4j.apps.refdb.dom.FormalPublication">
         <result property="key" column="KEYID"/>
         <result property="name" column="NAME"/>
         <result property="hashValue" column="HASHVALUE"/>
@@ -52,6 +52,11 @@
             OPTIMISTICLOCKINGVERSION from FORMALPUBLICATIONS, REFERENCESTABLE
                 where KEYID=KEYTOREFERENCE
     </statement>
+    
+    <select id="getAllFormalPublicationKeys" resultClass="java.lang.Integer">
+    	select KEYID from FORMALPUBLICATIONS, REFERENCESTABLE 
+    		where KEYID=KEYTOREFERENCE
+    </select>
     
     <select id="searchFormalPublications" resultMap="formalPublication" 
         parameterClass="list">
@@ -103,7 +108,12 @@
         order by NAME, DESCRIPTION
     </select>
 
-    <delete id="deleteFormalPublication" parameterClass="int">
+	<delete id="deleteFormalPublication">
+        delete from FORMALPUBLICATIONS where KEYID=#key# AND
+        OPTIMISTICLOCKINGVERSION=#optimisticLockingVersion#
+    </delete>
+
+    <delete id="deleteFormalPublicationById" parameterClass="int">
         delete from FORMALPUBLICATIONS where KEYTOREFERENCE=#value#
     </delete>
 </sqlMap>

@@ -12,7 +12,7 @@
     <!-- 
         Link related invocations
     -->
-    <resultMap id="link" class="ch.elca.el4j.apps.refdb.dto.LinkDto">
+    <resultMap id="link" class="ch.elca.el4j.apps.refdb.dom.Link">
         <result property="key" column="KEYID"/>
         <result property="name" column="NAME"/>
         <result property="hashValue" column="HASHVALUE"/>
@@ -49,6 +49,10 @@
             from LINKS, REFERENCESTABLE
                 where KEYID=KEYTOREFERENCE
     </statement>
+    
+    <select id="getAllLinkKeys" resultClass="java.lang.Integer">
+    	select KEYID from LINKS, REFERENCESTABLE where KEYID=KEYTOREFERENCE
+    </select>
     
     <select id="searchLinks" resultMap="link" parameterClass="list">
         select distinct KEYID, NAME, HASHVALUE, DESCRIPTION, VERSION, INCOMPLETE, 
@@ -98,7 +102,12 @@
         order by NAME, DESCRIPTION
     </select>
 
-    <delete id="deleteLink" parameterClass="int">
+	<delete id="deleteLink">
+        delete from LINKS where KEYID=#key# AND
+        OPTIMISTICLOCKINGVERSION=#optimisticLockingVersion#
+    </delete>
+
+    <delete id="deleteLinkById" parameterClass="int">
         delete from LINKS where KEYTOREFERENCE=#value#
     </delete>
 </sqlMap>

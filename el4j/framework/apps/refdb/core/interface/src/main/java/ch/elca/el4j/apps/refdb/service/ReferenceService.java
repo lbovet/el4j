@@ -25,16 +25,15 @@ import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.elca.el4j.apps.keyword.service.KeywordService;
-import ch.elca.el4j.apps.refdb.dto.AnnotationDto;
-import ch.elca.el4j.apps.refdb.dto.FileDescriptorView;
-import ch.elca.el4j.apps.refdb.dto.FileDto;
-import ch.elca.el4j.apps.refdb.dto.ReferenceDto;
+import ch.elca.el4j.apps.refdb.dom.File;
+import ch.elca.el4j.apps.refdb.dom.FileDescriptorView;
+import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
 import ch.elca.el4j.services.search.QueryObject;
 
 /**
- * This interface provides all available business methods, which can be used in
- * presentation layer.
+ * This interface provides the business methods which can be used in the
+ * presentation layer and which are not already present in the underlying DAOs.
  * 
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -44,205 +43,10 @@ import ch.elca.el4j.services.search.QueryObject;
  * );</script>
  * 
  * @author Martin Zeltner (MZE)
+ * @author Alex Mathey (AMA)
  */
 public interface ReferenceService extends KeywordService {
-    /**
-     * Get annotation by primary key.
-     * 
-     * @param key
-     *            Is the primary key
-     * @return Returns desired annotation.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     * @throws DataRetrievalFailureException
-     *             If annotation could not be retrieved.
-     */
-    public AnnotationDto getAnnotationByKey(int key)
-        throws DataAccessException, DataRetrievalFailureException;
-
-    /**
-     * Get all annotations from one annotator.
-     * 
-     * @param annotator
-     *            Is the name of the annotator.
-     * @return Returns a list with annotations. Returns never <code>null</code>.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     */
-    public List getAnnotationsByAnnotator(String annotator)
-        throws DataAccessException;
-
-    /**
-     * Get all annotations of a reference.
-     * 
-     * @param key
-     *            Is the primary key of the referenced reference.
-     * @return Returns a list with annotations. Returns never <code>null</code>.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     */
-    public List getAnnotationsByReference(int key)
-        throws DataAccessException;
-
-    /**
-     * Get all annotations.
-     * 
-     * @return Returns all annotations. Returns never <code>null</code>.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     */
-    public List getAllAnnotations()
-        throws DataAccessException;
-
-
-    /**
-     * Save annotation. If annotation is new, viz is has no primary key, it will
-     * be inserted. Otherwise, the annotation will be updated.
-     * 
-     * @param annotation
-     *            Is the annotation to save.
-     * @return Returns the saved annotation.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     * @throws InsertionFailureException
-     *             If annotation could not be inserted.
-     * @throws OptimisticLockingFailureException
-     *             If annotation has been modificated in the meantime.
-     */
-    @Transactional(rollbackFor = {DataAccessException.class,
-            RuntimeException.class, Error.class })
-    public AnnotationDto saveAnnotation(AnnotationDto annotation)
-        throws DataAccessException, InsertionFailureException, 
-            OptimisticLockingFailureException;
-
-    /**
-     * Remove annotation. Primary key will be used.
-     * 
-     * @param key
-     *            Is the primary key of the annotation, which should be deleted.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     * @throws JdbcUpdateAffectedIncorrectNumberOfRowsException
-     *             If annotation could not be deleted.
-     */
-    @Transactional(rollbackFor = {DataAccessException.class,
-            RuntimeException.class, Error.class })
-    public void removeAnnotation(int key) throws DataAccessException,
-        JdbcUpdateAffectedIncorrectNumberOfRowsException;
-
-    /**
-     * Get a file by primary key.
-     * 
-     * @param key
-     *            Is the primary key.
-     * @return Returns desired file.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     * @throws DataRetrievalFailureException
-     *             If file could not be retrieved.
-     */
-    public FileDto getFileByKey(int key)
-        throws DataAccessException, DataRetrievalFailureException;
-
-    /**
-     * Get all files with the same name.
-     * 
-     * @param name
-     *            Is the name of the file.
-     * @return Returns a list with files. Returns never <code>null</code>.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     */
-    public List getFilesByName(String name) throws DataAccessException;
-
-    /**
-     * Get all files of a reference.
-     * 
-     * @param key
-     *            Is the primary key of the referenced reference.
-     * @return Returns a list with files. Returns never <code>null</code>.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     */
-    public List getFilesByReference(int key) throws DataAccessException;
-
-    /**
-     * Get all files.
-     * 
-     * @return Returns all files. Returns never <code>null</code>.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     */
-    public List getAllFiles() throws DataAccessException;
-
-    /**
-     * Save file. If file is new, viz is has no primary key, it will be
-     * inserted. Otherwise, the file will be updated.
-     * 
-     * @param file
-     *            Is the file to save.
-     * @return Returns the saved file.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     * @throws InsertionFailureException
-     *             If file could not be inserted.
-     * @throws OptimisticLockingFailureException
-     *             If file has been modificated in the meantime.
-     */
-    @Transactional(rollbackFor = {DataAccessException.class,
-            RuntimeException.class, Error.class })
-    public FileDto saveFile(FileDto file)
-        throws DataAccessException, InsertionFailureException, 
-            OptimisticLockingFailureException;
-
-    /**
-     * Remove file. Primary key will be used.
-     * 
-     * @param key
-     *            Is the primary key of the file, which should be deleted.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     * @throws JdbcUpdateAffectedIncorrectNumberOfRowsException
-     *             If file could not be deleted.
-     */
-    @Transactional(rollbackFor = {DataAccessException.class,
-            RuntimeException.class, Error.class })
-    public void removeFile(int key) throws DataAccessException,
-        JdbcUpdateAffectedIncorrectNumberOfRowsException;
-
-    /**
-     * Get all file descriptor views of a reference.
-     * 
-     * @param key
-     *            Is the primary key of the referenced reference.
-     * @return Returns a list with file descriptor views. Returns never 
-     *         <code>null</code>.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     */
-    public List getFileDescriptorViewsByReference(int key)
-        throws DataAccessException;
-
-    /**
-     * Modifies every field of a file, except the content.
-     * 
-     * @param fileView
-     *            Is the file to modify.
-     * @return Returns the modified file descriptor view.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     * @throws OptimisticLockingFailureException
-     *             If file has been modificated in the meantime.
-     * @throws DataRetrievalFailureException
-     *             If file could not be retrieved.
-     */
-    @Transactional(rollbackFor = {DataAccessException.class,
-            RuntimeException.class, Error.class })
-    public FileDescriptorView modifyFileDescriptorView(
-        FileDescriptorView fileView)
-        throws DataAccessException, OptimisticLockingFailureException,
-            DataRetrievalFailureException;
-
+    
     /**
      * Save file. If file is new, viz is has no primary key, it will be
      * inserted. Otherwise, the file will be updated.
@@ -259,7 +63,7 @@ public interface ReferenceService extends KeywordService {
      */
     @Transactional(rollbackFor = {DataAccessException.class,
             RuntimeException.class, Error.class })
-    public FileDescriptorView saveFileAndReturnFileDescriptorView(FileDto file)
+    public FileDescriptorView saveFileAndReturnFileDescriptorView(File file)
         throws DataAccessException, InsertionFailureException, 
             OptimisticLockingFailureException;
 
@@ -274,7 +78,7 @@ public interface ReferenceService extends KeywordService {
      * @throws DataRetrievalFailureException
      *             If link could not be retrieved.
      */
-    public ReferenceDto getReferenceByKey(int key)
+    public Reference getReferenceByKey(int key)
         throws DataAccessException, DataRetrievalFailureException;
 
     /**
@@ -286,7 +90,8 @@ public interface ReferenceService extends KeywordService {
      * @throws DataAccessException
      *             If general data access problem occurred.
      */
-    public List getReferencesByName(String name) throws DataAccessException;
+    public List<Reference> getReferencesByName(String name)
+        throws DataAccessException;
 
     /**
      * Get all references.
@@ -296,7 +101,7 @@ public interface ReferenceService extends KeywordService {
      * @throws DataAccessException
      *             If general data access problem occurred.
      */
-    public List getAllReferences() throws DataAccessException;
+    public List<Reference> getAllReferences() throws DataAccessException;
 
     /**
      * Search references.
@@ -307,7 +112,7 @@ public interface ReferenceService extends KeywordService {
      * @throws DataAccessException
      *             If general data access problem occurred.
      */
-    public List searchReferences(QueryObject query)
+    public List<Reference> searchReferences(QueryObject query)
         throws DataAccessException;
 
     /**
@@ -326,7 +131,7 @@ public interface ReferenceService extends KeywordService {
      */
     @Transactional(rollbackFor = {DataAccessException.class,
             RuntimeException.class, Error.class })
-    public ReferenceDto saveReference(ReferenceDto reference)
+    public Reference saveReference(Reference reference)
         throws DataAccessException, InsertionFailureException, 
             OptimisticLockingFailureException;
 
