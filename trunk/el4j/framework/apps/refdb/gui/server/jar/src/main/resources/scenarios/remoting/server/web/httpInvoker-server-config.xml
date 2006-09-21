@@ -2,7 +2,7 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
     "http://www.springframework.org/dtd/spring-beans.dtd">
 <!--
-    Spring bean configuration file to export service with hessian.
+    Spring bean configuration file to export service with httpInvoker.
 -->
 <beans>
     <!-- Version: $Revision$ -->
@@ -12,13 +12,13 @@
     
     <import resource="classpath:scenarios/remoting/common/*.xml"/>
     
-    <bean id="abstractHessianServiceExporter" abstract="true">
+    <bean id="abstractHttpInvokerServiceExporter" abstract="true">
     	<property name="remoteProtocol">
-            <ref bean="hessianProtocol" />
-        </property>
+            <ref bean="httpInvokerProtocol" />
+        </property>    	
     </bean>
     
-    <bean id="hessianRefdbServiceExporter" parent="abstractHessianServiceExporter"
+    <bean id="httpInvokerRefdbServiceExporter" parent="abstractHttpInvokerServiceExporter"
     	class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
     	<property name="serviceInterface">
             <value>ch.elca.el4j.apps.refdb.service.ReferenceService</value>
@@ -28,7 +28,7 @@
         </property>	
    	</bean>
     
-    <bean id="hessianKeywordDaoExporter" parent="abstractHessianServiceExporter"
+    <bean id="httpInvokerKeywordDaoExporter" parent="abstractHttpInvokerServiceExporter"
     	class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
     	<property name="serviceInterface">
             <value>ch.elca.el4j.apps.keyword.dao.KeywordDao</value>
@@ -38,7 +38,7 @@
         </property>	
     </bean>
     
-    <bean id="hessianLinkDaoExporter" parent="abstractHessianServiceExporter"
+    <bean id="httpInvokerLinkDaoExporter" parent="abstractHttpInvokerServiceExporter"
     	class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
     	<property name="serviceInterface">
             <value>ch.elca.el4j.apps.refdb.dao.LinkDao</value>
@@ -48,7 +48,7 @@
         </property>	
     </bean>
     
-    <bean id="hessianFormalPublicationDaoExporter" parent="abstractHessianServiceExporter"
+    <bean id="httpInvokerFormalPublicationDaoExporter" parent="abstractHttpInvokerServiceExporter"
     	class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
     	<property name="serviceInterface">
             <value>ch.elca.el4j.apps.refdb.dao.FormalPublicationDao</value>
@@ -58,7 +58,7 @@
         </property>	
     </bean>
     
-    <bean id="hessianBookDaoExporter" parent="abstractHessianServiceExporter"
+    <bean id="httpInvokerBookDaoExporter" parent="abstractHttpInvokerServiceExporter"
     	class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
     	<property name="serviceInterface">
             <value>ch.elca.el4j.apps.refdb.dao.BookDao</value>
@@ -68,7 +68,7 @@
         </property>	
     </bean>
     
-    <bean id="hessianAnnotationDaoExporter" parent="abstractHessianServiceExporter"
+    <bean id="httpInvokerAnnotationDaoExporter" parent="abstractHttpInvokerServiceExporter"
     	class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
     	<property name="serviceInterface">
             <value>ch.elca.el4j.apps.refdb.dao.AnnotationDao</value>
@@ -78,7 +78,7 @@
         </property>	
     </bean>
     
-    <bean id="hessianFileDaoExporter" parent="abstractHessianServiceExporter"
+    <bean id="httpInvokerFileDaoExporter" parent="abstractHttpInvokerServiceExporter"
     	class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
     	<property name="serviceInterface">
             <value>ch.elca.el4j.apps.refdb.dao.FileDao</value>
@@ -88,7 +88,7 @@
         </property>	
     </bean>
     
-    <bean id="hessianFileDescriptorViewDaoExporter" parent="abstractHessianServiceExporter"
+    <bean id="httpInvokerFileDescriptorViewDaoExporter" parent="abstractHttpInvokerServiceExporter"
     	class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
     	<property name="serviceInterface">
             <value>ch.elca.el4j.apps.refdb.dao.FileDescriptorViewDao</value>

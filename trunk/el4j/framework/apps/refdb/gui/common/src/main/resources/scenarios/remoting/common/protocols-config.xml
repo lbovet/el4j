@@ -7,7 +7,14 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
     
-    <bean id="hessianProtocol" class="ch.elca.el4j.services.remoting.protocol.Hessian">
+    <!--
+       If Hibernate is used as ORM framework, it is not recommended to use the 
+       Hessian protocol, since there are known problems with the serialization
+       of Hibernate objects in combination with lazily initializing collections 
+       with this protocol. In this case, RMI or HTTP invokers should be used 
+       instead of Hessian.
+    -->
+	<bean id="httpInvokerProtocol" class="ch.elca.el4j.services.remoting.protocol.HttpInvoker">
         <property name="serviceHost">
             <value>${jee-web.host}</value>
         </property>
@@ -17,5 +24,6 @@
         <property name="contextPath">
             <value>refdb-gui-server</value>
         </property>
-    </bean>
+    </bean>    
+    
 </beans>
