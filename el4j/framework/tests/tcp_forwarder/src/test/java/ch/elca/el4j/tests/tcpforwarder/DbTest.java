@@ -79,11 +79,6 @@ public class DbTest extends TestCase {
         = LogFactory.getLog(DbTest.class);
     
     /**
-     * Help variable to test if an exception occured.
-     */
-    int m_gotException = 0;
-    
-    /**
      * This test uses a tcp forwarder to connect to a databse and verifies that
      * this connection has been established, then cuts the connection to the
      * database and verifies that there is no connectivity to the database any
