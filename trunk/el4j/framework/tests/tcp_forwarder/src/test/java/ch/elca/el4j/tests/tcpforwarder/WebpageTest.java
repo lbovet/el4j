@@ -147,6 +147,9 @@ public class WebpageTest extends WebTestCase {
         }
 
         assertLinkPresentWithText("Newsletter");
+        
+        // Unplugging again
+        ti.unplug();
         s_logger.debug("TEST OK");
     }
 }

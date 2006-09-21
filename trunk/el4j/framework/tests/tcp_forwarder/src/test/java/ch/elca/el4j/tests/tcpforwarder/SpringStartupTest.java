@@ -28,7 +28,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 
 import ch.elca.el4j.apps.keyword.dao.KeywordDao;
 import ch.elca.el4j.apps.keyword.dom.Keyword;
-import ch.elca.el4j.apps.keyword.service.KeywordService;
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.tcpforwarder.TcpForwarder;
 import ch.elca.el4j.util.env.EnvPropertiesUtils;
@@ -49,8 +48,6 @@ import junit.framework.TestCase;
  * @author Alex Mathey (AMA)
  */
 public class SpringStartupTest extends TestCase {
-    
-    
     
     /**
      * Delay between the single test steps (in milliseconds).
@@ -113,10 +110,7 @@ public class SpringStartupTest extends TestCase {
      * @return Returns the string array with exclude locations.
      */
     protected String[] getExcludeConfigLocations() {
-        return new String[] { 
-            "classpath*:scenarios/dataaccess/hibernate/keyword-core-repository-"
-                + "hibernate-config.xml"
-        };
+        return new String[] {};
     }
 
     /**
@@ -124,11 +118,11 @@ public class SpringStartupTest extends TestCase {
      */
     protected String[] getIncludeConfigLocations() {
         return new String[] {
-            "classpath:optional/interception/methodTracing.xml",
             "classpath*:mandatory/*.xml",
+            "classpath*:mandatory/keyword/*.xml",
             "classpath*:scenarios/db/raw/*.xml",
             "classpath*:scenarios/dataaccess/ibatis/*.xml",
-            //"classpath*:scenarios/dataaccess/hibernate/*.xml",
+            "classpath*:scenarios/dataaccess/ibatis/keyword/*.xml",
             "classpath*:optional/interception/transactionJava5Annotations.xml"};
     }
     
@@ -164,7 +158,6 @@ public class SpringStartupTest extends TestCase {
                 .getBean("keywordDao");
             s_logger.debug(dao.getClass().getName());
         } catch (Exception e) {
-            e.printStackTrace();
             fail("Spring failed to start up...");
         }
         
@@ -188,9 +181,13 @@ public class SpringStartupTest extends TestCase {
         try {
             dao.saveOrUpdate(newKeyword2);
         } catch (DataIntegrityViolationException e) {
-            s_logger.debug("Expected exception catched.", e);
+            s_logger.debug("Expected exception catched.");
         } catch (Exception e) {
             fail("Exception translation has not been performed correctly.");
         }
+        
+        // Unplugging again
+        ti.unplug();
+        s_logger.debug("TEST OK");
     }
 }
