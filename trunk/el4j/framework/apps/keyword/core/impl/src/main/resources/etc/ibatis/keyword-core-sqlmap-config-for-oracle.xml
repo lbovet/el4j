@@ -9,6 +9,6 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
 
-    <sqlMap resource="ibatis/common/table-keyword.xml" />
-    <sqlMap resource="ibatis/db2/table-keyword.xml" />
+    <sqlMap resource="etc/ibatis/common/table-keyword.xml" />
+    <sqlMap resource="etc/ibatis/oracle/table-keyword.xml" />
 </sqlMapConfig>
