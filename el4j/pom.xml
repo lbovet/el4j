@@ -349,7 +349,12 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-install-plugin</artifactId>
-                    <version>2.1</version>
+                    <!--
+                        Due to bugs fix built snapshot version is used.
+                           * maven-install-plugin (revision 448538 + patch http://jira.codehaus.org/browse/MINSTALL-34)
+                           * archiva (revision 439992)
+                    -->
+                    <version>2.2-20060922.131747-1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
