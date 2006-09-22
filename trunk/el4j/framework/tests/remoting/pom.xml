@@ -25,6 +25,7 @@
     <modules>
         <module>web</module>
         <module>functional-tests</module>
+        <module>apps</module>
     </modules>
     <dependencyManagement>
         <dependencies>
