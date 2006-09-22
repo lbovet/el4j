@@ -117,6 +117,15 @@ public class AggregateFilesMojo extends AbstractMojo {
     protected boolean visitChildProjects;
     
     /**
+     * Flag to indicate if only files should be copied.
+     * 
+     * @parameter expression="${aggregate.copyFilesOnly}"
+     *            default-value="false"
+     * @required
+     */
+    protected boolean copyFilesOnly;
+    
+    /**
      * The Maven project.
      *
      * @parameter expression="${project}"
@@ -330,8 +339,19 @@ public class AggregateFilesMojo extends AbstractMojo {
      */
     protected File copyFile(File sourceFile, String relativeFilePath)
         throws MojoExecutionException, FileException {
+        
+        // If only file copying is allowed skip copying of dirs.
+        if (copyFilesOnly && sourceFile.isDirectory()) {
+            getLog().info("Given source '" + sourceFile.getPath() 
+                + "' is a directory. Will skip copying it.");
+            return null;
+        }
+        
+        // Find out location of target file.
         File targetFile 
             = new File(targetDirectory, relativeFilePath);
+        
+        // If overwriting is not allowed and file exists throw an exception.
         if (!allowOverwrite && targetFile.exists()) {
             throw new MojoExecutionException(
                 "Overwrite not allowed! Target file '" 
