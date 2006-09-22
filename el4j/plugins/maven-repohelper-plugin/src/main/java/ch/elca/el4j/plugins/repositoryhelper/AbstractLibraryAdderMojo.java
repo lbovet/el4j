@@ -241,6 +241,8 @@ public abstract class AbstractLibraryAdderMojo extends AbstractMojo {
         cmd.clearArgs();
         modifyCommandLine(dependency, cmd);
         
+        getLog().info("Executing following command: '" + cmd.toString() + "'");
+        
         /**
          * Execute commandline.
          */
