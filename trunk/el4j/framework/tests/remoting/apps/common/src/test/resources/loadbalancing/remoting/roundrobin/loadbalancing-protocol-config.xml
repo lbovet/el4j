@@ -61,7 +61,7 @@
             <value>localhost</value>
         </property>
         <property name="servicePort">
-            <value>8097</value>
+            <value>8092</value>
         </property>
         <property name="implicitContextPassingRegistry">
             <ref local="implicitContextPassingRegistry" />
