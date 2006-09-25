@@ -112,6 +112,24 @@
     </reporting>
     <profiles>
         <profile>
+            <id>test.quiet</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <testFailureIgnore>true</testFailureIgnore>
+                            <reportsDirectory>${surefire.reports.directory}</reportsDirectory>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <properties>
+                <surefire.reports.directory>${project.build.directory}/surefire-reports</surefire.reports.directory>
+            </properties>
+        </profile>
+        <profile>
             <id>generate.doc.set.framework-modules</id>
             <build>
                 <plugins>
@@ -177,7 +195,7 @@
                         <artifactId>maven-file-collector-plugin</artifactId>
                         <configuration>
                             <rootSourceDirectory>${basedir}/apps</rootSourceDirectory>
-                            <sourceDirectoryIncludePatterns>**/src/main/java,**/src/test/java</sourceDirectoryIncludePatterns>
+                            <sourceDirectoryIncludePatterns>**/src/main/java</sourceDirectoryIncludePatterns>
                             <sourceDirectoryExcludePatterns>**/gui-tiger/**</sourceDirectoryExcludePatterns>
                             <sourceFileIncludePatterns>**/*.java,**/*.html</sourceFileIncludePatterns>
                             <targetDirectory>${aggregated.files.output.directory}</targetDirectory>
@@ -242,7 +260,7 @@
                         <artifactId>maven-file-collector-plugin</artifactId>
                         <configuration>
                             <rootSourceDirectory>${basedir}</rootSourceDirectory>
-                            <sourceDirectoryIncludePatterns>modules/**/src/test/java,tests/**/src/main/java,tests/**/src/test/java</sourceDirectoryIncludePatterns>
+                            <sourceDirectoryIncludePatterns>modules/**/src/test/java,apps/**/src/test/java,tests/**/src/main/java,tests/**/src/test/java</sourceDirectoryIncludePatterns>
                             <sourceFileIncludePatterns>**/*.java,**/*.html</sourceFileIncludePatterns>
                             <targetDirectory>${aggregated.files.output.directory}</targetDirectory>
                             <allowOverwrite>false</allowOverwrite>
