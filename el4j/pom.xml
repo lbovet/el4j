@@ -499,7 +499,8 @@
                                + patch http://jira.codehaus.org/browse/MSUREFIREREP-28
                                + patch http://jira.codehaus.org/browse/MSUREFIREREP-29
                                + patch http://jira.codehaus.org/browse/MSUREFIREREP-30
-                               + patch http://jira.codehaus.org/browse/MSUREFIREREP-31)
+                               + patch http://jira.codehaus.org/browse/MSUREFIREREP-31
+                               + patch http://jira.codehaus.org/browse/MSUREFIREREP-32)
                     -->
                     <version>${version.maven-surefire-report-plugin}</version>
                 </plugin>
@@ -1511,7 +1512,7 @@
         <!-- Maven plugin versions. Needed due to false dep mgt. -->
         <version.maven-project-info-reports-plugin>2.0.1</version.maven-project-info-reports-plugin>
         <version.maven-checkstyle-plugin>2.1</version.maven-checkstyle-plugin>
-        <version.maven-surefire-report-plugin>2.1-20060914.104220-2</version.maven-surefire-report-plugin>
+        <version.maven-surefire-report-plugin>2.1-20060925.113400-3</version.maven-surefire-report-plugin>
         <version.maven-javadoc-plugin>2.1-20060907.065424-2</version.maven-javadoc-plugin>
         <version.maven-jxr-plugin>2.1-20060911.142523-1</version.maven-jxr-plugin>
     </properties>
