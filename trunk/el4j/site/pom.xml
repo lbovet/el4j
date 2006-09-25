@@ -23,15 +23,14 @@
         Website of the EL4J project.
     </description>
 
-    <!-- TODO: Collect site stuff. -->
-
     <build>
-        <plugins><!--
+        <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
                 <executions>
                     <execution>
+                        <!-- Clean target dir of site artifact. -->
                         <id>clean-site-target</id>
                         <phase>pre-site</phase>
                         <goals>
@@ -49,6 +48,39 @@
                 </configuration>
                 <executions>
                     <execution>
+                        <!-- Execute tests with Tomcat and Derby. -->
+                        <id>execute.tests.tomcat5-derby10</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>
+                                <argument>-Ptest.quiet,tomcat5x,db2</argument>
+                                <argument>-Dsurefire.reports.directory=${project.build.directory}/${surefire-report.name.tomcat5-derby10}</argument>
+                                <argument>clean</argument>
+                                <argument>install</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <!-- Execute tests with Weblogic and Oracle. -->
+                        <id>execute.tests.weblogic9-oracle9</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>
+                                <argument>-Ptest.quiet,weblogic9x,oracle</argument>
+                                <argument>-Dsurefire.reports.directory=${project.build.directory}/${surefire-report.name.weblogic9-oracle9}</argument>
+                                <argument>clean</argument>
+                                <argument>install</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <!-- Clean target dir of framework artifact. -->
                         <id>clean.generated.doc</id>
                         <phase>pre-site</phase>
                         <goals>
@@ -62,6 +94,7 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <!-- Generate doc for set framework-modules. -->
                         <id>generate.doc.set.framework-modules</id>
                         <phase>pre-site</phase>
                         <goals>
@@ -77,6 +110,7 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <!-- Generate doc for set framework-applications. -->
                         <id>generate.doc.set.framework-applications</id>
                         <phase>pre-site</phase>
                         <goals>
@@ -92,6 +126,7 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <!-- Generate doc for set framework-tests. -->
                         <id>generate.doc.set.framework-tests</id>
                         <phase>pre-site</phase>
                         <goals>
@@ -107,6 +142,7 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <!-- Generate doc for set framework-demos. -->
                         <id>generate.doc.set.framework-demos</id>
                         <phase>pre-site</phase>
                         <goals>
@@ -128,6 +164,7 @@
                 <artifactId>maven-file-collector-plugin</artifactId>
                 <executions>
                     <execution>
+                        <!-- Collect generated doc from target dir of framework artifact. -->
                         <id>collect-set-docs</id>
                         <phase>pre-site</phase>
                         <goals>
@@ -140,22 +177,8 @@
                             <allowOverwrite>false</allowOverwrite>
                         </configuration>
                     </execution>
-                    <execution>
-                        <id>collect-test-reports</id>
-                        <phase>pre-site</phase>
-                        <goals>
-                            <goal>aggregate-files</goal>
-                        </goals>
-                        <configuration>
-                            <rootSourceDirectory>${basedir}/../framework</rootSourceDirectory>
-                            <sourceDirectoryIncludePatterns>modules/**/target/surefire-reports,tests/**/target/surefire-reports</sourceDirectoryIncludePatterns>
-                            <sourceFileIncludePatterns>*.xml</sourceFileIncludePatterns>
-                            <targetDirectory>${basedir}/target/surefire-reports</targetDirectory>
-                            <allowOverwrite>false</allowOverwrite>
-                        </configuration>
-                    </execution>
                 </executions>
-            </plugin>-->
+            </plugin>
         </plugins>
     </build>
     <reporting>
@@ -182,20 +205,50 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <configuration>
-                    <linkXRef>true</linkXRef>
-                    <xrefLocation>target/site/framework-tests/xref</xrefLocation>
-                    <outputName>${surefire-report.name.tomcat5-derby10}</outputName>
-                    <windowTitle>${surefire-report.title.tomcat5-derby10}</windowTitle>
-                    <docTitle>${surefire-report.title.tomcat5-derby10}</docTitle>
-                    <docDescription>${surefire-report.description.tomcat5-derby10}</docDescription>
-                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <id>surefire-report.tomcat5-derby10</id>
+                        <reports>
+                            <report>report</report>
+                        </reports>
+                        <configuration>
+                            <reportsDirectory>${project.build.directory}/${surefire-report.name.tomcat5-derby10}</reportsDirectory>
+                            <linkXRef>true</linkXRef>
+                            <xrefLocation>${set.framework-tests.xref.location}</xrefLocation>
+                            <outputName>${surefire-report.name.tomcat5-derby10}</outputName>
+                            <windowTitle>${surefire-report.title.tomcat5-derby10}</windowTitle>
+                            <docTitle>${surefire-report.title.tomcat5-derby10}</docTitle>
+                            <docDescription>${surefire-report.description.tomcat5-derby10}</docDescription>
+                        </configuration>
+                    </reportSet>
+                    <reportSet>
+                        <id>surefire-report.weblogic9-oracle9</id>
+                        <reports>
+                            <report>report</report>
+                        </reports>
+                        <configuration>
+                            <reportsDirectory>${project.build.directory}/${surefire-report.name.weblogic9-oracle9}</reportsDirectory>
+                            <linkXRef>true</linkXRef>
+                            <xrefLocation>${set.framework-tests.xref.location}</xrefLocation>
+                            <outputName>${surefire-report.name.weblogic9-oracle9}</outputName>
+                            <windowTitle>${surefire-report.title.weblogic9-oracle9}</windowTitle>
+                            <docTitle>${surefire-report.title.weblogic9-oracle9}</docTitle>
+                            <docDescription>${surefire-report.description.weblogic9-oracle9}</docDescription>
+                        </configuration>
+                    </reportSet>
+                </reportSets>
             </plugin>
         </plugins>
     </reporting>
     <properties>
+        <set.framework-tests.xref.location>target/site/framework-tests/xref</set.framework-tests.xref.location>
+    
         <surefire-report.name.tomcat5-derby10>surefire-report-tomcat5-derby10</surefire-report.name.tomcat5-derby10>
         <surefire-report.title.tomcat5-derby10>Surefire Test Report - Tomcat 5 and Derby 10</surefire-report.title.tomcat5-derby10>
         <surefire-report.description.tomcat5-derby10>The following document contains the summarized test results of test profile with Tomcat 5 as webserver and Derby 10 as database.</surefire-report.description.tomcat5-derby10>
+
+        <surefire-report.name.weblogic9-oracle9>surefire-report-weblogic9-oracle9</surefire-report.name.weblogic9-oracle9>
+        <surefire-report.title.weblogic9-oracle9>Surefire Test Report - Weblogic 9 and Oracle 9</surefire-report.title.weblogic9-oracle9>
+        <surefire-report.description.weblogic9-oracle9>The following document contains the summarized test results of test profile with Weblogic 9 as webserver and Oracle 9 as database.</surefire-report.description.weblogic9-oracle9>
     </properties>
 </project>
