@@ -282,3 +282,21 @@ dd {
 .infomark {
     background-image: url(../images/icon_info_sml.gif);
 }
+
+
+span.error {
+    color: #CC3300;
+    font-weight: bold;
+}
+span.failure {
+    color: #CC3300;
+    font-weight: bold;
+}
+span.skipped {
+    color: #FF9900;
+    font-weight: bold;
+}
+span.success {
+    color: #669900;
+    font-weight: bold;
+}
