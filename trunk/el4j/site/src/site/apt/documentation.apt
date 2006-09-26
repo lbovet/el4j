@@ -21,12 +21,6 @@ Documentation
     * EL4J Annotation Cheat Sheets {{{docs/pdf/ejb3.0-persistence-anno-cheat_v1_0.pdf} Standard }} 
        {{{docs/pdf/el4j-anno-cheat_v1_0.pdf} EL4J-Additions }}  
       
-    * (Legacy) {{{docs/pdf/EL4AntQuickReferenceSheet_v1_0.pdf}
-       Quick Reference Sheet for the old build system (EL4Ant) (PDF)}}
-
-    * (Legacy) Full documentation of the old build system (EL4Ant -
-      {{{http://el4ant.sf.net/documentation.html}link to EL4Ant}})
-
 * Presentations/ Marketing/ Blogs
 
     * {{{docs/pdf/progressiveEl4JDatasheet_v0_8.pdf}
