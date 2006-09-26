@@ -33,6 +33,9 @@
         EL4J, the Extension Library for the J2EE, adds incremental improvements
         to the Spring Java framework (http://www.springframework.org/).
     </description>
+    <prerequisites>
+        <maven>${el4j.maven.version}</maven>
+    </prerequisites>
     <issueManagement>
         <system>Sourceforge</system>
         <url>http://sourceforge.net/tracker/?group_id=147215&amp;atid=779814</url>
@@ -242,6 +245,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-antrun-plugin</artifactId>
                     <version>1.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-plugin-plugin</artifactId>
+                    <version>${version.maven-plugin-plugin}</version>
                 </plugin>
 
 
@@ -1515,5 +1523,9 @@
         <version.maven-surefire-report-plugin>2.1-20060925.113400-3</version.maven-surefire-report-plugin>
         <version.maven-javadoc-plugin>2.1-20060907.065424-2</version.maven-javadoc-plugin>
         <version.maven-jxr-plugin>2.1-20060911.142523-1</version.maven-jxr-plugin>
+        <version.maven-plugin-plugin>2.2-20060925.131529-1</version.maven-plugin-plugin>
+        
+        <!-- Used Maven version -->
+        <el4j.maven.version>2.1-20060906.100315-1</el4j.maven.version>
     </properties>
 </project>
