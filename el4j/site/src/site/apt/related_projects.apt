@@ -7,9 +7,6 @@
 
 Related Projects
 
-  * {{{http://el4ant.sourceforge.net}<<EL4Ant>>}} - 
-    A light build system based on Ant with transitive dependencies and plugins. 
-
   * {{{http://el4net.sourceforge.net}<<EL4NET>>}} - 
     The Extension Library for the .NET framework.
 
