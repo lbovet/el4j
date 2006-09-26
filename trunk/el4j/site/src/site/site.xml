@@ -33,6 +33,7 @@
             <item name="Tests" href="test-reports.html" />
         </menu>
         <menu name="More about EL4J">
+            <item name="Project Team" href="team-list.html" />
             <item name="Reference Projects" href="reference_projects.html" />
             <item name="Related Projects" href="related_projects.html" />
             <item name="Sponsor" href="sponsor.html" />
