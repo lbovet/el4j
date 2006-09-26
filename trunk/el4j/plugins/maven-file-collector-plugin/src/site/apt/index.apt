@@ -34,5 +34,6 @@ File collector plugin
     </plugin
 +----------------
 
+  []
   
   For detailed usage {{{plugin-info.html}see the plugin info page}}.
