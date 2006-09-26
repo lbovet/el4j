@@ -54,7 +54,7 @@ Documentation
 * Generated framework documentation
 
 *----------------------------+-------------------*----------------*
-| <<Documentation sets>>     | <<Javadoc>>       | <<Xref>>
+| <<Documentation set>>      | <<Javadoc>>       | <<Xref>>
 *----------------------------+-------------------*----------------*
 | Framework modules          | {{{framework-modules/apidocs/index.html}Javadoc}} | {{{framework-modules/xref/index.html}Xref}}
 *----------------------------+-------------------*----------------*  
