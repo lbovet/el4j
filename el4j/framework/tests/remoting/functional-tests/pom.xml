@@ -40,7 +40,7 @@
     </dependencies>
     <profiles>
         <profile>
-            <id>manuel</id>
+            <id>manual</id>
         </profile>
         <profile>
             <id>auto</id>
