@@ -23,6 +23,7 @@
             <item name="General" href="documentation.html" />
             <item name="API" href="framework-modules/apidocs/index.html" />
             <item name="FAQ" href="faq.html" />
+            <item name="Plugins" href="plugins/index.html" />
         </menu>
         <menu name="Support">
             <item name="General" href="support.html" />
