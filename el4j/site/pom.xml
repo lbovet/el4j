@@ -48,6 +48,22 @@
                 </configuration>
                 <executions>
                     <execution>
+                        <!-- Install EL4J's root pom. -->
+                        <id>install.root-pom</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>..</workingDirectory>
+                            <arguments>
+                                <argument>-N</argument>
+                                <argument>clean</argument>
+                                <argument>install</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <!-- Execute tests with Tomcat and Derby. -->
                         <id>execute.tests.tomcat5-derby10</id>
                         <phase>pre-site</phase>
@@ -157,6 +173,22 @@
                             </arguments>
                         </configuration>
                     </execution>
+                    <execution>
+                        <!-- Generate doc for set framework-demos. -->
+                        <id>generate.plugin.sites</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>../plugins</workingDirectory>
+                            <arguments>
+                                <argument>clean</argument>
+                                <argument>install</argument>
+                                <argument>site</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -174,6 +206,81 @@
                             <rootSourceDirectory>${basedir}/../framework/target/site</rootSourceDirectory>
                             <sourceFileIncludePatterns>framework-*</sourceFileIncludePatterns>
                             <targetDirectory>${basedir}/target/site</targetDirectory>
+                            <allowOverwrite>false</allowOverwrite>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <!-- Collect site of maven-checkclipse-helper-plugin. -->
+                        <id>collect.site.maven-checkclipse-helper-plugin</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>aggregate-files</goal>
+                        </goals>
+                        <configuration>
+                            <rootSourceDirectory>${basedir}/../plugins/maven-checkclipse-helper-plugin/target/site</rootSourceDirectory>
+                            <sourceFileIncludePatterns>**/*</sourceFileIncludePatterns>
+                            <targetDirectory>${basedir}/target/site/plugins/maven-checkclipse-helper-plugin</targetDirectory>
+                            <copyFilesOnly>true</copyFilesOnly>
+                            <allowOverwrite>false</allowOverwrite>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <!-- Collect site of maven-env-support-plugin. -->
+                        <id>collect.site.maven-env-support-plugin</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>aggregate-files</goal>
+                        </goals>
+                        <configuration>
+                            <rootSourceDirectory>${basedir}/../plugins/maven-env-support-plugin/target/site</rootSourceDirectory>
+                            <sourceFileIncludePatterns>**/*</sourceFileIncludePatterns>
+                            <targetDirectory>${basedir}/target/site/plugins/maven-env-support-plugin</targetDirectory>
+                            <copyFilesOnly>true</copyFilesOnly>
+                            <allowOverwrite>false</allowOverwrite>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <!-- Collect site of maven-file-collector-plugin. -->
+                        <id>collect.site.maven-file-collector-plugin</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>aggregate-files</goal>
+                        </goals>
+                        <configuration>
+                            <rootSourceDirectory>${basedir}/../plugins/maven-file-collector-plugin/target/site</rootSourceDirectory>
+                            <sourceFileIncludePatterns>**/*</sourceFileIncludePatterns>
+                            <targetDirectory>${basedir}/target/site/plugins/maven-file-collector-plugin</targetDirectory>
+                            <copyFilesOnly>true</copyFilesOnly>
+                            <allowOverwrite>false</allowOverwrite>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <!-- Collect site of maven-manifest-decorator-plugin. -->
+                        <id>collect.site.maven-manifest-decorator-plugin</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>aggregate-files</goal>
+                        </goals>
+                        <configuration>
+                            <rootSourceDirectory>${basedir}/../plugins/maven-manifest-decorator-plugin/target/site</rootSourceDirectory>
+                            <sourceFileIncludePatterns>**/*</sourceFileIncludePatterns>
+                            <targetDirectory>${basedir}/target/site/plugins/maven-manifest-decorator-plugin</targetDirectory>
+                            <copyFilesOnly>true</copyFilesOnly>
+                            <allowOverwrite>false</allowOverwrite>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <!-- Collect site of maven-repohelper-plugin. -->
+                        <id>collect.site.maven-repohelper-plugin</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>aggregate-files</goal>
+                        </goals>
+                        <configuration>
+                            <rootSourceDirectory>${basedir}/../plugins/maven-repohelper-plugin/target/site</rootSourceDirectory>
+                            <sourceFileIncludePatterns>**/*</sourceFileIncludePatterns>
+                            <targetDirectory>${basedir}/target/site/plugins/maven-repohelper-plugin</targetDirectory>
+                            <copyFilesOnly>true</copyFilesOnly>
                             <allowOverwrite>false</allowOverwrite>
                         </configuration>
                     </execution>
