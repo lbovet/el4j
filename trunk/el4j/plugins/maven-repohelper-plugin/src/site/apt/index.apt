@@ -1,0 +1,51 @@
+ -----
+ Repository helper plugin
+ -----
+ -----
+ 26 Sep 2006
+ -----
+
+Repository helper plugin
+
+  The Repository helper plugin can be used to install (local repository) or
+  deploy (install plus deploying on a remote repository) multiple jars and its 
+  source zip at one time. Just name files like the following:
+  
+    * <<name>>-<<version>>.jar
+    
+      * The name will be the <<<artifactId>>>.
+      
+      * The version must begin with a digit.
+      
+      * The name and the version must be separated with a dash.
+      
+      * The file name must end with <<<.jar>>>
+      
+    * <<name>>-<<version>>-src.zip
+    
+      * Like the jar file but with other ending <<<-src.zip>>>
+
+  Create a directory (i.e. <<<libraries>>>) where you create sub-directories and
+  where-in you put your files. The sub-directory path where the files are will be 
+  taken as <<<groupId>>> (slashes will be replaced with dots - leading and 
+  trailing dots will be truncated).
+  
+  Here the view of a file explorer:
+  
++------------
+    SOME_DIR
+      + libraries
+        + org
+          + springframework
+            - spring-2.0.jar
+            - spring-2.0-src.zip
++------------
+
+  In repository this artifacts will be available with
+  <<<groupId=org.springframework>>>, <<<artifactId=spring>> and <<<version=2.0>>>.
+  One will have no <<<classifier>>> (default) and the other artifact will have 
+  <<<classifier=sources>>>. FYI, the <maven-eclipse-plugin> tries to download
+  artifact with <<<classifier=sources>>> for each dependency of an Eclipse
+  project.
+  
+  For detailed usage {{{plugin-info.html}see the plugin info page}}.
