@@ -30,6 +30,11 @@ import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
  * );</script>
  *
  * @author Martin Zeltner (MZE)
+ * @deprecated Use Java 5 annotation 
+ *             {@link org.springframework.transaction.annotation.Transactional}
+ *             instead.
+ * @see <a href="http://static.springframework.org/spring/docs/2.0.x/reference/transaction.html#transaction-declarative-annotations">
+ *      Using @Transactional</a> (Spring reference doc).
  */
 public class RequiresNew extends DefaultTransactionAttribute {
 

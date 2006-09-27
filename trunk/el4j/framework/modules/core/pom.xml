@@ -74,6 +74,7 @@
             <artifactId>commons-collections</artifactId>
         </dependency>
         <dependency>
+            <!-- DEPRECATED: Use Java 5 annotations instead. -->
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-attributes-api</artifactId>
         </dependency>
