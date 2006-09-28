@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -213,6 +214,12 @@ public abstract class AbstractKeywordDaoTest
         } catch (DataRetrievalFailureException e) {
             s_logger.debug("Expected exception catched.", e);
         }
+        try {
+            dao.delete(keyword2);
+            fail("Delete should throw an exception!");
+        } catch (OptimisticLockingFailureException e) {
+            s_logger.debug("Expected exception catched.", e);
+        }
     }
     
     /**
@@ -230,6 +237,12 @@ public abstract class AbstractKeywordDaoTest
             dao.findById(keyword2.getKey());
             fail("The removed keyword is still in the DB.");
         } catch (DataRetrievalFailureException e) {
+            s_logger.debug("Expected exception catched.", e);
+        }
+        try {
+            dao.delete(keyword2.getKey());
+            fail("Delete should throw an exception!");
+        } catch (OptimisticLockingFailureException e) {
             s_logger.debug("Expected exception catched.", e);
         }
     }
