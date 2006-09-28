@@ -149,14 +149,6 @@ public class GenericHibernateDao<T, ID extends Serializable>
     /**
      * {@inheritDoc}
      */
-    /*@SuppressWarnings("unchecked")
-    public List<T> findByExample(T exampleInstance) throws DataAccessException {
-        return getConvenienceHibernateTemplate().findByExample(exampleInstance);
-    }*/
-
-    /**
-     * {@inheritDoc}
-     */
     @SuppressWarnings("unchecked")
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<T> findByQuery(QueryObject q) throws DataAccessException {
