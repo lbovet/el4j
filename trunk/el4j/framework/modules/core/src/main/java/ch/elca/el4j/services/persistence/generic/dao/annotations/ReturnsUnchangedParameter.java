@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
  * to 0, i.e. the first parameter.
  * <p>
  * More precisely, this annotation states that the method's return value is 
- * <i>transitively logically identical</i> to the value passed. 
+ * <i>logically and transitively identical</i> to the value passed. 
  * <i>Logically identical</i> means that the
  * returned object has the same logical identity, <i>transitive</i> means that
  * this must hold for all references reachable through it as

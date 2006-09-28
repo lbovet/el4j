@@ -30,11 +30,14 @@ import ch.elca.el4j.services.search.QueryObject;
 
 /**
  *
- * This interface serves as generic access to storage DAOs. It is the
- * interface for the DDD-Book's Repository pattern. The repository pattern is
- * similar to the DAO pattern, but a bit more generic. This interface can be
- * implemented in a generic way and can be extended in case a user needs more
- * specific methods. Based on an idea from the Hibernate website.
+ * This interface serves as generic access to DAOs. It is the interface for 
+ * the DDD-Book's (http://www.domaindrivendesign.org/) Repository pattern. 
+ * This interface is implemented generically and it can be extended in case 
+ * you need more specific methods. Based on an idea from the Hibernate website.
+ *
+ * This is the canonical form of this interface. We recommend it when a generic
+ * DAO is used in tools (to make the contract minimal). For direct programmer-usage
+ * we recommend to use the convenience subclasses. 
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -53,6 +56,8 @@ import ch.elca.el4j.services.search.QueryObject;
  */
 public interface GenericDao<T> {
     /**
+     *  Needed because the Java generics throw away this type
+     *  information.
      * @return Returns the domain class this DAO is responsible for.
      */
     public Class<T> getPersistentClass();    
@@ -60,9 +65,8 @@ public interface GenericDao<T> {
     /**
      * Executes a query based on a given query object.
      * 
-     * @param q
-     *            The search query object
-     * @throws DataAccessException
+     * @param q The search query object
+     * @throws  DataAccessException
      *             If general data access problem occurred
      * @return A list containing 0 or more domain objects
      */
@@ -81,7 +85,7 @@ public interface GenericDao<T> {
     
     /**
      * Re-reads the state of the given domain object from the underlying
-     * database.
+     * store.
      * 
      * @param entity
      *            The domain object to re-read the state of
@@ -117,7 +121,7 @@ public interface GenericDao<T> {
 
     /**
      * Deletes the given domain objects. This method executed in a single
-     * transaction.
+     * transaction (by default with the Required semantics).
      * 
      * @param entities
      *             The domain objects to delete.
