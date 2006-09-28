@@ -148,8 +148,8 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
         } catch (HibernateOptimisticLockingFailureException holfe) {
             String message = "The current " + objectName + " was modified or"
                 + " deleted in the meantime.";
-            CoreNotificationHelper
-                .notifyOptimisticLockingFailure(message, objectName);
+            CoreNotificationHelper.notifyOptimisticLockingFailure(
+                message, objectName);
         }
     }
     
@@ -173,7 +173,15 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
         final String objectName) throws DataRetrievalFailureException {
         Reject.ifEmpty(objectName, "The name of the persistent object type "
             + "must not be empty.");
-        Object toDelete = getByIdStrong(entityClass, id, objectName);
+        Object toDelete = null;
+        try {
+            toDelete = getByIdStrong(entityClass, id, objectName);
+        } catch (DataRetrievalFailureException e) {
+            String message = "The current " + objectName + " was "
+                + "deleted in the meantime.";
+            CoreNotificationHelper.notifyOptimisticLockingFailure(
+                message, objectName);
+        }
         delete(toDelete);
     }
 }
