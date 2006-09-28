@@ -19,8 +19,9 @@ package ch.elca.el4j.apps.keyword.service;
 import java.util.Collection;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.dao.OptimisticLockingFailureException;
+
+import ch.elca.el4j.core.transaction.annotations.RollbackConstraint;
 
 /**
  * This interface provides the business methods which can be used in the
@@ -45,12 +46,12 @@ public interface KeywordService {
      *            Are the primary keys of the keywords that should be deleted.
      * @throws DataAccessException
      *             If general data access problem occurred.
-     * @throws JdbcUpdateAffectedIncorrectNumberOfRowsException
+     * @throws OptimisticLockingFailureException
      *             If a keyword could not be deleted.
      */
-    @Transactional(rollbackFor = {DataAccessException.class,
-            RuntimeException.class, Error.class })
+    @RollbackConstraint(rollbackFor = {
+            OptimisticLockingFailureException.class, 
+            DataAccessException.class })
     public void removeKeywords(Collection<?> keys) 
-        throws DataAccessException,
-        JdbcUpdateAffectedIncorrectNumberOfRowsException;
+        throws OptimisticLockingFailureException, DataAccessException;
 }
