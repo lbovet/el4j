@@ -55,7 +55,7 @@ public class DbTest extends TestCase {
      * New input port -> Forwarder between INPUT_PORT and target port resp.
      * target server.
      */
-    static final int INPUT_PORT = 6789;
+    static final int INPUT_PORT = 6786;
     
     /**
      * Port of the Derby database.
