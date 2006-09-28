@@ -21,7 +21,7 @@ import java.util.Iterator;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -94,8 +94,8 @@ public class DefaultKeywordService
      * {@inheritDoc}
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void removeKeywords(Collection<?> keys) throws DataAccessException, 
-        JdbcUpdateAffectedIncorrectNumberOfRowsException {
+    public void removeKeywords(Collection<?> keys)
+        throws OptimisticLockingFailureException, DataAccessException {
         if (keys != null) {
             Iterator it = keys.iterator();
             while (it.hasNext()) {
