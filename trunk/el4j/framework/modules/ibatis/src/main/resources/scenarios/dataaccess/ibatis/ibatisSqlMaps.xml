@@ -37,7 +37,7 @@
     <bean id="sqlMapClientConfigurator" 
         class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
         <property name="configLocation">
-            <value>ibatis/my-sqlmap-config.xml</value>
+            <value>etc/ibatis/my-sqlmap-config.xml</value>
         </property>
     </bean>
 </beans>

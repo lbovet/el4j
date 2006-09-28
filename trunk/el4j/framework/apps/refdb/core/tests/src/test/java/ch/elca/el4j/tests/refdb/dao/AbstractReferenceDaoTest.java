@@ -219,7 +219,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
      */
     public void testInsertGetRemoveAnnotationWithMaxContentSize1MB() {
         final int MAX_CLOB_SIZE = 1024 * 1024;
-        String filepath = "/testfiles/gulliverstravels.txt";
+        String filepath = "etc/testfiles/gulliverstravels.txt";
         String annotator = "Gulliver's Travels";
         internalTestInsertGetRemoveAnnotation(
             MAX_CLOB_SIZE, filepath, annotator);
@@ -452,7 +452,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
      */
     public void testInsertGetRemoveFileWithMaxContentSize1MB() {
         final int MAX_BLOB_SIZE = 1024 * 1024;
-        String filepath = "/testfiles/iBATIS-SqlMaps-2.pdf";
+        String filepath = "etc/testfiles/iBATIS-SqlMaps-2.pdf";
         String name = "iBATIS SQL Maps Developer Guide Version 2.0";
         String mimeType = "application/x-pdf";
         internalTestInsertGetRemoveFile(

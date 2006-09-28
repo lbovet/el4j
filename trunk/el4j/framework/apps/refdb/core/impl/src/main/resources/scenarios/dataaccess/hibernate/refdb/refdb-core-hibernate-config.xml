@@ -20,11 +20,11 @@
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
         <property name="mappingResources">
             <list>
-                <value>hibernate/Keyword.hbm.xml</value>
-                <value>hibernate/Reference.hbm.xml</value>
-                <value>hibernate/Annotation.hbm.xml</value>
-                <value>hibernate/File.hbm.xml</value>
-                <value>hibernate/FileDescriptorView.hbm.xml</value>
+                <value>etc/hibernate/Keyword.hbm.xml</value>
+                <value>etc/hibernate/Reference.hbm.xml</value>
+                <value>etc/hibernate/Annotation.hbm.xml</value>
+                <value>etc/hibernate/File.hbm.xml</value>
+                <value>etc/hibernate/FileDescriptorView.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">
