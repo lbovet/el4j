@@ -210,7 +210,8 @@ public class ConvenienceSqlMapClientTemplate extends SqlMapClientTemplate {
         if (count != 1) {
             String message;
             if (parameterObject instanceof PrimaryKeyObject) {
-                PrimaryKeyObject primaryKeyObject = (PrimaryKeyObject) parameterObject;
+                PrimaryKeyObject primaryKeyObject 
+                    = (PrimaryKeyObject) parameterObject;
                 message = objectName + " with key "
                     + primaryKeyObject.getKeyAsObject()
                     + " was modified or deleted in the meantime.";
