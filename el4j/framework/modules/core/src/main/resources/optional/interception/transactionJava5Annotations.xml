@@ -53,5 +53,21 @@
         </property>
     </bean>
     <bean id="transactionAttributeSource" 
-        class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
+        class="ch.elca.el4j.core.transaction.ExtendedAnnotationTransactionAttributeSource">
+        <constructor-arg>
+            <ref local="attributesCollector"/>
+        </constructor-arg>
+    </bean>
+    
+    <!--
+        General attribute definitions.
+    -->
+    <bean id="attributesCollector" 
+        class="ch.elca.el4j.util.attributes.AttributesCollector">
+        <property name="attributes">
+            <ref local="annotations"/>
+        </property>
+    </bean>
+    <bean id="annotations" 
+        class="ch.elca.el4j.util.metadata.annotations.Annotations"/>
 </beans>
