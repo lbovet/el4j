@@ -112,17 +112,6 @@ public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,
     /**
      * {@inheritDoc}
      */
-    /*
-    @SuppressWarnings("unchecked")
-    public List<T> findByExample(T exampleInstance) throws DataAccessException {
-        //return getHibernateTemplate().findByExample(exampleInstance);
-        // TODO: Currently not implemented.
-        return null;
-    }*/
-
-    /**
-     * {@inheritDoc}
-     */
     @SuppressWarnings("unchecked")
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<T> findByQuery(QueryObject q) throws DataAccessException {
@@ -162,8 +151,8 @@ public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,
      */
     @SuppressWarnings("unchecked")
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public T refresh(T entity) throws DataAccessException, 
-    DataRetrievalFailureException {
+    public T refresh(T entity)
+        throws DataAccessException, DataRetrievalFailureException {
         return (T) getConvenienceSqlMapClientTemplate()
             .queryForObjectStrong("refresh" + getPersistentClassName(),
                 entity, getPersistentClassName());
@@ -173,18 +162,21 @@ public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,
      * {@inheritDoc}
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void delete(ID id) throws DataAccessException {
-        getConvenienceSqlMapClientTemplate().delete(
-            "delete" + getPersistentClassName() + "ById", id);
+    public void delete(ID id)
+        throws OptimisticLockingFailureException, DataAccessException {
+        getConvenienceSqlMapClientTemplate().deleteStrong(
+            "delete" + getPersistentClassName() + "ById", id, 
+            getPersistentClassName());
     }
 
     /** {@inheritDoc} */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void delete(Collection<T> entities) throws DataAccessException,
-            DataIntegrityViolationException, OptimisticLockingFailureException {
+    public void delete(Collection<T> entities)
+        throws OptimisticLockingFailureException, DataAccessException {
         for (T entity : entities) {
-            getConvenienceSqlMapClientTemplate().delete("delete" 
-                + getPersistentClassName(), entity.getKeyAsObject());
+            getConvenienceSqlMapClientTemplate().deleteStrong("delete" 
+                + getPersistentClassName(), entity.getKeyAsObject(),
+                getPersistentClassName());
         }
     }
     
