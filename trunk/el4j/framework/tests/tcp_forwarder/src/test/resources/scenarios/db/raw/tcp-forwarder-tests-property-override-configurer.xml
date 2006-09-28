@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!-- Version: $Revision: 308 $ -->
+    <!-- URL: $URL: https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/apps/keyword/core/tests/src/test/resources/scenarios/db/raw/keyword-core-tests-property-override-configurer.xml $ -->
+    <!-- Date: $Date: 2006-03-23 12:15:43 +0100 (Thu, 23 Mar 2006) $ -->
+    <!-- Author: $Author: swisswheel $ -->
+
+    <bean id="tcpForwarderTestsDbRawOverrideConfigurer"
+        class="ch.elca.el4j.core.config.RefreshPropertyOverrideConfigurer"
+        singleton="false">
+        <property name="locations">
+            <list>
+                <value>classpath:scenarios/db/raw/tcp-forwarder-tests-override-${db.name}.properties</value>
+            </list>
+        </property>
+        <property name="order" value="3"/>
+    </bean>
+</beans>
