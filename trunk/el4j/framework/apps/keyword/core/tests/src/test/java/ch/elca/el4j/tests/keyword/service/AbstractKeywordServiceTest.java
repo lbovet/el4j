@@ -18,10 +18,14 @@
 package ch.elca.el4j.tests.keyword.service;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.OptimisticLockingFailureException;
 
 import ch.elca.el4j.apps.keyword.dao.KeywordDao;
 import ch.elca.el4j.apps.keyword.dom.Keyword;
@@ -96,29 +100,108 @@ public abstract class AbstractKeywordServiceTest extends AbstractTestCaseBase {
     public void testInsertRemoveKeywords() {
         KeywordService service = getKeywordService();
         KeywordDao dao = getKeywordDao();
-        Keyword keyword = new Keyword();
-        keyword.setName("Java");
-        keyword.setDescription("Java related documentation");
-        Keyword keyword2 = dao.saveOrUpdate(keyword);
         
-        Keyword keyword3 = new Keyword();
-        keyword3.setName("C");
-        keyword3.setDescription("C related documentation");
-        Keyword keyword4 = dao.saveOrUpdate(keyword3);
+        Keyword keywordJava = dao.saveOrUpdate(createNewJavaKeyword());
+        Keyword keywordC = dao.saveOrUpdate(createNewCKeyword());
         
-        HashSet<Integer> keywords = new HashSet<Integer>();
-        keywords.add(keyword2.getKey());
-        keywords.add(keyword4.getKey());
+        List<Keyword> keywordList = dao.findAll();
+        assertEquals(2, keywordList.size());
+        for (Keyword keyword : keywordList) {
+            if (!keywordJava.equals(keyword)
+                && !keywordC.equals(keyword)) {
+                fail("Contains unexpected keyword '" 
+                    + keyword.getName() + "'.");
+            }
+        }
         
-        service.removeKeywords(keywords);
+        Set<Integer> keywordKeys = new HashSet<Integer>();
+        keywordKeys.add(keywordJava.getKey());
+        keywordKeys.add(keywordC.getKey());
+        
+        service.removeKeywords(keywordKeys);
         
         try {
-            dao.findById(keyword2.getKey());
-            dao.findById(keyword4.getKey());
+            dao.findById(keywordJava.getKey());
+            fail("Keyword Java is still in database!");
+        } catch (DataRetrievalFailureException e) {
+            s_logger.debug("Expected exception catched.", e);
+        }
+
+        try {
+            dao.findById(keywordC.getKey());
+            fail("Keyword C is still in database!");
         } catch (DataRetrievalFailureException e) {
             s_logger.debug("Expected exception catched.", e);
         }
     }
+    
+    public void testInsertRemoveKeywordsFailing() {
+        KeywordService service = getKeywordService();
+        KeywordDao dao = getKeywordDao();
+        
+        Keyword keywordJava = dao.saveOrUpdate(createNewJavaKeyword());
+        Keyword keywordC = dao.saveOrUpdate(createNewCKeyword());
+        
+        List<Keyword> keywordList = dao.findAll();
+        assertEquals(2, keywordList.size());
+        for (Keyword keyword : keywordList) {
+            if (!keywordJava.equals(keyword)
+                && !keywordC.equals(keyword)) {
+                fail("Contains unexpected keyword '" 
+                    + keyword.getName() + "'.");
+            }
+        }
+        
+        dao.delete(keywordC);
+        
+        try {
+            dao.findById(keywordC.getKey());
+            fail("Keyword C is still in database!");
+        } catch (DataRetrievalFailureException e) {
+            s_logger.debug("Expected exception catched.", e);
+        }
+        
+        Set<Integer> keywordKeys = new LinkedHashSet<Integer>();
+        keywordKeys.add(keywordJava.getKey());
+        keywordKeys.add(keywordC.getKey());
+        
+        try {
+            service.removeKeywords(keywordKeys);
+            fail("Removing keywords should fail!");
+        } catch (OptimisticLockingFailureException e) {
+            s_logger.debug("Expected exception catched.", e);
+        }
+        
+        keywordList = dao.findAll();
+        assertEquals(1, keywordList.size());
+        for (Keyword keyword : keywordList) {
+            if (!keywordJava.equals(keyword)) {
+                fail("Contains unexpected keyword '" 
+                    + keyword.getName() + "'.");
+            }
+        }
+    }
 
+    /**
+     * @return Returns a newly create keyword with java program language as 
+     *         content.
+     */
+    protected Keyword createNewJavaKeyword() {
+        Keyword keywordJava = new Keyword();
+        keywordJava.setName("Java");
+        keywordJava.setDescription("Java related documentation");
+        return keywordJava;
+    }
+    
+    /**
+     * @return Returns a newly create keyword with c program language as 
+     *         content.
+     */
+    protected Keyword createNewCKeyword() {
+        Keyword keywordC = new Keyword();
+        keywordC.setName("C");
+        keywordC.setDescription("C related documentation");
+        return keywordC;
+    }
 }
 //Checkstyle: MagicNumber on
