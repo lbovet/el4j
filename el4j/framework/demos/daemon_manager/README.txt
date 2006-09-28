@@ -1,7 +1,7 @@
-# compile & install all required targets files:
+# compile & install all required target files:
 mvn install
 
-# start the controller: (in console 1):
+# start the controller (in console 1):
 cd controller
 mvn exec:java
 
