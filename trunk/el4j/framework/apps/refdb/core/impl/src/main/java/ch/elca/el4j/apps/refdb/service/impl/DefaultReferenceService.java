@@ -254,8 +254,8 @@ public class DefaultReferenceService extends DefaultKeywordService
      * {@inheritDoc}
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void removeReference(int key) throws DataAccessException, 
-        JdbcUpdateAffectedIncorrectNumberOfRowsException {
+    public void removeReference(int key)
+        throws DataAccessException, OptimisticLockingFailureException  {
         
         if (getLinkDao().referenceExists(key)) {
             getLinkDao().delete(key);
@@ -264,9 +264,8 @@ public class DefaultReferenceService extends DefaultKeywordService
         } else if (getFormalPublicationDao().referenceExists(key)) {
             getFormalPublicationDao().delete(key);
         } else {
-            CoreNotificationHelper
-            .notifyJdbcUpdateAffectedIncorrectNumberOfRows(
-                Constants.REFERENCE, "deleteReferenceType", 1, 0);
+            CoreNotificationHelper.notifyOptimisticLockingFailure(
+                Constants.REFERENCE);
         }
     }
 }
