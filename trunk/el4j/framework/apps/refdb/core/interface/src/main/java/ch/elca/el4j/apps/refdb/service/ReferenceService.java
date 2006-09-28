@@ -19,6 +19,7 @@ package ch.elca.el4j.apps.refdb.service;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException;
@@ -28,6 +29,7 @@ import ch.elca.el4j.apps.keyword.service.KeywordService;
 import ch.elca.el4j.apps.refdb.dom.File;
 import ch.elca.el4j.apps.refdb.dom.FileDescriptorView;
 import ch.elca.el4j.apps.refdb.dom.Reference;
+import ch.elca.el4j.core.transaction.annotations.RollbackConstraint;
 import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
 import ch.elca.el4j.services.search.QueryObject;
 
@@ -61,8 +63,9 @@ public interface ReferenceService extends KeywordService {
      * @throws OptimisticLockingFailureException
      *             If file has been modificated in the meantime.
      */
-    @Transactional(rollbackFor = {DataAccessException.class,
-            RuntimeException.class, Error.class })
+    @RollbackConstraint(rollbackFor = { DataAccessException.class,
+            InsertionFailureException.class,
+            OptimisticLockingFailureException.class })
     public FileDescriptorView saveFileAndReturnFileDescriptorView(File file)
         throws DataAccessException, InsertionFailureException, 
             OptimisticLockingFailureException;
@@ -129,8 +132,9 @@ public interface ReferenceService extends KeywordService {
      * @throws OptimisticLockingFailureException
      *             If reference has been modificated in the meantime.
      */
-    @Transactional(rollbackFor = {DataAccessException.class,
-            RuntimeException.class, Error.class })
+    @RollbackConstraint(rollbackFor = { DataAccessException.class,
+            InsertionFailureException.class,
+            OptimisticLockingFailureException.class })
     public Reference saveReference(Reference reference)
         throws DataAccessException, InsertionFailureException, 
             OptimisticLockingFailureException;
@@ -142,11 +146,11 @@ public interface ReferenceService extends KeywordService {
      *            Is the primary key of the reference, which should be deleted.
      * @throws DataAccessException
      *             If general data access problem occurred.
-     * @throws JdbcUpdateAffectedIncorrectNumberOfRowsException
+     * @throws OptimisticLockingFailureException
      *             If reference could not be deleted.
      */
-    @Transactional(rollbackFor = {DataAccessException.class,
-            RuntimeException.class, Error.class })
-    public void removeReference(int key) throws DataAccessException,
-        JdbcUpdateAffectedIncorrectNumberOfRowsException;
+    @RollbackConstraint(rollbackFor = { DataAccessException.class,
+            OptimisticLockingFailureException.class })
+    public void removeReference(int key)
+        throws DataAccessException, OptimisticLockingFailureException;
 }
