@@ -19,13 +19,13 @@ package ch.elca.el4j.services.persistence.generic.dao;
 import java.io.Serializable;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
-import org.springframework.transaction.annotation.Transactional;
+
+import ch.elca.el4j.core.transaction.annotations.RollbackConstraint;
 
 /**
- * Extends the SimpleGenericDao with a few convenience methods.
+ * Extends the GenericDao with a few convenience methods.
  * 
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -41,6 +41,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Philipp Oser (POS)
  * @author Alex Mathey (AMA)
+ * @author Martin Zeltner (MZE)
  */
 public interface ConvenientGenericDao<T, ID extends Serializable>
     extends GenericDao<T> {
@@ -49,24 +50,14 @@ public interface ConvenientGenericDao<T, ID extends Serializable>
      * Retrieves a domain object by identifier.
      * 
      * @param id
-     * @return
-     * @throws DataAccessException
+     *             The id of the domain object to delete
+     * @return Returns the found domain object.
      * @throws DataRetrievalFailureException
-     */
-    T findById(ID id) throws DataAccessException, DataRetrievalFailureException;
-    
-
-    /**
-     * Executes a query based on a given example domain object.
-     * 
-     * @param exampleInstance
-     *            An instance of the desired domain object, serving as example
-     *            for "query-by-example"
+     *             If no domain object could be found with given id.
      * @throws DataAccessException
-     *             If general data access problem occurred           
-     * @return A list containing 0 or more domain objects
+     *             If general data access problem occurred
      */
-    /*List<T> findByExample(T exampleInstance) throws DataAccessException;*/
+    T findById(ID id) throws DataRetrievalFailureException, DataAccessException;
     
     /**
      * Deletes the domain object with the given id, disregarding any 
@@ -74,32 +65,28 @@ public interface ConvenientGenericDao<T, ID extends Serializable>
      * 
      * @param id
      *             The id of the domain object to delete
-     * @throws DataIntegrityViolationException
-     *             If domain object could not be deleted due to a data
-     *             integrity violation 
+     * @throws OptimisticLockingFailureException
+     *             If domain object has been deleted in the meantime   
      * @throws DataAccessException
      *             If general data access problem occurred
      */
-    @Transactional(rollbackFor = {DataAccessException.class,
-            RuntimeException.class, Error.class })
-    void delete(ID id) throws DataIntegrityViolationException, 
-                              DataAccessException;
+    @RollbackConstraint(rollbackFor = { DataAccessException.class,
+            OptimisticLockingFailureException.class })
+    void delete(ID id) 
+        throws OptimisticLockingFailureException, DataAccessException;
     
     /**
      * Deletes the given domain object.
      * 
      * @param entity
      *             The domain object to delete
+     * @throws OptimisticLockingFailureException
+     *             If domain object has been modified/deleted in the meantime   
      * @throws DataAccessException
      *             If general data access problem occurred
-     * @throws DataIntegrityViolationException
-     *             If domain object could not be deleted due to a data
-     *             integrity violation 
-     * @throws OptimisticLockingFailureException
-     *             If domain object has been modified in the meantime   
      */
-    @Transactional(rollbackFor = {DataAccessException.class,
-            RuntimeException.class, Error.class })
-    void delete(T entity)  throws DataAccessException,
-        DataIntegrityViolationException, OptimisticLockingFailureException;
+    @RollbackConstraint(rollbackFor = { DataAccessException.class,
+            OptimisticLockingFailureException.class })
+    void delete(T entity)
+        throws OptimisticLockingFailureException, DataAccessException;
 }

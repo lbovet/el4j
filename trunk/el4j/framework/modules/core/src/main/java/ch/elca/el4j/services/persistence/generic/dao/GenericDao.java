@@ -23,8 +23,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
-import org.springframework.transaction.annotation.Transactional;
 
+import ch.elca.el4j.core.transaction.annotations.RollbackConstraint;
 import ch.elca.el4j.services.persistence.generic.dao.annotations.ReturnsUnchangedParameter;
 import ch.elca.el4j.services.search.QueryObject;
 
@@ -49,6 +49,7 @@ import ch.elca.el4j.services.search.QueryObject;
  * @author Philipp Oser (POS)
  * @author Alex Mathey (AMA)
  * @author Adrian Moos (AMS)
+ * @author Martin Zeltner (MZE)
  */
 public interface GenericDao<T> {
     /**
@@ -104,12 +105,13 @@ public interface GenericDao<T> {
      *             If domain object could not be inserted due to a data
      *             integrity violation        
      * @throws OptimisticLockingFailureException
-     *             If domain object has been modified in the meantime   
+     *             If domain object has been modified/deleted in the meantime   
      * @return The saved or updated domain object
      */
     @ReturnsUnchangedParameter
-    @Transactional(rollbackFor = {DataAccessException.class,
-            RuntimeException.class, Error.class })
+    @RollbackConstraint(rollbackFor = { DataAccessException.class,
+            DataIntegrityViolationException.class,
+            OptimisticLockingFailureException.class })
     T saveOrUpdate(T entity) throws DataAccessException,
         DataIntegrityViolationException, OptimisticLockingFailureException;
 
@@ -121,14 +123,11 @@ public interface GenericDao<T> {
      *             The domain objects to delete.
      * @throws DataAccessException
      *             If general data access problem occurred
-     * @throws DataIntegrityViolationException
-     *             If domain object could not be deleted due to a data
-     *             integrity violation 
      * @throws OptimisticLockingFailureException
-     *             If domain object has been modified in the meantime   
+     *             If domain object has been modified/deleted in the meantime   
      */
-    @Transactional(rollbackFor = {DataAccessException.class,
-            RuntimeException.class, Error.class })
-    void delete(Collection<T> entities)  throws DataAccessException,
-        DataIntegrityViolationException, OptimisticLockingFailureException;
+    @RollbackConstraint(rollbackFor = { DataAccessException.class,
+            OptimisticLockingFailureException.class })
+    void delete(Collection<T> entities)
+        throws OptimisticLockingFailureException, DataAccessException;
 }
