@@ -101,7 +101,7 @@ public class GenericSqlMapReferenceDao<T extends Reference>
          * Remove all old keyword references to the saved reference and set them
          * new.
          */
-        removeAllReferenceKeywordRelationshipsByReference(entity.getKey());
+        deleteAllReferenceKeywordRelationshipsByReference(entity.getKey());
         Set<Keyword> set = entity.getKeywords();
         if (set != null) {
             for (Keyword k : set) {
@@ -124,7 +124,7 @@ public class GenericSqlMapReferenceDao<T extends Reference>
      */
     @Override
     public void delete(Integer id) throws DataAccessException {
-        removeAllReferenceKeywordRelationshipsByReference(id);
+        deleteAllReferenceKeywordRelationshipsByReference(id);
         super.delete(id);
     }
     
@@ -183,7 +183,7 @@ public class GenericSqlMapReferenceDao<T extends Reference>
     }
     
     /**
-     * This method removes all relationships between the given reference and a
+     * This method deletes all relationships between the given reference and a
      * keyword.
      * 
      * @param referenceKey
@@ -191,7 +191,7 @@ public class GenericSqlMapReferenceDao<T extends Reference>
      * @throws DataAccessException
      *             If general data access problem occurred.
      */
-    private void removeAllReferenceKeywordRelationshipsByReference(
+    private void deleteAllReferenceKeywordRelationshipsByReference(
         int referenceKey) throws DataAccessException {
         getConvenienceSqlMapClientTemplate().delete(
             "deleteAllReferenceKeywordRelationshipsByReference",
