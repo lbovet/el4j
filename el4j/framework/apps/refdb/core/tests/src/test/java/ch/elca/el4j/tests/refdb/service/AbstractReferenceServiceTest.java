@@ -25,6 +25,8 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.OptimisticLockingFailureException;
 
 import ch.elca.el4j.apps.keyword.dao.KeywordDao;
 import ch.elca.el4j.apps.keyword.dom.Keyword;
@@ -228,6 +230,13 @@ public abstract class AbstractReferenceServiceTest
             "iBatis Data Mapper Developer Guide");
         assertEquals("There is still a link with "
             + "name 'iBatis Data Mapper Developer Guide'.", list.size(), 0);
+        
+        try {
+            service.removeReference(link2.getKey());
+            fail("Reference already removed. Must fail!");
+        } catch (OptimisticLockingFailureException e) {
+            s_logger.debug("Expected exception catched.", e);
+        }
     }
 
     /**
@@ -893,6 +902,39 @@ public abstract class AbstractReferenceServiceTest
     }
     
     /**
+     * Test tries to add incomplete references.
+     */
+    public void testAddingIncompleteReferences() {
+        ReferenceService service = getReferenceService();
+        Link link = new Link();
+        link.setDescription("Bla bla.");
+        try {
+            service.saveReference(link);
+            fail("No exception although name of reference is missing.");
+        } catch (DataIntegrityViolationException e) {
+            s_logger.debug("Expected exception catched.", e);
+        }
+        
+        FormalPublication formalPublication = new FormalPublication();
+        formalPublication.setDescription("Bla bla.");
+        try {
+            service.saveReference(formalPublication);
+            fail("No exception although name of reference is missing.");
+        } catch (DataIntegrityViolationException e) {
+            s_logger.debug("Expected exception catched.", e);
+        }
+
+        Book book = new Book();
+        book.setDescription("Bla bla.");
+        try {
+            service.saveReference(book);
+            fail("No exception although name of reference is missing.");
+        } catch (DataIntegrityViolationException e) {
+            s_logger.debug("Expected exception catched.", e);
+        }
+    }
+    
+    /**
      * This test tries out many possible combinations of searching on
      * references.
      */
@@ -1194,6 +1236,29 @@ public abstract class AbstractReferenceServiceTest
                 fakeReferenceKey).get(0);
         assertTrue("FileDescriptorViews are not equals.", 
             fileView.equals(fileView2));
+    }
+    
+    /**
+     * Will try to add some incomplete file by using the special method 
+     * {@link ReferenceService#saveFileAndReturnFileDescriptorView(File)}.
+     */
+    public void testAddingIncompleteFileByFileDescriptorViewMethod() {
+        ReferenceService service = getReferenceService();
+        
+        int fakeReferenceKey = addDefaultFakeReference();
+        
+        File file = new File();
+        file.setKeyToReference(fakeReferenceKey);
+        file.setMimeType("text/plain");
+        byte[] content = "This is only a test content.".getBytes();
+        file.setContent(content);
+        
+        try {
+            service.saveFileAndReturnFileDescriptorView(file);
+            fail("Was able to save a file without a name.");
+        } catch (DataIntegrityViolationException e) {
+            s_logger.debug("Expected exception catched.", e);
+        }
     }
 
     /**
