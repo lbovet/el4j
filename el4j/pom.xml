@@ -417,7 +417,7 @@
                     <executions>
                         <execution>
                             <id>actualizeEclipseProjects</id>
-                            <phase>install</phase>
+                            <phase>initialize</phase>
                             <goals>
                                 <goal>eclipse</goal>
                             </goals>
