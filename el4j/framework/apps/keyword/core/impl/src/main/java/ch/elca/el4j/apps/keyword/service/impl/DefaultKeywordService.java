@@ -94,7 +94,7 @@ public class DefaultKeywordService
      * {@inheritDoc}
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void removeKeywords(Collection<?> keys)
+    public void deleteKeywords(Collection<?> keys)
         throws OptimisticLockingFailureException, DataAccessException {
         if (keys != null) {
             Iterator it = keys.iterator();

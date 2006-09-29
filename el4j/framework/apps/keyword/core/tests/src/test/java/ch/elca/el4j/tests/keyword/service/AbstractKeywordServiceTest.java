@@ -118,7 +118,7 @@ public abstract class AbstractKeywordServiceTest extends AbstractTestCaseBase {
         keywordKeys.add(keywordJava.getKey());
         keywordKeys.add(keywordC.getKey());
         
-        service.removeKeywords(keywordKeys);
+        service.deleteKeywords(keywordKeys);
         
         try {
             dao.findById(keywordJava.getKey());
@@ -166,7 +166,7 @@ public abstract class AbstractKeywordServiceTest extends AbstractTestCaseBase {
         keywordKeys.add(keywordC.getKey());
         
         try {
-            service.removeKeywords(keywordKeys);
+            service.deleteKeywords(keywordKeys);
             fail("Removing keywords should fail!");
         } catch (OptimisticLockingFailureException e) {
             s_logger.debug("Expected exception catched.", e);

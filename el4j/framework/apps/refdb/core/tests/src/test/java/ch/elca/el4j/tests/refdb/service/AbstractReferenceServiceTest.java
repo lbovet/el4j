@@ -225,14 +225,14 @@ public abstract class AbstractReferenceServiceTest
             }
         }
 
-        service.removeReference(link2.getKey());
+        service.deleteReference(link2.getKey());
         List list = service.getReferencesByName(
             "iBatis Data Mapper Developer Guide");
         assertEquals("There is still a link with "
             + "name 'iBatis Data Mapper Developer Guide'.", list.size(), 0);
         
         try {
-            service.removeReference(link2.getKey());
+            service.deleteReference(link2.getKey());
             fail("Reference already removed. Must fail!");
         } catch (OptimisticLockingFailureException e) {
             s_logger.debug("Expected exception catched.", e);
@@ -376,7 +376,7 @@ public abstract class AbstractReferenceServiceTest
             }
         }
 
-        service.removeReference(link.getKey());
+        service.deleteReference(link.getKey());
 
         list = service.getAllReferences();
         assertEquals("There is not one link.", 1, list.size());
@@ -483,7 +483,7 @@ public abstract class AbstractReferenceServiceTest
             }
         }
 
-        service.removeReference(formalPublication2.getKey());
+        service.deleteReference(formalPublication2.getKey());
         List<Reference> list = service.getReferencesByName(
             "iBatis Data Mapper Developer Guide");
         assertEquals("There is still a formal publication with "
@@ -637,7 +637,7 @@ public abstract class AbstractReferenceServiceTest
             }
         }
 
-        service.removeReference(formalPublication.getKey());
+        service.deleteReference(formalPublication.getKey());
 
         list = service.getAllReferences();
         assertEquals("There is not one formal publication.", 1, list.size());
@@ -743,7 +743,7 @@ public abstract class AbstractReferenceServiceTest
             }
         }
 
-        service.removeReference(book2.getKey());
+        service.deleteReference(book2.getKey());
         List<Reference> list = service.getReferencesByName(
             "Expert One-on-One J2EE Development without EJB");
         assertEquals("There is still a formal publication with name 'Expert "
@@ -893,7 +893,7 @@ public abstract class AbstractReferenceServiceTest
             }
         }
 
-        service.removeReference(book.getKey());
+        service.deleteReference(book.getKey());
 
         list = service.getAllReferences();
         assertEquals("There is not one book.", 1, list.size());
