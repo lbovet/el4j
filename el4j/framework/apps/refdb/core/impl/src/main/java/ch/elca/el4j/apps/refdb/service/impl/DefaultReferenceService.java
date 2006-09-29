@@ -20,9 +20,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
-import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,8 +40,6 @@ import ch.elca.el4j.apps.refdb.dom.Link;
 import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.apps.refdb.service.ReferenceService;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
-import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
-import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.Reject;
 
@@ -119,7 +117,7 @@ public class DefaultReferenceService extends DefaultKeywordService
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public FileDescriptorView saveFileAndReturnFileDescriptorView(File file)
-        throws DataAccessException, InsertionFailureException, 
+        throws DataAccessException, DataIntegrityViolationException, 
             OptimisticLockingFailureException {
         Reject.ifNull(file);
         File newFile = getFileDao().saveOrUpdate(file);
@@ -227,7 +225,7 @@ public class DefaultReferenceService extends DefaultKeywordService
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public Reference saveReference(Reference reference)
-        throws DataAccessException, InsertionFailureException, 
+        throws DataAccessException, DataIntegrityViolationException , 
             OptimisticLockingFailureException {
         Reject.ifNull(reference);
         
