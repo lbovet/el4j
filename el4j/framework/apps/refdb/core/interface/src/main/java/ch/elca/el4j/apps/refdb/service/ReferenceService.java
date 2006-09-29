@@ -22,15 +22,12 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
-import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException;
-import org.springframework.transaction.annotation.Transactional;
 
 import ch.elca.el4j.apps.keyword.service.KeywordService;
 import ch.elca.el4j.apps.refdb.dom.File;
 import ch.elca.el4j.apps.refdb.dom.FileDescriptorView;
 import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.core.transaction.annotations.RollbackConstraint;
-import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
 import ch.elca.el4j.services.search.QueryObject;
 
 /**
@@ -58,16 +55,16 @@ public interface ReferenceService extends KeywordService {
      * @return Returns the saved file without its content (FileDescriptorView).
      * @throws DataAccessException
      *             If general data access problem occurred.
-     * @throws InsertionFailureException
+     * @throws DataIntegrityViolationException
      *             If file could not be inserted.
      * @throws OptimisticLockingFailureException
      *             If file has been modificated in the meantime.
      */
     @RollbackConstraint(rollbackFor = { DataAccessException.class,
-            InsertionFailureException.class,
+            DataIntegrityViolationException.class,
             OptimisticLockingFailureException.class })
     public FileDescriptorView saveFileAndReturnFileDescriptorView(File file)
-        throws DataAccessException, InsertionFailureException, 
+        throws DataAccessException, DataIntegrityViolationException, 
             OptimisticLockingFailureException;
 
     /**
@@ -127,16 +124,16 @@ public interface ReferenceService extends KeywordService {
      * @return Returns the saved reference.
      * @throws DataAccessException
      *             If general data access problem occurred.
-     * @throws InsertionFailureException
+     * @throws DataIntegrityViolationException
      *             If reference could not be inserted.
      * @throws OptimisticLockingFailureException
      *             If reference has been modificated in the meantime.
      */
     @RollbackConstraint(rollbackFor = { DataAccessException.class,
-            InsertionFailureException.class,
+            DataIntegrityViolationException.class,
             OptimisticLockingFailureException.class })
     public Reference saveReference(Reference reference)
-        throws DataAccessException, InsertionFailureException, 
+        throws DataAccessException, DataIntegrityViolationException, 
             OptimisticLockingFailureException;
 
     /**
