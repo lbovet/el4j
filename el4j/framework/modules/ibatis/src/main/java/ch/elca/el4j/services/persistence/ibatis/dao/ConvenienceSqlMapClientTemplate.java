@@ -18,6 +18,7 @@
 package ch.elca.el4j.services.persistence.ibatis.dao;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException;
@@ -26,7 +27,6 @@ import org.springframework.orm.ibatis.SqlMapClientTemplate;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyObject;
 import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
-import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
@@ -52,7 +52,7 @@ public class ConvenienceSqlMapClientTemplate extends SqlMapClientTemplate {
      *            be used is "insert" + objectName or "update" + objectName.
      * @throws DataAccessException
      *             If general problem occurred.
-     * @throws InsertionFailureException
+     * @throws DataIntegrityViolationException
      *             If parameter object could not be inserted.
      * @throws OptimisticLockingFailureException
      *             If parameter object has been modificated in the meantime.
@@ -60,7 +60,7 @@ public class ConvenienceSqlMapClientTemplate extends SqlMapClientTemplate {
     public void insertOrUpdate(
         final PrimaryKeyOptimisticLockingObject parameterObject,
         final String objectName)
-        throws DataAccessException, InsertionFailureException, 
+        throws DataAccessException, DataIntegrityViolationException, 
             OptimisticLockingFailureException {
         Reject.ifNull(parameterObject, "Parameter object must not be null.");
         Reject.ifEmpty(objectName, "Name of the object must not be empty.");
@@ -75,7 +75,8 @@ public class ConvenienceSqlMapClientTemplate extends SqlMapClientTemplate {
                 if (keyObject != null) {
                     parameterObject.setKey(keyObject);
                 } else {
-                    CoreNotificationHelper.notifyInsertionFailure(objectName);
+                    CoreNotificationHelper.notifyDataIntegrityViolationFailure(
+                        objectName);
                 }
             }
         } else {
