@@ -76,9 +76,14 @@
                 <version>${version.maven-jxr-plugin}</version>
             </plugin>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>taglist-maven-plugin</artifactId>
+                <version>${version.taglist-maven-plugin}</version>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${version.maven-javadoc-plugin}</version>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${version.maven-checkstyle-plugin}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

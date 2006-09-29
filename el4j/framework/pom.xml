@@ -69,6 +69,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>taglist-maven-plugin</artifactId>
+                <version>${version.taglist-maven-plugin}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -82,16 +83,7 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${version.maven-javadoc-plugin}</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <!--
-                    Version must be defined here because Maven has already 
-                    defined the version somewhere in the reporting section.
-                -->
                 <version>${version.maven-project-info-reports-plugin}</version>
                 <reportSets>
                     <reportSet>
@@ -157,6 +149,7 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <configuration>
+                        	<aggregate>true</aggregate>
                             <sourcepath>${aggregated.files.output.directory}</sourcepath>
                             <reportOutputDirectory>${javadoc.output.directory}</reportOutputDirectory>
                             <doctitle>${javadoc.title}</doctitle>
@@ -215,6 +208,7 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <configuration>
+                        	<aggregate>true</aggregate>
                             <sourcepath>${aggregated.files.output.directory}</sourcepath>
                             <reportOutputDirectory>${javadoc.output.directory}</reportOutputDirectory>
                             <doctitle>${javadoc.title}</doctitle>
@@ -279,6 +273,7 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <configuration>
+                        	<aggregate>true</aggregate>
                             <sourcepath>${aggregated.files.output.directory}</sourcepath>
                             <reportOutputDirectory>${javadoc.output.directory}</reportOutputDirectory>
                             <doctitle>${javadoc.title}</doctitle>
@@ -347,6 +342,7 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <configuration>
+                        	<aggregate>true</aggregate>
                             <sourcepath>${aggregated.files.output.directory}</sourcepath>
                             <reportOutputDirectory>${javadoc.output.directory}</reportOutputDirectory>
                             <doctitle>${javadoc.title}</doctitle>
