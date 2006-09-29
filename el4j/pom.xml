@@ -231,7 +231,7 @@
                     -->
                     <version>2.3-20060921.102756-1</version>
                     <configuration>
-                        <testFailureIgnore>true</testFailureIgnore>
+                        <testFailureIgnore>false</testFailureIgnore>
                         <forkMode>never</forkMode>
                         <includes>
                             <include>**/*Test.java</include>
