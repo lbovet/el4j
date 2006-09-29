@@ -252,7 +252,7 @@ public class DefaultReferenceService extends DefaultKeywordService
      * {@inheritDoc}
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void removeReference(int key)
+    public void deleteReference(int key)
         throws DataAccessException, OptimisticLockingFailureException  {
         
         if (getLinkDao().referenceExists(key)) {

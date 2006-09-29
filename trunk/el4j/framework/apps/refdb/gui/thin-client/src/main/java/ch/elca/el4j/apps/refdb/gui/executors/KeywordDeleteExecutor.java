@@ -53,7 +53,7 @@ public class KeywordDeleteExecutor
         }
         
         ReferenceService referenceService = ServiceBroker.getReferenceService();
-        referenceService.removeKeywords(keys);
+        referenceService.deleteKeywords(keys);
     }
 
     /** {@inheritDoc} */

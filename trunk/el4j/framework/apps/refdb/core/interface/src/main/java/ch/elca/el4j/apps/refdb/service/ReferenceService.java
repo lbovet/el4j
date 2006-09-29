@@ -137,7 +137,7 @@ public interface ReferenceService extends KeywordService {
             OptimisticLockingFailureException;
 
     /**
-     * Remove reference. Primary key will be used.
+     * Delete reference. Primary key will be used.
      * 
      * @param key
      *            Is the primary key of the reference, which should be deleted.
@@ -148,6 +148,6 @@ public interface ReferenceService extends KeywordService {
      */
     @RollbackConstraint(rollbackFor = { DataAccessException.class,
             OptimisticLockingFailureException.class })
-    public void removeReference(int key)
+    public void deleteReference(int key)
         throws DataAccessException, OptimisticLockingFailureException;
 }
