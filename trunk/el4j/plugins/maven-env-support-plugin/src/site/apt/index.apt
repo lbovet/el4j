@@ -121,4 +121,6 @@ rmi.port=8099
   But be aware that you have the <<<env.properties>>> file only one time in 
   your classpath!
   
+  []
+  
   For detailed usage {{{plugin-info.html}see the plugin info page}}.
