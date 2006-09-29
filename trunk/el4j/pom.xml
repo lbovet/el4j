@@ -231,7 +231,7 @@
                     -->
                     <version>2.3-20060921.102756-1</version>
                     <configuration>
-                        <testFailureIgnore>false</testFailureIgnore>
+                        <testFailureIgnore>true</testFailureIgnore>
                         <forkMode>never</forkMode>
                         <includes>
                             <include>**/*Test.java</include>
@@ -412,6 +412,7 @@
                         <additionalBuildcommands>
                             <buildcommand>de.mvmsoft.checkclipse.CheckclipseBuilder</buildcommand>
                         </additionalBuildcommands>
+                        <workspace>${basedir}/workspace</workspace>
                     </configuration>
                     <executions>
                         <execution>
