@@ -41,12 +41,12 @@ public class ExtendedSqlMapKeywordDao extends SqlMapKeywordDao {
      */
     @Override
     public void delete(Integer id) throws DataAccessException {
-        removeAllReferenceKeywordRelationshipsByKeyword(id);
+        deleteAllReferenceKeywordRelationshipsByKeyword(id);
         super.delete(id);
     }
  
     /**
-     * This method removes all relationships between a reference and the given
+     * This method deletes all relationships between a reference and the given
      * keyword.
      * 
      * @param keywordKey
@@ -54,7 +54,7 @@ public class ExtendedSqlMapKeywordDao extends SqlMapKeywordDao {
      * @throws DataAccessException
      *             If general data access problem occurred.
      */
-    private void removeAllReferenceKeywordRelationshipsByKeyword(int keywordKey)
+    private void deleteAllReferenceKeywordRelationshipsByKeyword(int keywordKey)
         throws DataAccessException {
         getConvenienceSqlMapClientTemplate().delete(
             "deleteAllReferenceKeywordRelationshipsByKeyword",
