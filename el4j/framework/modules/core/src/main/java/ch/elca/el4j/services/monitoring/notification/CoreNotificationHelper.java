@@ -22,6 +22,7 @@ import java.text.MessageFormat;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException;
@@ -225,6 +226,28 @@ public final class CoreNotificationHelper {
         s_logger.error(message);
         throw new InsertionFailureException(message);
     }
+    
+    /**
+     * Notify violation of data integrity of an object.
+     * Will always throw an exception.
+     * 
+     * @param detailedMessage
+     *            Is the detailed message.
+     * @param objectName
+     *            Is the name of the object.
+     * @throws DataIntegrityViolationException
+     *             Will be thrown in every case.
+     */
+    public static void notifyDataIntegrityViolationFailure(
+        String detailedMessage, String objectName) 
+        throws DataIntegrityViolationException {
+        String message = StringUtils.hasText(detailedMessage) 
+            ? detailedMessage
+                : "Integrity of " + objectName + " violated.";
+        s_logger.error(message);
+        throw new DataIntegrityViolationException(message);
+    }
+
 
     /**
      * Method to log that the object has already been modified. This method
@@ -298,6 +321,18 @@ public final class CoreNotificationHelper {
         notifyInsertionFailure(null, objectName);
     }
 
+    /**
+     * Same behaviour as call of method 
+     * <code>notifyDataIntegrityViolationFailure(null, String)</code>.
+     * 
+     * @see #notifyDataIntegrityViolationFailure(String, String)
+     */
+    public static void notifyDataIntegrityViolationFailure(String objectName) 
+        throws DataIntegrityViolationException {
+        notifyDataIntegrityViolationFailure(null, objectName);
+    }
+
+    
     /**
      * Same behaviour as call of method 
      * <code>notifyOptimisticLockingFailure(null, String)</code>.
