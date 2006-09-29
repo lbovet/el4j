@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.transaction.annotation.Propagation;
@@ -31,7 +32,6 @@ import ch.elca.el4j.apps.refdb.dao.GenericReferenceDao;
 import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.apps.refdb.dom.ReferenceKeywordRelationship;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
-import ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException;
 import ch.elca.el4j.services.persistence.ibatis.dao.GenericSqlMapDao;
 import ch.elca.el4j.util.codingsupport.CollectionUtils;
 import ch.elca.el4j.util.codingsupport.Reject;
@@ -61,7 +61,7 @@ public class GenericSqlMapReferenceDao<T extends Reference>
      */
     @Override
     public T saveOrUpdate(T entity)
-        throws DataAccessException, InsertionFailureException, 
+        throws DataAccessException, DataIntegrityViolationException, 
             OptimisticLockingFailureException {
         Reject.ifNull(entity);
         boolean mustIncreaseOptimisticLockingVersion = false;
@@ -69,7 +69,7 @@ public class GenericSqlMapReferenceDao<T extends Reference>
             Object keyObject = getSqlMapClientTemplate().insert(
                 "insertReference", entity);
             if (keyObject == null) {
-                CoreNotificationHelper.notifyInsertionFailure(
+                CoreNotificationHelper.notifyDataIntegrityViolationFailure(
                     Constants.REFERENCE);
             }
             if (entity.isKeyNew()) {
@@ -163,12 +163,12 @@ public class GenericSqlMapReferenceDao<T extends Reference>
      *            To relate with the given reference
      * @throws DataAccessException
      *             If general data access problem occurred.
-     * @throws InsertionFailureException
+     * @throws DataIntegrityViolationException
      *             If reference could not be inserted.
      */
     private void addReferenceKeywordRelationship(
-        int referenceKey, int keywordKey) throws DataAccessException, 
-            InsertionFailureException {
+        int referenceKey, int keywordKey) 
+        throws DataAccessException, DataIntegrityViolationException {
         ReferenceKeywordRelationship ref
             = new ReferenceKeywordRelationship();
         ref.setKeyReference(referenceKey);
@@ -177,7 +177,7 @@ public class GenericSqlMapReferenceDao<T extends Reference>
         int count = getConvenienceSqlMapClientTemplate().update(
             "addReferenceKeywordRelationship", ref);
         if (count != 1) {
-            CoreNotificationHelper.notifyInsertionFailure(
+            CoreNotificationHelper.notifyDataIntegrityViolationFailure(
                 Constants.REFERENCE_KEYWORD_RELATIONSHIP);
         }
     }
