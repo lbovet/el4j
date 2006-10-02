@@ -11,7 +11,7 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
     
-    <import resource="classpath:template/server/web/soap-server-config.xml"/>
+    <import resource="classpath:etc/template/server/web/soap-server-config.xml"/>
     
     <bean id="beanNameHandlerMapping" 
         class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>

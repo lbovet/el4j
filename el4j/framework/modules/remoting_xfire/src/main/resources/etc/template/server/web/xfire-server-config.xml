@@ -7,7 +7,7 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
     
-    <import resource="classpath:template/common/protocols-config.xml"/>
+    <import resource="classpath:etc/template/common/protocols-config.xml"/>
     
     <bean id="xfireWithContextCalculatorExporter" class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
         <property name="remoteProtocol">
