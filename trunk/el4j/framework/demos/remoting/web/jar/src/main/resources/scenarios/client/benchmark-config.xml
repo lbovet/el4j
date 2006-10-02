@@ -7,7 +7,7 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
     
-    <import resource="classpath:common/benchmark-protocols-config.xml"/>
-    <import resource="classpath:server/app/benchmark-rmi-server-config.xml"/>
-    <import resource="classpath:client/benchmark-client-config.xml"/>
+    <import resource="classpath:scenarios/common/benchmark-protocols-config.xml"/>
+    <import resource="classpath:scenarios/server/app/benchmark-rmi-server-config.xml"/>
+    <import resource="classpath:scenarios/client/benchmark-client-config.xml"/>
 </beans>

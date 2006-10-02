@@ -8,7 +8,7 @@
     <!-- Author: $Author$ -->
     
     <import resource="classpath*:mandatory/*.xml"/>
-    <import resource="classpath:template/server/web/xfire-server-config.xml"/>
+    <import resource="classpath:etc/template/server/web/xfire-server-config.xml"/>
     
     <bean id="beanNameHandlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
 </beans>

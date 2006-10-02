@@ -67,13 +67,14 @@ public class RemotingBenchmark {
      * Path where the big text file can be found.
      */
     public static final String FILE_PATH_OF_BIG_TEXT_FILE 
-        = "files/gulliverstravels.txt";
+        = "etc/files/gulliverstravels.txt";
 
     /**
      * Paths where the config files can be found.
      */
     public static final String[] CONFIG_LOCATIONS 
-        = {"classpath*:mandatory/*.xml", "client/benchmark-config.xml"};
+        = {"classpath*:mandatory/*.xml", 
+           "scenarios/client/benchmark-config.xml"};
 
     /**
      * This counter declares how many times on warm up a test must be repeated.
