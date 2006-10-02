@@ -52,8 +52,8 @@ public final class Controller {
      */
     public static final String[] INCLUSIVE_CONFIG_LOCATION 
         = {"classpath*:mandatory/*.xml", 
-            "classpath*:daemon_manager_demos/common/*.xml", 
-            "classpath*:daemon_manager_demos/controller/*.xml"};
+            "classpath*:scenarios/daemon_manager_demos/common/*.xml", 
+            "classpath*:scenarios/daemon_manager_demos/controller/*.xml"};
 
     /**
      * Flag to tell application context if bean definition overriding is 
