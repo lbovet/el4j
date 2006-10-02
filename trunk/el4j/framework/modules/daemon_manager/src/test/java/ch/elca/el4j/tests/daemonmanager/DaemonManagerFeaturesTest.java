@@ -127,7 +127,9 @@ public class DaemonManagerFeaturesTest extends TestCase {
         }
         assertEquals("Unexpected number of running daemons.", 36, 
             daemonManager.getNumberOfRunningDaemons());
-        sleep(daemonManager.getMaxDaemonStartupDelay());
+        // Wait two seconds until daemon threads started and
+        // daemons has been initialized.
+        sleep(2000);
         
         // Check action lists.
         actionList = ActionRegister.getDaemonsByAction(DaemonAction.CLEANUP);
