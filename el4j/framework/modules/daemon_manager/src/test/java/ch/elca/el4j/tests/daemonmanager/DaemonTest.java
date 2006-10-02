@@ -143,6 +143,7 @@ public class DaemonTest extends TestCase {
     private void checkFastJobPeriodicallyDaemonWhileRunning(
         ActorDaemon daemon, final long periodicity, final long numberOfRuns) {
         sleep(periodicity / 2);
+        long nextWakeUpTime = System.currentTimeMillis() + periodicity;
         int i = 1;
         while (i <= numberOfRuns / 2) {
             int runJobCounter = daemon.getRunJobCounter();
@@ -150,7 +151,8 @@ public class DaemonTest extends TestCase {
                 runJobCounter);
             s_logger.info("Daemon information while running:\n" 
                 + daemon.getInformation());
-            sleep(periodicity);
+            sleep(nextWakeUpTime - System.currentTimeMillis());
+            nextWakeUpTime += periodicity;
             i++;
             checkMethodInvocationOrder(daemon, true, true, true, false, false);
         }
@@ -161,7 +163,8 @@ public class DaemonTest extends TestCase {
                 runJobCounter);
             s_logger.info("Daemon information while running:\n" 
                 + daemon.getInformation());
-            sleep(periodicity);
+            sleep(nextWakeUpTime - System.currentTimeMillis());
+            nextWakeUpTime += periodicity;
             i++;
             checkMethodInvocationOrder(daemon, true, true, true, true, false);
         }
@@ -237,13 +240,16 @@ public class DaemonTest extends TestCase {
             + daemon.getInformation());
         daemon.startDaemon();
         sleep(APPROXIMATED_PERIODICITY / 2);
+        long nextWakeUpTime
+            = System.currentTimeMillis() + APPROXIMATED_PERIODICITY;
         for (int i = 1; i < NUMBER_OF_RUNS; i++) {
             int runJobCounter = daemon.getRunJobCounter();
             assertEquals("Job of daemon was not executed as expected.", i, 
                 runJobCounter);
             s_logger.info("Daemon information while running:\n" 
                 + daemon.getInformation());
-            sleep(APPROXIMATED_PERIODICITY);
+            sleep(nextWakeUpTime - System.currentTimeMillis());
+            nextWakeUpTime += APPROXIMATED_PERIODICITY;
         }
         daemon.doStop();
         daemon.joinDaemon(DAEMON_JOIN_TIMEOUT);
