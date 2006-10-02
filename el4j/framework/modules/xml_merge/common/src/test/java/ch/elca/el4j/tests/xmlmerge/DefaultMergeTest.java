@@ -292,7 +292,7 @@ public class DefaultMergeTest extends TestCase {
         ApplicationContext appContext = new ModuleApplicationContext(
             new String[] { 
                 "classpath*:mandatory/*.xml",
-                "classpath*:template/xmlmerge-config.xml"
+                "classpath*:etc/template/xmlmerge-config.xml"
             }, null, false, null);
         
         Resource r = (Resource) appContext.getBean("merged");
