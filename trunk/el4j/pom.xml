@@ -21,6 +21,7 @@
             java.util.HashMap with java.util.LinkedHashMap in component
             artifacts "maven-project", "maven-artifact" and
             "maven-artifact-manager".
+       + Patch http://jira.codehaus.org/browse/MNG-2583
        =====================================================================
     -->
 
@@ -417,7 +418,7 @@
                     <executions>
                         <execution>
                             <id>actualizeEclipseProjects</id>
-                            <phase>initialize</phase>
+                            <phase>test-compile</phase>
                             <goals>
                                 <goal>eclipse</goal>
                             </goals>
@@ -1587,6 +1588,6 @@
         
         <!-- Used Maven version -->
         <el4j.java.version>1.5</el4j.java.version>
-        <el4j.maven.version>2.1-20060906.100315-1</el4j.maven.version>
+        <el4j.maven.version>2.1-SNAPSHOT</el4j.maven.version>
     </properties>
 </project>
