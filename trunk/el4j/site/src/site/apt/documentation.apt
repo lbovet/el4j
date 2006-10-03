@@ -9,25 +9,27 @@ Documentation
 
 * EL4J core documentation
 
+    * {{{docs/pdf/ReferenceDoc.pdf}
+      EL4J Reference Documentation (PDF)}}
+
+    * {{{docs/pdf/...}
+      A presentation about our use of Maven: TBD (PDF)}}    
+      
+    * EL4J Annotation Cheat Sheets {{{docs/pdf/ejb3.0-persistence-anno-cheat_v1_0.pdf} Standard }}  _  
+       {{{docs/pdf/el4j-anno-cheat_v1_0.pdf} EL4J-Additions }}  
+      
+* Presentations/ Articles/ Blogs
     * {{{docs/pdf/EL4J_IntroductionArticle1.pdf}
       EL4J Introduction Article for Spring Architects (PDF)}}
     
     * {{{http://www.elca.ch/resources/EL4J.pdf}
-      EL4J Introduction Article (in German) (PDF)}}
-    
-    * {{{docs/pdf/ReferenceDoc.pdf}
-      EL4J Reference Documentation (PDF)}}
-    
-    * EL4J Annotation Cheat Sheets {{{docs/pdf/ejb3.0-persistence-anno-cheat_v1_0.pdf} Standard }} 
-       {{{docs/pdf/el4j-anno-cheat_v1_0.pdf} EL4J-Additions }}  
-      
-* Presentations/ Marketing/ Blogs
+      EL4J Introduction Article (in German) (PDF)}}   
 
     * {{{docs/pdf/progressiveEl4JDatasheet_v0_8.pdf}
       Emerging Datasheet (TBD: replace with final version) }}
     
-    * {{{docs/pdf/...}
-      A presentation about our use of Maven: TBD (PDF)}}    
+    * {{{docs/pdf/IdentityFixerAnnouncement.pdf}
+      An article about the identity fixer (to preserve object identities over process boundaries) (PDF)}}   
       
     * {{{http://www.jugs.ch/html/events/slides/050830_LightDiContainer.pdf}
       A Spring presentation at JUG Switzerland, with a section on EL4J (PDF)}}    
@@ -37,6 +39,12 @@ Documentation
 
     * (A bit dated) {{{docs/pdf/EL4JFeatures.pdf}
       Short presentation with essential features of EL4J (PDF)}}
+
+* Links to external documenation (selection)
+
+    * Spring documentation {{{http://www.springframework.org/documentation}}}
+
+    * Maven 2 Book {{{http://www.mergere.com/m2book_download.jsp}}}
 
       
 * Release notes
