@@ -11,8 +11,9 @@ Overview
   
   J2EE is a very powerful development platform, with an enormous collection of tools and frameworks. Unfortunately, the price to pay for this vast set of facilities is complexity. EL4J makes it easy to use best-of-breed J2EE technologies.
 
-  Through the application templates, a developer has a sample application running within 10 minutes: it shows the typical development of all the
-  layers.
+  Through the application templates, a developer has a sample application running within 10 minutes: it shows the typical use of the frameworks and
+  the organization of the layers. Get to the point with your application more
+  rapidly.
 
   The following components make up EL4J:
   
