@@ -15,10 +15,14 @@ Documentation
     * {{{docs/pdf/...}
       A presentation about our use of Maven: TBD (PDF)}}    
       
-    * EL4J Annotation Cheat Sheets {{{docs/pdf/ejb3.0-persistence-anno-cheat_v1_0.pdf} Standard }}  _  
+    * EL4J Annotation Cheat Sheets {{{docs/pdf/ejb30-persistence-anno-cheat_v1_0.pdf} Standard }}  /   
        {{{docs/pdf/el4j-anno-cheat_v1_0.pdf} EL4J-Additions }}  
       
+    * {{{docs/pdf/UniqueEl4jFeatures.pdf} List of unique EL4J features}}
+      
+   
 * Presentations/ Articles/ Blogs
+
     * {{{docs/pdf/EL4J_IntroductionArticle1.pdf}
       EL4J Introduction Article for Spring Architects (PDF)}}
     

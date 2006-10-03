@@ -5,10 +5,10 @@
  15 Aug 2006
  -----
 
-License
+License 
 
-  For the time being, EL4J is published under the 
-  {{{http://www.gnu.org/licenses/}GPL version 2.0}}.
+  <<New!>> EL4J is published under the  
+  {{{http://www.gnu.org/licenses/}<<L>>GPL version 2.0}}.
 
   We also plans to try to submit parts of EL4J as contribution to the 
   Spring framework. Should these be accepted as such, they will of course 
