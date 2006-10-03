@@ -360,8 +360,8 @@
                     <artifactId>maven-install-plugin</artifactId>
                     <!--
                         Due to bugs fix built snapshot version is used.
-                           * maven-install-plugin (revision 448538 + patch http://jira.codehaus.org/browse/MINSTALL-34)
-                           * archiva (revision 439992)
+                           * maven-install-plugin (revision 427494 + patch http://jira.codehaus.org/browse/MINSTALL-34)
+                           * archiva (revision 439966)
                     -->
                     <version>2.2-20060922.131747-1</version>
                 </plugin>
@@ -486,7 +486,7 @@
                         
                         
                         Due to bugs fix built snapshot version is used.
-                           * maven-javadoc-plugin (revision 439622)
+                           * maven-javadoc-plugin (revision 450405 + patch http://jira.codehaus.org/browse/MJAVADOC-93)
                     -->
                     <version>${version.maven-javadoc-plugin}</version>
                     <configuration>
@@ -503,6 +503,7 @@
                             <link>${javadoc.link.jdk}</link>
                             <link>${javadoc.link.spring}</link>
                         </links>
+                        <header>${javadoc.header}</header>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -629,6 +630,7 @@
                         <link>${javadoc.link.jdk}</link>
                         <link>${javadoc.link.spring}</link>
                     </links>
+                    <header>${javadoc.header}</header>
                 </configuration>
                 <inherited>true</inherited>
             </plugin>
@@ -1571,6 +1573,7 @@
         <javadoc.stylesheet.path>${el4j.home}/external/etc/javadoc/stylesheet.css</javadoc.stylesheet.path>
         <javadoc.link.jdk>http://java.sun.com/j2se/${el4j.java.version}/docs/api</javadoc.link.jdk>
         <javadoc.link.spring>http://static.springframework.org/spring/docs/2.0.x/api</javadoc.link.spring>
+        <javadoc.header><![CDATA[&lt;script type='text/javascript'&gt;function removeKeyword(str) { i = str.indexOf(':'); str = str.substring(i+1); i = str.length; str = str.substring(0, i-1); return str; } function removeHead (str) { v=str.substring(42); return v.substring(0, v.length-2); } function printFileStatus (url_kw, revision_kw, date_kw, author_kw) { document.write ('&lt;br/&gt;&lt;dl&gt;&lt;dt&gt;&lt;b&gt;File-location:&lt;/b&gt;&lt;/dt&gt;&lt;dd&gt;&lt;a href="http://svn.sourceforge.net/viewcvs.cgi/'); document.write(removeHead(url_kw)); document.write('"&gt;'); document.write(removeHead(url_kw)); document.write('&lt;/a&gt;&lt;/dd&gt;&lt;/dl&gt;'); document.write('&lt;dl&gt;&lt;dt&gt;&lt;b&gt;Last check-in date &lt;/b&gt;'); document.write(removeKeyword(date_kw)); document.write('&lt;b&gt; by &lt;/b&gt;'); document.write(removeKeyword(author_kw)); document.write('&lt;b&gt; for revision &lt;/b&gt;'); document.write(removeKeyword(revision_kw)); document.write('&lt;/dt&gt;&lt;/dl&gt;'); } &lt;/script&gt;]]></javadoc.header>
         
         <!-- Checkstyle config -->
         <checkstyle.config.location>${el4j.home}/external/etc/checkstyle/checks.xml</checkstyle.config.location>
@@ -1581,7 +1584,7 @@
         <version.maven-project-info-reports-plugin>2.0.1</version.maven-project-info-reports-plugin>
         <version.maven-checkstyle-plugin>2.1</version.maven-checkstyle-plugin>
         <version.maven-surefire-report-plugin>2.1-20060925.113400-3</version.maven-surefire-report-plugin>
-        <version.maven-javadoc-plugin>2.1-20060907.065424-2</version.maven-javadoc-plugin>
+        <version.maven-javadoc-plugin>2.1-20061003.094811-3</version.maven-javadoc-plugin>
         <version.maven-jxr-plugin>2.1-20060911.142523-1</version.maven-jxr-plugin>
         <version.taglist-maven-plugin>2.0</version.taglist-maven-plugin>
         <version.maven-plugin-plugin>2.2-20060925.131529-1</version.maven-plugin-plugin>
