@@ -86,7 +86,7 @@ public class TcpForwarder implements Runnable {
      *            Forwarding port
      */
     public TcpForwarder(int listenport, int targetport) {
-        this(listenport, new InetSocketAddress(localhost(), targetport));
+        this(listenport, new InetSocketAddress(targetport));
     }
 
     /**
@@ -114,18 +114,6 @@ public class TcpForwarder implements Runnable {
     }
 
     /**
-     * @return an InetAddress for the loopback-interface
-     */
-    static InetAddress localhost() {
-        try {
-            return Inet4Address.getByAddress(new byte[] {127, 0, 0, 1});
-        } catch (UnknownHostException e) {
-            s_logger.warn("Unknown host", e);
-            return null;
-        }
-    }
-
-    /**
      * Closes a selectable channel.
      * 
      * @param c
@@ -144,7 +132,7 @@ public class TcpForwarder implements Runnable {
         while (true) {
             try {
                 m_ssc = ServerSocketChannel.open();
-                m_ssc.socket().bind(new InetSocketAddress(localhost(), m_port));
+                m_ssc.socket().bind(new InetSocketAddress(m_port));
             } catch (IOException e) {
                 s_logger.warn("binding to socket failed, aborting ...", e);
                 return;
