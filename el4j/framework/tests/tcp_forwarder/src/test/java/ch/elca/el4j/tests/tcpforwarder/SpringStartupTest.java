@@ -137,57 +137,68 @@ public class SpringStartupTest extends TestCase {
 
         boolean db2 = dbName.equals("db2");
 
-        TcpForwarder ti;
-        if (db2) {
-            ti = new TcpForwarder(INPUT_PORT, DERBY_DEST_PORT);
-        } else {
-            SocketAddress target = new InetSocketAddress(Inet4Address
-                .getByName(ORACLE_SERVER_NAME), ORACLE_DEST_PORT);
-            ti = new TcpForwarder(INPUT_PORT, target);
-        }
-
-        Thread.sleep(DELAY);
-        
-        // Cutting the connection to the database
-        ti.unplug();
-        
-        KeywordDao dao = null;
-        
+        TcpForwarder ti = null;
         try {
-            dao = (KeywordDao) getApplicationContext()
-                .getBean("keywordDao");
-            s_logger.debug(dao.getClass().getName());
-        } catch (Exception e) {
-            fail("Spring failed to start up...");
+            if (db2) {
+                ti = new TcpForwarder(INPUT_PORT, DERBY_DEST_PORT);
+            } else {
+                SocketAddress target = new InetSocketAddress(Inet4Address
+                    .getByName(ORACLE_SERVER_NAME), ORACLE_DEST_PORT);
+                ti = new TcpForwarder(INPUT_PORT, target);
+            }
+    
+            Thread.sleep(DELAY);
+            
+            // Cutting the connection to the database
+            ti.unplug();
+            
+            KeywordDao dao = null;
+            
+            try {
+                dao = (KeywordDao) getApplicationContext()
+                    .getBean("keywordDao");
+                s_logger.debug(dao.getClass().getName());
+            } catch (Exception e) {
+                fail("Spring failed to start up...");
+            }
+            
+            // Establishing the connection to the database
+            ti.plug();
+            
+            List<Keyword> keywordsList = dao.findAll();
+            for (Keyword k : keywordsList) {
+                dao.delete(k.getKey());
+            }
+            Keyword newKeyword = new Keyword();
+            newKeyword.setName("NewKeyword");
+            newKeyword.setDescription("NewKeyword description");
+            
+            dao.saveOrUpdate(newKeyword);
+            
+            Keyword newKeyword2 = new Keyword();
+            newKeyword2.setName("NewKeyword");
+            newKeyword.setDescription("NewKeyword 2 description");
+            
+            try {
+                dao.saveOrUpdate(newKeyword2);
+            } catch (DataIntegrityViolationException e) {
+                s_logger.debug("Expected exception catched.");
+            } catch (Exception e) {
+                fail("Exception translation has not been performed correctly.");
+            }
+            
+            // Unplugging again
+            ti.unplug();
+            ti = null;
+            s_logger.debug("TEST OK");
+        } finally {
+            if (ti != null) {
+                try {
+                    ti.unplug();
+                } catch (RuntimeException e) {
+                    s_logger.debug("Swallowed exception in finally block.", e);
+                }
+            }
         }
-        
-        // Establishing the connection to the database
-        ti.plug();
-        
-        List<Keyword> keywordsList = dao.findAll();
-        for (Keyword k : keywordsList) {
-            dao.delete(k.getKey());
-        }
-        Keyword newKeyword = new Keyword();
-        newKeyword.setName("NewKeyword");
-        newKeyword.setDescription("NewKeyword description");
-        
-        dao.saveOrUpdate(newKeyword);
-        
-        Keyword newKeyword2 = new Keyword();
-        newKeyword2.setName("NewKeyword");
-        newKeyword.setDescription("NewKeyword 2 description");
-        
-        try {
-            dao.saveOrUpdate(newKeyword2);
-        } catch (DataIntegrityViolationException e) {
-            s_logger.debug("Expected exception catched.");
-        } catch (Exception e) {
-            fail("Exception translation has not been performed correctly.");
-        }
-        
-        // Unplugging again
-        ti.unplug();
-        s_logger.debug("TEST OK");
     }
 }
