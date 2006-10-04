@@ -95,62 +95,73 @@ public class WebpageTest extends WebTestCase {
      * @throws Exception
      */
     public void testForwarder() throws Exception {
-
-        SocketAddress target 
-            = new InetSocketAddress(Inet4Address.getByName(DEST_URL), 
-                    DEST_PORT);
-        TcpForwarder ti = new TcpForwarder(INPUT_PORT, target);
-
-        Thread.sleep(DELAY);
-        s_logger.debug("testing if '" + DEST_URL + "' is up...");
-        Thread.sleep(DELAY);
+        TcpForwarder ti = null;
         try {
-            beginAt("/"); 
-        } catch (RuntimeException e) {
-            fail("Page not reachable -> Test FAILED");
+            SocketAddress target 
+                = new InetSocketAddress(Inet4Address.getByName(DEST_URL), 
+                        DEST_PORT);
+            ti = new TcpForwarder(INPUT_PORT, target);
+    
+            Thread.sleep(DELAY);
+            s_logger.debug("testing if '" + DEST_URL + "' is up...");
+            Thread.sleep(DELAY);
+            try {
+                beginAt("/"); 
+            } catch (RuntimeException e) {
+                fail("Page not reachable -> Test FAILED");
+            }
+            
+            assertLinkPresentWithText("Newsletter");
+            s_logger.debug("TEST OK");
+            Thread.sleep(DELAY);
+    
+            s_logger.debug("Cutting Link to '" + DEST_URL + "'");
+            ti.unplug();
+            Thread.sleep(DELAY);
+    
+            // Check if Runtime Exception occurs.  
+            try {
+                beginAt("/");
+            } catch (RuntimeException e) {
+                s_logger.debug("Page not reachable");
+                m_gotException = 1;
+            }
+            
+            if (m_gotException != 1) {
+                fail("Test FAILED, connection still up!");
+            }
+    
+            s_logger.debug("TEST OK");
+            Thread.sleep(DELAY);
+    
+            s_logger.debug("Restoring Link");
+            ti.plug();
+    
+            Thread.sleep(DELAY);
+            s_logger.debug("testing if '" + DEST_URL + "' is up again");
+            Thread.sleep(DELAY);
+    
+            try {
+                beginAt("/");
+            } catch (RuntimeException e) {
+                fail("Page not reachable -> Test FAILED");
+            }
+    
+            assertLinkPresentWithText("Newsletter");
+            
+            // Unplugging again
+            ti.unplug();
+            ti = null;
+            s_logger.debug("TEST OK");
+        } finally {
+            if (ti != null) {
+                try {
+                    ti.unplug();
+                } catch (RuntimeException e) {
+                    s_logger.debug("Swallowed exception in finally block.", e);
+                }
+            }
         }
-        
-        assertLinkPresentWithText("Newsletter");
-        s_logger.debug("TEST OK");
-        Thread.sleep(DELAY);
-
-        s_logger.debug("Cutting Link to '" + DEST_URL + "'");
-        ti.unplug();
-        Thread.sleep(DELAY);
-
-        // Check if Runtime Exception occurs.  
-        try {
-            beginAt("/");
-        } catch (RuntimeException e) {
-            s_logger.debug("Page not reachable");
-            m_gotException = 1;
-        }
-        
-        if (m_gotException != 1) {
-            fail("Test FAILED, connection still up!");
-        }
-
-        s_logger.debug("TEST OK");
-        Thread.sleep(DELAY);
-
-        s_logger.debug("Restoring Link");
-        ti.plug();
-
-        Thread.sleep(DELAY);
-        s_logger.debug("testing if '" + DEST_URL + "' is up again");
-        Thread.sleep(DELAY);
-
-        try {
-            beginAt("/");
-        } catch (RuntimeException e) {
-            fail("Page not reachable -> Test FAILED");
-        }
-
-        assertLinkPresentWithText("Newsletter");
-        
-        // Unplugging again
-        ti.unplug();
-        s_logger.debug("TEST OK");
     }
 }
 

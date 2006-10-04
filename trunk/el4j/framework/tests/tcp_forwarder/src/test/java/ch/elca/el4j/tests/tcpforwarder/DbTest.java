@@ -94,86 +94,95 @@ public class DbTest extends TestCase {
         
         boolean db2 = dbName.equals("db2");
         
-        TcpForwarder ti;
-        if (db2) {
-            ti = new TcpForwarder(INPUT_PORT, DERBY_DEST_PORT);
-        } else {
-            SocketAddress target = new InetSocketAddress(Inet4Address
-                .getByName(ORACLE_SERVER_NAME), ORACLE_DEST_PORT);
-            ti = new TcpForwarder(INPUT_PORT, target);
-        }
-        
-        HibernateKeywordDaoTest keywordTest = new HibernateKeywordDaoTest();
-        keywordTest.setName("testInsertKeywords");
-        TestResult testResult = null;
-        
-        Thread.sleep(DELAY);
-        if (db2) {
-            s_logger.debug("testing if port '" + DERBY_DEST_PORT 
-                + "' is up...");
-        } else {
-            s_logger.debug("testing if server '" + ORACLE_SERVER_NAME
-                + "' is up...");
-        }
-        Thread.sleep(DELAY);
-        
-        testResult = keywordTest.run();
-        if (!testResult.wasSuccessful()) {
-            fail("Database not reachable -> Test FAILED");
-        }
+        TcpForwarder ti = null;
+        try {
+            if (db2) {
+                ti = new TcpForwarder(INPUT_PORT, DERBY_DEST_PORT);
+            } else {
+                SocketAddress target = new InetSocketAddress(Inet4Address
+                    .getByName(ORACLE_SERVER_NAME), ORACLE_DEST_PORT);
+                ti = new TcpForwarder(INPUT_PORT, target);
+            }
+            
+            HibernateKeywordDaoTest keywordTest = new HibernateKeywordDaoTest();
+            keywordTest.setName("testInsertKeywords");
+            TestResult testResult = null;
+            
+            Thread.sleep(DELAY);
+            if (db2) {
+                s_logger.debug("testing if port '" + DERBY_DEST_PORT 
+                    + "' is up...");
+            } else {
+                s_logger.debug("testing if server '" + ORACLE_SERVER_NAME
+                    + "' is up...");
+            }
+            Thread.sleep(DELAY);
+            
+            testResult = keywordTest.run();
+            if (!testResult.wasSuccessful()) {
+                fail("Database not reachable -> Test FAILED");
+            }
+                    
+            s_logger.debug("TEST OK");
+            Thread.sleep(DELAY);
+            
+            if (db2) {
+                s_logger.debug("Cutting Link to port '" + DERBY_DEST_PORT + "'");
+            } else {
+                s_logger.debug("Cutting Link to server '" + ORACLE_SERVER_NAME
+                    + "'");
+            }
+            ti.unplug();
+            Thread.sleep(DELAY);
+            
+            testResult = null;
+            keywordTest = null;
+            keywordTest = new HibernateKeywordDaoTest();
+            keywordTest.setName("testInsertKeywords");
+            
+            testResult = keywordTest.run();
+            if (testResult.wasSuccessful()) {
+                fail("Connection is still up");
+            }
                 
-        s_logger.debug("TEST OK");
-        Thread.sleep(DELAY);
-        
-        if (db2) {
-            s_logger.debug("Cutting Link to port '" + DERBY_DEST_PORT + "'");
-        } else {
-            s_logger.debug("Cutting Link to server '" + ORACLE_SERVER_NAME
-                + "'");
-        }
-        ti.unplug();
-        Thread.sleep(DELAY);
-        
-        testResult = null;
-        keywordTest = null;
-        keywordTest = new HibernateKeywordDaoTest();
-        keywordTest.setName("testInsertKeywords");
-        
-        testResult = keywordTest.run();
-        if (testResult.wasSuccessful()) {
-            fail("Connection is still up");
-        }
-            
-        s_logger.debug("TEST OK");
-        Thread.sleep(DELAY);
+            s_logger.debug("TEST OK");
+            Thread.sleep(DELAY);
 
-        s_logger.debug("Restoring Link");
-        ti.plug();
-        
-        Thread.sleep(DELAY);
-        if (db2) {
-            s_logger.debug("testing if port '" + DERBY_DEST_PORT
-                + "' is up again");
-        } else {
-            s_logger.debug("testing if server '" + ORACLE_SERVER_NAME
-                + "' is up again");
-        }
-        Thread.sleep(DELAY);
-        
-        testResult = null;
-        keywordTest = null;
-        keywordTest = new HibernateKeywordDaoTest();
-        keywordTest.setName("testInsertKeywords");
-        testResult = keywordTest.run();
-        
-        if (!testResult.wasSuccessful()) {
-            fail("Database not reachable -> Test FAILED");
-        }
+            s_logger.debug("Restoring Link");
+            ti.plug();
             
-        // Unplugging again
-        ti.unplug();
-        s_logger.debug("TEST OK");
-
+            Thread.sleep(DELAY);
+            if (db2) {
+                s_logger.debug("testing if port '" + DERBY_DEST_PORT
+                    + "' is up again");
+            } else {
+                s_logger.debug("testing if server '" + ORACLE_SERVER_NAME
+                    + "' is up again");
+            }
+            Thread.sleep(DELAY);
+            
+            testResult = null;
+            keywordTest = null;
+            keywordTest = new HibernateKeywordDaoTest();
+            keywordTest.setName("testInsertKeywords");
+            testResult = keywordTest.run();
+            
+            if (!testResult.wasSuccessful()) {
+                fail("Database not reachable -> Test FAILED");
+            }
+                
+            // Unplugging again
+            ti.unplug();
+            ti = null;
+            s_logger.debug("TEST OK");
+        } finally {
+            if (ti != null) {
+                try {
+                    ti.unplug();
+                } catch (RuntimeException e) {
+                    s_logger.debug("Swallowed exception in finally block.", e);
+                }
+            }
+        }
     }
-    
 }
