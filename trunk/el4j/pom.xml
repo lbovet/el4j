@@ -871,13 +871,6 @@
             <name>${distmgt.snapshot-repository.name.external}</name>
             <url>${distmgt.snapshot-repository.url.external}</url>
         </snapshotRepository>
-
-        <!-- For testing only! -->
-        <site>
-            <id>pcmzeSite</id>
-            <name>Local website tryout location of MZE.</name>
-            <url>scp://pcmze/maven2site</url>
-        </site>
     </distributionManagement>
     <dependencyManagement>
         <dependencies>
@@ -1465,6 +1458,14 @@
         <distmgt.repository.name.internal>Internal EL4J repository</distmgt.repository.name.internal>
         <distmgt.repository.url.internal>scp://leaffy/home/java/maven2repository</distmgt.repository.url.internal>
 
+        <distmgt.site.id.external>sshSourceForgeEL4J</distmgt.site.id.external>
+        <distmgt.site.name.external>SourceForge EL4J website</distmgt.site.name.external>
+        <distmgt.site.url.external>scp://shell.sourceforge.net/home/groups/e/el/el4j/htdocs</distmgt.site.url.external>
+
+        <distmgt.site.id.internal>sshLeaffy</distmgt.site.id.internal>
+        <distmgt.site.name.internal>Internal EL4J website</distmgt.site.name.internal>
+        <distmgt.site.url.internal>scp://leaffy/home/java/el4j/website/internal</distmgt.site.url.internal>
+
         <distmgt.snapshot-repository.id.external>ftpEl4ElcaServicesSnapshot</distmgt.snapshot-repository.id.external>
         <distmgt.snapshot-repository.name.external>External EL4J snapshot repository</distmgt.snapshot-repository.name.external>
         <distmgt.snapshot-repository.url.external>ftp://el4.elca-services.ch/htdocs/el4j/maven2snapshots</distmgt.snapshot-repository.url.external>
@@ -1473,6 +1474,13 @@
         <distmgt.snapshot-repository.name.internal>Internal EL4J snapshot repository</distmgt.snapshot-repository.name.internal>
         <distmgt.snapshot-repository.url.internal>scp://leaffy/home/java/maven2snapshots</distmgt.snapshot-repository.url.internal>
 
+        <distmgt.snapshot-site.id.external>sshLeaffy</distmgt.snapshot-site.id.external>
+        <distmgt.snapshot-site.name.external>External EL4J snapshot website</distmgt.snapshot-site.name.external>
+        <distmgt.snapshot-site.url.external>scp://leaffy/home/java/el4j/snapshot/website/external</distmgt.snapshot-site.url.external>
+
+        <distmgt.snapshot-site.id.internal>sshLeaffy</distmgt.snapshot-site.id.internal>
+        <distmgt.snapshot-site.name.internal>Internal EL4J snapshot website</distmgt.snapshot-site.name.internal>
+        <distmgt.snapshot-site.url.internal>scp://leaffy/home/java/el4j/snapshot/website/internal</distmgt.snapshot-site.url.internal>
 
 
         <!-- EL4J framework plugin version numbers -->
