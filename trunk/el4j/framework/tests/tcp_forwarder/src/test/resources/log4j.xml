@@ -10,16 +10,16 @@
         </layout>
     </appender>
 
-    <appender name="logfile" class="org.apache.log4j.DailyRollingFileAppender">
+    <!--appender name="logfile" class="org.apache.log4j.DailyRollingFileAppender">
         <param name="File" value="logs/el4j_security.log"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern"
                 value="%d %5p [%c] %m%n"/>
         </layout>
-    </appender>
+    </appender-->
 
-    <logger name="ch.elca.el4j.tcpred">
+    <logger name="ch.elca.el4j.services.tcpforwarder">
         <level value="ALL"/>
     </logger>
 
@@ -27,7 +27,7 @@
         <level value="WARN"/>
     </logger>
 
-    <logger name="ch.elca.el4j.tcpred.tests">
+    <logger name="ch.elca.el4j.tests.tcpforwarder">
         <level value="ALL"/>
     </logger>
 
@@ -38,9 +38,7 @@
 
     <root>
         <level value="WARN"/>
-<!--
-        <appender-ref ref="logfile"/>
--->
+        <!--appender-ref ref="logfile"/-->
         <appender-ref ref="console"/>
     </root>
 </log4j:configuration>
