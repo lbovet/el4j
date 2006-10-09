@@ -26,6 +26,7 @@ import java.util.Set;
 import javax.annotation.security.RolesAllowed;
 
 import org.acegisecurity.SecurityConfig;
+import org.springframework.metadata.Attributes;
 
 /**
  * 
@@ -50,9 +51,9 @@ import org.acegisecurity.SecurityConfig;
  *
  * @author Alex Mathey (AMA)
  */
-public class RolesAllowedAnnotationAttributes {
+public class RolesAllowedAnnotationAttributes implements Attributes {
     /**
-     * Get the <code>Secured</code> attributes for a given target class.
+     * Get the <code>RolesAllowed</code> attributes for a given target class.
      *
      * @param target The target method
      *
@@ -64,7 +65,7 @@ public class RolesAllowedAnnotationAttributes {
         Set<SecurityConfig> attributes = new HashSet<SecurityConfig>();
 
         for (Annotation annotation : target.getAnnotations()) {
-            // check for Secured annotations
+            // check for RolesAllowed annotations
             if (annotation instanceof RolesAllowed) {
                 RolesAllowed attr = (RolesAllowed) annotation;
 
