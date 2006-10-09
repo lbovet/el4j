@@ -41,9 +41,5 @@
             <groupId>ch.elca.el4j.apps</groupId>
             <artifactId>refdb-gui-thin-client</artifactId>
         </dependency>
-        <dependency>
-            <groupId>ch.elca.el4j.modules</groupId>
-            <artifactId>module-jmx</artifactId>
-        </dependency>
     </dependencies>
 </project>

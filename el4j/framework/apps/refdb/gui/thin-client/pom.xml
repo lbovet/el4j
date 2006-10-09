@@ -41,7 +41,6 @@
             <groupId>ch.elca.el4j.apps</groupId>
             <artifactId>refdb-gui-common</artifactId>
         </dependency>
-                
         <dependency>
             <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-spring_rcp</artifactId>
