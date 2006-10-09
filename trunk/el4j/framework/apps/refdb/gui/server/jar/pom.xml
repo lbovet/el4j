@@ -29,7 +29,6 @@
             <groupId>ch.elca.el4j.apps</groupId>
             <artifactId>refdb-gui-common</artifactId>
         </dependency>
-                
         <dependency>
             <groupId>ch.elca.el4j.apps</groupId>
             <artifactId>common-database</artifactId>
@@ -37,10 +36,6 @@
         <dependency>
             <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-web-jar</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.elca.el4j.modules</groupId>
-            <artifactId>module-jmx</artifactId>
         </dependency>
     </dependencies>
 </project>
