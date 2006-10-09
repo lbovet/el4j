@@ -28,6 +28,7 @@ import java.util.Date;
 
 /**
  * This class is a simple user interface for using the tcp forwarder.
+ * TODO: Make this class usable. Make it cmd line argument aware.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
