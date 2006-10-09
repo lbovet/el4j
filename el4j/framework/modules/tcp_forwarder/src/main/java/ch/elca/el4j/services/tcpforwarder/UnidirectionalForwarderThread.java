@@ -18,6 +18,8 @@ package ch.elca.el4j.services.tcpforwarder;
 
 import java.nio.channels.SocketChannel;
 
+import ch.elca.el4j.services.tcpforwarder.messages.TcpMessageForwarder;
+
 /**
  * This class represents a receiver forwarding everything it hears.
  * 
@@ -32,11 +34,12 @@ import java.nio.channels.SocketChannel;
  * @author Florian Suess (FLS)
  * @author Alex Mathey (AMA)
  */
-class UnidirectionalForwarder extends TcpForwarder.Receiver {
+public class UnidirectionalForwarderThread extends ReceiverThread {
     /** The socket to forward to.*/
-    SocketChannel m_out;
+    protected final SocketChannel m_out;
+    
     /** Our controller. */
-    Link m_link;
+    protected final Link m_link;
 
     /**
      * @param link
@@ -46,7 +49,8 @@ class UnidirectionalForwarder extends TcpForwarder.Receiver {
      * @param out
      *            the socket to forward to
      */
-    UnidirectionalForwarder(Link link, SocketChannel in, SocketChannel out) {
+    public UnidirectionalForwarderThread(
+        Link link, SocketChannel in, SocketChannel out) {
         super(in);
         m_link = link;
         m_out = out;
@@ -55,7 +59,7 @@ class UnidirectionalForwarder extends TcpForwarder.Receiver {
     /**
      * {@inheritDoc}
      */
-    protected void process(AbstractTcpMsg msg) {
+    protected void process(TcpMessageForwarder msg) {
         super.process(msg);
         msg.forward(m_out);
     }
@@ -71,7 +75,7 @@ class UnidirectionalForwarder extends TcpForwarder.Receiver {
      * {@inheritDoc}
      */
     public String toString() {
-        return getClass().getName() + "[" + m_in.socket().getLocalPort() + ","
-            + m_out.socket().getLocalPort() + "]";
+        return "UnidirectionalForwarder [in=" + m_in.socket().getLocalPort() 
+            + ", out=" + m_out.socket().getLocalPort() + "]";
     }
 }
