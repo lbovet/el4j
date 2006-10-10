@@ -22,17 +22,21 @@
     <logger name="ch.elca.el4j.services.tcpforwarder">
         <level value="ALL"/>
     </logger>
-
-    <logger name="ch.elca.el4j">
-        <level value="WARN"/>
-    </logger>
-
+    
     <logger name="ch.elca.el4j.tests.tcpforwarder">
         <level value="ALL"/>
     </logger>
 
+    <logger name="ch.elca.el4j">
+        <level value="DEBUG"/>
+    </logger>
+    
+    <logger name="org.springframework">
+        <level value="DEBUG"/>
+    </logger>
+
     <logger name="org.apache.log4j">
-        <level value="OFF"/>
+        <level value="WARN"/>
     </logger>
 
 
