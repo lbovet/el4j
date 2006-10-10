@@ -63,11 +63,6 @@
         General attribute definitions.
     -->
     <bean id="attributesCollector" 
-        class="ch.elca.el4j.util.attributes.AttributesCollector">
-        <property name="attributes">
-            <ref local="commonsAttributes"/>
-        </property>
+        class="ch.elca.el4j.util.metadata.attributes.DefaultGenericAttributeCollector">
     </bean>
-    <bean id="commonsAttributes" 
-        class="org.springframework.metadata.commons.CommonsAttributes"/>
 </beans>
