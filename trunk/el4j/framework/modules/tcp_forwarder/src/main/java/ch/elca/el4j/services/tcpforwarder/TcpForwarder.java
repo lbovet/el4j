@@ -113,8 +113,8 @@ public class TcpForwarder implements Runnable {
                     + m_serverSocket.getLocalSocketAddress());
 
                 while (true) {
-                    Socket listenSocket;
-                    Socket targetSocket;
+                    Socket listenSocket = null;
+                    Socket targetSocket = null;
                     try {
                         listenSocket = m_serverSocket.accept();
                         s_logger.debug("Connection accepted; "
@@ -123,6 +123,27 @@ public class TcpForwarder implements Runnable {
                             m_targetAddress.getAddress(), 
                             m_targetAddress.getPort());
                     } catch (IOException e) {
+                        if (listenSocket != null) {
+                            try {
+                                listenSocket.close();
+                            } catch (IOException eInner) {
+                                s_logger.debug(
+                                    "Due to an exception the listening "
+                                    + "socket should be closed, but there was "
+                                    + "an exception while closing it.", eInner);
+                            }
+                        }
+                        if (targetSocket != null) {
+                            try {
+                                targetSocket.close();
+                            } catch (IOException eInner) {
+                                s_logger.debug(
+                                    "Due to an exception the target "
+                                    + "socket should be closed, but there was "
+                                    + "an exception while closing it.", eInner);
+                            }
+                        }
+                        
                         if (m_serverSocket.isClosed()) {
                             s_logger.warn(
                                 "Server socket on local port " 
