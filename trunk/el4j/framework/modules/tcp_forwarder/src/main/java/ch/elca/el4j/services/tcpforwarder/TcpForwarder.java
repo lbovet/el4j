@@ -18,18 +18,14 @@ package ch.elca.el4j.services.tcpforwarder;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.net.SocketAddress;
-import java.nio.channels.ClosedChannelException;
-import java.nio.channels.ServerSocketChannel;
-import java.nio.channels.SocketChannel;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-//Checkstyle: MagicNumber off
 
 /**
  * A TcpForwarder represents a service intended to forward TCP traffic 
@@ -59,42 +55,46 @@ public class TcpForwarder implements Runnable {
     private static Log s_logger 
         = LogFactory.getLog(TcpForwarder.class);
     
-    /** The listen port. */
-    protected int m_port;
-
-    /** The socket address to forward traffic to. */
-    protected SocketAddress m_target;
-
-    /** The set of active links. */
-    protected Set<Link> m_active = Collections.synchronizedSet(
-        new LinkedHashSet<Link>());
-
-    /** The server socket channel. */
-    private ServerSocketChannel m_ssc;
+    /**
+     * The listen port.
+     */
+    protected int m_listenPort;
 
     /**
-     * Creates a new TcpForwarder that listens on port <code>listenport</code>
-     * and forwards all traffic to <code>targetport</code> on 127.0.0.1.
-     * 
-     * @param listenport
-     *            Input port
-     * @param targetport
-     *            Forwarding port
+     * The internet socket address to forward traffic to.
      */
-    public TcpForwarder(int listenport, int targetport) {
-        this(listenport, new InetSocketAddress(targetport));
+    protected InetSocketAddress m_targetAddress;
+
+    /**
+     * The set of active links.
+     */
+    protected Set<Link> m_activeLinks = Collections.synchronizedSet(
+        new LinkedHashSet<Link>());
+
+    /**
+     * The used server socket.
+     */
+    private ServerSocket m_serverSocket = null;
+
+    /**
+     * Forwarder to listen and forward to local ports.
+     * 
+     * @param listenPort Is the input port.
+     * @param targetPort Is the output port.
+     */
+    public TcpForwarder(int listenPort, int targetPort) {
+        this(listenPort, new InetSocketAddress("localhost", targetPort));
     }
 
     /**
-     * Creates a new TcpForwarder that listens on port <code>listenport</code>
-     * and forwards all traffic to <code>target</code>.
+     * Forwarder to listen on local port and forward to given target address.
      * 
-     * @param port    Source port
-     * @param target  Forwarding Socket Address
+     * @param listenPort Is the input port.
+     * @param targetAddress Is the target internet socket address to forward to.
      */
-    public TcpForwarder(int port, SocketAddress target) {
-        m_port = port;
-        m_target = target;
+    public TcpForwarder(int listenPort, InetSocketAddress targetAddress) {
+        m_listenPort = listenPort;
+        m_targetAddress = targetAddress;
         new Thread(this).start();
     }
 
@@ -103,45 +103,58 @@ public class TcpForwarder implements Runnable {
         try {
             while (true) {
                 try {
-                    m_ssc = ServerSocketChannel.open();
-                    m_ssc.socket().bind(new InetSocketAddress(m_port));
+                    m_serverSocket = new ServerSocket(m_listenPort);
                 } catch (IOException e) {
-                    s_logger.warn("Binding to socket failed. Aborting...", e);
+                    s_logger.warn("Binding server socket to local port " 
+                        + m_listenPort + " failed. Aborting...", e);
                     return;
                 }
                 s_logger.debug("Server socket successfully bound to address "
-                    + m_ssc.socket().getLocalSocketAddress());
+                    + m_serverSocket.getLocalSocketAddress());
 
                 while (true) {
-                    SocketChannel in;
-                    SocketChannel out;
+                    Socket listenSocket;
+                    Socket targetSocket;
                     try {
-                        in = m_ssc.accept();
-                        s_logger.debug("Connection accepted");
-                        out = SocketChannel.open(m_target);
-                    } catch (ClosedChannelException e) {
-                        break;
+                        listenSocket = m_serverSocket.accept();
+                        s_logger.debug("Connection accepted; "
+                            + listenSocket.toString());
+                        targetSocket = new Socket(
+                            m_targetAddress.getAddress(), 
+                            m_targetAddress.getPort());
                     } catch (IOException e) {
-                        s_logger.warn("Connection failed. Aborting...", e);
+                        if (m_serverSocket.isClosed()) {
+                            s_logger.warn(
+                                "Server socket on local port " 
+                                + m_listenPort + " closed.", e);
+                            m_serverSocket = null;
+                            break;
+                        }
+                        s_logger.error("Connection from local port " 
+                            + m_listenPort + " to target address " 
+                            + m_targetAddress + " failed. Aborting...", e);
                         return;
                     }
-                    new Link(this, in, out);
+                    new Link(this, listenSocket, targetSocket);
                 }
                 try {
-                    if (m_ssc != null) {
-                        m_ssc.close();
+                    if (m_serverSocket != null) {
+                        m_serverSocket.close();
                     }
                 } catch (IOException e) {
-                    s_logger.warn("Closing server socket channel failed.", e);
+                    s_logger.warn("Closing server socket failed.", e);
                 }
-                m_ssc = null;
+                m_serverSocket = null;
 
                 // wait until we are needed again
                 synchronized (this) {
                     try {
                         wait();
+                        s_logger.debug(
+                            "Tcp forwarder awoken. Will continue work...");
                     } catch (InterruptedException e) {
-                        s_logger.warn("Unexpected exception occurred", e);
+                        s_logger.debug(
+                            "Tcp forwarder interrupted. Will continue work...");
                     }
                 }
             }
@@ -151,7 +164,7 @@ public class TcpForwarder implements Runnable {
     }
 
     /**
-     * stops simulating a total network failure.
+     * Starts forwarding tcp messages.
      */
     public void plug() {
         synchronized (this) {
@@ -160,22 +173,20 @@ public class TcpForwarder implements Runnable {
     }
 
     /** 
-     * simulates a complete network failure by dropping all active connections
-     * and ceasing to accept new ones.
+     * Stops forwarding tcp messages.
      */
     public void unplug() {
         try {
-            if (m_ssc != null) {
-                m_ssc.close();
+            if (m_serverSocket != null) {
+                m_serverSocket.close();
             }
         } catch (IOException e) {
-            s_logger.warn("Closing server socket channel failed.", e);
+            s_logger.warn("Closing server socket failed.", e);
         }
-        synchronized (m_active) {
-            for (Link l : m_active) {
+        synchronized (m_activeLinks) {
+            for (Link l : m_activeLinks) {
                 l.cut();
             }
         }
     }
 }
-//Checkstyle: MagicNumber on

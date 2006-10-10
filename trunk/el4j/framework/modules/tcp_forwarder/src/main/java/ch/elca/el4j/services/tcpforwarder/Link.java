@@ -16,11 +16,8 @@
  */
 package ch.elca.el4j.services.tcpforwarder;
 
-import java.io.IOException;
-import java.nio.channels.SocketChannel;
+import java.net.Socket;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.util.Assert;
 
 /**
@@ -33,85 +30,78 @@ import org.springframework.util.Assert;
  *    "$Author$"
  * );</script>
  *
- * @author Adrian Moos (AMS)
- * @author Florian Suess (FLS)
- * @author Alex Mathey (AMA)
  * @author Martin Zeltner (MZE)
  */
 public class Link {
     /**
-     * Private logger.
+     * The control interface keeping track of <code>this</code>.
      */
-    private static Log s_logger 
-        = LogFactory.getLog(Link.class);
+    protected final TcpForwarder m_tcpForwarder;
     
-    /** The control interface keeping track of <code>this</code>. */
-    final TcpForwarder m_ti;
+    /**
+     * The listen/input socket.
+     */
+    protected final Socket m_listenSocket;
     
-    /** The input socket channel. */
-    final SocketChannel m_in;
+    /**
+     * The target/output socket.
+     */
+    protected final Socket m_targetSocket;
     
-    /** The output socket channel. */
-    final SocketChannel m_out;
+    /**
+     * Is the request forwarder thread (listenSocket -> targetSocket).
+     */
+    protected final UnidirectionalForwarderThread m_requestForwarderThread;
     
-    /** Number of running links. */
-    private int m_running = 2;
+    /**
+     * Is the response forwarder thread (targetSocket -> listenSocket).
+     */
+    protected final UnidirectionalForwarderThread m_responseForwarderThread;
 
     /**
-     * Establishes a forwarding Link between <code>in</code> and
-     * <code>out</code>.
+     * Establishes a forwarding link between <code>listenSocket</code> and
+     * <code>targetSocket</code>.
      * 
-     * @param ti
-     *            the control interface keeping track of <code>this</code>
-     * @param in
-     *            input socket channel
-     * @param out
-     *            output socket channel
+     * @param tcpForwarder
+     *            The control interface keeping track of <code>this</code>.
+     * @param listenSocket Is the listen socket.
+     * @param targetSocket Is the target socket.
      */
-    public Link(TcpForwarder ti, SocketChannel in, SocketChannel out) {
-        Assert.notNull(ti);
-        Assert.notNull(in);
-        Assert.notNull(out);
+    public Link(TcpForwarder tcpForwarder, Socket listenSocket, 
+        Socket targetSocket) {
+        Assert.notNull(tcpForwarder);
+        Assert.notNull(listenSocket);
+        Assert.notNull(targetSocket);
         
-        m_ti = ti;
-        m_in = in;
-        m_out = out;
+        m_tcpForwarder = tcpForwarder;
+        m_listenSocket = listenSocket;
+        m_targetSocket = targetSocket;
 
-        ti.m_active.add(this);
-        new UnidirectionalForwarderThread(this, m_in, m_out).start();
-        new UnidirectionalForwarderThread(this, m_out, m_in).start();
+        m_requestForwarderThread = new UnidirectionalForwarderThread(
+            this, m_listenSocket, m_targetSocket);
+        m_responseForwarderThread = new UnidirectionalForwarderThread(
+            this, m_targetSocket, m_listenSocket);
+        
+        m_tcpForwarder.m_activeLinks.add(this);
+        m_requestForwarderThread.start();
+        m_responseForwarderThread.start();
     }
 
     /**
-     * immediately aborts <code>this</code>.
+     * Immediately aborts <code>this</code>.
      */
     protected void cut() {
-        try {
-            if (m_in != null) {
-                m_in.close();
-            }
-        } catch (IOException e) {
-            s_logger.warn("Closing input socket channel of link '" 
-                + toString() + "' failed.", e);
-        }
-        try {
-            if (m_out != null) {
-                m_out.close();
-            }
-        } catch (IOException e) {
-            s_logger.warn("Closing output socket channel of link '" 
-                + toString() + "' failed.", e);
-        }
-        // the forwarders get a concurrentCloseException
+        m_requestForwarderThread.halt();
+        m_responseForwarderThread.halt();
     }
 
     /**
-     * called by workers to tell <code>this</code> that they are done.
+     * Called by workers to tell <code>this</code> that they are done.
      */
     protected synchronized void done() {
-        m_running--;
-        if (m_running <= 0) {
-            m_ti.m_active.remove(this);
+        if (m_requestForwarderThread.isDone() 
+            && m_responseForwarderThread.isDone()) {
+            m_tcpForwarder.m_activeLinks.remove(this);
         }
     }
     
@@ -120,6 +110,7 @@ public class Link {
      */
     @Override
     public String toString() {
-        return "Link; in=[" + m_in + "], out=[" + m_out + "]";
+        return "Link; in=[" + m_listenSocket + "], out=[" 
+            + m_targetSocket + "]";
     }
 }
