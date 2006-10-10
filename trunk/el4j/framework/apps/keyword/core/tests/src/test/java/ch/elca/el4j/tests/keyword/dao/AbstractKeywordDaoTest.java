@@ -370,36 +370,5 @@ public abstract class AbstractKeywordDaoTest
         assertEquals("The inserted keyword has not been refreshed correctly", 
             keyword.getName(), "Xml");        
     }
-    
-    /**
-     * This test inserts two keywords and executes a query based on an example
-     * keyword on them.
-     */
-    /*
-    public void testFindByExample() {
-        KeywordDao dao = getKeywordDao();
-        Keyword keyword = new Keyword();
-        keyword.setName("Java");
-        keyword.setDescription("Java related documentation");
-        keyword = dao.saveOrUpdate(keyword);
-        
-        Keyword keyword2 = new Keyword();
-        keyword2.setName("C");
-        keyword2.setDescription("C related documentation");
-        keyword2 = dao.saveOrUpdate(keyword2);
-        
-        List<Keyword> list = dao.findByExample(keyword);
-        assertEquals(
-            "Query by example with does not result in one keyword.",
-            1, list.size());
-        
-        for (Keyword k : list) {
-            if (!k.equals(keyword)) {
-                fail("Not expected keyword on query by example.");
-            }
-        }
-        
-    }*/
-  
 }
 //Checkstyle: MagicNumber on
