@@ -120,8 +120,8 @@ public class SpringStartupTest extends TestCase {
             "classpath*:mandatory/*.xml",
             "classpath*:mandatory/keyword/*.xml",
             "classpath*:scenarios/db/raw/*.xml",
-            "classpath*:scenarios/dataaccess/ibatis/*.xml",
-            "classpath*:scenarios/dataaccess/ibatis/keyword/*.xml",
+            "classpath*:scenarios/dataaccess/hibernate/*.xml",
+            "classpath*:scenarios/dataaccess/hibernate/keyword/*.xml",
             "classpath*:optional/interception/transactionJava5Annotations.xml"};
     }
     
