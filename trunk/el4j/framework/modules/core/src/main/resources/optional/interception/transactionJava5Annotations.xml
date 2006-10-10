@@ -63,11 +63,6 @@
         General attribute definitions.
     -->
     <bean id="attributesCollector" 
-        class="ch.elca.el4j.util.attributes.AttributesCollector">
-        <property name="attributes">
-            <ref local="annotations"/>
-        </property>
+        class="ch.elca.el4j.util.metadata.annotations.DefaultGenericAnnotationCollector">
     </bean>
-    <bean id="annotations" 
-        class="ch.elca.el4j.util.metadata.annotations.Annotations"/>
 </beans>
