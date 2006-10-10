@@ -17,9 +17,11 @@
 package ch.elca.el4j.services.tcpforwarder;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -83,7 +85,7 @@ public class TcpForwarder implements Runnable {
      * @param targetPort Is the output port.
      */
     public TcpForwarder(int listenPort, int targetPort) {
-        this(listenPort, new InetSocketAddress("localhost", targetPort));
+        this(listenPort, getLocalSocketAddress(targetPort));
     }
 
     /**
@@ -97,8 +99,29 @@ public class TcpForwarder implements Runnable {
         m_targetAddress = targetAddress;
         new Thread(this).start();
     }
+    
+    /**
+     * @param port Is the local port for the socket.
+     * @return Returns the InetSocketAddress with the given port number for 
+     *         local host.
+     */
+    public static InetSocketAddress getLocalSocketAddress(int port) {
+        InetSocketAddress result = null;
+        try {
+            InetAddress localhost = InetAddress.getLocalHost();
+            result = new InetSocketAddress(localhost, port);
+        } catch (UnknownHostException e) {
+            s_logger.debug("Unable to get the InetAddress of local host.", e);
+        }
+        if (result == null) {
+            result = new InetSocketAddress("localhost", port);
+        }
+        return result;
+    }
 
-    /** this method is not intended to be invoked from outside. */
+    /**
+     * This method is not intended to be invoked from the outside.
+     */
     public void run() {
         try {
             while (true) {
@@ -119,6 +142,8 @@ public class TcpForwarder implements Runnable {
                         listenSocket = m_serverSocket.accept();
                         s_logger.debug("Connection accepted; "
                             + listenSocket.toString());
+                        s_logger.debug("Trying to open the target socket at [" 
+                            + m_targetAddress + "].");
                         targetSocket = new Socket(
                             m_targetAddress.getAddress(), 
                             m_targetAddress.getPort());
