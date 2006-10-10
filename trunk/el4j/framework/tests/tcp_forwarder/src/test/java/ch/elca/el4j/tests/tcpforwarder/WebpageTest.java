@@ -95,12 +95,12 @@ public class WebpageTest extends WebTestCase {
      * @throws Exception
      */
     public void testForwarder() throws Exception {
-        TcpForwarder ti = null;
+        TcpForwarder tf = null;
         try {
-            SocketAddress target 
+            InetSocketAddress target 
                 = new InetSocketAddress(Inet4Address.getByName(DEST_URL), 
                         DEST_PORT);
-            ti = new TcpForwarder(INPUT_PORT, target);
+            tf = new TcpForwarder(INPUT_PORT, target);
     
             Thread.sleep(DELAY);
             s_logger.debug("testing if '" + DEST_URL + "' is up...");
@@ -116,7 +116,7 @@ public class WebpageTest extends WebTestCase {
             Thread.sleep(DELAY);
     
             s_logger.debug("Cutting Link to '" + DEST_URL + "'");
-            ti.unplug();
+            tf.unplug();
             Thread.sleep(DELAY);
     
             // Check if Runtime Exception occurs.  
@@ -135,7 +135,7 @@ public class WebpageTest extends WebTestCase {
             Thread.sleep(DELAY);
     
             s_logger.debug("Restoring Link");
-            ti.plug();
+            tf.plug();
     
             Thread.sleep(DELAY);
             s_logger.debug("testing if '" + DEST_URL + "' is up again");
@@ -150,13 +150,13 @@ public class WebpageTest extends WebTestCase {
             assertLinkPresentWithText("Newsletter");
             
             // Unplugging again
-            ti.unplug();
-            ti = null;
+            tf.unplug();
+            tf = null;
             s_logger.debug("TEST OK");
         } finally {
-            if (ti != null) {
+            if (tf != null) {
                 try {
-                    ti.unplug();
+                    tf.unplug();
                 } catch (RuntimeException e) {
                     s_logger.debug("Swallowed exception in finally block.", e);
                 }
