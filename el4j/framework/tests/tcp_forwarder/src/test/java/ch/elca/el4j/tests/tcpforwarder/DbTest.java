@@ -94,14 +94,14 @@ public class DbTest extends TestCase {
         
         boolean db2 = dbName.equals("db2");
         
-        TcpForwarder ti = null;
+        TcpForwarder tf = null;
         try {
             if (db2) {
-                ti = new TcpForwarder(INPUT_PORT, DERBY_DEST_PORT);
+                tf = new TcpForwarder(INPUT_PORT, DERBY_DEST_PORT);
             } else {
-                SocketAddress target = new InetSocketAddress(Inet4Address
+                InetSocketAddress target = new InetSocketAddress(Inet4Address
                     .getByName(ORACLE_SERVER_NAME), ORACLE_DEST_PORT);
-                ti = new TcpForwarder(INPUT_PORT, target);
+                tf = new TcpForwarder(INPUT_PORT, target);
             }
             
             HibernateKeywordDaoTest keywordTest = new HibernateKeywordDaoTest();
@@ -132,7 +132,7 @@ public class DbTest extends TestCase {
                 s_logger.debug("Cutting Link to server '" + ORACLE_SERVER_NAME
                     + "'");
             }
-            ti.unplug();
+            tf.unplug();
             Thread.sleep(DELAY);
             
             testResult = null;
@@ -149,7 +149,7 @@ public class DbTest extends TestCase {
             Thread.sleep(DELAY);
 
             s_logger.debug("Restoring Link");
-            ti.plug();
+            tf.plug();
             
             Thread.sleep(DELAY);
             if (db2) {
@@ -172,13 +172,13 @@ public class DbTest extends TestCase {
             }
                 
             // Unplugging again
-            ti.unplug();
-            ti = null;
+            tf.unplug();
+            tf = null;
             s_logger.debug("TEST OK");
         } finally {
-            if (ti != null) {
+            if (tf != null) {
                 try {
-                    ti.unplug();
+                    tf.unplug();
                 } catch (RuntimeException e) {
                     s_logger.debug("Swallowed exception in finally block.", e);
                 }

@@ -35,20 +35,19 @@ import ch.elca.el4j.util.env.EnvPropertiesUtils;
 import junit.framework.TestCase;
 
 /**
- * 
- * This class tests whether Spring can start if there is no database connection.
+ * Tests whether Spring can start if there is no database connection.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$URL:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/tests/tcp_forwarder/src/test/java/ch/elca/el4j/tests/tcpforwarder/SpringStartupTest.java $",
- *    "$Revision:1114 $",
- *    "$Date:2006-09-08 09:39:24 +0000 (Fr, 08 Sep 2006) $",
- *    "$Author:swisswheel $"
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
  * );</script>
  *
  * @author Alex Mathey (AMA)
+ * @author Martin Zeltner (MZE)
  */
 public class SpringStartupTest extends TestCase {
-    
     /**
      * Delay between the single test steps (in milliseconds).
      */
@@ -137,33 +136,33 @@ public class SpringStartupTest extends TestCase {
 
         boolean db2 = dbName.equals("db2");
 
-        TcpForwarder ti = null;
+        TcpForwarder tf = null;
         try {
             if (db2) {
-                ti = new TcpForwarder(INPUT_PORT, DERBY_DEST_PORT);
+                tf = new TcpForwarder(INPUT_PORT, DERBY_DEST_PORT);
             } else {
-                SocketAddress target = new InetSocketAddress(Inet4Address
+                InetSocketAddress target = new InetSocketAddress(Inet4Address
                     .getByName(ORACLE_SERVER_NAME), ORACLE_DEST_PORT);
-                ti = new TcpForwarder(INPUT_PORT, target);
+                tf = new TcpForwarder(INPUT_PORT, target);
             }
     
             Thread.sleep(DELAY);
             
             // Cutting the connection to the database
-            ti.unplug();
+            tf.unplug();
             
             KeywordDao dao = null;
             
             try {
                 dao = (KeywordDao) getApplicationContext()
                     .getBean("keywordDao");
-                s_logger.debug(dao.getClass().getName());
+                s_logger.debug("Spring context started up successfully.");
             } catch (Exception e) {
                 fail("Spring failed to start up...");
             }
             
             // Establishing the connection to the database
-            ti.plug();
+            tf.plug();
             
             List<Keyword> keywordsList = dao.findAll();
             for (Keyword k : keywordsList) {
@@ -188,13 +187,13 @@ public class SpringStartupTest extends TestCase {
             }
             
             // Unplugging again
-            ti.unplug();
-            ti = null;
+            tf.unplug();
+            tf = null;
             s_logger.debug("TEST OK");
         } finally {
-            if (ti != null) {
+            if (tf != null) {
                 try {
-                    ti.unplug();
+                    tf.unplug();
                 } catch (RuntimeException e) {
                     s_logger.debug("Swallowed exception in finally block.", e);
                 }
