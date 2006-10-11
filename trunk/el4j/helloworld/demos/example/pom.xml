@@ -16,7 +16,7 @@
         <version>0.1-SNAPSHOT</version>
     </parent>
     
-    <artifactId>module-example</artifactId>
+    <artifactId>module-example-demos</artifactId>
     <version>${version.module-example}</version>
     <packaging>jar</packaging>
     <name>Hello World module example demos</name>
