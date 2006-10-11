@@ -605,9 +605,9 @@
     </build>
     <modules>
         <module>skin</module>
-        <module>helpers</module>
         <module>plugins</module>
         <module>framework</module>
+        <module>helpers</module>
         <module>site</module>
     </modules>
     <reporting>
