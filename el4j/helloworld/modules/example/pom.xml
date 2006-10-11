@@ -19,7 +19,7 @@
     <artifactId>module-example</artifactId>
     <version>${version.module-example}</version>
     <packaging>jar</packaging>
-    <name>Hello World module hibernate</name>
+    <name>Hello World module example</name>
     <description>
         Module example of the Hello World project.
     </description>
