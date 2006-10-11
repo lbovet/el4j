@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ch.elca.el4j</groupId>
+        <artifactId>el4j</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+    </parent>
+    
+    <groupId>ch.elca.helloworld-public</groupId>
+    <artifactId>helloworld</artifactId>
+    <version>0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>Hello World</name>
+    <description>Hello World is an example project.</description>
+
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <id>el4jReleaseRepositoryExternal</id>
+            <name>External release repository of the EL4J project</name>
+            <url>http://el4.elca-services.ch/el4j/maven2repository</url>
+        </repository>
+        <repository>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <id>el4jSnapshotRepositoryExternal</id>
+            <name>External snapshot repository of the EL4J project</name>
+            <url>http://el4.elca-services.ch/el4j/maven2snapshots</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <id>el4jReleasePluginRepositoryExternal</id>
+            <name>External release repository of the EL4J project</name>
+            <url>http://el4.elca-services.ch/el4j/maven2repository</url>
+        </pluginRepository>
+        <pluginRepository>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <id>el4jSnapshotPluginRepositoryExternal</id>
+            <name>External snapshot repository of the EL4J project</name>
+            <url>http://el4.elca-services.ch/el4j/maven2snapshots</url>
+        </pluginRepository>
+    </pluginRepositories>
+</project>
