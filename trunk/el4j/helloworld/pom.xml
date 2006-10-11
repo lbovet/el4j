@@ -22,6 +22,12 @@
     <name>Hello World</name>
     <description>Hello World is an example project.</description>
 
+	<modules>
+        <module>modules</module>
+        <module>demos</module>
+        <module>tests</module>
+    </modules>
+
     <repositories>
         <repository>
             <snapshots>
