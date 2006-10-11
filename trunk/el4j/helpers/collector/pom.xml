@@ -33,10 +33,11 @@
                         </goals>
                         <configuration>
                             <rootSourceDirectory>${basedir}/../../../external</rootSourceDirectory>
-            				<sourceDirectoryIncludePatterns>etc</sourceDirectoryIncludePatterns>
+            				<sourceDirectoryIncludePatterns>etc/**</sourceDirectoryIncludePatterns>
             				<sourceFileIncludePatterns>**/*</sourceFileIncludePatterns>
             				<sourceFileExcludePatterns>**/.svn,**/.svn/**/*</sourceFileExcludePatterns>
-            				<targetDirectory>${basedir}/../../../external/helloworld</targetDirectory>
+            				<targetDirectory>${basedir}/../../../external/helloworld/etc</targetDirectory>
+            				<copyFilesOnly>false</copyFilesOnly>
             				<allowOverwrite>false</allowOverwrite>
             				<visitChildProjects>true</visitChildProjects>
                         </configuration>
