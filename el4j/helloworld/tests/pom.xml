@@ -10,7 +10,7 @@
     <!-- $Author$ -->
 
     <parent>
-        <groupId>ch.elca.helloworld.modules</groupId>
+        <groupId>ch.elca.helloworld</groupId>
         <artifactId>helloworld</artifactId>
         <version>0.1-SNAPSHOT</version>
     </parent>
