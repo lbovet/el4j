@@ -24,8 +24,8 @@
 
 	<modules>
         <module>modules</module>
-        <module>demos</module>
         <module>tests</module>
+        <module>demos</module>
     </modules>
 
     <repositories>
