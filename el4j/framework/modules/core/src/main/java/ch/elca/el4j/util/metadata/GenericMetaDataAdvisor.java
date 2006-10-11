@@ -1,7 +1,7 @@
 /*
  * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
  * the spring framework, http://el4j.sf.net
- * Copyright (C) 2006 by ELCA Informatique SA, Av. de la Harpe 22-24,
+ * Copyright (C) 2005 by ELCA Informatique SA, Av. de la Harpe 22-24,
  * 1000 Lausanne, Switzerland, http://www.elca.ch
  *
  * EL4J is published under the GNU General Public License (GPL) Version 2.0.
@@ -14,89 +14,131 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
+
 package ch.elca.el4j.util.metadata;
 
 import java.lang.reflect.Method;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
+import org.aopalliance.aop.Advice;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.aop.support.StaticMethodMatcherPointcutAdvisor;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.util.Assert;
 
-import ch.elca.el4j.core.exceptions.BaseException;
-import ch.elca.el4j.util.codingsupport.Reject;
-import ch.elca.el4j.util.metadata.annotations.DefaultGenericAnnotationCollector;
+import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
+import ch.elca.el4j.util.metadata.annotations.Annotations;
 
 /**
- * <p>
- * This class extends the Spring AOP so that annotations can be read from 
- * methods, classes, interfaces and packages. The Spring 2.0 AOP supports only 
- * advices on methods (cf. The Spring Framework - Reference Documentation, 
- * Chapter 6. Aspect Oriented Programming with Spring,
- * <code><a href="http://static.springframework.org/spring/docs/2.0.x/reference/aop.html">
- * http://static.springframework.org/spring/docs/2.0.x/reference/aop.html</a></code>).</p>
+ * This class simplifies the metadata programming.
  * 
  * <p>
- * The advisor uses the {@link ch.elca.el4j.util.metadata} package to search
- * the specified meta data, for example Java Annotations 
- * ({@link #setMetaDataCollector(String)}). The meta data to which the Advice will 
- * react can be specified in the configuration file. If nothing is specified, 
- * all meta data will be collected.</p>
+ * One way to set up AOP in Spring is to define a DefaultAdvisorAutoProxyCreator
+ * bean which will create AOP proxies for all Advisors that are defined in the
+ * same BeanFactory. These advisors are the starting points for Attributes. For
+ * each attribute, at least 4 beans have to be defined:
+ * <dl>
+ * <dt>Advisor:</dt>
+ *   <dd>Base interface holding AOP advice (action to take at a joinpoint).</dd>
+ * <dt>Advice:</dt>
+ *   <dd>A possible advice is for example a MethodInterceptor which intercepts 
+ *       runtime events that occur within a base program. There is a link from 
+ *       the Advisor to the Advice.</dd>
+ * <dt>Source:</dt>
+ *   <dd>Sources the attributes. There is a link from the Advice to the Source 
+ *       telling the Advice which attribute sources it has to consider.</dd>
+ * <dt>Attributes:</dt>
+ *   <dd>The attributes implementation to use. There is a link from Source to 
+ *       Attributes to define where it has to take the attributes from.</dd>
+ * </dl>
+ * </p>
  * 
  * <p>
- * An object of {@link DefaultGenericAttributeSource} coordinates the collection of
- * the metaData. The collection takes respect on inheritence (cf. javadoc 
- * {@link DefaultGenericAttributeSource}</p>
+ * This class simplifies the creation of attributes. By using it, only two beans
+ * have to be defined:
+ * <dl>
+ * <dt>GenericMetaDataAdvisor:</dt>
+ *   <dd>This bean is an advisor implementing the matches(Method, Class) method.
+ *       This advisor also creates a DefaultGenericAttributeSource in case no 
+ *       one is defined in the configuration file. The attributes to which the 
+ *       Advice will react also have to be defined in the configuration 
+ *       file.</dd>
+ * <dt>Advice:</dt>
+ *   <dd>An advice which will be invoked by this Advisor has to be injected via 
+ *       the configuration file.</dd>
+ * </dl>
  * 
- * <p>
- * In chapter '3 Documentation for module core' of the 
- * <code><a href="http://el4j.sourceforge.net/docs/pdf/ReferenceDoc.pdf">
- * el4j reference documentation</a></code> are further informations about the
- * concept and the use of this Sringa AOP extension.</p>
- *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- *
- * @author Adrian Haefeli (ADH)
+ * 
+ * @author Raphael Boog (RBO)
+ * @author Martin Zeltner (MZE)
  */
-public class GenericMetaDataAdvisor extends DefaultPointcutAdvisor
+public class GenericMetaDataAdvisor extends StaticMethodMatcherPointcutAdvisor
     implements InitializingBean {
+    /**
+     * Private logger.
+     */
+    private static Log s_logger 
+        = LogFactory.getLog(GenericMetaDataAdvisor.class);
 
     /**
-     * Private logger of this class.
+     * The metadata source to lookup metadata.
      */
-    private static Log s_logger = LogFactory
-            .getLog(GenericMetaDataAdvisor.class);
-    
+    private GenericMetaDataSource m_metaDataSource;
+
     /**
-     * The meta data collecor.
+     * Are the metadata types where the interceptor will be applied.
      */
-    private GenericMetaDataCollector m_metaDataCollector;
-    
+    private List<Class> m_interceptingMetaData;
+
     /**
-     * <p>
-     * The attributes to which the interceptor reacts.</p>
+     * Default constructor.
+     */
+    public GenericMetaDataAdvisor() { }
+
+    /**
+     * Constructor which sets the advice being received as parameter.
      * 
-     * <p>
-     * Standard value is null. If it is not defined which meta Data Types has
-     * to be collected, the interceptor will get all meta Data. 
+     * @param advice The advice to set.
      */
-    private List <Class> m_interceptingMetaData = null;
-    
+    public GenericMetaDataAdvisor(Advice advice) {
+        setAdvice(advice);
+    }
+
     /**
-     * Inheritance configuration. If it is null, the default configuration 
-     * is used {@link DefaultGenericAttributeSource}.
+     * @return Returns the interceptingMetaData.
      */
-    private DefaultInheritanceConfiguration m_inheritanceConfiguration = null;
+    public List<Class> getInterceptingMetaData() {
+        return m_interceptingMetaData;
+    }
+
+    /**
+     * @param interceptingMetaData Is the interceptingMetaData to set.
+     */
+    public void setInterceptingMetaData(List<Class> interceptingMetaData) {
+        m_interceptingMetaData = interceptingMetaData;
+    }
+
+    /**
+     * @return Returns the metaDataSource.
+     */
+    public GenericMetaDataSource getMetaDataSource() {
+        return m_metaDataSource;
+    }
+
+    /**
+     * @param metaDataSource Is the metaDataSource to set.
+     */
+    public void setMetaDataSource(GenericMetaDataSource metaDataSource) {
+        m_metaDataSource = metaDataSource;
+    }
 
     /**
      * A convenience getter method for the method interceptor.
@@ -104,11 +146,10 @@ public class GenericMetaDataAdvisor extends DefaultPointcutAdvisor
      * @return The methodInterceptor
      */
     public MethodInterceptor getMethodInterceptor() {
-        Reject.ifFalse(getAdvice() instanceof MethodInterceptor,
-                "The advice is not of type "
-                + "'org.aopalliance.intercept.MethodInterceptor'");
-        
-        return (MethodInterceptor) getAdvice();
+        Advice advice = getAdvice();
+        Assert.isInstanceOf(MethodInterceptor.class, advice,
+                "Only method interception supported.");
+        return (MethodInterceptor) advice;
     }
 
     /**
@@ -120,110 +161,63 @@ public class GenericMetaDataAdvisor extends DefaultPointcutAdvisor
     public void setMethodInterceptor(MethodInterceptor methodInterceptor) {
         setAdvice(methodInterceptor);
     }
-    
-    /**
-     * @return The meta data to intercept.
-     */
-    public List <Class> getInterceptingMetaData() {
-        return m_interceptingMetaData;
-    }
 
     /**
-     * Sets the meta data to intercept.
+     * Perform static checking. If this returns false, no runtime check will be
+     * made.
      * 
-     * @param interceptedAttributes
-     *            A list of specific meta data to intercept.
-     * @throws IllegalArgumentException
-     *            If one or more element(s) defined in the list does not exists.
+     * @param method
+     *            the candidate method
+     * @param targetClass
+     *            target class (may be null, in which case the candidate class
+     *            must be taken to be the method's declaring class)
+     * @return whether or not this method matches statically
      */
-    public void setInterceptingMetaData(List interceptedAttributes) {
-        List <Class> interceptingMetaData = new LinkedList <Class>();
-        Class metaDataType;
-        
-        //TODO ADH | Frage: Effizienz? Gibt es eine bessere Lösung
-        /* Make shure, that it is a List of Classe set */
-        for (Iterator iter = interceptedAttributes.iterator(); iter.hasNext();) {
-            Object e = (Object) iter.next();
-            if (e instanceof Class) {
-                interceptingMetaData.add((Class) e);
-            } else {
-                try {
-                    metaDataType = Class.forName((String) e);
-                    interceptingMetaData.add(metaDataType);
-                } catch (ClassNotFoundException e1) {
-                    throw new IllegalArgumentException("The specified " 
-                            + "meta data type " + e.toString() 
-                            + " does not exists.");
-                } 
-            }      
-        }
-        m_interceptingMetaData = interceptingMetaData;
-    }
-
-    /**
-     * @see AbstractGenericMetaDataCollector#setInheritenceConfiguration(InheritanceConfiguration) 
-     * @param inheritanceConfiguration
-     *                  The inheritance configuration object.
-     */
-    public void setInheritanceConfiguration(DefaultInheritanceConfiguration 
-            inheritanceConfiguration) {
-        m_inheritanceConfiguration = inheritanceConfiguration;
-    }
-
-    /**
-     * Setter of the meta data collector. If nothing will be set, the annotation
-     * collector {@link DefaultGenericAnnotationCollector} will be used.
-     * 
-     * @param metaDataCollector
-     *          The Id of the metaDataType to set. The Id's of the
-     *          metaDataTypes are defined in {@link DefaultMetaDataCollectorFactory}.
-     */
-    public void setMetaDataCollector(GenericMetaDataCollector metaDataCollector) {
-        m_metaDataCollector = metaDataCollector;
+    public boolean matches(Method method, Class targetClass) {
+        return getMetaDataSource().getMetaData(method, targetClass) != null;
     }
 
     /**
      * {@inheritDoc}
      */
     public void afterPropertiesSet() throws Exception {
-        
-        
-        /* 
-         * Section One: Check if the necessary Properties has been set 
-         */
-    
+
         // Check whether an Advice has been defined.
-        if (getAdvice() == null) {
-            String message = "An 'org.aopalliance.aop.Advice' "
-                + "has to be defined.";
-            s_logger.error(message);
-            throw new BaseException(message, (Throwable) null);
-        }
-        
-        // Check whether an meta data collector has been defined. If 
-        // nothing is defined, the standard collector for annotations
-        // will be set.
-        if (m_metaDataCollector == null) {
-            m_metaDataCollector = new DefaultGenericAnnotationCollector();
+        CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+            getAdvice(), "advice", this);
+
+        // In case no MetaDataSource was defined, we create it on our own.
+        if (getMetaDataSource() == null) {
+            s_logger.debug("No specific metadata source set. Using default.");
+            setMetaDataSource(new DefaultGenericMetaDataSource());
         }
 
-        /*
-         * Section Two: Configure the needed objects
-         */
-        
-        // Set the inheritance configuration
-        m_metaDataCollector.setInheritenceConfiguration(m_inheritanceConfiguration);
-    
-        // Set the meta data which 'invoke' the Advice
-        m_metaDataCollector.setInterceptingMetaData(m_interceptingMetaData);
-  
-        // In case the Advice implements MetaDataCollectorAware, we set
-        // its meta data collector
-        if (getAdvice() instanceof MetaDataCollectorAware) {
-            ((MetaDataCollectorAware) getAdvice())
-                .setMetaDataSource(m_metaDataCollector);
+        // Set the metadata which 'invoke' the Advice
+        if (getMetaDataSource().getInterceptingMetaData() == null) {
+            s_logger.debug("No intercepting metadata set on metadata source. "
+                + "Using intercepting metadata from advisor.");
+            getMetaDataSource().setInterceptingMetaData(
+                getInterceptingMetaData());
         }
-        
+
+        // In case no metadata implementation is defined, we take the
+        // Annotation implementation. In order to provide splitting metadata
+        // on multiple source file we interposed the MetaDataCollector.
+        if (getMetaDataSource().getMetaDataDelegator() == null) {
+            s_logger.debug("No metadata delegator set on metadata source. "
+                + "Using metadata collector in combination with the metadata "
+                + "delegator for Java 5 annotations.");
+            MetaDataCollector collector = new MetaDataCollector();
+            collector.setMetaDataDelegator(new Annotations());
+            getMetaDataSource().setMetaDataDelegator(collector);
+        }
+
+        // In case the Advice implements MetaDataSourceAware, we set
+        // its MetaDataeSource
+        if (getAdvice() instanceof MetaDataSourceAware) {
+            ((MetaDataSourceAware) getAdvice())
+                .setMetaDataSource(getMetaDataSource());
+        }
     }
 
 }
