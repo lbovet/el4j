@@ -30,6 +30,7 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.util.Assert;
 
 import ch.elca.el4j.util.collections.ExtendedReorderableList;
 import ch.elca.el4j.util.collections.FilteredList;
@@ -276,11 +277,32 @@ public final class CollectionUtils {
     /**
      * Convenience method returning a {@link TransformedList} view to the
      * supplied list.
+     * 
+     * @param <T> the backing list's element type
+     * @param <O> this list's element type
+     * @param list Is the list to transform.
      * @param function the transformation function to apply to each element 
      * @return see above
      */
     public static <T, O> TransformedList<T, O> mapped(List<T> list, 
         Function<? super T, O> function) {
         return new DefaultTransformedList<T, O>(list, function);
+    }
+    
+    /**
+     * @param base
+     *            Is the collection to enrich.
+     * @param annex
+     *            Is the collection with the items to enrich the base
+     *            collection.
+     * @return Return the complemented base collection.
+     */
+    @SuppressWarnings("unchecked")
+    public static Collection nullSaveAddAll(Collection base, Collection annex) {
+        Assert.notNull(base);
+        if (annex != null) {
+            base.addAll(annex);
+        }
+        return base;
     }
 }
