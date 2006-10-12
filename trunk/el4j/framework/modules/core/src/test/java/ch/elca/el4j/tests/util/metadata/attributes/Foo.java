@@ -39,7 +39,7 @@ public interface Foo {
      * @return The product of base and number.
      * 
      * @@ch.elca.el4j.tests.util.metadata.attributes.ExampleAttributeOne(5)
-     * @@ch.elca.el4j.tests.util.metadata.attributes.ExampleAttributeTwo(5)
+     * @@ch.elca.el4j.tests.util.metadata.attributes.ExampleAttributeTwo(9)
      */
     public int test(int number);
 
@@ -53,7 +53,7 @@ public interface Foo {
      * @return The product of base and number.
      * 
      * @@ch.elca.el4j.tests.util.metadata.attributes.ExampleAttributeOne(5)
-     * @@ch.elca.el4j.tests.util.metadata.attributes.ExampleAttributeTwo(5)
+     * @@ch.elca.el4j.tests.util.metadata.attributes.ExampleAttributeTwo(12)
      */
     public int test(int number, FooImpl.Bar innerClass);
 }

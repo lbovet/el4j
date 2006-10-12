@@ -134,8 +134,8 @@ public class GenericAttributesTest extends TestCase {
         // Although we multiply the FooImpl.BASE number with 0, the result is
         // 150 since the method interceptor multiplies the FooImpl.BASE number
         // with 50 instead of 0.
-        assertEquals("The result should be " + FooImpl.BASE * 5
-            * ExampleAttributeTwo.CONSTANT_FACTOR + ".", FooImpl.BASE * 5
+        assertEquals("The result should be " + FooImpl.BASE * 9
+            * ExampleAttributeTwo.CONSTANT_FACTOR + ".", FooImpl.BASE * 9
             * ExampleAttributeTwo.CONSTANT_FACTOR, foo.test(0));
 
     }
