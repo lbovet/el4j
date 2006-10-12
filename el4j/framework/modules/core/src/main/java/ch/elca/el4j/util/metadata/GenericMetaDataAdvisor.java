@@ -26,6 +26,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.aop.support.StaticMethodMatcherPointcutAdvisor;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.metadata.commons.CommonsAttributes;
 import org.springframework.util.Assert;
 
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
@@ -97,6 +98,12 @@ public class GenericMetaDataAdvisor extends StaticMethodMatcherPointcutAdvisor
      * Are the metadata types where the interceptor will be applied.
      */
     private List<Class> m_interceptingMetaData;
+    
+    /**
+     * Is the by default used metadata type if nothing else is set.
+     */
+    private MetaDataType m_defaultMetaDataType 
+        = MetaDataType.JAVA_5_ANNOTATIONS;
 
     /**
      * Default constructor.
@@ -161,6 +168,20 @@ public class GenericMetaDataAdvisor extends StaticMethodMatcherPointcutAdvisor
     public void setMethodInterceptor(MethodInterceptor methodInterceptor) {
         setAdvice(methodInterceptor);
     }
+    
+    /**
+     * @return Returns the defaultMetaDataType.
+     */
+    public final MetaDataType getDefaultMetaDataType() {
+        return m_defaultMetaDataType;
+    }
+
+    /**
+     * @param defaultMetaDataType Is the defaultMetaDataType to set.
+     */
+    public final void setDefaultMetaDataType(MetaDataType defaultMetaDataType) {
+        m_defaultMetaDataType = defaultMetaDataType;
+    }
 
     /**
      * Perform static checking. If this returns false, no runtime check will be
@@ -204,11 +225,20 @@ public class GenericMetaDataAdvisor extends StaticMethodMatcherPointcutAdvisor
         // Annotation implementation. In order to provide splitting metadata
         // on multiple source file we interposed the MetaDataCollector.
         if (getMetaDataSource().getMetaDataDelegator() == null) {
+            MetaDataType metaDataType = getDefaultMetaDataType();
+            CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+                metaDataType, "defaultMetaDataType", this);
+            
             s_logger.debug("No metadata delegator set on metadata source. "
                 + "Using metadata collector in combination with the metadata "
-                + "delegator for Java 5 annotations.");
+                + "delegator for " + metaDataType + ".");
+            
             MetaDataCollector collector = new MetaDataCollector();
-            collector.setMetaDataDelegator(new Annotations());
+            if (MetaDataType.JAVA_5_ANNOTATIONS == metaDataType) {
+                collector.setMetaDataDelegator(new Annotations());
+            } else if (MetaDataType.COMMONS_ATTRIBUTES == metaDataType) {
+                collector.setMetaDataDelegator(new CommonsAttributes());
+            }
             getMetaDataSource().setMetaDataDelegator(collector);
         }
 

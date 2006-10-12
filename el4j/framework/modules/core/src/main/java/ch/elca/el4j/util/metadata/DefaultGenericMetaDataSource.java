@@ -29,6 +29,8 @@ import org.springframework.core.BridgeMethodResolver;
 import org.springframework.metadata.Attributes;
 import org.springframework.util.Assert;
 
+import ch.elca.el4j.util.codingsupport.CollectionUtils;
+
 /**
  * The default implementation of the GenericAttributeSource interface.
  * 
@@ -126,12 +128,13 @@ public class DefaultGenericMetaDataSource implements GenericMetaDataSource {
         Collection metaDataOnMethod = new ArrayList();
         
         // Try the bridge method.
-        metaDataOnMethod.addAll(
+        CollectionUtils.nullSaveAddAll(metaDataOnMethod,
             filterMetaData(findAllAttributes(bridgeMethod)));
         
-        if (metaDataOnMethod.isEmpty() && bridgeMethod.equals(method)) {
+        if (metaDataOnMethod.isEmpty() && !bridgeMethod.equals(method)) {
             // Fallback is to look at the original method
-            metaDataOnMethod.addAll(filterMetaData(findAllAttributes(method)));
+            CollectionUtils.nullSaveAddAll(metaDataOnMethod,
+                filterMetaData(findAllAttributes(method)));
         }
         
         // Collect the metadata from class.
@@ -139,21 +142,22 @@ public class DefaultGenericMetaDataSource implements GenericMetaDataSource {
         
         // Try as first the given target class
         if (targetClass != null) {
-            metaDataOnClass.addAll(
+            CollectionUtils.nullSaveAddAll(metaDataOnClass,
                 filterMetaData(findAllAttributes(bridgeMethod)));
         }
         
         if (metaDataOnClass.isEmpty()) {
             // Try as second the declaring class of found bridge method.
-            metaDataOnClass.addAll(
+            CollectionUtils.nullSaveAddAll(metaDataOnClass,
                 filterMetaData(
                     findAllAttributes(bridgeMethod.getDeclaringClass())));
         }
 
-        if (metaDataOnClass.isEmpty() && bridgeMethod != method) {
+        if (metaDataOnClass.isEmpty() && !bridgeMethod.equals(method)) {
             // Last fallback is the class of the original method
-            metaDataOnClass.addAll(filterMetaData(findAllAttributes(
-                method.getDeclaringClass())));
+            CollectionUtils.nullSaveAddAll(metaDataOnClass,
+                filterMetaData(findAllAttributes(
+                    method.getDeclaringClass())));
         }
         
         Collection result = new ArrayList();
@@ -192,7 +196,7 @@ public class DefaultGenericMetaDataSource implements GenericMetaDataSource {
         Assert.notEmpty(interceptingMetaData,
                 "There is no metadata defined to be used for interception.");
 
-        if (metaData == null) {
+        if (metaData == null || metaData.isEmpty()) {
             return null;
         }
         
