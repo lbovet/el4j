@@ -18,6 +18,7 @@
 package ch.elca.el4j.util.metadata;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -25,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.aop.support.AopUtils;
 import org.springframework.core.BridgeMethodResolver;
 import org.springframework.metadata.Attributes;
 import org.springframework.util.Assert;
@@ -80,7 +82,21 @@ public class DefaultGenericMetaDataSource implements GenericMetaDataSource {
         // Class may be null, method can't
         // Must not produce same key for overloaded methods
         // Must produce same key for different instances of the same method
-        return targetClass + ";" + method;
+        StringBuffer key = new StringBuffer();
+        if (targetClass != null) {
+            if (Proxy.isProxyClass(targetClass)) {
+                key.append("JdkProxy");
+            } else if (AopUtils.isCglibProxyClass(targetClass)) {
+                key.append("CglibProxy");
+            } else {
+                key.append(targetClass);
+            }
+        } else {
+            key.append("unknown");
+        }
+        key.append(';');
+        key.append(method);
+        return key.toString();
     }
 
     /**
@@ -123,15 +139,18 @@ public class DefaultGenericMetaDataSource implements GenericMetaDataSource {
         // Helps to find the bridge method. This is needed if the given method
         // is currently on a proxy.
         Method bridgeMethod = BridgeMethodResolver.findBridgedMethod(method);
+        // Then look for the most specific method on given target class.
+        Method specificMethod = AopUtils.getMostSpecificMethod(
+            bridgeMethod, targetClass);
 
         // Collect the metadata from method.
         Collection metaDataOnMethod = new ArrayList();
         
         // Try the bridge method.
         CollectionUtils.nullSaveAddAll(metaDataOnMethod,
-            filterMetaData(findAllAttributes(bridgeMethod)));
+            filterMetaData(findAllAttributes(specificMethod)));
         
-        if (metaDataOnMethod.isEmpty() && !bridgeMethod.equals(method)) {
+        if (metaDataOnMethod.isEmpty() && !specificMethod.equals(method)) {
             // Fallback is to look at the original method
             CollectionUtils.nullSaveAddAll(metaDataOnMethod,
                 filterMetaData(findAllAttributes(method)));
@@ -143,17 +162,17 @@ public class DefaultGenericMetaDataSource implements GenericMetaDataSource {
         // Try as first the given target class
         if (targetClass != null) {
             CollectionUtils.nullSaveAddAll(metaDataOnClass,
-                filterMetaData(findAllAttributes(bridgeMethod)));
+                filterMetaData(findAllAttributes(specificMethod)));
         }
         
         if (metaDataOnClass.isEmpty()) {
             // Try as second the declaring class of found bridge method.
             CollectionUtils.nullSaveAddAll(metaDataOnClass,
                 filterMetaData(
-                    findAllAttributes(bridgeMethod.getDeclaringClass())));
+                    findAllAttributes(specificMethod.getDeclaringClass())));
         }
 
-        if (metaDataOnClass.isEmpty() && !bridgeMethod.equals(method)) {
+        if (metaDataOnClass.isEmpty() && !specificMethod.equals(method)) {
             // Last fallback is the class of the original method
             CollectionUtils.nullSaveAddAll(metaDataOnClass,
                 filterMetaData(findAllAttributes(
