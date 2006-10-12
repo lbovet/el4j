@@ -230,8 +230,25 @@ public class AggregateFilesMojo extends AbstractMojo {
                                     File.separator, "/");
                                 for (int i = 0; !matchesExclude 
                                     && i < m_dirExcludePatterns.length; i++) {
-                                    matchesExclude = pathMatcher.match(
-                                        m_dirExcludePatterns[i], dirString);
+                                    String excludePattern 
+                                        = m_dirExcludePatterns[i];
+                                    if (pathMatcher.isPattern(excludePattern)) {
+                                        matchesExclude = pathMatcher.match(
+                                            excludePattern, dirString);
+                                    } else {
+                                        File excludeDir = new File(
+                                            rootSourceDirectory, 
+                                            excludePattern);
+                                        String excludeDirString 
+                                            = StringUtils.replace(
+                                                excludeDir.getCanonicalPath(), 
+                                            File.separator, "/");
+                                        matchesExclude 
+                                            = excludeDirString.equals(
+                                                dirString);
+                                    }
+                                    
+                                    
                                 }
                             }
                             if (matchesExclude) {
@@ -299,8 +316,21 @@ public class AggregateFilesMojo extends AbstractMojo {
                         if (m_fileExcludePatterns != null) {
                             for (int i = 0; !matchesExclude 
                                 && i < m_fileExcludePatterns.length; i++) {
-                                matchesExclude = pathMatcher.match(
-                                    m_fileExcludePatterns[i], sourceFileString);
+                                String excludePattern 
+                                    = m_fileExcludePatterns[i];
+                                if (pathMatcher.isPattern(excludePattern)) {
+                                    matchesExclude = pathMatcher.match(
+                                        excludePattern, sourceFileString);
+                                } else {
+                                    File excludeFile = new File(
+                                        sourceDirectory, excludePattern);
+                                    String excludeFileString 
+                                        = StringUtils.replace(
+                                            excludeFile.getCanonicalPath(), 
+                                            File.separator, "/");
+                                    matchesExclude = excludeFileString.equals(
+                                        sourceFileString);
+                                }
                             }
                         }
                         if (matchesExclude) {
