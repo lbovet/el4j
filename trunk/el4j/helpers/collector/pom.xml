@@ -37,7 +37,7 @@
             				<sourceFileIncludePatterns>**/*</sourceFileIncludePatterns>
             				<sourceFileExcludePatterns>**/.svn,**/.svn/**/*</sourceFileExcludePatterns>
             				<targetDirectory>${basedir}/../../../external/helloworld/etc</targetDirectory>
-            				<copyFilesOnly>false</copyFilesOnly>
+            				<copyFilesOnly>true</copyFilesOnly>
             				<allowOverwrite>false</allowOverwrite>
             				<visitChildProjects>true</visitChildProjects>
                         </configuration>
