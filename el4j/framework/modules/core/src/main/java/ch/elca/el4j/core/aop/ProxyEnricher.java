@@ -146,7 +146,7 @@ public class ProxyEnricher {
             }
             
             if (isProxyEnrichable) {
-                if (targetSource.isStatic()) {
+                if (!targetSource.isStatic()) {
                     s_logger.warn("Bean '" + beanName + "' has a non-static "
                         + "target source. Anyway, we will now try to get the "
                         + "target of the target source. This can cause an "
