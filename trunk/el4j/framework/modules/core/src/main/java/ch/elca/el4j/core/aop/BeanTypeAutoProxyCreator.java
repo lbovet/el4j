@@ -50,6 +50,7 @@ public class BeanTypeAutoProxyCreator extends AbstractAutoProxyCreator {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     protected Object[] getAdvicesAndAdvisorsForBean(Class beanClass,
             String beanName, TargetSource customTargetSource) {
         
