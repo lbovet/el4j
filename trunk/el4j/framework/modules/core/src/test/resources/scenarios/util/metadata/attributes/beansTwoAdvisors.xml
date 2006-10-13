@@ -8,10 +8,41 @@
     <!-- Author: $Author$ -->
     
     <!--
+        Trace interceptor added to test if metadata of implementation can be 
+        found altough the target bean is already a proxy.
+    -->
+    <bean id="methodTraceAutoProxy"
+        class="ch.elca.el4j.core.aop.IntelligentExclusiveBeanNameAutoProxyCreator">
+        <property name="interceptorNames">
+            <value>methodTraceInterceptor</value>
+        </property>
+        <property name="beanNames">
+            <value>foo</value>
+        </property>
+    </bean>
+    <bean id="methodTraceInterceptor"
+        class="org.springframework.aop.interceptor.CustomizableTraceInterceptor">
+        <property name="enterMessage">
+            <value>Entering method $[targetClassShortName].$[methodName]($[arguments]) with types($[argumentTypes])</value>
+        </property>
+        <property name="exceptionMessage">
+            <value>Exception thrown in method '$[methodName]' of class [$[targetClassName]]</value>
+        </property>
+        <property name="exitMessage">
+            <value>Exiting method '$[methodName]' of class [$[targetClassName]]</value>
+        </property>
+        <property name="useDynamicLogger">
+            <value>true</value>
+        </property>
+    </bean>
+    
+
+    
+    <!--
         Define the autoproxy bean which looks for each advisor in this context.
     -->
     <bean id="autoproxy" 
-        class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
+        class="ch.elca.el4j.core.aop.IntelligentAdvisorAutoProxyCreator"/>
 
     <!-- Define the first Advisor bean. -->
     <bean id="genericMetaDataAdvisorOne"
