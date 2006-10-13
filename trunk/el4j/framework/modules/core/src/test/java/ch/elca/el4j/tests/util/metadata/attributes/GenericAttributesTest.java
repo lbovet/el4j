@@ -27,7 +27,8 @@ import junit.framework.TestCase;
 // Checkstyle: MagicNumber off
 
 /**
- * JUnit test for the GenericAttributeAdvisor class.
+ * JUnit test for the GenericMetaDataAdvisor class in combination with
+ * Apache Commons Attributes.
  * 
  * Please be sure to compile the Commons Attributes before launching this test.
  * 
@@ -103,7 +104,7 @@ public class GenericAttributesTest extends TestCase {
 
         ApplicationContext ac = new ModuleApplicationContext(
             SPRING_BEAN_CONFIG_LOCATION 
-                + "beansWithConfiguredAttributeSource.xml", false);
+                + "beansWithConfiguredMetaDataSource.xml", false);
 
         Foo foo = (Foo) ac.getBean("foo");
 
@@ -167,7 +168,7 @@ public class GenericAttributesTest extends TestCase {
         try {
             new ModuleApplicationContext(
                 SPRING_BEAN_CONFIG_LOCATION 
-                    + "beansNoInterceptingAttributes.xml", false);
+                    + "beansNoInterceptingMetaData.xml", false);
             fail("A BaseRTException should have been thrown");
         } catch (Exception e) {
             // Expected behaviour
