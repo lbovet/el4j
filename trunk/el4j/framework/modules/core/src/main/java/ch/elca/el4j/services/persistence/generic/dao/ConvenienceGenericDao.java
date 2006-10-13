@@ -43,7 +43,7 @@ import ch.elca.el4j.core.transaction.annotations.RollbackConstraint;
  * @author Alex Mathey (AMA)
  * @author Martin Zeltner (MZE)
  */
-public interface ConvenientGenericDao<T, ID extends Serializable>
+public interface ConvenienceGenericDao<T, ID extends Serializable>
     extends GenericDao<T> {
     
     /**

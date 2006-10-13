@@ -29,7 +29,7 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.elca.el4j.services.persistence.generic.dao.ConvenientGenericDao;
+import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
 import ch.elca.el4j.services.persistence.generic.dao.annotations.ReturnsUnchangedParameter;
 import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
 import ch.elca.el4j.services.search.QueryObject;
@@ -38,8 +38,11 @@ import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
  * 
- * This class is an iBatis-specific implementation of the ConvenientGenericDao
+ * This class is an iBatis-specific implementation of the ConvenienceGenericDao
  * interface.
+ * 
+ * Note that when using this DAO, a special ibatis xml configuration file using
+ * is necessary for every domain object.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -58,7 +61,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
 public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,
     ID extends Serializable> 
     extends ConvenienceSqlMapClientDaoSupport
-    implements ConvenientGenericDao<T, ID>, InitializingBean {
+    implements ConvenienceGenericDao<T, ID>, InitializingBean {
     
     /**
      * The domain class this DAO is responsible for.
@@ -88,6 +91,11 @@ public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,
 
     /**
      * {@inheritDoc}
+     * 
+     * If OBJECTNAME denotes the name of the domain class this DAO is
+     * responsible for, the statement in the ibatis xml config file
+     * which is associated with this operation must be called 
+     * getOBJECTNAMEByKey.
      */
     @SuppressWarnings("unchecked")
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -100,6 +108,11 @@ public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,
 
     /**
      * {@inheritDoc}
+     * 
+     * If OBJECTNAME denotes the name of the domain class this DAO is
+     * responsible for, the statement in the ibatis xml config file
+     * which is associated with this operation must be called 
+     * getAllOBJECTNAMEs.
      */
     @SuppressWarnings("unchecked")
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -111,6 +124,11 @@ public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,
 
     /**
      * {@inheritDoc}
+     * 
+     * If OBJECTNAME denotes the name of the domain class this DAO is
+     * responsible for, the statement in the ibatis xml config file
+     * which is associated with this operation must be called 
+     * searchOBJECTNAMEs.
      */
     @SuppressWarnings("unchecked")
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -123,6 +141,11 @@ public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,
 
     /**
      * {@inheritDoc}
+     * 
+     * If OBJECTNAME denotes the name of the domain class this DAO is
+     * responsible for, the statements in the ibatis xml config file
+     * which are associated with this operation must be called 
+     * insertOBJECTNAME and updateOBJECTNAME.
      */
     @ReturnsUnchangedParameter
     @SuppressWarnings("unchecked")
@@ -137,6 +160,11 @@ public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,
 
     /**
      * {@inheritDoc}
+     * 
+     * If OBJECTNAME denotes the name of the domain class this DAO is
+     * responsible for, the statement in the ibatis xml config file
+     * which is associated with this operation must be called 
+     * deleteOBJECTNAME.
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void delete(T entity) throws DataAccessException,
@@ -148,6 +176,11 @@ public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,
     
     /**
      * {@inheritDoc}
+     * 
+     * If OBJECTNAME denotes the name of the domain class this DAO is
+     * responsible for, the statement in the ibatis xml config file
+     * which is associated with this operation must be called 
+     * refreshOBJECTNAME.
      */
     @SuppressWarnings("unchecked")
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -160,6 +193,11 @@ public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,
     
     /**
      * {@inheritDoc}
+     * 
+     * If OBJECTNAME denotes the name of the domain class this DAO is
+     * responsible for, the statement in the ibatis xml config file
+     * which is associated with this operation must be called 
+     * deleteOBJECTNAMEById.
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void delete(ID id)

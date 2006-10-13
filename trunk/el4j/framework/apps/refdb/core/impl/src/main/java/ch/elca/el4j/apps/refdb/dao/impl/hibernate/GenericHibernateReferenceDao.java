@@ -34,6 +34,11 @@ import ch.elca.el4j.util.codingsupport.Reject;
 /**
  * 
  * Generic DAO for references which is using Hibernate.
+ * 
+ * This DAO is not intended to be used directly. Only the concrete DAOs that are
+ * subclasses of this generic DAO should be used directly. To access or modify 
+ * reference objects which can be of different types, the service layer should
+ * be used.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",

@@ -31,7 +31,7 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.elca.el4j.services.persistence.generic.dao.ConvenientGenericDao;
+import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
 import ch.elca.el4j.services.persistence.generic.dao.annotations.ReturnsUnchangedParameter;
 import ch.elca.el4j.services.persistence.hibernate.criteria.CriteriaTransformer;
 import ch.elca.el4j.services.search.QueryObject;
@@ -39,8 +39,8 @@ import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
  * 
- * This class is a Hibernate-specific implementation of the ConvenientGenericDao
- * interface.
+ * This class is a Hibernate-specific implementation of the 
+ * ConvenienceGenericDao interface.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/hibernate/src/main/java/ch/elca/el4j/services/persistence/hibernate/dao/GenericHibernateDao.java $",
@@ -59,7 +59,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  */
 public class GenericHibernateDao<T, ID extends Serializable>
     extends ConvenienceHibernateDaoSupport
-    implements ConvenientGenericDao<T, ID>, InitializingBean {
+    implements ConvenienceGenericDao<T, ID>, InitializingBean {
     
     /**
      * The domain class this DAO is responsible for.
