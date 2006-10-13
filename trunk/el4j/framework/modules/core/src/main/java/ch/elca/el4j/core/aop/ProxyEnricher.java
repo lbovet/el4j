@@ -87,28 +87,28 @@ public class ProxyEnricher {
         String[] interceptorNames, BeanFactory beanFactory,
         AdvisorAdapterRegistry advisorAdapterRegistry,
         boolean applyCommonInterceptorsFirst) {
-        boolean shouldCreateNewProxy = shouldCreateNewProxy(
-            beanClass, beanName, specificInterceptors, targetSource);
         
+        boolean isProxyEnrichable = isProxyEnrichable(beanClass, beanName, 
+            specificInterceptors, targetSource, beanFactory);
         
         // Trying to get the advised object. 
         Advised proxy = null;
-        if (!shouldCreateNewProxy) {
+        if (isProxyEnrichable) {
             try {
                 proxy = (Advised) targetSource.getTarget();
             } catch (Exception e) {
+                isProxyEnrichable = false;
                 CoreNotificationHelper.notifyMisconfiguration(
                     "Exception while getting target of target source of bean"
                     + " with name " + beanName + " of type " + beanClass 
                     + ".", e);
-                shouldCreateNewProxy = true;
             }
         }
         
         // If the given target is already an advised object we enrich this
         // proxy.
         Object result = null;
-        if (!shouldCreateNewProxy && proxy != null) {
+        if (isProxyEnrichable && proxy != null) {
             result = enrichProxyInternal(beanClass, beanName, 
                 specificInterceptors, targetSource, interceptorNames, 
                 beanFactory, advisorAdapterRegistry, 
@@ -118,7 +118,7 @@ public class ProxyEnricher {
     }
     
     /**
-     * Dectects if a new proxy should be created for the given bean.
+     * Tests if the given bean is a proxy and if it is possible to enrich it.
      * 
      * @param beanClass
      *            the class of the bean
@@ -130,29 +130,41 @@ public class ProxyEnricher {
      * @param targetSource
      *            the TargetSource for the proxy, already pre-configured to
      *            access the bean
-     * @return Returns <code>true</code> if a new proxy should be created for
-     *         the given bean.
+     * @param beanFactory Is the factory where to get beans.
+     * @return Returns <code>true</code> if the given bean is a proxy and if it
+     *         is possible to enrich it.
      */
-    public static boolean shouldCreateNewProxy(Class beanClass, 
+    public static boolean isProxyEnrichable(Class beanClass, 
         String beanName, Object[] specificInterceptors, 
-        TargetSource targetSource) {
-        boolean result = true;
+        TargetSource targetSource, BeanFactory beanFactory) {
+        boolean isProxyEnrichable = true;
         try {
-            Object targetBean = targetSource.getTarget();
-            if (targetBean != null) {
-                // test if given target bean is a proxy
-                if (targetBean instanceof Advised) {
-                    result = false;
+            if (!beanFactory.isSingleton(beanName)) {
+                s_logger.warn("Bean '" + beanName + "' is not a singleton and "
+                    + "thus can not be enriched currently.");
+                isProxyEnrichable = false;
+            }
+            
+            if (isProxyEnrichable) {
+                if (targetSource.isStatic()) {
+                    s_logger.warn("Bean '" + beanName + "' has a non-static "
+                        + "target source. Anyway, we will now try to get the "
+                        + "target of the target source. This can cause an "
+                        + "unexpected behavior of the bean loading mechanism.");
+                }
+                Object targetBean = targetSource.getTarget();
+                if (targetBean == null || !(targetBean instanceof Advised)) {
+                    isProxyEnrichable = false;
                 }
             }
         } catch (Exception e) {
             s_logger.warn("Exception occured while trying to detect if bean"
                 + " with name " + beanName + " of type " + beanClass 
-                + " is already a proxy.", e);
-            result = true;
+                + " is an enrichable proxy.", e);
+            isProxyEnrichable = false;
         }
         
-        return result;
+        return isProxyEnrichable;
     }
 
     /**
