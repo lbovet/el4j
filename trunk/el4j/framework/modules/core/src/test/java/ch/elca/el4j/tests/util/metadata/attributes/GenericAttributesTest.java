@@ -132,8 +132,8 @@ public class GenericAttributesTest extends TestCase {
         Foo foo = (Foo) ac.getBean("foo");
 
         // Although we multiply the FooImpl.BASE number with 0, the result is
-        // 150 since the method interceptor multiplies the FooImpl.BASE number
-        // with 50 instead of 0.
+        // 270 since the method interceptor multiplies the FooImpl.BASE number
+        // with 90 instead of 0.
         assertEquals("The result should be " + FooImpl.BASE * 9
             * ExampleAttributeTwo.CONSTANT_FACTOR + ".", FooImpl.BASE * 9
             * ExampleAttributeTwo.CONSTANT_FACTOR, foo.test(0));

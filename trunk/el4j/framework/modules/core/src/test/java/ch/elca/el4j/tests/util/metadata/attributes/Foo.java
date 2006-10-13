@@ -38,8 +38,8 @@ public interface Foo {
      *            The number to multiply with the base variable.
      * @return The product of base and number.
      * 
-     * @@ch.elca.el4j.tests.util.metadata.attributes.ExampleAttributeOne(5)
-     * @@ch.elca.el4j.tests.util.metadata.attributes.ExampleAttributeTwo(9)
+     * @@ch.elca.el4j.tests.util.metadata.attributes.ExampleAttributeOne(16)
+     * @@ch.elca.el4j.tests.util.metadata.attributes.ExampleAttributeTwo(478)
      */
     public int test(int number);
 
@@ -52,8 +52,8 @@ public interface Foo {
      *            The inner class.
      * @return The product of base and number.
      * 
-     * @@ch.elca.el4j.tests.util.metadata.attributes.ExampleAttributeOne(5)
-     * @@ch.elca.el4j.tests.util.metadata.attributes.ExampleAttributeTwo(12)
+     * @@ch.elca.el4j.tests.util.metadata.attributes.ExampleAttributeOne(25)
+     * @@ch.elca.el4j.tests.util.metadata.attributes.ExampleAttributeTwo(998)
      */
     public int test(int number, FooImpl.Bar innerClass);
 }

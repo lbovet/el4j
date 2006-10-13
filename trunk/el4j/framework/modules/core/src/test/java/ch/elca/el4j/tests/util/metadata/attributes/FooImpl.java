@@ -69,6 +69,9 @@ public class FooImpl implements Foo {
 
     /**
      * {@inheritDoc}
+     * 
+     * @@ch.elca.el4j.tests.util.metadata.attributes.ExampleAttributeOne(5)
+     * @@ch.elca.el4j.tests.util.metadata.attributes.ExampleAttributeTwo(9)
      */
     public int test(int number) {
         s_logger.info("Multiplication of base (=" + m_base + ") and number (="
@@ -79,6 +82,9 @@ public class FooImpl implements Foo {
 
     /**
      * {@inheritDoc}
+     * 
+     * @@ch.elca.el4j.tests.util.metadata.attributes.ExampleAttributeOne(5)
+     * @@ch.elca.el4j.tests.util.metadata.attributes.ExampleAttributeTwo(9)
      */
     public int test(int number, FooImpl.Bar innerClass) {
         innerClass.doLog();

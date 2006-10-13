@@ -17,10 +17,12 @@
 
 package ch.elca.el4j.tests.util.metadata.attributes;
 
+import java.lang.reflect.Method;
 import java.util.Collection;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.util.Assert;
 
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
@@ -54,8 +56,14 @@ public class ExampleInterceptor
     public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 
         ExampleAttributeInterface att = null;
-        Collection c = m_metaDataSource.getMetaData(
-            methodInvocation.getMethod(), methodInvocation.getClass());
+        
+        Method invokedMethod = methodInvocation.getMethod();
+        Class targetClass = null;
+        if (!AopUtils.isAopProxy(methodInvocation.getThis())) {
+            targetClass = methodInvocation.getThis().getClass();
+        }
+        
+        Collection c = m_metaDataSource.getMetaData(invokedMethod, targetClass);
 
         Assert.isTrue(c != null && !c.isEmpty());
         Object obj = c.iterator().next();
