@@ -18,7 +18,6 @@
 package ch.elca.el4j.core.aop;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.aop.TargetSource;
@@ -54,7 +53,7 @@ public class ExclusiveBeanNameAutoProxyCreator
     public static final String[] AUTOPROXY_ALL_BEANS = {"*"};
     
     /** List of bean names that don't have to be advised. */
-    private List m_exclusiveBeanNames;
+    private List<String> m_exclusiveBeanNames;
     
     /** Whether there have been inclusive patterns set. */
     private boolean m_hasBeanNames = false;
@@ -96,21 +95,22 @@ public class ExclusiveBeanNameAutoProxyCreator
      */
     protected Object[] getAdvicesAndAdvisorsForBean(
             Class beanClass, String beanName, TargetSource targetSource) {
-        
+        boolean doNotProxy = false;
         if (m_exclusiveBeanNames != null) {
             if (m_exclusiveBeanNames.contains(beanName)) {
-                return DO_NOT_PROXY;
-            }
-            
-            for (Iterator it = m_exclusiveBeanNames.iterator(); it.hasNext();) {
-                String mappedName = (String) it.next();
-                if (isMatch(beanName, mappedName)) {
-                    return DO_NOT_PROXY;
+                doNotProxy = true;
+            } else {
+                for (String mappedName : m_exclusiveBeanNames) {
+                    if (isMatch(beanName, mappedName)) {
+                        doNotProxy = true;
+                        break;
+                    }
                 }
             }
         }
         
-        return super.getAdvicesAndAdvisorsForBean(
+        return doNotProxy ?  DO_NOT_PROXY 
+            : super.getAdvicesAndAdvisorsForBean(
                 beanClass, beanName, targetSource);
     }
 }
