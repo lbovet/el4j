@@ -19,7 +19,6 @@ package ch.elca.el4j.tests.util.metadata.attributes;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 
