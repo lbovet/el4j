@@ -139,11 +139,13 @@ public class ProxyEnricher {
         TargetSource targetSource, BeanFactory beanFactory) {
         boolean isProxyEnrichable = true;
         try {
-            if (!beanFactory.isSingleton(beanName)) {
-                s_logger.warn("Bean '" + beanName + "' is not a singleton and "
-                    + "thus can not be enriched currently.");
-                isProxyEnrichable = false;
-            }
+            // TODO: Check if singleton is a must. In MZE's opinion
+            // this should not be a must.
+//            if (!beanFactory.isSingleton(beanName)) {
+//                s_logger.warn("Bean '" + beanName + "' is not a singleton and "
+//                    + "thus can not be enriched currently.");
+//                isProxyEnrichable = false;
+//            }
             
             if (isProxyEnrichable) {
                 if (!targetSource.isStatic()) {
