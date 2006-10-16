@@ -60,6 +60,7 @@ public class GenericSqlMapReferenceDao<T extends Reference>
      * {@inheritDoc}
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public T saveOrUpdate(T entity)
         throws DataAccessException, DataIntegrityViolationException, 
             OptimisticLockingFailureException {
