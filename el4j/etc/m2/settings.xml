@@ -170,6 +170,8 @@
             <id>el4j.general</id>
             <properties>
                 <el4j.home>D:/Projects/EL4J</el4j.home>
+                <el4j.external>${el4j.home}/external</el4j.external>
+                <el4j.internal>${el4j.home}/internal</el4j.internal>
                 <el4j.external-tools>${el4j.home}/external/external-tools</el4j.external-tools>
 
                 <!-- Tomcat5x -->
