@@ -18,7 +18,7 @@
         General AOP definitions.
     -->
     <bean id="transactionAutoproxy" 
-        class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
+        class="ch.elca.el4j.core.aop.IntelligentAdvisorAutoProxyCreator">
         <property name="proxyTargetClass">
             <!-- 
                 false: 
@@ -53,16 +53,19 @@
         </property>
     </bean>
     <bean id="transactionAttributeSource" 
-        class="org.springframework.transaction.interceptor.AttributesTransactionAttributeSource">
-        <constructor-arg>
-            <ref local="attributesCollector"/>
-        </constructor-arg>
+        class="ch.elca.el4j.core.transaction.AnnotationTransactionMetaDataSource">
+        <property name="metaDataDelegator">
+            <ref local="metaDataCollector"/>
+        </property>
     </bean>
-    
-    <!--
-        General attribute definitions.
-    -->
-    <bean id="attributesCollector" 
-        class="ch.elca.el4j.util.metadata.attributes.DefaultGenericAttributeCollector">
+
+    <bean id="metaDataCollector" 
+        class="ch.elca.el4j.util.metadata.MetaDataCollector">
+        <property name="metaDataDelegator">
+            <ref local="annotations"/>
+        </property>
     </bean>
+
+    <bean id="annotations" 
+        class="org.springframework.metadata.commons.CommonsAttributes"/>
 </beans>
