@@ -32,11 +32,11 @@
                             <goal>aggregate-files</goal>
                         </goals>
                         <configuration>
-                            <rootSourceDirectory>${basedir}/../../../external</rootSourceDirectory>
+                            <rootSourceDirectory>${basedir}/../..</rootSourceDirectory>
             				<sourceDirectoryIncludePatterns>etc</sourceDirectoryIncludePatterns>
             				<sourceFileIncludePatterns>**/*</sourceFileIncludePatterns>
             				<sourceFileExcludePatterns>**/.svn,**/.svn/**/*</sourceFileExcludePatterns>
-            				<targetDirectory>${basedir}/../../../external/helloworld/etc</targetDirectory>
+            				<targetDirectory>${basedir}/../../helloworld/etc</targetDirectory>
             				<copyFilesOnly>true</copyFilesOnly>
             				<allowOverwrite>false</allowOverwrite>
             				<visitChildProjects>true</visitChildProjects>
@@ -50,7 +50,7 @@
                 <configuration>
                     <filesets>
                         <fileset>
-                            <directory>${basedir}/../../../external/helloworld/etc</directory>
+                            <directory>${basedir}/../../helloworld/etc</directory>
                         </fileset>
                     </filesets>
                 </configuration>
