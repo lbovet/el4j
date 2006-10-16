@@ -89,6 +89,8 @@
                                 <goals>
                                     <goal>start</goal>
                                     <goal>undeploy</goal>
+                                    <goal>stop</goal>
+                                    <goal>start</goal>
                                     <goal>deploy</goal>
                                 </goals>
                             </execution>
