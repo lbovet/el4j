@@ -14,7 +14,7 @@
     <!-- Author: $Author$ -->
 
     <bean id="methodTraceAutoProxy"
-        class="ch.elca.el4j.core.aop.ExclusiveBeanNameAutoProxyCreator">
+        class="ch.elca.el4j.core.aop.IntelligentExclusiveBeanNameAutoProxyCreator">
         <property name="interceptorNames">
             <value>methodTraceInterceptor</value>
         </property>
