@@ -33,7 +33,7 @@
         |
         | Default: ~/.m2/repository
     -->
-    <localRepository>d:/m2repository</localRepository>
+    <localRepository>/home/users2/tester/el4j/m2repository</localRepository>
 
     <!-- interactiveMode
         | This will determine whether maven prompts you when it needs input. If set to false,
@@ -170,9 +170,10 @@
             <id>el4j.general</id>
             <properties>
                 <el4j.home>D:/Projects/EL4J</el4j.home>
+                <el4j.external-tools>${el4j.home}/external/external-tools</el4j.external-tools>
 
                 <!-- Tomcat5x -->
-                <tomcat5x.basedir>${el4j.home}/external/external-tools/tomcat</tomcat5x.basedir>
+                <tomcat5x.basedir>${el4j.external-tools}/tomcat</tomcat5x.basedir>
                 <tomcat5x.version>5.5.17</tomcat5x.version>
                 <tomcat5x.home>${tomcat5x.basedir}/apache-tomcat-${tomcat5x.version}/apache-tomcat-${tomcat5x.version}</tomcat5x.home>
                 <tomcat5x.zipDownloadUrl>http://www.apache.org/dist/tomcat/tomcat-5/v${tomcat5x.version}/bin/apache-tomcat-${tomcat5x.version}.zip</tomcat5x.zipDownloadUrl>
@@ -180,9 +181,9 @@
                 <tomcat5x.cargo.log.file>${project.build.directory}/logs/tomcat5x/cargo.log</tomcat5x.cargo.log.file>
                 
                 <!-- Weblogic9x -->
-                <weblogic9x.home>${el4j.home}/external/external-tools/bea/weblogic90</weblogic9x.home>
+                <weblogic9x.home>${el4j.external-tools}/bea/weblogic90</weblogic9x.home>
                 <weblogic9x.server.name>myserver</weblogic9x.server.name>
-                <weblogic9x.domains.home>${el4j.home}/external/external-tools/bea/domains</weblogic9x.domains.home>
+                <weblogic9x.domains.home>${el4j.external-tools}/bea/domains</weblogic9x.domains.home>
                 <weblogic9x.domain.name>el4j</weblogic9x.domain.name>
                 <weblogic9x.manager.username>weblogic</weblogic9x.manager.username>
                 <weblogic9x.manager.password>weblogic</weblogic9x.manager.password>
@@ -190,7 +191,7 @@
                 <weblogic9x.cargo.log.file>${project.build.directory}/logs/weblogic9x/cargo.lo</weblogic9x.cargo.log.file>
                 
                 <!-- Birt -->
-                <birt.home>${el4j.home}/external/external-tools/birt-runtime-2_1_0</birt.home>
+                <birt.home>${el4j.external-tools}/birt-runtime-2_1_0</birt.home>
             </properties>
         </profile>
         
