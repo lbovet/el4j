@@ -439,7 +439,7 @@
                     <executions>
                         <execution>
                             <id>actualizeEclipseProjects</id>
-                            <phase>install</phase>
+                            <phase>test-compile</phase>
                             <goals>
                                 <goal>checkclipse-config-settings</goal>
                             </goals>
