@@ -162,7 +162,7 @@ public class DefaultGenericMetaDataSource implements GenericMetaDataSource {
         // Try as first the given target class
         if (targetClass != null) {
             CollectionUtils.nullSaveAddAll(metaDataOnClass,
-                filterMetaData(findAllAttributes(specificMethod)));
+                filterMetaData(findAllAttributes(targetClass)));
         }
         
         if (metaDataOnClass.isEmpty()) {
