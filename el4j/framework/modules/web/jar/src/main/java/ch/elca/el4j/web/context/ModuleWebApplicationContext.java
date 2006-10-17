@@ -98,16 +98,14 @@ public class ModuleWebApplicationContext extends XmlWebApplicationContext {
         m_exclusiveConfigLocations = exclusiveConfigLocations;
         m_allowBeanDefinitionOverriding = allowBeanDefinitionOverriding;
         
-        if (mergeWithOuterResources) {
-            /* HACK overrides the pattern resolver of the
-             *      AbastractApplicationContext to perform a customized
-             *      initialization.
-             */
-            m_patternResolver = (ListResourcePatternResolverDecorator)
-                getResourcePatternResolver();
-            m_patternResolver.setMergeWithOuterResources(true);
-        }
-        
+        /* HACK overrides the pattern resolver of the
+         *      AbastractApplicationContext to perform a customized
+         *      initialization.
+         */
+        m_patternResolver = (ListResourcePatternResolverDecorator)
+            getResourcePatternResolver();
+        m_patternResolver.setMergeWithOuterResources(mergeWithOuterResources);
+
         if (m_inclusiveConfigLocations != null
                 && m_inclusiveConfigLocations.length > 0) {
             ModuleApplicationContextUtils utils 
@@ -125,16 +123,17 @@ public class ModuleWebApplicationContext extends XmlWebApplicationContext {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Resource[] getResources(String locationPattern) throws IOException {
-        /* HACK The AbstractApplicationContext caches the resource pattern
-         *      resolver in a private field. Defining a resource pattern
-         *      resolver in this class allows configuring the resolver.
-         */
-        if (m_patternResolver == null) {
-            return super.getResources(locationPattern);
-        } else {
-            return m_patternResolver.getResources(locationPattern);
-        }
+        return m_patternResolver.getResources(locationPattern);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Resource getResource(String location) {
+        return m_patternResolver.getResource(location);
     }
     
     /**
