@@ -81,7 +81,7 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
     private boolean m_allowBeanDefinitionOverriding = false;
     
     /** The resource pattern resolver. */
-    private ListResourcePatternResolverDecorator m_patternResolver;
+    private final ListResourcePatternResolverDecorator m_patternResolver;
     
     /**
      * @see ch.elca.el4j.core.context.ModuleApplicationContext#ModuleApplicationContext(String[],
@@ -181,15 +181,13 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
         m_exclusiveConfigLocations = exclusiveConfigLocations;
         m_allowBeanDefinitionOverriding = allowBeanDefinitionOverriding;
         
-        if (mergeWithOuterResources) {
-            /* HACK overrides the pattern resolver of the
-             *      AbstractApplicationContext to perform a customized
-             *      initialization.
-             */
-            m_patternResolver = (ListResourcePatternResolverDecorator)
-                    getResourcePatternResolver();
-            m_patternResolver.setMergeWithOuterResources(true);
-        }
+        /* HACK overrides the pattern resolver of the
+         *      AbstractApplicationContext to perform a customized
+         *      initialization.
+         */
+        m_patternResolver = (ListResourcePatternResolverDecorator)
+            getResourcePatternResolver();
+        m_patternResolver.setMergeWithOuterResources(mergeWithOuterResources);
         
         ModuleApplicationContextUtils utils 
             = new ModuleApplicationContextUtils(this);
@@ -226,16 +224,15 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
      * {@inheritDoc}
      */
     public Resource[] getResources(String locationPattern) throws IOException {
-        
-        /* HACK The AbstractApplicationContext caches the resource pattern
-         *      resolver in a private field. Defining a resource pattern
-         *      resolver in this class allows configuring the resolver.
-         */
-        if (m_patternResolver == null) {
-            return super.getResources(locationPattern);
-        } else {
-            return m_patternResolver.getResources(locationPattern);
-        }
+        return m_patternResolver.getResources(locationPattern);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Resource getResource(String location) {
+        return m_patternResolver.getResource(location);
     }
     
     /**
