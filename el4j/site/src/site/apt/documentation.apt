@@ -18,19 +18,19 @@ Documentation
     * EL4J Annotation Cheat Sheets {{{docs/pdf/ejb30-persistence-anno-cheat_v1_0.pdf} Standard }}  /   
        {{{docs/pdf/el4j-anno-cheat_v1_0.pdf} EL4J-Additions }}  
       
-    * {{{docs/pdf/UniqueEl4jFeatures.pdf} List of unique EL4J features}}
+    * {{{docs/pdf/UniqueEL4JFeatures.pdf} List of unique EL4J features}}
       
    
 * Presentations/ Articles/ Blogs
+
+    * {{{docs/pdf/El4JDatasheet_v1_0.pdf}
+      Datasheet}}
 
     * {{{docs/pdf/EL4J_IntroductionArticle1.pdf}
       EL4J Introduction Article for Spring Architects (PDF)}}
     
     * {{{http://www.elca.ch/resources/EL4J.pdf}
       EL4J Introduction Article (in German) (PDF)}}   
-
-    * {{{docs/pdf/progressiveEl4JDatasheet_v0_8.pdf}
-      Emerging Datasheet (TBD: replace with final version) }}
     
     * {{{docs/pdf/IdentityFixerAnnouncement.pdf}
       An article about the identity fixer (to preserve object identities over process boundaries) (PDF)}}   
