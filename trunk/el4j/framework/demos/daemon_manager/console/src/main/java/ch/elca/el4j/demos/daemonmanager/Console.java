@@ -44,8 +44,8 @@ public final class Console {
      */
     public static final String[] INCLUSIVE_CONFIG_LOCATION 
         = {"classpath*:mandatory/*.xml", 
-            "classpath*:daemon_manager_demos/common/*.xml", 
-            "classpath*:daemon_manager_demos/console/*.xml"};
+            "classpath*:scenarios/daemon_manager_demos/common/*.xml", 
+            "classpath*:scenarios/daemon_manager_demos/console/*.xml"};
 
     /**
      * Flag to tell application context if bean definition overriding is 
