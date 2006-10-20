@@ -180,8 +180,12 @@ public class DefaultXmlMerge implements XmlMerge {
 
         Document result = doMerge(docs);
 
-        XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
-
+        Format prettyFormatter = Format.getPrettyFormat();
+        // Use system line seperator to avoid problems 
+        // with carriage return under linux
+        prettyFormatter.setLineSeparator(System.getProperty("line.separator"));
+        XMLOutputter sortie = new XMLOutputter(prettyFormatter);
+        
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
         try {
