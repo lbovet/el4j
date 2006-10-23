@@ -141,22 +141,19 @@ public class ManifestResourceResolverIntegrationTest
      * Tests whether a single resource is resolved correctly using
      * <code>getResource()</code>.
      */
-    public void testGetSingleResource() {
-        Resource r = m_resolver.getResource("classpath:a.xml");
-        System.out.println(r.getFilename());
-    }
-    
-    /**
-     * Tests resolving a single resource using wildcard notation.
-     * 
-     * @throws IOException
-     *      If an I/O error occurs.
-     */
-    public void testGetSingleResourceWithPattern() throws IOException {
+    public void testGetSingleResource() throws IOException {
+        String resourceLocation 
+            = "optional/interception/transactionJava5Annotations.xml";
         Resource[] r = m_resolver.getResources(
-                "classpath:scenarios/core/io/**/ab.xml");
-        assertEquals("Returned wrong number of resources", 1, r.length);
-        System.out.println(r[0].getFilename());
+            "classpath*:" + resourceLocation);
+        assertEquals(r.length, 2);
+        System.out.println(r[0].getURL());
+        System.out.println(r[1].getURL());
+        Resource r2 = m_resolver.getResource(
+            "classpath:" + resourceLocation);
+        assertNotNull(r2);
+        assertEquals(r[0].getURL(), r2.getURL());
+        System.out.println(r2.getURL());
     }
     
     /**
