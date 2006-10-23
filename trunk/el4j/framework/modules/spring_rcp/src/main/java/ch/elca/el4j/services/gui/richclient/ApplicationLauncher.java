@@ -244,18 +244,13 @@ public class ApplicationLauncher {
     protected ApplicationContext loadRootApplicationContext(
         ModuleApplicationContextConfiguration applicationContextConfiguration) {
         try {
-            return new ModuleApplicationContext(applicationContextConfiguration
-                .getInclusiveConfigLocations(), applicationContextConfiguration
-                .getExclusiveConfigLocations(), applicationContextConfiguration
-                .isAllowBeanDefinitionOverriding(),
-                applicationContextConfiguration.getParent(),
-                applicationContextConfiguration.isMergeWithOuterResources());
+            return new ModuleApplicationContext(
+                applicationContextConfiguration);
         } catch (Exception e) {
             s_logger.warn("Exception occured initializing application startup "
                 + "context.", e);
             throw new ApplicationException(
                 "Unable to start rich client application", e);
-
         }
     }
 
