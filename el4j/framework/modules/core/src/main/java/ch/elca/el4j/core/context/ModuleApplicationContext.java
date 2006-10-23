@@ -264,6 +264,23 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
     }
     
     /**
+     * Constructor to create a module application context by using the given 
+     * configurations.
+     * 
+     * @param config Is the used configuration.
+     */
+    public ModuleApplicationContext(
+        ModuleApplicationContextConfiguration config) {
+        this(config.getInclusiveConfigLocations(),
+            config.getExclusiveConfigLocations(),
+            config.isAllowBeanDefinitionOverriding(),
+            config.getParent(),
+            config.isMergeWithOuterResources(),
+            config.isMostSpecificResourceLast(),
+            config.isMostSpecificBeanDefinitionCounts());
+    }
+    
+    /**
      * @return Returns the ConfigLocations.
      */
     @Override
