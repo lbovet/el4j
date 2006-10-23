@@ -21,9 +21,15 @@ import java.io.IOException;
 
 import javax.servlet.ServletContext;
 
+import org.apache.commons.lang.ArrayUtils;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.ResourcePatternResolver;
-import org.springframework.util.AntPathMatcher;
+import org.springframework.util.Assert;
+import org.springframework.web.context.support.ServletContextResourceLoader;
+import org.springframework.web.context.support.ServletContextResourcePatternResolver;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContextUtils;
@@ -34,7 +40,7 @@ import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
  * This web application context behaves exactly the same way as Spring's
  * {@link org.springframework.web.context.support.XmlWebApplicationContext} but
  * uses a {@link org.springframework.core.io.support.ResourcePatternResolver}
- * that preserves the order defined by the EL4Ant's module hierarchy. Further,
+ * that preserves the order defined by the EL4J's module hierarchy. Further,
  * it allows to define configuration locations that have to be included and
  * those, that have to be excluded. This allows removing individual
  * configuration files that are included using using wildcard notation.
@@ -47,127 +53,248 @@ import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
  * );</script>
  *
  * @author Andreas Bur (ABU)
+ * @author Martin Zeltner (MZE)
  * @see ch.elca.el4j.core.context.ModuleApplicationContext
  */
 public class ModuleWebApplicationContext extends XmlWebApplicationContext {
-    
     /**
-     * Inclusive configuration locations.
+     * Inclusive config locations.
      */
-    private String[] m_inclusiveConfigLocations;
-    
+    private final String[] m_inclusiveConfigLocations;
+
     /**
-     * Exclusive configuration locations.
+     * Exclusive config locations.
      */
-    private String[] m_exclusiveConfigLocations;
-    
+    private final String[] m_exclusiveConfigLocations;
+
+    /**
+     * Config locations.
+     */
+    private final String[] m_configLocations;
+
     /**
      * Indicates if bean definition overriding is enabled.
      */
-    private boolean m_allowBeanDefinitionOverriding = false;
+    private final boolean m_allowBeanDefinitionOverriding;
     
-    /** The resource pattern resolver. */
+    /**
+     * Indicates if unordered/unknown resource should be used.
+     */
+    private final boolean m_mergeWithOuterResources;
+    
+    /**
+     * Indicates if the most specific resource should be the last resource
+     * in the fetched resource array. If its value is set to <code>true</code>
+     * and only one resource is requested the least specific resource will be
+     * returned. Default is set to <code>false</code>.
+     */
+    private final boolean m_mostSpecificResourceLast;
+    
+    /**
+     * Indicates if the most specific bean definition counts.
+     */
+    private final boolean m_mostSpecificBeanDefinitionCounts;
+    
+    /**
+     * The resource pattern resolver.
+     */
     private ListResourcePatternResolverDecorator m_patternResolver;
     
     /**
-     * Creates a new instance and computes the set of configuration locations
-     * by removing the exclusive locations from the inclusive ones.
+     * <ul>
+     * <li>Most specific resource last is set to <code>false</code>.</li>
+     * <li>Most specific bean definition counts is set to 
+     * <code>true</code>.</li>
+     * </ul>
      * 
-     * @param inclusiveConfigLocations
-     *      The configuration locations to include.
-     * @param exclusiveConfigLocations
-     *      The configuration locations to exclude.
-     * @param allowBeanDefinitionOverriding
-     *      Whether it's allowed to override already existing bean definitions.
-     * @param context
-     *      The Servlet context which this web application context is running
-     *      in.
-     * @param mergeWithOuterResources
-     *      A boolean which defines if the resources retrieved by the 
-     *      configuration files section of the manifest files should be merged
-     *      with resources found by searching in the file system.
+     * @see #ModuleWebApplicationContext(String[], String[], boolean,
+     *       ServletContext, boolean, boolean, boolean))
      */
     public ModuleWebApplicationContext(String[] inclusiveConfigLocations,
-            String[] exclusiveConfigLocations,
-            boolean allowBeanDefinitionOverriding, ServletContext context,
-            boolean mergeWithOuterResources) {
-        
-        setServletContext(context);
+        String[] exclusiveConfigLocations,
+        boolean allowBeanDefinitionOverriding, ServletContext servletContext,
+        boolean mergeWithOuterResources) {
+        this(inclusiveConfigLocations, exclusiveConfigLocations,
+            allowBeanDefinitionOverriding, servletContext,
+            mergeWithOuterResources, false, true);
+    }
+
+    /**
+     * Create a new ModuleApplicationContext with the given parent, loading the
+     * definitions from the given XML files in "inclusiveConfigLocations"
+     * excluded the XML files defined in "exclusiveConfigLocations". If the
+     * parameter "allowBeanDefinitionOverriding" is set to true then the
+     * BeanFactory is allowed to override a bean if there is another one with
+     * the same name.
+     * 
+     * @param inclusiveConfigLocations
+     *            array of file paths
+     * @param exclusiveConfigLocations
+     *            array of file paths which are excluded
+     * @param allowBeanDefinitionOverriding
+     *            a boolean which defines if overriding of bean definitions is
+     *            allowed
+     * @param servletContext
+     *            the servlet context where this application context is used
+     * @param mergeWithOuterResources
+     *            a boolean which defines if the resources retrieved by the
+     *            configuration files section of the manifest files should be
+     *            merged with resources found by searching in the file system.
+     * @param mostSpecificResourceLast
+     *            Indicates if the most specific resource should be the last
+     *            resource in the fetched resource array. If its value is set to
+     *            <code>true</code> and only one resource is requested the
+     *            least specific resource will be returned.
+     * @param mostSpecificBeanDefinitionCounts
+     *            Indicates that the most specific bean definition is used.
+     */
+    public ModuleWebApplicationContext(String[] inclusiveConfigLocations,
+        String[] exclusiveConfigLocations,
+        boolean allowBeanDefinitionOverriding, ServletContext servletContext,
+        boolean mergeWithOuterResources, boolean mostSpecificResourceLast,
+        boolean mostSpecificBeanDefinitionCounts) {
+
+        super();
         
         m_inclusiveConfigLocations = inclusiveConfigLocations;
         m_exclusiveConfigLocations = exclusiveConfigLocations;
         m_allowBeanDefinitionOverriding = allowBeanDefinitionOverriding;
+        m_mergeWithOuterResources = mergeWithOuterResources;
+        m_mostSpecificResourceLast = mostSpecificResourceLast;
+        m_mostSpecificBeanDefinitionCounts = mostSpecificBeanDefinitionCounts;
+        setServletContext(servletContext);
         
-        if (mergeWithOuterResources) {
-            /* HACK overrides the pattern resolver of the
-             *      AbastractApplicationContext to perform a customized
-             *      initialization.
-             */
-            m_patternResolver = (ListResourcePatternResolverDecorator)
-                getResourcePatternResolver();
-            m_patternResolver.setMergeWithOuterResources(true);
-        }
-        
-        if (m_inclusiveConfigLocations != null
-                && m_inclusiveConfigLocations.length > 0) {
-            ModuleApplicationContextUtils utils 
-                = new ModuleApplicationContextUtils(this);
-            
-            String[] configs = utils.calculateInputFiles(
-                    inclusiveConfigLocations,
-                    exclusiveConfigLocations,
-                    allowBeanDefinitionOverriding);
-            
-            setConfigLocations(configs);
-        }
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public Resource[] getResources(String locationPattern) throws IOException {
-        /* HACK The AbstractApplicationContext caches the resource pattern
-         *      resolver in a private field. Defining a resource pattern
-         *      resolver in this class allows configuring the resolver.
+        /**
+         * HACK: The pattern resolver is initialized by a super class
+         * via method <code>getResourcePatternResolver</code>.
          */
-        if (m_patternResolver == null) {
-            return super.getResources(locationPattern);
-        } else {
-            return m_patternResolver.getResources(locationPattern);
+        Assert.notNull(m_patternResolver);
+        Assert.isInstanceOf(ListResourcePatternResolverDecorator.class, 
+            m_patternResolver);
+        ListResourcePatternResolverDecorator listResourcePatternResolver
+            = (ListResourcePatternResolverDecorator) m_patternResolver;
+        listResourcePatternResolver.setMostSpecificResourceLast(
+            isMostSpecificResourceLast());
+        listResourcePatternResolver.setMergeWithOuterResources(
+            isMergeWithOuterResources());
+        
+        if (servletContext != null) {
+            listResourcePatternResolver.setPatternResolver(
+                new ServletContextResourcePatternResolver(servletContext));
+        }
+
+        ModuleApplicationContextUtils utils 
+            = new ModuleApplicationContextUtils(this);
+        utils.setReverseConfigLocationResourceArray(
+            isMostSpecificResourceLast() 
+                != isMostSpecificBeanDefinitionCounts());
+        
+        m_configLocations = utils.calculateInputFiles(inclusiveConfigLocations,
+                exclusiveConfigLocations, allowBeanDefinitionOverriding);
+
+        if (!ArrayUtils.isEmpty(m_configLocations)) {
+            setConfigLocations(m_configLocations);
         }
     }
     
     /**
-     * {@inheritDoc}
-     */
-    protected ResourcePatternResolver getResourcePatternResolver() {
-        return new ListResourcePatternResolverDecorator(
-                new ManifestOrderedConfigLocationProvider(),
-                super.getResourcePatternResolver(),
-                new AntPathMatcher());
-    }
-    
-    /**
-     * @return Returns <code>true</code> if overriding of already exisiting
-     *      bean definitions is allowed. <code>false</code> otherwise.
-     */
-    public boolean isAllowBeanDefinitionOverriding() {
-        return m_allowBeanDefinitionOverriding;
-    }
-
-    /**
-     * @return Returns the list of configuration file locations that has to
-     *      be excluded when the application context is initialized.
+     * @return Returns the exclusiveConfigLocations.
      */
     public String[] getExclusiveConfigLocations() {
         return m_exclusiveConfigLocations;
     }
 
     /**
-     * @return Returns the list of configuration file locations that are
-     *      included when the application context is initizlized.
+     * @return Returns the inclusiveConfigLocations.
      */
     public String[] getInclusiveConfigLocations() {
         return m_inclusiveConfigLocations;
+    }
+
+    /**
+     * @return Returns the allowBeanDefinitionOverriding.
+     */
+    public boolean isAllowBeanDefinitionOverriding() {
+        return m_allowBeanDefinitionOverriding;
+    }
+
+    /**
+     * @return Returns the mergeWithOuterResources.
+     */
+    public boolean isMergeWithOuterResources() {
+        return m_mergeWithOuterResources;
+    }
+
+    /**
+     * @return Returns the mostSpecificResourceLast.
+     */
+    public boolean isMostSpecificResourceLast() {
+        return m_mostSpecificResourceLast;
+    }
+
+    /**
+     * @return Returns the mostSpecificBeanDefinitionCounts.
+     */
+    public boolean isMostSpecificBeanDefinitionCounts() {
+        return m_mostSpecificBeanDefinitionCounts;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Resource getResource(String location) {
+        return m_patternResolver.getResource(location);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Resource[] getResources(String locationPattern) throws IOException {
+        return m_patternResolver.getResources(locationPattern);
+    }
+    
+    /**
+     * Override method createBeanFactory() in class
+     * AbstractRefreshableApplicationContext. The property
+     * m_allowBeanDefinitionOverriding can be set and is handed over to the
+     * DefaultListableBeanFactory which creates the BeanFactory.
+     * 
+     * @return the DefaultListableBeanFactory
+     */
+    @Override
+    protected DefaultListableBeanFactory createBeanFactory() {
+        DefaultListableBeanFactory dlbf = new DefaultListableBeanFactory(
+                getInternalParentBeanFactory());
+        dlbf.setAllowBeanDefinitionOverriding(
+            isAllowBeanDefinitionOverriding());
+        return dlbf;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected ResourcePatternResolver getResourcePatternResolver() {
+        ResourceLoader resourceLoader;
+        ServletContext servletContext = getServletContext();
+        if (servletContext == null) {
+            resourceLoader = new DefaultResourceLoader(getClassLoader());
+        } else {
+            resourceLoader = new ServletContextResourceLoader(servletContext);
+        }
+        
+        ListResourcePatternResolverDecorator patternResolver 
+            = new ListResourcePatternResolverDecorator(
+                new ManifestOrderedConfigLocationProvider(),
+                new ServletContextResourcePatternResolver(
+                    resourceLoader));
+        patternResolver.setMostSpecificResourceLast(
+            isMostSpecificResourceLast());
+        patternResolver.setMergeWithOuterResources(
+            isMergeWithOuterResources());
+        m_patternResolver = patternResolver;
+        return m_patternResolver; 
     }
 }
