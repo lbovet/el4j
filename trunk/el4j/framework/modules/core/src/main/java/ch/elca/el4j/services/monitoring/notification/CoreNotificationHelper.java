@@ -179,7 +179,7 @@ public final class CoreNotificationHelper {
      * @see MessageFormat
      */
     public static void notifyMisconfiguration(String message,
-            Object[] parameters) throws MisconfigurationRTException {
+            Object... parameters) throws MisconfigurationRTException {
         String msg = MessageFormat.format(message, parameters);
         notifyMisconfiguration(msg);
     }

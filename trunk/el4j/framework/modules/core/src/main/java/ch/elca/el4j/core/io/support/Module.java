@@ -17,9 +17,21 @@
 
 package ch.elca.el4j.core.io.support;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.StringTokenizer;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.util.ClassUtils;
+import org.springframework.util.StringUtils;
+
+import ch.elca.el4j.core.io.ExplicitClassPathResource;
 
 /**
  * This class represents a simplified view of a module (EL4Ant build system
@@ -39,14 +51,39 @@ public class Module {
     /** The delimiter used to separate configuration files and dependencies. */
     public static final String DELIMITER = ",";
     
-    /** The module's name. */
-    private String m_name;
+    /** Private logger. */
+    private static Log s_logger = LogFactory.getLog(Module.class);
     
-    /** The module's configuration files. */
-    private List m_configFiles;
+    /**
+     * Is the used class loader.
+     */
+    protected final ClassLoader m_classLoader;
     
-    /** The module's dependencies. */
-    private List m_dependencies;
+    /**
+     * The module's name.
+     */
+    private final String m_name;
+    
+    /**
+     * The module's location.
+     */
+    private final String m_moduleLocation;
+    
+    /**
+     * The module's configuration files.
+     */
+    private List<String> m_configFiles;
+    
+    /**
+     * The module's config file resources.
+     * Like {@link #m_configFiles} but with resolved resources.
+     */
+    private List<Resource> m_configFileResources;
+    
+    /**
+     * The module's dependencies.
+     */
+    private List<String> m_dependencies;
     
     /**
      * Creates a new module with the given name.
@@ -55,9 +92,36 @@ public class Module {
      *      The module's name.
      */
     public Module(String name) {
+        this(name, null, null);
+    }
+    
+    /**
+     * Creates a new module with the given name and the module's location.
+     * 
+     * @param name The module's name.
+     * @param moduleLocation The module's location.
+     */
+    public Module(String name, String moduleLocation) {
+        this(name, moduleLocation, null);
+    }
+    
+    /**
+     * Creates a new module with the given name, the module's location
+     * and resolves resources by using the given class loader.
+     * 
+     * @param name The module's name.
+     * @param moduleLocation The module's location.
+     * @param classLoader The class loader to resolve resources.
+     */
+    public Module(String name, String moduleLocation, ClassLoader classLoader) {
         m_name = name;
-        m_configFiles = new ArrayList();
-        m_dependencies = new ArrayList();
+        m_moduleLocation = StringUtils.hasText(moduleLocation) 
+            ? moduleLocation : null;
+        m_configFiles = new ArrayList<String>();
+        m_configFileResources = new ArrayList<Resource>();
+        m_dependencies = new ArrayList<String>();
+        m_classLoader = classLoader != null
+            ? classLoader : ClassUtils.getDefaultClassLoader();
     }
     
     /**
@@ -82,6 +146,7 @@ public class Module {
      */
     public void addConfigFile(String configFile) {
         m_configFiles.add(configFile);
+        m_configFileResources.add(getConfigFileAsResource(configFile));
     }
     
     /**
@@ -128,15 +193,15 @@ public class Module {
     /**
      * @return Returns the configuration file list.
      */
-    public List getConfigFilesAsList() {
-        return new ArrayList(m_configFiles);
+    public List<String> getConfigFilesAsList() {
+        return new ArrayList<String>(m_configFiles);
     }
     
     /**
      * @return Returns the dependency list.
      */
-    public List getDependenciesAsList() {
-        return new ArrayList(m_dependencies);
+    public List<String> getDependenciesAsList() {
+        return new ArrayList<String>(m_dependencies);
     }
     
     /**
@@ -147,9 +212,62 @@ public class Module {
     }
     
     /**
+     * @return Returns the module's location.
+     */
+    public String getModuleLocation() {
+        return m_moduleLocation;
+    }
+    
+    /**
+     * @return Returns the configuration files resolved as resources in a list. 
+     */
+    public List<Resource> getConfigFileResourcesAsList() {
+        return new ArrayList<Resource>(m_configFileResources);
+    }
+    
+    /**
+     * Converts the given config file in a resource that takes place in
+     * the current module.
+     * 
+     * @param configFile The config file to convert.
+     * @return Returns the converted resource.
+     */
+    public Resource getConfigFileAsResource(String configFile) {
+        Resource resource = null;
+        if (m_moduleLocation == null) {
+            resource = new ClassPathResource(configFile);
+        } else {
+            try {
+                Enumeration<URL> resources 
+                    = m_classLoader.getResources(configFile);
+                while (resources.hasMoreElements() && resource == null) {
+                    URL url = resources.nextElement();
+                    String urlString = url.getFile();
+                    if (urlString.startsWith(m_moduleLocation)) {
+                        resource = new ExplicitClassPathResource(
+                            url, configFile, m_classLoader);
+                    }
+                }
+            } catch (IOException e) {
+                resource = null;
+            }
+            if (resource == null) {
+                s_logger.warn("Config file '" + configFile 
+                    + "' could not be resolved with current class loader.");
+                resource = new ClassPathResource(configFile);
+            }
+        }
+        return resource;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public String toString() {
-        return "Module '" + m_name + "'";
+        if (m_moduleLocation != null) {
+            return "Module '" + m_name + "' at '" + m_moduleLocation + "'";
+        } else {
+            return "Module '" + m_name + "'";
+        }
     }
 }

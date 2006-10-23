@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
@@ -56,6 +57,11 @@ public class ModuleApplicationContextUtils {
     private ApplicationContext m_appContext;
     
     /**
+     * @see #setReverseConfigLocationResourceArray(boolean)
+     */
+    private boolean m_reverseConfigLocationResourceArray = false;
+    
+    /**
      * Creates a new instance that is connected to the given application
      * contet.
      * 
@@ -83,13 +89,18 @@ public class ModuleApplicationContextUtils {
     public String[] calculateInputFiles(String[] inclusiveConfigLocations,
             String[] exclusiveConfigLocations,
             boolean allowBeanDefinitionOverriding) {
+        
+        if (ArrayUtils.isEmpty(inclusiveConfigLocations)) {
+            s_logger.warn("No inclusive configuration locations given!");
+            return null;
+        }
 
         checkConfigLocations(inclusiveConfigLocations[0]);
         
-        ArrayList inclusiveFileNames 
+        List<String> inclusiveFileNames 
             = getResolvedFileNames(inclusiveConfigLocations);
 
-        ArrayList exclusiveFileNames 
+        List<String> exclusiveFileNames 
             = getResolvedFileNames(exclusiveConfigLocations);
 
         //remove the xml files in inclusiveFileNames which are in
@@ -136,9 +147,9 @@ public class ModuleApplicationContextUtils {
      * @param unresolvedFileNames Are the names of unresolved file names.
      * @return Returns a list of resolved file names.
      */
-    protected ArrayList getResolvedFileNames(String[] unresolvedFileNames) {
+    protected List<String> getResolvedFileNames(String[] unresolvedFileNames) {
 
-        ArrayList result = new ArrayList();
+        List<String> result = new ArrayList<String>();
 
         if (unresolvedFileNames == null) {
             return result;
@@ -169,10 +180,13 @@ public class ModuleApplicationContextUtils {
      * @return all resolved xml files
      */
     protected String[] resolveAttribute(String path) {
-        List resolvedAttributes = new ArrayList();
+        List<String> resolvedAttributes = new ArrayList<String>();
 
         try {
             Resource[] resLocal = m_appContext.getResources(path);
+            if (isReverseConfigLocationResourceArray()) {
+                ArrayUtils.reverse(resLocal);
+            }
 
             for (int i = 0; i < resLocal.length; i++) {
                 if (resLocal[i].exists()) {
@@ -193,5 +207,25 @@ public class ModuleApplicationContextUtils {
             result[i] = (String) resolvedAttributes.get(i);
         }
         return result;
+    }
+
+    /**
+     * @return Returns the reverseConfigLocationResourceArray.
+     */
+    public boolean isReverseConfigLocationResourceArray() {
+        return m_reverseConfigLocationResourceArray;
+    }
+
+    /**
+     * Flag to indicate if the resource array of a config location should be
+     * reversed. The default is set to <code>false</code>.
+     * 
+     * @param reverseConfigLocationResourceArray
+     *            Is the reverseConfigLocationResourceArray to set.
+     */
+    public void setReverseConfigLocationResourceArray(
+        boolean reverseConfigLocationResourceArray) {
+        m_reverseConfigLocationResourceArray 
+            = reverseConfigLocationResourceArray;
     }
 }

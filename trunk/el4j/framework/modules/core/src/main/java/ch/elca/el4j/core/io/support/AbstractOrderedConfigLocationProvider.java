@@ -17,8 +17,11 @@
 
 package ch.elca.el4j.core.io.support;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.core.io.Resource;
 
 /**
  * This class simplifies writing ordered configuration location providers.
@@ -42,6 +45,11 @@ public abstract class AbstractOrderedConfigLocationProvider
     private ModuleSorter m_moduleSorter = new DefaultModuleSorter();
 
     /**
+     * The sorted list of modules.
+     */
+    private Module[] m_sortedModules;
+
+    /**
      * Sets the module sorter used to compute the list of modules while
      * preserving their hierarchical constraints. Default sorter is a
      * {@link DefaultModuleSorter}.
@@ -55,6 +63,24 @@ public abstract class AbstractOrderedConfigLocationProvider
         m_moduleSorter = moduleSorter;
     }
 
+    /**
+     * @return Returns the sorted list of modules.
+     * @throws IOException On any io problem while working with modules.
+     */
+    protected Module[] getSortedModules() throws IOException {
+        if (m_sortedModules == null) {
+            Module[] modules = createModules();
+            m_sortedModules = sortModules(modules);
+        }
+        return m_sortedModules; 
+    }
+    
+    /**
+     * @return Returns the created list of modules.
+     * @throws IOException On any io problem while module creation.
+     */
+    protected abstract Module[] createModules() throws IOException;
+    
     /**
      * Sorts an unordered list of modules using the hierarchical constraints
      * defined across the modules.
@@ -81,12 +107,33 @@ public abstract class AbstractOrderedConfigLocationProvider
      *      by the modules.
      */
     protected String[] mergeConfigLocations(Module[] modules) {
-        List configLocations = new ArrayList();
+        List<String> configLocations = new ArrayList<String>();
         for (int i = 0; i < modules.length; i++) {
             configLocations.addAll(modules[i].getConfigFilesAsList());
         }
         
         return (String[]) configLocations.toArray(
                 new String[configLocations.size()]);
+    }
+    
+    /**
+     * Merges the configuration location resources of the provided list of
+     * modules, preserving the module's order.
+     * 
+     * @param modules
+     *      The ordered list of modules which configuration location resources
+     *      has to be merged.
+     *       
+     * @return Returns the ordered list of configuration location resources
+     *      declared by the modules.
+     */
+    protected Resource[] mergeConfigLocationResources(Module[] modules) {
+        List<Resource> configLocationResources = new ArrayList<Resource>();
+        for (Module module : modules) {
+            configLocationResources.addAll(
+                module.getConfigFileResourcesAsList());
+        }
+        return (Resource[]) configLocationResources.toArray(
+                new Resource[configLocationResources.size()]);
     }
 }

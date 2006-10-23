@@ -17,6 +17,8 @@
 
 package ch.elca.el4j.core.io.support;
 
+import org.springframework.core.io.Resource;
+
 /**
  * A configuration location provider returns a list of configuration locations
  * that is used to search for resources. This class can be used to guarantee
@@ -39,4 +41,9 @@ public interface ConfigLocationProvider {
      * @return Returns a list of configuration locations.
      */
     public String[] getConfigLocations();
+    
+    /**
+     * @return Returns a list of resolved configuration locations.
+     */
+    public Resource[] getConfigLocationResources();
 }

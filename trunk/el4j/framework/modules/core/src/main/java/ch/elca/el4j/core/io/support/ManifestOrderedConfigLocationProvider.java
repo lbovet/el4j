@@ -28,6 +28,8 @@ import java.util.jar.Manifest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.core.io.Resource;
+import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
 
 import ch.elca.el4j.core.exceptions.BaseRTException;
@@ -63,12 +65,19 @@ public class ManifestOrderedConfigLocationProvider
     /** The name of the module dependencies attribute. */
     public static final String CONFIG_DEPENDENCIES = "Dependencies";
     
-    /** The static logger. */
-    private static Log s_logger = LogFactory.getLog(
-            ManifestOrderedConfigLocationProvider.class);
+    /** Private logger. */
+    private static Log s_logger
+        = LogFactory.getLog(ManifestOrderedConfigLocationProvider.class);
     
-    /** The sorted list of configuration locations. */
-    private String[] m_configLocations;
+    /**
+     * The sorted list of configuration locations.
+     */
+    protected String[] m_configLocations;
+    
+    /**
+     * The sorted list of resolved config locations.
+     */
+    protected Resource[] m_configLocationResources;
     
     /**
      * {@inheritDoc}
@@ -80,15 +89,16 @@ public class ManifestOrderedConfigLocationProvider
         return m_configLocations;
     }
     
+    
     /**
      * @return Returns the list of sorted configuration locations, which are
      *      extracted from manifest files.
      */
-    private String[] assembleConfigLocations() {
+    protected String[] assembleConfigLocations() {
         String[] configLocations = new String[0];
         try {
-            Module[] modules = createModules();
-            configLocations = mergeConfigLocations(sortModules(modules));
+            Module[] sortedModules = getSortedModules();
+            configLocations = mergeConfigLocations(sortedModules);
             
         } catch (IOException ioe) {
             s_logger.error("Error while loading module structure from manifest "
@@ -105,10 +115,10 @@ public class ManifestOrderedConfigLocationProvider
      * @throws IOException
      *      If an I/O error occurs.
      */
-    private URL[] getManifestFiles() throws IOException {
-        List result = new ArrayList();
-        ClassLoader cl = Thread.currentThread().getContextClassLoader();
-        Enumeration urlEnum = cl.getResources(MANIFEST_FILE);
+    protected URL[] getManifestFiles() throws IOException {
+        List<URL> result = new ArrayList<URL>();
+        ClassLoader cl = ClassUtils.getDefaultClassLoader();
+        Enumeration<URL> urlEnum = cl.getResources(MANIFEST_FILE);
         
         while (urlEnum.hasMoreElements()) {
             result.add(urlEnum.nextElement());
@@ -124,8 +134,8 @@ public class ManifestOrderedConfigLocationProvider
      * @throws IOException
      *      If an I/O error occurs.
      */
-    private Module[] createModules() throws IOException {
-        List modules = new ArrayList();
+    protected Module[] createModules() throws IOException {
+        List<Module> modules = new ArrayList<Module>();
         URL[] urls = getManifestFiles();
         for (int i = 0; i < urls.length; i++) {
             Module m = createModuleFromManifest(urls[i]);
@@ -149,7 +159,7 @@ public class ManifestOrderedConfigLocationProvider
      * @throws IOException
      *      If an I/O error occurs.
      */
-    private Module createModuleFromManifest(URL url) throws IOException {
+    protected Module createModuleFromManifest(URL url) throws IOException {
         InputStream is = null;
         Module m = null;
         try {
@@ -181,7 +191,11 @@ public class ManifestOrderedConfigLocationProvider
                     dependencies = "";
                 }
                 
-                m = new Module(module);
+                String moduleLocation = url.getFile();
+                moduleLocation = moduleLocation.substring(
+                    0, moduleLocation.length() - MANIFEST_FILE.length());
+                
+                m = new Module(module, moduleLocation);
                 m.addAllConfigFiles(files);
                 m.addAllDependencies(dependencies);
             }
@@ -191,5 +205,34 @@ public class ManifestOrderedConfigLocationProvider
             }
         }
         return m;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public Resource[] getConfigLocationResources() {
+        if (m_configLocationResources == null) {
+            m_configLocationResources = assembleConfigLocationResources();
+        }
+        return m_configLocationResources;
+    }
+
+    /**
+     * @return Returns the assembled configuration location resources.
+     */
+    protected Resource[] assembleConfigLocationResources() {
+        Resource[] configLocationResources = new Resource[0];
+        try {
+            Module[] sortedModules = getSortedModules();
+            configLocationResources
+                = mergeConfigLocationResources(sortedModules);
+            
+        } catch (IOException ioe) {
+            s_logger.error("Error while loading module structure from manifest "
+                    + "files. Fall back to the default resource pattern "
+                    + "resolver strategy. Correct order of configuration file "
+                    + "resources is no longer guaranteed!", ioe);
+        }
+        return configLocationResources;
     }
 }

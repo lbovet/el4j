@@ -24,6 +24,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.AbstractXmlApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourcePatternResolver;
+import org.springframework.util.Assert;
 
 import ch.elca.el4j.core.io.support.ListResourcePatternResolverDecorator;
 import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
@@ -57,35 +58,55 @@ import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
  * 
  * @author Raphael Boog (RBO)
  * @author Andreas Bur (ABU)
+ * @author Martin Zeltner (MZE)
  */
 public class ModuleApplicationContext extends AbstractXmlApplicationContext {
-
     /**
      * Inclusive config locations.
      */
-    private String[] m_inclusiveConfigLocations;
+    private final String[] m_inclusiveConfigLocations;
 
     /**
      * Exclusive config locations.
      */
-    private String[] m_exclusiveConfigLocations;
+    private final String[] m_exclusiveConfigLocations;
 
     /**
      * Config locations.
      */
-    private String[] m_configLocations;
+    private final String[] m_configLocations;
 
     /**
      * Indicates if bean definition overriding is enabled.
      */
-    private boolean m_allowBeanDefinitionOverriding = false;
+    private final boolean m_allowBeanDefinitionOverriding;
     
-    /** The resource pattern resolver. */
+    /**
+     * Indicates if unordered/unknown resource should be used.
+     */
+    private final boolean m_mergeWithOuterResources;
+    
+    /**
+     * Indicates if the most specific resource should be the last resource
+     * in the fetched resource array. If its value is set to <code>true</code>
+     * and only one resource is requested the least specific resource will be
+     * returned. Default is set to <code>false</code>.
+     */
+    private final boolean m_mostSpecificResourceLast;
+    
+    /**
+     * Indicates if the most specific bean definition counts.
+     */
+    private final boolean m_mostSpecificBeanDefinitionCounts;
+    
+    /**
+     * The resource pattern resolver.
+     */
     private ListResourcePatternResolverDecorator m_patternResolver;
     
     /**
-     * @see ch.elca.el4j.core.context.ModuleApplicationContext#ModuleApplicationContext(String[],
-     *      String[], boolean, ApplicationContext, boolean)
+     * @see ch.elca.el4j.core.context.ModuleApplicationContext#ModuleApplicationContext(
+     *      String[], boolean)
      */
     public ModuleApplicationContext(String inclusiveConfigLocation,
             boolean allowBeanDefinitionOverriding) {
@@ -94,8 +115,8 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
     }
 
     /**
-     * @see ch.elca.el4j.core.context.ModuleApplicationContext#ModuleApplicationContext(String[],
-     *      String[], boolean, ApplicationContext, boolean)
+     * @see ch.elca.el4j.core.context.ModuleApplicationContext#ModuleApplicationContext(
+     *      String[], String[], boolean, ApplicationContext)
      */
     public ModuleApplicationContext(String[] inclusiveConfigLocations,
             boolean allowBeanDefinitionOverriding) {
@@ -104,8 +125,8 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
     }
 
     /**
-     * @see ch.elca.el4j.core.context.ModuleApplicationContext#ModuleApplicationContext(String[],
-     *      String[], boolean, ApplicationContext, boolean)
+     * @see ch.elca.el4j.core.context.ModuleApplicationContext#ModuleApplicationContext(
+     *      String[], String[], boolean, ApplicationContext)
      */
     public ModuleApplicationContext(String inclusiveConfigLocation,
             String exclusiveConfigLocation,
@@ -116,8 +137,8 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
     }
 
     /**
-     * @see ch.elca.el4j.core.context.ModuleApplicationContext#ModuleApplicationContext(String[],
-     *      String[], boolean, ApplicationContext, boolean)
+     * @see ch.elca.el4j.core.context.ModuleApplicationContext#ModuleApplicationContext(
+     *      String[], String[], boolean, ApplicationContext)
      */
     public ModuleApplicationContext(String[] inclusiveConfigLocations,
             String exclusiveConfigLocation,
@@ -128,8 +149,8 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
     }
 
     /**
-     * @see ch.elca.el4j.core.context.ModuleApplicationContext#ModuleApplicationContext(String[],
-     *      String[], boolean, ApplicationContext, boolean)
+     * @see ch.elca.el4j.core.context.ModuleApplicationContext#ModuleApplicationContext(
+     *      String[], String[], boolean, ApplicationContext)
      */
     public ModuleApplicationContext(String inclusiveConfigLocation,
             String[] exclusiveConfigLocations,
@@ -139,14 +160,38 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
     }
 
     /**
-     * @see ch.elca.el4j.core.context.ModuleApplicationContext#ModuleApplicationContext(String[],
-     *      String[], boolean, ApplicationContext, boolean)
+     * <ul>
+     * <li>Merge with outer resources is set to <code>true</code>.</li>
+     * </ul>
+     * 
+     * @see ch.elca.el4j.core.context.ModuleApplicationContext#ModuleApplicationContext(
+     *      String[], String[], boolean, ApplicationContext, boolean)
      */
     public ModuleApplicationContext(String[] inclusiveConfigLocations,
             String[] exclusiveConfigLocations,
             boolean allowBeanDefinitionOverriding, ApplicationContext parent) {
         this(inclusiveConfigLocations, exclusiveConfigLocations,
                 allowBeanDefinitionOverriding, parent, true); 
+    }
+    
+    /**
+     * <ul>
+     * <li>Most specific resource last is set to <code>false</code>.</li>
+     * <li>Most specific bean definition counts is set to 
+     * <code>true</code>.</li>
+     * </ul>
+     * 
+     * @see ch.elca.el4j.core.context.ModuleApplicationContext#ModuleApplicationContext(
+     *      String[], String[], boolean, ApplicationContext, boolean, boolean,
+     *      boolean)
+     */
+    public ModuleApplicationContext(String[] inclusiveConfigLocations,
+        String[] exclusiveConfigLocations,
+        boolean allowBeanDefinitionOverriding, ApplicationContext parent,
+        boolean mergeWithOuterResources) {
+        this(inclusiveConfigLocations, exclusiveConfigLocations,
+                allowBeanDefinitionOverriding, parent, mergeWithOuterResources,
+                false, true); 
     }
             
     /**
@@ -168,42 +213,60 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
      *            the parent context
      * @param mergeWithOuterResources
      *            a boolean which defines if the resources retrieved by the
-     *            configuration files section of the manifest files should
-     *            be merged with resources found by searching in the file
-     *            system.
+     *            configuration files section of the manifest files should be
+     *            merged with resources found by searching in the file system.
+     * @param mostSpecificResourceLast
+     *            Indicates if the most specific resource should be the last
+     *            resource in the fetched resource array. If its value is set to
+     *            <code>true</code> and only one resource is requested the
+     *            least specific resource will be returned.
+     * @param mostSpecificBeanDefinitionCounts
+     *            Indicates that the most specific bean definition is used.
      */
     public ModuleApplicationContext(String[] inclusiveConfigLocations,
             String[] exclusiveConfigLocations,
             boolean allowBeanDefinitionOverriding, ApplicationContext parent,
-            boolean mergeWithOuterResources) {
+            boolean mergeWithOuterResources,
+            boolean mostSpecificResourceLast,
+            boolean mostSpecificBeanDefinitionCounts) {
         super(parent);
         m_inclusiveConfigLocations = inclusiveConfigLocations;
         m_exclusiveConfigLocations = exclusiveConfigLocations;
         m_allowBeanDefinitionOverriding = allowBeanDefinitionOverriding;
+        m_mergeWithOuterResources = mergeWithOuterResources;
+        m_mostSpecificResourceLast = mostSpecificResourceLast;
+        m_mostSpecificBeanDefinitionCounts = mostSpecificBeanDefinitionCounts;
         
-        if (mergeWithOuterResources) {
-            /* HACK overrides the pattern resolver of the
-             *      AbstractApplicationContext to perform a customized
-             *      initialization.
-             */
-            m_patternResolver = (ListResourcePatternResolverDecorator)
-                    getResourcePatternResolver();
-            m_patternResolver.setMergeWithOuterResources(true);
-        }
-        
+        /**
+         * HACK: The pattern resolver is initialized by a super class
+         * via method <code>getResourcePatternResolver</code>.
+         */
+        Assert.notNull(m_patternResolver);
+        Assert.isInstanceOf(ListResourcePatternResolverDecorator.class, 
+            m_patternResolver);
+        ListResourcePatternResolverDecorator listResourcePatternResolver
+            = (ListResourcePatternResolverDecorator) m_patternResolver;
+        listResourcePatternResolver.setMostSpecificResourceLast(
+            isMostSpecificResourceLast());
+        listResourcePatternResolver.setMergeWithOuterResources(
+            isMergeWithOuterResources());
+
         ModuleApplicationContextUtils utils 
             = new ModuleApplicationContextUtils(this);
+        utils.setReverseConfigLocationResourceArray(
+            isMostSpecificResourceLast() 
+                != isMostSpecificBeanDefinitionCounts());
         
         m_configLocations = utils.calculateInputFiles(inclusiveConfigLocations,
                 exclusiveConfigLocations, allowBeanDefinitionOverriding);
         
         refresh();
-
     }
     
     /**
      * @return Returns the ConfigLocations.
      */
+    @Override
     public String[] getConfigLocations() {
         return m_configLocations;
     }
@@ -223,19 +286,47 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
     }
 
     /**
+     * @return Returns the allowBeanDefinitionOverriding.
+     */
+    public boolean isAllowBeanDefinitionOverriding() {
+        return m_allowBeanDefinitionOverriding;
+    }
+
+    /**
+     * @return Returns the mergeWithOuterResources.
+     */
+    public boolean isMergeWithOuterResources() {
+        return m_mergeWithOuterResources;
+    }
+
+    /**
+     * @return Returns the mostSpecificResourceLast.
+     */
+    public boolean isMostSpecificResourceLast() {
+        return m_mostSpecificResourceLast;
+    }
+
+    /**
+     * @return Returns the mostSpecificBeanDefinitionCounts.
+     */
+    public boolean isMostSpecificBeanDefinitionCounts() {
+        return m_mostSpecificBeanDefinitionCounts;
+    }
+    
+    /**
      * {@inheritDoc}
      */
+    @Override
+    public Resource getResource(String location) {
+        return m_patternResolver.getResource(location);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Resource[] getResources(String locationPattern) throws IOException {
-        
-        /* HACK The AbstractApplicationContext caches the resource pattern
-         *      resolver in a private field. Defining a resource pattern
-         *      resolver in this class allows configuring the resolver.
-         */
-        if (m_patternResolver == null) {
-            return super.getResources(locationPattern);
-        } else {
-            return m_patternResolver.getResources(locationPattern);
-        }
+        return m_patternResolver.getResources(locationPattern);
     }
     
     /**
@@ -246,18 +337,28 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
      * 
      * @return the DefaultListableBeanFactory
      */
+    @Override
     protected DefaultListableBeanFactory createBeanFactory() {
         DefaultListableBeanFactory dlbf = new DefaultListableBeanFactory(
                 getInternalParentBeanFactory());
-        dlbf.setAllowBeanDefinitionOverriding(m_allowBeanDefinitionOverriding);
+        dlbf.setAllowBeanDefinitionOverriding(
+            isAllowBeanDefinitionOverriding());
         return dlbf;
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     protected ResourcePatternResolver getResourcePatternResolver() {
-        return new ListResourcePatternResolverDecorator(
+        ListResourcePatternResolverDecorator patternResolver 
+            = new ListResourcePatternResolverDecorator(
                 new ManifestOrderedConfigLocationProvider());
+        patternResolver.setMostSpecificResourceLast(
+            isMostSpecificResourceLast());
+        patternResolver.setMergeWithOuterResources(
+            isMergeWithOuterResources());
+        m_patternResolver = patternResolver;
+        return m_patternResolver; 
     }
 }
