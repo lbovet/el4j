@@ -12,11 +12,11 @@
         <servlet-class>
             ch.elca.el4j.web.context.ModuleDispatcherServlet
         </servlet-class>
-        <!--<init-param>
-            <param-name>inclusiveLocations</param-name>
-            <param-value>WEB-INF/remotingtests-servlet.xml</param-value>
+        <init-param>
+            <param-name>allowBeanDefinitionOverriding</param-name>
+            <param-value>true</param-value>
         </init-param>
-        --><load-on-startup>100</load-on-startup>
+        <load-on-startup>100</load-on-startup>
     </servlet>
     
     <!-- Used by Soap(Axis) test -->
