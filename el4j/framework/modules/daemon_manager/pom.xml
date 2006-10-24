@@ -35,7 +35,7 @@
         <dependency>
             <groupId>org.tanukisoftware.wrapper</groupId>
             <artifactId>wrapper</artifactId>
-            <version>[3.2.0]</version>
+            <version>3.2.0</version>
         </dependency>
     </dependencies>
 </project>
