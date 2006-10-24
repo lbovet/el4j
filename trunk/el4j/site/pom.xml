@@ -293,10 +293,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <!--
-                    Version must be defined here because Maven has already 
-                    defined the version somewhere in the reporting section.
-                -->
                 <version>${version.maven-project-info-reports-plugin}</version>
                 <reportSets>
                     <reportSet>
