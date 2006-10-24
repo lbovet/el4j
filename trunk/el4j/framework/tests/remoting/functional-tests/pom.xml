@@ -38,6 +38,44 @@
             <artifactId>servlet-api</artifactId>
         </dependency>
     </dependencies>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.cargo</groupId>
+                    <artifactId>cargo-maven2-plugin</artifactId>
+                    <configuration>
+                        <wait>false</wait>
+                        <deployer>
+                            <deployables>
+                                <deployable>
+                                    <groupId>ch.elca.el4j.tests</groupId>
+                                    <artifactId>module-remoting-tests-web-war</artifactId>
+                                    <type>war</type>
+                                    <properties>
+                                        <context>module-remoting-tests-web</context>
+                                    </properties>
+                                    <pingURL>http://${jee-web.host}:${jee-web.port}/module-remoting-tests-web</pingURL>
+                                    <pingTimeout>120000</pingTimeout>
+                                </deployable>
+                            </deployables>
+                        </deployer>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <configuration>
+                        <tasks>
+                            <echo message="Sleeping now for 5 seconds ..." />
+                            <sleep seconds="5" />
+                            <echo message="Sleeping ended." />
+                        </tasks>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
     <profiles>
         <profile>
             <id>manual</id>
@@ -52,41 +90,77 @@
                     <plugin>
                         <groupId>org.codehaus.cargo</groupId>
                         <artifactId>cargo-maven2-plugin</artifactId>
-                        <configuration>
-                            <wait>false</wait>
-                            <deployer>
-                                <deployables>
-                                    <deployable>
-                                        <groupId>ch.elca.el4j.tests</groupId>
-                                        <artifactId>module-remoting-tests-web-war</artifactId>
-                                        <type>war</type>
-                                        <properties>
-                                            <context>module-remoting-tests-web</context>
-                                        </properties>
-                                        <pingURL>http://${jee-web.host}:${jee-web.port}/module-remoting-tests-web</pingURL>
-                                        <pingTimeout>120000</pingTimeout>
-                                    </deployable>
-                                </deployables>
-                            </deployer>
-                        </configuration>
                         <executions>
                             <execution>
                                 <id>start-container</id>
                                 <phase>pre-integration-test</phase>
                                 <goals>
                                     <goal>start</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>sleep-between-start-and-undeploy</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>undeploy-after-container-start</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
                                     <goal>undeploy</goal>
-                                    <goal>stop</goal>
-                                    <goal>start</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>sleep-between-undeploy-and-deploy</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>deploy-after-undeploy</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
                                     <goal>deploy</goal>
                                 </goals>
                             </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
                             <execution>
-                                <id>stop-container</id>
-                                <phase>post-integration-test</phase>
+                                <id>sleep-after-deploy</id>
+                                <phase>pre-integration-test</phase>
                                 <goals>
-                                    <goal>undeploy</goal>
-                                    <goal>stop</goal>
+                                    <goal>run</goal>
                                 </goals>
                             </execution>
                         </executions>
@@ -107,6 +181,45 @@
                                 <configuration>
                                     <skip>false</skip>
                                 </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>undeploy-after-testing</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>undeploy</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>sleep-between-undeploy-and-stop</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>stop-container</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
                             </execution>
                         </executions>
                     </plugin>
