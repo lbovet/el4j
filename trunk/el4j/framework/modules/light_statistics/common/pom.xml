@@ -33,7 +33,7 @@
         <dependency>
             <groupId>com.jamonapi</groupId>
             <artifactId>jamon</artifactId>
-            <version>[1.0]</version>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 </project>

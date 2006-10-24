@@ -34,17 +34,17 @@
         <dependency>
             <groupId>org.jaxen</groupId>
             <artifactId>jaxen</artifactId>
-            <version>[1.1-beta-8]</version>
+            <version>1.1-beta-8</version>
         </dependency>
         <dependency>
             <groupId>org.saxpath</groupId>
             <artifactId>saxpath</artifactId>
-            <version>[1.0]</version>
+            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>com.wutka.dtd</groupId>
             <artifactId>dtdparser</artifactId>
-            <version>[1.2.1]</version>
+            <version>1.2.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.tools.ant</groupId>
