@@ -7,7 +7,7 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
     
-    <import resource="classpath:scenarios/common/remotingtests-web-protocols-config.xml"/>
+    <import resource="classpath:scenarios/common/remotingtests-hessian-protocol-config.xml"/>
     
     <bean id="hessianCalculatorExporter" class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
         <property name="remoteProtocol">
