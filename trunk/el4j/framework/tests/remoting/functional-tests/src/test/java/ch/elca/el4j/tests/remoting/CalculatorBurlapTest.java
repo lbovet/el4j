@@ -41,6 +41,6 @@ public class CalculatorBurlapTest extends AbstractCalculatorTest {
         return  new ModuleApplicationContext(
             new String[] {"classpath*:mandatory/*.xml",
                 "scenarios/client/remotingtests-burlap-client-config.xml"}, 
-                true);
+                false);
     }
 }

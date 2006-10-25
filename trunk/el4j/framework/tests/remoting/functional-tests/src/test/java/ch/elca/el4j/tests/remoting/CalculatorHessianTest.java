@@ -42,6 +42,6 @@ public class CalculatorHessianTest extends AbstractCalculatorTest {
         return  new ModuleApplicationContext(
             new String[] {"classpath*:mandatory/*.xml",
                 "scenarios/client/remotingtests-hessian-client-config.xml"}, 
-                true);
+                false);
     }
 }

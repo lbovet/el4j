@@ -41,6 +41,6 @@ public class CalculatorHttpInvokerTest extends AbstractCalculatorTest {
         return  new ModuleApplicationContext(
             new String[] {"classpath*:mandatory/*.xml",
                 "scenarios/client/remotingtests-httpinvoker-client-config.xml"},
-                true);
+                false);
     }
 }
