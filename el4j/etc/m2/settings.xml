@@ -58,14 +58,14 @@
         | specification in this list marked as active will be used.
         |-->
     <proxies>
-        <proxy>
+        <!--proxy>
             <id>optional</id>
             <active>true</active>
             <protocol>http</protocol>
             <host>proxy.elca.ch</host>
             <port>8080</port>
             <nonProxyHosts>*.elca.ch|leaffy</nonProxyHosts>
-        </proxy>
+        </proxy-->
     </proxies>
 
     <!-- servers
@@ -73,7 +73,7 @@
         | Authentication profiles can be used whenever maven must make a connection to a remote server.
         |-->
     <servers>
-        <server>
+        <!--server>
             <id>ftpEl4ElcaServices</id>
             <username>********</username>
             <password>********</password>
@@ -92,7 +92,7 @@
             <id>sshLeaffySnapshot</id>
             <username>********</username>
             <password>********</password>
-        </server>
+        </server-->
         
         
         <!-- server
@@ -169,9 +169,9 @@
         <profile>
             <id>el4j.general</id>
             <properties>
-                <el4j.home>D:/Projects/EL4J</el4j.home>
+                <!--el4j.home>D:/Projects/EL4J</el4j.home>
                 <el4j.external>${el4j.home}/external</el4j.external>
-                <el4j.internal>${el4j.home}/internal</el4j.internal>
+                <el4j.internal>${el4j.home}/internal</el4j.internal-->
                 <el4j.external-tools>${el4j.home}/external/external-tools</el4j.external-tools>
 
                 <!-- Tomcat5x -->
