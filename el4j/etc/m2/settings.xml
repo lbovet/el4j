@@ -169,13 +169,17 @@
         <profile>
             <id>el4j.general</id>
             <properties>
-                <!--el4j.home>D:/Projects/EL4J</el4j.home>
-                <el4j.external>${el4j.home}/external</el4j.external>
-                <el4j.internal>${el4j.home}/internal</el4j.internal-->
-                <el4j.external-tools>${el4j.home}/external/external-tools</el4j.external-tools>
+                <!-- EL4J developer specific properties -->
+                <!--el4j.root>D:/Projects/EL4J</el4j.root>
+                <el4j.external>${el4j.root}/external</el4j.external>
+                <el4j.internal>${el4j.root}/internal</el4j.internal-->
+
+                <!-- Project properties -->
+                <project.home>${el4j.external}</project.home>
+                <project.external-tools>${project.home}/external-tools</project.external-tools>
 
                 <!-- Tomcat5x -->
-                <tomcat5x.basedir>${el4j.external-tools}/tomcat</tomcat5x.basedir>
+                <tomcat5x.basedir>${project.external-tools}/tomcat</tomcat5x.basedir>
                 <tomcat5x.version>5.5.17</tomcat5x.version>
                 <tomcat5x.home>${tomcat5x.basedir}/apache-tomcat-${tomcat5x.version}/apache-tomcat-${tomcat5x.version}</tomcat5x.home>
                 <tomcat5x.zipDownloadUrl>http://www.apache.org/dist/tomcat/tomcat-5/v${tomcat5x.version}/bin/apache-tomcat-${tomcat5x.version}.zip</tomcat5x.zipDownloadUrl>
@@ -183,9 +187,9 @@
                 <tomcat5x.cargo.log.file>${project.build.directory}/logs/tomcat5x/cargo.log</tomcat5x.cargo.log.file>
                 
                 <!-- Weblogic9x -->
-                <weblogic9x.home>${el4j.external-tools}/bea/weblogic90</weblogic9x.home>
+                <weblogic9x.home>${project.external-tools}/bea/weblogic90</weblogic9x.home>
                 <weblogic9x.server.name>myserver</weblogic9x.server.name>
-                <weblogic9x.domains.home>${el4j.external-tools}/bea/domains</weblogic9x.domains.home>
+                <weblogic9x.domains.home>${project.external-tools}/bea/domains</weblogic9x.domains.home>
                 <weblogic9x.domain.name>el4j</weblogic9x.domain.name>
                 <weblogic9x.manager.username>weblogic</weblogic9x.manager.username>
                 <weblogic9x.manager.password>weblogic</weblogic9x.manager.password>
@@ -193,7 +197,7 @@
                 <weblogic9x.cargo.log.file>${project.build.directory}/logs/weblogic9x/cargo.lo</weblogic9x.cargo.log.file>
                 
                 <!-- Birt -->
-                <birt.home>${el4j.external-tools}/birt-runtime-2_1_0</birt.home>
+                <birt.home>${project.external-tools}/birt-runtime-2_1_0</birt.home>
             </properties>
         </profile>
         
