@@ -7,8 +7,6 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
     
-    <import resource="classpath:scenarios/common/remotingtests-app-protocols-config.xml"/>
-    
     <bean id="calculator" class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
         <property name="remoteProtocol">
             <ref bean="rmiProtocol" />

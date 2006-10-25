@@ -7,19 +7,22 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
     
-    <bean id="rmiProtocol" class="ch.elca.el4j.services.remoting.protocol.Rmi">
+    <bean id="burlapProtocol" class="ch.elca.el4j.services.remoting.protocol.Burlap">
         <property name="serviceHost">
-            <value>${rmi.host}</value>
+            <value>${jee-web.host}</value>
         </property>
         <property name="servicePort">
-            <value>${rmi.port}</value>
+            <value>${jee-web.port}</value>
+        </property>
+        <property name="contextPath">
+            <value>module-remoting-tests-web</value>
         </property>
         <property name="implicitContextPassingRegistry">
-            <ref local="implicitContextPassingRegistry" />
+            <ref local="burlapImplicitContextPassingRegistry" />
         </property>
     </bean>
 
-    <bean id="implicitContextPassingRegistry" 
+    <bean id="burlapImplicitContextPassingRegistry" 
         class="ch.elca.el4j.tests.remoting.service.TestImplicitContextPassingRegistry" />
-    
+
 </beans>
