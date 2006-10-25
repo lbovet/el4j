@@ -58,7 +58,7 @@ public class CalculatorXFireTest extends TestCase {
             = new ModuleApplicationContext(
                 new String[] {"classpath*:mandatory/*.xml",
                     "scenarios/client/remotingtests-xfire-client-config.xml"}, 
-                    true);
+                    false);
         m_calc 
             = (Calculator) appContext.getBean("calculator");
     }

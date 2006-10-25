@@ -37,10 +37,11 @@ public class CalculatorRmiTest extends AbstractCalculatorTest {
      * {@inheritDoc}
      */
     ApplicationContext getContext() {
-        return  new ModuleApplicationContext(
-            new String[] {"classpath*:mandatory/*.xml",
-                "scenarios/server/app/remotingtests-rmi-server-config.xml",
-                "scenarios/client/remotingtests-rmi-client-config.xml"},
-                true);
+        String[] inclusiveLocations = {"classpath*:mandatory/*.xml",
+            "classpath*:scenarios/common/remotingtests-rmi-protocol-config.xml",
+            "classpath*:scenarios/server/app/"
+                + "remotingtests-rmi-server-config.xml",
+            "classpath*:scenarios/client/remotingtests-rmi-client-config.xml"};
+        return  new ModuleApplicationContext(inclusiveLocations, false);
     }
 }

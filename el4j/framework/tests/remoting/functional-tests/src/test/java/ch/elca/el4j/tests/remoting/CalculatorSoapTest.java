@@ -69,7 +69,7 @@ public class CalculatorSoapTest extends TestCase {
             = new ModuleApplicationContext(
                 new String[] {"classpath*:mandatory/*.xml",
                     "scenarios/client/remotingtests-soap-client-config.xml"}, 
-                    true);
+                    false);
         m_calc 
             = (Calculator) appContext.getBean("calculator");
         m_soapExceptionThrower 
