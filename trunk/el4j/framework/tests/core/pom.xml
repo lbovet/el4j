@@ -25,6 +25,7 @@
     <modules>
         <module>core_integration_parent</module>
         <module>core_integration_child</module>
+        <module>core_implicit_context_passing_test</module>
     </modules>
     <dependencyManagement>
         <dependencies>
