@@ -625,8 +625,8 @@
         <module>skin</module>
         <module>plugins</module>
         <module>framework</module>
-        <module>helpers</module>
         <module>site</module>
+        <module>helpers</module>
     </modules>
     <reporting>
         <plugins>
