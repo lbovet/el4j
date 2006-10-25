@@ -3,7 +3,7 @@ EL4J, the Extension Library for the J2EE, adds incremental improvements to the
 Spring Java framework (http://www.springframework.org/).
 
 ---+ License
-For the time being, EL4J is published under the GPL 
+For the time being, EL4J is published under the LGPL 
 (see file "etc/License.txt").
 
 We also have plans to try to submit parts of EL4J as contribution to the Spring 
