@@ -1,2 +1,2 @@
-Here will be the generated Eclipse workspace data. Eclipse must use this 
-workspace to work correctly.
+Here will be the generated Eclipse workspace data. It is recommended to use an
+own workspace for all helloworld artifacts.
