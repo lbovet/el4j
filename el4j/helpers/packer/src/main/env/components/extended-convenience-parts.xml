@@ -1,0 +1,96 @@
+<component>
+    <files>
+        <file>
+            <source>${el4j.external}/README.txt</source>
+            <outputDirectory></outputDirectory>
+            <destName>README-external.txt</destName>
+        </file>
+    </files>
+    <fileSets>
+        <fileSet>
+            <directory>${el4j.internal}</directory>
+            <outputDirectory></outputDirectory>
+            <includes>
+                <include>*.txt</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>${el4j.internal}/framework</directory>
+            <outputDirectory>internal-framework</outputDirectory>
+            <excludes>
+                <!-- Generated stuff -->
+                <exclude>**/target/**</exclude>
+                <!-- Eclipse workspace -->
+                <exclude>**/workspace/.metadata/**</exclude>
+                <!-- Eclipse files and folders -->
+                <exclude>**/.*/**</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>${el4j.internal}/helloworld</directory>
+            <outputDirectory>internal-helloworld</outputDirectory>
+            <excludes>
+                <!-- Generated stuff -->
+                <exclude>**/target/**</exclude>
+                <!-- Eclipse workspace -->
+                <exclude>**/workspace/.metadata/**</exclude>
+                <!-- Eclipse files and folders -->
+                <exclude>**/.*/**</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>${el4j.internal}</directory>
+            <outputDirectory></outputDirectory>
+            <includes>
+                <include>gui-app-template/**</include>
+                <include>web-app-template/**</include>
+                <include>helpers/**</include>
+            </includes>
+            <excludes>
+                <!-- Generated stuff -->
+                <exclude>**/target/**</exclude>
+                <!-- Eclipse workspace -->
+                <exclude>**/workspace/.metadata/**</exclude>
+                <!-- Eclipse files and folders -->
+                <exclude>**/.*/**</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>${el4j.project.external-tools}/tomcat</directory>
+            <outputDirectory>external-tools/tomcat</outputDirectory>
+            <fileMode>0755</fileMode>
+            <includes>
+                <!--
+                    Include all files in tomcat's root dir that don't have a 
+                    file extension.
+                -->
+                <include>**/apache-tomcat-*/*</include>
+                <!-- Include all text files from tomcat's root dir. -->
+                <include>**/apache-tomcat-*/*.txt</include>
+                
+                <!-- Include well-known tomcat stuff. -->
+                <include>**/bin/**</include>
+                <include>**/common/**</include>
+                <include>**/conf/**</include>
+                <include>**/server/**</include>
+                <include>**/shared/**</include>
+                <include>**/webapps/balancer/**</include>
+                <include>**/webapps/jsp-examples/**</include>
+                <include>**/webapps/ROOT/**</include>
+                <include>**/webapps/servlets-examples/**</include>
+                <include>**/webapps/tomcat-docs/**</include>
+                <include>**/webapps/webdav/**</include>
+                
+                <!-- Just include the empty folders. -->
+                <include>**/logs</include>
+                <include>**/temp</include>
+                <include>**/work</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>${el4j.project.external-tools}/derby</directory>
+            <outputDirectory>external-tools/derby</outputDirectory>
+            <fileMode>0755</fileMode>
+        </fileSet>
+    </fileSets>
+</component>
