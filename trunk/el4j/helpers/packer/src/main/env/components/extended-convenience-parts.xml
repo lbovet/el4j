@@ -80,6 +80,7 @@
                 <include>**/webapps/servlets-examples/**</include>
                 <include>**/webapps/tomcat-docs/**</include>
                 <include>**/webapps/webdav/**</include>
+                <include>**/webapps/cargocpc.war</include>
                 
                 <!-- Just include the empty folders. -->
                 <include>**/logs</include>
@@ -91,6 +92,10 @@
             <directory>${el4j.project.external-tools}/derby</directory>
             <outputDirectory>external-tools/derby</outputDirectory>
             <fileMode>0755</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>${el4j.localRepository.basedir}</directory>
+            <outputDirectory>m2repository</outputDirectory>
         </fileSet>
     </fileSets>
 </component>
