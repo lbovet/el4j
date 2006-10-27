@@ -1,101 +1,168 @@
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-TODO: Translate it from EL4Ant to Maven2
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-
 ---+ Getting started
-Remark: Every directory mentioned in this document is relative to the 
- el4j-<version> directory.
 
----++ Description of directories
-   * Directory "external-tools" contains by default the tools Ant and EL4Ant.
-     We sometimes also put tools such as Tomcat, JBoss or the Derby database in this 
-     directory. We will provide some hints on how we recommend to set these tools up.
-   * Directory "lib" contains (almost) all needed jar and zip files for EL4J.
-     Library files such as the JDBC driver for Oracle and DB2 (same for Derby) must be
-     download from the vendor's homepage if you need them.
-       * Download the DB2/Derby JDBC driver (db2jcc.jar and db2jcc_license_c.jar)
-         from "http://www.ibm.com/developerworks/db2/downloads/jcc/".
-       * Download the Oracle driver (ojdbc14*.jar)
-         from "http://www.oracle.com/technology/software/tech/java/sqlj_jdbc/".
-         Note: You can also use the 10g driver for version 9 database.
-   * Directory "lib/src" contains sources for library files of directory "lib".
-   * Directory "framework" contains the source of the EL4J framework. If your 
+   Remark: Every directory mentioned in this document is relative to the 
+   el4j-<version> main directory.
+
+---+ Directory structure
+
+   * The directory "external-tools" is made to contain tools like Maven,
+     Tomcat, Weblogic, JBoss and so on. At minimum the directory "external-tools"
+     contains a directory "maven" that hold the used version of Maven 2.
+     If no other structure is needed, it is recommended to save all external
+     tools of a project into this directory, for example eclipse.
+
+   * Directory "plugins" contains the EL4J plugins for Maven 2. If your 
      download does not contain it, you can get it from SourceForge Subversion
-     server (svn co https://svn.sourceforge.net/svnroot/el4j el4j/framework).
-   * Directory "etc" contains various little files about EL4J.
-   
----+ How to get started (this is just a proposition to show some features)
-   * Set Ant (directory "external-tools/ant/bin") to your path.
-     IMPORTANT: We require at least Ant 1.6.5 (try ant -version).
-   * cd framework
-   * ant -f bootstrap.xml (same as "ant -f bootstrap.xml configure")
-       * A standard Ant "build.xml" will be created. It generates also Eclipse files 
-         (".project", ".classpath and so on). Needed library (jar/zip) files 
-         will be downloaded/ copied to "framework/lib". Sources of it to "framework/lib/src". 
-         EL4Ant complains if a library file (as described in the dependencies) can not 
-         be found. In this case, the library file has to be download manually from the 
-         vendor's homepage and be copied in the directory "framework/lib".
+     server (svn co https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/plugins).
 
-   * ant -p  
-       * Show all available targets (standard ant). Most of the targets are convenience 
-         targets.
-   * ant compile
-       * Directory "framework/dist/classes" will be created with a folder for
-         each module of the EL4J framework project. These folders contain the 
-         compiled classes.
-   * ant jars
-       * Generated jars will be located in the directory "framework/dist/lib".
-   * ant start.module.eu.module-daemon_manager-tests
-       * JUnit tests of module-daemon_manager will be started. JUnit Reports (xml files) can be
-         found in directory "framework/dist/junit". This command executes the
-         tests with generated module jar files (command "ant jars" is prerequisite).
-   * ant startdev.module.eu.module-daemon_manager-tests
-       * Executes the same as before but with code from classes directory (not from jars) 
-         from directory "framework/dist/classes".
-   * ant junit.report
-       * Creates a junit website report for executed junit tests in directory
-         "framework/dist/website/junit".
-   * ant javadoc
-       * Generates javadoc in directory "framework/dist/website/javadoc".
-   * ant checkstyle
+   * Directory "framework" contains the EL4J framework stuff. If your 
+     download does not contain it, you can get it from SourceForge Subversion
+     server (svn co https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework).
+
+   * Directory "etc" contains various little files about EL4J, like the
+     Checkstyle configuration file, the stylesheet for the Javadoc and
+     the Maven 2 setting configuration file.
+
+   * Directory "helloworld" is a small EL4J project template that can be used to
+     start a new project. If your download does not contain it, you can get it
+     from SourceForge Subversion server
+     (svn co https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/helloworld).
+
+   * There are some other directories. For more information please read the
+     readme-file inside of each directory.
+   
+---+ Set up the development environment
+
+   * Set the environment variable JAVA_HOME. This variable must point to
+     a Java 5 JDK. Example: C:\jdk1.5.0_09
+     
+   * Set the environment variable M2_HOME. This variable must point to
+     the "maven" directory inside "external-tools".
+     Example: D:\el4j-<version>\external-tools\maven
+
+   * Prepend the binary folders of Maven 2 and the JDK to the environment
+     varibale PATH. Examples:
+       * Windows: %JAVA_HOME%\bin;%M2_HOME%\bin;...
+       * Unix: $JAVA_HOME/bin:$M2_HOME/bin:...
+
+   * Open a command line and test if the configuration above made correctly.
+     Enter the following commands:
+       * java -version
+           * Must print out the version number of a Java 5 JDK or newer.
+       * javac -version
+           * Must print out the same version number as above.
+       * mvn -version
+           * Must print out the version "2.1-SNAPSHOT" or newer.
+
+   * Copy the file "etc/m2/settings.xml" to directory "~/.m2".
+       * Windows users: A directory starting with a dot can only be created by
+         using the command line. Change to your home directory and execute the
+         command "mkdir .m2".
+
+   * Edit the file "~/.m2/settings.xml" like the following:
+       * By default the local repository takes place at "~/.m2/repository/".
+         If the path to your local repository contains a blank you have to 
+         change this path.
+           * Choose a new location for the local repository.
+             Example: "D:\m2repository". 
+
+       * Search for the element "el4j.project.home". Change the value of this
+         element to the path where your EL4J project is.
+         Example: "D:\el4j-<version>"
+       
+       * You will see that some external-tools are preconfigured. If nothing
+         special is needed you can leave them like they are. If other containers
+         are needed configure the cargo-maven2-plugin in your pom.xml
+         configuration file. For more information see http://cargo.codehaus.org/
+
+---+ Remarks
+   
+   * Do not use any special characters or spaces in a path. Else some plugins
+     will not work. Remember that the length of a path is limited.
+   * Windows users:
+       * In configuration files and java code use always slashes instead of
+         backslashes to describe a path.
+
+---+ ELCA internal settings
+
+   * Here the differences if you are connected to the ELCA network:
+       * The EL4J team has its own server "leaffy.elca.ch". On this server we
+         provide a Maven 2 repository with artifacts that are not allowed to 
+         publish publicly. You will not receive the unresolved dependency
+         message as described below.
+   * Because we have a proxy server (proxy.elca.ch) it is hardly recommended to 
+     uncomment the preconfigured proxy inside the "~/.m2/settings.xml" file.
+
+
+
+
+
+TODO: ADH; start refining from here...
+
+
+---+ Basic Maven 2 tasks
+
+   Maven knows three lifecycles. The most interesting ones to programm are "default"
+   and "clean". A lifecycle knows different tasks for example "compile" or "test". These
+   tasks are in a specific order. If one task is called all other tasks in the order before
+   will be executed first. Further details are on the project page http://maven.apache.org/
+   TODO Exact reference.
+   
+
+   During the programming are two maven commands needed
+
+   * mvn install -Dmaven.test.skip=true
+      * Maven compiles and package the module into the directory "target". The test task wich is
+        defined in the lifecyle is skipped.
+
+   * mvn clean
+      * Deleted the directory "target". The Eclipse ".project" file will also be deleted.
+
+  Remark:
+  Maven will execute a task in the folder and all its subfolders from which the
+  task was startet. For example if a task is started in the directory framework, the 
+  task will be executed in each module in the directory framework. If the same task
+  is started in the directory of the module core, the task take only efect to this module.
+
+JavaEE
+
+---+ Maven 2 and Eclipse
+
+
+---+ Further maven tasks
+
+   * mvn -H
+       * Lists the options of maven.
+
+   * mvn -N <task>
+       * Maven do no recurse into subfolders to execute the task.
+
+   * mvn execute
+       * TODO ?? Does exists
+   * mvn javadoc
+       * Generates javadoc in directory "framework/dist/website/javadoc". TODO
+   * mvn checkstyle
        * Checks the whole framework code with Checkstyle rules. Reports can be 
-         found in directory "framework/dist/website/checkstyle".
-   * ant website
+         found in directory "framework/dist/website/checkstyle". TODO
+   * mvn site
        * Creates a website for the framework project in the directory
          "framework/dist/website". It contains links to the generated project
          reports of junit, javadoc, checkstyle, ... Follow the project reports
-         link.
-
-   * You can open eclipse and set directory "framework/workspace" as 
-     workspace. Set ANT_HOME in Window/Preferences to directory 
-     "external-tools/ant". Import all eclipse projects into the workspace. The 
-     incremental compilation of eclipse works such that you don't need 
-     to manually "ant compile". To enable Checkstyle in Eclipse 
-     please consult the documentation.
+         link. TODO
          
-   * If you need J2EE container support, set the configurations for your containers 
-     under framework/env. These settings are then automatically available for EL4Ant
-     and for Spring. We have tested the framework with Tomcat (5.0), Jboss
-     (4.0) and Weblogic (9.0).
-   * ant deploy.war.module.eu.module-remoting-tests.web
-       * Re/Deploys the web part of the remoting test in the web container (tomcat
-         by default, directory "external-tools/tomcat") and starts the web container 
-         if it is not already running.
-   * ant startdev.module.eu.module-remoting-tests.gui
-       * Executes the JUnit tests for module remoting based on compiled classes
-         from directory "framework/dist/classes".
-   * ant junit.start.all
-       * Run all junit tests (run all modules that are in the "framework-tests" subset)
+   * mvn test
+       * Run all junit tests.
      
-   * ant binrelease
-       * Creates binary releases of marked modules in directory 
-         "framework/dist/binaries".
-   
-   * ant -f bootstrap.xml distclean (or "ant distclean" if build.xml exists)
-       * Cleans directory "framework/dist" and removes file "build.xml".
-         Note: Generated Eclispe files remain but be sure Eclipse is not opened
-         in workspace of the framework project (directory 
-         "framework/workspace").
+   * mvn package
+       * Creates jar, war resp. ear files. They will be saved in directory "target" of the
+         correspoding module.
+
+   * mvn deploy
+       * TODO
+   * mvn eclipse
+       * Creates the eclipse ".project" file, so that a module can be importet as Eclipse
+         project.
+   * mvn antrun
+       * Task to call ant scripts.
+   * mvn carco:start
+       * TODO: Testen mit Remoting Container starten
