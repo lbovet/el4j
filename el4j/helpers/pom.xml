@@ -22,5 +22,6 @@
     <modules>
         <module>upload</module>
         <module>collector</module>
+        <module>packer</module>
     </modules>
 </project>

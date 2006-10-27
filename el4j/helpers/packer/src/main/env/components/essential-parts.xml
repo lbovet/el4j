@@ -1,0 +1,38 @@
+<component>
+    <fileSets>
+        <fileSet>
+            <directory>${el4j.project.home}</directory>
+            <outputDirectory></outputDirectory>
+            <includes>
+                <include>*.txt</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>${el4j.project.home}/etc</directory>
+            <outputDirectory>etc</outputDirectory>
+            <includes>
+                <include>*.txt</include>
+                <include>*.conf</include>
+                <include>m2/*</include>
+                <include>subversion/*</include>
+            </includes>
+            <excludes>
+                <exclude>**/.*/**</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>${el4j.project.external-tools}/maven</directory>
+            <outputDirectory>external-tools/maven</outputDirectory>
+            <fileMode>0755</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>${el4j.localRepository.basedir}/com</directory>
+            <outputDirectory>m2repository/com</outputDirectory>
+            <excludes>
+                <!-- Exclude JDBC drivers of DB2 and Oracle. -->
+                <exclude>**/db2jcc*/**</exclude>
+                <exclude>**/ojdbc*/**</exclude>
+            </excludes>
+        </fileSet>
+    </fileSets>
+</component>
