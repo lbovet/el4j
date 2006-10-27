@@ -32,6 +32,9 @@
                 <!-- Exclude JDBC drivers of DB2 and Oracle. -->
                 <exclude>**/db2jcc*/**</exclude>
                 <exclude>**/ojdbc*/**</exclude>
+                
+                <!-- Ignore all in internal EL4J stuff. -->
+                <exclude>ch/elca/el4j/**/*internal*/**</exclude>
             </excludes>
         </fileSet>
     </fileSets>
