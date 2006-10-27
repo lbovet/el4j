@@ -1,7 +1,7 @@
 <component>
     <fileSets>
         <fileSet>
-            <directory>${el4j.project.home}</directory>
+            <directory>${el4j.external}</directory>
             <outputDirectory></outputDirectory>
             <includes>
                 <include>framework/**</include>

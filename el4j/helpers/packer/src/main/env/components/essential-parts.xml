@@ -1,14 +1,14 @@
 <component>
     <fileSets>
         <fileSet>
-            <directory>${el4j.project.home}</directory>
+            <directory>${el4j.external}</directory>
             <outputDirectory></outputDirectory>
             <includes>
                 <include>*.txt</include>
             </includes>
         </fileSet>
         <fileSet>
-            <directory>${el4j.project.home}/etc</directory>
+            <directory>${el4j.external}/etc</directory>
             <outputDirectory>etc</outputDirectory>
             <includes>
                 <include>*.txt</include>
