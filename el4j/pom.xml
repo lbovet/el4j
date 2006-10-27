@@ -655,6 +655,13 @@
         </plugins>
     </reporting>
     <profiles>
+        <profile>
+            <id>manual</id>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+            </properties>
+        </profile>
+    
         <!-- Web -->
         <profile>
             <id>tomcat5x</id>
