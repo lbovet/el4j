@@ -10,16 +10,16 @@
     <!-- Author: $Author$ -->
 
     <parent>
-        <groupId>ch.elca.el4j.apps</groupId>
-        <artifactId>el4j-framework-apps-common</artifactId>
+        <groupId>ch.elca.el4j.modules</groupId>
+        <artifactId>el4j-framework-modules</artifactId>
         <version>1.1.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>common-database</artifactId>
     <version>${version.common-database}</version>
     <packaging>jar</packaging>
-    <name>EL4J application common module database</name>
-    <description>Common database module of the EL4J framework.</description>
+    <name>EL4J module database</name>
+    <description>Module database of the EL4J framework.</description>
     <dependencies>
         <!-- DBCP libraries -->
         <dependency>
