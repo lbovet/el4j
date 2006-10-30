@@ -7,10 +7,10 @@ mvn exec:java
 
 # get information about the running daemons via the console application (in console 2):
 cd console
-mvn exec:java -Pinformation
+mvn exec:java -Dexec.args=information
 
 # reconfigure the daemons via the console application (in console 2):
-mvn exec:java -Preconfigure
+mvn exec:java -Dexec.args=reconfigure
 
 # stop the daemons via the console application (in console 2):
-mvn exec:java -Pstop
+mvn exec:java -Dexec.args=stop
