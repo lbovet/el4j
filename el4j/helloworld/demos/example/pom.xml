@@ -42,30 +42,4 @@
             </plugin>
         </plugins>
     </build>
-    
-	<!--
-        This profile was added only as example due to problem passing argument
-        by system property. See following JIRA issue for more information:
-        http://jira.codehaus.org/browse/MEXEC-5
-     -->
-    <profiles>
-        <profile>
-            <id>example</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <configuration>
-                            <arguments>
-                                <argument>div</argument>
-                                <argument>6.8</argument>
-                                <argument>3.9</argument>
-                            </arguments>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>    
