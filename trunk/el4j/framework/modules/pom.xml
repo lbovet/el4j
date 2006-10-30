@@ -25,6 +25,7 @@
     <modules>
         <module>core</module>
         <module>daemon_manager</module>
+        <module>database</module>
         <module>env</module>
         <module>exception_handling</module>
         <module>hibernate</module>
