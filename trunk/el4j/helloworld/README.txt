@@ -9,8 +9,8 @@ The following steps are necessary to start up with a new project:
       how to set up the develop environment. It's recommended to get knowledge
       about the buildsystem maven.
 
-    * Replace over all files the string "helloworld" and "Hello World" with your 
-      project name.
+    * Replace over all files with name "pom.xml" and pattern "*.txt" the string 
+      "helloworld" and "Hello World" with your project name.
 
     * Choose an appropriate name of the module example, e.g. myproject-core.
       Rename it in the pom.xml files and the filesystem (change folder names).
