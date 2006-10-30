@@ -21,7 +21,6 @@
     <name>EL4J framework applications</name>
     <description>Applications of the EL4J framework.</description>
     <modules>
-        <module>common</module>
         <module>keyword</module>
         <module>refdb</module>
     </modules>
