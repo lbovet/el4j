@@ -935,6 +935,21 @@
                 <scope>test</scope>
             </dependency>
 
+            <!-- module-database -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-database</artifactId>
+                <version>${version.module-database}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-database</artifactId>
+                <version>${version.module-database}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            
             <!-- module-env -->
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
@@ -1230,14 +1245,6 @@
             <!-- **************************** -->
             <!-- * Application dependencies *-->
             <!-- **************************** -->
-
-            <!-- Common modules -->
-            <dependency>
-                <groupId>ch.elca.el4j.apps</groupId>
-                <artifactId>module-database</artifactId>
-                <version>${version.module-database}</version>
-                <type>jar</type>
-            </dependency>
 
             <!-- Keyword -->
             <dependency>
