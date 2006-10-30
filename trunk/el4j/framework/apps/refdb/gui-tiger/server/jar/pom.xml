@@ -31,8 +31,8 @@
         </dependency>
                 
         <dependency>
-            <groupId>ch.elca.el4j.apps</groupId>
-            <artifactId>common-database</artifactId>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-database</artifactId>
         </dependency>
         <dependency>
             <groupId>ch.elca.el4j.modules</groupId>
