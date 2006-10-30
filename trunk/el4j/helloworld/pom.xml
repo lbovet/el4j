@@ -17,7 +17,6 @@
     
     <groupId>ch.elca.helloworld</groupId>
     <artifactId>helloworld</artifactId>
-    <version>0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Hello World</name>
     <description>Hello World is an example project.</description>
