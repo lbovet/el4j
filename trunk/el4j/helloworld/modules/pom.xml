@@ -18,7 +18,7 @@
     <groupId>ch.elca.helloworld.modules</groupId>
     <artifactId>helloworld-modules</artifactId>
     <packaging>pom</packaging>
-    <name>Hello world modules</name>
+    <name>Hello World modules</name>
     <description>
         Modules of the Hello World project.
     </description>

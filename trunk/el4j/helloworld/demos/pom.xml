@@ -18,7 +18,7 @@
     <groupId>ch.elca.helloworld.demos</groupId>
     <artifactId>helloworld-demos</artifactId>
     <packaging>pom</packaging>
-    <name>Hello world demos</name>
+    <name>Hello World demos</name>
     <description>
         Demo modules of the Hello World project.
     </description>

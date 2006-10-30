@@ -18,7 +18,7 @@
     <groupId>ch.elca.helloworld.tests</groupId>
     <artifactId>helloworld-tests</artifactId>
     <packaging>pom</packaging>
-    <name>Hello world tests</name>
+    <name>Hello World tests</name>
     <description>
         Tests modules of the Hello World project.
     </description>
