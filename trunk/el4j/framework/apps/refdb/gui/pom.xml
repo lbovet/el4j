@@ -25,32 +25,4 @@
         <module>thin-client</module>
         <module>standalone-client</module>
     </modules>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>ch.elca.el4j.apps</groupId>
-                <artifactId>refdb-gui-common</artifactId>
-                <version>${version.application-refdb}</version>
-                <type>jar</type>
-            </dependency>
-            <dependency>
-                <groupId>ch.elca.el4j.apps</groupId>
-                <artifactId>refdb-gui-server-jar</artifactId>
-                <version>${version.application-refdb}</version>
-                <type>jar</type>
-            </dependency>
-            <dependency>
-                <groupId>ch.elca.el4j.apps</groupId>
-                <artifactId>refdb-gui-thin-client</artifactId>
-                <version>${version.application-refdb}</version>
-                <type>jar</type>
-            </dependency>
-            <dependency>
-                <groupId>ch.elca.el4j.apps</groupId>
-                <artifactId>refdb-gui-standalone-client</artifactId>
-                <version>${version.application-refdb}</version>
-                <type>jar</type>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 </project>
