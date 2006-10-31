@@ -100,10 +100,12 @@
    model called POM. It ist recommended to skim the following sources to 
    get basic knowledge about Maven 2.
 
-   * Maven 2 project page: http://maven.apache.org/
+   * Maven 2 project page: http://maven.apache.org
    
    * Free Maven 2 book "Better Builds with Maven":
      http://www.mergere.com/m2book_download.jsp
+     
+   * Maven 2 docs made by EL4J: http://el4j.sf.net
      
    NOTE: When we talk about Maven we talk about Maven 2 and not Maven 1.
 
