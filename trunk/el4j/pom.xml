@@ -418,8 +418,8 @@
                     <artifactId>exec-maven-plugin</artifactId>
                     <!--
                         Due to bugs fix built snapshot version is used.
-                           * cargo-maven2-plugin (revision 2586M
-                               + patch http://jira.codehaus.org/browse/MEXEC-11
+                           * exec-maven-plugin (revision 2586
+                               + patch http://jira.codehaus.org/browse/MEXEC-11)
                     -->
                     <version>1.0.3-20061030.133616-1</version>
                 </plugin>
