@@ -75,6 +75,10 @@
          are needed configure the cargo-maven2-plugin in your pom.xml
          configuration file. For more information see http://cargo.codehaus.org/
 
+   * In the zip file you can find a directory "m2repository". If you are offline
+     or do not want to download all dependencies from the internet you can use
+     the given "m2repository" directory as your initial local Maven 2 repository.
+
 ---+ Remarks
    
    * Do not use any special characters or spaces in a path. Else some plugins
