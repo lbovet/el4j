@@ -8,7 +8,72 @@
 * SourceForge Change Requests CLOSED
   -
   
-...
+
+* General framework
+  = EL4J license switched from GPL to LGPL.
+  = EL4J switched from JDK 1.4 to JDK 1.5.
+  = EL4Ant replaced by Maven 2.
+  = Checkstyle:
+    + JavadocMethod: Throw tag test disabled due to bug of checkstyle.
+    + Further checks adapted for Java5.
+  = All module dependencies moved to newest versions!
+
+
+* Framework modules
+  = module-core
+    + Moved to Spring 2.0.
+    + Added overloaded methods that permit to customize the exception thrown in case the precondition is violated.
+    + Codingsupport now contains a package for standard code annotations.
+    + Added annotations for implementation assumptions and API preliminarity.
+    + Generic observer pattern support added.
+    + Lists utilities.
+    + Generic dao and service parts added.
+    + Live value support added.
+    + Commons Attributes are now marked as deprecated.
+    + Meta data support added. This covers Commons Attributes and Java5 Annotations.
+    + Support for intelligent auto proxy creators added. Intelligent means that a bean is not proxied twice if two auto proxy creators are used.
+    + ModuleApplicationContext and ModuleWebApplicationContext improved so requested resources will always be fetched ordered.
+    + Identity fixed repository added.
+    + Intelligent i18n support added.
+    + Dom concept introduced.
+
+  = module-spring-rcp
+    + IncludeSearchItem class added to the spring-rcp module.
+    + Refactoring: Introduced AbstractViewDescriptor.
+    + Generified module spring_rcp and updated it to current Spring RCP codebase.
+    + Discontinued use of raw types in AbstractSearchItem, added dynamic type check to setInitialValue.
+
+  = module-remoting_core
+    + New protocol HttpInvoker added.
+    + Pre-instantate exporter object if factory is singleton (like it was made in Spring 1.2.x). Previously this was made only for protocol rmi, now this is the default behaviour for all protocols.
+    + Load balancing protocol added.
+
+  = module-hibernate
+    + Renamed classes to be convenient with module-core parts.
+    + Generic dao added.
+
+  = module-ibatis
+    + Generic dao added.
+
+  = module-webtest added.
+
+  = module-tcp_forwarder added.
+
+  = module-xml_merge added.
+
+  = module-remoting-xfire added.
+
+  = module-daemon_manager moved into internal EL4J repository.
+
+
+  = module-database (was common-database):
+    + Automatic import of raw db config file removed.
+
+* Applications (Keyword and RefDB):
+    + Commons attributes replaced by Java5 annotations.
+    + Hibernate and IBatis stuff better splitted up.
+    + The distributed RefDB gui uses now Http Invoker instead of Hessian.
+    + Dto concept replaced by the dom concept.
 
 
 --------------------------------------------------------------------------------
