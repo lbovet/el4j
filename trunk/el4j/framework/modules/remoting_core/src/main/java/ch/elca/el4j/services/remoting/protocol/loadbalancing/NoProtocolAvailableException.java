@@ -30,11 +30,11 @@ import ch.elca.el4j.core.exceptions.BaseRTException ;
  *
  * @author Stefan Pleisch (SPL)
  */
-public class NoProtocolAvailableException extends BaseRTException {
+public class NoProtocolAvailableRTException extends BaseRTException {
 
-    public NoProtocolAvailableException(String reason) {
+    public NoProtocolAvailableRTException(String reason) {
         super("No protocols available: " + reason) ;
     } // <init>
     
     
-} // Class NoProtocolAvailableException
+} // Class NoProtocolAvailableRTException

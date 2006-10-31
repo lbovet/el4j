@@ -34,7 +34,7 @@ import java.lang.reflect.UndeclaredThrowableException;
 
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
-import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailableException;
+import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailableRTException;
 import ch.elca.el4j.tests.services.remoting.loadbalancing.common.BusinessObject;
 
 /**
@@ -122,7 +122,7 @@ public class LbClientRedirectUponFailureTest extends TestCase {
             try {
                 result = getTestObj().call("hello6") ;
                 fail("No server should have executed this code.") ;                     
-            } catch (NoProtocolAvailableException npae) {
+            } catch (NoProtocolAvailableRTException npae) {
                 s_logger.debug("Expected exception: " + npae.getMessage()) ;
                 assertTrue("Exception is correct", true) ;
             } // catch
