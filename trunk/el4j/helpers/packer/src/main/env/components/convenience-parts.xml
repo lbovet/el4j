@@ -24,5 +24,9 @@
                 <exclude>helpers/upload/**/libraries/**</exclude>
             </excludes>
         </fileSet>
+        <fileSet>
+            <directory>${el4j.external}/site/target/site</directory>
+            <outputDirectory>docs</outputDirectory>
+        </fileSet>
     </fileSets>
 </component>
