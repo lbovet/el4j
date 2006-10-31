@@ -12,8 +12,8 @@ Documentation
     * {{{docs/pdf/ReferenceDoc.pdf}
       EL4J Reference Documentation (PDF)}}
 
-    * {{{docs/pdf/...}
-      A presentation about our use of Maven: TBD (PDF)}}    
+    * {{{docs/pdf/Maven2Course_v1_2.pdf}
+      A presentation about our use of Maven: (PDF)}}    
       
     * EL4J Annotation Cheat Sheets {{{docs/pdf/ejb30-persistence-anno-cheat_v1_0.pdf} Standard }}  /   
        {{{docs/pdf/el4j-anno-cheat_v1_0.pdf} EL4J-Additions }}  
