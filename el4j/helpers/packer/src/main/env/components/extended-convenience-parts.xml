@@ -56,6 +56,10 @@
             </excludes>
         </fileSet>
         <fileSet>
+            <directory>${el4j.internal}/site/target/site</directory>
+            <outputDirectory>internal-docs</outputDirectory>
+        </fileSet>
+        <fileSet>
             <directory>${el4j.project.external-tools}/tomcat</directory>
             <outputDirectory>external-tools/tomcat</outputDirectory>
             <fileMode>0755</fileMode>
