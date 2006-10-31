@@ -1,390 +1,0 @@
-%PDF-1.2
-%âãÏÓ
-1 0 obj<</Producer(htmldoc 1.8.23 Copyright 1997-2002 Easy Software Products, All Rights Reserved.)/CreationDate(D:20061003113151-0200)/Title( FrequentlyAskedQuestions)>>endobj
-2 0 obj<</Type/Encoding/Differences[ 32/space/exclam/quotedbl/numbersign/dollar/percent/ampersand/quotesingle/parenleft/parenright/asterisk/plus/comma/minus/period/slash/zero/one/two/three/four/five/six/seven/eight/nine/colon/semicolon/less/equal/greater/question/at/A/B/C/D/E/F/G/H/I/J/K/L/M/N/O/P/Q/R/S/T/U/V/W/X/Y/Z/bracketleft/backslash/bracketright/asciicircum/underscore/grave/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/braceleft/bar/braceright/asciitilde 128/Euro 130/quotesinglbase/florin/quotedblbase/ellipsis/dagger/daggerdbl/circumflex/perthousand/Scaron/guilsinglleft/OE 145/quoteleft/quoteright/quotedblleft/quotedblright/bullet/endash/emdash/tilde/trademark/scaron/guilsinglright/oe 159/Ydieresis/space/exclamdown/cent/sterling/currency/yen/brokenbar/section/dieresis/copyright/ordfeminine/guillemotleft/logicalnot/hyphen/registered/macron/degree/plusminus/twosuperior/threesuperior/acute/mu/paragraph/periodcentered/cedilla/onesuperior/ordmasculine/guillemotright/onequarter/onehalf/threequarters/questiondown/Agrave/Aacute/Acircumflex/Atilde/Adieresis/Aring/AE/Ccedilla/Egrave/Eacute/Ecircumflex/Edieresis/Igrave/Iacute/Icircumflex/Idieresis/Eth/Ntilde/Ograve/Oacute/Ocircumflex/Otilde/Odieresis/multiply/Oslash/Ugrave/Uacute/Ucircumflex/Udieresis/Yacute/Thorn/germandbls/agrave/aacute/acircumflex/atilde/adieresis/aring/ae/ccedilla/egrave/eacute/ecircumflex/edieresis/igrave/iacute/icircumflex/idieresis/eth/ntilde/ograve/oacute/ocircumflex/otilde/odieresis/divide/oslash/ugrave/uacute/ucircumflex/udieresis/yacute/thorn/ydieresis]>>endobj
-3 0 obj<</Type/Font/Subtype/Type1/BaseFont/Courier/Encoding 2 0 R>>endobj
-4 0 obj<</Type/Font/Subtype/Type1/BaseFont/Helvetica/Encoding 2 0 R>>endobj
-5 0 obj<</Type/Font/Subtype/Type1/BaseFont/Helvetica-Bold/Encoding 2 0 R>>endobj
-6 0 obj<</Type/Font/Subtype/Type1/BaseFont/Helvetica-Oblique/Encoding 2 0 R>>endobj
-7 0 obj<</Type/Font/Subtype/Type1/BaseFont/Helvetica-BoldOblique/Encoding 2 0 R>>endobj
-8 0 obj<</Type/Font/Subtype/Type1/BaseFont/Symbol>>endobj
-9 0 obj<</S/URI/URI(http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/FrequentlyAskedQuestions)>>endobj
-10 0 obj<</Subtype/Link/Rect[163.5 332.1 467.5 344.1]/Border[0 0 0]/A 9 0 R>>endobj
-11 0 obj[10 0 R]endobj
-12 0 obj<</Subtype/Link/Rect[72.0 712.5 210.4 724.5]/Border[0 0 0]/Dest[118 0 R/XYZ 0 739 0]>>endobj
-13 0 obj<</Subtype/Link/Rect[108.0 700.5 164.7 712.5]/Border[0 0 0]/Dest[118 0 R/XYZ 0 707 0]>>endobj
-14 0 obj<</Subtype/Link/Rect[108.0 688.5 173.6 700.5]/Border[0 0 0]/Dest[118 0 R/XYZ 0 629 0]>>endobj
-15 0 obj<</Subtype/Link/Rect[126.0 676.5 268.3 688.5]/Border[0 0 0]/Dest[118 0 R/XYZ 0 600 0]>>endobj
-16 0 obj<</Subtype/Link/Rect[126.0 664.5 256.6 676.5]/Border[0 0 0]/Dest[118 0 R/XYZ 0 502 0]>>endobj
-17 0 obj<</Subtype/Link/Rect[126.0 652.5 207.2 664.5]/Border[0 0 0]/Dest[122 0 R/XYZ 0 296 0]>>endobj
-18 0 obj<</Subtype/Link/Rect[126.0 640.5 232.2 652.5]/Border[0 0 0]/Dest[124 0 R/XYZ 0 740 0]>>endobj
-19 0 obj<</Subtype/Link/Rect[126.0 628.5 271.6 640.5]/Border[0 0 0]/Dest[124 0 R/XYZ 0 125 0]>>endobj
-20 0 obj<</Subtype/Link/Rect[108.0 616.5 205.3 628.5]/Border[0 0 0]/Dest[126 0 R/XYZ 0 474 0]>>endobj
-21 0 obj<</Subtype/Link/Rect[126.0 604.5 209.9 616.5]/Border[0 0 0]/Dest[126 0 R/XYZ 0 444 0]>>endobj
-22 0 obj[12 0 R
-13 0 R
-14 0 R
-15 0 R
-16 0 R
-17 0 R
-18 0 R
-19 0 R
-20 0 R
-21 0 R]endobj
-23 0 obj<</S/URI/URI(http://el4j.sourceforge.net/documentation.html)>>endobj
-24 0 obj<</Subtype/Link/Rect[183.0 439.9 388.7 451.9]/Border[0 0 0]/A 23 0 R>>endobj
-25 0 obj<</S/URI/URI(http://wiki.elca.ch/twiki/el4j/bin/view/EL4J)>>endobj
-26 0 obj<</Subtype/Link/Rect[241.9 427.9 425.9 439.9]/Border[0 0 0]/A 25 0 R>>endobj
-27 0 obj<</S/URI/URI(http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/FeaturesOfEl4j)>>endobj
-28 0 obj<</Subtype/Link/Rect[183.0 367.9 252.5 379.9]/Border[0 0 0]/A 27 0 R>>endobj
-29 0 obj<</S/URI/URI(http://el4j.sourceforge.net/docs/pdf/UniqueEl4jFeatures.pdf)>>endobj
-30 0 obj<</Subtype/Link/Rect[264.2 367.9 527.6 379.9]/Border[0 0 0]/A 29 0 R>>endobj
-31 0 obj<</S/URI/URI(http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/IntroductoryReadingListForEl4J)>>endobj
-32 0 obj<</Subtype/Link/Rect[115.2 319.9 258.1 331.9]/Border[0 0 0]/A 31 0 R>>endobj
-33 0 obj<</S/URI/URI(http://el4j.sourceforge.net/docs/pdf/EL4J_IntroductionArticle1.pdf)>>endobj
-34 0 obj<</Subtype/Link/Rect[254.7 271.9 544.3 283.9]/Border[0 0 0]/A 33 0 R>>endobj
-35 0 obj[24 0 R
-26 0 R
-28 0 R
-30 0 R
-32 0 R
-34 0 R]endobj
-36 0 obj<</S/URI/URI(http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/ModuleApplicationContext)>>endobj
-37 0 obj<</Subtype/Link/Rect[350.3 656.0 469.3 668.0]/Border[0 0 0]/A 36 0 R>>endobj
-38 0 obj<</S/URI/URI(http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/JmxModuleForTheImpatient)>>endobj
-39 0 obj<</Subtype/Link/Rect[115.2 572.0 242.5 584.0]/Border[0 0 0]/A 38 0 R>>endobj
-40 0 obj<</S/URI/URI(http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/DebuggingHowTo)>>endobj
-41 0 obj<</Subtype/Link/Rect[115.2 512.0 198.0 524.0]/Border[0 0 0]/A 40 0 R>>endobj
-42 0 obj<</S/URI/URI(http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/DebuggingHowTo)>>endobj
-43 0 obj<</Subtype/Link/Rect[115.2 464.0 198.0 476.0]/Border[0 0 0]/A 42 0 R>>endobj
-44 0 obj<</S/URI/URI(mailto:el4j_team@elca.ch)>>endobj
-45 0 obj<</Subtype/Link/Rect[200.8 380.0 288.8 392.0]/Border[0 0 0]/A 44 0 R>>endobj
-46 0 obj<</S/URI/URI(http://el4j.sourceforge.net/docs/pdf/EL4J_IntroductionArticle1.pdf)>>endobj
-47 0 obj<</Subtype/Link/Rect[257.5 320.0 547.1 332.0]/Border[0 0 0]/A 46 0 R>>endobj
-48 0 obj<</S/URI/URI(http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/ModuleRemoting)>>endobj
-49 0 obj<</Subtype/Link/Rect[249.7 308.0 328.1 320.0]/Border[0 0 0]/A 48 0 R>>endobj
-50 0 obj<</S/URI/URI(http://static.springframework.org/spring/docs/1.2.x/spring-reference.pdf)>>endobj
-51 0 obj<</Subtype/Link/Rect[183.0 260.0 501.2 272.0]/Border[0 0 0]/A 50 0 R>>endobj
-52 0 obj<</S/URI/URI(http://static.springframework.org/spring/docs/2.0.x/spring-reference.pdf)>>endobj
-53 0 obj<</Subtype/Link/Rect[108.0 116.0 423.4 128.0]/Border[0 0 0]/A 52 0 R>>endobj
-54 0 obj[37 0 R
-39 0 R
-41 0 R
-43 0 R
-45 0 R
-47 0 R
-49 0 R
-51 0 R
-53 0 R]endobj
-55 0 obj<</S/URI/URI(http://swik.net/Spring/Ben+Hale's+Blog/Another+Reason+to+Love+Spring+2.0:+Interceptor+Combining/die8)>>endobj
-56 0 obj<</Subtype/Link/Rect[144.0 692.0 622.6 704.0]/Border[0 0 0]/A 55 0 R>>endobj
-57 0 obj<</S/URI/URI(http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/ModuleApplicationContext)>>endobj
-58 0 obj<</Subtype/Link/Rect[144.0 332.0 260.2 344.0]/Border[0 0 0]/A 57 0 R>>endobj
-59 0 obj<</S/URI/URI(http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/MavenBuildSystem)>>endobj
-60 0 obj<</Subtype/Link/Rect[183.0 233.6 271.4 245.6]/Border[0 0 0]/A 59 0 R>>endobj
-61 0 obj[56 0 R
-58 0 R
-60 0 R]endobj
-62 0 obj<</S/URI/URI(http://leaffy.elca.ch/java/el4j/Documentation_Mirror/miscellaneous/j2eeCourse/)>>endobj
-63 0 obj<</Subtype/Link/Rect[111.3 581.6 458.7 593.6]/Border[0 0 0]/A 62 0 R>>endobj
-64 0 obj<</S/URI/URI(http://www.hibernate.org/328.html)>>endobj
-65 0 obj<</Subtype/Link/Rect[133.6 509.6 285.9 521.6]/Border[0 0 0]/A 64 0 R>>endobj
-66 0 obj<</S/URI/URI(http://leaffy.elca.ch/java/el4j/Documentation_Mirror/miscellaneous/j2eeCourse/)>>endobj
-67 0 obj<</Subtype/Link/Rect[111.3 341.6 458.7 353.6]/Border[0 0 0]/A 66 0 R>>endobj
-68 0 obj<</S/URI/URI(http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/HibernateFramework)>>endobj
-69 0 obj<</Subtype/Link/Rect[295.9 281.6 392.0 293.6]/Border[0 0 0]/A 68 0 R>>endobj
-70 0 obj<</S/URI/URI(http://el4j.sourceforge.net/docs/pdf/IdentityFixerAnnouncement.pdf)>>endobj
-71 0 obj<</Subtype/Link/Rect[108.0 221.6 402.6 233.6]/Border[0 0 0]/A 70 0 R>>endobj
-72 0 obj<</S/URI/URI(http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/BasicSpringGuidelines#Circular_references_0)>>endobj
-73 0 obj<</Subtype/Link/Rect[183.0 63.2 390.3 75.2]/Border[0 0 0]/A 72 0 R>>endobj
-74 0 obj[63 0 R
-65 0 R
-67 0 R
-69 0 R
-71 0 R
-73 0 R]endobj
-75 0 obj<</S/URI/URI(http://static.springframework.org/spring/docs/2.0.x/spring-reference.pdf)>>endobj
-76 0 obj<</Subtype/Link/Rect[183.0 692.0 501.2 704.0]/Border[0 0 0]/A 75 0 R>>endobj
-77 0 obj<</S/URI/URI(http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/ModuleLightStatistics)>>endobj
-78 0 obj<</Subtype/Link/Rect[183.0 644.0 388.7 656.0]/Border[0 0 0]/A 77 0 R>>endobj
-79 0 obj<</S/URI/URI(http://wiki.elca.ch/twiki/el4j/bin/view/Main/PhilippHOser)>>endobj
-80 0 obj<</Subtype/Link/Rect[410.5 500.0 472.2 512.0]/Border[0 0 0]/A 79 0 R>>endobj
-81 0 obj<</S/URI/URI(http://wiki.elca.ch/twiki/el4j/bin/view/EL4Ant/PlugIns)>>endobj
-82 0 obj<</Subtype/Link/Rect[185.8 142.3 297.5 154.3]/Border[0 0 0]/A 81 0 R>>endobj
-83 0 obj<</S/URI/URI(http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/PluginDocumentations)>>endobj
-84 0 obj<</Subtype/Link/Rect[303.1 142.3 402.3 154.3]/Border[0 0 0]/A 83 0 R>>endobj
-85 0 obj<</S/URI/URI(http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/PluginIncubator)>>endobj
-86 0 obj<</Subtype/Link/Rect[407.9 142.3 480.1 154.3]/Border[0 0 0]/A 85 0 R>>endobj
-87 0 obj<</S/URI/URI(http://wiki.elca.ch/twiki/el4j/bin/view/EL4Ant/WebHome)>>endobj
-88 0 obj<</Subtype/Link/Rect[200.3 94.3 235.9 106.3]/Border[0 0 0]/A 87 0 R>>endobj
-89 0 obj[76 0 R
-78 0 R
-80 0 R
-82 0 R
-84 0 R
-86 0 R
-88 0 R]endobj
-90 0 obj<</Dests 91 0 R>>endobj
-91 0 obj<</Kids[92 0 R]>>endobj
-92 0 obj<</Limits[(1)(twiki2pdf.body.29240.htm.html)]/Names[(1)93 0 R(data_access_faq)94 0 R(data_access_faq_0)95 0 R(el4ant_faq)96 0 R(el4ant_faq_0)97 0 R(el4j_faq)98 0 R(el4j_faq_0)99 0 R(el4j_spring_core_faq)100 0 R(el4j_spring_core_faq_0)101 0 R(legacy_questions)102 0 R(legacy_questions_0)103 0 R(maven_faq)104 0 R(maven_faq_0)105 0 R(more_advanced_el4j_faq)106 0 R(more_advanced_el4j_faq_0)107 0 R(purpose)108 0 R(purpose_0)109 0 R(questions_about_this_faq)110 0 R(questions_about_this_faq_0)111 0 R(twiki2pdf.body.29240.htm.html)112 0 R]>>endobj
-93 0 obj<</D[118 0 R/XYZ 0 739 0]>>endobj
-94 0 obj<</D[124 0 R/XYZ 0 740 0]>>endobj
-95 0 obj<</D[124 0 R/XYZ 0 740 0]>>endobj
-96 0 obj<</D[126 0 R/XYZ 0 444 0]>>endobj
-97 0 obj<</D[126 0 R/XYZ 0 444 0]>>endobj
-98 0 obj<</D[118 0 R/XYZ 0 629 0]>>endobj
-99 0 obj<</D[118 0 R/XYZ 0 629 0]>>endobj
-100 0 obj<</D[118 0 R/XYZ 0 502 0]>>endobj
-101 0 obj<</D[118 0 R/XYZ 0 502 0]>>endobj
-102 0 obj<</D[126 0 R/XYZ 0 474 0]>>endobj
-103 0 obj<</D[126 0 R/XYZ 0 474 0]>>endobj
-104 0 obj<</D[122 0 R/XYZ 0 296 0]>>endobj
-105 0 obj<</D[122 0 R/XYZ 0 296 0]>>endobj
-106 0 obj<</D[124 0 R/XYZ 0 125 0]>>endobj
-107 0 obj<</D[124 0 R/XYZ 0 125 0]>>endobj
-108 0 obj<</D[118 0 R/XYZ 0 707 0]>>endobj
-109 0 obj<</D[118 0 R/XYZ 0 707 0]>>endobj
-110 0 obj<</D[118 0 R/XYZ 0 600 0]>>endobj
-111 0 obj<</D[118 0 R/XYZ 0 600 0]>>endobj
-112 0 obj<</D[118 0 R/XYZ 0 740 0]>>endobj
-113 0 obj<</Type/Pages/Count 7/Kids[114 0 R
-116 0 R
-118 0 R
-120 0 R
-122 0 R
-124 0 R
-126 0 R
-]>>endobj
-114 0 obj<</Type/Page/Parent 113 0 R/Contents 115 0 R/MediaBox[0 0 595 792]/Resources<</ProcSet[/PDF/Text]/Font<</F0 3 0 R/F8 4 0 R/F9 5 0 R>>/XObject<<>>>>/Annots 11 0 R>>endobj
-115 0 obj<</Filter/FlateDecode/Length 564       >>stream
-x}TËnÛ0¼ë+öè Å—^¾¹­İ¤A„(|Qm:f"ËD×h¿¾KJEd1Ò,gf9Ké5`@ñÇ å XíJğQdx•	I€â¿Q°ép.zˆÅ¸Àá¸
-	‚rø¹PGpŒ¦C‹w¥X,óš(#±ã|x,	ÛÊ9šÔk4äŒädGrN‚úŠ'‰«…×hÈ9W{/P‡Ó¼7OÆSx#ø&ãº…ÙÅì‘êcñT”‘Ø…(/Èu!{Œ†ÿdÜÎ³ìSöÈõ“ñU-œ«}(‚h‘§xxŠp–‘”32#I’@±Æ³G)…b5™ßÈoWÅs2†¾r¡ÌIêMz=ªÚTfí‹ZßUkô¾níúh‘C…¤øê¥fè‘£İzòYÕª)ZÃ¦Ùïà‡~Ñp(ŸÔÔò(á©sï.Í„9Ñ8†qËŞs˜FÑ	YDU«’¬¶‘±O‘ªäsôK×Ño­N‘m<ºÔ¡İâÈ)‹‰RFx[»GÕ´¸'ÛZÆIn›³ğ'ìßb,¥Dˆ¬gG³İ7ËI»¼r5ü
-`¤]íQ·¥C‘çDæM$š9F˜°5IIÆzÊánepD#ÇÜ4Îœ&~äÿ&nK]“Û²1ºş©*ƒ©^ƒÃ¾ou¥‡/w­…†OVÃ&!¹MÈFb!ñ†–¸€—<fó›3øZoöÍ®4‡³kx8ióW5UY¯]cVl^÷Á?•aI‘endstream
-endobj
-116 0 obj<</Type/Page/Parent 113 0 R/Contents 117 0 R/MediaBox[0 0 595 792]/Resources<</ProcSet[/PDF/Text]/Font<</F8 4 0 R/F9 5 0 R>>/XObject<<>>>>/Annots 22 0 R>>endobj
-117 0 obj<</Filter/FlateDecode/Length 538       >>stream
-xÍ–ÏnÚ@Æï~Š9’Ãş·}$m8T‰TT¿€c/”6µÛDÊÛwv½ÔDU/4€„µ#ï0¿ı¾İ—„£/‡T€4PıJn‹d±Ê§(¡ØĞ“¡–L£0
-Š2Æ ¨fEùød¡İÀ§¶l3ô7Å„¡Hı+ãO·Ÿ&l`~È6Sú¿¢qp³2”Šê ñª³/{Jöô¶ìÚz½·ı°kŸ›z/ßÃûpWñb•TŒhÑ	„#7hB­ğuß=·½uódÚ|8Âéây¤¹6(ÔÄ!¼41Çİ½úâ „FM*;\X-×>$PÊëâ¡”AEPAB`" ™L¥x­|l÷ƒ‡›bÃ÷İèÅÉ²ÑğàâÓõ½ÌxäŠÓ÷	u‹nBUë@ıí¹Û5[•|²jÕvŞ§‚ò=#¾ úepŞËEù‘ˆÒ{3f|(_mãi¦ù™9ù˜Sºòæ)±Ä»ÕËçr(½\$eUÙŞ;ONÁiïı_ã)¥<g
-sÛPŸa=¼Eí#ô@(ë×²©lí’ĞV=pÀßZG–å¨K á˜EwÇ{»-«7"£æB§Ùt‚)‰êº¿öš¥)òH2ùNk$–ïÄD}ô´çÓ™çC—ZûÈëYÜ¥äôÚ‘AænRe¨í8íî2‚bõlçøïŠdüx:Ùwendstream
-endobj
-118 0 obj<</Type/Page/Parent 113 0 R/Contents 119 0 R/MediaBox[0 0 595 792]/Resources<</ProcSet[/PDF/Text]/Font<</F8 4 0 R/F9 5 0 R/Fb 7 0 R/Fc 8 0 R>>/XObject<<>>>>/Annots 35 0 R>>endobj
-119 0 obj<</Filter/FlateDecode/Length 1596      >>stream
-x­WÛnÛF}÷Wò$u³%Ù}(”4B]$ˆS«H(ÖäRÜ˜â2»K+jÑï™]’–lqš ‰“p/3sÎ™Ë~:P¿4ÒhLñúèåâ¨7?§Á$Ñ"ÅÚx:°ºH¨õû}ZÄÍüTÉÂåÛ™½•ÉûJZ§taÃñÓè4ïÏ£éÙç;ƒh@¼¡CW•)µ•a÷”¸•Mu‡§ÑtÊ[™¤2l"’Ë”%§Kÿc£S'4[“rd3]å	Yiî$	K‚¬E"LBóÙûˆ^úm–àqğ’2µÊrüÁY½önÀø€ƒì¨u©;*µ*¬eÂÑ†/¶ÕZÒVWÁÛBo"ºÖ¤RÚd²ğkÂHº1zcU±ÂY£«U†¿ñQX¸ßúÀ±·Fá-ñÁugd·QV&'lÖÈX¯×œ¦Lp„ç ÏP®õ-Á9¾ıõ›Ó_)Ñ1\,œ`.¢§¸˜2-ÌÄ°fÂŸJíf€¨×T`oË[Ë3‰]±eĞÑ¾©‰„˜Io©¾¸á¸C¯$ĞUåª¸µğ˜
-xµ¹¥T
-dôæq}UwÛPGÒYÇïsoŞØá5âÕÙ¾”:ô§´'T¸ÓU…p2ßzªk³ºÀÿ½ÑBà{5£e‡‘\³w¶„˜áûÄ-#ú èÁ£n÷øƒP ‚ÂIÃ
-ñVç•OÃäÏóêŞ ¸Àî‚øšç{çcË A¶ï2°Mò3n/D¾g·”ºÌeÍôf–ĞÒÚîpS÷ÌƒÊÜî*¡G×ü5<û:bÑ–hª UÅÀ#PÈ°V
-ƒøS iÏÏÿÃíU.12E8í‰†_ŸÂ³¢eÎ•½ÌO?FVW&–pj%£BºŞ~¦dnpE{xË²ÃÚèzr?•ÒXh2Ù’Èm°ŞĞf«Ü¬¡J©[E‰B£LB‹‰4_p•OD2Eg=Ş{ß»QEïNÉMQw<áèñğ†š¶#ƒ½ÜA¢"w¥èepÖÑ T_%P‡àˆäĞ‹-ô¨‚ÔS#Ö’s‰%Î²æ$áDª
-…jG"ITHzß°Iâ9>?Ê÷gjb.…«¤ïÒ×Å!(õ—ˆ:¤)Û+“´÷»œ4æ"|>dì©ì}FV<b­Î¿•DSsÂ8™7_¾¾%óúR«7¿/ç—…3:©b§Íö7)7Æ\Ä@«__Şû!Cöáçä¦/ä¨3A‡iÍ57èqK¥Ñw*‘ßÆnè$ç5oeÌ5oÙ¹ÄÌQëı~_,MAFœµøâÚ™q*Îåà°š¾²,# †J–ªUeB×wÒ@ç!®[Ï,¾.pî3ä-#[†Â|7œ_pÅ÷oPÎµó`®7Ü¹6b{Á©ÆCH¨$¬7ı³¤@«å#‰JÑ?$šìoß myYìôU.‰è]ÉeÛ·~°‹à7åøx&ä‘Oì•´‰Mhè‰DD¢†ÇòÄ›ƒ24Ó…$Fsc”œŞwe,Zx ÁiüT
-®«èùaşõ%•muÛ¡‘Ì³²ÌUìYNS‚Å¬Âw´0Àä>¢f$@ëëM‡ånè»Œ§õSGÁI ã°|1g§ùp—Œ »ıƒxì;ÿ(:kœ·~¬ØÃÊ·oYÄ<q•È—ûWp«é‡¼QcÔ¦ó4r5–í÷])§`‘gœº2İÜmßÕê€~£4'{6û®rË/iî·>	õ×8íÙ^KL&­§tN®âjÚ8ğ–wİ›èİöQìÏ½FÚ.ãŸ½!øÖ”WÎsbèFQBç~d84PFşõ¨\ÏîßNõ¦vÃ+Èg`@}ş¬8ktˆ
-
-ËõjÅêóãW,K´™zÊÈDYJÌax{!‰öøÚ½;Ã{Ğ'Y[ T™Nhİ$é½¸Ó
-–X!…Âı`b/ğeyü#ıû‚~Öu²Æ¾|pCi7ĞjÜ}ôíøıTÛiR²}ÚL	Ïß¯š0¤O¢ó¾ß,;1üò¯”Ëf¶æáêzvB×hóK“sAöûcÆât:ŒÎÎ†áé4à/¯Gïş²–µendstream
-endobj
-120 0 obj<</Type/Page/Parent 113 0 R/Contents 121 0 R/MediaBox[0 0 595 792]/Resources<</ProcSet[/PDF/Text]/Font<</F0 3 0 R/F8 4 0 R/Fa 6 0 R/Fb 7 0 R/Fc 8 0 R>>/XObject<<>>>>/Annots 54 0 R>>endobj
-121 0 obj<</Filter/FlateDecode/Length 1598      >>stream
-xİXÛn7}÷WLßÀZÉ²ãK€"U.Fm8E«Hôî¬ÄxµÜ\ËÊ×÷¹’¥h•*­ûR0$.—œ9sfÎŒ¾ìPt2 ÃcJ§{¯F{½ó[:èÓ(—¥ã³#eÔOú},¥á³Ñgì8mvtè7óù	SeÍÃœ2ÃJãÉrU¨”Ã#WY]é–U¹OÚ“)‹y<I-OšYU¹o—sW^Nh„…¸	v+;~¢7Ş«Œ.=[ÙÙíS÷` /:–§J—·£ŒÕc]ª‚n:?×¥X¯9»yFæö3§>‰·¤Í-İ“ä€â17ƒã“Æ†Rò°¸pÉûo]ø8Q®# ©)s=®­òFäº VÊ2Õ3ReFº¤™ì76c9°TÙËƒ @ÖÙfÏ@B·1A•Óì<ÍÔœ¼¡1û€H¡±frj3Ó‹Yb«ØB·óEX4‚o¨0æN˜R]‰ø(æ.¡¿|÷'MMVğµ×X¥RUUè4‚;=?øá·WG—áıdpÈÿÙ1uè]8føøêëøfÜš
-YWöO0†KÓªà‡5£
-3Ö©XÏ¥«áŒÆ>k}8¤2¡l0±ìLmSvûÄ÷\Š“®âTƒ?é’ÀhªÊ1Üü´PÎUÊO@7W‹óR¶Œ\ÃÁ±½gëGH”›gm4ŒDÛöã@ŠşjfâªãÆÏ~–¾˜“J½¾ÇW©éØ{¸gi¯î
-d”ÁîÔÔe¤ËÚ+kÈŞ«¢µ<±:Ë"\È°
-Ï#ïÛè¼K~…
-ÔßàÅjMºœ>D’œ;šğÅ°k8»…!	]Go3°Î¥9¢½ ‘q®êÂvµZ€ïK­½Ô>1UÅ‹5p¥ª$”6as:áô.fxSÕB6IæOÙQÀ´›×pèBíÔØÁmÔàRİ‚¸È
-”E	÷†%m1Ûµ}?doø¶×‚¦#Ó¨ŞùZ1Şáâm"·²Å…/éÊ n=$øÔx.æÿ'W›J‰4‹¦ı×Vì£¨ *ê”A\)*áªÜš)DŒø2"Z-ïQ2©¥€ş¥ä±„‡ª
-,‰µ–@3¾İ'7ÃiûAıqõš°ºú6-_=fãÒZj|¦p}¹vŠ¶³MèM%©©’ãP¼–58S¢Ó©™H¥'.”¹‰œä(j«G}X»Q™ƒñ
-ª)¢i¿©x\}ş$Û~á"UI:‰*ô.Hã“‰EèYDìÅÊœ•‡<¢œçá{°:d<I's‰º:l¶¼\ßH#ì:ÅÃF$©‚Ê{k`Á£	*4Ø<3ö®¬»”·õ÷Ë9ú°U|rPnt`7‹éøòmĞO¼¯^ôz$ê?´aÌIÉ¾—™Ôõª,ï	 Ÿ.JoÑ™@L9´Ğ‚‚<mÕ²1Zò&c´·áÌÂÜm–E…û Ep¶ßÒi#Ä.nÎ‹¾t¥+G#óüd-j1PÆAn·!ĞÄy´“hOnÕ”…=	ÂÔ‹k1PÉ yhVº\.SŞ¡íC®U…)‚Ë˜áĞÎ=­èhhÚûìfÍãLÆ¤0¿³K‹ïƒÌ8IG3¾Ÿ´k[Üã8°­k<:m^¤k„Z^,G„Ç6Õ@‘­Ëô[­Æmy»ƒVoKÛ†ñpy74Ñ—ê^‘›;”~Q·ØXŞk§¥…¹×*ì•j#LÀI }œ?Œ«ï^a8mÃíåK( ¨ŠÂ“Lç¨<Â6DÖÏ‚"°`
-$#1Dõ^xãç•ìÂÚc“º¨_5\Ò†|G–Äÿ±Œ$ıÎ8Ôå`Íarôd±h&Ÿ0x£ÿ¨!/2§…R®¼Á´%Z×BÀÌzüÁâ©1u-æï0>7¶…ù†!âoÚİSBÆæÔœ&gt|ÒWø.Ô><ë'gÇøeóÿ¹å/5¢\Ì‡î³÷˜Ëáğ‹I·ÙØ=iHŞI¡†o¯^émŒ‚x™®‡ûtó•m!TôûÇrÏÑé yş|/ÈÊÛÑŞû½¿ VcÕendstream
-endobj
-122 0 obj<</Type/Page/Parent 113 0 R/Contents 123 0 R/MediaBox[0 0 595 792]/Resources<</ProcSet[/PDF/Text]/Font<</F0 3 0 R/F8 4 0 R/F9 5 0 R/Fa 6 0 R/Fb 7 0 R/Fc 8 0 R>>/XObject<<>>>>/Annots 61 0 R>>endobj
-123 0 obj<</Filter/FlateDecode/Length 2058      >>stream
-x­X]oÛ8}Ï¯¸3/ãcù#_N^
-'Û é¶Àvb ] /´DÛª%QCRq¼¿~Ï½”lËq¶(ÔEŞsÏ9ôß'Càß®FtvIq~r;=éßi8 éœ¿½¼>§iBƒh0ÀWqç£zÖ¤(3fEÊ“_jr^Å+òVÅšÖK]àq®ıÒ$d
-Y0Óª Ô‘~ÑqåuÑt‰1¾iJL¡é9Uï¦?NÔp^‡÷Mô¬Z,´=å§„Åú%Ö¥O±«±á;ldµJ(©ò2âú÷q{oˆ˜Ï(l÷4ºPxŞä÷Fœ^gŠãæ&ËÌ:-4ËÌ‚táí1¸Ø¦3íÈ¥y™iŠM¢ÉZhO*Ë(-¼¶–±óUäJ+› éÉ)]IıÂ»@Áë,—Ş—7ı¾[§«¨Ğ¾ÿ(¯öouÑı¨2ı‡ëŞ"”ş¤0¨‡íş¥•3E×›îgó¬»auwnº»0ºw&Ÿ¥bè'©‡Ğ<ná6„ÿ£N…^Ó‡ÏçŸèÓ—ïäª²4VJaÖã4ğÂpÿgq÷ K:{íRM;GÑõUS¸¿t®ìªİPà·.ëƒg´•Æ¹t†–ùe ªE`V‡—fõ¶Ê«Ì§ÜÙÒš—T»ö¦¼bª"i÷õ7ú·©¿‰ö:æ1`xG‹)KÁ›P¸
-ûóaæØ)–ú˜ílDô¯­Õdõ\[TÏáYx\èOWÚ1ìëŠ5±÷8ã€ß¯‡QÙìŸË‘J4[ï5‡â¥J]G²’3J}Dß¸pnÉÑ>`Lß‡C¶v1{H».¯êéjbãgul“ÃØî–šù•Q3àx›¦W¡OÒ²©ìa˜ö,Ûì’‘’ì:?¡UaÖL6®ü HNQ®6´dî:ìwÓ`éÔntÃ›±)æ• ØN-¯4À›£¦|Lì}`,òé¢NàeÂ“½ıâ+ÀOÚ¸±ªp*æ®·Ö>ueIjÑ$D˜ÛO'ÑiÅ/º§w§<¶Yë@®Cdmìê·Ö“oì‹î`DSğŸ39òÍù£ÎA”àN‹“PïßçZytğwzê QÆ& 4ïËÌPjµ"™ ûÓ;ü—êm˜3"Ì/X$¯»h@sa2æéèXN“6ç‘ËC"9à}H[3k—µÑEŒ™¯cX%ÀrÀğ¦6®2e!¥.¬İ´ÉÖJHd›§È%AUêncÔÏú
-V˜ÔkÖIıÓ»ãù½M×Ñ(ŸæR/mĞmMƒÓ<Íğ¬(=ZèB[ÆJ[ì‰¥ÏQ‡!Å™rN^¢RÛvóT!¸ÃË?Ô3ÊÄK<M¡¢1è­èƒŞfUš%§Ğò„µMçô3ô:0Çè–h ¤ÃùÈmœ×ùñbÜS’ €4 € Ò…Wz±7ôBS5}úÇ?i] É–§ŒgğU‚€²×©_î÷×q=e,*[ dàöFbaÇ2H7®xÀdyt„w‡÷[“ºë+˜‡ÛÆe½t¥MÀÛ:
-=D™Q„7U°wv®hx.éitœó‡×2X¯‰¤øÃS–®˜Ş=ô7t_Ì‚CjÂ9„Î­Éå­ĞQğZ¶kÌ-ªò&ÇRÖÔä±«úô«£ãÉŒ¼0Ñ’$C°™ øR'†o'G¼]®0@Ü2æ
-cÈÌ‘Ôš	ÿ²šSGf¦T~ùçÍ6ÏşŸÑKq›w¶¼ÃäŠRnKŠ¬Ç.}­â%t¯)XP	.p$Ààåã@Å5Ş”]Şš%:;ÿ!û¹‡ıb’*Ó“²ÌĞ–;ê|ñáµÆrŠù„õíDbp|!•ÑE–:Ï¦¯§¬h²A3÷!À"¾V…Vwµªm~èdÓ½ãp§È*HÚ1ÔmÍC€.ŸNµ¸ü$ÀTĞ‚¹‚lM£$ÆŠÌÉ1ÕÁ ¸ŸäĞ`±¾ªÔóv>>°X×r§™Ã^£kê…Ç†Ñ(:<uèlNA÷“zKÆ°G2½¯Æó£Y³¼ñ­&g]JÈÏ_ifØ•]•lù]oC¬Îä–5ãQ˜ş8¦öî2o´¤¯Ò¦H$ş}såè°W+\
-âËh­öG®9Ôí}pËûËDW÷¶ÀŒ1Õıª>Ìi²!F'.×Ğ[ÑØÛŸ>¿;…ÃÇ5ùŸàI°"-:årïèdo÷;¾Á·kÂèÉ…
-‚Ÿx•÷£‹· 9{§¦¢huà­é‘«tØ¾×fƒdÙ &îF<=œ¹W³Œı.ÓSn+â•¬-<ŠM”œvëH¶AX˜ĞlS/¢ïuÈìŠüK\Y4d›€Ä®‰Ûn³w^ë¨ÃcNIûX˜mëÃ÷°Â0sV’CXÈS4HÅ±†)Cù9ÁÔãwüDq
-f{µ½ƒÛjÑÛ!…òÔ4~ù¸³Æ·%¼/ªÆÑƒ¤ .u}ßsJ"×Ø\+~ğ§K»œÎJN¨ÌÌöPb£Ål…Ò°Ûá’8\#ñËT#˜ß­×
-÷mìÂ}‚×bÙË™=[ÍâË".û*ÍÜ±ò5Ü½-ß˜ÀÛI_^ïòüóŞg×ƒèú2Üï­Æ¿€öMÜJ'_ëË~põÂŞU}@'†Xø|7¡‡†¡ñ2=NNé¹ÿG[\Õ—|Îùx]\ŒÂAgüÍ‡éÉ×“ÿê“&®endstream
-endobj
-124 0 obj<</Type/Page/Parent 113 0 R/Contents 125 0 R/MediaBox[0 0 595 792]/Resources<</ProcSet[/PDF/Text]/Font<</F0 3 0 R/F8 4 0 R/F9 5 0 R/Fb 7 0 R/Fc 8 0 R>>/XObject<<>>>>/Annots 74 0 R>>endobj
-125 0 obj<</Filter/FlateDecode/Length 1672      >>stream
-xÕXÛnG}×W‡¥rHQ².Á#‰‰‚ÍÚeÍ™²åa÷¤»‡óõ{ªg†7QF²«},XÔôtw]NSÅßONi€§t9¤³J'ß?œôÇ×t:¤‡+×øÑ ôvN“arNoO:t«‚"•¦ì=Gäa<¥S¼˜Ëi½á9Ş}È:ÍÒU³Ô¡_ç*ötóË§Ûïê}i³Ø»LÄ&ìš/.ãMÛCe§Êê¨Ş¶=óa}P&ó”[GaÎtNSåuJ¶d§‚¶Æ“¢fã1SéìRgì¿¥Ô±
-Ü%üÊºT•xe\pàä¿³ïˆÏl(³´b\“ÚÅ‚MF?ê);o[Í¬ßOa¶­İš±A(Š¬ cWğ»b
-60WiÀÉ~LàâÈŒN¹XÓJ‡9ÙÊÑ­](m$Rê	v²Î­ÓKxtË^Ï!ÎÊÓ¤£ª`{’vZjU[ƒü8.­×Áºu—–ªĞˆ?’EøÉâÁd§œ/9I%¹\òŞm¶z¡}Àa…M¿h3ëÒÂ:¦¼à'=-˜ª,ñ¸õ¬EA—¢I¾*KëÂ9*vkz¯B@~º”$ÉäÍŞ…ï8$©ÌX«£åa9‚có»Ÿ†ww¤\:×¶W°¥tìÙ„Ú9Áh´P|\Ä‡{7L:ñÏdxË¯şÏÍ¨3¡ü¶ß‡y¾N¸HU’Îûj©ú\œ?öomZ]õ=ŸÖÎY×Gp²B¶•ï?™o8ÏıúT·ÔøöêF'ÚœK:‚f·ga©\¨ÃÒïÕïÅWøêë¤ …[Vˆà6”µHííè]D¡.ùµªâ7[ff2æLÒ9ôR›¡`NÍ"¶yeR'PÖbß:âô.¡¼)8fËîÊ{ÎöV™¬	áó¬R“ÖÕj•Ì[ZH¬›õÏ†WÉ<,Š—25é€S*DK8›Tf¦s   ½(ŞÀp÷Ñ%k$º{Ömn¦Õl¶¼Ih”-°4OÊÛÂëuÃñçqC%ƒJijÔšP6íÀã0;k	şí !ø–ÆëÕRe(Ò|â§ œ)	Ù„RL‚äN8æ±òVe'©¦`(TS•ÍN±ª·áª-ÿ<ƒsmQíñdø’Áµ&	§ĞT›l‡g~øt/áô’k $è…NÅµ©ğ@‰ 1íš’j,è%ƒK‘í¯(åõ…¬Q"àÃ‚¨$’^-ùû%æ6;Õ;ã#ˆL€5%¿V Æ3x£Õ1@)
-qVa}!ÂÇÉ,!•e¢åÓ^ŒD)£÷N/Xûpp÷'ÛŠ‚%z)ö\f`ö"·P"à„õjêı¿*dƒø¿±¸ÔµöRwx~õæëS{ .…úc¦AÅªå§”ÑJHó‘Ó†¿£íJdA-­ÎP¼¯ûc9Ívå»©Å˜»#š±éÇN-xeİ—úÍVÉ£¦KÏğzåğbï3ÈˆâX?±ûFm‡†(H¤ëÿŠ¬n ß¨«4H‰‡d§İ˜qb8ôqß/³¼ßº=c!öQ;¬ì´	Å´Bq|tx#ä{´KL‰î:«ûÃ«íp@P
-tætİ`=±¤?ÆØMÈ©óo{£ĞešÙQèt³»Ãõ{­¶v’ˆb‘{ÊõSô§séñ¥ìÏøólû¨¶óÏ04z©;®}E-yø"å˜ÖÆ·ã˜Û–<ÂäÖûosºi“äNšÎ}Šà½õÄaô<ÆWÔû“æƒM	Áâû×wîæï¦±ÙD·K+™“Vu%[¶ıEÆ¹ª
-™ èŸ´‰F7† õñ^FŸzô:¸@İi	k_#Ş×3lìË øŒ'Û©¾‡~òšzè$ FèßF;ô³LJú½(¼û×ùOq®–Äˆ+YÆ¨c€:Õ.­0²ar+Ñ½±I5:F4}Ù´‰&×3`²xµ¦ş€X% ƒ#üù½|=ğ1ZñC…Ş½Ğ†ı77ÍŸãt“ÙÔGëAÌç+‚åøÎB"~q5L¢:Idå¸³ëA‚-n;ş½ë‘ÿÂæO³øÂBŞë5/ö.›rì¤“7ÈÏÍˆîÛá›éã¨K1“ÿÁƒ^FÃÁàBöŸãâ·o‡õEçòäîáäÃÉ âÕA[endstream
-endobj
-126 0 obj<</Type/Page/Parent 113 0 R/Contents 127 0 R/MediaBox[0 0 595 792]/Resources<</ProcSet[/PDF/Text]/Font<</F0 3 0 R/F8 4 0 R/F9 5 0 R/Fb 7 0 R/Fc 8 0 R>>/XObject<<>>>>/Annots 89 0 R>>endobj
-127 0 obj<</Filter/FlateDecode/Length 1551      >>stream
-x­W]OÛJ}çWÌå)HØù $¡/UzUTªJ´·‘xáec¯Ûëî®	¹¿şÙµ!![U¨j g?fÎœ9güëhHüÒtDgJÊ£A< ñù„?gS|ğßHÊ>-ú—Kh‘ñÚÉÅ˜)aı ’Ş“ÅVÌÚ=ºQnEŸ¿¿öégmT•ÓF7”ˆŠ¤°ªØ|LV¢Ê%?7¸¤ÔWÕF;è"¦O£•^“Ó”¬´•$VñeŠ†#ÄĞëv|!$mÑ4RXq;šL)|Û¥À_FÈûç/Cÿ^ DI‰®lS8W<šú\Ã‡É©G+çêı¾uÂ©$¶>ÇÌˆR®µ¹µÉûáY?Õ‰íÈø±}™I#«DÆuš…ó"c¹u¾•‰Sº¢á4†w2êiïµÄF\œıš|	hşjTr
-Xéššji2mJp¨DâJ!+g	OCm ğ‚9„ïoDñ‡ğº•$ ×p,@@èŒøa¡ò•#»òTê´)ä+(Æt…µ+İ)UÚ‘÷pThPÏà@rxîww|*UÕ8i™w@K”%àôø@Q~‡n{ÒV%ç»ŒHps›ià?¬¬d@™Dîëó‘n{W±Œ»¹¯PÜõJV$ªÔ?ÛwRËÕÆLï*Pì”Ñ4Îö]–
-?.Š¥Hî-–mİ~{ò§9¿Æ‰cyQÆ2ĞÂÂmİIªrÒ$²v`#
-áSÉ”@a½¢ÈÇYr1-8{g6Ï•´è
-[è<g‰)äƒ,:“BXP¶‚]5ÒÂtŒŞkê»t™ÄÇ|üq*—M~ÜŞÉÊf¥Ä;h{¶êUAbüÇ›Û¥õ ?)Û§ÅÍ‡À?]¡_YXhæó^‰éeR™	hÕ)H^E_óí²Q ‰éA˜µ‚¶!âP+	P‘—HEbí€KÍi$—MÚÊu¾¨¤)ZhæMÆ³‚ÕYE4šÅÁ‚ Yn¶Bè_D‡C…i­Š‚–ád•Ê4¦V£-ş$Íim­öyp:>ÅÒı}¥
-U×_®­4aM§¼^ƒ!ïıËcÈhƒŒÆ#ş5íã3ï#=ú&s‘l/åcü&¤á·Œ&ñÌ§Œ=ğş¾Ç~8¯]Î[èÜFüuTû†ij_u»V.Yñ¯†–‚ªÙu²¤Ìè²;ù—`Gõ^‚}ƒ¶( “8·½¿»ÒÆ[»'wS–(ê6&1]¢aSé„*ì)öw–ê dO¼%'Eyˆ-¿á+{:ºSÇgU=h(~¨&œ›QO QFK­}ëø±,Â’”=]ôÔ‰âö„D%òÂ‰.hg¨†LÀ%+û,«V¥Òï|Ú¸ÜŞæìàbNpXØ°Û°(g*oLp¼LµÆÖ)Xò|Zš²”	ªäº;ìğæç$Rìöáƒo‡-vvÔÉ&FÕŞfùRËh<o”İFÑİz‡Æç…¼h-§ÔÜU²	`îÌ+“7K:óíµg×,{w±üÅJQ’e…‰#1ÕÀJxFôqJ2Îc(ÆĞåG>É­‘õyˆ@Ú¡ƒ­¨!.†ì0Z»Œaª=Ój·Ì&|×d‡ËöD=†‹—Çõ³ïkd¨Ö^=ø¸Û“Sî_/Iâ¹‡|qŒ,´€ò¢<m[Ó‚™x+î_îpâMJ¼2ÃŞ°™ÖE'Gõ¹â±yB
-û^Ê×ºŒŸ×!ÇÁCiucT•
-“vññòáÅ9äßgê_‡"‹yEe\Û$ü¢Á8âƒ=ÖÆÉ]UI³˜zÂûõ„äÔö¢İüZ=_íQ0|.U%0=…Ú~$Lá;ø2Ìï…ê?üúÃnÂ<ÁŒÏxØÿ…€ßæ^’iF°ß¾ÊãÅä|O¼ó¸Äç]â‹IØuÉê÷Œb3·÷2ıÑÍ¼.jFÓv¸ïq_}şö÷œ®*0®„Tc3ıœŸÒO¨Í¿ÒÀ+So‚¼<Åçç£p‘Ñø¼8úqô>…endstream
-endobj
-128 0 obj<</Count 2/First 129 0 R/Last 130 0 R>>endobj
-129 0 obj<</Parent 128 0 R/Title(Table of Contents)/Dest[116 0 R/XYZ 0 756 0]/Next 130 0 R>>endobj
-130 0 obj<</Parent 128 0 R/Count -3/First 131 0 R/Last 138 0 R/Title(1 FrequentlyAskedQuestions)/Dest[118 0 R/XYZ 0 788 0]/Prev 129 0 R>>endobj
-131 0 obj<</Parent 130 0 R/Title(1.1  Purpose)/Dest[118 0 R/XYZ 0 767 0]/Next 132 0 R>>endobj
-132 0 obj<</Parent 130 0 R/Count -5/First 133 0 R/Last 137 0 R/Title(1.2  EL4J FAQ)/Dest[118 0 R/XYZ 0 689 0]/Prev 131 0 R/Next 138 0 R>>endobj
-133 0 obj<</Parent 132 0 R/Title(1.2.1  Questions about this FAQ)/Dest[118 0 R/XYZ 0 660 0]/Next 134 0 R>>endobj
-134 0 obj<</Parent 132 0 R/Title(1.2.2  EL4J/ Spring core FAQ)/Dest[118 0 R/XYZ 0 562 0]/Prev 133 0 R/Next 135 0 R>>endobj
-135 0 obj<</Parent 132 0 R/Title(1.2.3  Maven FAQ)/Dest[122 0 R/XYZ 0 356 0]/Prev 134 0 R/Next 136 0 R>>endobj
-136 0 obj<</Parent 132 0 R/Title(1.2.4  Data access FAQ)/Dest[124 0 R/XYZ 0 788 0]/Prev 135 0 R/Next 137 0 R>>endobj
-137 0 obj<</Parent 132 0 R/Title(1.2.5  More advanced EL4J FAQ)/Dest[124 0 R/XYZ 0 185 0]/Prev 136 0 R>>endobj
-138 0 obj<</Parent 130 0 R/Count -1/First 139 0 R/Last 139 0 R/Title(1.3  Legacy questions)/Dest[126 0 R/XYZ 0 534 0]/Prev 132 0 R>>endobj
-139 0 obj<</Parent 138 0 R/Title(1.3.1  EL4Ant FAQ)/Dest[126 0 R/XYZ 0 504 0]>>endobj
-140 0 obj<</Type/Catalog/Pages 113 0 R/PageLayout/SinglePage/Outlines 128 0 R/OpenAction[118 0 R/XYZ null null 0]/PageMode/UseOutlines>>endobj
-xref
-0 141 
-0000000000 65535 f 
-0000000015 00000 n 
-0000000192 00000 n 
-0000001758 00000 n 
-0000001832 00000 n 
-0000001908 00000 n 
-0000001989 00000 n 
-0000002073 00000 n 
-0000002161 00000 n 
-0000002219 00000 n 
-0000002318 00000 n 
-0000002402 00000 n 
-0000002425 00000 n 
-0000002526 00000 n 
-0000002628 00000 n 
-0000002730 00000 n 
-0000002832 00000 n 
-0000002934 00000 n 
-0000003036 00000 n 
-0000003138 00000 n 
-0000003240 00000 n 
-0000003342 00000 n 
-0000003444 00000 n 
-0000003530 00000 n 
-0000003607 00000 n 
-0000003692 00000 n 
-0000003767 00000 n 
-0000003852 00000 n 
-0000003942 00000 n 
-0000004027 00000 n 
-0000004117 00000 n 
-0000004202 00000 n 
-0000004308 00000 n 
-0000004393 00000 n 
-0000004490 00000 n 
-0000004575 00000 n 
-0000004633 00000 n 
-0000004733 00000 n 
-0000004818 00000 n 
-0000004918 00000 n 
-0000005003 00000 n 
-0000005093 00000 n 
-0000005178 00000 n 
-0000005268 00000 n 
-0000005353 00000 n 
-0000005408 00000 n 
-0000005493 00000 n 
-0000005590 00000 n 
-0000005675 00000 n 
-0000005765 00000 n 
-0000005850 00000 n 
-0000005953 00000 n 
-0000006038 00000 n 
-0000006141 00000 n 
-0000006226 00000 n 
-0000006305 00000 n 
-0000006436 00000 n 
-0000006521 00000 n 
-0000006621 00000 n 
-0000006706 00000 n 
-0000006798 00000 n 
-0000006883 00000 n 
-0000006920 00000 n 
-0000007029 00000 n 
-0000007114 00000 n 
-0000007178 00000 n 
-0000007263 00000 n 
-0000007372 00000 n 
-0000007457 00000 n 
-0000007551 00000 n 
-0000007636 00000 n 
-0000007733 00000 n 
-0000007818 00000 n 
-0000007937 00000 n 
-0000008020 00000 n 
-0000008078 00000 n 
-0000008181 00000 n 
-0000008266 00000 n 
-0000008363 00000 n 
-0000008448 00000 n 
-0000008536 00000 n 
-0000008621 00000 n 
-0000008706 00000 n 
-0000008791 00000 n 
-0000008887 00000 n 
-0000008972 00000 n 
-0000009063 00000 n 
-0000009148 00000 n 
-0000009233 00000 n 
-0000009317 00000 n 
-0000009382 00000 n 
-0000009414 00000 n 
-0000009446 00000 n 
-0000009999 00000 n 
-0000010041 00000 n 
-0000010083 00000 n 
-0000010125 00000 n 
-0000010167 00000 n 
-0000010209 00000 n 
-0000010251 00000 n 
-0000010293 00000 n 
-0000010336 00000 n 
-0000010379 00000 n 
-0000010422 00000 n 
-0000010465 00000 n 
-0000010508 00000 n 
-0000010551 00000 n 
-0000010594 00000 n 
-0000010637 00000 n 
-0000010680 00000 n 
-0000010723 00000 n 
-0000010766 00000 n 
-0000010809 00000 n 
-0000010852 00000 n 
-0000010954 00000 n 
-0000011133 00000 n 
-0000011771 00000 n 
-0000011941 00000 n 
-0000012553 00000 n 
-0000012741 00000 n 
-0000014411 00000 n 
-0000014608 00000 n 
-0000016280 00000 n 
-0000016486 00000 n 
-0000018618 00000 n 
-0000018815 00000 n 
-0000020561 00000 n 
-0000020758 00000 n 
-0000022383 00000 n 
-0000022438 00000 n 
-0000022537 00000 n 
-0000022681 00000 n 
-0000022775 00000 n 
-0000022919 00000 n 
-0000023032 00000 n 
-0000023155 00000 n 
-0000023266 00000 n 
-0000023383 00000 n 
-0000023494 00000 n 
-0000023633 00000 n 
-0000023719 00000 n 
-trailer
-<</Size 141/Root 140 0 R/Info 1 0 R/ID[<7236778930bde3fb0f01a7a7ea6d70c9><7236778930bde3fb0f01a7a7ea6d70c9>]>>
-startxref
-23862
-%%EOF
