@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
- Date :   25.10.06
+ Date :   31.10.06
                             EL4J version  1.1.0
 --------------------------------------------------------------------------------
 * SourceForge Change Requests PENDING (problems resolved but not yet acknowledged)
@@ -13,35 +13,47 @@
   = EL4J license switched from GPL to LGPL.
   = EL4J switched from JDK 1.4 to JDK 1.5.
   = EL4Ant replaced by Maven 2.
+   + Some plugins and many bugfixes complement this change
   = Checkstyle:
     + JavadocMethod: Throw tag test disabled due to bug of checkstyle.
     + Further checks adapted for Java5.
-  = All module dependencies moved to newest versions!
+  = All module dependencies moved to newest versions
 
-
+* Documentation
+  = Datasheet about EL4J
+  = Maven tutorial presentation
+  = Cheat sheets for annotations
+  = Updated reference documentation
+  = Created a list of unique EL4J features
+  = IdentityFixer article
+  = Blog
+  
 * Framework modules
   = module-core
     + Moved to Spring 2.0.
-    + Added overloaded methods that permit to customize the exception thrown in case the precondition is violated.
+    + Added methods that permit to customize the exception thrown in case a precondition is violated.
     + Codingsupport now contains a package for standard code annotations.
     + Added annotations for implementation assumptions and API preliminarity.
-    + Generic observer pattern support added.
-    + Lists utilities.
-    + Generic dao and service parts added.
-    + Live value support added.
+    + Generic observer pattern support added (mainly for spring_rcp).
+    + Lists utilities added.
+    + Generic DAO and service parts added.
+    + Live value support added (mainly for spring_rcp).
     + Commons Attributes are now marked as deprecated.
-    + Meta data support added. This covers Commons Attributes and Java5 Annotations.
-    + Support for intelligent auto proxy creators added. Intelligent means that a bean is not proxied twice if two auto proxy creators are used.
-    + ModuleApplicationContext and ModuleWebApplicationContext improved so requested resources will always be fetched ordered.
-    + Identity fixed repository added.
-    + Intelligent i18n support added.
-    + Dom concept introduced.
+    + Meta data support added. This covers Commons Attributes and Java5 Annotations. It simplifies the association of annotations with interceptors.
+    + Support for intelligent auto proxy creators added. Intelligent means that a bean is not proxied multiple times if two auto proxy creators are used.
+    + ModuleApplicationContext and ModuleWebApplicationContext improved so requested resources will always be fetched in the correct order.
+    + Identity fixer repository added (for spring_rcp).
+    + Intelligent i18n support added (for spring_rcp).
+    + DOM concept introduced (use generic DAO, make service layer sometimes optional).
+    + Log4j file appenders support relative paths (relative paths are interpreted relative to a global el4j-log directory system property) 
 
   = module-spring-rcp
     + IncludeSearchItem class added to the spring-rcp module.
     + Refactoring: Introduced AbstractViewDescriptor.
-    + Generified module spring_rcp and updated it to current Spring RCP codebase.
-    + Discontinued use of raw types in AbstractSearchItem, added dynamic type check to setInitialValue.
+    + Made module spring_rcp more generic and updated it to current Spring RCP codebase.
+    + Discontinued use of raw types in AbstractSearchItem, added dynamic type checks to setInitialValue.
+    + A demo for the new spring-rcp code is in the sandbox
+    + Components became more flexible.
 
   = module-remoting_core
     + New protocol HttpInvoker added.
@@ -50,21 +62,33 @@
 
   = module-hibernate
     + Renamed classes to be convenient with module-core parts.
-    + Generic dao added.
+    + Generic DAO added.
 
   = module-ibatis
-    + Generic dao added.
+    + Generic DAO added.
 
+  = module-jmx
+    + Added support for thread info, get info about
+      interceptors
+    + Added log4j support: get active appenders,
+      add and remove appenders during runtime,
+      change root and logger log levels
+    + Correct visual things
+    + All threads are now daemon threads
+    
   = module-webtest added.
+    + Support tests of web GUIs
 
   = module-tcp_forwarder added.
-
+    + Support testing of network connection issues.
+  
   = module-xml_merge added.
+    + Pragmatic merge of XML files. Please refer to the documentation.
 
   = module-remoting-xfire added.
+    + support this new soap stack
 
   = module-daemon_manager moved into internal EL4J repository.
-
 
   = module-database (was common-database):
     + Automatic import of raw db config file removed.
@@ -72,8 +96,8 @@
 * Applications (Keyword and RefDB):
     + Commons attributes replaced by Java5 annotations.
     + Hibernate and IBatis stuff better splitted up.
-    + The distributed RefDB gui uses now Http Invoker instead of Hessian.
-    + Dto concept replaced by the dom concept.
+    + The distributed RefDB gui uses now HttpInvoker instead of Hessian.
+    + DTO concept replaced by the DOM concept.
 
 
 --------------------------------------------------------------------------------
