@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<bean name="merged" class="ch.elca.el4j.services.xmlmerge.springframework.XmlMergeResource">
+        <property name="resources">
+            <list>
+                <bean class="org.springframework.core.io.ClassPathResource">
+                    <constructor-arg>
+                        <value>ch/elca/el4j/tests/xmlmerge/r1.xml</value>
+                    </constructor-arg>
+                </bean>
+                <bean class="org.springframework.core.io.ClassPathResource">
+                    <constructor-arg>
+                        <value>ch/elca/el4j/tests/xmlmerge/r2.xml</value>
+                    </constructor-arg>
+                </bean>
+            </list>            
+        </property>
+        <property name="properties">
+            <map>
+                <entry key="action.default" value="COMPLETE"/>
+                <entry key="xpath.path1" value="/root/a"/>
+                <entry key="action.path1" value="MERGE"/> 
+            </map>
+        </property>
+	</bean>
+</beans>
