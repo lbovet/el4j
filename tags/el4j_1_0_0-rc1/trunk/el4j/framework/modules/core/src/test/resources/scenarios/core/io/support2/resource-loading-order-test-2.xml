@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+    
+    <bean id="employee2" 
+    	class="ch.elca.el4j.tests.core.io.support.helper.Employee"/>
+    
+    <bean id="refreshPropertyOverrideConfigurer2"
+        class="ch.elca.el4j.core.config.RefreshPropertyOverrideConfigurer"
+        singleton="false">
+        <property name="locations">
+            <list>
+                <value>classpath:scenarios/core/io/support2/resource-loading-order-test-2.properties</value>
+            </list>
+        </property>
+        <property name="order" value="11"/>
+    </bean>
+</beans>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+    
+    <bean id="httpInvokerWithContextCalculatorExporter" class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
+        <property name="remoteProtocol">
+            <ref bean="httpInvokerProtocol" />
+        </property>
+        <property name="serviceInterface">
+            <value>ch.elca.el4j.demos.remoting.Calculator</value>
+        </property>
+        <property name="serviceName">
+            <value>Calculator.HttpInvokerWithContext.Benchmark</value>
+        </property>
+        <property name="service">
+            <idref bean="httpInvokerCalculatorImpl"/>
+        </property>
+    </bean>
+    
+    <bean id="httpInvokerWithoutContextCalculatorExporter" 
+        name="/Calculator.HttpInvokerWithoutContext.Benchmark" 
+        class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+        <property name="serviceInterface">
+            <value>ch.elca.el4j.demos.remoting.Calculator</value>
+        </property>
+        <property name="service">
+            <ref bean="httpInvokerCalculatorImpl"/>
+        </property>
+    </bean>
+    
+    <bean id="httpInvokerCalculatorImpl" class="ch.elca.el4j.demos.remoting.impl.CalculatorImpl" />
+</beans>
