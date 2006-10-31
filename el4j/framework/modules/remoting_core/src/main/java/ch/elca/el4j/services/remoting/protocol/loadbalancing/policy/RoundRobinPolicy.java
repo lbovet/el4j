@@ -17,7 +17,7 @@
 package ch.elca.el4j.services.remoting.protocol.loadbalancing.policy;
 
 import ch.elca.el4j.services.remoting.AbstractRemotingProtocol ;
-import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailableException;
+import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailableRTException;
 
 
 /**
@@ -36,9 +36,9 @@ import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailable
 public class RoundRobinPolicy extends AbstractPolicy {
 
     @Override
-    public AbstractRemotingProtocol getNextProtocol() throws NoProtocolAvailableException {
+    public AbstractRemotingProtocol getNextProtocol() throws NoProtocolAvailableRTException {
         if ((m_protocols == null) || (m_protocols.length == 0)) {
-            throw new NoProtocolAvailableException("No protocol defined") ;
+            throw new NoProtocolAvailableRTException("No protocol defined") ;
         } // if 
         m_currentIndex = (m_currentIndex + 1) % m_protocols.length ;
         return m_protocols[m_currentIndex];

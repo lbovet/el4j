@@ -42,7 +42,7 @@ import ch.elca.el4j.services.remoting.RemotingProxyFactoryBean;
 
 import ch.elca.el4j.services.remoting.protocol.AbstractInetSocketAddressProtocol;
 
-import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailableException;
+import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailableRTException;
 import ch.elca.el4j.services.remoting.protocol.loadbalancing.policy.AbstractPolicy;
 
 
@@ -218,7 +218,7 @@ public class ClientLoadBalancingInvocationHandler implements InvocationHandler,
                     + ":" + ((AbstractInetSocketAddressProtocol)protocol).getServicePort());
                 m_currentProtocolProxy = loadCurrentProtocol(protocol);
                 proxyGenerationSucceeded = true;
-            } catch (NoProtocolAvailableException npae) {
+            } catch (NoProtocolAvailableRTException npae) {
                 s_logger.debug("No more protocols available, stop trying ...");
                 throw npae;
             } catch (BeanCreationException bce) {
@@ -234,7 +234,7 @@ public class ClientLoadBalancingInvocationHandler implements InvocationHandler,
 
         if (!proxyGenerationSucceeded) {
             // If arrived here -> problem
-            throw new NoProtocolAvailableException("Found no available "
+            throw new NoProtocolAvailableRTException("Found no available "
                 + "target, attemps exhausted.");
         } // if
 

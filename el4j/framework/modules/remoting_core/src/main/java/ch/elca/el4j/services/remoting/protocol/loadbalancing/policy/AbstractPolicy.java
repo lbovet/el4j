@@ -17,7 +17,7 @@
 package ch.elca.el4j.services.remoting.protocol.loadbalancing.policy;
 
 import ch.elca.el4j.services.remoting.AbstractRemotingProtocol ;
-import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailableException;
+import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailableRTException;
 
 /**
  * 
@@ -64,10 +64,10 @@ public abstract class AbstractPolicy {
      * Note that protocol comparison must be done using "=="!
      * 
      * @return The next protocol to be used. 
-     * @throws NoProtocolAvailableException If no protocol is available any more
+     * @throws NoProtocolAvailableRTException If no protocol is available any more
      */
     public abstract AbstractRemotingProtocol getNextProtocol() 
-       throws NoProtocolAvailableException;
+       throws NoProtocolAvailableRTException;
     
     
     /**

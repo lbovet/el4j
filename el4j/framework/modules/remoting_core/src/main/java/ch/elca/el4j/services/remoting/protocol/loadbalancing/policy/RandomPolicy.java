@@ -23,7 +23,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import ch.elca.el4j.services.remoting.AbstractRemotingProtocol ;
-import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailableException ;
+import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailableRTException ;
 
 /**
  * 
@@ -43,9 +43,9 @@ public class RandomPolicy extends AbstractPolicy {
 
     @Override
     public AbstractRemotingProtocol getNextProtocol() 
-        throws NoProtocolAvailableException {
+        throws NoProtocolAvailableRTException {
         if ((m_protocols == null) || (m_protocols.length == 0)) {
-            throw new NoProtocolAvailableException("No protocol defined") ;
+            throw new NoProtocolAvailableRTException("No protocol defined") ;
         } // if 
         AbstractRemotingProtocol protocol = 
             m_protocols[m_random.nextInt(m_protocols.length)];
