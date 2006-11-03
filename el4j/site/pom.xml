@@ -66,38 +66,6 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <!-- Execute tests with Tomcat and Derby. -->
-                        <id>execute.tests.tomcat5-derby10</id>
-                        <phase>pre-site</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>
-                                <argument>-Ptest.quiet,tomcat5x,db2</argument>
-                                <argument>-Dsurefire.reports.directory=${project.build.directory}/${surefire-report.name.tomcat5-derby10}</argument>
-                                <argument>clean</argument>
-                                <argument>install</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <!-- Execute tests with Weblogic and Oracle. -->
-                        <id>execute.tests.weblogic9-oracle9</id>
-                        <phase>pre-site</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>
-                                <argument>-Ptest.quiet,weblogic9x,oracle</argument>
-                                <argument>-Dsurefire.reports.directory=${project.build.directory}/${surefire-report.name.weblogic9-oracle9}</argument>
-                                <argument>clean</argument>
-                                <argument>install</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                    <execution>
                         <!-- Clean target dir of framework artifact. -->
                         <id>clean.generated.doc</id>
                         <phase>pre-site</phase>
@@ -318,6 +286,32 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <!-- Execute tests with Tomcat and Derby. -->
+                                <id>execute.tests.tomcat5-derby10</id>
+                                <phase>pre-site</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>
+                                        <argument>-Ptest.quiet,tomcat5x,db2</argument>
+                                        <argument>-Dsurefire.reports.directory=${project.build.directory}/${surefire-report.name.tomcat5-derby10}</argument>
+                                        <argument>clean</argument>
+                                        <argument>install</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
             <reporting>
                 <plugins>
                     <plugin>
@@ -349,6 +343,32 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <!-- Execute tests with Weblogic and Oracle. -->
+                                <id>execute.tests.weblogic9-oracle9</id>
+                                <phase>pre-site</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>
+                                        <argument>-Ptest.quiet,weblogic9x,oracle</argument>
+                                        <argument>-Dsurefire.reports.directory=${project.build.directory}/${surefire-report.name.weblogic9-oracle9}</argument>
+                                        <argument>clean</argument>
+                                        <argument>install</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
             <reporting>
                 <plugins>
                     <plugin>
