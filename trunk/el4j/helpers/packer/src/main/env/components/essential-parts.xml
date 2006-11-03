@@ -26,8 +26,8 @@
             <fileMode>0755</fileMode>
         </fileSet>
         <fileSet>
-            <directory>${el4j.localRepository.basedir}/com</directory>
-            <outputDirectory>m2repository/com</outputDirectory>
+            <directory>${el4j.localRepository.basedir}</directory>
+            <outputDirectory>m2repository</outputDirectory>
             <excludes>
                 <!-- Exclude JDBC drivers of DB2 and Oracle. -->
                 <exclude>**/db2jcc*/**</exclude>
