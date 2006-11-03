@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <parent>
+        <groupId>ch.elca.el4j.modules</groupId>
+        <artifactId>el4j-framework-modules</artifactId>
+        <version>1.1.0</version>
+    </parent>
+
+    <artifactId>module-core</artifactId>
+    <version>${version.module-core}</version>
+    <packaging>jar</packaging>
+    <name>EL4J module core</name>
+    <description>
+        Module core of the EL4J framework.
+    </description>
+    <build>
+        <!-- Support for Commons Attributes -->
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>commons-attributes-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring</artifactId>
+        </dependency>
+        
+        <!--
+            Use the one from the EL4J repository!
+            Else you will have dependencies to servlet-api and so on!!!!
+         -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-logging</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>[1.2.13]</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.bcel</groupId>
+            <artifactId>bcel</artifactId>
+            <version>[5.1]</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.cglib</groupId>
+            <artifactId>cglib-nodep</artifactId>
+            <version>[2.1_3]</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jdom</groupId>
+            <artifactId>jdom</artifactId>
+            <version>[1.0]</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections</artifactId>
+        </dependency>
+        <dependency>
+            <!-- DEPRECATED: Use Java 5 annotations instead. -->
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-attributes-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.easymock</groupId>
+            <artifactId>easymock</artifactId>
+            <version>[2.2]</version>
+        </dependency>
+        <dependency>
+            <groupId>org.easymock</groupId>
+            <artifactId>easymockclassextension</artifactId>
+            <version>[2.2.1]</version>
+        </dependency>
+        <dependency>
+            <groupId>net.java.dev.which4j</groupId>
+            <artifactId>which4j</artifactId>
+            <version>[0.21]</version>
+        </dependency>
+        
+        <!-- Annotations for generic persistence support. -->
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>ejb3-persistence</artifactId>
+            <version>[20060502-public-draft]</version>
+        </dependency>
+    </dependencies>
+</project>

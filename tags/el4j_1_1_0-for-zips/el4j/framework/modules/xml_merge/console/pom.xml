@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
+    <parent>
+        <groupId>ch.elca.el4j.modules</groupId>
+        <artifactId>module-xml_merge</artifactId>
+        <version>1.1.0</version>
+    </parent>
+    
+    <artifactId>module-xml_merge-console</artifactId>
+    <version>${version.module-xml_merge}</version>
+    <packaging>jar</packaging>
+    <name>EL4J module XmlMerge console</name>
+    <description>
+        Console application module for XmlMerge module of the EL4J framework.
+    </description>
+	<dependencies>
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-xml_merge-common</artifactId>
+            <type>jar</type>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>ch.elca.el4j.xmlmerge.tool.XmlMergeTool</mainClass>
+                    <keepAlive>false</keepAlive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    
+	<!--
+        This profile was added only as example due to problem passing argument
+        by system property. See following JIRA issue for more information:
+        http://jira.codehaus.org/browse/MEXEC-5
+     -->
+    <profiles>
+        <profile>
+            <id>example</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <configuration>
+                            <arguments>
+                                <argument>file1.xml</argument>
+                                <argument>file2.xml</argument>
+                                <argument>file3.xml</argument>
+                            </arguments>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>    

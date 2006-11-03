@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <parent>
+        <groupId>ch.elca.el4j.apps</groupId>
+        <artifactId>el4j-framework-apps-refdb-core</artifactId>
+        <version>1.1.0</version>
+    </parent>
+
+    <artifactId>refdb-core-interface</artifactId>
+    <version>${version.application-refdb}</version>
+    <packaging>jar</packaging>
+    <name>EL4J application refdb core interface</name>
+    <description>RefDb core interface module of the EL4J framework.</description>
+    <dependencies>
+        <dependency>
+            <groupId>ch.elca.el4j.apps</groupId>
+            <artifactId>keyword-core-interface</artifactId>
+            <type>jar</type>
+        </dependency>
+    </dependencies>
+</project>
