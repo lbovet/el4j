@@ -820,8 +820,8 @@
             <releases>
                 <enabled>false</enabled>
             </releases>
-            <!--id>el4jSnapshotRepositoryExternal</id-->
-            <id>apache.snapshots</id>
+            <id>el4jSnapshotRepositoryExternal</id>
+            <!--id>apache.snapshots</id-->
             <name>External snapshot repository of the EL4J project</name>
             <url>http://el4.elca-services.ch/el4j/maven2snapshots</url>
         </repository>
@@ -871,8 +871,8 @@
             <releases>
                 <enabled>false</enabled>
             </releases>
-            <!--id>el4jSnapshotPluginRepositoryExternal</id-->
-            <id>apache.snapshots</id>
+            <id>el4jSnapshotPluginRepositoryExternal</id>
+            <!--id>apache.snapshots</id-->
             <name>External snapshot repository of the EL4J project</name>
             <url>http://el4.elca-services.ch/el4j/maven2snapshots</url>
         </pluginRepository>
@@ -1623,13 +1623,13 @@
         </version.application-refdb>
 
         <!-- Javadoc config -->
-        <javadoc.stylesheet.path>${project.home}/etc/javadoc/stylesheet.css</javadoc.stylesheet.path>
+        <javadoc.stylesheet.path>${el4j.project.home}/etc/javadoc/stylesheet.css</javadoc.stylesheet.path>
         <javadoc.link.jdk>http://java.sun.com/j2se/${el4j.java.version}/docs/api</javadoc.link.jdk>
         <javadoc.link.spring>http://static.springframework.org/spring/docs/2.0.x/api</javadoc.link.spring>
         <javadoc.header><![CDATA[&lt;script type='text/javascript'&gt;function removeKeyword(str) { i = str.indexOf(':'); str = str.substring(i+1); i = str.length; str = str.substring(0, i-1); return str; } function removeHead (str) { v=str.substring(42); return v.substring(0, v.length-2); } function printFileStatus (url_kw, revision_kw, date_kw, author_kw) { document.write ('&lt;br/&gt;&lt;dl&gt;&lt;dt&gt;&lt;b&gt;File-location:&lt;/b&gt;&lt;/dt&gt;&lt;dd&gt;&lt;a href="http://svn.sourceforge.net/viewcvs.cgi/'); document.write(removeHead(url_kw)); document.write('"&gt;'); document.write(removeHead(url_kw)); document.write('&lt;/a&gt;&lt;/dd&gt;&lt;/dl&gt;'); document.write('&lt;dl&gt;&lt;dt&gt;&lt;b&gt;Last check-in date &lt;/b&gt;'); document.write(removeKeyword(date_kw)); document.write('&lt;b&gt; by &lt;/b&gt;'); document.write(removeKeyword(author_kw)); document.write('&lt;b&gt; for revision &lt;/b&gt;'); document.write(removeKeyword(revision_kw)); document.write('&lt;/dt&gt;&lt;/dl&gt;'); } &lt;/script&gt;]]></javadoc.header>
         
         <!-- Checkstyle config -->
-        <checkstyle.config.location>${project.home}/etc/checkstyle/checks.xml</checkstyle.config.location>
+        <checkstyle.config.location>${el4j.project.home}/etc/checkstyle/checks.xml</checkstyle.config.location>
         <checkstyle.enable.rss>false</checkstyle.enable.rss>
         <checkstyle.enable.rules.summary>false</checkstyle.enable.rules.summary>
 
