@@ -12,7 +12,7 @@
     <parent>
         <groupId>ch.elca.el4j.modules</groupId>
         <artifactId>el4j-framework-module-light_statistics</artifactId>
-        <version>1.1.0</version>
+        <version>1.1.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>module-light_statistics-common</artifactId>
