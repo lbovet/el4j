@@ -13,7 +13,7 @@
     <parent>
         <groupId>ch.elca.el4j.demos</groupId>
         <artifactId>el4j-framework-demos-remoting-web</artifactId>
-        <version>1.1.0</version>
+        <version>1.1.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>module-remoting-demos-web-jar</artifactId>
