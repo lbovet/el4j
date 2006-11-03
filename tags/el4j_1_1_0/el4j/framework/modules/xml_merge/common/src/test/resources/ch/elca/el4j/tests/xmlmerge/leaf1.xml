@@ -1,0 +1,798 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<leaf-config
+  depend='leafcore'
+  provide='epaymentcentercore'
+  >
+  <!-- This is the leaf-config file for the epaymentcentercore module -->
+  <!-- $Author$ $Date$ $Revision$ -->
+  <!-- $Source: /var/versioning/cvs/e-payment-center-dev/core/src/cejb/META-INF/epaymentcentercore-config.xml,v $ -->
+
+  <services>
+
+    <Stateless>
+
+      <!-- facade -->
+      <shopPayment>
+        <jndiName>
+          epc.shopPayment
+        </jndiName>
+        <interfaceName>
+          ch.elca.pc.facade.payment.ShopPaymentService
+        </interfaceName>
+        <fullName>
+          ch.elca.pc.facade.payment.DefaultShopPaymentBean
+        </fullName>
+        <config>
+          <centerStatusManagerJNDI>epc.centralStatusManager</centerStatusManagerJNDI>
+          <paymentManagementJNDI>epc.paymentManagement</paymentManagementJNDI>
+          <shopManagementJNDI>epc.shopManagement</shopManagementJNDI>
+          <configurationManagementJNDI>epc.configurationManagement</configurationManagementJNDI>
+          <providerManagementJNDI>epc.providerManagement</providerManagementJNDI>
+          <tranxTokenManagementJNDI>epc.tranxTokenManagement</tranxTokenManagementJNDI>
+          <supportCurrencies>CHF EUR USD</supportCurrencies>
+        </config>
+        <ObjectInvokers>
+            <addUserSharedContextInvoker>
+              epc.addUserSharedContextInvoker
+            </addUserSharedContextInvoker>
+        </ObjectInvokers>
+      </shopPayment>
+
+      <customerPayment>
+        <jndiName>
+          epc.customerPayment
+        </jndiName>
+        <interfaceName>
+          ch.elca.pc.facade.payment.CustomerPaymentService
+        </interfaceName>
+        <fullName>
+          ch.elca.pc.facade.payment.DefaultCustomerPaymentBean
+        </fullName>
+        <config>
+          <centerStatusManagerJNDI>epc.centralStatusManager</centerStatusManagerJNDI>
+          <shopManagementJNDI>epc.shopManagement</shopManagementJNDI>
+          <paymentManagementJNDI>epc.paymentManagement</paymentManagementJNDI>
+          <providerManagementJNDI>epc.providerManagement</providerManagementJNDI>
+          <configurationManagementJNDI>epc.configurationManagement</configurationManagementJNDI>
+        </config>
+        <ObjectInvokers>
+            <addUserSharedContextInvoker>
+              epc.addUserSharedContextInvoker
+            </addUserSharedContextInvoker>
+        </ObjectInvokers>
+      </customerPayment>
+
+    </Stateless>
+    <LocalStateless>
+      <!-- process -->
+      <centralStatusManager>
+        <jndiName>
+          epc.centralStatusManager
+        </jndiName>
+        <interfaceName>
+          ch.elca.pc.process.payment.CentralStatusManagerService
+        </interfaceName>
+        <fullName>
+          ch.elca.pc.process.payment.DefaultCentralStatusManagerBean
+        </fullName>
+        <config>
+          <stateHandlerFactoryJNDI>epc.stateHandlerFactory</stateHandlerFactoryJNDI>
+        </config>
+        <deployment>
+          <ejb-jar>
+            <insertXMLTransactions>
+              <container-transaction>
+                <method>
+                  <ejb-name>#ejb-name</ejb-name>
+                  <method-name>getServiceInformation</method-name>
+                </method>
+                <method>
+                  <ejb-name>#ejb-name</ejb-name>
+                  <method-name>getServiceMetadata</method-name>
+                </method>
+                <trans-attribute>NotSupported</trans-attribute>
+              </container-transaction>
+              <container-transaction>
+                <method>
+                  <ejb-name>#ejb-name</ejb-name>
+                  <method-name>*</method-name>
+                </method>
+                <trans-attribute>RequiresNew</trans-attribute>
+              </container-transaction>
+            </insertXMLTransactions>
+          </ejb-jar>
+        </deployment>
+      </centralStatusManager>
+
+      <shopManagement>
+        <jndiName>
+          epc.shopManagement
+        </jndiName>
+        <interfaceName>
+          ch.elca.pc.process.shop.ShopManagementService
+        </interfaceName>
+        <fullName>
+          ch.elca.pc.process.shop.DefaultShopManagementBean
+        </fullName>
+        <config>
+            <generationIdSeed>
+              1234567890
+            </generationIdSeed>
+      			<ftp>
+      				<host>debian</host>
+      				<port>21</port>
+      				<user>epc4</user>
+      				<pwd>epc4</pwd>
+      				<!-- Remote directory where to put the generated file -->
+      				<remoteCSSDir>epc-4.0/www/public/shops</remoteCSSDir>
+      				<remoteShopsDir>epc-4.0/www/public/shops</remoteShopsDir>
+      				<remoteCacheDir>epc-4.0/www/epccodeversion</remoteCacheDir>
+      				<remoteCacheFile>epcCode.version</remoteCacheFile>
+      				<remoteLogoDir>epc-4.0/www/public/shops/default</remoteLogoDir>
+      				<remoteLogoFile>logo.gif</remoteLogoFile>
+      				<remoteProvidersDir>epc-4.0/www/public/providers</remoteProvidersDir>
+      				<remotePTDir>paymenttypes</remotePTDir>
+      				<remotePHPFile>config.php</remotePHPFile>
+      				<remoteHTMLFile>introduction</remoteHTMLFile>
+      				<remoteExtFile>.php</remoteExtFile>
+      				<remoteResourcesDir>epc-4.0/www/public/main/resources</remoteResourcesDir>
+      			</ftp>
+      			<server>
+      			  <remoteShopDir>D:/epaymentcenter/dev/leafproject/epaymentcenter/frontend/v4/public/shops</remoteShopDir>
+      			  <remoteProviderDir>D:/epaymentcenter/dev/leafproject/epaymentcenter/frontend/v4/public/providers</remoteProviderDir>
+      			  <remotePTDir>paymenttypes</remotePTDir>
+      			  <remoteCacheDir>D:/epaymentcenter/dev/leafproject/epaymentcenter/frontend/v4/epccodeversion</remoteCacheDir>
+      			  <remoteCSSDir>D:/epaymentcenter/dev/leafproject/epaymentcenter/frontend/v4/public/shops</remoteCSSDir>
+      			  <remoteLogoDir>D:/epaymentcenter/dev/leafproject/epaymentcenter/frontend/v4/public/default</remoteLogoDir>
+      			  <remotePHPFile>config.php</remotePHPFile>
+      			  <remoteLogoFile>logo.gif</remoteLogoFile>
+      			  <remoteIntroFile>introduction</remoteIntroFile>
+      			  <remoteExtFile>.php</remoteExtFile>
+      			  <remoteCacheFile>epcCode.version</remoteCacheFile>
+      			</server>
+      			<css>
+      				<!-- CSS template file : fullName -->
+      				<template>leafproject/epaymentcenter/distrib/css/template.css</template>
+      				<!-- character that delimits the keys to replace in the template -->
+      				<token>$</token>
+      				<!-- Generated CSS file name -->
+      				<fileNamePattern>shop.css</fileNamePattern>
+      				<!--
+      					Additionnal tokens to be replaced in the generated CSS file
+      					but that are not stored in the db, cause don't need the user
+      					to fill this info. Rather technical data.
+      				-->
+      				<additionnalTokens/>
+      			</css>
+      			<shopParameters>
+      			  <bodyFontFamily>Verdana,Geneva,Arial,Helvetica,sans-serif</bodyFontFamily>
+      			  <bodyFontSize>small</bodyFontSize>
+      			  <bodyBackgroundColor>white</bodyBackgroundColor>
+      			  <mainBackgroundColor>#cc9</mainBackgroundColor>
+      			  <mainBorderTopColor>#c30</mainBorderTopColor>
+      			  <h2FontSize>13px</h2FontSize>
+      			  <normalFontSize>13px</normalFontSize>
+      			  <mainBorderBottomColor>#c30</mainBorderBottomColor>
+      			  <inputFieldBackgroundColor>white</inputFieldBackgroundColor>
+      			  <linkColor>black</linkColor>
+      			  <textColor>black</textColor>
+      			</shopParameters>
+      			<shopMessages>
+      			  <mailSubject>
+      			    <en>mail subject english</en>
+      			    <fr>mail subject french</fr>
+      			    <de>mail subject german</de>
+      			    <it>mail subject italian</it>
+      			  </mailSubject>
+      			  <mailBody>
+      			    <en>Please click {0} to download the bill._en</en>
+      			    <fr>Please click {0} to download the bill._fr</fr>
+      			    <de>Please click {0} to download the bill._de</de>
+      			    <it>Please click {0} to download the bill._it</it>
+      			  </mailBody>
+      			  <ackMessage>
+      			    <en>Thank you for your order. Please pay this bill within 30 days._en</en>
+      			    <fr>Thank you for your order. Please pay this bill within 30 days._fr</fr>
+      			    <de>Thank you for your order. Please pay this bill within 30 days._de</de>
+      			    <it>Thank you for your order. Please pay this bill within 30 days._it</it>
+      			  </ackMessage>
+      			</shopMessages>
+        </config>
+      </shopManagement>
+
+     <paymentManagement>
+        <jndiName>
+          epc.paymentManagement
+        </jndiName>
+        <interfaceName>
+          ch.elca.pc.process.payment.PaymentManagementService
+        </interfaceName>
+        <fullName>
+          ch.elca.pc.process.payment.DefaultPaymentManagementBean
+        </fullName>
+        <config>
+          <maxSelectedPayment>100</maxSelectedPayment>
+   			  <exportFolder>d:\\exchanges\\shops</exportFolder>
+   			  <appVersion>4.1.0.12</appVersion>
+   			  <!-- number of payments to get from database per one time -->
+   			  <zipBlock>25000</zipBlock>
+   			  <!-- number of payments in one zip entry -->
+   			  <zipEntry>25000</zipEntry>
+   			  <!-- number of mails to get from database per one time -->
+   			  <zipMailBlock>25000</zipMailBlock>
+   			  <!-- number of mails in one zip entry -->
+   			  <zipMailEntry>25000</zipMailEntry>
+   			  <!-- number of mails to get from database per one time -->
+   			  <zipAccountBlock>25000</zipAccountBlock>
+   			  <!-- number of mails in one zip entry -->
+   			  <zipAccountEntry>25000</zipAccountEntry>
+   			  <!-- 1048576 = 1024 * 1024, size to write into ZipOutputStream per one time -->
+   			  <zipBuffer>1048576</zipBuffer>
+   			  <!-- number of files to get from database per one time -->
+   			  <zipFileBlock>25000</zipFileBlock>
+   			  <!-- number of files in one zip entry -->
+   			  <zipFileEntry>25000</zipFileEntry>
+          	  <row0>09468271350</row0>
+          	  <row1>94682713509</row1>
+          	  <row2>46827135098</row2>
+          	  <row3>68271350947</row3>
+          	  <row4>82713509466</row4>
+          	  <row5>27135094685</row5>
+          	  <row6>71350946824</row6>
+          	  <row7>13509468273</row7>
+          	  <row8>35094682712</row8>
+          	  <row9>50946827131</row9>
+              <secutixTicketProducerJNDI>secutix.production.ticketProducer</secutixTicketProducerJNDI>
+        </config>
+      </paymentManagement>
+
+     <paymentTimestamp>
+        <jndiName>
+          epc.paymentTimestamp
+        </jndiName>
+        <interfaceName>
+          ch.elca.pc.process.payment.PaymentTimestampService
+        </interfaceName>
+        <fullName>
+          ch.elca.pc.process.payment.DefaultPaymentTimestampBean
+        </fullName>
+        <config>
+        </config>
+        <deployment>
+          <ejb-jar>
+            <insertXMLTransactions>
+              <container-transaction>
+                <method>
+                  <ejb-name>#ejb-name</ejb-name>
+                  <method-name>getServiceInformation</method-name>
+                </method>
+                <method>
+                  <ejb-name>#ejb-name</ejb-name>
+                  <method-name>getServiceMetadata</method-name>
+                </method>
+                <trans-attribute>NotSupported</trans-attribute>
+              </container-transaction>
+              <container-transaction>
+                <method>
+                  <ejb-name>#ejb-name</ejb-name>
+                  <method-name>*</method-name>
+                </method>
+                <trans-attribute>RequiresNew</trans-attribute>
+              </container-transaction>
+            </insertXMLTransactions>
+          </ejb-jar>
+        </deployment>
+      </paymentTimestamp>
+
+      <providerManagement>
+        <jndiName>
+          epc.providerManagement
+        </jndiName>
+        <interfaceName>
+          ch.elca.pc.process.provider.ProviderManagementService
+        </interfaceName>
+        <fullName>
+          ch.elca.pc.process.provider.DefaultProviderManagementBean
+        </fullName>
+        <config>
+        </config>
+      </providerManagement>
+
+      <configurationManagement>
+        <jndiName>
+          epc.configurationManagement
+        </jndiName>
+        <interfaceName>
+          ch.elca.pc.process.configuration.ConfigurationManagementService
+        </interfaceName>
+        <fullName>
+          ch.elca.pc.process.configuration.DefaultConfigurationManagementBean
+        </fullName>
+        <config>
+        </config>
+      </configurationManagement>
+
+      <historyManagement>
+        <jndiName>
+          epc.historyManagement
+        </jndiName>
+        <interfaceName>
+          ch.elca.pc.process.history.HistoryManagementService
+        </interfaceName>
+        <fullName>
+          ch.elca.pc.process.history.DefaultHistoryManagementBean
+        </fullName>
+        <config>
+        </config>
+      </historyManagement>
+
+      <tranxTokenManagement>
+        <jndiName>
+          epc.tranxTokenManagement
+        </jndiName>
+        <interfaceName>
+          ch.elca.pc.process.tranxtoken.TransactionTokenManagementService
+        </interfaceName>
+        <fullName>
+          ch.elca.pc.process.tranxtoken.DefaultTransactionTokenManagementBean
+        </fullName>
+        <config>
+        </config>
+      </tranxTokenManagement>
+
+      <logFileManagement>
+        <jndiName>
+          epc.logFileManagement
+        </jndiName>
+        <interfaceName>
+          ch.elca.pc.process.log.LogFileManagementService
+        </interfaceName>
+        <fullName>
+          ch.elca.pc.process.log.DefaultLogFileManagementBean
+        </fullName>
+        <config>
+            <logDir>
+      				<!-- Either absolute paths, or relative to leaf.home -->
+      				<paths>C:/epaymentcenter/dev/log</paths>
+      				<excludes>CVS,keepme</excludes>
+      			</logDir>
+      			<!-- maxsize, in Megabyte -->
+      			<maxSize>20</maxSize>
+        </config>
+      </logFileManagement>
+      
+      <cdsFileManagement>
+        <jndiName>
+          epc.cdsFileManagement
+        </jndiName>
+        <interfaceName>
+          ch.elca.pc.process.cdsfile.CdsFileManagementService
+        </interfaceName>
+        <fullName>
+          ch.elca.pc.process.cdsfile.DefaultCdsFileManagementBean
+        </fullName>
+        <config>
+        </config>
+      </cdsFileManagement>
+
+    </LocalStateless>
+
+    <Local>
+      <pspAdapter>
+        <jndiName> epc.pspAdapter </jndiName>
+        <interfaceName> ch.elca.pc.process.provider.PSPAdapter </interfaceName>
+        <fullName> ch.elca.pc.process.provider.PSPAdapterImpl </fullName>
+        <config>
+        </config>
+      </pspAdapter>
+      <stateHandlerFactory>
+        <jndiName>epc.stateHandlerFactory</jndiName>
+        <interfaceName>
+          ch.elca.pc.process.payment.StateHandlerFactory</interfaceName>
+        <fullName>
+          ch.elca.pc.process.payment.DefaultStateHandlerFactory</fullName>
+        <config>
+          <handlers>
+            <initialStateHandler>
+              <jndiName>epc.initialStateHandler</jndiName>
+              <interfaceName>
+                ch.elca.pc.process.payment.StateHandler</interfaceName>
+              <fullName>
+                ch.elca.pc.process.payment.InitialStateHandler</fullName>
+              <config>
+                <pspAdapterJNDI>epc.pspAdapter</pspAdapterJNDI>
+              </config>
+            </initialStateHandler>
+            <shoosingStateHandler>
+              <jndiName>epc.shoosingStateHandler</jndiName>
+              <interfaceName>
+                ch.elca.pc.process.payment.StateHandler</interfaceName>
+              <fullName>
+                ch.elca.pc.process.payment.ChoosingStateHandler</fullName>
+              <config>
+                <pspAdapterJNDI>epc.pspAdapter</pspAdapterJNDI>
+              </config>
+            </shoosingStateHandler>
+            <redirectedStateHandler>
+              <jndiName>epc.redirectedStateHandler</jndiName>
+              <interfaceName>
+                ch.elca.pc.process.payment.StateHandler</interfaceName>
+              <fullName>
+                ch.elca.pc.process.payment.RedirectedStateHandler</fullName>
+              <config>
+                <pspAdapterJNDI>epc.pspAdapter</pspAdapterJNDI>
+              </config>
+            </redirectedStateHandler>
+            <inputStateHandler>
+              <jndiName>epc.inputStateHandler</jndiName>
+              <interfaceName>
+                ch.elca.pc.process.payment.StateHandler</interfaceName>
+              <fullName>ch.elca.pc.process.payment.InputStateHandler</fullName>
+              <config>
+                <pspAdapterJNDI>epc.pspAdapter</pspAdapterJNDI>
+              </config>
+            </inputStateHandler>
+            <storedStateHandler>
+              <jndiName>epc.storedStateHandler</jndiName>
+              <interfaceName>
+                ch.elca.pc.process.payment.StateHandler</interfaceName>
+              <fullName>ch.elca.pc.process.payment.StoredStateHandler</fullName>
+              <config>
+                <paymentTimestampJNDI>
+                  epc.paymentTimestamp</paymentTimestampJNDI>
+                <pspAdapterJNDI>epc.pspAdapter</pspAdapterJNDI>
+                <maxAuthorizationAttempts>10</maxAuthorizationAttempts>
+              </config>
+            </storedStateHandler>
+            <authorizeTimeoutStateHandler>
+              <jndiName>epc.authorizeTimeoutStateHandler</jndiName>
+              <interfaceName>
+                ch.elca.pc.process.payment.StateHandler</interfaceName>
+              <fullName>
+                ch.elca.pc.process.payment.AuthorizeTimeoutStateHandler</fullName>
+              <config>
+                <pspAdapterJNDI>epc.pspAdapter</pspAdapterJNDI>
+                <maxCheckAuthorizationAttempts>
+                  10</maxCheckAuthorizationAttempts>
+              </config>
+            </authorizeTimeoutStateHandler>
+            <authorizePendingStateHandler>
+              <jndiName>epc.authorizePendingStateHandler</jndiName>
+              <interfaceName>
+                ch.elca.pc.process.payment.StateHandler</interfaceName>
+              <fullName>
+                ch.elca.pc.process.payment.AuthorizePendingStateHandler</fullName>
+              <config>
+                <pspAdapterJNDI>epc.pspAdapter</pspAdapterJNDI>
+              </config>
+            </authorizePendingStateHandler>
+            <authorizedConfirmedStateHandler>
+              <jndiName>epc.authorizedConfirmedStateHandler</jndiName>
+              <interfaceName>
+                ch.elca.pc.process.payment.StateHandler</interfaceName>
+              <fullName>
+                ch.elca.pc.process.payment.AuthorizedConfirmedStateHandler</fullName>
+              <config>
+                <pspAdapterJNDI>epc.pspAdapter</pspAdapterJNDI>
+              </config>
+            </authorizedConfirmedStateHandler>
+            <authorizedSubmittedStateHandler>
+              <jndiName>epc.authorizedSubmittedStateHandler</jndiName>
+              <interfaceName>
+                ch.elca.pc.process.payment.StateHandler</interfaceName>
+              <fullName>
+                ch.elca.pc.process.payment.AuthorizedSubmittedStateHandler</fullName>
+              <config>
+                <paymentManagementJNDI>
+                  epc.paymentManagement</paymentManagementJNDI>
+                  <pspAdapterJNDI>epc.pspAdapter</pspAdapterJNDI>
+              </config>
+            </authorizedSubmittedStateHandler>
+            <authorizedStateHandler>
+              <jndiName>epc.authorizedStateHandler</jndiName>
+              <interfaceName>
+                ch.elca.pc.process.payment.StateHandler</interfaceName>
+              <fullName>
+                ch.elca.pc.process.payment.AuthorizedStateHandler</fullName>
+              <config>
+                <pspAdapterJNDI>epc.pspAdapter</pspAdapterJNDI>
+              </config>
+            </authorizedStateHandler>
+            <submittedStateHandler>
+              <jndiName>epc.submittedStateHandler</jndiName>
+              <interfaceName>
+                ch.elca.pc.process.payment.StateHandler</interfaceName>
+              <fullName>
+                ch.elca.pc.process.payment.SubmittedStateHandler</fullName>
+              <config>
+                <paymentManagementJNDI>epc.paymentManagement</paymentManagementJNDI>
+                <pspAdapterJNDI>epc.pspAdapter</pspAdapterJNDI>
+                <maxCheckConfirmationAttempts>100</maxCheckConfirmationAttempts>
+              </config>
+            </submittedStateHandler>
+            <submittingStateHandler>
+              <jndiName>epc.submittingStateHandler</jndiName>
+              <interfaceName>
+                ch.elca.pc.process.payment.StateHandler</interfaceName>
+              <fullName>
+                ch.elca.pc.process.payment.SubmittingStateHandler</fullName>
+              <config>
+                <paymentTimestampJNDI>epc.paymentTimestamp</paymentTimestampJNDI>
+                <pspAdapterJNDI>epc.pspAdapter</pspAdapterJNDI>
+                <maxSubmissionAttempts>10</maxSubmissionAttempts>
+              </config>
+            </submittingStateHandler>
+            <submitTimeoutStateHandler>
+              <jndiName>epc.submitTimeoutStateHandler</jndiName>
+              <interfaceName>
+                ch.elca.pc.process.payment.StateHandler</interfaceName>
+              <fullName>
+                ch.elca.pc.process.payment.SubmitTimeoutStateHandler</fullName>
+              <config>
+                <paymentManagementJNDI>epc.paymentManagement</paymentManagementJNDI>
+                <pspAdapterJNDI>epc.pspAdapter</pspAdapterJNDI>
+                <maxCheckSubmissionAttempts>10</maxCheckSubmissionAttempts>
+              </config>
+            </submitTimeoutStateHandler>
+            <submitManualStateHandler>
+              <jndiName>epc.submitManualStateHandler</jndiName>
+              <interfaceName>
+                ch.elca.pc.process.payment.StateHandler</interfaceName>
+              <fullName>
+                ch.elca.pc.process.payment.SubmitManualStateHandler</fullName>
+              <config>
+                <paymentManagementJNDI>epc.paymentManagement</paymentManagementJNDI>
+                <pspAdapterJNDI>epc.pspAdapter</pspAdapterJNDI>
+                <maxCheckSubmissionAttempts>10</maxCheckSubmissionAttempts>
+              </config>
+            </submitManualStateHandler>
+            <paidStateHandler>
+              <jndiName>epc.paidStateHandler</jndiName>
+              <interfaceName>
+                ch.elca.pc.process.payment.StateHandler</interfaceName>
+              <fullName>ch.elca.pc.process.payment.PaidStateHandler</fullName>
+              <config>
+                <pspAdapterJNDI>epc.pspAdapter</pspAdapterJNDI>
+              </config>
+            </paidStateHandler>
+            <cancelledByUserStateHandler>
+              <jndiName>epc.cancelledByUserStateHandler</jndiName>
+              <interfaceName>
+                ch.elca.pc.process.payment.StateHandler</interfaceName>
+              <fullName>
+                ch.elca.pc.process.payment.CancelledByUserStateHandler</fullName>
+              <config>
+                <pspAdapterJNDI>epc.pspAdapter</pspAdapterJNDI>
+              </config>
+            </cancelledByUserStateHandler>
+            <errorStateHandler>
+              <jndiName>epc.errorStateHandler</jndiName>
+              <interfaceName>
+                ch.elca.pc.process.payment.StateHandler</interfaceName>
+              <fullName>ch.elca.pc.process.payment.ErrorStateHandler</fullName>
+              <config>
+                <pspAdapterJNDI>epc.pspAdapter</pspAdapterJNDI>
+              </config>
+            </errorStateHandler>
+            <refusedStateHandler>
+              <jndiName>epc.refusedStateHandler</jndiName>
+              <interfaceName>
+                ch.elca.pc.process.payment.StateHandler</interfaceName>
+              <fullName>
+                ch.elca.pc.process.payment.RefusedStateHandler</fullName>
+              <config>
+                <pspAdapterJNDI>epc.pspAdapter</pspAdapterJNDI>
+              </config>
+            </refusedStateHandler>
+            <abandonedStateHandler>
+              <jndiName>epc.abandonedStateHandler</jndiName>
+              <interfaceName>
+                ch.elca.pc.process.payment.StateHandler</interfaceName>
+              <fullName>
+                ch.elca.pc.process.payment.AbandonedStateHandler</fullName>
+              <config>
+                <pspAdapterJNDI>epc.pspAdapter</pspAdapterJNDI>
+              </config>
+            </abandonedStateHandler>
+            <cancelledByAdminStateHandler>
+              <jndiName>epc.cancelledByAdminStateHandler</jndiName>
+              <interfaceName>
+                ch.elca.pc.process.payment.StateHandler</interfaceName>
+              <fullName>
+                ch.elca.pc.process.payment.CancelledByAdminStateHandler</fullName>
+              <config>
+                <pspAdapterJNDI>epc.pspAdapter</pspAdapterJNDI>
+              </config>
+            </cancelledByAdminStateHandler>
+            <unpaidStateHandler>
+              <jndiName>epc.unpaidStateHandler</jndiName>
+              <interfaceName>
+                ch.elca.pc.process.payment.StateHandler</interfaceName>
+              <fullName>ch.elca.pc.process.payment.UnpaidStateHandler</fullName>
+              <config>
+                <pspAdapterJNDI>epc.pspAdapter</pspAdapterJNDI>
+              </config>
+            </unpaidStateHandler>
+            <archivingStateHandler>
+              <jndiName>epc.archivingStateHandler></jndiName>
+              <interfaceName>
+                ch.elca.pc.process.payment.StateHandler</interfaceName>
+              <fullName>
+                ch.elca.pc.process.payment.ArchivingStateHandler</fullName>
+              <config>
+                <paymentManagementJNDI>epc.paymentManagement</paymentManagementJNDI>
+                <pspAdapterJNDI>epc.pspAdapter</pspAdapterJNDI>
+              </config>
+            </archivingStateHandler>
+            <archivedStateHandler>
+              <jndiName>epc.archivedStateHandler></jndiName>
+              <interfaceName>
+                ch.elca.pc.process.payment.StateHandler</interfaceName>
+              <fullName>
+                ch.elca.pc.process.payment.ArchivedStateHandler</fullName>
+              <config>
+                <pspAdapterJNDI>epc.pspAdapter</pspAdapterJNDI>
+              </config>
+            </archivedStateHandler>
+            <generatingStateHandler>
+              <jndiName>epc.generatingStateHandler></jndiName>
+              <interfaceName>
+                ch.elca.pc.process.payment.StateHandler</interfaceName>
+              <fullName>
+                ch.elca.pc.process.payment.GeneratingStateHandler</fullName>
+              <config>
+                <pspAdapterJNDI>epc.pspAdapter</pspAdapterJNDI>
+                <paymentManagementJNDI>epc.paymentManagement</paymentManagementJNDI>
+                <mailServer>svdev20102</mailServer>
+              </config>
+            </generatingStateHandler>
+            <generatedStateHandler>
+              <jndiName>epc.generatedStateHandler></jndiName>
+              <interfaceName>
+                ch.elca.pc.process.payment.StateHandler</interfaceName>
+              <fullName>
+                ch.elca.pc.process.payment.GeneratedStateHandler</fullName>
+              <config>
+                <pspAdapterJNDI>epc.pspAdapter</pspAdapterJNDI>
+                <paymentManagementJNDI>epc.paymentManagement</paymentManagementJNDI>
+              </config>
+            </generatedStateHandler>
+          </handlers>
+        </config>
+      </stateHandlerFactory>
+      <orb>
+        <config>
+          <invokers>
+            <addUserSharedContextInvoker>
+              <jndiName> epc.addUserSharedContextInvoker </jndiName>
+              <fullName> ch.elca.pc.facade.payment.AddUserSharedContextInvoker
+                </fullName>
+              <config>
+                <userJNDIConfig>
+                  <epc.shopPayment>SHOP</epc.shopPayment>
+                  <epc.customerPayment>CUSTOMER</epc.customerPayment>
+                </userJNDIConfig>
+              </config>
+            </addUserSharedContextInvoker>
+          </invokers>
+          <referenceOrder> leaf.invoker.Trace epc.addUserSharedContextInvoker
+            </referenceOrder>
+        </config>
+      </orb>
+      <!-- Local implementation of the server statistic collector. -->
+      <localserverstatisticcollector>
+        <jndiName> epc.technical.cejbstatisticcollector </jndiName>
+        <interfaceName> ch.elca.pc.utils.statistics.StatisticCollectorService
+          </interfaceName>
+        <fullName> ch.elca.pc.utils.statistics.DefaultStatisticCollectorService
+          </fullName>
+        <config>
+          <!-- dump stat files in here -->
+          <!-- file-path relative to leaf-home -->
+          <outputPath>statistics</outputPath>
+          <!-- Filename format: the first parameter will be the domain, the second one the format for the date -->
+          <!-- not that if you specify a minute-precise date you will get a new file each minute		     -->
+          <fileNameFormat>{0}-{1,date,yyyy-MM-dd}.log</fileNameFormat>
+          <!-- Dump the data to file every X seconds, this is defined       -->
+          <!-- with the Event-WriteCejbStatistics timer (see Cext config).  -->
+          <!-- SimpleDateFormat to use inside the logfiles -->
+          <dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>
+          <!-- in seconds -->
+          <dumpFrequency>60</dumpFrequency>
+        </config>
+      </localserverstatisticcollector>
+
+
+      <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+      <!-- Configuration for the Notification                               -->
+      <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+      <notification>
+        <config>
+          <handlers>
+            <!-- FileNotificationHandler dedicaced to ePC events. -->
+            <EpcLogHandler>
+              <jndiName>epc.technical.EpcLogHandler</jndiName>
+              <fullName>
+                ch.elca.leaf.services.notification.FileNotificationHandler
+                </fullName>
+              <config>
+                <eventLayoutName>
+                  ch.elca.pc.utils.notification.EpcEventLayout
+                  </eventLayoutName>
+                <filePathName>log/epc-{0,date,yyyy-MM-dd}.log</filePathName>
+                <append>true</append>
+                <periodField>DATE</periodField>
+                <period>1</period>
+                <periodZeroFields>
+                  HOUR_OF_DAY MINUTE SECOND MILLISECOND
+                </periodZeroFields>
+              </config>
+            </EpcLogHandler>
+          </handlers>
+          <channels>
+            <!-- NotificationChannel dedicaced to ePC events. -->
+            <EpcLogChannel>
+              <jndiName>epc.technical.EpcLogChannel</jndiName>
+              <fullName>
+                ch.elca.leaf.services.notification.DefaultNotificationChannel
+                </fullName>
+              <config>
+                <filters>
+                  <LoginEventFilter>
+                    <filterName>
+                      ch.elca.pc.utils.notification.EpcEventFilter
+                      </filterName>
+                    <config/>
+                  </LoginEventFilter>
+                </filters>
+                <localHandlers>
+                  epc.technical.EpcLogHandler</localHandlers>
+              </config>
+            </EpcLogChannel>
+          </channels>
+        </config>
+      </notification>
+    </Local>
+    
+    <Soap>
+      <secutixTicketProducer>
+        <jndiName>
+          secutix.production.ticketProducer
+        </jndiName>
+        <interfaceName>
+          com.secutix.production.facade.ticketgeneration.TicketProducerService
+        </interfaceName>
+        <wsdl>
+          <uri>
+            <!--http://mafalda.elca.ch:80/tp1/secutix/services/secutix.production.ticketProducer?wsdl-->
+            <!--file:///D:/epc/Epc4.3/TP/my-secutix.production.ticketProducer.wsdl-->
+            file:///D:/epaymentcenter/dev/leafproject/epaymentcenter/distrib/config/ticketproducer/secutix.production.ticketProducer.wsdl
+          </uri>
+        </wsdl>
+        <wsdd>
+            <!--file:///D:/epc/Epc4.3/TP/wsdd/my-tp.wsdd-->
+            file:///D:/epaymentcenter/dev/leafproject/epaymentcenter/distrib/config/ticketproducer/wsdd-service-ticketproducer.wsdd
+        </wsdd>
+        <SharedContextMapper>
+          ch.elca.leaf.soap.axis.sharedcontext.DefaultHeaderSharedContext
+        </SharedContextMapper>
+      </secutixTicketProducer>
+    </Soap>
+
+  </services>
+  <EPCDataSourceName>leaf.dataSource.containerDataSource</EPCDataSourceName>
+  
+  <BvrConfig>
+    <pdfBillTemplateFile>printing/landscapeBill.jasper</pdfBillTemplateFile>
+    <attentionIcon>D:\Temp\bvr\logos\printing\attention.gif</attentionIcon>
+    <htmlBillTemplateFile>printing/web_landscapeBill.jasper</htmlBillTemplateFile>
+    <htmlBillsFolder>D:\Temp\bvr\htmlbills</htmlBillsFolder>
+    <pdfBillsFolder>D:\Temp\bvr\pdfbills</pdfBillsFolder>
+    <urlToDownloadPdfBills>http://epc4bvr/pdfbills/</urlToDownloadPdfBills>
+    <urlForHtmlBillReferences>http://epc4bvr/htmlbills/</urlForHtmlBillReferences>
+    <htmlBillFolderNameSuffix>.html_files</htmlBillFolderNameSuffix>
+    <shopBvrLogoFolder>D:\Temp\bvr\logos</shopBvrLogoFolder>
+    <microImageFolder>D:\Temp\bvr\microimages</microImageFolder>
+  </BvrConfig>
+  
+</leaf-config>
