@@ -1,0 +1,81 @@
+ -----
+ Manifest decorator plugin
+ -----
+ -----
+ 26 Sep 2006
+ -----
+
+Manifest decorator plugin
+
+  The Manifest decorator plugin is used to list resource files and dependencies
+  (transitively) and save these lists by default comma separated in system 
+  properties. Also the current module will be saved in a system property. This
+  made by default for main and test scope.
+  
+  The jar manifest file can now take this information to reconstruct the order
+  of modules and resources on runtime.
+  
+  Here an example configuration for the <<<maven-jar-plugin>>>:
+  
++--------------
+    <plugin>
+        <groupId>ch.elca.el4j.plugins</groupId>
+        <artifactId>maven-manifest-decorator-plugin</artifactId>
+        <executions>
+            <execution>
+                <!--
+                    Due to bug that goals are not executed in the
+                    defined order in the same phase the goal below
+                    must be executed before the package phase!
+                    Please see: http://jira.codehaus.org/browse/MNG-2258
+                -->
+                <phase>test</phase>
+                <goals>
+                    <goal>manifest-prepare-config-section</goal>
+                </goals>
+            </execution>
+        </executions>
+    </plugin>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+            <archive>
+                <manifestSections>
+                    <manifestSection>
+                        <name>el4j-config</name>
+                        <manifestEntries>
+                            <Module>${el4j-config.module}</Module>
+                            <Files>${el4j-config.files}</Files>
+                            <Dependencies>${el4j-config.dependencies}</Dependencies>
+                        </manifestEntries>
+                    </manifestSection>
+                </manifestSections>
+            </archive>
+        </configuration>
+        <executions>
+            <execution>
+                <id>createTestJar</id>
+                <goals>
+                    <goal>test-jar</goal>
+                </goals>
+                <configuration>
+                    <archive>
+                        <manifestSections>
+                            <manifestSection>
+                                <name>el4j-config</name>
+                                <manifestEntries>
+                                    <Module>${el4j-config.testmodule}</Module>
+                                    <Files>${el4j-config.testfiles}</Files>
+                                    <Dependencies>${el4j-config.testdependencies}</Dependencies>
+                                </manifestEntries>
+                            </manifestSection>
+                        </manifestSections>
+                    </archive>
+                </configuration>
+            </execution>
+        </executions>
+    </plugin>
++--------------
+  
+  For detailed usage {{{plugin-info.html}see the plugin info page}}.

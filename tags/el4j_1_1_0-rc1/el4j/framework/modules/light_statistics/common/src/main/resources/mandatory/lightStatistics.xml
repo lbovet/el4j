@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!-- 
+    Spring bean configuration file to intercept and so enable light statistics 
+    for all beans.
+-->
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <!-- Proxy all beans using an auto proxy creator -->
+    <bean id="lightStatisticsMonitorProxy" 
+        class="ch.elca.el4j.core.aop.ExclusiveBeanNameAutoProxyCreator">
+        <property name="beanNames"><value>*</value></property>
+        <property name="interceptorNames">
+            <list>
+                <value>lightStatisticsAdvisor</value>
+            </list>
+        </property>
+   	</bean>
+   	
+   	<!-- The JAMon interceptor -->
+    <bean id="lightStatisticsAdvisor" 
+        class="ch.elca.el4j.services.statistics.light.LightStatisticsMonitorInterceptor"/>
+</beans>
