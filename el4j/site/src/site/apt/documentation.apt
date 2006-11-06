@@ -16,7 +16,7 @@ Documentation
       A presentation about our use of Maven: (PDF)}}    
       
     * EL4J Annotation Cheat Sheets {{{docs/pdf/ejb30-persistence-anno-cheat_v1_0.pdf} Standard }}  /   
-       {{{docs/pdf/el4j-anno-cheat_v1_2.pdf} EL4J-Additions }}  
+       {{{docs/pdf/el4j-anno-cheat_v1_2	.pdf} EL4J-Additions }}  
       
     * {{{docs/pdf/UniqueEL4JFeatures.pdf} List of unique EL4J features}}
       
@@ -46,9 +46,9 @@ Documentation
 
 * Links to external documenation (selection)
 
-    * Spring documentation {{{http://www.springframework.org/documentation}}}
+    * {{{http://www.springframework.org/documentation} Spring documentation}}
 
-    * Maven 2 Book {{{http://www.mergere.com/m2book_download.jsp}}}
+    * {{{http://www.mergere.com/m2book_download.jsp} Maven 2 Book}}
 
       
 * Release notes

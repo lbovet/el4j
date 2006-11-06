@@ -15,15 +15,15 @@
                 href="http://sourceforge.net/projects/el4j/" />
         </menu>
         <menu name="Download">
-            <item name="Sources" href="source-repository.html" />
-            <item name="Binaries"
+            <item name="Individual sources from svn" href="source-repository.html" />
+            <item name="Binary packages"
                 href="http://sourceforge.net/project/showfiles.php?group_id=147215" />
         </menu>
         <menu name="Documentation">
             <item name="General" href="documentation.html" />
             <item name="API" href="framework-modules/apidocs/index.html" />
             <item name="FAQ" href="docs/pdf/FrequentlyAskedQuestions.pdf" />
-            <item name="Plugins" href="plugins/index.html" />
+            <item name="Maven plugins" href="plugins/index.html" />
         </menu>
         <menu name="Support">
             <item name="General" href="support.html" />
