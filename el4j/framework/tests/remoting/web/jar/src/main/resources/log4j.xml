@@ -8,14 +8,27 @@
     <!-- URL: $URL$ -->
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
-    
+
+    <!---
+        This is the basic log4j.xml definition file, referenced by all
+        components via a symlink.
+
+        If you wish to get a custom output during the development, either extend
+        this file with your current logger or replace the symlink with your own
+        file. Make sure not to check in your changes to the repository.
+
+        MDL 06-09-12
+    -->
+
     <appender name="console" class="org.apache.log4j.ConsoleAppender">
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d %5p [%c] %m%n" />
         </layout>   
     </appender>
 
-    <!--appender name="logfile" class="org.apache.log4j.DailyRollingFileAppender">
+    <!-- uncommend this block if you want to have an output into a log file
+
+    <appender name="logfile" class="org.apache.log4j.DailyRollingFileAppender">
         <param name="File" value="el4j_logging_output.log"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd"/>
         <layout class="org.apache.log4j.PatternLayout">
@@ -24,48 +37,18 @@
         </layout>
     </appender-->
 
+    <!-- EL4J framwork: show only warnings -->
 
     <logger name="ch.elca.el4j">
-        <level value="INFO"/>
-    </logger>    
-
-    <logger name="org.springframework">
-        <level value="INFO"/>
-    </logger>    
-
-    <logger name="org.apache.axis">
-        <level value="INFO"/>
-    </logger>
-    <logger name="org.apache.axis.i18n">
-        <level value="WARN"/>
-    </logger>
-    <logger name="org.apache.axis.utils.NSStack">
-        <level value="WARN"/>
-    </logger>
-    <logger name="org.apache.axis.encoding.SerializationContext">
         <level value="WARN"/>
     </logger>
     
-    <logger name="javax.xml">
-        <level value="ALL"/>
-    </logger>    
+    <!-- External tools: show only warnings -->
 
-    <logger name="org.apache.catalina">
-        <level value="INFO"/>
-    </logger>    
-
-    <logger name="attrib">
-        <level value="ALL"/>
-    </logger>    
-
-    <logger name="org.apache.log4j">
-        <level value="WARN"/>
-    </logger>
-    
-    
     <root>
-        <level value="WARN"/>
+        <level value="FATAL"/>
         <appender-ref ref="console"/>
         <!--appender-ref ref="logfile"/-->
     </root>
 </log4j:configuration>
+
