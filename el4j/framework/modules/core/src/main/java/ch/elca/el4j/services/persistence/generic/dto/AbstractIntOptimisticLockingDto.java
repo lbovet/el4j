@@ -62,7 +62,7 @@ import java.io.Serializable;
  *
  * @author Martin Zeltner (MZE)
  */
-public abstract class AbstractIntOptimisticLockingDto 
+public abstract class 	 
     implements Serializable, OptimisticLockingObject {
     /**
      * Is the optimistic locking version number. Initial optimistic locking 
@@ -73,7 +73,7 @@ public abstract class AbstractIntOptimisticLockingDto
     /**
      * @return Returns the optimistic locking version.
      */
-    public final int getOptimisticLockingVersion() {
+    public int getOptimisticLockingVersion() {
         return m_optimisticLockingVersion;
     }
 
@@ -81,7 +81,7 @@ public abstract class AbstractIntOptimisticLockingDto
      * @param optimisticLockingVersion
      *            The optimistic locking version to set.
      */
-    public final void setOptimisticLockingVersion(
+    public void setOptimisticLockingVersion(
         int optimisticLockingVersion) {
         m_optimisticLockingVersion = optimisticLockingVersion;
     }
@@ -89,7 +89,7 @@ public abstract class AbstractIntOptimisticLockingDto
     /**
      * Method to increase the int optimistic locking version number.
      */
-    public final void increaseOptimisticLockingVersion() {
+    public void increaseOptimisticLockingVersion() {
         m_optimisticLockingVersion++;
     }
 }
