@@ -205,7 +205,7 @@
    * mvn cargo:undeploy
        * Undeploys the configured deployable. If the current artifact is of type war this war will be undeployed.
          
-   * mvn carco:stop
+   * mvn cargo:stop
        * Stops the configured container. By default this is Tomcat 5.
 
    * mvn install:install-file 
