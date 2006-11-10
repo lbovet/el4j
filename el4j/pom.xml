@@ -42,6 +42,7 @@
         <url>http://sourceforge.net/tracker/?group_id=147215&amp;atid=779814</url>
     </issueManagement>
     <inceptionYear>2005</inceptionYear>
+    
     <mailingLists>
         <mailingList>
             <name>Version control commits</name>
@@ -51,6 +52,7 @@
             <archive>http://sourceforge.net/mailarchive/forum.php?forum=el4j-commits</archive>
         </mailingList>
     </mailingLists>
+
     <developers>
         <developer>
             <id>poser55</id>
@@ -96,6 +98,7 @@
             <timezone>+1</timezone>
         </developer>
     </developers>
+
     <contributors>
         <contributor>
             <name>Alex Mathey</name>
@@ -130,12 +133,14 @@
             <timezone>+1</timezone>
         </contributor>
     </contributors>
+
     <licenses>
         <license>
             <name>LGPL version 2.1</name>
             <url>http://www.gnu.org/licenses/lgpl.txt</url>
         </license>
     </licenses>
+
     <scm>
         <connection>
             scm:svn:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/
@@ -147,11 +152,14 @@
             http://svn.sourceforge.net/viewcvs.cgi/el4j/trunk/el4j/
         </url>
     </scm>
+
     <organization>
         <name>ELCA</name>
         <url>http://www.elca.ch</url>
     </organization>
+
     <build>
+
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -164,6 +172,7 @@
                 <filtering>false</filtering>
             </resource>
         </resources>
+
         <testResources>
             <testResource>
                 <directory>src/test/resources</directory>
@@ -176,7 +185,9 @@
                 <filtering>false</filtering>
             </testResource>
         </testResources>
+
         <defaultGoal>install</defaultGoal>
+
         <pluginManagement>
             <plugins>
                 <!--
@@ -185,6 +196,7 @@
                 -->
 
                 <!-- Building -->
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-help-plugin</artifactId>
@@ -250,6 +262,12 @@
                     -->
                     <version>2.3-20060921.102756-1</version>
                     <configuration>
+                          <systemProperties>
+                            <property>
+                              <name>log4j.configuration</name>
+                              <value>file:/${el4j.external}/etc/log4j/log4j.xml</value>
+                            </property>
+                          </systemProperties>
                         <testFailureIgnore>false</testFailureIgnore>
                         <forkMode>never</forkMode>
                         <includes>
