@@ -99,6 +99,12 @@
     + The distributed RefDB gui uses now HttpInvoker instead of Hessian.
     + DTO concept replaced by the DOM concept.
 
+* Issues
+    + When running the tests, there are some log outputs that seem to indicate errors. This is due to the fact that some external components log these problems while we make some tests. Mostly our tests try out special behavior that causes the external components to consider it an error.
+    List of problems:
+      * Hibernate StaleObjectStateException due to us provoking a db error
+      * Connection error due to TCP tests or load-balancing tests
+      * A file with {db.name} in its name is not found: this is due to a strange issue with Spring post bean processors (setting -Ddb.name=db on the JVM-level makes it 'disappear').
 
 --------------------------------------------------------------------------------
  Date :   25.04.06
