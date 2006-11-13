@@ -26,12 +26,12 @@
      (svn co https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/helloworld).
 
    * There are some other directories. For more information please read the
-     readme-file inside of each directory.
+     readme-file inside each directory.
    
 ---+ Set up the development environment
 
    * Set the environment variable JAVA_HOME. This variable must point to
-     a Java 5 JDK. Example: C:\jdk1.5.0_09 (Remark: some early tests with JDK 1.6 beta 2 showed some issues.)
+     a Java 5 JDK. Example: C:\jdk1.5.0_09 (Remark: some early tests with JDK 1.6 beta 2 showed some problems.)
      
    * Set the environment variable M2_HOME. This variable must point to
      the "maven" directory inside "external-tools".
@@ -165,8 +165,10 @@
       * Deletes the generated directory "target" plus the Eclipse project files 
         for non-pom artifacts.
    
-   It is recommended to always execute all the desired phases above in one Maven command.
-   Example: mvn clean install
+   It is recommended to always execute all the desired phases above in one Maven command. Example: mvn clean install
+   
+   We typically make the following settings in the environment in order for the maven task to have enough memory: 
+    MAVEN_OPTS=-Xmx512m -Xss128k -XX:MaxPermSize=256m
    
 ---+ Further maven goals
 
@@ -217,9 +219,9 @@
        * Used to install a jar library in the local Maven repository. For example the Oracle and DB2 JDBC driver has to be installed using this goal, if EL4J is used. This because the licence of the freely available drivers does not allow redistribution.
        Please see above for samples for this.
 
----+ Maven 2 and Eclipse (recommendation for work with EL4J)
+---+ Maven 2 and Eclipse (recommendations for work with EL4J)
 
-   Eclipse is often used as development environment. Maven is used to manage software project completely. Eclipse should only be used to write code and test small parts of the project. Most other development tasks should be executed wit Maven, escpecially the unit tests due to the following reasons:
+   Eclipse is often used as development environment. Maven is used to manage software project completely. Eclipse should only be used to write code and test small parts of the project. Most other development tasks should be executed wit Maven, especially the unit tests due to the following reasons:
    
    * Eclipse projects do not separate compile and test scope as Maven does. This 
      can be dangerous, for example if the directory test resources contain Spring bean xml files in the “mandatory” directory. This means in EL4J a special place where to place spring bean configuration files.
