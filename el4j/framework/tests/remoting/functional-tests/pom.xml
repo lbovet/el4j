@@ -23,6 +23,7 @@
     <description>
         Test module for functional tests of remoting modules of the EL4J framework.
     </description>
+
     <dependencies>
         <dependency>
             <groupId>ch.elca.el4j.tests</groupId>
@@ -38,6 +39,7 @@
             <artifactId>servlet-api</artifactId>
         </dependency>
     </dependencies>
+
     <build>
         <pluginManagement>
             <plugins>
@@ -65,10 +67,17 @@
             </plugins>
         </pluginManagement>
     </build>
+
+
+
     <profiles>
+
+
         <profile>
             <id>manual</id>
         </profile>
+
+
         <profile>
             <id>auto</id>
             <activation>
@@ -108,13 +117,14 @@
                         <executions>
                             <execution>
                                 <id>deploy-after-undeploy</id>
-                                <phase>pre-integration-test</phase>
+                                <phase>integration-test</phase>
                                 <goals>
                                     <goal>deploy</goal>
                                 </goals>
                             </execution>
                         </executions>
                     </plugin>
+
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
@@ -134,6 +144,7 @@
                             </execution>
                         </executions>
                     </plugin>
+
                     <plugin>
                         <groupId>org.codehaus.cargo</groupId>
                         <artifactId>cargo-maven2-plugin</artifactId>
@@ -147,6 +158,7 @@
                             </execution>
                         </executions>
                     </plugin>
+
                     <plugin>
                         <groupId>org.codehaus.cargo</groupId>
                         <artifactId>cargo-maven2-plugin</artifactId>
@@ -160,8 +172,53 @@
                             </execution>
                         </executions>
                     </plugin>
+
                 </plugins>
             </build>
         </profile>
+
+
+        <profile>
+            <id>tomcat5x</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <!-- MDL 06-9-10
+                         Copy the config file into the directory
+                         -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.1</version>
+                        <inherited>false</inherited>
+                        <executions>
+                            <execution>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+
+                                    <tasks>
+                                         <copy overwrite="true" todir="${tomcat5x.home}/conf">
+                                            <fileset
+                                            dir="${el4j.external}/etc/tomcat"
+                                            excludes="**/.svn"/>
+                                             <!--
+                                             file="${el4j.external}/etc/tomcat/context.xml"
+                                             -->
+                                         </copy>
+                                    </tasks>
+
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>  
+        </profile>
     </profiles>
+
 </project>
