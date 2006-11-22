@@ -725,32 +725,7 @@
                     </plugins>
                 </pluginManagement>
                 <plugins>
-                    <!-- MDL 06-9-10
-                         Copy the config file into the directory
-                         -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <version>1.1</version>
-                        <executions>
-                            <execution>
-                                <phase>pre-integration-test</phase>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                                <configuration>
 
-                                    <tasks>
-                                         <copy overwrite="true"
-                                             file="${el4j.external}/etc/tomcat/context.xml" 
-                                             todir="${tomcat5x.home}/conf"
-                                            />
-                                    </tasks>
-
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
             </plugins>
 
             </build>
