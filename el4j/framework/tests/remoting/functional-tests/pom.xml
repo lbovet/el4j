@@ -100,24 +100,6 @@
                         </executions>
                     </plugin>
 
-                    <!-- MDL 2006-11-23
-                    Due to a Bug within the Cargo plugin, we need to sleep here.
-                    Note that the time is crucia: 5 seconds are not enough. -->
-					<plugin>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<executions>
-							<execution>
-								<phase>pre-integration-test</phase>
-								<configuration>
-									<tasks>
-                                        <echo message="sleeping now"></echo>
-										<sleep seconds="10"></sleep>
-                                    </tasks>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-
                     <plugin>
                         <groupId>org.codehaus.cargo</groupId>
                         <artifactId>cargo-maven2-plugin</artifactId>
@@ -128,24 +110,6 @@
                                 <goals>
                                     <goal>undeploy</goal>
                                 </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                    <!-- MDL 2006-11-23
-                    Due to a Bug within the Cargo plugin, we need to sleep here.
-                    Note that the time is crucia: 5 seconds are not enough. -->
-					<plugin>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<executions>
-							<execution>
-								<phase>pre-integration-test</phase>
-								<configuration>
-									<tasks>
-                                        <echo message="sleeping now"></echo>
-										<sleep seconds="10"></sleep>
-                                    </tasks>
-                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
