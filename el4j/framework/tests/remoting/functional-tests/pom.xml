@@ -251,9 +251,6 @@
                                             <fileset
                                             dir="../../../../etc/tomcat"
                                             excludes="**/.svn"/>
-                                             <!--
-                                             file="${el4j.external}/etc/tomcat/context.xml"
-                                             -->
                                          </copy>
                                     </tasks>
 
