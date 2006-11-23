@@ -105,20 +105,6 @@
                         <artifactId>cargo-maven2-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>undeploy-after-container-start</id>
-                                <phase>pre-integration-test</phase>
-                                <goals>
-                                    <goal>undeploy</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                    <plugin>
-                        <groupId>org.codehaus.cargo</groupId>
-                        <artifactId>cargo-maven2-plugin</artifactId>
-                        <executions>
-                            <execution>
                                 <id>deploy-after-undeploy</id>
                                 <phase>integration-test</phase>
                                 <goals>
@@ -178,51 +164,6 @@
 
                 </plugins>
             </build>
-        </profile>
-
-
-        <profile>
-            <id>tomcat5x</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <build>
-                <plugins>
-                    <!-- MDL 06-9-10
-                         Copy the config file into the directory
-                         Note: We are using '..' for the source directory path
-                         since we are having several project directories on the
-                         test server, therefore we can't use the
-                         ${el4j.external} variable
-                         -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <version>1.1</version>
-                        <inherited>false</inherited>
-                        <executions>
-                            <execution>
-                                <phase>pre-integration-test</phase>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                                <configuration>
-
-                                    <tasks>
-                                         <copy overwrite="true" todir="${tomcat5x.home}/conf">
-                                            <fileset
-                                            dir="../../../../etc/tomcat"
-                                            excludes="**/.svn"/>
-                                         </copy>
-                                    </tasks>
-
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                </plugins>
-            </build>  
         </profile>
     </profiles>
 
