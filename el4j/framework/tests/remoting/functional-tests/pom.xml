@@ -208,6 +208,10 @@
                 <plugins>
                     <!-- MDL 06-9-10
                          Copy the config file into the directory
+                         Note: We are using '..' for the source directory path
+                         since we are having several project directories on the
+                         test server, therefore we can't use the
+                         ${el4j.external} variable
                          -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -225,7 +229,7 @@
                                     <tasks>
                                          <copy overwrite="true" todir="${tomcat5x.home}/conf">
                                             <fileset
-                                            dir="${el4j.external}/etc/tomcat"
+                                            dir="../../../../etc/tomcat"
                                             excludes="**/.svn"/>
                                              <!--
                                              file="${el4j.external}/etc/tomcat/context.xml"
