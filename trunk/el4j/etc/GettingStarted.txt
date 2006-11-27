@@ -104,6 +104,19 @@
 
    * Because we have a proxy server (proxy.elca.ch) it is hardly recommended to 
      uncomment the preconfigured proxy inside the "~/.m2/settings.xml" file.
+     The settings should look as follows:
+     ----8<----
+     <proxies>
+      <proxy>
+        <id>optional</id>
+        <active>true</active>
+        <protocol>http</protocol>
+        <host>proxy.elca.ch</host>
+        <port>80</port>
+        <nonProxyHosts>*.elca.ch|leaffy|localhost</nonProxyHosts>
+      </proxy>
+    </proxies>
+     ---->8----
 
 ---+ Introduction to Maven 2
 
