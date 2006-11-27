@@ -13,7 +13,7 @@
    * The directory "plugins" contains the EL4J plugins for Maven 2. If your 
      download does not contain it, you can get it from the SourceForge Subversion server (svn co https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/plugins).
 
-   * The directory "framework" contains the EL4J framework stuff. If your 
+   * The directory "framework" contains the EL4J framework. If your 
      download does not contain it, you can get it from SourceForge Subversion
      server (svn co https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework).
 
@@ -52,14 +52,19 @@
            * Must print out the version "2.1-SNAPSHOT" or newer.
 
    * Copy the file "etc/m2/settings.xml" to directory "~/.m2".
+
        * Windows users: A directory starting with a dot can only be created by
          using the command line. Change to your home directory and execute the
-         command "mkdir .m2". Remark: under Windows, with the directory ~ we mean the home directory (i.e. something like c:/Documents and Settings/<yourLogin>/"). 
+         command "mkdir .m2". 
+         Remark: under Windows, with the directory ~ we mean the home directory
+         (i.e. something like c:/Documents and Settings/<yourLogin>/"). 
 
    * Edit the file "~/.m2/settings.xml" as follows:
+
        * By default the local repository is located at "~/.m2/repository/".
          If the path to your local repository contains a blank you have to 
          change this path.
+
            * Choose a new location for the local repository.
              Example: "D:\m2repository". 
 
@@ -71,6 +76,10 @@
          special is needed you can leave them as they are. If other containers
          are needed, configure the cargo-maven2-plugin in your pom.xml
          configuration file. For more information see http://cargo.codehaus.org/
+
+       * If you have a proxy, uncomment the <proxies> tag and adapt the settings
+         to your system-specific configuration. Make sure to enter "localhost"
+         to <nonProxyHosts>, otherwise some tests may fail!
 
    * In the zip file you can find a directory "m2repository". If you are offline
      or do not want to download all dependencies from the internet you can use
@@ -87,9 +96,12 @@
 ---+ ELCA internal settings
 
    * Here are the differences if you are connected to the ELCA network:
+
        * The EL4J team has its own server "leaffy.elca.ch". On this server, we
-         provide a Maven 2 repository with artifacts that we cannot publish publicly. Here you will not receive the unresolved dependency
-         message as described below.
+         provide a Maven 2 repository with artifacts that we cannot publish
+         publicly. Here you will not receive the unresolved dependency message
+         as described below.
+
    * Because we have a proxy server (proxy.elca.ch) it is hardly recommended to 
      uncomment the preconfigured proxy inside the "~/.m2/settings.xml" file.
 
