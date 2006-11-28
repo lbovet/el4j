@@ -265,7 +265,7 @@
                           <systemProperties>
                             <property>
                               <name>log4j.configuration</name>
-                              <value>file:///${el4j.external}/etc/log4j/log4j.xml</value>
+                              <value>file:${el4j.external}/etc/log4j/log4j.xml</value>
                             </property>
                           </systemProperties>
                         <testFailureIgnore>false</testFailureIgnore>
