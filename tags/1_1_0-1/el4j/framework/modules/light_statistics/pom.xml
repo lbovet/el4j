@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <parent>
+        <groupId>ch.elca.el4j.modules</groupId>
+        <artifactId>el4j-framework-modules</artifactId>
+        <version>1.1.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>el4j-framework-module-light_statistics</artifactId>
+    <packaging>pom</packaging>
+    <name>EL4J module light statistics</name>
+    <description>
+        Module light statistics of the EL4J framework.
+    </description>
+    <modules>
+        <module>common</module>
+        <module>jmx</module>
+        <module>web</module>
+    </modules>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-light_statistics-common</artifactId>
+                <version>${version.module-light_statistics}</version>
+                <type>jar</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

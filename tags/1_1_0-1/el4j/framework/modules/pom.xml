@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <parent>
+        <groupId>ch.elca.el4j</groupId>
+        <artifactId>el4j-framework</artifactId>
+        <version>1.1.1-SNAPSHOT</version>
+    </parent>
+
+    <groupId>ch.elca.el4j.modules</groupId>
+    <artifactId>el4j-framework-modules</artifactId>
+    <packaging>pom</packaging>
+    <name>EL4J framework modules</name>
+    <description>
+        Modules of the EL4J framework.
+    </description>
+    <modules>
+        <module>core</module>
+        <module>database</module>
+        <module>env</module>
+        <module>exception_handling</module>
+        <module>hibernate</module>
+        <module>ibatis</module>
+        <module>jmx</module>
+        <module>light_statistics</module>
+        <module>remoting_core</module>
+        <module>remoting_caucho</module>
+        <module>remoting_xfire</module>
+        <module>remoting_soap</module>
+        <!--module>remoting_ejb</module-->
+        <module>security</module>
+        <module>spring_rcp</module>
+        <module>tcp_forwarder</module>
+        <module>web</module>
+        <module>webtest</module>
+        <module>xml_merge</module>
+    </modules>
+</project>

@@ -1,0 +1,32 @@
+<component>
+    <fileSets>
+        <fileSet>
+            <directory>${el4j.external}</directory>
+            <outputDirectory></outputDirectory>
+            <includes>
+                <include>framework/**</include>
+                <include>helloworld/**</include>
+                <include>helpers/**</include>
+                <include>plugins/**</include>
+                <include>site/**</include>
+                <include>skin/**</include>
+                <include>src/**</include>
+                <include>workspace/**</include>
+            </includes>
+            <excludes>
+                <!-- Generated stuff -->
+                <exclude>**/target/**</exclude>
+                <!-- Eclipse workspace -->
+                <exclude>**/workspace/.metadata/**</exclude>
+                <!-- Eclipse files and folders -->
+                <exclude>**/.*/**</exclude>
+                <!-- Already known libraries -->
+                <exclude>helpers/upload/**/libraries/**</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>${el4j.external}/site/target/site</directory>
+            <outputDirectory>docs</outputDirectory>
+        </fileSet>
+    </fileSets>
+</component>

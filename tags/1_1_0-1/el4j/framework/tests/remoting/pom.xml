@@ -1,0 +1,48 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <parent>
+        <groupId>ch.elca.el4j.tests</groupId>
+        <artifactId>el4j-framework-tests</artifactId>
+        <version>1.1.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>el4j-framework-tests-remoting</artifactId>
+    <packaging>pom</packaging>
+    <name>EL4J test remoting</name>
+    <description>
+        Test module for remoting modules of the EL4J framework.
+    </description>
+    <modules>
+        <module>web</module>
+        <module>functional-tests</module>
+        <module>apps</module>
+    </modules>
+    <dependencyManagement>
+        <dependencies>
+            <!-- module-remoting-tests-web -->
+            <dependency>
+                <groupId>ch.elca.el4j.tests</groupId>
+                <artifactId>module-remoting-tests-web-jar</artifactId>
+                <version>${version.module-remoting-tests}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.tests</groupId>
+                <artifactId>module-remoting-tests-web-war</artifactId>
+                <version>${version.module-remoting-tests}</version>
+                <type>war</type>
+                <scope>provided</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

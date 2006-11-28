@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <parent>
+        <groupId>ch.elca.el4j.modules</groupId>
+        <artifactId>el4j-framework-modules</artifactId>
+        <version>1.1.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>module-security</artifactId>
+    <version>${version.module-security}</version>
+    <packaging>jar</packaging>
+    <name>EL4J module security</name>
+    <description>
+        Module security of the EL4J framework.
+    </description>
+    <build>
+        <!-- Support for Commons Attributes -->
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>commons-attributes-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <!-- EL4J framework modules -->
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-remoting_core</artifactId>
+            <scope>test</scope>
+        </dependency>
+            
+        <!-- Third party tools -->
+        <dependency>
+            <groupId>org.acegisecurity</groupId>
+            <artifactId>acegi-security</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.acegisecurity</groupId>
+            <artifactId>acegi-security-tiger</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>jsr250-api</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-codec</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.oro</groupId>
+            <artifactId>jakarta-oro</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+        </dependency>
+    </dependencies>
+</project>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+    Spring bean configuration file to access httpInvoker service.
+-->
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+    
+    <import resource="classpath:scenarios/remoting/common/*.xml"/>
+    
+    <bean id="abstractHttpInvokerProxyFactoryBean" abstract="true">
+    	<property name="remoteProtocol">
+            <ref bean="httpInvokerProtocol" />
+        </property>
+    </bean>
+    
+    <bean id="referenceService" parent="abstractHttpInvokerProxyFactoryBean"
+    	class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
+        <property name="serviceInterface">
+            <value>ch.elca.el4j.apps.refdb.service.ReferenceService</value>
+        </property>
+    </bean>
+    
+    <bean id="keywordDao" parent="abstractHttpInvokerProxyFactoryBean"
+    	 class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
+        <property name="serviceInterface">
+            <value>ch.elca.el4j.apps.keyword.dao.KeywordDao</value>
+        </property>
+    </bean>
+    
+    <bean id="linkDao" parent="abstractHttpInvokerProxyFactoryBean"
+    	class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
+        <property name="serviceInterface">
+            <value>ch.elca.el4j.apps.refdb.dao.LinkDao</value>
+        </property>
+    </bean>
+    
+    <bean id="formalPublicationDao" parent="abstractHttpInvokerProxyFactoryBean"
+    	class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
+        <property name="serviceInterface">
+            <value>ch.elca.el4j.apps.refdb.dao.FormalPublicationDao</value>
+        </property>
+    </bean>
+    
+    <bean id="bookDao" parent="abstractHttpInvokerProxyFactoryBean"
+    	class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
+        <property name="serviceInterface">
+            <value>ch.elca.el4j.apps.refdb.dao.BookDao</value>
+        </property>
+    </bean>
+    
+    <bean id="annotationDao" parent="abstractHttpInvokerProxyFactoryBean"
+    	class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
+        <property name="serviceInterface">
+            <value>ch.elca.el4j.apps.refdb.dao.AnnotationDao</value>
+        </property>
+    </bean>
+    
+    <bean id="fileDao" parent="abstractHttpInvokerProxyFactoryBean"
+    	class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
+        <property name="serviceInterface">
+            <value>ch.elca.el4j.apps.refdb.dao.FileDao</value>
+        </property>
+    </bean>
+    
+    <bean id="fileDescriptorViewDao" parent="abstractHttpInvokerProxyFactoryBean"
+    	class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
+        <property name="serviceInterface">
+            <value>ch.elca.el4j.apps.refdb.dao.FileDescriptorViewDao</value>
+        </property>
+    </bean>
+    
+</beans>
