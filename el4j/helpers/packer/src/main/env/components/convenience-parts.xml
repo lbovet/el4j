@@ -12,6 +12,7 @@
                 <include>skin/**</include>
                 <include>src/**</include>
                 <include>workspace/**</include>
+                <include>pom.xml</include>
             </includes>
             <excludes>
                 <!-- Generated stuff -->
