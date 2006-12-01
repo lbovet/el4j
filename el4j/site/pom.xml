@@ -12,7 +12,7 @@
     <parent>
         <groupId>ch.elca.el4j</groupId>
         <artifactId>el4j</artifactId>
-        <version>1.1.1-SNAPSHOT</version>
+        <version>1.1.0-1</version>
     </parent>
 
     <groupId>ch.elca.el4j.sites</groupId>
@@ -25,12 +25,12 @@
 
     <build>
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
                 <executions>
                     <execution>
-                        <!-- Clean target dir of site artifact. -->
                         <id>clean-site-target</id>
                         <phase>pre-site</phase>
                         <goals>
@@ -39,10 +39,10 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <!-- Sticks on version 1.0.1 due to problems with the newest version. -->
                 <version>1.0.1</version>
                 <configuration>
                     <executable>mvn</executable>
@@ -50,7 +50,6 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <!-- Install EL4J's root pom. -->
                         <id>install.root-pom</id>
                         <phase>pre-site</phase>
                         <goals>
@@ -66,7 +65,6 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <!-- Clean target dir of framework artifact. -->
                         <id>clean.generated.doc</id>
                         <phase>pre-site</phase>
                         <goals>
@@ -80,7 +78,6 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <!-- Generate doc for set framework-modules. -->
                         <id>generate.doc.set.framework-modules</id>
                         <phase>pre-site</phase>
                         <goals>
@@ -96,7 +93,6 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <!-- Generate doc for set framework-applications. -->
                         <id>generate.doc.set.framework-applications</id>
                         <phase>pre-site</phase>
                         <goals>
@@ -112,7 +108,6 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <!-- Generate doc for set framework-tests. -->
                         <id>generate.doc.set.framework-tests</id>
                         <phase>pre-site</phase>
                         <goals>
@@ -128,7 +123,6 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <!-- Generate doc for set framework-demos. -->
                         <id>generate.doc.set.framework-demos</id>
                         <phase>pre-site</phase>
                         <goals>
@@ -144,7 +138,6 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <!-- Generate doc for set framework-demos. -->
                         <id>generate.plugin.sites</id>
                         <phase>pre-site</phase>
                         <goals>
@@ -161,12 +154,12 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>ch.elca.el4j.plugins</groupId>
                 <artifactId>maven-file-collector-plugin</artifactId>
                 <executions>
                     <execution>
-                        <!-- Collect generated doc from target dir of framework artifact. -->
                         <id>collect-set-docs</id>
                         <phase>pre-site</phase>
                         <goals>
@@ -180,7 +173,6 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <!-- Collect site of maven-checkclipse-helper-plugin. -->
                         <id>collect.site.maven-checkclipse-helper-plugin</id>
                         <phase>pre-site</phase>
                         <goals>
@@ -195,7 +187,6 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <!-- Collect site of maven-env-support-plugin. -->
                         <id>collect.site.maven-env-support-plugin</id>
                         <phase>pre-site</phase>
                         <goals>
@@ -210,7 +201,6 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <!-- Collect site of maven-file-collector-plugin. -->
                         <id>collect.site.maven-file-collector-plugin</id>
                         <phase>pre-site</phase>
                         <goals>
@@ -225,7 +215,6 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <!-- Collect site of maven-manifest-decorator-plugin. -->
                         <id>collect.site.maven-manifest-decorator-plugin</id>
                         <phase>pre-site</phase>
                         <goals>
@@ -240,7 +229,6 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <!-- Collect site of maven-repohelper-plugin. -->
                         <id>collect.site.maven-repohelper-plugin</id>
                         <phase>pre-site</phase>
                         <goals>
@@ -256,8 +244,10 @@
                     </execution>
                 </executions>
             </plugin>
+            
         </plugins>
     </build>
+
     <reporting>
         <plugins>
             <plugin>
@@ -277,10 +267,13 @@
             </plugin>
         </plugins>
     </reporting>
+
     <profiles>
+
         <profile>
             <id>no-surefire-reports</id>
         </profile>
+
         <profile>
             <id>surefire-report.tomcat5-derby10</id>
             <activation>
@@ -293,7 +286,6 @@
                         <artifactId>exec-maven-plugin</artifactId>
                         <executions>
                             <execution>
-                                <!-- Execute tests with Tomcat and Derby. -->
                                 <id>execute.tests.tomcat5-derby10</id>
                                 <phase>pre-site</phase>
                                 <goals>
@@ -338,6 +330,7 @@
                 </plugins>
             </reporting>
         </profile>
+
         <profile>
             <id>surefire-report.weblogic9-oracle9</id>
             <activation>
@@ -350,7 +343,6 @@
                         <artifactId>exec-maven-plugin</artifactId>
                         <executions>
                             <execution>
-                                <!-- Execute tests with Weblogic and Oracle. -->
                                 <id>execute.tests.weblogic9-oracle9</id>
                                 <phase>pre-site</phase>
                                 <goals>
@@ -395,6 +387,7 @@
                 </plugins>
             </reporting>
         </profile>
+
         <profile>
             <id>release.site</id>
             <distributionManagement>
@@ -405,7 +398,9 @@
                 </site>
             </distributionManagement>
         </profile>
+
     </profiles>
+
     <distributionManagement>
         <site>
             <id>${distmgt.snapshot-site.id.external}</id>
@@ -413,6 +408,7 @@
             <url>${distmgt.snapshot-site.url.external}</url>
         </site>
     </distributionManagement>
+
     <properties>
         <set.framework-tests.xref.location>target/site/framework-tests/xref</set.framework-tests.xref.location>
     
@@ -424,4 +420,5 @@
         <surefire-report.title.weblogic9-oracle9>Surefire Test Report - Weblogic 9 and Oracle 9</surefire-report.title.weblogic9-oracle9>
         <surefire-report.description.weblogic9-oracle9>The following document contains the summarized test results of test profile with Weblogic 9 as webserver and Oracle 9 as database.</surefire-report.description.weblogic9-oracle9>
     </properties>
+
 </project>

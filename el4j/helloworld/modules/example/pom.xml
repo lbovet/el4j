@@ -12,8 +12,8 @@
     
     <parent>
         <groupId>ch.elca.helloworld.modules</groupId>
-    	<artifactId>helloworld-modules</artifactId>
-        <version>1.1.1-SNAPSHOT</version>
+     	<artifactId>helloworld-modules</artifactId>
+        <version>1.1.0-1</version>
     </parent>
     
     <artifactId>module-example</artifactId>

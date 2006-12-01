@@ -12,12 +12,12 @@
     <parent>
         <groupId>ch.elca.el4j</groupId>
         <artifactId>el4j</artifactId>
-        <version>1.1.1-SNAPSHOT</version>
+        <version>1.1.0-1</version>
     </parent>
     
     <groupId>ch.elca.helloworld</groupId>
     <artifactId>helloworld</artifactId>
-    <version>1.1.1-SNAPSHOT</version>
+    <version>1.1.0-1</version>
     <packaging>pom</packaging>
     <name>Hello World</name>
     <description>Hello World is an example project.</description>
