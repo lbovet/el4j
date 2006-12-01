@@ -426,8 +426,6 @@ public class AggregateFilesMojo extends AbstractMojo {
      */
     protected void initPaths() throws MojoExecutionException {
         // rootSourceDirectory checks
-    	System.out.println("=============================>" + rootSourceDirectory.getAbsolutePath());
-    	
         Assert.isTrue(rootSourceDirectory != null 
             && rootSourceDirectory.isDirectory() 
             && rootSourceDirectory.canRead(), 
