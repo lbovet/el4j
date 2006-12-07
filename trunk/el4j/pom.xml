@@ -1067,8 +1067,21 @@
                 <type>war</type>
                 <scope>runtime</scope>
             </dependency>
-
-
+			
+			  <!-- module-detailed_statistics -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-detailed_statistics-jmx</artifactId>
+                <version>${version.module-detailed_statistics}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-detailed_statistics-jmx</artifactId>
+                <version>${version.module-detailed_statistics}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
 
             <!-- module-remoting_core -->
             <dependency>
@@ -1607,6 +1620,9 @@
         <version.module-light_statistics>
             1.2-SNAPSHOT
         </version.module-light_statistics>
+        <version.module-detailed_statistics>
+            1.2-SNAPSHOT
+        </version.module-detailed_statistics>
         <version.module-remoting_core>
             2.2-SNAPSHOT
         </version.module-remoting_core>
