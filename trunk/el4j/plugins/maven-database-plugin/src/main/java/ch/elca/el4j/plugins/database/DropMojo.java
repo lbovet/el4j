@@ -47,7 +47,9 @@ public class DropMojo extends AbstractDBMojo {
         try {
             executeAction(ACTION);
         } catch (Exception e) {
-            throw new MojoFailureException(e.getMessage());
+            // These exceptions are not thrown in order to ensure
+            // that drop goal always succeeds.
+            getLog().error("Encountered error during drop", e);
         }
     }
 }
