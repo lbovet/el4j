@@ -36,5 +36,6 @@
     <modules>
         <module>remoting</module>
         <module>light_statistics</module>
+        <module>detailed_statistics</module>
     </modules>
 </project>
