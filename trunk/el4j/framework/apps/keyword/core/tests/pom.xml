@@ -1,41 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <!-- Version: $Revision$ -->
-    <!-- URL: $URL$ -->
-    <!-- Date: $Date$ -->
-    <!-- Author: $Author$ -->
+	<!-- Version: $Revision$ -->
+	<!-- URL: $URL$ -->
+	<!-- Date: $Date$ -->
+	<!-- Author: $Author$ -->
 
-    <parent>
-        <groupId>ch.elca.el4j.apps</groupId>
-        <artifactId>el4j-framework-apps-keyword-core</artifactId>
-        <version>1.1.1-SNAPSHOT</version>
-    </parent>
+	<parent>
+		<groupId>ch.elca.el4j.apps</groupId>
+		<artifactId>el4j-framework-apps-keyword-core</artifactId>
+		<version>1.1.1-SNAPSHOT</version>
+	</parent>
 
-    <artifactId>keyword-core-tests</artifactId>
-    <version>${version.application-keyword}</version>
-    <packaging>jar</packaging>
-    <name>EL4J application keyword core tests</name>
-    <description>Keyword core test module of the EL4J framework.</description>
-    <dependencies>
-        <dependency>
-            <groupId>ch.elca.el4j.apps</groupId>
-            <artifactId>keyword-core-impl</artifactId>
-            <type>jar</type>
-        </dependency>
-        
-        <dependency>
-            <groupId>ch.elca.el4j.modules</groupId>
-            <artifactId>module-database</artifactId>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>ch.elca.el4j.modules</groupId>
-            <artifactId>module-env</artifactId>
-            <type>jar</type>
-        </dependency>
-    </dependencies>
+	<artifactId>keyword-core-tests</artifactId>
+	<version>${version.application-keyword}</version>
+	<packaging>jar</packaging>
+	<name>EL4J application keyword core tests</name>
+	<description>
+		Keyword core test module of the EL4J framework.
+	</description>
+	<build>
+		<plugins>
+			<!-- EL4J Database plugin to start and fill DB automatically -->
+			<plugin>
+				<groupId>ch.elca.el4j.plugins</groupId>
+				<artifactId>maven-database-plugin</artifactId>
+				<version>1.1-SNAPSHOT</version>
+				<executions>
+					<execution>
+						<configuration>
+							<connectionPropertiesSource>
+								scenarios/db/raw/keyword-core-tests-override-{db.name}.properties
+							</connectionPropertiesSource>
+							<sqlSourceDir>
+								/etc/*/general/, /etc/*/db2/
+							</sqlSourceDir>
+						</configuration>
+						<goals>
+							<goal>start</goal>
+							<goal>drop</goal>
+							<goal>create</goal>
+						</goals>
+						<phase>pre-integration-test</phase>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- skip unit test run, tests to be executed during integration-test -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+				<executions>
+					<execution>
+						<id>surefire-it</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<skip>false</skip>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<!-- Delete tables and stop Network Server -->
+			<plugin>
+				<groupId>ch.elca.el4j.plugins</groupId>
+				<artifactId>maven-database-plugin</artifactId>
+				<version>1.1-SNAPSHOT</version>
+				<executions>
+					<execution>
+						<configuration>
+							<db.connectionProperties>
+								scenarios/db/raw/keyword-core-tests-override-{db.name}.properties
+							</db.connectionProperties>
+							<db.sqlSourceDir>
+								/etc/*/general/, /etc/*/db2/
+							</db.sqlSourceDir>
+						</configuration>
+						<goals>
+							<goal>drop</goal>
+							<goal>stop</goal>
+						</goals>
+						<phase>post-integration-test</phase>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>ch.elca.el4j.apps</groupId>
+			<artifactId>keyword-core-impl</artifactId>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-database</artifactId>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-env</artifactId>
+			<type>jar</type>
+		</dependency>
+	</dependencies>
 </project>
