@@ -1578,6 +1578,9 @@
         <version.maven-file-collector-plugin>
             1.1-SNAPSHOT
         </version.maven-file-collector-plugin>
+         <version.maven-database-plugin>
+            1.1-SNAPSHOT
+        </version.maven-database-plugin>
 
         <!-- EL4J framework module version numbers -->
         <version.module-core>
