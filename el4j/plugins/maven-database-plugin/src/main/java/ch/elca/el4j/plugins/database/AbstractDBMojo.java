@@ -22,6 +22,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.Driver;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,7 +67,7 @@ public abstract class AbstractDBMojo extends AbstractMojo {
      * Moreover it can include a generic <code>{db.name}</code> if a
      * <code>env.properties</code> file is provided (in the project dir).
      * 
-     * @parameter expression="${db.connectionProperties}"
+     * @parameter expression="${db.connectionPropertiesSource}"
      * @required
      */
     private String connectionPropertiesSource;
@@ -78,7 +79,7 @@ public abstract class AbstractDBMojo extends AbstractMojo {
      * Moreover it can include a generic <code>{db.name}</code> if a
      * <code>env.properties</code> file is provided (in the project dir).
      * 
-     * @parameter expression="${db.driverProperties}" default-value=
+     * @parameter expression="${db.driverPropertiesSource}" default-value=
      *  "scenarios/db/raw/common-database-override-{db.name}.properties"
      */
     private String driverPropertiesSource;
@@ -273,23 +274,38 @@ public abstract class AbstractDBMojo extends AbstractMojo {
      * 
      * @param resources
      *            Array of resources
+     * @throws Exception 
      * @throws Exception
      */
     private void processResources(List<Resource> resources) throws Exception {
+        List<SQLException> sqlExceptions = new ArrayList<SQLException>();
         Connection connection = getConnection();
         Statement stmt;
         // Process resources from back to beginning to beginn with 
-        // resources of uppermost dependency first
+        // Resources of uppermost dependency first
         for (int i = (resources.size() - 1); i >= 0; i--) {
             getLog().info("Processing resource: " + resources.get(i)
                 .getFilename());
             List<String> sqlStmts = extractStmtsFromFile(resources.get(i)
                 .getURL());
-            // execute statements extracted from file
+            // Execute statements extracted from file.
+            // Collect exception and throw them afterwards to ensure that
+            // all SQL Statements are processed.
             for (String sqlString : sqlStmts) {
-                stmt = connection.createStatement();
-                stmt.execute(sqlString);
+                try {
+                    stmt = connection.createStatement();
+                    stmt.execute(sqlString);
+                } catch (SQLException e) {
+                    sqlExceptions.add(e);
+                }
+            } 
+        }
+        if (!sqlExceptions.isEmpty()) {
+            for (SQLException e : sqlExceptions) {
+                getLog().error("Encountered error during " 
+                       + "execution of sql statements", e); 
             }
+            throw new Exception("Error during sql statement execution");
         }
     }
     
