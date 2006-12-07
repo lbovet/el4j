@@ -33,6 +33,7 @@
     </build>
     <modules>
         <module>maven-checkclipse-helper-plugin</module>
+		<module>maven-database-plugin</module>
         <module>maven-env-support-plugin</module>
         <module>maven-repohelper-plugin</module>
         <module>maven-manifest-decorator-plugin</module>
