@@ -14,18 +14,15 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.plugins.database;
-
-import java.lang.reflect.Method;
+package ch.elca.el4j.plugins.database.mojo;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
+import ch.elca.el4j.plugins.database.AbstractDBMojo;
+
 /**
- * This class is a database mojo for the 'start' statement.
- * In case of using derby it starts the DerbyNetworkServer. 
- * In case of using oracle, is doesn nothing (as we require 
- * the oracle database to run when using this plugin).
+ * This class is a database mojo for the 'update' statement.
  * 
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -34,26 +31,26 @@ import org.apache.maven.plugin.MojoFailureException;
  *    "$Author$"
  * );</script>
  * 
- * @goal start
+ * @goal update
  * @author David Stefan (DST)
  */
-public class StartMojo extends AbstractDBMojo {
+public class UpdateMojo extends AbstractDBMojo {
+
+    /**
+     * Action this mojo is implementing and identifier sql files have to start
+     * with.
+     */
+    private static final String ACTION = "update";
 
     /**
      * {@inheritDoc}
      */
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
-            getLog().info("STARTING DATABASE... ");
-            if (needStartup()) {
-                Class starter = getDerbyNetworkServerStarter();
-                Method start = starter.getMethod("startNetworkServer",
-                    new Class[0]);
-                start.invoke(null, (Object[]) null);
-            }
+            executeAction(ACTION);
         } catch (Exception e) {
-            e.printStackTrace(System.out);
             throw new MojoFailureException(e.getMessage());
         }
     }
+
 }
