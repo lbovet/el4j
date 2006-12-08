@@ -4,6 +4,7 @@
             <directory>${el4j.external}</directory>
             <outputDirectory></outputDirectory>
             <includes>
+                <include>etc/**</include>
                 <include>framework/**</include>
                 <include>helloworld/**</include>
                 <include>helpers/**</include>
