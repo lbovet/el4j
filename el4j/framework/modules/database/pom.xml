@@ -52,21 +52,5 @@
             <version>10.2.0.1.0</version>
             <scope>runtime</scope>
         </dependency>
-        <!-- Derby Network Server Dependencies -->
-		<dependency>
-			<groupId>org.apache.derby</groupId>
-			<artifactId>derby</artifactId>
-			<version>10.2.1.6</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.derby</groupId>
-			<artifactId>derbytools</artifactId>
-			<version>10.2.1.6</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.derby</groupId>
-			<artifactId>derbynet</artifactId>
-			<version>10.2.1.6</version>
-		</dependency>
     </dependencies>
 </project>
