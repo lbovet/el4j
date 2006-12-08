@@ -159,7 +159,7 @@ public abstract class AbstractDBMojo extends AbstractMojo {
     protected void executeAction(String goal) throws Exception {
         // If no SQL Directories or properties given, skip goal
         if (sqlSourceDir != null && connectionPropertiesSource != null) {
-            processResources(getResources(getSqlSourcesPath(goal)));
+            processResources(getResources(getSqlSourcesPath(goal)), goal);
         }
     }
 
@@ -291,39 +291,68 @@ public abstract class AbstractDBMojo extends AbstractMojo {
     
     /**
      * Iterates through array and executes sql statements of resources.
+     * If goal is create or update, resources are processed in reversed order.
+     * If goal is delete or drop, resources are processed sequentially. This
+     * ensures that dependency files are processed in the right order.
      * 
      * @param resources
      *            Array of resources
+     * @param goal The goal to execute.
      * @throws Exception 
      * @throws Exception
      */
-    private void processResources(List<Resource> resources) throws Exception {
+    private void processResources(List<Resource> resources, String goal) 
+        throws Exception {
         List<SQLException> sqlExceptions = new ArrayList<SQLException>();
         Connection connection = getConnection();
         Statement stmt;
-        // Process resources from back to beginning to beginn with 
-        // Resources of uppermost dependency first
-        for (int i = (resources.size() - 1); i >= 0; i--) {
-            getLog().info("Processing resource: " + resources.get(i)
-                .getFilename());
-            List<String> sqlStmts = extractStmtsFromFile(resources.get(i)
-                .getURL());
-            // Execute statements extracted from file.
-            // Collect exception and throw them afterwards to ensure that
-            // all SQL Statements are processed.
-            for (String sqlString : sqlStmts) {
-                try {
-                    stmt = connection.createStatement();
-                    stmt.execute(sqlString);
-                } catch (SQLException e) {
-                    sqlExceptions.add(e);
+        if (goal.equalsIgnoreCase("create") 
+            || goal.equalsIgnoreCase("update")) {
+            // Process resources from back to beginning to beginn with
+            // Resources of uppermost dependency first
+            for (int i = (resources.size() - 1); i >= 0; i--) {
+                getLog().info(
+                    "Processing resource: " + resources.get(i).getFilename());
+                List<String> sqlStmts = extractStmtsFromFile(resources.get(i)
+                    .getURL());
+                // Execute statements extracted from file.
+                // Collect exception and throw them afterwards to ensure that
+                // all SQL Statements are processed.
+                for (String sqlString : sqlStmts) {
+                    try {
+                        stmt = connection.createStatement();
+                        stmt.execute(sqlString);
+                    } catch (SQLException e) {
+                        sqlExceptions.add(e);
+                    }
                 }
-            } 
+            }
+        } else {
+            for (int i = 0; i < resources.size(); i++) {
+                getLog().info(
+                    "Processing resource: " + resources.get(i).getFilename());
+                List<String> sqlStmts = extractStmtsFromFile(resources.get(i)
+                    .getURL());
+                // Execute statements extracted from file.
+                // Collect exception and throw them afterwards to ensure that
+                // all SQL Statements are processed.
+                for (String sqlString : sqlStmts) {
+                    try {
+                        stmt = connection.createStatement();
+                        stmt.execute(sqlString);
+                    } catch (SQLException e) {
+                        sqlExceptions.add(e);
+                    }
+                }
+            }
         }
+
         if (!sqlExceptions.isEmpty()) {
             for (SQLException e : sqlExceptions) {
-                getLog().error("Encountered error during " 
-                       + "execution of sql statements", e); 
+                getLog()
+                    .error(
+                        "Encountered error during "
+                            + "execution of sql statements", e);
             }
             throw new Exception("Error during sql statement execution");
         }
