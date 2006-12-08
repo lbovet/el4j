@@ -38,6 +38,7 @@
 							<sqlSourceDir>
 								/etc/*/general/, /etc/*/db2/
 							</sqlSourceDir>
+							<wait>false</wait>
 						</configuration>
 						<goals>
 							<goal>start</goal>
@@ -84,6 +85,7 @@
 							<db.sqlSourceDir>
 								/etc/*/general/, /etc/*/db2/
 							</db.sqlSourceDir>
+							<wait>false</wait>
 						</configuration>
 						<goals>
 							<goal>drop</goal>

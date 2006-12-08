@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <!-- Version: $Revision$ -->
-    <!-- URL: $URL$ -->
-    <!-- Date: $Date$ -->
-    <!-- Author: $Author$ -->
+	<!-- Version: $Revision$ -->
+	<!-- URL: $URL$ -->
+	<!-- Date: $Date$ -->
+	<!-- Author: $Author$ -->
 
-    <parent>
-        <groupId>ch.elca.el4j.apps</groupId>
-        <artifactId>el4j-framework-apps-refdb-core</artifactId>
-        <version>1.1.1-SNAPSHOT</version>
-    </parent>
+	<parent>
+		<groupId>ch.elca.el4j.apps</groupId>
+		<artifactId>el4j-framework-apps-refdb-core</artifactId>
+		<version>1.1.1-SNAPSHOT</version>
+	</parent>
 
-    <artifactId>refdb-core-tests</artifactId>
-    <version>${version.application-refdb}</version>
-    <packaging>jar</packaging>
-    <name>EL4J application refdb core tests</name>
-    <description>RefDb core test module of the EL4J framework.</description>
-    <build>
+	<artifactId>refdb-core-tests</artifactId>
+	<version>${version.application-refdb}</version>
+	<packaging>jar</packaging>
+	<name>EL4J application refdb core tests</name>
+	<description>
+		RefDb core test module of the EL4J framework.
+	</description>
+	<build>
 		<plugins>
 			<!-- EL4J Database plugin to start and fill DB automatically -->
 			<plugin>
@@ -36,6 +38,7 @@
 							<sqlSourceDir>
 								/etc/*/general/, /etc/*/db2/
 							</sqlSourceDir>
+							<wait>false</wait>
 						</configuration>
 						<goals>
 							<goal>start</goal>
@@ -67,7 +70,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<!-- Delete tables and stop Network Server -->
 			<plugin>
 				<groupId>ch.elca.el4j.plugins</groupId>
@@ -82,6 +85,7 @@
 							<sqlSourceDir>
 								/etc/*/general/, /etc/*/db2/
 							</sqlSourceDir>
+							<wait>false</wait>
 						</configuration>
 						<goals>
 							<goal>drop</goal>
@@ -93,21 +97,21 @@
 			</plugin>
 		</plugins>
 	</build>
-    <dependencies>
-        <dependency>
-            <groupId>ch.elca.el4j.apps</groupId>
-            <artifactId>refdb-core-impl</artifactId>
-            <type>jar</type>
-        </dependency>     
-        <dependency>
-            <groupId>ch.elca.el4j.modules</groupId>
-            <artifactId>module-database</artifactId>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>ch.elca.el4j.modules</groupId>
-            <artifactId>module-env</artifactId>
-            <type>jar</type>
-        </dependency>
-    </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>ch.elca.el4j.apps</groupId>
+			<artifactId>refdb-core-impl</artifactId>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-database</artifactId>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-env</artifactId>
+			<type>jar</type>
+		</dependency>
+	</dependencies>
 </project>
