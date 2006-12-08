@@ -14,14 +14,15 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.plugins.database;
+package ch.elca.el4j.plugins.database.mojo;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
+import ch.elca.el4j.plugins.database.AbstractDBMojo;
+
 /**
- * This class is a database mojo for the 'create' statement.
- * It creates the table(s) in the database.
+ * This class is a database mojo for the 'drop' statement. 
  * 
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -30,17 +31,17 @@ import org.apache.maven.plugin.MojoFailureException;
  *    "$Author$"
  * );</script>
  * 
- * @goal create
+ * @goal drop
  * @author David Stefan (DST)
  */
-public class CreateMojo extends AbstractDBMojo {
+public class DropMojo extends AbstractDBMojo {
 
     /**
      * Action this mojo is implementing and identifier sql files have to start
      * with.
      */
-    private static final String ACTION = "create";
-
+    private static final String ACTION = "drop";
+    
     /**
      * {@inheritDoc}
      */
@@ -48,7 +49,9 @@ public class CreateMojo extends AbstractDBMojo {
         try {
             executeAction(ACTION);
         } catch (Exception e) {
-            throw new MojoFailureException(e.getMessage());
+            // These exceptions are not thrown in order to ensure
+            // that drop goal always succeeds.
+            getLog().error("Encountered error during drop", e);
         }
     }
 }

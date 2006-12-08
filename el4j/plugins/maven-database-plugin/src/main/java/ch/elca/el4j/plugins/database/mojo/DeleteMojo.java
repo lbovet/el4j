@@ -14,10 +14,12 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.plugins.database;
+package ch.elca.el4j.plugins.database.mojo;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+
+import ch.elca.el4j.plugins.database.AbstractDBMojo;
 
 /**
  * This class is a database mojo for the 'delete' statement. 

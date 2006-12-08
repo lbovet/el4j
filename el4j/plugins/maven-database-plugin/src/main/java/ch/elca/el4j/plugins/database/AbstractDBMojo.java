@@ -61,6 +61,15 @@ public abstract class AbstractDBMojo extends AbstractMojo {
     // Checkstyle: MemberName off
     
     /**
+     * Decides whether to wait after the container is started or to return 
+     * the execution flow to the user.
+     * 
+     * @parameter default-value = "true"
+     * @required
+     */
+    protected boolean wait;
+    
+    /**
      * Path to properties file where connection properties can be found.
      * 
      * For this property, no prefix <code>classpath:*</code> is needed. 
@@ -68,7 +77,6 @@ public abstract class AbstractDBMojo extends AbstractMojo {
      * <code>env.properties</code> file is provided (in the project dir).
      * 
      * @parameter expression="${db.connectionPropertiesSource}"
-     * @required
      */
     private String connectionPropertiesSource;
     
@@ -83,6 +91,14 @@ public abstract class AbstractDBMojo extends AbstractMojo {
      *  "scenarios/db/raw/common-database-override-{db.name}.properties"
      */
     private String driverPropertiesSource;
+    
+    /**
+     * Name of database to use (either db2 or oracle).
+     * 
+     * @parameter expression="${db.dbName}"
+     * 
+     */
+    private String dbName;
     
     /**
      * Separator for string lists.
@@ -112,11 +128,8 @@ public abstract class AbstractDBMojo extends AbstractMojo {
      * SQL Source Directories, i.e. directories where to find the .sql files.
      * 
      * @parameter expression="${db.sqlSourceDir}"
-     * @required
      */
     private String sqlSourceDir;
-
-    
    
     /**
      * Local maven repository.
@@ -144,7 +157,10 @@ public abstract class AbstractDBMojo extends AbstractMojo {
      * @throws Exception
      */
     protected void executeAction(String goal) throws Exception {
-        processResources(getResources(getSqlSourcesPath(goal)));
+        // If no SQL Directories or properties given, skip goal
+        if (sqlSourceDir != null && connectionPropertiesSource != null) {
+            processResources(getResources(getSqlSourcesPath(goal)));
+        }
     }
 
     /**
@@ -152,39 +168,43 @@ public abstract class AbstractDBMojo extends AbstractMojo {
      * 
      * @return Return whether database need to be started.
      */
-    protected boolean needStartup() {
-        /* HACK: 
-         * Because we only support derby and oracle, we can find out 
-         * if we have to start database by checking the head of the URL.
+    protected boolean needStartup() throws Exception {
+        /*
+         * HACK: Because we only support derby and oracle, we can find out if we
+         * have to start database by checking the head of the URL.
+         * 
+         * In case of an exception, start NetworkServer just to be on the
+         * safe side.
          */
-        return getDataHolder().getUrl().toLowerCase().startsWith("jdbc:derby");
-
+        try {
+            String db = getDataHolder().getDbName();
+            return (db == null || db.equalsIgnoreCase("db2"));
+        } catch (Exception e) {
+            return true;
+        }
     }
     
     /**
-     * Returns Class of DerbyNetworkServerStarter. 
-     * This way, we can call the NetwerkServerStarter without including any 
-     * Derby specific libraries in the plugin.
+     * Returns directory, where NetworkServer should be started. 
+     * This will be the location, where the NetworkServer looks for databases.
      * 
-     * @return The class of DerbyNetworkServerStarter from classloader.
-     * @throws Exception
+     * @return Home Directory of NetworkServer
      */
-    protected Class getDerbyNetworkServerStarter() throws Exception {
-        return getDataHolder().getDerbyNetworkServerStarter(externalToolsPath);
+    protected String getDerbyLocation() {
+        return externalToolsPath + "/derby/derby-databases";
     }
     
     /**
      * @return The instance of the DatabaseDataHolder.
+     * @throws IllegalPropertyException 
      */
-    private DatabaseDataHolder getDataHolder() {
+    private DatabaseDataHolder getDataHolder() throws Exception {
         if (dataHolder == null) {
             dataHolder = new DatabaseDataHolder();
-            try {
-                dataHolder.prepareHolder(repository, project, 
-                    driverPropertiesSource, connectionPropertiesSource);
-            } catch (IOException e) {
-                getLog().error(e);
-            }
+            dataHolder.prepareHolder(repository, project);
+            // Let Data Holder load data from properties files.
+            getDataHolder().loadData(dbName, connectionPropertiesSource,
+                driverPropertiesSource);
         }
         return dataHolder;
     }

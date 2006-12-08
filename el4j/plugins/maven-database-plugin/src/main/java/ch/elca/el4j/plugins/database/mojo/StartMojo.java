@@ -14,15 +14,19 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.plugins.database;
-
-import java.lang.reflect.Method;
+package ch.elca.el4j.plugins.database.mojo;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
+import ch.elca.el4j.plugins.database.AbstractDBMojo;
+import ch.elca.el4j.plugins.database.util.derby.DerbyNetworkServerStarter;
+
 /**
- * This class is a database mojo for the 'stop' statement.
+ * This class is a database mojo for the 'start' statement.
+ * In case of using derby it starts the DerbyNetworkServer. 
+ * In case of using oracle, is doesn nothing (as we require 
+ * the oracle database to run when using this plugin).
  * 
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -31,26 +35,38 @@ import org.apache.maven.plugin.MojoFailureException;
  *    "$Author$"
  * );</script>
  * 
- * @goal stop
+ * @goal start
  * @author David Stefan (DST)
  */
-public class StopMojo extends AbstractDBMojo {
-
+public class StartMojo extends AbstractDBMojo {
+    
+    /**
+     * Delay ensures that "Press ..." is last line in console.
+     */
+    private static final int DELAY = 500;
+    
     /**
      * {@inheritDoc}
      */
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
-            getLog().info("STOPPING DATABASE...");
             if (needStartup()) {
-                Class starter = getDerbyNetworkServerStarter();
-                Method stop = starter.getMethod("stopNetworkServer",
-                    new Class[0]);
-                stop.invoke(null, (Object[]) null);
+                getLog().info("Starting database...");
+                DerbyNetworkServerStarter.setHomeDir(getDerbyLocation());
+                DerbyNetworkServerStarter.startNetworkServer();
+                if (this.wait) {
+                    Thread.sleep(DELAY);
+                    getLog().info("Press Ctrl-C to stop Server");
+                    try {
+                        Thread.sleep(Long.MAX_VALUE);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } 
+                }
             }
         } catch (Exception e) {
+            e.printStackTrace(System.out);
             throw new MojoFailureException(e.getMessage());
         }
     }
-
 }

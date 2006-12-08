@@ -14,13 +14,16 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.plugins.database;
+package ch.elca.el4j.plugins.database.mojo;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
+import ch.elca.el4j.plugins.database.AbstractDBMojo;
+import ch.elca.el4j.plugins.database.util.derby.DerbyNetworkServerStarter;
+
 /**
- * This class is a database mojo for the 'update' statement.
+ * This class is a database mojo for the 'stop' statement.
  * 
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -29,23 +32,21 @@ import org.apache.maven.plugin.MojoFailureException;
  *    "$Author$"
  * );</script>
  * 
- * @goal update
+ * @goal stop
  * @author David Stefan (DST)
  */
-public class UpdateMojo extends AbstractDBMojo {
-
-    /**
-     * Action this mojo is implementing and identifier sql files have to start
-     * with.
-     */
-    private static final String ACTION = "update";
+public class StopMojo extends AbstractDBMojo {
 
     /**
      * {@inheritDoc}
      */
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
-            executeAction(ACTION);
+            getLog().info("Stopping database... ");
+            if (needStartup()) {
+                DerbyNetworkServerStarter.setHomeDir(getDerbyLocation());
+                DerbyNetworkServerStarter.stopNetworkServer();
+            }
         } catch (Exception e) {
             throw new MojoFailureException(e.getMessage());
         }
