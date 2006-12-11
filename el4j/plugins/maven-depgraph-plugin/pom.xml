@@ -11,7 +11,7 @@
 	<artifactId>maven-depgraph-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
 	<version>${version.maven-depgraph-plugin}</version>
-	<name>maven-depgraph-plugin</name>
+	<name>EL4J plugin dependecy graph</name>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
