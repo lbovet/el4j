@@ -118,6 +118,8 @@ public class DatabaseDataHolder {
         createEnrichedClassloader(m_dependencyURLs, m_projectURLs);
     }
     
+   
+    
     /**
      * Process properties files and extract necessary information.
      * 
@@ -147,7 +149,7 @@ public class DatabaseDataHolder {
     public String getUrl() {
         return m_url;
     }
-
+    
     /**
      * @return Returns the username of the database.
      */
@@ -176,92 +178,6 @@ public class DatabaseDataHolder {
     public String getDbName() {
         return m_dbName;
     }
-    
-    /**
-     * Add all project dependencies as well as project specific resources
-     * to actual classpath and generate PathResolver.
-     * 
-     * @param urls Urls from dependencies to include into classpath.
-     * @param projectURLs URLs from project to include.
-     * @throws IOException
-     */
-    private void createEnrichedClassloader(List<URL> urls, 
-        List<URL> projectURLs) throws IOException {
-        
-        urls.addAll(projectURLs);
-        // Set thread's classloader as parent classloader
-        m_classloader = URLClassLoader.newInstance(urls.toArray(new URL[1]),
-            Thread.currentThread().getContextClassLoader());
-        m_resolver = new PathMatchingResourcePatternResolver(m_classloader);
-    }
-    
-    /**
-     * Get name of database (either db2 or oracle) from project's 
-     * env.properties file or configuration tag. 
-     * 
-     * If neither of both is set, goal might be to start NetworkServer
-     * and therefore database name isn't needed.
-     * 
-     * @param urls The Project URLs (to build classpath)
-     * @param dbName dbName from configuration tag in pom file
-     * @throws IOException
-     */
-    private void loadDBName(List<URL> urls, String dbName) throws Exception {
-        // Check if DB Name was set with configuration tag or should be
-        // read from project's env.properties
-        if (dbName == null || dbName.equalsIgnoreCase("db2")
-            || dbName.equalsIgnoreCase("oracle")) {
-
-            // Create own classloader and resovler for env.properties, because
-            // we only want the file from the project we're working on
-            URLClassLoader projectClasspath = URLClassLoader.newInstance(urls
-                .toArray(new URL[1]), Thread.currentThread()
-                     .getContextClassLoader());
-            PathMatchingResourcePatternResolver projectResolver 
-                = new PathMatchingResourcePatternResolver(projectClasspath);
-
-            // Check if project contains env.properties
-            Resource[] resources = projectResolver
-                .getResources("classpath*:env/env.properties");
-            Properties properties = getProperties(resources);
-            m_dbName = properties.getProperty("db.name");
-        } else {
-            m_dbName = dbName;
-        }
-       
-    }
-    
-    /**
-     * Get driver from specified properties file.
-     * 
-     * @param sourceDir
-     *            Path where to find properties file
-     * @throws IOException
-     */
-    private void loadDriverName(String sourceDir) throws Exception  {
-        String source = replace(sourceDir, "{db.name}", m_dbName);
-        Resource[] resources = m_resolver.getResources("classpath*:" + source);
-        Properties properties = getProperties(resources);
-        m_driverName = properties.getProperty("dataSource.driverClassName");
-    }
-
-    
-    /**
-     * Load connection properties from specified properties file.
-     * @param sourceDir
-     *          Path where to find properties file
-     * @throws IOException
-     */
-    private void loadConnectionProperties(String sourceDir) throws Exception {
-
-        String source = replace(sourceDir, "{db.name}", m_dbName);
-        Resource[] resources = m_resolver.getResources("classpath*:" + source);
-        Properties properties = getProperties(resources);
-        m_url = properties.getProperty("dataSource.url");
-        m_username = properties.getProperty("dataSource.username");
-        m_password = properties.getProperty("dataSource.password");
-    }
-
     
     /**
      * Collects and returns list of project urls. This includes the normal jar
@@ -293,7 +209,13 @@ public class DatabaseDataHolder {
         // projectUrls
         Resource[] res = projectResolver.getResources("classpath*:*.jar");
         for (Resource r : res) {
-            urls.add(r.getURL());
+            // Relies on the naming convention that the jar files in the target
+            // directories are *-sources.jar, *-test-sources.jar, *-tests.jar
+            // and *.jar (where we only need the latter two)
+            if (r.getFilename().endsWith("-sources.jar")) {
+                s_logger.info("Adding resource to classpath: " + r.getURL());
+                urls.add(r.getURL());
+            }
         }
         return urls;
     }
@@ -312,10 +234,114 @@ public class DatabaseDataHolder {
         // Iterate through test dependencies, because it contains more resources
         for (Object obj : project.getTestArtifacts()) {
             Artifact artifact = (Artifact) obj;
-            urls.add(constructURL(repo.getBasedir(), repo.pathOf(artifact)));
+            URL url = constructURL(repo.getBasedir(), repo.pathOf(artifact));
+            s_logger.info("Adding resource to classpath: " + url);
+            urls.add(url);
         }
         return urls;
     }
+    
+    /**
+     * Add all project dependencies as well as project specific resources
+     * to actual classpath and generate PathResolver.
+     * 
+     * @param urls Urls from dependencies to include into classpath.
+     * @param projectURLs URLs from project to include.
+     * @throws IOException
+     */
+    private void createEnrichedClassloader(List<URL> urls, 
+        List<URL> projectURLs) throws IOException {
+        
+        urls.addAll(projectURLs);
+        // Set thread's classloader as parent classloader
+        m_classloader = URLClassLoader.newInstance(urls.toArray(new URL[1]),
+            Thread.currentThread().getContextClassLoader());
+        m_resolver = new PathMatchingResourcePatternResolver(m_classloader);
+    }
+    
+    /**
+     * Get name of database (either db2 or oracle) from project's 
+     * env.properties file or configuration tag. 
+     * 
+     * If neither of both is set, goal might be to start NetworkServer
+     * and therefore database name isn't needed.
+     * 
+     * @param urls The Project URLs (to build classpath)
+     * @param dbName dbName from configuration tag in pom file
+     * @throws IOException 
+     * @throws IOException
+     */
+    private void loadDBName(List<URL> urls, String dbName) throws Exception {
+
+        // Check if DB Name was set with configuration tag or should be
+        // read from project's env.properties
+        if (dbName == null || dbName.equalsIgnoreCase("db2")
+            || dbName.equalsIgnoreCase("oracle")) {
+            try {
+                // Create own classloader and resovler for env.properties,
+                // because we only want the file from the project we're 
+                // working on
+                URLClassLoader projectClasspath = URLClassLoader.newInstance(
+                    urls.toArray(new URL[1]), Thread.currentThread()
+                        .getContextClassLoader());
+                PathMatchingResourcePatternResolver projectResolver 
+                    = new PathMatchingResourcePatternResolver(projectClasspath);
+
+                // Check if project contains env.properties
+                Resource[] resources = projectResolver
+                    .getResources("classpath*:env/env.properties");
+
+                Properties properties = getProperties(resources);
+                m_dbName = properties.getProperty("db.name");
+            } catch (Exception e) {
+                throw new Exception("Error reading env.properties", e);
+            }
+        } else {
+            m_dbName = dbName;
+        } 
+    }
+       
+    /**
+     * Load connection properties from specified properties file.
+     * @param sourceDir
+     *          Path where to find properties file
+     * @throws IOException
+     */
+    private void loadConnectionProperties(String sourceDir) throws Exception {
+        try {
+            String source = replace(sourceDir, "{db.name}", m_dbName);
+            Resource[] resources = m_resolver
+                .getResources("classpath*:" + source);
+            Properties properties = getProperties(resources);
+            m_url = properties.getProperty("dataSource.url");
+            m_username = properties.getProperty("dataSource.username");
+            m_password = properties.getProperty("dataSource.password");
+        } catch (Exception e) {
+            throw new Exception("Error reading connection properties", e);
+        }
+        
+    }
+
+    /**
+     * Get driver from specified properties file.
+     * 
+     * @param sourceDir
+     *            Path where to find properties file
+     * @throws IOException
+     */
+    private void loadDriverName(String sourceDir) throws Exception  {
+        try {
+            String source = replace(sourceDir, "{db.name}", m_dbName);
+            Resource[] resources = m_resolver.getResources("classpath*:"
+                + source);
+            Properties properties = getProperties(resources);
+            m_driverName = properties.getProperty("dataSource.driverClassName");
+        } catch (Exception e) {
+            throw new Exception("Error reading Driver Name properties", e);
+        }
+    }
+    
+    
     
     /**
      * Constructs a URL from the given Base directory and the file path.
@@ -365,9 +391,11 @@ public class DatabaseDataHolder {
      * @throws IOException
      */
     private Properties getProperties(Resource[] resources) throws Exception {
-        if (resources.length != 1) {
-            s_logger
-                .warn("Source path is ambigious or doesn't contain resources");
+        if (resources.length == 0) {
+            throw new Exception("Path doesn't contain resources");
+        }
+        if (resources.length > 1) {
+            s_logger.warn("Source path is ambigous");
         }
         Resource resource = resources[0];
         Properties properties = new Properties();

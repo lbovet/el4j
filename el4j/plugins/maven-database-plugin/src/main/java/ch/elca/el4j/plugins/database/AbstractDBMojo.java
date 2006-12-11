@@ -231,6 +231,7 @@ public abstract class AbstractDBMojo extends AbstractMojo {
      * @param fileURL
      *            URL of the file
      * @return List of statements
+     * @throws IOException 
      * @throws IOException
      */
     private List<String> extractStmtsFromFile(URL fileURL) throws IOException {
@@ -380,6 +381,8 @@ public abstract class AbstractDBMojo extends AbstractMojo {
      * @param sourcePaths
      *            of sql files
      * @return Array of resources
+     * @throws Exception 
+     * @throws Exception 
      * @throws Exception
      */
     private List<Resource> getResources(List<String> sourcePaths) 
