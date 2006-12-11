@@ -22,11 +22,14 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 
 /**
- * Mojo to config files in the .settings directory. <script
- * type="text/javascript">printFileStatus ("$URL:
- * https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/plugins/maven-checkclipse-helper-plugin/src/main/java/ch/elca/el4j/plugins/checkclipsehelper/CheckclipseConfigSettingsMojo.java
- * $", "$Revision$", "$Date: 2006-08-09 15:46:40 +0200 (Mi, 09 Aug 2006)
- * $", "$Author$" );</script>
+ * Mojo to config files in the .settings directory.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  * 
  * @author Philippe Jacot (PJA)
  * @goal fullgraph

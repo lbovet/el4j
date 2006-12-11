@@ -35,9 +35,14 @@ import org.codehaus.plexus.util.cli.DefaultConsumer;
 import org.codehaus.plexus.util.cli.StreamConsumer;
 
 /**
- * This class projects a dependency graph to the graphviz format. <script
- * type="text/javascript">printFileStatus ("$URL$", "$Revision$", "$Date$",
- * "$Author$" );</script>
+ * This class projects a dependency graph to the graphviz format. 
+ *
+ * * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  * 
  * @author Philippe Jacot (PJA)
  */

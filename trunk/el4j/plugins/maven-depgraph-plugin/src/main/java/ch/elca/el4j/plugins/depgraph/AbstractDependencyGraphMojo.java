@@ -33,11 +33,17 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 
 /**
- * This class is a starting point for dependency graph mojos. <script
- * type="text/javascript">printFileStatus ("$URL$", "$Revision$", "$Date$",
- * "$Author$" );</script>
  * 
- * @author Philippe Jacot (PJA) *
+ * A starting point for DepGraph Mojos.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Philippe Jacot (PJA)
  * @requiresDependencyResolution compile|runtime|test
  */
 public abstract class AbstractDependencyGraphMojo extends AbstractMojo {

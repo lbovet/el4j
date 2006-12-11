@@ -1,7 +1,5 @@
 package ch.elca.el4j.plugins.depgraph;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Stack;
 
 import org.apache.maven.artifact.Artifact;
@@ -37,7 +35,7 @@ class DepGraphResolutionListener implements ResolutionListener {
     private static Log s_log = new SystemStreamLog();
     
     /**
-     * The graph
+     * The graph.
      */
     private DependencyGraph m_graph;
     
