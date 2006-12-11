@@ -61,7 +61,7 @@ public class DerbyNetworkServerStarter {
         // check if homeDir was set.
         assert (s_derbyDir != null);
         setWorkingDir();
-        s_server = new NetworkServerControl(InetAddress.getByName("localhost"),
+        s_server = new NetworkServerControl(InetAddress.getByName("0.0.0.0"),
             NetworkServerControl.DEFAULT_PORTNUMBER);
     }
     
