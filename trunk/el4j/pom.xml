@@ -439,7 +439,7 @@
                            * exec-maven-plugin (revision 2586
                                + patch http://jira.codehaus.org/browse/MEXEC-11)
                     -->
-                    <version>1.0.3-20061030.133616-1</version>
+                    <version>1.0.3-20061204.110918-2</version>
                 </plugin>
 
                 <!-- IDE -->
@@ -1591,9 +1591,12 @@
         <version.maven-file-collector-plugin>
             1.1-SNAPSHOT
         </version.maven-file-collector-plugin>
-         <version.maven-database-plugin>
+        <version.maven-database-plugin>
             1.1-SNAPSHOT
         </version.maven-database-plugin>
+        <version.maven-depgraph-plugin>
+        	1.1-SNAPSHOT
+        </version.maven-depgraph-plugin>
 
         <!-- EL4J framework module version numbers -->
         <version.module-core>
