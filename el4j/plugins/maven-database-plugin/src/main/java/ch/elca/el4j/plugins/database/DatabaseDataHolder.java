@@ -275,8 +275,8 @@ public class DatabaseDataHolder {
 
         // Check if DB Name was set with configuration tag or should be
         // read from project's env.properties
-        if (dbName == null || dbName.equalsIgnoreCase("db2")
-            || dbName.equalsIgnoreCase("oracle")) {
+        if ( (dbName == null) || (!dbName.equalsIgnoreCase("db2")
+            && !dbName.equalsIgnoreCase("oracle")) ) {
             try {
                 // Create own classloader and resovler for env.properties,
                 // because we only want the file from the project we're 
