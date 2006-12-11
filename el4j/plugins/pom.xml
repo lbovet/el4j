@@ -38,6 +38,7 @@
         <module>maven-repohelper-plugin</module>
         <module>maven-manifest-decorator-plugin</module>
         <module>maven-file-collector-plugin</module>
+        <module>maven-depgraph-plugin</module>
     </modules>
     <dependencies>
         <dependency>
