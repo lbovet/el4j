@@ -26,6 +26,7 @@
     <modules>
         <module>core</module>
         <module>database</module>
+        <module>detailed_statistics</module>
         <module>env</module>
         <module>exception_handling</module>
         <module>hibernate</module>
