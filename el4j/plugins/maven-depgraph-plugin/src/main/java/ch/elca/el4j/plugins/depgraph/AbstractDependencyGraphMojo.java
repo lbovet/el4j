@@ -21,6 +21,9 @@ package ch.elca.el4j.plugins.depgraph;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
@@ -95,6 +98,12 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
      * @parameter expression="${depgraph.versionFilter}"
      */
     private String versionFilter;
+    
+    /**
+     * Filter all empty artifacts.
+     * @parameter expression="${depgraph.filterEmptyArtifacts}"
+     */
+    private boolean filterEmptyArtifacts;
 
     /**
      * @parameter expression="${localRepository}"
@@ -230,6 +239,45 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
      */
     protected File getOutFile() {
         return outFile;
+    }
+    
+    /**
+     * Project the given graph.
+     * @param graph The graph to project
+     * @throws MojoExecutionException
+     */
+    protected void project(DependencyGraph graph) 
+        throws MojoExecutionException {
+        
+        if (filterEmptyArtifacts) {
+            // Create a list artifacts someone is depending on
+            Map<String, DepGraphArtifact> dependencies = new HashMap();
+            List<DepGraphArtifact> dependants = graph.getArtifacts();
+            
+            for (DepGraphArtifact a : dependants) {
+                for (DepGraphArtifact dep : a.getDependencies()) {
+                    if (!dependencies.containsKey(dep.getQualifiedName())) {
+                        dependencies.put(dep.getQualifiedName(), dep);
+                    }
+                }
+            }
+            
+            for (DepGraphArtifact a : dependants) {
+                if (a.getDependencies().size() == 0 
+                    && !dependencies.containsKey(a.getQualifiedName())) {
+                    graph.removeArtifact(a);
+                }
+            }
+        }
+        
+        if (graph.getArtifacts().size() == 0) {
+            getLog().error(
+                "There were no Artifacts resolved. "
+                    + "Maybe there's a problem with a user supplied filter.");
+            throw new MojoExecutionException("No artifacts resolved");
+        }       
+
+        getProjector().project(graph); 
     }
 
     /**
