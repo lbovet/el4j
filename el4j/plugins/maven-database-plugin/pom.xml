@@ -12,12 +12,11 @@
 	<parent>
 		<groupId>ch.elca.el4j.plugins</groupId>
 		<artifactId>el4j-plugins</artifactId>
-		<version>1.1.1-SNAPSHOT</version>
+		<version>1.1.0</version>
 	</parent>
 	
 	<artifactId>maven-database-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
-	<version>${version.maven-database-plugin}</version>
 	<name>EL4J plugin database</name>
 	<build>
 		<plugins>
