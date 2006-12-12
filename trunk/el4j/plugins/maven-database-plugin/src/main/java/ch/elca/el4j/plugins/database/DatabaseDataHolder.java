@@ -16,6 +16,7 @@
  */
 package ch.elca.el4j.plugins.database;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -275,8 +276,8 @@ public class DatabaseDataHolder {
 
         // Check if DB Name was set with configuration tag or should be
         // read from project's env.properties
-        if ( (dbName == null) || (!dbName.equalsIgnoreCase("db2")
-            && !dbName.equalsIgnoreCase("oracle")) ) {
+        if ((dbName == null) || (!dbName.equalsIgnoreCase("db2")
+            && !dbName.equalsIgnoreCase("oracle"))) {
             try {
                 // Create own classloader and resovler for env.properties,
                 // because we only want the file from the project we're 
@@ -351,10 +352,16 @@ public class DatabaseDataHolder {
      * @return URL of this file
      * @throws MalformedURLException
      */
-    private URL constructURL(String baseDir, String filePath) 
+    private URL constructURL(String baseDir, String filePath)
         throws MalformedURLException {
-        String path = "file:/" + baseDir + "/" + filePath;
-        return  new URL("jar", "", path + "!/");
+        String path = baseDir + "/" + filePath;
+        File file = new File(path);
+        // check if file exist to avoid Exception
+        if (file.exists()) {
+            return file.toURL();
+        } else {
+            return null;
+        }
     }
     
     /**
