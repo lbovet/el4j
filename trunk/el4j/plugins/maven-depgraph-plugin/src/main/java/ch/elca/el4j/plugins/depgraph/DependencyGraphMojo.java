@@ -44,16 +44,7 @@ public class DependencyGraphMojo extends AbstractDependencyGraphMojo {
         
         processProject(m_project, resultGraph);
         
-        if (resultGraph.getArtifacts().size() == 0) {
-            getLog().error(
-                "There were no Artifacts resolved. "
-                    + "Maybe there's a problem with a user supplied filter.");
-            throw new MojoExecutionException("No artifacts resolved");
-        }
-
-
-        
-
-        getProjector().project(resultGraph);        
+        project(resultGraph);
+   
     }
 }
