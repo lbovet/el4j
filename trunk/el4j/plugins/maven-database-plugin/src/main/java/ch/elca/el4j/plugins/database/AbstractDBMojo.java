@@ -64,13 +64,14 @@ public abstract class AbstractDBMojo extends AbstractMojo {
      * Decides whether to wait after the container is started or to return 
      * the execution flow to the user.
      * 
-     * @parameter default-value = "true"
+     * @parameter expression="${db.wait}" default-value = "true"
      * @required
      */
     protected boolean wait;
     
     /**
-     * Path to properties file where connection properties can be found.
+     * Path to properties file where connection properties (username, password 
+     * and url)can be found.
      * 
      * For this property, no prefix <code>classpath:*</code> is needed. 
      * Moreover it can include a generic <code>{db.name}</code> if a
@@ -81,7 +82,7 @@ public abstract class AbstractDBMojo extends AbstractMojo {
     private String connectionPropertiesSource;
     
     /**
-     * Path to properties file where JDBC driver can be found.
+     * Path to properties file where JDBC driver name can be found.
      * 
      * For this property, no prefix <code>classpath:*</code> is needed. 
      * Moreover it can include a generic <code>{db.name}</code> if a
