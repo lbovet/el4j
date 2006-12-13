@@ -60,12 +60,11 @@ public class StartMojo extends AbstractDBMojo {
                     try {
                         Thread.sleep(Long.MAX_VALUE);
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        getLog().error("Error during wait", e);
                     } 
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace(System.out);
             throw new MojoFailureException(e.getMessage());
         }
     }
