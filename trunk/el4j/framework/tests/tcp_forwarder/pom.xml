@@ -44,7 +44,6 @@
 			<plugin>
 				<groupId>ch.elca.el4j.plugins</groupId>
 				<artifactId>maven-database-plugin</artifactId>
-				<version>1.1-SNAPSHOT</version>
 				<executions>
 					<execution>
 						<configuration>
@@ -91,7 +90,6 @@
 			<plugin>
 				<groupId>ch.elca.el4j.plugins</groupId>
 				<artifactId>maven-database-plugin</artifactId>
-				<version>1.1-SNAPSHOT</version>
 				<executions>
 					<execution>
 						<configuration>
