@@ -84,7 +84,13 @@ public class DerbyNetworkServerStarter {
         if (s_server == null) {
             createNetworkServer();
         }
-        s_server.start(new PrintWriter(System.out));
+        // Test if there's already a Network Server running on this port. 
+        // If so, do nothing, else start server.
+        try {
+            s_server.ping();
+        } catch (Exception e) {
+            s_server.start(new PrintWriter(System.out));
+        }   
     }
 
     /**
