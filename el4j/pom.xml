@@ -1554,6 +1554,10 @@
         <distmgt.site.name.external>SourceForge EL4J website</distmgt.site.name.external>
         <distmgt.site.url.external>scp://shell.sourceforge.net/home/groups/e/el/el4j/htdocs</distmgt.site.url.external>
 
+        <distmgt.site.id.nightly>sshLeaffy</distmgt.site.id.nightly>
+        <distmgt.site.name.nightly>Internal EL4J website with the nightly interfaces</distmgt.site.name.nightly>
+        <distmgt.site.url.nightly>scp://leaffy/var/www/java/el4j/website/external</distmgt.site.url.nightly>
+
         <distmgt.site.id.internal>sshLeaffy</distmgt.site.id.internal>
         <distmgt.site.name.internal>Internal EL4J website</distmgt.site.name.internal>
         <distmgt.site.url.internal>scp://leaffy/home/java/el4j/website/internal</distmgt.site.url.internal>
