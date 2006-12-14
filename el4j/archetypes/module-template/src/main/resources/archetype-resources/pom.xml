@@ -1,0 +1,50 @@
+<project>
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>${groupId}</groupId>
+  <artifactId>${artifactId}</artifactId>
+  <packaging>jar</packaging>
+  <version>${version}</version>
+  <name>A custom project that uses EL4J</name>
+  <url>http://el4j.sourceforge.net</url>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+        
+    <dependency>
+        <groupId>ch.elca.el4j.modules</groupId>
+        <artifactId>module-core</artifactId>
+        <version>1.5</version>
+    </dependency>
+
+  </dependencies>
+
+
+  <build>
+
+      <!-- include the log4j configuration file -->
+      <resources>
+          <resource>
+            <directory>src/main/resources/log4j</directory>
+          </resource>
+      </resources>
+
+  </build>
+
+  <repositories>
+
+    <repository>
+        <id>El4jElcaServices</id>
+        <name>External EL4J snapshot repository</name>
+        <url>http://el4.elca-services.ch/el4j/maven2repository</url>
+    </repository>
+
+  </repositories>
+
+</project>
