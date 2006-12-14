@@ -399,6 +399,17 @@
             </distributionManagement>
         </profile>
 
+        <profile>
+            <id>internal.site</id>
+            <distributionManagement>
+                <site>
+                    <id>${distmgt.site.id.nightly}</id>
+                    <name>${distmgt.site.name.nightly}</name>
+                    <url>${distmgt.site.url.nightly}</url>
+                </site>
+            </distributionManagement>
+        </profile>
+
     </profiles>
 
     <distributionManagement>
