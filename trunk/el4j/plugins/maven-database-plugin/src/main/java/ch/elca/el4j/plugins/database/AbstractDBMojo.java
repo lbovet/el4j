@@ -65,7 +65,6 @@ public abstract class AbstractDBMojo extends AbstractMojo {
      * the execution flow to the user.
      * 
      * @parameter expression="${db.wait}" default-value = "true"
-     * @required
      */
     protected boolean wait;
     
