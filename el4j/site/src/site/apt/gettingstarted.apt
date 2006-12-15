@@ -36,11 +36,14 @@ Getting Started
   Create your projects (Core and Web) from the maven archetypes:
 
 +-------------------------------------------------------------------------
-mvn archetype:create -DarchetypeGroupId=ch.elca.el4j 
-  -DarchetypeArtifactId=EL4JArchetypeCore -DarchetypeVersion=1.1.0 
-  -DgroupId=<yourGroup> -DartifactId=<yourCoreProject> 
+mvn archetype:create -DarchetypeGroupId=ch.elca.el4j \
+  -DarchetypeArtifactId=EL4JArchetypeCore -DarchetypeVersion=1.1.0 \
+  -DgroupId=<yourGroup> -DartifactId=<yourCoreProject> \
   -DremoteRepositories=http://el4.elca-services.ch/el4j/maven2repository
 +------------------------------------------------------------------------
+
+  Make sure to replace <<< \<yourGroup\> >>> and <<< \<yourCoreProject\> >>>
+  with your desired package name and your project name.
 
 
 ** Building EL4J yourself
@@ -120,5 +123,21 @@ svn checkout https://svn.sourceforge.net/svnroot/el4j/trunk/el4j external
 mvn clean install 
 ---
 
+
+* Next steps
+
+  * If you are an experienced EL4J user, you can just use the <<archetype>> to start
+    your own project.
+
+  * If you like to review a small, simple and easy to understand demo
+    application, have a look at our <<application templates>>
+
+    ~~ TODO: Replace <<application templates>> with a link to a downloadable zip
+    ~~ file
+
+  * If you like to see just a certain aspect of EL4J, have a look at our
+    <<demos>>
+
+    ~~ TODO: Replace <<demos>> with a link to a downloadable zip file.
 
 
