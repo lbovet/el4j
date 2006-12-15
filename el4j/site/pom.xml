@@ -46,7 +46,7 @@
                 <version>1.0.1</version>
                 <configuration>
                     <executable>mvn</executable>
-                    <workingDirectory>../framework</workingDirectory>
+                    <workingDirectory>${el4j.external}/framework</workingDirectory>
                 </configuration>
                 <executions>
                     <execution>
@@ -56,7 +56,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <workingDirectory>..</workingDirectory>
+                            <workingDirectory>${el4j.external}</workingDirectory>
                             <arguments>
                                 <argument>-N</argument>
                                 <argument>clean</argument>
@@ -144,7 +144,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <workingDirectory>../plugins</workingDirectory>
+                            <workingDirectory>${el4j.external}/plugins</workingDirectory>
                             <arguments>
                                 <argument>clean</argument>
                                 <argument>install</argument>
@@ -166,7 +166,7 @@
                             <goal>aggregate-files</goal>
                         </goals>
                         <configuration>
-                            <rootSourceDirectory>${basedir}/../framework/target/site</rootSourceDirectory>
+                            <rootSourceDirectory>${el4j.external}/framework/target/site</rootSourceDirectory>
                             <sourceFileIncludePatterns>framework-*</sourceFileIncludePatterns>
                             <targetDirectory>${basedir}/target/site</targetDirectory>
                             <allowOverwrite>false</allowOverwrite>
@@ -179,7 +179,7 @@
                             <goal>aggregate-files</goal>
                         </goals>
                         <configuration>
-                            <rootSourceDirectory>${basedir}/../plugins/maven-checkclipse-helper-plugin/target/site</rootSourceDirectory>
+                            <rootSourceDirectory>${el4j.external}/plugins/maven-checkclipse-helper-plugin/target/site</rootSourceDirectory>
                             <sourceFileIncludePatterns>**/*</sourceFileIncludePatterns>
                             <targetDirectory>${basedir}/target/site/plugins/maven-checkclipse-helper-plugin</targetDirectory>
                             <copyFilesOnly>true</copyFilesOnly>
@@ -193,7 +193,7 @@
                             <goal>aggregate-files</goal>
                         </goals>
                         <configuration>
-                            <rootSourceDirectory>${basedir}/../plugins/maven-env-support-plugin/target/site</rootSourceDirectory>
+                            <rootSourceDirectory>${el4j.external}/plugins/maven-env-support-plugin/target/site</rootSourceDirectory>
                             <sourceFileIncludePatterns>**/*</sourceFileIncludePatterns>
                             <targetDirectory>${basedir}/target/site/plugins/maven-env-support-plugin</targetDirectory>
                             <copyFilesOnly>true</copyFilesOnly>
@@ -207,7 +207,7 @@
                             <goal>aggregate-files</goal>
                         </goals>
                         <configuration>
-                            <rootSourceDirectory>${basedir}/../plugins/maven-file-collector-plugin/target/site</rootSourceDirectory>
+                            <rootSourceDirectory>${el4j.external}/plugins/maven-file-collector-plugin/target/site</rootSourceDirectory>
                             <sourceFileIncludePatterns>**/*</sourceFileIncludePatterns>
                             <targetDirectory>${basedir}/target/site/plugins/maven-file-collector-plugin</targetDirectory>
                             <copyFilesOnly>true</copyFilesOnly>
@@ -221,7 +221,7 @@
                             <goal>aggregate-files</goal>
                         </goals>
                         <configuration>
-                            <rootSourceDirectory>${basedir}/../plugins/maven-manifest-decorator-plugin/target/site</rootSourceDirectory>
+                            <rootSourceDirectory>${el4j.external}/plugins/maven-manifest-decorator-plugin/target/site</rootSourceDirectory>
                             <sourceFileIncludePatterns>**/*</sourceFileIncludePatterns>
                             <targetDirectory>${basedir}/target/site/plugins/maven-manifest-decorator-plugin</targetDirectory>
                             <copyFilesOnly>true</copyFilesOnly>
@@ -235,7 +235,7 @@
                             <goal>aggregate-files</goal>
                         </goals>
                         <configuration>
-                            <rootSourceDirectory>${basedir}/../plugins/maven-repohelper-plugin/target/site</rootSourceDirectory>
+                            <rootSourceDirectory>${el4j.external}/plugins/maven-repohelper-plugin/target/site</rootSourceDirectory>
                             <sourceFileIncludePatterns>**/*</sourceFileIncludePatterns>
                             <targetDirectory>${basedir}/target/site/plugins/maven-repohelper-plugin</targetDirectory>
                             <copyFilesOnly>true</copyFilesOnly>
