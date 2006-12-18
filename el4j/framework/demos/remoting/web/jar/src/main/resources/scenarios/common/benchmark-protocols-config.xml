@@ -80,8 +80,9 @@
         </property>
         <property name="serviceFactory">
             <ref bean="xfire.serviceFactory"/>
-        </property>    
+        </property>
     </bean>
+
 
     <bean id="soapProtocol" class="ch.elca.el4j.services.remoting.protocol.Soap">
         <property name="serviceHost">
