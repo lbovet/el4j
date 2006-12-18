@@ -44,9 +44,14 @@ public class ImplicitContextPassingIntegrationTest extends TestCase {
 
     /**
      * Location where config files can be found.
+     * The order of the config files is crucial. If the client is started before
+     * the server, it obviously won't work.
      */
-    private static final String CONFIG_LOCATION 
-        = "classpath:scenarios/implicitcontextpassing/*.xml";
+    private static final String[] CONFIG_LOCATION 
+        = new String[]{
+            "classpath:scenarios/implicitcontextpassing/rmi-server-config.xml",
+            "classpath:scenarios/implicitcontextpassing/rmi-client-config.xml"
+        };
 
     /**
      * ApplicationContext object.
