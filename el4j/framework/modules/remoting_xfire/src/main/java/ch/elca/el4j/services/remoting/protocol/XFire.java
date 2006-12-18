@@ -19,7 +19,8 @@ package ch.elca.el4j.services.remoting.protocol;
 
 import java.util.HashMap;
 
-import org.codehaus.xfire.jaxb2.JaxbServiceFactory;
+import org.apache.commons.lang.StringUtils;
+import org.codehaus.xfire.annotations.AnnotationServiceFactory;
 import org.codehaus.xfire.service.ServiceFactory;
 import org.codehaus.xfire.spring.remoting.XFireClientFactoryBean;
 import org.codehaus.xfire.spring.remoting.XFireExporter;
@@ -33,7 +34,7 @@ import ch.elca.el4j.services.remoting.RemotingServiceExporter;
 
 
 /**
- * This class implements all needed things for the burlap protocol.
+ * This class implements all needed things for the xfire protocol.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -43,73 +44,38 @@ import ch.elca.el4j.services.remoting.RemotingServiceExporter;
  * );</script>
  *
  * @author Rashid Waraich (RWA)
+ * @author Philippe Jacot (PJA)
  */
-public class XFire extends AbstractInetSocketAddressWebProtocol {
-    
+public class XFire extends AbstractInetSocketAddressWebProtocol {   
     /**
      * Needed suffix to get the wsdl of the given service.
      */
     private static final String URL_WSDL_SUFFIX = "?wsdl";
     
-    public ServiceFactory serviceFactory;
-    public org.codehaus.xfire.XFire xfire;
+    /**
+     * Name for the created exporter bean.
+     */
+    private static final String EXPORTER_BEAN_NAME = "xFireExporterBeanGen";
     
     /**
-     * {@inheritDoc}
+     * Name for the created proxy bean.
      */
-    public Object createProxyBean(RemotingProxyFactoryBean proxyBean,
-            Class serviceInterfaceOptionallyWithContext) {     
-        StaticApplicationContext appContext = new StaticApplicationContext(
-                m_parentApplicationContext);
-        MutablePropertyValues proxyProps = new MutablePropertyValues();
-        proxyProps.addPropertyValue("serviceClass",
-            serviceInterfaceOptionallyWithContext);
-        proxyProps.addPropertyValue("wsdlDocumentUrl", 
-            generateUrl(proxyBean));
-        appContext.registerSingleton("xFireProxyBeanGen",
-                getProxyObjectType(), proxyProps);
-        
-        return appContext.getBean("xFireProxyBeanGen");
-    }
-
+    private static final String PROXY_BEAN_NAME = "xFireProxyBeanGen";
+    
     /**
-     * {@inheritDoc}
+     * The Service Factory to work with.
      */
-    public Object createExporterBean(RemotingServiceExporter exporterBean,
-       Class serviceInterfaceOptionallyWithContext, Object serviceProxy) {
-        StaticApplicationContext appContext = new StaticApplicationContext(
-                m_parentApplicationContext);
-        
-        MutablePropertyValues props = new MutablePropertyValues();
-        
-        //setting the properties of the XFireExporter
-        props.addPropertyValue("serviceFactory", serviceFactory);
-        props.addPropertyValue("xfire", xfire);
-        props.addPropertyValue("serviceBean", serviceProxy);
-
-        // In the case of a JaxBFactory the serviceClass property should not be
-        // set, because of SOAPBinding problems.
-        if (!serviceFactory.getClass().equals(JaxbServiceFactory.class)) {
-            props.addPropertyValue("serviceClass", 
-                serviceInterfaceOptionallyWithContext);
-        }
-
-        // register the XFireExporter bean with the appContext
-        appContext.registerSingleton("xFireExporterBeanGen",
-                getExporterObjectType(), props);
-        
-        // URL Mapping for the service is added and registered 
-        // with the appContext
-        props = new MutablePropertyValues();
-        HashMap hm = new HashMap();
-        hm.put(exporterBean.getServiceName(),
-            appContext.getBean("xFireExporterBeanGen"));
-        props.addPropertyValue("urlMap", hm);
-        appContext.registerSingleton("anonymous",
-            SimpleUrlHandlerMapping.class, props);
-        
-        return appContext.getBean("xFireExporterBeanGen");
-    }
+    private ServiceFactory m_serviceFactory;
+    
+    /**
+     * The used XFire instance.
+     */
+    private org.codehaus.xfire.XFire m_xfire;
+    
+    /**
+     * The used WSDL file. If none is provided a generated one is taken
+     */
+    private String m_wsdlDocumentUrl = "";
 
     /**
      * {@inheritDoc}
@@ -124,7 +90,99 @@ public class XFire extends AbstractInetSocketAddressWebProtocol {
     public Class getExporterObjectType() {
         return XFireExporter.class;
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public Object createExporterBean(RemotingServiceExporter exporterBean,
+       Class serviceInterfaceOptionallyWithContext, Object serviceProxy) {
+        StaticApplicationContext appContext = new StaticApplicationContext(
+                m_parentApplicationContext);
+      
+        MutablePropertyValues props = new MutablePropertyValues();
+        //setting the properties of the XFireExporter
+        props.addPropertyValue("serviceFactory", getServiceFactory());
+        props.addPropertyValue("xfire", getXfire());
+        props.addPropertyValue("serviceBean", serviceProxy);
+              
+        
+        // JSR 181 annotated classes do not have to specify the serviceClass
+        // property as the implementing class already has its serviceClass
+        // given by the endpointInterface attribute of the @WebService 
+        // annotation. For the moment it is assumed that all JSR 181 processing
+        // ServiceFactories are subclasses of AnnotationServiceFactory which
+        // not always has to be true.
+        if (!(getServiceFactory() instanceof AnnotationServiceFactory)) {
+            props.addPropertyValue("serviceClass", 
+                serviceInterfaceOptionallyWithContext);
+        }
 
+        
+        // Give potential Subclasses the chance to adapt the properties
+        adaptExporterProperties(props);
+        
+        // register the XFireExporter bean with the appContext
+        appContext.registerSingleton(EXPORTER_BEAN_NAME,
+                getExporterObjectType(), props);
+               
+        
+        // URL Mapping for the service is added and registered 
+        // with the appContext
+        props = new MutablePropertyValues();
+        HashMap<String, Object> hm = new HashMap<String, Object>();
+        hm.put(exporterBean.getServiceName(),
+            appContext.getBean(EXPORTER_BEAN_NAME));
+        props.addPropertyValue("urlMap", hm);
+        appContext.registerSingleton("anonymous",
+            SimpleUrlHandlerMapping.class, props);
+        
+        return appContext.getBean(EXPORTER_BEAN_NAME);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public Object createProxyBean(RemotingProxyFactoryBean proxyBean,
+            Class serviceInterfaceOptionallyWithContext) {     
+        
+        StaticApplicationContext appContext = new StaticApplicationContext(
+                m_parentApplicationContext);
+        MutablePropertyValues proxyProps = new MutablePropertyValues();
+        proxyProps.addPropertyValue(
+            "serviceClass", serviceInterfaceOptionallyWithContext);
+        
+        String wsdlUrl = StringUtils.isNotBlank(m_wsdlDocumentUrl) 
+            ? m_wsdlDocumentUrl : generateUrl(proxyBean);
+        
+        proxyProps.addPropertyValue("wsdlDocumentUrl", wsdlUrl);
+        proxyProps.addPropertyValue("serviceFactory", getServiceFactory());
+        
+        // Pass properties to possible subclasses
+        adaptProxyProperties(proxyProps);
+        
+        appContext.registerSingleton(PROXY_BEAN_NAME,
+            getProxyObjectType(), proxyProps);
+
+        
+        return appContext.getBean(PROXY_BEAN_NAME);
+    }
+    
+    /**
+     * Method providing an extension point do adapt the proxy properites.
+     * @param properties The properties so far
+     */
+    protected void adaptProxyProperties(
+        MutablePropertyValues properties) {
+    }
+    
+    /**
+     * Method providing an extension point do adapt the exported properites.
+     * @param properties The properties so far
+     */
+    protected void adaptExporterProperties(
+        MutablePropertyValues properties) {
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -141,22 +199,53 @@ public class XFire extends AbstractInetSocketAddressWebProtocol {
         sb.append(URL_WSDL_SUFFIX);
         return sb.toString();
     }
-
+    
+    /**
+     * Get the {@link ServiceFactory}.
+     * @return The used {@link ServiceFactory}
+     */
     public ServiceFactory getServiceFactory() {
-        return serviceFactory;
+        return m_serviceFactory;
     }
 
+    /**
+     * Set the {@link ServiceFactory}.
+     * @param serviceFactory The {@link ServiceFactory}
+     */
     public void setServiceFactory(ServiceFactory serviceFactory) {
-        this.serviceFactory = serviceFactory;
+        this.m_serviceFactory = serviceFactory;
     }
 
+    /**
+     * Get the {@link org.codehaus.xfire.XFire} instance.
+     * @return The {@link org.codehaus.xfire.XFire} instance.
+     */
     public org.codehaus.xfire.XFire getXfire() {
-        return xfire;
+        return m_xfire;
     }
 
+    /**
+     * Set the {@link org.codehaus.xfire.XFire} instance.
+     * @param xfire The {@link org.codehaus.xfire.XFire} instance.
+     */
     public void setXfire(org.codehaus.xfire.XFire xfire) {
-        this.xfire = xfire;
+        this.m_xfire = xfire;
     }
-
+    
+    /**
+     * Set the wsdl used by the client.
+     * @param wsdlDocumentUrl The wsdl address to set
+     */
+    public void setWsdlDocumentUrl(String wsdlDocumentUrl) {
+        m_wsdlDocumentUrl = wsdlDocumentUrl;
+    }
+    
+    /**
+     * Get the wsdl used by the client.
+     * @return The wsdl document URL
+     */
+    public String getWsdlDocumentUrl() {
+        return m_wsdlDocumentUrl;
+    }
 
 }

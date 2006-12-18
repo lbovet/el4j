@@ -16,6 +16,8 @@
  */
 package ch.elca.el4j.services.remoting.protocol.xfire;
 
+import javax.xml.bind.JAXBContext;
+
 import org.codehaus.xfire.XFireFactory;
 import org.codehaus.xfire.aegis.AegisBindingProvider;
 import org.codehaus.xfire.jaxb2.JaxbTypeRegistry;
@@ -46,7 +48,7 @@ import org.codehaus.xfire.transport.TransportManager;
 
 
 public class JaxbServiceFactoryWithoutWebAnnotations
-    extends ObjectServiceFactory {
+        extends ObjectServiceFactory {
     
     /**
      * Default constructor.
@@ -63,9 +65,24 @@ public class JaxbServiceFactoryWithoutWebAnnotations
     (TransportManager transportManager) {
         super(transportManager, 
               new AegisBindingProvider(new JaxbTypeRegistry()));
+   
+        setWsdlBuilderFactory(new JaxbWSDLBuilderFactory());
+
+    }
+    
+    /**
+     * This constructor can take a transportManager as parameter and a 
+     * <code>JAXBContext</code>.
+     * @param transportManager The transportManger for the ServiceFactroy.
+     * @param context The JAXBContext to indicate JAXB annotated classes
+     */
+    public JaxbServiceFactoryWithoutWebAnnotations
+    (TransportManager transportManager, JAXBContext context) {
+        super(transportManager, 
+              new AegisBindingProvider(new JaxbTypeRegistry(context)));       
         
         setWsdlBuilderFactory(new JaxbWSDLBuilderFactory());
-    }    
+    }
 }
 
 
