@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+	targetNamespace="http://service.remoting.tests.el4j.elca.ch"
+	xmlns:tns="http://service.remoting.tests.el4j.elca.ch"
+	xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"
+	xmlns:ns1="another.test.another.path"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soapenc11="http://schemas.xmlsoap.org/soap/encoding/"
+	xmlns:soapenc12="http://www.w3.org/2003/05/soap-encoding"
+	xmlns:soap11="http://schemas.xmlsoap.org/soap/envelope/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+	<wsdl:types>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			attributeFormDefault="qualified" elementFormDefault="qualified"
+			targetNamespace="http://service.remoting.tests.el4j.elca.ch">
+			<xsd:element name="echoValueObject">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1"
+							ref="ns1:CalculatorValueObject" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="echoValueObjectResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1"
+							ref="ns1:CalculatorValueObject" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="countNumberOfUppercaseLetters">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1"
+							name="in0" nillable="true" type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="countNumberOfUppercaseLettersResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1"
+							name="out" type="xsd:int" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="getArea">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1"
+							name="in0" type="xsd:double" />
+						<xsd:element maxOccurs="1" minOccurs="1"
+							name="in1" type="xsd:double" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="getAreaResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="1" minOccurs="1"
+							name="out" type="xsd:double" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema> 
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			elementFormDefault="qualified"
+			targetNamespace="another.test.another.path" version="1.0">
+			<xs:element name="CalculatorValueObject">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="myOwnInt" type="xs:int" />
+						<xs:element name="myOwnLong" type="xs:long" />
+						<xs:element name="myOwnDouble" type="xs:double" />
+						<xs:element minOccurs="0" name="myOwnString"
+							type="xs:string" />
+						<xs:element minOccurs="0" name="myOwnByteArray"
+							type="xs:base64Binary" />
+						<xs:element maxOccurs="unbounded" minOccurs="0"
+							name="m_myStringArray" nillable="true" type="xs:string" />
+						<xs:element maxOccurs="unbounded" minOccurs="0"
+							name="m_myIntArray" nillable="true" type="xs:int" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="echoValueObjectResponse">
+		<wsdl:part name="parameters"
+			element="tns:echoValueObjectResponse" />
+	</wsdl:message>
+	<wsdl:message name="getAreaRequest">
+		<wsdl:part name="parameters" element="tns:getArea" />
+	</wsdl:message>
+	<wsdl:message name="getAreaResponse">
+		<wsdl:part name="parameters" element="tns:getAreaResponse" />
+	</wsdl:message>
+	<wsdl:message name="countNumberOfUppercaseLettersResponse">
+		<wsdl:part name="parameters"
+			element="tns:countNumberOfUppercaseLettersResponse" />
+	</wsdl:message>
+	<wsdl:message name="countNumberOfUppercaseLettersRequest">
+		<wsdl:part name="parameters"
+			element="tns:countNumberOfUppercaseLetters" />
+	</wsdl:message>
+	<wsdl:message name="echoValueObjectRequest">
+		<wsdl:part name="parameters" element="tns:echoValueObject" />
+	</wsdl:message>
+	<wsdl:portType name="CalculatorPortType">
+		<wsdl:operation name="echoValueObject">
+			<wsdl:input name="echoValueObjectRequest"
+				message="tns:echoValueObjectRequest" />
+			<wsdl:output name="echoValueObjectResponse"
+				message="tns:echoValueObjectResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="countNumberOfUppercaseLetters">
+			<wsdl:input name="countNumberOfUppercaseLettersRequest"
+				message="tns:countNumberOfUppercaseLettersRequest" />
+			<wsdl:output name="countNumberOfUppercaseLettersResponse"
+				message="tns:countNumberOfUppercaseLettersResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="getArea">
+			<wsdl:input name="getAreaRequest"
+				message="tns:getAreaRequest" />
+			<wsdl:output name="getAreaResponse"
+				message="tns:getAreaResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="CalculatorHttpBinding"
+		type="tns:CalculatorPortType">
+		<wsdlsoap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="echoValueObject">
+			<wsdlsoap:operation soapAction="" />
+			<wsdl:input name="echoValueObjectRequest">
+				<wsdlsoap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="echoValueObjectResponse">
+				<wsdlsoap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="countNumberOfUppercaseLetters">
+			<wsdlsoap:operation soapAction="" />
+			<wsdl:input name="countNumberOfUppercaseLettersRequest">
+				<wsdlsoap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="countNumberOfUppercaseLettersResponse">
+				<wsdlsoap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getArea">
+			<wsdlsoap:operation soapAction="" />
+			<wsdl:input name="getAreaRequest">
+				<wsdlsoap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getAreaResponse">
+				<wsdlsoap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation></wsdl:binding>
+	<wsdl:service name="Calculator">
+		<wsdl:port name="CalculatorHttpPort"
+			binding="tns:CalculatorHttpBinding">
+			<wsdlsoap:address
+				location="http://localhost:8080/module-remoting-tests-web/Calculator.XFireJaxb.Remotingtests" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
