@@ -163,40 +163,44 @@ public class AggregateFilesMojo extends AbstractMojo {
      * {@inheritDoc}
      */
     public void execute() throws MojoExecutionException, MojoFailureException {
-        Log log = getLog();
-        if (!visitChildProjects
-            && project != null && !project.isExecutionRoot()) {
-            log.info("Current project is a child project. "
-                + "Execution will be skipped.");
-            return;
-        }
-        
-        init();
-
-        PathMatchingResourcePatternResolver resolver 
-            = new PathMatchingResourcePatternResolver(
-                new FileSystemResourceLoader());
-        PathMatcher pathMatcher = new AntPathMatcher();
-        resolver.setPathMatcher(pathMatcher);
-        
-        List<File> sourceDirectories = resolveSourceDirectories(resolver);
-        
-        if (sourceDirectories.size() <= 0) {
-            log.warn("No source directories found with given source "
-                + "directory patterns '" + sourceDirectoryIncludePatterns 
-                + "'. File aggregation will be skipped.");
-            return;
-        }
-        
-        if (log.isInfoEnabled()) {
-            log.info("Following " + sourceDirectories.size()
-                + " source dir(s) could be found:");
-            for (File sourceDirectory : sourceDirectories) {
-                log.info(sourceDirectory.getAbsolutePath());
+        try {
+            Log log = getLog();
+            if (!visitChildProjects && project != null
+                && !project.isExecutionRoot()) {
+                log.info("Current project is a child project. "
+                    + "Execution will be skipped.");
+                return;
             }
-        }
+
+            init();
+
+            PathMatchingResourcePatternResolver resolver 
+                = new PathMatchingResourcePatternResolver(
+                    new FileSystemResourceLoader());
+            PathMatcher pathMatcher = new AntPathMatcher();
+            resolver.setPathMatcher(pathMatcher);
+
+            List<File> sourceDirectories = resolveSourceDirectories(resolver);
+
+            if (sourceDirectories.size() <= 0) {
+                log.warn("No source directories found with given source "
+                    + "directory patterns '" + sourceDirectoryIncludePatterns
+                    + "'. File aggregation will be skipped.");
+                return;
+            }
+
+            if (log.isInfoEnabled()) {
+                log.info("Following " + sourceDirectories.size()
+                    + " source dir(s) could be found:");
+                for (File sourceDirectory : sourceDirectories) {
+                    log.info(sourceDirectory.getAbsolutePath());
+                }
+            }
         
-        resolveSourceFiles(resolver, sourceDirectories);
+            resolveSourceFiles(resolver, sourceDirectories);
+        } catch (Exception e) {
+            throw new MojoExecutionException(e.getMessage());
+        }
     }
 
     /**
@@ -204,21 +208,29 @@ public class AggregateFilesMojo extends AbstractMojo {
      * 
      * @param resolver Is the resolver used for dir lookup.
      * @return Returns the list of source dirs.
-     * @throws MojoExecutionException On any execution problem.
      */
     protected List<File> resolveSourceDirectories(
         PathMatchingResourcePatternResolver resolver)
-        throws MojoExecutionException {
+        throws Exception {
         
         Log log = getLog();
-    
+        
         PathMatcher pathMatcher = resolver.getPathMatcher();
         List<File> sourceDirectories = new ArrayList<File>();
         if (sourceDirectoryIncludePatterns != null) {
             for (String dirPattern : m_dirIncludePatterns) {
                 try {
+                    File rootDir = new File(m_rootSourceDirectoryString);
+                    String rootDirURL = null;
+                    if (rootDir.exists()) {
+                        rootDirURL = rootDir.toURL().toString();
+                    } else {
+                        throw new Exception("Directory " 
+                            + m_rootSourceDirectoryString + " doesn't exist");
+                    }
+                    
                     Resource[] resources = resolver.getResources(
-                        m_rootSourceDirectoryString + "/" + dirPattern);
+                        rootDirURL + dirPattern);
                     for (Resource resource : resources) {
                         File dir = resource.getFile();
                         if (dir.isDirectory()) {
@@ -242,7 +254,7 @@ public class AggregateFilesMojo extends AbstractMojo {
                                         String excludeDirString 
                                             = StringUtils.replace(
                                                 excludeDir.getCanonicalPath(), 
-                                            File.separator, "/");
+                                                File.separator, "/");
                                         matchesExclude 
                                             = excludeDirString.equals(
                                                 dirString);
