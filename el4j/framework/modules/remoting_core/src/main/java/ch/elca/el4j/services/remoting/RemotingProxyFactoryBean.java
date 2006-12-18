@@ -72,8 +72,9 @@ public class RemotingProxyFactoryBean extends AbstractRemotingBase implements
         boolean useImplicitContextPassing = getRemoteProtocol().
             getImplicitContextPassingRegistry() != null;
         
-        if (useImplicitContextPassing) {
-            s_logger.info("Implicit context passing in enabled.");
+        if (useImplicitContextPassing 
+            && !getRemoteProtocol().getProtocolSpecificContextPassing()) {
+            s_logger.info("Implicit context passing enabled.");
             
             /**
              * Get the context class loader from current thread.
@@ -111,7 +112,13 @@ public class RemotingProxyFactoryBean extends AbstractRemotingBase implements
                     proxyInterface, invocationHandler);
             
         } else {
-            s_logger.warn("Implicit context passing in disabled.");
+            if (!getRemoteProtocol().getProtocolSpecificContextPassing()) {
+                s_logger.warn("Implicit context passing disabled.");
+            } else {
+                s_logger.info(
+                    "Protocol specific implicit context passing enabled.");
+            }
+
             serviceProxy = getRemoteProtocol().createProxyBean(this,
                     getServiceInterface());
         }
