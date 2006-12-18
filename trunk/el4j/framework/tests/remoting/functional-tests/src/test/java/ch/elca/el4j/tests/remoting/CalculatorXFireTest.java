@@ -15,6 +15,9 @@
  * For alternative licensing, please contact info@elca.ch
  */
 
+// Checkstyle: EmptyBlock off
+// Checkstyle: MagicNumber off
+
 package ch.elca.el4j.tests.remoting;
 
 import java.util.Arrays;
@@ -23,12 +26,14 @@ import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.tests.remoting.service.Calculator;
+import ch.elca.el4j.tests.remoting.service.CalculatorException;
 import ch.elca.el4j.tests.remoting.service.CalculatorValueObject;
 
 import junit.framework.TestCase;
 
 /**
  * This class is a test for the calculator.
+ * It uses the XFire Protocol with its default binding
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -38,6 +43,7 @@ import junit.framework.TestCase;
  * );</script>
  *
  * @author Rashid Waraich (RWA)
+ * @author Philippe Jacot (PJA)
  */
 public class CalculatorXFireTest extends TestCase {
     /**
@@ -59,8 +65,12 @@ public class CalculatorXFireTest extends TestCase {
                 new String[] {"classpath*:mandatory/*.xml",
                     "scenarios/client/remotingtests-xfire-client-config.xml"}, 
                     false);
-        m_calc 
-            = (Calculator) appContext.getBean("calculator");
+        setCalc((Calculator) appContext.getBean("calculator"));
+        
+        // TODO: Control me regularly
+        // Remove the proxy manually, until 
+        // http://jira.codehaus.org/browse/XFIRE-401 really is resolved
+        System.clearProperty("http.proxyHost");
     }
 
     /**
@@ -70,27 +80,22 @@ public class CalculatorXFireTest extends TestCase {
         final double VALUE_A = 2.3;
         final double VALUE_B = 5.7;
         final double FAULT_DELTA = 0.00000001;
-        double result = m_calc.getArea(VALUE_A, VALUE_B);
+        double result = getCalc().getArea(VALUE_A, VALUE_B);
         assertEquals("The area is not correctly calculated.", result, 
             VALUE_A * VALUE_B, FAULT_DELTA);
     }
     
     /**
      * This test tests the exception handling.
-     * 
-     * TODO: This test is commented out, because  throwing remote
-     * exceptions does not yet work for the XFire protocol.
      */
-//    public void testExceptionBehaviour() {
-//        try {
-//            m_calc.throwMeAnException();
-//            fail("No exception was thrown.");
-//        } catch (CalculatorException e) {
-//            // It's okay.
-//            String stackTrace = SoapHelper.getLastServerSideStackTrace();
-//            System.err.println(stackTrace);
-//        }
-//    }
+    public void testExceptionBehaviour() {
+        try {
+            getCalc().throwMeAnException();
+            fail("No exception was thrown.");
+        } catch (CalculatorException e) {
+            
+        }
+    }
     
     /**
      * This test tests the counting of uppercase letters.
@@ -98,7 +103,7 @@ public class CalculatorXFireTest extends TestCase {
     public void testNumberOfUppercaseCharacters() {
         String message = "Hans Müller likes to pay with Euro.";
         int numberOfUppercaseLetters = 3;
-        int result = m_calc.countNumberOfUppercaseLetters(message);
+        int result = getCalc().countNumberOfUppercaseLetters(message);
         assertEquals("The number of uppercase letter was not " 
             + "counted correctly.", result, numberOfUppercaseLetters);
     }
@@ -122,17 +127,32 @@ public class CalculatorXFireTest extends TestCase {
         o.setMyString(MY_STRING);
         o.setMyByteArray(MY_BYTE_ARRAY);
         
-        final double FAULT_DELTA = 0.00000001;
-        CalculatorValueObject echo = m_calc.echoValueObject(o);
+        CalculatorValueObject echo = getCalc().echoValueObject(o);
         assertEquals("Int values are not equals.", 
             o.getMyInt(), echo.getMyInt());
         assertEquals("Long values are not equals.", 
             o.getMyLong(), echo.getMyLong());
         assertEquals("Double values are not equals.", 
-            o.getMyDouble(), echo.getMyDouble(), FAULT_DELTA);
+            o.getMyDouble(), echo.getMyDouble(), DOUBLE_TOLERANCE);
         assertEquals("Strings are not equals.",
             o.getMyString(), echo.getMyString());
         assertTrue("Byte arrays are not equals.",
             Arrays.equals(o.getMyByteArray(), echo.getMyByteArray()));
+    }
+    
+    /**
+     * Get the calculator to use.
+     * @return Calculator to use
+     */
+    public Calculator getCalc() {
+        return m_calc;
+    }
+    
+    /**
+     * Set the calculator to use.
+     * @param calc The calculator to use
+     */
+    public void setCalc(Calculator calc) {
+        m_calc = calc;
     }
 }

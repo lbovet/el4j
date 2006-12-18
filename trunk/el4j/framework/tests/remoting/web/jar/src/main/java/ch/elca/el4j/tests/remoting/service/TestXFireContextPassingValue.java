@@ -14,19 +14,19 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-
 package ch.elca.el4j.tests.remoting.service;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * This is a value object for test reason.
+ * 
+ * This class is used to pass a comlex element through the implicit context.
+ * Its originally a copy of the <code>CalculatorValueObject</code>, 
+ * but uses different Annotations.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -35,36 +35,33 @@ import javax.xml.bind.annotation.XmlType;
  *    "$Author$"
  * );</script>
  *
- * @author Martin Zeltner (MZE)
+ * @author Philippe Jacot (PJA)
  */
+@XmlRootElement(name = "TestXFireContextPassingValue")
+@XmlType
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "")
-@XmlRootElement(
-      name = "CalculatorValueObject"
-)
-public class CalculatorValueObject {
+public class TestXFireContextPassingValue {
     /**
      * Int test value.
      */
-    @XmlElement(name = "myOwnInt")
+    
     private int m_myInt;
 
     /**
      * Long test value.
      */
-    @XmlElement(name = "myOwnLong")
     private long m_myLong;
     
     /**
      * Double test value.
      */
-    @XmlElement(name = "myOwnDouble")
+
     private double m_myDouble;
     
     /**
      * String test value.
      */
-    @XmlElement(name = "myOwnString")
+
     private String m_myString;
     
     /**
@@ -73,21 +70,18 @@ public class CalculatorValueObject {
      * There is no @XmlElementWrapper possible.
      * byte[] is translated to xs:base64Binary
      */
-    @XmlElement(name = "myOwnByteArray", type = byte[].class)
     private byte[] m_myByteArray;
     
     /**
      * String array test value.
      */
-    @XmlElementWrapper(name = "myOwnStrings")
-    @XmlElement(name = "myOwnStringArrayElement", type = String[].class)
+    @XmlElementWrapper(name = "myStrings")
     private String[] m_myStringArray;
     
     /**
      * String array test value.
      */
-    @XmlElementWrapper(name = "myOwnInts")
-    @XmlElement(name = "myOwnIntArrayElement", type = int[].class)
+    @XmlElementWrapper(name = "myInts")
     private int[] m_myIntArray;
 
     /**

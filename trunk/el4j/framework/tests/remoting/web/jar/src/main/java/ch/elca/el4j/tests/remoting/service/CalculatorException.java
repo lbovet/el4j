@@ -38,4 +38,13 @@ public class CalculatorException extends BaseException {
     public CalculatorException() {
         super("This is a test exception.", (Object[]) null);
     }
+    
+    /**
+     * Set the message. Used to serialize with XFire. If this is not wanted
+     * remove the exception test for xfire.
+     * @param message The message
+     */
+    public void setMessage(String message) {
+        m_message = message;
+    }
 }
