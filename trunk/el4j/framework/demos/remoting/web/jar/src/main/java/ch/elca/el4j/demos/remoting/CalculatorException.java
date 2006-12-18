@@ -38,4 +38,14 @@ public class CalculatorException extends BaseException {
     public CalculatorException() {
         super("This is a test exception.", (Object[]) null);
     }
+    
+    /**
+     * A setter for the message property is needed as XFire cannot initialize
+     * the exception otherwise.
+     * @param message The message of this Exception
+     */
+    public void setMessage(String message) {
+        m_message = message;
+    }
+
 }

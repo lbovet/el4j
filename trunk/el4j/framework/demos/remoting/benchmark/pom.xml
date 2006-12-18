@@ -39,11 +39,6 @@
             <scope>runtime</scope>
         </dependency>
     </dependencies>
-    
-    
-    
-    
-
     <build>
         <pluginManagement>
             <plugins>
@@ -51,9 +46,19 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>exec-maven-plugin</artifactId>
                     <configuration>
-                        <mainClass>
-                            ch.elca.el4j.demos.remoting.benchmark.RemotingBenchmark
-                        </mainClass>
+                    	<executable>
+                    		java
+                    	</executable>
+                    	<workingDirectory>
+                    		 ${basedir}/target/classes
+                    	</workingDirectory>
+                    	<arguments>
+	                        <argument>-classpath</argument>
+	                        <classpath/>
+	                        <argument>
+	                            ch.elca.el4j.demos.remoting.benchmark.RemotingBenchmark
+	                        </argument>
+	                     </arguments>
                         <keepAlive>false</keepAlive>
                     </configuration>
                 </plugin>
@@ -188,7 +193,7 @@
                             <execution>
                                 <phase>integration-test</phase>
                                 <goals>
-                                    <goal>java</goal>
+                                    <goal>exec</goal>
                                 </goals>
                             </execution>
                         </executions>

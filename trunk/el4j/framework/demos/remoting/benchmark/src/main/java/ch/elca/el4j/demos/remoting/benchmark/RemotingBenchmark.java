@@ -120,9 +120,15 @@ public class RemotingBenchmark {
      */
     private static Log s_logger 
         = LogFactory.getLog(RemotingBenchmark.class);
+    
+    /**
+     * Contains StackTraceElements of exceptions, which occured during the
+     * benchmark.
+     */
+    private static LinkedList s_stackTraceElements = new LinkedList();
 
     /**
-     * These are the tests, which has to be run.
+     * These are the tests, which have to be run.
      */
     private static String[] s_tests = {"rmiWithoutContextCalculator",
         "rmiWithContextCalculator", "hessianWithoutContextCalculator",
@@ -145,12 +151,6 @@ public class RemotingBenchmark {
      * This list contains the test results.
      */
     private List m_benchmarkResults = new LinkedList();
-
-    /**
-     * Contains StackTraceElements of exceptions, which occured during the
-     * benchmark.
-     */
-    private static LinkedList stackTraceElements=new LinkedList();
    
     /**
      * In this constructor a big text file will be loaded and an application
@@ -194,6 +194,13 @@ public class RemotingBenchmark {
      *            Are the arguments from console.
      */
     public static void main(String[] args) {
+        // As there is an error in XFire, the proxy settings are removed
+        // TODO: Please remove this, as soon as ...
+        // http://jira.codehaus.org/browse/XFIRE-401 
+        // finally is resolved.
+        String proxyHost = System.getProperty("http.proxyHost");
+        System.clearProperty("http.proxyHost");
+        
         RemotingBenchmark b = new RemotingBenchmark();
         System.out.println("Please wait, benchmarks are running...");
         for (int i = 0; i < s_tests.length; i++) {
@@ -208,6 +215,10 @@ public class RemotingBenchmark {
         
         
         printStackTrace();
+        
+        if (proxyHost != null) {
+            System.setProperty("http.proxyHost", proxyHost);
+        }
     }
     
     /**
@@ -223,7 +234,7 @@ public class RemotingBenchmark {
      * Print exceptions which occured during the benchmark.
      */
     private static void printStackTrace() {
-        int noOfStackTraces = stackTraceElements.size();
+        int noOfStackTraces = s_stackTraceElements.size();
         StackTraceElement[] currentTrace;
         
         if (noOfStackTraces > 0) {
@@ -233,7 +244,7 @@ public class RemotingBenchmark {
  
         for (int i = 0; i < noOfStackTraces; i++) {
             currentTrace
-                = ((StackTraceElement[]) stackTraceElements.removeFirst());
+                = ((StackTraceElement[]) s_stackTraceElements.removeFirst());
             for (int j = 0; j < currentTrace.length; j++) {
                 System.out.println(currentTrace[j]);
             }
@@ -465,7 +476,7 @@ public class RemotingBenchmark {
      *              The StackTraceElements to be added to the global list.
      */           
     private void addStackTraceElements(StackTraceElement[] stackTraceElem){
-        stackTraceElements.addLast(stackTraceElem);
+        s_stackTraceElements.addLast(stackTraceElem);
     }
 
     /**
