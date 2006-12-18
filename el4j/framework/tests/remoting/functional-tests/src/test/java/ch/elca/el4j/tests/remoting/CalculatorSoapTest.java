@@ -19,6 +19,8 @@ package ch.elca.el4j.tests.remoting;
 
 import java.util.Arrays;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
@@ -50,6 +52,12 @@ public class CalculatorSoapTest extends TestCase {
      * Is the delta to doubles can have to be equal.
      */
     private static final double DOUBLE_TOLERANCE = 0.000000001;
+    
+    /**
+     * Private logger.
+     */
+    private static Log s_logger 
+        = LogFactory.getLog(AbstractCalculatorTest.class);
     
     /**
      * Instance of the calculator proxy.
@@ -98,7 +106,8 @@ public class CalculatorSoapTest extends TestCase {
         } catch (CalculatorException e) {
             // It's okay.
             String stackTrace = SoapHelper.getLastServerSideStackTrace();
-            System.err.println(stackTrace);
+            s_logger.debug("Expected Exception caught:");
+            s_logger.debug(stackTrace);
         }
     }
     
@@ -119,7 +128,8 @@ public class CalculatorSoapTest extends TestCase {
                 sce.getMessage(), e.getMessage());
             
             String stackTrace = SoapHelper.getLastServerSideStackTrace();
-            System.err.println(stackTrace);
+            s_logger.debug("Expected Exception caught:");
+            s_logger.debug(stackTrace);
         }
     }
     
