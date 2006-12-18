@@ -139,7 +139,8 @@ public class RemotingServiceExporter extends AbstractRemotingBase implements
          */
         Object service = getApplicationContext().getBean(getService());
         
-        if (useImplicitContextPassing) {
+        if (useImplicitContextPassing && !getRemoteProtocol()
+            .getProtocolSpecificContextPassing()) {
             s_logger.info("Implicit context passing in enabled.");
             
             /**
@@ -168,7 +169,13 @@ public class RemotingServiceExporter extends AbstractRemotingBase implements
             exporterBean = getRemoteProtocol().createExporterBean(this,
                     serviceInterfaceWithContext, serviceProxy);
         } else {
-            s_logger.warn("Implicit context passing in disabled.");
+            if (!getRemoteProtocol().getProtocolSpecificContextPassing()) {
+                s_logger.warn("Implicit context passing in disabled.");
+            } else {
+                s_logger.info(
+                    "Protocol Specific implicit context passing in enabled.");
+            }
+            
             exporterBean = getRemoteProtocol().createExporterBean(this,
                     getServiceInterface(), service);
         }

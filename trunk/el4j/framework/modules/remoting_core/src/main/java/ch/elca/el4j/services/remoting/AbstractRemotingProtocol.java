@@ -71,7 +71,32 @@ public abstract class AbstractRemotingProtocol implements
      */
     private Set<ApplicationContext> m_chlidApplicationContexts
         = new LinkedHashSet<ApplicationContext>();
-
+    
+    /**
+     * State whether the protocol can candle the context on its own.
+     * Per default not.
+     */
+    private boolean m_protocolSpecificContextPassing = false;
+    
+    /**
+     * Does this protocol handle context passing on its own?
+     * @return Whether this protocol handles the context
+     */
+    public boolean getProtocolSpecificContextPassing() {
+        return m_protocolSpecificContextPassing;
+    }
+    
+    /**
+     * Set if this protocol should handle the context passing on its own.
+     * Enabling this will disable generic context passing, therefore only
+     * use this if the protocol handles the context.
+     * @param protocolSpecificContextPassing Should the context be handled?
+     */
+    public void setProtocolSpecificContextPassing(
+        boolean protocolSpecificContextPassing) {
+        m_protocolSpecificContextPassing = protocolSpecificContextPassing;
+    }
+    
     /**
      * @return Returns the implicitContextPassingRegistry.
      */
