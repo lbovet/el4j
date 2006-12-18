@@ -18,6 +18,7 @@ package ch.elca.el4j.plugins.filecollector;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -220,17 +221,9 @@ public class AggregateFilesMojo extends AbstractMojo {
         if (sourceDirectoryIncludePatterns != null) {
             for (String dirPattern : m_dirIncludePatterns) {
                 try {
-                    File rootDir = new File(m_rootSourceDirectoryString);
-                    String rootDirURL = null;
-                    if (rootDir.exists()) {
-                        rootDirURL = rootDir.toURL().toString();
-                    } else {
-                        throw new Exception("Directory " 
-                            + m_rootSourceDirectoryString + " doesn't exist");
-                    }
-                    
+                    String url = getUrl(m_rootSourceDirectoryString);        
                     Resource[] resources = resolver.getResources(
-                        rootDirURL + dirPattern);
+                        url + dirPattern);
                     for (Resource resource : resources) {
                         File dir = resource.getFile();
                         if (dir.isDirectory()) {
@@ -299,15 +292,15 @@ public class AggregateFilesMojo extends AbstractMojo {
         PathMatcher pathMatcher = resolver.getPathMatcher();
         
         for (File sourceDirectory : sourceDirectories) {
-            String sourceDirectoryString;
             try {
-                sourceDirectoryString = StringUtils.replace(
+                String sourceDirectoryString = StringUtils.replace(
                     sourceDirectory.getCanonicalPath(), File.separator, "/");
+                String url = getUrl(sourceDirectoryString);
                 int sourceDirectoryLength = sourceDirectoryString.length();
                 for (String filePattern : m_fileIncludePatterns) {
                     int fileCounter = 0;
-                    Resource[] resources = resolver.getResources(
-                        sourceDirectoryString + "/" + filePattern);
+                    Resource[] resources = resolver.getResources(url 
+                        + filePattern);
                     for (Resource resource : resources) {
                         File sourceFile = resource.getFile();
                         String sourceFileString = StringUtils.replace(
@@ -512,6 +505,22 @@ public class AggregateFilesMojo extends AbstractMojo {
                 + sourceFileExcludePatterns);
         } else {
             log.info("No source file exclude patterns are present.");
+        }
+    }
+    
+    /**
+     * Returns the URL for the file name given. 
+     * @param filename Filename we want URL of
+     * @return The URL of the filename
+     * @throws Exception
+     */
+    private String getUrl(String filename) throws Exception {
+        File dir = new File(filename);
+        if (dir.exists()) {
+            return dir.toURL().toString();
+        } else {
+            throw new Exception("File or directory " 
+                + filename + " doesn't exist");
         }
     }
 }
