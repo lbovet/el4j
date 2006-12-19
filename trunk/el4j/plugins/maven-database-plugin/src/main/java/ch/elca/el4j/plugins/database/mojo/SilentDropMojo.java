@@ -33,7 +33,7 @@ import ch.elca.el4j.plugins.database.AbstractDBMojo;
  *    "$Author$"
  * );</script>
  * 
- * @goal drop
+ * @goal silentDrop
  * @author David Stefan (DST)
  */
 public class SilentDropMojo extends AbstractDBMojo {
