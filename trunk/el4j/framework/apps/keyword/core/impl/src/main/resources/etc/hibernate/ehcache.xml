@@ -69,8 +69,8 @@
 	<cache name="ch.elca.el4j.apps.keyword.dom.Keyword"
 		maxElementsInMemory="500"
 		eternal="false"
-		timeToIdleSeconds="300"
-		timeToLiveSeconds="600"
+		timeToIdleSeconds="120"
+		timeToLiveSeconds="120"
 		overflowToDisk="false"
 	/>
 	
