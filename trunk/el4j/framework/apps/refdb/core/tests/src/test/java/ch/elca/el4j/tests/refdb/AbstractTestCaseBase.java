@@ -24,6 +24,7 @@ import javax.sql.DataSource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import ch.elca.el4j.apps.refdb.dao.AnnotationDao;
 import ch.elca.el4j.apps.refdb.dao.FileDao;
@@ -58,7 +59,7 @@ public abstract class AbstractTestCaseBase extends TestCase {
     /**
      * Application context to load beans.
      */
-    private ApplicationContext m_applicationContext;
+    private ConfigurableApplicationContext m_applicationContext;
 
     /**
      * Data source. Created by application context.
@@ -159,6 +160,14 @@ public abstract class AbstractTestCaseBase extends TestCase {
                 }
             }
         }
+    }
+    
+    @Override
+    protected void tearDown() throws Exception {
+        if (m_applicationContext != null) {
+            m_applicationContext.close();
+        }
+        super.tearDown();
     }
 
     /**
