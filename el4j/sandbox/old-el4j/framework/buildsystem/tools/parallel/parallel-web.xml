@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<!-- EL4Ant plugin definition -->
+<project name="parallel-web" 
+    xmlns:antcontrib="antlib:net.sf.antcontrib" 
+    xmlns:el4ant="antlib:ch.elca.el4ant">
+    <description>
+        Hook to start a web container parallely and to deploy a unit given as local ant target.
+    </description>
+
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <target name="configure" description="[C] Configure parallel-web plugin">
+        <el4ant:buildgen action="include" 
+            target="parallel-web.include.startpoint" />
+    </target>
+
+    <!-- Fake init target to load plugin file -->
+    <target name="init" />
+
+    <!-- Targets following the next fake target are copied into the generated build.xml file -->
+    <target name="parallel-web.include.startpoint" />
+
+    <!-- Targets from parallel-web.xml  -->
+    <target name="init.parallel-web">
+        <property name="parallel-web.wait" value="25" />
+        <fail message="Set the property 'check.web.readyness.port'">
+            <condition>
+                <not>
+                    <isset property="check.web.readyness.port" />
+                </not>
+            </condition>
+        </fail>
+    </target>
+
+    <target name="runtime.hook.parallel-web.start" 
+        depends="init, init.parallel-web" 
+        description="[R] Hook to start the web container parallely.">
+        
+        <el4ant:extendedproperty name="parallel-web.deploytarget" 
+            value="${parallel-web.deploytarget.${module}.${eu}}" />
+
+        <!-- Test if the web container is not already started -->
+        <antcontrib:if>
+            <not>
+                <socket server="${j2ee-web.host}" 
+                    port="${check.web.readyness.port}" />
+            </not>
+            <antcontrib:then>
+                <parallel>
+                    <!-- Start parallely and wait for availability -->
+                    <daemons>
+                        <sequential>
+                            <antcall target="start.web" />
+                        </sequential>
+                    </daemons>
+                    <sequential>
+                        <!-- wait until the web container has been started -->
+                        <waitfor maxwait="${parallel-web.wait}" 
+                            maxwaitunit="second">
+                            <socket server="${j2ee-web.host}" 
+                                port="${check.web.readyness.port}" />
+                        </waitfor>
+                    </sequential>
+
+                </parallel>
+            </antcontrib:then>
+        </antcontrib:if>
+
+        <!-- 
+            Security factor added. Wait a bit longer than until the readyness port 
+            is up, else first tests could fail.
+        -->
+        <sleep seconds="20" />
+
+        <!-- deploy application -->
+        <antcall target="${parallel-web.deploytarget}" />
+        <sleep seconds="5" />
+    </target>
+
+    <target name="runtime.hook.parallel-web.stop" 
+        depends="init, init.parallel-web" 
+        description="[R] Hook to stop the web container.">
+
+        <!-- Test if the web container is not already started -->
+        <antcontrib:if>
+            <socket server="${j2ee-web.host}" 
+                port="${check.web.readyness.port}" />
+            <antcontrib:then>
+                <parallel>
+                    <sequential>
+                        <antcall target="stop.web" />
+                    </sequential>
+                    <sequential>
+                        <waitfor maxwait="${parallel-web.wait}" 
+                            maxwaitunit="second">
+                            <not>
+                                <socket server="${j2ee-web.host}" 
+                                    port="${check.web.readyness.port}" />
+                            </not>
+                        </waitfor>
+                        <sleep seconds="15" />
+                    </sequential>
+                </parallel>
+            </antcontrib:then>
+        </antcontrib:if>
+    </target>
+    <!-- End  parallel-web.xml  -->
+</project>
