@@ -49,7 +49,7 @@ public class DropMojo extends AbstractDBMojo {
         try {
             executeAction(ACTION);
         } catch (Exception e) {
-            getLog().error("Error during drop", e);
+            throw new MojoExecutionException(e.getMessage());
         }
     }
 }
