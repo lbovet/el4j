@@ -649,7 +649,7 @@
         <module>plugins</module>
         <module>framework</module>
         <module>site</module>
-        <module>helpers</module>
+        <module>maven</module>
     </modules>
     <reporting>
         <plugins>
