@@ -24,5 +24,6 @@
     </description>
     <modules>
 		<module>helpers</module>
+		<module>archetypes</module>
     </modules>
 </project>
