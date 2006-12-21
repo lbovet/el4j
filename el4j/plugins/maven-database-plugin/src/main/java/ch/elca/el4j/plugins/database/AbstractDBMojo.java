@@ -349,13 +349,10 @@ public abstract class AbstractDBMojo extends AbstractMojo {
         }
 
         if (!sqlExceptions.isEmpty()) {
-            for (SQLException e : sqlExceptions) {
-                getLog()
-                    .error(
-                        "Encountered error during "
-                            + "execution of sql statements", e);
-            }
-            throw new Exception("Error during sql statement execution");
+            // If we encountered exceptions during execution, 
+            // throw new Exception and pass it first occured exception.
+            throw new Exception("Error during sql statement execution", 
+                sqlExceptions.get(0));
         }
     }
     
