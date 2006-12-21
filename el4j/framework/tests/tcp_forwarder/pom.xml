@@ -57,7 +57,7 @@
 						</configuration>
 						<goals>
 							<goal>start</goal>
-							<goal>drop</goal>
+							<goal>silentDrop</goal>
 							<goal>create</goal>
 						</goals>
 						<phase>pre-integration-test</phase>
