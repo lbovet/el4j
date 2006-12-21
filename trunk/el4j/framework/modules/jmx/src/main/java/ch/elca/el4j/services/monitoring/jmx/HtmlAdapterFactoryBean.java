@@ -20,6 +20,7 @@ package ch.elca.el4j.services.monitoring.jmx;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.StringUtils;
@@ -40,7 +41,9 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * 
  * @author Raphael Boog (RBO)
  */
-public class HtmlAdapterFactoryBean implements FactoryBean, InitializingBean {
+public class HtmlAdapterFactoryBean 
+    implements FactoryBean, InitializingBean, DisposableBean {
+    
     /**
      * The counter on the number of created HtmlAdaptorServers.
      */
@@ -270,5 +273,16 @@ public class HtmlAdapterFactoryBean implements FactoryBean, InitializingBean {
      */
     public HtmlAdaptorServer getHtmlAdaptorServer() {
         return m_htmlAdaptorServer;
+    }
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public void destroy() throws Exception {
+        // Try to stop the AdaptorServer
+        if (m_htmlAdaptorServer != null) {
+            m_htmlAdaptorServer.stop();
+        }
     }
 }
