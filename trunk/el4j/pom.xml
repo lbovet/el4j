@@ -213,7 +213,7 @@
                     <version>2.2</version>
                 </plugin>
                 <plugin>
-                    <groupId>ch.elca.el4j.plugins</groupId>
+                    <groupId>ch.elca.el4j.maven.plugins</groupId>
                     <artifactId>maven-env-support-plugin</artifactId>
                     <version>${version.maven-env-support-plugin}</version>
                     <executions>
@@ -334,7 +334,7 @@
                     </executions>
                 </plugin>
                 <plugin>
-                    <groupId>ch.elca.el4j.plugins</groupId>
+                    <groupId>ch.elca.el4j.maven.plugins</groupId>
                     <artifactId>maven-manifest-decorator-plugin</artifactId>
                     <version>${version.maven-manifest-decorator-plugin}</version>
                     <executions>
@@ -474,7 +474,7 @@
                     </executions>
                 </plugin>
                 <plugin>
-                    <groupId>ch.elca.el4j.plugins</groupId>
+                    <groupId>ch.elca.el4j.maven.plugins</groupId>
                     <artifactId>maven-checkclipse-helper-plugin</artifactId>
                     <version>${version.maven-checkclipse-helper-plugin}</version>
                     <executions>
@@ -619,12 +619,12 @@
 
                 <!-- Further EL4J specific plugins -->
                 <plugin>
-                    <groupId>ch.elca.el4j.plugins</groupId>
+                    <groupId>ch.elca.el4j.maven.plugins</groupId>
                     <artifactId>maven-repohelper-plugin</artifactId>
                     <version>${version.maven-repohelper-plugin}</version>
                 </plugin>
                 <plugin>
-                    <groupId>ch.elca.el4j.plugins</groupId>
+                    <groupId>ch.elca.el4j.maven.plugins</groupId>
                     <artifactId>maven-file-collector-plugin</artifactId>
                     <version>${version.maven-file-collector-plugin}</version>
                 </plugin>
@@ -646,10 +646,9 @@
     </build>
     <modules>
         <module>skin</module>
-        <module>plugins</module>
+        <module>maven</module>
         <module>framework</module>
         <module>site</module>
-        <module>maven</module>
     </modules>
     <reporting>
         <plugins>
