@@ -277,6 +277,6 @@
     
     <pluginGroups>
         <pluginGroup>org.codehaus.cargo</pluginGroup>
-        <pluginGroup>ch.elca.el4j.plugins</pluginGroup>
+        <pluginGroup>ch.elca.el4j.maven.plugins</pluginGroup>
     </pluginGroups>
 </settings>
