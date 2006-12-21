@@ -23,7 +23,7 @@ import javax.management.ObjectName;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
@@ -99,11 +99,13 @@ public class JmxTest extends TestCase {
     public void testRegisteredMBeanWithTwoAppCxtsAndOneJmxInstance()
         throws MalformedObjectNameException {
 
-        ApplicationContext tac1 = new ClassPathXmlApplicationContext(
-            new String[] {m_mandatoryFiles, m_fileName1});
+        ConfigurableApplicationContext tac1 
+            = new ClassPathXmlApplicationContext(
+                new String[] {m_mandatoryFiles, m_fileName1});
 
-        ApplicationContext tac2 = new ModuleApplicationContext(new String[] {
-            m_mandatoryFiles, m_fileName2}, false);
+        ConfigurableApplicationContext tac2 
+            = new ModuleApplicationContext(new String[] {
+                m_mandatoryFiles, m_fileName2}, false);
 
         ObjectName on1 = new ObjectName("MBean:name=foo1");
         ObjectName on2 = new ObjectName("MBean:name=foo2");
@@ -130,6 +132,9 @@ public class JmxTest extends TestCase {
         assertTrue("MBean with object name 'SpringBean2:name=foo2' is not "
             + "registered at the MBean Server", mBeanServer1.isRegistered(on4));
 
+        // Shut down the application contexts
+        tac1.close();
+        tac2.close();
     }
 
     /**
@@ -148,11 +153,13 @@ public class JmxTest extends TestCase {
     public void testRegisteredMBeanWithTwoAppCxtsAndTwoMBeanServers()
         throws MalformedObjectNameException {
 
-        ApplicationContext tac1 = new ClassPathXmlApplicationContext(
-            new String[] {m_mandatoryFiles, m_fileName3});
+        ConfigurableApplicationContext tac1 
+            = new ClassPathXmlApplicationContext(
+                new String[] {m_mandatoryFiles, m_fileName3});
 
-        ApplicationContext tac2 = new ClassPathXmlApplicationContext(
-            new String[] {m_mandatoryFiles, m_fileName4});
+        ConfigurableApplicationContext tac2 
+            = new ClassPathXmlApplicationContext(
+                new String[] {m_mandatoryFiles, m_fileName4});
 
         ObjectName on1 = new ObjectName("MBean:name=foo3");
         ObjectName on2 = new ObjectName("MBean:name=foo4");
@@ -192,5 +199,9 @@ public class JmxTest extends TestCase {
             throw new BaseRTException(message, e);
         }
         */
+        
+        // Shut down the application contexts
+        tac1.close();
+        tac2.close();
     }
 }
