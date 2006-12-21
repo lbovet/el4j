@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+    
+    <parent>
+        <groupId>ch.elca.el4j.maven</groupId>
+        <artifactId>el4j-maven</artifactId>
+        <version>1.1.1-SNAPSHOT</version>
+    </parent>
+    
+    <groupId>ch.elca.el4j.maven.plugins</groupId>
+    <artifactId>el4j-maven-plugins</artifactId>
+    <packaging>pom</packaging>
+    <name>EL4J plugins</name>
+    <description>
+        Maven 2 plugins of EL4J.
+    </description>
+    <build>
+        <plugins>
+            <!-- Packaging -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+    <modules>
+        <module>maven-checkclipse-helper-plugin</module>
+		<module>maven-database-plugin</module>
+        <module>maven-env-support-plugin</module>
+        <module>maven-repohelper-plugin</module>
+        <module>maven-manifest-decorator-plugin</module>
+        <module>maven-file-collector-plugin</module>
+        <module>maven-depgraph-plugin</module>
+    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+    </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-plugin-api</artifactId>
+                <version>${el4j.maven.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-project</artifactId>
+                <version>${el4j.maven.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.plexus</groupId>
+                <artifactId>plexus-utils</artifactId>
+                <version>1.2</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>${version.maven-plugin-plugin}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <version>${version.maven-jxr-plugin}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>taglist-maven-plugin</artifactId>
+                <version>${version.taglist-maven-plugin}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${version.maven-checkstyle-plugin}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>${version.maven-project-info-reports-plugin}</version>
+                <reportSets>
+                    <reportSet>
+                        <id>standardReports</id>
+                        <reports>
+                            <report>issue-tracking</report>
+                            <report>mailing-list</report>
+                            <report>project-team</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
+</project>
