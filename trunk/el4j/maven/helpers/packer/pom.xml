@@ -29,7 +29,7 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>ch.elca.el4j.plugins</groupId>
+                <groupId>ch.elca.el4j.maven.plugins</groupId>
                 <artifactId>maven-env-support-plugin</artifactId>
             </plugin>
         </plugins>
