@@ -25,7 +25,7 @@ import org.acegisecurity.GrantedAuthorityImpl;
 import org.acegisecurity.providers.TestingAuthenticationToken;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.security.authentication.AuthenticationService;
@@ -89,25 +89,42 @@ public class AuthorizationDistributedTest extends TestCase {
     /**
      * Application context.
      */
-    private ApplicationContext m_ac;
+    private ConfigurableApplicationContext m_ac;
 
-    /**
-     * Test tries to execute the target method without authentication.
-     * 
-     * @throws Exception If something.
+    
+   /**
+     * {@inheritDoc}
      */
-    public void testMethodCallWithoutLogin() throws Exception {
+    protected void setUp() throws Exception {
         s_logger.debug("Starting server.");
         AuthorizationServer.main(m_configLocationsServer);
         s_logger.debug("Server started. Loading client context.");
 
         m_ac = new ModuleApplicationContext(m_configLocationsClient, false);
         s_logger.debug("Client context loaded.");
-
+        super.setUp();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    protected void tearDown() throws Exception {
+        AuthorizationServer.close();
+        m_ac.close();
+        super.tearDown();
+    }
+    
+    /**
+     * Test tries to execute the target method without authentication.
+     * 
+     * @throws Exception
+     *             If something.
+     */
+    public void testMethodCallWithoutLogin() throws Exception {
         try {
             getSampleService().addOne(1234);
             fail("User should not be able to execute this method "
-                    + "without login");
+                + "without login");
         } catch (AuthenticationCredentialsNotFoundException e) {
             // o.k.
         }
@@ -120,13 +137,6 @@ public class AuthorizationDistributedTest extends TestCase {
      * @throws Exception If something.
      */
     public void testCorrectAuthorization() throws Exception {
-        s_logger.debug("Starting server.");
-        AuthorizationServer.main(m_configLocationsServer);
-        s_logger.debug("Server started. Loading client context.");
-
-        m_ac = new ModuleApplicationContext(m_configLocationsClient, false);
-        s_logger.debug("Client context loaded.");
-
         createSecureContext("server", "server", METHOD_ACCESS_ROLE);
         int result = getSampleService().addOne(1234);
         assertEquals(result, 1235);
@@ -140,13 +150,6 @@ public class AuthorizationDistributedTest extends TestCase {
      * @throws Exception If something.
      */
     public void testCorrectAuthorizationAfterLogoutNoAccess() throws Exception {
-        s_logger.debug("Starting server.");
-        AuthorizationServer.main(m_configLocationsServer);
-        s_logger.debug("Server started. Loading client context.");
-
-        m_ac = new ModuleApplicationContext(m_configLocationsClient, false);
-        s_logger.debug("Client context loaded.");
-
         createSecureContext("server", "server", METHOD_ACCESS_ROLE);
         int result = getSampleService().addOne(1234);
         assertEquals(result, 1235);
@@ -169,13 +172,6 @@ public class AuthorizationDistributedTest extends TestCase {
      * @throws Exception If something.
      */
     public void testFailedAuthorization() throws Exception {
-        s_logger.debug("Starting server.");
-        AuthorizationServer.main(m_configLocationsServer);
-        s_logger.debug("Server started. Loading client context.");
-
-        m_ac = new ModuleApplicationContext(m_configLocationsClient, false);
-        s_logger.debug("Client context loaded.");
-
         createSecureContext("test4", "test4", "ROLE_NO_PERMISSION");
 
         try {
@@ -193,13 +189,6 @@ public class AuthorizationDistributedTest extends TestCase {
      * @throws Exception If something.
      */
     public void testFailedAuthentication() throws Exception {
-        s_logger.debug("Starting server.");
-        AuthorizationServer.main(m_configLocationsServer);
-        s_logger.debug("Server started. Loading client context.");
-
-        m_ac = new ModuleApplicationContext(m_configLocationsClient, false);
-        s_logger.debug("Client context loaded.");
-
         try {
             createSecureContext("Different username", "than password", "");
             fail("User should not be able to authenticate since the password "
