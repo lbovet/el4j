@@ -347,6 +347,7 @@ public abstract class AbstractDBMojo extends AbstractMojo {
                 }
             }
         }
+        connection.close();
 
         if (!sqlExceptions.isEmpty()) {
             // If we encountered exceptions during execution, 
