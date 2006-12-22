@@ -50,8 +50,10 @@ public class SilentDropMojo extends AbstractDBMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
             executeAction(ACTION);
+            // Checkstyle: EmptyBlock off
         } catch (Exception e) {
             // ignore exceptions
         }
+        // Checkstyle: EmptyBlock on
     }
 }
