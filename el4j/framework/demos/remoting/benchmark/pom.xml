@@ -99,12 +99,15 @@
     </build>
     <profiles>
         <profile>
-            <id>manual</id>
-        </profile>
-        <profile>
             <id>auto</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>execute</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
             </activation>
             <build>
                 <plugins>
