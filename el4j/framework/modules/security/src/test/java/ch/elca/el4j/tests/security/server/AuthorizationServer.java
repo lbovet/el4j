@@ -16,7 +16,9 @@
  */
 package ch.elca.el4j.tests.security.server;
 
-import org.springframework.context.ApplicationContext;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 
@@ -35,27 +37,44 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
  * @author Andreas Pfenninger (APR)
  */
 public class AuthorizationServer {
-    /** The application context. */
-    private static ApplicationContext s_appContext;
-    
+
     /**
-     * Hide constructor.
-     *
+     * Logger.
      */
-    protected AuthorizationServer() { }
+    private static Log s_logger = LogFactory.getLog(AuthorizationServer.class);
+
+    /** The application context. */
+    private static ConfigurableApplicationContext s_appContext;
+
+    /**
+         * Hide constructor.
+         * 
+         */
+    protected AuthorizationServer() {
+    }
 
     /**
      * The main method.
      * 
      * @param args
-     *      Command line parameters.
+     *            Command line parameters.
      */
     public static void main(String[] args) {
         s_appContext = new ModuleApplicationContext(args, false);
         String[] str = s_appContext.getBeanDefinitionNames();
         for (int i = 0; i < str.length; i++) {
-            System.out.println(str[i]);
+            s_logger.info(str[i]);
+        }
+    }
+    
+    /**
+     * Close the application context after the AuthorizationServer has been
+     * used.
+     */
+    public static void close() {
+        if (s_appContext != null) {
+            s_appContext.close();
         }
     }
 }
-//Checkstyle: UncommentedMain on
+// Checkstyle: UncommentedMain on
