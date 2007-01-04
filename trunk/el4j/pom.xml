@@ -648,6 +648,7 @@
         <module>skin</module>
         <module>maven</module>
         <module>framework</module>
+        <module>demos</module>
         <module>site</module>
     </modules>
     <reporting>
