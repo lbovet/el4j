@@ -50,9 +50,6 @@
 							<connectionPropertiesSource>
 								scenarios/db/raw/pluginconfig-tcp-forwarder-tests-override-{db.name}.properties
 							</connectionPropertiesSource>
-							<sqlSourceDir>
-								/etc/*/general/, /etc/*/db2/
-							</sqlSourceDir>
 							<wait>false</wait>
 						</configuration>
 						<goals>
