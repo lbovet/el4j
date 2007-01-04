@@ -171,6 +171,15 @@
         </module>
 
 
+		<!-- Use of system.out instead of logger -->
+		<module name="GenericIllegalRegexp">
+		<!-- . matches any character, so we need to escape it and use \. to match dots. -->
+			<property name="format" value="System\.out\.print"/>
+			<property name="ignoreComments " value="true"/>
+			<property name="message" value="Use logger instead of system.out"/> 
+		</module>
+
+
         <!-- Modifiers -->
 
         <module name="ModifierOrder" />
