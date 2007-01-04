@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <parent>
+        <groupId>ch.elca.el4j.apps</groupId>
+        <artifactId>el4j-framework-apps-refdb-gui-tiger</artifactId>
+        <version>1.1.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>refdb-gui-tiger-thin-client</artifactId>
+    <version>${version.application-refdb}</version>
+    <packaging>jar</packaging>
+    <name>EL4J application refdb gui tiger thin-client</name>
+    <description>RefDb gui tiger thin-client module of the EL4J framework.</description>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>ch.elca.el4j.apps.refdb.gui.MainDistributed</mainClass>
+                    <keepAlive>true</keepAlive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>ch.elca.el4j.apps</groupId>
+            <artifactId>refdb-core-interface</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j.apps</groupId>
+            <artifactId>refdb-gui-tiger-common</artifactId>
+        </dependency>
+                
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-spring_rcp</artifactId>
+        </dependency>
+    </dependencies>
+</project>
