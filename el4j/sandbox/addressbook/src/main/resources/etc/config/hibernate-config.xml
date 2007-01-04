@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+
+<beans>
+	<import resource="classpath*:etc/properties/keyword-core-tests-property-override-configurer.xml"/>
+	<import resource="classpath*:scenarios/dataaccess/hibernate/hibernateDatabase.xml"/>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<!-- List of Hibernate mapping files -->
+		<property name="mappingResources">
+			<list>
+				<value>etc/hibernate/Contact.hbm.xml</value>
+			</list>
+		</property>
+		<!-- List of Hibernate properties -->
+		<property name="hibernateProperties">
+			<props>
+				
+				<!-- Database-specific Hibernate dialect. -->
+				<prop key="hibernate.dialect">
+					ch.elca.el4j.services.persistence.hibernate.dialect.PatchedDerbyDialect
+				</prop>
+
+				<!-- Cache provider -->
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+
+				<!-- Hibernate's outer join fetch behavior -->
+				<prop key="hibernate.max_fetch_depth">3</prop>
+			</props>
+		</property>
+        <property name="useTransactionAwareDataSource">
+        	<value>true</value>
+        </property>
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+</beans>

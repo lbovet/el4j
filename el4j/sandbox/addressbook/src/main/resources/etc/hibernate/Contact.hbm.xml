@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping>
+
+	<class name="ch.elca.el4j.addressbook.dom.Contact" table="CONTACTS">
+		<cache usage="read-write"/>
+		<id name="id">
+            <column name="CONTACTID"/>
+            <generator class="native">
+            	<param name="sequence">contact_sequence</param>
+            </generator>
+        </id>
+ <!--         
+        <version name="optimisticLockingVersion">
+        	<column name="OPTIMISTICLOCKINGVERSION"/>
+        </version>
+ -->       
+        <property name="firstName" type="string">
+            <column name="FIRSTNAME"/>
+        </property>
+        <property name="lastName" type="string">
+            <column name="LASTNAME"/>
+        </property>
+        <!--  
+		<property name="address" type="ch.elca.el4j.addressbook.dom.Address">
+            <column name="ADDRESS"/>
+        </property>
+        -->
+	</class>
+
+</hibernate-mapping>
