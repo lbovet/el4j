@@ -27,9 +27,14 @@ public class Calculator {
      * @param n2 Is the divisor number.
      * @return Returns the addition result.
      */
-    public double div(double n1, double n2) {
+    public static double div(double n1, double n2) {
         Reject.ifFalse(n2 != 0, "Divisor must not be zero!");
         return n1 / n2;
+    }
+    
+    public static void main(String[] args) {
+        System.out.println("Calculating 5 divided by 3");
+        System.out.println("The result is " + div(5d, 3d));
     }
     
 }
