@@ -72,7 +72,7 @@ public abstract class AbstractDBMojo extends AbstractMojo {
      * Path to properties file where connection properties (username, password 
      * and url)can be found.
      * 
-     * For this property, no prefix <code>classpath:*</code> is needed. 
+     * For this property, no prefix <code>classpath*:</code> is needed. 
      * Moreover it can include a generic <code>{db.name}</code> if a
      * <code>env.properties</code> file is provided (in the project dir).
      * 
@@ -83,7 +83,7 @@ public abstract class AbstractDBMojo extends AbstractMojo {
     /**
      * Path to properties file where JDBC driver name can be found.
      * 
-     * For this property, no prefix <code>classpath:*</code> is needed. 
+     * For this property, no prefix <code>classpath*:</code> is needed. 
      * Moreover it can include a generic <code>{db.name}</code> if a
      * <code>env.properties</code> file is provided (in the project dir).
      * 
@@ -127,7 +127,17 @@ public abstract class AbstractDBMojo extends AbstractMojo {
     /**
      * SQL Source Directories, i.e. directories where to find the .sql files.
      * 
-     * @parameter expression="${db.sqlSourceDir}"
+     * By convention these are <code>classpath*:/etc/sql/general/</code> for 
+     * sql files used by both database types and 
+     * <code>classpath*:/etc/sql/{db.name}/</code> for those sql files that are
+     * specific.
+     * 
+     * Note: if you use a non-default separator in your project you have to 
+     * state this parameter expclicetly as well as it uses the default separator
+     * in its default value.
+     * 
+     * @parameter expression="${db.sqlSourceDir}" default-value=
+     *  "/etc/sql/general/, /etc/sql/{db.name}/"
      */
     private String sqlSourceDir;
    
@@ -157,8 +167,8 @@ public abstract class AbstractDBMojo extends AbstractMojo {
      * @throws Exception
      */
     protected void executeAction(String goal) throws Exception {
-        // If no SQL Directories or properties given, skip goal
-        if (sqlSourceDir != null && connectionPropertiesSource != null) {
+        // If no connection properties are given, skip goal
+        if (connectionPropertiesSource != null) {
             processResources(getResources(getSqlSourcesPath(goal)), goal);
         }
     }
@@ -268,16 +278,20 @@ public abstract class AbstractDBMojo extends AbstractMojo {
      * Seperate source paths in sourceDir and return them as an array.
      * 
      * @return Array of source paths
+     * @throws Exception 
      */
-    private List<String> seperateSourcePath() {
+    private List<String> seperateSourcePath() throws Exception {
         int index;
+        String part;
         List<String> result = new ArrayList<String>();
         // Add seperator at end due to following algorithm
         if (!sqlSourceDir.endsWith(separator)) {
             sqlSourceDir = sqlSourceDir + separator;
         }
-        while ((index = sqlSourceDir.indexOf(separator)) != -1) {           
-            result.add(sqlSourceDir.substring(0, index).trim());
+        while ((index = sqlSourceDir.indexOf(separator)) != -1) {
+            part = getDataHolder()
+                .replaceDbName(sqlSourceDir.substring(0, index).trim());
+            result.add(part);
             // check if sourceDir has input after separator. If so, continue.
             int temp = sqlSourceDir.length();
             if (index < temp) {
@@ -363,8 +377,9 @@ public abstract class AbstractDBMojo extends AbstractMojo {
      * @param action
      *            mojo is implementing
      * @return array of sourcepaths
+     * @throws Exception 
      */
-    private List<String> getSqlSourcesPath(String action) {
+    private List<String> getSqlSourcesPath(String action) throws Exception {
         List<String> result = new ArrayList<String>();
         List<String> resources = seperateSourcePath();
         for (String str : resources) {
