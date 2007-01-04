@@ -34,9 +34,6 @@
 							<connectionPropertiesSource>
 								scenarios/db/raw/refdb-core-tests-override-{db.name}.properties
 							</connectionPropertiesSource>
-							<sqlSourceDir>
-								/etc/*/general/, /etc/*/db2/
-							</sqlSourceDir>
 							<wait>false</wait>
 						</configuration>
 						<goals>
@@ -80,9 +77,6 @@
 							<connectionPropertiesSource>
 								scenarios/db/raw/refdb-core-tests-override-{db.name}.properties
 							</connectionPropertiesSource>
-							<sqlSourceDir>
-								/etc/*/general/, /etc/*/db2/
-							</sqlSourceDir>
 							<wait>false</wait>
 						</configuration>
 						<goals>
