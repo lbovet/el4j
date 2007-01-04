@@ -1,0 +1,25 @@
+<projectDescription>
+  <name>module-detailed_statistics-demo</name>
+  <comment>Demos for detailed statistic modules of the EL4J framework.</comment>
+  <projects>
+    <project>module-detailed_statistics-jmx</project>
+    <project>module-detailed_statistics-common</project>
+    <project>module-core</project>
+    <project>module-remoting_core</project>
+    <project>module-jmx</project>
+  </projects>
+  <buildSpec>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javabuilder</name>
+      <arguments/>
+    </buildCommand>
+    <buildCommand>
+      <name>de.mvmsoft.checkclipse.CheckclipseBuilder</name>
+      <arguments/>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.eclipse.jdt.core.javanature</nature>
+    <nature>de.mvmsoft.checkclipse.CheckclipseNature</nature>
+  </natures>
+</projectDescription>
