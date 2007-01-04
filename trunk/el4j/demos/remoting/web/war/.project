@@ -1,0 +1,29 @@
+<projectDescription>
+  <name>module-remoting-demos-web-war</name>
+  <comment>War part of demo web module for remoting modules of the EL4J framework.</comment>
+  <projects>
+    <project>module-remoting-demos-web-jar</project>
+    <project>module-remoting_caucho</project>
+    <project>module-remoting_core</project>
+    <project>module-core</project>
+    <project>module-remoting_soap</project>
+    <project>module-remoting_xfire</project>
+    <project>module-web-jar</project>
+    <project>module-env</project>
+    <project>module-web-war</project>
+  </projects>
+  <buildSpec>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javabuilder</name>
+      <arguments/>
+    </buildCommand>
+    <buildCommand>
+      <name>de.mvmsoft.checkclipse.CheckclipseBuilder</name>
+      <arguments/>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.eclipse.jdt.core.javanature</nature>
+    <nature>de.mvmsoft.checkclipse.CheckclipseNature</nature>
+  </natures>
+</projectDescription>
