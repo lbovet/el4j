@@ -52,7 +52,6 @@
         <module>modules</module>
         <module>apps</module>
         <module>tests</module>
-        <module>demos</module>
     </modules>
     <dependencies>
         <dependency>
