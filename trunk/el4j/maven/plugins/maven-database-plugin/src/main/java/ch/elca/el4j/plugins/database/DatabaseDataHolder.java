@@ -58,6 +58,11 @@ public class DatabaseDataHolder {
      * Logger.
      */
     private static Log s_logger = LogFactory.getLog(DatabaseDataHolder.class);
+    
+    /**
+     * Placeholder for database name.
+     */
+    private static final String PLACEHOLDER = "{db.name}";
 
     /**
      * Classloader with all project dependend classes.
@@ -135,6 +140,26 @@ public class DatabaseDataHolder {
         loadDBName(m_projectURLs, dbName);
         loadConnectionProperties(connectionSource);
         loadDriverName(driverSource);
+    }
+    
+    /**
+     * Util method for replacing occurences in String, because 
+     *  replace method of String (and StringUtils) class doesn't work for this.
+     * 
+     * @param input String where we want to replace oldExpr
+     * @return New string
+     */
+    public String replaceDbName(String input) {
+        int old = PLACEHOLDER.length();
+        String result = input;
+        for (int i = 0; i + old < result.length(); i = i + 1) {
+            if (result.substring(i, i + old).equalsIgnoreCase(PLACEHOLDER)) {
+                String before = result.substring(0, i);
+                String after = result.substring(i + old, result.length());
+                result = before + m_dbName + after;
+            }
+        }
+        return result;   
     }
     
     /**
@@ -310,7 +335,7 @@ public class DatabaseDataHolder {
      */
     private void loadConnectionProperties(String sourceDir) throws Exception {
         try {
-            String source = replace(sourceDir, "{db.name}", m_dbName);
+            String source = replaceDbName(sourceDir);
             Resource[] resources = m_resolver
                 .getResources("classpath*:" + source);
             Properties properties = getProperties(resources);
@@ -332,7 +357,7 @@ public class DatabaseDataHolder {
      */
     private void loadDriverName(String sourceDir) throws Exception  {
         try {
-            String source = replace(sourceDir, "{db.name}", m_dbName);
+            String source = replaceDbName(sourceDir);
             Resource[] resources = m_resolver.getResources("classpath*:"
                 + source);
             Properties properties = getProperties(resources);
@@ -362,30 +387,7 @@ public class DatabaseDataHolder {
         } else {
             return null;
         }
-    }
-    
-    /**
-     * Util method for replacing occurences in String, because 
-     *  replace method of String (and StringUtils) class doesn't work for this.
-     * 
-     * @param input String where we want to replace oldExpr
-     * @param oldExpr Expression to replace
-     * @param newExpr New expression
-     * @return New string
-     */
-    private String replace(String input, String oldExpr, String newExpr) {
-        int old = oldExpr.length();
-        String result = input;
-        for (int i = 0; i + old < result.length(); i = i + 1) {
-            if (result.substring(i, i + old).equalsIgnoreCase(oldExpr)) {
-                String before = result.substring(0, i);
-                String after = result.substring(i + old, result.length());
-                result = before + newExpr + after;
-            }
-        }
-        return result;   
-    }
-    
+    } 
     
     /**
      * Checks if resource array contains only one element and if so, returns 
