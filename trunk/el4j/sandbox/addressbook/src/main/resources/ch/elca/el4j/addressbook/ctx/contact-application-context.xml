@@ -34,13 +34,14 @@
         </property>
         <property name="viewProperties">
             <map>
+            	
                 <entry key="myAddressBook" value-ref="myAddressbook"/>
             </map>
         </property>
     </bean>
 
 	<bean id="myAddressbook" class="ch.elca.el4j.addressbook.dom.Addressbook">
-		<property name="source" ref="dataSource"/>
+		<property name="daoRegistry" ref="daoRegistry"/>
 	</bean>
 
     <bean id="serviceLocator" class="org.springframework.richclient.application.ApplicationServicesLocator">

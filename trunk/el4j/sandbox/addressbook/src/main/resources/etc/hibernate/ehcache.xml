@@ -66,7 +66,7 @@
         disk cache, which in this configuration will go to wherever java.io.tmp is
         defined on your system.
     -->
-	<cache name="ch.elca.el4j.apps.keyword.dom.Keyword"
+	<cache name="ch.elca.el4j.addressbook.dom.Contact"
 		maxElementsInMemory="500"
 		eternal="false"
 		timeToIdleSeconds="300"

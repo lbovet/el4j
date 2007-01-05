@@ -4,9 +4,14 @@
 
 
 <beans>
-	<import resource="classpath*:etc/properties/keyword-core-tests-property-override-configurer.xml"/>
+	
+	<!-- Get connection properties -->
+	<import resource="classpath*:etc/properties/contacts-property-override-configurer.xml"/>
+	<!--  Data Source in Module Hibernate -->
 	<import resource="classpath*:scenarios/dataaccess/hibernate/hibernateDatabase.xml"/>
-
+	<!--  DB2 properties in Module Database -->
+	<import resource="classpath*:scenarios/db/raw/common-database-property-override-configurer.xml"/>
+	
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
 		<!-- List of Hibernate mapping files -->
@@ -36,6 +41,26 @@
         </property>
 		<property name="dataSource">
 			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<bean id="contactDao" parent="abstractDao" class="ch.elca.el4j.addressbook.dao.HibernateContactDao"/>
+	
+	<bean id="contactService"  
+	 	class="ch.elca.el4j.addressbook.dao.DefaultContactService">
+		<property name="daoRegistry">
+	 		<ref bean="daoRegistry"/>
+	 	</property> 	
+	</bean>
+	
+	<bean id="daoRegistry"
+		class="ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry">
+		<property name="daos">
+			<map>
+				<entry key="ch.elca.el4j.addressbook.dom.Contact">
+					<ref bean="contactDao"/>
+				</entry>
+			</map>
 		</property>
 	</bean>
 </beans>

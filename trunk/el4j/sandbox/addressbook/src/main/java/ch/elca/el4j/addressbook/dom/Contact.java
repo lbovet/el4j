@@ -38,7 +38,7 @@ import ch.elca.el4j.util.dom.annotations.MemberOrder;
  * in the domain object implementation.
  * 
  * <script type="text/javascript">printFileStatus
-*   ("$URL$",
+*   ("$URL: $",
     *    "$Revision$",
     *    "$Date$",
     *    "$Author$"
@@ -49,7 +49,9 @@ import ch.elca.el4j.util.dom.annotations.MemberOrder;
  */
 @MemberOrder({
     "firstName",
-    "lastName"
+    "lastName", 
+    "address",
+    "city"
 })
 @Entity
 public class Contact {
@@ -59,10 +61,10 @@ public class Contact {
      */
     private int m_id;
 
-    /**
-     * Contact type.
-     */
-    private ContactType m_contactType;
+//    /**
+//     * Contact type.
+//     */
+//    private ContactType m_contactType;
 
     /**
      * First name.
@@ -77,13 +79,22 @@ public class Contact {
     /**
      * Address.
      */
-    private Address m_address;
+    private String m_address;
+    
+    /**
+     * City.
+     */
+    private String m_city;
+    
+//    /**
+//     * Address.
+//     */
+//    private Address m_address;
     
     /**
      * Default constructor.
      */
     public Contact() {
-        setAddress(new Address(""));
     }
 
     /**
@@ -131,20 +142,20 @@ public class Contact {
         this.m_lastName = lastName;
     }
 
-    /**
-     * @return the contactType
-     */
-    public ContactType getContactType() {
-        return m_contactType;
-    }
-
-    /**
-     * @param contactType
-     *            the contactType to set
-     */
-    public void setContactType(ContactType contactType) {
-        this.m_contactType = contactType;
-    }
+//    /**
+//     * @return the contactType
+//     */
+//    public ContactType getContactType() {
+//        return m_contactType;
+//    }
+//
+//    /**
+//     * @param contactType
+//     *            the contactType to set
+//     */
+//    public void setContactType(ContactType contactType) {
+//        this.m_contactType = contactType;
+//    }
 
     /**
      * Compare two objects for equality. Just test their ids.
@@ -167,17 +178,30 @@ public class Contact {
     }
     
     /**
-     * @return the address
+     * @return address
      */
-    public Address getAddress() {
+    public String getAddress() {
         return m_address;
     }
 
     /**
-     * @param address
-     *            the address to set
+     * @param address to set
      */
-    public void setAddress(Address address) {
+    public void setAddress(String address) {
         this.m_address = address;
+    }
+
+    /**
+     * @return City
+     */
+    public String getCity() {
+        return m_city;
+    }
+
+    /**
+     * @param city to set
+     */
+    public void setCity(String city) {
+        m_city = city;
     }
 }

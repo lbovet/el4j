@@ -16,10 +16,10 @@
  */
 package ch.elca.el4j.addressbook.dom;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.sql.DataSource;
+import ch.elca.el4j.addressbook.dao.ContactDao;
+import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
 
 /**
  * 
@@ -37,32 +37,30 @@ import javax.sql.DataSource;
 public class Addressbook {
 
     /**
+     * Dao Registry.
+     */
+    private DefaultDaoRegistry m_daoRegistry;
+    
+    /**
      * My contacts.
      */
     private List<Contact> m_myContacts;
-    
-    /**
-     * Id for new contacts.
-     */
-    private int m_nextId = 0;
-    
-    /**
-     * Data Source.
-     */
-    private DataSource m_source;
 
    /**
     * Constructor.
     *
     */
     public Addressbook() {
-        fillContacts();
     }
     
     /**
      * @return My Contacts
      */
     public List<Contact> getMyContacts() {
+        if (m_myContacts == null) {
+            ContactDao dao = (ContactDao) m_daoRegistry.getFor(Contact.class);
+            m_myContacts = dao.findAll();
+        }
         return m_myContacts;
     }
 
@@ -72,69 +70,21 @@ public class Addressbook {
     public void setMyContacts(List<Contact> myContacts) {
         this.m_myContacts = myContacts;
     }
-    
-    /**
-     * Fill my contacts with data.
-     *
-     */
-    private void fillContacts() {
-        m_myContacts = new ArrayList<Contact>();
-        m_myContacts.add(makeContact("Larry", "Streepy", "123 Some St.",
-            "Apt. #26C", "New York", "NY", "10010", ContactType.BUSINESS));
-        m_myContacts.add(makeContact("Keith", "Donald", "456 WebFlow Rd.", "2",
-            "Cooltown", "NY", "10001", ContactType.BUSINESS));
-        m_myContacts.add(makeContact("Steve", "Brothers",
-            "10921 The Other Street", "", "Denver", "CO", "81234-2121",
-            ContactType.PERSONAL));
-        m_myContacts.add(makeContact("Carlos", "Mencia", "4321 Comedy Central",
-            "", "Hollywood", "CA", "91020", ContactType.PERSONAL));
-        m_myContacts.add(makeContact("Jim", "Jones", "1001 Another Place", "",
-            "Dallas", "TX", "71212", ContactType.PERSONAL));
-        m_myContacts.add(makeContact("Jenny", "Jones", "1001 Another Place", "",
-            "Dallas", "TX", "75201", ContactType.PERSONAL));
-        m_myContacts.add(makeContact("Greg", "Jones", "9 Some Other Place",
-            "Apt. 12D", "Chicago", "IL", "60601", ContactType.PERSONAL));
-    }
-    
 
     /**
-     * Create a new contact.
-     * @param first .
-     * @param last .
-     * @param address1 .
-     * @param address2 .
-     * @param city .
-     * @param state .
-     * @param zip .
-     * @param contactType .
+     * Getter.
      * @return .
      */
-    private Contact makeContact(String first, String last, String address1,
-        String address2, String city, String state, String zip,
-        ContactType contactType) {
-
-        Contact contact = new Contact();
-        contact.setId(m_nextId++);
-        contact.setContactType(contactType);
-        contact.setFirstName(first);
-        contact.setLastName(last);
-
-        Address address = contact.getAddress();
-        address.setAddress1(address1);
-        address.setAddress2(address2);
-        address.setCity(city);
-        address.setState(state);
-        address.setZip(zip);
-
-        return contact;
+    public DefaultDaoRegistry getDaoRegistry() {
+        return m_daoRegistry;
     }
 
-    public DataSource getSource() {
-        return m_source;
+    /**
+     * Setter.
+     * @param daoRegistry .
+     */
+    public void setDaoRegistry(DefaultDaoRegistry daoRegistry) {
+        this.m_daoRegistry = daoRegistry;
     }
-
-    public void setSource(DataSource source) {
-        this.m_source = source;
-    }
-
+    
 }

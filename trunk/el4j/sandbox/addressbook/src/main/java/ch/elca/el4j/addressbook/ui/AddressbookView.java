@@ -16,9 +16,8 @@
 package ch.elca.el4j.addressbook.ui;
 
 import java.awt.BorderLayout;
-import java.sql.Driver;
+import java.util.List;
 
-import javax.sql.DataSource;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -43,8 +42,10 @@ import ca.odell.glazedlists.TextFilterator;
 import ca.odell.glazedlists.matchers.MatcherEditor;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 
+import ch.elca.el4j.addressbook.dao.ContactDao;
 import ch.elca.el4j.addressbook.dom.Addressbook;
 import ch.elca.el4j.addressbook.dom.Contact;
+import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
 
 /**
  * This class provides the main view of the contacts. It provides a table
@@ -60,7 +61,7 @@ import ch.elca.el4j.addressbook.dom.Contact;
  * </ul>
  * 
  * <script type="text/javascript">printFileStatus
-*   ("$URL$",
+*   ("$URL: $",
     *    "$Revision$",
     *    "$Date$",
     *    "$Author$"
@@ -68,7 +69,8 @@ import ch.elca.el4j.addressbook.dom.Contact;
  * 
  * @author David Stefan (DST)
  */
-public class AddressbookView extends AbstractView implements ApplicationListener {
+public class AddressbookView extends AbstractView 
+    implements ApplicationListener {
 
     /**
      * Handler for the "New Contact" action.
@@ -103,6 +105,8 @@ public class AddressbookView extends AbstractView implements ApplicationListener
      * Addressbook form.
      */
     private AddressbookForm m_form;
+    
+    
 
     /**
      * Create the control for this view. This method is called by the platform
@@ -169,16 +173,7 @@ public class AddressbookView extends AbstractView implements ApplicationListener
          * {@inheritDoc}
          */
         public void execute() {
-            DataSource source = m_myAddressBook.getSource();
-            try {
-                Driver driver = (Driver) this.getClass().getClassLoader().loadClass("com.ibm.db2.jcc.DB2Driver").newInstance();
-                if (driver.acceptsURL("jdbc:derby:net://localhost:1527/\"keyword;create=true;\":retrieveMessagesFromServerOnGetMessage=true;")) {
-                }
-                source.getConnection();                
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            m_form.getNewFormObjectCommand().execute();
+             m_form.getNewFormObjectCommand().execute();
         }
     }
 

@@ -53,8 +53,9 @@ public class AddressbookForm extends AbstractTableMasterForm {
      * @return String[] array of property names
      */
     protected String[] getColumnPropertyNames() {
-        return new String[] {"firstName", "lastName", "address.address1", 
-            "address.address2"};
+//        return new String[] {"firstName", "lastName", "address.address1", 
+//            "address.address2"};
+        return new String[] {"firstName", "lastName", "address"};
     }
 
     /**
@@ -78,7 +79,7 @@ public class AddressbookForm extends AbstractTableMasterForm {
         tcm.getColumn(0).setPreferredWidth(100);
         tcm.getColumn(1).setPreferredWidth(100);
         tcm.getColumn(2).setPreferredWidth(100);
-        tcm.getColumn(3).setPreferredWidth(100);
+//        tcm.getColumn(3).setPreferredWidth(100);
         // Checkstyle: MagicNumber on
         return comp;
     }
@@ -88,7 +89,7 @@ public class AddressbookForm extends AbstractTableMasterForm {
      * This class is the detailed form of the master/detail pair.
      *
      * <script type="text/javascript">printFileStatus
-     *   ("$URL$",
+     *   ("$URL: $",
      *    "$Revision$",
      *    "$Date$",
      *    "$Author$"
@@ -119,19 +120,31 @@ public class AddressbookForm extends AbstractTableMasterForm {
                 = new TableFormBuilder(getBindingFactory());
             formBuilder.setLabelAttributes("colGrId=label colSpec=right:pref");
 
+//            formBuilder.row();
+//            formBuilder.add("firstName", "colSpan=1 align=left");
+//            formBuilder.add("address.address1", "colSpan=1 align=left");
+//           
+//            formBuilder.row();
+//            formBuilder.add("lastName", "colSpan=1 align=left");
+//            formBuilder.add("address.address2", "colSpan=1 align=left");
+//            formBuilder.row();
+//            formBuilder.add("contactType", "colSpan=1 align=left");
+//            formBuilder.row();
+//            formBuilder.row();
+//            formBuilder.getLayoutBuilder().cell(createButtonBar());
+
             formBuilder.row();
             formBuilder.add("firstName", "colSpan=1 align=left");
-            formBuilder.add("address.address1", "colSpan=1 align=left");
+            formBuilder.add("address", "colSpan=1 align=left");
            
             formBuilder.row();
             formBuilder.add("lastName", "colSpan=1 align=left");
-            formBuilder.add("address.address2", "colSpan=1 align=left");
+//            formBuilder.add("address.address2", "colSpan=1 align=left");
             formBuilder.row();
-            formBuilder.add("contactType", "colSpan=1 align=left");
             formBuilder.row();
             formBuilder.row();
             formBuilder.getLayoutBuilder().cell(createButtonBar());
-
+            
             updateControlsForState();
 
             return formBuilder.getForm();
