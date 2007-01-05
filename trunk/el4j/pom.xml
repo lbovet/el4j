@@ -645,10 +645,10 @@
         </extensions>
     </build>
     <modules>
-        <module>skin</module>
         <module>maven</module>
+        <module>skin</module>
         <module>framework</module>
-        <module>demos</module>
+        <module>applications</module>
         <module>site</module>
     </modules>
     <reporting>
