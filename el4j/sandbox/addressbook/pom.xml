@@ -19,6 +19,7 @@
 	<packaging>jar</packaging>
 	<name>Spring RCP Master/Detail Prototype</name>
 	<dependencies>
+		<!-- Spring dependencies --> 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring</artifactId>
@@ -63,6 +64,8 @@
 			<artifactId>glazedlists</artifactId>
 			<version>0.9.7</version>
 		</dependency>
+		
+		<!-- Dataaccess depenendcies -->
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-hibernate</artifactId>

@@ -24,11 +24,18 @@
         <property name="lastName" type="string">
             <column name="LASTNAME"/>
         </property>
-        <!--  
+         <property name="address" type="string">
+            <column name="ADDRESS"/>
+        </property>
+         <property name="city" type="string">
+            <column name="CITY"/>
+        </property>
+ <!--  
 		<property name="address" type="ch.elca.el4j.addressbook.dom.Address">
             <column name="ADDRESS"/>
         </property>
-        -->
+-->        
+        
 	</class>
 
 </hibernate-mapping>
