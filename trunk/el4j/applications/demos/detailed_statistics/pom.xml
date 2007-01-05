@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- $Revision$ -->
+	<!-- $URL$ -->
+	<!-- $Date$ -->
+	<!-- $Author$ -->
+
+	 <parent>
+        <groupId>ch.elca.el4j.applications</groupId>
+        <artifactId>el4j-demos</artifactId>
+        <version>1.1.1-SNAPSHOT</version>
+    </parent>
+
+	<artifactId>el4j-detailed_statistics-demo</artifactId>
+	<version>${version.module-detailed_statistics}</version>
+	<packaging>jar</packaging>
+	<name>EL4J demo detailed statistics</name>
+	 <description>
+        Demos for detailed statistic modules of the EL4J framework.
+    </description>
+	<dependencies>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-detailed_statistics-jmx</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-remoting_core</artifactId>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>
+						ch.elca.el4j.demos.statistics.detailed.DetailedStatisticsDemo
+					</mainClass>
+					<keepAlive>false</keepAlive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
