@@ -20,9 +20,6 @@
 
 package ch.elca.el4j.tests.remoting;
 
-import org.springframework.context.ApplicationContext;
-
-import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.tests.remoting.service.Calculator;
 
 /**
@@ -39,21 +36,22 @@ import ch.elca.el4j.tests.remoting.service.Calculator;
  *
  * @author Philippe Jacot (PJA)
  */
-public class CalculatorXFireJaxbAnnotatedTest extends CalculatorXFireTest {
-
+public class CalculatorXFireJaxbAnnotatedTest extends AbstractXFireTest {
+    
     /**
+     * A calculator.
+     */
+    private Calculator m_calc;
+    
+    /**
+     * 
      * {@inheritDoc}
      */
-    public void setUp() {
-        ApplicationContext appContext = new ModuleApplicationContext(
-            new String[] {"classpath*:mandatory/*.xml",
-                "scenarios/client/remotingtests-xfire-client-config.xml"}, 
-                false);
-        setCalc((Calculator) appContext.getBean("calculatorJaxbAnnotated"));
-        
-        // TODO: Control me regularly
-        // Remove the proxy manually, until 
-        // http://jira.codehaus.org/browse/XFIRE-401 really is resolved
-        System.clearProperty("http.proxyHost");
+    public Calculator getCalc() {
+        if (m_calc == null) {
+            m_calc = (Calculator) getApplicationContext().
+                getBean("calculatorJaxbAnnotated");
+        }
+        return m_calc;
     }
 }
