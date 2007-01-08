@@ -320,7 +320,13 @@ public class DatabaseDataHolder {
                 Properties properties = getProperties(resources);
                 m_dbName = properties.getProperty("db.name");
             } catch (Exception e) {
-                throw new Exception("Error reading env.properties", e);
+                Resource[] resources = 
+                    m_resolver.getResources("classpath*:env/env.properties");
+                try {
+                    m_dbName = getProperties(resources).getProperty("db.name");
+                } catch (Exception ex) {
+                    throw new Exception("Error reading env.properties", ex);
+                }
             }
         } else {
             m_dbName = dbName;
