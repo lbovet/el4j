@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+    Beans defined by module-core:
+       * sqlMapClientTemplate
+-->
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+    
+    <bean id="keywordDao" parent="abstractDao" class="ch.elca.el4j.applications.refdb.dao.impl.ibatis.ExtendedSqlMapKeywordDao"/>
+    <bean id="linkDao" parent="abstractDao" class="ch.elca.el4j.applications.refdb.dao.impl.ibatis.SqlMapLinkDao"/>
+    <bean id="formalPublicationDao" parent="abstractDao" class="ch.elca.el4j.applications.refdb.dao.impl.ibatis.SqlMapFormalPublicationDao"/>
+    <bean id="bookDao" parent="abstractDao" class="ch.elca.el4j.applications.refdb.dao.impl.ibatis.SqlMapBookDao"/>
+    <bean id="annotationDao" parent="abstractDao" class="ch.elca.el4j.applications.refdb.dao.impl.ibatis.SqlMapAnnotationDao"/>
+    <bean id="fileDao" parent="abstractDao" class="ch.elca.el4j.applications.refdb.dao.impl.ibatis.SqlMapFileDao"/>
+    <bean id="fileDescriptorViewDao" parent="abstractDao" class="ch.elca.el4j.applications.refdb.dao.impl.ibatis.SqlMapFileDescriptorViewDao"/>
+    
+</beans>

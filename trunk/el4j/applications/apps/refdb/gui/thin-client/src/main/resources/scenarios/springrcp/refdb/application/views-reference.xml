@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <!--
+        Reference table view descriptor. Describs the reference table view. This 
+        class is needed as factory for the given viewPrototypeBeanName. 
+    -->
+    <bean id="referenceTableView"
+        class="ch.elca.el4j.services.gui.richclient.views.descriptors.impl.LookupViewDescriptor">
+        <property name="viewPrototypeBeanName">
+            <idref bean="referenceTableViewTarget" />
+        </property>
+        <property name="preferredGroup" value="tableGroup"/>
+    </bean>
+
+    <!-- 
+        Reference table view target. Must be prototype! Implemented by user.
+    -->
+    <bean id="referenceTableViewTarget"
+        class="ch.elca.el4j.applications.refdb.gui.views.ReferenceView"
+        singleton="false">
+        <property name="beanTableModel">
+            <ref bean="referenceBeanTableModel" />
+        </property>
+        <property name="beanExecutors">
+            <list>
+                <ref bean="referencePropertiesExecutor" />
+            </list>
+        </property>
+    </bean>
+    
+    <!-- 
+        Table model for reference domain objects.
+    -->
+    <bean id="referenceBeanTableModel"
+        class="ch.elca.el4j.services.gui.richclient.models.BeanTableModel"
+        singleton="false">
+        <property name="beanClass"
+            value="ch.elca.el4j.applications.refdb.dom.Reference"/>
+        <property name="columnPropertyNames">
+            <list>
+                <!--
+                    List properties that must be displayed in shown table. The 
+                    order here is the same in shown table.
+                -->
+                <value>name</value>
+                <value>description</value>
+                <value>incomplete</value>
+                <value>version</value>
+                <value>hashValue</value>
+                <value>date</value>
+                <value>whenInserted</value>
+            </list>
+        </property>
+    </bean>
+    
+    <!--
+        Search view for references.
+    -->
+    <bean id="referenceSearchView"
+        class="ch.elca.el4j.services.gui.richclient.views.descriptors.impl.LookupViewDescriptor">
+        <property name="viewPrototypeBeanName">
+            <idref bean="referenceSearchViewTarget" />
+        </property>
+        <property name="preferredGroup" value="searchGroup"/>
+    </bean>
+
+    <!--
+        Search view target for references.
+    -->
+    <bean id="referenceSearchViewTarget"
+        class="ch.elca.el4j.services.gui.richclient.views.SearchView"
+        singleton="false">
+        <property name="searchItems">
+            <list>
+                <bean class="ch.elca.el4j.services.gui.search.LikeSearchItem"
+                    singleton="false">
+                    <property name="targetProperty" value="name"/>
+                    <property name="targetBeanClass" 
+                        value="ch.elca.el4j.applications.refdb.dom.Reference"/>
+                </bean>
+                <bean class="ch.elca.el4j.services.gui.search.LikeSearchItem"
+                    singleton="false">
+                    <property name="targetProperty" value="description"/>
+                    <property name="targetBeanClass" 
+                        value="ch.elca.el4j.applications.refdb.dom.Reference"/>
+                </bean>
+                <bean class="ch.elca.el4j.services.gui.search.ComparisonSearchItem"
+                    singleton="false">
+                    <property name="targetProperty" value="incomplete"/>
+                    <property name="targetBeanClass" 
+                        value="ch.elca.el4j.applications.refdb.dom.Reference"/>
+                    <property name="type" value="java.lang.Boolean"/>
+                </bean>
+                <bean class="ch.elca.el4j.services.gui.search.IncludeSearchItem"
+                    singleton="false">
+                    <property name="targetProperty" value="keywords"/>
+                    <property name="targetBeanClass" 
+                        value="ch.elca.el4j.applications.refdb.dom.Reference"/>
+                    <property name="type" value="java.util.List"/>
+                    <property name="specificBinder">
+                    	<bean class="ch.elca.el4j.services.gui.richclient.forms.binding.DynamicListBinder"
+                            singleton="false">
+                    		<property name="bindingClass" 
+                    			value="ch.elca.el4j.applications.refdb.gui.bindings.KeywordDynamicListBinding"/>
+                    	</bean>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+</beans>

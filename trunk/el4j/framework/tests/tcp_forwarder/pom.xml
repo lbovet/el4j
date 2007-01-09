@@ -24,7 +24,7 @@
         Test module for tcp forwarder module of the EL4J framework.
     </description>
     <dependencies>
-        <dependency>
+         <dependency>
             <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-tcp_forwarder</artifactId>
         </dependency>
@@ -33,9 +33,16 @@
             <artifactId>module-webtest</artifactId>
         </dependency>
         <dependency>
-            <groupId>ch.elca.el4j.apps</groupId>
-            <artifactId>keyword-core-tests</artifactId>
-            <type>test-jar</type>
+        	<groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-database</artifactId>
+        </dependency>
+        <dependency>
+        	<groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-env</artifactId>
+        </dependency>
+        <dependency>
+        	<groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-hibernate</artifactId>
         </dependency>
     </dependencies>
     <build>

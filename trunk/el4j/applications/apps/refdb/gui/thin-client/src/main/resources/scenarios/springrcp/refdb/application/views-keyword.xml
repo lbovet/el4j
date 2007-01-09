@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <!--
+        Keyword table view descriptor. Describs the keyword table view. This 
+        class is needed as factory for the given viewPrototypeBeanName. 
+    -->
+    <bean id="keywordTableView"
+        class="ch.elca.el4j.services.gui.richclient.views.descriptors.impl.LookupViewDescriptor">
+        <property name="viewPrototypeBeanName">
+            <idref bean="keywordTableViewTarget" />
+        </property>
+        <property name="preferredGroup" value="tableGroup"/>
+    </bean>
+
+    <!-- 
+        Keyword table view target. Must be prototype! Implemented by user.
+    -->
+    <bean id="keywordTableViewTarget"
+        class="ch.elca.el4j.applications.refdb.gui.views.KeywordView"
+        singleton="false">
+        <property name="beanTableModel">
+            <!--
+                Is the table model for keyword domain objects.
+            -->
+            <ref bean="keywordBeanTableModel" />
+        </property>
+        <property name="beanExecutors">
+            <!--
+                These are the executors for this view.
+            -->
+            <list>
+                <!--
+                    Executor to change keyword data.
+                -->
+                <ref bean="keywordPropertiesExecutor" />
+                <!--
+                    Executor to delete keywords.
+                -->
+                <ref bean="keywordDeleteExecutor" />
+                <!--
+                    Executor to select all displayed keywords.
+                -->
+                <ref bean="keywordSelectAllExecutor" />
+                <!--
+                    Executor to create a keyword.
+                -->
+                <ref bean="keywordCreateNewExecutor" />
+            </list>
+        </property>
+    </bean>
+    
+    <!-- 
+        Table model for keyword domain objects.
+    -->
+    <bean id="keywordBeanTableModel"
+        class="ch.elca.el4j.services.gui.richclient.models.BeanTableModel"
+        singleton="false">
+        <property name="beanClass"
+            value="ch.elca.el4j.applications.keyword.dom.Keyword"/>
+        <property name="columnPropertyNames">
+            <list>
+                <!--
+                    List properties that must be displayed in shown table. The 
+                    order here is the same in shown table.
+                -->
+                <value>name</value>
+                <value>description</value>
+            </list>
+        </property>
+    </bean>
+    
+    <!--
+        Keyword search view descriptor. Describs the keyword search view. This 
+        class is needed as factory for the given viewPrototypeBeanName.
+    -->
+    <bean id="keywordSearchView"
+        class="ch.elca.el4j.services.gui.richclient.views.descriptors.impl.LookupViewDescriptor">
+        <property name="viewPrototypeBeanName">
+            <idref bean="keywordSearchViewTarget" />
+        </property>
+        <property name="preferredGroup" value="searchGroup"/>
+    </bean>
+
+    <!--
+        Keyword search view target. Must be prototype!
+    -->
+    <bean id="keywordSearchViewTarget"
+        class="ch.elca.el4j.services.gui.richclient.views.SearchView"
+        singleton="false">
+        <property name="searchItems">
+            <list>
+                <bean class="ch.elca.el4j.services.gui.search.LikeSearchItem"
+                    singleton="false">
+                    <property name="targetProperty" value="name"/>
+                    <property name="targetBeanClass" 
+                        value="ch.elca.el4j.applications.keyword.dom.Keyword"/>
+                </bean>
+                <bean class="ch.elca.el4j.services.gui.search.LikeSearchItem"
+                    singleton="false">
+                    <property name="targetProperty" value="description"/>
+                    <property name="targetBeanClass" 
+                        value="ch.elca.el4j.applications.keyword.dom.Keyword"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+</beans>

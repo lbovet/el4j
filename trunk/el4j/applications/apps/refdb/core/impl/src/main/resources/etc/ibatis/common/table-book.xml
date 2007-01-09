@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="refdb-core">
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <!-- 
+        Book related invocations
+    -->
+    <resultMap id="book" 
+        class="ch.elca.el4j.applications.refdb.dom.Book">
+        <result property="key" column="KEYID"/>
+        <result property="name" column="NAME"/>
+        <result property="hashValue" column="HASHVALUE"/>
+        <result property="description" column="DESCRIPTION"/>
+        <result property="version" column="VERSION"/>
+        <result property="incomplete" column="INCOMPLETE"/>
+        <result property="whenInserted" column="WHENINSERTED"/>
+        <result property="date" column="DOCUMENTDATE"/>
+        <result property="authorName" column="AUTHORNAME"/>
+        <result property="publisher" column="PUBLISHER"/>
+        <result property="pageNum" column="PAGENUM"/>
+        <result property="isbnNumber" column="ISBNNUMBER"/>
+        <result property="optimisticLockingVersion" 
+            column="OPTIMISTICLOCKINGVERSION"/>
+        <result property="keywords" column="KEYID" 
+            select="getKeywordsByReferenceKey"/>
+    </resultMap>
+    <statement id="getBookByKey" 
+        parameterClass="int" resultMap="book">
+        select KEYID, NAME, HASHVALUE, DESCRIPTION, VERSION, INCOMPLETE, 
+            WHENINSERTED, DOCUMENTDATE, AUTHORNAME, PUBLISHER, PAGENUM, 
+            ISBNNUMBER, OPTIMISTICLOCKINGVERSION from BOOKS, REFERENCESTABLE
+                where KEYID=#value# 
+                    and KEYID=KEYTOREFERENCE
+    </statement>
+    <statement id="getBooksByName" 
+        parameterClass="java.lang.String" resultMap="book">
+        select KEYID, NAME, HASHVALUE, DESCRIPTION, VERSION, INCOMPLETE, 
+            WHENINSERTED, DOCUMENTDATE, AUTHORNAME, PUBLISHER, PAGENUM, 
+            ISBNNUMBER, OPTIMISTICLOCKINGVERSION from BOOKS, REFERENCESTABLE
+                where NAME=#value# 
+                    and KEYID=KEYTOREFERENCE
+    </statement>
+    <statement id="getAllBooks" resultMap="book">
+        select KEYID, NAME, HASHVALUE, DESCRIPTION, VERSION, INCOMPLETE, 
+            WHENINSERTED, DOCUMENTDATE, AUTHORNAME, PUBLISHER, PAGENUM, 
+            ISBNNUMBER, OPTIMISTICLOCKINGVERSION from BOOKS, REFERENCESTABLE
+                where KEYID=KEYTOREFERENCE
+    </statement>
+    
+    <select id="getAllBookKeys" resultClass="java.lang.Integer">
+    	select KEYID from BOOKS, REFERENCESTABLE where KEYID=KEYTOREFERENCE
+    </select>
+    
+    <select id="searchBooks" resultMap="book" 
+        parameterClass="list">
+        select distinct KEYID, NAME, HASHVALUE, DESCRIPTION, VERSION, INCOMPLETE, 
+            WHENINSERTED, DOCUMENTDATE, AUTHORNAME, PUBLISHER, PAGENUM, 
+            ISBNNUMBER, OPTIMISTICLOCKINGVERSION
+            from REFERENCESTABLE, BOOKS
+                where KEYID=KEYTOREFERENCE
+        <!--
+            HACK!
+            This will be replaced by an easier solution.
+            (MZE, 22/02/2006)
+        -->
+        <iterate prepend="and" conjunction="and">
+            <isEqual property="[].type" compareValue="comparisonBoolean">
+                <isEqual property="[].field" compareValue="incomplete">
+                    INCOMPLETE=#[].booleanValue#
+                </isEqual>
+            </isEqual>
+            <isEqual property="[].type" compareValue="like">
+                <isEqual property="[].field" compareValue="name">
+                    <isEqual property="[].caseSensitive" compareValue="true">
+                        NAME like #[].stringValue#
+                    </isEqual>
+                    <isNotEqual property="[].caseSensitive" compareValue="true">
+                        upper(NAME) like upper(#[].stringValue#)
+                    </isNotEqual>
+                </isEqual>
+                <isEqual property="[].field" compareValue="description">
+                    <isEqual property="[].caseSensitive" compareValue="true">
+                        DESCRIPTION like #[].stringValue#
+                    </isEqual>
+                    <isNotEqual property="[].caseSensitive" compareValue="true">
+                        upper(DESCRIPTION) like upper(#[].stringValue#)
+                    </isNotEqual>
+                </isEqual>
+            </isEqual>
+        </iterate>
+        <iterate prepend="and"
+            conjunction="and" >
+            <isEqual property="[].type" compareValue="include">
+                <isEqual property="[].field" compareValue="keywords">
+                    KEYID in (
+                        select KEYREFERENCE from REFERENCEKEYWORDRELATIONSHIPS 
+                            where KEYKEYWORD=#[].integerValue#)
+                </isEqual>
+            </isEqual>
+        </iterate>
+        order by NAME, DESCRIPTION
+    </select>
+
+	<delete id="deleteBook">
+        delete from BOOKS where KEYID=#key# AND
+        OPTIMISTICLOCKINGVERSION=#optimisticLockingVersion#
+    </delete>
+
+    <delete id="deleteBookById" parameterClass="int">
+        delete from BOOKS where KEYTOREFERENCE=#value#
+    </delete>
+</sqlMap>
