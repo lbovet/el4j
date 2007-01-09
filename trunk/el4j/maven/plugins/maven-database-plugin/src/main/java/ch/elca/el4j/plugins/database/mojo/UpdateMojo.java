@@ -19,7 +19,7 @@ package ch.elca.el4j.plugins.database.mojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
-import ch.elca.el4j.plugins.database.AbstractDBMojo;
+import ch.elca.el4j.plugins.database.AbstractDBExecutionMojo;
 
 /**
  * This class is a database mojo for the 'update' statement.
@@ -34,7 +34,7 @@ import ch.elca.el4j.plugins.database.AbstractDBMojo;
  * @goal update
  * @author David Stefan (DST)
  */
-public class UpdateMojo extends AbstractDBMojo {
+public class UpdateMojo extends AbstractDBExecutionMojo {
 
     /**
      * Action this mojo is implementing and identifier sql files have to start
@@ -47,7 +47,7 @@ public class UpdateMojo extends AbstractDBMojo {
      */
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
-            executeAction(ACTION);
+            executeAction(ACTION, true);
         } catch (Exception e) {
             throw new MojoFailureException(e.getMessage());
         }

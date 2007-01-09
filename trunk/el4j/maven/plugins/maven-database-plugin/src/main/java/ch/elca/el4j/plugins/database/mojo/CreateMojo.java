@@ -19,7 +19,8 @@ package ch.elca.el4j.plugins.database.mojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
-import ch.elca.el4j.plugins.database.AbstractDBMojo;
+import ch.elca.el4j.plugins.database.AbstractDBExecutionMojo;
+
 
 /**
  * This class is a database mojo for the 'create' statement.
@@ -35,7 +36,7 @@ import ch.elca.el4j.plugins.database.AbstractDBMojo;
  * @goal create
  * @author David Stefan (DST)
  */
-public class CreateMojo extends AbstractDBMojo {
+public class CreateMojo extends AbstractDBExecutionMojo {
 
     /**
      * Action this mojo is implementing and identifier sql files have to start
@@ -48,7 +49,7 @@ public class CreateMojo extends AbstractDBMojo {
      */
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
-            executeAction(ACTION);
+            executeAction(ACTION, true);
         } catch (Exception e) {
             throw new MojoFailureException(e.getMessage());
         }
