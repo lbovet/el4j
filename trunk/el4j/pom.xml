@@ -1282,19 +1282,19 @@
 
             <!-- Keyword -->
             <dependency>
-                <groupId>ch.elca.el4j.apps</groupId>
+                <groupId>ch.elca.el4j.applications</groupId>
                 <artifactId>keyword-core-interface</artifactId>
                 <version>${version.application-keyword}</version>
                 <type>jar</type>
             </dependency>
             <dependency>
-                <groupId>ch.elca.el4j.apps</groupId>
+                <groupId>ch.elca.el4j.applications</groupId>
                 <artifactId>keyword-core-impl</artifactId>
                 <version>${version.application-keyword}</version>
                 <type>jar</type>
             </dependency>
             <dependency>
-                <groupId>ch.elca.el4j.apps</groupId>
+                <groupId>ch.elca.el4j.applications</groupId>
                 <artifactId>keyword-core-tests</artifactId>
                 <version>${version.application-keyword}</version>
                 <type>test-jar</type>
@@ -1303,44 +1303,44 @@
 
             <!-- RefDb -->
             <dependency>
-                <groupId>ch.elca.el4j.apps</groupId>
+                <groupId>ch.elca.el4j.applications</groupId>
                 <artifactId>refdb-core-interface</artifactId>
                 <version>${version.application-refdb}</version>
                 <type>jar</type>
             </dependency>
             <dependency>
-                <groupId>ch.elca.el4j.apps</groupId>
+                <groupId>ch.elca.el4j.applications</groupId>
                 <artifactId>refdb-core-impl</artifactId>
                 <version>${version.application-refdb}</version>
                 <type>jar</type>
             </dependency>
             <dependency>
-                <groupId>ch.elca.el4j.apps</groupId>
+                <groupId>ch.elca.el4j.applications</groupId>
                 <artifactId>refdb-core-tests</artifactId>
                 <version>${version.application-refdb}</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>ch.elca.el4j.apps</groupId>
+                <groupId>ch.elca.el4j.applications</groupId>
                 <artifactId>refdb-gui-common</artifactId>
                 <version>${version.application-refdb}</version>
                 <type>jar</type>
             </dependency>
             <dependency>
-                <groupId>ch.elca.el4j.apps</groupId>
+                <groupId>ch.elca.el4j.applications</groupId>
                 <artifactId>refdb-gui-server-jar</artifactId>
                 <version>${version.application-refdb}</version>
                 <type>jar</type>
             </dependency>
             <dependency>
-                <groupId>ch.elca.el4j.apps</groupId>
+                <groupId>ch.elca.el4j.applications</groupId>
                 <artifactId>refdb-gui-thin-client</artifactId>
                 <version>${version.application-refdb}</version>
                 <type>jar</type>
             </dependency>
             <dependency>
-                <groupId>ch.elca.el4j.apps</groupId>
+                <groupId>ch.elca.el4j.applications</groupId>
                 <artifactId>refdb-gui-standalone-client</artifactId>
                 <version>${version.application-refdb}</version>
                 <type>jar</type>
