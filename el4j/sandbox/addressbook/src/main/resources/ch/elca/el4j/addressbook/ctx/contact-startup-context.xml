@@ -9,7 +9,7 @@
 	<!-- The SplashScreen class requires the location of the image to display -->
 	<bean id="splashScreen" class="org.springframework.richclient.application.SplashScreen">
 		<property name="imageResourcePath">
-			<value>/images/refdb-splash-screen.gif</value>
+			<value>/images/splash-screen.gif</value>
 		</property>
 	</bean>
 </beans>
