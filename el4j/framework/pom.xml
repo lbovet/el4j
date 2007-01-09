@@ -50,7 +50,6 @@
     </build>
     <modules>
         <module>modules</module>
-        <module>apps</module>
         <module>tests</module>
     </modules>
     <dependencies>

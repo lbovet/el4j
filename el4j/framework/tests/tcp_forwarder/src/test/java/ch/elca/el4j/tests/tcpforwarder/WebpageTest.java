@@ -18,7 +18,6 @@ package ch.elca.el4j.tests.tcpforwarder;
 
 import java.net.Inet4Address;
 import java.net.InetSocketAddress;
-import java.net.SocketAddress;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
