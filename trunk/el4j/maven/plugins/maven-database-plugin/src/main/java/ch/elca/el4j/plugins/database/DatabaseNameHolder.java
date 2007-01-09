@@ -31,7 +31,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 /**
  * 
- * This class is ...
+ * This class holds the DatabaseName.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
