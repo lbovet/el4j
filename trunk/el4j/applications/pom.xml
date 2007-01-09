@@ -50,6 +50,7 @@
         </plugins>
     </build>
     <modules>
+		<module>apps</module>
 		<module>demos</module>
         <module>templates</module> 
     </modules>
