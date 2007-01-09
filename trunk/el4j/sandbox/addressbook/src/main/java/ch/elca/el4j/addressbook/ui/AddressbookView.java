@@ -16,13 +16,13 @@
 package ch.elca.el4j.addressbook.ui;
 
 import java.awt.BorderLayout;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import org.springframework.binding.form.HierarchicalFormModel;
@@ -42,10 +42,8 @@ import ca.odell.glazedlists.TextFilterator;
 import ca.odell.glazedlists.matchers.MatcherEditor;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 
-import ch.elca.el4j.addressbook.dao.ContactDao;
 import ch.elca.el4j.addressbook.dom.Addressbook;
 import ch.elca.el4j.addressbook.dom.Contact;
-import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
 
 /**
  * This class provides the main view of the contacts. It provides a table
@@ -133,7 +131,7 @@ public class AddressbookView extends AbstractView
             = FormModelHelper.createFormModel(m_myAddressBook);
         m_form = new AddressbookForm(model, "myContacts", Contact.class);
         TextFilterator filterator = GlazedLists
-                .textFilterator(new String[] {"lastName", "address.address1"});
+                .textFilterator(new String[] {"lastName", "address"});
         MatcherEditor editor 
             = new TextComponentMatcherEditor(m_filterField, filterator);
         m_form.setFilterMatcherEditor(editor);
@@ -144,11 +142,15 @@ public class AddressbookView extends AbstractView
             m_form.getControl());
         view.add(filterPanel, BorderLayout.NORTH);
         view.add(sp, BorderLayout.CENTER);
-        
+
         // Need two lines to create TabbedPane
-        // JTabbedPane pane = new JTabbedPane();
-        // pane.add("Addressbook", view);
-        return view;
+        JTabbedPane pane = new JTabbedPane();
+        JTextField infoText = new JTextField("Here will be the explanation");
+        infoText.setEditable(false);
+        pane.add("Info", infoText);
+        pane.add("Addressbook", view);
+        pane.setSelectedIndex(1);
+        return pane;
     }
 
     /**

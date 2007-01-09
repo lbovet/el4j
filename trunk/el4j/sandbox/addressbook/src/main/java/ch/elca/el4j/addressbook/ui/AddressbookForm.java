@@ -55,7 +55,7 @@ public class AddressbookForm extends AbstractTableMasterForm {
     protected String[] getColumnPropertyNames() {
 //        return new String[] {"firstName", "lastName", "address.address1", 
 //            "address.address2"};
-        return new String[] {"firstName", "lastName", "address"};
+        return new String[] {"firstName", "lastName", "address", "city"};
     }
 
     /**
@@ -79,7 +79,7 @@ public class AddressbookForm extends AbstractTableMasterForm {
         tcm.getColumn(0).setPreferredWidth(100);
         tcm.getColumn(1).setPreferredWidth(100);
         tcm.getColumn(2).setPreferredWidth(100);
-//        tcm.getColumn(3).setPreferredWidth(100);
+        tcm.getColumn(3).setPreferredWidth(100);
         // Checkstyle: MagicNumber on
         return comp;
     }
@@ -139,7 +139,7 @@ public class AddressbookForm extends AbstractTableMasterForm {
            
             formBuilder.row();
             formBuilder.add("lastName", "colSpan=1 align=left");
-//            formBuilder.add("address.address2", "colSpan=1 align=left");
+            formBuilder.add("city", "colSpan=1 align=left");
             formBuilder.row();
             formBuilder.row();
             formBuilder.row();
