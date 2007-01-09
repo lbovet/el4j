@@ -34,7 +34,9 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 /**
  * 
- * This class is ...
+ * This class is the abstract Base for all DatabaseHolders. 
+ * It contains the enriched classloader as well as the Path matcher needed
+ * in its subclasses.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",

@@ -25,7 +25,8 @@ import org.springframework.core.io.Resource;
 
 /**
  * 
- * This class is ...
+ * This class holds the data needed to connect to a database, namely the 
+ * URL, the username, the password and the JDBC driver.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",

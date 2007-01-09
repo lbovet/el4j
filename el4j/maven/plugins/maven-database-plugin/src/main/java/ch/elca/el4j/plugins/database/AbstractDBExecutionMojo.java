@@ -35,7 +35,8 @@ import org.springframework.util.StringUtils;
 
 /**
  * 
- * This class is ...
+ * This class is the abstract class for all mojos, which are executing SQL
+ * statements. 
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",

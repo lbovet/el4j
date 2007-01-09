@@ -18,7 +18,9 @@ package ch.elca.el4j.plugins.database;
 
 /**
  * 
- * This class is ...
+ * This class is thrown wherever an exception is encountered during execution.
+ * We need this to be able to catch some of the exceptions we have thrown 
+ * earlier.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
