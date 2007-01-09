@@ -19,7 +19,7 @@ package ch.elca.el4j.plugins.database.mojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
-import ch.elca.el4j.plugins.database.AbstractDBMojo;
+import ch.elca.el4j.plugins.database.AbstractDBExecutionMojo;
 
 /**
  * This class is a database mojo for the 'silentDrop' statement. 
@@ -36,7 +36,7 @@ import ch.elca.el4j.plugins.database.AbstractDBMojo;
  * @goal silentDrop
  * @author David Stefan (DST)
  */
-public class SilentDropMojo extends AbstractDBMojo {
+public class SilentDropMojo extends AbstractDBExecutionMojo {
 
     /**
      * Action this mojo is implementing and identifier sql files have to start
@@ -49,7 +49,7 @@ public class SilentDropMojo extends AbstractDBMojo {
      */
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
-            executeAction(ACTION);
+            executeAction(ACTION, false);
             // Checkstyle: EmptyBlock off
         } catch (Exception e) {
             // ignore exceptions

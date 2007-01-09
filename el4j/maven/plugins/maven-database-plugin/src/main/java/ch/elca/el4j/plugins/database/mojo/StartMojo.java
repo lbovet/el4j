@@ -54,7 +54,7 @@ public class StartMojo extends AbstractDBMojo {
                 getLog().info("Starting database...");
                 DerbyNetworkServerStarter.setHomeDir(getDerbyLocation());
                 DerbyNetworkServerStarter.startNetworkServer();
-                if (this.wait) {
+                if (hasToWait()) {
                     Thread.sleep(DELAY);
                     getLog().info("Press Ctrl-C to stop Server");
                     try {
