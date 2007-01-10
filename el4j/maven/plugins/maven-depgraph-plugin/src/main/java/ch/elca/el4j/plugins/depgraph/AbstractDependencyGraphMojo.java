@@ -30,7 +30,6 @@ import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.resolver.AbstractArtifactResolutionException;
 import org.apache.maven.artifact.resolver.ArtifactCollector;
-import org.apache.maven.artifact.resolver.ArtifactResolutionResult;
 import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -99,9 +98,10 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
      * @parameter expression="${depgraph.versionFilter}"
      */
     private String versionFilter;
-    
+
     /**
      * Filter all empty artifacts.
+     * 
      * @parameter expression="${depgraph.filterEmptyArtifacts}"
      */
     private boolean filterEmptyArtifacts;
@@ -219,15 +219,13 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
 
         try {
 
-                m_artifactResolver.resolve(projectArtifact, m_project
+            m_artifactResolver.resolve(projectArtifact, m_project
                 .getRemoteArtifactRepositories(), m_localRepository);
-            
-            
-            ArtifactResolutionResult result = m_collector.collect(project.getDependencyArtifacts(), project
+
+            m_collector.collect(project.getDependencyArtifacts(), project
                 .getArtifact(), m_localRepository, project
                 .getRemoteArtifactRepositories(), m_artifactMetadataSource,
                 filter, Collections.singletonList(listener));
-            System.out.println(result);
 
         } catch (AbstractArtifactResolutionException e) {
             getLog().error("Error resolving artifacts", e);
@@ -243,20 +241,22 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
     protected File getOutFile() {
         return outFile;
     }
-    
+
     /**
      * Project the given graph.
-     * @param graph The graph to project
+     * 
+     * @param graph
+     *            The graph to project
      * @throws MojoExecutionException
      */
     protected void project(DependencyGraph graph) 
         throws MojoExecutionException {
-        
+
         if (filterEmptyArtifacts) {
             // Create a list artifacts someone is depending on
             Map<String, DepGraphArtifact> dependencies = new HashMap();
             List<DepGraphArtifact> dependants = graph.getArtifacts();
-            
+
             for (DepGraphArtifact a : dependants) {
                 for (DepGraphArtifact dep : a.getDependencies()) {
                     if (!dependencies.containsKey(dep.getQualifiedName())) {
@@ -264,23 +264,23 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
                     }
                 }
             }
-            
+
             for (DepGraphArtifact a : dependants) {
-                if (a.getDependencies().size() == 0 
+                if (a.getDependencies().size() == 0
                     && !dependencies.containsKey(a.getQualifiedName())) {
                     graph.removeArtifact(a);
                 }
             }
         }
-        
+
         if (graph.getArtifacts().size() == 0) {
             getLog().error(
                 "There were no Artifacts resolved. "
                     + "Maybe there's a problem with a user supplied filter.");
             throw new MojoExecutionException("No artifacts resolved");
-        }       
+        }
 
-        getProjector().project(graph); 
+        getProjector().project(graph);
     }
 
     /**
