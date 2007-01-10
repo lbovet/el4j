@@ -10,7 +10,7 @@
 	<!-- $Author$ -->
 
 	<bean id="keywordService"  
-	 	class="ch.elca.el4j.applications.keyword.service.impl.DefaultKeywordService">
+	 	class="ch.elca.el4j.apps.keyword.service.impl.DefaultKeywordService">
 		<property name="daoRegistry">
 	 		<ref bean="daoRegistry"/>
 	 	</property> 	

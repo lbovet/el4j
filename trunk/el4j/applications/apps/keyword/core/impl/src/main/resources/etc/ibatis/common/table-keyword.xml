@@ -13,7 +13,7 @@
         Keyword related invocations
     -->
     <resultMap id="keyword"
-        class="ch.elca.el4j.applications.keyword.dom.Keyword">
+        class="ch.elca.el4j.apps.keyword.dom.Keyword">
         <result property="key" column="KEYID" columnIndex="1" />
         <result property="name" column="NAME" columnIndex="2" />
         <result property="description" column="DESCRIPTION" columnIndex="3" />
