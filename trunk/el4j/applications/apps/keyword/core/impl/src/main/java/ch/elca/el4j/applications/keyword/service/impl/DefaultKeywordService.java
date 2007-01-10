@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.applications.keyword.service.impl;
+package ch.elca.el4j.apps.keyword.service.impl;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -25,9 +25,9 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.elca.el4j.applications.keyword.dao.KeywordDao;
-import ch.elca.el4j.applications.keyword.dom.Keyword;
-import ch.elca.el4j.applications.keyword.service.KeywordService;
+import ch.elca.el4j.apps.keyword.dao.KeywordDao;
+import ch.elca.el4j.apps.keyword.dom.Keyword;
+import ch.elca.el4j.apps.keyword.service.KeywordService;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 
