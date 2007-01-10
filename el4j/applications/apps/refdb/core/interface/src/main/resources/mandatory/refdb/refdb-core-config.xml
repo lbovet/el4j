@@ -12,25 +12,25 @@
     	class="ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry">
     	<property name="daos">
 			<map>
-				<entry key="ch.elca.el4j.applications.keyword.dom.Keyword">
+				<entry key="ch.elca.el4j.apps.keyword.dom.Keyword">
 					<ref bean="keywordDao"/>
 				</entry>
-				<entry key="ch.elca.el4j.applications.refdb.dom.Link">
+				<entry key="ch.elca.el4j.apps.refdb.dom.Link">
 					<ref bean="linkDao"/>
 				</entry>
-				<entry key="ch.elca.el4j.applications.refdb.dom.FormalPublication">
+				<entry key="ch.elca.el4j.apps.refdb.dom.FormalPublication">
 					<ref bean="formalPublicationDao"/>
 				</entry>
-				<entry key="ch.elca.el4j.applications.refdb.dom.Book">
+				<entry key="ch.elca.el4j.apps.refdb.dom.Book">
 					<ref bean="bookDao"/>
 				</entry>
-				<entry key="ch.elca.el4j.applications.refdb.dom.Annotation">
+				<entry key="ch.elca.el4j.apps.refdb.dom.Annotation">
 					<ref bean="annotationDao"/>
 				</entry>
-				<entry key="ch.elca.el4j.applications.refdb.dom.File">
+				<entry key="ch.elca.el4j.apps.refdb.dom.File">
 					<ref bean="fileDao"/>
 				</entry>
-				<entry key="ch.elca.el4j.applications.refdb.dom.FileDescriptorView">
+				<entry key="ch.elca.el4j.apps.refdb.dom.FileDescriptorView">
 					<ref bean="fileDescriptorViewDao"/>
 				</entry>
 			</map>
