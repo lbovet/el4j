@@ -12,6 +12,6 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
 
-	<bean id="keywordDao" parent="abstractDao" class="ch.elca.el4j.applications.keyword.dao.impl.ibatis.SqlMapKeywordDao"/>
+	<bean id="keywordDao" parent="abstractDao" class="ch.elca.el4j.apps.keyword.dao.impl.ibatis.SqlMapKeywordDao"/>
 		
 </beans>

@@ -27,9 +27,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
-import ch.elca.el4j.applications.keyword.dao.KeywordDao;
-import ch.elca.el4j.applications.keyword.dom.Keyword;
-import ch.elca.el4j.applications.keyword.service.KeywordService;
+import ch.elca.el4j.apps.keyword.dao.KeywordDao;
+import ch.elca.el4j.apps.keyword.dom.Keyword;
+import ch.elca.el4j.apps.keyword.service.KeywordService;
 import ch.elca.el4j.tests.keyword.AbstractTestCaseBase;
 
 // Checkstyle: MagicNumber off
