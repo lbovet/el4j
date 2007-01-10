@@ -115,7 +115,6 @@ class DepGraphResolutionListener implements ResolutionListener {
      * {@inheritDoc}
      */
     public void includeArtifact(Artifact artifact) {
-        s_log.info("---Include " + artifact.getArtifactId());
         if (!isFiltering()) {
             // Currently not in a tree that's filtered
             // Check if the given artifact should be filtered
@@ -218,7 +217,7 @@ class DepGraphResolutionListener implements ResolutionListener {
     /**
      * {@inheritDoc}
      */
-    public void testArtifact(Artifact node) { s_log.info("Test " + node.getArtifactId()); }
+    public void testArtifact(Artifact node) { }
 
     /**
      * {@inheritDoc}
