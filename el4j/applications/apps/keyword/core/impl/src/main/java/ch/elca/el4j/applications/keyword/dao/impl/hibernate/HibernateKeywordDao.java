@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.applications.keyword.dao.impl.hibernate;
+package ch.elca.el4j.apps.keyword.dao.impl.hibernate;
 
 import java.util.List;
 
@@ -23,8 +23,8 @@ import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.elca.el4j.applications.keyword.dao.KeywordDao;
-import ch.elca.el4j.applications.keyword.dom.Keyword;
+import ch.elca.el4j.apps.keyword.dao.KeywordDao;
+import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
 
 /**

@@ -14,15 +14,15 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.applications.keyword.dao.impl.ibatis;
+package ch.elca.el4j.apps.keyword.dao.impl.ibatis;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.elca.el4j.applications.keyword.dao.KeywordDao;
-import ch.elca.el4j.applications.keyword.dom.Keyword;
+import ch.elca.el4j.apps.keyword.dao.KeywordDao;
+import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.services.persistence.ibatis.dao.GenericSqlMapDao;
 import ch.elca.el4j.util.codingsupport.Reject;
 
