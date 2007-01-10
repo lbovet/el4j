@@ -173,7 +173,6 @@ public class DatabaseNameHolder extends AbstractDatabaseHolder {
                     }
                 }
             } catch (IOException e) {
-                e.printStackTrace();
                 throw new DatabaseHolderException(e);
 
             }

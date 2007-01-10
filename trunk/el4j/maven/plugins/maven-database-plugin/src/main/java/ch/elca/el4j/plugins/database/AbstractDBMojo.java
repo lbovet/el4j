@@ -107,7 +107,7 @@ public abstract class AbstractDBMojo extends AbstractMojo {
                 = new DatabaseNameHolder(repository, project, dbName);
             String db = holder.getDbName();
             return (db == null || db.equalsIgnoreCase("db2"));
-        } catch (DatabaseHolderException e) {
+        } catch (Exception e) {
             return true;
         }
     }
