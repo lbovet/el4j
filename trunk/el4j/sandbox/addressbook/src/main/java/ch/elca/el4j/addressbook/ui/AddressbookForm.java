@@ -1,14 +1,19 @@
 package ch.elca.el4j.addressbook.ui;
 
 import javax.swing.JComponent;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumnModel;
 
+import org.springframework.binding.form.FormModel;
 import org.springframework.binding.form.HierarchicalFormModel;
 import org.springframework.binding.value.ValueModel;
 import org.springframework.binding.value.support.ObservableList;
 import org.springframework.richclient.form.AbstractDetailForm;
 import org.springframework.richclient.form.AbstractTableMasterForm;
 import org.springframework.richclient.form.builder.TableFormBuilder;
+
+import ch.elca.el4j.addressbook.dao.ContactDao;
+import ch.elca.el4j.addressbook.dom.Contact;
 
 /**
  * 
@@ -29,6 +34,11 @@ public class AddressbookForm extends AbstractTableMasterForm {
      * Name of form.
      */
     public static final String FORM_NAME = "addressbook";
+    
+    /**
+     * The ContactDao.
+     */
+    private ContactDao m_dao;
 
     /**
      * Construct a new AddressbookForm using the given parent model and detail
@@ -53,8 +63,6 @@ public class AddressbookForm extends AbstractTableMasterForm {
      * @return String[] array of property names
      */
     protected String[] getColumnPropertyNames() {
-//        return new String[] {"firstName", "lastName", "address.address1", 
-//            "address.address2"};
         return new String[] {"firstName", "lastName", "address", "city"};
     }
 
@@ -84,23 +92,42 @@ public class AddressbookForm extends AbstractTableMasterForm {
         return comp;
     }
 
+    
     /**
-     * 
+     * Define what we would like to do when the delete command is executed.
+     */
+    @Override
+    protected void deleteSelectedItems() {
+        ListSelectionModel sm = getSelectionModel();
+
+        if (sm.isSelectionEmpty()) {
+            return;
+        }
+
+        getDetailForm().reset();
+
+        int min = sm.getMinSelectionIndex();
+        int max = sm.getMaxSelectionIndex();
+
+        // Loop backwards and delete each selected item in the interval
+        for (int index = max; index >= min; index--) {
+            if (sm.isSelectedIndex(index)) {
+                Contact contact = (Contact) getMasterEventList().getElementAt(
+                    index);
+                m_dao.delete(contact);
+                getMasterEventList().remove(index);
+            }
+        }
+    }
+    
+    /**
      * This class is the detailed form of the master/detail pair.
-     *
-     * <script type="text/javascript">printFileStatus
-     *   ("$URL: $",
-     *    "$Revision$",
-     *    "$Date$",
-     *    "$Author$"
-     * );</script>
-     *
-     * @author David Stefan (DST)
      */
     private class DetailForm extends AbstractDetailForm {
 
         /**
          * Constructor.
+         * 
          * @param parentFormModel .
          * @param formId .
          * @param childFormObjectHolder .
@@ -110,6 +137,24 @@ public class AddressbookForm extends AbstractTableMasterForm {
             ValueModel childFormObjectHolder, ObservableList masterList) {
             super(parentFormModel, formId, childFormObjectHolder, masterList);
 
+        }
+        
+        /**
+         * Do the database storing stuff in the postCommit of the detail form.
+         * {@inheritDoc}
+         */
+        @Override
+        public void postCommit(FormModel formModel) {
+            super.postCommit(formModel);
+            Contact entity = new Contact();
+            entity.setFirstName((String) formModel.getValueModel("firstName")
+                .getValue());
+            entity.setLastName((String) formModel.getValueModel("lastName")
+                .getValue());
+            entity.setAddress((String) formModel.getValueModel("address")
+                .getValue());
+            entity.setCity((String) formModel.getValueModel("city").getValue());
+            m_dao.saveOrUpdate(entity);
         }
 
         /**
@@ -149,5 +194,12 @@ public class AddressbookForm extends AbstractTableMasterForm {
 
             return formBuilder.getForm();
         }
+    }
+
+    /**
+     * @param dao The Dao we are using.
+     */
+    public void setDao(ContactDao dao) {
+        this.m_dao = dao;
     }
 }

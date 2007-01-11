@@ -38,13 +38,6 @@
 	
 	<bean id="contactDao" parent="abstractDao" class="ch.elca.el4j.addressbook.dao.HibernateContactDao"/>
 	
-	<bean id="contactService"  
-	 	class="ch.elca.el4j.addressbook.dao.DefaultContactService">
-		<property name="daoRegistry">
-	 		<ref bean="daoRegistry"/>
-	 	</property> 	
-	</bean>
-	
 	<bean id="daoRegistry"
 		class="ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry">
 		<property name="daos">
