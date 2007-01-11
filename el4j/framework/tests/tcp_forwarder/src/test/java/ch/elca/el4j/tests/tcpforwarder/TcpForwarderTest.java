@@ -29,7 +29,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
 import ch.elca.el4j.services.tcpforwarder.TcpForwarder;
-import ch.elca.el4j.tests.tcpforwarder.dao.Name;
+import ch.elca.el4j.tests.tcpforwarder.dom.Name;
 import ch.elca.el4j.util.env.EnvPropertiesUtils;
 
 import junit.framework.TestCase;

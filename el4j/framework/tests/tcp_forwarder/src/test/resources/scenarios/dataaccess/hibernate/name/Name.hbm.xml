@@ -5,7 +5,7 @@
     
 <hibernate-mapping>
 
-	<class name="ch.elca.el4j.tests.tcpforwarder.dao.Name" table="NAMES">
+	<class name="ch.elca.el4j.tests.tcpforwarder.dom.Name" table="NAMES">
 		<cache usage="read-write"/>
 		<id name="key">
             <column name="NAMEID"/>
