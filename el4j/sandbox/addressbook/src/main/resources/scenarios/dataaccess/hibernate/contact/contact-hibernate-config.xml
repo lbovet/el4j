@@ -4,6 +4,9 @@
 
 
 <beans>
+
+	<bean id="contactDao" parent="abstractDao" class="ch.elca.el4j.addressbook.dao.HibernateContactDao"/>
+
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
 		<!-- List of Hibernate mapping files -->
@@ -35,8 +38,6 @@
 			<ref bean="dataSource" />
 		</property>
 	</bean>
-	
-	<bean id="contactDao" parent="abstractDao" class="ch.elca.el4j.addressbook.dao.HibernateContactDao"/>
 	
 	<bean id="daoRegistry"
 		class="ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry">

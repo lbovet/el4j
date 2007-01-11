@@ -31,7 +31,7 @@
         </property>
         <property name="viewProperties">
             <map>
-            	
+            	<entry key="contactDao" value-ref="contactDao"/>
                 <entry key="myAddressBook" value-ref="myAddressbook"/>
             </map>
         </property>

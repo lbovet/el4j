@@ -5,12 +5,12 @@
 <helpset version="2.0">
 
 <!-- title -->
-<title>Spring Rich Simple Sample Help</title>
+<title>EL4J Example of the new Spring RCP (v.0.3)</title>
 
 <!-- maps -->
 <maps>
     <homeID>Overview</homeID>
-    <mapref location="simple.jhm" />
+    <mapref location="contact.jhm" />
 </maps>
 
 <!-- views -->
