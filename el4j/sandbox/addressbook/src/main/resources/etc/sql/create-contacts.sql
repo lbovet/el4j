@@ -4,4 +4,6 @@ CREATE TABLE contacts (
   lastname  VARCHAR(64) UNIQUE NOT NULL,
   address VARCHAR(64) UNIQUE NOT NULL,
   city VARCHAR(64) UNIQUE NOT NULL
+,
+  optimisticLockingVersion INTEGER NOT NULL
 );

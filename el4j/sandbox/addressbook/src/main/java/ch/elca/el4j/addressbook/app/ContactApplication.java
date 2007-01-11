@@ -37,7 +37,17 @@ public class ContactApplication {
      * Logger.
      */
     private static Log s_logger = LogFactory.getLog(ContactApplication.class);
-
+    
+    /**
+     * Spring config locations.
+     */
+    private static final String[] CONFIG_LOCATIONS = {
+        "classpath*:scenarios/db/raw/*.xml",
+        "classpath*:scenarios/dataaccess/hibernate/*.xml",
+        "classpath*:scenarios/dataaccess/hibernate/contact/contact-hibernate-config.xml",
+        "classpath*:optional/interception/transactionJava5Annotations.xml",
+        "classpath*:ch/elca/el4j/addressbook/ctx/contact-application-context.xml"
+    };
     /**
      * Main routine for the simple sample application.
      * 
@@ -61,17 +71,13 @@ public class ContactApplication {
         String startupContextPath = rootContextDirectoryClassPath
             + "/contact-startup-context.xml";
 
-        String richclientApplicationContextPath = rootContextDirectoryClassPath
-            + "/contact-application-context.xml";
-
         // The ApplicationLauncher is responsible for loading the contexts,
         // presenting the splash screen, initializing the Application
         // singleton instance, creating the application window to display
         // the initial page.
 
         try {
-            new ApplicationLauncher(startupContextPath,
-                new String[] {richclientApplicationContextPath});
+            new ApplicationLauncher(startupContextPath, CONFIG_LOCATIONS);
         } catch (RuntimeException e) {
             s_logger.error("RuntimeException during startup", e);
         }

@@ -4,20 +4,12 @@
 
 
 <beans>
-	
-	<!-- Get connection properties -->
-	<import resource="classpath*:etc/properties/contacts-property-override-configurer.xml"/>
-	<!--  Data Source in Module Hibernate -->
-	<import resource="classpath*:scenarios/dataaccess/hibernate/hibernateDatabase.xml"/>
-	<!--  DB2 properties in Module Database -->
-	<import resource="classpath*:scenarios/db/raw/common-database-property-override-configurer.xml"/>
-	
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
 		<!-- List of Hibernate mapping files -->
 		<property name="mappingResources">
 			<list>
-				<value>etc/hibernate/Contact.hbm.xml</value>
+				<value>scenarios/dataaccess/hibernate/contact/Contact.hbm.xml</value>
 			</list>
 		</property>
 		<!-- List of Hibernate properties -->

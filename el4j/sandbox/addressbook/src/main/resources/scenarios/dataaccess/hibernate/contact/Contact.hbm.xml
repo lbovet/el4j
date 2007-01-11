@@ -7,17 +7,17 @@
 
 	<class name="ch.elca.el4j.addressbook.dom.Contact" table="CONTACTS">
 		<cache usage="read-write"/>
-		<id name="id">
+		<id name="key">
             <column name="CONTACTID"/>
             <generator class="native">
             	<param name="sequence">contact_sequence</param>
             </generator>
         </id>
- <!--         
+          
         <version name="optimisticLockingVersion">
         	<column name="OPTIMISTICLOCKINGVERSION"/>
         </version>
- -->       
+        
         <property name="firstName" type="string">
             <column name="FIRSTNAME"/>
         </property>
