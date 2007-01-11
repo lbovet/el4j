@@ -44,12 +44,12 @@ public class ContactApplication {
     private static final String[] CONFIG_LOCATIONS = {
         "classpath*:scenarios/db/raw/*.xml",
         "classpath*:scenarios/dataaccess/hibernate/*.xml",
-        "classpath*:scenarios/dataaccess/hibernate/contact/contact-hibernate-config.xml",
+        "classpath*:mandatory/context/contact-application-context.xml",
         "classpath*:optional/interception/transactionJava5Annotations.xml",
-        "classpath*:ch/elca/el4j/addressbook/ctx/contact-application-context.xml"
+        "classpath*:scenarios/dataaccess/hibernate/contact/contact-hibernate-config.xml"
     };
     /**
-     * Main routine for the simple sample application.
+     * Main routine for the contact application.
      * 
      * @param args Parameters
      */
@@ -62,14 +62,11 @@ public class ContactApplication {
         //
         // Part of this configuration will indicate the initial page to be
         // displayed.
-
-        String rootContextDirectoryClassPath = "/ch/elca/el4j/addressbook/ctx";
-
         // The startup context defines elements that should be available
         // quickly such as a splash screen image.
 
-        String startupContextPath = rootContextDirectoryClassPath
-            + "/contact-startup-context.xml";
+        String startupContextPath 
+            = "classpath*:mandatory/context/contact-startup-context.xml";
 
         // The ApplicationLauncher is responsible for loading the contexts,
         // presenting the splash screen, initializing the Application

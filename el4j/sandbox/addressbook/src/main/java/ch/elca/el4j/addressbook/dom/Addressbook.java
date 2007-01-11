@@ -87,4 +87,11 @@ public class Addressbook {
         this.m_daoRegistry = daoRegistry;
     }
     
+    /**
+     * @return ContactDao
+     */
+    public ContactDao getContactDao() {
+        return (ContactDao) m_daoRegistry.getFor(Contact.class);
+    }
+    
 }
