@@ -42,6 +42,7 @@ import ca.odell.glazedlists.TextFilterator;
 import ca.odell.glazedlists.matchers.MatcherEditor;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 
+import ch.elca.el4j.addressbook.dao.ContactDao;
 import ch.elca.el4j.addressbook.dom.Addressbook;
 import ch.elca.el4j.addressbook.dom.Contact;
 
@@ -59,7 +60,7 @@ import ch.elca.el4j.addressbook.dom.Contact;
  * </ul>
  * 
  * <script type="text/javascript">printFileStatus
-*   ("$URL: $",
+*   ("$URL$",
     *    "$Revision$",
     *    "$Date$",
     *    "$Author$"
@@ -175,7 +176,18 @@ public class AddressbookView extends AbstractView
          * {@inheritDoc}
          */
         public void execute() {
-             m_form.getNewFormObjectCommand().execute();
+            
+            Contact con = new Contact();
+            con.setFirstName("Foo1");
+            con.setLastName("Bar1");
+            con.setAddress("11001011");
+            con.setCity("LA1");
+            
+            ContactDao dao = (ContactDao) m_myAddressBook.getDaoRegistry().getFor(Contact.class);
+            Contact con2 = dao.saveOrUpdate(con);
+            System.out.println(con2.getFirstName() + " " + con2.getKey());
+            
+//             m_form.getNewFormObjectCommand().execute();
         }
     }
 

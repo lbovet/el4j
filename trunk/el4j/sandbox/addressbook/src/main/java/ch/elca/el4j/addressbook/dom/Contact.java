@@ -17,6 +17,7 @@ package ch.elca.el4j.addressbook.dom;
 
 import javax.persistence.Entity;
 
+import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 import ch.elca.el4j.util.dom.annotations.MemberOrder;
 
 /**
@@ -38,7 +39,7 @@ import ch.elca.el4j.util.dom.annotations.MemberOrder;
  * in the domain object implementation.
  * 
  * <script type="text/javascript">printFileStatus
-*   ("$URL: $",
+*   ("$URL$",
     *    "$Revision$",
     *    "$Date$",
     *    "$Author$"
@@ -54,7 +55,7 @@ import ch.elca.el4j.util.dom.annotations.MemberOrder;
     "city"
 })
 @Entity
-public class Contact {
+public class Contact extends AbstractIntKeyIntOptimisticLockingDto {
 
     /**
      * Id.

@@ -13,7 +13,7 @@
         singleton="false">
         <property name="locations">
             <list>
-                <value>classpath:etc/properties/contacts-override-db2.properties</value>
+                <value>classpath:scenarios/db/raw/contacts-override-db2.properties</value>
             </list>
         </property>
         <property name="order" value="2"/>
