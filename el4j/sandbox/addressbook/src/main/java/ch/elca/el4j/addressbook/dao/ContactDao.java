@@ -24,8 +24,8 @@ import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
 
 /**
  * 
- * This interface represents a DAO for the keyword domain object.
- * It defines the methods which are specific to the keyword domain object. 
+ * This interface represents a DAO for the contact domain object.
+ * It defines the methods which are specific to the contact domain object. 
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -43,12 +43,12 @@ public interface ContactDao
      * Get contact by lastName.
      * 
      * @param lastname
-     *            Is the name of a keyword.
-     * @return Returns the desired keyword.
+     *            Is the name of a contact.
+     * @return Returns the desired contact.
      * @throws DataAccessException
      *             If general data access problem occurred.
      * @throws DataRetrievalFailureException
-     *             If keyword could not be retrieved.
+     *             If contact could not be retrieved.
      */
     public Contact getContactByLastName(String lastname)
         throws DataAccessException, DataRetrievalFailureException;

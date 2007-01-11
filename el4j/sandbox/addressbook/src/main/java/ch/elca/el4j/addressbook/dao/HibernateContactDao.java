@@ -28,7 +28,7 @@ import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
 
 /**
  * 
- * Implementation of the keyword DAO which is using Hibernate.
+ * Implementation of the contact DAO which is using Hibernate.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -44,7 +44,7 @@ public class HibernateContactDao
     implements ContactDao {
     
     /**
-     * Creates a new HibernateKeywordDao instance.
+     * Creates a new HibernateContactDao instance.
      */
     public HibernateContactDao() {
         setPersistentClass(Contact.class);

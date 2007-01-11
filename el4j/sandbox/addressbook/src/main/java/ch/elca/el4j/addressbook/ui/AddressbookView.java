@@ -42,6 +42,7 @@ import ca.odell.glazedlists.TextFilterator;
 import ca.odell.glazedlists.matchers.MatcherEditor;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 
+import ch.elca.el4j.addressbook.dao.ContactDao;
 import ch.elca.el4j.addressbook.dom.Addressbook;
 import ch.elca.el4j.addressbook.dom.Contact;
 
@@ -103,6 +104,11 @@ public class AddressbookView extends AbstractView
      * Addressbook form.
      */
     private AddressbookForm m_form;
+
+    /**
+     * Dao.
+     */
+    private ContactDao m_dao;
     
     
 
@@ -130,7 +136,7 @@ public class AddressbookView extends AbstractView
         HierarchicalFormModel model 
             = FormModelHelper.createFormModel(m_myAddressBook);
         m_form = new AddressbookForm(model, "myContacts", Contact.class);
-        m_form.setDao(m_myAddressBook.getContactDao());
+        m_form.setDao(m_dao);
         TextFilterator filterator = GlazedLists
                 .textFilterator(new String[] {"lastName", "address"});
         MatcherEditor editor 
@@ -249,5 +255,12 @@ public class AddressbookView extends AbstractView
      */
     public void setMyAddressBook(Addressbook myAddressBook) {
         this.m_myAddressBook = myAddressBook;
+    }
+    
+    /**
+     * @param dao Set the Contact Dao
+     */
+    public void setContactDao(ContactDao dao) {
+        m_dao = dao;
     }
 }
