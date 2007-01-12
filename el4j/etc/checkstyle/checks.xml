@@ -43,6 +43,14 @@
         <property name="onCommentFormat" value="Checkstyle: EmptyBlock on" />
         <property name="checkFormat" value="EmptyBlock" />
     </module>
+    <!-- Use logger filter -->
+    <module name="SuppressionCommentFilter">
+        <property name="offCommentFormat" value="Checkstyle: UseLogger off" />
+        <property name="onCommentFormat" value="Checkstyle: UseLogger on" />
+        <property name="checkFormat" value="GenericIllegalRegexp" />
+    </module>
+    
+    
     <!--
         MemberName filter
         
