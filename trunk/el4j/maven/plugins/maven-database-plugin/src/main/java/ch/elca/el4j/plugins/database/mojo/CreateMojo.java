@@ -49,7 +49,7 @@ public class CreateMojo extends AbstractDBExecutionMojo {
      */
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
-            executeAction(ACTION, true);
+            executeAction(ACTION, false);
         } catch (Exception e) {
             throw new MojoFailureException(e.getMessage());
         }

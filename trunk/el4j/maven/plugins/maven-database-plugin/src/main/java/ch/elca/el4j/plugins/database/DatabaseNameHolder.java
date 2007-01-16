@@ -65,10 +65,11 @@ public class DatabaseNameHolder extends AbstractDatabaseHolder {
      * @param repository Maven repository
      * @param project Maven project
      * @param dbName Name of database from maven parameter
+     * @param walker The dependency graph walker
      */
     public DatabaseNameHolder(ArtifactRepository repository, 
-        MavenProject project, String dbName) {
-        super(repository, project);
+        MavenProject project, DepGraphWalker walker, String dbName) {
+        super(repository, project, walker);
         loadDBName(getProjectURLs(), dbName);
     }
     
@@ -108,6 +109,7 @@ public class DatabaseNameHolder extends AbstractDatabaseHolder {
      *            Array of resources. Should only be one properties file
      * @return Properties object of file given
      * @throws IOException
+     * @throws IllegalAccessException
      */
     protected Properties getProperties(Resource[] resources) 
         throws IOException, IllegalAccessException {
@@ -134,8 +136,6 @@ public class DatabaseNameHolder extends AbstractDatabaseHolder {
      * 
      * @param urls The Project URLs (to build classpath)
      * @param dbName dbName from configuration tag in pom file
-     * @throws IOException 
-     * @throws IOException
      */
     private void loadDBName(List<URL> urls, String dbName) {
 
@@ -163,8 +163,7 @@ public class DatabaseNameHolder extends AbstractDatabaseHolder {
                 } catch (IllegalAccessException e) {
                     // Didn't find a env.properties file in the project
                     // Therefore, start looking in the dependencies
-                    resources = getResolver().getResources(
-                        "classpath*:env/env.properties");
+                    resources = getResources("classpath*:env/env.properties");
                     try {
                         m_dbName 
                             = getProperties(resources).getProperty("db.name");

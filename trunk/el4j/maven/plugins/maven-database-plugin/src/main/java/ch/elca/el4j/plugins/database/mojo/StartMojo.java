@@ -41,7 +41,7 @@ import ch.elca.el4j.plugins.database.util.derby.DerbyNetworkServerStarter;
 public class StartMojo extends AbstractDBMojo {
     
     /**
-     * Delay ensures that "Press ..." is last line in console.
+     * Delay ensures that "Press ..." is last line on console.
      */
     private static final int DELAY = 500;
     
