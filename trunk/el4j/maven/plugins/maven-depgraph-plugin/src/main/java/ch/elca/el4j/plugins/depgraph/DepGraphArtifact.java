@@ -49,6 +49,16 @@ public class DepGraphArtifact {
     private String m_version;
     
     /**
+     * The artifacts scope.
+     */
+    private String m_scope;
+    
+    /**
+     * The artifacts type.
+     */
+    private String m_type;
+    
+    /**
      * All dependencies of this artifact.
      */
     private Collection<DepGraphArtifact> m_artifacts 
@@ -60,8 +70,11 @@ public class DepGraphArtifact {
      * @param artifactId The id to set
      * @param groupId The group to set
      * @param version The version to set
+     * @param scope The scope to set
+     * @param type The type to set
      */
-    public DepGraphArtifact(String artifactId, String groupId, String version) {
+    public DepGraphArtifact(String artifactId, String groupId, String version,
+        String scope, String type) {
         if (artifactId == null) {
             throw new NullPointerException("ArtifactId null");
         }
@@ -77,6 +90,8 @@ public class DepGraphArtifact {
         m_artifactId = artifactId;
         m_groupId = groupId;
         m_version = version;
+        m_scope = scope;
+        m_type = type;
     }
     
     /**
@@ -101,6 +116,22 @@ public class DepGraphArtifact {
      */
     public String getVersion() {
         return m_version;
+    }
+    
+    /**
+     * Get this artifacts scope.
+     * @return The Scope
+     */
+    public String getScope() {
+        return m_scope;
+    }
+    
+    /**
+     * Get this artifacts type.
+     * @return The type.
+     */
+    public String getType() {
+        return m_type;
     }
     
     /**

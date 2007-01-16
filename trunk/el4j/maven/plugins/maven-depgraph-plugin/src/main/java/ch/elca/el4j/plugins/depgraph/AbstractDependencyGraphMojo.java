@@ -219,7 +219,7 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
 
         try {
 
-            m_artifactResolver.resolve(projectArtifact, m_project
+            m_artifactResolver.resolve(projectArtifact, project
                 .getRemoteArtifactRepositories(), m_localRepository);
 
             m_collector.collect(project.getDependencyArtifacts(), project
