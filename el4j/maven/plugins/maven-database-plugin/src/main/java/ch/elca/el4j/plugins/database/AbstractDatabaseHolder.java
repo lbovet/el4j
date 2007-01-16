@@ -16,9 +16,7 @@
  */
 package ch.elca.el4j.plugins.database;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -26,7 +24,6 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.project.MavenProject;
 import org.springframework.core.io.Resource;
@@ -79,21 +76,28 @@ public abstract class AbstractDatabaseHolder {
      * Constructor.
      * @param repository Maven repository for artifacts
      * @param project Maven project we're working on
+     * @param walker The Dependency GraphWalker
      */
     protected AbstractDatabaseHolder(ArtifactRepository repository, 
-        MavenProject project) {
+        MavenProject project, DepGraphWalker walker) {
         
-        m_dependencyURLs = getDependencyURLs(repository, project);
+        m_dependencyURLs = walker.getDependencyURLs();
         m_projectURLs = getProjectUrls(repository, project);
         createEnrichedClassloader(m_dependencyURLs, m_projectURLs);
     }
     
     /**
-     * @return The PathMatcher
+     * Get resources from the classloader.
+     * @param path Path of the resources to get
+     * @return Array of resources
      */
-    public PathMatchingResourcePatternResolver getResolver() {
-        return m_resolver;
-    } 
+    protected Resource[] getResources(String path) {
+        try {
+            return m_resolver.getResources(path);
+        } catch (IOException e) {
+            throw new DatabaseHolderException(e);
+        }
+    }
     
     /**
      * @return The URLs of project artifacts
@@ -117,7 +121,6 @@ public abstract class AbstractDatabaseHolder {
      * @param repo The artifact repository.
      * @param project The projects we're working on.
      * @return List of project's jar URLs
-     * @throws MalformedURLException
      */
     private ArrayList<URL> getProjectUrls(ArtifactRepository repo, 
             MavenProject project) {
@@ -158,33 +161,11 @@ public abstract class AbstractDatabaseHolder {
     }
     
     /**
-     * Collects and returns list of urls of all dependencies of this project. 
-     * 
-     * @param repo The artifact repository.
-     * @param project The projects we're working on.
-     * @return List of dependencies jar URLs
-     * @throws MalformedURLException
-     */
-    private List<URL> getDependencyURLs(ArtifactRepository repo, 
-            MavenProject project) {
-        List<URL> urls = new ArrayList<URL>();
-        // Iterate through test dependencies, because it contains more resources
-        for (Object obj : project.getTestArtifacts()) {
-            Artifact artifact = (Artifact) obj;
-            URL url = constructURL(repo.getBasedir(), repo.pathOf(artifact));
-            s_logger.info("Adding resource to classpath: " + url);
-            urls.add(url);
-        }
-        return urls;
-    }
-    
-    /**
      * Add all project dependencies as well as project specific resources
      * to actual classpath and generate PathResolver.
      * 
      * @param urls Urls from dependencies to include into classpath.
      * @param projectURLs URLs from project to include.
-     * @throws IOException
      */
     private void createEnrichedClassloader(List<URL> urls, 
         List<URL> projectURLs) {
@@ -195,26 +176,4 @@ public abstract class AbstractDatabaseHolder {
         m_resolver = new PathMatchingResourcePatternResolver(m_classloader);
     }
     
-    /**
-     * Constructs a URL from the given Base directory and the file path.
-     * 
-     * @param baseDir Base directory of maven repository.
-     * @param filePath Path of file we want URL for
-     * @return URL of this file
-     * @throws MalformedURLException
-     */
-    private URL constructURL(String baseDir, String filePath) {
-        String path = baseDir + "/" + filePath;
-        try {
-            File file = new File(path);
-            // check if file exist to avoid Exception
-            if (file.exists()) {
-                return file.toURL();
-            } else {
-                return null;
-            }
-        } catch (MalformedURLException e) {
-            throw new DatabaseHolderException(e);
-        }
-    }   
 }

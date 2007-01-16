@@ -108,11 +108,10 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
      * 
      * @param goal Goal to execute
      * @param reversed Should be statements processed in reverse order?
-     * @throws Exception
      */
     protected void executeAction(String goal, boolean reversed) {
         // If no connection properties are given, skip goal
-        if (connectionPropertiesSource != null) {
+        if (connectionPropertiesSource != null) {            
             List<Resource> resources = getResources(getSqlSourcesPath(goal));
             if (reversed) {
                 Collections.reverse(resources);
@@ -178,12 +177,12 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
         HashMap<URL, Resource> resourcesMap = new HashMap<URL, Resource>();
         Resource[] resources;
         DatabaseNameHolder holder = new DatabaseNameHolder(getRepository(),
-            getProject(), getDbName());
+            getProject(), getGraphWalker(), getDbName());
         List<Resource> result = new ArrayList<Resource>();
 
         try {
             for (String source : sourcePaths) {
-                resources = holder.getResolver().getResources(source);
+                resources = holder.getResources(source);
                 for (Resource resource : resources) {
                     if (!resourcesMap.containsKey(resource.getURL())) {
                         result.add(resource);
@@ -203,12 +202,10 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
      * @param action
      *            mojo is implementing
      * @return array of sourcepaths
-     * @throws Exception 
      */
     private List<String> getSqlSourcesPath(String action) {
         List<String> result = new ArrayList<String>();
-        List<String> resources = seperateSourcePath();
-        for (String str : resources) {
+        for (String str : seperateSourcePath()) {
             result.add("classpath*:" + str + action + "*.sql");
         }
         return result;
@@ -218,14 +215,13 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
      * Seperate source paths in sourceDir and return them as an array.
      * 
      * @return Array of source paths
-     * @throws Exception 
      */
     private List<String> seperateSourcePath() {
         int index;
         String part;
         List<String> result = new ArrayList<String>();
         DatabaseNameHolder holder = new DatabaseNameHolder(
-            getRepository(), getProject(), getDbName());
+            getRepository(), getProject(), getGraphWalker(), getDbName());
         // Add seperator at end due to following algorithm
         if (!sqlSourceDir.endsWith(separator)) {
             sqlSourceDir = sqlSourceDir + separator;
@@ -252,8 +248,6 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
      * @param fileURL
      *            URL of the file
      * @return List of statements
-     * @throws IOException 
-     * @throws IOException
      */
     private List<String> extractStmtsFromFile(URL fileURL) {
         ArrayList<String> result = new ArrayList<String>();
@@ -293,13 +287,13 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
      * Establish a database connection.
      * 
      * @return the connection established
-     * @throws Exception
      */
     private Connection getConnection() {
         ConnectionPropertiesHolder holder 
             = new ConnectionPropertiesHolder(
                 getRepository(),
                 getProject(), 
+                getGraphWalker(),
                 getDbName(), 
                 connectionPropertiesSource, 
                 driverPropertiesSource);

@@ -16,7 +16,11 @@
  */
 package ch.elca.el4j.plugins.database;
 
+import org.apache.maven.artifact.factory.ArtifactFactory;
+import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
 import org.apache.maven.artifact.repository.ArtifactRepository;
+import org.apache.maven.artifact.resolver.ArtifactCollector;
+import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.project.MavenProject;
 
@@ -86,7 +90,35 @@ public abstract class AbstractDBMojo extends AbstractMojo {
      * @readonly
      */
     private ArtifactRepository repository;
-
+    
+    
+    /**
+     * @component
+     */
+    private ArtifactMetadataSource artifactMetadataSource;
+    
+    /**
+     * Collector.
+     * 
+     * @component
+     */
+    private ArtifactCollector collector;
+    
+    /**
+     * @component
+     */
+    private ArtifactFactory factory;
+    
+    /**
+     * @component
+     */
+    private ArtifactResolver artifactResolver;
+    
+    /**
+     * The Dependency Graph Walker.
+     */
+    private DepGraphWalker graphWalker;
+    
     // Checkstyle: MemberName on
    
     /**
@@ -104,7 +136,8 @@ public abstract class AbstractDBMojo extends AbstractMojo {
          */
         try {
             DatabaseNameHolder holder 
-                = new DatabaseNameHolder(repository, project, dbName);
+                = new DatabaseNameHolder(repository, project, getGraphWalker(), 
+                    dbName);
             String db = holder.getDbName();
             return (db == null || db.equalsIgnoreCase("db2"));
         } catch (Exception e) {
@@ -150,5 +183,14 @@ public abstract class AbstractDBMojo extends AbstractMojo {
         return dbName;
     }
 
-    
+    /**
+     * @return The Dependency GraphWalker
+     */
+    protected DepGraphWalker getGraphWalker() {
+        if (graphWalker == null) {
+            graphWalker = new DepGraphWalker(repository, project, 
+                artifactResolver, collector, artifactMetadataSource, factory);
+        }
+        return graphWalker;
+    }   
 }

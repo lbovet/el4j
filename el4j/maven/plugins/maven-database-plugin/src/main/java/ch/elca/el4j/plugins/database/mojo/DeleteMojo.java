@@ -49,7 +49,7 @@ public class DeleteMojo extends AbstractDBExecutionMojo {
      */
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
-            executeAction(ACTION, false);
+            executeAction(ACTION, true);
         } catch (Exception e) {
             throw new MojoFailureException(e.getMessage());
         }

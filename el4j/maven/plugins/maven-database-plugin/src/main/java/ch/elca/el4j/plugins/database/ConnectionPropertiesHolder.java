@@ -66,11 +66,12 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
      * @param dbName Name of database from maven parameter
      * @param connectionSource Path to properties file of connection properties
      * @param driverSource Path to properties file for Driver Property
+     * @param walker The Dependency Graph walker
      */
     public ConnectionPropertiesHolder(ArtifactRepository repository,
-        MavenProject project, String dbName, String connectionSource, 
-        String driverSource) {
-        super(repository, project, dbName);
+        MavenProject project, DepGraphWalker walker, String dbName, 
+        String connectionSource, String driverSource) {
+        super(repository, project, walker, dbName);
         loadDriverName(driverSource);
         loadConnectionProperties(connectionSource);
     }
@@ -117,8 +118,7 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
     private void loadDriverName(String sourceDir) {
         try {
             String source = replaceDbName(sourceDir);
-            Resource[] resources = getResolver().getResources("classpath*:"
-                + source);
+            Resource[] resources = getResources("classpath*:" + source);
             Properties properties = getProperties(resources);
             m_driverName = properties.getProperty("dataSource.driverClassName");
         } catch (Exception e) {
@@ -135,8 +135,7 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
     private void loadConnectionProperties(String sourceDir) {
         try {
             String source = replaceDbName(sourceDir);
-            Resource[] resources = getResolver()
-                .getResources("classpath*:" + source);
+            Resource[] resources = getResources("classpath*:" + source);
             Properties properties = getProperties(resources);
             m_url = properties.getProperty("dataSource.url");
             m_username = properties.getProperty("dataSource.username");
