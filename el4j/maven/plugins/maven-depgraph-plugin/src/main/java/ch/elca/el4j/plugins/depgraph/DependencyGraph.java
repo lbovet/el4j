@@ -59,9 +59,9 @@ public class DependencyGraph {
      * @return A DepgraphArtifact
      */
     public DepGraphArtifact getArtifact(
-        String artifactId, String groupId, String version) {
+        String artifactId, String groupId, String version, String scope, String type) {
         DepGraphArtifact newArtifact 
-            = new DepGraphArtifact(artifactId, groupId, version);
+            = new DepGraphArtifact(artifactId, groupId, version, scope, type);
         
         if (m_artifacts.containsKey(newArtifact.getQualifiedName())) {
             return m_artifacts.get(newArtifact.getQualifiedName());

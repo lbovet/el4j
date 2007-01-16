@@ -23,7 +23,7 @@ import org.apache.maven.plugin.logging.SystemStreamLog;
  *
  * @author Philippe Jacot (PJA)
  */
-class DepGraphResolutionListener implements ResolutionListener {
+public class DepGraphResolutionListener implements ResolutionListener {
     /**
      * Number indicating that no filtering is done.
      */
@@ -88,8 +88,10 @@ class DepGraphResolutionListener implements ResolutionListener {
         String aId = artifact.getArtifactId();
         String gId = artifact.getGroupId();
         String version = artifact.getVersion();
+        String scope = artifact.getScope();
+        String type = artifact.getType();
 
-        return m_graph.getArtifact(aId, gId, version);
+        return m_graph.getArtifact(aId, gId, version, scope, type);
     }
     
     /**
