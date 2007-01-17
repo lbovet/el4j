@@ -62,6 +62,14 @@ public class WebpageTest extends WebTestCase {
      */
     static final int DEST_PORT = 80;
     
+    
+    /**
+     * Directory to access on the homepage.
+     * 
+     * CAUTION: After an update of ELCA's homepage, this might need to be
+     *          updated as well!
+     */
+    private final String DIR = "/live/3/home/";
     /**
      * Private logger.
      */
@@ -105,7 +113,7 @@ public class WebpageTest extends WebTestCase {
             s_logger.debug("testing if '" + DEST_URL + "' is up...");
             Thread.sleep(DELAY);
             try {
-                beginAt("/"); 
+                beginAt(DIR); 
             } catch (RuntimeException e) {
                 fail("Page not reachable -> Test FAILED");
             }
@@ -120,7 +128,7 @@ public class WebpageTest extends WebTestCase {
     
             // Check if Runtime Exception occurs.  
             try {
-                beginAt("/");
+                beginAt(DIR);
             } catch (RuntimeException e) {
                 s_logger.debug("Page not reachable");
                 m_gotException = 1;
@@ -141,7 +149,7 @@ public class WebpageTest extends WebTestCase {
             Thread.sleep(DELAY);
     
             try {
-                beginAt("/");
+                beginAt(DIR);
             } catch (RuntimeException e) {
                 fail("Page not reachable -> Test FAILED");
             }
