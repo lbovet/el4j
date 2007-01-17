@@ -39,7 +39,7 @@
 		<dependency>
 			<groupId>ch.elca.el4j.maven.plugins</groupId>
 			<artifactId>maven-depgraph-plugin</artifactId>
-			<version>1.1-SNAPSHOT</version>
+			<version>${version.maven-depgraph-plugin}</version>
 		</dependency>
 	
 		<dependency>
