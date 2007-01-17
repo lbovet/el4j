@@ -18,7 +18,7 @@
     <groupId>ch.elca.el4j.applications</groupId>
     <artifactId>el4j-applications</artifactId>
     <packaging>pom</packaging>
-    <name>EL4J framework applications</name>
+    <name>EL4J applications</name>
     <description>Applications of the EL4J framework.</description>
     <build>
         <plugins>
@@ -50,9 +50,8 @@
         </plugins>
     </build>
     <modules>
-		<module>apps</module>
-		<module>demos</module>
-        <module>templates</module> 
+		<module>templates</module>
+		<module>demos</module>       
     </modules>
     <dependencies>
         <dependency>
