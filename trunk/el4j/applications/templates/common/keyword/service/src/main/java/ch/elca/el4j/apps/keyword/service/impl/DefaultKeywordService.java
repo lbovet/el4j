@@ -117,26 +117,4 @@ public class DefaultKeywordService
         }    
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public List<Keyword> getAllKeywords() {
-        return getKeywordDao().findAll();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void createAndStore(String name, String description) 
-        throws OptimisticLockingFailureException, DataAccessException {
-        Keyword entity = new Keyword();
-        entity.setName(name);
-        entity.setDescription(description);
-        getKeywordDao().saveOrUpdate(entity);
-    }
-
-    public void deleteKeywords(List<Keyword> keywords) throws OptimisticLockingFailureException, DataAccessException {
-        getKeywordDao().delete(keywords);
-        
-    }
 }
