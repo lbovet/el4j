@@ -1283,19 +1283,19 @@
             <!-- Keyword -->
             <dependency>
                 <groupId>ch.elca.el4j.applications</groupId>
-                <artifactId>keyword-core-interface</artifactId>
+                <artifactId>keyword-service</artifactId>
                 <version>${version.application-keyword}</version>
                 <type>jar</type>
             </dependency>
             <dependency>
                 <groupId>ch.elca.el4j.applications</groupId>
-                <artifactId>keyword-core-impl</artifactId>
+                <artifactId>keyword-dao</artifactId>
                 <version>${version.application-keyword}</version>
                 <type>jar</type>
             </dependency>
             <dependency>
                 <groupId>ch.elca.el4j.applications</groupId>
-                <artifactId>keyword-core-tests</artifactId>
+                <artifactId>keyword-tests</artifactId>
                 <version>${version.application-keyword}</version>
                 <type>test-jar</type>
                 <scope>test</scope>
@@ -1304,19 +1304,19 @@
             <!-- RefDb -->
             <dependency>
                 <groupId>ch.elca.el4j.applications</groupId>
-                <artifactId>refdb-core-interface</artifactId>
+                <artifactId>refdb-service</artifactId>
                 <version>${version.application-refdb}</version>
                 <type>jar</type>
             </dependency>
             <dependency>
                 <groupId>ch.elca.el4j.applications</groupId>
-                <artifactId>refdb-core-impl</artifactId>
+                <artifactId>refdb-dao</artifactId>
                 <version>${version.application-refdb}</version>
                 <type>jar</type>
             </dependency>
             <dependency>
                 <groupId>ch.elca.el4j.applications</groupId>
-                <artifactId>refdb-core-tests</artifactId>
+                <artifactId>refdb-tests</artifactId>
                 <version>${version.application-refdb}</version>
                 <type>test-jar</type>
                 <scope>test</scope>
