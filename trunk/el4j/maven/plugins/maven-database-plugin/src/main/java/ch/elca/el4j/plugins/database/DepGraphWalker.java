@@ -16,8 +16,6 @@
  */
 package ch.elca.el4j.plugins.database;
 
-import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -154,6 +152,8 @@ public class DepGraphWalker {
         // Create a DAG from the dependency m_graph and sort it.
         createDAG(rootArtifact);
         List<String> list = TopologicalSorter.sort(m_dag);
+        // Remove root artifact as it is not a dependency
+        list.remove(rootArtifact.getQualifiedName());
         
         return resolveArtifactsToURL(m_resolver, m_factory, m_graph, list);
     }
@@ -220,8 +220,15 @@ public class DepGraphWalker {
         DepGraphResolutionListener listener = new DepGraphResolutionListener(
             graph);
         try {
-            resolver.resolve(m_project.getArtifact(), m_project
-                .getRemoteArtifactRepositories(), m_repo);
+            /* Although this was used in the Dependency Graph Plugin, 
+             * it causes an exception here, because the project's artifact
+             * usually isn't deployed in the local repository by the time 
+             * this method is called (which is usuall in the pre- and 
+             * post-integration phase)
+             */
+            
+            // resolver.resolve(m_project.getArtifact(), m_project
+            // .getRemoteArtifactRepositories(), m_repo);
 
             collector.collect(m_project.getDependencyArtifacts(), m_project
                 .getArtifact(), m_repo, m_project
