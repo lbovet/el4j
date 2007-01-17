@@ -17,12 +17,10 @@
 package ch.elca.el4j.apps.keyword.service;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
-import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.core.transaction.annotations.RollbackConstraint;
 
 /**
@@ -55,40 +53,5 @@ public interface KeywordService {
             OptimisticLockingFailureException.class, 
             DataAccessException.class })
     public void deleteKeywords(Collection<?> keys) 
-        throws OptimisticLockingFailureException, DataAccessException;
-   
-    /**
-     * @return A list of all keywords.
-     */
-    public List<Keyword> getAllKeywords();
-    
-    /**
-     * Create and store a keyword.
-     * 
-     * @param name Name of the keyword
-     * @param description Description of the keyword
-     * @throws OptimisticLockingFailureException
-     * @throws DataAccessException
-     */
-    @RollbackConstraint(rollbackFor = {
-            OptimisticLockingFailureException.class,
-            DataAccessException.class })
-    public void createAndStore(String name, String description)
-        throws OptimisticLockingFailureException, DataAccessException;
-    
-    /**
-     * Delete a list of keywords.
-     * 
-     * @param keywords
-     *            Keywords to delete
-     * @throws OptimisticLockingFailureException
-     *             If general data access problem occurred.
-     * @throws DataAccessException
-     *             If a keyword could not be deleted.
-     */
-    @RollbackConstraint(rollbackFor = {
-            OptimisticLockingFailureException.class,
-            DataAccessException.class })
-    public void deleteKeywords(List<Keyword> keywords)
         throws OptimisticLockingFailureException, DataAccessException;
 }
