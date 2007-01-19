@@ -24,6 +24,8 @@ import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.project.MavenProject;
 
+import ch.elca.el4j.plugins.database.holder.DatabaseNameHolder;
+
 /**
  * This class holds all fields and methods commmon to all database mojos, namely
  * the properties from the pom file, the Maven project and repository as well as
@@ -118,6 +120,11 @@ public abstract class AbstractDBMojo extends AbstractMojo {
      * The Dependency Graph Walker.
      */
     private DepGraphWalker graphWalker;
+
+    /**
+     * The Data Holder.
+     */
+    private DatabaseNameHolder m_holder;
     
     // Checkstyle: MemberName on
    
@@ -135,10 +142,7 @@ public abstract class AbstractDBMojo extends AbstractMojo {
          * safe side.
          */
         try {
-            DatabaseNameHolder holder 
-                = new DatabaseNameHolder(repository, project, getGraphWalker(), 
-                    dbName);
-            String db = holder.getDbName();
+            String db = getHolder().getDbName();
             return (db == null || db.equalsIgnoreCase("db2"));
         } catch (Exception e) {
             return true;
@@ -192,5 +196,19 @@ public abstract class AbstractDBMojo extends AbstractMojo {
                 artifactResolver, collector, artifactMetadataSource, factory);
         }
         return graphWalker;
-    }   
+    } 
+   
+    /**
+     * @return The holder
+     */
+    private DatabaseNameHolder getHolder() {
+        if (m_holder == null) {
+            m_holder = new DatabaseNameHolder(
+                repository, 
+                project, 
+                getGraphWalker(), 
+                dbName);
+        }
+        return m_holder;
+    }
 }
