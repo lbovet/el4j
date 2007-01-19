@@ -57,12 +57,9 @@
 							<connectionPropertiesSource>
 								scenarios/db/raw/pluginconfig-tcp-forwarder-tests-override-{db.name}.properties
 							</connectionPropertiesSource>
-							<wait>false</wait>
 						</configuration>
 						<goals>
-							<goal>start</goal>
-							<goal>silentDrop</goal>
-							<goal>create</goal>
+							<goal>prepareDB</goal>
 						</goals>
 						<phase>pre-integration-test</phase>
 					</execution>
@@ -100,11 +97,9 @@
 							<db.connectionProperties>
 								scenarios/db/raw/pluginconfig-tcp-forwarder-tests-override-{db.name}.properties
 							</db.connectionProperties>
-							<wait>false</wait>
 						</configuration>
 						<goals>
-							<goal>drop</goal>
-							<goal>stop</goal>
+							<goal>cleanUpDB</goal>
 						</goals>
 						<phase>post-integration-test</phase>
 					</execution>
