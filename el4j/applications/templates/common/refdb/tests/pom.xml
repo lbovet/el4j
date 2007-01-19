@@ -34,13 +34,9 @@
 							<connectionPropertiesSource>
 								scenarios/db/raw/refdb-core-tests-override-{db.name}.properties
 							</connectionPropertiesSource>
-
-							<wait>false</wait>
 						</configuration>
 						<goals>
-							<goal>start</goal>
-							<goal>silentDrop</goal>
-							<goal>create</goal>
+							<goal>prepareDB</goal>
 						</goals>
 						<phase>pre-integration-test</phase>
 					</execution>
@@ -78,11 +74,9 @@
 							<connectionPropertiesSource>
 								scenarios/db/raw/refdb-core-tests-override-{db.name}.properties
 							</connectionPropertiesSource>
-							<wait>false</wait>
 						</configuration>
 						<goals>
-							<goal>drop</goal>
-							<goal>stop</goal>
+							<goal>cleanUpDB</goal>
 						</goals>
 						<phase>post-integration-test</phase>
 					</execution>

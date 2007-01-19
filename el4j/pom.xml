@@ -628,6 +628,16 @@
                     <artifactId>maven-file-collector-plugin</artifactId>
                     <version>${version.maven-file-collector-plugin}</version>
                 </plugin>
+                <plugin>
+                    <groupId>ch.elca.el4j.maven.plugins</groupId>
+                    <artifactId>maven-database-plugin</artifactId>
+                    <version>${version.maven-database-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>ch.elca.el4j.maven.plugins</groupId>
+                    <artifactId>maven-depgraph-plugin</artifactId>
+                    <version>${version.maven-depgraph-plugin}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
         <extensions>
