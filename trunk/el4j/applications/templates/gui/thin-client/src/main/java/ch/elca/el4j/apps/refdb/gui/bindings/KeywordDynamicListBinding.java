@@ -58,6 +58,6 @@ public class KeywordDynamicListBinding extends AbstractDynamicListBinding {
      */
     protected List getActualSelectableItems() {
         KeywordDao keywordDao = ServiceBroker.getKeywordDao();
-        return keywordDao.findAll();
+        return keywordDao.getAll();
     }
 }

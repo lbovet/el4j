@@ -85,8 +85,8 @@ public class IdentityFixedDaoImpl<T>
     }
     
     /** {@inheritDoc} */
-    public List<T> findAll() throws DataAccessException {
-        return fixed(m_backing.findAll());        
+    public List<T> getAll() throws DataAccessException {
+        return fixed(m_backing.getAll());        
     }
 
     /** {@inheritDoc} */

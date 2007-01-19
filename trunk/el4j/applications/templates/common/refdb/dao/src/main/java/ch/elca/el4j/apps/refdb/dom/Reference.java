@@ -16,9 +16,9 @@
  */
 package ch.elca.el4j.apps.refdb.dom;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 

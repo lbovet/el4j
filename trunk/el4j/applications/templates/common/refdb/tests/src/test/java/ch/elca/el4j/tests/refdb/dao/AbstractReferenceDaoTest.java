@@ -144,7 +144,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
         annotation2.setContent("This is an comment.");
         annotation = dao.saveOrUpdate(annotation);
         annotation2 = dao.saveOrUpdate(annotation2);
-        List<Annotation> list = dao.findAll();
+        List<Annotation> list = dao.getAll();
         assertEquals("Wrong number of annotations in DB", 2, list.size());
         assertTrue("First annotation has not been found", 
             list.contains(annotation));
@@ -288,7 +288,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 
         dao.delete(annotation.getKey());
 
-        List<Annotation> list = dao.findAll();
+        List<Annotation> list = dao.getAll();
         assertEquals("The removed annotation is still in the DB.", 
             0, list.size());
     }
@@ -378,7 +378,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
         file2.setContent(content2);
         dao.saveOrUpdate(file);
         dao.saveOrUpdate(file2);
-        List<File> list = dao.findAll();
+        List<File> list = dao.getAll();
         assertEquals("Wrong number of files in DB", 2, list.size());
         assertTrue("First file has not been found", list.contains(file));
         assertTrue("Second file has not been found", list.contains(file2));
@@ -526,7 +526,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 
         dao.delete(file2.getKey());
 
-        List<File> list = dao.findAll();
+        List<File> list = dao.getAll();
         assertEquals("The removed file is still in the DB.", 
             0, list.size());
     }

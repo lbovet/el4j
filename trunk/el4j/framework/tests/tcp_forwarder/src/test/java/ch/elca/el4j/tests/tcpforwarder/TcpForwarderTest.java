@@ -186,7 +186,7 @@ public class TcpForwarderTest extends TestCase {
         // Establishing the connection to the database
         m_forwarder.plug();
 
-        List<Name> nameList = getDao().findAll();
+        List<Name> nameList = getDao().getAll();
         for (Name k : nameList) {
             getDao().delete(k.getKey());
         }

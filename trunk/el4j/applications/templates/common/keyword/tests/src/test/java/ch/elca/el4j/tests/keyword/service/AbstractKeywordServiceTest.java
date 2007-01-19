@@ -104,7 +104,7 @@ public abstract class AbstractKeywordServiceTest extends AbstractTestCaseBase {
         Keyword keywordJava = dao.saveOrUpdate(createNewJavaKeyword());
         Keyword keywordC = dao.saveOrUpdate(createNewCKeyword());
         
-        List<Keyword> keywordList = dao.findAll();
+        List<Keyword> keywordList = dao.getAll();
         assertEquals(2, keywordList.size());
         for (Keyword keyword : keywordList) {
             if (!keywordJava.equals(keyword)
@@ -142,7 +142,7 @@ public abstract class AbstractKeywordServiceTest extends AbstractTestCaseBase {
         Keyword keywordJava = dao.saveOrUpdate(createNewJavaKeyword());
         Keyword keywordC = dao.saveOrUpdate(createNewCKeyword());
         
-        List<Keyword> keywordList = dao.findAll();
+        List<Keyword> keywordList = dao.getAll();
         assertEquals(2, keywordList.size());
         for (Keyword keyword : keywordList) {
             if (!keywordJava.equals(keyword)
@@ -172,7 +172,7 @@ public abstract class AbstractKeywordServiceTest extends AbstractTestCaseBase {
             s_logger.debug("Expected exception catched.", e);
         }
         
-        keywordList = dao.findAll();
+        keywordList = dao.getAll();
         assertEquals(1, keywordList.size());
         for (Keyword keyword : keywordList) {
             if (!keywordJava.equals(keyword)) {
