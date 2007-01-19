@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.plugins.database;
+package ch.elca.el4j.plugins.database.holder;
 
 /**
  * 

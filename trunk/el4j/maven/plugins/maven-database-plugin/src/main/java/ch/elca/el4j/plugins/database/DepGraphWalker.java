@@ -35,6 +35,7 @@ import org.codehaus.plexus.util.dag.CycleDetectedException;
 import org.codehaus.plexus.util.dag.DAG;
 import org.codehaus.plexus.util.dag.TopologicalSorter;
 
+import ch.elca.el4j.plugins.database.holder.DatabaseHolderException;
 import ch.elca.el4j.plugins.depgraph.DepGraphArtifact;
 import ch.elca.el4j.plugins.depgraph.DepGraphResolutionListener;
 import ch.elca.el4j.plugins.depgraph.DependencyGraph;

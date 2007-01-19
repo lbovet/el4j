@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.plugins.database;
+package ch.elca.el4j.plugins.database.holder;
 
 import java.sql.Driver;
 import java.util.Properties;
@@ -22,6 +22,8 @@ import java.util.Properties;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.project.MavenProject;
 import org.springframework.core.io.Resource;
+
+import ch.elca.el4j.plugins.database.DepGraphWalker;
 
 /**
  * 

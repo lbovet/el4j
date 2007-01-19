@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.plugins.database;
+package ch.elca.el4j.plugins.database.holder;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,6 +28,8 @@ import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.project.MavenProject;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+
+import ch.elca.el4j.plugins.database.DepGraphWalker;
 
 /**
  * 
@@ -91,7 +93,7 @@ public abstract class AbstractDatabaseHolder {
      * @param path Path of the resources to get
      * @return Array of resources
      */
-    protected Resource[] getResources(String path) {
+    public Resource[] getResources(String path) {
         try {
             return m_resolver.getResources(path);
         } catch (IOException e) {

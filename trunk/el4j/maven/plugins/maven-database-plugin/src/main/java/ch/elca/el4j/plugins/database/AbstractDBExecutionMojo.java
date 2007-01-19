@@ -33,6 +33,9 @@ import java.util.Properties;
 import org.springframework.core.io.Resource;
 import org.springframework.util.StringUtils;
 
+import ch.elca.el4j.plugins.database.holder.ConnectionPropertiesHolder;
+import ch.elca.el4j.plugins.database.holder.DatabaseHolderException;
+
 /**
  * 
  * This class is the abstract class for all mojos, which are executing SQL
@@ -98,6 +101,11 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
      *  "/etc/sql/general/, /etc/sql/{db.name}/"
      */
     private String sqlSourceDir;
+
+    /**
+     * The Data Holder.
+     */
+    private ConnectionPropertiesHolder m_holder;
     
     // Checkstyle: MemberName on
     
@@ -176,13 +184,11 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
     private List<Resource> getResources(List<String> sourcePaths) {
         HashMap<URL, Resource> resourcesMap = new HashMap<URL, Resource>();
         Resource[] resources;
-        DatabaseNameHolder holder = new DatabaseNameHolder(getRepository(),
-            getProject(), getGraphWalker(), getDbName());
         List<Resource> result = new ArrayList<Resource>();
 
         try {
             for (String source : sourcePaths) {
-                resources = holder.getResources(source);
+                resources = getHolder().getResources(source);
                 for (Resource resource : resources) {
                     if (!resourcesMap.containsKey(resource.getURL())) {
                         result.add(resource);
@@ -218,25 +224,24 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
      */
     private List<String> seperateSourcePath() {
         int index;
+        String fullPath = sqlSourceDir;
         String part;
         List<String> result = new ArrayList<String>();
-        DatabaseNameHolder holder = new DatabaseNameHolder(
-            getRepository(), getProject(), getGraphWalker(), getDbName());
         // Add seperator at end due to following algorithm
-        if (!sqlSourceDir.endsWith(separator)) {
-            sqlSourceDir = sqlSourceDir + separator;
+        if (!fullPath.endsWith(separator)) {
+            fullPath = fullPath + separator;
         }
-        while ((index = sqlSourceDir.indexOf(separator)) != -1) {
-            part = holder.replaceDbName(
-                sqlSourceDir.substring(0, index).trim());
+        while ((index = fullPath.indexOf(separator)) != -1) {
+            part = getHolder().replaceDbName(
+                fullPath.substring(0, index).trim());
             result.add(part);
             // check if sourceDir has input after separator. If so, continue.
-            int temp = sqlSourceDir.length();
+            int temp = fullPath.length();
             if (index < temp) {
-                sqlSourceDir = sqlSourceDir.substring(index + 1, 
-                    sqlSourceDir.length());
+                fullPath = fullPath.substring(index + 1, 
+                    fullPath.length());
             } else {
-                sqlSourceDir = "";
+                fullPath = "";
             }
         }
         return result;
@@ -289,22 +294,30 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
      * @return the connection established
      */
     private Connection getConnection() {
-        ConnectionPropertiesHolder holder 
-            = new ConnectionPropertiesHolder(
+        Properties prop = new Properties();
+        prop.put("user", getHolder().getUsername());
+        prop.put("password", getHolder().getPassword());
+        Driver driver = getHolder().getDriver();
+        try {
+            return driver.connect(getHolder().getUrl(), prop);
+        } catch (SQLException e) {
+            throw new DatabaseHolderException(e);
+        }   
+    }
+    
+    /**
+     * @return The Data Holder
+     */
+    private ConnectionPropertiesHolder getHolder() {
+        if (m_holder == null) {
+            m_holder = new ConnectionPropertiesHolder(
                 getRepository(),
                 getProject(), 
                 getGraphWalker(),
                 getDbName(), 
                 connectionPropertiesSource, 
                 driverPropertiesSource);
-        Properties prop = new Properties();
-        prop.put("user", holder.getUsername());
-        prop.put("password", holder.getPassword());
-        Driver driver = holder.getDriver();
-        try {
-            return driver.connect(holder.getUrl(), prop);
-        } catch (SQLException e) {
-            throw new DatabaseHolderException(e);
-        }   
+        } 
+        return m_holder;
     }
 }
