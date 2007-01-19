@@ -187,11 +187,11 @@ public class DefaultReferenceService extends DefaultKeywordService
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<Reference> getAllReferences() throws DataAccessException {
         List<Link> listLinks 
-            = getLinkDao().findAll();
+            = getLinkDao().getAll();
         List<FormalPublication> listFormalPublications 
-            = getFormalPublicationDao().findAll();
+            = getFormalPublicationDao().getAll();
         List<Book> listBooks 
-            = getBookDao().findAll();
+            = getBookDao().getAll();
         
         List<Reference> list = new LinkedList<Reference>();
         list.addAll(listLinks);

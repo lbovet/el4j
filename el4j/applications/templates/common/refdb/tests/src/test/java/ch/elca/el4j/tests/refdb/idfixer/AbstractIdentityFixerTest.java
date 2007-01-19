@@ -86,7 +86,7 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
             skw
         );
         
-        skw = m_keywordDao.findAll().iterator().next();
+        skw = m_keywordDao.getAll().iterator().next();
         assertSame(
             "finding a previously saved keyword returns a new instance",
             kw,
@@ -116,7 +116,7 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
         UpdateRecorder rec = new UpdateRecorder();
         m_fixer.getChangeNotifier().subscribe(rec);
         
-        Reference ref = m_bookDao.findAll().iterator().next();
+        Reference ref = m_bookDao.getAll().iterator().next();
         assertNotNull("change notification missing", rec.m_change);
         assertTrue(
             "wrong change notification type",
@@ -137,7 +137,7 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
     private void renameKeyword() {
         GenericDao<Keyword> otherKeywordDao
             = getDaoRegistry().getFor(Keyword.class);
-        Keyword okw = otherKeywordDao.findAll().iterator().next();
+        Keyword okw = otherKeywordDao.getAll().iterator().next();
         okw.setName("Another name");
         otherKeywordDao.saveOrUpdate(okw);
     }

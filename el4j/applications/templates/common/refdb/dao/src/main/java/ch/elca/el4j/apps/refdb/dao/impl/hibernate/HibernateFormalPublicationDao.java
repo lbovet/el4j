@@ -50,7 +50,7 @@ public class HibernateFormalPublicationDao
     @Override
     @SuppressWarnings("unchecked")
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<FormalPublication> findAll() throws DataAccessException {
+    public List<FormalPublication> getAll() throws DataAccessException {
         List<FormalPublication> result = getConvenienceHibernateTemplate()
             .find("from FormalPublication formalPublication left join "
                 + "fetch formalPublication.keywords");

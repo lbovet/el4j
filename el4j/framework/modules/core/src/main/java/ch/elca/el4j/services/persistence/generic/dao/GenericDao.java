@@ -81,7 +81,7 @@ public interface GenericDao<T> {
      * @throws DataAccessException
      *             If general data access problem occurred
      */
-    List<T> findAll() throws DataAccessException;   
+    List<T> getAll() throws DataAccessException;   
     
     /**
      * Re-reads the state of the given domain object from the underlying

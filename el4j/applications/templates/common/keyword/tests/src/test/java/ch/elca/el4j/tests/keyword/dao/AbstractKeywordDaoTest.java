@@ -187,7 +187,7 @@ public abstract class AbstractKeywordDaoTest
         dao.saveOrUpdate(keyword1);
         dao.saveOrUpdate(keyword2);
         
-        List<Keyword> list = dao.findAll();
+        List<Keyword> list = dao.getAll();
         
         assertEquals("Wrong number of keywords in DB", 2, list.size());
         assertTrue("First keyword has not been found", 

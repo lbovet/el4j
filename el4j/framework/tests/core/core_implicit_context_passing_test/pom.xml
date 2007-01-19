@@ -18,7 +18,7 @@
 	<artifactId>module-core_implicit_context_passing_test</artifactId>
 	<version>${version.module-core}</version>
 	<packaging>jar</packaging>
-	<name>EL4J implicit context passing integration test</name>
+	<name>EL4J test implicit context passing integration</name>
 	<description>
 		Integration test module for implicit context passing of the EL4J
 		framework.

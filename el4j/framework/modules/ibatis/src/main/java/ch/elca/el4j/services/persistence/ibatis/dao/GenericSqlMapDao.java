@@ -116,7 +116,7 @@ public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,
      */
     @SuppressWarnings("unchecked")
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<T> findAll() throws DataAccessException {
+    public List<T> getAll() throws DataAccessException {
         List<T> result = getConvenienceSqlMapClientTemplate().queryForList(
             "getAll" + getPersistentClassName() + "s", null);
         return CollectionUtils.asList(result);

@@ -48,7 +48,7 @@ public class GenericHibernateReferenceDao<T extends Reference,
      */
     @Override
     @SuppressWarnings("unchecked")
-    public List<T> findAll() throws DataAccessException {
+    public List<T> getAll() throws DataAccessException {
         String domainClassName = getPersistentClassName();
         String domainClassNameLowerCase = domainClassName.toLowerCase();
         String queryString = "from " + domainClassName + " "
