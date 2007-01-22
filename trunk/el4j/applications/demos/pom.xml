@@ -38,6 +38,8 @@
         <module>light_statistics</module>
 		<module>detailed_statistics</module>
     </modules>
+    <!-- Former profile for API generation (site) -->
+    <!--
     <profiles>
 		<profile>
             <id>generate.doc.set.framework-demos</id>
@@ -113,4 +115,5 @@
             </properties>
         </profile>
     </profiles>
+    -->
 </project>
