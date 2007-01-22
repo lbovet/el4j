@@ -113,6 +113,8 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
     private ArtifactRepository m_localRepository;
 
     /**
+     * The *.dot file to write to. Will be a temporary file if unset.
+     * 
      * @parameter expression="${depgraph.dotFile}"
      */
     private File dotFile;
@@ -123,17 +125,19 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
     private ArtifactResolver m_artifactResolver;
 
     /**
+     * The MetaDataSource used by the collector.
+     * 
      * @component
      */
     private ArtifactMetadataSource m_artifactMetadataSource;
 
     /**
-     * The projector used to project the graph. //@component //@required
+     * The projector used to project the graph.
      */
     private DepGraphProjector m_projector;
 
     /**
-     * Collector.
+     * The ArtifactCollector used to resolve the dependencies.
      * 
      * @component
      */
