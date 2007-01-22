@@ -49,6 +49,7 @@
                     <workingDirectory>${el4j.external}/framework</workingDirectory>
                 </configuration>
                 <executions>
+                
                     <execution>
                         <id>install.root-pom</id>
                         <phase>pre-site</phase>
@@ -64,6 +65,7 @@
                             </arguments>
                         </configuration>
                     </execution>
+                    
                     <execution>
                         <id>clean.generated.doc</id>
                         <phase>pre-site</phase>
@@ -77,6 +79,7 @@
                             </arguments>
                         </configuration>
                     </execution>
+                    
                     <execution>
                         <id>generate.doc.set.framework-modules</id>
                         <phase>pre-site</phase>
@@ -92,6 +95,9 @@
                             </arguments>
                         </configuration>
                     </execution>
+                    
+                    <!-- Excluded applications from site generation -->
+                    <!-- 
                     <execution>
                         <id>generate.doc.set.framework-applications</id>
                         <phase>pre-site</phase>
@@ -99,6 +105,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
+							<workingDirectory>${el4j.external}/applications/templates/common/</workingDirectory>
                             <arguments>
                                 <argument>-Pgenerate.doc.set.framework-applications</argument>
                                 <argument>collector:aggregate-files</argument>
@@ -107,6 +114,7 @@
                             </arguments>
                         </configuration>
                     </execution>
+                    -->
                     <execution>
                         <id>generate.doc.set.framework-tests</id>
                         <phase>pre-site</phase>
@@ -122,6 +130,8 @@
                             </arguments>
                         </configuration>
                     </execution>
+                    <!-- Excluded Demos from site generation -->
+                    <!--
                     <execution>
                         <id>generate.doc.set.framework-demos</id>
                         <phase>pre-site</phase>
@@ -129,6 +139,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
+							<workingDirectory>${el4j.external}/applications/demos</workingDirectory>
                             <arguments>
                                 <argument>-Pgenerate.doc.set.framework-demos</argument>
                                 <argument>collector:aggregate-files</argument>
@@ -137,6 +148,7 @@
                             </arguments>
                         </configuration>
                     </execution>
+                    -->
                     <execution>
                         <id>generate.plugin.sites</id>
                         <phase>pre-site</phase>
@@ -159,6 +171,7 @@
                 <groupId>ch.elca.el4j.maven.plugins</groupId>
                 <artifactId>maven-file-collector-plugin</artifactId>
                 <executions>
+                
                     <execution>
                         <id>collect-set-docs</id>
                         <phase>pre-site</phase>
@@ -172,6 +185,7 @@
                             <allowOverwrite>false</allowOverwrite>
                         </configuration>
                     </execution>
+                    
                     <execution>
                         <id>collect.site.maven-checkclipse-helper-plugin</id>
                         <phase>pre-site</phase>
@@ -186,6 +200,7 @@
                             <allowOverwrite>false</allowOverwrite>
                         </configuration>
                     </execution>
+                    
                     <execution>
                         <id>collect.site.maven-env-support-plugin</id>
                         <phase>pre-site</phase>
@@ -200,6 +215,7 @@
                             <allowOverwrite>false</allowOverwrite>
                         </configuration>
                     </execution>
+                    
                     <execution>
                         <id>collect.site.maven-file-collector-plugin</id>
                         <phase>pre-site</phase>
@@ -214,6 +230,7 @@
                             <allowOverwrite>false</allowOverwrite>
                         </configuration>
                     </execution>
+                    
                     <execution>
                         <id>collect.site.maven-manifest-decorator-plugin</id>
                         <phase>pre-site</phase>
@@ -228,6 +245,7 @@
                             <allowOverwrite>false</allowOverwrite>
                         </configuration>
                     </execution>
+                    
                     <execution>
                         <id>collect.site.maven-repohelper-plugin</id>
                         <phase>pre-site</phase>
