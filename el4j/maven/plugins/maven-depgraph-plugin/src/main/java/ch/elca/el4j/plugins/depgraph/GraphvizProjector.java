@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugin.logging.SystemStreamLog;
 import org.codehaus.plexus.util.FileUtils;
@@ -236,7 +237,7 @@ public class GraphvizProjector implements DepGraphProjector {
     /**
      * {@inheritDoc}
      */
-    public void project(DependencyGraph graph) {
+    public void project(DependencyGraph graph) throws MojoExecutionException {
         if (graph == null) {
             throw new NullPointerException("dependency is null");
         }
@@ -285,6 +286,7 @@ public class GraphvizProjector implements DepGraphProjector {
             if (returnValue != 0) {
                 // Error running dot
                 m_logger.error("Dot returned non-zero value");
+                throw new MojoExecutionException("Dot returned non-zero value");
             }
 
             // Try to delete the temp file

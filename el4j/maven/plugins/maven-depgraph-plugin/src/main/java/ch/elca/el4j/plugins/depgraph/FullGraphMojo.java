@@ -37,10 +37,6 @@ import org.apache.maven.project.MavenProject;
  * @requiresDependencyResolution compile|test
  */
 public class FullGraphMojo extends AbstractDependencyGraphMojo {
-    /**
-     * The default file extension.
-     */
-    public static final String DEFAULT_EXTENSION = "png";
         
     /**
      * @parameter default-value="${reactorProjects}"
@@ -55,7 +51,7 @@ public class FullGraphMojo extends AbstractDependencyGraphMojo {
      * {@inheritDoc}
      */
     public void execute() throws MojoExecutionException {
-        initOutput();
+        super.execute();
         
         DependencyGraph resultGraph = new DependencyGraph();
         resultGraph.setName(m_project.getName());
