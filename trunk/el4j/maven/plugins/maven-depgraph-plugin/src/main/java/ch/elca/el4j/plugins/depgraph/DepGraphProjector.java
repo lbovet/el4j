@@ -16,6 +16,8 @@
  */
 package ch.elca.el4j.plugins.depgraph;
 
+import org.apache.maven.plugin.MojoExecutionException;
+
 /**
  * 
  * This class is used to create some sort of output from a given
@@ -40,5 +42,5 @@ public interface DepGraphProjector {
      * Project the dependency graph somehow.
      * @param graph The graph to project
      */
-    public void project(DependencyGraph graph);
+    public void project(DependencyGraph graph) throws MojoExecutionException;
 }
