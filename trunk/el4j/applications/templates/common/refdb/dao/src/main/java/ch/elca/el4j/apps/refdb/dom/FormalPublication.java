@@ -18,6 +18,10 @@ package ch.elca.el4j.apps.refdb.dom;
 
 import javax.persistence.Entity;
 
+import org.hibernate.validator.Length;
+import org.hibernate.validator.NotNull;
+import org.hibernate.validator.Pattern;
+
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
 /**
@@ -50,13 +54,19 @@ public class FormalPublication extends Reference {
      */
     private int m_pageNum;
 
+    // Checkstyle: MagicNumber off
+    
     /**
      * @return Returns the authorName.
      */
+    @NotNull
+    @Length(min = 3)
     public String getAuthorName() {
         return m_authorName;
     }
-
+    
+    // Checkstyle: MagicNumber on
+    
     /**
      * @param authorName
      *            The authorName to set.
@@ -68,6 +78,7 @@ public class FormalPublication extends Reference {
     /**
      * @return Returns the pageNum.
      */
+    @Pattern(regex = "[0-9]*")
     public int getPageNum() {
         return m_pageNum;
     }

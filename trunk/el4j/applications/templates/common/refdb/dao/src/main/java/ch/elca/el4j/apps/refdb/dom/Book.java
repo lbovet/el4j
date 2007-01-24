@@ -18,6 +18,8 @@ package ch.elca.el4j.apps.refdb.dom;
 
 import javax.persistence.Entity;
 
+import org.hibernate.validator.Pattern;
+
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
 /**
@@ -42,6 +44,7 @@ public class Book extends FormalPublication {
     /**
      * @return Returns the isbnNumber.
      */
+    @Pattern(regex = "[-0-9]{10,13}")
     public String getIsbnNumber() {
         return m_isbnNumber;
     }

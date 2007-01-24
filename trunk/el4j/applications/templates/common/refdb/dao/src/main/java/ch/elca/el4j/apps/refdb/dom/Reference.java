@@ -25,6 +25,7 @@ import java.util.Set;
 import javax.persistence.Entity;
 
 import org.hibernate.validator.AssertTrue;
+import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 
 import ch.elca.el4j.apps.keyword.dom.Keyword;
@@ -188,14 +189,19 @@ public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
         m_incomplete = incomplete;
     }
 
+    //Checkstyle: MagicNumber off
+    
     /**
      * @return Returns the name.
      */
     @NotNull
+    @Length(min = 3)
     public String getName() {
         return m_name;
     }
 
+    // Checkstyle: MagicNumber on
+    
     /**
      * @param name
      *            The name to set.
