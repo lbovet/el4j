@@ -767,6 +767,7 @@
                                     <containerId>${jee-web.containerId}</containerId>
                                     <home>${weblogic9x.home}</home>
                                     <systemProperties>
+										<com.sun.xml.namespace.QName.useCompatibleSerialVersionUID>1.0</com.sun.xml.namespace.QName.useCompatibleSerialVersionUID>
                                         <java.security.policy>${weblogic9x.home}/server/lib/weblogic.policy</java.security.policy>
                                     </systemProperties>
                                     <dependencies>
