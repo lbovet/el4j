@@ -178,6 +178,7 @@
                 <jxr.title>EL4J framework modules ${project.version} Reference</jxr.title>
             </properties>
         </profile>
+        <!--
         <profile>
             <id>generate.doc.set.framework-applications</id>
             <build>
@@ -244,6 +245,7 @@
                 <jxr.title>EL4J framework applications ${project.version} Reference</jxr.title>
             </properties>
         </profile>
+        -->
         <profile>
             <id>generate.doc.set.framework-tests</id>
             <build>
@@ -253,7 +255,7 @@
                         <artifactId>maven-file-collector-plugin</artifactId>
                         <configuration>
                             <rootSourceDirectory>${el4j.external}/framework</rootSourceDirectory>
-                            <sourceDirectoryIncludePatterns>modules/**/src/test/java,apps/**/src/test/java,tests/**/src/main/java,tests/**/src/test/java</sourceDirectoryIncludePatterns>
+                            <sourceDirectoryIncludePatterns>modules/**/src/test/java,tests/**/src/main/java,tests/**/src/test/java</sourceDirectoryIncludePatterns>
                             <sourceFileIncludePatterns>**/*.java,**/*.html</sourceFileIncludePatterns>
                             <targetDirectory>${aggregated.files.output.directory}</targetDirectory>
                             <allowOverwrite>false</allowOverwrite>
