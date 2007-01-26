@@ -45,6 +45,26 @@
 	</dependencies>
 
 	<build>
+		<resources> <!-- Workaround for http://jira.codehaus.org/browse/XFIRE-857 -->
+			<resource>
+				<directory>src/main/resources/scenarios/common</directory>
+				<includes>
+                    <include> remotingtests-xfire_versioning-protocol-config.xml</include>
+                </includes>
+                <targetPath>/scenarios/common</targetPath>
+				<filtering>true</filtering>
+			</resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+            </resource>
+
+            <!-- Used for the environment support of EL4J -->
+            <resource>
+                <directory>target/env</directory>
+                <filtering>false</filtering>
+            </resource>
+		</resources>
 		<pluginManagement>
 			<plugins>
 				<plugin>

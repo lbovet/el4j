@@ -194,13 +194,6 @@ public class RemotingBenchmark {
      *            Are the arguments from console.
      */
     public static void main(String[] args) {
-        // As there is an error in XFire, the proxy settings are removed
-        // TODO: Please remove this, as soon as ...
-        // http://jira.codehaus.org/browse/XFIRE-401 
-        // finally is resolved.
-        String proxyHost = System.getProperty("http.proxyHost");
-        System.clearProperty("http.proxyHost");
-        
         RemotingBenchmark b = new RemotingBenchmark();
         System.out.println("Please wait, benchmarks are running...");
         for (int i = 0; i < s_tests.length; i++) {
@@ -215,10 +208,6 @@ public class RemotingBenchmark {
         
         
         printStackTrace();
-        
-        if (proxyHost != null) {
-            System.setProperty("http.proxyHost", proxyHost);
-        }
     }
     
     /**

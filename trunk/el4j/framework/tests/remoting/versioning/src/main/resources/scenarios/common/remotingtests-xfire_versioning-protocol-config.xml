@@ -33,7 +33,9 @@
         	<ref bean="xfireContextPassingContextVersioning"/>
         </property>
         <property name="wsdlDocumentUrl">
-        	<value>classpath:scenarios/client/Calculator.XFireJaxbVersioning.RemotingtestsOld.wsdl</value>
+            <!-- References to classpath resource are broken since XFire 1.2.4. Remove workaround as soon as possible http://jira.codehaus.org/browse/XFIRE-857 -->
+        	<!--<value>classpath:scenarios/client/Calculator.XFireJaxbVersioning.RemotingtestsOld.wsdl</value>-->
+            <value>file:/${el4j.external}/framework/tests/remoting/versioning/src/main/resources/scenarios/client/Calculator.XFireJaxbVersioning.RemotingtestsOld.wsdl</value>
         </property>
     </bean>
         
