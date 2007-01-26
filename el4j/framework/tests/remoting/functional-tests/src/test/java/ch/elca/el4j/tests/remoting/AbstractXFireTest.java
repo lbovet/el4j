@@ -64,11 +64,6 @@ public abstract class AbstractXFireTest extends TestCase {
                 new String[] {"classpath*:mandatory/*.xml",
                     "scenarios/client/remotingtests-xfire-client-config.xml"}, 
                     false);
-        
-        // TODO: Control me regularly
-        // Remove the proxy manually, until 
-        // http://jira.codehaus.org/browse/XFIRE-401 really is resolved
-        System.clearProperty("http.proxyHost");
     }
     
     /**

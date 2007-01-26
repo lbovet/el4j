@@ -61,14 +61,6 @@ public class CalculatorXFireJaxbTest extends TestCase {
                 false);
         m_calc 
             = (Calculator) appContext.getBean("calculatorJaxbVersioning");
-        
-        /* 
-         * TODO: Remove as soon as XFire is updated to version 1.2.3
-         * Remove proxy settings as XFire ignores the NoProxyHosts variable
-         * and therfore some test to localhost are done through the proxy and
-         * therefore fail.
-         */
-        System.clearProperty("http.proxyHost");
     }
 
     /**
