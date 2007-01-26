@@ -255,6 +255,7 @@
                         <artifactId>maven-file-collector-plugin</artifactId>
                         <configuration>
                             <rootSourceDirectory>${el4j.external}/framework</rootSourceDirectory>
+                            <sourceDirectoryExcludePatterns>**/tests/remoting/versioning/src/main/java,**/tests/remoting/versioning/src/test/java</sourceDirectoryExcludePatterns>
                             <sourceDirectoryIncludePatterns>modules/**/src/test/java,tests/**/src/main/java,tests/**/src/test/java</sourceDirectoryIncludePatterns>
                             <sourceFileIncludePatterns>**/*.java,**/*.html</sourceFileIncludePatterns>
                             <targetDirectory>${aggregated.files.output.directory}</targetDirectory>
@@ -285,10 +286,12 @@
                                     <url>../../${set.framework-modules}/apidocs</url>
                                     <location>${el4j.external}/framework/target/site/${set.framework-modules}/apidocs</location>
                                 </offlineLink>
+                                <!--
                                 <offlineLink>
                                     <url>../../${set.framework-applications}/apidocs</url>
                                     <location>${el4j.external}/framework/target/site/${set.framework-applications}/apidocs</location>
                                 </offlineLink>
+                                -->
                             </offlineLinks>
                         </configuration>
                     </plugin>
@@ -354,10 +357,12 @@
                                     <url>../../${set.framework-modules}/apidocs</url>
                                     <location>${el4j.external}/framework/target/site/${set.framework-modules}/apidocs</location>
                                 </offlineLink>
+                                <!--
                                 <offlineLink>
                                     <url>../../${set.framework-applications}/apidocs</url>
                                     <location>${el4j.external}/framework/target/site/${set.framework-applications}/apidocs</location>
                                 </offlineLink>
+                                -->
                                 <offlineLink>
                                     <url>../../${set.framework-tests}/apidocs</url>
                                     <location>${el4j.external}/framework/target/site/${set.framework-tests}/apidocs</location>
@@ -392,7 +397,9 @@
     <properties>
         <!-- Sets values -->
         <set.framework-modules>framework-modules</set.framework-modules>
+        <!--
         <set.framework-applications>framework-applications</set.framework-applications>
+        -->
         <set.framework-tests>framework-tests</set.framework-tests>
         <set.framework-demos>framework-demos</set.framework-demos>
     </properties>
