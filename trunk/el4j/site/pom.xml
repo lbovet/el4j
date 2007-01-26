@@ -186,6 +186,38 @@
                         </configuration>
                     </execution>
                     
+                     <execution>
+                        <id>collect.site.maven-database-plugin</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>aggregate-files</goal>
+                        </goals>
+                        <configuration>
+                            <rootSourceDirectory>${el4j.external}/maven/plugins/maven-database-plugin/target/site</rootSourceDirectory>
+                            <sourceFileIncludePatterns>**/*</sourceFileIncludePatterns>
+                            <targetDirectory>${basedir}/target/site/plugins/maven-database-plugin</targetDirectory>
+                            <copyFilesOnly>true</copyFilesOnly>
+                            <allowOverwrite>false</allowOverwrite>
+                        </configuration>
+                    </execution>  
+                    
+                    
+                   <execution>
+                        <id>collect.site.maven-depgraph-plugin</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>aggregate-files</goal>
+                        </goals>
+                        <configuration>
+                            <rootSourceDirectory>${el4j.external}/maven/plugins/maven-depgraph-plugin/target/site</rootSourceDirectory>
+                            <sourceFileIncludePatterns>**/*</sourceFileIncludePatterns>
+                            <targetDirectory>${basedir}/target/site/plugins/maven-depgraph-plugin</targetDirectory>
+                            <copyFilesOnly>true</copyFilesOnly>
+                            <allowOverwrite>false</allowOverwrite>
+                        </configuration>
+                    </execution>    
+                      
+                    
                     <execution>
                         <id>collect.site.maven-checkclipse-helper-plugin</id>
                         <phase>pre-site</phase>
