@@ -163,7 +163,7 @@
 		<wsdl:port name="CalculatorHttpPort"
 			binding="tns:CalculatorHttpBinding">
 			<wsdlsoap:address
-				location="http://localhost:8080/module-remoting-tests-web/Calculator.XFireJaxb.Remotingtests" />
+				location="http://${jee-web.host}:${jee-web.port}/module-remoting-tests-web/Calculator.XFireJaxb.Remotingtests" />
 		</wsdl:port>
 	</wsdl:service>
 </wsdl:definitions>
