@@ -18,6 +18,7 @@
 package ch.elca.el4j.services.remoting.protocol;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.codehaus.xfire.annotations.AnnotationServiceFactory;
@@ -73,6 +74,11 @@ public class XFire extends AbstractInetSocketAddressWebProtocol {
     private org.codehaus.xfire.XFire m_xfire;
     
     /**
+     * Properties for the XFire service.
+     */
+    private Map<String, Object> m_serviceProperties;
+    
+    /**
      * The used WSDL file. If none is provided a generated one is taken
      */
     private String m_wsdlDocumentUrl = "";
@@ -104,7 +110,11 @@ public class XFire extends AbstractInetSocketAddressWebProtocol {
         props.addPropertyValue("serviceFactory", getServiceFactory());
         props.addPropertyValue("xfire", getXfire());
         props.addPropertyValue("serviceBean", serviceProxy);
-              
+        if (getServiceProperties() != null) {
+            props.addPropertyValue("properties", getServiceProperties());
+        }
+        
+
         
         // JSR 181 annotated classes do not have to specify the serviceClass
         // property as the implementing class already has its serviceClass
@@ -151,11 +161,14 @@ public class XFire extends AbstractInetSocketAddressWebProtocol {
         proxyProps.addPropertyValue(
             "serviceClass", serviceInterfaceOptionallyWithContext);
         
-        String wsdlUrl = StringUtils.isNotBlank(m_wsdlDocumentUrl) 
-            ? m_wsdlDocumentUrl : generateUrl(proxyBean);
+        String wsdlUrl = StringUtils.isNotBlank(getWsdlDocumentUrl()) 
+            ? getWsdlDocumentUrl() : generateUrl(proxyBean);
         
         proxyProps.addPropertyValue("wsdlDocumentUrl", wsdlUrl);
         proxyProps.addPropertyValue("serviceFactory", getServiceFactory());
+        if (getServiceProperties() != null) {
+            proxyProps.addPropertyValue("properties", getServiceProperties());
+        }
         
         // Pass properties to possible subclasses
         adaptProxyProperties(proxyProps);
@@ -247,5 +260,20 @@ public class XFire extends AbstractInetSocketAddressWebProtocol {
     public String getWsdlDocumentUrl() {
         return m_wsdlDocumentUrl;
     }
-
+    
+    /**
+     * Get the properties to be set to the service.
+     * @return A {@link java.util.Map} of properties
+     */
+    public Map<String, Object> getServiceProperties() {
+        return m_serviceProperties;
+    }
+    
+    /**
+     * Set the properties to be set to the service.
+     * @param serviceProperties A {@link java.util.Map} of properties
+     */
+    public void setServiceProperties(Map<String, Object> serviceProperties) {
+        m_serviceProperties = serviceProperties;
+    }
 }
