@@ -72,8 +72,8 @@
                         <deployer>
                             <deployables>
                                 <deployable>
-                                    <groupId>ch.elca.el4j.demos</groupId>
-                                    <artifactId>module-remoting-demos-web-war</artifactId>
+                                    <groupId>ch.elca.el4j.applications</groupId>
+                                    <artifactId>el4j-remoting-demos-web-war</artifactId>
                                     <type>war</type>
                                     <properties>
                                         <context>module-remoting-demos-web</context>
