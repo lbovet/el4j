@@ -22,4 +22,9 @@ Plugins
 *----------------------------+-------------------+
 | {{{maven-repohelper-plugin/index.html}repohelper}}                   | Tool to install and deploy multiple libraries with its sources.
 *----------------------------+-------------------+
-    
+| {{{maven-database-plugin/index.html}database}}                   	   | Plugin to automate database actions.
+*----------------------------+-------------------+  
+| {{{maven-depgraph-plugin/index.html}Dependency-graph}}               | Tool to visualize depedency graph.
+*----------------------------+-------------------+  
+
+
