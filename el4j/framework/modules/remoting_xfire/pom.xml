@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
+<project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    
+
     <!-- Version: $Revision$ -->
     <!-- URL: $URL$ -->
     <!-- Date: $Date$ -->
@@ -23,91 +23,84 @@
     <description>
         Module remoting xfire of the EL4J framework.
     </description>
-    <build>
-    </build>
+    <build></build>
     <dependencies>
         <!-- EL4J framework modules -->
         <dependency>
             <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-remoting_core</artifactId>
         </dependency>
-         <!--  
-         	Switch to next version if possible as soon as it is released
-         	The following issue is hopefully fixed there.
-         	http://jira.codehaus.org/browse/XFIRE-401 (NonProxyHosts ignored)
-         -->
+        <!--  
+            Switch to next version if possible as soon as it is released
+            The following issue is hopefully fixed there.
+            http://jira.codehaus.org/browse/XFIRE-401 (NonProxyHosts ignored)
+        -->
         <dependency>
             <groupId>org.codehaus.xfire</groupId>
             <artifactId>xfire-core</artifactId>
-            <version>1.2.3</version>
-        </dependency>   
+            <version>1.2.4</version>
+        </dependency>
         <dependency>
             <groupId>org.codehaus.xfire</groupId>
             <artifactId>xfire-spring</artifactId>
-            <version>1.2.3</version>
+            <version>1.2.4</version>
         </dependency>
         <dependency>
             <groupId>org.codehaus.xfire</groupId>
             <artifactId>xfire-jaxb2</artifactId>
-            <version>1.2.3</version>
+            <version>1.2.4</version>
         </dependency>
-        
-        <!--<dependency> Removed as it already is a transitive dependency
-            <groupId>javax.xml</groupId>
-             jaxb-api is also available in group javax.xml.bind, but without sources 
-            <artifactId>jaxb-api</artifactId>
-            <version>2.0</version>
-        </dependency>-->
-        
+
+
         <dependency>
-        	<groupId>javax.jws</groupId>
-        	<artifactId>xfire-jsr181-api</artifactId>
-        	<version>1.0-M1</version>
+            <groupId>javax.jws</groupId>
+            <artifactId>xfire-jsr181-api</artifactId>
+            <version>1.0-M1</version>
         </dependency>
         <!-- Copy from xfire-parent with updated version (2.5 to 2.6)
-             According to dependencies listed on the xfire site
-             
-         	2.6 seems not to work.
-         	http://forum.springframework.org/showthread.php?t=29867
-         	Using 2.7 (2.5 seems to work too) -->  	
-        <dependency>
-        <groupId>org.apache.xbean</groupId>
-        <artifactId>xbean-spring</artifactId>
-        <version>2.7</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>mx4j</artifactId>
-            <groupId>mx4j</groupId>
-          </exclusion>
-          <exclusion>
-            <artifactId>ant</artifactId>
-            <groupId>ant</groupId>
-          </exclusion>
-          <exclusion>
-            <artifactId>groovy</artifactId>
-            <groupId>groovy</groupId>
-          </exclusion>
-          <exclusion>
-            <artifactId>org.springframework</artifactId>
-            <groupId>spring</groupId>
-          </exclusion>
-          <exclusion>
-            <artifactId>xbean-spring-v1</artifactId>
+            According to dependencies listed on the xfire site
+            
+            2.6 seems not to work.
+            http://forum.springframework.org/showthread.php?t=29867
+            Using 2.7 (2.5 seems to work too) -->
+        <!--<dependency>
             <groupId>org.apache.xbean</groupId>
-          </exclusion>
-          <exclusion>
-            <artifactId>xbean-spring-v2</artifactId>
-            <groupId>org.apache.xbean</groupId>
-          </exclusion>
-          <exclusion>
-            <artifactId>xbean-spring-common</artifactId>
-            <groupId>org.apache.xbean</groupId>
-          </exclusion>
-          <exclusion>
-            <artifactId>backport-util-concurrent</artifactId>
-            <groupId>backport-util-concurrent</groupId>
-          </exclusion>
-        </exclusions>
-      </dependency>
+            <artifactId>xbean-spring</artifactId>
+            <version>2.7</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>mx4j</artifactId>
+                    <groupId>mx4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>ant</artifactId>
+                    <groupId>ant</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>groovy</artifactId>
+                    <groupId>groovy</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>org.springframework</artifactId>
+                    <groupId>spring</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>xbean-spring-v1</artifactId>
+                    <groupId>org.apache.xbean</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>xbean-spring-v2</artifactId>
+                    <groupId>org.apache.xbean</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>xbean-spring-common</artifactId>
+                    <groupId>org.apache.xbean</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>backport-util-concurrent</artifactId>
+                    <groupId>backport-util-concurrent</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>-->
     </dependencies>
 </project>
