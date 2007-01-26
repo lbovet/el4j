@@ -45,15 +45,12 @@
 	</dependencies>
 
 	<build>
-		<resources> <!-- Workaround for http://jira.codehaus.org/browse/XFIRE-857 -->
-			<resource>
-				<directory>src/main/resources/scenarios/common</directory>
-				<includes>
-                    <include> remotingtests-xfire_versioning-protocol-config.xml</include>
-                </includes>
-                <targetPath>/scenarios/common</targetPath>
+		<resources> 
+			<resource> <!-- Filter the wsdl so the correct port is used. workaround for http://jira.codehaus.org/browse/XFIRE-857 -->
+				<directory>src/main/filtered-resources</directory>
 				<filtering>true</filtering>
 			</resource>
+
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>false</filtering>
