@@ -24,7 +24,7 @@ Plugins
 *----------------------------+-------------------+
 | {{{maven-database-plugin/index.html}database}}                   	   | Plugin to automate database actions.
 *----------------------------+-------------------+  
-| {{{maven-depgraph-plugin/index.html}Dependency-graph}}               | Tool to visualize depedency graph.
+| {{{maven-depgraph-plugin/index.html}dependency-graph}}               | Tool to visualize depedency graph.
 *----------------------------+-------------------+  
 
 
