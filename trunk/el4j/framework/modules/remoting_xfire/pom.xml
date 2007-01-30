@@ -39,11 +39,23 @@
             <groupId>org.codehaus.xfire</groupId>
             <artifactId>xfire-spring</artifactId>
             <version>1.2.4</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.codehaus.xfire</groupId>
             <artifactId>xfire-jaxb2</artifactId>
             <version>1.2.4</version>
+        </dependency>
+        
+        <!-- Set a dependency to spring 2 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring</artifactId>
         </dependency>
 
 
