@@ -114,7 +114,7 @@ public class DatabaseNameHolder extends AbstractDatabaseHolder {
      * @throws IllegalAccessException
      */
     protected Properties getProperties(Resource[] resources) 
-        throws IOException, IllegalAccessException {
+        throws IOException {
         if (resources.length == 0) {
             throw new IllegalArgumentException(
                 "Path doesn't contain resources");
@@ -162,14 +162,14 @@ public class DatabaseNameHolder extends AbstractDatabaseHolder {
                 try {
                     Properties properties = getProperties(resources);
                     m_dbName = properties.getProperty("db.name");
-                } catch (IllegalAccessException e) {
+                } catch (IllegalArgumentException e) {
                     // Didn't find a env.properties file in the project
                     // Therefore, start looking in the dependencies
                     resources = getResources("classpath*:env/env.properties");
                     try {
                         m_dbName 
                             = getProperties(resources).getProperty("db.name");
-                    } catch (IllegalAccessException e1) {
+                    } catch (IllegalArgumentException e1) {
                         throw new DatabaseHolderException(e1);
                     }
                 }
