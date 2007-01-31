@@ -167,6 +167,50 @@
                 </executions>
             </plugin>
 
+
+			<!-- 
+				Copied surefire report plugin from reporting section of tomcat profile, 
+				because otherwise the necessary html files for the test reports are not generated.
+				
+				This is not a satisfying solution and should be fixed when there is time to do so.
+			-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>generate-surefire-reports-html-page</id>
+						<phase>pre-site</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration> 
+							<reportsDirectory>
+								${project.build.directory}/${surefire-report.name.tomcat5-derby10}
+							</reportsDirectory>
+							<linkXRef>true</linkXRef>
+							<xrefLocation>
+								${set.framework-tests.xref.location}
+							</xrefLocation>
+							<outputName>
+								${surefire-report.name.tomcat5-derby10}
+							</outputName>
+							<windowTitle>
+								${surefire-report.title.tomcat5-derby10}
+							</windowTitle>
+							<docTitle>
+								${surefire-report.title.tomcat5-derby10}
+							</docTitle>
+							<docDescription>
+								${surefire-report.description.tomcat5-derby10}
+							</docDescription>
+						</configuration>
+						
+					</execution>
+				</executions>
+			</plugin>
+			
+
             <plugin>
                 <groupId>ch.elca.el4j.maven.plugins</groupId>
                 <artifactId>maven-file-collector-plugin</artifactId>
@@ -294,6 +338,8 @@
                     </execution>
                 </executions>
             </plugin>
+            
+          
             
         </plugins>
     </build>
