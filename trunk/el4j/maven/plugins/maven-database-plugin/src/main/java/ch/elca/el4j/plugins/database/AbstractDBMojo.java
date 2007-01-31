@@ -70,10 +70,10 @@ public abstract class AbstractDBMojo extends AbstractMojo {
     /**
      * Directory of external-tools in el4j project.
      * 
-     * @parameter expression="${el4j.project.external-tools}"
+     * @parameter expression="${el4j.project.tools}"
      * @required
      */
-    private String externalToolsPath;
+    private String toolsPath;
 
     /**
      * The maven project from where this plugin is called.
@@ -93,15 +93,12 @@ public abstract class AbstractDBMojo extends AbstractMojo {
      */
     private ArtifactRepository repository;
     
-    
     /**
      * @component
      */
     private ArtifactMetadataSource artifactMetadataSource;
     
-    /**
-     * Collector.
-     * 
+    /** 
      * @component
      */
     private ArtifactCollector collector;
@@ -156,7 +153,7 @@ public abstract class AbstractDBMojo extends AbstractMojo {
      * @return Home Directory of NetworkServer
      */
     protected String getDerbyLocation() {
-        return externalToolsPath + "/derby/derby-databases";
+        return toolsPath + "/derby/derby-databases";
     }
 
     /**
