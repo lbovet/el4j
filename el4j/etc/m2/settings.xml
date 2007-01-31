@@ -177,10 +177,10 @@
 
                 <!-- Project properties -->
                 <el4j.project.home>~/myproject</el4j.project.home>
-                <el4j.project.external-tools>${el4j.project.home}/external-tools</el4j.project.external-tools>
+                <el4j.project.tools>${el4j.project.home}/external-tools</el4j.project.tools>
 
                 <!-- Tomcat5x -->
-                <tomcat5x.basedir>${el4j.project.external-tools}/tomcat</tomcat5x.basedir>
+                <tomcat5x.basedir>${el4j.project.tools}/tomcat</tomcat5x.basedir>
                 <tomcat5x.version>5.5.17</tomcat5x.version>
                 <tomcat5x.home>${tomcat5x.basedir}/apache-tomcat-${tomcat5x.version}/apache-tomcat-${tomcat5x.version}</tomcat5x.home>
                 <tomcat5x.zipDownloadUrl>http://www.apache.org/dist/tomcat/tomcat-5/v${tomcat5x.version}/bin/apache-tomcat-${tomcat5x.version}.zip</tomcat5x.zipDownloadUrl>
@@ -188,9 +188,9 @@
                 <tomcat5x.cargo.log.file>${project.build.directory}/logs/tomcat5x/cargo.log</tomcat5x.cargo.log.file>
                 
                 <!-- Weblogic9x -->
-                <weblogic9x.home>${el4j.project.external-tools}/bea/weblogic90</weblogic9x.home>
+                <weblogic9x.home>${el4j.project.tools}/bea/weblogic90</weblogic9x.home>
                 <weblogic9x.server.name>myserver</weblogic9x.server.name>
-                <weblogic9x.domains.home>${el4j.project.external-tools}/bea/domains</weblogic9x.domains.home>
+                <weblogic9x.domains.home>${el4j.project.tools}/bea/domains</weblogic9x.domains.home>
                 <weblogic9x.domain.name>el4j</weblogic9x.domain.name>
                 <weblogic9x.manager.username>weblogic</weblogic9x.manager.username>
                 <weblogic9x.manager.password>weblogic</weblogic9x.manager.password>
@@ -198,7 +198,7 @@
                 <weblogic9x.cargo.log.file>${project.build.directory}/logs/weblogic9x/cargo.lo</weblogic9x.cargo.log.file>
                 
                 <!-- Birt -->
-                <birt.home>${el4j.project.external-tools}/birt-runtime-2_1_0</birt.home>
+                <birt.home>${el4j.project.tools}/birt-runtime-2_1_0</birt.home>
             </properties>
         </profile>
         
