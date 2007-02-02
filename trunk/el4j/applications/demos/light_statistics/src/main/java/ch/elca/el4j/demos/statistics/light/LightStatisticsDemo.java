@@ -20,8 +20,8 @@ package ch.elca.el4j.demos.statistics.light;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-//Checkstyle: UncommentedMain off
-
+// Checkstyle: UncommentedMain off
+// Checkstyle: UseLogger off
 /**
  * This class is a demo that loads an application context, registers the light
  * statistics performance monitor and invokes some methods. The thread sleeps
@@ -78,4 +78,5 @@ public class LightStatisticsDemo {
         }
     }
 }
-//Checkstyle: UncommentedMain on
+// Checkstyle: UseLogger on
+// Checkstyle: UncommentedMain on

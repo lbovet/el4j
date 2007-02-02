@@ -15,6 +15,8 @@
  * For alternative licensing, please contact info@elca.ch
  */
 
+// Checkstyle: UseLogger off
+
 package ch.elca.el4j.demos.remoting.benchmark;
 
 import java.io.BufferedReader;
@@ -608,5 +610,5 @@ public class RemotingBenchmark {
     }
     
 }
-
-//Checkstyle: UncommentedMain on
+// Checkstyle: UseLogger on
+// Checkstyle: UncommentedMain on

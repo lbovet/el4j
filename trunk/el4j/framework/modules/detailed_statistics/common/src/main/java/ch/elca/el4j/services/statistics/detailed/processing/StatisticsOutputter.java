@@ -23,6 +23,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import ch.elca.el4j.services.statistics.detailed.MeasureId;
 import ch.elca.el4j.services.statistics.detailed.MeasureItem;
 import ch.elca.el4j.util.codingsupport.Reject;
@@ -44,6 +47,12 @@ import ch.elca.el4j.util.codingsupport.Reject;
  */
 public class StatisticsOutputter {
 
+    /**
+     * Logger.
+     */
+    private static Log s_logger 
+        = LogFactory.getLog(StatisticsOutputter.class);
+    
     /**
      * The SVG Diagram Evaluator.
      */
@@ -87,7 +96,7 @@ public class StatisticsOutputter {
             }
             // Checkstyle: MagicNumber on
         }
-        System.out.println(buff);
+        s_logger.info(buff);
     }
     
     

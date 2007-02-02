@@ -16,6 +16,9 @@
  */
 package ch.elca.el4j.demos.statistics.detailed.internal;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  *  This class is a dummy class for presentation purposes for the 
  *  detailed statistics demo.
@@ -32,6 +35,12 @@ package ch.elca.el4j.demos.statistics.detailed.internal;
 public class DemoC {
 
     /**
+     * Logger.
+     */
+    private static Log s_logger 
+        = LogFactory.getLog(DemoC.class);
+    
+    /**
      * Print "Hi" on console.
      *
      */
@@ -43,7 +52,7 @@ public class DemoC {
             e.printStackTrace();
         }
         // Checkstyle: MagicNumber on
-        System.out.println("Hi");     
+        s_logger.info("Hi");     
     }
 
 }
