@@ -24,7 +24,7 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.demos.statistics.detailed.internal.DemoA;
 
 // Checkstyle: UncommentedMain off
-
+// Checkstyle: UseLogger off
 /**
  * This class is the base class for the detailed statistics demo.
  * 
@@ -235,5 +235,5 @@ public class DetailedStatisticsDemo {
         return (stop - start);
     }
 }
-
+// Checkstyle: UseLogger on
 // Checkstyle: UncommentedMain on

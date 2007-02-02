@@ -401,6 +401,8 @@
         <set.framework-applications>framework-applications</set.framework-applications>
         -->
         <set.framework-tests>framework-tests</set.framework-tests>
+        <!--
         <set.framework-demos>framework-demos</set.framework-demos>
+        -->
     </properties>
 </project>

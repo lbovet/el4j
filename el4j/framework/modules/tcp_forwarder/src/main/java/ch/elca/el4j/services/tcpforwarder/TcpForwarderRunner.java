@@ -14,6 +14,8 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
+
+// Checkstyle: UseLogger off
 package ch.elca.el4j.services.tcpforwarder;
 
 import java.net.InetSocketAddress;
@@ -98,4 +100,5 @@ public class TcpForwarderRunner {
             "   Example: java TcpForwarderRunner 6786 tulipe.elca.ch:1521");
     }
 }
+// Checkstyle: UseLogger on
 // Checkstyle: UncommentedMain on

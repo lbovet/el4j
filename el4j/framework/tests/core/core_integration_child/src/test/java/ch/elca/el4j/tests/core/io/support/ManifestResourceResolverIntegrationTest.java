@@ -19,6 +19,8 @@ package ch.elca.el4j.tests.core.io.support;
 
 import java.io.IOException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
@@ -101,6 +103,12 @@ public class ManifestResourceResolverIntegrationTest
         CONFIG_CORE_INTEGRATION_TESTS_3, CONFIG_CORE_INTEGRATION_TESTS_4, 
     };
 
+    /**
+     * Logger.
+     */
+    private static Log s_logger 
+        = LogFactory.getLog(ManifestResourceResolverIntegrationTest.class);
+    
     /** The resource pattern resover. */
     private ResourcePatternResolver m_resolver;
     
@@ -147,13 +155,13 @@ public class ManifestResourceResolverIntegrationTest
         Resource[] r = m_resolver.getResources(
             "classpath*:" + resourceLocation);
         assertEquals(r.length, 2);
-        System.out.println(r[0].getURL());
-        System.out.println(r[1].getURL());
+        s_logger.info(r[0].getURL());
+        s_logger.info(r[1].getURL());
         Resource r2 = m_resolver.getResource(
             "classpath:" + resourceLocation);
         assertNotNull(r2);
         assertEquals(r[0].getURL(), r2.getURL());
-        System.out.println(r2.getURL());
+        s_logger.info(r2.getURL());
     }
     
     /**
@@ -166,7 +174,7 @@ public class ManifestResourceResolverIntegrationTest
         Resource[] r = m_resolver.getResources(
                 "classpath:scenarios/core/io/support/a?.xml");
         assertEquals("Returned wrong number of resources", 1, r.length);
-        System.out.println(r[0].getFilename());
+        s_logger.info(r[0].getFilename());
     }
     
     /**
