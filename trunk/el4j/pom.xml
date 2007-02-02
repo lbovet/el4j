@@ -846,17 +846,6 @@
         </repository>
         <repository>
             <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <id>el4jReleaseRepositoryInternal</id>
-            <name>Internal release repository of the EL4J project</name>
-            <url>http://leaffy.elca.ch/java/maven2repository</url>
-        </repository>
-        <repository>
-            <snapshots>
                 <enabled>true</enabled>
             </snapshots>
             <releases>
@@ -867,21 +856,6 @@
             <name>External snapshot repository of the EL4J project</name>
             <url>http://el4.elca-services.ch/el4j/maven2snapshots</url>
         </repository>
-        <!--
-            Internal snapshot repository commented because it is currently empty.
-            ==> Faster build-process
-        -->
-        <!--repository>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <id>el4jSnapshotRepositoryInternal</id>
-            <name>Internal snapshot repository of the EL4J project</name>
-            <url>http://leaffy.elca.ch/java/maven2snapshots</url>
-        </repository-->
     </repositories>
     <pluginRepositories>
         <pluginRepository>
@@ -897,17 +871,6 @@
         </pluginRepository>
         <pluginRepository>
             <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <id>el4jReleasePluginRepositoryInternal</id>
-            <name>Internal release repository of the EL4J project</name>
-            <url>http://leaffy.elca.ch/java/maven2repository</url>
-        </pluginRepository>
-        <pluginRepository>
-            <snapshots>
                 <enabled>true</enabled>
             </snapshots>
             <releases>
@@ -918,21 +881,6 @@
             <name>External snapshot repository of the EL4J project</name>
             <url>http://el4.elca-services.ch/el4j/maven2snapshots</url>
         </pluginRepository>
-        <!--
-            Internal snapshot repository commented because it is currently empty.
-            ==> Faster build-process
-        -->
-        <!--pluginRepository>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <id>el4jSnapshotPluginRepositoryInternal</id>
-            <name>Internal snapshot repository of the EL4J project</name>
-            <url>http://leaffy.elca.ch/java/maven2snapshots</url>
-        </pluginRepository-->
     </pluginRepositories>
     <distributionManagement>
         <repository>
@@ -1551,44 +1499,22 @@
         <rmi.host>localhost</rmi.host>
         <rmi.port>8099</rmi.port>
 
-
         <!-- Distribution mgt repository ids, names and urls -->
         <distmgt.repository.id.external>ftpEl4ElcaServices</distmgt.repository.id.external>
         <distmgt.repository.name.external>External EL4J repository</distmgt.repository.name.external>
         <distmgt.repository.url.external>ftp://el4.elca-services.ch/htdocs/el4j/maven2repository</distmgt.repository.url.external>
 
-        <distmgt.repository.id.internal>sshLeaffy</distmgt.repository.id.internal>
-        <distmgt.repository.name.internal>Internal EL4J repository</distmgt.repository.name.internal>
-        <distmgt.repository.url.internal>scp://leaffy/home/java/maven2repository</distmgt.repository.url.internal>
-
         <distmgt.site.id.external>sshSourceForgeEL4J</distmgt.site.id.external>
         <distmgt.site.name.external>SourceForge EL4J website</distmgt.site.name.external>
         <distmgt.site.url.external>scp://shell.sourceforge.net/home/groups/e/el/el4j/htdocs</distmgt.site.url.external>
-
-        <distmgt.site.id.nightly>sshLeaffy</distmgt.site.id.nightly>
-        <distmgt.site.name.nightly>Internal EL4J website with the nightly interfaces</distmgt.site.name.nightly>
-        <distmgt.site.url.nightly>scp://leaffy/var/www/java/el4j/website/external</distmgt.site.url.nightly>
-
-        <distmgt.site.id.internal>sshLeaffy</distmgt.site.id.internal>
-        <distmgt.site.name.internal>Internal EL4J website</distmgt.site.name.internal>
-        <distmgt.site.url.internal>scp://leaffy/home/java/el4j/website/internal</distmgt.site.url.internal>
 
         <distmgt.snapshot-repository.id.external>ftpEl4ElcaServicesSnapshot</distmgt.snapshot-repository.id.external>
         <distmgt.snapshot-repository.name.external>External EL4J snapshot repository</distmgt.snapshot-repository.name.external>
         <distmgt.snapshot-repository.url.external>ftp://el4.elca-services.ch/htdocs/el4j/maven2snapshots</distmgt.snapshot-repository.url.external>
 
-        <distmgt.snapshot-repository.id.internal>sshLeaffySnapshot</distmgt.snapshot-repository.id.internal>
-        <distmgt.snapshot-repository.name.internal>Internal EL4J snapshot repository</distmgt.snapshot-repository.name.internal>
-        <distmgt.snapshot-repository.url.internal>scp://leaffy/home/java/maven2snapshots</distmgt.snapshot-repository.url.internal>
-
         <distmgt.snapshot-site.id.external>sshLeaffy</distmgt.snapshot-site.id.external>
         <distmgt.snapshot-site.name.external>External EL4J snapshot website</distmgt.snapshot-site.name.external>
         <distmgt.snapshot-site.url.external>scp://leaffy/home/java/el4j/snapshot/website/external</distmgt.snapshot-site.url.external>
-
-        <distmgt.snapshot-site.id.internal>sshLeaffy</distmgt.snapshot-site.id.internal>
-        <distmgt.snapshot-site.name.internal>Internal EL4J snapshot website</distmgt.snapshot-site.name.internal>
-        <distmgt.snapshot-site.url.internal>scp://leaffy/home/java/el4j/snapshot/website/internal</distmgt.snapshot-site.url.internal>
-
 
         <!-- EL4J framework plugin version numbers -->
         <version.maven-repohelper-plugin>
