@@ -856,6 +856,40 @@
             <name>External snapshot repository of the EL4J project</name>
             <url>http://el4.elca-services.ch/el4j/maven2snapshots</url>
         </repository>
+        
+        <!-- 
+            The internal leaffy respository is listed here for convenience.
+            ELCA interal developers do not have to deploy the db2 driver by
+            hand.
+         -->
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <id>el4jReleaseRepositoryInternal</id>
+            <name>Internal release repository of the EL4J project</name>
+            <url>http://leaffy.elca.ch/java/maven2repository</url>
+        </repository>
+
+
+       <!--
+            Internal snapshot repository commented because it is currently empty.
+            ==> Faster build-process
+        -->
+        <!--repository>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <id>el4jSnapshotRepositoryInternal</id>
+            <name>Internal snapshot repository of the EL4J project</name>
+            <url>http://leaffy.elca.ch/java/maven2snapshots</url>
+        </repository-->
     </repositories>
     <pluginRepositories>
         <pluginRepository>
