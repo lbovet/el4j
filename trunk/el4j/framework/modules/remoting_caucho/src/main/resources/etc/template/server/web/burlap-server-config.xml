@@ -24,7 +24,7 @@
             <value>Calculator.Burlap.Remotingtests</value>
         </property>
         <property name="service">
-            <refid local="burlapCalculatorImpl" />
+            <idref local="burlapCalculatorImpl" />
         </property>
     </bean>
     
