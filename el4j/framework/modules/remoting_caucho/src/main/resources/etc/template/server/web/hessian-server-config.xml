@@ -24,7 +24,7 @@
             <value>Calculator.Hessian.Remotingtests</value>
         </property>
         <property name="service">
-            <refid local="hessianCalculatorImpl" />
+            <idref local="hessianCalculatorImpl" />
         </property>
     </bean>
     

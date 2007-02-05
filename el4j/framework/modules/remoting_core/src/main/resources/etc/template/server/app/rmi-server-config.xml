@@ -24,7 +24,7 @@
             <value>Calculator.Rmi.Remotingtests</value>
         </property>
         <property name="service">
-            <refid local="calculatorImpl" />
+            <idref local="calculatorImpl" />
         </property>
     </bean>
     <bean id="calculatorImpl"
