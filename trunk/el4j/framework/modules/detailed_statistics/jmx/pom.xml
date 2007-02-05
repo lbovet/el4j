@@ -4,15 +4,15 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<!-- Version: $Revision: $ -->
-	<!-- URL: $URL: $ -->
-	<!-- Date: $Date: $ -->
+	<!-- Version: $Revision$ -->
+	<!-- URL: $URL$ -->
+	<!-- Date: $Date$ -->
 	<!-- Author: $Author$ -->
 
 	 <parent>
         <groupId>ch.elca.el4j.modules</groupId>
         <artifactId>el4j-framework-module-detailed_statistics</artifactId>
-        <version>1.1.1-SNAPSHOT</version>
+        <version>1.1.1</version>
     </parent>
 
 	<artifactId>module-detailed_statistics-jmx</artifactId>
