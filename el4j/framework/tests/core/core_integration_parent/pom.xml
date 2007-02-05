@@ -12,7 +12,7 @@
     <parent>
         <groupId>ch.elca.el4j.tests</groupId>
         <artifactId>el4j-framework-tests-core</artifactId>
-        <version>1.1.1-SNAPSHOT</version>
+        <version>1.1.1</version>
     </parent>
 
     <artifactId>module-core_integration_parent-tests</artifactId>
