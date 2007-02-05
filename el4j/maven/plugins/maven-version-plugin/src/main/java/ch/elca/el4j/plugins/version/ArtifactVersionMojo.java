@@ -16,16 +16,9 @@
  */
 package ch.elca.el4j.plugins.version;
 
-import java.util.Collections;
 import java.util.List;
 
-import org.apache.maven.archiva.discoverer.DefaultMetadataDiscoverer;
-import org.apache.maven.archiva.discoverer.DiscovererException;
-import org.apache.maven.archiva.discoverer.MetadataDiscoverer;
 import org.apache.maven.artifact.Artifact;
-import org.apache.maven.artifact.ArtifactUtils;
-import org.apache.maven.artifact.DefaultArtifact;
-import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
 import org.apache.maven.artifact.repository.metadata.ArtifactRepositoryMetadata;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -58,31 +51,25 @@ public class ArtifactVersionMojo extends AbstractVersionMojo {
      */
     private String groupId="";
     
-    /**
-     * MetadataDiscoverer
-     * @component
-     * @required
-     */
-    private MetadataDiscoverer discoverer;
 
     /**
      * {@inheritDoc}
      */
     public void execute() throws MojoExecutionException, MojoFailureException {
         
-        List metas;
-//        try {
-//            metas = discoverer.discoverMetadata(localRepository,"",Collections.EMPTY_LIST);
-/*        } catch (DiscovererException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(e);
-        } */
-        
-        getLog().info("Trying to get versions of " + groupId + ":" + artifactId);
-        
-        Artifact a = factory.createArtifact(groupId,artifactId,null,null,"jar");
-   
-        ArtifactRepositoryMetadata meta = new ArtifactRepositoryMetadata(a);
-    }
+//        List metas;
+////        try {
+////            metas = discoverer.discoverMetadata(localRepository,"",Collections.EMPTY_LIST);
+///*        } catch (DiscovererException e) {
+//            // TODO Auto-generated catch block
+//            throw new RuntimeException(e);
+//        } */
+//        
+//        getLog().info("Trying to get versions of " + groupId + ":" + artifactId);
+//        
+//        Artifact a = factory.createArtifact(groupId,artifactId,null,null,"jar");
+//   
+//        ArtifactRepositoryMetadata meta = new ArtifactRepositoryMetadata(a);
+        }
 
 }
