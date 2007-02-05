@@ -11,7 +11,8 @@
     <artifactId>maven-version-plugin</artifactId>
     <packaging>maven-plugin</packaging>
     <version>${version.maven-version-plugin}</version>
-    <name>A plugin to compare the version of used plugins/packages and the available ones</name>
+	<name>EL4J plugin version</name>
+    <description>A plugin to compare the version of used plugins/packages and the available ones</description>
     <build>
         <plugins>
         <!--
