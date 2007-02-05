@@ -1,4 +1,63 @@
 --------------------------------------------------------------------------------
+ Date :   05.01.07
+                            EL4J version  1.1.1
+--------------------------------------------------------------------------------
+* SourceForge Change Requests PENDING (problems resolved but not yet acknowledged)
+  -
+  
+* SourceForge Change Requests CLOSED
+  -
+  
+* Maven and build scripts
+  = Many clean-ups in the build infrastructure and in the file organization
+  = Added a database plugin that allows to execute SQL scripts on the database.
+     It can optionally launch an embedded database (Derby for now).
+  = Added a dependency plugin that illustrates the dependencies between modules
+     graphically.
+  = Added a basic EL4J archetype to get started more easily
+  = We provide a mechanim to override the configuration files that are in
+     the automatic Tomcat download (files etc/tomcat are copied to Tomcat).
+  = Test run now in the maven integration phase (in order for us to launch
+     the database in the right moment).
+  = Some issues in the site-generation were fixed.
+  = Added an experimental version plugin that checks whether there are new 
+     versions available of existing maven plugins or of other jar-files a 
+     project depends on.
+  = Provided fixes for the external exec plugin 
+     (http://jira.codehaus.org/browse/MEXEC-11)
+  = Upgrade to some newer maven plugins: eclipse, javadoc, deploy.
+
+* Module XFire-Remoting
+  = Added JAXB support for webservices
+  = Added webservice version compatibility samples to see what XML document
+     differences are tolerated by different JAXB settings.
+  = Fixes that XFire runs fine with WLS.
+  = Upgraded to the latest XFire library
+  
+* Module Detailed Statistics
+  = Allows detailed analysis of how much times is spent in complex
+     call-graphs. Please refer to its documentation.
+  = Demo for the Detailed Statistics module
+  
+* Module Spring RCP
+  = We worked on a better Spring RCP demo (currently this is an emerging 
+     prototype) 
+  
+* Varia
+  = The remoting benchmark has been moved out of the standard EL4J tests
+     (it did not fail even if there was a problem). This saves some time at 
+     each build.
+  = The number of exceptions thrown during a normal test run was significantly
+     reduced.   
+  = We resolved some build issues that occured under linux
+  = We fixed a thread leak (due to incorrect resource releasing during Spring
+     shutdown)
+  = Upgrade to Spring 2.0.2 and some of its required tools.
+  = Upgrade to Tomcat 5.5.20.
+  = Minor documentation update (sourceforge site, pdf documentation, 
+     new components)
+  
+--------------------------------------------------------------------------------
  Date :   03.11.06
                             EL4J version  1.1.0
 --------------------------------------------------------------------------------
