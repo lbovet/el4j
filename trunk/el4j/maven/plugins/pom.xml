@@ -39,6 +39,7 @@
         <module>maven-manifest-decorator-plugin</module>
         <module>maven-file-collector-plugin</module>
         <module>maven-depgraph-plugin</module>
+        <module>maven-version-plugin</module>
     </modules>
     <dependencies>
         <dependency>

@@ -1572,6 +1572,9 @@
         <version.maven-depgraph-plugin>
         	1.1-SNAPSHOT
         </version.maven-depgraph-plugin>
+        <version.maven-version-plugin>
+        	1.1-SNAPSHOT
+        </version.maven-version-plugin>
 
         <!-- EL4J framework module version numbers -->
         <version.module-core>
