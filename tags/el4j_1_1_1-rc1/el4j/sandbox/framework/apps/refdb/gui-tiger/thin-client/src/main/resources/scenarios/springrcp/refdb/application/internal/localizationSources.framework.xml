@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <!-- 
+        Language specific messages will be taken from this source.
+        Listed in service registry.
+    -->
+    <bean id="messageSource"
+        class="ch.elca.el4j.services.i18n.RewritingMessageSource">
+        <property name="basenames">
+            <list>
+                <!--
+                    Takes the localized messages. First line means that file
+                    with name "messages_de.properties" will be taken from 
+                    directory "scenarios/springrcp/properties" if current 
+                    language is German. If this file does not exist file with 
+                    name "messages.properties" will be taken. Same for the 
+                    second line.
+                -->
+                <value>scenarios.springrcp.properties.messages</value>
+                <value>org.springframework.richclient.application.messages</value>
+            </list>
+        </property>
+        <property name="additionalRules">
+        	<list>
+        		<ref bean="fieldTypeResolver"/>
+        		<bean class="ch.elca.el4j.services.i18n.RewritingUtilities"/>
+        	</list>
+        </property>
+    </bean>
+
+	<bean id="fieldTypeResolver"
+	    class="ch.elca.el4j.services.i18n.FieldTypeResolver">
+		<!-- The names of the packages containing dom classes,
+		     {@code domPackages}, must set using a property configurer
+		-->
+	</bean>
+	
+    <!-- 
+        Images will be taken by this source.
+        Listed in service registry.
+    -->
+    <bean id="imageSource"
+        class="org.springframework.richclient.image.DefaultImageSource">
+        <constructor-arg index="0">
+            <ref bean="imageResourcesFactory" />
+        </constructor-arg>
+        <property name="brokenImageIndicator">
+            <!-- 
+                This image will be taken if the requested image does not exist.
+            -->
+            <value>images/alert/error_obj.gif</value>
+        </property>
+    </bean>
+
+    <!-- 
+        Factory to load images by using short names that are defined in 
+        property files.
+    -->
+    <bean id="imageResourcesFactory"
+        class="org.springframework.context.support.ResourceMapFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath:org/springframework/richclient/image/images.properties</value>
+                <value>classpath:scenarios/springrcp/properties/images.properties</value>
+            </list>
+        </property>
+        <property name="resourceBasePath">
+            <value>images/</value>
+        </property>
+    </bean>
+</beans>

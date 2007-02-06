@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<!-- Version: $Revision$ -->
+	<!-- URL: $URL$ -->
+	<!-- Date: $Date$ -->
+	<!-- Author: $Author$ -->
+
+	<!-- On client side, interceptors are added with the AOP ProxyFactoryBean
+		on server side, with the ExclusiveBeanNameAutoProxyCreator -->
+	<bean id="printer"
+		class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<value>
+				ch.elca.el4j.demos.statistics.detailed.internal.DemoA
+			</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>clientInterceptor</value>
+			</list>
+		</property>
+		<property name="target">
+			<ref bean="rmiWithContextPrinter" />
+		</property>
+	</bean>
+
+	<!-- Remote proxy -->
+	<bean id="rmiWithContextPrinter"
+		class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
+		<property name="remoteProtocol">
+			<ref bean="rmiProtocol" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				ch.elca.el4j.demos.statistics.detailed.internal.DemoA
+			</value>
+		</property>
+		<property name="serviceName">
+			<value>Printer.rmiWithContext.StatisticDemo</value>
+		</property>
+	</bean>
+
+	<!--  Set the host and port properties for the RMI protocol -->
+	<bean id="propertyOverrideConfigurer"
+		class="org.springframework.beans.factory.config.PropertyOverrideConfigurer"
+		singleton="false">
+		<property name="locations">
+			<list>
+				<value>classpath:scenarios/client.properties</value>
+			</list>
+		</property>
+	</bean>
+</beans>

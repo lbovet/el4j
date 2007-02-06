@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!-- $Version$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
+	<bean id="repoRegistry"
+    	class="ch.elca.el4j.services.persistence.dao.HibernateRepositoryRegistry">
+    	
+    	<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+    	<property name="repos">
+    		<list>
+    			<ref bean="keywordRepo"/>
+    			<ref bean="referenceRepo"/>
+       		</list>
+    	</property>
+    </bean>
+    
+    <bean id="identityFixer"
+    	class="ch.elca.el4j.services.persistence.hibernate.HibernateProxyAwareIdentityFixer"/>    	
+</beans>

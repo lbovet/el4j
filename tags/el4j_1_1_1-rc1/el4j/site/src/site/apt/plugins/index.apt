@@ -1,0 +1,30 @@
+ -----
+ Plugins
+ -----
+ -----
+ 26 Sep 2006
+ -----
+
+Plugins
+
+  EL4J contains following Maven plugins:
+  
+*----------------------------+-------------------+
+| <<Plugin>>                 | <<Description>>
+*----------------------------+-------------------+
+| {{{maven-checkclipse-helper-plugin/index.html}checkclipse-helper}}   | Configures <Checkclipse> for smooth <Checkstyle> integration in Eclipse.
+*----------------------------+-------------------+
+| {{{maven-env-support-plugin/index.html}env-support}}                 | To share environment variables between Maven and the running application.
+*----------------------------+-------------------+
+| {{{maven-file-collector-plugin/index.html}file-collector}}           | Powerful copy tool.
+*----------------------------+-------------------+
+| {{{maven-manifest-decorator-plugin/index.html}manifest-decorator}}   | Collects information about artifacts to reconstruct artifact dependency order on runtime.
+*----------------------------+-------------------+
+| {{{maven-repohelper-plugin/index.html}repohelper}}                   | Tool to install and deploy multiple libraries with its sources.
+*----------------------------+-------------------+
+| {{{maven-database-plugin/index.html}database}}                   	   | Plugin to automate database actions.
+*----------------------------+-------------------+  
+| {{{maven-depgraph-plugin/index.html}dependency-graph}}               | Tool to visualize depedency graph.
+*----------------------------+-------------------+  
+
+
