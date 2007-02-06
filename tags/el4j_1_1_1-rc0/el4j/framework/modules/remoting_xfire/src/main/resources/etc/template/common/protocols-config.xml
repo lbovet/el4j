@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+    
+    <import resource="classpath:org/codehaus/xfire/spring/xfire.xml"/>
+    
+    <bean id="xFireProtocol" class="ch.elca.el4j.services.remoting.protocol.XFire">
+        <property name="serviceHost">
+            <value>localhost</value>
+        </property>
+        <property name="servicePort">
+            <value>8080</value>
+        </property>
+        <property name="contextPath">
+            <value>module-remoting-tests-web</value>
+        </property>
+        <property name="implicitContextPassingRegistry">
+            <ref local="implicitContextPassingRegistry" />
+        </property>
+        <property name="xfire">
+            <ref bean="xfire"/>
+        </property>
+        <property name="serviceFactory">
+            <ref bean="xfire.serviceFactory"/>
+        </property>
+		<property name="serviceProperties">
+			<map>
+				<entry key="xfire.stax.input.factory">
+					<value type="java.lang.String">com.ctc.wstx.stax.WstxInputFactory</value>
+				</entry>
+				<entry key="xfire.stax.output.factory">
+					<value type="java.lang.String">com.ctc.wstx.stax.WstxOutputFactory</value>
+				</entry>
+			</map>
+		</property>
+    </bean>
+
+    <bean id="implicitContextPassingRegistry" 
+        class="ch.elca.el4j.tests.remoting.service.TestImplicitContextPassingRegistry" />
+
+</beans>

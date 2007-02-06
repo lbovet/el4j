@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<bean id="loadBalancingProtocolConfiguration"
+		class="ch.elca.el4j.services.remoting.protocol.loadbalancing.protocol.LoadBalancingProtocolConfiguration">
+		<property name="protocols">
+			<list>
+				<ref bean="rmiProtocol1"/>
+				<ref bean="rmiProtocol"/>
+				<ref bean="rmiProtocol3"/>
+			</list>
+		</property>
+		<property name="policy">
+			<ref bean="randomPolicy" />
+		</property>
+	</bean>
+
+    <bean id="rmiProtocol1" class="ch.elca.el4j.services.remoting.protocol.Rmi">
+        <property name="serviceHost">
+            <value>localhost</value>
+        </property>
+        <property name="servicePort">
+            <value>8092</value>
+        </property>
+   </bean>
+
+    <bean id="rmiProtocol2" class="ch.elca.el4j.services.remoting.protocol.Rmi">
+        <property name="serviceHost">
+            <value>localhost</value>
+        </property>
+        <property name="servicePort">
+            <value>8094</value>
+        </property>
+    </bean>
+
+    <bean id="rmiProtocol3" class="ch.elca.el4j.services.remoting.protocol.Rmi">
+        <property name="serviceHost">
+            <value>localhost</value>
+        </property>
+        <property name="servicePort">
+            <value>8099</value>
+        </property>
+   </bean>
+
+
+
+</beans>

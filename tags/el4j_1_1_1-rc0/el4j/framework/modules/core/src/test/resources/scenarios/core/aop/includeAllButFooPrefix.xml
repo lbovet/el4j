@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <import resource="testBeansForExclusiveBeanNameAutoProxyCreator.xml"/>
+    
+    <bean id="exclusiveNameAutoProxy" 
+        class="ch.elca.el4j.core.aop.ExclusiveBeanNameAutoProxyCreator">
+        <property name="exclusiveBeanNames"><value>foo*</value></property>
+        <property name="interceptorNames">
+            <list>
+                <value>shortcutInterceptor</value>
+            </list>
+        </property>
+    </bean>
+</beans>
