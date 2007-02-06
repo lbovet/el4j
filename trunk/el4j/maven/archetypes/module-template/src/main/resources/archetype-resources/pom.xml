@@ -59,7 +59,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.1-SNAPSHOT</version>
+				<version>1.0.3-20061204.110918-2</version>
 				<configuration>
 					<mainClass>${groupId}.Calculator</mainClass>
 					<keepAlive>false</keepAlive>
