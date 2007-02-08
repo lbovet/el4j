@@ -31,63 +31,76 @@ import org.apache.maven.artifact.repository.metadata.RepositoryMetadataResolutio
 import org.apache.maven.artifact.repository.metadata.SnapshotArtifactRepositoryMetadata;
 import org.apache.maven.artifact.versioning.ArtifactVersion;
 import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
-import org.apache.maven.artifact.versioning.Restriction;
 import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.logging.Log;
 
 /**
- * This class is ... <script type="text/javascript">printFileStatus ("$URL$",
- * "$Revision$", "$Date$", "$Author$" );</script>
- * 
+ * This class is the starting point for analyzing the versions of artifacts 
+ * and provides some general tools.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
  * @author Philippe Jacot (PJA)
  */
 public abstract class AbstractVersionMojo extends AbstractMojo {
-
     /**
-     * The local Repository
+     * The local Repository.
      * 
      * @parameter expression="${localRepository}
      * @required
      * @readonly
      */
-    protected ArtifactRepository localRepository;
+    private ArtifactRepository m_localRepository;
 
     /**
-     * The artifact factory
+     * The artifact factory.
      * 
      * @component
      * @required
      */
-    protected ArtifactFactory factory;
+    private ArtifactFactory m_factory;
 
     /**
-     * Metadata Manager
+     * Metadata Manager.
      * 
      * @component
      */
-    private RepositoryMetadataManager metadataManager;
+    private RepositoryMetadataManager m_metadataManager;
 
     /**
-     * Metadata Source
+     * Metadata Source.
      * 
      * @component
      */
-    private ArtifactMetadataSource metadataSource;
-
-    protected VersionResult getAvailableVersions(Artifact a,
+    private ArtifactMetadataSource m_metadataSource;
+    
+    /**
+     * Get all available versions for an artifact.
+     * @param artifact Artifact to get versions of
+     * @param remoteRepositories Remote Repositories to look in
+     * @return A list of versions
+     */
+    @SuppressWarnings("unchecked")
+    protected VersionResult getAvailableVersions(Artifact artifact,
         List<ArtifactRepository> remoteRepositories) {
         List<ArtifactVersion> result = null;
 
         try {
-            RepositoryMetadata snapshotMetadata = new SnapshotArtifactRepositoryMetadata(
-                a);
-            metadataManager.resolve(snapshotMetadata, remoteRepositories,
-                localRepository);
+            RepositoryMetadata snapshotMetadata 
+                = new SnapshotArtifactRepositoryMetadata(artifact);
+            m_metadataManager.resolve(snapshotMetadata, remoteRepositories,
+                m_localRepository);
 
-            result = (List<ArtifactVersion>) metadataSource
-                .retrieveAvailableVersions(a, localRepository,
+            result = (List<ArtifactVersion>) m_metadataSource
+                .retrieveAvailableVersions(artifact, m_localRepository,
                     remoteRepositories);
-            // To surely not get an Abstract list that does not support insertion
+            
+            // To surely not get an Abstract list 
+            // that does not support insertion
             result = new LinkedList<ArtifactVersion>(result);
 
             // For snapshots add the used snapshot as well
@@ -97,8 +110,8 @@ public abstract class AbstractVersionMojo extends AbstractMojo {
             }
 
         } catch (ArtifactMetadataRetrievalException e) {
-            getLog().warn(
-                "Unable to retrieve Artifact Metadata for " + a.toString());
+            getLog().warn("Unable to retrieve Artifact Metadata for " 
+                + artifact.toString());
             result = Collections.emptyList();
         } catch (RepositoryMetadataResolutionException e) {
             getLog().warn("Unable to resolve Repository Data");
@@ -109,68 +122,26 @@ public abstract class AbstractVersionMojo extends AbstractMojo {
             result = new LinkedList<ArtifactVersion>();
         }
 
-        return new VersionResult(a, result);
-    }
+        return new VersionResult(artifact, result);
+    }   
 
-    protected void printArtifactVersionComparison(Artifact a,
-        List<ArtifactVersion> versions, boolean listAllVersions) {
-        Restriction restriction = new Restriction(new DefaultArtifactVersion(a
-            .getVersion()), false, null, false);
-        List<ArtifactVersion> higherVersions = new LinkedList<ArtifactVersion>();
-
-        Collections.sort(versions);
-
-        for (ArtifactVersion version : versions) {
-            if (restriction.containsVersion(version)) {
-                higherVersions.add(version);
-            }
-        }
-
-        if (listAllVersions || !higherVersions.isEmpty()) {
-            Log log = getLog();
-            log.info(a.getGroupId() + ":" + a.getArtifactId());
-            log.info("\tVersion: " + a.getVersion());
-
-            if (listAllVersions) {
-                log.info("\tAvailable Versions:");
-                for (ArtifactVersion version : versions)
-                    log.info("\t\t" + version);
-            }
-
-            log.info("\tHigher Versions:");
-            if (!higherVersions.isEmpty()) {
-                for (ArtifactVersion version : higherVersions) {
-                    log.info("\t\t" + version);
-                }
-            } else {
-                log.info("\t\tHighest Version is in use");
-            }
-
-        }
-    }
-
-    protected void printArtifacts(List<VersionResult> versions, boolean printAll) {
-        Log log = getLog();
-        for (VersionResult v : versions) {
-            if (printAll || v.isNewerVersionAvailable()) {
-                log.info("ArtifactID:\t" + v.getArtifact().getArtifactId());
-                log.info("GroupID:\t" + v.getArtifact().getGroupId());
-                log.info("Version:\t" + v.getArtifact().getVersion());
-                
-                if (printAll) {
-                    log.info("\tAll available versions:");
-                    for (ArtifactVersion artifactVersion : v.getVersions()) {
-                        log.info("\t\t" + artifactVersion.toString());
-                    }
-                } else {
-                    log.info("\tAll newer versions:");
-                    for (ArtifactVersion artifactVersion : v.getNewerVersions()) {
-                        log.info("\t\t" + artifactVersion.toString());
-                    }
-                }
-                log.info("");
-
-            }
-        }
+    /**
+     * Create an artifact for the given data.
+     * 
+     * @param artifactId The artifact ID
+     * @param groupId The group ID
+     * @param version The version
+     * @param scope The scope
+     * @param type The type
+     * @return An artifact
+     */
+    protected Artifact getArtifact(
+        String artifactId, 
+        String groupId, 
+        String version, 
+        String scope, 
+        String type) {
+        return m_factory.createArtifact(
+            groupId, artifactId, version, scope, type);
     }
 }
