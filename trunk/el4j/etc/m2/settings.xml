@@ -64,7 +64,7 @@
             <protocol>http</protocol>
             <host>proxy.elca.ch</host>
             <port>8080</port>
-            <nonProxyHosts>*.elca.ch|leaffy</nonProxyHosts>
+            <nonProxyHosts>*.elca.ch|leaffy|localhost</nonProxyHosts>
         </proxy-->
     </proxies>
 
@@ -177,7 +177,7 @@
 
                 <!-- Project properties -->
                 <el4j.project.home>~/myproject</el4j.project.home>
-                <el4j.project.tools>${el4j.project.home}/external-tools</el4j.project.tools>
+                <el4j.project.tools>${el4j.project.home}/tools</el4j.project.tools>
 
                 <!-- Tomcat5x -->
                 <tomcat5x.basedir>${el4j.project.tools}/tomcat</tomcat5x.basedir>
