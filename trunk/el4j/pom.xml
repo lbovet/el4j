@@ -1671,7 +1671,7 @@
         <version.maven-javadoc-plugin>2.1-20061003.094811-3</version.maven-javadoc-plugin>
         <version.maven-jxr-plugin>2.1-20060911.142523-1</version.maven-jxr-plugin>
         <version.taglist-maven-plugin>2.0</version.taglist-maven-plugin>
-        <version.maven-plugin-plugin>2.2-20060925.131529-1</version.maven-plugin-plugin>
+        <version.maven-plugin-plugin>2.2</version.maven-plugin-plugin>
         
         <!-- Used Maven version -->
         <el4j.java.version>1.5</el4j.java.version>
