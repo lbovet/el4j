@@ -15,12 +15,6 @@
     <description>A plugin to compare the version of used plugins/packages and the available ones</description>
     <build>
         <plugins>
-        <!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-        -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
@@ -44,47 +38,5 @@
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-project</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-model</artifactId>
-            <version>2.0.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-artifact-manager</artifactId>
-            <version>2.0.4</version>
-        </dependency>
     </dependencies>
-    
-<!--  zum testen -->
-<!--
-    <repositories>
-        <repository>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <id>el4jSnapshotRepositoryExternal</id> 
-            <id>apache.snapshots</id>
-            <name>External snapshot repository of the EL4J project</name>
-            <url>http://el4.elca-services.ch/el4j/maven2snapshots</url>
-        </repository>
-    </repositories>  -->
-<!--
-    <pluginRepositories>
-        <pluginRepository>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            id>el4jSnapshotPluginRepositoryExternal</id
-            <id>apache.snapshots</id>
-            <name>External snapshot repository of the EL4J project</name>
-            <url>http://el4.elca-services.ch/el4j/maven2snapshots</url>
-        </pluginRepository>
-    </pluginRepositories>
---></project>
+</project>
