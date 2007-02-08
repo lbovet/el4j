@@ -16,15 +16,9 @@
  */
 package ch.elca.el4j.plugins.version;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.Collection;
 
 import org.apache.maven.artifact.Artifact;
-import org.apache.maven.artifact.factory.ArtifactFactory;
-import org.apache.maven.artifact.repository.ArtifactRepository;
-import org.apache.maven.artifact.transform.ArtifactTransformationManager;
-import org.apache.maven.artifact.versioning.ArtifactVersion;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -33,7 +27,8 @@ import org.apache.maven.project.MavenProject;
 
 
 /**
- * Mojo to config files in the .settings directory.
+ * Lists for the current project all Dependencies, Managed Dependencies, Plugins
+ * and managed Plugins if a newer version is available.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -47,10 +42,8 @@ import org.apache.maven.project.MavenProject;
  * @goal list
  * @requiresDependencyResolution compile|test
  */
+public class VersionMojo extends AbstractProjectVersionMojo {
 
-
-public class VersionMojo extends AbstractVersionMojo {
-	
     /**
      * The maven project.
      *
@@ -58,83 +51,40 @@ public class VersionMojo extends AbstractVersionMojo {
      * @required
      * @readonly
      */
-    private MavenProject project;
-    
-    /**
-     * Should the plugin list all versions?
-     * 
-     * @parameter expression="${version.listall}"
-     */
-    private boolean listAllVersions = false;
-                         
+    private MavenProject m_project;
+                             
     /** 
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     public void execute() throws MojoExecutionException, MojoFailureException {
-        List<VersionResult> dependencies = new LinkedList<VersionResult>();
-        List<VersionResult> plugins = new LinkedList<VersionResult>();
-        List<VersionResult> managedDependencies = new LinkedList<VersionResult>();
-        List<VersionResult> managedPlugins = new LinkedList<VersionResult>();        
-        
-        List<ArtifactRepository> remoteRepositories = 
-            (List<ArtifactRepository>) project.getRemoteArtifactRepositories();
-
-		for (Dependency d:(List<Dependency>) project.getDependencies()) {
-			Artifact a = convertDependencyToArtifact(d);
-            dependencies.add(getAvailableVersions(a, remoteRepositories));
+            
+        for (Artifact artifact : (Collection<Artifact>) 
+            m_project.getDependencyArtifacts()) {
+            createOverview(artifact).addOccurence(
+                new ArtifactOccurence(m_project, ReferenceType.DEPENDENCY));
         }
         
-        for (Dependency d:(List<Dependency>) project.getDependencyManagement().getDependencies()) {
-            Artifact a = convertDependencyToArtifact(d);
-            managedDependencies.add(getAvailableVersions(a, remoteRepositories));
-        }        		
-
-		for(Artifact a:(Set<Artifact>) project.getPluginArtifacts()) {
-            plugins.add(getAvailableVersions(a, remoteRepositories));      
+        for (Dependency dependency : (Collection<Dependency>)
+            m_project.getDependencyManagement().getDependencies()) {
+            createOverview(toArtifact(dependency))
+                .addOccurence(new ArtifactOccurence(
+                    m_project, ReferenceType.DEPENDENCY_MANAGEMENT));
         }
 
-        for (Plugin p:(List<Plugin>) project.getPluginManagement().getPlugins()) {
-            Artifact a = convertPluginToArtifact(p);
-            managedPlugins.add(getAvailableVersions(a, remoteRepositories));
+        for (Artifact artifact : (Collection<Artifact>)
+            m_project.getPluginArtifacts()) {
+            createOverview(artifact).addOccurence(
+                new ArtifactOccurence(m_project, ReferenceType.PLUGIN));  
+        }
+
+        for (Plugin plugin : (Collection<Plugin>) 
+            m_project.getPluginManagement().getPlugins()) {
+            createOverview(toArtifact(plugin))
+                .addOccurence(new ArtifactOccurence(
+                    m_project, ReferenceType.PLUGIN_MANAGEMENT));
         } 
         
-        getLog().info("Dependencies:");
-        printArtifacts(plugins, listAllVersions);
-
-        getLog().info("Plugins:");
-        printArtifacts(plugins, listAllVersions);
-        
-        getLog().info("Managed Dependencies:");
-        printArtifacts(managedDependencies, listAllVersions);
-        
-        getLog().info("Managed Plugins:");
-        printArtifacts(managedPlugins, listAllVersions);
+        printArtifactOverviews();
     }
-	
-
-    
-    private Artifact convertDependencyToArtifact(Dependency dependency){
-        Artifact a = factory.createArtifact(
-            dependency.getGroupId(),
-            dependency.getArtifactId(),
-            dependency.getVersion(),
-            dependency.getScope(),
-            dependency.getType());
-        return a;
-    }
-    
-    private Artifact convertPluginToArtifact(Plugin plugin){
-        Artifact a = factory.createArtifact(
-            plugin.getGroupId(),
-            plugin.getArtifactId(),
-            plugin.getVersion(),
-            Artifact.SCOPE_RUNTIME,
-            "maven-plugin");
-        return a;
-    }
-
-	
-	
-	
-
 }
