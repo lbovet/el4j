@@ -90,10 +90,10 @@ public abstract class AbstractVersionMojo extends AbstractMojo {
         List<ArtifactVersion> result = null;
 
         try {
-            RepositoryMetadata snapshotMetadata 
-                = new SnapshotArtifactRepositoryMetadata(artifact);
-            m_metadataManager.resolve(snapshotMetadata, remoteRepositories,
-                m_localRepository);
+//            RepositoryMetadata snapshotMetadata 
+//                = new SnapshotArtifactRepositoryMetadata(artifact);
+//            m_metadataManager.resolve(snapshotMetadata, remoteRepositories,
+//                m_localRepository);
 
             result = (List<ArtifactVersion>) m_metadataSource
                 .retrieveAvailableVersions(artifact, m_localRepository,
@@ -104,18 +104,18 @@ public abstract class AbstractVersionMojo extends AbstractMojo {
             result = new LinkedList<ArtifactVersion>(result);
 
             // For snapshots add the used snapshot as well
-            if (snapshotMetadata.isSnapshot()) {
-                result.add(new DefaultArtifactVersion(snapshotMetadata
-                    .getMetadata().getVersion()));
-            }
+//            if (snapshotMetadata.isSnapshot()) {
+//                result.add(new DefaultArtifactVersion(snapshotMetadata
+//                    .getMetadata().getVersion()));
+//            }
 
         } catch (ArtifactMetadataRetrievalException e) {
             getLog().warn("Unable to retrieve Artifact Metadata for " 
                 + artifact.toString());
             result = Collections.emptyList();
-        } catch (RepositoryMetadataResolutionException e) {
-            getLog().warn("Unable to resolve Repository Data");
-            result = Collections.emptyList();
+//        } catch (RepositoryMetadataResolutionException e) {
+//            getLog().warn("Unable to resolve Repository Data");
+//            result = Collections.emptyList();
         }
 
         if (result == null) {
