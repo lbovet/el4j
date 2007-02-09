@@ -92,7 +92,7 @@ public class ArtifactVersionMojo extends AbstractVersionMojo {
             remoteRepositories = new LinkedList<ArtifactRepository>();
         } else {
             // Use remote repositories of the current project
-            getLog().info("Using the currenct projects \"" 
+            getLog().info("Using the current project's \"" 
                 + m_project.getName() + "\" repositories.");
             remoteRepositories = m_project.getRemoteArtifactRepositories();
         }
