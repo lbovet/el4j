@@ -20,7 +20,7 @@ import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import ch.elca.el4j.services.statistics.detailed.contextpassing.SharedContext;
+import ch.elca.el4j.services.statistics.detailed.contextpassing.DetailedStatisticsSharedContextHolder;
 import ch.elca.el4j.services.statistics.detailed.processing.MeasureCollectorService;
 
 
@@ -130,31 +130,6 @@ public class MeasureId implements Serializable {
         return new MeasureId();
     }
 
-    /**
-     * Returns the MeasureID object stored in the shared context. Remark : This
-     * method should only be called by the server.
-     * 
-     * @return the MeasureID object stored in the context
-     */
-    public static MeasureId getIDFromContext() {
-        return (MeasureId) SharedContext.getContext()
-            .get(MeasureCollectorService.CONTEXT_NAME_ID);
-    }
-
-    /**
-     * Returns the sequence of the current measure stored in the shared context.
-     * Remark : This method should only be called by the server.
-     * 
-     * @return the sequence stored in the context
-     */
-    public static int getSeqFromContext() {
-        int seq = ((Integer) SharedContext.getContext()
-                .get(MeasureCollectorService.CONTEXT_NAME_SEQ)).intValue();
-
-        SharedContext.getContext().put(
-            MeasureCollectorService.CONTEXT_NAME_SEQ, new Integer(seq + 1));
-        return seq;
-    }
 
     /**
      * Returns the host name of the measure ID.
