@@ -73,5 +73,14 @@ public interface ImplicitContextPassTester {
      *            Kind of data to use
      */
     public abstract void setDataToUse(int option);
+    
+    /**
+     * @return Returns the receivedData.
+     */
+    public Object getReceivedData();
 
+    /**
+     * @return Returns the testData.
+     */
+    public Object getTestData();
 }

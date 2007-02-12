@@ -17,15 +17,16 @@
 
 package ch.elca.el4j.tests.core.implicitcontextpassing;
 
-import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
-import ch.elca.el4j.core.contextpassing.DefaultImplicitContextPassingRegistry;
+import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
 import ch.elca.el4j.tests.remoting.service.Calculator;
 
 import junit.framework.TestCase;
 
-//Checkstyle: MagicNumber off
+// Checkstyle: MagicNumber off
+// Checkstyle: EmptyBlock off
 
 /**
  * This integration test checks correctness of the Implicit context passer.
@@ -56,39 +57,32 @@ public class ImplicitContextPassingIntegrationTest extends TestCase {
     /**
      * ApplicationContext object.
      */
-    private ConfigurableApplicationContext m_appContext;
+    private ApplicationContext m_appContext;
 
     /**
      * ImplicitContextPassingRegistry for client.
      */
-    private DefaultImplicitContextPassingRegistry m_clientRegistry;
+    private ImplicitContextPassingRegistry m_clientRegistry;
 
     /**
      * ImplicitContextPassingRegistry for server.
      */
-    private DefaultImplicitContextPassingRegistry m_serverRegistry;
+    private ImplicitContextPassingRegistry m_serverRegistry;
     
     /**
      * Implicit context passer for client.
      */
-    private ImplicitContextPasserImplA m_clientPasserA;
+    private ImplicitContextPassTester m_clientPasserA;
 
     /**
      * Implicit context passer for server.
      */
-    private ImplicitContextPasserImplA m_serverPasserA; 
+    private ImplicitContextPassTester m_serverPasserA; 
     
     /**
      * Inteface of service provided by server.
      */
     private Calculator m_calc;
-    
-
-    /**
-     * Constructor.
-     */
-    public ImplicitContextPassingIntegrationTest() {
-    }
 
     /**
      * {@inheritDoc}
@@ -96,16 +90,16 @@ public class ImplicitContextPassingIntegrationTest extends TestCase {
     public void setUp() {
 
         m_appContext = new ModuleApplicationContext(CONFIG_LOCATION, true);
-        m_clientRegistry = (DefaultImplicitContextPassingRegistry) m_appContext
+        m_clientRegistry = (ImplicitContextPassingRegistry) m_appContext
             .getBean("clientImplicitContextPassingRegistry");
 
-        m_serverRegistry = (DefaultImplicitContextPassingRegistry) m_appContext
+        m_serverRegistry = (ImplicitContextPassingRegistry) m_appContext
             .getBean("serverImplicitContextPassingRegistry");
         
-        m_serverPasserA = (ImplicitContextPasserImplA) m_appContext
+        m_serverPasserA = (ImplicitContextPassTester) m_appContext
             .getBean("serverPasserA");
         
-        m_clientPasserA = (ImplicitContextPasserImplA) m_appContext
+        m_clientPasserA = (ImplicitContextPassTester) m_appContext
             .getBean("clientPasserA");
         
         m_calc = (Calculator) m_appContext.getBean("calculator");
@@ -268,4 +262,5 @@ public class ImplicitContextPassingIntegrationTest extends TestCase {
     }
     
 }
-//Checkstyle: MagicNumber on
+// Checkstyle: EmptyBlock on
+// Checkstyle: MagicNumber on
