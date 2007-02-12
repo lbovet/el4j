@@ -110,14 +110,14 @@ public class ImplicitContextPasserImplB extends AbstractImplicitContextPasser
     }
 
     /**
-     * @return Returns the receivedData.
+     * {@inheritDoc}
      */
     public Object getReceivedData() {
         return m_receivedData;
     }
 
     /**
-     * @return Returns the testData.
+     * {@inheritDoc}
      */
     public Object getTestData() {
         return m_testData;
