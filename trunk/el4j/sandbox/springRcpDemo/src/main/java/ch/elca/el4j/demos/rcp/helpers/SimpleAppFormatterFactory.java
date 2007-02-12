@@ -1,3 +1,19 @@
+/*
+ * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
+ * the spring framework, http://el4j.sf.net
+ * Copyright (C) 2006 by ELCA Informatique SA, Av. de la Harpe 22-24,
+ * 1000 Lausanne, Switzerland, http://www.elca.ch
+ *
+ * EL4J is published under the GNU General Public License (GPL) Version 2.0.
+ * http://www.gnu.org/licenses/
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * For alternative licensing, please contact info@elca.ch
+ */
 package ch.elca.el4j.demos.rcp.helpers;
 
 import java.text.ParseException;
@@ -14,11 +30,23 @@ import org.springframework.binding.format.support.SimpleFormatterFactory;
 import org.springframework.util.StringUtils;
 
 /**
+ * 
+ * 
  * Simple formatter factory that returns a custom date/time formatter.  
  * By default, this formatter is used to format all date fields in the 
  * application.
  *
- * @author Keith Donald
+ * Mostly taken from Spring RCP v.0.3 by Keith Donald
+ * 
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author David Stefan (DST)
  */
 public class SimpleAppFormatterFactory extends SimpleFormatterFactory {
     
@@ -37,21 +65,27 @@ public class SimpleAppFormatterFactory extends SimpleFormatterFactory {
     class AppDateFormatter extends AbstractFormatter {
 
         /** Default Date format. */
-        private final DateFormatter format = new DateFormatter(
+        private final DateFormatter m_format = new DateFormatter(
             new SimpleDateFormat("dd.MM.yyyy"));
 
         /** Pattern to verify date contains full 4 digit year. */
-        private final Pattern MDY_PATTERN = Pattern
+        private final Pattern m_dmyPattern = Pattern
             .compile("[0-9]{1,2}.[0-9]{1,2}.[0-9]{4}");
 
+        /**
+         * {@inheritDoc}
+         */
         protected String doFormatValue(Object value) {
             if (value == null) {
                 return "";
             } else {
-                return format.formatValue(value);
+                return m_format.formatValue(value);
             }
         }
 
+        /**
+         * {@inheritDoc}
+         */
         protected Object doParseValue(String formattedString, Class targetClass)
             throws InvalidFormatException, ParseException {
             String src = (String) formattedString;
@@ -62,13 +96,13 @@ public class SimpleAppFormatterFactory extends SimpleFormatterFactory {
             Object value = null;
             if (StringUtils.hasText(src)) {
 
-                Matcher matcher = MDY_PATTERN.matcher(src);
+                Matcher matcher = m_dmyPattern.matcher(src);
 
                 if (!matcher.matches()) {
                     throw new ParseException("Invalid date format: " + src, 0);
                 }
 
-                value = format.parseValue(src, Date.class);
+                value = m_format.parseValue(src, Date.class);
             }
             return value;
         }

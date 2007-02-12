@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.demos.rcp.template;
+package ch.elca.el4j.demos.rcp.ui;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
@@ -47,7 +47,6 @@ import ca.odell.glazedlists.matchers.MatcherEditor;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 
 import ch.elca.el4j.apps.keyword.dao.KeywordDao;
-import ch.elca.el4j.demos.rcp.ui.MasterDetailForm;
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
 import ch.elca.el4j.util.env.EnvPropertiesUtils;
@@ -67,7 +66,7 @@ import ch.elca.el4j.util.env.EnvPropertiesUtils;
  * </ul>
  * 
  * <script type="text/javascript">printFileStatus
-*   ("$URL: $",
+*   ("$URL$",
     *    "$Revision$",
     *    "$Date$",
     *    "$Author$"
@@ -83,7 +82,7 @@ public class MasterDetailView<T> extends AbstractView
      * Handler for the New Entity action.
      */
     private ActionCommandExecutor m_newEntityExecutor 
-        = new NewContactExecutor();
+        = new NewBookExecutor();
 
 //    /**
 //     * Handler for the "Properties" action.
@@ -119,9 +118,9 @@ public class MasterDetailView<T> extends AbstractView
         // Create filter panel
         JPanel filterPanel = new JPanel(new BorderLayout());
         JLabel filterLabel = getComponentFactory().createLabel(
-            "nameAddressFilter.label");
+            "masterDetailFilter.label");
         filterPanel.add(filterLabel, BorderLayout.WEST);
-        String tip = getMessage("nameAddressFilter.caption");
+        String tip = getMessage("masterDetailFilter.caption");
         JTextField filterField = getComponentFactory().createTextField();
         filterField.setToolTipText(tip);
         filterPanel.add(filterField, BorderLayout.CENTER);
@@ -174,37 +173,22 @@ public class MasterDetailView<T> extends AbstractView
      * @param context The PageComponentContext
      */
     protected void registerLocalCommandExecutors(PageComponentContext context) {
-        context.register("newContactCommand", m_newEntityExecutor);
-//        context.register(GlobalCommandIds.PROPERTIES, m_propertiesExecutor);
+        context.register("newBookCommand", m_newEntityExecutor);
         context.register(GlobalCommandIds.DELETE, m_deleteExecutor);
     }
 
     /**
      * Private inner class to create a new contact.
      */
-    private class NewContactExecutor implements ActionCommandExecutor {
+    private class NewBookExecutor implements ActionCommandExecutor {
         /**
          * 
          * {@inheritDoc}
          */
         public void execute() {
-            // TODO remove this as it is a dependency to the form.
             m_form.getNewFormObjectCommand().execute();
         }
     }
-
-//    /**
-//     * Private inner class to handle the properties form display.
-//     */
-//    private class PropertiesExecutor extends AbstractActionCommandExecutor {
-//        /**
-//         * 
-//         * {@inheritDoc}
-//         */
-//        public void execute() {
-//            
-//        }
-//    }
 
     /**
      * Private class to handle the delete command. Note that due to the
@@ -222,8 +206,8 @@ public class MasterDetailView<T> extends AbstractView
             // of the guards put in place in prepareTable.
             // final Contact contact = contactTable.getSelectedContact();
             // Query the user to be sure they want to do this
-            String title = getMessage("contact.confirmDelete.title");
-            String message = getMessage("contact.confirmDelete.message");
+            String title = getMessage("MasterDetailForm.confirmDelete.title");
+            String message = getMessage("MasterDetailForm.confirmDelete.message");
             ConfirmationDialog dlg = new ConfirmationDialog(title, message) {
                 protected void onConfirm() {
                 // Delete the object from the persistent store.

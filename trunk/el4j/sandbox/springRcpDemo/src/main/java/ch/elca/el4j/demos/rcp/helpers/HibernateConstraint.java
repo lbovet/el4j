@@ -22,7 +22,8 @@ import org.springframework.core.closure.Constraint;
 
 /**
  * 
- * This class is a constraint for class T.
+ * This class checks constraints given as Hibernate Annotation in the 
+ * domain objects.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",

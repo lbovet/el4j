@@ -114,12 +114,12 @@
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-hibernate</artifactId>
-			<version>1.3-SNAPSHOT</version>
+			<!-- version>1.3-SNAPSHOT</version -->
 		</dependency>
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-database</artifactId>
-			<version>1.4-SNAPSHOT</version>
+			<!-- version>1.4-SNAPSHOT</version -->
 		</dependency>
 
 		<dependency>
