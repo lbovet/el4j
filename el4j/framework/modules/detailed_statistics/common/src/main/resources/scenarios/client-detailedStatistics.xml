@@ -8,7 +8,7 @@
 		</constructor-arg>
 		<!-- Configure this Interceptor to be a client interceptor -->
 		<constructor-arg index="1">
-			<value>false</value>
+			<value>Jvm1</value>
 		</constructor-arg>
 	</bean>
 </beans>

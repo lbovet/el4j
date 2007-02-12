@@ -38,7 +38,7 @@
 		</constructor-arg>
 		<!-- Configure this Interceptor to be a server interceptor -->
 		<constructor-arg index="1">
-			<value>true</value>
+			<value>Jvm2</value>
 		</constructor-arg>
 	</bean>
 
