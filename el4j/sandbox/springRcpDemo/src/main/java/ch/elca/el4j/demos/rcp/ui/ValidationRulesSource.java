@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.demos.rcp.template;
+package ch.elca.el4j.demos.rcp.ui;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.rules.Rules;

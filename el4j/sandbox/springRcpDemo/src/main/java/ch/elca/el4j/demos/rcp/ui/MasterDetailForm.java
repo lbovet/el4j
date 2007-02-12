@@ -189,31 +189,6 @@ public class MasterDetailForm<T> extends AbstractTableMasterForm {
             super.postCommit(formModel);
             T entity = (T) formModel.getFormObject();
             m_dao.saveOrUpdate(entity);  
-//            Book book = new Book();
-//            book.setAuthorName("AAA");
-//            book.setDescription("BBB");
-//            book.setIsbnNumber("1234567890");
-//            book.setName("CCC");
-//            book.setPageNum(111);
-//            book.setPublisher("DDD");
-//            book.setVersion("EEE");
-//            
-//            Keyword key1 = new Keyword();
-//            key1.setName("key1");
-//            key1.setDescription("des key1");
-//            
-//            Keyword key2 = new Keyword();
-//            key2.setName("key2");
-//            key2.setDescription("des key2");
-//            
-//            Set set = new HashSet();
-//            set.add(key1);
-//            set.add(key2);
-//            
-//            book.setKeywords(set);
-//            
-//            m_dao.saveOrUpdate((T) book);
-            
         }
 
         /**
@@ -235,112 +210,12 @@ public class MasterDetailForm<T> extends AbstractTableMasterForm {
                     formBuilder.row();
                     count = 0;
                 }
-            }
-         
-            // Add List with all keywords
-            AllKeywordsForm allKeywords = new AllKeywordsForm();
-            formBuilder.row();
-            formBuilder.getLayoutBuilder().cell(
-                getComponentFactory().createLabel("All Keywords"));
-            formBuilder.getLayoutBuilder().cell(allKeywords.getControl(),
-                "colSpan=1 align=left");
-            formBuilder.getLayoutBuilder().unrelatedGapCol();
-            
-            DetailKeywordForm detailKeyword 
-                = new DetailKeywordForm(getFormModel());
-            getSelectionModel().addListSelectionListener(detailKeyword);
-            formBuilder.getLayoutBuilder().cell(
-                getComponentFactory().createLabel("This Keywords"));
-            formBuilder.getLayoutBuilder().cell(detailKeyword.getControl(),
-                "colSpan=1 align=left");
-            formBuilder.getLayoutBuilder().unrelatedGapCol();
-            
-            
+            }  
             formBuilder.row();
             formBuilder.row();
             formBuilder.getLayoutBuilder().cell(createButtonBar());
-            
             updateControlsForState();
-            
-
-
-
             return formBuilder.getForm();
         }
-        
     }
 }
-
-
-/*
- * ValueModel o = (ValueModel)
- * getFormModel().getValueModel("keywords"); ValueHolder
- * allNodesHolder = new ValueHolder(o.getValue()); Map<String,
- * Object> context = new HashMap<String, Object>();
- * context.put(ListBinder.SELECTABLE_ITEMS_KEY, allNodesHolder);
- * context.put(ListBinder.RENDERER_KEY, new
- * BeanPropertyValueListRenderer( "name"));
- * context.put(ListBinder.SELECTION_MODE_KEY, new Integer(
- * ListSelectionModel.SINGLE_SELECTION));
- * formBuilder.add(getBindingFactory().createBinding(JList.class,
- * "keywords", context), "keywords");
- */
-
-/*
- * JList list = getComponentFactory().createList(); list = new
- * JList(new String[]{"TEST"});
- * list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
- * list.setCellRenderer(new BeanPropertyValueListRenderer("name"));
- * formBuilder.add("keywords", list);
- * formBuilder.getLayoutBuilder().cell(
- * getComponentFactory().createLabel("This Keywords"));
- * formBuilder.getLayoutBuilder().cell(thisKeywords.getControl(),
- * "colSpan=1 align=left");
- * formBuilder.getLayoutBuilder().unrelatedGapCol();
- * formBuilder.add("keywords", getComponentFactory()
- * .createListValueModelComboBox( model2.getValueModel("all"),
- * model2.getValueModel("all"), ""));
- */
-
-//JPanel view = getComponentFactory().createPanel();    
-//view.add(formBuilder.getForm(), BorderLayout.WEST);
-//view.add(mini.getControl(), BorderLayout.EAST);
-//return view;
-
-/*
- * formBuilder.add("keywords", "colSpan=1 align=left"); KeywordDao
- * dao2 = (KeywordDao) getApplicationContext().getBean(
- * "keywordDao"); HierarchicalFormModel model =
- * FormModelHelper.createFormModel(dao2); TestForm allKeyword = new
- * TestForm(model, "all", this); TestForm thisKeywords = new
- * TestForm(getFormModel(), "keywords", this);
- * getSelectionModel().addListSelectionListener(thisKeywords);
- * formBuilder.getLayoutBuilder().cell(
- * getComponentFactory().createLabel("All Keywords"));
- * formBuilder.getLayoutBuilder().cell(allKeyword.getControl(),
- * "colSpan=1 align=left");
- * formBuilder.getLayoutBuilder().unrelatedGapCol();
- */
-
-//HierarchicalFormModel model = FormModelHelper
-//.createFormModel((Book) getFormModel().getFormObject());
-//MiniMasterDetail mini = new MiniMasterDetail(model, "keywords", this);
-//getSelectionModel().addListSelectionListener(mini);
-
-//JList masterList = getComponentFactory().createList(); 
-//masterList.setModel(mini.getMasterEventList());
-//masterList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//// TODO fix me ;)
-//masterList.setFixedCellWidth(120);
-//// Configure the list to be the size desired
-//masterList.setVisibleRowCount(4);
-//// Setup our selection listener so that it controls the detail form
-//installSelectionHandler();
-//// Install the renderer, if configured
-//masterList.setCellRenderer(new BeanPropertyValueListRenderer("name"));
-//JScrollPane sp = new JScrollPane(masterList);
-//formBuilder.getLayoutBuilder().cell(getComponentFactory().createLabel("Keywords"));
-//formBuilder.getLayoutBuilder().cell(sp, "colSpan=1 align=left");
-//formBuilder.getLayoutBuilder().unrelatedGapCol();
-
-//formBuilder.getLayoutBuilder().cell(mini.getDetail().getControl(), "colSpan=1 align=left");

@@ -23,7 +23,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.richclient.application.ApplicationLauncher;
 
 /**
- * This class is Starts the Master/Detail Prototype.
+ * This class is Starts the Master/Detail RCP Demo.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",

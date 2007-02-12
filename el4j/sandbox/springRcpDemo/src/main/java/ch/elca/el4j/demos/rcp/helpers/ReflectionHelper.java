@@ -30,7 +30,7 @@ import ch.elca.el4j.util.env.EnvPropertiesUtils;
 
 /**
  * 
- * This class is a helper for work related to reflection.
+ * This class provides lists of getters and setters for a specific class.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -45,18 +45,18 @@ import ch.elca.el4j.util.env.EnvPropertiesUtils;
 public class ReflectionHelper<T> {
     
     /**
-     * Columns to display.
+     * Columns to display (property from properties file).
      */
     private static final String ENV_COLUMNS = "masterDetail.columns";
     
     /**
-     * Columns to include.
+     * Columns to include (property from properties file).
      */
     private static final String ENV_INCLUDE_COLUMNS 
         = "masterDetail.includeColumns";
     
     /**
-     * Columns to exclude from being displayed.
+     * Columns to exclude from being displayed (property from properties file).
      */
     private static final String ENV_EXCLUDE_COLUMNS 
         = "masterDetail.excludeColumns";
@@ -72,11 +72,6 @@ public class ReflectionHelper<T> {
     private List<String> m_getterNames;
     
     /**
-     * All setter names.
-     */
-    private List<String> m_setterNames;
-    
-    /**
      * Map of setters with names.
      */
     private Map<String, Method> m_setters;
@@ -89,10 +84,8 @@ public class ReflectionHelper<T> {
     public ReflectionHelper(Class type) {
         m_type = type;
         m_getterNames = new ArrayList<String>();
-        m_setterNames = new ArrayList<String>();
         m_setters = new HashMap<String, Method>();
         findMethods(m_type, "get", m_getterNames);
-        findMethods(m_type, "set", m_setterNames);
         
         Properties props = EnvPropertiesUtils.getEnvProperties();
         
@@ -124,6 +117,13 @@ public class ReflectionHelper<T> {
                 }
             }
         }
+    }
+    
+    /**
+     * @return Return all properties, i.e. the transformed names of all getters
+     */
+    public List<String> getProperties() {
+        return m_getterNames;
     }
     
     /**
@@ -177,20 +177,5 @@ public class ReflectionHelper<T> {
         result 
             = result.substring(0, 1).toLowerCase().concat(result.substring(1));
         return result;
-    }
-
-    /**
-     * @return Return all properties, i.e. the transformed names of all getters
-     */
-    public List<String> getProperties() {
-        return m_getterNames;
-    }
-    
-    /**
-     * @return Return all properties that are settable
-     */
-    public List<String> getSettableProperties() {
-        return m_setterNames;
-    }
-    
+    } 
 }

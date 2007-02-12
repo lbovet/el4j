@@ -106,7 +106,7 @@
 	<bean id="addressView"
 		class="org.springframework.richclient.application.support.DefaultViewDescriptor">
 		<property name="viewClass">
-			<value>ch.elca.el4j.demos.rcp.template.MasterDetailView</value>
+			<value>ch.elca.el4j.demos.rcp.ui.MasterDetailView</value>
 		</property>
 		<property name="viewProperties">
 			<map>
@@ -187,7 +187,7 @@
 	</bean>
 
 	<bean id="rulesSource"
-		class="ch.elca.el4j.demos.rcp.template.ValidationRulesSource">
+		class="ch.elca.el4j.demos.rcp.ui.ValidationRulesSource">
 		<property name="domainType" value="ch.elca.el4j.apps.refdb.dom.Book">
 		</property>
 	</bean>
