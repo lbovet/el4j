@@ -20,6 +20,8 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.commons.collections.bag.SynchronizedBag;
+
 import ch.elca.el4j.services.statistics.detailed.svg.CallHierarchy;
 
 
@@ -48,7 +50,9 @@ import ch.elca.el4j.services.statistics.detailed.svg.CallHierarchy;
  */
 public class MeasureItem implements Serializable {
 
-    /** Date and time format. */
+	private static final long serialVersionUID = 5083234396519618596L;
+
+	/** Date and time format. */
     private static final SimpleDateFormat DATE_FORMAT 
         = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS");
 
@@ -66,7 +70,7 @@ public class MeasureItem implements Serializable {
 
     /** The EJB doing the measure (not available in case 
      * of a database measure). */
-    private String m_ejb;
+    private String m_service;
 
     /** The method doing the measure. */
     private String m_method;
@@ -114,7 +118,7 @@ public class MeasureItem implements Serializable {
     * value is EJB_CONTAINER.
     * <br>Attribute in database: TYPE
     *
-    * @param ejbName The JNDI name of the EJB for which the measure is done
+    * @param service The JNDI name of the EJB for which the measure is done
     * (not available in case of a database measure)
     * <br>Attribute in database: EJBNAME
     *
@@ -133,18 +137,18 @@ public class MeasureItem implements Serializable {
     * <br>Attribute in database: HIERARCHY
     */
     public MeasureItem(MeasureId id, int seq, String client, String level,
-                       String ejbName, String methodName, long startTime,
+                       String service, String methodName, long startTime,
                        long duration, String hierarchy) {
         m_id = id;
         m_seq = seq;
         m_client = client;
         m_level = level;
-        m_ejb = ejbName;
+        m_service = service;
         m_method = methodName;
         m_startTime = startTime;
         m_duration = duration;
         m_hierarchy = hierarchy;
-        m_serviceName = ejbName + "." + getShortLevel();
+        m_serviceName = service + "." + getShortLevel();
         
     }
 
@@ -211,7 +215,7 @@ public class MeasureItem implements Serializable {
             level = "CL";
         } else if (level.equals("EJB_CONTAINER")) {
             level = "EJB";
-        }
+        } 
 
         return level;
     }
@@ -222,7 +226,7 @@ public class MeasureItem implements Serializable {
      * @return the measure EJB
      */
     public String getEjbName() {
-        return m_ejb;
+        return m_service;
     }
 
     /**
@@ -271,7 +275,7 @@ public class MeasureItem implements Serializable {
      */
     public String getFormattedString() {
         return m_id + ", " + m_seq + ", " + m_client + ", " + m_level + ", "
-            + m_startTime + ", " + "(" + ((m_ejb == null) ? "<undef>" : m_ejb)
+            + m_startTime + ", " + "(" + ((m_service == null) ? "<undef>" : m_service)
             + ", " + ((m_method == null) ? "<undef>" : m_method) + "), "
             + m_duration;
     }
@@ -283,14 +287,15 @@ public class MeasureItem implements Serializable {
      *            the string to use as CSV delimiter
      * @return measure CSV representation
      */
-    public String getCsvString(String delimiter) {
+    // synchronized due to dateformat
+    public synchronized String getCsvString(String delimiter) {
         String dateSign = "_";
         String hierarchySign = "#";
 
         return m_id + delimiter + hierarchySign + m_hierarchy + delimiter
             + m_seq + delimiter + m_client + delimiter + m_level + delimiter
             + dateSign + DATE_FORMAT.format(new Date(m_startTime)) + delimiter
-            + ((m_ejb == null) ? "" : m_ejb) + delimiter
+            + ((m_service == null) ? "" : m_service) + delimiter
             + ((m_method == null) ? "" : m_method) + delimiter + m_duration;
     }
 
