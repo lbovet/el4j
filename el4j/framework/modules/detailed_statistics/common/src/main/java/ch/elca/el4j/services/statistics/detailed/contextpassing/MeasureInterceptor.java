@@ -16,6 +16,9 @@
  */
 package ch.elca.el4j.services.statistics.detailed.contextpassing;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.logging.Log;
@@ -65,11 +68,29 @@ public class MeasureInterceptor  implements MethodInterceptor {
      *  (e.g. [1-1] to [1-2])
      *  further calls make the hierarchy more deep (e.g. [1-1] to [1-1-1]) 
      */
-    private static ThreadLocal s_hierarchy = new ThreadLocal();
+    private static ThreadLocal<int[]> s_hierarchy = new ThreadLocal<int[]>();
+    
+    protected static String s_hostName = "<unknown>";   
+    {
+        try {
+            s_hostName = InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException e) {
+        }
+    }
+        
+    
     /**
      * See comment on s_hierarcy.
      */
-    private static ThreadLocal s_id = new ThreadLocal();
+    private static ThreadLocal<MeasureId> s_id = new ThreadLocal<MeasureId>();
+    
+    /**
+     * Holds the depth of the current call stack. It's incremented when a call
+     *  arrives inbound, it's decremented when the variable arrives outbound.
+     */
+    private static ThreadLocal<Integer> s_depth = new ThreadLocal<Integer>();
+    
+    
     /**
      * ThreadLocal variables to store the measureId locally in the thread.
      */
@@ -84,6 +105,7 @@ public class MeasureInterceptor  implements MethodInterceptor {
      * should be stored to.
      * 
      * @param isServer Is this a server (client=false).
+     * @deprecated use the constructor with (MeasureCollectorService,String) instead
      */
     public MeasureInterceptor(MeasureCollectorService collectorService,
         boolean isServer) {
@@ -94,167 +116,144 @@ public class MeasureInterceptor  implements MethodInterceptor {
             this.m_level = "CLIENT";
         }
     }
+
+    /**
+     * The constructor.
+     * @param collectorService The collectorService, where the measured data 
+     * should be stored to.
+     * 
+     * @param isServer Is this a server (client=false).
+     */
+    public MeasureInterceptor(MeasureCollectorService collectorService, String vmName) {
+        m_collectorService = collectorService;
+        m_level = vmName;
+    }    
     
     /**
      * {@inheritDoc}
      */
-    public Object invoke(MethodInvocation methodInvocation) throws Throwable {      
-        PassedContext passedObject = SharedContext.getPassedObject();
-        MeasureId id;
+    public Object invoke(MethodInvocation methodInvocation) throws Throwable {
+        
+        // we will work on the passed object directly (it is stored in a
+        //  threadlocal in the DetailedStatisticsSharedContextHolder)
+        DetailedStatisticsContext context = DetailedStatisticsSharedContextHolder.getContext();
+
         int seqNumber;
         int[] hierarchy;
-        boolean noId = false;
-
-        // Get current Id "MEASURE_ID"
-        id = passedObject.getMeasureId();
-
-        // Get previous startTime
-        Long oldStartTime = new Long(passedObject.getStartTime());
-
-        // No starttime in context
-        if (oldStartTime == null) {
-            oldStartTime = new Long(0);
-        }
+        
+        // Indicates that the ID was newly created in this currently running invoke method.
+        //  At the end of this currently running invoke method, we should drop it again.
+        boolean dropIdAtEnd = false;
 
         
+        // depth++
+        context.setDepth(context.getDepth()+1); 
+        seqNumber = context.getSequenceNumber();
+        seqNumber++;
+
+        System.out.println(methodInvocation);
+        System.out.println("depth:"+context.getDepth());
+        
+        
         /* ---------------------------------------------------------------------
-         * If no id is available this is the first measure and the Invoker has 
-         * to generate a MeasureId
+         * If no mesure id is available this is the first measure and the  
+         * interceptor has to generate a new MeasureId
          * -------------------------------------------------------------------*/
-        if (id == null) {
+        if (context.getMeasureId() == null) {
 
             // The id does not exist : client side, or first call
             // of the invoker from service side
-            id = MeasureId.createID();
-            seqNumber = 1;
-
-            hierarchy = new int[] {1};
+            context.setMeasureId(MeasureId.createID());
+            hierarchy = new int[]{1};
             
-            passedObject.setMeasureId(id);
-            noId = true;
+            dropIdAtEnd = true;
 
-            /* ----------------------------------------------------------------
-             * A MeasureId was found in the shared context with context level
-             *  ACTION   
-             * This means an additional call in the whole measuring chain.
-             * ---------------------------------------------------------------*/
         } else {
+            /* ----------------------------------------------------------------
+             * A MeasureId was found in the shared context    
+             * This means an additional call in the existing measuring chain.
+             * ---------------------------------------------------------------*/
 
-            // get seq from calling svc increment it by one
-            seqNumber = passedObject.getSequenceNumber();
+            hierarchy = context.getHierarchy();
 
-            seqNumber++;
-
-            // Get hierarchy from previous service
-            // if ThreadLocal Variable has something different to null
-            // then this is an additional measure.
-            int[] previousHierarchy = null;
-            int[] threadLocalHierarchy = (int[]) s_hierarchy.get();
-            MeasureId threadLocalId = (MeasureId) s_id.get();
-
-            if (threadLocalHierarchy != null && threadLocalId != null) {
-                // test if it's still the same measure id, 
-                // else it's a new measure
-                if (threadLocalId.getFormattedString().equals(
-                    id.getFormattedString())) {
-                    previousHierarchy = threadLocalHierarchy;
+            assert (context.getDepth() <= hierarchy.length);  // after previous depth incremental!          
+            
+            System.out.println("*hier:"+hierarchy.length+" "+context.getDepth());            
+            
+            // extend hierarchy-array if needed
+            if ((hierarchy.length+1) == context.getDepth()) {
+                int[] extendedHierarchy = new int[hierarchy.length+1];
+                for (int i = 0; i < hierarchy.length; i++) {
+                    extendedHierarchy[i] = hierarchy[i];
                 }
+                extendedHierarchy[hierarchy.length] = 0;
+
+                hierarchy = extendedHierarchy;
             }
-
-            // normal case, no additional call. take hierachy from context
-            if (previousHierarchy == null) {
-                previousHierarchy = passedObject.getHierarchy();
-
-            }
-
-            // distinguish if call is more wide or more deep
-            if (previousHierarchy.length < seqNumber) {
-                // more deep e.g. from 1-1 to 1-1-1
-                hierarchy = new int[seqNumber];
-
-                System.arraycopy(previousHierarchy, 0, hierarchy, 0,
-                    previousHierarchy.length);
-                hierarchy[hierarchy.length - 1] = 1;
-
-            } else if (previousHierarchy.length >= seqNumber) {
-                // more wide e.g. from 1-1 to 1-2
-                hierarchy = new int[seqNumber];
-
-                for (int i = 0; i < seqNumber - 1; i++) {
-                    hierarchy[i] = previousHierarchy[i];
-                }
-
-                hierarchy[seqNumber - 1] = previousHierarchy[seqNumber - 1] + 1;
-
-            } else {
-                // should not happen
-                hierarchy = null;
-
-            }
-
+                
+            System.out.println("hier:"+hierarchy.length+" "+context.getDepth());
+            hierarchy[context.getDepth()-1] = hierarchy[context.getDepth()-1] + 1;
         }
 
-        // put sequence into context with context level ACTION
-        passedObject.setSequenceNumber(seqNumber);
 
-        // put hierarchy into context with context level ACTION
-        // This refactoring was done because the SESSION context 
-        // level (of the shared context service) was removed in the cejb.
-        // The new solution uses ThreadLocal variables.
-        passedObject.setHierarchy(hierarchy);
-
-        s_hierarchy.set(hierarchy);
-        s_id.set(id);
-
+ 
         // Perform invocation and measure time
         long startTime = System.currentTimeMillis();
 
-        long lastStartTime = oldStartTime.longValue();
+        long lastStartTime = context.getStartTime();
 
         // Correction of unsynchronized clocks.
         if (startTime < lastStartTime) {
             startTime = lastStartTime;
         }
 
-        // Put the starttime in shared context
-        passedObject.setStartTime(startTime);
+        // Put the values in shared context
+        context.setStartTime(startTime);       
+        context.setSequenceNumber(seqNumber);
+        context.setHierarchy(hierarchy);      
 
-        /* ---------------------------------------------------------------------
-         * The invokation */
-
-        Object retVal = methodInvocation.proceed();
-
-        /* ---------------------------------------------------------------------
-         */
-
-        // Calculate duration after invocation
-        long duration = System.currentTimeMillis() - startTime;
-
-        /* ---------------------------------------------------------------------
-         * Create MeasureItem and put duration into this item. Then pass the 
-         * item to the CollectorService which will add the item to persistence
-         * -------------------------------------------------------------------*/
-
-        // Add new measure
-        if (m_collectorService != null) {
-            MeasureItem tempMeasure = new MeasureItem(
-                id, seqNumber, id.getHost(), m_level,
-                methodInvocation.getThis().getClass().getName(),
-                methodInvocation.getMethod().getName(), startTime, duration,
-                arrayToString(hierarchy));
-            m_collectorService.add(tempMeasure);
-
-        } else {
-            s_logger.info("invoke, Unable to write measure because "
-                + "MeasureCollectorService is not available. The measure"
-                + "is ignored");
+        Object retVal = null;
+        try {
+            // the invocation
+            retVal = methodInvocation.proceed();
+        } catch (Throwable t) {
+            throw t;
         }
+        finally {       
+            // Calculate duration after invocation
+            long duration = System.currentTimeMillis() - startTime;
 
-        if (noId) {
-            // Erase id in shared context
-            passedObject.setMeasureId(null);
+            /*
+             * ---------------------------------------------------------------------
+             * Create MeasureItem and pass it to the CollectorService that
+             * stores is
+             * -------------------------------------------------------------------
+             */
+            if (m_collectorService != null) {
+                MeasureItem tempMeasure = new MeasureItem(context
+                        .getMeasureId(), seqNumber, s_hostName, m_level,
+                        methodInvocation.getThis().getClass().getName(),
+                        methodInvocation.getMethod().getName(), startTime,
+                        duration, arrayToString(hierarchy, context.getDepth()));
+                m_collectorService.add(tempMeasure);
+
+            } else {
+                s_logger
+                        .info("invoke, Unable to write measure because "
+                                + "MeasureCollectorService is not available. "
+                                + "The measure is ignored");
+            }
+
+            // depth--
+            context.setDepth(context.getDepth() - 1);
+
+            if (dropIdAtEnd) {
+                // start with a fresh context
+                DetailedStatisticsSharedContextHolder
+                        .setContext(new DetailedStatisticsContext());
+            }       
+
         }
-
         return retVal;
     }
 
@@ -263,17 +262,16 @@ public class MeasureInterceptor  implements MethodInterceptor {
      * @param array Every array entry must provide a toString() method
      * @return A string representation of the array. (E.g. "1-2-1")
      */
-    private String arrayToString(int[] array) {
+    private String arrayToString(int[] array, int depth) {
         if (array == null) {
             return "null";
         }
 
         StringBuffer str = new StringBuffer();
-
-        for (int j = 0; j < array.length; j++) {
+        for (int j = 0; j < depth; j++) {
             str.append(array[j]);
 
-            if ((j + 1) != array.length) {
+            if ((j + 1) != depth) {
                 str.append("-");
             }
         }
