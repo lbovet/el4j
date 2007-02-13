@@ -1,16 +1,16 @@
 /*
  * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
  * the spring framework, http://el4j.sf.net
- * Copyright (C) 2006 by ELCA Informatique SA, Av. de la Harpe 22-24,
+ * Copyright (C) 2005 by ELCA Informatique SA, Av. de la Harpe 22-24,
  * 1000 Lausanne, Switzerland, http://www.elca.ch
  *
- * EL4J is published under the GNU General Public License (GPL) Version 2.0.
- * http://www.gnu.org/licenses/
+ * EL4J is published under the GNU Lesser General Public License (LGPL)
+ * Version 2.1. See http://www.gnu.org/licenses/
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
+ * GNU Lesser General Public License for more details.
  *
  * For alternative licensing, please contact info@elca.ch
  */
@@ -30,7 +30,7 @@ import ch.elca.el4j.util.env.EnvPropertiesUtils;
 
 /**
  * 
- * This class provides lists of getters and setters for a specific class.
+ * This class is a helper that provides lists of getters for a specific class.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -127,12 +127,15 @@ public class ReflectionHelper<T> {
     }
     
     /**
-     * Find all getters of this type of class and store them in a List.
-     *
-     * @param clazz .
-     * @param prefix .
-     * @param list .
-.     */
+     * Find all methods with the giving prefix in Class clazz.
+     * 
+     * @param clazz
+     *            The class to look for methods
+     * @param prefix
+     *            The prefix the method must have, e.g. 'get' or 'set'
+     * @param list
+     *            The list to add the found methods to .
+     */
     private void findMethods(Class<?> clazz, String prefix, List<String> list) {
         if (clazz.isAnnotationPresent(Entity.class)) {
             // Get all methods of the DOM class and add them to
@@ -165,8 +168,10 @@ public class ReflectionHelper<T> {
     /**
      * Transform name of getter to format we need.
      * 
-     * @param prefix Prefix to remove
-     * @param name Name of getter to transform
+     * @param prefix
+     *            Prefix to remove
+     * @param name
+     *            Name of getter to transform
      * @return Name of getter without 'get' and leading character lower case
      */
     private String removePrefix(String prefix, String name) {
