@@ -85,7 +85,7 @@ public class ValidationRulesSource<T> extends DefaultRulesSource
     }
     
     /**
-     * Construct the rules that are used to validate a Contact domain object.
+     * Construct the rules that are used to validate the domain object.
      * 
      * @return validation rules
      * @see Rules

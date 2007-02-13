@@ -52,10 +52,10 @@ import ch.elca.el4j.util.env.EnvPropertiesUtils;
 
 
 /**
- * This class provides the main view of the contacts. It provides a table
- * showing the contact objects and a quick filter field to narrow down the list
- * of visible contacts. Several commands are tied to the selection of the
- * contacts table
+ * This class provides View for the master/detail example. It provides a table
+ * showing the domain objects and a quick filter field to narrow down the list
+ * of visible domain object. Several commands are tied to the selection of the
+ * master table
  * <p>
  * By implementing special tag interfaces, this component will be automatically
  * wired in to certain events of interest.
