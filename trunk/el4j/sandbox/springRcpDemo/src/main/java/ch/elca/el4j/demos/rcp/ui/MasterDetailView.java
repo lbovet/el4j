@@ -46,7 +46,6 @@ import ca.odell.glazedlists.TextFilterator;
 import ca.odell.glazedlists.matchers.MatcherEditor;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 
-import ch.elca.el4j.apps.keyword.dao.KeywordDao;
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
 import ch.elca.el4j.util.env.EnvPropertiesUtils;
@@ -66,11 +65,11 @@ import ch.elca.el4j.util.env.EnvPropertiesUtils;
  * </ul>
  * 
  * <script type="text/javascript">printFileStatus
-*   ("$URL$",
-    *    "$Revision$",
-    *    "$Date$",
-    *    "$Author$"
-    * );</script>
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  * 
  * @param <T> Class type of Domain Object we want to display
  * @author David Stefan (DST)
@@ -83,12 +82,6 @@ public class MasterDetailView<T> extends AbstractView
      */
     private ActionCommandExecutor m_newEntityExecutor 
         = new NewBookExecutor();
-
-//    /**
-//     * Handler for the "Properties" action.
-//     */
-//    private GuardedActionCommandExecutor m_propertiesExecutor 
-//        = new PropertiesExecutor();
 
     /**
      * Handler for the "Delete" action.
@@ -134,16 +127,13 @@ public class MasterDetailView<T> extends AbstractView
             = (DaoRegistry) getApplicationContext().getBean("daoRegistry");
         GenericDao<T> dao = registry.getFor(m_domainType);
         Properties pros = EnvPropertiesUtils.getEnvProperties();
-        String sortProperty = pros.getProperty("masterDetail.sortProperty");
-          
+        String sortProperty = pros.getProperty("masterDetail.sortProperty");    
         HierarchicalFormModel model = FormModelHelper.createFormModel(dao);
-
         m_form 
             = new MasterDetailForm<T>(model, "all", m_domainType, sortProperty);
         
         String filterProperty 
-            = pros.getProperty("masterDetail.filterProperties");
-        
+            = pros.getProperty("masterDetail.filterProperties");    
         StringTokenizer tokenizer = new StringTokenizer(filterProperty, ",");
         List<String> tokens = new ArrayList<String>();
         while (tokenizer.hasMoreTokens()) {
@@ -207,7 +197,8 @@ public class MasterDetailView<T> extends AbstractView
             // final Contact contact = contactTable.getSelectedContact();
             // Query the user to be sure they want to do this
             String title = getMessage("MasterDetailForm.confirmDelete.title");
-            String message = getMessage("MasterDetailForm.confirmDelete.message");
+            String message 
+                = getMessage("MasterDetailForm.confirmDelete.message");
             ConfirmationDialog dlg = new ConfirmationDialog(title, message) {
                 protected void onConfirm() {
                 // Delete the object from the persistent store.

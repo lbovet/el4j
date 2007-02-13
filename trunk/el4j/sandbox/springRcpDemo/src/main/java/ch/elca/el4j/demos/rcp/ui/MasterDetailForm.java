@@ -38,7 +38,10 @@ import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
 
 /**
  * 
- * This class is a prototype for a master/detail pair.
+ * This class is a prototype for a master/detail pair. It works together with 
+ * the master/detail view and is completely generic. 
+ * It gets the domain class from the view and uses the ReflectionHelper to get
+ * the needed knowledge about the domain class.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -58,12 +61,12 @@ public class MasterDetailForm<T> extends AbstractTableMasterForm {
     public static final String FORM_NAME = "MasterDetailForm";
     
     /**
-     * The Dao.
+     * The Generic Dao we use to get and store our domain objects.
      */
     private GenericDao<T> m_dao;
     
     /**
-     * Reflection Helper for DOM class.
+     * Reflection Helper for domain class.
      */
     private ReflectionHelper<T> m_helper;
     
@@ -72,11 +75,12 @@ public class MasterDetailForm<T> extends AbstractTableMasterForm {
      * object type.
      * 
      * @param parentFormModel
-     *            Parent form model
+     *            The formModel containing the data for the table
      * @param property
-     *            containing this forms data (must be a collection or an array)
-     * @param type 
-     *            Type of detail
+     *            The property, i.e. getter method, containing this forms data
+     *            (must be a collection or an array)
+     * @param type
+     *            The class type of the detail form
      * @param sortProperty
      *            Field for sorting master table
      */
@@ -132,11 +136,9 @@ public class MasterDetailForm<T> extends AbstractTableMasterForm {
     @Override
     protected void deleteSelectedItems() {
         ListSelectionModel sm = getSelectionModel();
-
         if (sm.isSelectionEmpty()) {
             return;
         }
-
         getDetailForm().reset();
 
         int min = sm.getMinSelectionIndex();
@@ -155,9 +157,11 @@ public class MasterDetailForm<T> extends AbstractTableMasterForm {
     }
     
     /**
+     * According to the Spring manual, this method needs to be overriden for 
+     * Hibernate to work.
+     * 
      * {@inheritDoc}
      */
-    @Override
     protected Class getMasterCollectionType(ValueModel collectionPropertyVM) {
         return List.class;
     }
@@ -170,10 +174,12 @@ public class MasterDetailForm<T> extends AbstractTableMasterForm {
         /**
          * Constructor.
          * 
-         * @param parentFormModel .
-         * @param formId .
-         * @param childFormObjectHolder .
-         * @param masterList .
+         * @param parentFormModel
+         *            The parent form model
+         * @param formId The Id of the form
+         * @param childFormObjectHolder The Child Form Object Holder
+         * @param masterList
+         *            The list containing all elements of the master table
          */
         public DetailForm(HierarchicalFormModel parentFormModel, String formId,
             ValueModel childFormObjectHolder, ObservableList masterList) {
@@ -206,6 +212,7 @@ public class MasterDetailForm<T> extends AbstractTableMasterForm {
             for (String elem : properties) {
                 formBuilder.add(elem, "colSpan=1 align=left");
                 count++;
+                // Split the properties into two rows, that's why we need the 2
                 if (count >= 2) {
                     formBuilder.row();
                     count = 0;
