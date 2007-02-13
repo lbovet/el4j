@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <parent>
+        <groupId>ch.elca.el4j.apps</groupId>
+        <artifactId>el4j-framework-apps-refdb-gui-tiger-server</artifactId>
+        <version>1.1.2-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>refdb-gui-tiger-server-jar</artifactId>
+    <version>${version.application-refdb}</version>
+    <packaging>jar</packaging>
+    <name>EL4J application refdb gui tiger server - jar</name>
+    <description>Jar part of RefDb gui tiger server module of the EL4J framework.</description>
+    <dependencies>
+        <dependency>
+            <groupId>ch.elca.el4j.apps</groupId>
+            <artifactId>refdb-core-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j.apps</groupId>
+            <artifactId>refdb-gui-tiger-common</artifactId>
+        </dependency>
+                
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-database</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-web-jar</artifactId>
+        </dependency>
+    </dependencies>
+</project>
