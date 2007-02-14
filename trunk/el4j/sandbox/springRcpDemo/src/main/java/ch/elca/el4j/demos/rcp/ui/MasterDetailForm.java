@@ -32,7 +32,7 @@ import org.springframework.richclient.form.AbstractDetailForm;
 import org.springframework.richclient.form.AbstractTableMasterForm;
 import org.springframework.richclient.form.builder.TableFormBuilder;
 
-import ch.elca.el4j.demos.rcp.helpers.ReflectionHelper;
+import ch.elca.el4j.demos.rcp.helpers.EntityHelper;
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
 
@@ -68,7 +68,7 @@ public class MasterDetailForm<T> extends AbstractTableMasterForm {
     /**
      * Reflection Helper for domain class.
      */
-    private ReflectionHelper<T> m_helper;
+    private EntityHelper<T> m_helper;
     
     /**
      * Construct a new MasterDetailForm using the given parent model and detail
@@ -88,7 +88,7 @@ public class MasterDetailForm<T> extends AbstractTableMasterForm {
         String property, Class<T> type, String sortProperty) {
         super(parentFormModel, property, FORM_NAME, type);
         setSortProperty(sortProperty);
-        m_helper = new ReflectionHelper<T>(type);
+        m_helper = new EntityHelper<T>(type);
         DaoRegistry registry 
             = (DaoRegistry) getApplicationContext().getBean("daoRegistry");
         m_dao = (GenericDao<T>) registry.getFor(type);

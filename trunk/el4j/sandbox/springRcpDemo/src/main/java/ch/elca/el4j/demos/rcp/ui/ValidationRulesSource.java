@@ -20,8 +20,8 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.rules.Rules;
 import org.springframework.rules.support.DefaultRulesSource;
 
+import ch.elca.el4j.demos.rcp.helpers.EntityHelper;
 import ch.elca.el4j.demos.rcp.helpers.HibernateConstraint;
-import ch.elca.el4j.demos.rcp.helpers.ReflectionHelper;
 
 /**
  * This class is a source for validation rules associated with the 
@@ -58,7 +58,7 @@ public class ValidationRulesSource<T> extends DefaultRulesSource
     /**
      * The Reflection Helper.
      */
-    private ReflectionHelper<T> m_helper;
+    private EntityHelper<T> m_helper;
     
     /**
      * Construct the rules source. Just add all the rules for each class that
@@ -79,7 +79,7 @@ public class ValidationRulesSource<T> extends DefaultRulesSource
      * {@inheritDoc}
      */
     public void afterPropertiesSet() throws Exception {
-        m_helper = new ReflectionHelper<T>(m_domainType);
+        m_helper = new EntityHelper<T>(m_domainType);
         // Add the rules specific to the object types we manage
         addRules(createRules());
     }
