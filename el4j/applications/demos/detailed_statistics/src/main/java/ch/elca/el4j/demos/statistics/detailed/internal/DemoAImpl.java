@@ -33,6 +33,9 @@ public class DemoAImpl implements DemoA {
 
     /** nonsense demoB object. */
     private DemoB m_demoB;
+    
+    /** nonsense demoB object. */
+    private DemoC m_demoC;
 
     /**
      * {@inheritDoc}
@@ -46,6 +49,13 @@ public class DemoAImpl implements DemoA {
             e.printStackTrace();
         }
         m_demoB.computeB(3);
+        
+        try {
+            Thread.sleep(3 * number);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        m_demoC.print();
     }
 
     /**
@@ -57,5 +67,16 @@ public class DemoAImpl implements DemoA {
     public void setDemoB(DemoB demo) {
         this.m_demoB = demo;
     }
+    
+    /**
+     * Setter for DemoC.
+     * 
+     * @param demo
+     *            DemoB object
+     */
+    public void setDemoC(DemoC demo) {
+        this.m_demoC = demo;
+    }
+    
 }
 // Checkstyle: MagicNumber on

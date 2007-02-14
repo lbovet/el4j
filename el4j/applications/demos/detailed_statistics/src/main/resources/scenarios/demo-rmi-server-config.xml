@@ -27,6 +27,9 @@
 		<property name="demoB">
 			<ref bean="demoB" />
 		</property>
+		<property name="demoC">
+			<ref bean="demoC" />
+		</property>
 	</bean>
 	<bean id="demoB"
 		class="ch.elca.el4j.demos.statistics.detailed.internal.DemoB">
