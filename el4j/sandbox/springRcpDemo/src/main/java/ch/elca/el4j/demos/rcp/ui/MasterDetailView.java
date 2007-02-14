@@ -17,10 +17,7 @@
 package ch.elca.el4j.demos.rcp.ui;
 
 import java.awt.BorderLayout;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
-import java.util.StringTokenizer;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
@@ -46,6 +43,7 @@ import ca.odell.glazedlists.TextFilterator;
 import ca.odell.glazedlists.matchers.MatcherEditor;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 
+import ch.elca.el4j.demos.rcp.helpers.PropertyReader;
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
 import ch.elca.el4j.util.env.EnvPropertiesUtils;
@@ -132,15 +130,9 @@ public class MasterDetailView<T> extends AbstractView
         m_form 
             = new MasterDetailForm<T>(model, "all", m_domainType, sortProperty);
         
-        String filterProperty 
-            = pros.getProperty("masterDetail.filterProperties");    
-        StringTokenizer tokenizer = new StringTokenizer(filterProperty, ",");
-        List<String> tokens = new ArrayList<String>();
-        while (tokenizer.hasMoreTokens()) {
-            tokens.add(tokenizer.nextToken());
-        }
         TextFilterator filterator = GlazedLists
-                .textFilterator(tokens.toArray(new String[0]));
+                .textFilterator(PropertyReader.getFilterProperties()
+                    .toArray(new String[0]));
         MatcherEditor editor 
             = new TextComponentMatcherEditor(filterField, filterator);
         m_form.setFilterMatcherEditor(editor);
