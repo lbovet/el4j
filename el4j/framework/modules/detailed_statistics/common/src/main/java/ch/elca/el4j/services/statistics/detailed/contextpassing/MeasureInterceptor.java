@@ -48,49 +48,35 @@ import ch.elca.el4j.services.statistics.detailed.processing.MeasureCollectorServ
  *
  *
  * <script type="text/javascript">printFileStatus
-*   ("$URL$",
-    *    "$Revision$",
-    *    "$Date$",
-    *    "$Author$"
-    * );</script>
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  * 
  * @author Rashid Waraich (RWA)
+ * @author Philipp Oser (POS)
  */
 public class MeasureInterceptor  implements MethodInterceptor {
+    
     /**
-     * Private logger.
+     * The host name.
      */
-    private static Log s_logger = LogFactory.getLog(MeasureInterceptor.class);
-    
-    /** ThreadLocal variables to store the hierarchy locally in the thread.
-     *  This variables are used if a service is called more than once in the 
-     *  same transaction. In such a case, the hierarchy is built more wide.
-     *  (e.g. [1-1] to [1-2])
-     *  further calls make the hierarchy more deep (e.g. [1-1] to [1-1-1]) 
-     */
-    private static ThreadLocal<int[]> s_hierarchy = new ThreadLocal<int[]>();
-    
     protected static String s_hostName = "<unknown>";   
     {
         try {
             s_hostName = InetAddress.getLocalHost().getHostName();
+            // Checkstyle: EmptyBlock off
         } catch (UnknownHostException e) {
         }
+            // Checkstyle: EmptyBlock on
     }
+    
+    /**
+     * Private logger.
+     */
+    private static Log s_logger = LogFactory.getLog(MeasureInterceptor.class);
         
-    
-    /**
-     * See comment on s_hierarcy.
-     */
-    private static ThreadLocal<MeasureId> s_id = new ThreadLocal<MeasureId>();
-    
-    /**
-     * Holds the depth of the current call stack. It's incremented when a call
-     *  arrives inbound, it's decremented when the variable arrives outbound.
-     */
-    private static ThreadLocal<Integer> s_depth = new ThreadLocal<Integer>();
-    
-    
     /**
      * ThreadLocal variables to store the measureId locally in the thread.
      */
@@ -101,11 +87,14 @@ public class MeasureInterceptor  implements MethodInterceptor {
 
     /**
      * The constructor.
-     * @param collectorService The collectorService, where the measured data 
-     * should be stored to.
      * 
-     * @param isServer Is this a server (client=false).
-     * @deprecated use the constructor with (MeasureCollectorService,String) instead
+     * @param collectorService
+     *            The collectorService, where the measured data should be stored
+     *            to.
+     * @param isServer
+     *            Is this a server (client=false).
+     * @deprecated use the constructor with (MeasureCollectorService,String)
+     *             instead
      */
     public MeasureInterceptor(MeasureCollectorService collectorService,
         boolean isServer) {
@@ -119,12 +108,15 @@ public class MeasureInterceptor  implements MethodInterceptor {
 
     /**
      * The constructor.
-     * @param collectorService The collectorService, where the measured data 
-     * should be stored to.
      * 
-     * @param isServer Is this a server (client=false).
+     * @param collectorService
+     *            The collectorService, where the measured data should be stored
+     *            to.
+     * @param vmName
+     *            Name of the virual machine
      */
-    public MeasureInterceptor(MeasureCollectorService collectorService, String vmName) {
+    public MeasureInterceptor(MeasureCollectorService collectorService, 
+        String vmName) {
         m_collectorService = collectorService;
         m_level = vmName;
     }    
@@ -136,23 +128,25 @@ public class MeasureInterceptor  implements MethodInterceptor {
         
         // we will work on the passed object directly (it is stored in a
         //  threadlocal in the DetailedStatisticsSharedContextHolder)
-        DetailedStatisticsContext context = DetailedStatisticsSharedContextHolder.getContext();
+        DetailedStatisticsContext context 
+            = DetailedStatisticsSharedContextHolder.getContext();
 
         int seqNumber;
         int[] hierarchy;
         
-        // Indicates that the ID was newly created in this currently running invoke method.
-        //  At the end of this currently running invoke method, we should drop it again.
+        // Indicates that the ID was newly created in this currently running 
+        // invoke method. At the end of this currently running invoke method, 
+        // we should drop it again.
         boolean dropIdAtEnd = false;
 
         
         // depth++
-        context.setDepth(context.getDepth()+1); 
+        context.setDepth(context.getDepth() + 1); 
         seqNumber = context.getSequenceNumber();
         seqNumber++;
 
-        System.out.println(methodInvocation);
-        System.out.println("depth:"+context.getDepth());
+        s_logger.info(methodInvocation);
+        s_logger.info("depth:" + context.getDepth());
         
         
         /* ---------------------------------------------------------------------
@@ -176,13 +170,15 @@ public class MeasureInterceptor  implements MethodInterceptor {
 
             hierarchy = context.getHierarchy();
 
-            assert (context.getDepth() <= hierarchy.length);  // after previous depth incremental!          
-            
-            System.out.println("*hier:"+hierarchy.length+" "+context.getDepth());            
+            // after previous depth incremental!
+            assert (context.getDepth() <= hierarchy.length);
+
+            s_logger.info("*hier:" + hierarchy.length 
+                + " " + context.getDepth());            
             
             // extend hierarchy-array if needed
-            if ((hierarchy.length+1) == context.getDepth()) {
-                int[] extendedHierarchy = new int[hierarchy.length+1];
+            if ((hierarchy.length + 1) == context.getDepth()) {
+                int[] extendedHierarchy = new int[hierarchy.length + 1];
                 for (int i = 0; i < hierarchy.length; i++) {
                     extendedHierarchy[i] = hierarchy[i];
                 }
@@ -191,8 +187,10 @@ public class MeasureInterceptor  implements MethodInterceptor {
                 hierarchy = extendedHierarchy;
             }
                 
-            System.out.println("hier:"+hierarchy.length+" "+context.getDepth());
-            hierarchy[context.getDepth()-1] = hierarchy[context.getDepth()-1] + 1;
+            s_logger.info("hier:" + hierarchy.length + " " 
+                + context.getDepth());
+            hierarchy[context.getDepth() - 1] 
+                = hierarchy[context.getDepth() - 1] + 1;
         }
 
 
@@ -218,8 +216,7 @@ public class MeasureInterceptor  implements MethodInterceptor {
             retVal = methodInvocation.proceed();
         } catch (Throwable t) {
             throw t;
-        }
-        finally {       
+        } finally {       
             // Calculate duration after invocation
             long duration = System.currentTimeMillis() - startTime;
 
@@ -258,8 +255,11 @@ public class MeasureInterceptor  implements MethodInterceptor {
     }
 
     /**
-     * Print the hierarchy array as String with "-" between every array entry. 
-     * @param array Every array entry must provide a toString() method
+     * Print the hierarchy array as String with "-" between every array entry.
+     * 
+     * @param array
+     *            Every array entry must provide a toString() method
+     * @param depth Depth of array
      * @return A string representation of the array. (E.g. "1-2-1")
      */
     private String arrayToString(int[] array, int depth) {

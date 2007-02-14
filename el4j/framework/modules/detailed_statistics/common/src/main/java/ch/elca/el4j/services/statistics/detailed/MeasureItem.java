@@ -20,10 +20,6 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.apache.commons.collections.bag.SynchronizedBag;
-
-import ch.elca.el4j.services.statistics.detailed.svg.CallHierarchy;
-
 
 /**
  * Represents a performance measure collected by the detailed measurement 
@@ -40,19 +36,23 @@ import ch.elca.el4j.services.statistics.detailed.svg.CallHierarchy;
  * Leaf2 package name: ch.elca.leaf.services.measuring 
  *
  * <script type="text/javascript">printFileStatus
-*   ("$URL$",
-    *    "$Revision$",
-    *    "$Date$",
-    *    "$Author$"
-    * );</script>
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  * 
  * @author Rashid Waraich (RWA)
+ * @author Philipp Oser (POS)
  */
 public class MeasureItem implements Serializable {
 
-	private static final long serialVersionUID = 5083234396519618596L;
+    /**
+     * Serial ID, as this class is serializable.
+     */
+    private static final long serialVersionUID = 5083234396519618596L;
 
-	/** Date and time format. */
+    /** Date and time format. */
     private static final SimpleDateFormat DATE_FORMAT 
         = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS");
 
@@ -260,12 +260,8 @@ public class MeasureItem implements Serializable {
      * The Hierarchy.
      * @return The Hierarchy.
      */
-    public CallHierarchy getHierarchy() {
-        /* HACK
-         * Create CallHierarchy object with every call instead of changing
-         * type of m_hierarchy to avoid RMI unmarshelling exception.
-         */
-        return new CallHierarchy(m_hierarchy);
+    public String getHierarchy() {
+        return m_hierarchy;
     }
 
     /**
@@ -275,7 +271,8 @@ public class MeasureItem implements Serializable {
      */
     public String getFormattedString() {
         return m_id + ", " + m_seq + ", " + m_client + ", " + m_level + ", "
-            + m_startTime + ", " + "(" + ((m_service == null) ? "<undef>" : m_service)
+            + m_startTime + ", " + "(" 
+            + ((m_service == null) ? "<undef>" : m_service)
             + ", " + ((m_method == null) ? "<undef>" : m_method) + "), "
             + m_duration;
     }

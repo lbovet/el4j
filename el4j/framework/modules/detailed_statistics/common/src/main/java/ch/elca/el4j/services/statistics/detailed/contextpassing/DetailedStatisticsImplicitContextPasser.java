@@ -19,9 +19,11 @@ package ch.elca.el4j.services.statistics.detailed.contextpassing;
 
 import ch.elca.el4j.core.contextpassing.AbstractImplicitContextPasser;
 import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
+
+
 /**
- * 
- * This ImplicitContextPasser passes the DetailedStatisticsSharedContextHolder as implicit context.
+ * This ImplicitContextPasser passes the DetailedStatisticsSharedContextHolder 
+ * as implicit context.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -31,6 +33,7 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
  * );</script>
  *
  * @author Rashid Waraich (RWA)
+ * @author Philipp Oser (POS)
  */
 public class DetailedStatisticsImplicitContextPasser 
     extends AbstractImplicitContextPasser {
@@ -51,7 +54,8 @@ public class DetailedStatisticsImplicitContextPasser
      * {@inheritDoc}
      */
     public void pushImplicitlyPassedContext(Object context) {
-        DetailedStatisticsSharedContextHolder.setContext(((DetailedStatisticsContext)context));
+        DetailedStatisticsSharedContextHolder.setContext(
+            ((DetailedStatisticsContext) context));
     }
 
     /**

@@ -32,6 +32,7 @@ import ch.elca.el4j.services.statistics.detailed.MeasureId;
  * );</script>
  *
  * @author Rashid Waraich (RWA)
+ * @author Philipp Oser (POS)
  */
 public class DetailedStatisticsContext implements java.io.Serializable {
 
@@ -45,6 +46,8 @@ public class DetailedStatisticsContext implements java.io.Serializable {
     
     /** 
      * The depth of the call stack. Starts at 0.
+     * It's incremented when a call arrives inbound, it's decremented 
+     * when the variable arrives outbound.
      */
     private int m_depth = 0;
     
@@ -55,6 +58,11 @@ public class DetailedStatisticsContext implements java.io.Serializable {
     
     /**
      * The hierarchy of the method call.
+     * 
+     * This variables are used if a service is called more than once in the 
+     * same transaction. In such a case, the hierarchy is built more wide.
+     * (e.g. [1-1] to [1-2])
+     * further calls make the hierarchy more deep (e.g. [1-1] to [1-1-1])
      */
     private int[] m_hierarchy = new int[]{0};
     
@@ -119,10 +127,16 @@ public class DetailedStatisticsContext implements java.io.Serializable {
         m_startTime = startTime;
     }
 
+    /**
+     * @return The depth of the call stack.
+     */
     public int getDepth() {
         return m_depth;
     }
 
+    /**
+     * @param depth Set the depth of the call stack.
+     */
     public void setDepth(int depth) {
         this.m_depth = depth;
     }

@@ -30,19 +30,28 @@ package ch.elca.el4j.services.statistics.detailed.contextpassing;
  * );</script>
  *
  * @author Rashid Waraich (RWA)
+ * @author Philipp Oser (POS)
  */
 public class DetailedStatisticsSharedContextHolder {
     
-    /** 
-     * Internal holder of thread static variable
+    /**
+     * Internal holder of thread static variable.
      */
     private static final ThreadLocal<DetailedStatisticsContext> 
-             s_detailedStatisticsContext = new ThreadLocal<DetailedStatisticsContext>() {
-        @Override
-        protected DetailedStatisticsContext initialValue() {
-            return new DetailedStatisticsContext();
-        }
-    };    
+    DETAILED_STATISTICS_CONTEXT 
+        = new ThreadLocal<DetailedStatisticsContext>() {
+                @Override
+                protected DetailedStatisticsContext initialValue() {
+                    return new DetailedStatisticsContext();
+                } 
+            }; 
+    
+    /**
+     * Hide default constructor as this is a Utility class.
+     *
+     */
+    protected DetailedStatisticsSharedContextHolder() { }
+    
     
     /**
      * Get the passed object.
@@ -50,15 +59,16 @@ public class DetailedStatisticsSharedContextHolder {
      * @return DetailedStatisticsContext.
      */
     public static final DetailedStatisticsContext getContext() {
-        return s_detailedStatisticsContext.get();
+        return DETAILED_STATISTICS_CONTEXT.get();
     }
    
     /**
      * Set the passed object.
      * @param passedObject The passed object.
      */
-    public static final void setContext(DetailedStatisticsContext passedObject) {
-        s_detailedStatisticsContext.set(passedObject);
+    public static final void setContext(
+        DetailedStatisticsContext passedObject) {
+        DETAILED_STATISTICS_CONTEXT.set(passedObject);
     }
-
+    
 }

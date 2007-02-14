@@ -19,14 +19,13 @@ package ch.elca.el4j.services.statistics.detailed.processing;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.zanthan.sequence.Fasade;
 
-import ch.elca.el4j.services.statistics.detailed.MeasureId;
 import ch.elca.el4j.services.statistics.detailed.MeasureItem;
 import ch.elca.el4j.util.codingsupport.Reject;
 
@@ -42,22 +41,10 @@ import ch.elca.el4j.util.codingsupport.Reject;
  *    "$Author$"
  * );</script>
  * 
- * @author Rashid Waraich (RWA)
  * @author David Stefan (DST)
  */
 public class StatisticsOutputter {
-
-    /**
-     * Logger.
-     */
-    private static Log s_logger 
-        = LogFactory.getLog(StatisticsOutputter.class);
     
-    /**
-     * The SVG Diagram Evaluator.
-     */
-    private DataProcessor m_eval;
-
     /**
      * List of MeasureItems.
      */
@@ -74,45 +61,6 @@ public class StatisticsOutputter {
         m_measures = measures;
     }
 
-
-    /**
-     * Lists the loaded RequestIds.
-     */
-    public void listRequestIds() {
-        List<MeasureId> mids = getRequestIds();
-
-        StringBuffer buff = new StringBuffer();
-        Iterator<MeasureId> iter = mids.iterator();
-
-        int i = 0;
-        while (iter.hasNext()) {
-            i++;
-            buff.append(iter.next());
-            // Checkstyle: MagicNumber off
-            if (i % 4 == 0) {
-                buff.append("\n");
-            } else {
-                buff.append("   ");
-            }
-            // Checkstyle: MagicNumber on
-        }
-        s_logger.info(buff);
-    }
-    
-    
-    /**
-     * Computes a SVG Graph and format it to a HTML compatible format.
-     * 
-     * @see convertTags
-     * @param measureId
-     *            Id of measurements that graph is computed
-     * @return String containing the HTML compatible SVG Graph
-     */
-    public String getHTMLCompatibleSVGGraph(String measureId) {
-        String svgGraph = createSVGGraph(measureId);
-        return convertTags(svgGraph);
-    }
-
     /**
      * Compute SVGGraph and write it to filename given.
      * 
@@ -120,25 +68,29 @@ public class StatisticsOutputter {
      *            Name of file to write
      * @param measureId
      *            Id of measurements that graph is computed
+     * @param width 
+     *            Width of the diagram
+     * @param height
+     *            Height of the diagram
      */
-    public void createSVGFile(String filename, String measureId) {
+    public void createDiagFile(String filename, String measureId, 
+        int width, int height) {
         Reject.ifNull(filename);
         String newFilename = filename;
         
-        if (!newFilename.endsWith(".svg")) {
-            newFilename = newFilename.concat(".svg");
+        // Check for existing file ending
+        if (!newFilename.endsWith(".png")) {
+            newFilename = newFilename.concat(".png");
         }
-        String svgGraph = createSVGGraph(measureId);
-
-        // Write svgGraph to file
-        try {
-            PrintStream out 
-                = new PrintStream(new FileOutputStream(newFilename));
-            out.println(svgGraph);
-            out.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }  
+        
+        Fasade fasade = new Fasade();
+        // Check if width and height were set, else use defaults 
+        if (width == 0 || height == 0) {
+            fasade.createSequenceDiagram(convertData(measureId), newFilename);
+        } else {
+            fasade.createSequenceDiagram(convertData(measureId), newFilename, 
+                width, height);
+        }
     }
     
     /**
@@ -156,9 +108,6 @@ public class StatisticsOutputter {
         if (!newFilename.endsWith(".txt")) {
             newFilename = newFilename.concat(".txt");
         }
-        
-//        List<MeasureItemEnhanced> formatedMeasures 
-//            = formatToPerformanceViewerFormat(m_measures);
         
         try {
             PrintStream out 
@@ -178,52 +127,94 @@ public class StatisticsOutputter {
     }
     
     /**
-     * Take all the step to compute SVG graph and return it as String.
+     * Converts the data into the format needed by the library that generates
+     * the diagram.
      * 
-     * @param measureId
-     *            Id of measurements that graph is computed
-     * @return String containing the SVG Graph
+     * @param id
+     *            The MeasureId we want to generate a diagram for
+     * @return String representation of the graph
      */
-    private String createSVGGraph(String measureId) {
-        Reject.ifNull(measureId);
-        m_eval = new DataProcessor();
-        try {
-            return m_eval.getSVGGraph(m_measures, measureId);
-        } catch (Exception e) {
-            e.printStackTrace();
+    private String convertData(String id) {
+        Map<Integer, MeasureItem> myMap = new HashMap<Integer, MeasureItem>();
+        int i = 1;
+        MeasureItem elem;
+        String hierarchy = "";
+        String oldHierarchy = "";
+        String res = "";
+        
+        // Get the measure items with our id
+        for (MeasureItem m : m_measures) {
+            if (id.equalsIgnoreCase(m.getID().toString())) {
+                myMap.put(m.getSequence(), m);
+            }
         }
-        return null;
+        // Check if there is a measure item with the sequence no 1
+        if (myMap.get(i) == null) {
+            throw new RuntimeException("Measurement are messed up");
+        }
+        
+        // Convert the graph. Goes through all measure items and adds them to 
+        // the string representation by distinguishing the hierarchical level. 
+        while ((elem = myMap.get(i)) != null) {
+            hierarchy = elem.getHierarchy();
+            // Check if hierarchy increased. If so, open a new bracket
+            if (hierarchy.length() > oldHierarchy.length()) {
+                res = res + printCall(elem);
+            // Check if hierarchy is the same. If so, close the bracket and open
+            // another one.
+            } else if (hierarchy.length() == oldHierarchy.length()) {
+                res = res + ")" + printCall(elem);
+            // Check if hierarchy has decreased. If so, close brackets.
+            } else if (hierarchy.length() < oldHierarchy.length()) {
+                while (hierarchy.length() != oldHierarchy.length()) {
+                    res = res + ") ";
+                    oldHierarchy 
+                        = oldHierarchy.substring(0, oldHierarchy.length() - 2);
+                }
+                res = res + ")" + printCall(elem);
+            // hopefully we'll never get here
+            } else {
+                throw new RuntimeException("Measurements messed up");
+            }
+            oldHierarchy = elem.getHierarchy();
+            i++;
+        }
+        // Finally, close the remaining brackets
+        while (oldHierarchy.length() > 1) {
+            res = res + ")";
+            oldHierarchy = oldHierarchy.substring(0, oldHierarchy.length() - 2);
+        }
+        // Close the last bracket
+        res = res + ")";
+        return res;
     }
     
-
     /**
-     * Gives back a list of the loaded measure ids.
+     * Removes the package declaration in front of a Class name.
      * 
-     * @return the list of the ids.
+     * @param className
+     *            the class name to trim.
+     * @return The class name without package prefix
      */
-    private List<MeasureId> getRequestIds() {
-        List<MeasureId> result = new ArrayList<MeasureId>();
-
-        Iterator<MeasureItem> iter = m_measures.iterator();
-        while (iter.hasNext()) {
-            result.add(iter.next().getID());
+    private String trimClassNames(String className) {
+        int i = className.lastIndexOf('.'); 
+        if (i  > -1) {
+            return className.substring(i + 1);
+        } else {
+            return className;
         }
-        return result;
     }
-
+    
     /**
-     * The 'convertTags' returns XML, which is embeddable in HTML. For this
-     * reason, the XML tag symbols '<' and '>' are converted to '&lt;' resp.
-     * '&gt;'.
+     * Print a method call in the new format for the given Measure Item.
      * 
-     * @param input
-     *            XML document.
-     * @return HTML embeddable XML.
+     * @param elem
+     *            The Measure Item
+     * @return The method call string
      */
-    private String convertTags(String input) {
-        String output = input;
-        output = output.replaceAll("<", "&lt;");
-        output = output.replaceAll(">", "&gt;");
-        return output;
+    private String printCall(MeasureItem elem) {
+        return "(" + trimClassNames(elem.getEjbName()) 
+            + " " + elem.getMethodName() 
+            + ":" + elem.getDuration() + "ms" + " " + "\"\"";
     }
 }
