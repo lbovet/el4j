@@ -20,11 +20,11 @@ package ch.elca.el4j.demos.statistics.detailed.jmx;
  * This class publishes the detailed statistics through JMX (MBean Interface).
  *
  * <script type="text/javascript">printFileStatus
-*   ("$URL$",
-    *    "$Revision$",
-    *    "$Date$",
-    *    "$Author$"
-    * );</script>
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Rashid Waraich (RWA)
  * @author David Stefan (DST)
@@ -37,13 +37,6 @@ public interface DetailedStatisticsReporterMBean {
      */
     public  String showMeasureIDTable();
     
-    /**
-     * Computes SVG graph of measurement of id given.
-     * @param measureId The id of the measurement.
-     * @return SVG graph as string
-     */
-    public String getSvgString(String measureId);
-    
     
     /**
      * Creates a CSV file with the measurment results.
@@ -54,9 +47,19 @@ public interface DetailedStatisticsReporterMBean {
     
     
     /**
-     * Creates a SVG file with the measurment results.
+     * Creates a png file with the measurment results.
      * @param filename Name of file for output
      * @param measureId Id of measurments to output 
      */
-    public void createSVGFile(String filename, String measureId);
+    public void createDiagramFile(String filename, String measureId);
+    
+    /**
+     * Creates a png file with the measurment results.
+     * @param filename Name of file for output
+     * @param measureId Id of measurments to output
+     * @param width Width of the diagram
+     * @param height Height of the diagram 
+     */
+    public void createDiagramFile(String filename, String measureId, 
+        int width, int height);
 }

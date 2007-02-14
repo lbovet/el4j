@@ -16,7 +16,6 @@
  */
 package ch.elca.el4j.demos.statistics.detailed.jmx;
 
-import java.util.Iterator;
 import java.util.List;
 
 import javax.management.MBeanServer;
@@ -41,7 +40,6 @@ import ch.elca.el4j.util.codingsupport.Reject;
  *    "$Author$"
  * );</script>
  * 
- * @author Rashid Waraich (RWA)
  * @author David Stefan (DST)
  */
 public class DetailedStatisticsReporter implements
@@ -119,56 +117,27 @@ public class DetailedStatisticsReporter implements
     public String showMeasureIDTable() {
         String result = "";
         String[][] table;
-        List measureIds = m_dataRepository.getFirstMeasureItems();
-        Iterator iter = measureIds.iterator();
-        int noOfRowsInTable = 0;
-        MeasureItem tempItem;
-
-        while (iter.hasNext()) {
-            noOfRowsInTable++;
-            iter.next();
-        }
-        iter = measureIds.iterator();
+        List<MeasureItem> measureItems 
+            = m_dataRepository.getFirstMeasureItems();
+        // Add one row for labeling
+        int noOfRowsInTable = measureItems.size() + 1;
         // Checkstyle: MagicNumber off
-        table = new String[noOfRowsInTable + 1][3];
+        table = new String[noOfRowsInTable][3];
         // Checkstyle: MagicNumber on
 
         table[0][0] = "MeasureID";
         table[0][1] = "Duration in [ms]";
         table[0][2] = "Invocation Start";
-
-        for (int i = 1; i < noOfRowsInTable + 1; i++) {
-            tempItem = (MeasureItem) iter.next();
-            table[i][0] = tempItem.getID().getFormattedString();
-            table[i][1] = Long.toString(tempItem.getDuration());
-            table[i][2] = tempItem.getEjbName() + "."
-                + tempItem.getMethodName();
+        
+        int i = 1;
+        for (MeasureItem m : measureItems) {
+            table[i][0] = m.getID().getFormattedString();
+            table[i][1] = Long.toString(m.getDuration());
+            table[i][2] = m.getEjbName() + "." + m.getMethodName();
+            i++;
         }
-
         result = JmxHtmlFormatter.getHtmlTable(table);
         return result;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public String getSvgString(String measureId) {
-        Reject.ifNull(measureId);
-        StatisticsOutputter sv = new StatisticsOutputter(m_dataRepository
-            .getAllMeasureItems());
-        return sv.getHTMLCompatibleSVGGraph(measureId);
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public void createSVGFile(String filename, String measureId) {
-        Reject.ifNull(filename);
-        Reject.ifNull(measureId);
-        StatisticsOutputter sv = new StatisticsOutputter(m_dataRepository
-            .getAllMeasureItems());
-        sv.createSVGFile(filename, measureId); 
     }
 
     /**
@@ -181,5 +150,26 @@ public class DetailedStatisticsReporter implements
         StatisticsOutputter sv = new StatisticsOutputter(m_dataRepository
             .getAllMeasureItems());
         sv.createCVSFile(filename, measureId);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void createDiagramFile(String filename, String measureId) {
+        createDiagramFile(filename, measureId, 0, 0);
+        
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void createDiagramFile(String filename, String measureId, 
+        int width, int height) {
+        Reject.ifNull(filename);
+        Reject.ifNull(measureId);
+        StatisticsOutputter sv = new StatisticsOutputter(m_dataRepository
+            .getAllMeasureItems());
+        sv.createDiagFile(filename, measureId, width, height);
+        
     }
 }
