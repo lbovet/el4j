@@ -20,9 +20,6 @@ import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import ch.elca.el4j.services.statistics.detailed.contextpassing.DetailedStatisticsSharedContextHolder;
-import ch.elca.el4j.services.statistics.detailed.processing.MeasureCollectorService;
-
 
 /**
  * A <code>MeasureID</code> uniquely identifies a global measure. <p>
@@ -46,11 +43,11 @@ import ch.elca.el4j.services.statistics.detailed.processing.MeasureCollectorServ
  * Leaf2 package name: ch.elca.leaf.services.measuring 
  *
  * <script type="text/javascript">printFileStatus
-*   ("$URL$",
-    *    "$Revision$",
-    *    "$Date$",
-    *    "$Author$"
-    * );</script>
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  * 
  * @author Rashid Waraich (RWA)
  */
@@ -156,20 +153,6 @@ public class MeasureId implements Serializable {
      */
     public String getFormattedString() {
         return m_host + FORMATTED_SEP + m_prefix + ":" + m_invocationTime;
-    }
-
-    /**
-     * Compares two MeasureID objects and returns true if they are equivalent.
-     * 
-     * @param obj
-     *            the MeasureID object to compare with
-     * @return true or false
-     */
-    public boolean equals(Object obj) {
-        MeasureId measure = (MeasureId) obj;
-
-        return (m_host.equals(measure.getHost()) && m_invocationTime == measure
-            .getInvocationTime());
     }
 
     /**

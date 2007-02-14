@@ -33,7 +33,8 @@ import ch.elca.el4j.services.statistics.detailed.MeasureItem;
  * the order of the diverse sub-measures (starting at 1 for the global measure).
  * <p>
  * The id and sequence of the current measure (or sub-measures) are stored in
- * the LEAF DetailedStatisticsSharedContextHolder object (keys defined by <code>CONTEXT_NAME_ID</code>
+ * the LEAF DetailedStatisticsSharedContextHolder object (keys defined by 
+ * <code>CONTEXT_NAME_ID</code>
  * and <code>CONTEXT_NAME_SEQ</code>).
  * <p>
  * So the <code>MeasureInvoker</code> (wherever it is) starts a measure if
@@ -58,10 +59,16 @@ import ch.elca.el4j.services.statistics.detailed.MeasureItem;
  */
 public interface MeasureCollectorService {
 
-    /** DetailedStatisticsSharedContextHolder key for saving the measure MeasureID object. */
+    /** 
+     * DetailedStatisticsSharedContextHolder key for saving the measure 
+     * MeasureID object. 
+     */
     public static final String CONTEXT_NAME_ID = "MEASURE_ID";
 
-    /** DetailedStatisticsSharedContextHolder key for saving the measure sequence. */
+    /** 
+     * DetailedStatisticsSharedContextHolder key for saving the 
+     * measure sequence. 
+     */
     public static final String CONTEXT_NAME_SEQ = "MEASURE_SEQ";
 
     /**
