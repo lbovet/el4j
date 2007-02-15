@@ -3,5 +3,5 @@
 # Create the database and keep the Network Server running
 mvn db:prepareDB db:start
 
-# Start the demo
+# Open a second console and start the demo
 mvn exec:java
