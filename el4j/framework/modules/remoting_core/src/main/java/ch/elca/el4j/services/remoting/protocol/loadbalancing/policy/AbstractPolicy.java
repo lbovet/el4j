@@ -16,7 +16,7 @@
  */
 package ch.elca.el4j.services.remoting.protocol.loadbalancing.policy;
 
-import ch.elca.el4j.services.remoting.AbstractRemotingProtocol ;
+import ch.elca.el4j.services.remoting.AbstractRemotingProtocol;
 import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailableRTException;
 
 /**
@@ -35,14 +35,20 @@ import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailable
  */
 public abstract class AbstractPolicy {
     
+    /** 
+     * Array of protocols, each represented by an array of Strings, using
+     * a [protocolTag, arg1, arg2, ...] representation.
+    */
+    protected AbstractRemotingProtocol[] m_protocols;
+    
     /**
      * This method is called before any other method is called. It passes the
      * protocol information.
      * @param protocols Array of currently defined protocols.
      */
     public void setProtocols(AbstractRemotingProtocol[] protocols) {
-        m_protocols = protocols ;
-    } // setProtocols()
+        m_protocols = protocols;
+    }
     
     /**
      * This method is called if the use of one of the protocols has failed.
@@ -51,54 +57,54 @@ public abstract class AbstractPolicy {
      */
     public void notifyFailure(AbstractRemotingProtocol protocol) {
         // Do nothing
-    } // notifyFailure()
+    }
     
     /** 
      * @return Number of available protocols
      */
     public int getProtocolCount() {
-        return m_protocols.length ;
-    } // getProtocolCount()
+        return m_protocols.length;
+    }
     
     /**
      * Note that protocol comparison must be done using "=="!
      * 
-     * @return The next protocol to be used. 
-     * @throws NoProtocolAvailableRTException If no protocol is available any more
+     * @return The next protocol to be used.
+     * @throws NoProtocolAvailableRTException
+     *             If no protocol is available any more
      */
     public abstract AbstractRemotingProtocol getNextProtocol() 
-       throws NoProtocolAvailableRTException;
+        throws NoProtocolAvailableRTException;
     
     
     /**
      * Removes protocol 'pi' from {@link #m_protocols}. Does nothing if 'pi'
      * does not exist.
-     * @param pi Protocol to be removed.
+     * 
+     * @param protocol
+     *            Protocol to be removed.
      */
     protected void removeProtocol(AbstractRemotingProtocol protocol) {
-       int index = -1 ;
-       for (int i = 0; i < m_protocols.length; i += 1) {
-           if (m_protocols[i] == protocol) {
-               index = i;
-               break ;
-           } // if
-       } // for i
+        int index = -1;
+        for (int i = 0; i < m_protocols.length; i += 1) {
+            if (m_protocols[i] == protocol) {
+                index = i;
+                break;
+            }
+        }
         if (index >= 0) {
             // Element found
-            AbstractRemotingProtocol[] tmp = new AbstractRemotingProtocol[m_protocols.length - 1];
+            AbstractRemotingProtocol[] tmp 
+                = new AbstractRemotingProtocol[m_protocols.length - 1];
             for (int k = 0; k < index; k += 1) {
-               tmp[k] = m_protocols[k] ; 
-            } // for k
+                tmp[k] = m_protocols[k];
+            }
             for (int j = index + 1; j < m_protocols.length; j += 1) {
-                tmp[j-1] = m_protocols[j] ;
-            } // for j
-            m_protocols = tmp ;
-        } // if
-    } // removeProtocol()
+                tmp[j - 1] = m_protocols[j];
+            }
+            m_protocols = tmp;
+        }
+    }
     
-    /** 
-     * Array of protocols, each represented by an array of Strings, using
-     * a [protocolTag, arg1, arg2, ...] representation.
-    */
-    protected AbstractRemotingProtocol[] m_protocols ;
+    
 } // CLASS AbstractPolicy

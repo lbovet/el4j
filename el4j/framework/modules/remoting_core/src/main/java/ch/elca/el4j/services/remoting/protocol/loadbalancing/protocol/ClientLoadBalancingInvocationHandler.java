@@ -20,28 +20,19 @@ package ch.elca.el4j.services.remoting.protocol.loadbalancing.protocol;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.UndeclaredThrowableException;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.MutablePropertyValues;
+import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.support.StaticApplicationContext;
 import org.springframework.remoting.RemoteAccessException;
-import org.springframework.beans.factory.BeanCreationException;
 
-import ch.elca.el4j.core.exceptions.BaseRTException;
 import ch.elca.el4j.services.persistence.generic.primarykey.PrimaryKeyGenerator;
 import ch.elca.el4j.services.persistence.generic.primarykey.UuidPrimaryKeyGenerator;
 import ch.elca.el4j.services.remoting.AbstractRemotingProtocol;
 import ch.elca.el4j.services.remoting.RemotingProxyFactoryBean;
-
 import ch.elca.el4j.services.remoting.protocol.AbstractInetSocketAddressProtocol;
-
 import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailableRTException;
 import ch.elca.el4j.services.remoting.protocol.loadbalancing.policy.AbstractPolicy;
 
@@ -51,14 +42,41 @@ import ch.elca.el4j.services.remoting.protocol.loadbalancing.policy.AbstractPoli
  * selection of a particular protocol for a particular invocation is based on
  * the policy defined by an implementation of
  * 
- * @{link ch.elca.el4j.loadbalancing.policy.AbstractPolicy}. <script
- *        type="text/javascript">printFileStatus ("$URL$", "$Revision$",
- *        "$Date$", "$Author$" );</script>
+ * @{link ch.elca.el4j.loadbalancing.policy.AbstractPolicy}.
+ *        
+ * <script type="text/javascript">printFileStatus
+*   ("$URL$",
+    *    "$Revision$",
+    *    "$Date$",
+    *    "$Author$"
+    * );</script>
+ *        
  * @author Stefan Pleisch (SPL)
  */
 public class ClientLoadBalancingInvocationHandler implements InvocationHandler,
     ApplicationContextAware {
 
+    /**
+     * Private logger.
+     */
+    private static Log s_logger = LogFactory
+        .getLog(ClientLoadBalancingInvocationHandler.class);
+
+    private Object m_currentProtocolProxy;
+
+    /** Defines the protocol selection policy. */
+    private AbstractPolicy m_policy;
+
+    private Class m_serviceInterfaceWithContext;
+    
+    private RemotingProxyFactoryBean m_proxyBean;
+
+    /** Stores the previously loaded proxies to protocols. */
+    private ProtocolProxyStore m_protocolProxyStore;
+
+    /** Used to generate unique keys */
+    private PrimaryKeyGenerator m_uniqueKeyGenerator;
+    
     /**
      * Stores references to the instantiated protocols. The comparison is done
      * using "==" rather than the usual "equals" method. Thus, this class
@@ -67,7 +85,16 @@ public class ClientLoadBalancingInvocationHandler implements InvocationHandler,
      */
     private static class ProtocolProxyStore {
 
-        public ProtocolProxyStore() {} // <init>
+        /** Array of protocols. */
+        private AbstractRemotingProtocol[] m_protocols;
+        
+        /** Array of protocol proxies. */
+        private Object[] m_protocolProxies;
+        
+        /**
+         * Constructor.
+         */
+        public ProtocolProxyStore() { }
 
         /**
          * @param protocol
@@ -83,11 +110,11 @@ public class ClientLoadBalancingInvocationHandler implements InvocationHandler,
                 return null;
             } else {
                 return m_protocolProxies[index];
-            } // if
-        } // retrieve()
+            } 
+        }
 
         /**
-         * Stores the protocol proxy bean under its protocol information
+         * Stores the protocol proxy bean under its protocol information.
          * 
          * @param protocol
          *            protocol information of the proxy
@@ -105,19 +132,20 @@ public class ClientLoadBalancingInvocationHandler implements InvocationHandler,
                 int index = getProtocolIndex(protocol);
 
                 if (index < 0) {
-                    AbstractRemotingProtocol[] tmp = new AbstractRemotingProtocol[m_protocols.length + 1];
+                    AbstractRemotingProtocol[] tmp 
+                        = new AbstractRemotingProtocol[m_protocols.length + 1];
                     Object[] tmpProxies = new Object[m_protocols.length + 1];
                     for (int i = 0; i < m_protocols.length; i += 1) {
                         tmp[i] = m_protocols[i];
                         tmpProxies[i] = m_protocolProxies[i];
-                    } // for i
+                    }
                     tmp[m_protocols.length] = protocol;
                     tmpProxies[m_protocols.length] = proxy;
                     m_protocols = tmp;
                     m_protocolProxies = tmpProxies;
-                } // if
-            } // if
-        } // store()
+                }
+            }
+        }
 
         /**
          * Removes 'protocol' from storage. Does nothing if 'protocol' does not
@@ -126,34 +154,30 @@ public class ClientLoadBalancingInvocationHandler implements InvocationHandler,
          */
         public void remove(AbstractRemotingProtocol protocol) {
             if (m_protocols == null) {
-                return ;
+                return;
             } else {
 
                 int index = getProtocolIndex(protocol);
 
                 if (index >= 0) {
-                    AbstractRemotingProtocol[] tmp = 
-                        new AbstractRemotingProtocol[m_protocols.length - 1];
+                    AbstractRemotingProtocol[] tmp 
+                        = new AbstractRemotingProtocol[m_protocols.length - 1];
                     Object[] tmpProxies = new Object[m_protocols.length - 1];
                     for (int i = 0; i < index; i += 1) {
                         tmp[i] = m_protocols[i];
                         tmpProxies[i] = m_protocolProxies[i];
-                    } // for i
+                    }
                     for (int k = (index + 1); k < m_protocols.length; k += 1) {
-                        tmp[k-1] = m_protocols[k];
-                        tmpProxies[k-1] = m_protocolProxies[k];
-                    } // for k
+                        tmp[k - 1] = m_protocols[k];
+                        tmpProxies[k - 1] = m_protocolProxies[k];
+                    }
                     m_protocols = tmp;
                     m_protocolProxies = tmpProxies;
-                } // if
-            } // if
-        } // remove()
+                }
+            }
+        }
         
-        /** Array of protocols. */
-        private AbstractRemotingProtocol[] m_protocols;
-        /** Array of protocol proxies. */
-        private Object[] m_protocolProxies;
-
+        
         private int getProtocolIndex(AbstractRemotingProtocol protocol) {
             boolean found = false;
             int index = -1;
@@ -161,12 +185,11 @@ public class ClientLoadBalancingInvocationHandler implements InvocationHandler,
                 if (m_protocols[i] == protocol) {
                     found = true;
                     index = i;
-                } // if
-            } // for i
+                }
+            }
             return index;
-        } // getProtocolIndex()
-
-    } // CLASS ProtocolProxyStore
+        }
+    }
 
     /**
      * @param protocols
@@ -183,7 +206,7 @@ public class ClientLoadBalancingInvocationHandler implements InvocationHandler,
 
         m_uniqueKeyGenerator = new UuidPrimaryKeyGenerator();
         // loadCurrentProtocol() ;
-    } // <init>
+    }
 
     /** Returns the currently used protocol. */
     // public AbstractInetSocketAddressProtocol getCurrentProtocol() {
@@ -194,7 +217,6 @@ public class ClientLoadBalancingInvocationHandler implements InvocationHandler,
      * {@inheritDoc}
      */
     public void setApplicationContext(ApplicationContext applicationContext) {
-        m_parentApplicationContext = applicationContext;
     } // setApplicationContext()
 
     /**
@@ -214,8 +236,10 @@ public class ClientLoadBalancingInvocationHandler implements InvocationHandler,
                 protocol = m_policy.getNextProtocol();
                 s_logger.debug("Attempting to connect to: " + protocol 
                     + " at host:port=" 
-                    + ((AbstractInetSocketAddressProtocol)protocol).getServiceHost()
-                    + ":" + ((AbstractInetSocketAddressProtocol)protocol).getServicePort());
+                    + ((AbstractInetSocketAddressProtocol) protocol)
+                    .getServiceHost()
+                    + ":" + ((AbstractInetSocketAddressProtocol) protocol)
+                    .getServicePort());
                 m_currentProtocolProxy = loadCurrentProtocol(protocol);
                 proxyGenerationSucceeded = true;
             } catch (NoProtocolAvailableRTException npae) {
@@ -228,15 +252,15 @@ public class ClientLoadBalancingInvocationHandler implements InvocationHandler,
                 // throw e.getTargetException();
                 notifyFailure(protocol);
                 // Retry
-            } // catch
+            } 
             attemptCount += 1;
-        } // while
+        } 
 
         if (!proxyGenerationSucceeded) {
             // If arrived here -> problem
             throw new NoProtocolAvailableRTException("Found no available "
                 + "target, attemps exhausted.");
-        } // if
+        } 
 
         Object result = null;
         try {
@@ -248,35 +272,14 @@ public class ClientLoadBalancingInvocationHandler implements InvocationHandler,
             if (ite.getTargetException() instanceof RemoteAccessException) {
                 s_logger.debug("Expected exception: " + ite.getMessage());
                 notifyFailure(protocol);
-            } // if
+            }
 
             // Rethrow exception to mirror normal protocol behavior
             throw ite.getTargetException();
-        } // catch
+        } 
+    }
 
-    } // invoke()
-
-    /**
-     * Private logger.
-     */
-    private static Log s_logger = LogFactory
-        .getLog(ClientLoadBalancingInvocationHandler.class);
-
-    private Object m_currentProtocolProxy;
-
-    /** Defines the protocol selection policy. */
-    private AbstractPolicy m_policy;
-
-    private ApplicationContext m_parentApplicationContext;
-
-    private Class m_serviceInterfaceWithContext;
-    private RemotingProxyFactoryBean m_proxyBean;
-
-    /** Stores the previously loaded proxies to protocols. */
-    private ProtocolProxyStore m_protocolProxyStore;
-
-    /** Used to generate unique keys */
-    private PrimaryKeyGenerator m_uniqueKeyGenerator;
+   
 
     /**
      * Creates a proxy to the remoting protocol passed as an argument.
@@ -295,7 +298,7 @@ public class ClientLoadBalancingInvocationHandler implements InvocationHandler,
      * the corresponding protocols. Side-effects: modifies m_currentProtocol,
      * m_currentProtocolProxy, m_protocolProxyStore
      * 
-     * @param pi
+     * @param protocol
      *            Defines the protocol to be loaded
      */
     private Object loadCurrentProtocol(AbstractRemotingProtocol protocol) {
@@ -315,9 +318,9 @@ public class ClientLoadBalancingInvocationHandler implements InvocationHandler,
      */
     private void notifyFailure(AbstractRemotingProtocol protocol) {
         // Notify the policy component of the failure
-        m_policy.notifyFailure(protocol) ;
+        m_policy.notifyFailure(protocol);
         // Remove the proxy from the protocol proxy store
-        m_protocolProxyStore.remove(protocol) ;
+        m_protocolProxyStore.remove(protocol);
     } // notifyFailure()
     
 } // CLASS ClientLoadBalancingInvocationHandler

@@ -16,7 +16,7 @@
  */
 package ch.elca.el4j.services.remoting.protocol.loadbalancing;
 
-import ch.elca.el4j.core.exceptions.BaseRTException ;
+import ch.elca.el4j.core.exceptions.BaseRTException;
 
 /**
  * Exception used to notify the user that no more protocols are available.
@@ -33,8 +33,6 @@ import ch.elca.el4j.core.exceptions.BaseRTException ;
 public class NoProtocolAvailableRTException extends BaseRTException {
 
     public NoProtocolAvailableRTException(String reason) {
-        super("No protocols available: " + reason) ;
-    } // <init>
-    
-    
-} // Class NoProtocolAvailableRTException
+        super("No protocols available: " + reason);
+    }   
+}

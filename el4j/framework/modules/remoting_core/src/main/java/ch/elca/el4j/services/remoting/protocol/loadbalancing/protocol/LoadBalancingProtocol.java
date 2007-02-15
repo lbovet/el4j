@@ -18,16 +18,13 @@
 package ch.elca.el4j.services.remoting.protocol.loadbalancing.protocol;
 
 import java.lang.reflect.Proxy;
-import java.util.Map;
 
 import org.springframework.aop.framework.ProxyFactoryBean;
 
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
-import ch.elca.el4j.services.remoting.AbstractRemotingBase;
 import ch.elca.el4j.services.remoting.AbstractRemotingProtocol;
 import ch.elca.el4j.services.remoting.RemotingProxyFactoryBean;
 import ch.elca.el4j.services.remoting.RemotingServiceExporter;
-
 import ch.elca.el4j.services.remoting.protocol.loadbalancing.policy.AbstractPolicy;
 import ch.elca.el4j.services.remoting.protocol.loadbalancing.policy.RoundRobinPolicy;
 
@@ -54,16 +51,31 @@ import ch.elca.el4j.services.remoting.protocol.loadbalancing.policy.RoundRobinPo
 public class LoadBalancingProtocol extends AbstractRemotingProtocol {
 
     /**
+     * Stores temporarily the config input. Is modified upon creation of
+     * ProtocolInfo instances, due to performance reasons.
+     */
+    private AbstractRemotingProtocol[] m_protocols;
+
+    /** Defines the protocol selection policy. */
+    private AbstractPolicy m_policy;
+
+    /** The invocation handler for the proxy installed by the current class. */
+    private ClientLoadBalancingInvocationHandler m_invocationHandler;
+    
+    /**
      * {@inheritDoc}
      */
     public void afterPropertiesSet() throws Exception {
-        CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(getProtocolSpecificConfiguration(),
+        CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+            getProtocolSpecificConfiguration(),
             "protocolSpecificConfiguration", this);
-        if (!(getProtocolSpecificConfiguration() instanceof LoadBalancingProtocolConfiguration)) {
-            CoreNotificationHelper.notifyMisconfiguration("The configuration " +
-            "needs to be of type " + LoadBalancingProtocolConfiguration.class) ;
-        } // if
-   } // afterPropertiesSet()
+        if (!(getProtocolSpecificConfiguration() 
+            instanceof LoadBalancingProtocolConfiguration)) {
+            CoreNotificationHelper.notifyMisconfiguration("The configuration " 
+                + "needs to be of type " 
+                + LoadBalancingProtocolConfiguration.class);
+        }
+    }
 
     /**
      * {@inheritDoc}
@@ -74,14 +86,15 @@ public class LoadBalancingProtocol extends AbstractRemotingProtocol {
         // Get the context class loader from current thread.
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
 
-        LoadBalancingProtocolConfiguration conf = 
-         (LoadBalancingProtocolConfiguration)getProtocolSpecificConfiguration();
+        LoadBalancingProtocolConfiguration conf 
+            = (LoadBalancingProtocolConfiguration) 
+            getProtocolSpecificConfiguration();
         m_protocols = conf.getProtocols();
         m_policy = conf.getPolicy();
         if (m_policy == null) {
             // Install default policy
             m_policy = new RoundRobinPolicy();
-        } // if
+        }
         m_policy.setProtocols(m_protocols);
 
         // Create invocation handler
@@ -89,12 +102,11 @@ public class LoadBalancingProtocol extends AbstractRemotingProtocol {
             m_invocationHandler = new ClientLoadBalancingInvocationHandler(
                 m_policy, proxyBean,
                 serviceInterfaceWithContext);
-        } // if
+        }
 
         return Proxy.newProxyInstance(cl,
             new Class[] {serviceInterfaceWithContext}, m_invocationHandler);
-
-    } // createProxyBean()
+    }
 
     /**
      * {@inheritDoc}
@@ -102,14 +114,14 @@ public class LoadBalancingProtocol extends AbstractRemotingProtocol {
     public Object createExporterBean(RemotingServiceExporter exporterBean,
         Class serviceInterfaceWithContext, Object serviceProxy) {
         throw new RuntimeException("No exporter of this type can be created.");
-    } // createExporterBean()
+    }
 
     /**
      * {@inheritDoc}
      */
     public Class getProxyObjectType() {
         return ProxyFactoryBean.class;
-    } // getProxyObjectType()
+    }
 
     /**
      * {@inheritDoc}
@@ -117,19 +129,5 @@ public class LoadBalancingProtocol extends AbstractRemotingProtocol {
     public Class getExporterObjectType() {
         throw new RuntimeException(this.getClass().getName()
             + " cannot be used as an exporter");
-    } // getExporterObjectType() ;
-
-
-    /**
-     * Stores temporarily the config input. Is modified upon creation of
-     * ProtocolInfo instances, due to performance reasons.
-     */
-    private AbstractRemotingProtocol[] m_protocols;
-
-    /** Defines the protocol selection policy. */
-    private AbstractPolicy m_policy ;
-
-    /** The invocation handler for the proxy installed by the current class. */
-    private ClientLoadBalancingInvocationHandler m_invocationHandler;
-
-} // CLASS LoadBalancingProtocol
+    }
+}
