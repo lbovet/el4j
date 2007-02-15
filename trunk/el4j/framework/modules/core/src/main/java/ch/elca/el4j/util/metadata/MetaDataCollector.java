@@ -165,9 +165,11 @@ public class MetaDataCollector implements Attributes, InitializingBean {
                 Method m = iface.getDeclaredMethod(targetMethod.getName(),
                         targetMethod.getParameterTypes());
                 attributeSet.addAll(metaDataDelegator.getAttributes(m));
+            // Checkstyle: EmptyBlock off
             } catch (NoSuchMethodException e) {
                 // Do nothing. Method does not exist in current interface.
             }
+            // Checkstyle: EmptyBlock off
         }
 
         return attributeSet;

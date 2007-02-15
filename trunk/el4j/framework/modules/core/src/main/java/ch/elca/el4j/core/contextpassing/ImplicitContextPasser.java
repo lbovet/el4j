@@ -19,8 +19,8 @@ package ch.elca.el4j.core.contextpassing;
 
 /**
  * Implicit context passer interface.
- * Please refer to the documentation of the remoting_and_interface_enrichment module
- * more information on this.
+ * Please refer to the documentation of the 
+ * remoting_and_interface_enrichment module more information on this.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",

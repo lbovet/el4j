@@ -36,8 +36,8 @@ import ch.elca.el4j.services.search.QueryObject;
  * you need more specific methods. Based on an idea from the Hibernate website.
  *
  * This is the canonical form of this interface. We recommend it when a generic
- * DAO is used in tools (to make the contract minimal). For direct programmer-usage
- * we recommend to use the convenience subclasses. 
+ * DAO is used in tools (to make the contract minimal). 
+ * For direct programmer-usage we recommend to use the convenience subclasses. 
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",

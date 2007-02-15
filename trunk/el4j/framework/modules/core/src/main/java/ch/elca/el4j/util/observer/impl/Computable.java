@@ -31,7 +31,7 @@ package ch.elca.el4j.util.observer.impl;
  */
 public interface Computable<T> {
     /**
-     * returns this computation's result.
+     * @return Returns this computation's result.
      */
     T is();
 }

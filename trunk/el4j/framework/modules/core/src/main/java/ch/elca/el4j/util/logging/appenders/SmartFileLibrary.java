@@ -38,6 +38,11 @@ import org.springframework.util.StringUtils;
 public class SmartFileLibrary {
     
     /**
+     * Hide the default constructor as this is a utility class.
+     */
+    protected SmartFileLibrary() { }
+    
+    /**
      * This method tries to create a valid logfile path from the given input.
      * @param fileName The fileName.
      * @return A valid filePath.
