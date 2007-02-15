@@ -16,7 +16,7 @@
  */
 package ch.elca.el4j.services.remoting.protocol.loadbalancing.policy;
 
-import ch.elca.el4j.services.remoting.AbstractRemotingProtocol ;
+import ch.elca.el4j.services.remoting.AbstractRemotingProtocol;
 import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailableRTException;
 
 
@@ -39,13 +39,19 @@ import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailable
  */
 public class RedirectUponFailurePolicy extends AbstractPolicy {
 
+    /** 
+     * Index of the currently used protocol. 
+     */
+    private int m_currentIndex = 0;
+    
     /** {@inheritDoc} */
-    public AbstractRemotingProtocol getNextProtocol() throws NoProtocolAvailableRTException {
+    public AbstractRemotingProtocol getNextProtocol() 
+        throws NoProtocolAvailableRTException {
         if ((m_protocols == null) || (m_protocols.length == 0)) {
             throw new NoProtocolAvailableRTException("No protocol defined");
-        } // if
+        }
         return m_protocols[m_currentIndex];
-    } // getNextProtocol()
+    }
 
     /** {@inheritDoc} */
     public void notifyFailure(AbstractRemotingProtocol protocol) {
@@ -53,12 +59,9 @@ public class RedirectUponFailurePolicy extends AbstractPolicy {
             int index = findIndex(protocol);
             if (index == m_currentIndex) {
                 m_currentIndex = (m_currentIndex + 1) % m_protocols.length;
-            } // if
-        } // if
-    } // notifyFailure()
-
-    /** Index of the currently used protocol */
-    private int m_currentIndex = 0;
+            }
+        } 
+    }
 
     /**
      * @param protocol
@@ -70,9 +73,8 @@ public class RedirectUponFailurePolicy extends AbstractPolicy {
         for (int i = 0; (index < 0) && (i < m_protocols.length); i += 1) {
             if (protocol == m_protocols[i]) {
                 index = i;
-            } // if
-        } // for i
+            }
+        }
         return index;
-    } // findIndex()
-
-} // CLASS RedirectUponFailure
+    }
+}

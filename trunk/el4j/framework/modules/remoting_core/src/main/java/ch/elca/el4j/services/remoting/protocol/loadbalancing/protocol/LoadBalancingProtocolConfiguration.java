@@ -16,16 +16,14 @@
  */
 package ch.elca.el4j.services.remoting.protocol.loadbalancing.protocol;
 
-import java.util.Map;
-
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
-import ch.elca.el4j.services.remoting.AbstractRemotingProtocol ;
+import ch.elca.el4j.services.remoting.AbstractRemotingProtocol;
 import ch.elca.el4j.services.remoting.ProtocolSpecificConfiguration;
 import ch.elca.el4j.services.remoting.protocol.loadbalancing.policy.AbstractPolicy;
 
 /**
  * 
- * Defines the configuration parameters for {@link LoadBalancingProtocol}
+ * Defines the configuration parameters for {@link LoadBalancingProtocol}.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -39,6 +37,10 @@ import ch.elca.el4j.services.remoting.protocol.loadbalancing.policy.AbstractPoli
 public class LoadBalancingProtocolConfiguration implements
     ProtocolSpecificConfiguration {
 
+    protected AbstractRemotingProtocol[] m_protocols;
+    
+    protected AbstractPolicy m_policy;
+    
     /**
      * {@inheritDoc}
      */
@@ -46,48 +48,43 @@ public class LoadBalancingProtocolConfiguration implements
         CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(getProtocols(),
             "protocols", this);
         if (getProtocols().length == 0) {
-            CoreNotificationHelper.notifyMisconfiguration("At least one " +
-                    "protocol needs to be defined.") ;
-        } // if
-   } // afterPropertiesSet()
+            CoreNotificationHelper.notifyMisconfiguration("At least one " 
+                + "protocol needs to be defined.");
+        }
+    }
     
     /**
-     * Setter method
+     * Setter method.
      * 
      * @param protocols
      *            Available protocols
      */
     public void setProtocols(AbstractRemotingProtocol[] protocols) {
         m_protocols = protocols;
-    } // setProtocols()
+    }
 
     /** 
      * 
      * @return Defined protocols, or arguments to protocols
      */
     public AbstractRemotingProtocol[] getProtocols() {
-        return m_protocols ;
-    } // getProtocols()
+        return m_protocols;
+    }
     
     /**
      * Installs the policy used to select the protocols.
      * 
-     * @param policy
+     * @param policy The policy to install
      */
     public void setPolicy(AbstractPolicy policy) {
         m_policy = policy;
-    } // setPolicy()
+    }
 
     /**
      * 
      * @return Policy map
      */
     public AbstractPolicy getPolicy() {
-        return m_policy ;
-    } // getPolicy()
-
-    
-    protected AbstractRemotingProtocol[] m_protocols ;
-    protected AbstractPolicy m_policy ;
-    
-} // Class LoadBalancingProtocolConfiguration
+        return m_policy;
+    }   
+}

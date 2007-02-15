@@ -16,14 +16,14 @@
  */
 package ch.elca.el4j.services.remoting.protocol.loadbalancing.policy;
 
-import java.util.Calendar ;
-import java.util.Random ;
+import java.util.Calendar;
+import java.util.Random;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import ch.elca.el4j.services.remoting.AbstractRemotingProtocol ;
-import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailableRTException ;
+import ch.elca.el4j.services.remoting.AbstractRemotingProtocol;
+import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailableRTException;
 
 /**
  * 
@@ -41,28 +41,38 @@ import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailable
  */
 public class RandomPolicy extends AbstractPolicy {
 
-    @Override
-    public AbstractRemotingProtocol getNextProtocol() 
-        throws NoProtocolAvailableRTException {
-        if ((m_protocols == null) || (m_protocols.length == 0)) {
-            throw new NoProtocolAvailableRTException("No protocol defined") ;
-        } // if 
-        AbstractRemotingProtocol protocol = 
-            m_protocols[m_random.nextInt(m_protocols.length)];
-        s_logger.debug("Returning next protocol: " + protocol);
-        return protocol;
-    } // getNextProtocol()
-
-    public void notifyFailure(AbstractRemotingProtocol protocol) {
-        s_logger.debug("Removing protocol: " + protocol);
-        removeProtocol(protocol) ;
-    } // notifyFailure()
-    
     /**
      * Private logger.
      */
     private static Log s_logger = LogFactory
             .getLog(RandomPolicy.class);
 
-    private Random m_random = new Random(Calendar.getInstance().getTimeInMillis()) ;
-} // Class RandomPolicy
+    /**
+     * Random number generator.
+     */
+    private Random m_random 
+        = new Random(Calendar.getInstance().getTimeInMillis());
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AbstractRemotingProtocol getNextProtocol() 
+        throws NoProtocolAvailableRTException {
+        if ((m_protocols == null) || (m_protocols.length == 0)) {
+            throw new NoProtocolAvailableRTException("No protocol defined");
+        }
+        AbstractRemotingProtocol protocol 
+            = m_protocols[m_random.nextInt(m_protocols.length)];
+        s_logger.debug("Returning next protocol: " + protocol);
+        return protocol;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void notifyFailure(AbstractRemotingProtocol protocol) {
+        s_logger.debug("Removing protocol: " + protocol);
+        removeProtocol(protocol);
+    }
+}
