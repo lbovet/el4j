@@ -30,9 +30,6 @@ import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.DESedeKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -49,10 +46,6 @@ import sun.misc.BASE64Encoder;
  * @author Andreas Pfenninger (APR)
  */
 public class SymmetricEncryption {
-    /**
-     * Private logger.
-     */
-    private static Log s_logger = LogFactory.getLog(SymmetricEncryption.class);
 
     /** DESede encryption scheme. */
     private static final String DESEDE_ENCRYPTION_SCHEME = "DESede";
