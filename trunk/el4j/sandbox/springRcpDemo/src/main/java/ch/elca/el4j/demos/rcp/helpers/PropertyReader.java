@@ -106,10 +106,12 @@ public class PropertyReader {
         List<String> result = new ArrayList<String>();
 
         String values = getProperties().getProperty(property);
-        StringTokenizer tokenizer = new StringTokenizer(values, SEPARATOR);
-        
-        while (tokenizer.hasMoreTokens()) {
-            result.add(tokenizer.nextToken());
+        if (values != null) {
+            StringTokenizer tokenizer = new StringTokenizer(values, SEPARATOR);
+            
+            while (tokenizer.hasMoreTokens()) {
+                result.add(tokenizer.nextToken());
+            }
         }
         return result;
     }
