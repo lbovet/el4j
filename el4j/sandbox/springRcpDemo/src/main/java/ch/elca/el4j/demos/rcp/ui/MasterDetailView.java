@@ -202,7 +202,6 @@ public class MasterDetailView<T> extends AbstractView
      *            event to process
      */
     public void onApplicationEvent(ApplicationEvent e) {
-        System.out.println(e.getSource() + " : " + e.toString());
     }
 
     /**

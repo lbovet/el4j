@@ -18,7 +18,6 @@ package ch.elca.el4j.apps.keyword.service.impl;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.dao.DataAccessException;
