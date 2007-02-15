@@ -17,7 +17,6 @@
 package ch.elca.el4j.demos.rcp.ui;
 
 import java.awt.BorderLayout;
-import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
@@ -46,7 +45,6 @@ import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 import ch.elca.el4j.demos.rcp.helpers.PropertyReader;
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
-import ch.elca.el4j.util.env.EnvPropertiesUtils;
 
 
 /**
@@ -105,11 +103,10 @@ public class MasterDetailView<T> extends AbstractView
      * @return component holding this view
      */
     protected JComponent createControl() {
-        
         // Create filter panel
         JPanel filterPanel = new JPanel(new BorderLayout());
-        JLabel filterLabel = getComponentFactory().createLabel(
-            "masterDetailFilter.label");
+        JLabel filterLabel 
+            = getComponentFactory().createLabel("masterDetailFilter.label");
         filterPanel.add(filterLabel, BorderLayout.WEST);
         String tip = getMessage("masterDetailFilter.caption");
         JTextField filterField = getComponentFactory().createTextField();
@@ -121,15 +118,16 @@ public class MasterDetailView<T> extends AbstractView
         
         
         // Create Master/Detail form
+        // First, get the dao for our domain type
         DaoRegistry registry 
             = (DaoRegistry) getApplicationContext().getBean("daoRegistry");
         GenericDao<T> dao = registry.getFor(m_domainType);
-        Properties pros = EnvPropertiesUtils.getEnvProperties();
-        String sortProperty = pros.getProperty("masterDetail.sortProperty");    
+        // Then, create the form model and the master/detail form
         HierarchicalFormModel model = FormModelHelper.createFormModel(dao);
         m_form 
-            = new MasterDetailForm<T>(model, "all", m_domainType, sortProperty);
-        
+            = new MasterDetailForm<T>(model, "all", m_domainType, 
+                PropertyReader.getSortProperty());
+        // Finally, link the filter panel with the master/detail form
         TextFilterator filterator = GlazedLists
                 .textFilterator(PropertyReader.getFilterProperties()
                     .toArray(new String[0]));
@@ -137,9 +135,8 @@ public class MasterDetailView<T> extends AbstractView
             = new TextComponentMatcherEditor(filterField, filterator);
         m_form.setFilterMatcherEditor(editor);
         
-        // Puth things together
+        // Now, put things together
         JPanel view = getComponentFactory().createPanel(new BorderLayout());
-        //new JPanel(new BorderLayout());
         JScrollPane sp = getComponentFactory().createScrollPane(
             m_form.getControl());      
         view.add(filterPanel, BorderLayout.NORTH);
@@ -184,22 +181,13 @@ public class MasterDetailView<T> extends AbstractView
          * {@inheritDoc}
          */
         public void execute() {
-            // We know exactly one contact will be selected at this time because
-            // of the guards put in place in prepareTable.
-            // final Contact contact = contactTable.getSelectedContact();
             // Query the user to be sure they want to do this
             String title = getMessage("MasterDetailForm.confirmDelete.title");
             String message 
                 = getMessage("MasterDetailForm.confirmDelete.message");
             ConfirmationDialog dlg = new ConfirmationDialog(title, message) {
                 protected void onConfirm() {
-                // Delete the object from the persistent store.
-                // getContactDataStore().delete(contact);
-                // And notify the rest of the application of the change
-                // getApplicationContext().publishEvent(
-                // new
-                // LifecycleApplicationEvent(LifecycleApplicationEvent.DELETED,
-                // contact));
+                    m_form.deleteSelectedItems();
                 }
             };
             dlg.showDialog();
@@ -214,7 +202,7 @@ public class MasterDetailView<T> extends AbstractView
      *            event to process
      */
     public void onApplicationEvent(ApplicationEvent e) {
-
+        System.out.println(e.getSource() + " : " + e.toString());
     }
 
     /**

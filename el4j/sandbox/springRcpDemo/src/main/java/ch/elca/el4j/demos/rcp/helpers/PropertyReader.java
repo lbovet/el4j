@@ -57,6 +57,11 @@ public class PropertyReader {
         = "masterDetail.filterProperties";
     
     /**
+     * Property for sorting master list.
+     */
+    private static final String SORT_PROPERTY = "masterDetail.sortProperty";
+    
+    /**
      * The Separator.
      */
     private static final String SEPARATOR 
@@ -91,7 +96,17 @@ public class PropertyReader {
      */
     public static List<String> getFilterProperties() {
         return readProperty(FILTER_PROPERTIES);
-        
+    }
+    
+    /**
+     * @return The column to sort the master list.
+     */
+    public static String getSortProperty() {
+        List<String> res = readProperty(SORT_PROPERTY);
+        if (res.size() != 1) {
+            throw new RuntimeException("Sort property must not be ambigious");
+        }
+        return res.get(0);
     }
     
     /**
