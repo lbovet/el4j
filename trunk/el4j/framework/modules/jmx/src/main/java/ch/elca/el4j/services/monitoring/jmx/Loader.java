@@ -20,7 +20,7 @@ package ch.elca.el4j.services.monitoring.jmx;
 import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -41,7 +41,6 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.util.Assert;
 
 import ch.elca.el4j.core.exceptions.BaseException;
 import ch.elca.el4j.core.exceptions.BaseRTException;
@@ -66,7 +65,8 @@ public class Loader implements ApplicationContextAware, InitializingBean,
     /**
      * A map containing the MBean Server as key and the JvmMB as value.
      */
-    protected static Map s_jvmMBs = new HashMap();
+    protected static Map<MBeanServer, JvmMBMBean> s_jvmMBs 
+        = new HashMap<MBeanServer, JvmMBMBean>();
 
     /**
      * Private logger of this class.
@@ -141,35 +141,21 @@ public class Loader implements ApplicationContextAware, InitializingBean,
 
             // Remove names of Log4jConfig beans from the jvms-array.
             // Because the JVM_DOMAIN was made under the assumption, that
-            // the JVM_DOMAIn will only contain JVM's. But this assuption
+            // the JVM_DOMAIN will only contain JVM's. But this assuption
             // is not true anymore, therefor the following tests would fail
             // if non-JVM beans are not removed from the jvms-array.
 
-            int arrayLength = 0;
+            int numberOfMBeans = 0;
 
             for (int i = 0; i < jvms.length; i++) {
-                if (jvms[i].getCanonicalName().contains("log4jConfig")) {
-                    jvms[i] = null;
-                } else {
-                    arrayLength++;
+                if (!jvms[i].getCanonicalName().contains("log4jConfig")) {
+                    numberOfMBeans++;
                 }
             }
-
-            ObjectName[] jvmsTemp = new ObjectName[arrayLength];
-            int j = 0;
-
-            for (int i = 0; i < jvms.length; i++) {
-                if (jvms[i] != null) {
-                    jvmsTemp[j] = jvms[i];
-                    j++;
-                }
-            }
-
-            jvms = jvmsTemp;
 
             // In case there is no MBean in the JVM_DOMAIN, we create one and
             // register it at the MBean Server.
-            if (jvms.length == 0) {
+            if (numberOfMBeans == 0) {
 
                 // execute the following code only on a
                 // JRE, with version >= 1.5
@@ -197,7 +183,7 @@ public class Loader implements ApplicationContextAware, InitializingBean,
                     s_logger.error(message);
                     throw new BaseException(message, e);
                 }
-            } else if (jvms.length == 1) {
+            } else if (numberOfMBeans == 1) {
                 // In case there is one MBean in the JVM_DOMAIN, we make
                 // reference to it in this loader.
                 m_jvmmb = (JvmMB) s_jvmMBs.get(m_server);
@@ -240,11 +226,10 @@ public class Loader implements ApplicationContextAware, InitializingBean,
         Reject.ifNull(mBeansSet, "The 'queryMBeans(ObjectName, QueryExp)' "
             + "method on the MBeanServer returned null.");
 
-        ArrayList relatedBeans = new ArrayList();
+        List<ObjectName> relatedBeans = new ArrayList<ObjectName>();
 
-        Iterator it = mBeansSet.iterator();
-        while (it.hasNext()) {
-            ObjectInstance objectInstance = (ObjectInstance) it.next();
+        for (Object oi : mBeansSet) {
+            ObjectInstance objectInstance = (ObjectInstance) oi;
             ObjectName objectName = objectInstance.getObjectName();
 
             // Check whether this object name contains the requested domain and
@@ -259,9 +244,8 @@ public class Loader implements ApplicationContextAware, InitializingBean,
                 }
             }
         }
-
-        return (ObjectName[]) relatedBeans.toArray(new ObjectName[relatedBeans
-            .size()]);
+            
+        return relatedBeans.toArray(new ObjectName[relatedBeans.size()]);
     }
 
     /**
@@ -272,8 +256,8 @@ public class Loader implements ApplicationContextAware, InitializingBean,
      *            ApplicationContextAware
      */
     public void setApplicationContext(ApplicationContext applicationContext) {
-        Assert.isInstanceOf(ConfigurableApplicationContext.class, 
-            applicationContext);
+        Reject.ifFalse(applicationContext 
+            instanceof ConfigurableApplicationContext);
         this.m_applicationContext 
             = (ConfigurableApplicationContext) applicationContext;
 
@@ -298,7 +282,8 @@ public class Loader implements ApplicationContextAware, InitializingBean,
     /**
      * @param initAfterPropertiesSet Is the initAfterPropertiesSet to set.
      */
-    public final void setInitAfterPropertiesSet(boolean initAfterPropertiesSet) {
+    public final void setInitAfterPropertiesSet(
+        boolean initAfterPropertiesSet) {
         m_initAfterPropertiesSet = initAfterPropertiesSet;
     }
 
@@ -320,7 +305,7 @@ public class Loader implements ApplicationContextAware, InitializingBean,
      */
     public void onApplicationEvent(ApplicationEvent event) {
         if (event instanceof ContextRefreshedEvent 
-            && ((ContextRefreshedEvent)event).getSource() 
+            && ((ContextRefreshedEvent) event).getSource() 
                 == getApplicationContext()) {
             try {
                 init();

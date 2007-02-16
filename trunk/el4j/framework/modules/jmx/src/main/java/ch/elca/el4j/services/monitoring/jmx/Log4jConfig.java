@@ -22,6 +22,8 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.management.InstanceAlreadyExistsException;
@@ -68,11 +70,6 @@ public class Log4jConfig implements Log4jConfigMBean {
     public static final String LOG4J_JMX_LOADER = "log4jJmxLoader";
     
     /**
-     * The instance counter of this object.
-     */
-    private int m_instanceCounter;
-    
-    /**
      * The counter on the number of JVMs.
      */
     private static int s_counter = 1;
@@ -103,6 +100,11 @@ public class Log4jConfig implements Log4jConfigMBean {
     protected BeanFactory m_beanFactory;
 
     /**
+     * The instance counter of this object.
+     */
+    private int m_instanceCounter;
+    
+    /**
      * The MBean Server where this Spring Bean is registered at.
      */
     private MBeanServer m_mBeanServer;
@@ -120,12 +122,13 @@ public class Log4jConfig implements Log4jConfigMBean {
     /**
      * Contains all appenders, which are currently loaded.
      */
-    private HashMap m_appendersPool;
+    private Map m_appendersPool;
 
     /**
      * All logging level changes are stored here.
      */
-    private HashMap m_loggingLevelCache = new HashMap();
+    private Map<String, String> m_loggingLevelCache 
+        = new HashMap<String, String>();
 
     /**
      * True, if the RootLevel was changed through the setRootLoggerLevel method.
@@ -146,8 +149,9 @@ public class Log4jConfig implements Log4jConfigMBean {
      * @param mBeanServer
      *            The MBean Server where this Spring Bean is registered at
      */
-    public Log4jConfig(String name, ApplicationContextMB acMB,
-        ApplicationContext ac, BeanFactory beanFactory, MBeanServer mBeanServer) {
+    public Log4jConfig(String name, ApplicationContextMB acMB, 
+        ApplicationContext ac, BeanFactory beanFactory, 
+        MBeanServer mBeanServer) {
 
         this.m_name = name;
         this.m_applicationContextMB = acMB;
@@ -231,14 +235,15 @@ public class Log4jConfig implements Log4jConfigMBean {
     public void setObjectName() {
 
         String name = JVM_DOMAIN + ":name=log4jConfig " + getInstanceCounter();
-//        String name = JVM_DOMAIN + ":name="+ getName() + " " + getInstanceCounter();
-        
+        // String name = JVM_DOMAIN + ":name="+ getName() + " " +
+        // getInstanceCounter();
+
         try {
             m_objectName = new ObjectName(name);
         } catch (MalformedObjectNameException e) {
             CoreNotificationHelper
-                .notifyMisconfiguration("The string passed as a parameter does not have"
-                    + " the right format.");
+                .notifyMisconfiguration("The string passed as a parameter" 
+                    + "does not have the right format.");
         }
     }
 
@@ -281,7 +286,7 @@ public class Log4jConfig implements Log4jConfigMBean {
         Set appKeySet = m_appendersPool.keySet();
         Iterator i = appKeySet.iterator();
         String appKey;
-        LinkedList queue = new LinkedList();
+        LinkedList<String> queue = new LinkedList<String>();
         while (i.hasNext()) {
             appKey = (String) i.next();
             queue.add("appenderName=" + appKey + "; appenderObject="
@@ -316,23 +321,17 @@ public class Log4jConfig implements Log4jConfigMBean {
      * {@inheritDoc}
      */
     public Appender[] showAppenders(String category) {
-        Appender[] result = null;
         Enumeration enumerator = LogManager.getLogger(category)
             .getAllAppenders();
 
-        LinkedList queue = new LinkedList();
+        List<Appender> queue = new LinkedList<Appender>();
 
         while (enumerator.hasMoreElements()) {
-            queue.add(enumerator.nextElement());
+            queue.add((Appender) enumerator.nextElement());
         }
-
-        Object[] array = queue.toArray();
-        if (array.length > 0) {
-            result = new Appender[array.length];
-            for (int j = 0; j < array.length; j++) {
-                result[j] = (Appender) array[j];
-            }
-            return result;
+     
+        if (queue.size() > 0) {
+            return queue.toArray(new Appender[queue.size()]);
         } else {
             return null;
         }
