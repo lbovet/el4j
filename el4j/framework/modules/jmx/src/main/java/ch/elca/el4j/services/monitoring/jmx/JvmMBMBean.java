@@ -51,7 +51,7 @@ public interface JvmMBMBean {
     /**
      * An HTML table is created, which lists all Threads and
      * their property values.
-     * @return
+     * @return A table with all threads
      */
     public String showThreadTable();
 }
