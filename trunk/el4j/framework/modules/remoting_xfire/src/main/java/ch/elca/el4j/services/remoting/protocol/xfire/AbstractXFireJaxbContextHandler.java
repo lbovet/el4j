@@ -27,7 +27,8 @@ import org.jdom.Namespace;
 
 /**
  * 
- * This class is ...
+ * Baseclass for the JAXB context handlers, implementing some 
+ * common functionalities.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
