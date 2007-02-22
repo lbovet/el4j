@@ -44,6 +44,7 @@ import org.codehaus.xfire.transport.TransportManager;
  * );</script>
  *
  * @author Rashid Waraich (RWA)
+ * @author Philippe Jacot (PJA)
  */
 
 
