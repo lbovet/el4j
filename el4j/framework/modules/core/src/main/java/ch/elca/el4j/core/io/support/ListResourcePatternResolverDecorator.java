@@ -17,6 +17,7 @@
 
 package ch.elca.el4j.core.io.support;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -378,6 +379,12 @@ public class ListResourcePatternResolverDecorator
             } else {
                 resource = findLastClassPathResource(location);
             }
+        } catch (FileNotFoundException e) {
+            // Treat a FileNotFoundException differently to avoid stacktraces
+            // in setups where the file later gets found by delegation to 
+            // another resource locator.
+            s_logger.info("Resource not found: " + location);
+            s_logger.debug("Exception was: ", e);
         } catch (IOException e) {
             s_logger.warn("Exception occurred while lookup of single class "
                 + "path resource at location '" + location + "'.", e);
