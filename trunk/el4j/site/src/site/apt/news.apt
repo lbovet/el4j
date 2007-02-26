@@ -7,6 +7,8 @@
 
 News
 
+  * <20/02/2007> - <<EL4J 1.1.1 released!>> Main features: Many clean ups and simplifications, new maven artefact, database and dependency maven plugins, JAXB support for webservices.
+  
   * <03/11/2006> - <<EL4J 1.1>> released!
 
   * <03/10/2006> - The license of EL4J is weakened to the <<L>>GPL license!  
