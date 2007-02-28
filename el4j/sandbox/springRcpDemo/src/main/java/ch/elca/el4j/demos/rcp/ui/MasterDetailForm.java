@@ -133,6 +133,7 @@ public class MasterDetailForm<T> extends AbstractTableMasterForm {
     /**
      * Define what we would like to do when the delete command is executed.
      */
+    @SuppressWarnings("unchecked")
     @Override
     protected void deleteSelectedItems() {
         ListSelectionModel sm = getSelectionModel();
@@ -190,6 +191,7 @@ public class MasterDetailForm<T> extends AbstractTableMasterForm {
          * Do the database storing stuff in the postCommit of the detail form.
          * {@inheritDoc}
          */
+        @SuppressWarnings("unchecked")
         @Override
         public void postCommit(FormModel formModel) {
             super.postCommit(formModel);

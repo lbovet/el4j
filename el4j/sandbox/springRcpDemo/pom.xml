@@ -77,37 +77,42 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-binding</artifactId>
+			<version>1.0</version>
+		</dependency>
 
 		<!--  Spring RCP v.0.3 -->
 		<dependency>
 			<groupId>org.springframework.richclient</groupId>
 			<artifactId>spring-richclient-tiger</artifactId>
-			<version>0.3.0-SNAPSHOT</version>
+			<version>0.3.0-20070228.130443-1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.richclient</groupId>
 			<artifactId>spring-richclient-core</artifactId>
-			<version>0.3.0-SNAPSHOT</version>
+			<version>0.3.0-20070228.130111-1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.richclient</groupId>
 			<artifactId>spring-richclient-support</artifactId>
-			<version>0.3.0-SNAPSHOT</version>
+			<version>0.3.0-20070228.130346-1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.richclient</groupId>
 			<artifactId>spring-richclient-binding</artifactId>
-			<version>0.3.0-SNAPSHOT</version>
+			<version>0.3.0-20070228.130015-1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.richclient</groupId>
 			<artifactId>spring-richclient-form</artifactId>
-			<version>0.3.0-SNAPSHOT</version>
+			<version>0.3.0-20070228.130201-1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.richclient</groupId>
 			<artifactId>spring-richclient-sandbox</artifactId>
-			<version>0.3.0-SNAPSHOT</version>
+			<version>0.3.0-20070228.130251-1</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
