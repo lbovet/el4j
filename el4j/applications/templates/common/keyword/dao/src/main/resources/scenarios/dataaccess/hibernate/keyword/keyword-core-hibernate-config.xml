@@ -12,7 +12,7 @@
 	<bean id="keywordDao" parent="abstractDao" class="ch.elca.el4j.apps.keyword.dao.impl.hibernate.HibernateKeywordDao"/>
 	
 	<!-- Hibernate Session Factory Bean -->
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean" destroy-method="destroy">
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
         <property name="mappingResources">
             <list>
                 <value>etc/hibernate/Keyword.hbm.xml</value>
