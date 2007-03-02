@@ -18,8 +18,7 @@
 
 	<!-- Hibernate Session Factory Bean -->
 	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
-		destroy-method="destroy">
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
 		<property name="mappingResources">
 			<list>
 				<value>
