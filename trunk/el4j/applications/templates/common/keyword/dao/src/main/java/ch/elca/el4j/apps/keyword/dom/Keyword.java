@@ -16,6 +16,7 @@
  */
 package ch.elca.el4j.apps.keyword.dom;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import org.hibernate.validator.Length;
@@ -62,6 +63,7 @@ public class Keyword extends AbstractIntKeyIntOptimisticLockingDto {
     @NotNull
     @Length(min = 3)
     @Pattern(regex = "[-'.a-zA-Z ]*")
+    @Column(unique = true)
     public String getName() {
         return m_name;
     }
