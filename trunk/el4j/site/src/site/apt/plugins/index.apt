@@ -27,4 +27,80 @@ Plugins
 | {{{maven-depgraph-plugin/index.html}dependency-graph}}               | Tool to visualize depedency graph.
 *----------------------------+-------------------+  
 
+  The plugins can also be used from outside of EL4J, they are in our repository. Here's a sample config for your pom.xml file: 
+  
+  \<pluginRepository\>
+  
+  \ \ \<id\>elca-services\</id\>
+    
+  \ \ \<url\>http://el4.elca-services.ch/el4j/maven2repository\</url\>
+    
+  \ \ \<releases\>
+    
+  \ \ \ \<enabled\>true\</enabled\>
+      
+  \ \ \</releases\>
+    
+  \</pluginRepository\>
+  
+    
+  ===========
+  
+  The individual plugins can then be setup like the following:
+  
+  
+  \<plugins\>
+  
+  \ \ \[...\]
+    
+  \ \ \<plugin\>
+  
+  \ \ \ \<groupId\>ch.elca.el4j.maven.plugins\</groupId\>
+  
+  \ \ \ \<artifactId\>maven-depgraph-plugin\</artifactId\>
+  
+  \ \ \ \<configuration\>
+  
+  \ \ \ \ \<outDir\>target/site/images\</outDir\>
+  
+  \ \ \ \ \<outFile\>${pom.artifactId}.png\</outFile\>
+  
+  \ \ \ \</configuration\>
+  
+  \ \ \ \<version\>1.1\</version\>
+  
+  \ \ \</plugin\>
+  
+  \ \ \<plugin\>
+  
+  \ \ \ \<groupId\>ch.elca.el4j.maven.plugins\</groupId\>
+  
+  \ \ \ \<artifactId\>maven-repohelper-plugin\</artifactId\>
+  
+  \ \ \ \<version\>1.1\</version\>
+  
+  \ \ \</plugin\>
+  
+  \ \ \<plugin\>
+  
+  \ \ \ \<groupId\>ch.elca.el4j.maven.plugins\</groupId\>
+  
+  \ \ \ \<artifactId\>maven-file-collector-plugin\</artifactId\>
+  
+  \ \ \ \<version\>1.1\</version\>
+  
+  \ \ \</plugin\>
+  
+  \ \ \<plugin\>
+  
+  \ \ \ \<groupId\>ch.elca.el4j.maven.plugins\</groupId\>
+  
+  \ \ \ \<artifactId\>maven-database-plugin\</artifactId\>
+  
+  \ \ \ \<version\>1.1\</version\>
+  
+  \ \ \</plugin\>    
+    
+  \</plugins\>
+  
 
