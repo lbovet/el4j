@@ -24,9 +24,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.logging.Log;
-import org.apache.maven.plugin.logging.SystemStreamLog;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.cli.CommandLineException;
@@ -88,9 +88,10 @@ public class GraphvizProjector implements DepGraphProjector {
     private static final String GVN_SHAPE = "box";
 
     /**
-     * The logger...
+     * Logger.
      */
-    Log m_logger = new SystemStreamLog();
+    private static Log s_log = LogFactory
+        .getLog(GraphvizProjector.class);
 
     /**
      * Id counter.
@@ -132,9 +133,9 @@ public class GraphvizProjector implements DepGraphProjector {
 
         String extension = FileUtils.getExtension(outputFile.getName());
         if (!SUPPORTED_FORMATS.contains(extension)) {
-            m_logger.error("Extension \"" + extension + "\" not supported.");
-            m_logger.error("Supported formats are: ");
-            m_logger.error(SUPPORTED_FORMATS.toString());
+            s_log.error("Extension \"" + extension + "\" not supported.");
+            s_log.error("Supported formats are: ");
+            s_log.error(SUPPORTED_FORMATS.toString());
         }
 
         m_imageFile = outputFile;
@@ -267,7 +268,7 @@ public class GraphvizProjector implements DepGraphProjector {
             try {
                 cmd.addSystemEnvironment();
             } catch (Exception e) {
-                m_logger.error(
+                s_log.error(
                     "Error initializing the Environment to execute dot", e);
             }
 
@@ -285,7 +286,7 @@ public class GraphvizProjector implements DepGraphProjector {
                 consumer, consumer);
             if (returnValue != 0) {
                 // Error running dot
-                m_logger.error("Dot returned non-zero value");
+                s_log.error("Dot returned non-zero value");
                 throw new MojoExecutionException("Dot returned non-zero value");
             }
 
@@ -294,9 +295,9 @@ public class GraphvizProjector implements DepGraphProjector {
                 dotFile.deleteOnExit();
             }
         } catch (IOException e) {
-            m_logger.error("Error writing to file", e);
+            s_log.error("Error writing to file", e);
         } catch (CommandLineException e) {
-            m_logger.error("Error executing dot", e);
+            s_log.error("Error executing dot", e);
         }
 
     }
@@ -315,15 +316,5 @@ public class GraphvizProjector implements DepGraphProjector {
      */
     public File getDotFile() {
         return m_dotFile;
-    }
-
-    /**
-     * Set another logger.
-     * 
-     * @param log
-     *            The logger to use
-     */
-    public void setLogger(Log log) {
-        m_logger = log;
     }
 }
