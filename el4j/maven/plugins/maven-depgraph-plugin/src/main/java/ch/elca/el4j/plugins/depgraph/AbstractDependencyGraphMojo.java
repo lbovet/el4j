@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
 import org.apache.maven.artifact.repository.ArtifactRepository;
@@ -49,12 +51,18 @@ import org.apache.maven.project.MavenProject;
  * @author Philippe Jacot (PJA)
  * @requiresDependencyResolution test
  */
-public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
+public abstract class AbstractDependencyGraphMojo extends AbstractMojo {   
     /**
      * The default file extension.
      */
     public static final String DEFAULT_EXTENSION = "png";
 
+    /**
+     * Logger.
+     */
+    private static Log s_log = LogFactory
+        .getLog(AbstractDependencyGraphMojo.class);
+    
     /**
      * The maven project.
      * 
@@ -162,7 +170,7 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
             if (!(outDir.exists() && outDir.isDirectory())) {
                 // Try to create the directory
                 if (!outDir.mkdirs()) {
-                    getLog().error(
+                    s_log.error(
                         "Unable to create Directory "
                             + outDir.getAbsolutePath());
                     throw new MojoExecutionException(
@@ -175,7 +183,7 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
         }
 
         if (outFile.exists() && !outFile.canWrite()) {
-            getLog().error(
+            s_log.error(
                 "Unable to write to \"" + outFile.getAbsolutePath() + "\"");
             throw new MojoExecutionException("Out File not writeable");
 
@@ -184,7 +192,7 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
             try {
                 createPossible = outFile.createNewFile();
             } catch (IOException e) {
-                getLog().error("Unable to create " + outFile.getAbsolutePath(),
+                s_log.error("Unable to create " + outFile.getAbsolutePath(),
                     e);
             }
 
@@ -219,7 +227,6 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
 
         DepGraphResolutionListener listener = new DepGraphResolutionListener(
             graph, filter);
-        listener.setLog(getLog());
 
         try {
 
@@ -232,7 +239,7 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
                 filter, Collections.singletonList(listener));
 
         } catch (AbstractArtifactResolutionException e) {
-            getLog().error("Error resolving artifacts", e);
+            s_log.error("Error resolving artifacts", e);
         }
 
     }
@@ -278,7 +285,7 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
         }
 
         if (graph.getArtifacts().size() == 0) {
-            getLog().error(
+            s_log.error(
                 "There were no Artifacts resolved. "
                     + "Maybe there's a problem with a user supplied filter.");
             throw new MojoExecutionException("No artifacts resolved");
@@ -296,7 +303,7 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
         // TODO: Implement properly so the actual projector used can be inejcted
 
         if (m_projector == null) {
-            getLog().info(
+            s_log.info(
                 "Writing dependency graph to " + outFile.getAbsolutePath());
 
             GraphvizProjector projector = new GraphvizProjector(getOutFile());
@@ -314,7 +321,7 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
                     }
                 }
             } catch (IOException e) {
-                getLog().error("Unable to create dot file.", e);
+                s_log.error("Unable to create dot file.", e);
             }
 
             m_projector = projector;

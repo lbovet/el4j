@@ -2,12 +2,12 @@ package ch.elca.el4j.plugins.depgraph;
 
 import java.util.Stack;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.resolver.ResolutionListener;
 import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
 import org.apache.maven.artifact.versioning.VersionRange;
-import org.apache.maven.plugin.logging.Log;
-import org.apache.maven.plugin.logging.SystemStreamLog;
 
 /**
  * 
@@ -30,9 +30,10 @@ public class DepGraphResolutionListener implements ResolutionListener {
     private static final int NOT_FILTERING = -1;
     
     /**
-     * The Log.
+     * Logger.
      */
-    private static Log s_log = new SystemStreamLog();
+    private static Log s_log = LogFactory
+        .getLog(DepGraphResolutionListener.class);
     
     /**
      * The graph.
@@ -230,13 +231,4 @@ public class DepGraphResolutionListener implements ResolutionListener {
      * {@inheritDoc}
      */
     public void updateScopeCurrentPom(Artifact artifact, String scope) { }
-    
-    /**
-     * Select the used Log.
-     * @param log The Log to use
-     */
-    public void setLog(Log log) {
-        s_log = log;
-    }
-
 }

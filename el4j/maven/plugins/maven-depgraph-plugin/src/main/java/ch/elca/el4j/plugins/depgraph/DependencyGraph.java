@@ -56,10 +56,13 @@ public class DependencyGraph {
      * @param artifactId The artifact ID
      * @param groupId The group ID
      * @param version The version
+     * @param scope The scope
+     * @param type The type
      * @return A DepgraphArtifact
      */
     public DepGraphArtifact getArtifact(
-        String artifactId, String groupId, String version, String scope, String type) {
+        String artifactId, String groupId, 
+        String version, String scope, String type) {
         DepGraphArtifact newArtifact 
             = new DepGraphArtifact(artifactId, groupId, version, scope, type);
         
