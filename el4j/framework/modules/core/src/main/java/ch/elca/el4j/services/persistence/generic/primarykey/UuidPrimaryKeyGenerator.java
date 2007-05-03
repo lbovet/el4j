@@ -29,6 +29,8 @@ import org.apache.commons.logging.LogFactory;
  * presented in
  * http://www1.ics.uci.edu/~ejw/authoring/uuid-guid/draft-leach-uuids-guids-01.txt
  *
+ * The returned UUID is a hex-encoded 32-digit number. 
+ * 
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
