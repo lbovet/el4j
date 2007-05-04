@@ -69,7 +69,7 @@ public class ExceptionChainConverterInterceptorTest extends TestCase {
 
         try {
             expect(methodInvocation.proceed()).andThrow(
-                    new IllegalArgumentException("ttt", testThrowable));
+                    new IllegalArgumentException("ttt", m_testThrowable));
         } catch (Throwable e1) {
         }
 
@@ -97,12 +97,12 @@ public class ExceptionChainConverterInterceptorTest extends TestCase {
 
         ecci.callConvertCause(null);
 
-        Throwable result = ecci.callConvertCause(testThrowable);
+        Throwable result = ecci.callConvertCause(m_testThrowable);
 
         checkThrowableIsCorrectlyHandled(result);
     }
 
-    Throwable testThrowable = new Throwable("t", new Exception("t2",
+    Throwable m_testThrowable = new Throwable("t", new Exception("t2",
             new Exception("t3", new RuntimeException("t4", null))));
 
     private void checkThrowableIsCorrectlyHandled(Throwable result) {
