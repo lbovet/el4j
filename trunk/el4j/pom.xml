@@ -495,8 +495,11 @@
                         Due to bugs fix built snapshot version is used.
                            * maven-site-plugin (revision 433356)
                            * doxia (revision 434153)
+			   
+			   See change request [ 1717260 ] on sf.net. Thanks to
+			   Tobias Vogel!
                     -->
-                    <version>2.0-20060907.091343-1</version>
+                    <version>2.0-beta-5</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
