@@ -39,10 +39,10 @@
                     <groupId>commons-logging</groupId>
                     <artifactId>commons-logging</artifactId>
                 </exclusion>
-                <exclusion>
+                <!--exclusion>
                     <groupId>commons-httpclient</groupId>
                     <artifactId>commons-httpclient</artifactId>
-                </exclusion>
+                </exclusion-->
                 <exclusion>
                     <groupId>jdom</groupId>
                     <artifactId>jdom</artifactId>
