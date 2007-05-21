@@ -53,7 +53,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
-            <artifactId>commons-logging-api</artifactId>
+            <artifactId>commons-logging</artifactId>
         </dependency>
     </dependencies>
 </project>
