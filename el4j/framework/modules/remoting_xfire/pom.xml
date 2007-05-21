@@ -34,6 +34,25 @@
             <groupId>org.codehaus.xfire</groupId>
             <artifactId>xfire-core</artifactId>
             <version>1.2.4</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-httpclient</groupId>
+                    <artifactId>commons-httpclient</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>jdom</groupId>
+                    <artifactId>jdom</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>wsdl4j</groupId>
+                    <artifactId>wsdl4j</artifactId>
+                </exclusion>		
+            </exclusions>
+	    
         </dependency>
         <dependency>
             <groupId>org.codehaus.xfire</groupId>
@@ -44,6 +63,18 @@
                     <groupId>org.springframework</groupId>
                     <artifactId>spring</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-beanutils</groupId>
+                    <artifactId>commons-beanutils</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-attributes</groupId>
+                    <artifactId>commons-attributes-api</artifactId>
+                </exclusion>					
             </exclusions>
         </dependency>
         <dependency>
