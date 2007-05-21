@@ -127,7 +127,7 @@ public class RemotingBenchmark {
      * Contains StackTraceElements of exceptions, which occured during the
      * benchmark.
      */
-    private static LinkedList s_stackTraceElements = new LinkedList();
+    private static LinkedList s_exceptionElements = new LinkedList();
 
     /**
      * These are the tests, which have to be run.
@@ -225,8 +225,8 @@ public class RemotingBenchmark {
      * Print exceptions which occured during the benchmark.
      */
     private static void printStackTrace() {
-        int noOfStackTraces = s_stackTraceElements.size();
-        StackTraceElement[] currentTrace;
+        int noOfStackTraces = s_exceptionElements.size();
+        Exception currentException;
         
         if (noOfStackTraces > 0) {
             System.out.println("The following exceptions "
@@ -234,12 +234,10 @@ public class RemotingBenchmark {
         }
  
         for (int i = 0; i < noOfStackTraces; i++) {
-            currentTrace
-                = ((StackTraceElement[]) s_stackTraceElements.removeFirst());
-            for (int j = 0; j < currentTrace.length; j++) {
-                System.out.println(currentTrace[j]);
-            }
-            System.out.println();
+            currentException
+                = ((Exception) s_exceptionElements.removeFirst());
+            currentException.printStackTrace();
+            System.out.println(); System.out.println();
         }
     }
     
@@ -418,13 +416,13 @@ public class RemotingBenchmark {
         try {
             warmupTest(calc);
         } catch (Exception e) {
-            addStackTraceElements(e.getStackTrace());
+            addStackTraceElements(e);
         }
         
         try {
             averageGetArea = executeTestMethodGetArea(calc);
         } catch (Exception e) {
-            addStackTraceElements(e.getStackTrace());
+            addStackTraceElements(e);
             // -1.0 indicates error in the test
             averageGetArea = -1.0; 
         }        
@@ -433,7 +431,7 @@ public class RemotingBenchmark {
             averageThrowMeAnException 
                 = executeTestMethodThrowMeAnException(calc);
         } catch (Exception e) {
-            addStackTraceElements(e.getStackTrace());
+            addStackTraceElements(e);
             // -1.0 indicates error in the test
             averageThrowMeAnException  = -1.0; 
         } 
@@ -442,7 +440,7 @@ public class RemotingBenchmark {
             averageCountNumberOfUppercaseLetters
                 = executeTestMethodCountNumberOfUppercaseLetters(calc);
         } catch (Exception e) {
-            addStackTraceElements(e.getStackTrace());
+            addStackTraceElements(e);
             // -1.0 indicates error in the test
             averageCountNumberOfUppercaseLetters = -1.0; 
         }        
@@ -450,7 +448,7 @@ public class RemotingBenchmark {
         try {
             averageAddComplexNumbers = executeTestAddComplexNumbers(calc);
         } catch (Exception e) {
-            addStackTraceElements(e.getStackTrace());
+            addStackTraceElements(e);
             // -1.0 indicates error in the test
             averageAddComplexNumbers = -1.0; 
         } 
@@ -466,8 +464,8 @@ public class RemotingBenchmark {
      * @param stackTraceElem
      *              The StackTraceElements to be added to the global list.
      */           
-    private void addStackTraceElements(StackTraceElement[] stackTraceElem){
-        s_stackTraceElements.addLast(stackTraceElem);
+    private void addStackTraceElements(Exception e){
+        s_exceptionElements.addLast(e);
     }
 
     /**
