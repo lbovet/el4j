@@ -47,10 +47,6 @@
                     <groupId>jdom</groupId>
                     <artifactId>jdom</artifactId>
                 </exclusion>
-                <exclusion>
-                    <groupId>wsdl4j</groupId>
-                    <artifactId>wsdl4j</artifactId>
-                </exclusion>		
             </exclusions>
 	    
         </dependency>
