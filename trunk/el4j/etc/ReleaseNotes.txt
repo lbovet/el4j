@@ -1,4 +1,14 @@
 --------------------------------------------------------------------------------
+ Date :   31.05.07
+                            EL4J version  1.1.2
+--------------------------------------------------------------------------------
+* SourceForge Change Requests CLOSED: 1715563, 1717260
+
+* This minor release mainly contributes a convenience zip to get started 
+  quickly. The file can be downloaded as el4j-convenience-1.1.2.rar from
+  the file download facility of sourceforge. 
+
+--------------------------------------------------------------------------------
  Date :   05.02.07
                             EL4J version  1.1.1
 --------------------------------------------------------------------------------
