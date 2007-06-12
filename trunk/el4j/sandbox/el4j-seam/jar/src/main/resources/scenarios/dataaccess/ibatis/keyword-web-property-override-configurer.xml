@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!-- Version: $Revision: 425 $ -->
+    <!-- URL: $URL: svn://cvs/subversion/el4j-internal/trunk/framework/apps/keyword/web/jar/src/main/resources/scenarios/dataaccess/ibatis/keyword-web-property-override-configurer.xml $ -->
+    <!-- Date: $Date: 2006-03-23 16:16:57 +0100 (Do, 23 Mrz 2006) $ -->
+    <!-- Author: $Author: mze $ -->
+    
+    <import resource="classpath:scenarios/dataaccess/ibatisSqlMaps.xml"/>
+
+    <bean id="keywordWebDataaccessIbatisOverrideConfigurer"
+        class="ch.elca.el4j.core.config.RefreshPropertyOverrideConfigurer"
+        singleton="false">
+        <property name="locations">
+            <list>
+                <value>classpath:scenarios/dataaccess/ibatis/keyword-web-override-${db.name}.properties</value>
+            </list>
+        </property>
+        <property name="order" value="2"/>
+    </bean>
+</beans>
