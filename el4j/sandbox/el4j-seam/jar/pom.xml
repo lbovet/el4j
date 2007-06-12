@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<groupId>ch.elca.el4j.applications</groupId>
+		<artifactId>el4j-seam</artifactId>
+		<version>1.0-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
+	
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>el4j-seam-jar</artifactId>
+	<packaging>jar</packaging>
+	<name>el4j-seam-jar</name>
+	<description>JAR part of el4j-seam</description>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>cz.softeu.seamgen</groupId>
+				<artifactId>maven-seam-plugin</artifactId>
+				<configuration>
+					<modelPackage>ch.elca.el4j.applications.el4jseam.model</modelPackage>
+					<actionPackage>ch.elca.el4j.applications.el4jseam.action</actionPackage>
+					<testPackage>ch.elca.el4j.applications.el4jseam.test</testPackage>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+<!-- Project dependencies -->
+	<dependencies>
+
+        <!--  EL4J framework modules -->
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-env</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j.applications</groupId>
+            <artifactId>keyword-service</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-web-jar</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-database</artifactId>
+        </dependency>
+          
+        
+        
+		<!--<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>4.7</version>
+			<scope>test</scope>
+			<classifier>jdk15</classifier>
+		</dependency>-->
+
+<!-- SEAM -->
+		<dependency>
+			<groupId>jboss.seam.profiles</groupId>
+			<artifactId>seam-facelets</artifactId>
+			<version>${seam.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>jboss.seam</groupId>
+			<artifactId>jboss-seam-debug</artifactId>
+			<version>${seam.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>jboss.seam.profiles</groupId>
+			<artifactId>seam-drools</artifactId>
+			<version>${seam.version}</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+</project>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <groupId>ch.elca.el4j.applications</groupId>
+        <artifactId>el4j-seam</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>..</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>el4j-seam-war</artifactId>
+    <packaging>war</packaging>
+    <name>el4j-seam-war</name>
+    <description>WAR part of el4j-seam</description>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>maven-jetty-plugin</artifactId>
+                <version>6.0.1</version>
+                <configuration>
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <contextPath>/</contextPath>
+                </configuration>
+            </plugin>
+			<plugin>
+				<groupId>ch.elca.el4j.maven.plugins</groupId>
+				<artifactId>maven-database-plugin</artifactId>
+                <configuration>
+					<wait>false</wait>
+                </configuration>
+			</plugin>
+
+        </plugins>
+    </build>
+    <profiles>
+        <profile>
+            <id>initDB</id>
+            <activation>
+                <property>
+                    <name>initDB</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <!-- EL4J Database plugin to start and fill DB automatically -->
+                    <plugin>
+                        <groupId>ch.elca.el4j.maven.plugins</groupId>
+                        <artifactId>maven-database-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>initDB</id>
+                                <goals>
+                                    <goal>start</goal>
+                                    <goal>silentDrop</goal>
+                                    <goal>create</goal>
+                                </goals>
+                                <phase>package</phase>                               
+                                <configuration>
+                                    <connectionPropertiesSource>
+                                        scenarios/db/raw/keyword-web-override-{db.name}.properties
+                                    </connectionPropertiesSource>
+                                    <wait>false</wait>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    <!-- Project dependencies -->
+    <dependencies>
+
+        <!--  EL4J framework modules -->
+        <dependency>
+            <groupId>ch.elca.el4j.applications</groupId>
+            <artifactId>el4j-seam-jar</artifactId>
+            <version>${el4j-seam.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>el-api</artifactId>
+            <version>1.2</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>el-ri</artifactId>
+            <version>1.2</version>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+</project>
