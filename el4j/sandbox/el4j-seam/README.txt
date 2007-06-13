@@ -9,10 +9,23 @@ Here's a short description of how to use it:
     * Run   mvn db:start jetty:run   to start the Derby network server and run jetty
     * You can access the application now at http://localhost:8080/
 
-Know issues:
+If you're developing based on the template, every time you change some file of 
+the jar part, just re-install the artifact in your local repository by issuing 
+=mvn clean install=. Jetty will detect this after some time (the check interval 
+is set to 10 sec at the moment) and reload the changes. While working on the 
+xhtml files in the war part, you can just save the files and reload your 
+browser window. The made changes should be visible immediately. If you change 
+the configuration files (e.g. the =web.xml= file) jetty will reload the 
+application on its own, but sometimes not (e.g. when changing the file 
+=pages.xml=). For such cases you can simply make some small change to =web.xml= 
+and save it or issue =touch src/main/webapp/WEB-INF/web.xml=, to force jetty to 
+reload.
+
+
+* Know issues:
     
-There is a (not fatal) issue during runtime. The following exception occurs. The
-problem is due to the deployment without an ejb container. It is described under 
+1) There is a (non fatal) issue during runtime. The following exception occurs. The
+problem occurs only in deployments without an ejb container. It is described under 
 http://jira.jboss.com/jira/browse/JBSEAM-1188 . It is fixed in seam 1.3.0 (not out
 when this was written).
 
@@ -52,3 +65,9 @@ javax.naming.NameNotFoundException; remaining name 'EJBContext'
         at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:339)
         at org.mortbay.jetty.nio.HttpChannelEndPoint.run(HttpChannelEndPoint.java:270)
         at org.mortbay.thread.BoundedThreadPool$PoolThread.run(BoundedThreadPool.java:475)
+	
+2) When shutting the application down, theres an EHCache exception 
+(=org.hibernate.cache.CacheException: java.lang.IllegalStateException: The 
+CacheManager is not alive=) this error is related to a bug in EL4J and seems 
+not to have an impact on the correct behavior of the application.
+
