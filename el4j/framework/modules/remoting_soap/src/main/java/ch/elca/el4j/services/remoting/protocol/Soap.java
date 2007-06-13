@@ -20,6 +20,7 @@ package ch.elca.el4j.services.remoting.protocol;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.rmi.RemoteException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -1118,18 +1119,32 @@ public class Soap extends AbstractInetSocketAddressWebProtocol
      */
     private AxisServer retrieveAxisServer(String servletName) {
         final String ATTR_AXIS_ENGINE = "AxisEngine";
+        
+        s_logger.info("print servlet context: ");
+        Enumeration servletNames = m_servletContext.getAttributeNames();
+        if (servletNames != null) {
+            while (servletNames.hasMoreElements()) {
+                String name = (String) servletNames.nextElement();
+                s_logger.info("Element: "+name+"="+m_servletContext.getAttribute(name));
+            }
+        }
+        
         Object contextObject = m_servletContext.getAttribute(
             servletName + ATTR_AXIS_ENGINE);
+        s_logger.info(contextObject);
         if (contextObject == null) {
             // if AxisServer not found:
             // fall back to the "default" AxisEngine
             contextObject = m_servletContext.getAttribute(ATTR_AXIS_ENGINE);
+            s_logger.info("2nd Try"+ contextObject);            
         }
         if (contextObject instanceof AxisServer) {
             AxisServer server = (AxisServer) contextObject;
             // if this is "our" Engine
+            s_logger.info("3nd Try"+server);            
             if (server != null 
                 && servletName.equals(server.getName())) {
+                s_logger.info("4nd Try"+server.getName());                
                 return server;
             }
         }

@@ -18,6 +18,7 @@
 package ch.elca.el4j.tests.core.config;
 
 import org.springframework.beans.factory.BeanInitializationException;
+import org.springframework.beans.factory.config.TypedStringValue;
 import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
@@ -72,8 +73,9 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
         assertEquals("The list in 'ListTest' does not contain 2 entries.", 2,
                 listTest.getListTest().size());
 
+        // HACKY: change in spring 2.0.3, probably a mistake?
         assertEquals("The first entry in the list is not 'item 0'.", "item 0",
-                listTest.getListTest().get(0));
+                ((TypedStringValue)(listTest.getListTest().get(0))).getValue());
 
         assertEquals("The second entry in the list is not 'item 1'.", "item 1",
                 listTest.getListTest().get(1));
@@ -96,9 +98,10 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
         assertEquals("The list in 'ListTest' does not contain 3 entries.", 3,
                 listTest.getListTest().size());
 
+        // HACKY: change in spring 2.0.3, probably a mistake?
         assertEquals("The first entry in the list is not 'item 0'.", "item 0",
-                listTest.getListTest().get(0));
-
+                ((TypedStringValue)(listTest.getListTest().get(0))).getValue());
+        
         assertEquals("The second entry in the list is not 'item 2'.", "item 2",
                 listTest.getListTest().get(1));
 
@@ -125,8 +128,9 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
         assertEquals("The list in 'ListTest' does not contain 4 entries.", 4,
                 listTest.getListTest().size());
 
+        // HACKY: change in spring 2.0.3, probably a mistake?
         assertEquals("The first entry in the list is not 'item 0'.", "item 0",
-                listTest.getListTest().get(0));
+                ((TypedStringValue)(listTest.getListTest().get(0))).getValue());
 
         assertEquals("The second entry in the list is not 'item 1'.", "item 1",
                 listTest.getListTest().get(1));
@@ -154,15 +158,16 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
 
         assertEquals("The list in 'ListTest' does not contain 1 entry.", 1,
                 listTest.getListTest().size());
-
+      
         assertEquals("The first entry in the list is not 'item 4'.", "item 4",
                 listTest.getListTest().get(0));
 
         assertEquals("The list in 'ListTest2' does not contain 2 entries.", 2,
                 listTest2.getListTest().size());
 
+        // HACKY: change in spring 2.0.3, probably a mistake?
         assertEquals("The first entry in the list is not 'item 0'.", "item 0",
-                listTest2.getListTest().get(0));
+                ((TypedStringValue)(listTest2.getListTest().get(0))).getValue());
 
         assertEquals("The second entry in the list is not 'item 5'.", "item 5",
                 listTest2.getListTest().get(1));

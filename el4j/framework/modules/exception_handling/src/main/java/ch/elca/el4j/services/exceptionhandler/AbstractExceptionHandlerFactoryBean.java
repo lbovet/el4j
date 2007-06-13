@@ -19,6 +19,7 @@ package ch.elca.el4j.services.exceptionhandler;
 
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.AdvisedSupport;
+import org.springframework.aop.framework.ProxyCreatorSupport;
 import org.springframework.aop.target.SingletonTargetSource;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -37,7 +38,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  *
  * @author Andreas Bur (ABU)
  */
-public abstract class AbstractExceptionHandlerFactoryBean extends AdvisedSupport
+public abstract class AbstractExceptionHandlerFactoryBean extends ProxyCreatorSupport
     implements FactoryBean, InitializingBean {
 
     /** The proxy's target object which is either a bean or a TargetSource. */

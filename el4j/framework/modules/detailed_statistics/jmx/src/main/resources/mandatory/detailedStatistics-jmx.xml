@@ -5,10 +5,10 @@
 	Spring bean configuration file to export statistic information via jmx.
 -->
 <beans>
-	<!-- Version: $Revision: $ -->
-	<!-- URL: $URL: $ -->
-	<!-- Date: $Date:  $ -->
-	<!-- Author: $Author: $ -->
+	<!-- Version: $Revision$ -->
+	<!-- URL: $URL$ -->
+	<!-- Date: $Date$ -->
+	<!-- Author: $Author$ -->
 
 	<!--  Reporter -->
 	<bean id="detailedStatisticsReporter"
