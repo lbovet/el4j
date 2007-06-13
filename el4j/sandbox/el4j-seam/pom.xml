@@ -102,6 +102,14 @@
 			<id>softeu-repo</id>
 			<url>http://maven.softeu.cz</url>
 		</repository>
+		<repository>
+			<id>el4j-repo</id>
+			<url>http://el4.elca-services.ch/el4j/maven2repository</url>
+		</repository>		
+		<repository>
+			<id>el4j-repo-snapshots</id>
+			<url>http://el4.elca-services.ch/el4j/maven2snapshots/</url>
+		</repository>				
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
@@ -112,6 +120,10 @@
                         <id>codehaus-repo</id>
                         <url>http://repository.codehaus.org/</url>
                 </pluginRepository>
+		<repository>
+			<id>el4j-repo</id>
+			<url>http://el4.elca-services.ch/el4j/maven2repository</url>
+		</repository>		
 	</pluginRepositories>
 
 	<properties>
