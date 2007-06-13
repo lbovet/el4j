@@ -307,9 +307,9 @@ public final class Reject {
     T instantiateConditionException(Class<T> exceptionClass, 
                                     Object... constructorArgs) {
         
-        for (Constructor<T> c : exceptionClass.getConstructors()) {
+        for (Constructor<?> c : exceptionClass.getConstructors()) {
             try {
-                return c.newInstance(constructorArgs);
+                return (T) c.newInstance(constructorArgs);
             } catch (IllegalArgumentException e) {
                 continue;
             } catch (InstantiationException e) {
