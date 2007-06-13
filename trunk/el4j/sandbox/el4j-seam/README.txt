@@ -12,8 +12,9 @@ Here's a short description of how to use it:
 Know issues:
     
 There is a (not fatal) issue during runtime. The following exception occurs. The
-problem is due to the deployment without an ejb container. It is dedescribed under 
-http://jira.jboss.com/jira/browse/JBSEAM-1188 . Will be fixed in seam 1.3.0.
+problem is due to the deployment without an ejb container. It is described under 
+http://jira.jboss.com/jira/browse/JBSEAM-1188 . It is fixed in seam 1.3.0 (not out
+when this was written).
 
 
 javax.naming.NameNotFoundException; remaining name 'EJBContext'
