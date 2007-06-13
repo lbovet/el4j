@@ -19,5 +19,5 @@ Code and documentation of the EL4J J2EE framework can be found on
 information on how to set up EL4J.
 
 ---+ New projects
-You can use the Hello World project template (in directory "helloworld") to
-begin with a new project. Please read the "helloworld/README.txt".
+Please refer to the convenience downloadable that has a description on how
+to set up new projects.
