@@ -120,10 +120,10 @@
                         <id>codehaus-repo</id>
                         <url>http://repository.codehaus.org/</url>
                 </pluginRepository>
-		<repository>
+		<pluginRepository>
 			<id>el4j-repo</id>
 			<url>http://el4.elca-services.ch/el4j/maven2repository</url>
-		</repository>		
+		</pluginRepository>		
 	</pluginRepositories>
 
 	<properties>
