@@ -71,3 +71,7 @@ javax.naming.NameNotFoundException; remaining name 'EJBContext'
 CacheManager is not alive=) this error is related to a bug in EL4J and seems 
 not to have an impact on the correct behavior of the application.
 
+3) Validations are not handled in the same way in all parts of the application.
+   The main focus of the application template was on the seam<->maven integration,
+   the coding patterns are not yet very cleaned up.
+
