@@ -27,6 +27,8 @@ Plugins
 | {{{maven-depgraph-plugin/index.html}dependency-graph}}               | Tool to visualize depedency graph.
 *----------------------------+-------------------+  
 
+  Please refer also the plugin section of the reference document and the maven cheat sheet for more information. 
+
   The plugins can also be used from outside of EL4J, they are in our repository. Here's a sample config for your pom.xml file: 
   
   \<pluginRepository\>
@@ -63,7 +65,7 @@ Plugins
   
   \ \ \ \ \<outDir\>target/site/images\</outDir\>
   
-  \ \ \ \ \<outFile\>${pom.artifactId}.png\</outFile\>
+  \ \ \ \ \<outFile\>$\{pom.artifactId\}.png\</outFile\>
   
   \ \ \ \</configuration\>
   
