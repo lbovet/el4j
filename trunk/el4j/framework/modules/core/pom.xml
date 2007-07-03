@@ -98,8 +98,8 @@
         <!-- Annotations for generic persistence support. -->
         <dependency>
             <groupId>javax.persistence</groupId>
-            <artifactId>ejb3-persistence</artifactId>
-            <version>[20060502-public-draft]</version>
+            <artifactId>persistence-api</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 </project>
