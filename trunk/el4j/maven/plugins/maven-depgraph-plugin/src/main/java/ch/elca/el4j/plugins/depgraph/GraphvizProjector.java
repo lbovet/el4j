@@ -287,7 +287,7 @@ public class GraphvizProjector implements DepGraphProjector {
             if (returnValue != 0) {
                 // Error running dot
                 s_log.error("Dot returned non-zero value");
-                throw new MojoExecutionException("Dot returned non-zero value");
+                throw new MojoExecutionException("Dot returned non-zero value. Maybe graphviz (http://www.graphviz.org/) is not installed or dot is not in the path?");
             }
 
             // Try to delete the temp file
