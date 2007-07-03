@@ -43,7 +43,7 @@
             Else you will have dependencies to servlet-api and so on!!!!
          -->
         <dependency>
-            <groupId>org.apache.commons</groupId>
+            <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
         </dependency>
         <dependency>

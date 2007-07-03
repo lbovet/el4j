@@ -49,8 +49,10 @@ public final class Services {
     public static <S> S get(Class<S> type)
         throws UnsupportedOperationException {
         
+        Object t=ApplicationServicesLocator.services().getService(type);
+        
         return type.cast(
-            ApplicationServicesLocator.services().getService(type)
+            t
         );
     }
     
