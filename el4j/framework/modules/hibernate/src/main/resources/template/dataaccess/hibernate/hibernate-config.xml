@@ -65,7 +65,7 @@
 					
 					Uncomment the following line to enable the second-level cache.
 				-->
-				<!-- <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop> -->
+				<!--   <prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>-->
 
 				<!-- 
 					Optional property controlling Hibernate's outer join fetch behavior
