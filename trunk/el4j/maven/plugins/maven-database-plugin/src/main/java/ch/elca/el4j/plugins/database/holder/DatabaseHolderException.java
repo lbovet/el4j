@@ -34,6 +34,11 @@ package ch.elca.el4j.plugins.database.holder;
 public class DatabaseHolderException extends RuntimeException {
     
     /**
+     * 
+     */
+    private static final long serialVersionUID = -2477553692644057146L;
+
+    /**
      * Constructor.
      * @param cause Cause of exception
      */

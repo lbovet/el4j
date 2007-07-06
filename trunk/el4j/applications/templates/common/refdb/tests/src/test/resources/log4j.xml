@@ -4,10 +4,10 @@
     xmlns:log4j="http://jakarta.apache.org/log4j/" 
     debug="false">
     
-    <!-- Version: $Revision$ -->
-    <!-- URL: $URL$ -->
-    <!-- Date: $Date$ -->
-    <!-- Author: $Author$ -->
+    <!-- Version: $Revision: 1839 $ -->
+    <!-- URL: $URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/applications/templates/common/keyword/tests/src/test/resources/log4j.xml $ -->
+    <!-- Date: $Date: 2007-06-13 16:00:22 +0200 (Wed, 13 Jun 2007) $ -->
+    <!-- Author: $Author: poser55 $ -->
 
     <!---
         This is the basic log4j.xml definition file, referenced by all

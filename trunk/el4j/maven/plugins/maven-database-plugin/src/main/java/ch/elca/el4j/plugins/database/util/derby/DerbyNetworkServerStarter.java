@@ -32,7 +32,7 @@ import org.apache.derby.drda.NetworkServerControl;
  * );</script>
  * @author David Stefan (DST)
  */
-public class DerbyNetworkServerStarter {
+public final class DerbyNetworkServerStarter {
 
     /**
      * Network server Control object.
@@ -44,6 +44,10 @@ public class DerbyNetworkServerStarter {
      */
     private static String s_derbyDir;
 
+    
+    /** to hide constructor. */
+    private DerbyNetworkServerStarter() { }    
+    
     /**
      * Set the property "derby.system.home" so that database and log file will
      * be placed in the right directory.
@@ -105,4 +109,5 @@ public class DerbyNetworkServerStarter {
         s_server.ping();
         s_server.shutdown();
     }
+    
 }
