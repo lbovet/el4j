@@ -184,8 +184,9 @@ public abstract class AbstractKeywordDaoTest
         keyword2.setName("Java");
         keyword2.setDescription("Java related documentation");
         
-        dao.saveOrUpdate(keyword1);
-        dao.saveOrUpdate(keyword2);
+        // reset keyword* to have correct PK
+        keyword1 = dao.saveOrUpdate(keyword1);
+        keyword2 = dao.saveOrUpdate(keyword2);
         
         List<Keyword> list = dao.getAll();
         
@@ -214,6 +215,7 @@ public abstract class AbstractKeywordDaoTest
             s_logger.debug("Expected exception catched.", e);
         }
         try {
+            s_logger.error("Provoking hibernate StaleObjectStateException");
             dao.delete(keyword2);
             fail("Delete should throw an exception!");
         } catch (OptimisticLockingFailureException e) {
@@ -265,6 +267,7 @@ public abstract class AbstractKeywordDaoTest
         dao.saveOrUpdate(keyword2);
         keyword3.setDescription("Java API of version 1.5");
         try {
+            s_logger.error("Provoking hibernate StaleObjectStateException");
             dao.saveOrUpdate(keyword3);
             fail("The current keyword could be modified "
                     + "by two persons at the same time.");
@@ -272,6 +275,7 @@ public abstract class AbstractKeywordDaoTest
             s_logger.debug("caught expected exception.", e);
         }
         try {
+            s_logger.error("Provoking hibernate StaleObjectStateException");
             dao.delete(keyword3);
             fail("A keyword could be deleted although it has been modified "
                 + "concurrently.");

@@ -204,6 +204,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
         annotation3.setContent(
             "I think someone has always the same ideas as me.");
         try {
+            s_logger.error("Provoking hibernate StaleObjectStateException");
             dao.saveOrUpdate(annotation3);
             fail("The current annotation could be modificated "
                 + "by two persons on the same time.");
@@ -438,6 +439,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
         content = "I think someone has always the same ideas as me.".getBytes();
         file3.setContent(content);
         try {
+            s_logger.error("Provoking hibernate StaleObjectStateException");
             dao.saveOrUpdate(file3);
             fail("The current file could be modificated "
                 + "by two persons on the same time.");

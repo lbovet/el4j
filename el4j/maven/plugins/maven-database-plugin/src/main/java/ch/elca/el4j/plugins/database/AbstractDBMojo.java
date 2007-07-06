@@ -68,7 +68,8 @@ public abstract class AbstractDBMojo extends AbstractMojo {
     private String dbName;
 
     /**
-     * Directory of external-tools in el4j project.
+     * Directory of tools (such as application servers or local 
+     * dbs) in the project.
      * 
      * @parameter expression="${el4j.project.tools}"
      * @required
