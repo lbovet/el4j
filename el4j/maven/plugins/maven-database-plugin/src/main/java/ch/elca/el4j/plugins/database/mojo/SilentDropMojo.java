@@ -49,7 +49,7 @@ public class SilentDropMojo extends AbstractDBExecutionMojo {
      */
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
-            executeAction(ACTION, true);
+            executeAction(ACTION, true, true);
             // Checkstyle: EmptyBlock off
         } catch (Exception e) {
             // ignore exceptions

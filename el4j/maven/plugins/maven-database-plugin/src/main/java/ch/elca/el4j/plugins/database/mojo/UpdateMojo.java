@@ -47,7 +47,7 @@ public class UpdateMojo extends AbstractDBExecutionMojo {
      */
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
-            executeAction(ACTION, false);
+            executeAction(ACTION, false, false);
         } catch (Exception e) {
             throw new MojoFailureException(e.getMessage());
         }

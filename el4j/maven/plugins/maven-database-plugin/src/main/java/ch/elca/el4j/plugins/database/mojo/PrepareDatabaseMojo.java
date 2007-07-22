@@ -60,7 +60,7 @@ public class PrepareDatabaseMojo extends AbstractDBExecutionMojo {
             getLog().info("Executing silent drop");
             // Execute a silent drop
             try {
-                executeAction("drop", true);
+                executeAction("drop", true, true);
                 // Checkstyle: EmptyBlock off
             } catch (Exception e) {
                 // Skip Exception
@@ -68,7 +68,7 @@ public class PrepareDatabaseMojo extends AbstractDBExecutionMojo {
             // Checkstyle: EmptyBlock on
             getLog().info("Executing create");
             // Create tables
-            executeAction("create", false);
+            executeAction("create", false, false);
         } catch (Exception e) {
             throw new MojoFailureException(e.getMessage());
         }
