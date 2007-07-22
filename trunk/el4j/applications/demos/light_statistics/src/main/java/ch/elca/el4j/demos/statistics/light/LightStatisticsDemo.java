@@ -18,7 +18,8 @@
 package ch.elca.el4j.demos.statistics.light;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import ch.elca.el4j.core.context.ModuleApplicationContext;
 
 // Checkstyle: UncommentedMain off
 // Checkstyle: UseLogger off
@@ -57,8 +58,7 @@ public class LightStatisticsDemo {
      * @param args Arguments provided by the command line.
      */
     public static void main(String[] args) {
-        ApplicationContext ac = new ClassPathXmlApplicationContext(
-                s_mandatoryFiles);
+        ApplicationContext ac = new ModuleApplicationContext(s_mandatoryFiles, false);
 
         Foo bean = (Foo) ac.getBean(s_bean);
         
