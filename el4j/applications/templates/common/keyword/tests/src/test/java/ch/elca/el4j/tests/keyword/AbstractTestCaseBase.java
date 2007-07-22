@@ -81,7 +81,7 @@ public abstract class AbstractTestCaseBase extends TestCase {
      *         be allowed.
      */
     protected boolean isBeanOverridingAllowed() {
-        return false;
+        return true;
     }
 
     /**

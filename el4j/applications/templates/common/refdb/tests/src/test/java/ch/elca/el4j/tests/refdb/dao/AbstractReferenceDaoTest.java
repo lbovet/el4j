@@ -96,6 +96,11 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
         Annotation annotation2 = dao.saveOrUpdate(annotation);
         Annotation annotation3 
             = dao.findById(annotation2.getKey());
+        
+        // the next two lines are here due to a strange bug of mysql
+        annotation2.getWhenInserted().setNanos(0);
+        annotation3.getWhenInserted().setNanos(0);         
+        
         assertEquals("The inserted and read domain objects are not equal", 
             annotation3, annotation2);
     }
@@ -118,6 +123,11 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
         assertEquals("List contains more than one annotation of annotator '"
             + annotation2.getAnnotator() + "'", 1, list.size());
         Annotation annotation3 = list.get(0);
+        
+        // the next two lines are here due to a strange bug of mysql
+        annotation2.getWhenInserted().setNanos(0);
+        annotation3.getWhenInserted().setNanos(0);       
+        
         assertEquals("The inserted and read domain objects are not equal", 
             annotation3, annotation2);
     }
@@ -146,6 +156,14 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
         annotation2 = dao.saveOrUpdate(annotation2);
         List<Annotation> list = dao.getAll();
         assertEquals("Wrong number of annotations in DB", 2, list.size());
+        
+        // the next lines are here due to a strange bug of mysql
+        annotation2.getWhenInserted().setNanos(0);
+        annotation.getWhenInserted().setNanos(0);              
+        for (Annotation l : list) {
+            ((Annotation)l).getWhenInserted().setNanos(0);
+        }
+        
         assertTrue("First annotation has not been found", 
             list.contains(annotation));
         assertTrue("Second annotation has not been found", 
@@ -284,6 +302,10 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
         Annotation annotation2 
             = (Annotation) dao.getAnnotationsByAnnotator(annotator).get(0);
 
+        // the next two lines are here due to a strange bug of mysql
+        annotation2.getWhenInserted().setNanos(0);
+        annotation.getWhenInserted().setNanos(0);         
+        
         assertEquals("The inserted and read domain objects are not equal", 
             annotation, annotation2);
 
