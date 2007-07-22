@@ -29,15 +29,23 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jdom.Element;
+import org.springframework.beans.factory.xml.BeansDtdResolver;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.xml.sax.EntityResolver;
+import org.xml.sax.InputSource;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
+import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.xmlmerge.Configurer;
 import ch.elca.el4j.services.xmlmerge.Matcher;
 import ch.elca.el4j.services.xmlmerge.MergeAction;
 import ch.elca.el4j.services.xmlmerge.XmlMerge;
+import ch.elca.el4j.services.xmlmerge.XmlMergeContext;
 import ch.elca.el4j.services.xmlmerge.action.CompleteAction;
 import ch.elca.el4j.services.xmlmerge.action.OrderedMergeAction;
 import ch.elca.el4j.services.xmlmerge.config.AttributeMergeConfigurer;
@@ -65,6 +73,9 @@ import junit.framework.TestCase;
  */
 public class DefaultMergeTest extends TestCase {
 
+    private static Log logger 
+        = LogFactory.getLog(DefaultMergeTest.class);    
+    
     /**
      * New line.
      */
@@ -344,8 +355,10 @@ public class DefaultMergeTest extends TestCase {
         props.load(this.getClass().getResourceAsStream("test-dtd.properties"));
         
     
-        XmlMerge xmlMerge = new ConfigurableXmlMerge(
-            new PropertyXPathConfigurer(props));        
+        ConfigurableXmlMerge xmlMerge = new ConfigurableXmlMerge(
+            new PropertyXPathConfigurer(props));
+        XmlMergeContext.setEntityResolver(new NonNetworkIbatisResolver());
+        
         InputStream in = xmlMerge.merge(streams);
         
         writeFromTo(in, out);
@@ -627,7 +640,58 @@ public class DefaultMergeTest extends TestCase {
         
         assertEquals(expected.trim(), result.trim());        
     }
+    
+    /** 
+     * private EntityResolver that does not use the network.
+     * 
+     *  Inspired by Spring's  BeansDtdResolver
+     *   Works for dtd of ibatis
+     */
+    class NonNetworkIbatisResolver implements EntityResolver {
         
-}
+        private static final String DTD_EXTENSION = ".dtd";
+
+        private final String[] DTD_NAMES = {"sql-map-config-2.dtd"};
+
+        
+        public InputSource resolveEntity(String publicId, String systemId) throws IOException {
+            if (systemId != null && systemId.endsWith(DTD_EXTENSION)) {
+                int lastPathSeparator = systemId.lastIndexOf("/");
+                for (int i = 0; i < DTD_NAMES.length; ++i) {
+                    int dtdNameStart = systemId.indexOf(DTD_NAMES[i]);
+                    if (dtdNameStart > lastPathSeparator) {
+                        String dtdFile = systemId.substring(dtdNameStart);
+                        if (logger.isTraceEnabled()) {
+                            logger.trace("Trying to locate [" + dtdFile + "] in Spring jar");
+                        }
+                        try {
+                            Resource resource = new ClassPathResource( /*"ch/elca/el4j/tests/xmlmerge/"+*/
+                                                                      dtdFile, getClass());
+                            InputSource source = new InputSource(resource.getInputStream());
+                            source.setPublicId(publicId);
+                            source.setSystemId(systemId);
+                            if (logger.isDebugEnabled()) {
+                                logger.debug("Found beans DTD [" + systemId + "] in classpath: " + dtdFile);
+                            }
+                            return source;
+                        }
+                        catch (IOException ex) {
+                            if (logger.isDebugEnabled()) {
+                                logger.debug("Could not resolve beans DTD [" + systemId + "]: not found in class path", ex);
+                            }
+                        }
+                    
+                    }
+                }
+            }
+
+            // Use the default behavior -> download from website or wherever.
+            return null;
+        }
+
+    }
+
+ } 
+
 
 //Checkstyle: MagicNumber on

@@ -17,7 +17,9 @@
 package ch.elca.el4j.services.xmlmerge.action;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -29,6 +31,9 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jdom.Element;
+import org.xml.sax.EntityResolver;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import com.wutka.dtd.DTD;
 import com.wutka.dtd.DTDAny;
@@ -42,6 +47,7 @@ import ch.elca.el4j.services.xmlmerge.AbstractXmlMergeException;
 import ch.elca.el4j.services.xmlmerge.Action;
 import ch.elca.el4j.services.xmlmerge.DocumentException;
 import ch.elca.el4j.services.xmlmerge.ElementException;
+import ch.elca.el4j.services.xmlmerge.XmlMergeContext;
 
 /**
  * Copy the patch element in the output parent with the correct position
@@ -174,17 +180,47 @@ public class DtdInsertAction implements Action {
 
             // if not in cache, create the DTD and put it in cache
             if (dtd == null) {
-                URL url;
-
-                try {
-                    url = new URL(systemId);
-                } catch (MalformedURLException e) {
-                    throw new DocumentException(element.getDocument(), e);
+                Reader reader =null;
+                
+                // first try the configured EntityResolver
+                EntityResolver er= XmlMergeContext.getEntityResolver();
+                if (er != null) {
+                    InputSource is = null;
+                    try {
+                        is = er.resolveEntity("", systemId);
+                    } catch (SAXException e) {
+                        // ignore deliberately
+                    } catch (IOException e) {
+                        // ignore deliberately
+                    }
+                    if (is != null) {
+                        // there can be either a Reader or an Input stream in is
+                       
+                        reader = is.getCharacterStream();
+                        if (reader == null) {
+                            InputStream inputstream = is.getByteStream();
+                            if (inputstream != null) {
+                                reader = new InputStreamReader(inputstream);
+                            }
+                        }
+                    }
                 }
-
+                
+                if (reader == null) {  
+                     // lookup URL of DTD
+                    URL url;
+                    try {
+                        url = new URL(systemId);
+                        reader = new InputStreamReader(url.openStream());
+                    } catch (MalformedURLException e) {
+                        throw new DocumentException(element.getDocument(), e);
+                    } catch (IOException ioe) {
+                        throw new DocumentException(element.getDocument(), ioe);
+                    }                  
+                }
+                
                 try {
-                    dtd = new DTDParser(new InputStreamReader(url.openStream()))
-                        .parse();
+                    dtd = new DTDParser(reader).parse();
                 } catch (IOException ioe) {
                     throw new DocumentException(element.getDocument(), ioe);
                 }
