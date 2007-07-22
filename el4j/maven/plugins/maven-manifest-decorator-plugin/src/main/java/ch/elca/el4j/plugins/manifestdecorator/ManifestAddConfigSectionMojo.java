@@ -18,6 +18,7 @@ package ch.elca.el4j.plugins.manifestdecorator;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -60,7 +61,7 @@ public class ManifestAddConfigSectionMojo extends AbstractMojo {
     protected String fileListIncludes;
 
     /**
-     * Comma separated excludes for the files list.
+     * Comma separated excludes for the files list.                                         
      *
      * @parameter expression="${fileListExcludes}" default-value="**\/*.class"
      * @required
@@ -134,9 +135,12 @@ public class ManifestAddConfigSectionMojo extends AbstractMojo {
          * Get runtime dependency list for manifest.
          */
         List<Dependency> deps = project.getRuntimeDependencies();
-        String manifestDependencies = getDependencyList(deps);
-        deps = project.getTestDependencies();
-        String manifestTestDependencies = getDependencyList(deps);
+        String manifestDependencies = getDependencyList(deps, false);
+        List<Dependency> testDeps = project.getTestDependencies();
+        String manifestTestDependencies = getDependencyList(testDeps, false);
+        
+        logDependencies (deps, testDeps);
+        
         // Prepend dependency to own (main) module jar.
         manifestTestDependencies 
             = manifestModule + separator + manifestTestDependencies;
@@ -175,16 +179,69 @@ public class ManifestAddConfigSectionMojo extends AbstractMojo {
     }
 
     /**
+     * log dependencies more intelligently
+     * @param deps	the dependencies for normal executions
+     * @param testDeps  the dependencies for tests
+     */
+    private void logDependencies(List<Dependency> deps,
+            List<Dependency> testDeps) {
+        if (deps == null) {
+            deps = new ArrayList<Dependency>();
+        }
+        if (testDeps == null) {
+            testDeps = new ArrayList<Dependency>();
+        }       
+        
+        List<Dependency> onlyInNormal = calculateDependencyOnlyInFirstList(
+                deps, testDeps);
+        
+        List<Dependency> onlyInTests = calculateDependencyOnlyInFirstList(
+                testDeps, deps);
+        
+      String manifestDependencies = getDependencyList(deps, true);
+        
+      getLog().info("Project " + project.getGroupId() + ":" 
+      + project.getArtifactId() + " has the following " 
+      + deps.size() + " runtime dependencies: " 
+      + manifestDependencies);
+      
+      getLog().info("Delta for tests:    only in tests: "+ getDependencyList(onlyInTests, true) + 
+              "  | only in normal execution: "+ getDependencyList(onlyInNormal, true));
+        
+    }
+
+    private List<Dependency> calculateDependencyOnlyInFirstList(
+            List<Dependency> deps, List<Dependency> testDeps) {
+        List<Dependency> onlyInNormal = new ArrayList<Dependency>();
+        for (Dependency d : deps) {
+            boolean found = false;
+            for (Dependency tDep : testDeps) {
+                if ((d.getArtifactId().equals(tDep.getArtifactId())) && 
+                    (d.getGroupId().equals(tDep.getGroupId())) && 
+                    (d.getVersion().equals(tDep.getVersion())) && 
+                    (d.getType().equals(tDep.getType()))) {
+                   found = true;
+                   break;
+                }
+            }
+            
+            if (!found) {
+                onlyInNormal.add(d);
+            }
+        }
+        return onlyInNormal;
+    }
+
+    /**
      * @param deps Are the dependencies to fit into a single string.
+     * @param showVersion shall we add the version for each dependency
+     *                     (used for debugging)
      * @return Returns the dependencies as a string.
      */
-    protected String getDependencyList(List<Dependency> deps) {
+    protected String getDependencyList(List<Dependency> deps, boolean showVersion) {
         Assert.notNull(deps);
         String manifestDependencies = "";
-        if (CollectionUtils.isEmpty(deps)) {
-            getLog().info("Project " + project.getGroupId() + ":" 
-                + project.getArtifactId() + " has no runtime dependencies.");
-        } else {
+        if (!CollectionUtils.isEmpty(deps)) {
             StringBuffer sb = new StringBuffer();
             int manifestDependencyCount = 0;
             for (Dependency dependency : deps) {
@@ -193,6 +250,10 @@ public class ManifestAddConfigSectionMojo extends AbstractMojo {
                 String type = dependency.getType();
                 String dependencyString 
                     = groupId + ":" + artifactId + ":" + type;
+                
+                if (showVersion) {
+                    dependencyString += ":" + dependency.getVersion();
+                }
                 
                 if (manifestDependencyCount > 0) {
                     sb.append(separator);
@@ -203,10 +264,6 @@ public class ManifestAddConfigSectionMojo extends AbstractMojo {
             }
             manifestDependencies = sb.toString();
             
-            getLog().info("Project " + project.getGroupId() + ":" 
-                + project.getArtifactId() + " has following " 
-                + manifestDependencyCount + " runtime dependencies: " 
-                + manifestDependencies);
         }
         return manifestDependencies;
     }
