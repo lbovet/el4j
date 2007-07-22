@@ -53,7 +53,7 @@
             <artifactId>javamail</artifactId>
         </dependency>
         <dependency>
-            <groupId>javax.wsdl</groupId>
+            <groupId>wsdl4j</groupId>
             <artifactId>wsdl4j</artifactId>
         </dependency>
         <dependency>
@@ -65,7 +65,7 @@
             <artifactId>commons-discovery</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
+            <groupId>commons-httpclient</groupId>
             <artifactId>commons-httpclient</artifactId>
         </dependency>
         <dependency>
