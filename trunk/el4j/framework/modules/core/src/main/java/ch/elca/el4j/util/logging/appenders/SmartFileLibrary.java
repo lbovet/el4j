@@ -24,7 +24,10 @@ import org.springframework.util.StringUtils;
 /**
  * 
  * This provides methods to check and construct a valid
- * logfile path.
+ * logfile path. Setting an absolute log file path that works in all 
+ * environments is typically hard. This Appender-wrapper creates such
+ * an absolute log file path.
+ *  
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -61,7 +64,7 @@ public class SmartFileLibrary {
         File logFile = new File(finalFileName);
         
         // if the fileName does not contain an absolute path,
-        // we need to asign a directory to that file.
+        // we need to assign a directory to that file.
         if (!logFile.isAbsolute()) {
             String logDir;
             logDir = System.getProperty("el4j.log.dir");
