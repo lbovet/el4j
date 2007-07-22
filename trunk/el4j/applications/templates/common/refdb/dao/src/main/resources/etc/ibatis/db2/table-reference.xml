@@ -20,92 +20,24 @@
         insert into REFERENCESTABLE (NAME, HASHVALUE, DESCRIPTION, 
             VERSION, DOCUMENTDATE, INCOMPLETE, WHENINSERTED, 
             OPTIMISTICLOCKINGVERSION) 
-            values ( 
-                <dynamic>
-                    <isNotNull property="name">
-                        #name#
-                    </isNotNull>
-                    <isNull property="name">
-                        null
-                    </isNull>
-                    ,
-                    <isNotNull property="hashValue">
-                        #hashValue#
-                    </isNotNull>
-                    <isNull property="hashValue">
-                        null
-                    </isNull>
-                    ,
-                    <isNotNull property="description">
-                        #description#
-                    </isNotNull>
-                    <isNull property="description">
-                        null
-                    </isNull>
-                    ,
-                    <isNotNull property="version">
-                        #version#
-                    </isNotNull>
-                    <isNull property="version">
-                        null
-                    </isNull>
-                    ,
-                    <isNotNull property="date">
-                        #date#
-                    </isNotNull>
-                    <isNull property="date">
-                        null
-                    </isNull>
-                    ,
-                </dynamic>
-                #incomplete#, #whenInserted#, 
+            values (#name#, #hashValue#, #description#,
+                        #version#, #date#,
+			#incomplete#, #whenInserted#, 
                 #optimisticLockingVersion#)
         <selectKey resultClass="int" keyProperty="key">
-            values IDENTITY_VAL_LOCAL()
+            SELECT LAST_INSERT_ID();
         </selectKey>
     </insert>
 
     <update id="updateReference">
         update REFERENCESTABLE set
-            <dynamic>
-                <isNotNull property="name">
-                    NAME=#name#
-                </isNotNull>
-                <isNull property="name">
-                    NAME=null
-                </isNull>
-                ,
-                <isNotNull property="hashValue">
-                    HASHVALUE=#hashValue#
-                </isNotNull>
-                <isNull property="hashValue">
-                    HASHVALUE=null
-                </isNull>
-                ,
-                <isNotNull property="description">
-                    DESCRIPTION=#description#
-                </isNotNull>
-                <isNull property="description">
-                    DESCRIPTION=null
-                </isNull>
-                ,
-                <isNotNull property="version">
-                    VERSION=#version#
-                </isNotNull>
-                <isNull property="version">
-                    VERSION=null
-                </isNull>
-                ,
-                <isNotNull property="date">
-                    DOCUMENTDATE=#date#
-                </isNotNull>
-                <isNull property="date">
-                    DOCUMENTDATE=null
-                </isNull>
-                ,
-            </dynamic>
-            INCOMPLETE=#incomplete#, 
-            OPTIMISTICLOCKINGVERSION=OPTIMISTICLOCKINGVERSION+1 
+                    NAME=#name#,
+                    HASHVALUE=#hashValue#,
+                    DESCRIPTION=#description#,
+                    VERSION=#version#,
+                    DOCUMENTDATE=#date#,
+		    INCOMPLETE=#incomplete#, 
+		    OPTIMISTICLOCKINGVERSION=OPTIMISTICLOCKINGVERSION+1 
             where KEYID=#key# 
                 and OPTIMISTICLOCKINGVERSION=#optimisticLockingVersion#
     </update>
