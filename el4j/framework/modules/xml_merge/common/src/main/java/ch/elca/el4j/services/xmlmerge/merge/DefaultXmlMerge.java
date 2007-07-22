@@ -30,6 +30,7 @@ import org.jdom.input.SAXBuilder;
 import org.jdom.output.DOMOutputter;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
+import org.xml.sax.EntityResolver;
 
 import ch.elca.el4j.services.xmlmerge.AbstractXmlMergeException;
 import ch.elca.el4j.services.xmlmerge.DocumentException;
@@ -38,6 +39,7 @@ import ch.elca.el4j.services.xmlmerge.Matcher;
 import ch.elca.el4j.services.xmlmerge.MergeAction;
 import ch.elca.el4j.services.xmlmerge.ParseException;
 import ch.elca.el4j.services.xmlmerge.XmlMerge;
+import ch.elca.el4j.services.xmlmerge.XmlMergeContext;
 import ch.elca.el4j.services.xmlmerge.action.OrderedMergeAction;
 import ch.elca.el4j.services.xmlmerge.factory.StaticOperationFactory;
 import ch.elca.el4j.services.xmlmerge.mapper.IdentityMapper;
@@ -76,6 +78,7 @@ public class DefaultXmlMerge implements XmlMerge {
      */
     private Matcher m_rootMatcher = new TagMatcher();
 
+    
     /**
      * Creates a new DefaultXmlMerge instance.
      */
@@ -164,6 +167,11 @@ public class DefaultXmlMerge implements XmlMerge {
         throws AbstractXmlMergeException {
         SAXBuilder sxb = new SAXBuilder();
 
+        EntityResolver entityResolver = XmlMergeContext.getEntityResolver();
+        if (entityResolver != null) {
+           sxb.setEntityResolver(entityResolver);
+        }
+        
         // to save all XML files as JDOM objects
         Document[] docs = new Document[sources.length];
 
@@ -174,6 +182,7 @@ public class DefaultXmlMerge implements XmlMerge {
             } catch (JDOMException e) {
                 throw new ParseException(e);
             } catch (IOException ioe) {
+                ioe.printStackTrace();
                 throw new ParseException(ioe);
             }
         }
@@ -235,6 +244,7 @@ public class DefaultXmlMerge implements XmlMerge {
 
         return temporary;
     }
+
 }
 
 // Checkstyle: MagicNumber on
