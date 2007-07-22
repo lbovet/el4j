@@ -116,15 +116,16 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
      * 
      * @param goal Goal to execute
      * @param reversed Should be statements processed in reverse order?
+     * @param isSilent indicates whether we reduce log output
      */
-    protected void executeAction(String goal, boolean reversed) {
+    protected void executeAction(String goal, boolean reversed, boolean isSilent) {
         // If no connection properties are given, skip goal
         if (connectionPropertiesSource != null) {            
             List<Resource> resources = getResources(getSqlSourcesPath(goal));
             if (reversed) {
                 Collections.reverse(resources);
             }
-            processResources(resources, goal);
+            processResources(resources, goal, isSilent);
         }
     }
     
@@ -137,9 +138,11 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
      * @param resources
      *            Array of resources
      * @param goal The goal to execute.
+     * @param beSilent indicates whether we reduce log output
      */
-    private void processResources(List<Resource> resources, String goal) {
+    private void processResources(List<Resource> resources, String goal, boolean beSilent) {
         List<SQLException> sqlExceptions = new ArrayList<SQLException>();
+        List<String> failedSqlStatements = new ArrayList<String>();
         Connection connection = getConnection();
         Statement stmt;
         try {
@@ -157,18 +160,27 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
                         stmt.execute(sqlString);
                     } catch (SQLException e) {
                         sqlExceptions.add(e);
+                        failedSqlStatements.add(sqlString);
                     }
                 }
             }
             connection.close();
         } catch (SQLException e) {
             sqlExceptions.add(e);
+            failedSqlStatements.add("<no stmt available>");
         } catch (IOException e2) {
             throw new DatabaseHolderException(e2);
         }
         if (!sqlExceptions.isEmpty()) {
             // If we encountered exceptions during execution,
             // throw new Exception and pass it first occured exception.
+            if (!beSilent) {
+                getLog().info("Exceptions during goal db:'"+goal+"'");
+                for (int i = 0; i < sqlExceptions.size(); i++) {
+                    getLog().info("failed stmt: "+failedSqlStatements.get(i));
+                    getLog().info(sqlExceptions.get(i).toString());
+                }
+            }
             throw new DatabaseHolderException(
                 "Error during sql statement execution", sqlExceptions.get(0));
         }

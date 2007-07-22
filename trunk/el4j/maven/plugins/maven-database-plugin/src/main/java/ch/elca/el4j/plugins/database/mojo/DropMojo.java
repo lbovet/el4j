@@ -47,7 +47,7 @@ public class DropMojo extends AbstractDBExecutionMojo {
      */
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
-            executeAction(ACTION, true);
+            executeAction(ACTION, true, false);
         } catch (Exception e) {
             throw new MojoExecutionException(e.getMessage());
         }

@@ -45,7 +45,7 @@ public class CleanUpDatabaseMojo extends AbstractDBExecutionMojo {
         try {
             getLog().info("Executing drop");
             //Execute drop
-            executeAction("drop", true);
+            executeAction("drop", true, false);
             getLog().info("Stopping database... ");
             // Stop Derby Network Server if necessary
             if (needStartup()) {
