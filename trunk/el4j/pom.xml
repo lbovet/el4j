@@ -832,6 +832,12 @@
                 <db.name>oracle</db.name>
             </properties>
         </profile>
+        <profile>
+            <id>mysql</id>
+            <properties>
+                <db.name>mysql</db.name>
+            </properties>
+        </profile>	
     </profiles>
     <repositories>
         <repository>
@@ -1435,7 +1441,7 @@
                 <version>1.1.1</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.commons</groupId>
+                <groupId>commons-httpclient</groupId>
                 <artifactId>commons-httpclient</artifactId>
                 <version>3.0.1</version>
             </dependency>
@@ -1516,9 +1522,9 @@
                 <version>1.4</version>
             </dependency>
             <dependency>
-                <groupId>javax.wsdl</groupId>
+                <groupId>wsdl4j</groupId>
                 <artifactId>wsdl4j</artifactId>
-                <version>1.5.2</version>
+                <version>1.6.1</version>
             </dependency>
             <dependency>
                 <groupId>javax.activation</groupId>
