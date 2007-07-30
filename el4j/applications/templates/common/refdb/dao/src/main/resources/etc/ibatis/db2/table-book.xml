@@ -12,21 +12,68 @@
     <!-- 
         Book related invocations
     -->
+    <!-- 
+        ATTENTION: Dynamic parts are only used due to badly implemented jdbc 
+        driver from ibm, which does not support java.sql.Types.NULL!
+    -->
     <!--
         Tag 'update' and not 'insert' is used, because no primary key must be 
         generated.
     -->
     <update id="insertBook">
         insert into BOOKS (KEYTOREFERENCE, AUTHORNAME, PUBLISHER, ISBNNUMBER, 
-            PAGENUM) values (#key#, #authorName#, #publisher#, #isbnNumber#,
+            PAGENUM) values (#key#, 
+            <dynamic>
+                <isNotNull property="authorName">
+                    #authorName#
+                </isNotNull>
+                <isNull property="authorName">
+                    null
+                </isNull>
+                ,
+                <isNotNull property="publisher">
+                    #publisher#
+                </isNotNull>
+                <isNull property="publisher">
+                    null
+                </isNull>
+                ,
+                <isNotNull property="isbnNumber">
+                    #isbnNumber#
+                </isNotNull>
+                <isNull property="isbnNumber">
+                    null
+                </isNull>
+                ,
+            </dynamic>
             #pageNum#)
     </update>
     <update id="updateBook">
         update BOOKS set 
-                    AUTHORNAME=#authorName#,
-                    PUBLISHER=#publisher#,
-                    ISBNNUMBER=#isbnNumber#,
-		    		PAGENUM=#pageNum#
+            <dynamic>
+                <isNotNull property="authorName">
+                    AUTHORNAME=#authorName#
+                </isNotNull>
+                <isNull property="authorName">
+                    AUTHORNAME=null
+                </isNull>
+                ,
+                <isNotNull property="publisher">
+                    PUBLISHER=#publisher#
+                </isNotNull>
+                <isNull property="publisher">
+                    PUBLISHER=null
+                </isNull>
+                ,
+                <isNotNull property="isbnNumber">
+                    ISBNNUMBER=#isbnNumber#
+                </isNotNull>
+                <isNull property="isbnNumber">
+                    ISBNNUMBER=null
+                </isNull>
+                ,
+            </dynamic>
+            PAGENUM=#pageNum#
             where KEYTOREFERENCE=#key#
     </update>
 </sqlMap>

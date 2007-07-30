@@ -19,17 +19,48 @@
     <insert id="insertFile">
         insert into FILES (KEYTOREFERENCE, NAME, MIMETYPE, CONTENTSIZE, 
             CONTENT, OPTIMISTICLOCKINGVERSION) 
-            values (#keyToReference#, #name#, #mimeType#,
+            values (#keyToReference#, 
+                <dynamic>
+                    <isNotNull property="name">
+                        #name#
+                    </isNotNull>
+                    <isNull property="name">
+                        null
+                    </isNull>
+                    ,
+                    <isNotNull property="mimeType">
+                        #mimeType#
+                    </isNotNull>
+                    <isNull property="mimeType">
+                        null
+                    </isNull>
+                    ,
+                </dynamic>
                 #size#, #content,handler=blobHandler#,
                 #optimisticLockingVersion#)
         <selectKey resultClass="int" keyProperty="key">
-             SELECT LAST_INSERT_ID();
+            values IDENTITY_VAL_LOCAL()
         </selectKey>
     </insert>
 
     <update id="updateFile">
         update FILES set KEYTOREFERENCE=#keyToReference#,
-                    NAME=#name#, MIMETYPE=#mimeType#,
+            <dynamic>
+                <isNotNull property="name">
+                    NAME=#name#
+                </isNotNull>
+                <isNull property="name">
+                    NAME=null
+                </isNull>
+                ,
+                <isNotNull property="mimeType">
+                    MIMETYPE=#mimeType#
+                </isNotNull>
+                <isNull property="mimeType">
+                    MIMETYPE=null
+                </isNull>
+                ,
+            </dynamic>
             CONTENTSIZE=#size#, CONTENT=#content,handler=blobHandler#, 
             OPTIMISTICLOCKINGVERSION=OPTIMISTICLOCKINGVERSION+1 
             where KEYID=#key# 
