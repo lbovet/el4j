@@ -109,9 +109,8 @@ public class SmartFileLibrary {
         
         // if directoryPath does not already contain
         // any pathSeperator at the end, add a pathSeperator
-        if (directoryPath.charAt(directoryPath.length() - 1) 
-                                      != File.separatorChar) {
-            directoryPath.concat(File.pathSeparator);
+        if (directoryPath.endsWith(File.separator)) {
+            directoryPath.concat(File.separator);
         }
         
         return directoryPath.concat(extractRelativePath(fileName));
