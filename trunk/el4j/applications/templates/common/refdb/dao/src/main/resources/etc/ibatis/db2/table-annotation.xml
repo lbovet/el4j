@@ -12,15 +12,27 @@
     <!-- 
         Annotation related invocations
     -->
-
+    <!-- 
+        ATTENTION: Dynamic parts are only used due to badly implemented jdbc 
+        driver from ibm, which does not support java.sql.Types.NULL!
+    -->
     <insert id="insertAnnotation">
         insert into ANNOTATIONS (KEYTOREFERENCE, ANNOTATOR, GRADE, 
             CONTENT, WHENINSERTED, OPTIMISTICLOCKINGVERSION) 
-            values (#keyToReference#, #annotator#, 
+            values (#keyToReference#, 
+                <dynamic>
+                    <isNotNull property="annotator">
+                        #annotator#
+                    </isNotNull>
+                    <isNull property="annotator">
+                        null
+                    </isNull>
+                    ,
+                </dynamic>
                 #grade#, #content,handler=clobHandler#, #whenInserted#, 
                 #optimisticLockingVersion#)
         <selectKey resultClass="int" keyProperty="key">
-           SELECT LAST_INSERT_ID();
+            values IDENTITY_VAL_LOCAL()
         </selectKey>
     </insert>
 

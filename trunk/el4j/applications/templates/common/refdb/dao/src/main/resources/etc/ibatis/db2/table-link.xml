@@ -22,12 +22,26 @@
     -->
     <update id="insertLink">
         insert into LINKS (KEYTOREFERENCE, URL) values (#key#, 
+            <dynamic>
+                <isNotNull property="url">
                     #url#
+                </isNotNull>
+                <isNull property="url">
+                    null
+                </isNull>
+            </dynamic>
         )
     </update>
     <update id="updateLink">
         update LINKS set 
+            <dynamic>
+                <isNotNull property="url">
                     URL=#url#
+                </isNotNull>
+                <isNull property="url">
+                    URL=null
+                </isNull>
+            </dynamic>
         where KEYTOREFERENCE=#key#
     </update>
 </sqlMap>
