@@ -18,10 +18,25 @@
 package ch.elca.el4j.core.context;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
+import org.springframework.beans.PropertyValue;
+import org.springframework.beans.PropertyValues;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.config.TypedStringValue;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.AbstractXmlApplicationContext;
+import org.springframework.core.OrderComparator;
+import org.springframework.core.Ordered;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.util.Assert;
@@ -49,6 +64,18 @@ import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
  * classpath in two different jars, then you have to change classpath:folder/...
  * into classpath*:folder/... Otherwise, only the file(s) from the first jar is
  * loaded.
+ * 
+ * Additional features: 
+ *  * PropertyPlaceholder/ PropertyOverride configurers (actually all {@link BeanFactoryPostProcessor})
+ *     can override properties of {@link BeanFactoryPostProcessor}s that come later in the order
+ *      ( see {@link Ordered} for more details).
+ *  * Exclusion lists
+ *  * One can define (constructor argument) whether we allow bean-definitions to silently overwrite earlier configuration 
+ *     settings.  
+ *  * The order of underlying resources is better conserved than with pure spring
+ *  * More configuration info is available in JMX (only when jmx module is active)  
+ * 
+ * @see ModuleWebApplicationContext 
  * 
  * <script type="text/javascript">printFileStatus 
  * ("$URL$",
@@ -360,6 +387,7 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
                 getInternalParentBeanFactory());
         dlbf.setAllowBeanDefinitionOverriding(
             isAllowBeanDefinitionOverriding());
+        dlbf.setBeanClassLoader(this.getClassLoader()); // TODO: test if this improves situation
         return dlbf;
     }
 
@@ -378,4 +406,78 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
         m_patternResolver = patternResolver;
         return m_patternResolver; 
     }
+    
+    @Override
+    protected void initBeanDefinitionReader(XmlBeanDefinitionReader beanDefinitionReader) {
+        beanDefinitionReader.setBeanClassLoader(this.getClassLoader()); // this is a test, whether this helps
+    }
+    
+  
+    /**
+     * Copied almost 1:1 from implementation of AbstractApplicationContext.
+     * 
+     *  Changed handling of ordered beanFactoryPostProcessors: load them later
+     *   from spring (in order to allow more property replacements in configs)
+     *   
+     *   This class is duplicated in {@link ModuleWebApplicationContext}
+     */
+    @Override
+    protected void invokeBeanFactoryPostProcessors(ConfigurableListableBeanFactory beanFactory) {
+        // Invoke factory processors registered with the context instance.
+        for (Iterator it = getBeanFactoryPostProcessors().iterator(); it.hasNext();) {
+            BeanFactoryPostProcessor factoryProcessor = (BeanFactoryPostProcessor) it.next();
+            factoryProcessor.postProcessBeanFactory(beanFactory);
+        }
+
+        // Do not initialize FactoryBeans here: We need to leave all regular beans
+        // uninitialized to let the bean factory post-processors apply to them!
+        String[] factoryProcessorNames =
+                beanFactory.getBeanNamesForType(BeanFactoryPostProcessor.class, true, false);
+
+        // Separate between BeanFactoryPostProcessors that implement the Ordered
+        // interface and those that do not.
+        List<OrderedBeanNameHolder> orderedFactoryProcessors = new ArrayList<OrderedBeanNameHolder>();
+        List nonOrderedFactoryProcessorNames = new ArrayList();
+        for (int i = 0; i < factoryProcessorNames.length; i++) {
+            if (isTypeMatch(factoryProcessorNames[i], Ordered.class)) {
+                // new: remember the name of each processor                
+                PropertyValues processorDefinitionProps =  beanFactory.
+                    getBeanDefinition (factoryProcessorNames[i]).getPropertyValues();
+                PropertyValue order = processorDefinitionProps.getPropertyValue("order");
+                int orderAsInt = 0;
+                if (order != null) {
+                    try {                         
+                        String orderAsString = order.getValue().toString();
+                        if (order.getValue() instanceof TypedStringValue) {
+                            orderAsString = ((TypedStringValue)order.getValue()).getValue();
+                        }                        
+                        
+                        orderAsInt = Integer.parseInt(order.getValue().toString());
+                    } catch (NumberFormatException e) {}
+                }
+                orderedFactoryProcessors.add(new OrderedBeanNameHolder(orderAsInt, factoryProcessorNames[i]));                
+            }
+            else { 
+                nonOrderedFactoryProcessorNames.add(factoryProcessorNames[i]);
+            }
+        }
+
+        // First, invoke the BeanFactoryPostProcessors that implement Ordered.
+        Collections.sort(orderedFactoryProcessors, new OrderComparator());
+        for (Iterator<OrderedBeanNameHolder> it = orderedFactoryProcessors.iterator(); it.hasNext();) {
+            OrderedBeanNameHolder factoryProcessorHolder = it.next();
+            
+            // here is the change: reload each BeanFactoryPostProcessor once again from the beanFactory            
+            BeanFactoryPostProcessor factoryProcessor = 
+                   (BeanFactoryPostProcessor) beanFactory.getBean( factoryProcessorHolder.getBeanName());
+            
+            factoryProcessor.postProcessBeanFactory(beanFactory);
+        }
+        // Second, invoke all other BeanFactoryPostProcessors, one by one.
+        for (Iterator it = nonOrderedFactoryProcessorNames.iterator(); it.hasNext();) {
+            String factoryProcessorName = (String) it.next();
+            ((BeanFactoryPostProcessor) getBean(factoryProcessorName)).postProcessBeanFactory(beanFactory);
+        }
+    }
+
 }
