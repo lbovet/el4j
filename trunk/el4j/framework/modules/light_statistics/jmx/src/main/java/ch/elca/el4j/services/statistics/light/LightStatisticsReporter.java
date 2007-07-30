@@ -47,33 +47,12 @@ public class LightStatisticsReporter
     public static final String NAME = "Performance:key=lightStatisticsReporter";
     
     /** The measurements' captions. */
-    private static final String[] CAPTIONS = {
-        "Target",
-        "Hits",
-        "Avg ms",
-        "Total ms",
-        "Std Dev ms",
-        "Min ms",
-        "Max ms",
-        "Active",
-        "Avg active",
-        "Max active",
-        "First access",
-        "Last access",
-        "Primary",
-        "0-10ms",
-        "11-20ms",
-        "21-40ms",
-        "41-80ms",
-        "81-160ms",
-        "161-320ms",
-        "321-640ms",
-        "641-1280ms",
-        "1281-2560ms",
-        "2561-5120ms",
-        "5121-10240ms",
-        "10241-20480ms",
-        ">20480ms"
+    private static String[] CAPTIONS = {
+        "Target", "Hits", "Avg",
+        "Total", "StdDev", "LastValue",
+        "Min", "Max", "Active",
+        "AvgActive", "MaxActive", "FirstAccess",
+        "LastAccess", "Enabled", "Primary", "HasListeners"
     };
     
     
@@ -155,7 +134,24 @@ public class LightStatisticsReporter
      * {@inheritDoc}
      */
     public String[] getData() {
-        String[][] data = MonitorFactory.getRootMonitor().getData();
+        Object[][] dataAsObj = MonitorFactory.getRootMonitor().getBasicData();
+        
+        if (dataAsObj == null) {
+            return new String[]  { " " };
+        }
+        
+        // make simple conversion to String[][]
+        String[][] data;
+        data = new String[dataAsObj.length][];
+        for (int i=0; i < dataAsObj.length; i++) {
+            String[] line = new String[dataAsObj[i].length];
+            for (int j = 0; j < dataAsObj[i].length; j++) {
+                line[j] = (dataAsObj[i][j]).toString(); 
+            }
+            data[i] = line;
+        }
+        
+        
         String[] paddedCaptions = new String[CAPTIONS.length];
         String[] result = new String[data.length + 1];
         MessageFormat format = new MessageFormat(m_formatString);
@@ -171,7 +167,7 @@ public class LightStatisticsReporter
         result[0] = format.format(paddedCaptions);
         
         
-        if (data[0].length == CAPTIONS.length) {
+        if (data[0].length >= CAPTIONS.length) {
             // pad data
             for (int i = 0; i < data.length; i++) {
                 for (int j = 0; j < CAPTIONS.length; j++) {
@@ -189,7 +185,7 @@ public class LightStatisticsReporter
     }
     
     /**
-     * Converts class naems, removes <code>&nbsp</code>s and computes the number
+     * Converts class names, removes blank characters and computes the number
      * of chars in the widest line. 
      * @param data The measurement data.
      * @return The number of chars in the widest row for each column of the
