@@ -36,12 +36,12 @@ import java.util.List;
 public class ListClass {
 
     /** The test list. */
-    private List m_listTest = new ArrayList();
+    private List<String> m_listTest = new ArrayList<String>();
 
         /**
      * @return Returns the listTest.
      */
-    public List getListTest() {
+    public List<String> getListTest() {
         return m_listTest;
     }
 
@@ -49,7 +49,7 @@ public class ListClass {
      * @param listTest
      *            The listTest to set.
      */
-    public void setListTest(List listTest) {
+    public void setListTest(List<String> listTest) {
         this.m_listTest = listTest;
     }
 

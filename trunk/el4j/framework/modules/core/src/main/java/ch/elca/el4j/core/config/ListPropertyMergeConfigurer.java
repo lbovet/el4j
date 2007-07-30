@@ -33,6 +33,8 @@ import org.springframework.beans.PropertyValue;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.PropertyOverrideConfigurer;
+import org.springframework.beans.factory.config.TypedStringValue;
+import org.springframework.beans.factory.support.ManagedList;
 import org.springframework.beans.propertyeditors.StringArrayPropertyEditor;
 import org.springframework.core.io.Resource;
 import org.springframework.util.DefaultPropertiesPersister;
@@ -234,8 +236,8 @@ public class ListPropertyMergeConfigurer extends PropertyOverrideConfigurer {
     /**
      * {@inheritDoc}
      */
-    public void postProcessBeanFactory(
-        ConfigurableListableBeanFactory beanFactory) {
+    @Override
+    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
         Properties mergedProps = new Properties();
 
         addDefaultProperties(mergedProps);
@@ -272,7 +274,7 @@ public class ListPropertyMergeConfigurer extends PropertyOverrideConfigurer {
     }
 
     /**
-     * Loads the properties form the given location.
+     * Loads the properties from the given location.
      * 
      * @param mergedProps Is the properties container to write into.
      * @param location Is the resource location to read properties from.
@@ -321,6 +323,7 @@ public class ListPropertyMergeConfigurer extends PropertyOverrideConfigurer {
     /**
      * {@inheritDoc}
      */
+    @Override
     protected void applyPropertyValue(ConfigurableListableBeanFactory factory,
         String beanName, String property, String value) {
         /**
@@ -364,20 +367,22 @@ public class ListPropertyMergeConfigurer extends PropertyOverrideConfigurer {
         List newValueList = new ArrayList();
         String[] newValues = (String[]) beanWrapper.convertIfNecessary(value,
             String[].class);
-        /*
-         * String[] newValues = (String[]) beanWrapper
-         * .doTypeConversionIfNecessary(value, String[].class);
-         */
+        
+
         for (int i = 0; i < newValues.length; i++) {
             String newValue = newValues[i];
-            newValueList.add(
-                newValue != null ? newValue.trim() : newValue);
+            TypedStringValue typedValue = null;
+            if (newValue != null) {
+                newValue = newValue.trim();
+                typedValue = new TypedStringValue(newValue);
+            }
+            newValueList.add(typedValue);
         }
         
         /**
          * Mix the old and new values and set the new property value.
          */
-        List mixedValueList = new ArrayList();
+        ManagedList mixedValueList = new ManagedList();
         if (isInsertNewItemsAfter()) {
             mixedValueList.addAll(oldValueList);
             mixedValueList.addAll(newValueList);

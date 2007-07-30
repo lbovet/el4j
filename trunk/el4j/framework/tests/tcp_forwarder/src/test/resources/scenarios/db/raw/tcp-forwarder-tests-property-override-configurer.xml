@@ -9,7 +9,7 @@
     <!-- Author: $Author$ -->
 
     <bean id="tcpForwarderTestsDbRawOverrideConfigurer"
-        class="ch.elca.el4j.core.config.RefreshPropertyOverrideConfigurer"
+        class="org.springframework.beans.factory.config.PropertyOverrideConfigurer"
         singleton="false">
         <property name="locations">
             <list>

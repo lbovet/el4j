@@ -278,7 +278,7 @@ public class ListResourcePatternResolverDecorator
             if (singleResource != null) {
                 resources = new Resource[] {singleResource};
             } else {
-                s_logger.warn("Ordered resource loading not supported for "
+                s_logger.info("Ordered resource loading not supported for "
                     + "location pattern '" + locationPattern + "'!");
                 resources = delegateResourcesLookup(locationPattern);
             }
@@ -427,10 +427,16 @@ public class ListResourcePatternResolverDecorator
         Map<URL, Resource> resourceUrlMap = new LinkedHashMap<URL, Resource>();
         if (isMergeWithOuterResources()) {
             Resource[] resources = delegateResourcesLookup(location);
-            for (Resource r : resources) {
-                URL url = r.getURL();
-                resourceUrlMap.put(url, r);
-            }
+            for (Resource r : resources) {            
+                try {
+                    
+                    // POS: the next line can throw a FileNotFoundException 
+                    //  when run in a web server (in a servlet context)
+                    //   But this is no real problem.
+                    URL url = r.getURL();
+                    resourceUrlMap.put(url, r);
+                } catch (FileNotFoundException fnfe) { }                    
+            }         
             
             List<Resource> orderedResources = new ArrayList<Resource>();
             for (int i = m_configLocations.length - 1; i >= 0; i--) {

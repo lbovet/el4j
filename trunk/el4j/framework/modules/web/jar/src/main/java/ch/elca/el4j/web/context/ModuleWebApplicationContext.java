@@ -18,11 +18,22 @@
 package ch.elca.el4j.web.context;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.springframework.beans.PropertyValue;
+import org.springframework.beans.PropertyValues;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.config.TypedStringValue;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.core.OrderComparator;
+import org.springframework.core.Ordered;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -32,7 +43,9 @@ import org.springframework.web.context.support.ServletContextResourceLoader;
 import org.springframework.web.context.support.ServletContextResourcePatternResolver;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 
+import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.core.context.ModuleApplicationContextUtils;
+import ch.elca.el4j.core.context.OrderedBeanNameHolder;
 import ch.elca.el4j.core.io.support.ListResourcePatternResolverDecorator;
 import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
 
@@ -297,4 +310,72 @@ public class ModuleWebApplicationContext extends XmlWebApplicationContext {
         m_patternResolver = patternResolver;
         return m_patternResolver; 
     }
+    
+    /**
+     * Copied almost 1:1 from implementation of AbstractApplicationContext.
+     * 
+     *  Changed handling of ordered beanFactoryPostProcessors: load them later
+     *   from spring (in order to allow more property replacements in configs)
+     *   
+     *   This class is duplicated in {@link ModuleApplicationContext}
+     */
+    @Override
+    protected void invokeBeanFactoryPostProcessors(ConfigurableListableBeanFactory beanFactory) {
+        // Invoke factory processors registered with the context instance.
+        for (Iterator it = getBeanFactoryPostProcessors().iterator(); it.hasNext();) {
+            BeanFactoryPostProcessor factoryProcessor = (BeanFactoryPostProcessor) it.next();
+            factoryProcessor.postProcessBeanFactory(beanFactory);
+        }
+
+        // Do not initialize FactoryBeans here: We need to leave all regular beans
+        // uninitialized to let the bean factory post-processors apply to them!
+        String[] factoryProcessorNames =
+                beanFactory.getBeanNamesForType(BeanFactoryPostProcessor.class, true, false);
+
+        // Separate between BeanFactoryPostProcessors that implement the Ordered
+        // interface and those that do not.
+        List<OrderedBeanNameHolder> orderedFactoryProcessors = new ArrayList<OrderedBeanNameHolder>();
+        List nonOrderedFactoryProcessorNames = new ArrayList();
+        for (int i = 0; i < factoryProcessorNames.length; i++) {
+            if (isTypeMatch(factoryProcessorNames[i], Ordered.class)) {
+                // new: remember the name of each processor                
+                PropertyValues processorDefinitionProps =  beanFactory.
+                    getBeanDefinition (factoryProcessorNames[i]).getPropertyValues();
+                PropertyValue order = processorDefinitionProps.getPropertyValue("order");
+                int orderAsInt = 0;
+                if (order != null) {
+                    try {                         
+                        String orderAsString = order.getValue().toString();
+                        if (order.getValue() instanceof TypedStringValue) {
+                            orderAsString = ((TypedStringValue)order.getValue()).getValue();
+                        }                        
+                        
+                        orderAsInt = Integer.parseInt(order.getValue().toString());
+                    } catch (NumberFormatException e) {}
+                }
+                orderedFactoryProcessors.add(new OrderedBeanNameHolder(orderAsInt, factoryProcessorNames[i]));                
+            }
+            else { 
+                nonOrderedFactoryProcessorNames.add(factoryProcessorNames[i]);
+            }
+        }
+
+        // First, invoke the BeanFactoryPostProcessors that implement Ordered.
+        Collections.sort(orderedFactoryProcessors, new OrderComparator());
+        for (Iterator<OrderedBeanNameHolder> it = orderedFactoryProcessors.iterator(); it.hasNext();) {
+            OrderedBeanNameHolder factoryProcessorHolder = it.next();
+            
+            // here is the change: reload each BeanFactoryPostProcessor once again from the beanFactory            
+            BeanFactoryPostProcessor factoryProcessor = 
+                   (BeanFactoryPostProcessor) beanFactory.getBean( factoryProcessorHolder.getBeanName());
+            
+            factoryProcessor.postProcessBeanFactory(beanFactory);
+        }
+        // Second, invoke all other BeanFactoryPostProcessors, one by one.
+        for (Iterator it = nonOrderedFactoryProcessorNames.iterator(); it.hasNext();) {
+            String factoryProcessorName = (String) it.next();
+            ((BeanFactoryPostProcessor) getBean(factoryProcessorName)).postProcessBeanFactory(beanFactory);
+        }
+    }
+    
 }

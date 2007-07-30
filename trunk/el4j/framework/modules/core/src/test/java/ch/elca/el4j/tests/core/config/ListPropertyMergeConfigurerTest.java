@@ -75,7 +75,7 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
 
         // HACKY: change in spring 2.0.3, probably a mistake?
         assertEquals("The first entry in the list is not 'item 0'.", "item 0",
-                ((TypedStringValue)(listTest.getListTest().get(0))).getValue());
+                listTest.getListTest().get(0));
 
         assertEquals("The second entry in the list is not 'item 1'.", "item 1",
                 listTest.getListTest().get(1));
@@ -100,7 +100,7 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
 
         // HACKY: change in spring 2.0.3, probably a mistake?
         assertEquals("The first entry in the list is not 'item 0'.", "item 0",
-                ((TypedStringValue)(listTest.getListTest().get(0))).getValue());
+                listTest.getListTest().get(0));
         
         assertEquals("The second entry in the list is not 'item 2'.", "item 2",
                 listTest.getListTest().get(1));
@@ -130,7 +130,7 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
 
         // HACKY: change in spring 2.0.3, probably a mistake?
         assertEquals("The first entry in the list is not 'item 0'.", "item 0",
-                ((TypedStringValue)(listTest.getListTest().get(0))).getValue());
+                listTest.getListTest().get(0));
 
         assertEquals("The second entry in the list is not 'item 1'.", "item 1",
                 listTest.getListTest().get(1));
@@ -167,7 +167,7 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
 
         // HACKY: change in spring 2.0.3, probably a mistake?
         assertEquals("The first entry in the list is not 'item 0'.", "item 0",
-                ((TypedStringValue)(listTest2.getListTest().get(0))).getValue());
+                listTest2.getListTest().get(0));
 
         assertEquals("The second entry in the list is not 'item 5'.", "item 5",
                 listTest2.getListTest().get(1));
