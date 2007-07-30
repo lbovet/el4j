@@ -43,8 +43,11 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  *    "$Author$"
  * );</script>
  *
+ * @deprecated This former hack is no longer required (spring 2 has better hocks to fix it properly)
+ *
  * @author Martin Zeltner (MZE)
  */
+@Deprecated
 public class RefreshPropertyOverrideConfigurer extends
     PropertyOverrideConfigurer implements BeanNameAware {
 
