@@ -10,12 +10,12 @@
     <!-- Author: $Author$ -->
 
     <insert id="insertKeyword">
-        insert into KEYWORDS (NAME, DESCRIPTION,
-            OPTIMISTICLOCKINGVERSION) values (#name#,
-            #description#, #optimisticLockingVersion#)
         <selectKey resultClass="int" keyProperty="key">
-            SELECT LAST_INSERT_ID();
-        </selectKey>	    
+            select KEYWORD_SEQUENCE.NEXTVAL AS KEY FROM DUAL
+        </selectKey>
+        insert into KEYWORDS (KEYID, NAME, DESCRIPTION,
+            OPTIMISTICLOCKINGVERSION) values (#key#, #name#,
+            #description#, #optimisticLockingVersion#)
     </insert>
 
     <update id="updateKeyword">
