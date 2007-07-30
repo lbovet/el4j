@@ -11,3 +11,6 @@ DROP TABLE formalpublications;
 DROP TABLE links;
 DROP TABLE referencesTable;
 
+DROP SEQUENCE reference_sequence;
+DROP SEQUENCE annotation_sequence;
+DROP SEQUENCE file_sequence;
