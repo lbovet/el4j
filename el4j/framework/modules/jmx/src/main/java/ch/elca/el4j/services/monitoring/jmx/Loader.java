@@ -159,7 +159,7 @@ public class Loader implements ApplicationContextAware, InitializingBean,
 
                 // execute the following code only on a
                 // JRE, with version >= 1.5
-                if (jreVersion.startsWith("1.5")) {
+                if (jreVersion.startsWith("1.5") || jreVersion.startsWith("1.6") || jreVersion.startsWith("1.7") ) {
                     s_logger.info("Registering Jdk 1.5 Mbean");
                     registerJdk15Mbean(m_server);
                 }
