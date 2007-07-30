@@ -109,7 +109,7 @@ public class SmartFileLibrary {
         
         // if directoryPath does not already contain
         // any pathSeperator at the end, add a pathSeperator
-        if (directoryPath.endsWith(File.separator)) {
+        if (!directoryPath.endsWith(File.separator)) {
             directoryPath.concat(File.separator);
         }
         
