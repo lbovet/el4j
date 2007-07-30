@@ -79,6 +79,11 @@
 					set to false. 
 				-->
 				<prop key="hibernate.max_fetch_depth">3</prop>
+				
+				<!--  the  next two lines print more verbose info about hibernate >
+				<prop key="hibernate.use_sql_comments">true</prop>
+				<prop key="hibernate.show_sql">true</prop-->				
+				
 			</props>
 		</property>
         <property name="useTransactionAwareDataSource">
