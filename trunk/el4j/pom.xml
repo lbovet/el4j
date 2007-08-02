@@ -264,7 +264,7 @@
                           <systemProperties>
                             <property>
                               <name>log4j.configuration</name>
-                              <value>file:${el4j.external}/etc/log4j/log4j.xml</value>
+                              <value>${log4j.default.config.file}</value>
                             </property>
                           </systemProperties>
                         <testFailureIgnore>false</testFailureIgnore>
@@ -426,6 +426,14 @@
                                + patch http://jira.codehaus.org/browse/CARGO-412)
                     -->
                     <version>0.3-20060918.130206-4</version>
+		    <configuration>
+		       <!-- the next configuration is not working -->
+		       <!--configuration>
+                            <properties>
+                              <log4j.configuration>${log4j.default.config.file}</log4j.configuration>
+                            </properties>
+		       </configuration-->
+		    </configuration>		       
                 </plugin>
 
                 <!-- Execution -->
@@ -438,6 +446,14 @@
                                + patch http://jira.codehaus.org/browse/MEXEC-11)
                     -->
                     <version>1.0.3-20061204.110918-2</version>
+		    <configuration>
+		       <systemProperties>
+                            <property>
+                              <key>log4j.configuration</key>
+                              <value>${log4j.default.config.file}</value>
+                            </property>
+		       </systemProperties>
+		    </configuration>		       		    
                 </plugin>
 
                 <!-- IDE -->
@@ -1416,9 +1432,9 @@
                 <version>1.0.1</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.commons</groupId>
+                <groupId>commons-dbcp</groupId>
                 <artifactId>commons-dbcp</artifactId>
-                <version>1.2.1</version>
+                <version>1.2.2</version>
             </dependency>
             <dependency>
                 <groupId>commons-digester</groupId>
@@ -1438,7 +1454,7 @@
             <dependency>
                 <groupId>commons-fileupload</groupId>
                 <artifactId>commons-fileupload</artifactId>
-                <version>1.1.1</version>
+                <version>1.2</version>
             </dependency>
             <dependency>
                 <groupId>commons-httpclient</groupId>
@@ -1448,7 +1464,7 @@
             <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
-                <version>1.3.1</version>
+                <version>1.3.2</version>
             </dependency>
             <dependency>
                 <groupId>commons-lang</groupId>
