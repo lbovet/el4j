@@ -32,6 +32,7 @@
         <module>hibernate</module>
         <module>ibatis</module>
         <module>jmx</module>
+        <module>bshlauncher</module> 
         <module>light_statistics</module>
         <module>remoting_core</module>
         <module>remoting_caucho</module>
