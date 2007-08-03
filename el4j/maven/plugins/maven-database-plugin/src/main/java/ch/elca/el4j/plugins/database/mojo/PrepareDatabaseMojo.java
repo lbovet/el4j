@@ -34,7 +34,7 @@ import ch.elca.el4j.plugins.database.util.derby.DerbyNetworkServerStarter;
  *    "$Author$"
  * );</script>
  * 
- * @goal prepareDB
+ * @goal prepare
  * @author David Stefan (DST)
  */
 public class PrepareDatabaseMojo extends AbstractDBExecutionMojo {
