@@ -35,6 +35,7 @@ import ch.elca.el4j.plugins.database.util.derby.DerbyNetworkServerStarter;
  * 
  * @goal cleanUpDB
  * @author David Stefan (DST)
+ * @deprecated
  */
 public class CleanUpDatabaseMojo extends AbstractDBExecutionMojo {
 
