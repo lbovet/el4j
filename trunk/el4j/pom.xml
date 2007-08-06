@@ -142,13 +142,13 @@
 
     <scm>
         <connection>
-            scm:svn:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/
+            scm:svn:https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/
         </connection>
         <developerConnection>
-            scm:svn:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/
+            scm:svn:https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/
         </developerConnection>
         <url>
-            http://svn.sourceforge.net/viewcvs.cgi/el4j/trunk/el4j/
+            http://el4j.svn.sourceforge.net/viewvc/el4j/trunk/el4j/
         </url>
     </scm>
 
@@ -410,7 +410,7 @@
                     <version>2.0-beta-4</version>
                     <configuration>
                         <tagBase>
-                            https://svn.sourceforge.net/svnroot/el4j/tags/
+                            https://el4j.svn.sourceforge.net/svnroot/el4j/tags/
                         </tagBase>
                     </configuration>
                 </plugin>
@@ -1684,7 +1684,7 @@
         <javadoc.stylesheet.path>${el4j.external}/etc/javadoc/stylesheet.css</javadoc.stylesheet.path>
         <javadoc.link.jdk>http://java.sun.com/j2se/${el4j.java.version}/docs/api</javadoc.link.jdk>
         <javadoc.link.spring>http://static.springframework.org/spring/docs/2.0.x/api</javadoc.link.spring>
-        <javadoc.header><![CDATA[&lt;script type='text/javascript'&gt;function removeKeyword(str) { i = str.indexOf(':'); str = str.substring(i+1); i = str.length; str = str.substring(0, i-1); return str; } function removeHead (str) { v=str.substring(42); return v.substring(0, v.length-2); } function printFileStatus (url_kw, revision_kw, date_kw, author_kw) { document.write ('&lt;br/&gt;&lt;dl&gt;&lt;dt&gt;&lt;b&gt;File-location:&lt;/b&gt;&lt;/dt&gt;&lt;dd&gt;&lt;a href="http://svn.sourceforge.net/viewcvs.cgi/'); document.write(removeHead(url_kw)); document.write('"&gt;'); document.write(removeHead(url_kw)); document.write('&lt;/a&gt;&lt;/dd&gt;&lt;/dl&gt;'); document.write('&lt;dl&gt;&lt;dt&gt;&lt;b&gt;Last check-in date &lt;/b&gt;'); document.write(removeKeyword(date_kw)); document.write('&lt;b&gt; by &lt;/b&gt;'); document.write(removeKeyword(author_kw)); document.write('&lt;b&gt; for revision &lt;/b&gt;'); document.write(removeKeyword(revision_kw)); document.write('&lt;/dt&gt;&lt;/dl&gt;'); } &lt;/script&gt;]]></javadoc.header>
+        <javadoc.header><![CDATA[&lt;script type='text/javascript'&gt;function removeKeyword(str) { i = str.indexOf(':'); str = str.substring(i+1); i = str.length; str = str.substring(0, i-1); return str; } function removeHead (str) { v=str.substring(42); return v.substring(0, v.length-2); } function printFileStatus (url_kw, revision_kw, date_kw, author_kw) { document.write ('&lt;br/&gt;&lt;dl&gt;&lt;dt&gt;&lt;b&gt;File-location:&lt;/b&gt;&lt;/dt&gt;&lt;dd&gt;&lt;a href="http://el4j.svn.sourceforge.net/viewvc/'); document.write(removeHead(url_kw)); document.write('"&gt;'); document.write(removeHead(url_kw)); document.write('&lt;/a&gt;&lt;/dd&gt;&lt;/dl&gt;'); document.write('&lt;dl&gt;&lt;dt&gt;&lt;b&gt;Last check-in date &lt;/b&gt;'); document.write(removeKeyword(date_kw)); document.write('&lt;b&gt; by &lt;/b&gt;'); document.write(removeKeyword(author_kw)); document.write('&lt;b&gt; for revision &lt;/b&gt;'); document.write(removeKeyword(revision_kw)); document.write('&lt;/dt&gt;&lt;/dl&gt;'); } &lt;/script&gt;]]></javadoc.header>
         
         <!-- Checkstyle config -->
         <checkstyle.config.location>${el4j.external}/etc/checkstyle/checks.xml</checkstyle.config.location>
