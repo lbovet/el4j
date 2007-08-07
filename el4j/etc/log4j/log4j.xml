@@ -29,7 +29,7 @@
     <!-- uncommend this block if you want to have an output into a log file -->
 
     <appender name="logfile" class="ch.elca.el4j.util.logging.appenders.SmartDailyRollingFileAppender">
-        <param name="File" value="default_mvn_el4j_logging_output.log"/>
+        <param name="File" value="default_el4j_logging_output.log"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" 
