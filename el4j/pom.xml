@@ -204,7 +204,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-clean-plugin</artifactId>
-                    <version>2.1</version>
+                    <version>2.1.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -258,8 +258,9 @@
                         Due to bugs fix built snapshot version is used.
                            * maven-surefire-plugin (revision 439735)
                            * surefire (revision 439785)
-                    -->
                     <version>2.3-20060921.102756-1</version>
+                    -->
+                    <version>2.3</version>
                     <configuration>
                           <systemProperties>
                             <property>
@@ -353,7 +354,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>2.0.2</version>
+                    <version>2.0.3</version>
                     <executions>
                         <execution>
                             <id>createSourceJars</id>
@@ -371,8 +372,9 @@
                     <!--
                         Due to bugs fix built snapshot version is used.
                            * maven-war-plugin (revision 429069)
-                    -->
                     <version>2.0.2-20060907.100703-1</version>
+		    -->
+                    <version>2.0.2</version>
                     <configuration>
                         <warName>${jee-web.war.name}</warName>
                         <webappDirectory>${jee-web.webapp.directory}</webappDirectory>
@@ -396,8 +398,9 @@
                         Due to bugs fix built snapshot version is used.
                            * maven-install-plugin (revision 427494 + patch http://jira.codehaus.org/browse/MINSTALL-34)
                            * archiva (revision 439966)
-                    -->
                     <version>2.2-20060922.131747-1</version>
+		    -->
+                    <version>2.2</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -407,7 +410,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-release-plugin</artifactId>
-                    <version>2.0-beta-4</version>
+                    <version>2.0-beta-6</version>
                     <configuration>
                         <tagBase>
                             https://el4j.svn.sourceforge.net/svnroot/el4j/tags/
@@ -444,8 +447,9 @@
                         Due to bugs fix built snapshot version is used.
                            * exec-maven-plugin (revision 2586
                                + patch http://jira.codehaus.org/browse/MEXEC-11)
-                    -->
                     <version>1.0.3-20061204.110918-2</version>
+		    -->
+                    <version>1.1-beta-1</version>
 		    <configuration>
 		       <systemProperties>
                             <property>
@@ -460,7 +464,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-eclipse-plugin</artifactId>
-                    <version>2.3</version>
+                    <version>2.4</version>
                     <configuration>
                         <additionalProjectnatures>
                             <projectnature>de.mvmsoft.checkclipse.CheckclipseNature</projectnature>
@@ -1695,10 +1699,10 @@
         <version.maven-project-info-reports-plugin>2.0.1</version.maven-project-info-reports-plugin>
         <version.maven-checkstyle-plugin>2.1</version.maven-checkstyle-plugin>
         <version.maven-surefire-report-plugin>2.1-20060925.113400-3</version.maven-surefire-report-plugin>
-        <version.maven-javadoc-plugin>2.1-20061003.094811-3</version.maven-javadoc-plugin>
-        <version.maven-jxr-plugin>2.1-20060911.142523-1</version.maven-jxr-plugin>
+        <version.maven-javadoc-plugin>2.1</version.maven-javadoc-plugin>
+        <version.maven-jxr-plugin>2.1</version.maven-jxr-plugin>
         <version.taglist-maven-plugin>2.0</version.taglist-maven-plugin>
-        <version.maven-plugin-plugin>2.2</version.maven-plugin-plugin>
+        <version.maven-plugin-plugin>2.3</version.maven-plugin-plugin>
         
         <!-- Used Maven version -->
         <el4j.java.version>1.5</el4j.java.version>
