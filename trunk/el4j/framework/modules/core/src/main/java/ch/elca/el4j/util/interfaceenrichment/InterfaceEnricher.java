@@ -151,8 +151,12 @@ public class InterfaceEnricher {
             throw new RuntimeException("The given class is not an interface.");
         }
 
-        JavaClass jcServiceInterfaceOld = Repository
-                .lookupClass(serviceInterfaceOld);
+		JavaClass jcServiceInterfaceOld = null;
+		try {
+		    jcServiceInterfaceOld = Repository.lookupClass(serviceInterfaceOld);
+		} catch (ClassNotFoundException e) {
+		    throw new RuntimeException("Class could not be found.");
+		}
         ClassGen cgShadowInterfaceNew = new ClassGen(jcServiceInterfaceOld);
 
         /**
