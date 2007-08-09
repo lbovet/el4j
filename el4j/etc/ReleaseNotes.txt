@@ -1,15 +1,65 @@
 --------------------------------------------------------------------------------
- Date :   3.08.07
-                            EL4J version  1.2
+ Date :   10.08.07
+                            EL4J version  1.1.3
 --------------------------------------------------------------------------------
 
-* Mainly a maintanance release, fixing many small configuration issues with 
-  spring
+* SourceForge Change Requests CLOSED:
+ 1684819 -  maven-depgraph-plugin
+ 1523763 -  throw more specific exception in ConvenienceHibernateTemplate
+
+* Build system
+  = Upgrade to new Maven 2.0.7, upgrade to many new maven plugins, re-applied
+     the patches that were still not applied to the version.
+  = Cleaned up convenience zip (supports now also Unix, more generic handling
+     of paths)
+  = In the database maven plugin, we renamed db:prepareDB  and db:cleanUpDB to 
+     db:prepare  and db:cleanUp, respectively. The old plugin names are still 
+     usable but deprecated. Added db:block for unconditionaly blocking.
+     Better error signaling. Silent drop is now more silent.
+  = Log4j configuration solved more homogeneously (see EL4J tracing stack
+     document). Fixed issue in Smart*Appenders. SmartDailyRollingFileAppender
+     is now in standard log4j config files.
+  = Removed many duplicated jar files from the execution paths (mainly
+     by using the same maven ids (group and artefact id) as the others).
+  = Cleaned up the EL4J archetype
+  = Manifest plugin has less verbose log output.
 
 
+* Core 
+  = Upgraded to Spring 2.0.6 and many new dependent libraries (Hibernate,
+     most jakarta commons, Jamon, Tomcat, Struts, ...)
+  = Fixing many small configuration issues with Spring: the problems with 
+     environment configurations (env.properties) are now resolved. (Hack
+     to define -Ddb.name=db2 on JVM command line is no longer needed). With 
+     this fix, the configuration issues of the GUI demo application are 
+     resolved.
+  = New Exception chain interceptor: avoid deserialisation issues
+     when after a remote invocation call an exception is missing in the client's
+     CLASSPATH (contributed by Reto Fankhauser)
+  = 
+
+* Database
+  = Support for mysql in database module and in demos.
+  
+* Documentation
+  = General documentation update (FAQ, Reference Document, ...)
+  = New MavenCheatSheet with useful commands for the EL4J context
+  = New EL4J tracing stack document (concentrates in one place many ideas to 
+     figure out what is going on in an application)
+  = Updated many parts of the website
+  = Readme file updates
+  
+* Varia
+  = Added experimental spring RCP 0.3 demo in sandbox/springRcpDemo
+  = Clean ups of detailed statistics module
+  = Added experimental el4j-seam release under sandbox/el4j-seam 
+     (is still being improved)
+  = XML merger tests can now run without the network
+
+  
 --------------------------------------------------------------------------------
  Date :   31.05.07
-                            EL4J version  1.1.2
+                            EL4J version  1.1.2     (no tag in svn repo)
 --------------------------------------------------------------------------------
 * SourceForge Change Requests CLOSED: 1715563, 1717260
 
@@ -19,7 +69,7 @@
 
 --------------------------------------------------------------------------------
  Date :   05.02.07
-                            EL4J version  1.1.1
+                            EL4J version  1.1.1    (svn revision 1757)
 --------------------------------------------------------------------------------
 * SourceForge Change Requests PENDING (problems resolved but not yet acknowledged)
   -
