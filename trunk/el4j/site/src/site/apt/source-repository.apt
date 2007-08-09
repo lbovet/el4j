@@ -15,14 +15,14 @@ Web Access
 
   The following is a link to the online source repository:
   
-  {{http://svn.sourceforge.net/viewvc/el4j/trunk/el4j/}}
+  {{http://el4j.svn.sourceforge.net/viewvc/el4j/trunk/el4j/}}
 
 Anonymous access
 
   The source can be checked out anonymously from SVN with this command:
 
 +----------------
-svn checkout https://svn.sourceforge.net/svnroot/el4j/trunk/el4j el4j
+svn checkout https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j el4j
 +----------------
 
 Developer access
@@ -31,7 +31,7 @@ Developer access
   checkout the Subversion repository via HTTPS.
 
 +----------------
-svn checkout https://svn.sourceforge.net/svnroot/el4j/trunk/el4j el4j
+svn checkout https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j el4j
 +----------------
 
   To commit changes to the repository, execute the following command to commit 
