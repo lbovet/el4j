@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="clientRemoteProtocol"
+		class="ch.elca.el4j.services.remoting.protocol.Rmi">
+		<property name="serviceHost">
+			<value>localhost</value>
+		</property>
+		<property name="servicePort">
+			<value>8099</value>
+		</property>
+		<property name="implicitContextPassingRegistry">
+			<ref local="clientImplicitContextPassingRegistry" />
+		</property>
+	</bean>
+	<bean id="clientImplicitContextPassingRegistry"
+		class="ch.elca.el4j.core.contextpassing.DefaultImplicitContextPassingRegistry" />
+
+	<bean id="clientPasserA"
+		class="ch.elca.el4j.tests.core.implicitcontextpassing.ImplicitContextPasserImplA">
+		<property name="implicitContextPassingRegistry">
+			<ref local="clientImplicitContextPassingRegistry" />
+		</property>
+	</bean>
+	
+	<bean id="clientPasserB"
+		class="ch.elca.el4j.tests.core.implicitcontextpassing.ImplicitContextPasserImplB">
+		<property name="implicitContextPassingRegistry">
+			<ref local="clientImplicitContextPassingRegistry" />
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- Version: $Revision$ -->
+	<!-- URL: $URL$ -->
+	<!-- Date: $Date$ -->
+	<!-- Author: $Author$ -->
+
+	<parent>
+		<groupId>ch.elca.el4j.applications</groupId>
+		<artifactId>el4j-templates-keyword</artifactId>
+		<version>1.1.3</version>
+	</parent>
+
+	<artifactId>keyword-tests</artifactId>
+	<version>${version.application-keyword}</version>
+	<packaging>jar</packaging>
+	<name>EL4J application keyword tests</name>
+	<description>
+		Test module of the Keyword application of the EL4J framework.
+	</description>
+	<build>
+		<plugins>
+			<!-- EL4J Database plugin to start and fill DB automatically -->
+			<plugin>
+				<groupId>ch.elca.el4j.maven.plugins</groupId>
+				<artifactId>maven-database-plugin</artifactId>
+				<executions>
+					<execution>
+						<configuration>
+							<connectionPropertiesSource>
+								scenarios/db/raw/keyword-core-tests-override-{db.name}.properties
+							</connectionPropertiesSource>
+						</configuration>
+						<goals>
+							<goal>prepareDB</goal>
+						</goals>
+						<phase>pre-integration-test</phase>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- skip unit test run, tests to be executed during integration-test -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+				<executions>
+					<execution>
+						<id>surefire-it</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<skip>false</skip>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<!-- Delete tables and stop Network Server -->
+			<plugin>
+				<groupId>ch.elca.el4j.maven.plugins</groupId>
+				<artifactId>maven-database-plugin</artifactId>
+				<executions>
+					<execution>
+						<configuration>
+							<db.connectionProperties>
+								scenarios/db/raw/keyword-core-tests-override-{db.name}.properties
+							</db.connectionProperties>
+						</configuration>
+						<goals>
+							<goal>cleanUpDB</goal>
+						</goals>
+						<phase>post-integration-test</phase>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>ch.elca.el4j.applications</groupId>
+			<artifactId>keyword-service</artifactId>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-database</artifactId>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-env</artifactId>
+			<type>jar</type>
+		</dependency>
+	</dependencies>
+</project>
