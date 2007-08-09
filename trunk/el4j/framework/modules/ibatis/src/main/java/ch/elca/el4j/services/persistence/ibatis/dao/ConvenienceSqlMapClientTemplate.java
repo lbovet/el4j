@@ -97,7 +97,7 @@ public class ConvenienceSqlMapClientTemplate extends SqlMapClientTemplate {
                         + " was modified or deleted in the meantime.";
                 }
                 CoreNotificationHelper.notifyOptimisticLockingFailure(
-                    message, objectName);
+                    message, objectName, null);
             } else {
                 parameterObject.increaseOptimisticLockingVersion();
             }
@@ -221,7 +221,7 @@ public class ConvenienceSqlMapClientTemplate extends SqlMapClientTemplate {
                     + " was modified or deleted in the meantime.";
             }
             CoreNotificationHelper.notifyOptimisticLockingFailure(message,
-                objectName);
+                objectName, null);
         }
     }
 }

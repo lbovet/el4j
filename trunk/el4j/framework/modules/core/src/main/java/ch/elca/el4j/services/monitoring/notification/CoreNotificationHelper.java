@@ -257,17 +257,25 @@ public final class CoreNotificationHelper {
      *            Is the detailed message.
      * @param objectName
      *            Is the name of the object.
+     * @param optionalException optionally returns the original {@link OptimisticLockingFailureException}
+     *         (in order not to loose information)
      * @throws OptimisticLockingFailureException
      *             Will be thrown in every case.
      */
     public static void notifyOptimisticLockingFailure(
-        String detailedMessage, String objectName) 
+        String detailedMessage, String objectName, OptimisticLockingFailureException optionalException) 
         throws OptimisticLockingFailureException {
         String message = StringUtils.hasText(detailedMessage) 
             ? detailedMessage
                 : objectName + " was modified or deleted in the meantime.";
         s_logger.error(message);
-        throw new OptimisticLockingFailureException(message);
+        
+        // in order not to loose information
+        if (optionalException != null) { 
+            throw optionalException;
+        } else {
+            throw new OptimisticLockingFailureException(message);
+        }
     }
 
     /**
@@ -337,11 +345,11 @@ public final class CoreNotificationHelper {
      * Same behaviour as call of method 
      * <code>notifyOptimisticLockingFailure(null, String)</code>.
      * 
-     * @see #notifyOptimisticLockingFailure(String, String)
+     * @see #notifyOptimisticLockingFailure(String, String, OptimisticLockingFailureException)
      */
     public static void notifyOptimisticLockingFailure(String objectName) 
         throws OptimisticLockingFailureException {
-        notifyOptimisticLockingFailure(null, objectName);
+        notifyOptimisticLockingFailure(null, objectName, null);
     }
     
     /**
