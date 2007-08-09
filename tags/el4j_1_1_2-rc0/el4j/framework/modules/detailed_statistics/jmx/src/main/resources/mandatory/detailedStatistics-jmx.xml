@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+	Spring bean configuration file to export statistic information via jmx.
+-->
+<beans>
+	<!-- Version: $Revision$ -->
+	<!-- URL: $URL$ -->
+	<!-- Date: $Date$ -->
+	<!-- Author: $Author$ -->
+
+	<!--  Reporter -->
+	<bean id="detailedStatisticsReporter"
+		class="ch.elca.el4j.demos.statistics.detailed.jmx.DetailedStatisticsReporter">
+		<property name="server">
+			<ref bean="mBeanServer" />
+		</property>
+		<property name="dataRepository">
+			<ref bean="dataRepository" />
+		</property>
+	</bean>
+
+	<!-- Assembler that holds client and server side measurements -->
+	<bean id="dataRepository"
+		class="ch.elca.el4j.services.statistics.detailed.processing.DataRepository">
+		<constructor-arg index="0">
+			<ref bean="clientCollector" />
+		</constructor-arg>
+		<constructor-arg index="1">
+			<ref bean="remoteCollector" />
+		</constructor-arg>
+	</bean>
+
+	<!-- Client side collector -->
+	<bean id="clientCollector"
+		class="ch.elca.el4j.services.statistics.detailed.processing.NonPersistentMeasureCollectorService">
+		<constructor-arg index="0">
+			<value>50</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- Server side collector -->
+	<bean id="remoteCollector"
+		class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
+		<property name="remoteProtocol">
+			<ref bean="rmiProtocol" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				ch.elca.el4j.services.statistics.detailed.processing.MeasureCollectorService
+			</value>
+		</property>
+		<property name="serviceName">
+			<value>Statistics.remoteCollector</value>
+		</property>
+	</bean>
+</beans>

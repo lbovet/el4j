@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- Version: $Revision$ -->
+	<!-- URL: $URL$ -->
+	<!-- Date: $Date$ -->
+	<!-- Author: $Author$ -->
+
+	<parent>
+		<groupId>ch.elca.el4j.tests</groupId>
+		<artifactId>el4j-framework-tests-core</artifactId>
+		<version>1.1.2-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>module-core_implicit_context_passing_test</artifactId>
+	<version>${version.module-core}</version>
+	<packaging>jar</packaging>
+	<name>EL4J test implicit context passing integration</name>
+	<description>
+		Integration test module for implicit context passing of the EL4J
+		framework.
+	</description>
+	<build></build>
+	<dependencies>
+		<!-- module-remoting_core -->
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-remoting_core</artifactId>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+		<!--  remoting test -->
+		<dependency>
+			<groupId>ch.elca.el4j.tests</groupId>
+			<artifactId>module-remoting-tests-web-jar</artifactId>
+			<version>${version.module-remoting-tests}</version>
+			<type>jar</type>
+		</dependency>
+	</dependencies>
+</project>

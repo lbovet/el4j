@@ -1,0 +1,24 @@
+ -----
+ Dependency graph plugin
+ -----
+ -----
+ 26 Jan 2007
+ -----
+
+Dependency graph plugin
+
+  The DepGraph plugin can be used to draw a dependency graph from the project, 
+  the mojo is executed in. It traverses all dependencies and creates a graph using Graphviz.
+  
+   There are two maven goals: depgraph and fullgraph to get a dependency graph just for 
+   your project or a graph for all the modules as they are interconnected. 
+   Please refer to the next two section for more info on how to use them.
+
+   Handling of child->parent dependencies: 
+   To make the graph output more readable, parent->child dependencies are not 
+   considered as dependencies in case no other dependencies exist. This typically leads 
+   to "orphan" artifacts that seem to be not connected to the rest of the artifacts. 
+   You can use the depgraph.filterEmptyArtifacts property in case you want to eliminate 
+   them from the graph. 
+  
+  For usage {{{plugin-info.html}see the plugin info page}}.

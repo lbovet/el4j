@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<!-- On server side, interceptors are automatically added to all application 
+		objects with help of this AutoProxy -->
+	<bean id="methodTraceAutoProxy"
+		class="ch.elca.el4j.core.aop.IntelligentExclusiveBeanNameAutoProxyCreator">
+		<property name="interceptorNames">
+			<value>serverInterceptor</value>
+		</property>
+		<!-- Note that ALL classes except of service classes are proxied. 
+		 If this is not desired, then this can be changed here -->
+		<property name="beanNames">
+			<value>*</value>
+		</property>
+		<property name="exclusiveBeanNames">
+			<list>
+				<value>serverInterceptor</value>
+				<value>rmiProtocol</value>
+				<value>serverCollector</value>
+				<value>clientCollector</value>
+				<value>remoteCollector</value>
+				<value>dataRepository</value>
+				<value>rmiCollectorExporter</value>
+				<value>implicitContextPassingRegistry</value>
+				<value>sharedContextImplicitContextPasser</value>
+				<value>clientInterceptor</value>
+				<value>mBeanServer</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="serverInterceptor"
+		class="ch.elca.el4j.services.statistics.detailed.contextpassing.MeasureInterceptor">
+		<constructor-arg index="0">
+			<ref bean="serverCollector" />
+		</constructor-arg>
+		<!-- Configure this Interceptor to be a server interceptor -->
+		<constructor-arg index="1">
+			<value>Jvm2</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- The data collected on the server side is exported via RMI and therefore 
+		accessible from the reporter located on the client side -->
+	<bean id="serverCollector"
+		class="ch.elca.el4j.services.statistics.detailed.processing.NonPersistentMeasureCollectorService">
+		<constructor-arg index="0">
+			<value>51</value>
+		</constructor-arg>
+	</bean>
+	<bean id="rmiCollectorExporter"
+		class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
+		<property name="remoteProtocol">
+			<ref bean="rmiProtocol" />
+		</property>
+		<property name="serviceInterface">
+			<value>
+				ch.elca.el4j.services.statistics.detailed.processing.MeasureCollectorService
+			</value>
+		</property>
+		<property name="serviceName">
+			<value>Statistics.remoteCollector</value>
+		</property>
+		<property name="service">
+			<idref bean="serverCollector" />
+		</property>
+	</bean>
+</beans>

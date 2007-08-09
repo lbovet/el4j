@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<!-- $Version: $ -->
+	<!-- $Source: $ -->
+	<!-- $Date$ -->
+	<!-- $Author$ -->
+
+	<bean id="nameDao" parent="abstractDao"
+		class="ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao">
+		<property name="persistentClass"
+			value="ch.elca.el4j.tests.tcpforwarder.dom.Name" />
+	</bean>
+
+
+	<!-- Hibernate Session Factory Bean -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="mappingResources">
+			<list>
+				<value>
+					scenarios/dataaccess/hibernate/name/Name.hbm.xml
+				</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${databaseDialect}</prop>
+                                <prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>				
+				<prop key="hibernate.max_fetch_depth">3</prop>
+			</props>
+		</property>
+		<property name="useTransactionAwareDataSource">
+			<value>true</value>
+		</property>
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+</beans>

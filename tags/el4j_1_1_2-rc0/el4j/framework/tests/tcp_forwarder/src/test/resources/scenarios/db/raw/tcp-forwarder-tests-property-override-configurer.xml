@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <bean id="tcpForwarderTestsDbRawOverrideConfigurer"
+        class="org.springframework.beans.factory.config.PropertyOverrideConfigurer"
+        singleton="false">
+        <property name="locations">
+            <list>
+                <value>classpath:scenarios/db/raw/tcp-forwarder-tests-override-${db.name}.properties</value>
+            </list>
+        </property>
+        <property name="order" value="3"/>
+    </bean>
+</beans>

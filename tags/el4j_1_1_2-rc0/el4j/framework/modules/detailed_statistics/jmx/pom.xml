@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- Version: $Revision$ -->
+	<!-- URL: $URL$ -->
+	<!-- Date: $Date$ -->
+	<!-- Author: $Author$ -->
+
+	 <parent>
+        <groupId>ch.elca.el4j.modules</groupId>
+        <artifactId>el4j-framework-module-detailed_statistics</artifactId>
+        <version>1.1.2-SNAPSHOT</version>
+    </parent>
+
+	<artifactId>module-detailed_statistics-jmx</artifactId>
+	<version>${version.module-detailed_statistics}</version>
+	<packaging>jar</packaging>
+	<name>EL4J module detailed statistics for JMX</name>
+	<description>
+		Module detailed statistics for JMX of the EL4J framework.
+	</description>	
+	<dependencies>
+		<!-- EL4J framework modules -->
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-detailed_statistics-common</artifactId>
+			<version>${version.module-detailed_statistics}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-jmx</artifactId>
+		</dependency>
+	</dependencies>
+</project>
