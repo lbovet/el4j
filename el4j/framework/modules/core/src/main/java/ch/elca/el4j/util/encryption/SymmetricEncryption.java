@@ -30,11 +30,13 @@ import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.DESedeKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  * Class to en- and decrypt data symetrically.
+ * 
+ * CAVEAT: the encoding between byte[] and String was recently changed to adapt to
+ *  the new Base64 encore (before it used a private method of sun).
  * 
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -197,8 +199,7 @@ public class SymmetricEncryption {
             m_cipher.init(Cipher.ENCRYPT_MODE, getKey());
             byte[] ciphertext = m_cipher.doFinal(cleartext);
 
-            BASE64Encoder base64encoder = new BASE64Encoder();
-            return base64encoder.encode(ciphertext);
+            return (Base64.encodeBase64(ciphertext)).toString();
         } catch (Exception e) {
             throw new EncryptionException(e);
         }
@@ -222,8 +223,7 @@ public class SymmetricEncryption {
 
         try {
             m_cipher.init(Cipher.DECRYPT_MODE, getKey());
-            BASE64Decoder base64decoder = new BASE64Decoder();
-            byte[] cleartext = base64decoder.decodeBuffer(encryptedString);
+            byte[] cleartext = Base64.decodeBase64(encryptedString.getBytes());
             byte[] ciphertext = m_cipher.doFinal(cleartext);
 
             return ciphertext;
