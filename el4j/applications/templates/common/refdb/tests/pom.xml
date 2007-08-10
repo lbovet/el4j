@@ -36,7 +36,7 @@
 							</connectionPropertiesSource>
 						</configuration>
 						<goals>
-							<goal>prepareDB</goal>
+							<goal>prepare</goal>
 						</goals>
 						<phase>pre-integration-test</phase>
 					</execution>
@@ -76,7 +76,7 @@
 							</connectionPropertiesSource>
 						</configuration>
 						<goals>
-							<goal>cleanUpDB</goal>
+							<goal>cleanUp</goal>
 						</goals>
 						<phase>post-integration-test</phase>
 					</execution>

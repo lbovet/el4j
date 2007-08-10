@@ -36,7 +36,7 @@
 							</connectionPropertiesSource>
 						</configuration>
 						<goals>
-							<goal>prepareDB</goal>
+							<goal>prepare</goal>
 						</goals>
 						<phase>pre-integration-test</phase>
 					</execution>
@@ -76,7 +76,7 @@
 							</db.connectionProperties>
 						</configuration>
 						<goals>
-							<goal>cleanUpDB</goal>
+							<goal>cleanUp</goal>
 						</goals>
 						<phase>post-integration-test</phase>
 					</execution>
@@ -100,5 +100,17 @@
 			<artifactId>module-env</artifactId>
 			<type>jar</type>
 		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-env</artifactId>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>com.p6spy</groupId>
+			<artifactId>p6spy</artifactId>
+			<type>jar</type>
+            <version>1.0</version>
+		</dependency>
+		
 	</dependencies>
 </project>
