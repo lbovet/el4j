@@ -18,7 +18,7 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
 
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName">
             <value>oracle.jdbc.driver.OracleDriver</value>
         </property>
