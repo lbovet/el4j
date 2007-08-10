@@ -391,7 +391,6 @@
                                     <arguments>
                                         <argument>-Ptest.quiet,tomcat5x,db2,auto</argument>
                                         <argument>-Dsurefire.reports.directory=${project.build.directory}/${surefire-report.name.tomcat5-derby10}</argument>
-                                        <argument>clean</argument>
                                         <argument>install</argument>
                                     </arguments>
                                 </configuration>
@@ -448,7 +447,6 @@
                                     <arguments>
                                         <argument>-Ptest.quiet,weblogic9x,oracle,auto</argument>
                                         <argument>-Dsurefire.reports.directory=${project.build.directory}/${surefire-report.name.weblogic9-oracle9}</argument>
-                                        <argument>clean</argument>
                                         <argument>install</argument>
                                     </arguments>
                                 </configuration>
