@@ -2,14 +2,14 @@
  Getting Started
  -----
  -----
- 14 Dec 2006
+ 13 Aug 2007
  -----
 
 Getting Started
 
 * Prerequisites
 
-  You need the Maven 2.1-SNAPSHOT version because the current Maven version (2.0.4)
+  You need the a patched Maven 2.0.7 version because the current Maven version
   contains a bug that is crucial for EL4J. We submitted a patch and we provide
   an inofficial build with the fixed bug. Here is a complete list of what you
   need:
@@ -87,7 +87,7 @@ javac --version
 mvn --version 
 ---
 
-      Make sure that you have the Maven version <<< 2.1-SNAPSHOT >>>
+      Make sure that you have the Maven version <<< 2.0.7 >>>
 
 
 *** Checkout the source code
@@ -95,7 +95,7 @@ mvn --version
   * Open a command line, change to the EL4J directory and execute
 
 +------------------------------------------------------------------------
-svn checkout https://svn.sourceforge.net/svnroot/el4j/trunk/el4j external 
+svn checkout https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j external 
 +------------------------------------------------------------------------
 
 
