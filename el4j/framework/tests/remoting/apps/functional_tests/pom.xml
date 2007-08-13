@@ -78,7 +78,6 @@
 			</plugin>
 
 		</plugins>
-
 	</build>
 
 	<profiles>
