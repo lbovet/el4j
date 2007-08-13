@@ -30,7 +30,7 @@ Plugins
   Please refer also the plugin section of the reference document and the maven cheat sheet for more information. 
 
   The plugins can also be used from outside of EL4J, they are in our repository. Here's a sample config for your pom.xml file: 
-  
+---
   \<pluginRepository\>
   
   \ \ \<id\>elca-services\</id\>
@@ -44,13 +44,13 @@ Plugins
   \ \ \</releases\>
     
   \</pluginRepository\>
-  
+---
     
-  ===========
+===========
   
   The individual plugins can then be setup like the following:
   
-  
+---
   \<plugins\>
   
   \ \ \[...\]
@@ -104,5 +104,5 @@ Plugins
   \ \ \</plugin\>    
     
   \</plugins\>
-  
+---
 
