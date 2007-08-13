@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    
+  <import resource="protocols-config.xml"/>
+
+  <bean id="Calculator" class="ch.elca.el4j.tests.remoting.ejb.service.impl.CalculatorImpl"/>
+  
+  <bean id="Library" class="ch.elca.el4j.tests.remoting.ejb.service.impl.LibraryImpl" singleton="false"/>
+  
+  <bean id="statelessEjbWithContextCalculatorExporter" class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
+    <property name="remoteProtocol">
+        <ref bean="ejbWithCtxProtocol"/>
+    </property>
+    <property name="singleton">
+        <value>false</value>
+    </property>
+    <property name="serviceInterface">
+	<value>ch.elca.el4j.tests.remoting.ejb.service.Calculator</value>
+    </property>
+    <property name="service">
+        <value>Calculator</value>
+    </property>
+    <property name="serviceName">
+      <value>CalculatorStatelessWithCtxEjbBean</value>
+    </property>
+    <property name="protocolSpecificConfiguration">
+    	<ref bean="calculatorValueObject"/>
+    </property>
+  </bean>
+
+  
+  <bean id="statefulEjbWithContextLibraryExporter" class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
+    <property name="remoteProtocol">
+        <ref bean="ejbWithCtxProtocol"/>
+    </property>
+    <property name="singleton">
+    	<value>false</value>
+    </property>
+    <property name="serviceInterface">
+	<value>ch.elca.el4j.tests.remoting.ejb.service.Library</value>
+    </property>
+    <property name="service">
+        <value>Library</value>
+    </property>
+    <property name="serviceName">
+      <value>LibraryStatefulWithCtxEjbBean</value>
+    </property>
+    <property name="protocolSpecificConfiguration">
+    	<ref bean="libraryValueObject"/>
+    </property>
+  </bean>
+</beans>

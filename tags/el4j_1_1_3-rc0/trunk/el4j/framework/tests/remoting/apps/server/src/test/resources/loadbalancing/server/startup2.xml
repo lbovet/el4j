@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!-- Version: $Revision: 308 $ -->
+    <!-- URL: $URL: https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/apps/refdb/app/gui/conf/scenarios/springrcp/refdb/startup/startup.xml $ -->
+    <!-- Date: $Date: 2006-03-23 12:15:43 +0100 (Thu, 23 Mar 2006) $ -->
+    <!-- Author: $Author: swisswheel $ -->
+
+
+    <bean id="rmiTestObjImpl2" class="ch.elca.el4j.tests.services.remoting.loadbalancing.common.BusinessObjectImpl">
+	<property name="serverName">
+		<value>localhost:8095</value>
+		</property>
+    </bean>
+
+    <bean id="rmiTestObjExporter2" class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
+        <property name="serviceInterface">
+            <value>ch.elca.el4j.tests.services.remoting.loadbalancing.common.BusinessObject</value>
+        </property>
+        <property name="service">
+            <idref bean="rmiTestObjImpl2"/>
+        </property>
+        <property name="remoteProtocol">
+            <ref bean="rmiProtocol2" />
+        </property>
+    </bean>
+</beans>
