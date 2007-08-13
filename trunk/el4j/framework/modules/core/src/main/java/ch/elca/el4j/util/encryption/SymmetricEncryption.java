@@ -199,7 +199,7 @@ public class SymmetricEncryption {
             m_cipher.init(Cipher.ENCRYPT_MODE, getKey());
             byte[] ciphertext = m_cipher.doFinal(cleartext);
 
-            return (Base64.encodeBase64(ciphertext)).toString();
+            return new String(Base64.encodeBase64(ciphertext));
         } catch (Exception e) {
             throw new EncryptionException(e);
         }
