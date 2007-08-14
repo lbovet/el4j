@@ -22,5 +22,4 @@ mvn exec:java
 
 # Browse to "Performance - key=detailedStatisticsReporter" 
   Click on "showMeasureIdTable" on the bottom to choose a measureId
-  Then, either create a CSV or SVG File (providing filename and measureId)
-  or get a SVGString (providing a measureId)
+  Then, either create a CSV or a GIF File (providing filename and measureId).
