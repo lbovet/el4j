@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+	
+<sqlMap namespace="refdb-core">
+    <!-- Version: $Revision: 1860 $ -->
+    <!-- URL: $URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/applications/templates/common/refdb/dao/src/main/resources/etc/ibatis/db2/table-formalpublication.xml $ -->
+    <!-- Date: $Date: 2007-07-22 22:37:17 +0200 (Sun, 22 Jul 2007) $ -->
+    <!-- Author: $Author: poser55 $ -->
+
+    <!-- 
+        Formal publication related invocations
+    -->
+    <!-- 
+        ATTENTION: Dynamic parts are only used due to badly implemented jdbc 
+        driver from ibm, which does not support java.sql.Types.NULL!
+    -->
+    <!--
+        Tag 'update' and not 'insert' is used, because no primary key must be 
+        generated.
+    -->
+    <update id="insertFormalPublication">
+        insert into FORMALPUBLICATIONS (KEYTOREFERENCE, AUTHORNAME, PUBLISHER,
+            PAGENUM) values (#key#, #authorName#,
+                    #publisher#, #pageNum#)
+    </update>
+    <update id="updateFormalPublication">
+        update FORMALPUBLICATIONS set 
+                    AUTHORNAME=#authorName#,
+                    PUBLISHER=#publisher#,
+		    PAGENUM=#pageNum# 
+            where KEYTOREFERENCE=#key#
+    </update>
+</sqlMap>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!-- 
+    Spring bean configuration file to load property files of environment 
+    support for direct bean property overriding.
+-->
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <bean id="moduleEnvOverrideConfigurer"
+        class="org.springframework.beans.factory.config.PropertyOverrideConfigurer">
+        <property name="location">
+            <value>classpath:env/env.properties</value>
+        </property>
+        <property name="ignoreInvalidKeys" value="true"/>
+        <property name="order" value="-1"/>
+    </bean>
+</beans>

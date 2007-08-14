@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sqlMapConfig 
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN" 
+	"http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+    <!-- Version: $Revision: 1694 $ -->
+    <!-- URL: $URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/applications/templates/common/refdb/dao/src/main/resources/etc/ibatis/refdb-core-sqlmap-config-for-db2.xml $ -->
+    <!-- Date: $Date: 2007-01-16 17:44:26 +0100 (Tue, 16 Jan 2007) $ -->
+    <!-- Author: $Author: enylaios $ -->
+
+    <sqlMap resource="etc/ibatis/common/table-keyword.xml" />
+    <sqlMap resource="etc/ibatis/common/table-reference.xml" />
+    <sqlMap resource="etc/ibatis/common/table-link.xml" />
+    <sqlMap resource="etc/ibatis/common/table-book.xml" />
+    <sqlMap resource="etc/ibatis/common/table-formalpublication.xml" />
+    <sqlMap resource="etc/ibatis/common/table-annotation.xml" />
+    <sqlMap resource="etc/ibatis/common/table-file.xml" />
+    <sqlMap resource="etc/ibatis/common/table-referencekeywordrelationship.xml" />
+
+    <sqlMap resource="etc/ibatis/mysql/table-keyword.xml" />
+    <sqlMap resource="etc/ibatis/mysql/table-reference.xml" />
+    <sqlMap resource="etc/ibatis/mysql/table-link.xml" />
+    <sqlMap resource="etc/ibatis/mysql/table-book.xml" />
+    <sqlMap resource="etc/ibatis/mysql/table-formalpublication.xml" />
+    <sqlMap resource="etc/ibatis/mysql/table-annotation.xml" />
+    <sqlMap resource="etc/ibatis/mysql/table-file.xml" />
+</sqlMapConfig>
