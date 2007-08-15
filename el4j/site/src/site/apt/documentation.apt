@@ -60,7 +60,7 @@ Documentation
 * Release notes
 
   Release notes directly from the 
-  {{{http://el4j.svn.sourceforge.net/viewcvs.cgi/*checkout*/el4j/trunk/el4j/etc/ReleaseNotes.txt}
+  {{{http://el4j.svn.sourceforge.net/viewvc/*checkout*/el4j/trunk/el4j/etc/ReleaseNotes.txt}
   sourceforge subversion repository}}.
 
 * Generated framework documentation
