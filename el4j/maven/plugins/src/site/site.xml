@@ -45,18 +45,7 @@
                 href="/favicon.ico"
                 type="image/x-icon" />
         </head>
-        <links>
-            <item name="EL4NET"
-                href="http://el4net.sourceforge.net" />
-            <item name="IIOP.NET"
-                href="http://iiop-net.sourceforge.net" />
-            <item name="ELCA"
-                href="http://www.elca.ch" />
-        </links>
-        <menu ref="parent" />
-        <menu ref="modules" />
-        <menu ref="reports" />
-		
+
         <menu name="EL4J">
             <item name="Overview" href="../../index.html" />
             <item name="Plugins" href="../index.html" />
@@ -74,5 +63,18 @@
             <item name="Issue Tracking" href="issue-tracking.html" />
             <item name="Project Team" href="team-list.html" />
         </menu>
+		
+		<links>
+            <item name="EL4NET"
+                href="http://el4net.sourceforge.net" />
+            <item name="IIOP.NET"
+                href="http://iiop-net.sourceforge.net" />
+            <item name="ELCA"
+                href="http://www.elca.ch" />
+        </links>
+        <menu ref="parent" />
+        <menu ref="modules" />
+        <menu ref="reports" />
+		
     </body>
 </project>
