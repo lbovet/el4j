@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+    
+    <bean id="rmiProtocol" class="ch.elca.el4j.services.remoting.protocol.Rmi">
+        <property name="serviceHost">
+            <value>${rmi.host}</value>
+        </property>
+        <property name="servicePort">
+            <value>${rmi.port}</value>
+        </property>
+        <property name="implicitContextPassingRegistry">
+            <ref local="rmiImplicitContextPassingRegistry" />
+        </property>
+    </bean>
+
+    <bean id="rmiImplicitContextPassingRegistry" 
+        class="ch.elca.el4j.tests.remoting.service.TestImplicitContextPassingRegistry" />
+    
+</beans>
