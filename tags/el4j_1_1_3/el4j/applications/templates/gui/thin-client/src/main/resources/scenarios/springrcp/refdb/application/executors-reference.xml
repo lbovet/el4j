@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <!-- 
+        Executor to change reference properties.
+    -->
+    <bean id="referencePropertiesExecutor"
+        class="ch.elca.el4j.apps.refdb.gui.executors.ReferencePropertiesExecutor"
+        singleton="false">
+        <property name="beanPropertiesForms">
+            <!--
+                Displayed property forms. Here only one is diplayed for all 
+                reference properties.
+            -->
+            <ref local="referenceFormAll" />
+        </property>
+    </bean>
+
+    <!-- 
+        Form that describs which reference properties should be displayed.
+    -->
+    <bean id="referenceFormAll"
+        class="ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm"
+        singleton="false">
+        <property name="shownBeanProperties">
+            <!--
+                Are the shown bean properties. The order is the same in 
+                dialog.
+            -->
+            <list>
+                <value>key</value>
+                <value>name</value>
+                <value>description</value>
+                <value>incomplete</value>
+                <value>version</value>
+                <value>hashValue</value>
+                <value>date</value>
+                <value>whenInserted</value>
+            </list>
+        </property>
+        <property name="readOnlyBeanProperties">
+            <!--
+                Are shown but read only bean properties.
+            -->
+            <list>
+                <value>key</value>
+                <value>whenInserted</value>
+            </list>
+        </property>
+    </bean>
+</beans>

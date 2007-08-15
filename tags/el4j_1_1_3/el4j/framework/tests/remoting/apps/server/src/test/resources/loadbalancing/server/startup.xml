@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+
+    <!--  Server -->
+    <bean id="rmiTestObjImpl" class="ch.elca.el4j.tests.services.remoting.loadbalancing.common.BusinessObjectImpl">
+	<property name="serverName">
+		<value>localhost:${rmi.port}</value>
+		</property>
+    </bean>
+
+    <bean id="rmiTestObjExporter" class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
+        <property name="serviceInterface">
+            <value>ch.elca.el4j.tests.services.remoting.loadbalancing.common.BusinessObject</value>
+        </property>
+        <property name="service">
+            <idref bean="rmiTestObjImpl"/>
+        </property>
+        <property name="remoteProtocol">
+            <ref bean="rmiProtocol" />
+        </property>
+    </bean>
+</beans>
