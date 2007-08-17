@@ -96,6 +96,22 @@
             </roles>
             <timezone>+1</timezone>
         </developer>
+		<developer>
+            <id>swi</id>
+            <name>Stefan Wismer</name>
+            <roles>
+                <role>Java developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+		<developer>
+            <id>cba</id>
+            <name>Christoph Bäni</name>
+            <roles>
+                <role>Java developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
     </developers>
 
     <contributors>
