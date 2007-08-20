@@ -67,5 +67,5 @@
     </bean>
 
     <bean id="annotations" 
-        class="org.springframework.metadata.commons.CommonsAttributes"/>
+        class="org.acegisecurity.annotation.SecurityAnnotationAttributes"/>
 </beans>
