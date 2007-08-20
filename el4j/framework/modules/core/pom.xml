@@ -23,15 +23,6 @@
     <description>
         Module core of the EL4J framework.
     </description>
-    <build>
-        <!-- Support for Commons Attributes -->
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>commons-attributes-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -78,11 +69,6 @@
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
-        </dependency>
-        <dependency>
-            <!-- DEPRECATED: Use Java 5 annotations instead. -->
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-attributes-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.easymock</groupId>

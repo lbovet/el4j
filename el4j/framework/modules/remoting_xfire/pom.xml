@@ -62,10 +62,6 @@
                 <exclusion>
                     <groupId>commons-beanutils</groupId>
                     <artifactId>commons-beanutils</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>commons-attributes</groupId>
-                    <artifactId>commons-attributes-api</artifactId>
                 </exclusion>					
             </exclusions>
         </dependency>

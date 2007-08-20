@@ -23,15 +23,6 @@
     <description>
         Module security of the EL4J framework.
     </description>
-    <build>
-        <!-- Support for Commons Attributes -->
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>commons-attributes-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
     <dependencies>
         <!-- EL4J framework modules -->
         <dependency>
