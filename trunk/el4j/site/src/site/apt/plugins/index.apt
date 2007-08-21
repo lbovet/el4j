@@ -69,7 +69,7 @@ Plugins
   
   \ \ \ \</configuration\>
   
-  \ \ \ \<version\>1.1\</version\>
+  \ \ \ \<version\>1.2\</version\>
   
   \ \ \</plugin\>
   
@@ -79,7 +79,7 @@ Plugins
   
   \ \ \ \<artifactId\>maven-repohelper-plugin\</artifactId\>
   
-  \ \ \ \<version\>1.1\</version\>
+  \ \ \ \<version\>1.2\</version\>
   
   \ \ \</plugin\>
   
@@ -89,7 +89,7 @@ Plugins
   
   \ \ \ \<artifactId\>maven-file-collector-plugin\</artifactId\>
   
-  \ \ \ \<version\>1.1\</version\>
+  \ \ \ \<version\>1.2\</version\>
   
   \ \ \</plugin\>
   
@@ -99,7 +99,7 @@ Plugins
   
   \ \ \ \<artifactId\>maven-database-plugin\</artifactId\>
   
-  \ \ \ \<version\>1.1\</version\>
+  \ \ \ \<version\>1.2\</version\>
   
   \ \ \</plugin\>    
     
