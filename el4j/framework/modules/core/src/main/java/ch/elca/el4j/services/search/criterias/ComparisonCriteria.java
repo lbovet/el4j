@@ -134,10 +134,21 @@ public class ComparisonCriteria extends AbstractCriteria {
      * @param value Is the value of this criteria.
      * @return Returns an equals comparison criteria.
      */
+    public static ComparisonCriteria equals(String field, Enum value) {
+        return new ComparisonCriteria(
+            field, value, "=", "Enum");
+    }
+    
+    /**
+     * @param field Is the field the criteria is made for.
+     * @param value Is the value of this criteria.
+     * @return Returns an equals comparison criteria.
+     */
     public static ComparisonCriteria equals(String field, float value) {
         return new ComparisonCriteria(
             field, new Float(value), "=", "Float");
     }
+    
     /**
      * @return Returns the compare operator.
      */
