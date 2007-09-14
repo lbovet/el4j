@@ -28,11 +28,11 @@ import java.awt.event.ContainerEvent;
 import java.awt.event.ContainerListener;
 import java.util.Arrays;
 import java.util.Hashtable;
+
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
-import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.event.InternalFrameEvent;
