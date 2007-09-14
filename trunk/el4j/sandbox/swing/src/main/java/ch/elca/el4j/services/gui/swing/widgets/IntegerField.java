@@ -1,21 +1,3 @@
-/**
- * ----------------------------------------------------------------------------
- * (c) 2004, 2005 by Les Retraites Populaires
- * ----------------------------------------------------------------------------
- * 
- * ElcaIntegerField
- *
- * PROJECT: RP
- * SERVICE: 
- *
- * $Source: /cvsroot/spos-backend/dev/src/guifw/java/ch/elca/guifw/widget/ElcaIntegerField.java,v $
- * $Revision: 1.3 $
- * ----------------------------------------------------------------------------
- * WHEN         WHO                 VERSION   DESCRIPTION
- * 30-03-2005   HUN                 1.0       Creation
- * ----------------------------------------------------------------------------
- */
-
 package ch.elca.el4j.services.gui.swing.widgets;
 
 import java.awt.Color;
@@ -29,14 +11,8 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
 /**
- * <p>
- * The text field for inputting integer value only.
- * </p>
- * 
- * <script type="text/javascript">printFileStatus ("$Source:
- * /cvsroot/spos-backend/dev/src/guifw/java/ch/elca/guifw/widget/ElcaIntegerField.java,v $",
- * "$Revision: 1.3 $", "$Date: 2007/01/31 09:05:44 $", "$Author: ctt $" );</script>
- * 
+ * Swing text field for inputting integer values only.
+ *
  * @author HUN
  */
 
