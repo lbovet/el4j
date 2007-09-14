@@ -34,20 +34,22 @@ import ch.elca.el4j.core.context.ModuleApplicationContextConfiguration;
 import ch.elca.el4j.services.gui.swing.splash.SplashScreen;
 
 /**
- * The main driver for a Spring Rich Client application. This class displays a
- * configurable splash screen and instantiates the rich client
- * <code>Application</code> instance. <b>ATTENTION:</b> This class has the
- * same name in Spring RCP. The idea is that the people from Spring RCP will
- * change their class in a next release so we do not have to serve a separate
- * class in the future. <script type="text/javascript">printFileStatus ("$URL:
- * https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/spring_rcp/src/main/java/ch/elca/el4j/services/gui/richclient/ApplicationLauncher.java
- * $", "$Revision: 1436 $", "$Date: 2006-03-13 14:15:43 +0100 (Mo, 13 Mrz 2006)
- * $", "$Author: swisswheel $" );</script>
+ * The main launcher for a Swing GUI application. This class displays a
+ * configurable splash screen and instantiates the 
+ * <code>Application</code> instance. 
+ * 
+ * TODO: clean this class up (it comes from the original Spring RCP framework 
+ *  and it has still a lot of things in it that are not required for the new, 
+ *  lighter application framework). Potentially we could remove the 
+ *  startup context (is it still needed)?
+ * 
+ * <script type="text/javascript">printFileStatus ("$URL$", 
+ *  "$Revision: 1436 $", "$Date $", "$Author: swisswheel $" );</script>
  * 
  * @author Keith Donald
  * @author Martin Zeltner (MZE)
  * @author Alex Mathey (AMA)
- * @see Application
+ * @see org.jdesktop.application.Application
  */
 public class ApplicationLauncher {
     /**

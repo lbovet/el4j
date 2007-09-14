@@ -10,6 +10,20 @@ import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.services.gui.swing.exceptions.Exceptions;
 
+/** 
+ * Parent class for new applications. (For MDI applications refer to 
+ *  {@link ch.elca.el4j.services.gui.swing.MDIApplication })
+ * 
+ * Additional features:
+ *   * access to static Spring application context
+ *      (TBD whether a static access is a good idea)
+ *   * allows installing a handler for uncaught exceptions
+ *    @see ch.elca.el4j.services.gui.swing.exceptions.Exceptions 
+ *    @see ch.elca.el4j.services.gui.swing.exceptions.Handler
+ *   * defines a basic menu
+ *   * defines a getAction(String) method
+ *      (refer to recommended programming pattern with this method)
+ */
 public abstract class GUIApplication extends SingleFrameApplication {
     /**
      * The Spring context.
