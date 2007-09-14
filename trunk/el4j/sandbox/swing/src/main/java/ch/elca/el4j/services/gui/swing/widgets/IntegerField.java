@@ -261,11 +261,6 @@ public class IntegerField extends JTextField {
 
 /**
  * The integer document object for the text field.
- * 
- * <script type="text/javascript">printFileStatus ("$Source:
- * /cvsroot/spos-backend/dev/src/guifw/java/ch/elca/guifw/widget/ElcaIntegerField.java,v $",
- * "$Revision: 1.3 $", "$Date: 2007/01/31 09:05:44 $", "$Author: ctt $" );</script>
- * 
  * @author HUN
  * @version 1.0
  */
