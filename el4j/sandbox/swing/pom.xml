@@ -17,7 +17,7 @@
     </parent>
 
     <artifactId>module-swing</artifactId>
-    <version>${version.module-swing}</version>
+    <version>0.1-SNAPSHOT</version> <!-- ${version.module-swing} -->
     <packaging>jar</packaging>
     <name>EL4J module swing</name>
     <description>
