@@ -2,7 +2,22 @@ package ch.elca.el4j.services.gui.swing.layout;
 import javax.swing.*; 
 import java.awt.*; 
  
-/** 
+/**
+ * LayoutManager that ensures that command buttons have the same width and height 
+ *  and are aligned to left/right.
+ *  
+ * Sample usage:
+ *  public static void main(String[] args){ <br>        
+ *       JPanel buttonPanel = new JPanel(new EqualsLayout(3)); <br> 
+ *       buttonPanel.add(new JButton("OK")); <br>
+ *       buttonPanel.add(new JButton("Cancel")); <br>
+ *       buttonPanel.add(new JButton("Help")); <br>
+ *       ...
+ *
+ *  This class was published under 
+ *   http://www.jroller.com/page/santhosh?entry=how_do_you_layout_command
+ *
+ * 
  * @author Santhosh Kumar - santhosh@in.fiorano.com 
  */ 
 public class EqualsLayout implements LayoutManager, SwingConstants{ 
