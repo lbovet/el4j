@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!-- Version: $Revision: 308 $ -->
+    <!-- URL: $URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/spring_rcp/src/main/resources/scenarios/springrcp/startup/startup.xml $ -->
+    <!-- Date: $Date: 2006-03-23 12:15:43 +0100 (Do, 23 Mrz 2006) $ -->
+    <!-- Author: $Author: swisswheel $ -->
+
+	<bean id="splashScreen" 
+		class="ch.elca.el4j.services.gui.swing.splash.ImageSplashScreen" 
+		singleton="false">
+		<property name="imageResourcePath">
+			<value>/images/splash-screen.gif</value>
+		</property>
+	</bean>
+</beans>
