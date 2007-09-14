@@ -9,6 +9,11 @@ import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.ApplicationContext;
 
+/**
+ * JMenu handling the Windows Menu for an MDI application.
+ *  
+ * @author SWI
+ */
 public class WindowMenu extends JMenu {
     private WindowManager windowManager;
     
