@@ -27,7 +27,7 @@ public class ImageSplashScreen {
     /**
      * Default EL4J splash screen gif
      */
-    public static final String DEFAULT_SPLASH_SCREEN = "/ch/elca/gui/resources/splash/splash-screen.gif";
+    public static final String DEFAULT_SPLASH_SCREEN = "/ch/elca/el4j/gui/swing/splash/resources/splash-screen.gif";
 	
 	
 	private static class SplashWindow extends Window {
