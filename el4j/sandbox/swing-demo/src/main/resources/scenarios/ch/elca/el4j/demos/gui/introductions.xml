@@ -1,0 +1,54 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="konto" singleton="false"
+		class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target">
+			<bean id="kontoTarget"
+				class="ch.elca.el4j.demos.gui.fs.object.ExampleKonto" singleton="false" />
+		</property>
+		<property name="exposeProxy">
+            <value>true</value>
+        </property>
+		<property name="interceptorNames">
+			<list>
+				<value>propertyChangeListenerAdvisor</value>
+			</list>
+		</property>
+		<property name="proxyTargetClass">
+			<value>true</value>
+		</property>
+	</bean>
+
+	<bean id="person" singleton="false"
+		class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target">
+			<bean id="personTarget"
+				class="ch.elca.el4j.demos.gui.model.DefaultPerson" singleton="false" />
+		</property>
+		<property name="exposeProxy">
+			<value>true</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>propertyChangeListenerAdvisor</value>
+			</list>
+		</property>
+		<property name="proxyTargetClass">
+			<value>true</value>
+		</property>
+	</bean>
+
+
+	<bean id="propertyChangeListenerMixin"
+		class="ch.elca.el4j.gui.model.mixin.PropertyChangeListenerMixin"
+		singleton="false">
+	</bean>
+
+	<bean id="propertyChangeListenerAdvisor"
+		class="org.springframework.aop.support.DefaultIntroductionAdvisor"
+		singleton="false">
+		<constructor-arg>
+			<ref bean="propertyChangeListenerMixin" />
+		</constructor-arg>
+	</bean>
+</beans>
