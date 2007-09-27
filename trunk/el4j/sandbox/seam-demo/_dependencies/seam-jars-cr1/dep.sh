@@ -1,0 +1,5 @@
+echo "<dependency>"
+echo "	<groupId>$2</groupId>"
+echo "	<artifactId>$3</artifactId>"
+echo "	<version>1.0-SNAPSHOT</version>"
+echo "</dependency>"
