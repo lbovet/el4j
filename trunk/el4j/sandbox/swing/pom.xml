@@ -35,11 +35,6 @@
             <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-security</artifactId>
         </dependency>
-		<dependency>
-			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-swing</artifactId>
-			<version>0.1-SNAPSHOT</version>
-		</dependency>
 
         <!-- Components -->
         <dependency>
