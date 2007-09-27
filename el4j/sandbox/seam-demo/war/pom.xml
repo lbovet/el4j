@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+   
+	<!-- Seam Demo WAR pom -->
+    
+	<parent>
+        <groupId>ch.elca.el4j.applications</groupId>
+        <artifactId>seam-demo</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>..</relativePath>
+    </parent>
+    
+	<modelVersion>4.0.0</modelVersion>
+    <artifactId>seam-demo-war</artifactId>
+    <packaging>war</packaging>
+    <name>seam-demo-war</name>
+    <description>WAR part of Seam Demo</description>
+    
+	<build>
+        <plugins>
+            <plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<configuration>
+					<deployer>
+						<deployables>
+							<deployable>
+								<location>
+									${jee-web.war.location}
+								</location>
+								<properties>
+									<context>
+										${jee-web.context}
+									</context>
+								</properties>
+							</deployable>
+						</deployables>
+					</deployer>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>ch.elca.el4j.maven.plugins</groupId>
+				<artifactId>maven-database-plugin</artifactId>
+                <configuration>
+					<wait>false</wait>
+                </configuration>
+			</plugin>
+
+        </plugins>
+    </build>
+    
+	<profiles>
+        <profile>
+            <id>initDB</id>
+            <activation>
+                <property>
+                    <name>initDB</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <!-- EL4J Database plugin to start and fill DB automatically -->
+                    <plugin>
+                        <groupId>ch.elca.el4j.maven.plugins</groupId>
+                        <artifactId>maven-database-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>initDB</id>
+                                <goals>
+                                    <goal>start</goal>
+                                    <goal>silentDrop</goal>
+                                    <goal>create</goal>
+                                </goals>
+                                <phase>package</phase>                               
+                                <configuration>
+                                    <connectionPropertiesSource>
+                                        scenarios/db/raw/keyword-web-override-{db.name}.properties
+                                    </connectionPropertiesSource>
+                                    <wait>false</wait>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    
+	<!-- Project dependencies -->
+    <dependencies>
+        <dependency>
+            <groupId>ch.elca.el4j.applications</groupId>
+            <artifactId>seam-demo-jar</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+</project>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+    
+<beans>
+	<!-- NOTE: This is sort of an unusually "monolithic" EL4J configuration.
+	           It is only used to simplify the configuration of this
+	           demo application. In a real world application, the beans herein
+	           will be scattered in several config files of different EL4J modules. -->
+
+	<!--
+	*********************************************************************************
+	  Hibernate related beans:
+	*********************************************************************************
+	-->
+
+	<!-- Hibernate Session Factory Bean -->
+	<bean id="sessionFactory"
+	   class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		
+		<!-- IMPORTANT: All classes containing hibernate annotations have to
+		                be listed here or hibernate won't be able to provide
+		                access to their metadata at runtime. -->
+		<property name="annotatedClasses">
+			<list>
+				<value>ch.elca.ttrich.Client</value>
+				<value>ch.elca.ttrich.Employee</value>
+				<value>ch.elca.ttrich.Offer</value>
+			</list>
+		</property>
+		
+		<!-- NOTE: The annotatedPackages property does not seem to be needed.
+		           It is not even clear, "what package level annotations" would
+		           be used by hibernate from the hibernate documentation anyway. -->
+		<!-- <property name="annotatedPackages">
+			<list>
+				<value>ch.elca.ttrich</value>
+			</list>
+		</property> -->
+		
+		<!-- Example usage of explicit hibernate mapping resources -->
+		<property name="mappingResources">
+			<list>
+				<value>etc/hibernate/Keyword.hbm.xml</value>
+			</list>
+		</property>
+		
+		<!-- The hibernate properties  -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${databaseDialect}</prop>
+				<prop key="hibernate.cache.provider_class">
+					org.hibernate.cache.HashtableCacheProvider
+				</prop>
+				<prop key="hibernate.max_fetch_depth">3</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>				
+				<prop key="hibernate.show_sql">true</prop>
+				
+				<!-- IMPORTANT: these prop's are needed for Open Session In View: -->
+				<prop key="hibernate.connection.autocommit">false</prop>				
+				<prop key="hibernate.connection.release_mode">after_transaction</prop>		
+			</props>
+		</property>
+		
+		<property name="useTransactionAwareDataSource">
+			<value>true</value>
+		</property>
+		
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+	<!--
+	*********************************************************************************
+	  DAO related beans:
+	*********************************************************************************
+	-->
+
+	<!-- the dao registry -->
+	<bean id="daoRegistry"
+	   class="ch.elca.j4persist.generic.dao.impl.DefaultDaoRegistry">
+		
+		<!-- mapping from qualified class names to daos -->
+		<property name="daos">
+			<map>
+				<!-- the example below illustrates, how a dao can be registered explicitly -->
+				<entry key="ch.elca.el4j.apps.keyword.dom.Keyword">
+					<ref bean="kwDao"/>
+				</entry>
+			</map>
+		</property>
+		
+		<!-- session factory needed for dao auto-creation -->
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"/> 
+		</property>	
+	</bean>
+
+	<!-- example of an explicit declaration of a dao -->
+	<bean id="kwDao" class="ch.elca.j4persist.hibernate.dao.GenericHibernateDao" parent="abstractDao">
+		<property name="persistentClass" value="ch.elca.el4j.apps.keyword.dom.Keyword"/>				
+	</bean>
+	
+	<!-- DAO prototype to be used for DAO auto-creation  -->
+	<bean id="DaoPrototype" class="ch.elca.j4persist.hibernate.dao.GenericHibernateDao"
+		parent="abstractDao" singleton="false">				
+	</bean>
+	
+	<!--
+	*********************************************************************************
+	  Generic master/detail view beans:
+	*********************************************************************************
+	-->
+	
+	<!-- Shortname mapping: bijective mapping between entity shortnames and class names -->
+	<bean id="shortNameMapping" class="ch.elca.ttrich.EntityShortNameMapping">
+		<property name="entityShortNames">
+			<map>
+				<entry key="ch.elca.el4j.apps.keyword.dom.Keyword">
+					<value>keyword</value>
+				</entry>
+			</map>
+		</property>
+		<!-- The package to use when guessing -->
+		<property name="defaultEntityPackage" value="ch.elca.ttrich"/>
+	</bean>
+	
+	<!-- Entity info base: provides (mostly metadata related) info about entities -->
+	<bean id="entityInfoBase" class="ch.elca.ttrich.EntityInfoBase">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<!-- Field lists: computes field/column lists (metadata & given in/exclusion lists) -->
+	<bean id="fieldLists" class="ch.elca.ttrich.FieldLists">
+		<property name="sessionFactory" ref="sessionFactory"/>
+		<property name="shortNameMapping" ref="shortNameMapping"/>
+	</bean>
+	
+	<!-- The essential utils bean: The heart of all generic master/detail views -->
+	<bean id="utils" class="ch.elca.ttrich.ElUtils">
+		<property name="shortNameMapping" ref="shortNameMapping"/>
+		<property name="entityInfoBase" ref="entityInfoBase"/>
+		<property name="fieldLists" ref="fieldLists"/>
+	</bean>
+</beans>

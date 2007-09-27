@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<!-- Seam Demo JAR pom -->
+
+	<parent>
+		<groupId>ch.elca.el4j.applications</groupId>
+		<artifactId>seam-demo</artifactId>
+		<version>1.0-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
+	
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>seam-demo-jar</artifactId>
+	<packaging>jar</packaging>
+	<name>seam-demo-jar</name>
+	<description>JAR part of Seam Demo</description>
+	
+	<build>
+		<!-- maven-seam-plugin provides seam-gen like functionality. its all optional -->
+		<!-- <plugins>
+			<plugin>
+				<groupId>cz.softeu.seamgen</groupId>
+				<artifactId>maven-seam-plugin</artifactId>
+				<configuration>
+					<modelPackage>ch.elca.el4j.applications.el4jseam.model</modelPackage>
+					<actionPackage>ch.elca.el4j.applications.el4jseam.action</actionPackage>
+					<testPackage>ch.elca.el4j.applications.el4jseam.test</testPackage>
+				</configuration>
+			</plugin>
+		</plugins>
+		-->
+	</build>
+	
+	<!-- Project dependencies -->
+	<dependencies>
+		<!--  EL4J framework modules -->
+		<dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-env</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-web-jar</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-database</artifactId>
+        </dependency>
+		
+		<!-- EL4J keyword dao -->
+		<dependency>
+            <groupId>ch.elca.el4j.applications</groupId>
+            <artifactId>keyword-dao</artifactId>
+        </dependency>
+		
+		<!-- Seam module -->
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-seam</artifactId>
+			<version>2.0.0.CR1</version>
+		</dependency>
+	</dependencies>
+</project>

@@ -1,0 +1,2 @@
+
+mvn -N deploy:deploy-file -DgroupId=$2 -DartifactId=$3 -Dversion=$4 -Dpackaging=jar -Dfile=d:/el4j/external/sandbox/seam-demo/_dependencies/seam-jars-cr1/$1 -DrepositoryId=ftpEl4ElcaServices -Durl=ftp://el4.elca-services.ch/htdocs/el4j/maven2repository
