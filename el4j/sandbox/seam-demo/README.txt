@@ -22,15 +22,11 @@ Used Libraries:
  - Sun Facelets implementation 1.1.13
 
 Build Instructions:
- !!!!! TODO !!!!!
-
- include instructions for installation of atomic jars!!! 
- 
- 5. Navigate to http://localhost:8080//??????????????????????????
-
-Source code layout:
-  !!!!! TODO !!!!!
-
+ - First compile it, using mvn install.
+ - To execute it, change to the war directory an run the following command:
+      mvn db:prepareDB cargo:undeploy cargo:deploy cargo:start
+ - After the application has started you can access it at
+      http://localhost:8080/seam-demo-war/
 
 Severe Problems:
 
