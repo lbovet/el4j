@@ -1,1 +1,0 @@
-find d:/el4j/external/sandbox/ttmaven/_mega-jar/seam-jars -iname "*.jar" | xargs -n 1 ./dep.sh
