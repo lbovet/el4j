@@ -150,7 +150,7 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
             String message = "The current " + objectName + " was modified or"
                 + " deleted in the meantime.";
             CoreNotificationHelper.notifyOptimisticLockingFailure(
-                message, objectName);
+                message, objectName, holfe);
         }
     }
     
@@ -181,7 +181,7 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
             String message = "The current " + objectName + " was "
                 + "deleted in the meantime.";
             CoreNotificationHelper.notifyOptimisticLockingFailure(
-                message, objectName);
+                message, objectName, null);
         }
         delete(toDelete);
     }
