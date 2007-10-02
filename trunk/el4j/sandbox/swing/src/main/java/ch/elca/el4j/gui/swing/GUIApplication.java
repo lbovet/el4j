@@ -128,7 +128,7 @@ public abstract class GUIApplication extends SingleFrameApplication {
             } else {
                 JMenuItem menuItem = new JMenuItem();
                 menuItem.setAction(getAction(actionName));
-                menuItem.setIcon(null);
+                //menuItem.setIcon(null);
                 menu.add(menuItem);
             }
         }
