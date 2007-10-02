@@ -18,9 +18,12 @@
 package ch.elca.el4j.gui.swing;
 
 import java.awt.EventQueue;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.Action;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
@@ -136,14 +139,55 @@ public abstract class GUIApplication extends SingleFrameApplication {
     }
     
     /**
-     * Returns the action object for an action name.
+     * Returns the first action object found for an action name.
+     *  (Looks in the internal list of candidate objects.) 
      * 
      * @param actionName   the action name as String
      * @return             the corresponding action object
+     * @see #addActionMappingInstance(Object)
      */
-    protected javax.swing.Action getAction(String actionName) {
+    protected Action getAction(String actionName) {
         org.jdesktop.application.ApplicationContext ac
             = Application.getInstance().getContext();
-        return ac.getActionMap(this).get(actionName);
+        
+        for (Object candidate: m_instancesWithActionMappings) {
+        	Action foundAction = ac.getActionMap(candidate).get(actionName); 
+        	if (foundAction != null) {
+        		return foundAction;
+        	}
+        }
+		return null;
     }
+    
+    /**
+     * Holds objects that contain @Action methods
+     *  (in order to allow distributing Action methods on
+     *   different classes.
+     */
+    protected List<Object> m_instancesWithActionMappings = new ArrayList<Object>();
+    
+    { 
+    	// always add "this" to the list of objects where Action methods 
+    	//  can be found 
+    	addActionMappingInstance(this);
+    }
+    
+    /**
+     * Add an object with @Action methods to the list of 
+     *  objects in which to look for actions. 
+     *   BTW: "this" is always added as first element in
+     *    this array.
+     * @param o 
+     */
+    public void addActionMappingInstance (Object o) {
+    	m_instancesWithActionMappings.add(o);
+    }
+    
+    /*
+     * @see #addActionMappingInstance
+     */
+    public void removeActionMappingInstance (Object o) {
+    	m_instancesWithActionMappings.remove(o);
+    }
+    
 }
