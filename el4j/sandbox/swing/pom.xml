@@ -40,7 +40,7 @@
         <dependency>
             <groupId>org.jdesktop.application</groupId>
             <artifactId>application</artifactId>
-            <version>1.0-patch1</version>
+            <version>1.01-patch1</version>
         </dependency>
 		<dependency>
             <groupId>javax.jnlp</groupId>
@@ -68,9 +68,14 @@
             <version>1.0</version>
         </dependency>
 		<dependency>
-            <groupId>ca.odell</groupId>
-            <artifactId>glazedlists</artifactId>
-            <version>1.7.0</version>
+            <groupId>zappini</groupId>
+            <artifactId>designgridlayout</artifactId>
+            <version>0.1.1</version>
+        </dependency>
+		<dependency>
+            <groupId>org.jdesktop.layout</groupId>
+            <artifactId>swing-layout</artifactId>
+            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -86,11 +91,6 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-commons-annotations</artifactId>
             <version>3.0.0.ga</version>
-        </dependency>
-		<dependency>
-            <groupId>com.jgoodies.forms</groupId>
-            <artifactId>forms</artifactId>
-            <version>1.0.5</version>
         </dependency>
         <dependency>
             <groupId>com.jgoodies.looks</groupId>
