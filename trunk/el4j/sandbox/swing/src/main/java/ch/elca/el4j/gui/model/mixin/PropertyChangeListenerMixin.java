@@ -20,9 +20,6 @@ import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.support.DefaultIntroductionAdvisor;
 import org.springframework.aop.support.DelegatingIntroductionInterceptor;
 
-import ca.odell.glazedlists.EventList;
-import ca.odell.glazedlists.GlazedLists;
-
 import com.silvermindsoftware.hitch.events.PropertyChangeListenerCapability;
 import com.silvermindsoftware.hitch.validation.ValidationCapability;
 
