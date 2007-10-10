@@ -172,8 +172,7 @@
                 <!-- EL4J developer specific properties -->
                 <!--el4j.root>/home/users2/tester/el4j</el4j.root>
                 <el4j.external>${el4j.root}/external</el4j.external>
-                <el4j.internal>${el4j.root}/internal</el4j.internal>
-                <el4j.localRepository.basedir>~/.m2/repository</el4j.localRepository.basedir-->
+                <el4j.internal>${el4j.root}/internal</el4j.internal-->
 
                 <!-- Project properties -->
                 <el4j.project.home>~/myproject</el4j.project.home>
