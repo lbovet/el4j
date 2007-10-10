@@ -23,5 +23,9 @@ public interface Person {
     public List<Person> getChildren() ;
     
     public void setChildren(List<Person> children);
+    
+    public boolean getSmart();
+    
+    public void setSmart(boolean smart);
 
 }
