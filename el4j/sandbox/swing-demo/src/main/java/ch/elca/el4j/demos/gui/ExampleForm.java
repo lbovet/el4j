@@ -26,11 +26,6 @@ import org.springframework.context.ApplicationContext;
 import zappini.designgridlayout.DesignGridLayout;
 import zappini.designgridlayout.Row;
 
-import ca.odell.glazedlists.EventList;
-import ca.odell.glazedlists.GlazedLists;
-import ca.odell.glazedlists.gui.TableFormat;
-import ca.odell.glazedlists.swing.EventListModel;
-import ca.odell.glazedlists.swing.EventTableModel;
 import ch.elca.el4j.demos.gui.model.DefaultPerson;
 import ch.elca.el4j.demos.gui.model.MyNumber;
 import ch.elca.el4j.demos.gui.model.Person;
