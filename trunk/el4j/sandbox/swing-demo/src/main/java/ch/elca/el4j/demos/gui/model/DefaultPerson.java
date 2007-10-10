@@ -12,6 +12,7 @@ public class DefaultPerson implements Person {
 	protected int age;
     protected List<MyNumber> numbers;
     protected List<Person> children;
+    protected boolean smart;
     
     public DefaultPerson() {
         numbers = new ArrayList<MyNumber>();
@@ -25,7 +26,6 @@ public class DefaultPerson implements Person {
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
-		System.out.println("new firstname: "+firstName);
 	}
 
 	@NotNull
@@ -35,6 +35,7 @@ public class DefaultPerson implements Person {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+		System.out.println("lastName has changed to " + lastName);
 	}
 
 	public int getAge() {
@@ -59,5 +60,13 @@ public class DefaultPerson implements Person {
     
     public void setChildren(List<Person> children) {
         this.children = children;
+    }
+    
+    public boolean getSmart() {
+        return smart;
+    }
+    
+    public void setSmart(boolean smart) {
+        this.smart = smart;   
     }
 }
