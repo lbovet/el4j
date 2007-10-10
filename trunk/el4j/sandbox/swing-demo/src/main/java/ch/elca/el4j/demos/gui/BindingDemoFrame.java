@@ -22,6 +22,7 @@ public class BindingDemoFrame extends JInternalFrame {
         
 
         setClosable(true);
+        setResizable(true);
         setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
         pack();
         setVisible(true);
