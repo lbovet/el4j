@@ -31,6 +31,7 @@
             <directory>${el4j.external}/maven/helpers/packer/src/main/resources/convenience</directory>
             <outputDirectory></outputDirectory>
             <fileMode>0755</fileMode>
+            <lineEnding>unix</lineEnding>
             <excludes>
                 <exclude>**/.*/**</exclude>
             </excludes>
