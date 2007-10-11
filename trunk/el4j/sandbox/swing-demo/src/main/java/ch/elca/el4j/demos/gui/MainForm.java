@@ -112,8 +112,13 @@ public class MainForm extends MDIApplication {
 
 	@Action
     public void addFrame2() {
-        JInternalFrame jif1 = new BindingDemoFrame(this);
-        jif1.setName("BindingDemoFrame");
+        JInternalFrame jif1 = new SimpleInteralFrameWrapper("BindingDemoFrame", new ExampleForm(this));
+        showInternalFrame(jif1);
+    }
+	
+	@Action
+    public void addFrame3() {
+        JInternalFrame jif1 = new SimpleInteralFrameWrapper("CancelableForm", new CancelableForm(this));
         showInternalFrame(jif1);
     }
 	
@@ -177,7 +182,7 @@ public class MainForm extends MDIApplication {
 
     private JMenuBar createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
-        String[] fileMenuActionNames = {  "addFrame2", "---", "quit" };
+        String[] fileMenuActionNames = {  "addFrame2", "addFrame3", "---", "quit" };
         String[] helpMenuActionNames = { "help", "about" };
         menuBar.add(createMenu("fileMenu", fileMenuActionNames));
         menuBar.add(createMenu("helpMenu", helpMenuActionNames));
