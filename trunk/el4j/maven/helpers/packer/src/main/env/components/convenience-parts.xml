@@ -1,34 +1,50 @@
 <component>
     <fileSets>
         <fileSet>
-            <directory>${el4j.external}</directory>
-            <outputDirectory></outputDirectory>
+            <directory>${el4j.external}/etc</directory>
+            <outputDirectory>etc</outputDirectory>
             <includes>
-                <include>etc/**</include>
-                <include>framework/**</include>
-                <include>helloworld/**</include>
-                <include>helpers/**</include>
-                <include>plugins/**</include>
-                <include>site/**</include>
-                <include>skin/**</include>
-                <include>src/**</include>
-                <include>workspace/**</include>
-                <include>pom.xml</include>
+                <include>*.txt</include>
+                <include>subversion/*</include>
+                <include>javadoc/*</include>
+                <include>checkstyle/*</include>
             </includes>
             <excludes>
-                <!-- Generated stuff -->
-                <exclude>**/target/**</exclude>
-                <!-- Eclipse workspace -->
-                <exclude>**/workspace/.metadata/**</exclude>
-                <!-- Eclipse files and folders -->
                 <exclude>**/.*/**</exclude>
-                <!-- Already known libraries -->
-                <exclude>helpers/upload/**/libraries/**</exclude>
             </excludes>
         </fileSet>
         <fileSet>
-            <directory>${el4j.external}/site/target/site</directory>
-            <outputDirectory>docs</outputDirectory>
+            <directory>${el4j.project.tools}/maven</directory>
+            <outputDirectory>tools/maven</outputDirectory>
+            <fileMode>0755</fileMode>
+        </fileSet>
+
+        <fileSet>
+            <directory>${el4j.external}/site/src/site/resources/docs/pdf</directory>
+            <outputDirectory>docs/pdf</outputDirectory>
+            <excludes>
+                <exclude>**/.*/**</exclude>
+            </excludes>
+        </fileSet>
+        
+        <fileSet>
+            <directory>${el4j.external}/maven/helpers/packer/src/main/resources/convenience</directory>
+            <outputDirectory></outputDirectory>
+            <fileMode>0755</fileMode>
+            <excludes>
+                <exclude>**/.*/**</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>${el4j.external}/maven/helpers/packer/target/convenience</directory>
+            <outputDirectory></outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>${el4j.external}/maven/helpers/packer/target/env</directory>
+            <outputDirectory></outputDirectory>
+            <excludes>
+                <exclude>components</exclude>
+            </excludes>
         </fileSet>
     </fileSets>
 </component>
