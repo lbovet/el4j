@@ -1,7 +1,10 @@
 package ch.elca.el4j.gui.model.mixin;
 
+import java.beans.BeanInfo;
+import java.beans.Introspector;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +16,6 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.validator.ClassValidator;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
-import org.springframework.aop.Advisor;
 import org.springframework.aop.IntroductionAdvisor;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.aop.framework.ProxyFactory;
@@ -33,13 +35,15 @@ import com.silvermindsoftware.hitch.validation.ValidationCapability;
  */
 public class PropertyChangeListenerMixin extends
         DelegatingIntroductionInterceptor implements
-        PropertyChangeListenerCapability, ValidationCapability {
+        PropertyChangeListenerCapability, SaveRestoreCapability, ValidationCapability {
+    
+    private static Log s_logger = LogFactory
+            .getLog(PropertyChangeListenerMixin.class);
     
     /**
      * The support for property change notification.
      */
     private PropertyChangeSupport m_changeSupport;
-    
     
     /**
      * Getter-to-setter/setter-to-getter method cache.
@@ -47,14 +51,16 @@ public class PropertyChangeListenerMixin extends
     private Map<Method, Method> m_methodCache = new HashMap<Method, Method>();
 
     /**
+     * The stored properties (a map containing the setter-method and its value).
+     */
+    private Map<Method, Object> m_backup = new HashMap<Method, Object>();
+    
+    /**
      * Hibernate class validator.
      */
     private ClassValidator m_classValidator;
+    
 
-    private static Log s_logger = LogFactory
-            .getLog(PropertyChangeListenerMixin.class);
-
-    /** {@inheritDoc} */
     public PropertyChangeListenerMixin() {
         // initialize later when reference to the model is known
         m_changeSupport = null;
@@ -112,11 +118,14 @@ public class PropertyChangeListenerMixin extends
     public Object invoke(MethodInvocation invocation) throws Throwable {
         // initialize PropertyChangeSupport here
         if (m_changeSupport == null) {
-            m_changeSupport = new PropertyChangeSupport(AopContext.currentProxy());
+            m_changeSupport = new PropertyChangeSupport(
+                    AopContext.currentProxy());
         }
         if (m_classValidator == null) {
-            m_classValidator = new ClassValidator(invocation.getThis().getClass());
+            m_classValidator = new ClassValidator(
+                    invocation.getThis().getClass());
         }
+        
 
         if (invocation.getMethod().getName().startsWith("set")) {
             if (invocation.getArguments().length == 1) {
@@ -164,7 +173,7 @@ public class PropertyChangeListenerMixin extends
             return super.invoke(invocation);
         }
     }
-
+    
     /**
      * @param setter
      *            the setter method
@@ -225,7 +234,40 @@ public class PropertyChangeListenerMixin extends
         }
         return setter;
     }
+    
+    /** {@inheritDoc} */
+    public void save() {
+        try {
+            m_backup.clear();
 
+            BeanInfo info = Introspector.getBeanInfo(
+                    AopContext.currentProxy().getClass());
+            for (PropertyDescriptor pd : info.getPropertyDescriptors()) {
+                Method r = pd.getReadMethod();
+                Method w = pd.getWriteMethod();
+                if (r != null && w != null) {
+                    m_backup.put(pd.getWriteMethod(), r.invoke(
+                            AopContext.currentProxy()));
+                }
+            }
+        } catch (Exception e) {
+            m_backup.clear();
+        }
+    }
+
+    /** {@inheritDoc} */
+    public void restore() {
+        for (Method method : m_backup.keySet()) {
+            try {
+                method.invoke(AopContext.currentProxy(), m_backup.get(method));
+            } catch (Exception e) {
+                s_logger.warn("Could not restore property with setter "
+                        + method.getName());
+            }
+        }
+    }
+
+    /** {@inheritDoc} */
     public ClassValidator getClassValidator() {
         return m_classValidator;
     }
