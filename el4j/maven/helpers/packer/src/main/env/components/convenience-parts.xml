@@ -43,6 +43,7 @@
             <directory>${el4j.external}/maven/helpers/packer/target/env</directory>
             <outputDirectory></outputDirectory>
             <excludes>
+                <exclude>components/*</exclude>
                 <exclude>components</exclude>
             </excludes>
         </fileSet>
