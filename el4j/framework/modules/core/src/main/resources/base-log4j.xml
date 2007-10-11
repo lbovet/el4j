@@ -16,17 +16,19 @@
     </appender>
 
     <!--
-    	Uncommend this block if you want to have an output into a log file.
-    	Further you have to uncomment it in the root logger section below.
+        This smart file appender will save the log files relatively to the given file
+        path into the temporary dir given via system property "java.io.tmpdir".
+        Under Windows the temp path is normally
+        "C:\Documents and Settings\your_username\Local Settings\Temp"
     -->
-    <!--appender name="logfile" class="ch.elca.el4j.util.logging.appenders.SmartDailyRollingFileAppender">
-        <param name="File" value="c:/tmp/core_el4j_logging_output.log"/>
+    <appender name="logfile" class="ch.elca.el4j.util.logging.appenders.SmartDailyRollingFileAppender">
+        <param name="File" value="el4j-logging/core_el4j_logging_output.log"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" 
                 value="%d %5p [%c] %m%n"/>
         </layout>
-    </appender-->
+    </appender>
 
     <!-- EL4J framwork: show only warnings -->
     <logger name="ch.elca.el4j">
@@ -41,6 +43,6 @@
     <root>
         <level value="WARN"/>
         <appender-ref ref="console"/>
-        <!--appender-ref ref="logfile"/-->
+        <appender-ref ref="logfile"/>
     </root>
 </log4j:configuration>
