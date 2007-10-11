@@ -265,12 +265,6 @@
                     -->
                     <version>2.3</version>
                     <configuration>
-                          <systemProperties>
-                            <property>
-                              <name>log4j.configuration</name>
-                              <value>${log4j.default.config.file}</value>
-                            </property>
-                          </systemProperties>
                         <testFailureIgnore>false</testFailureIgnore>
                         <forkMode>never</forkMode>
                         <includes>
@@ -432,14 +426,6 @@
                                + patch http://jira.codehaus.org/browse/CARGO-412)
                     -->
                     <version>0.3-20060918.130206-4</version>
-		    <configuration>
-		       <!-- the next configuration is not working -->
-		       <!--configuration>
-                            <properties>
-                              <log4j.configuration>${log4j.default.config.file}</log4j.configuration>
-                            </properties>
-		       </configuration-->
-		    </configuration>		       
                 </plugin>
 
                 <!-- Execution -->
@@ -453,14 +439,6 @@
                     <version>1.0.3-20061204.110918-2</version>
 		    -->
                     <version>1.1-beta-1</version>
-		    <configuration>
-		       <systemProperties>
-                            <property>
-                              <key>log4j.configuration</key>
-                              <value>${log4j.default.config.file}</value>
-                            </property>
-		       </systemProperties>
-		    </configuration>		       		    
                 </plugin>
 
                 <!-- IDE -->
