@@ -17,15 +17,18 @@
 
 package ch.elca.el4j.web.context;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
 import javax.servlet.ServletContext;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.PropertyValue;
 import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
@@ -39,6 +42,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.support.ServletContextResourceLoader;
 import org.springframework.web.context.support.ServletContextResourcePatternResolver;
 import org.springframework.web.context.support.XmlWebApplicationContext;
@@ -70,7 +74,15 @@ import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
  * @see ch.elca.el4j.core.context.ModuleApplicationContext
  */
 public class ModuleWebApplicationContext extends XmlWebApplicationContext {
-    /**
+    
+    /** 
+     * This logger is used to print out some global debugging info. Consult it for
+     *   info what is going on.
+     */
+    protected static Log s_el4jLogger = 
+    	LogFactory.getLog( ModuleApplicationContext.EL4J_DEBUGGING_LOGGER);	
+	
+	/**
      * Inclusive config locations.
      */
     private final String[] m_inclusiveConfigLocations;
@@ -208,7 +220,52 @@ public class ModuleWebApplicationContext extends XmlWebApplicationContext {
         if (!ArrayUtils.isEmpty(m_configLocations)) {
             setConfigLocations(m_configLocations);
         }
+        
+        additionalLoggingOutput(allowBeanDefinitionOverriding,
+				mergeWithOuterResources, mostSpecificResourceLast,
+				mostSpecificBeanDefinitionCounts);
     }
+    
+	/**
+	 *  Log some interesting values.
+	 *  
+	 *    Not nice: code duplication between the 2 ModuleApplicationContext classes!
+	 * @param allowBeanDefinitionOverriding
+	 * @param mergeWithOuterResources
+	 * @param mostSpecificResourceLast
+	 * @param mostSpecificBeanDefinitionCounts
+	 */
+	private void additionalLoggingOutput(boolean allowBeanDefinitionOverriding,
+			boolean mergeWithOuterResources, boolean mostSpecificResourceLast,
+			boolean mostSpecificBeanDefinitionCounts) {
+		
+        s_el4jLogger.info("Starting up ModuleApplicationContext. configLocations :"+StringUtils.arrayToDelimitedString(m_configLocations,", "));
+        if (s_el4jLogger.isDebugEnabled()) {
+            s_el4jLogger.debug("inclusiveLocation:"+StringUtils.arrayToDelimitedString(m_inclusiveConfigLocations,", "));
+            s_el4jLogger.debug("exclusiveLocation:"+StringUtils.arrayToDelimitedString(m_exclusiveConfigLocations,", "));
+            s_el4jLogger.debug("allowBeanDefinitionOverriding:"+allowBeanDefinitionOverriding);
+            s_el4jLogger.debug("mergeWithOuterResources:"+mergeWithOuterResources);
+            s_el4jLogger.debug("mostSpecificResourceLast:"+mostSpecificResourceLast);
+            s_el4jLogger.debug("mostSpecificBeanDefinitionCounts:"+mostSpecificBeanDefinitionCounts);                   
+            
+            for (String configLocation : m_configLocations) {
+                Resource res = getResource(configLocation);
+                BufferedReader reader;
+                try {
+                    reader = new BufferedReader( new InputStreamReader(res.getInputStream()));
+                    StringBuffer buf = new StringBuffer();
+                    while (reader.ready()) {
+                        buf.append(reader.readLine());
+                        buf.append("\n");
+                    }                    
+                    s_el4jLogger.debug("Content of "+configLocation+" : "+buf.toString()+"\n---");
+                } catch (IOException e) {
+                    // deliberately ignore exception
+                    s_el4jLogger.debug("Error during printing of config location "+configLocation, e);
+                }               
+            }
+        }
+	}
     
     /**
      * @return Returns the exclusiveConfigLocations.
@@ -335,7 +392,7 @@ public class ModuleWebApplicationContext extends XmlWebApplicationContext {
         // Separate between BeanFactoryPostProcessors that implement the Ordered
         // interface and those that do not.
         List<OrderedBeanNameHolder> orderedFactoryProcessors = new ArrayList<OrderedBeanNameHolder>();
-        List nonOrderedFactoryProcessorNames = new ArrayList();
+        List<String> nonOrderedFactoryProcessorNames = new ArrayList<String>();
         for (int i = 0; i < factoryProcessorNames.length; i++) {
             if (isTypeMatch(factoryProcessorNames[i], Ordered.class)) {
                 // new: remember the name of each processor                
@@ -350,7 +407,7 @@ public class ModuleWebApplicationContext extends XmlWebApplicationContext {
                             orderAsString = ((TypedStringValue)order.getValue()).getValue();
                         }                        
                         
-                        orderAsInt = Integer.parseInt(order.getValue().toString());
+                        orderAsInt = Integer.parseInt(orderAsString);
                     } catch (NumberFormatException e) {}
                 }
                 orderedFactoryProcessors.add(new OrderedBeanNameHolder(orderAsInt, factoryProcessorNames[i]));                
@@ -372,8 +429,8 @@ public class ModuleWebApplicationContext extends XmlWebApplicationContext {
             factoryProcessor.postProcessBeanFactory(beanFactory);
         }
         // Second, invoke all other BeanFactoryPostProcessors, one by one.
-        for (Iterator it = nonOrderedFactoryProcessorNames.iterator(); it.hasNext();) {
-            String factoryProcessorName = (String) it.next();
+        for (Iterator<String> it = nonOrderedFactoryProcessorNames.iterator(); it.hasNext();) {
+            String factoryProcessorName = it.next();
             ((BeanFactoryPostProcessor) getBean(factoryProcessorName)).postProcessBeanFactory(beanFactory);
         }
     }
