@@ -297,7 +297,26 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
         m_configLocations = utils.calculateInputFiles(inclusiveConfigLocations,
                 exclusiveConfigLocations, allowBeanDefinitionOverriding);
         
-        // some additional logging output:
+        additionalLoggingOutput(allowBeanDefinitionOverriding,
+				mergeWithOuterResources, mostSpecificResourceLast,
+				mostSpecificBeanDefinitionCounts);
+        
+        refresh();
+    }
+
+	/**
+	 *  Log some interesting values.
+	 *  
+	 *    Not nice: code duplication between the 2 ModuleApplicationContext classes!  
+	 * @param allowBeanDefinitionOverriding
+	 * @param mergeWithOuterResources
+	 * @param mostSpecificResourceLast
+	 * @param mostSpecificBeanDefinitionCounts
+	 */
+	private void additionalLoggingOutput(boolean allowBeanDefinitionOverriding,
+			boolean mergeWithOuterResources, boolean mostSpecificResourceLast,
+			boolean mostSpecificBeanDefinitionCounts) {
+		
         s_el4jLogger.info("Starting up ModuleApplicationContext. configLocations :"+StringUtils.arrayToDelimitedString(m_configLocations,", "));
         if (s_el4jLogger.isDebugEnabled()) {
             s_el4jLogger.debug("inclusiveLocation:"+StringUtils.arrayToDelimitedString(m_inclusiveConfigLocations,", "));
@@ -321,15 +340,10 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
                 } catch (IOException e) {
                     // deliberately ignore exception
                     s_el4jLogger.debug("Error during printing of config location "+configLocation, e);
-                }
-                
-                
-                
+                }               
             }
         }
-        
-        refresh();
-    }
+	}
     
     /**
      * Constructor to create a module application context by using the given 
