@@ -16,7 +16,7 @@ To set up:
  * rename directory el4j-xy to EL4J
  * open a cygwin or bash shell, cd EL4J
  * execute  chmod 755 *sh
- * chmod 755 /data/el4j/tools/maven/bin/mvn
+ * execute  chmod 755 tools/maven/bin/mvn
  * execute  ./finishInstallation.sh 
       This finalizes the installation. You need to do this only once.
  * execute  source ./setupPathsAndEnvironment.sh
