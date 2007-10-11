@@ -50,6 +50,15 @@
                                 <descriptor>src/assemble/convenience.xml</descriptor>
                             </descriptors>
                         </configuration>
+                        <executions>
+                            <execution>
+                                <id>create-convenience-zip</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>assembly</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
