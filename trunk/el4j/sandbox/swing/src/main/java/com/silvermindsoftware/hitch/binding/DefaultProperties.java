@@ -61,13 +61,20 @@ public class DefaultProperties {
      * @return                 the default property
      */
     public Property getDefaultProperty(Object widget) {
+        Class widgetClass;
         if (!(widget instanceof Class)) {
             if (defaultProperties.containsKey(widget)) {
                 return defaultProperties.get(widget);
             } else {
-                widget = widget.getClass();
+                widgetClass = widget.getClass();
             }
+        } else {
+            widgetClass = (Class) widget;
         }
-        return defaultProperties.get(widget);
+        
+        while (defaultProperties.get(widgetClass) == null && widgetClass != Object.class) {
+            widgetClass = widgetClass.getSuperclass();
+        }
+        return defaultProperties.get(widgetClass);
     }
 }
