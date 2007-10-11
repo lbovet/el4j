@@ -1,17 +1,11 @@
 package ch.elca.el4j.demos.gui;
 
 import java.awt.BorderLayout;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.List;
 
-import javax.help.SeparatorAction;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
 import org.jdesktop.application.Application;
 import org.jdesktop.beansbinding.BeanProperty;
@@ -24,14 +18,10 @@ import org.jdesktop.swingx.JXTable;
 import org.springframework.context.ApplicationContext;
 
 import zappini.designgridlayout.DesignGridLayout;
-import zappini.designgridlayout.Row;
-
 import ch.elca.el4j.demos.gui.model.DefaultPerson;
 import ch.elca.el4j.demos.gui.model.MyNumber;
 import ch.elca.el4j.demos.gui.model.Person;
 import ch.elca.el4j.gui.model.mixin.PropertyChangeListenerMixin;
-import ch.elca.el4j.gui.model.mixin.SaveRestoreCapability;
-import ch.elca.el4j.gui.model.mixin.SaveRestoreMixin;
 import ch.elca.el4j.gui.swing.GUIApplication;
 
 import com.silvermindsoftware.hitch.Binder;
@@ -195,11 +185,5 @@ public class ExampleForm extends JPanel {
 
         numbers = new JList();
         children = new JXTable();
-    }
-
-    private javax.swing.Action getAction(String actionName) {
-        org.jdesktop.application.ApplicationContext ac = Application
-                .getInstance().getContext();
-        return ac.getActionMap(this).get(actionName);
     }
 }
