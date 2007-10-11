@@ -106,7 +106,7 @@
         </developer>
 		<developer>
             <id>cba</id>
-            <name>Christoph Bäni</name>
+            <name>Christoph Bï¿½ni</name>
             <roles>
                 <role>Java developer</role>
             </roles>
@@ -1387,7 +1387,7 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring</artifactId>
-                <version>2.0.6</version>
+                <version>2.0.7</version>
             </dependency>
 
             <!-- Apache projects -->
