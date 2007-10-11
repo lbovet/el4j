@@ -15,25 +15,4 @@
     <description>
         Archetype of a Hello World project/module.
     </description>
-
-
-    <build>
-        <extensions>
-            <!-- Transport -->
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-ftp</artifactId>
-                <version>1.0-beta-1</version>
-            </extension>
-        </extensions>
-    </build>
-
-    <distributionManagement>
-        <repository>
-            <id>ftpEl4ElcaServices</id>
-            <name>External EL4J repository</name>
-            <url>ftp://el4.elca-services.ch/htdocs/el4j/maven2repository</url>
-        </repository>
-    </distributionManagement>
-
 </project>
