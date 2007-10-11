@@ -8,8 +8,8 @@ echo
 
 case "`uname`" in
 CYGWIN*)
-	mkdir "~/.m2"
-	cp -i etc/m2/settings.xml "~/.m2"
+	mkdir "$HOME/.m2"
+	cp -i etc/m2/settings.xml "$HOME/.m2"
 	;;
 *)
 	mkdir "$HOME/.m2"
