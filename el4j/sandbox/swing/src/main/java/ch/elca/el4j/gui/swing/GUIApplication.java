@@ -146,7 +146,7 @@ public abstract class GUIApplication extends SingleFrameApplication {
      * @return             the corresponding action object
      * @see #addActionMappingInstance(Object)
      */
-    protected Action getAction(String actionName) {
+    public Action getAction(String actionName) {
         org.jdesktop.application.ApplicationContext ac
             = Application.getInstance().getContext();
         
@@ -157,6 +157,19 @@ public abstract class GUIApplication extends SingleFrameApplication {
         	}
         }
 		return null;
+    }
+    
+    /**
+     * Returns the action object for a specific object and action name.
+     * @param object        the object containing actions
+     * @param actionName    the action name as String
+     * @return              the corresponding action object
+     */
+    public Action getAction(Object object, String actionName) {
+        org.jdesktop.application.ApplicationContext ac
+            = Application.getInstance().getContext();
+        
+        return ac.getActionMap(object).get(actionName);
     }
     
     /**
