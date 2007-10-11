@@ -1,4 +1,7 @@
-<component>
+<assembly>
+	<formats>
+		<format>zip</format>
+	</formats>
     <fileSets>
         <fileSet>
             <directory>${el4j.external}/etc</directory>
@@ -13,11 +16,13 @@
                 <exclude>**/.*/**</exclude>
             </excludes>
         </fileSet>
+
         <fileSet>
             <directory>${el4j.project.tools}/maven</directory>
             <outputDirectory>tools/maven</outputDirectory>
             <fileMode>0755</fileMode>
         </fileSet>
+
 
         <fileSet>
             <directory>${el4j.external}/site/src/site/resources/docs/pdf</directory>
@@ -49,4 +54,4 @@
             </excludes>
         </fileSet>
     </fileSets>
-</component>
+</assembly>
