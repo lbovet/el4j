@@ -1,10 +1,19 @@
 --------------------------------------------------------------------------------
- Date :   20.08.07
+ Date :   xxx
                             EL4J version  1.1.4
 --------------------------------------------------------------------------------
 
 TBD Apache Commons Attributes not supported anymore
     (replaced by Java 5 Annotations)
+
+* Core
+  = Base Log4J configuration added as log4j.properties file. If a project likes
+    to overwrite this configuration a log4j.xml must be used, due the xml 
+    format has the higher priority than the properties file.
+  = Moved to Spring 2.0.7.
+
+* Varia
+  = Generation of the new EL4J convenience zip automated.
 
 --------------------------------------------------------------------------------
  Date :   10.08.07
