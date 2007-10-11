@@ -36,23 +36,10 @@
     </build>
     <profiles>
         <profile>
-            <id>essential-zip</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-assembly-plugin</artifactId>
-                        <configuration>
-                            <descriptors>
-                                <descriptor>src/assemble/essential.xml</descriptor>
-                            </descriptors>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>            
-        </profile>
-        <profile>
             <id>convenience-zip</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <build>
                 <plugins>
                     <plugin>
@@ -64,21 +51,49 @@
                             </descriptors>
                         </configuration>
                     </plugin>
-                </plugins>
-            </build>            
-        </profile>
-        <profile>
-            <id>extended-convenience-zip</id>
-            <build>
-                <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-assembly-plugin</artifactId>
-                        <configuration>
-                            <descriptors>
-                                <descriptor>src/assemble/extended-convenience.xml</descriptor>
-                            </descriptors>
-                        </configuration>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-windows-settings-xml</id>
+                                <phase>generate-resources</phase>
+                                <configuration>
+                                    <tasks>
+                                        <property name="sourceFile" value="${el4j.external}/etc/m2/settings.xml"/>
+                                        <property name="targetFile" value="${el4j.external}/maven/helpers/packer/target/convenience/etc/m2/settings.xml"/>
+                                        <property name="installDir" value="d:"/>
+                                        <copy file="${sourceFile}" tofile="${targetFile}"/>
+                                        <replace file="${targetFile}">
+                                            <replacefilter token="~/.m2/repository" value="${installDir}/m2repository"/>
+                                            <replacefilter token="~/myproject" value="${installDir}/Projects/EL4J"/> 
+                                        </replace>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>copy-linux-settings-xml</id>
+                                <phase>generate-resources</phase>
+                                <configuration>
+                                    <tasks>
+                                        <property name="sourceFile" value="${el4j.external}/etc/m2/settings.xml"/>
+                                        <property name="targetFile" value="${el4j.external}/maven/helpers/packer/target/convenience/etc/m2/settingsLINUX.xml"/>
+                                        <property name="installDir" value="/data"/>
+                                        <copy file="${sourceFile}" tofile="${targetFile}"/>
+                                        <replace file="${targetFile}">
+                                            <replacefilter token="~/.m2/repository" value="${installDir}/m2repository"/>
+                                            <replacefilter token="~/myproject" value="${installDir}/Projects/EL4J"/> 
+                                        </replace>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>            

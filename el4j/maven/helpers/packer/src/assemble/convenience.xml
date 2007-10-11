@@ -5,7 +5,6 @@
     </formats>
     <includeBaseDirectory>true</includeBaseDirectory>
     <componentDescriptors>
-        <componentDescriptor>target/env/components/essential-parts.xml</componentDescriptor>
         <componentDescriptor>target/env/components/convenience-parts.xml</componentDescriptor>
     </componentDescriptors>
 </assembly>
