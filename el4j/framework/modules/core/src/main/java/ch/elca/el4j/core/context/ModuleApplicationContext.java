@@ -17,17 +17,18 @@
 
 package ch.elca.el4j.core.context;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.PropertyValue;
 import org.springframework.beans.PropertyValues;
-import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.TypedStringValue;
@@ -40,6 +41,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 import ch.elca.el4j.core.io.support.ListResourcePatternResolverDecorator;
 import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
@@ -69,11 +71,11 @@ import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
  *  * PropertyPlaceholder/ PropertyOverride configurers (actually all {@link BeanFactoryPostProcessor})
  *     can override properties of {@link BeanFactoryPostProcessor}s that come later in the order
  *      ( see {@link Ordered} for more details).
- *  * Exclusion lists
- *  * One can define (constructor argument) whether we allow bean-definitions to silently overwrite earlier configuration 
- *     settings.  
+ *  * Exclusion lists (config files to explicitly exclude from the configuration)
+ *  * One can define (constructor argument) whether we allow bean-definitions to silently overwrite 
+ *     earlier configuration settings.  
  *  * The order of underlying resources is better conserved than with pure spring
- *  * More configuration info is available in JMX (only when jmx module is active)  
+ *  * More configuration info is available in JMX (only when the jmx module is active)  
  * 
  * @see ModuleWebApplicationContext 
  * 
@@ -88,6 +90,14 @@ import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
  * @author Martin Zeltner (MZE)
  */
 public class ModuleApplicationContext extends AbstractXmlApplicationContext {
+    public final static String EL4J_DEBUGGING_LOGGER = "el4j.debugging";
+    
+    /** 
+     * This logger is used to print out some global debugging info. Consult it for
+     *   info what is going on.
+     */
+    protected static Log s_el4jLogger = LogFactory.getLog( EL4J_DEBUGGING_LOGGER);
+    
     /**
      * Inclusive config locations.
      */
@@ -287,6 +297,37 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
         m_configLocations = utils.calculateInputFiles(inclusiveConfigLocations,
                 exclusiveConfigLocations, allowBeanDefinitionOverriding);
         
+        // some additional logging output:
+        s_el4jLogger.info("Starting up ModuleApplicationContext. configLocations :"+StringUtils.arrayToDelimitedString(m_configLocations,", "));
+        if (s_el4jLogger.isDebugEnabled()) {
+            s_el4jLogger.debug("inclusiveLocation:"+StringUtils.arrayToDelimitedString(m_inclusiveConfigLocations,", "));
+            s_el4jLogger.debug("exclusiveLocation:"+StringUtils.arrayToDelimitedString(m_exclusiveConfigLocations,", "));
+            s_el4jLogger.debug("allowBeanDefinitionOverriding:"+allowBeanDefinitionOverriding);
+            s_el4jLogger.debug("mergeWithOuterResources:"+mergeWithOuterResources);
+            s_el4jLogger.debug("mostSpecificResourceLast:"+mostSpecificResourceLast);
+            s_el4jLogger.debug("mostSpecificBeanDefinitionCounts:"+mostSpecificBeanDefinitionCounts);                   
+            
+            for (String configLocation : m_configLocations) {
+                Resource res = getResource(configLocation);
+                BufferedReader reader;
+                try {
+                    reader = new BufferedReader( new InputStreamReader(res.getInputStream()));
+                    StringBuffer buf = new StringBuffer();
+                    while (reader.ready()) {
+                        buf.append(reader.readLine());
+                        buf.append("\n");
+                    }                    
+                    s_el4jLogger.debug("Content of "+configLocation+" : "+buf.toString()+"\n---");
+                } catch (IOException e) {
+                    // deliberately ignore exception
+                    s_el4jLogger.debug("Error during printing of config location "+configLocation, e);
+                }
+                
+                
+                
+            }
+        }
+        
         refresh();
     }
     
@@ -437,7 +478,7 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
         // Separate between BeanFactoryPostProcessors that implement the Ordered
         // interface and those that do not.
         List<OrderedBeanNameHolder> orderedFactoryProcessors = new ArrayList<OrderedBeanNameHolder>();
-        List nonOrderedFactoryProcessorNames = new ArrayList();
+        List<String> nonOrderedFactoryProcessorNames = new ArrayList<String>();
         for (int i = 0; i < factoryProcessorNames.length; i++) {
             if (isTypeMatch(factoryProcessorNames[i], Ordered.class)) {
                 // new: remember the name of each processor                
@@ -452,7 +493,7 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
                             orderAsString = ((TypedStringValue)order.getValue()).getValue();
                         }                        
                         
-                        orderAsInt = Integer.parseInt(order.getValue().toString());
+                        orderAsInt = Integer.parseInt(orderAsString);
                     } catch (NumberFormatException e) {}
                 }
                 orderedFactoryProcessors.add(new OrderedBeanNameHolder(orderAsInt, factoryProcessorNames[i]));                
@@ -463,6 +504,7 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
         }
 
         // First, invoke the BeanFactoryPostProcessors that implement Ordered.
+        
         Collections.sort(orderedFactoryProcessors, new OrderComparator());
         for (Iterator<OrderedBeanNameHolder> it = orderedFactoryProcessors.iterator(); it.hasNext();) {
             OrderedBeanNameHolder factoryProcessorHolder = it.next();
@@ -474,8 +516,8 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
             factoryProcessor.postProcessBeanFactory(beanFactory);
         }
         // Second, invoke all other BeanFactoryPostProcessors, one by one.
-        for (Iterator it = nonOrderedFactoryProcessorNames.iterator(); it.hasNext();) {
-            String factoryProcessorName = (String) it.next();
+        for (Iterator<String> it = nonOrderedFactoryProcessorNames.iterator(); it.hasNext();) {
+            String factoryProcessorName =  it.next();
             ((BeanFactoryPostProcessor) getBean(factoryProcessorName)).postProcessBeanFactory(beanFactory);
         }
     }
