@@ -26,6 +26,7 @@ public class DefaultPerson implements Person {
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+		//System.out.println("firstName has changed to " + firstName);
 	}
 
 	@NotNull
@@ -35,7 +36,7 @@ public class DefaultPerson implements Person {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-		System.out.println("lastName has changed to " + lastName);
+		//System.out.println("lastName has changed to " + lastName);
 	}
 
 	public int getAge() {
