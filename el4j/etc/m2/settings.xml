@@ -142,7 +142,100 @@
             <url>http://my.repository.com/repo/path</url>
             </mirror>
         -->
+        
+        
+        
+        <!-- ######  Release mirrors  ###### -->
+        <!-- Uncomment if you are inside ELCA! -->
+        <!--mirror>
+        	<id>proximityCentral</id>
+        	<mirrorOf>central</mirrorOf>
+        	<name>Proxmity mirrored central.</name>
+        	<url>http://leaffy.elca.ch:18080/repository/apache.release</url>
+        </mirror-->
+        
+        <!-- Uncomment if you are inside ELCA! -->
+        <!--mirror>
+        	<id>proximityCodehaus</id>
+        	<mirrorOf>codehaus</mirrorOf>
+        	<name>Proxmity mirrored codehaus.</name>
+        	<url>http://leaffy.elca.ch:18080/repository/codehaus.release</url>
+        </mirror-->
+        
+        <!-- Uncomment if you are inside ELCA but not at Lausanne! -->
+        <!--mirror>
+        	<id>proximityEl4ElcaServices</id>
+        	<mirrorOf>el4jReleaseRepositoryExternal</mirrorOf>
+        	<name>Proxmity mirrored el4jReleaseRepositoryExternal.</name>
+        	<url>http://leaffy.elca.ch:18080/repository/el4-elca-services.release</url>
+        </mirror-->
+        
+        <!-- Uncomment if you are inside ELCA! -->
+        <!--mirror>
+        	<id>proximityLeaffy</id>
+        	<mirrorOf>el4jReleaseRepositoryInternal</mirrorOf>
+        	<name>Proxmity mirrored el4jReleaseRepositoryInternal.</name>
+        	<url>http://leaffy.elca.ch:18080/repository/leaffy.release</url>
+        </mirror-->
+        
+        
+        
+        <!-- ######  Snapshot mirrors  ###### -->
+        <!-- Uncomment if you are inside ELCA! -->
+        <!--mirror>
+        	<id>proximityCentralSnapshot</id>
+        	<mirrorOf>apache.snapshots</mirrorOf>
+        	<name>Proxmity mirrored apache.snapshots.</name>
+        	<url>http://leaffy.elca.ch:18080/repository/apache.snapshot</url>
+        </mirror-->
+        
+        <!-- Uncomment if you are inside ELCA! -->
+        <!--mirror>
+        	<id>proximityCodehausSnapshot</id>
+        	<mirrorOf>codehaus.snapshot</mirrorOf>
+        	<name>Proxmity mirrored codehaus.snapshot.</name>
+        	<url>http://leaffy.elca.ch:18080/repository/codehaus.snapshot</url>
+        </mirror-->
+        
+        <!-- Uncomment if you are inside ELCA but not at Lausanne! -->
+        <!--mirror>
+        	<id>proximityEl4ElcaServicesSnapshot</id>
+        	<mirrorOf>el4jSnapshotRepositoryExternal</mirrorOf>
+        	<name>Proxmity mirrored el4jSnapshotRepositoryExternal.</name>
+        	<url>http://leaffy.elca.ch:18080/repository/el4-elca-services.snapshot</url>
+        </mirror-->
+        
+        <!-- Uncomment if you are inside ELCA! -->
+        <!--mirror>
+        	<id>proximityLeaffySnapshot</id>
+        	<mirrorOf>el4jSnapshotRepositoryInternal</mirrorOf>
+        	<name>Proxmity mirrored el4jSnapshotRepositoryInternal.</name>
+        	<url>http://leaffy.elca.ch:18080/repository/leaffy.snapshot</url>
+        </mirror-->
+        
+        
+        
+        <!-- ######  Plugin release mirrors  ###### -->
+        <!-- Uncomment if you are inside ELCA but not at Lausanne! -->
+        <!--mirror>
+        	<id>proximityPluginEl4ElcaServices</id>
+        	<mirrorOf>el4jReleasePluginRepositoryExternal</mirrorOf>
+        	<name>Proxmity mirrored el4jReleasePluginRepositoryExternal.</name>
+        	<url>http://leaffy.elca.ch:18080/repository/el4-elca-services.release</url>
+        </mirror-->
+        
+        
+        
+        <!-- ######  Plugin snapshot mirrors  ###### -->
+        <!-- Uncomment if you are inside ELCA but not at Lausanne! -->
+        <!--mirror>
+        	<id>proximityPluginEl4ElcaServicesSnapshot</id>
+        	<mirrorOf>el4jSnapshotPluginRepositoryExternal</mirrorOf>
+        	<name>Proxmity mirrored el4jSnapshotPluginRepositoryExternal.</name>
+        	<url>http://leaffy.elca.ch:18080/repository/el4-elca-services.snapshot</url>
+        </mirror-->
     </mirrors>
+
 
     <!-- profiles
         | This is a list of profiles which can be activated in a variety of ways, and which can modify
