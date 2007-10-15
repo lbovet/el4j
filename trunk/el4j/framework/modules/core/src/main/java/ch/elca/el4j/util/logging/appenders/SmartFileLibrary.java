@@ -93,27 +93,33 @@ public class SmartFileLibrary {
     private static String constructPath(String directoryPath, String fileName)
         throws IOException {
         
-        
         // if directoryPath is empty throw IOException
         if (!StringUtils.hasText(directoryPath)) {
             throw new IOException("The directoryPath can not be empty!");
         }
         
-        File directory = new File(directoryPath);
+        // if fileName is empty throw IOException
+        if (!StringUtils.hasText(fileName)) {
+            throw new IOException("The fileName can not be empty!");
+        }
         
+        String d = directoryPath.replace('\\', '/');
+        String f = extractRelativePath(fileName.replace('\\', '/'));
+        
+        File dFile = new File(d);
         // if the directory does not exist, throw IOException
-        if (!directory.isDirectory()) {
+        if (!dFile.isDirectory()) {
             throw new IOException("The directory [" 
                 + directoryPath + "] does not exist!");
         }
         
         // if directoryPath does not already contain
         // any pathSeperator at the end, add a pathSeperator
-        if (!directoryPath.endsWith(File.separator)) {
-            directoryPath.concat(File.separator);
+        if (directoryPath.endsWith("/")) {
+            return d + f;
+        } else {
+            return d + '/' + f;
         }
-        
-        return directoryPath.concat(extractRelativePath(fileName));
     }
     
     /**
@@ -131,7 +137,7 @@ public class SmartFileLibrary {
         
         // remove all pathSeperator symbols infont of the 
         // fileName/relative-path
-        while (result.startsWith(File.pathSeparator)) {
+        while (result.startsWith("/")) {
             result = result.substring(1 , result.length());
         }
         
