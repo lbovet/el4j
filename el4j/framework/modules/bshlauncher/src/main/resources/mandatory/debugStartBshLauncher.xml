@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!-- 
+    Spring bean configuration file to load property files of environment 
+    support.
+-->
+<beans>
+    <!-- Version: $Revision: 323 $ -->
+    <!-- URL: $URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/env/src/main/resources/mandatory/env.xml $ -->
+    <!-- Date: $Date: 2006-03-30 14:45:47 +0200 (Thu, 30 Mar 2006) $ -->
+    <!-- Author: $Author: mathey $ -->
+
+    <bean id="bshLauncher"
+        class="ch.elca.el4j.services.debug.BshCommandLineLauncher">
+    </bean>
+</beans>

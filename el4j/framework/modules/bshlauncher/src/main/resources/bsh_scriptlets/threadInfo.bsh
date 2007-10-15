@@ -1,0 +1,7 @@
+import java.lang.management.*;
+
+threadInfo(){
+    ThreadMXBean tmb = ManagementFactory.getThreadMXBean();
+    System.out.println("Peak thread cnt:"+ tmb.getPeakThreadCount() );
+    deadlockedThread = tmb.findDeadlockedThreads();
+}
