@@ -32,7 +32,7 @@ import org.springframework.util.StringUtils;
  *   (3) Launch your application <br>
  *   (4) Open in a browser the following URL: http://localhost:2000/remote/jconsole.html <br>
  *   (5) type   threadInfo();    ENTER       <br>
- *    
+ *    <br>
  * Limitation: cut and paste (with external info) is currently not supported.
  * 
  * @author Philipp H. Oser (POS)
