@@ -44,5 +44,6 @@
         <module>web</module>
         <module>webtest</module>
         <module>xml_merge</module>
+        <module>bshlauncher</module>
     </modules>
 </project>
