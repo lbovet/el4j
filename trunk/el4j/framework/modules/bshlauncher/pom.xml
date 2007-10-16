@@ -17,7 +17,7 @@
     </parent>
 
     <artifactId>module-bshlauncher</artifactId>
-    <version>1.0</version>
+    <version>${version.module-bshlauncher}</version>
     <packaging>jar</packaging>
     <name>EL4J module bsh launcher</name>
     <description>
