@@ -11,7 +11,7 @@
 
     <bean id="rmiTestObjImpl2" class="ch.elca.el4j.tests.services.remoting.loadbalancing.common.BusinessObjectImpl">
 	<property name="serverName">
-		<value>localhost:8095</value>
+		<value>${rmi.host}:8095</value>
 		</property>
     </bean>
 
