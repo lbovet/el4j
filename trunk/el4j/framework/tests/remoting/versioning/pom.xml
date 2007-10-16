@@ -45,23 +45,6 @@
 	</dependencies>
 
 	<build>
-		<resources> 
-			<resource> <!-- Filter the wsdl so the correct port is used. workaround for http://jira.codehaus.org/browse/XFIRE-857 -->
-				<directory>src/main/filtered-resources</directory>
-				<filtering>true</filtering>
-			</resource>
-
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>false</filtering>
-            </resource>
-
-            <!-- Used for the environment support of EL4J -->
-            <resource>
-                <directory>target/env</directory>
-                <filtering>false</filtering>
-            </resource>
-		</resources>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -88,9 +71,6 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
-
-
 	<profiles>
 		<profile>
 			<id>manual</id>
