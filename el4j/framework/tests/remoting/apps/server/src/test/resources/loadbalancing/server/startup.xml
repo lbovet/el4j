@@ -12,7 +12,7 @@
     <!--  Server -->
     <bean id="rmiTestObjImpl" class="ch.elca.el4j.tests.services.remoting.loadbalancing.common.BusinessObjectImpl">
 	<property name="serverName">
-		<value>localhost:${rmi.port}</value>
+		<value>${rmi.host}:${rmi.port}</value>
 		</property>
     </bean>
 
