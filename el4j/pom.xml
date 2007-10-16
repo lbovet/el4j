@@ -1276,6 +1276,20 @@
                 <scope>runtime</scope>
             </dependency>
 
+            <!-- module-core -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-bshlauncher</artifactId>
+                <version>${version.module-bshlauncher}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-bshlauncher</artifactId>
+                <version>${version.module-bshlauncher}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
 
             <!-- **************************** -->
             <!-- * Application dependencies *-->
