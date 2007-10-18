@@ -28,7 +28,6 @@
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-env</artifactId>
-			<scope>integration-test</scope>
 		</dependency>
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
