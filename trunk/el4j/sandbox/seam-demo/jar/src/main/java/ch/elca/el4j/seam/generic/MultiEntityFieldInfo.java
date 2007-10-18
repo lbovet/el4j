@@ -1,4 +1,7 @@
-package ch.elca.ttrich;
+package ch.elca.el4j.seam.generic;
+
+import ch.elca.el4j.seam.generic.metadata.FieldInfo;
+import ch.elca.el4j.seam.generic.metadata.RelationFieldInfo;
 
 /**
  * Multi Entity Field info. Provides metadata information about a multi entity field of an entity.

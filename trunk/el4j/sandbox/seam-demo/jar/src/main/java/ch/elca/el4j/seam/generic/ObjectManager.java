@@ -1,4 +1,4 @@
-package ch.elca.ttrich;
+package ch.elca.el4j.seam.generic;
 
 import static org.jboss.seam.ScopeType.CONVERSATION;
 
@@ -16,6 +16,9 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.web.RequestParameter;
 
+import ch.elca.el4j.seam.generic.metadata.EntityInfoBase;
+import ch.elca.el4j.seam.generic.metadata.EnumFieldInfo;
+import ch.elca.el4j.seam.generic.metadata.FieldInfo;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.ComparisonCriteria;
 import ch.elca.el4j.services.search.criterias.Criteria;

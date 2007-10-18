@@ -46,7 +46,7 @@
 									  value="#{temporary.map[fieldName]}">
 							<s:selectItems value="#{relEntities}" var="selEntity"
 								label="#{selEntity.toString()}" noSelectionLabel="Select..."/>
-							<f:converter converterId="ch.elca.ttrich.EntityConverter"/> 
+							<f:converter converterId="ch.elca.el4j.seam.generic.EntityConverter"/> 
 						</h:selectOneMenu>
 						
 						<a4j:commandButton value="Add"

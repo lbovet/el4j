@@ -1,4 +1,4 @@
-package ch.elca.ttrich;
+package ch.elca.el4j.seam.generic;
 
 import java.io.Serializable;
 import org.jboss.seam.annotations.*;

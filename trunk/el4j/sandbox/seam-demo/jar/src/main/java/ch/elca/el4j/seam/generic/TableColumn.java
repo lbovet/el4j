@@ -1,4 +1,4 @@
-package ch.elca.ttrich;
+package ch.elca.el4j.seam.generic;
 
 /**
  * Helper class to store name and "linked"-property of a column.
