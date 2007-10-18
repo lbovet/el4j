@@ -23,9 +23,9 @@
 		                access to their metadata at runtime. -->
 		<property name="annotatedClasses">
 			<list>
-				<value>ch.elca.ttrich.Client</value>
-				<value>ch.elca.ttrich.Employee</value>
-				<value>ch.elca.ttrich.Offer</value>
+				<value>ch.elca.el4j.seam.demo.entities.Client</value>
+				<value>ch.elca.el4j.seam.demo.entities.Employee</value>
+				<value>ch.elca.el4j.seam.demo.entities.Offer</value>
 			</list>
 		</property>
 		
@@ -34,7 +34,7 @@
 		           be used by hibernate from the hibernate documentation anyway. -->
 		<!-- <property name="annotatedPackages">
 			<list>
-				<value>ch.elca.ttrich</value>
+				<value>ch.elca.el4j.seam.generic</value>
 			</list>
 		</property> -->
 		
@@ -114,7 +114,7 @@
 	-->
 	
 	<!-- Shortname mapping: bijective mapping between entity shortnames and class names -->
-	<bean id="shortNameMapping" class="ch.elca.ttrich.EntityShortNameMapping">
+	<bean id="shortNameMapping" class="ch.elca.el4j.seam.generic.EntityShortNameMapping">
 		<property name="entityShortNames">
 			<map>
 				<entry key="ch.elca.el4j.apps.keyword.dom.Keyword">
@@ -123,22 +123,22 @@
 			</map>
 		</property>
 		<!-- The package to use when guessing -->
-		<property name="defaultEntityPackage" value="ch.elca.ttrich"/>
+		<property name="defaultEntityPackage" value="ch.elca.el4j.seam.demo.entities"/>
 	</bean>
 	
 	<!-- Entity info base: provides (mostly metadata related) info about entities -->
-	<bean id="entityInfoBase" class="ch.elca.ttrich.EntityInfoBase">
+	<bean id="entityInfoBase" class="ch.elca.el4j.seam.generic.metadata.EntityInfoBase">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 
 	<!-- Field lists: computes field/column lists (metadata & given in/exclusion lists) -->
-	<bean id="fieldLists" class="ch.elca.ttrich.FieldLists">
+	<bean id="fieldLists" class="ch.elca.el4j.seam.generic.metadata.FieldLists">
 		<property name="sessionFactory" ref="sessionFactory"/>
 		<property name="shortNameMapping" ref="shortNameMapping"/>
 	</bean>
 	
 	<!-- The essential utils bean: The heart of all generic master/detail views -->
-	<bean id="utils" class="ch.elca.ttrich.ElUtils">
+	<bean id="utils" class="ch.elca.el4j.seam.generic.ElUtils">
 		<property name="shortNameMapping" ref="shortNameMapping"/>
 		<property name="entityInfoBase" ref="entityInfoBase"/>
 		<property name="fieldLists" ref="fieldLists"/>

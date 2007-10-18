@@ -47,7 +47,11 @@
             <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-database</artifactId>
         </dependency>
-		
+	        <!--dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-core</artifactId>
+            <version>1.8-SNAPSHOT</version>
+        </dependency-->	
 		<!-- EL4J keyword dao -->
 		<dependency>
             <groupId>ch.elca.el4j.applications</groupId>

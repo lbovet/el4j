@@ -1,4 +1,4 @@
-package ch.elca.el4j;
+package ch.elca.el4j.seam.taghandler;
 
 /*
 This code is derived from code taken from "ninth avenue"'s "Seamless Java EE Utility Library"

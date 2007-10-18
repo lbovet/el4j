@@ -1,4 +1,4 @@
-package ch.elca.ttrich;
+package ch.elca.el4j.seam.generic;
 
 import static org.jboss.seam.ScopeType.CONVERSATION;
 
@@ -22,7 +22,7 @@ import org.jboss.seam.annotations.intercept.BypassInterceptors;
  * 
  * @author  Baeni Christoph (CBA)
  */
-@Name("ch.elca.ttrich.EntityConverter")
+@Name("ch.elca.el4j.seam.generic.EntityConverter")
 @Scope(CONVERSATION)
 @Converter
 @BypassInterceptors

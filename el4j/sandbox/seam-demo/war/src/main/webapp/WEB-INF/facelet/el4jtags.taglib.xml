@@ -103,56 +103,56 @@
 	<!-- programmatically defined facelets tags -->
 	<tag>
 		<tag-name>set</tag-name>
-		<handler-class>ch.elca.el4j.SetTagHandler</handler-class>
+		<handler-class>ch.elca.el4j.seam.taghandler.SetTagHandler</handler-class>
 	</tag>
 	
 	<!-- general purpose helper function -->
 	<function>
 		<function-name>booleanValue</function-name>
-		<function-class>ch.elca.ttrich.ElUtils</function-class>
+		<function-class>ch.elca.el4j.seam.generic.ElUtils</function-class>
 		<function-signature>boolean getBooleanValue(java.lang.String)</function-signature>
 	</function>
 	
 	<!-- humanization el functions -->
 	<function>
 		<function-name>h10nEntityName</function-name>
-		<function-class>ch.elca.ttrich.Humanization</function-class>
+		<function-class>ch.elca.el4j.seam.generic.humanization.Humanization</function-class>
 		<function-signature>java.lang.String getEntityName(java.lang.String)</function-signature>
 	</function>
 	
 	<function>
 		<function-name>h10nEntityNamePlural</function-name>
-		<function-class>ch.elca.ttrich.Humanization</function-class>
+		<function-class>ch.elca.el4j.seam.generic.humanization.Humanization</function-class>
 		<function-signature>java.lang.String getEntityNamePlural(java.lang.String)</function-signature>
 	</function>
 	
 	<function>
 		<function-name>h10nFieldName</function-name>
-		<function-class>ch.elca.ttrich.Humanization</function-class>
+		<function-class>ch.elca.el4j.seam.generic.humanization.Humanization</function-class>
 		<function-signature>java.lang.String getFieldName(java.lang.String, java.lang.String)</function-signature>
 	</function>
 	
 	<function>
 		<function-name>h10nFieldHint</function-name>
-		<function-class>ch.elca.ttrich.Humanization</function-class>
+		<function-class>ch.elca.el4j.seam.generic.humanization.Humanization</function-class>
 		<function-signature>java.lang.String getFieldHint(java.lang.String, java.lang.String)</function-signature>
 	</function>
 	
 	<function>
 		<function-name>h10nFieldGroupName</function-name>
-		<function-class>ch.elca.ttrich.Humanization</function-class>
+		<function-class>ch.elca.el4j.seam.generic.humanization.Humanization</function-class>
 		<function-signature>java.lang.String getFieldGroupName(java.lang.String, java.lang.String)</function-signature>
 	</function>
 	
 	<function>
 		<function-name>h10nFieldEnumName</function-name>
-		<function-class>ch.elca.ttrich.Humanization</function-class>
+		<function-class>ch.elca.el4j.seam.generic.humanization.Humanization</function-class>
 		<function-signature>java.lang.String getFieldEnumName(java.lang.String, java.lang.String, java.lang.String)</function-signature>
 	</function>
 	
 	<function>
 		<function-name>h10nFieldBoolText</function-name>
-		<function-class>ch.elca.ttrich.Humanization</function-class>
+		<function-class>ch.elca.el4j.seam.generic.humanization.Humanization</function-class>
 		<function-signature>java.lang.String getFieldBoolText(java.lang.String, java.lang.String, boolean)</function-signature>
 	</function>
 </facelet-taglib>

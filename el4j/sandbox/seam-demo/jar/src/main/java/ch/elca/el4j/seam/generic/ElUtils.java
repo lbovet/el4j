@@ -1,8 +1,12 @@
-package ch.elca.ttrich;
-
-import javax.faces.context.FacesContext;
+package ch.elca.el4j.seam.generic;
 
 import org.jboss.seam.Component;
+
+import ch.elca.el4j.seam.generic.metadata.EntityInfoBase;
+import ch.elca.el4j.seam.generic.metadata.EnumFieldInfo;
+import ch.elca.el4j.seam.generic.metadata.FieldInfo;
+import ch.elca.el4j.seam.generic.metadata.FieldLists;
+import ch.elca.el4j.seam.generic.metadata.RelationFieldInfo;
 
 /**
  * The heart of the generic master/detail views.

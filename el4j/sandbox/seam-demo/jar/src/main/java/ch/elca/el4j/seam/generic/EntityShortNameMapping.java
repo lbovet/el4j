@@ -1,7 +1,9 @@
-package ch.elca.ttrich;
+package ch.elca.el4j.seam.generic;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import ch.elca.el4j.seam.generic.humanization.Humanization;
 
 /**
  * A bijective mapping between entity short-names and fully qualified entity class names.
