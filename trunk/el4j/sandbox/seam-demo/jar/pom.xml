@@ -46,16 +46,28 @@
         <dependency>
             <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-database</artifactId>
+            <exclusions>
+                <exclusion>            
+            			<groupId>com.oracle</groupId>
+						<artifactId>ojdbc14_g</artifactId>
+			 	</exclusion>
+			 	<exclusion>
+						<groupId>com.mysql</groupId>
+						<artifactId>mysql-connector</artifactId>
+				</exclusion>
+            </exclusions>
         </dependency>
-	        <!--dependency>
-            <groupId>ch.elca.el4j.modules</groupId>
-            <artifactId>module-core</artifactId>
-            <version>1.8-SNAPSHOT</version>
-        </dependency-->	
+
 		<!-- EL4J keyword dao -->
 		<dependency>
             <groupId>ch.elca.el4j.applications</groupId>
             <artifactId>keyword-dao</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>ch.elca.el4j.modules</groupId>
+                    <artifactId>module-ibatis</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 		
 		<!-- Seam module -->

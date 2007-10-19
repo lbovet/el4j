@@ -2,11 +2,19 @@
                              "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
                 template="layout/masterPage.xhtml">
 	
-	<ui:param name="entityShortName" value="employee"/>
-	<ui:param name="shown" value="@visa,@lastName,firstName,active"/>
-	<ui:param name="filterOn" value="active"/>
+	
+<ui:define name="body">
+	<ui:decorate template="layout/masterView.xhtml">
+		<ui:param name="entityShortName" value="employee"/>
+		<!--ui:param name="shown" value="@visa,@lastName,firstName,active"/-->
+		<ui:param name="filterOn" value="active"/>
+	</ui:decorate>
+	<p><b><h:outputText value="Master Level 999"/></b></p>
+</ui:define>
+	
 	
 </ui:composition>
 

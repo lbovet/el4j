@@ -1,11 +1,13 @@
 package ch.elca.el4j.seam.generic;
 
+import java.io.Serializable;
+
 /**
  * Helper class to store name and "linked"-property of a column.
  *
  * @author  Baeni Christoph (CBA)
  */
-public class TableColumn implements Comparable {
+public class TableColumn implements Comparable, Serializable {
 	private String name;
 	private boolean linked;
 	
