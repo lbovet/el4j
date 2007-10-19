@@ -12,7 +12,7 @@
                   concurrent-request-timeout="500"
                   conversation-id-parameter="cid"/>
 				  
-	<core:init transaction-management-enabled="false"/>
+	<core:init transaction-management-enabled="false" debug="true"/>
 	
 	<security:identity authenticate-method="#{authenticator.authenticate}"/>
     
