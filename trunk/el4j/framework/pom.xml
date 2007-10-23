@@ -41,6 +41,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-eclipse-plugin</artifactId>
+                <configuration>
+                    <reactorProjectGroupIdPrefixes>
+                        ch.elca.el4j.modules,
+                        ch.elca.el4j.tests,
+                        ch.elca.el4j.applications
+                    </reactorProjectGroupIdPrefixes>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>ch.elca.el4j.maven.plugins</groupId>
