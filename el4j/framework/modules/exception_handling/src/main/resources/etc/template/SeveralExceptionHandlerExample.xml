@@ -54,7 +54,7 @@
                     </property>
                     <property name="exceptionHandler">
                         <bean class="ch.elca.el4j.tests.services.exceptionhandler.ReconfigureExceptionHandler">
-                            <property name="c"><ref local="C"/></property>
+                            <property name="c"><ref bean="C"/></property>
                         </bean>
                     </property>
                 </bean>
