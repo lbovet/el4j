@@ -62,22 +62,27 @@ POSSIBILITY OF SUCH DAMAGE.
 
 <form action="JAMonAdmin.jsp" method="post">
 <table border='0' cellpadding='0' cellspacing='0' width='75%'>
-<tr>
-<td style='text-align:left;'><table class='layoutmain' border='0' cellpadding='2' cellspacing='2' bgcolor='#669999'>
-    <tr>
-    <th><input name='Refresh' type='SUBMIT' value='Refresh'></th>
-    <th><input name='Reset' type='SUBMIT' value='Reset'></th>
-    <th><input name='Enable' type='SUBMIT' value='Enable'></th>
-    <th><input name='Disable' type='SUBMIT' value='Disable'></th>
-    </tr>
-</table></td>
-<td><table border='0' width='100%'>
-    <tr>
-    <th nowrap><a href="http://www.jamonapi.com"><img src="jamon_small.jpg" id="monLink" border="0" /></a></th>
-</font></th>
-    </tr>
-</table></td>
-</tr>
+	<tr>
+		<td style='text-align: left;'>
+		<table class='layoutmain' border='0' cellpadding='2' cellspacing='2'
+			bgcolor='#669999'>
+			<tr>
+				<th><input name='Refresh' type='SUBMIT' value='Refresh'></th>
+				<th><input name='Reset' type='SUBMIT' value='Reset'></th>
+				<th><input name='Enable' type='SUBMIT' value='Enable'></th>
+				<th><input name='Disable' type='SUBMIT' value='Disable'></th>
+			</tr>
+		</table>
+		</td>
+		<td>
+		<table border='0' width='100%'>
+			<tr>
+				<th nowrap><a href="http://www.jamonapi.com"><img
+					src="jamon_small.jpg" id="monLink" border="0" /></a></th>
+			</tr>
+		</table>
+		</td>
+	</tr>
 </table>
 
 <% 
