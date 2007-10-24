@@ -278,6 +278,7 @@
                 <tomcat5x.zipDownloadUrl>http://www.apache.org/dist/tomcat/tomcat-5/v${tomcat5x.version}/bin/apache-tomcat-${tomcat5x.version}.zip</tomcat5x.zipDownloadUrl>
                 <tomcat5x.container.log.file>${project.build.directory}/logs/tomcat5x/output.log</tomcat5x.container.log.file>
                 <tomcat5x.cargo.log.file>${project.build.directory}/logs/tomcat5x/cargo.log</tomcat5x.cargo.log.file>
+                <tomcat5x.eclipse.runtime.facet.name>Apache Tomcat v5.5</tomcat5x.eclipse.runtime.facet.name>
                 
                 <!-- Weblogic9x -->
                 <weblogic9x.home>${el4j.project.tools}/bea/weblogic90</weblogic9x.home>
