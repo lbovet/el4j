@@ -5,9 +5,6 @@
 
 <sqlMapConfig>
 
-<!--
-   <sqlMap resource="ibatis/sip.xml" />
-    <sqlMap resource="ibatis/workcase.xml" /> -->
-
+    <sqlMap resource="ibatis/workcase.xml" />
 
 </sqlMapConfig>
