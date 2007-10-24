@@ -448,9 +448,10 @@
                     <!--
                         New features in snapshot version available.
                            * maven-eclipse-plugin (revision 587020
-                               + patch http://jira.codehaus.org/browse/MECLIPSE-334)
+                               + patch http://jira.codehaus.org/browse/MECLIPSE-334
+                               + patch http://jira.codehaus.org/browse/MECLIPSE-336)
                     -->
-                    <version>2.5-20071023.085032-4</version>
+                    <version>2.5-20071024.082440-4</version>
                     <configuration>
                         <additionalProjectnatures>
                             <projectnature>de.mvmsoft.checkclipse.CheckclipseNature</projectnature>
@@ -459,6 +460,7 @@
                             <buildcommand>de.mvmsoft.checkclipse.CheckclipseBuilder</buildcommand>
                         </additionalBuildcommands>
                         <workspace>${basedir}/workspace</workspace>
+                        <wtpversion>1.5</wtpversion>
                     </configuration>
                     <executions>
                         <execution>
@@ -711,10 +713,6 @@
             <build>
                 <pluginManagement>
                     <plugins>
-
-                        <!-- MDL 06-9-10
-                             First download and extract the container ..
-                             -->
                         <plugin>
                             <groupId>org.codehaus.cargo</groupId>
                             <artifactId>cargo-maven2-plugin</artifactId>
@@ -736,20 +734,27 @@
                                 
                             </configuration>
                         </plugin>
-
-
-
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-eclipse-plugin</artifactId>
+                            <configuration>
+                                <wtpContextName>${jee-web.context}</wtpContextName>
+                                <projectRuntimeFacets>
+                                    <projectRuntimeFacet>${tomcat5x.eclipse.runtime.facet.name}</projectRuntimeFacet>
+                                </projectRuntimeFacets>
+                                <additionalWarClasspathContainers>
+                                    <additionalWarClasspathContainer>org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/${tomcat5x.eclipse.runtime.facet.name}</additionalWarClasspathContainer>
+                                    <additionalWarClasspathContainer>org.eclipse.jst.j2ee.internal.web.container</additionalWarClasspathContainer>
+                                    <additionalWarClasspathContainer>org.eclipse.jst.j2ee.internal.module.container</additionalWarClasspathContainer>
+                                </additionalWarClasspathContainers>
+                            </configuration>
+                        </plugin>
                     </plugins>
                 </pluginManagement>
-                <plugins>
-
-            </plugins>
-
             </build>
-
             <properties>
                 <jee-web.containerId>tomcat5x</jee-web.containerId>
-
+                
                 <jee-web.host>localhost</jee-web.host>
                 <jee-web.port>8080</jee-web.port>
                 <jee-web.war.name>${project.build.finalName}</jee-web.war.name>
@@ -805,6 +810,17 @@
                                 </configuration>
                             </configuration>
                         </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-eclipse-plugin</artifactId>
+                            <configuration>
+                                <wtpContextName>${jee-web.context}</wtpContextName>
+                                <additionalWarClasspathContainers>
+                                    <additionalWarClasspathContainer>org.eclipse.jst.j2ee.internal.web.container</additionalWarClasspathContainer>
+                                    <additionalWarClasspathContainer>org.eclipse.jst.j2ee.internal.module.container</additionalWarClasspathContainer>
+                                </additionalWarClasspathContainers>
+                            </configuration>
+                        </plugin>
                     </plugins>
                 </pluginManagement>
             </build>
@@ -843,7 +859,7 @@
             <properties>
                 <db.name>mysql</db.name>
             </properties>
-        </profile>	
+        </profile>
     </profiles>
     <repositories>
         <repository>
