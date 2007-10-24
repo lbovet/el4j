@@ -11,6 +11,6 @@
     <typeHandler javaType="java.sql.Blob"
         callback="com.ibatis.sqlmap.engine.type.BlobTypeHandlerCallback"/>
 
-
+    <sqlMap resource="ibatis/sip.xml" />
 
 </sqlMapConfig>
