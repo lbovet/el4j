@@ -2,7 +2,11 @@
 <weblogic-web-app
     xmlns="http://www.bea.com/ns/weblogic/90"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.bea.com/ns/weblogic/90 http://www.bea.com/ns/weblogic/90/weblogic-web-app.xsd">
+    xsi:schemaLocation="http://www.bea.com/ns/weblogic/90/weblogic-web-app.xsd">
+<!--
+    The following line has been commented due to problems in the given xsd file.
+    xsi:schemaLocation="http://www.bea.com/ns/weblogic/90 http://www.bea.com/ns/weblogic/90/weblogic-web-app.xsd"
+-->
 
     <!-- Version: $Revision$ -->
     <!-- URL: $URL$ -->
