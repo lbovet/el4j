@@ -13,7 +13,9 @@
 	<wsdl:types>
 		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 			attributeFormDefault="qualified" elementFormDefault="qualified"
-			targetNamespace="http://service.remoting.tests.el4j.elca.ch">
+			targetNamespace="http://service.remoting.tests.el4j.elca.ch"
+            xmlns:ns1="another.test.another.path">
+            <xsd:import namespace="another.test.another.path" />
 			<xsd:element name="echoValueObject">
 				<xsd:complexType>
 					<xsd:sequence>
