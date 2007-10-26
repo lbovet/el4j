@@ -248,21 +248,24 @@ public class ModuleWebApplicationContext extends XmlWebApplicationContext {
             s_el4jLogger.debug("mostSpecificResourceLast:"+mostSpecificResourceLast);
             s_el4jLogger.debug("mostSpecificBeanDefinitionCounts:"+mostSpecificBeanDefinitionCounts);                   
             
-            for (String configLocation : m_configLocations) {
-                Resource res = getResource(configLocation);
-                BufferedReader reader;
-                try {
-                    reader = new BufferedReader( new InputStreamReader(res.getInputStream()));
+            try {
+                for (String configLocation : m_configLocations) {
+                    Resource res = getResource(configLocation);
+                    BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(res.getInputStream()));
                     StringBuffer buf = new StringBuffer();
                     while (reader.ready()) {
                         buf.append(reader.readLine());
                         buf.append("\n");
                     }                    
-                    s_el4jLogger.debug("Content of "+configLocation+" : "+buf.toString()+"\n---");
-                } catch (IOException e) {
-                    // deliberately ignore exception
-                    s_el4jLogger.debug("Error during printing of config location "+configLocation, e);
-                }               
+                    s_el4jLogger.debug("Content of " + configLocation + " : "
+                        + buf.toString() + "\n---");
+
+                }
+            } catch (Exception e) {
+                // deliberately ignore exception
+                s_el4jLogger.debug("Error during printing of config location "
+                    + m_configLocations, e);
             }
         }
 	}
