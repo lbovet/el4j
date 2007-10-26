@@ -112,6 +112,27 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
     }
     
     /**
+     * Load connection properties from specified properties file.
+     * @param sourceDir
+     *          Path where to find properties file
+     */
+    public void loadConnectionProperties(String sourceDir) {
+        if (sourceDir != null) {
+            try {
+                String source = replaceDbName(sourceDir);
+                Resource[] resources = getResources("classpath*:" + source);
+                Properties properties = getProperties(resources);
+                m_url = properties.getProperty("dataSource.url");
+                m_username = properties.getProperty("dataSource.username");
+                m_password = properties.getProperty("dataSource.password");
+            } catch (Exception e) {
+                throw new DatabaseHolderException(
+                    "Error reading connection properties", e);
+            }
+        }
+    }
+    
+    /**
      * Get driver from specified properties file.
      * 
      * @param sourceDir
@@ -129,23 +150,5 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
         }
     }
     
-    /**
-     * Load connection properties from specified properties file.
-     * @param sourceDir
-     *          Path where to find properties file
-     */
-    private void loadConnectionProperties(String sourceDir) {
-        try {
-            String source = replaceDbName(sourceDir);
-            Resource[] resources = getResources("classpath*:" + source);
-            Properties properties = getProperties(resources);
-            m_url = properties.getProperty("dataSource.url");
-            m_username = properties.getProperty("dataSource.username");
-            m_password = properties.getProperty("dataSource.password");
-        } catch (Exception e) {
-            throw new DatabaseHolderException(
-                "Error reading connection properties", e);
-        }
-        
-    }
+    
 }

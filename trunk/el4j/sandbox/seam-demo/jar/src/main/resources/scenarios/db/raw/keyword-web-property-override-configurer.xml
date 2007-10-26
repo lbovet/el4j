@@ -13,7 +13,7 @@
         singleton="false">
         <property name="locations">
             <list>
-                <value>classpath:scenarios/db/raw/keyword-web-override-${db.name}.properties</value>
+                <value>classpath:scenarios/db/raw/seam-demo-jar-override-${db.name}.properties</value>
             </list>
         </property>
         <property name="order" value="2"/>

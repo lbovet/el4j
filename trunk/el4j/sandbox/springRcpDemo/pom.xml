@@ -51,7 +51,7 @@
 				<artifactId>maven-database-plugin</artifactId>
 				<configuration>
 					<connectionPropertiesSource>
-						scenarios/db/raw/rcpDemo-override-{db.name}.properties
+						scenarios/db/raw/el4j-rcp-demo-override-{db.name}.properties
 					</connectionPropertiesSource>
 					<dbName>db2</dbName>
 				</configuration>

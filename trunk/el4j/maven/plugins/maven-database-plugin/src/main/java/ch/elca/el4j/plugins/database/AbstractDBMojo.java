@@ -62,7 +62,6 @@ public abstract class AbstractDBMojo extends AbstractMojo {
     /**
      * Name of database to use (either db2 or oracle).
      * 
-     * @parameter expression="${db.dbName}"
      * 
      */
     private String dbName;
@@ -183,6 +182,14 @@ public abstract class AbstractDBMojo extends AbstractMojo {
      */
     protected String getDbName() {
         return dbName;
+    }
+    
+    /**
+     * 
+     * @param value the database name
+     */
+    public void setDbName(String value) {
+        this.dbName = value;
     }
 
     /**

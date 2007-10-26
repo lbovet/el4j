@@ -52,7 +52,7 @@ public class PrepareMojo extends AbstractDBExecutionMojo {
             // Start Derby Network Server if necessary, but do not wait, because
             // we know that execution will continue
             if (needStartup()) {
-                getLog().info("Starting database...");
+                getLog().info("Starting database (PrepareMojo)...");
                 DerbyNetworkServerStarter.setHomeDir(getDerbyLocation());
                 DerbyNetworkServerStarter.startNetworkServer();
             }

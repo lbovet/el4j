@@ -135,6 +135,37 @@ public class DepGraphWalker {
    
       
     /**
+     * Collects and returns list of artifact-objects of all dependencies of 
+     * this project,
+     * topologically sorted.
+     * 
+     * @author Frank Bitzer
+     * 
+     * @return List of dependencies as Artifact
+     */
+    public List<Artifact> getDependencyArtifacts() {
+       // Get the root artifact from the created dependency m_graph
+        DepGraphArtifact rootArtifact 
+            = m_graph.getArtifact(
+                m_project.getArtifactId(), 
+                m_project.getGroupId(), 
+                m_project.getVersion(), 
+                m_project.getArtifact().getScope(), 
+                m_project.getArtifact().getType());
+
+        // Create a DAG from the dependency m_graph and sort it.
+        createDAG(rootArtifact);
+        List<String> list = TopologicalSorter.sort(m_dag);
+        // Remove root artifact as it is not a dependency
+        list.remove(rootArtifact.getQualifiedName());
+        
+        List<Artifact> result = resolveArtifacts(
+            m_resolver, m_factory, m_graph, list);
+        
+        return result;
+    }
+    
+    /**
      * Collects and returns list of urls of all dependencies of this project,
      * topologically sorted.
      * 
@@ -158,6 +189,7 @@ public class DepGraphWalker {
         
         return resolveArtifactsToURL(m_resolver, m_factory, m_graph, list);
     }
+    
     
     /**
      * Resolves the sorted DepGraphArtifacts back to (Maven) Artifacts and
@@ -189,6 +221,8 @@ public class DepGraphWalker {
                     art.getVersion(), 
                     art.getScope(), 
                     art.getType());
+            
+            
             try {
                 resolver.resolve(artifact, m_project
                     .getRemoteArtifactRepositories(), m_repo);
@@ -199,6 +233,56 @@ public class DepGraphWalker {
         }
         return artifactURLs;
     }
+    
+    
+    
+    /**
+     * Resolves the sorted DepGraphArtifacts back to (Maven) Artifacts
+     * and returns a list of them.
+     *  
+     * @author Frank Bitzer (FBI)
+     * 
+     * @param resolver
+     *            The maven artifact resolver
+     * @param factory
+     *            The maven artifact factory
+     * @param graph
+     *            The intermediate dependency graph
+     * @param sorted
+     *            Topologically sorted list of all dependencies
+     * @return List of the Artifacts of the topologically sorted dependencies
+     */
+    private List<Artifact> resolveArtifacts(ArtifactResolver resolver,
+        ArtifactFactory factory, DependencyGraph graph, List<String> sorted) {
+
+        String[] parts;
+        List<Artifact> artifacts = new ArrayList<Artifact>();
+        for (String item : sorted) {
+            parts = item.split(":");
+            DepGraphArtifact art = graph.getArtifact(parts[2], parts[0],
+                parts[1], "", "");
+
+            Artifact artifact = factory.createArtifact(
+                    art.getGroupId(), 
+                    art.getArtifactId(), 
+                    art.getVersion(), 
+                    art.getScope(), 
+                    art.getType());
+            
+            
+            try {
+                resolver.resolve(artifact, m_project
+                    .getRemoteArtifactRepositories(), m_repo);
+                artifacts.add(artifact);
+            } catch (Exception e) {
+                throw new DatabaseHolderException(e);
+            }
+        }
+        return artifacts;
+    }
+    
+    
+    
     
    /**
      * Creates the Intermediate dependency graph with help of the Dependency

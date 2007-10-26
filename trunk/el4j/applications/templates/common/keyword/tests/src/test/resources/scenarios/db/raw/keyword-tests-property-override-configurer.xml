@@ -13,7 +13,7 @@
         singleton="false">
         <property name="locations">
             <list>
-                <value>classpath:scenarios/db/raw/keyword-core-tests-override-${db.name}.properties</value>
+                <value>classpath:scenarios/db/raw/keyword-tests-override-${db.name}.properties</value>
             </list>
         </property>
         <property name="order" value="2"/>
