@@ -55,7 +55,7 @@
 					<execution>
 						<configuration>
 							<connectionPropertiesSource>
-								scenarios/db/raw/pluginconfig-tcp-forwarder-tests-override-{db.name}.properties
+								scenarios/db/raw/module-tcp_forwarder-tests-override-{db.name}.properties
 							</connectionPropertiesSource>
 						</configuration>
 						<goals>
@@ -95,7 +95,7 @@
 					<execution>
 						<configuration>
 							<db.connectionProperties>
-								scenarios/db/raw/pluginconfig-tcp-forwarder-tests-override-{db.name}.properties
+								scenarios/db/raw/module-tcp_forwarder-tests-override-{db.name}.properties
 							</db.connectionProperties>
 						</configuration>
 						<goals>

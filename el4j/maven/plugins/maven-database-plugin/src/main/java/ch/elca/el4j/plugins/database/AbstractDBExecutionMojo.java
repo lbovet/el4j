@@ -30,6 +30,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
+
+import org.apache.maven.artifact.Artifact;
 import org.springframework.core.io.Resource;
 import org.springframework.util.StringUtils;
 
@@ -42,7 +44,9 @@ import ch.elca.el4j.plugins.database.holder.DatabaseHolderException;
  * statements. 
  *
  * <script type="text/javascript">printFileStatus
- *   ("$URL$",
+ *   ("$URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/
+ *   maven/plugins/maven-database-plugin/src/main/java/ch/elca/el4j/plugins/
+ *   database/AbstractDBExecutionMojo.java $",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
@@ -55,16 +59,44 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
     // Checkstyle: MemberName off
     
     /**
+     * Base path (in <code>classpath*:</code>)where properties files can be 
+     * found.
+     * 
+     * @parameter expression="${db.connectionPropertiesDir}"  default-value=
+     *  "scenarios/db/raw/"
+     */
+    private String connectionPropertiesDir;
+    
+    
+    /**
      * Path to properties file where connection properties (username, password 
      * and url)can be found.
      * 
      * For this property, no prefix <code>classpath*:</code> is needed. 
      * Moreover it can include a generic <code>{db.name}</code> if a
      * <code>env.properties</code> file is provided (in the project dir).
-     * 
+     *  
+     *  
+     *  
      * @parameter expression="${db.connectionPropertiesSource}"
      */
     private String connectionPropertiesSource;
+    
+    
+    
+    /**
+     * Template for filenames for .properties files used to read the
+     * connection settings of the database.
+     * You can use the variables {groupId}, {artifactId}, {version} and
+     * {db.name} eg. {artifactId}-override-{db.name}.properties 
+     * (this is the default-value)
+     * 
+     * 
+     * @parameter expression="${db.connectionPropertiesSourceTemplate}" 
+     * default-value="{artifactId}-override-{db.name}.properties"
+     */
+    private String connectionPropertiesSourceTemplate;
+    
     
     /**
      * Path to properties file where JDBC driver name can be found.
@@ -74,7 +106,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
      * <code>env.properties</code> file is provided (in the project dir).
      * 
      * @parameter expression="${db.driverPropertiesSource}" default-value=
-     *  "scenarios/db/raw/common-database-override-{db.name}.properties"
+     *  "scenarios/db/raw/module-database-override-{db.name}.properties"
      */
     private String driverPropertiesSource;
     
@@ -114,21 +146,211 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
      * Looks for matching sql resources in <code>sqlSourceDir</code>, extracts
      * sql statements and executes them.
      * 
+     * Also looks for the properties-file to use, if none is specified
+     * (per parameter oder pom.xml)
+     * 
      * @param goal Goal to execute
      * @param reversed Should be statements processed in reverse order?
      * @param isSilent indicates whether we reduce log output
      */
-    protected void executeAction(String goal, boolean reversed, boolean isSilent) {
+    protected void executeAction(String goal, boolean reversed, 
+        boolean isSilent) {
+        
+        
+        //first make sure, that connectionPropertiesDir ends with a "/"
+        //because this is needed for further operations
+        if (!connectionPropertiesDir.endsWith("/")) {
+            connectionPropertiesDir = connectionPropertiesDir + "/";
+        }
+        
+        //set the dbName to global db.name
+        setDbName(getProject().getProperties().getProperty("db.name"));
+      
+        
+        if (getDbName() != null) {
+            getLog().info("DbName: " + getDbName());
+        }
+        
+    
+        getLog().info("Current artifact: " + getProject().getArtifactId());
+        
+        getLog().info("Tree: ");
+        
+        List<Artifact> deps = getGraphWalker().
+            getDependencyArtifacts();
+        //add current artifact to search-list
+        if (deps != null) { deps.add(getProject().getArtifact()); }
+        
+        for (Artifact dep : deps) {
+            getLog().info(dep.getArtifactId());
+        }
+       
+       
+//        getLog().info("Resources:");
+//        
+//        Resource[] res = getHolder().getResources("classpath*:" 
+//            + connectionPropertiesDir);
+//        //res now holds all resources matching path-pattern
+//         
+//        for (Resource r : res) {
+//            try {
+//                getLog().info("  " 
+//                     + r.getURL().getFile());
+//            } catch (Exception e) {
+//                 getLog().info("Error getting URL of resource.");
+//            }
+//        }
+        
+        //shows dependencies of current artifact
+        //very nice but very useless...
+        /**
+        List<URL> dependencies=getGraphWalker().getDependencyURLs();
+        
+        getLog().info("Dependencies are: ");
+        for (URL url : dependencies) {
+            getLog().info(url.getFile());
+        }
+        */
+        
+        //no file for connection-properties was specified, so search it
+        if (!StringUtils.hasText(connectionPropertiesSource)) {
+            
+            //then dbName must be provided, so that corrent 
+            //properties file can be found
+            //hint: since there is a default value for dbName, 
+            //this case should never occur
+            
+            if (!StringUtils.hasText(getDbName())) {
+                getLog().error("Please provide a value for either "
+                    + "the parameter 'db.connectionPropertiesSource' or "
+                    + "'db.dbName'");
+            } else {
+            
+                getLog().info("Looking for .properties file...");
+                
+                connectionPropertiesSource = getPropertiesFile();
+                
+                
+                //load the found properties (possible even if nothing found)
+                getHolder().loadConnectionProperties(
+                    connectionPropertiesSource);
+            }
+        }
+    
+        
+        
         // If no connection properties are given, skip goal
-        if (connectionPropertiesSource != null) {            
+        if (connectionPropertiesSource != null) {
+            
+            getLog().info("Using connectionPropertiesSource at '" 
+                + getHolder().replaceDbName(connectionPropertiesSource) + "'");
+            
             List<Resource> resources = getResources(getSqlSourcesPath(goal));
             if (reversed) {
                 Collections.reverse(resources);
             }
             processResources(resources, goal, isSilent);
+        } else {
+            
+            getLog().info("-----------------------------------------------");
+            getLog().error("Missing parameter: connectionPropertiesSource!");
+            getLog().info("Skipping goal...");
+            getLog().info("-----------------------------------------------");
         }
     }
-    
+    /**
+     * Searches the resources for a .properties file containing connection 
+     * properties for current dbName.
+     * Looks in current artifact und from the leafs to the root
+     * in all dependent artifacts
+     * until properties file is found.
+     * 
+     * @author Frank Bitzer (FBI)
+     * 
+     * @return relative path of properties file (relative to classpath*:)
+     */
+    private String getPropertiesFile() {
+        
+        String result = null;
+        
+        //create list of dependencies
+        List<Artifact>dependencies = getGraphWalker().
+            getDependencyArtifacts();
+       
+        //add current artifact to search-list
+        if (dependencies != null) { 
+            dependencies.add(getProject().getArtifact());
+        }
+        
+        
+        //reverse to search bottom-up
+        Collections.reverse(dependencies);
+        
+        String pattern;
+        
+        for (Artifact currentDependency : dependencies) {
+            
+//            pattern = "classpath*:" + connectionPropertiesDir
+//                + currentDependency.getArtifactId()
+//                + "-override-" + getDbName() + ".properties";
+            
+            
+            //create pattern from template
+            
+            //at first, set variable artifactId
+            pattern = this.connectionPropertiesSourceTemplate.replace
+            ("{artifactId}", currentDependency.getArtifactId());
+            
+            //next, version
+            pattern = pattern.replace
+            ("{version}", currentDependency.getVersion());
+            
+            //then groupId
+            pattern = pattern.replace
+            ("{groupId}", currentDependency.getGroupId());
+            
+            //and at least, db.name using the function of the holder
+            pattern = getHolder().replaceDbName(pattern);
+            
+            
+            //search must be executed in classpath
+            pattern = "classpath*:" + connectionPropertiesDir + pattern;
+            
+            getLog().info("Using pattern " + pattern);
+            
+            Resource[] res = getHolder().getResources(pattern);
+            
+            
+            if (res.length == 0) {
+                //no properties found for this artifact, so try parent artifact
+                getLog().info("Artifact " + currentDependency.getArtifactId()
+                    + " has no .properties file. Trying next dependency...");
+                
+                
+            } else if (res.length == 1) {
+                //exactly one .properties file was found, so return its path
+                result = connectionPropertiesDir + res[0].getFilename();
+                
+                break;
+            } else {
+                //ambiguous properties files found 
+                getLog().error("More then one .properties file found in "
+                    + currentDependency.getArtifactId());
+                
+                result = null;
+                
+                break;
+                
+            }
+            
+           
+        }
+         
+        return result;
+        
+        
+
+    }
     /**
      * Iterates through array and executes sql statements of resources.
      * If goal is create or update, resources are processed in reversed order.
@@ -140,7 +362,8 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
      * @param goal The goal to execute.
      * @param beSilent indicates whether we reduce log output
      */
-    private void processResources(List<Resource> resources, String goal, boolean beSilent) {
+    private void processResources(List<Resource> resources, String goal, 
+        boolean beSilent) {
         List<SQLException> sqlExceptions = new ArrayList<SQLException>();
         List<String> failedSqlStatements = new ArrayList<String>();
         Connection connection = getConnection();
@@ -175,9 +398,9 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
             // If we encountered exceptions during execution,
             // throw new Exception and pass it first occured exception.
             if (!beSilent) {
-                getLog().info("Exceptions during goal db:'"+goal+"'");
+                getLog().info("Exceptions during goal db:'" + goal + "'");
                 for (int i = 0; i < sqlExceptions.size(); i++) {
-                    getLog().info("failed stmt: "+failedSqlStatements.get(i));
+                    getLog().info("failed stmt: " + failedSqlStatements.get(i));
                     getLog().info(sqlExceptions.get(i).toString());
                 }
             }
@@ -310,9 +533,14 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
         prop.put("user", getHolder().getUsername());
         prop.put("password", getHolder().getPassword());
         Driver driver = getHolder().getDriver();
+        getLog().info("Trying to connect to db '" 
+            + getHolder().getDbName() + "' at '" + getHolder().getUrl() + "'");
+
         try {
             return driver.connect(getHolder().getUrl(), prop);
         } catch (SQLException e) {
+            getLog().info("Error connecting to db " 
+                + getHolder().getDbName() + " at " + getHolder().getUrl() + "");
             throw new DatabaseHolderException(e);
         }   
     }
@@ -321,6 +549,8 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
      * @return The Data Holder
      */
     private ConnectionPropertiesHolder getHolder() {
+        
+        
         if (m_holder == null) {
             m_holder = new ConnectionPropertiesHolder(
                 getRepository(),

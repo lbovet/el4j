@@ -13,7 +13,7 @@
         singleton="false">
         <property name="locations">
             <list>
-                <value>classpath:scenarios/db/raw/refdb-gui-override-${db.name}.properties</value>
+                <value>classpath:scenarios/db/raw/refdb-gui-server-jar-override-${db.name}.properties</value>
             </list>
         </property>
         <property name="order" value="3"/>

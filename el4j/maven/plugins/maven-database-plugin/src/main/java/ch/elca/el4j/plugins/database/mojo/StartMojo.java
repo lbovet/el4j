@@ -51,7 +51,10 @@ public class StartMojo extends AbstractDBMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
         try {
             if (needStartup()) {
-                getLog().info("Starting database...");
+                getLog().info("Starting database (StartMojo)...");
+                
+              
+                
                 DerbyNetworkServerStarter.setHomeDir(getDerbyLocation());
                 DerbyNetworkServerStarter.startNetworkServer();
                 if (hasToWait()) {
