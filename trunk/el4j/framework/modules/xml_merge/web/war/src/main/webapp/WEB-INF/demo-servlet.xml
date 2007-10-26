@@ -2,7 +2,7 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans>
 	<bean name="/demo"
-		class="ch.elca.el4j.xmlmerge.web.DemoController" />
+		class="ch.elca.el4j.services.xmlmerge.web.DemoController" />
 
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
