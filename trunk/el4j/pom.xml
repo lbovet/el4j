@@ -448,10 +448,10 @@
                     <!--
                         New features in snapshot version available.
                            * maven-eclipse-plugin (revision 587020
-                               + patch http://jira.codehaus.org/browse/MECLIPSE-334
-                               + patch http://jira.codehaus.org/browse/MECLIPSE-336)
+                               + patch http://jira.codehaus.org/browse/MECLIPSE-333 "just first patch!"
+                               + patch http://jira.codehaus.org/browse/MECLIPSE-334)
                     -->
-                    <version>2.5-20071024.082440-4</version>
+                    <version>2.5-20071029.085417-4</version>
                     <configuration>
                         <additionalProjectnatures>
                             <projectnature>de.mvmsoft.checkclipse.CheckclipseNature</projectnature>
@@ -460,7 +460,7 @@
                             <buildcommand>de.mvmsoft.checkclipse.CheckclipseBuilder</buildcommand>
                         </additionalBuildcommands>
                         <workspace>${basedir}/workspace</workspace>
-                        <wtpversion>1.5</wtpversion>
+                        <wtpversion>2.0</wtpversion>
                     </configuration>
                     <executions>
                         <execution>
@@ -739,14 +739,14 @@
                             <artifactId>maven-eclipse-plugin</artifactId>
                             <configuration>
                                 <wtpContextName>${jee-web.context}</wtpContextName>
-                                <projectRuntimeFacets>
-                                    <projectRuntimeFacet>${tomcat5x.eclipse.runtime.facet.name}</projectRuntimeFacet>
-                                </projectRuntimeFacets>
-                                <additionalWarClasspathContainers>
-                                    <additionalWarClasspathContainer>org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/${tomcat5x.eclipse.runtime.facet.name}</additionalWarClasspathContainer>
-                                    <additionalWarClasspathContainer>org.eclipse.jst.j2ee.internal.web.container</additionalWarClasspathContainer>
-                                    <additionalWarClasspathContainer>org.eclipse.jst.j2ee.internal.module.container</additionalWarClasspathContainer>
-                                </additionalWarClasspathContainers>
+<!--                                <projectRuntimeFacets>-->
+<!--                                    <projectRuntimeFacet>${tomcat5x.eclipse.runtime.facet.name}</projectRuntimeFacet>-->
+<!--                                </projectRuntimeFacets>-->
+<!--                                <additionalWarClasspathContainers>-->
+<!--                                    <additionalWarClasspathContainer>org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/${tomcat5x.eclipse.runtime.facet.name}</additionalWarClasspathContainer>-->
+<!--                                    <additionalWarClasspathContainer>org.eclipse.jst.j2ee.internal.web.container</additionalWarClasspathContainer>-->
+<!--                                    <additionalWarClasspathContainer>org.eclipse.jst.j2ee.internal.module.container</additionalWarClasspathContainer>-->
+<!--                                </additionalWarClasspathContainers>-->
                             </configuration>
                         </plugin>
                     </plugins>
@@ -818,10 +818,10 @@
                             <artifactId>maven-eclipse-plugin</artifactId>
                             <configuration>
                                 <wtpContextName>${jee-web.context}</wtpContextName>
-                                <additionalWarClasspathContainers>
-                                    <additionalWarClasspathContainer>org.eclipse.jst.j2ee.internal.web.container</additionalWarClasspathContainer>
-                                    <additionalWarClasspathContainer>org.eclipse.jst.j2ee.internal.module.container</additionalWarClasspathContainer>
-                                </additionalWarClasspathContainers>
+<!--                                <additionalWarClasspathContainers>-->
+<!--                                    <additionalWarClasspathContainer>org.eclipse.jst.j2ee.internal.web.container</additionalWarClasspathContainer>-->
+<!--                                    <additionalWarClasspathContainer>org.eclipse.jst.j2ee.internal.module.container</additionalWarClasspathContainer>-->
+<!--                                </additionalWarClasspathContainers>-->
                             </configuration>
                         </plugin>
                     </plugins>
