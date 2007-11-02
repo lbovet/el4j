@@ -286,6 +286,12 @@
                     <version>${version.maven-plugin-plugin}</version>
                 </plugin>
 
+                <!-- Webservice annotation processing -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>jaxws-maven-plugin</artifactId>
+                    <version>1.7</version>
+                </plugin>
 
                 <!-- Packaging -->
                 <plugin>
@@ -931,6 +937,18 @@
             <releases>
                 <enabled>true</enabled>
             </releases>
+            <id>maven2-repository.dev.java.net</id>
+            <name>Java.net Repository for Maven</name>
+            <url>http://download.java.net/maven/2/</url>
+        </pluginRepository>
+		
+        <pluginRepository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
             <id>el4jReleasePluginRepositoryExternal</id>
             <name>External release repository of the EL4J project</name>
             <url>http://el4.elca-services.ch/el4j/maven2repository</url>
@@ -1149,6 +1167,21 @@
                 <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-remoting_xfire</artifactId>
                 <version>${version.module-remoting_xfire}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+			
+			<!-- module-remoting_jaxws -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-remoting_jaxws</artifactId>
+                <version>${version.module-remoting_jaxws}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-remoting_jaxws</artifactId>
+                <version>${version.module-remoting_jaxws}</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
@@ -1664,6 +1697,9 @@
         <version.module-remoting_xfire>
             2.4-SNAPSHOT
         </version.module-remoting_xfire>
+		<version.module-remoting_jaxws>
+            1.0-SNAPSHOT
+        </version.module-remoting_jaxws>
         <version.module-remoting_ejb>
             2.4-SNAPSHOT
         </version.module-remoting_ejb>
