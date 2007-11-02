@@ -26,6 +26,7 @@ import org.jvnet.jax_ws_commons.spring.SpringService;
 import com.sun.xml.ws.client.sei.SEIStub;
 import com.sun.xml.ws.transport.http.servlet.SpringBinding;
 
+import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.remoting.AbstractRemotingBase;
 import ch.elca.el4j.services.remoting.RemotingProxyFactoryBean;
 import ch.elca.el4j.services.remoting.RemotingServiceExporter;
@@ -77,8 +78,8 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
             binding.setService(service.getObject());
             m_jaxwsBinding = binding;
         } catch (Exception e) {
-            s_logger.error("Could not create JAX-WS binding for " + bean);
-            m_jaxwsBinding = null;
+            CoreNotificationHelper.notifyMisconfiguration(
+                "Could not create JAX-WS binding for " + bean, e);
         }
         
         // just return something that can be instantiated.
@@ -129,8 +130,9 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
                     serviceInterface.getPackage().getName() + ".gen");
             }
         } catch (Exception e) {
-            s_logger.error("Could not create JAX-WS binding for "
-                + serviceInterface);
+            CoreNotificationHelper.notifyMisconfiguration(
+                "Could not create JAX-WS binding for "
+                + serviceInterface, e);
         }
         return createdProxy;
     }
@@ -146,6 +148,7 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
     /** {@inheritDoc} */
     @Override
     public String generateUrl(AbstractRemotingBase remoteBase) {
+        // ATTENTION: The complete url is defined manually in the wsdl
         return "/" + remoteBase.getServiceName();
     }
 

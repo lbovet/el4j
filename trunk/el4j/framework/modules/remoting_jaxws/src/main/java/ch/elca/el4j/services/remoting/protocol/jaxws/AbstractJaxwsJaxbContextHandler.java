@@ -41,8 +41,8 @@ import org.jdom.Namespace;
  * @author Philippe Jacot (PJA)
  * @author Stefan Wismer (SWI)
  */
-public abstract class AbstractJaxwsJaxbContextHandler implements
-    SOAPHandler<SOAPMessageContext> {
+public abstract class AbstractJaxwsJaxbContextHandler
+    implements SOAPHandler<SOAPMessageContext> {
     
     /**
      * Name of the element in the header containing the context.
@@ -53,7 +53,7 @@ public abstract class AbstractJaxwsJaxbContextHandler implements
      * Name of the namespace of the element containing the context.
      */
     protected static final Namespace CONTEXT_NAMESPACE = Namespace.getNamespace(
-            "ch.elca.el4j.services.remoting.protocol.jaxws");
+        "ch.elca.el4j.services.remoting.protocol.jaxws");
     
     /**
      * The context used to serialize the implicit context.
@@ -93,8 +93,8 @@ public abstract class AbstractJaxwsJaxbContextHandler implements
         try {
             return m_jaxbContext.createMarshaller();
         } catch (JAXBException e) {
-            getLogger().error("Unable to create marshaller for context passing"
-                , e);
+            getLogger().error(
+                "Unable to create marshaller for context passing", e);
             return null;   
         }
     }
