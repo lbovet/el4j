@@ -43,10 +43,15 @@
             <artifactId>jaxrpc</artifactId>
             <version>1.1</version>
         </dependency>
-        <dependency>
+		<dependency>
             <groupId>javax.xml.soap</groupId>
-            <artifactId>saaj</artifactId>
-            <version>1.2</version>
+            <artifactId>saaj-api</artifactId>
+            <version>1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.messaging.saaj</groupId>
+            <artifactId>saaj-impl</artifactId>
+            <version>1.3</version>
         </dependency>
         <dependency>
             <groupId>javax.mail</groupId>
