@@ -47,17 +47,18 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
  */
 public class XFireJaxbContextOutHandler 
     extends AbstractXFireJaxbContextHandler {
+    
+    /**
+     * The logger.
+     */
+    private static Logger s_logger = Logger.getLogger(
+        XFireJaxbContextOutHandler.class);
 
     /**
      * The registry to get the context from.
      */
     private ImplicitContextPassingRegistry m_contextPassingRegistry;
-
-    /**
-     * The logger.
-     */
-    private Logger m_logger = Logger.getLogger(
-        XFireJaxbContextOutHandler.class);
+    
 
     /**
      * Create a new XFire Handler to add the context to a soap message.
@@ -94,7 +95,7 @@ public class XFireJaxbContextOutHandler
                 marshaller.marshal(new JAXBElement(new QName("", key), 
                     Object.class, value), writer);
             } catch (JAXBException e) {
-                m_logger.error("Unable to marshal context for " + key);
+                s_logger.error("Unable to marshal context for " + key);
                 throw e;
             }
 
@@ -106,6 +107,6 @@ public class XFireJaxbContextOutHandler
      */
     @Override
     protected Logger getLogger() {
-        return m_logger;
+        return s_logger;
     }
 }
