@@ -55,7 +55,7 @@ public class XFireJaxbContextInHandler extends AbstractXFireJaxbContextHandler {
     /**
      * The logger.
      */
-    private Logger m_logger = Logger.getLogger(XFireJaxbContextInHandler.class);
+    private static Logger m_logger = Logger.getLogger(XFireJaxbContextInHandler.class);
     
     /**
      * Create a new Context Handler that tries to get the implicit context from
