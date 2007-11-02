@@ -61,7 +61,7 @@ public class ManifestAddConfigSectionMojo extends AbstractMojo {
     protected String fileListIncludes;
 
     /**
-     * Comma separated excludes for the files list.                                         
+     * Comma separated excludes for the files list.
      *
      * @parameter expression="${fileListExcludes}" default-value="**\/*.class"
      * @required
