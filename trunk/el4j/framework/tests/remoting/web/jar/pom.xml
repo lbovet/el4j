@@ -23,6 +23,29 @@
     <description>
         Jar part of test web module for remoting modules of the EL4J framework.
     </description>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxws-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>wsimport</goal>
+                            <goal>wsgen</goal>
+                        </goals>
+                        <configuration>
+                            <sei>ch.elca.el4j.tests.remoting.service.impl.CalculatorImplJaxws</sei>
+                            <genWsdl>true</genWsdl>
+                            <wsdlDirectory>${basedir}/src/main/resources/wsdl</wsdlDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
     <dependencies>
         <!-- EL4J framework modules -->
         <dependency>
@@ -32,6 +55,10 @@
         <dependency>
             <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-remoting_xfire</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-remoting_jaxws</artifactId>
         </dependency>
         <dependency>
             <groupId>ch.elca.el4j.modules</groupId>
