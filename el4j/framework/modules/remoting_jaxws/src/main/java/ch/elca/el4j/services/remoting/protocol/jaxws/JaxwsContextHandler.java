@@ -77,7 +77,7 @@ public class JaxwsContextHandler extends AbstractJaxwsJaxbContextHandler {
     public JaxwsContextHandler(ImplicitContextPassingRegistry registry,
         JAXBContext jaxbContext) {
         super(jaxbContext);
-        this.m_contextPassingRegistry = registry;
+        m_contextPassingRegistry = registry;
     }
 
     /** {@inheritDoc} */
@@ -117,6 +117,7 @@ public class JaxwsContextHandler extends AbstractJaxwsJaxbContextHandler {
             }
         } catch (Exception e) {
             s_logger.error("Error getting SOAP header.");
+            return;
         }
 
         if (contextElement != null) {
@@ -136,9 +137,8 @@ public class JaxwsContextHandler extends AbstractJaxwsJaxbContextHandler {
 
                     map.put(soapNode.getNodeName(), element.getValue());
                 } catch (JAXBException e) {
-                    s_logger
-                        .error("Unable to unmarshall context element "
-                            + soapNode.getNodeName());
+                    s_logger.error("Unable to unmarshall context element "
+                        + soapNode.getNodeName());
                 }
             }
             m_contextPassingRegistry.pushAssembledImplicitContext(map);
@@ -165,6 +165,7 @@ public class JaxwsContextHandler extends AbstractJaxwsJaxbContextHandler {
                     CONTEXT_ELEMENT_NAME));
         } catch (Exception e) {
             s_logger.error("Error creating SOAP header.");
+            return;
         }
 
         Marshaller marshaller = getMarshaller();
@@ -173,6 +174,7 @@ public class JaxwsContextHandler extends AbstractJaxwsJaxbContextHandler {
                 Boolean.TRUE);
         } catch (PropertyException e) {
             s_logger.error("Error setting marshaller properties.");
+            return;
         }
 
         Map assembledContext = m_contextPassingRegistry
@@ -186,7 +188,6 @@ public class JaxwsContextHandler extends AbstractJaxwsJaxbContextHandler {
             } catch (JAXBException e) {
                 s_logger.error("Unable to marshal context for " + key);
             }
-
         }
     }
 

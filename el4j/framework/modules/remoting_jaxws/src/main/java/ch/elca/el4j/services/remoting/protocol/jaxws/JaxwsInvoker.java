@@ -142,8 +142,6 @@ public class JaxwsInvoker implements java.lang.reflect.InvocationHandler {
             result = convert(result, m_generatedToOrig);
         } catch (InvocationTargetException e) {
             convertException(e.getTargetException());
-        } catch (Exception e) {
-            throw e;
         }
         return result;
     }
@@ -157,10 +155,11 @@ public class JaxwsInvoker implements java.lang.reflect.InvocationHandler {
      */
     @SuppressWarnings("unchecked")
     public static Object newInstance(Object obj, Class newInterface,
-            String genPackageName) {
+        String genPackageName) {
         
-        return java.lang.reflect.Proxy.newProxyInstance(obj.getClass()
-            .getClassLoader(), new Class[]{newInterface}, 
+        return java.lang.reflect.Proxy.newProxyInstance(
+            Thread.currentThread().getContextClassLoader(),
+            new Class[]{newInterface},
             new JaxwsInvoker(obj, newInterface, genPackageName));
     }
     
@@ -389,28 +388,21 @@ public class JaxwsInvoker implements java.lang.reflect.InvocationHandler {
             throw exception;
         }
         
-        try {
-            // get the right exception by calling getFaultInfo()
-            Method getFaultInfo = exception.getClass().getMethod(
-                "getFaultInfo", new Class[] {});
-            Object source = getFaultInfo.invoke(exception);
-            
-            Class exceptionClass = m_generatedToOrig.get(source.getClass());
-            Throwable realException = (Throwable) exceptionClass.newInstance();
-            
-            // unfortunately, the cause is already set, so properties can be
-            // copied only
-            //realException.initCause(exception);
-            BeanUtils.copyProperties(source, realException);
-            realException.setStackTrace(exception.getStackTrace());
-            
-            throw realException;
-            
-        } catch (ClassNotFoundException e) {
-            System.err.println(e);
-            throw exception;
-        }
+        // get the right exception by calling getFaultInfo()
+        Method getFaultInfo = exception.getClass().getMethod(
+            "getFaultInfo", new Class[] {});
+        Object source = getFaultInfo.invoke(exception);
         
+        Class exceptionClass = m_generatedToOrig.get(source.getClass());
+        Throwable realException = (Throwable) exceptionClass.newInstance();
+        
+        // unfortunately, the cause is already set, so properties can be
+        // copied only
+        //realException.initCause(exception);
+        BeanUtils.copyProperties(source, realException);
+        realException.setStackTrace(exception.getStackTrace());
+        
+        throw realException;
     }
     
 
