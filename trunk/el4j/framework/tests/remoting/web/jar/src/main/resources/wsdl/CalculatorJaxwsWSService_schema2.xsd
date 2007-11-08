@@ -7,6 +7,8 @@
       <xs:element name="myDouble" type="xs:double"/>
       <xs:element name="myInt" type="xs:int"/>
       <xs:element name="myIntArray" type="xs:int" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="myIntegerList" type="xs:int" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="myIntegerSet" type="xs:int" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="myLong" type="xs:long"/>
       <xs:element name="myString" type="xs:string" minOccurs="0"/>
       <xs:element name="myStringArray" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>

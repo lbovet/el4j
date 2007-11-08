@@ -25,6 +25,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -278,19 +279,17 @@ public class JaxwsInvoker implements java.lang.reflect.InvocationHandler {
      * @param mapping            the mapping for conversion
      * @throws BeansException
      */
+    @SuppressWarnings("unchecked")
     private void copyPropertiesDeep(Object source, Object target,
         Map<Class<?>, Class<?>> mapping) throws BeansException {
 
         Assert.notNull(source, "Source must not be null");
         Assert.notNull(target, "Target must not be null");
-
-        Class<?> actualEditable = target.getClass();
-
         
         PropertyDescriptor[] targetPds;
         PropertyDescriptor[] sourcePds;
         try {
-            targetPds = Introspector.getBeanInfo(actualEditable).
+            targetPds = Introspector.getBeanInfo(target.getClass()).
                 getPropertyDescriptors();
             sourcePds = Introspector.getBeanInfo(source.getClass()).
                 getPropertyDescriptors();
@@ -298,9 +297,23 @@ public class JaxwsInvoker implements java.lang.reflect.InvocationHandler {
             return;
         }
         
-        for (int i = 0; i < targetPds.length; i++) {
-            PropertyDescriptor targetPd = targetPds[i];
+        for (PropertyDescriptor targetPd : targetPds) {
+            boolean copyProperty = false;
             if (targetPd.getWriteMethod() != null) {
+                copyProperty = true;
+            }
+            if (targetPd.getReadMethod() != null) {
+                if (List.class.isAssignableFrom(
+                    targetPd.getReadMethod().getReturnType())) {
+                    copyProperty = true;
+                }
+                if (Set.class.isAssignableFrom(
+                    targetPd.getReadMethod().getReturnType())) {
+                    copyProperty = true;
+                }
+            }
+            
+            if (copyProperty) {
                 PropertyDescriptor sourcePd = null;
                 for (PropertyDescriptor propDesc : sourcePds) {
                     if (propDesc.getName().equals(targetPd.getName())) {
@@ -316,17 +329,42 @@ public class JaxwsInvoker implements java.lang.reflect.InvocationHandler {
                             readMethod.setAccessible(true);
                         }
                         Object value = readMethod.invoke(source, new Object[0]);
-                        value = convert(value, mapping);
-                        
                         Method writeMethod = targetPd.getWriteMethod();
-                        value = convertArray(value, 
-                            writeMethod.getParameterTypes()[0]);
                         
-                        if (!Modifier.isPublic(writeMethod.getDeclaringClass()
-                            .getModifiers())) {
-                            writeMethod.setAccessible(true);
+                        // determine target type for conversion
+                        Class convertTarget = null;
+                        if (writeMethod == null) {
+                            // write List or Set
+                            // the generated Collection has no setter method
+                            // Use get to access the generated Collection
+                            convertTarget = targetPd.getReadMethod().
+                                getReturnType();
+                        } else {
+                            convertTarget = writeMethod.getParameterTypes()[0];
                         }
-                        writeMethod.invoke(target, new Object[] {value});
+                        
+                        // convert value if necessary
+                        if (value != null) {
+                            value = convert(value, mapping);
+                            value = convertCollection(value, 
+                                convertTarget);
+                        }
+                        
+                        // write value
+                        if (writeMethod == null) {
+                            Collection collection = (Collection) targetPd
+                                .getReadMethod().invoke(target);
+                            if (collection != null && value != null) {
+                                collection.addAll((Collection) value);
+                            }
+                        } else {
+                            if (!Modifier.isPublic(writeMethod
+                                .getDeclaringClass().getModifiers())) {
+                                
+                                writeMethod.setAccessible(true);
+                            }
+                            writeMethod.invoke(target, new Object[] {value});
+                        }
                         
                     } catch (Throwable ex) {
                         throw new FatalBeanException(
@@ -344,9 +382,12 @@ public class JaxwsInvoker implements java.lang.reflect.InvocationHandler {
      * @param src       the source object
      * @param target    the target class
      * @return          an object of type target
+     * @throws Exception 
      */
     @SuppressWarnings("unchecked")
-    private Object convertArray(Object src, Class target) {
+    private Object convertCollection(Object src, Class target)
+        throws Exception {
+        
         Object result = src;
         if (!target.isAssignableFrom(src.getClass())) {
             if (target.isArray() && src instanceof List) {
@@ -356,20 +397,87 @@ public class JaxwsInvoker implements java.lang.reflect.InvocationHandler {
                 Object tmp = Array.newInstance(componentType, list.size());
                 // add values and convert recursively
                 for (int i = 0; i < list.size(); i++) {
-                    Array.set(tmp, i, convertArray(list.get(i), componentType));
+                    Array.set(tmp, i,
+                        convertCollection(list.get(i), componentType));
                 }
                 result = target.cast(tmp);
             } else if (List.class.isAssignableFrom(target)
-                    && src.getClass().isArray()) {
+                && src.getClass().isArray()) {
+                
                 // Array -> List
                 ArrayList tmp = new ArrayList(((Object[]) src).length);
                 // add values and convert recursively
                 Class subTarget = ((Object[]) src)[0].getClass();
                 for (Object elem : (Object[]) src) {
-                    tmp.add(convertArray(elem, subTarget));
+                    tmp.add(convertCollection(elem, subTarget));
                 }
                 result = target.cast(tmp);
-            }
+            } else if (src instanceof Collection
+                && List.class.isAssignableFrom(target)) {
+                
+                // Collection -> List
+                Collection tmp = new ArrayList();
+                tmp.addAll((Collection) src);
+                result = tmp;
+            } else if (src instanceof Collection
+                && Set.class.isAssignableFrom(target)) {
+                
+                // Collection -> Set
+                Collection tmp = new HashSet();
+                tmp.addAll((Collection) src);
+                result = tmp;
+            } /*
+                // Map is not yet supported
+                else if (Map.class.isAssignableFrom(src.getClass())) {
+                // Map -> generated Map with entries
+                Map map = (Map) src;
+                result = target.newInstance();
+                
+                if (map.size() > 0) {
+                    Class keyClass = map.keySet().toArray()[0].getClass();
+                    Class valueClass = map.values().toArray()[0].getClass();
+                    
+                    Method getEntryMethod
+                        = target.getMethod("getEntry", new Class[0]);
+                    List entries = (List) getEntryMethod.invoke(result);
+                    
+                    // there is only one inner class named 'Entry'
+                    Class entryClass = target.getClasses()[0];
+                    
+                    // get setter methods for 'Entry'
+                    Method setKeyMethod =
+                        entryClass.getMethod("setKey",
+                        new Class[]{keyClass});
+                    Method setValueMethod =
+                        entryClass.getMethod("setValue",
+                        new Class[]{valueClass});
+                    
+                    for (Object key : map.keySet()) {
+                        Object entry = entryClass.newInstance();
+                        setKeyMethod.invoke(entry, key);
+                        setValueMethod.invoke(entry, map.get(key));
+                        entries.add(entry);
+                    }
+                }
+                
+            } else if (Map.class.isAssignableFrom(target)) {
+                // generated Map with entries -> Map
+                Method getEntryMethod
+                    = src.getClass().getMethod("getEntry", new Class[0]);
+                List list = (List) getEntryMethod.invoke(src);
+                Map map = (Map) src.getClass().newInstance();
+                if (list.size() > 0) {
+                    Method getKeyMethod = list.get(0)
+                        .getClass().getMethod("getKey", new Class[0]);
+                    Method getValueMethod = list.get(0)
+                        .getClass().getMethod("getValue", new Class[0]);
+                    for (Object item : list) {
+                        map.put(getKeyMethod.invoke(item),
+                            getValueMethod.invoke(item));
+                    }
+                }
+                result = map;
+            }*/
         }
         return result;
     }

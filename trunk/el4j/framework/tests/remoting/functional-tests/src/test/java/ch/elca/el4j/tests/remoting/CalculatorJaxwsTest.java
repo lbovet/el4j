@@ -20,7 +20,11 @@ package ch.elca.el4j.tests.remoting;
 //Checkstyle: MagicNumber off
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -35,7 +39,8 @@ import junit.framework.TestCase;
 
 /**
  * 
- * This class is the basic class for XFire Tests.
+ * This class is a test for JAX-WS using proxies on the generated classes
+ * to get the same interfaces as on the server.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -132,10 +137,22 @@ public class CalculatorJaxwsTest extends TestCase {
         o.setMyDouble(MY_DOUBLE);
         o.setMyString(MY_STRING);
         o.setMyByteArray(MY_BYTE_ARRAY);
+        
         SomeIntValueJaxws v = new SomeIntValueJaxws(MY_INT);
         o.setSomeValue(v);
         
+        List<Integer> list = new ArrayList<Integer>();
+        list.add(4);
+        list.add(7);
+        o.setMyIntegerList(list);
+        
+        Set<Integer> set = new HashSet<Integer>();
+        set.add(2);
+        set.add(5);
+        o.setMyIntegerSet(set);
+        
         CalculatorValueObjectJaxws echo = getCalc().echoValueObjectJaxws(o);
+        
         assertEquals("Int values are not equals.", 
             o.getMyInt(), echo.getMyInt());
         assertEquals("Long values are not equals.", 
@@ -149,6 +166,22 @@ public class CalculatorJaxwsTest extends TestCase {
         assertEquals("SomeIntValue are not equals.",
             o.getSomeValue().getSomeValue(),
             echo.getSomeValue().getSomeValue());
+        
+        if (echo.getMyIntegerList().size() == list.size()) {
+            assertTrue("List items are not equal.",
+                echo.getMyIntegerList().get(0).equals(new Integer(4))
+                && echo.getMyIntegerList().get(1).equals(new Integer(7)));
+        } else {
+            fail("List size is not equal.");
+        }
+        
+        if (echo.getMyIntegerSet().size() == set.size()) {
+            assertTrue("Set items are not equal.",
+                echo.getMyIntegerSet().contains(new Integer(2))
+                && echo.getMyIntegerSet().contains(new Integer(5)));
+        } else {
+            fail("Set size is not equal.");
+        }
     }
     
     /**

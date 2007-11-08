@@ -17,6 +17,9 @@
 
 package ch.elca.el4j.tests.remoting.service;
 
+import java.util.List;
+import java.util.Set;
+
 
 /**
  * This is a value object for test reason.
@@ -58,9 +61,6 @@ public class CalculatorValueObjectJaxws {
     
     /**
      * Byte array test value.
-     * 
-     * There is no @XmlElementWrapper possible.
-     * byte[] is translated to xs:base64Binary
      */
     private byte[] m_myByteArray;
     
@@ -78,6 +78,19 @@ public class CalculatorValueObjectJaxws {
      * A nested object.
      */
     private SomeIntValueJaxws m_myNestedObject;
+    
+    /**
+     * A list of Integers.
+     */
+    private List<Integer> m_myIntegerList;
+    
+    /**
+     * A set of Integers.
+     */
+    private Set<Integer> m_myIntegerSet;
+    
+    // Map is not yet supported. Use list of tuples intead
+    //private Map<Integer, Integer> m_myIntegerMap;
     
 
     /**
@@ -198,5 +211,33 @@ public class CalculatorValueObjectJaxws {
      */
     public void setSomeValue(SomeIntValueJaxws object) {
         m_myNestedObject = object;
+    }
+
+    /**
+     * @return Returns myIntegerList.
+     */
+    public List<Integer> getMyIntegerList() {
+        return m_myIntegerList;
+    }
+
+    /**
+     * @param myIntegerList The myIntegerList to set.
+     */
+    public void setMyIntegerList(List<Integer> myIntegerList) {
+        m_myIntegerList = myIntegerList;
+    }
+
+    /**
+     * @return Returns  myIntegerSet.
+     */
+    public Set<Integer> getMyIntegerSet() {
+        return m_myIntegerSet;
+    }
+
+    /**
+     * @param myIntegerSet The myIntegerSet to set.
+     */
+    public void setMyIntegerSet(Set<Integer> myIntegerSet) {
+        m_myIntegerSet = myIntegerSet;
     }
 }
