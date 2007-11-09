@@ -1,20 +1,26 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
-<beans>
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
-	<bean id="loadBalancingProtocolConfiguration"
-		class="ch.elca.el4j.services.remoting.protocol.loadbalancing.protocol.LoadBalancingProtocolConfiguration">
-		<property name="protocols">
-			<list>
-				<ref bean="rmiProtocol1"/>
-				<ref bean="rmiProtocol"/>
-				<ref bean="rmiProtocol3"/>
-			</list>
-		</property>
-		<property name="policy">
-			<ref bean="randomPolicy" />
-		</property>
-	</bean>
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
+    <bean id="loadBalancingProtocolConfiguration"
+        class="ch.elca.el4j.services.remoting.protocol.loadbalancing.protocol.LoadBalancingProtocolConfiguration">
+        <property name="protocols">
+            <list>
+                <ref bean="rmiProtocol1"/>
+                <ref bean="rmiProtocol"/>
+                <ref bean="rmiProtocol3"/>
+            </list>
+        </property>
+        <property name="policy">
+            <ref bean="randomPolicy" />
+        </property>
+    </bean>
 
     <bean id="rmiProtocol1" class="ch.elca.el4j.services.remoting.protocol.Rmi">
         <property name="serviceHost">

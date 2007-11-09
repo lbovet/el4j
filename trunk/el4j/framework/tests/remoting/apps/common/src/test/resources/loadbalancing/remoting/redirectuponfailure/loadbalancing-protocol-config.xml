@@ -1,23 +1,29 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
-<beans>
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
-	<bean id="loadBalancingProtocolConfiguration"
-		class="ch.elca.el4j.services.remoting.protocol.loadbalancing.protocol.LoadBalancingProtocolConfiguration">
-		<property name="protocols">
-			<list>
-				<ref bean="rmiProtocol1"/>
-				<ref bean="rmiProtocol2"/>
-				<ref bean="rmiProtocol3"/>
-				<ref bean="rmiProtocol4"/>
-				<ref bean="rmiProtocol5"/>
-				<ref bean="rmiProtocol6"/>
-				</list>
-				</property>
-		<property name="policy">
-			<ref bean="redirectUponFailurePolicy" />
-		</property>
-	</bean>
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
+    <bean id="loadBalancingProtocolConfiguration"
+        class="ch.elca.el4j.services.remoting.protocol.loadbalancing.protocol.LoadBalancingProtocolConfiguration">
+        <property name="protocols">
+            <list>
+                <ref bean="rmiProtocol1"/>
+                <ref bean="rmiProtocol2"/>
+                <ref bean="rmiProtocol3"/>
+                <ref bean="rmiProtocol4"/>
+                <ref bean="rmiProtocol5"/>
+                <ref bean="rmiProtocol6"/>
+                </list>
+                </property>
+        <property name="policy">
+            <ref bean="redirectUponFailurePolicy" />
+        </property>
+    </bean>
 
     <bean id="rmiProtocol1" class="ch.elca.el4j.services.remoting.protocol.Rmi">
         <property name="serviceHost">
@@ -92,8 +98,8 @@
         </property>
     </bean>
 
-	<bean id="implicitContextPassingRegistry"
-		class="ch.elca.el4j.tests.services.remoting.loadbalancing.common.TestImplicitContext" />
+    <bean id="implicitContextPassingRegistry"
+        class="ch.elca.el4j.tests.services.remoting.loadbalancing.common.TestImplicitContext" />
 
 
 </beans>
