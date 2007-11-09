@@ -48,19 +48,19 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>exec-maven-plugin</artifactId>
                     <configuration>
-                    	<executable>
-                    		java
-                    	</executable>
-                    	<workingDirectory>
-                    		 ${basedir}/target/classes
-                    	</workingDirectory>
-                    	<arguments>
-	                        <argument>-classpath</argument>
-	                        <classpath/>
-	                        <argument>
-	                            ch.elca.el4j.demos.remoting.benchmark.RemotingBenchmark
-	                        </argument>
-	                     </arguments>
+                        <executable>
+                            java
+                        </executable>
+                        <workingDirectory>
+                             ${basedir}/target/classes
+                        </workingDirectory>
+                        <arguments>
+                            <argument>-classpath</argument>
+                            <classpath/>
+                            <argument>
+                                ch.elca.el4j.demos.remoting.benchmark.RemotingBenchmark
+                            </argument>
+                         </arguments>
                         <keepAlive>false</keepAlive>
                     </configuration>
                 </plugin>
