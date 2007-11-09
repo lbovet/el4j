@@ -44,7 +44,7 @@
                     <artifactId>jdom</artifactId>
                 </exclusion>
             </exclusions>
-	    
+        
         </dependency>
         <dependency>
             <groupId>org.codehaus.xfire</groupId>
@@ -62,7 +62,7 @@
                 <exclusion>
                     <groupId>commons-beanutils</groupId>
                     <artifactId>commons-beanutils</artifactId>
-                </exclusion>					
+                </exclusion>                    
             </exclusions>
         </dependency>
         <dependency>
