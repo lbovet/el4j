@@ -16,8 +16,8 @@
         <version>1.1.4-SNAPSHOT</version>
     </parent>
 
-	<artifactId>swing-demo</artifactId>
-	<version>0.1-SNAPSHOT</version>
+    <artifactId>swing-demo</artifactId>
+    <version>0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>EL4J swing demo</name>
     <description>
@@ -29,15 +29,15 @@
             <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-core</artifactId>
         </dependency>
-		<dependency>
+        <dependency>
             <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-security</artifactId>
         </dependency>
-		<dependency>
-			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-swing</artifactId>
-			<version>0.1-SNAPSHOT</version>
-		</dependency>
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-swing</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
 
     </dependencies>
 
