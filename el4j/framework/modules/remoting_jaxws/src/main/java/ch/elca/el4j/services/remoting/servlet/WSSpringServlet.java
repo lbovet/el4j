@@ -37,15 +37,12 @@ import ch.elca.el4j.services.remoting.RemotingServiceExporter;
 import ch.elca.el4j.services.remoting.protocol.Jaxws;
 
 /**
- * {@link HttpServlet} that uses Spring to obtain a configured server set up,
- * then routes incoming requests to it.
- * 
-
- */
-/**
  * This class represents a customized JAX-WS {@link HttpServlet}. Instead of
  * using the {@link SpringBinding}s specified in special Spring XML format,
  * this class searches for JAX-WS bindings in el4j-remoting-protocol form.
+ * 
+ * Remark: This class cannot extend ModuleContextLoaderServlet because
+ * doPost, doGet, doPut and doDelete are final.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
