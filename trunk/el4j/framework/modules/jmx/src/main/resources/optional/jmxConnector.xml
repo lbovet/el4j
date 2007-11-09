@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 <!-- 
     Spring bean configuration file to export information via jmx messaging
     protocol (jmxmp).
 -->
-<beans>
-    <!-- Version: $Revision$ -->
-    <!-- URL: $URL$ -->
-    <!-- Date: $Date$ -->
-    <!-- Author: $Author$ -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
     <!-- In case you want to access the MBeans via the jmxmp protocol,
          use this connector -->
     <bean id="jmxConnector" 
