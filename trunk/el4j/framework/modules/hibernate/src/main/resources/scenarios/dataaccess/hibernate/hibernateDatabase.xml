@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
-    "http://www.springframework.org/dtd/spring-beans.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
     Spring bean configuration file for data source and transaction manager.
 
@@ -13,11 +11,14 @@
        * dataSource.username
        * dataSource.password
 -->
-<beans>
-    <!-- Version: $Revision$ -->
-    <!-- URL: $URL$ -->
-    <!-- Date: $Date$ -->
-    <!-- Author: $Author$ -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
 
     <!-- The DBCP DataSource -->
      <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
@@ -103,9 +104,9 @@
         <property name="testWhileIdle">
             <value>false</value>
         </property>
-	<!-- Auto commits are switched off -->
+    <!-- Auto commits are switched off -->
          <property name="defaultAutoCommit">
-        	<value>false</value>
+            <value>false</value>
         </property>                
     </bean>
 
@@ -121,8 +122,8 @@
     </bean>
     
     <bean id="abstractDao" abstract="true">
-    	<property name="sessionFactory">
-    		<ref bean="sessionFactory"/>
-    	</property>
+        <property name="sessionFactory">
+            <ref bean="sessionFactory"/>
+        </property>
     </bean>
 </beans>

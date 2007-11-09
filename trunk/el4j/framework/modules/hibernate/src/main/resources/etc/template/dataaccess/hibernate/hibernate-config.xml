@@ -1,96 +1,100 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
-    "http://www.springframework.org/dtd/spring-beans.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
-	Spring bean configuration file to prepare Hibernate SessionFactory. This
-	bean is normally used in daos.
-	
-	Needed beans which are not defined in this file:
-	* dataSource
+    Spring bean configuration file to prepare Hibernate SessionFactory. This
+    bean is normally used in daos.
+    
+    Needed beans which are not defined in this file:
+    * dataSource
 -->
-<beans>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
-	<!-- Hibernate Session Factory Bean -->
-	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+        <!-- Hibernate Session Factory Bean -->
+    <bean id="sessionFactory"
+        class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
 
-		<!-- List of Hibernate mapping files -->
-		<property name="mappingResources">
-			<list>
-				<value>hibernate/Booking.hbm.xml</value>
-				<value>hibernate/Genre.hbm.xml</value>
-				<value>hibernate/Performance.hbm.xml</value>
-				<value>hibernate/PriceBand.hbm.xml</value>
-				<value>hibernate/PriceStructure.hbm.xml</value>
-				<value>hibernate/Purchase.hbm.xml</value>
-				<value>hibernate/Seat.hbm.xml</value>
-				<value>hibernate/SeatClass.hbm.xml</value>
-				<value>hibernate/SeatStatus.hbm.xml</value>
-				<value>hibernate/SeatingPlan.hbm.xml</value>
-				<value>hibernate/Show.hbm.xml</value>
-				<value>hibernate/queries.hbm.xml</value>
-			</list>
-		</property>
-
-		<!-- List of Hibernate properties -->
-		<property name="hibernateProperties">
-			<props>
-
-				<!-- Database-specific Hibernate dialect. -->
-				<prop key="hibernate.dialect">
-					${databaseDialect}
-				</prop>
-
-				<!--
-					Optional property representing the Hibernate cache provider. If this
-					property is set, Hibernate's second-level cache will be used (the
-					first-level cache, consisting of the Hibernate Session itself, is
-					enabled automatically - it is a transaction scope cache). The Hibernate
-					second-level cache has process or cluster scope; all sessions share the
-					same second-level cache. The second-level cache actually has the scope of
-					a SessionFactory. Hence the second-level cache can be dangerous in systems
-					that share the database with other writing applications. Furthermore, the
-					cache is usually useful only for readmostly classes. If you have data that
-					is updated more often than it?s read, don?t enable the second-level cache,
-					even if all other conditions for caching are true - in such situations,
-					performance will degrade if you enable the second-level cache!
-					
-					In addition to setting the cache provider property in the configuration
-					file, the concurrency strategy which will used for caching has to be set
-					in the mapping files of each class which will make use of the second-level
-					cache (this is done with the help of the cache attribute), and the provider-
-					specific settings, such as the expiry policies for the cache regions have
-					to be set. For the EHCache provider, this is done in the provider's 
-					configuration file called ehcache.xml.
-					
-					Uncomment the following line to enable the second-level cache.
-				-->
-				<!--   <prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>-->
-
-				<!-- 
-					Optional property controlling Hibernate's outer join fetch behavior
-					(default value is 1). The higher the value of this property, the more
-					outer-joined tables will be used by Hibernate in a single SQL query. 
-					Recommended values for the fetch depth depend on the join performance
-					and the size of the database tables; test your applications with low values
-					(less than 4) first, and decrease or increase the number while tuning
-					your application. This property only applies for associations which have
-					the outer-join attribute set to true and which have the lazy attribute
-					set to false. 
-				-->
-				<prop key="hibernate.max_fetch_depth">3</prop>
-				
-				<!--  the  next two lines print more verbose info about hibernate >
-				<prop key="hibernate.use_sql_comments">true</prop>
-				<prop key="hibernate.show_sql">true</prop-->				
-				
-			</props>
-		</property>
-        <property name="useTransactionAwareDataSource">
-        	<value>true</value>
+        <!-- List of Hibernate mapping files -->
+        <property name="mappingResources">
+            <list>
+                <value>hibernate/Booking.hbm.xml</value>
+                <value>hibernate/Genre.hbm.xml</value>
+                <value>hibernate/Performance.hbm.xml</value>
+                <value>hibernate/PriceBand.hbm.xml</value>
+                <value>hibernate/PriceStructure.hbm.xml</value>
+                <value>hibernate/Purchase.hbm.xml</value>
+                <value>hibernate/Seat.hbm.xml</value>
+                <value>hibernate/SeatClass.hbm.xml</value>
+                <value>hibernate/SeatStatus.hbm.xml</value>
+                <value>hibernate/SeatingPlan.hbm.xml</value>
+                <value>hibernate/Show.hbm.xml</value>
+                <value>hibernate/queries.hbm.xml</value>
+            </list>
         </property>
-		<property name="dataSource">
-			<ref bean="dataSource" />
-		</property>
-	</bean>
+
+        <!-- List of Hibernate properties -->
+        <property name="hibernateProperties">
+            <props>
+
+                <!-- Database-specific Hibernate dialect. -->
+                <prop key="hibernate.dialect">
+                    ${databaseDialect}
+                </prop>
+
+                <!--
+                    Optional property representing the Hibernate cache provider. If this
+                    property is set, Hibernate's second-level cache will be used (the
+                    first-level cache, consisting of the Hibernate Session itself, is
+                    enabled automatically - it is a transaction scope cache). The Hibernate
+                    second-level cache has process or cluster scope; all sessions share the
+                    same second-level cache. The second-level cache actually has the scope of
+                    a SessionFactory. Hence the second-level cache can be dangerous in systems
+                    that share the database with other writing applications. Furthermore, the
+                    cache is usually useful only for readmostly classes. If you have data that
+                    is updated more often than it?s read, don?t enable the second-level cache,
+                    even if all other conditions for caching are true - in such situations,
+                    performance will degrade if you enable the second-level cache!
+                    
+                    In addition to setting the cache provider property in the configuration
+                    file, the concurrency strategy which will used for caching has to be set
+                    in the mapping files of each class which will make use of the second-level
+                    cache (this is done with the help of the cache attribute), and the provider-
+                    specific settings, such as the expiry policies for the cache regions have
+                    to be set. For the EHCache provider, this is done in the provider's 
+                    configuration file called ehcache.xml.
+                    
+                    Uncomment the following line to enable the second-level cache.
+                -->
+                <!--   <prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>-->
+
+                <!-- 
+                    Optional property controlling Hibernate's outer join fetch behavior
+                    (default value is 1). The higher the value of this property, the more
+                    outer-joined tables will be used by Hibernate in a single SQL query. 
+                    Recommended values for the fetch depth depend on the join performance
+                    and the size of the database tables; test your applications with low values
+                    (less than 4) first, and decrease or increase the number while tuning
+                    your application. This property only applies for associations which have
+                    the outer-join attribute set to true and which have the lazy attribute
+                    set to false. 
+                -->
+                <prop key="hibernate.max_fetch_depth">3</prop>
+                
+                <!--  the  next two lines print more verbose info about hibernate >
+                <prop key="hibernate.use_sql_comments">true</prop>
+                <prop key="hibernate.show_sql">true</prop-->                
+                
+            </props>
+        </property>
+        <property name="useTransactionAwareDataSource">
+            <value>true</value>
+        </property>
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
 </beans>
