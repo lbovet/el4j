@@ -34,7 +34,7 @@
           <!--DVT 06.09.2004 -->
           <!--Adapted from old version for simulator -->
           <datatrans-log-folder>
-			log/transaction/dt
+            log/transaction/dt
           </datatrans-log-folder>
         </config>
       </DatatransProvider>
@@ -184,17 +184,17 @@
       <shopManagement>
         <config>
           <server>
-      		  <remoteShopDir>D:/epaymentcenter/dev/leafproject/epaymentcenter/frontend/v4/public/shops</remoteShopDir>
-      			<remoteProviderDir>D:/epaymentcenter/dev/leafproject/epaymentcenter/frontend/v4/public/providers</remoteProviderDir>
-      			<remotePTDir>paymenttypes</remotePTDir>
-      			<remoteCacheDir>D:/epaymentcenter/dev/leafproject/epaymentcenter/frontend/v4/epccodeversion</remoteCacheDir>
-      			<remoteCSSDir>D:/epaymentcenter/dev/leafproject/epaymentcenter/frontend/v4/public/shops</remoteCSSDir>
-      			<remoteLogoDir>D:/epaymentcenter/dev/leafproject/epaymentcenter/frontend/v4/public/default</remoteLogoDir>
-      			<remotePHPFile>config.php</remotePHPFile>
-      			<remoteLogoFile>logo.gif</remoteLogoFile>
-      			<remoteIntroFile>introduction</remoteIntroFile>
-      			<remoteExtFile>.php</remoteExtFile>
-      			<remoteCacheFile>epcCode.version</remoteCacheFile>
+                <remoteShopDir>D:/epaymentcenter/dev/leafproject/epaymentcenter/frontend/v4/public/shops</remoteShopDir>
+                  <remoteProviderDir>D:/epaymentcenter/dev/leafproject/epaymentcenter/frontend/v4/public/providers</remoteProviderDir>
+                  <remotePTDir>paymenttypes</remotePTDir>
+                  <remoteCacheDir>D:/epaymentcenter/dev/leafproject/epaymentcenter/frontend/v4/epccodeversion</remoteCacheDir>
+                  <remoteCSSDir>D:/epaymentcenter/dev/leafproject/epaymentcenter/frontend/v4/public/shops</remoteCSSDir>
+                  <remoteLogoDir>D:/epaymentcenter/dev/leafproject/epaymentcenter/frontend/v4/public/default</remoteLogoDir>
+                  <remotePHPFile>config.php</remotePHPFile>
+                  <remoteLogoFile>logo.gif</remoteLogoFile>
+                  <remoteIntroFile>introduction</remoteIntroFile>
+                  <remoteExtFile>.php</remoteExtFile>
+                  <remoteCacheFile>epcCode.version</remoteCacheFile>
           </server>
           <css>
             <!-- CSS template file : fullName -->
@@ -217,8 +217,8 @@
         <config>
           <maxSelectedPayment>100</maxSelectedPayment>
           <exportFolder>d:\\exchanges\\shops</exportFolder>
-   		  <appVersion>4.1.0.12</appVersion>
-   		  <!-- number of payments to get from database per one time -->
+             <appVersion>4.1.0.12</appVersion>
+             <!-- number of payments to get from database per one time -->
           <zipBlock>25000</zipBlock>
           <!-- number of payments in one zip entry -->
           <zipEntry>25000</zipEntry>
@@ -232,16 +232,16 @@
           <zipAccountEntry>25000</zipAccountEntry>
           <!-- 1048576 = 1024 * 1024, size to write into ZipOutputStream per one time -->
           <zipBuffer>1048576</zipBuffer>
-      	  <row0>09468271350</row0>
-      	  <row1>94682713509</row1>
-      	  <row2>46827135098</row2>
-      	  <row3>68271350947</row3>
-      	  <row4>82713509466</row4>
-      	  <row5>27135094685</row5>
-      	  <row6>71350946824</row6>
-      	  <row7>13509468273</row7>
-      	  <row8>35094682712</row8>
-      	  <row9>50946827131</row9>
+            <row0>09468271350</row0>
+            <row1>94682713509</row1>
+            <row2>46827135098</row2>
+            <row3>68271350947</row3>
+            <row4>82713509466</row4>
+            <row5>27135094685</row5>
+            <row6>71350946824</row6>
+            <row7>13509468273</row7>
+            <row8>35094682712</row8>
+            <row9>50946827131</row9>
         </config>
       </paymentManagement>
       
