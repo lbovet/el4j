@@ -1,46 +1,46 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
-	"http://www.springframework.org/dtd/spring-beans.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
-<beans>
-    <!-- Version: $Revision$ -->
-    <!-- URL: $URL$ -->
-    <!-- Date: $Date$ -->
-    <!-- Author: $Author$ -->
-
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
     <!-- Locator for the application service registry -->
     <bean id="serviceLocator" class="org.springframework.richclient.application.ApplicationServicesLocator">
         <property name="applicationServices" ref="applicationServices"/>
     </bean>
 
     <!-- Application Service Registry -->
-    <bean id="applicationServices" singleton="true"
+    <bean id="applicationServices"
         class="ch.elca.el4j.services.gui.richclient.support.ExtendableApplicationServices">
-		<property name="applicationObjectConfigurerId"><idref bean="applicationObjectConfigurer"/></property>
-		<property name="binderSelectionStrategy" ref="binderSelectionStrategy"/>
-		<property name="componentFactory" ref="componentFactory"/>
-		<property name="conversionService" ref="conversionService"/>
-		<property name="fieldFaceSource" ref="formFieldFaceSource"/>
-		<property name="formComponentInterceptorFactory" ref="formComponentInterceptorFactory"/>
-		<property name="imageSource" ref="imageSource"/>
-		<property name="messageSource" ref="messageSource"/>
-		<property name="rulesSource" ref="rulesSource"/>
-		<property name="registryEntries">
-         	<map>
-            	<entry>
-                 	<key><value>org.springframework.context.event.ApplicationEventMulticaster</value></key>
-					<idref bean="applicationEventMulticaster"/>
-				</entry>
-			</map>          
-		</property>
-		<property name="extenderNames">
-			<list>
-				<value>servicesExtender</value>
-			</list>
-		</property>
-	</bean>
-	
-	<!-- Applications should define their default message provider. -->
+        <property name="applicationObjectConfigurerId"><idref bean="applicationObjectConfigurer"/></property>
+        <property name="binderSelectionStrategy" ref="binderSelectionStrategy"/>
+        <property name="componentFactory" ref="componentFactory"/>
+        <property name="conversionService" ref="conversionService"/>
+        <property name="fieldFaceSource" ref="formFieldFaceSource"/>
+        <property name="formComponentInterceptorFactory" ref="formComponentInterceptorFactory"/>
+        <property name="imageSource" ref="imageSource"/>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="rulesSource" ref="rulesSource"/>
+        <property name="registryEntries">
+             <map>
+                <entry>
+                     <key><value>org.springframework.context.event.ApplicationEventMulticaster</value></key>
+                    <idref bean="applicationEventMulticaster"/>
+                </entry>
+            </map>          
+        </property>
+        <property name="extenderNames">
+            <list>
+                <value>servicesExtender</value>
+            </list>
+        </property>
+    </bean>
+    
+    <!-- Applications should define their default message provider. -->
 
     <!-- 
         Sends all application events to every registered application listener.
@@ -99,7 +99,7 @@
         class="org.springframework.binding.format.support.SimpleFormatterLocator">
         <property name="defaultDateStyle">
             <bean class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">
-	            <property name="staticField" value="org.springframework.binding.format.Style.SHORT"/>
+                <property name="staticField" value="org.springframework.binding.format.Style.SHORT"/>
             </bean>
         </property>
         <property name="defaultTimeStyle">
