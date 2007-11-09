@@ -26,8 +26,8 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>jaxws-maven-plugin</artifactId>
+                <groupId>ch.elca.el4j.maven.plugins</groupId>
+                <artifactId>maven-jaxws-plugin</artifactId>
                 <executions>
                     <execution>
                         <goals>
@@ -35,7 +35,7 @@
                             <goal>wsgen</goal>
                         </goals>
                         <configuration>
-                            <sei>ch.elca.el4j.tests.remoting.service.impl.CalculatorImplJaxws</sei>
+                            <sei>*</sei>
                             <genWsdl>true</genWsdl>
                             <wsdlDirectory>${basedir}/src/main/resources/wsdl</wsdlDirectory>
                         </configuration>
