@@ -42,8 +42,8 @@
     <logger name="ch.elca.el4j">
         <level value="WARN"/>
     </logger>
-	
-	<!-- More info about db mvn plugin -->
+    
+    <!-- More info about db mvn plugin -->
 
     <logger name="ch.elca.el4j.plugins.database">
         <level value="DEBUG"/>
