@@ -21,7 +21,7 @@
     <name>EL4J application refdb service</name>
     <description>Service module of RefDB application of the EL4J framework.</description>
     <dependencies>
-		<dependency>
+        <dependency>
             <groupId>ch.elca.el4j.applications</groupId>
             <artifactId>refdb-dao</artifactId>
             <type>jar</type>
