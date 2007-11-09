@@ -96,8 +96,7 @@ public class ModuleContextLoader extends ContextLoader {
 
         ConfigurableWebApplicationContext wac;
 
-        if (contextClass == ModuleWebApplicationContext.class) {
-
+        if (ModuleWebApplicationContext.class.isAssignableFrom(contextClass)) {
             String[] inclusiveConfigLocations = getInclusiveConfigLocations(
                 servletContext);
             String[] exclusiveConfigLocations = getExclusiveConfigLocations(
