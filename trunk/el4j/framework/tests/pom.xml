@@ -26,6 +26,7 @@
         <module>core</module>
         <module>env</module>
         <module>remoting</module>
+        <module>remoting_jaxws</module>
         <module>tcp_forwarder</module>
     </modules>
 </project>
