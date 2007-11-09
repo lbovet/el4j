@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-	<!-- $Revision$ -->
+    <!-- $Revision$ -->
     <!-- $URL$ -->
     <!-- $Date$ -->
     <!-- $Author$ -->
@@ -19,7 +19,7 @@
     <artifactId>module-xml_merge-web-war</artifactId>
     <version>${version.module-xml_merge}</version>
     <packaging>war</packaging>
-	<name>EL4J module XmlMerge for web - war</name>
+    <name>EL4J module XmlMerge for web - war</name>
     <description>
         War part of web XmlMerge module of the EL4J framework.
     </description>
@@ -55,10 +55,10 @@
         </dependency>
     </dependencies>
     <properties>
-    	<!-- 
-    		This property overrides the default jee-web.context property
-    	    defined in the pom.xml file of the external folder.
-     	-->
-    	<jee-web.context>xmlmerge</jee-web.context>
+        <!-- 
+            This property overrides the default jee-web.context property
+            defined in the pom.xml file of the external folder.
+         -->
+        <jee-web.context>xmlmerge</jee-web.context>
     </properties>
 </project>
