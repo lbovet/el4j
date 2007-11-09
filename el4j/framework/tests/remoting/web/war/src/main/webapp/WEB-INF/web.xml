@@ -6,19 +6,6 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
 
-	<context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>
-            WEB-INF/remotingtests-servlet.xml
-        </param-value>
-    </context-param>
-   
-	<listener>
-	    <listener-class>
-	        org.springframework.web.context.ContextLoaderListener
-	    </listener-class>
-	</listener>
-	
     <servlet>
         <servlet-name>remotingtests</servlet-name>
         <servlet-class>
@@ -30,15 +17,8 @@
         </init-param>
         <load-on-startup>100</load-on-startup>
     </servlet>
-    <servlet>
-        <servlet-name>jaxws-servlet-spring</servlet-name>
-        <servlet-class>
-            ch.elca.el4j.services.remoting.servlet.WSSpringServlet
-        </servlet-class>
-        <load-on-startup>101</load-on-startup>
-    </servlet>
 
-    <!-- Used by Soap(Axis) test - ->
+    <!-- Used by Soap(Axis) test -->
     <listener>
         <listener-class>org.apache.axis.transport.http.AxisHTTPSessionListener</listener-class>
     </listener>
@@ -48,27 +28,21 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <!- - Used to see all deployed services with its methods as list - ->
+        <!-- Used to see all deployed services with its methods as list -->
         <servlet-name>AxisServlet</servlet-name>
         <url-pattern>/servlet/AxisServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <!- - Url to deployed services - ->
+        <!-- Url to deployed services -->
         <servlet-name>AxisServlet</servlet-name>
         <url-pattern>/services/*</url-pattern>
-    </servlet-mapping> -->
+    </servlet-mapping>
     
     
     <!-- Used by Hessian, Burlap and xFire tests -->    
     <servlet-mapping>
         <servlet-name>remotingtests</servlet-name>
         <url-pattern>*.Remotingtests</url-pattern>
-    </servlet-mapping>
-    
-    <!-- Used by Jaxws tests --> 
-    <servlet-mapping>
-        <servlet-name>jaxws-servlet-spring</servlet-name>
-        <url-pattern>*.RemotingtestsJaxws</url-pattern>
     </servlet-mapping>
 
     <session-config>
