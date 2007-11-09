@@ -53,7 +53,7 @@
             OPTIMISTICLOCKINGVERSION from ANNOTATIONS
     </statement>
 
-	<delete id="deleteAnnotation">
+    <delete id="deleteAnnotation">
         delete from ANNOTATIONS where KEYID=#key# AND
         OPTIMISTICLOCKINGVERSION=#optimisticLockingVersion#
     </delete>

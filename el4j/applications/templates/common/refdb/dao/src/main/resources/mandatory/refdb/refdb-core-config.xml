@@ -1,40 +1,40 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
-    "http://www.springframework.org/dtd/spring-beans.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
-<beans>
-    <!-- $Version$ -->
+    <!-- $Revision$ -->
     <!-- $URL$ -->
     <!-- $Date$ -->
     <!-- $Author$ -->
     
     <bean id="daoRegistry"
-    	class="ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry">
-    	<property name="daos">
-			<map>
-				<entry key="ch.elca.el4j.apps.keyword.dom.Keyword">
-					<ref bean="keywordDao"/>
-				</entry>
-				<entry key="ch.elca.el4j.apps.refdb.dom.Link">
-					<ref bean="linkDao"/>
-				</entry>
-				<entry key="ch.elca.el4j.apps.refdb.dom.FormalPublication">
-					<ref bean="formalPublicationDao"/>
-				</entry>
-				<entry key="ch.elca.el4j.apps.refdb.dom.Book">
-					<ref bean="bookDao"/>
-				</entry>
-				<entry key="ch.elca.el4j.apps.refdb.dom.Annotation">
-					<ref bean="annotationDao"/>
-				</entry>
-				<entry key="ch.elca.el4j.apps.refdb.dom.File">
-					<ref bean="fileDao"/>
-				</entry>
-				<entry key="ch.elca.el4j.apps.refdb.dom.FileDescriptorView">
-					<ref bean="fileDescriptorViewDao"/>
-				</entry>
-			</map>
-		</property>	
+        class="ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry">
+        <property name="daos">
+            <map>
+                <entry key="ch.elca.el4j.apps.keyword.dom.Keyword">
+                    <ref bean="keywordDao"/>
+                </entry>
+                <entry key="ch.elca.el4j.apps.refdb.dom.Link">
+                    <ref bean="linkDao"/>
+                </entry>
+                <entry key="ch.elca.el4j.apps.refdb.dom.FormalPublication">
+                    <ref bean="formalPublicationDao"/>
+                </entry>
+                <entry key="ch.elca.el4j.apps.refdb.dom.Book">
+                    <ref bean="bookDao"/>
+                </entry>
+                <entry key="ch.elca.el4j.apps.refdb.dom.Annotation">
+                    <ref bean="annotationDao"/>
+                </entry>
+                <entry key="ch.elca.el4j.apps.refdb.dom.File">
+                    <ref bean="fileDao"/>
+                </entry>
+                <entry key="ch.elca.el4j.apps.refdb.dom.FileDescriptorView">
+                    <ref bean="fileDescriptorViewDao"/>
+                </entry>
+            </map>
+        </property>    
     </bean>
   
 </beans>

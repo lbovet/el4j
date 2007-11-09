@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE sqlMapConfig 
-	PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN" 
-	"http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
 
 <sqlMapConfig>
     <!-- Version: $Revision$ -->
