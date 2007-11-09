@@ -1,80 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<!-- Version: $Revision$ -->
-	<!-- URL: $URL$ -->
-	<!-- Date: $Date$ -->
-	<!-- Author: $Author$ -->
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
 
-	<parent>
-		<groupId>ch.elca.el4j.tests</groupId>
-		<artifactId>el4j-framework-tests-remoting</artifactId>
-		<version>1.1.4-SNAPSHOT</version>
-	</parent>
+    <parent>
+        <groupId>ch.elca.el4j.tests</groupId>
+        <artifactId>el4j-framework-tests-remoting</artifactId>
+        <version>1.1.4-SNAPSHOT</version>
+    </parent>
 
-	<artifactId>module-remoting-tests-versioning_tests</artifactId>
-	<version>${version.module-remoting-tests}</version>
-	<packaging>jar</packaging>
-	<name>EL4J test remoting version</name>
-	<description>
-		Test module for testing inter-version compatibilities.
-	</description>
-	<dependencies>
-		<!-- EL4J framework modules -->
-		<dependency>
-			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-remoting_xfire</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-env</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>ch.elca.el4j.tests</groupId>
-			<artifactId>module-remoting-tests-web-war</artifactId>
-			<type>war</type>
-		</dependency>
+    <artifactId>module-remoting-tests-versioning_tests</artifactId>
+    <version>${version.module-remoting-tests}</version>
+    <packaging>jar</packaging>
+    <name>EL4J test remoting version</name>
+    <description>
+        Test module for testing inter-version compatibilities.
+    </description>
+    <dependencies>
+        <!-- EL4J framework modules -->
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-remoting_xfire</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-env</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j.tests</groupId>
+            <artifactId>module-remoting-tests-web-war</artifactId>
+            <type>war</type>
+        </dependency>
 
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+        </dependency>
+    </dependencies>
 
-	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.codehaus.cargo</groupId>
-					<artifactId>cargo-maven2-plugin</artifactId>
-					<configuration>
-						<wait>false</wait>
-						<deployer>
-							<deployables>
-								<deployable>
-									<groupId>ch.elca.el4j.tests</groupId>
-									<artifactId>module-remoting-tests-web-war</artifactId>
-									<type>war</type>
-									<properties>
-										<context>module-remoting-tests-web</context>
-									</properties>
-									<pingURL>http://${jee-web.host}:${jee-web.port}/module-remoting-tests-web</pingURL>
-									<pingTimeout>120000</pingTimeout>
-								</deployable>
-							</deployables>
-						</deployer>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
-	<profiles>
-		<profile>
-			<id>manual</id>
-		</profile>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.cargo</groupId>
+                    <artifactId>cargo-maven2-plugin</artifactId>
+                    <configuration>
+                        <wait>false</wait>
+                        <deployer>
+                            <deployables>
+                                <deployable>
+                                    <groupId>ch.elca.el4j.tests</groupId>
+                                    <artifactId>module-remoting-tests-web-war</artifactId>
+                                    <type>war</type>
+                                    <properties>
+                                        <context>module-remoting-tests-web</context>
+                                    </properties>
+                                    <pingURL>http://${jee-web.host}:${jee-web.port}/module-remoting-tests-web</pingURL>
+                                    <pingTimeout>120000</pingTimeout>
+                                </deployable>
+                            </deployables>
+                        </deployer>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    <profiles>
+        <profile>
+            <id>manual</id>
+        </profile>
        <profile>
             <id>auto</id>
             <activation>
@@ -100,20 +100,20 @@
                     <!-- MDL 2006-11-23
                     Due to a Bug within the Cargo plugin, we need to sleep here.
                     Note that the time is crucial: 5 seconds are not enough. -->
-					<plugin>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<executions>
-							<execution>
-								<phase>pre-integration-test</phase>
-								<configuration>
-									<tasks>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>pre-integration-test</phase>
+                                <configuration>
+                                    <tasks>
                                         <echo message="sleeping now"></echo>
-										<sleep seconds="10"></sleep>
+                                        <sleep seconds="10"></sleep>
                                     </tasks>
                                 </configuration>
-								<goals>
-									<goal>run</goal>
-								</goals>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
                             </execution>
                         </executions>
                     </plugin>
@@ -135,20 +135,20 @@
                     <!-- MDL 2006-11-23
                     Due to a Bug within the Cargo plugin, we need to sleep here.
                     Note that the time is crucial: 5 seconds are not enough. -->
-					<plugin>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<executions>
-							<execution>
-								<phase>pre-integration-test</phase>
-								<configuration>
-									<tasks>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>pre-integration-test</phase>
+                                <configuration>
+                                    <tasks>
                                         <echo message="sleeping now"></echo>
-										<sleep seconds="10"></sleep>
+                                        <sleep seconds="10"></sleep>
                                     </tasks>
                                 </configuration>
-								<goals>
-									<goal>run</goal>
-								</goals>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
                             </execution>
                         </executions>
                     </plugin>
@@ -170,20 +170,20 @@
                     <!-- MDL 2006-11-23
                     Due to a Bug within the Cargo plugin, we need to sleep here.
                     Note that the time is crucial: 5 seconds are not enough. -->
-					<plugin>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<executions>
-							<execution>
-								<phase>integration-test</phase>
-								<configuration>
-									<tasks>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>integration-test</phase>
+                                <configuration>
+                                    <tasks>
                                         <echo message="sleeping now"></echo>
-										<sleep seconds="10"></sleep>
+                                        <sleep seconds="10"></sleep>
                                     </tasks>
                                 </configuration>
-								<goals>
-									<goal>run</goal>
-								</goals>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
                             </execution>
                         </executions>
                     </plugin>
@@ -239,5 +239,5 @@
                 </plugins>
             </build>
         </profile>
-	</profiles>
+    </profiles>
 </project>
