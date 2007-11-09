@@ -1,16 +1,16 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
-	"http://www.springframework.org/dtd/spring-beans.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
-<beans>
-    <!-- Version: $Revision$ -->
-    <!-- URL: $URL$ -->
-    <!-- Date: $Date$ -->
-    <!-- Author: $Author$ -->
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
     
     <bean id="employee" 
-    	class="ch.elca.el4j.tests.core.io.support.helper.Employee">
-    	<property name="prename" value="Martin"/>
-    	<property name="lastname" value="Zeltner"/>
+        class="ch.elca.el4j.tests.core.io.support.helper.Employee">
+        <property name="prename" value="Martin"/>
+        <property name="lastname" value="Zeltner"/>
     </bean>
 </beans>
