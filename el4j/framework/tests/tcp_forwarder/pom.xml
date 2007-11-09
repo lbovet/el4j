@@ -33,78 +33,78 @@
             <artifactId>module-webtest</artifactId>
         </dependency>
         <dependency>
-        	<groupId>ch.elca.el4j.modules</groupId>
+            <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-database</artifactId>
         </dependency>
         <dependency>
-        	<groupId>ch.elca.el4j.modules</groupId>
+            <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-env</artifactId>
         </dependency>
         <dependency>
-        	<groupId>ch.elca.el4j.modules</groupId>
+            <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-hibernate</artifactId>
         </dependency>
     </dependencies>
     <build>
         <plugins>
-        		<!-- EL4J Database plugin to start and fill DB automatically -->
-			<plugin>
-				<groupId>ch.elca.el4j.maven.plugins</groupId>
-				<artifactId>maven-database-plugin</artifactId>
-				<executions>
-					<execution>
-						<configuration>
-							<connectionPropertiesSource>
-								scenarios/db/raw/module-tcp_forwarder-tests-override-{db.name}.properties
-							</connectionPropertiesSource>
-						</configuration>
-						<goals>
-							<goal>prepare</goal>
-						</goals>
-						<phase>pre-integration-test</phase>
-					</execution>
-				</executions>
-			</plugin>
+                <!-- EL4J Database plugin to start and fill DB automatically -->
+            <plugin>
+                <groupId>ch.elca.el4j.maven.plugins</groupId>
+                <artifactId>maven-database-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <connectionPropertiesSource>
+                                scenarios/db/raw/module-tcp_forwarder-tests-override-{db.name}.properties
+                            </connectionPropertiesSource>
+                        </configuration>
+                        <goals>
+                            <goal>prepare</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                    </execution>
+                </executions>
+            </plugin>
 
-			<!-- skip unit test run, tests to be executed during integration-test -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
-				<executions>
-					<execution>
-						<id>surefire-it</id>
-						<phase>integration-test</phase>
-						<goals>
-							<goal>test</goal>
-						</goals>
-						<configuration>
-							<skip>false</skip>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			
-			<!-- Delete tables and stop Network Server -->
-			<plugin>
-				<groupId>ch.elca.el4j.maven.plugins</groupId>
-				<artifactId>maven-database-plugin</artifactId>
-				<executions>
-					<execution>
-						<configuration>
-							<db.connectionProperties>
-								scenarios/db/raw/module-tcp_forwarder-tests-override-{db.name}.properties
-							</db.connectionProperties>
-						</configuration>
-						<goals>
-							<goal>cleanUp</goal>
-						</goals>
-						<phase>post-integration-test</phase>
-					</execution>
-				</executions>
-			</plugin>
+            <!-- skip unit test run, tests to be executed during integration-test -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>surefire-it</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <skip>false</skip>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <!-- Delete tables and stop Network Server -->
+            <plugin>
+                <groupId>ch.elca.el4j.maven.plugins</groupId>
+                <artifactId>maven-database-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <db.connectionProperties>
+                                scenarios/db/raw/module-tcp_forwarder-tests-override-{db.name}.properties
+                            </db.connectionProperties>
+                        </configuration>
+                        <goals>
+                            <goal>cleanUp</goal>
+                        </goals>
+                        <phase>post-integration-test</phase>
+                    </execution>
+                </executions>
+            </plugin>
         
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
