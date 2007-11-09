@@ -1,21 +1,21 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
-	"http://www.springframework.org/dtd/spring-beans.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
-<beans>
-    <!-- Version: $Revision$ -->
-    <!-- URL: $URL$ -->
-    <!-- Date: $Date$ -->
-    <!-- Author: $Author$ -->
-
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
     <bean id="keywordPage"
         class="ch.elca.el4j.services.gui.richclient.pages.descriptors.MultipleViewsPageDescriptor"
-        singleton="false">
+        scope="prototype">
         <property name="pageComponentDescriptors">
             <list>
                 <bean name="tableGroup"
                     class="ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.DefaultGroupPageComponentDescriptor"
-                    singleton="false">
+                    scope="prototype">
                     <property name="preferredPositionArgument" value="Center"/>
                     <property name="pageComponentDescriptors">
                         <ref bean="keywordTableView" />
@@ -23,7 +23,7 @@
                 </bean>
                 <bean name="searchGroup"
                     class="ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.DefaultGroupPageComponentDescriptor"
-                    singleton="false">
+                    scope="prototype">
                     <property name="preferredPositionArgument" value="West"/>
                     <property name="pageComponentDescriptors">
                         <ref bean="keywordSearchView" />
@@ -31,7 +31,7 @@
                 </bean>
                 <bean name="dialogGroup"
                     class="ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.DefaultGroupPageComponentDescriptor"
-                    singleton="false">
+                    scope="prototype">
                     <property name="preferredPositionArgument" value="East"/>
                 </bean>
             </list>
@@ -40,12 +40,12 @@
 
     <bean id="referencePage"
         class="ch.elca.el4j.services.gui.richclient.pages.descriptors.MultipleViewsPageDescriptor"
-        singleton="false">
+        scope="prototype">
         <property name="pageComponentDescriptors">
             <list>
                 <bean name="tableGroup"
                     class="ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.DefaultGroupPageComponentDescriptor"
-                    singleton="false">
+                    scope="prototype">
                     <property name="preferredPositionArgument" value="Center"/>
                     <property name="pageComponentDescriptors">
                         <ref bean="referenceTableView" />
@@ -53,7 +53,7 @@
                 </bean>
                 <bean name="searchGroup"
                     class="ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.DefaultGroupPageComponentDescriptor"
-                    singleton="false">
+                    scope="prototype">
                     <property name="preferredPositionArgument" value="West"/>
                     <property name="pageComponentDescriptors">
                         <ref bean="referenceSearchView" />
@@ -61,7 +61,7 @@
                 </bean>
                 <bean name="dialogGroup"
                     class="ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.DefaultGroupPageComponentDescriptor"
-                    singleton="false">
+                    scope="prototype">
                     <property name="preferredPositionArgument" value="East"/>
                 </bean>
             </list>
@@ -70,12 +70,12 @@
 
     <bean id="referenceKeywordPage"
         class="ch.elca.el4j.services.gui.richclient.pages.descriptors.MultipleViewsPageDescriptor"
-        singleton="false">
+        scope="prototype">
         <property name="pageComponentDescriptors">
             <list>
                 <bean name="tableGroup"
                     class="ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.DefaultGroupPageComponentDescriptor"
-                    singleton="false">
+                    scope="prototype">
                     <property name="preferredPositionArgument" value="Center"/>
                     <property name="pageComponentDescriptors">
                         <list>
@@ -86,7 +86,7 @@
                 </bean>
                 <bean name="searchGroup"
                     class="ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.DefaultGroupPageComponentDescriptor"
-                    singleton="false">
+                    scope="prototype">
                     <property name="preferredPositionArgument" value="West"/>
                     <property name="pageComponentDescriptors">
                         <list>
@@ -97,7 +97,7 @@
                 </bean>
                 <bean name="dialogGroup"
                     class="ch.elca.el4j.services.gui.richclient.pagecomponents.descriptors.impl.DefaultGroupPageComponentDescriptor"
-                    singleton="false">
+                    scope="prototype">
                     <property name="preferredPositionArgument" value="East"/>
                 </bean>
             </list>

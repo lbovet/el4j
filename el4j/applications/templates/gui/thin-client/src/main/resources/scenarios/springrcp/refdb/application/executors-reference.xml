@@ -1,19 +1,19 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
-	"http://www.springframework.org/dtd/spring-beans.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
-<beans>
-    <!-- Version: $Revision$ -->
-    <!-- URL: $URL$ -->
-    <!-- Date: $Date$ -->
-    <!-- Author: $Author$ -->
-
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
     <!-- 
         Executor to change reference properties.
     -->
     <bean id="referencePropertiesExecutor"
         class="ch.elca.el4j.apps.refdb.gui.executors.ReferencePropertiesExecutor"
-        singleton="false">
+        scope="prototype">
         <property name="beanPropertiesForms">
             <!--
                 Displayed property forms. Here only one is diplayed for all 
@@ -28,7 +28,7 @@
     -->
     <bean id="referenceFormAll"
         class="ch.elca.el4j.services.gui.richclient.forms.BeanPropertiesForm"
-        singleton="false">
+        scope="prototype">
         <property name="shownBeanProperties">
             <!--
                 Are the shown bean properties. The order is the same in 
