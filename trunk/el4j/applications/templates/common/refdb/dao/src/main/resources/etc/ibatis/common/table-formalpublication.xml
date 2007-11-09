@@ -2,7 +2,7 @@
 <!DOCTYPE sqlMap
     PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
     "http://ibatis.apache.org/dtd/sql-map-2.dtd">
-	
+    
 <sqlMap namespace="refdb-core">
     <!-- Version: $Revision$ -->
     <!-- URL: $URL$ -->
@@ -54,8 +54,8 @@
     </statement>
     
     <select id="getAllFormalPublicationKeys" resultClass="java.lang.Integer">
-    	select KEYID from FORMALPUBLICATIONS, REFERENCESTABLE 
-    		where KEYID=KEYTOREFERENCE
+        select KEYID from FORMALPUBLICATIONS, REFERENCESTABLE 
+            where KEYID=KEYTOREFERENCE
     </select>
     
     <select id="searchFormalPublications" resultMap="formalPublication" 
@@ -108,7 +108,7 @@
         order by NAME, DESCRIPTION
     </select>
 
-	<delete id="deleteFormalPublication">
+    <delete id="deleteFormalPublication">
         delete from FORMALPUBLICATIONS where KEYID=#key# AND
         OPTIMISTICLOCKINGVERSION=#optimisticLockingVersion#
     </delete>
