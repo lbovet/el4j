@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
- 
-   <parent>
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+
+    <parent>
         <groupId>ch.elca.el4j.maven.plugins</groupId>
         <artifactId>el4j-maven-plugins</artifactId>
         <version>1.1.4-SNAPSHOT</version>
@@ -11,7 +16,7 @@
     <artifactId>maven-version-plugin</artifactId>
     <packaging>maven-plugin</packaging>
     <version>${version.maven-version-plugin}</version>
-	<name>EL4J plugin version</name>
+    <name>EL4J plugin version</name>
     <description>A plugin to compare the version of used plugins/packages and the available ones</description>
     <build>
         <plugins>
