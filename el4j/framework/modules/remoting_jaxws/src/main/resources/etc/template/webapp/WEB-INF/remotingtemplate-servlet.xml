@@ -7,6 +7,6 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
     
-	<import resource="classpath*:mandatory/*.xml"/>
+    <import resource="classpath*:mandatory/*.xml"/>
     <import resource="classpath:etc/template/server/web/jaxws-server-config.xml"/>
 </beans>
