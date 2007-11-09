@@ -32,7 +32,6 @@ import javax.jws.WebService;
  *
  * @author Martin Zeltner (MZE)
  */
-@WebService
 public interface Calculator {
     /**
      * This method calculates the area of a rectangle.
