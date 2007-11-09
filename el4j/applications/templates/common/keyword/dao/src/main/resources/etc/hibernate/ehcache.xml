@@ -1,6 +1,6 @@
 <ehcache>
 
-	<!-- Sets the path to the directory where cache .data files are created.
+    <!-- Sets the path to the directory where cache .data files are created.
 
        If the path is a Java System Property it is replaced by
        its value in the running VM.
@@ -13,7 +13,7 @@
        
     <diskStore path="java.io.tmpdir"/>
 
-	<!-- Default Cache configuration. These will applied to caches programmatically created through
+    <!-- Default Cache configuration. These will applied to caches programmatically created through
         the CacheManager.
 
         The following attributes are required for defaultCache:
@@ -29,15 +29,15 @@
                             has reached the maxInMemory limit.
     -->
     
-	<defaultCache
-		maxElementsInMemory="1000"
-		eternal="false"
-		timeToIdleSeconds="120"
-		timeToLiveSeconds="120"
-		overflowToDisk="false"
-	/>
-	 
-	<!-- Predefined caches.  Add your cache configuration settings here.
+    <defaultCache
+        maxElementsInMemory="1000"
+        eternal="false"
+        timeToIdleSeconds="120"
+        timeToLiveSeconds="120"
+        overflowToDisk="false"
+    />
+     
+    <!-- Predefined caches.  Add your cache configuration settings here.
         If you do not have a configuration for your cache a WARNING will be issued when the
         CacheManager starts
 
@@ -55,9 +55,9 @@
                             has reached the maxInMemory limit.
 
     -->
-	
-	<!-- Cache for the Keyword class named ch.elca.el4j.apps.keyword.dom.Keyword
-		(same name as the Keyword class).
+    
+    <!-- Cache for the Keyword class named ch.elca.el4j.apps.keyword.dom.Keyword
+        (same name as the Keyword class).
         This cache contains a maximum in memory of 500 elements, and will expire
         an element if it is idle for more than 5 minutes and lives for more than
         10 minutes.
@@ -66,12 +66,12 @@
         disk cache, which in this configuration will go to wherever java.io.tmp is
         defined on your system.
     -->
-	<cache name="ch.elca.el4j.apps.keyword.dom.Keyword"
-		maxElementsInMemory="500"
-		eternal="false"
-		timeToIdleSeconds="120"
-		timeToLiveSeconds="120"
-		overflowToDisk="false"
-	/>
-	
+    <cache name="ch.elca.el4j.apps.keyword.dom.Keyword"
+        maxElementsInMemory="500"
+        eternal="false"
+        timeToIdleSeconds="120"
+        timeToLiveSeconds="120"
+        overflowToDisk="false"
+    />
+    
 </ehcache>

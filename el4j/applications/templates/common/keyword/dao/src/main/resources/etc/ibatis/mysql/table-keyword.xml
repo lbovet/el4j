@@ -15,7 +15,7 @@
             #description#, #optimisticLockingVersion#)
         <selectKey resultClass="int" keyProperty="key">
             SELECT LAST_INSERT_ID();
-        </selectKey>	    
+        </selectKey>        
     </insert>
 
     <update id="updateKeyword">
