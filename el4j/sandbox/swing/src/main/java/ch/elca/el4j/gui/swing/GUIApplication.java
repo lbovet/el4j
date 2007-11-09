@@ -17,6 +17,7 @@
 
 package ch.elca.el4j.gui.swing;
 
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +25,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.Action;
+import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 
 import org.jdesktop.application.Application;
@@ -49,9 +52,13 @@ import ch.elca.el4j.gui.swing.exceptions.Exceptions;
  *       the app framework )
  */
 public abstract class GUIApplication extends SingleFrameApplication {
-	
-	private static final Logger logger = Logger.getLogger(GUIApplication.class.getName());	
-	
+
+    /**
+     * The logger.
+     */
+    private static final Logger s_logger = Logger.getLogger(
+        GUIApplication.class.getName());
+
     /**
      * The Spring context.
      */
@@ -74,57 +81,88 @@ public abstract class GUIApplication extends SingleFrameApplication {
     }
 
     /**
-     * Launch the application and do some adaptations for Spring ( { @link GUIApplication } class
-     *  documentation for more information)
+     * Launch the application and do some adaptations for Spring.
      * 
-     *  CAVEAT: We used cut&paste to extend the launch method of the Application 
-     *  class. At each change of the class Application of the app framework, 
-     *   adapt the code of this method (the app framework does not allow
-     *   a "clean" extension).
-     * 
-     * @param applicationClass      the application class to launch
-     * @param args                  command line arguments
-     * @param springContext			spring application context
+     * @link GUIApplication } class documentation for more information) CAVEAT:
+     *       We used cut&paste to extend the launch method of the Application
+     *       class. At each change of the class Application of the app
+     *       framework, adapt the code of this method (the app framework does
+     *       not allow a "clean" extension).
+     * @param applicationClass
+     *            the application class to launch
+     * @param args
+     *            command line arguments
+     * @param springContext
+     *            spring application context
      */
     public static synchronized <T extends GUIApplication> void launch(
-    		final Class<T> applicationClass, final String[] args, final ApplicationContext springContext) {
+        final Class<T> applicationClass, final String[] args,
+        final ApplicationContext springContext) {
 
-    	// install exception handler
-    	Thread.setDefaultUncaughtExceptionHandler(Exceptions.getInstance());
+        // install exception handler
+        Thread.setDefaultUncaughtExceptionHandler(Exceptions.getInstance());
 
-    	Runnable doCreateAndShowGUI = new Runnable() {
-    		public void run() {
-    			try {
-    				GUIApplication application = Application.create(applicationClass);
-    				Application.setInstance(application);
-    				
-    				// new: set the spring context early
-    				application.setSpringContext(springContext);
-    				application.initialize(args);
-    				application.startup();
-    				application.waitForReady();
-    			}
-    			catch (Exception e) {
-    				String msg = String.format("Application %s failed to launch", applicationClass);
-    				logger.log(Level.SEVERE, msg, e);
-    				throw(new Error(msg, e));
-    			}
-    		}
-    	};
-    	EventQueue.invokeLater(doCreateAndShowGUI);	        
+        Runnable doCreateAndShowGUI = new Runnable() {
+            public void run() {
+                try {
+                    GUIApplication application = Application
+                        .create(applicationClass);
+                    Application.setInstance(application);
+
+                    // new: set the spring context early
+                    application.setSpringContext(springContext);
+                    application.initialize(args);
+                    application.startup();
+                    application.waitForReady();
+                } catch (Exception e) {
+                    String msg = String.format(
+                        "Application %s failed to launch", applicationClass);
+                    s_logger.log(Level.SEVERE, msg, e);
+                    throw (new Error(msg, e));
+                }
+            }
+        };
+        EventQueue.invokeLater(doCreateAndShowGUI);
     }
 
     /**
-     * Creates a JMenu out of a String array containing action names.
-     * A separator is represented by the string "---"
+     * Creates a JMenu out of a String array containing action names. A
+     * separator is represented by the string "---"
      * 
-     * @param menuName      the menu name
-     * @param actionNames   the array of menu items
-     * @return              a JMenu
+     * @param menuName
+     *            the menu name
+     * @param actionNames
+     *            the array of menu items
+     * @return a JMenu
      */
     protected JMenu createMenu(String menuName, String[] actionNames) {
         JMenu menu = new JMenu();
         menu.setName(menuName);
+        return initMenu(actionNames, menu);
+    }
+    
+    /**
+     * Creates a JPopupMenu out of a String array containing action names. A
+     * separator is represented by the string "---"
+     * 
+     * @param actionNames
+     *            the array of menu items
+     * @return a JPopupMenu
+     */
+    protected JPopupMenu createPopup(String[] actionNames) {
+        JPopupMenu menu = new JPopupMenu();
+        return initMenu(actionNames, menu);
+    }
+    
+    /**
+     * Fills a menu with menu items.
+     * 
+     * @param <T>            the menu type (e.g. JMenu, JPopupMenu)
+     * @param actionNames    the array of menu items
+     * @param menu           the menu to insert the items
+     * @return               a menu
+     */
+    private <T extends JComponent> T initMenu(String[] actionNames, T menu) {
         for (String actionName : actionNames) {
             if (actionName.equals("---")) {
                 menu.add(new JSeparator());
@@ -150,13 +188,13 @@ public abstract class GUIApplication extends SingleFrameApplication {
         org.jdesktop.application.ApplicationContext ac
             = Application.getInstance().getContext();
         
-        for (Object candidate: m_instancesWithActionMappings) {
-        	Action foundAction = ac.getActionMap(candidate).get(actionName); 
-        	if (foundAction != null) {
-        		return foundAction;
-        	}
+        for (Object candidate : m_instancesWithActionMappings) {
+            Action foundAction = ac.getActionMap(candidate).get(actionName);
+            if (foundAction != null) {
+                return foundAction;
+            }
         }
-		return null;
+        return null;
     }
     
     /**
@@ -173,16 +211,28 @@ public abstract class GUIApplication extends SingleFrameApplication {
     }
     
     /**
+     * Returns the string for a specific resource id.
+     * @param id    the resource id
+     * @return      the corresponding string
+     */
+    public String getString(String id) {
+        org.jdesktop.application.ApplicationContext ac
+            = Application.getInstance().getContext();
+
+        return ac.getResourceMap().getString(id, new Object[0]);
+    }
+    
+    /**
      * Holds objects that contain @Action methods
      *  (in order to allow distributing Action methods on
      *   different classes.
      */
-    protected List<Object> m_instancesWithActionMappings = new ArrayList<Object>();
-    
-    { 
-    	// always add "this" to the list of objects where Action methods 
-    	//  can be found 
-    	addActionMappingInstance(this);
+    protected List<Object> m_instancesWithActionMappings
+        = new ArrayList<Object>();
+    {
+        // always add "this" to the list of objects where Action methods
+        // can be found
+        addActionMappingInstance(this);
     }
     
     /**
@@ -190,17 +240,18 @@ public abstract class GUIApplication extends SingleFrameApplication {
      *  objects in which to look for actions. 
      *   BTW: "this" is always added as first element in
      *    this array.
-     * @param o 
+     * @param o the object with @Action methods
      */
-    public void addActionMappingInstance (Object o) {
-    	m_instancesWithActionMappings.add(o);
+    public void addActionMappingInstance(Object o) {
+        m_instancesWithActionMappings.add(o);
     }
     
     /*
      * @see #addActionMappingInstance
      */
-    public void removeActionMappingInstance (Object o) {
-    	m_instancesWithActionMappings.remove(o);
+    /** {@inheritDoc} */
+    public void removeActionMappingInstance(Object o) {
+        m_instancesWithActionMappings.remove(o);
     }
     
 }

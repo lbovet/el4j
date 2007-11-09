@@ -14,31 +14,42 @@ import org.jdesktop.application.ResourceMap;
 import ch.elca.el4j.gui.swing.mdi.WindowManager;
 import ch.elca.el4j.gui.swing.mdi.WindowMenu;
 
-/** 
+
+ /** 
  * Parent class for new MDI applications.
  *  
  *  Additional features:
  *   * allows adding internal frames (for the Documents of MDI) to the application
  *      Internal frames can (optionally) minimize themselves 
  *       { @link JInternalFrame#setIconifiable(boolean) }
+ * 
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ * 
+ * @author Stefan Wismer (SWI)
+ * @author Philipp Oser (POS)
  */
 public abstract class MDIApplication extends GUIApplication {
    
     /** 
-     * The desktop pane of this MDIApplication
+     * The desktop pane of this MDIApplication.
      *  @see #createDefaultDesktopPane() 
      */
-    protected JDesktopPane desktopPane;
+    protected JDesktopPane m_desktopPane;
 
     /**
-     * Helps to manage the mdi menu and pane
+     * Helps to manage the mdi menu and pane.
      */
-    protected WindowManager windowManager;    
+    protected WindowManager m_windowManager;    
     
     
     /**
      * Adds an internal frame to the MDI application.
-     * @param frame
+     * @param frame     the frame to add
      * @see #showInternalFrame(JInternalFrame,int)
      */
     protected void showInternalFrame(JInternalFrame frame) {
@@ -63,54 +74,60 @@ public abstract class MDIApplication extends GUIApplication {
         // inject values from properties file
         map.injectComponents(frame);
 
-        desktopPane.add(frame, index);
+        m_desktopPane.add(frame, index);
     }
 
     /**
-	 * Creates a default desktop pane with a default Menu
-	 * 	This method could be overridden in case you would like another
-	 *   desktop pane. <br>
-	 *   
-	 *   Stores the created desktop pane in the {@link #desktopPane}
-	 */
-	protected void createDefaultDesktopPane() {
-		desktopPane = new JDesktopPane();      
-	    
-	    // create window manager and add window menu
-	    WindowMenu windowMenu = new WindowMenu();
-	    windowManager = new WindowManager(desktopPane, windowMenu);
-	    windowMenu.setWindowManager(windowManager);
-	    getMainFrame().getJMenuBar().add(windowMenu, getMainFrame().getJMenuBar().getMenuCount() - 1);
-	}
+     * Creates a default desktop pane with a default Menu This method could be
+     * overridden in case you would like another desktop pane. <br>
+     * Stores the created desktop pane in the {@link #m_desktopPane}
+     */
+    protected void createDefaultDesktopPane() {
+        m_desktopPane = new JDesktopPane();
 
-	/**
-     * Helper that listens to events of the internal frames
+        // create window manager and add window menu
+        WindowMenu windowMenu = new WindowMenu();
+        m_windowManager = new WindowManager(m_desktopPane, windowMenu);
+        windowMenu.setWindowManager(m_windowManager);
+        getMainFrame().getJMenuBar().add(windowMenu,
+            getMainFrame().getJMenuBar().getMenuCount() - 1);
+    }
+
+    /**
+     * Helper that listens to events of the internal frames.
      */
     private final class ListenerToEvent implements InternalFrameListener {
+        /** {@inheritDoc} */
         public void internalFrameClosing(InternalFrameEvent e) {
             EventBus.publish(e);
         }
 
+        /** {@inheritDoc} */
         public void internalFrameClosed(InternalFrameEvent e) {
             EventBus.publish(e);
         }
 
+        /** {@inheritDoc} */
         public void internalFrameOpened(InternalFrameEvent e) {
             EventBus.publish(e);
         }
 
+        /** {@inheritDoc} */
         public void internalFrameIconified(InternalFrameEvent e) {
             EventBus.publish(e);
         }
 
+        /** {@inheritDoc} */
         public void internalFrameDeiconified(InternalFrameEvent e) {
             EventBus.publish(e);
         }
 
+        /** {@inheritDoc} */
         public void internalFrameActivated(InternalFrameEvent e) {
             EventBus.publish(e);
         }
 
+        /** {@inheritDoc} */
         public void internalFrameDeactivated(InternalFrameEvent e) {
             EventBus.publish(e);
         }
