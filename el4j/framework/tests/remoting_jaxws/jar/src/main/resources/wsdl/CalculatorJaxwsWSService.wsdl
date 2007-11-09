@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions targetNamespace="http://gen.service.remoting.tests.el4j.elca.ch/" name="CalculatorJaxwsWSService" xmlns:tns="http://gen.service.remoting.tests.el4j.elca.ch/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://gen.service.remoting.tests.el4j.elca.ch/" schemaLocation="CalculatorJaxwsWSService_schema1.xsd"/>
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import namespace="another.test.another.path" schemaLocation="CalculatorJaxwsWSService_schema2.xsd"/>
+    </xsd:schema>
+  </types>
+  <message name="countNumberOfUppercaseLetters">
+    <part name="parameters" element="tns:countNumberOfUppercaseLetters"/>
+  </message>
+  <message name="countNumberOfUppercaseLettersResponse">
+    <part name="parameters" element="tns:countNumberOfUppercaseLettersResponse"/>
+  </message>
+  <message name="echoValueObjectJaxws">
+    <part name="parameters" element="tns:echoValueObjectJaxws"/>
+  </message>
+  <message name="echoValueObjectJaxwsResponse">
+    <part name="parameters" element="tns:echoValueObjectJaxwsResponse"/>
+  </message>
+  <message name="getArea">
+    <part name="parameters" element="tns:getArea"/>
+  </message>
+  <message name="getAreaResponse">
+    <part name="parameters" element="tns:getAreaResponse"/>
+  </message>
+  <message name="throwMeASpecialException">
+    <part name="parameters" element="tns:throwMeASpecialException"/>
+  </message>
+  <message name="throwMeASpecialExceptionResponse">
+    <part name="parameters" element="tns:throwMeASpecialExceptionResponse"/>
+  </message>
+  <message name="SpecialCalculatorException">
+    <part name="fault" element="tns:SpecialCalculatorException"/>
+  </message>
+  <message name="throwMeAnException">
+    <part name="parameters" element="tns:throwMeAnException"/>
+  </message>
+  <message name="throwMeAnExceptionResponse">
+    <part name="parameters" element="tns:throwMeAnExceptionResponse"/>
+  </message>
+  <message name="CalculatorException">
+    <part name="fault" element="tns:CalculatorException"/>
+  </message>
+  <portType name="CalculatorJaxwsWS">
+    <operation name="countNumberOfUppercaseLetters">
+      <input message="tns:countNumberOfUppercaseLetters"/>
+      <output message="tns:countNumberOfUppercaseLettersResponse"/>
+    </operation>
+    <operation name="echoValueObjectJaxws">
+      <input message="tns:echoValueObjectJaxws"/>
+      <output message="tns:echoValueObjectJaxwsResponse"/>
+    </operation>
+    <operation name="getArea">
+      <input message="tns:getArea"/>
+      <output message="tns:getAreaResponse"/>
+    </operation>
+    <operation name="throwMeASpecialException">
+      <input message="tns:throwMeASpecialException"/>
+      <output message="tns:throwMeASpecialExceptionResponse"/>
+      <fault message="tns:SpecialCalculatorException" name="SpecialCalculatorException"/>
+    </operation>
+    <operation name="throwMeAnException">
+      <input message="tns:throwMeAnException"/>
+      <output message="tns:throwMeAnExceptionResponse"/>
+      <fault message="tns:CalculatorException" name="CalculatorException"/>
+    </operation>
+  </portType>
+  <binding name="CalculatorJaxwsWSPortBinding" type="tns:CalculatorJaxwsWS">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <operation name="countNumberOfUppercaseLetters">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="echoValueObjectJaxws">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getArea">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="throwMeASpecialException">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="SpecialCalculatorException">
+        <soap:fault name="SpecialCalculatorException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="throwMeAnException">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="CalculatorException">
+        <soap:fault name="CalculatorException" use="literal"/>
+      </fault>
+    </operation>
+  </binding>
+  <service name="CalculatorJaxwsWSService">
+    <port name="CalculatorJaxwsWSPort" binding="tns:CalculatorJaxwsWSPortBinding">
+      <soap:address location="http://localhost:8080/module-remoting-jaxws-tests/Calculator.Jaxws.RemotingtestsJaxws"/>
+    </port>
+  </service>
+</definitions>
+
