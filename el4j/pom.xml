@@ -653,6 +653,11 @@
                     <artifactId>maven-depgraph-plugin</artifactId>
                     <version>${version.maven-depgraph-plugin}</version>
                 </plugin>
+                <plugin>
+                    <groupId>ch.elca.el4j.maven.plugins</groupId>
+                    <artifactId>maven-jaxws-plugin</artifactId>
+                    <version>${version.maven-jaxws-plugin}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
         <extensions>
@@ -1666,6 +1671,9 @@
         <version.maven-version-plugin>
         	1.3-SNAPSHOT
         </version.maven-version-plugin>
+		<version.maven-jaxws-plugin>
+        	1.0-SNAPSHOT
+        </version.maven-jaxws-plugin>
 
         <!-- EL4J framework module version numbers -->
         <version.module-core>
