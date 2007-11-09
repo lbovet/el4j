@@ -1,17 +1,19 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
-    "http://www.springframework.org/dtd/spring-beans.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
     Spring configuration file for method trace interception. By default enter,
     exit normally and exit exceptionally for methods of interfaces of beans that
     name ends with 'Dao' and 'Service' will be logged with logger of invoked 
     class at level TRACE. Only interface methods will be traced.
  -->
-<beans>
-    <!-- Version: $Revision$ -->
-    <!-- URL: $URL$ -->
-    <!-- Date: $Date$ -->
-    <!-- Author: $Author$ -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
 
     <bean id="methodTraceAutoProxy"
         class="ch.elca.el4j.core.aop.IntelligentExclusiveBeanNameAutoProxyCreator">
