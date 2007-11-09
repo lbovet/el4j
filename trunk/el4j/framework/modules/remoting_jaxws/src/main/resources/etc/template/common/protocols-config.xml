@@ -7,7 +7,7 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
     
-	<!-- JAX-WS Soap Protocol -->
+    <!-- JAX-WS Soap Protocol -->
     <bean id="jaxwsProtocol" class="ch.elca.el4j.services.remoting.protocol.JaxwsSoapHeaderContextPassing">
         <property name="serviceHost">
             <value>localhost</value>

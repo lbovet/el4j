@@ -6,19 +6,19 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
 
-	<context-param>
+    <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
             WEB-INF/remotingtemplate-servlet.xml
         </param-value>
     </context-param>
    
-	<listener>
-	    <listener-class>
-	        org.springframework.web.context.ContextLoaderListener
-	    </listener-class>
-	</listener>
-	
+    <listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
+    
     <servlet>
         <servlet-name>jaxws-servlet-spring</servlet-name>
         <servlet-class>
