@@ -1,4 +1,4 @@
-package ch.elca.el4j.gui.model.mixin;
+package ch.elca.el4j.model.mixin;
 
 import java.beans.BeanInfo;
 import java.beans.Introspector;
@@ -14,8 +14,10 @@ import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.validator.ClassValidator;
+import org.hibernate.validator.InvalidValue;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
+import org.jdesktop.swingbinding.validation.ValidationCapability;
 import org.springframework.aop.IntroductionAdvisor;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.aop.framework.ProxyFactory;
@@ -23,7 +25,7 @@ import org.springframework.aop.support.DefaultIntroductionAdvisor;
 import org.springframework.aop.support.DelegatingIntroductionInterceptor;
 
 import com.silvermindsoftware.hitch.events.PropertyChangeListenerCapability;
-import com.silvermindsoftware.hitch.validation.ValidationCapability;
+import com.silvermindsoftware.hitch.validation.HibernateValidationCapability;
 
 /**
  * Mixin to enable javaBeans event support and validation in ordinary POJOs.
@@ -31,12 +33,23 @@ import com.silvermindsoftware.hitch.validation.ValidationCapability;
  * To see each fired property change, set the log4j level for this class to
  * debug
  * 
- * @author SWI
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Stefan Wismer (SWI)
  */
 public class PropertyChangeListenerMixin extends
         DelegatingIntroductionInterceptor implements
-        PropertyChangeListenerCapability, SaveRestoreCapability, ValidationCapability {
+        PropertyChangeListenerCapability, SaveRestoreCapability,
+        ValidationCapability, HibernateValidationCapability {
     
+    /**
+     * The logger.
+     */
     private static Log s_logger = LogFactory
             .getLog(PropertyChangeListenerMixin.class);
     
@@ -61,6 +74,9 @@ public class PropertyChangeListenerMixin extends
     private ClassValidator m_classValidator;
     
 
+    /**
+     * The constructor.
+     */
     public PropertyChangeListenerMixin() {
         // initialize later when reference to the model is known
         m_changeSupport = null;
@@ -70,18 +86,19 @@ public class PropertyChangeListenerMixin extends
     /**
      * Wrap an object with the change tracking mixin.
      * 
+     * @param <T>      the object class
      * @param object   the object to be wrapped
      * @return the same object wrapped with a spring proxy that has the
      *         {@link PropertyChangeListenerMixin} as {@link Advisor}
      */
-    public static Object addPropertyChangeMixin(Object object) {
+    public static <T> T addPropertyChangeMixin(T object) {
         ProxyFactory pc = new ProxyFactory(object);
         IntroductionAdvisor ii = new DefaultIntroductionAdvisor(
                 new PropertyChangeListenerMixin());
         pc.setProxyTargetClass(true);
         pc.setExposeProxy(true);
         pc.addAdvisor(0, ii);
-        object = pc.getProxy();
+        object = (T) pc.getProxy();
         return object;
     }
 
@@ -96,7 +113,9 @@ public class PropertyChangeListenerMixin extends
     }
 
     /** {@inheritDoc} */
-    public void addPropertyChangeListener(String key, PropertyChangeListener l) {
+    public void addPropertyChangeListener(String key,
+        PropertyChangeListener l) {
+        
         m_changeSupport.addPropertyChangeListener(key, l);
     }
 
@@ -114,6 +133,7 @@ public class PropertyChangeListenerMixin extends
     }
 
     /** {@inheritDoc} */
+    @SuppressWarnings("unchecked")
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
         // initialize PropertyChangeSupport here
@@ -268,7 +288,23 @@ public class PropertyChangeListenerMixin extends
     }
 
     /** {@inheritDoc} */
-    public ClassValidator getClassValidator() {
+    public ClassValidator<?> getClassValidator() {
         return m_classValidator;
+    }
+    
+    /** {@inheritDoc} */
+    @SuppressWarnings("unchecked")
+    public boolean isValid() {
+        InvalidValue[] validationMessages = m_classValidator
+            .getInvalidValues(AopContext.currentProxy());
+        return validationMessages.length == 0;
+    }
+
+    /** {@inheritDoc} */
+    @SuppressWarnings("unchecked")
+    public boolean isValid(String property) {
+        InvalidValue[] validationMessages = m_classValidator.getInvalidValues(
+            AopContext.currentProxy(), property);
+        return validationMessages.length == 0;
     }
 }

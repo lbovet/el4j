@@ -5,10 +5,8 @@ import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
@@ -19,11 +17,29 @@ import javax.swing.JToggleButton;
 import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.Property;
 
+/**
+ * This class holds a mapping of objects or classes to their default property.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Stefan Wismer (SWI)
+ */
 public class DefaultProperties {
-    private Map<Object, Property> defaultProperties;
+    /**
+     * The mapping of objects or classes to their default property.
+     */
+    private Map<Object, Property<?, ?>> m_defaultProperties;
     
+    /**
+     * Constructor with support for common GUI elements.
+     */
     public DefaultProperties() {
-        defaultProperties = new HashMap<Object, Property>();
+        m_defaultProperties = new HashMap<Object, Property<?, ?>>();
         
         register(JButton.class, "text");
         register(JTextField.class, "text");
@@ -38,33 +54,35 @@ public class DefaultProperties {
     }
     
     /**
-     * Registers a new default property for a widget or widget class
+     * Registers a new default property for a widget or widget class.
      * @param widget           the widget or widget class
      * @param property         the property as String
      */
     public void register(Object widget, String property) {
-        defaultProperties.put(widget, BeanProperty.create(property));
+        m_defaultProperties.put(widget, BeanProperty.create(property));
     }
     
     /**
-     * Registers a new default property for a widget or widget class
+     * Registers a new default property for a widget or widget class.
      * @param widget           the widget or widget class
      * @param property         the property as Property
      */
+    @SuppressWarnings("unchecked")
     public void register(Object widget, Property property) {
-        defaultProperties.put(widget, property);
+        m_defaultProperties.put(widget, property);
     }
     
     /**
-     * Returns the default property for a widget or widget class
+     * Returns the default property for a widget or widget class.
      * @param widget           the widget or widget class
      * @return                 the default property
      */
+    @SuppressWarnings("unchecked")
     public Property getDefaultProperty(Object widget) {
         Class widgetClass;
         if (!(widget instanceof Class)) {
-            if (defaultProperties.containsKey(widget)) {
-                return defaultProperties.get(widget);
+            if (m_defaultProperties.containsKey(widget)) {
+                return m_defaultProperties.get(widget);
             } else {
                 widgetClass = widget.getClass();
             }
@@ -72,9 +90,11 @@ public class DefaultProperties {
             widgetClass = (Class) widget;
         }
         
-        while (defaultProperties.get(widgetClass) == null && widgetClass != Object.class) {
+        while (m_defaultProperties.get(widgetClass) == null
+            && widgetClass != Object.class) {
+            
             widgetClass = widgetClass.getSuperclass();
         }
-        return defaultProperties.get(widgetClass);
+        return m_defaultProperties.get(widgetClass);
     }
 }

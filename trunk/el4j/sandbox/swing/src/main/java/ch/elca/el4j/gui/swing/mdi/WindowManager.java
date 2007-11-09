@@ -66,7 +66,7 @@ import ch.elca.el4j.gui.swing.mdi.JInternalFrameComparator;
  * </ul>
  * <p>
  * 
- * Adapted form project http://zeus-jscl.sourceforge.net/ 
+ * Adapted from project http://zeus-jscl.sourceforge.net/ 
  * 
  * @author Gregory Kotsaftis
  * @since 1.04

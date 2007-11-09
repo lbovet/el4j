@@ -14,28 +14,52 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import org.apache.log4j.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ApplicationActionMap;
 import org.jdesktop.application.ApplicationContext;
 import org.jdesktop.application.ResourceMap;
 
-public class AboutDialog extends JDialog {
-    private ResourceMap map;
+import ch.elca.el4j.gui.swing.GUIApplication;
 
-    public AboutDialog(ApplicationContext appContext) {
-        map = appContext.getResourceMap(AboutDialog.class);
+/**
+ * A standard About dialog.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Stefan Wismer (SWI)
+ */
+public class AboutDialog extends JDialog {
+    /**
+     * The logger.
+     */
+    private static Logger s_logger = Logger.getLogger(JDialog.class);
+    
+    /**
+     * The resource map.
+     */
+    private ResourceMap m_resourceMap;
+
+    public AboutDialog(GUIApplication app) {
+        ApplicationContext appContext = app.getContext();
+        m_resourceMap = appContext.getResourceMap(AboutDialog.class);
 
         setTitle(getRes("aboutText"));
         JPanel panel = new JPanel(new BorderLayout());
 
         // image on the left
-        ImageIcon icon = createImageIcon(getRes("aboutImage"), "");
+        ImageIcon icon = createImageIcon(getRes("aboutImage"));
         JLabel logo = new JLabel(icon);
         panel.add(logo, BorderLayout.WEST);
 
         // about-text on the right
-        final String lineSep = "<br> "; // System.getProperty( "line.separator"
-                                        // );
+        final String lineSep = "<br> ";
+        
         StringBuilder sb = new StringBuilder();
         sb.append("<html>");
         sb.append(getRes("Application.title")).append(lineSep).append(lineSep);
@@ -77,16 +101,17 @@ public class AboutDialog extends JDialog {
 
         // assign actions
         ApplicationActionMap actionMap = appContext.getActionMap(this);
-        closeButton.setAction(actionMap.get("closeButton"));
+        closeButton.setAction(actionMap.get("close"));
 
         add(panel);
 
         // inject values from properties file
-        map.injectComponents(this);
+        m_resourceMap.injectComponents(this);
 
         // little hack to make button larger
         Insets s = closeButton.getMargin();
-        s.left = s.right = Integer.parseInt(getRes("closeButton.space"));
+        s.right = Integer.parseInt(getRes("closeButton.space"));
+        s.left = s.right;
         closeButton.setMargin(s);
 
         // prepare to show
@@ -96,22 +121,32 @@ public class AboutDialog extends JDialog {
         setModal(true);
     }
 
+    /**
+     * Close the dialog
+     */
     @Action
-    public void closeButton() {
+    public void close() {
         dispose();
     }
 
+    /**
+     * @param id    the resource ID
+     * @return      the String associated with the given resource ID
+     */
     protected String getRes(String id) {
-        return map.getString(id, new Object[0]);
+        return m_resourceMap.getString(id, new Object[0]);
     }
 
-    /** Returns an ImageIcon, or null if the path was invalid. */
-    protected ImageIcon createImageIcon(String path, String description) {
+    /**
+     * @param path           the path to the image
+     * @return               an ImageIcon, or null if the path was invalid.
+     */
+    protected ImageIcon createImageIcon(String path) {
         java.net.URL imgURL = getClass().getResource(path);
         if (imgURL != null) {
-            return new ImageIcon(imgURL, description);
+            return new ImageIcon(imgURL, "");
         } else {
-            System.err.println("Couldn't find file: " + path);
+            s_logger.error("Couldn't find file: " + path);
             return null;
         }
     }

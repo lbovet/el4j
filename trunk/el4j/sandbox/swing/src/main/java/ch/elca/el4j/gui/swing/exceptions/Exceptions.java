@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import ch.elca.el4j.gui.swing.exceptions.Handler;
-
 /**
  * This class contains a repository of strategies for dealing with Exceptions
  * which occur anywhere in the application. Clients may register Exception
@@ -18,8 +16,15 @@ import ch.elca.el4j.gui.swing.exceptions.Handler;
  * registered Exception handler recognizes an exception that has been raised
  * it is printed to {@link System#err} but otherwise ignored.
  *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
  * @author James Lemieux
- * @author SWI
+ * @author Stefan Wismer (SWI)
  */
 public final class Exceptions implements Thread.UncaughtExceptionHandler {
 

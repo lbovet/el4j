@@ -22,7 +22,7 @@ import javax.swing.JComponent;
 
 import org.jdesktop.beansbinding.BindingGroup;
 
-import com.silvermindsoftware.hitch.binding.SpecialBinding;
+import com.silvermindsoftware.hitch.binding.SpecialBindingCreator;
 
 public interface Binder {
     
@@ -57,5 +57,5 @@ public interface Binder {
      * @param component     the component to bind
      * @param binding       the custom binding
      */
-    public void registerBinding(JComponent component, SpecialBinding binding);
+    public void registerBinding(JComponent component, SpecialBindingCreator binding);
 }
