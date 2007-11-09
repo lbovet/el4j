@@ -1,18 +1,18 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
-	"http://www.springframework.org/dtd/spring-beans.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
-<beans>
-    <!-- Version: $Revision$ -->
-    <!-- URL: $URL$ -->
-    <!-- Date: $Date$ -->
-    <!-- Author: $Author$ -->
-
-	<bean id="splashScreen" 
-		class="org.springframework.richclient.application.SplashScreen" 
-		singleton="false">
-		<property name="imageResourcePath">
-			<value>/images/refdb-splash-screen.gif</value>
-		</property>
-	</bean>
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
+    <bean id="splashScreen" 
+        class="org.springframework.richclient.application.SplashScreen" 
+        scope="prototype">
+        <property name="imageResourcePath">
+            <value>/images/refdb-splash-screen.gif</value>
+        </property>
+    </bean>
 </beans>

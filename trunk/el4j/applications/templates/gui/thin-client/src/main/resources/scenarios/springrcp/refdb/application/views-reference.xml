@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
-	"http://www.springframework.org/dtd/spring-beans.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
-<beans>
-    <!-- Version: $Revision$ -->
-    <!-- URL: $URL$ -->
-    <!-- Date: $Date$ -->
-    <!-- Author: $Author$ -->
-
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
     <!--
         Reference table view descriptor. Describs the reference table view. This 
         class is needed as factory for the given viewPrototypeBeanName. 
@@ -25,7 +25,7 @@
     -->
     <bean id="referenceTableViewTarget"
         class="ch.elca.el4j.apps.refdb.gui.views.ReferenceView"
-        singleton="false">
+        scope="prototype">
         <property name="beanTableModel">
             <ref bean="referenceBeanTableModel" />
         </property>
@@ -41,7 +41,7 @@
     -->
     <bean id="referenceBeanTableModel"
         class="ch.elca.el4j.services.gui.richclient.models.BeanTableModel"
-        singleton="false">
+        scope="prototype">
         <property name="beanClass"
             value="ch.elca.el4j.apps.refdb.dom.Reference"/>
         <property name="columnPropertyNames">
@@ -77,40 +77,40 @@
     -->
     <bean id="referenceSearchViewTarget"
         class="ch.elca.el4j.services.gui.richclient.views.SearchView"
-        singleton="false">
+        scope="prototype">
         <property name="searchItems">
             <list>
                 <bean class="ch.elca.el4j.services.gui.search.LikeSearchItem"
-                    singleton="false">
+                    scope="prototype">
                     <property name="targetProperty" value="name"/>
                     <property name="targetBeanClass" 
                         value="ch.elca.el4j.apps.refdb.dom.Reference"/>
                 </bean>
                 <bean class="ch.elca.el4j.services.gui.search.LikeSearchItem"
-                    singleton="false">
+                    scope="prototype">
                     <property name="targetProperty" value="description"/>
                     <property name="targetBeanClass" 
                         value="ch.elca.el4j.apps.refdb.dom.Reference"/>
                 </bean>
                 <bean class="ch.elca.el4j.services.gui.search.ComparisonSearchItem"
-                    singleton="false">
+                    scope="prototype">
                     <property name="targetProperty" value="incomplete"/>
                     <property name="targetBeanClass" 
                         value="ch.elca.el4j.apps.refdb.dom.Reference"/>
                     <property name="type" value="java.lang.Boolean"/>
                 </bean>
                 <bean class="ch.elca.el4j.services.gui.search.IncludeSearchItem"
-                    singleton="false">
+                    scope="prototype">
                     <property name="targetProperty" value="keywords"/>
                     <property name="targetBeanClass" 
                         value="ch.elca.el4j.apps.refdb.dom.Reference"/>
                     <property name="type" value="java.util.List"/>
                     <property name="specificBinder">
-                    	<bean class="ch.elca.el4j.services.gui.richclient.forms.binding.DynamicListBinder"
-                            singleton="false">
-                    		<property name="bindingClass" 
-                    			value="ch.elca.el4j.apps.refdb.gui.bindings.KeywordDynamicListBinding"/>
-                    	</bean>
+                        <bean class="ch.elca.el4j.services.gui.richclient.forms.binding.DynamicListBinder"
+                            scope="prototype">
+                            <property name="bindingClass" 
+                                value="ch.elca.el4j.apps.refdb.gui.bindings.KeywordDynamicListBinding"/>
+                        </bean>
                     </property>
                 </bean>
             </list>

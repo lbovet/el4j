@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
-	"http://www.springframework.org/dtd/spring-beans.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
-<beans>
-    <!-- Version: $Revision$ -->
-    <!-- URL: $URL$ -->
-    <!-- Date: $Date$ -->
-    <!-- Author: $Author$ -->
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
     
     <!-- Application general parts. -->
     <import resource="classpath:scenarios/springrcp/application/applicationGeneral.xml"/>
@@ -21,8 +21,8 @@
     
     <!-- Default MessageProvider -->
     <bean class="ch.elca.el4j.services.i18n.OldStyleMessageProvider">
-    	<constructor-arg><ref bean="messageSource"/></constructor-arg>
-    	<property name="asDefault"><value>true</value></property>
+        <constructor-arg><ref bean="messageSource"/></constructor-arg>
+        <property name="asDefault"><value>true</value></property>
     </bean>
     
     

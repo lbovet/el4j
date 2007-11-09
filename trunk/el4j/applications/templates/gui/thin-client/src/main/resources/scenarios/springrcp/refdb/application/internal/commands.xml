@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
-    "http://www.springframework.org/dtd/spring-beans.dtd">
-<beans>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
     <!-- 
         Contains the shared command ids. These commands stick in toolbars, menus
         and so on but can have a different behaviours on views. I.e. in  
@@ -120,7 +126,7 @@
     </bean>
     
     <bean id="refreshCommand"
-    	class="ch.elca.el4j.services.gui.richclient.commands.RefreshCommand"/>
+        class="ch.elca.el4j.services.gui.richclient.commands.RefreshCommand"/>
     
     <bean id="helpContentsCommand" 
         class="org.springframework.richclient.command.support.HelpContentsCommand"/>
