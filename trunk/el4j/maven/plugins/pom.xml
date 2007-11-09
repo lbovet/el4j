@@ -40,6 +40,7 @@
         <module>maven-file-collector-plugin</module>
         <module>maven-depgraph-plugin</module>
         <module>maven-version-plugin</module>
+        <module>maven-jaxws-plugin</module>
     </modules>
     <dependencies>
         <dependency>
