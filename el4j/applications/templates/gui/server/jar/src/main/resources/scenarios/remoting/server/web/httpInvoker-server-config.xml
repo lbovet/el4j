@@ -1,96 +1,97 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
-    "http://www.springframework.org/dtd/spring-beans.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
     Spring bean configuration file to export service with httpInvoker.
 -->
-<beans>
-    <!-- Version: $Revision$ -->
-    <!-- URL: $URL$ -->
-    <!-- Date: $Date$ -->
-    <!-- Author: $Author$ -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
     
     <import resource="classpath:scenarios/remoting/common/*.xml"/>
     
     <bean id="abstractHttpInvokerServiceExporter" abstract="true">
-    	<property name="remoteProtocol">
+        <property name="remoteProtocol">
             <ref bean="httpInvokerProtocol" />
-        </property>    	
+        </property>        
     </bean>
     
     <bean id="httpInvokerRefdbServiceExporter" parent="abstractHttpInvokerServiceExporter"
-    	class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
-    	<property name="serviceInterface">
+        class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
+        <property name="serviceInterface">
             <value>ch.elca.el4j.apps.refdb.service.ReferenceService</value>
         </property>
         <property name="service">
             <idref bean="referenceService" />
-        </property>	
-   	</bean>
+        </property>    
+       </bean>
     
     <bean id="httpInvokerKeywordDaoExporter" parent="abstractHttpInvokerServiceExporter"
-    	class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
-    	<property name="serviceInterface">
+        class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
+        <property name="serviceInterface">
             <value>ch.elca.el4j.apps.keyword.dao.KeywordDao</value>
         </property>
         <property name="service">
             <idref bean="keywordDao" />
-        </property>	
+        </property>    
     </bean>
     
     <bean id="httpInvokerLinkDaoExporter" parent="abstractHttpInvokerServiceExporter"
-    	class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
-    	<property name="serviceInterface">
+        class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
+        <property name="serviceInterface">
             <value>ch.elca.el4j.apps.refdb.dao.LinkDao</value>
         </property>
         <property name="service">
             <idref bean="linkDao" />
-        </property>	
+        </property>    
     </bean>
     
     <bean id="httpInvokerFormalPublicationDaoExporter" parent="abstractHttpInvokerServiceExporter"
-    	class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
-    	<property name="serviceInterface">
+        class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
+        <property name="serviceInterface">
             <value>ch.elca.el4j.apps.refdb.dao.FormalPublicationDao</value>
         </property>
         <property name="service">
             <idref bean="formalPublicationDao" />
-        </property>	
+        </property>    
     </bean>
     
     <bean id="httpInvokerBookDaoExporter" parent="abstractHttpInvokerServiceExporter"
-    	class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
-    	<property name="serviceInterface">
+        class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
+        <property name="serviceInterface">
             <value>ch.elca.el4j.apps.refdb.dao.BookDao</value>
         </property>
         <property name="service">
             <idref bean="bookDao" />
-        </property>	
+        </property>    
     </bean>
     
     <bean id="httpInvokerAnnotationDaoExporter" parent="abstractHttpInvokerServiceExporter"
-    	class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
-    	<property name="serviceInterface">
+        class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
+        <property name="serviceInterface">
             <value>ch.elca.el4j.apps.refdb.dao.AnnotationDao</value>
         </property>
         <property name="service">
             <idref bean="annotationDao" />
-        </property>	
+        </property>    
     </bean>
     
     <bean id="httpInvokerFileDaoExporter" parent="abstractHttpInvokerServiceExporter"
-    	class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
-    	<property name="serviceInterface">
+        class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
+        <property name="serviceInterface">
             <value>ch.elca.el4j.apps.refdb.dao.FileDao</value>
         </property>
         <property name="service">
             <idref bean="fileDao" />
-        </property>	
+        </property>    
     </bean>
     
     <bean id="httpInvokerFileDescriptorViewDaoExporter" parent="abstractHttpInvokerServiceExporter"
-    	class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
-    	<property name="serviceInterface">
+        class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
+        <property name="serviceInterface">
             <value>ch.elca.el4j.apps.refdb.dao.FileDescriptorViewDao</value>
         </property>
         <property name="service">
