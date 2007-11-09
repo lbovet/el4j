@@ -1,0 +1,423 @@
+<plugin>
+  <description>A plugin to ease the use of wsgen and wsimport</description>
+  <groupId>ch.elca.el4j.maven.plugins</groupId>
+  <artifactId>maven-jaxws-plugin</artifactId>
+  <version>0.1</version>
+  <goalPrefix>version</goalPrefix>
+  <isolatedRealm>false</isolatedRealm>
+  <inheritedByDefault>true</inheritedByDefault>
+  <mojos>
+    <mojo>
+      <goal>wsgen</goal>
+      <description>Reads a JAX-WS service endpoint implementation class
+and generates all of the portable artifacts for a JAX-WS web service.</description>
+      <requiresDependencyResolution>runtime</requiresDependencyResolution>
+      <requiresDirectInvocation>false</requiresDirectInvocation>
+      <requiresProject>true</requiresProject>
+      <requiresReports>false</requiresReports>
+      <aggregator>false</aggregator>
+      <requiresOnline>false</requiresOnline>
+      <inheritedByDefault>true</inheritedByDefault>
+      <phase>process-classes</phase>
+      <implementation>org.codehaus.mojo.jaxws.MainWsGenMojo</implementation>
+      <language>java</language>
+      <instantiationStrategy>per-lookup</instantiationStrategy>
+      <executionStrategy>once-per-session</executionStrategy>
+      <parameters>
+        <parameter>
+          <name>classDirectory</name>
+          <type>java.io.File</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description>The directory where compiled classes go.</description>
+        </parameter>
+        <parameter>
+          <name>destDir</name>
+          <type>java.io.File</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Specify where to place output generated classes
+Set to &quot;&quot; to turn it off</description>
+        </parameter>
+        <parameter>
+          <name>extension</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Allow to use the JAXWS Vendor Extensions.</description>
+        </parameter>
+        <parameter>
+          <name>genWsdl</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Specify that a WSDL file should be generated in ${resourceDestDir}</description>
+        </parameter>
+        <parameter>
+          <name>keep</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Keep generated files.</description>
+        </parameter>
+        <parameter>
+          <name>pluginArtifactMap</name>
+          <type>java.util.Map</type>
+          <required>false</required>
+          <editable>false</editable>
+          <description>Map of of plugin artifacts.</description>
+        </parameter>
+        <parameter>
+          <name>project</name>
+          <type>org.apache.maven.project.MavenProject</type>
+          <required>false</required>
+          <editable>false</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>protocol</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Used in conjunction with genWsdl to specify the protocol to use in the
+wsdl:binding. Value values are &quot;soap1.1&quot; or &quot;Xsoap1.2&quot;, default is &quot;soap1.1&quot;.
+&quot;Xsoap1.2&quot; is not standard and can only be used in conjunction with the
+-extensions option</description>
+        </parameter>
+        <parameter>
+          <name>resourceDestDir</name>
+          <type>java.io.File</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Directory containing the generated wsdl files.</description>
+        </parameter>
+        <parameter>
+          <name>sei</name>
+          <type>java.lang.String</type>
+          <required>true</required>
+          <editable>true</editable>
+          <description>service endpoint implementation class name.</description>
+        </parameter>
+        <parameter>
+          <name>sourceDestDir</name>
+          <type>java.io.File</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Specify where to place generated source files, keep is turned on with this option.</description>
+        </parameter>
+        <parameter>
+          <name>verbose</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Output messages about what the tool is doing</description>
+        </parameter>
+      </parameters>
+      <configuration>
+        <extension implementation="boolean" default-value="false"/>
+        <resourceDestDir implementation="java.io.File" default-value="${project.build.directory}/jaxws/wsgen/wsdl"/>
+        <genWsdl implementation="boolean" default-value="false"/>
+        <keep implementation="boolean" default-value="false"/>
+        <verbose implementation="boolean" default-value="false"/>
+        <project implementation="org.apache.maven.project.MavenProject">${project}</project>
+        <classDirectory implementation="java.io.File">${project.build.outputDirectory}</classDirectory>
+        <destDir implementation="java.io.File" default-value="${project.build.outputDirectory}"/>
+        <pluginArtifactMap implementation="java.util.Map">${plugin.artifactMap}</pluginArtifactMap>
+      </configuration>
+    </mojo>
+    <mojo>
+      <goal>wsimport</goal>
+      <description>Parses wsdl and binding files and generates Java code needed to access it.</description>
+      <requiresDependencyResolution>runtime</requiresDependencyResolution>
+      <requiresDirectInvocation>false</requiresDirectInvocation>
+      <requiresProject>true</requiresProject>
+      <requiresReports>false</requiresReports>
+      <aggregator>false</aggregator>
+      <requiresOnline>false</requiresOnline>
+      <inheritedByDefault>true</inheritedByDefault>
+      <phase>generate-sources</phase>
+      <implementation>org.codehaus.mojo.jaxws.MainWsImportMojo</implementation>
+      <language>java</language>
+      <instantiationStrategy>per-lookup</instantiationStrategy>
+      <executionStrategy>once-per-session</executionStrategy>
+      <parameters>
+        <parameter>
+          <name>bindingDirectory</name>
+          <type>java.io.File</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Directory containing binding files.</description>
+        </parameter>
+        <parameter>
+          <name>bindingFiles</name>
+          <type>java.util.List</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>List of files to use for bindings.If not specified, all .xml files
+in the bindingDirectory will be used.</description>
+        </parameter>
+        <parameter>
+          <name>catalog</name>
+          <type>java.io.File</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Catalog file to resolve external entity references support TR9401,
+XCatalog, and OASIS XML Catalog format.</description>
+        </parameter>
+        <parameter>
+          <name>destDir</name>
+          <type>java.io.File</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Specify where to place output generated classes
+Set to &quot;&quot; to turn it off</description>
+        </parameter>
+        <parameter>
+          <name>extension</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Allow to use the JAXWS Vendor Extensions.</description>
+        </parameter>
+        <parameter>
+          <name>httpproxy</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Set HTTP/HTTPS proxy. Format is [user[:password]@]proxyHost[:proxyPort]</description>
+        </parameter>
+        <parameter>
+          <name>keep</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Keep generated files.</description>
+        </parameter>
+        <parameter>
+          <name>packageName</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>The package in which the source files will be generated.</description>
+        </parameter>
+        <parameter>
+          <name>pluginArtifactMap</name>
+          <type>java.util.Map</type>
+          <required>false</required>
+          <editable>false</editable>
+          <description>Map of of plugin artifacts.</description>
+        </parameter>
+        <parameter>
+          <name>project</name>
+          <type>org.apache.maven.project.MavenProject</type>
+          <required>false</required>
+          <editable>false</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>sourceDestDir</name>
+          <type>java.io.File</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Specify where to place generated source files, keep is turned on with this option.</description>
+        </parameter>
+        <parameter>
+          <name>staleFile</name>
+          <type>java.io.File</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>The location of the flag file used to determine if the output is stale.</description>
+        </parameter>
+        <parameter>
+          <name>target</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Generate code as per the given JAXWS specification version.
+Setting &quot;2.0&quot; will cause JAX-WS to generate artifacts
+that run with JAX-WS 2.0 runtime.</description>
+        </parameter>
+        <parameter>
+          <name>verbose</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Output messages about what the tool is doing</description>
+        </parameter>
+        <parameter>
+          <name>wsdlDirectory</name>
+          <type>java.io.File</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Directory containing wsdl files.</description>
+        </parameter>
+        <parameter>
+          <name>wsdlFiles</name>
+          <type>java.util.List</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>List of files to use for wsdls. If not specified, all .wsdl files
+in the wsdlDirectory will be used.</description>
+        </parameter>
+        <parameter>
+          <name>wsdlLocation</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>wsdlUrls</name>
+          <type>java.util.List</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>List of external wsdl urls to be compiled.</description>
+        </parameter>
+        <parameter>
+          <name>xjcArgs</name>
+          <type>java.util.List</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Specify optional XJC-specific parameters that should simply be passed to xjc
+using -B option of WsImport command.</description>
+        </parameter>
+      </parameters>
+      <configuration>
+        <extension implementation="boolean" default-value="false"/>
+        <bindingDirectory implementation="java.io.File" default-value="${basedir}/src/jaxws"/>
+        <sourceDestDir implementation="java.io.File" default-value="${project.build.directory}/jaxws/wsimport/java"/>
+        <wsdlDirectory implementation="java.io.File" default-value="${basedir}/src/wsdl"/>
+        <staleFile implementation="java.io.File" default-value="${project.build.directory}/jaxws/stale/.staleFlag"/>
+        <keep implementation="boolean" default-value="false"/>
+        <verbose implementation="boolean" default-value="false"/>
+        <project implementation="org.apache.maven.project.MavenProject">${project}</project>
+        <destDir implementation="java.io.File" default-value="${project.build.outputDirectory}"/>
+        <pluginArtifactMap implementation="java.util.Map">${plugin.artifactMap}</pluginArtifactMap>
+      </configuration>
+    </mojo>
+    <mojo>
+      <goal>wsgen-test</goal>
+      <description>Reads a JAX-WS service endpoint implementation class
+and generates all of the portable artifacts for a JAX-WS web service
+(into the generate test source directroy.)
+
+&lt;p&gt;
+Due to &lt;a href=&quot;http://jira.codehaus.org/browse/MNG-1508&quot;&gt;MNG-1508&lt;/a&gt;, this requires 2.0.5 or higher.
+&lt;/p&gt;</description>
+      <requiresDependencyResolution>runtime</requiresDependencyResolution>
+      <requiresDirectInvocation>false</requiresDirectInvocation>
+      <requiresProject>true</requiresProject>
+      <requiresReports>false</requiresReports>
+      <aggregator>false</aggregator>
+      <requiresOnline>false</requiresOnline>
+      <inheritedByDefault>true</inheritedByDefault>
+      <phase>process-test-classes</phase>
+      <implementation>org.codehaus.mojo.jaxws.TestWsGenMojo</implementation>
+      <language>java</language>
+      <instantiationStrategy>per-lookup</instantiationStrategy>
+      <executionStrategy>once-per-session</executionStrategy>
+      <parameters>
+        <parameter>
+          <name>classDirectory</name>
+          <type>java.io.File</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description>The directory where compiled classes go.</description>
+        </parameter>
+        <parameter>
+          <name>destDir</name>
+          <type>java.io.File</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Specify where to place output generated classes
+Set to &quot;&quot; to turn it off</description>
+        </parameter>
+        <parameter>
+          <name>extension</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Allow to use the JAXWS Vendor Extensions.</description>
+        </parameter>
+        <parameter>
+          <name>genWsdl</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Specify that a WSDL file should be generated in ${resourceDestDir}</description>
+        </parameter>
+        <parameter>
+          <name>keep</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Keep generated files.</description>
+        </parameter>
+        <parameter>
+          <name>pluginArtifactMap</name>
+          <type>java.util.Map</type>
+          <required>false</required>
+          <editable>false</editable>
+          <description>Map of of plugin artifacts.</description>
+        </parameter>
+        <parameter>
+          <name>project</name>
+          <type>org.apache.maven.project.MavenProject</type>
+          <required>false</required>
+          <editable>false</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>protocol</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Used in conjunction with genWsdl to specify the protocol to use in the
+wsdl:binding. Value values are &quot;soap1.1&quot; or &quot;Xsoap1.2&quot;, default is &quot;soap1.1&quot;.
+&quot;Xsoap1.2&quot; is not standard and can only be used in conjunction with the
+-extensions option</description>
+        </parameter>
+        <parameter>
+          <name>resourceDestDir</name>
+          <type>java.io.File</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Directory containing the generated wsdl files.</description>
+        </parameter>
+        <parameter>
+          <name>sei</name>
+          <type>java.lang.String</type>
+          <required>true</required>
+          <editable>true</editable>
+          <description>service endpoint implementation class name.</description>
+        </parameter>
+        <parameter>
+          <name>sourceDestDir</name>
+          <type>java.io.File</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Specify where to place generated source files, keep is turned on with this option.</description>
+        </parameter>
+        <parameter>
+          <name>verbose</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Output messages about what the tool is doing</description>
+        </parameter>
+      </parameters>
+      <configuration>
+        <extension implementation="boolean" default-value="false"/>
+        <resourceDestDir implementation="java.io.File" default-value="${project.build.directory}/jaxws/wsgen/wsdl"/>
+        <genWsdl implementation="boolean" default-value="false"/>
+        <keep implementation="boolean" default-value="false"/>
+        <verbose implementation="boolean" default-value="false"/>
+        <project implementation="org.apache.maven.project.MavenProject">${project}</project>
+        <classDirectory implementation="java.io.File">${project.build.outputDirectory}</classDirectory>
+        <destDir implementation="java.io.File" default-value="${project.build.testOutputDirectory}"/>
+        <pluginArtifactMap implementation="java.util.Map">${plugin.artifactMap}</pluginArtifactMap>
+      </configuration>
+    </mojo>
+  </mojos>
+  <dependencies/>
+</plugin>
