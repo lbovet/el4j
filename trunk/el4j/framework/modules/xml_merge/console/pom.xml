@@ -23,7 +23,7 @@
     <description>
         Console application module for XmlMerge module of the EL4J framework.
     </description>
-	<dependencies>
+    <dependencies>
         <dependency>
             <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-xml_merge-common</artifactId>
@@ -43,7 +43,7 @@
         </plugins>
     </build>
     
-	<!--
+    <!--
         This profile was added only as example due to problem passing argument
         by system property. See following JIRA issue for more information:
         http://jira.codehaus.org/browse/MEXEC-5
