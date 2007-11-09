@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-	<!-- $Revision$ -->
+    <!-- $Revision$ -->
     <!-- $URL$ -->
     <!-- $Date$ -->
     <!-- $Author$ -->
@@ -19,7 +19,7 @@
     <artifactId>module-xml_merge-web-jar</artifactId>
     <version>${version.module-xml_merge}</version>
     <packaging>jar</packaging>
-	<name>EL4J module XmlMerge for web - jar</name>
+    <name>EL4J module XmlMerge for web - jar</name>
     <description>
         Jar part of web XmlMerge module of the EL4J framework.
     </description>
