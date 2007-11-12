@@ -7,42 +7,62 @@ import javax.swing.JTextField;
 import org.jdesktop.application.Action;
 import org.jdesktop.beansbinding.BindingGroup;
 
-import zappini.designgridlayout.DesignGridLayout;
-import ch.elca.el4j.demos.gui.model.DefaultPerson;
-import ch.elca.el4j.demos.gui.model.Person;
-import ch.elca.el4j.gui.model.mixin.PropertyChangeListenerMixin;
-import ch.elca.el4j.gui.model.mixin.SaveRestoreCapability;
-import ch.elca.el4j.gui.swing.GUIApplication;
-
 import com.silvermindsoftware.hitch.Binder;
 import com.silvermindsoftware.hitch.BinderManager;
 import com.silvermindsoftware.hitch.annotations.Form;
 import com.silvermindsoftware.hitch.annotations.ModelObject;
 
+import ch.elca.el4j.demos.model.DefaultPerson;
+import ch.elca.el4j.demos.model.Person;
+import ch.elca.el4j.gui.swing.GUIApplication;
+import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
+import ch.elca.el4j.model.mixin.SaveRestoreCapability;
+
+import zappini.designgridlayout.DesignGridLayout;
+
+/**
+ * This class demonstrates a form that has a cancel button to restore the
+ * original value.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Stefan Wismer (SWI)
+ */
 @Form(autoBind = true)
-public class CancelableForm extends JPanel {
+public class CancelableDemoForm extends JPanel {
+    /**
+     * The first name. Bound to the model.
+     */
     private JTextField firstName;
-    private JButton okButton, cancelButton;
+    
+    private JButton m_okButton;
+    private JButton m_cancelButton;
     
     @ModelObject(isDefault = true)
     private Person person;
     
-    // setup a final binder instance variable
-    private final Binder binder = BinderManager.getBinder(this);
+    /**
+     * The binder instance variable.
+     */
+    private final Binder m_binder = BinderManager.getBinder(this);
     
-    public CancelableForm(GUIApplication app) {
+    public CancelableDemoForm(GUIApplication app) {
         createComponents();
         createLayout();
         
         // assign actions
-        okButton.setAction(app.getAction(this, "applyChanges"));
-        cancelButton.setAction(app.getAction(this, "discardChanges"));
+        m_okButton.setAction(app.getAction(this, "applyChanges"));
+        m_cancelButton.setAction(app.getAction(this, "discardChanges"));
         
         
         // creating model entirely programmatically:
         person = new DefaultPerson();
-        person = (Person) PropertyChangeListenerMixin
-                .addPropertyChangeMixin(person);
+        person = PropertyChangeListenerMixin.addPropertyChangeMixin(person);
 
         // initialize model
         person.setFirstName("Nobody");
@@ -52,7 +72,7 @@ public class CancelableForm extends JPanel {
         
         // bind the variable "person" to "this"
         // this interprets the @ModelObject annotation (see above)
-        BindingGroup group = binder.getAutoBinding(this);
+        BindingGroup group = m_binder.getAutoBinding(this);
         group.bind();
     }
     
@@ -66,12 +86,18 @@ public class CancelableForm extends JPanel {
         ((SaveRestoreCapability) person).restore();
     }
     
+    /**
+     * Create the form components.
+     */
     private void createComponents() {
         firstName = new JTextField();
-        okButton = new JButton();
-        cancelButton = new JButton();
+        m_okButton = new JButton();
+        m_cancelButton = new JButton();
     }
     
+    /**
+     * Layout the form components.
+     */
     private void createLayout() {
         // create the form layout
         DesignGridLayout layout = new DesignGridLayout(this);
@@ -79,6 +105,6 @@ public class CancelableForm extends JPanel {
 
         // the first two rows contains a label and a text field each
         layout.row().label("First Name").add(firstName);
-        layout.row().add(okButton).add(cancelButton);
+        layout.row().add(m_okButton).add(m_cancelButton);
     }
 }

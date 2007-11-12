@@ -1,4 +1,4 @@
-package ch.elca.el4j.demos.gui.model;
+package ch.elca.el4j.demos.model;
 
 import java.util.List;
 
