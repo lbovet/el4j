@@ -17,6 +17,8 @@
 
 package ch.elca.el4j.apps.refdb.gui;
 
+import ch.elca.el4j.core.context.ModuleApplicationContextConfiguration;
+
 
 // Checkstyle: UncommentedMain off
 
@@ -53,7 +55,13 @@ public final class MainDistributed {
             "classpath:scenarios/remoting/client/*.xml",
             "classpath:scenarios/springrcp/refdb/application/*.xml"
         };
-        MainCommon.launchApplication(startupContext, applicationContextPaths);
+        
+        ModuleApplicationContextConfiguration mac = new ModuleApplicationContextConfiguration();
+        mac.setInclusiveConfigLocations(applicationContextPaths);
+        mac.setExclusiveConfigLocations(new String[] { "classpath*:mandatory/refdb/refdb-core-service-config.xml"});
+        mac.setAllowBeanDefinitionOverriding(true);
+                
+        MainCommon.launchApplication(startupContext, mac);
     }
 }
 //Checkstyle: UncommentedMain on
