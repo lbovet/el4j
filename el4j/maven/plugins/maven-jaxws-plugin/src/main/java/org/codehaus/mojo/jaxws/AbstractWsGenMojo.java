@@ -36,6 +36,8 @@ import com.sun.tools.ws.WsGen;
  *
  * @author gnodet <gnodet@apache.org>
  * @author dantran <dantran@apache.org>
+ * @author Stefan Wismer (SWI)
+ * 
  * @version $Id$
  */
 abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
@@ -218,6 +220,11 @@ abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
         return args;
     }
     
+    /**
+     * Adds all the class files located in the folder to the list.
+     * @param list      the list to add the class names
+     * @param folder    the folder to examine
+     */
     @SuppressWarnings("unchecked")
     private void addClassFiles(List<String> list, File folder) {
         for (File file : folder.listFiles()) {
@@ -253,19 +260,20 @@ abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
 
                 try {
                     Class c = classLoader.loadClass(className);
+                    
                     // second check for generated files
                     if (c.getPackage().getName().endsWith(".gen")) {
                         continue;
                     }
+                    
                     Annotation[] annots = c.getAnnotations();
                     // search for @WebService annotations
-                    if (annots.length > 0) {
-                        for (Annotation annotation : annots) {
-                            if (annotation.annotationType().getName()
-                                .equals("javax.jws.WebService")) {
-                                list.add(className);
-                                break;
-                            }
+                    for (Annotation annotation : annots) {
+                        if (annotation.annotationType().getName()
+                            .equals("javax.jws.WebService")) {
+                            
+                            list.add(className);
+                            break;
                         }
                     }
                 } catch (Exception e) {
