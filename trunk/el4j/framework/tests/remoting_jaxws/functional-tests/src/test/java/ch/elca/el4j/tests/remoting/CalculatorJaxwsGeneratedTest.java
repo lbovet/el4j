@@ -133,6 +133,10 @@ public class CalculatorJaxwsGeneratedTest extends TestCase {
         o.setMyString(MY_STRING);
         o.setMyByteArray(MY_BYTE_ARRAY);
         
+        // test int[]
+        o.getMyIntArray().add(9);
+        o.getMyIntArray().add(2);
+        
         SomeIntValueJaxws v = new SomeIntValueJaxws();
         v.setSomeValue(MY_INT);
         o.setSomeValue(v);
@@ -159,6 +163,10 @@ public class CalculatorJaxwsGeneratedTest extends TestCase {
         assertEquals("SomeIntValue are not equals.",
             o.getSomeValue().getSomeValue(),
             echo.getSomeValue().getSomeValue());
+        
+        assertTrue("int[] is not equal.",
+            echo.getMyIntArray().get(0).equals(9)
+            && echo.getMyIntArray().get(1).equals(2));
         
         if (echo.getMyIntegerList().size() == 2) {
             assertTrue("List items are not equal.",
