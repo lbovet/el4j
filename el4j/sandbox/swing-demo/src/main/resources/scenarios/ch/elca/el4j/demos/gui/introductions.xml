@@ -8,25 +8,6 @@
     <!-- $Date$ -->
     <!-- $Author$ -->
     
-    <bean id="konto" scope="prototype"
-        class="org.springframework.aop.framework.ProxyFactoryBean">
-        <property name="target">
-            <bean id="kontoTarget"
-                class="ch.elca.el4j.demos.gui.fs.object.ExampleKonto" scope="prototype" />
-        </property>
-        <property name="exposeProxy">
-            <value>true</value>
-        </property>
-        <property name="interceptorNames">
-            <list>
-                <value>propertyChangeListenerAdvisor</value>
-            </list>
-        </property>
-        <property name="proxyTargetClass">
-            <value>true</value>
-        </property>
-    </bean>
-
     <bean id="person" scope="prototype"
         class="org.springframework.aop.framework.ProxyFactoryBean">
         <property name="target">
