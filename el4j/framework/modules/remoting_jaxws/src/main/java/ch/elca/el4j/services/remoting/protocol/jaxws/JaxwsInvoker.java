@@ -405,11 +405,12 @@ public class JaxwsInvoker implements java.lang.reflect.InvocationHandler {
                 && src.getClass().isArray()) {
                 
                 // Array -> List
-                ArrayList tmp = new ArrayList(((Object[]) src).length);
+                ArrayList tmp = new ArrayList(Array.getLength(src));
+                Class componentType = src.getClass().getComponentType();
                 // add values and convert recursively
-                Class subTarget = ((Object[]) src)[0].getClass();
-                for (Object elem : (Object[]) src) {
-                    tmp.add(convertCollection(elem, subTarget));
+                for (int i = 0; i < Array.getLength(src); i++) {
+                    tmp.add(convertCollection(Array.get(src, i),
+                        componentType));
                 }
                 result = target.cast(tmp);
             } else if (src instanceof Collection
