@@ -19,9 +19,9 @@ package ch.elca.el4j.tests.remoting.service.impl;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
+import ch.elca.el4j.tests.remoting.service.Calculator;
 import ch.elca.el4j.tests.remoting.service.CalculatorException;
-import ch.elca.el4j.tests.remoting.service.CalculatorJaxws;
-import ch.elca.el4j.tests.remoting.service.CalculatorValueObjectJaxws;
+import ch.elca.el4j.tests.remoting.service.CalculatorValueObject;
 import ch.elca.el4j.tests.remoting.service.SpecialCalculatorException;
 
 /**
@@ -45,38 +45,38 @@ import ch.elca.el4j.tests.remoting.service.SpecialCalculatorException;
  * serviceName = name of implemented core interface + "WSService"
  * targetNamespace = "http://gen." + package name of implemented core interface
  */
-@WebService(name = "CalculatorJaxwsWS",
-    serviceName = "CalculatorJaxwsWSService",
+@WebService(name = "CalculatorWS",
+    serviceName = "CalculatorWSService",
     targetNamespace = "http://gen.service.remoting.tests.el4j.elca.ch/")
-public class CalculatorImplJaxws implements CalculatorJaxws {
-    /**
-     * The actual Calculator.
-     */
-    private CalculatorImpl m_delegate;
-    
-    /**
-     * The default constructor.
-     */
-    public CalculatorImplJaxws() {
-        m_delegate = new CalculatorImpl();
-    }
+public class CalculatorImplJaxws implements Calculator {
 
     /**
      * {@inheritDoc}
      */
     @WebMethod
     public int countNumberOfUppercaseLetters(String text) {
-        return m_delegate.countNumberOfUppercaseLetters(text);
+        if (text == null) {
+            return 0;
+        }
+ 
+        int numberOfUppercaseLetters = 0;
+        char[] c = text.toCharArray();
+        for (int i = 0; i < c.length; i++) {
+            if (c[i] >= 'A' && c[i] <= 'Z') {
+                numberOfUppercaseLetters++;
+            }
+        }
+        return numberOfUppercaseLetters;
     }
 
     /**
      * {@inheritDoc}
      */
     @WebMethod
-    public CalculatorValueObjectJaxws echoValueObjectJaxws(
-        CalculatorValueObjectJaxws o) {
+    public CalculatorValueObject echoValueObjectJaxws(
+        CalculatorValueObject valueObject) {
         
-        return o;
+        return valueObject;
     }
 
     /**
@@ -84,7 +84,7 @@ public class CalculatorImplJaxws implements CalculatorJaxws {
      */
     @WebMethod
     public double getArea(double a, double b) {
-        return m_delegate.getArea(a, b);
+        return a * b;
     }
 
     /**
@@ -93,7 +93,7 @@ public class CalculatorImplJaxws implements CalculatorJaxws {
     @WebMethod
     public void throwMeASpecialException(
         String action) throws SpecialCalculatorException {
-        m_delegate.throwMeASpecialException(action);
+        throw new SpecialCalculatorException(action);
     }
 
     /**
@@ -101,7 +101,7 @@ public class CalculatorImplJaxws implements CalculatorJaxws {
      */
     @WebMethod
     public void throwMeAnException() throws CalculatorException {
-        m_delegate.throwMeAnException();
+        throw new CalculatorException();
     }
 
 }

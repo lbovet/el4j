@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<definitions targetNamespace="http://gen.service.remoting.tests.el4j.elca.ch/" name="CalculatorJaxwsWSService" xmlns:tns="http://gen.service.remoting.tests.el4j.elca.ch/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+<definitions targetNamespace="http://gen.service.remoting.tests.el4j.elca.ch/" name="CalculatorWSService" xmlns:tns="http://gen.service.remoting.tests.el4j.elca.ch/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns="http://schemas.xmlsoap.org/wsdl/">
   <types>
     <xsd:schema>
-      <xsd:import namespace="http://gen.service.remoting.tests.el4j.elca.ch/" schemaLocation="CalculatorJaxwsWSService_schema1.xsd"/>
+      <xsd:import namespace="http://gen.service.remoting.tests.el4j.elca.ch/" schemaLocation="CalculatorWSService_schema1.xsd"/>
     </xsd:schema>
     <xsd:schema>
-      <xsd:import namespace="another.test.another.path" schemaLocation="CalculatorJaxwsWSService_schema2.xsd"/>
+      <xsd:import namespace="another.test.another.path" schemaLocation="CalculatorWSService_schema2.xsd"/>
     </xsd:schema>
   </types>
   <message name="getArea">
@@ -44,7 +44,7 @@
   <message name="echoValueObjectJaxwsResponse">
     <part name="parameters" element="tns:echoValueObjectJaxwsResponse"/>
   </message>
-  <portType name="CalculatorJaxwsWS">
+  <portType name="CalculatorWS">
     <operation name="getArea">
       <input message="tns:getArea"/>
       <output message="tns:getAreaResponse"/>
@@ -68,7 +68,7 @@
       <output message="tns:echoValueObjectJaxwsResponse"/>
     </operation>
   </portType>
-  <binding name="CalculatorJaxwsWSPortBinding" type="tns:CalculatorJaxwsWS">
+  <binding name="CalculatorWSPortBinding" type="tns:CalculatorWS">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
     <operation name="getArea">
       <soap:operation soapAction=""/>
@@ -122,9 +122,9 @@
       </output>
     </operation>
   </binding>
-  <service name="CalculatorJaxwsWSService">
-    <port name="CalculatorJaxwsWSPort" binding="tns:CalculatorJaxwsWSPortBinding">
-      <soap:address location="http://localhost:8080/module-remoting-jaxws-tests/Calculator.Jaxws.RemotingtestsJaxws"/>
+  <service name="CalculatorWSService">
+    <port name="CalculatorWSPort" binding="tns:CalculatorWSPortBinding">
+      <soap:address location="http://localhost:8080/module-remoting-jaxws-tests/Calculator.Jaxws.Remotingtests"/>
     </port>
   </service>
 </definitions>

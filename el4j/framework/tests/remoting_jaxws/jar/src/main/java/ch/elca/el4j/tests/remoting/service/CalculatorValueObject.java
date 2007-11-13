@@ -17,12 +17,10 @@
 
 package ch.elca.el4j.tests.remoting.service;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import java.util.List;
+import java.util.Set;
+
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
@@ -36,59 +34,78 @@ import javax.xml.bind.annotation.XmlType;
  * );</script>
  *
  * @author Martin Zeltner (MZE)
+ * 
+ * 
+ * IMPORTANT
+ * 
+ * Don't use @Xml... annotations!
  */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "")
-@XmlRootElement(
-      name = "CalculatorValueObject"
-)
 public class CalculatorValueObject {
     /**
      * Int test value.
      */
-    @XmlElement(name = "myOwnInt")
     private int m_myInt;
 
     /**
      * Long test value.
      */
-    @XmlElement(name = "myOwnLong")
     private long m_myLong;
     
     /**
      * Double test value.
      */
-    @XmlElement(name = "myOwnDouble")
     private double m_myDouble;
     
     /**
      * String test value.
      */
-    @XmlElement(name = "myOwnString")
     private String m_myString;
     
     /**
      * Byte array test value.
-     * 
-     * There is no @XmlElementWrapper possible.
-     * byte[] is translated to xs:base64Binary
      */
-    @XmlElement(name = "myOwnByteArray", type = byte[].class)
     private byte[] m_myByteArray;
     
     /**
      * String array test value.
      */
-    @XmlElementWrapper(name = "myOwnStrings")
-    @XmlElement(name = "myOwnStringArrayElement", type = String[].class)
     private String[] m_myStringArray;
     
     /**
      * String array test value.
      */
-    @XmlElementWrapper(name = "myOwnInts")
-    @XmlElement(name = "myOwnIntArrayElement", type = int[].class)
     private int[] m_myIntArray;
+    
+    /**
+     * A nested object.
+     */
+    private SomeIntValue m_myNestedObject;
+    
+    /**
+     * A list of Integers.
+     */
+    private List<Integer> m_myIntegerList;
+    
+    /**
+     * A set of Integers.
+     */
+    private Set<Integer> m_myIntegerSet;
+    
+    // Map is not yet supported. Use list of tuples intead
+    //private Map<Integer, Integer> m_myIntegerMap;
+    
+    // Neither multi-dimensional arrays nor nested collections like
+    // List<List<...>> are supported.
+    
+    /**
+     * A two dimensional array.
+     * 
+     * ATTENTION: Do not use {@link XmlJavaTypeAdapter} annotation here
+     * but on setter method, otherwise wsgen generates
+     * an additional element called m_myIntMatrix
+     */
+    private int[][] m_myIntMatrix;
+    
 
     /**
      * @return Returns the myByteArray.
@@ -193,5 +210,65 @@ public class CalculatorValueObject {
      */
     public void setMyIntArray(int[] myIntArray) {
         m_myIntArray = myIntArray;
+    }
+    
+    /**
+     * @return Returns myNestedObject
+     */
+    public SomeIntValue getSomeValue() {
+        return m_myNestedObject;
+    }
+    
+    /**
+     * @param object
+     *             The SomeIntValueJaxws to set
+     */
+    public void setSomeValue(SomeIntValue object) {
+        m_myNestedObject = object;
+    }
+
+    /**
+     * @return Returns myIntegerList.
+     */
+    public List<Integer> getMyIntegerList() {
+        return m_myIntegerList;
+    }
+
+    /**
+     * @param myIntegerList The myIntegerList to set.
+     */
+    public void setMyIntegerList(List<Integer> myIntegerList) {
+        m_myIntegerList = myIntegerList;
+    }
+
+    /**
+     * @return Returns  myIntegerSet.
+     */
+    public Set<Integer> getMyIntegerSet() {
+        return m_myIntegerSet;
+    }
+
+    /**
+     * @param myIntegerSet The myIntegerSet to set.
+     */
+    public void setMyIntegerSet(Set<Integer> myIntegerSet) {
+        m_myIntegerSet = myIntegerSet;
+    }
+
+    /**
+     * @return Returns the myIntMatrix.
+     * 
+     * ATTENTION: strange: {@link XmlJavaTypeAdapter} is not accepted here
+     */
+    public int[][] getMyIntMatrix() {
+        return m_myIntMatrix;
+    }
+
+    /**
+     * @param myIntMatrix Is the myIntMatrix to set.
+     */
+    @XmlJavaTypeAdapter(type = int[][].class, value = IntMatrixAdapter.class)
+    public void setMyIntMatrix(int[][] myIntMatrix) {
+        m_myIntMatrix = myIntMatrix;
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <xs:schema elementFormDefault="qualified" version="1.0" targetNamespace="another.test.another.path" xmlns:tns="another.test.another.path" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-  <xs:complexType name="calculatorValueObjectJaxws">
+  <xs:complexType name="calculatorValueObject">
     <xs:sequence>
       <xs:element name="myByteArray" type="xs:base64Binary" minOccurs="0"/>
       <xs:element name="myDouble" type="xs:double"/>
@@ -13,11 +13,11 @@
       <xs:element name="myLong" type="xs:long"/>
       <xs:element name="myString" type="xs:string" minOccurs="0"/>
       <xs:element name="myStringArray" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="someValue" type="tns:someIntValueJaxws" minOccurs="0"/>
+      <xs:element name="someValue" type="tns:someIntValue" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="someIntValueJaxws">
+  <xs:complexType name="someIntValue">
     <xs:sequence>
       <xs:element name="someValue" type="xs:int"/>
     </xs:sequence>
