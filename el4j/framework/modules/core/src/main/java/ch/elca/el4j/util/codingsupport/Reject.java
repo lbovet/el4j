@@ -40,16 +40,15 @@ import org.springframework.util.StringUtils;
  * <code><pre>
  *     public class AccountDao {
  *         public void saveAccount(Account x) {
- *             Reject.ifNull(x, Illegal);
+ *             Reject.ifNull(x, IllegalArgumentException.class, "My String");
  *             ...
  *         }
  *     }
  * </pre></code>
  * 
- * In this example a 
- * <code>ch.elca.el4j.util.codingsupport.PreconditionRTException</code> will be
- * thrown if the given account will be null. That way, we can prevent that an
- * ugly <code>NullPointerException</code> can be thrown.
+ * In this example an  
+ * <code>IllegalArgumentException</code> is thrown if the given account is null. 
+ * This may prevent an ugly <code>NullPointerException</code>.
  * 
  * <b>Example 2:</b>
  * <code><pre>
@@ -59,11 +58,12 @@ import org.springframework.util.StringUtils;
  *             ...
  *         }
  *     }
- * </pre></code>
- * In this example a 
- * <code>ch.elca.el4j.util.codingsupport.PreconditionRTException</code> will be
- * thrown if the given account will be null. That way, we can prevent that an
- * ugly <code>NullPointerException</code> can be thrown. 
+ * </pre></code> <br> <br>
+ * 
+ * In this example, a 
+ * <code>ch.elca.el4j.util.codingsupport.PreconditionRTException</code> is
+ * thrown if the given account is null. This prevents that an
+ * ugly <code>NullPointerException</code>. 
  * 
  * <p> It is also possible to add a reason to the reject method, if it is not 
  * absolutely clear what is checked. Alternatively, you can customize the
