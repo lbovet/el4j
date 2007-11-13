@@ -35,6 +35,9 @@
                             <goal>wsgen</goal>
                         </goals>
                         <configuration>
+                            <hostURL>http://${jee-web.host}:${jee-web.port}</hostURL>
+                            <contextURL>${jee-web.context}</contextURL>
+                            <serviceURL>*.Jaxws.Remotingtests</serviceURL>
                             <sei>*</sei>
                             <genWsdl>true</genWsdl>
                             <wsdlDirectory>${basedir}/src/main/resources/wsdl</wsdlDirectory>

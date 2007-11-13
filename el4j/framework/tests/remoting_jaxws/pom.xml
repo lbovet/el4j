@@ -45,4 +45,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+	<properties>
+        <jee-web.context>module-remoting-jaxws-tests</jee-web.context>
+    </properties>
 </project>
