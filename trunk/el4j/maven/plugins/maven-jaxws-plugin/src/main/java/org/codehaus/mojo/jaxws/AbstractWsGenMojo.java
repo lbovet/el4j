@@ -16,7 +16,12 @@
 
 package org.codehaus.mojo.jaxws;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
 import java.lang.annotation.Annotation;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -102,6 +107,25 @@ abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
      * @parameter 
      */
     private String protocol;
+    
+    /**
+     * The host part of the URL (like http://localhost:8080).
+     * @parameter 
+     */
+    private String hostURL;
+    
+    /**
+     * The context part of the URL (this becomes the directory).
+     * @parameter 
+     */
+    private String contextURL;
+    
+    /**
+     * The service part of the URL. The star charcter (*) gets replaced by
+     * the service interface name.
+     * @parameter 
+     */
+    private String serviceURL;
 
     
     /**
@@ -148,6 +172,24 @@ abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
 
                 if (WsGen.doMain(args.toArray(new String[args.size()])) != 0)
                     throw new MojoExecutionException("Error executing: wsgen " + args);
+                
+                
+                if (hostURL != null && contextURL != null
+                    && serviceURL != null) {
+                    
+                    if (!hostURL.endsWith("/")) {
+                        hostURL = hostURL + "/";
+                    }
+                    if (!contextURL.endsWith("/")) {
+                        contextURL = contextURL + "/";
+                    }
+                    
+                    String serviceName = getServiceName(classToPrecess);
+                    serviceURL = serviceURL.replaceAll("\\*", serviceName);
+                    
+                    replaceURLinWSDL(serviceName,
+                        hostURL + contextURL + serviceURL);
+                }
             }
         } catch (MojoExecutionException e) {
             throw e;
@@ -281,5 +323,91 @@ abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
                 }
             }
         }
+    }
+    
+    /**
+     * Replaces REPLACE_WITH_ACTUAL_URL by actual url in WSDL file.
+     * @param serviceName    the service name
+     * @param url            the url which replaces REPLACE_WITH_ACTUAL_URL
+     * @throws MojoExecutionException
+     */
+    private void replaceURLinWSDL(String serviceName, String url)
+        throws MojoExecutionException {
+        File file = new File(getDestDir().getParentFile().getAbsolutePath()
+            + File.separatorChar + "jaxws" + File.separatorChar + "wsgen"
+            + File.separatorChar + "wsdl" + File.separatorChar
+            + serviceName + "WSService.wsdl");
+        
+        if (file.exists()) {
+            String line;
+            StringBuffer sb = new StringBuffer();
+            try {
+                // read file and replace
+                FileInputStream fis = new FileInputStream(file);
+                BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(fis));
+                while ((line = reader.readLine()) != null) {
+                    line = line.replaceAll("REPLACE_WITH_ACTUAL_URL", url);
+                    sb.append(line + "\n");
+                }
+                reader.close();
+                
+                // write file
+                BufferedWriter out = new BufferedWriter(new FileWriter(file));
+                out.write(sb.toString());
+                out.close();
+            } catch (Throwable e) {
+                throw new MojoExecutionException(
+                    "Could not modify WSDL file for service " + serviceName);
+            }
+        }
+    }
+    
+    /**
+     * @param classToPrecess   the web service class to process
+     * @return                 the service name derived from the annotated class
+     * @throws MojoExecutionException
+     */
+    @SuppressWarnings("unchecked")
+    private String getServiceName(String classToPrecess)
+        throws MojoExecutionException {
+        
+        String serviceName = null;
+        try {
+            Class c = classLoader.loadClass(classToPrecess);
+            
+            Annotation[] annots = c.getAnnotations();
+            // search for @WebService annotations
+            for (Annotation annotation : annots) {
+                if (annotation.annotationType().getName()
+                    .equals("javax.jws.WebService")) {
+                    
+                    serviceName = (String) annotation
+                        .annotationType().getMethod("serviceName")
+                        .invoke(annotation);
+                    
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            throw new MojoExecutionException(
+                "Could not get serviceName from " + classToPrecess);
+        }
+        if (serviceName == null) {
+            throw new MojoExecutionException(
+                "Could not get serviceName from " + classToPrecess);
+        }
+        
+        // cut "WSService" suffix away
+        if (serviceName.endsWith("WSService")) {
+            serviceName = serviceName.substring(0,
+                serviceName.length() - "WSService".length());
+        } else {
+            throw new MojoExecutionException(
+                classToPrecess + " does not follow the convention that "
+                + "serviceName must end with WSService");
+        }
+        
+        return serviceName;
     }
 }
