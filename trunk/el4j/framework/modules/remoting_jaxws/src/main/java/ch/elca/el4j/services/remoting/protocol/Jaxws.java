@@ -45,12 +45,7 @@ import ch.elca.el4j.services.remoting.protocol.jaxws.JaxwsInvoker;
  * @author Stefan Wismer (SWI)
  */
 public class Jaxws extends AbstractInetSocketAddressWebProtocol {
-    
-    /**
-     * The logger.
-     */
-    private static Logger s_logger = Logger.getLogger(Jaxws.class);
-    
+
     /**
      * The JAX-WS Binding.
      */
