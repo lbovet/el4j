@@ -35,6 +35,6 @@
     
     <servlet-mapping>
         <servlet-name>jaxws-servlet-spring</servlet-name>
-        <url-pattern>*.RemotingtestsJaxws</url-pattern>
+        <url-pattern>*.Remotingtests</url-pattern>
     </servlet-mapping>
 </web-app>

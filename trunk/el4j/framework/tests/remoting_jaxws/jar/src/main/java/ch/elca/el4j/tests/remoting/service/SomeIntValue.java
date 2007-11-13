@@ -28,7 +28,7 @@ package ch.elca.el4j.tests.remoting.service;
  *
  * @author Stefan Wismer (SWI)
  */
-public class SomeIntValueJaxws {
+public class SomeIntValue {
     /**
      * An integer value.
      */
@@ -37,12 +37,12 @@ public class SomeIntValueJaxws {
     /**
      * Default constructor for JAX-WS.
      */
-    public SomeIntValueJaxws() { }
+    public SomeIntValue() { }
     
     /**
      * @param value    the new value
      */
-    public SomeIntValueJaxws(int value) {
+    public SomeIntValue(int value) {
         m_someValue = value;
     }
 

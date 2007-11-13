@@ -28,9 +28,9 @@ import org.springframework.context.ConfigurableApplicationContext;
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.tests.remoting.service.IntMatrixAdapter;
 import ch.elca.el4j.tests.remoting.service.gen.CalculatorException_Exception;
-import ch.elca.el4j.tests.remoting.service.gen.CalculatorJaxwsWS;
-import ch.elca.el4j.tests.remoting.service.gen.CalculatorValueObjectJaxws;
-import ch.elca.el4j.tests.remoting.service.gen.SomeIntValueJaxws;
+import ch.elca.el4j.tests.remoting.service.gen.CalculatorValueObject;
+import ch.elca.el4j.tests.remoting.service.gen.CalculatorWS;
+import ch.elca.el4j.tests.remoting.service.gen.SomeIntValue;
 
 import junit.framework.TestCase;
 
@@ -127,7 +127,7 @@ public class CalculatorJaxwsGeneratedTest extends TestCase {
             = "I can not find any ä, ö, ü, é, è or à character on my keyboard.";
         final byte[] MY_BYTE_ARRAY = MY_STRING.getBytes();
         
-        CalculatorValueObjectJaxws o = new CalculatorValueObjectJaxws();
+        CalculatorValueObject o = new CalculatorValueObject();
         o.setMyInt(MY_INT);
         o.setMyLong(MY_LONG);
         o.setMyDouble(MY_DOUBLE);
@@ -147,7 +147,7 @@ public class CalculatorJaxwsGeneratedTest extends TestCase {
             fail("Error occured while marshalling matrix.");
         }
         
-        SomeIntValueJaxws v = new SomeIntValueJaxws();
+        SomeIntValue v = new SomeIntValue();
         v.setSomeValue(MY_INT);
         o.setSomeValue(v);
 
@@ -158,7 +158,7 @@ public class CalculatorJaxwsGeneratedTest extends TestCase {
         o.getMyIntegerSet().add(5);
         
         
-        CalculatorValueObjectJaxws echo = getCalc().echoValueObjectJaxws(o);
+        CalculatorValueObject echo = getCalc().echoValueObjectJaxws(o);
         
         assertEquals("Int values are not equals.", 
             o.getMyInt(), echo.getMyInt());
@@ -210,8 +210,8 @@ public class CalculatorJaxwsGeneratedTest extends TestCase {
      * Get the calculator to use.
      * @return Calculator to use
      */
-    public CalculatorJaxwsWS getCalc() {
-        return (CalculatorJaxwsWS) getApplicationContext().
+    public CalculatorWS getCalc() {
+        return (CalculatorWS) getApplicationContext().
             getBean("calculatorGenerated");
     }
     

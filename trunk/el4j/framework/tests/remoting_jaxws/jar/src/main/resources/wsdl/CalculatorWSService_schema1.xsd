@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <xs:schema version="1.0" targetNamespace="http://gen.service.remoting.tests.el4j.elca.ch/" xmlns:tns="http://gen.service.remoting.tests.el4j.elca.ch/" xmlns:ns1="another.test.another.path" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-  <xs:import namespace="another.test.another.path" schemaLocation="CalculatorJaxwsWSService_schema2.xsd"/>
+  <xs:import namespace="another.test.another.path" schemaLocation="CalculatorWSService_schema2.xsd"/>
 
   <xs:element name="CalculatorException" type="tns:CalculatorException"/>
 
@@ -29,13 +29,13 @@
 
   <xs:complexType name="echoValueObjectJaxws">
     <xs:sequence>
-      <xs:element name="arg0" type="ns1:calculatorValueObjectJaxws" minOccurs="0"/>
+      <xs:element name="arg0" type="ns1:calculatorValueObject" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="echoValueObjectJaxwsResponse">
     <xs:sequence>
-      <xs:element name="return" type="ns1:calculatorValueObjectJaxws" minOccurs="0"/>
+      <xs:element name="return" type="ns1:calculatorValueObject" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 

@@ -30,10 +30,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
+import ch.elca.el4j.tests.remoting.service.Calculator;
 import ch.elca.el4j.tests.remoting.service.CalculatorException;
-import ch.elca.el4j.tests.remoting.service.CalculatorJaxws;
-import ch.elca.el4j.tests.remoting.service.CalculatorValueObjectJaxws;
-import ch.elca.el4j.tests.remoting.service.SomeIntValueJaxws;
+import ch.elca.el4j.tests.remoting.service.CalculatorValueObject;
+import ch.elca.el4j.tests.remoting.service.SomeIntValue;
 
 import junit.framework.TestCase;
 
@@ -131,7 +131,7 @@ public class CalculatorJaxwsTest extends TestCase {
             = "I can not find any ä, ö, ü, é, è or à character on my keyboard.";
         final byte[] MY_BYTE_ARRAY = MY_STRING.getBytes();
         
-        CalculatorValueObjectJaxws o = new CalculatorValueObjectJaxws();
+        CalculatorValueObject o = new CalculatorValueObject();
         o.setMyInt(MY_INT);
         o.setMyLong(MY_LONG);
         o.setMyDouble(MY_DOUBLE);
@@ -144,7 +144,7 @@ public class CalculatorJaxwsTest extends TestCase {
         // test int[][]
         o.setMyIntMatrix(new int[][]{new int[] {5, 8}, new int[] {1, -4}});
         
-        SomeIntValueJaxws v = new SomeIntValueJaxws(MY_INT);
+        SomeIntValue v = new SomeIntValue(MY_INT);
         o.setSomeValue(v);
         
         List<Integer> list = new ArrayList<Integer>();
@@ -157,7 +157,7 @@ public class CalculatorJaxwsTest extends TestCase {
         set.add(5);
         o.setMyIntegerSet(set);
         
-        CalculatorValueObjectJaxws echo = getCalc().echoValueObjectJaxws(o);
+        CalculatorValueObject echo = getCalc().echoValueObjectJaxws(o);
         
         assertEquals("Int values are not equals.", 
             o.getMyInt(), echo.getMyInt());
@@ -204,8 +204,8 @@ public class CalculatorJaxwsTest extends TestCase {
      * Get the calculator to use.
      * @return Calculator to use
      */
-    public CalculatorJaxws getCalc() {
-        return (CalculatorJaxws) getApplicationContext().getBean("calculator");
+    public Calculator getCalc() {
+        return (Calculator) getApplicationContext().getBean("calculator");
     }
     
     

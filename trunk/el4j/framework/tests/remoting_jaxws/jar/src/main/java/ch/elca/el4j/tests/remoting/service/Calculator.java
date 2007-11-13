@@ -72,5 +72,6 @@ public interface Calculator {
      * @param o Is the object to echo.
      * @return Returns the received object.
      */
-    public CalculatorValueObject echoValueObject(CalculatorValueObject o);
+    public CalculatorValueObject echoValueObjectJaxws(
+        CalculatorValueObject o);
 }
