@@ -19,6 +19,7 @@ package ch.elca.el4j.services.remoting.protocol.jaxws;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -31,6 +32,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.xml.bind.annotation.adapters.XmlAdapter;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
@@ -87,6 +91,12 @@ public class JaxwsInvoker implements java.lang.reflect.InvocationHandler {
     private Map<Object, Object> m_alreadyConverted;
     
     /**
+     * Adapters specified by XmlJavaTypeAdapter annotations.
+     */
+    @SuppressWarnings("unchecked")
+    private Map<String, Class<? extends XmlAdapter>> m_adapters;
+    
+    /**
      * The name of the package containing all generated classes.
      */
     private String m_genClsPackageName;
@@ -106,6 +116,7 @@ public class JaxwsInvoker implements java.lang.reflect.InvocationHandler {
         
         m_origToGenerated = new HashMap<Class<?>, Class<?>>();
         m_generatedToOrig = new HashMap<Class<?>, Class<?>>();
+        m_adapters = new HashMap<String, Class<? extends XmlAdapter>>();
         inspectUsedTypes(m_interface);
         
         m_alreadyConverted = new HashMap<Object, Object>();
@@ -173,6 +184,8 @@ public class JaxwsInvoker implements java.lang.reflect.InvocationHandler {
      */
     @SuppressWarnings("unchecked")
     private void inspectUsedTypes(Class classToInspect) {
+        inspectAdapters(classToInspect);
+        
         Set<Class> classes = new HashSet<Class>();
         for (Method m : classToInspect.getMethods()) {
             // parameter types
@@ -193,6 +206,39 @@ public class JaxwsInvoker implements java.lang.reflect.InvocationHandler {
                 m_generatedToOrig.put(gen, cls);
                 m_origToGenerated.put(cls, gen);
                 inspectUsedTypes(cls);
+            }
+        }
+    }
+    
+    /**
+     * Goes through all methods and checks if a XmlJavaTypeAdapter annotation
+     * exists. All hits get stored into {@link #m_adapters}.
+     * 
+     * @param classToInspect    the class to inspect
+     */
+    @SuppressWarnings("unchecked")
+    private void inspectAdapters(Class classToInspect) {
+        PropertyDescriptor[] descriptors;
+        try {
+            descriptors = Introspector.getBeanInfo(classToInspect).
+                getPropertyDescriptors();
+        } catch (IntrospectionException e) {
+            return;
+        }
+        
+        for (PropertyDescriptor descriptor : descriptors) {
+            Annotation annot = null;
+            if (descriptor.getReadMethod() != null) {
+                annot = descriptor.getReadMethod()
+                    .getAnnotation(XmlJavaTypeAdapter.class);
+            }
+            if (descriptor.getWriteMethod() != null) {
+                annot = descriptor.getWriteMethod()
+                    .getAnnotation(XmlJavaTypeAdapter.class);
+            }
+            if (annot != null && annot instanceof XmlJavaTypeAdapter) {
+                XmlJavaTypeAdapter adapter = (XmlJavaTypeAdapter) annot;
+                m_adapters.put(descriptor.getName(), adapter.value());
             }
         }
     }
@@ -297,6 +343,8 @@ public class JaxwsInvoker implements java.lang.reflect.InvocationHandler {
             return;
         }
         
+        Object value = null;
+        Class convertTarget = null;
         for (PropertyDescriptor targetPd : targetPds) {
             boolean copyProperty = false;
             if (targetPd.getWriteMethod() != null) {
@@ -328,11 +376,11 @@ public class JaxwsInvoker implements java.lang.reflect.InvocationHandler {
                             .getModifiers())) {
                             readMethod.setAccessible(true);
                         }
-                        Object value = readMethod.invoke(source, new Object[0]);
+                        value = readMethod.invoke(source, new Object[0]);
                         Method writeMethod = targetPd.getWriteMethod();
                         
                         // determine target type for conversion
-                        Class convertTarget = null;
+                        convertTarget = null;
                         if (writeMethod == null) {
                             // write List or Set
                             // the generated Collection has no setter method
@@ -345,6 +393,15 @@ public class JaxwsInvoker implements java.lang.reflect.InvocationHandler {
                         
                         // convert value if necessary
                         if (value != null) {
+                            if (m_adapters.containsKey(targetPd.getName())) {
+                                XmlAdapter adapter = m_adapters
+                                    .get(targetPd.getName()).newInstance();
+                                if (mapping == m_origToGenerated) {
+                                    value = adapter.marshal(value);
+                                } else {
+                                    value = adapter.unmarshal(value);
+                                }
+                            }
                             value = convert(value, mapping);
                             value = convertCollection(value, 
                                 convertTarget);
@@ -368,8 +425,9 @@ public class JaxwsInvoker implements java.lang.reflect.InvocationHandler {
                         
                     } catch (Throwable ex) {
                         throw new FatalBeanException(
-                            "Could not copy properties from source to target",
-                            ex);
+                            "Could not copy property of type "
+                            + value.getClass().getName() + " to "
+                            + convertTarget.getName() , ex);
                     }
                 }
             }
