@@ -138,6 +138,12 @@ public class CalculatorJaxwsTest extends TestCase {
         o.setMyString(MY_STRING);
         o.setMyByteArray(MY_BYTE_ARRAY);
         
+        // test int[]
+        o.setMyIntArray(new int[] {9, 2});
+        
+        // test int[][]
+        o.setMyIntMatrix(new int[][]{new int[] {5, 8}, new int[] {1, -4}});
+        
         SomeIntValueJaxws v = new SomeIntValueJaxws(MY_INT);
         o.setSomeValue(v);
         
@@ -150,9 +156,6 @@ public class CalculatorJaxwsTest extends TestCase {
         set.add(2);
         set.add(5);
         o.setMyIntegerSet(set);
-        
-        // test int[]
-        o.setMyIntArray(new int[] {9, 2});
         
         CalculatorValueObjectJaxws echo = getCalc().echoValueObjectJaxws(o);
         
@@ -170,10 +173,6 @@ public class CalculatorJaxwsTest extends TestCase {
             o.getSomeValue().getSomeValue(),
             echo.getSomeValue().getSomeValue());
         
-        assertTrue("int[] is not equal.",
-            echo.getMyIntArray()[0] == 9
-            && echo.getMyIntArray()[1] == 2);
-        
         if (echo.getMyIntegerList().size() == list.size()) {
             assertTrue("List items are not equal.",
                 echo.getMyIntegerList().get(0).equals(new Integer(4))
@@ -189,6 +188,16 @@ public class CalculatorJaxwsTest extends TestCase {
         } else {
             fail("Set size is not equal.");
         }
+        
+        assertTrue("int[] is not equal.",
+            echo.getMyIntArray()[0] == 9
+            && echo.getMyIntArray()[1] == 2);
+        
+        assertTrue("int[][] is not equal.",
+            echo.getMyIntMatrix()[0][0] == 5
+            && echo.getMyIntMatrix()[0][1] == 8
+            && echo.getMyIntMatrix()[1][0] == 1
+            && echo.getMyIntMatrix()[1][1] == -4);
     }
     
     /**

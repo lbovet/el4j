@@ -27,6 +27,18 @@
 
   <xs:element name="throwMeAnExceptionResponse" type="tns:throwMeAnExceptionResponse"/>
 
+  <xs:complexType name="echoValueObjectJaxws">
+    <xs:sequence>
+      <xs:element name="arg0" type="ns1:calculatorValueObjectJaxws" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="echoValueObjectJaxwsResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns1:calculatorValueObjectJaxws" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="throwMeASpecialException">
     <xs:sequence>
       <xs:element name="arg0" type="xs:string" minOccurs="0"/>
@@ -45,18 +57,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="echoValueObjectJaxws">
-    <xs:sequence>
-      <xs:element name="arg0" type="ns1:calculatorValueObjectJaxws" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="echoValueObjectJaxwsResponse">
-    <xs:sequence>
-      <xs:element name="return" type="ns1:calculatorValueObjectJaxws" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="getArea">
     <xs:sequence>
       <xs:element name="arg0" type="xs:double"/>
@@ -67,6 +67,18 @@
   <xs:complexType name="getAreaResponse">
     <xs:sequence>
       <xs:element name="return" type="xs:double"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="countNumberOfUppercaseLetters">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="countNumberOfUppercaseLettersResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:int"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -83,18 +95,6 @@
       <xs:element name="formatParameters" type="xs:anyType" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="formatString" type="xs:string" minOccurs="0"/>
       <xs:element name="message" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="countNumberOfUppercaseLetters">
-    <xs:sequence>
-      <xs:element name="arg0" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="countNumberOfUppercaseLettersResponse">
-    <xs:sequence>
-      <xs:element name="return" type="xs:int"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

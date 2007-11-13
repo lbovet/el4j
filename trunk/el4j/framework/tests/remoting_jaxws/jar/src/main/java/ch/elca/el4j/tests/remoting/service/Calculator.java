@@ -18,8 +18,6 @@
 package ch.elca.el4j.tests.remoting.service;
 
 
-import javax.jws.WebService;
-
 /**
  * This interface is a calculator.
  *

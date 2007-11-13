@@ -18,8 +18,6 @@
 package ch.elca.el4j.tests.remoting.service;
 
 
-import javax.jws.WebService;
-
 /**
  * This interface is a calculator.
  *
@@ -74,5 +72,6 @@ public interface CalculatorJaxws {
      * @param o Is the object to echo.
      * @return Returns the received object.
      */
-    public CalculatorValueObjectJaxws echoValueObjectJaxws(CalculatorValueObjectJaxws o);
+    public CalculatorValueObjectJaxws echoValueObjectJaxws(
+        CalculatorValueObjectJaxws o);
 }
