@@ -34,9 +34,24 @@ import org.springframework.util.StringUtils;
  * be checked by using the <code>assert</code> keyword of JDK 1.4. More about
  * this you can find 
  * <a href="http://java.sun.com/j2se/1.4.2/docs/guide/lang/assert.html">here</a>
- * .
+ * . <br>
  * 
  * <b>Example:</b>
+ * <code><pre>
+ *     public class AccountDao {
+ *         public void saveAccount(Account x) {
+ *             Reject.ifNull(x, Illegal);
+ *             ...
+ *         }
+ *     }
+ * </pre></code>
+ * 
+ * In this example a 
+ * <code>ch.elca.el4j.util.codingsupport.PreconditionRTException</code> will be
+ * thrown if the given account will be null. That way, we can prevent that an
+ * ugly <code>NullPointerException</code> can be thrown.
+ * 
+ * <b>Example 2:</b>
  * <code><pre>
  *     public class AccountDao {
  *         public void saveAccount(Account x) {
@@ -53,8 +68,9 @@ import org.springframework.util.StringUtils;
  * <p> It is also possible to add a reason to the reject method, if it is not 
  * absolutely clear what is checked. Alternatively, you can customize the
  * exception to be thrown in case the condition is violated by providing the
- * exception class and the arguments to its constructor. Existence and 
- * uniqueness of a constructor capable of taking the provided arguments is not
+ * exception class and the arguments to its constructor (the rationale of this is that it does not require
+ * the (potential expensive) creation of an exception class when its not needed. 
+ * The existence and uniqueness of a constructor capable of taking the provided arguments is not
  * verified statically and must therefore be ensured by the user.  
  * 
  * <script type="text/javascript">printFileStatus
@@ -90,7 +106,7 @@ public final class Reject {
      *            Is the object to be analyzed.
      */
     public static void ifNull(Object object) {
-        ifNull(object, PreconditionRTException.class);
+        ifNull(object, RuntimeException.class);
     }
     
 
@@ -104,9 +120,9 @@ public final class Reject {
      *            Is the message to explain the reason of the exception.
      */
     public static void ifNull(Object object, String reason) {
-        ifNull(object, PreconditionRTException.class, reason);
+        ifNull(object, RuntimeException.class, reason);
     }
-    
+       
     
     /**
      * Method to ensure that an object is not null. Used at the beginning of a
@@ -122,7 +138,7 @@ public final class Reject {
      */
     public static 
     void ifNull(Object object, 
-                Class<? extends PreconditionRTException> exceptionType,
+                Class<? extends RuntimeException> exceptionType,
                 Object... exceptionArguments) {
         
         checkCondition(object != null, exceptionType, exceptionArguments);
@@ -138,7 +154,7 @@ public final class Reject {
      *            Is the condition to be analyzed.
      */
     public static void ifFalse(boolean condition) {
-        ifFalse(condition, PreconditionRTException.class);
+        ifFalse(condition, RuntimeException.class);
     }
 
     /**
@@ -151,7 +167,7 @@ public final class Reject {
      *            Is the message to explain the reason of the exception.
      */
     public static void ifFalse(boolean condition, String reason) {
-        ifFalse(condition, PreconditionRTException.class, reason);
+        ifFalse(condition, RuntimeException.class, reason);
     }
 
     /**
@@ -168,7 +184,7 @@ public final class Reject {
      */
     public static 
     void ifFalse(boolean condition, 
-                 Class<? extends PreconditionRTException> exceptionType,
+                 Class<? extends RuntimeException> exceptionType,
                  Object... exceptionArguments) {
         
         checkCondition(condition, exceptionType, exceptionArguments);
@@ -183,7 +199,7 @@ public final class Reject {
      *            Is the string to be analyzed.
      */
     public static void ifEmpty(String s) {
-        ifEmpty(s, PreconditionRTException.class);
+        ifEmpty(s, RuntimeException.class);
     }
 
     /**
@@ -196,7 +212,7 @@ public final class Reject {
      *            Is the message to explain the reason of the exception.
      */
     public static void ifEmpty(String s, String reason) {
-        ifEmpty(s, PreconditionRTException.class, reason);
+        ifEmpty(s, RuntimeException.class, reason);
     }
     
     /**
@@ -213,7 +229,7 @@ public final class Reject {
      */
     public static 
     void ifEmpty(String s, 
-                 Class<? extends PreconditionRTException> exceptionType,
+                 Class<? extends RuntimeException> exceptionType,
                  Object... exceptionArguments) {
         
         checkCondition(
@@ -231,7 +247,7 @@ public final class Reject {
      *            The collection.
      */
     public static void ifEmpty(Collection<?> c) {
-        ifEmpty(c, PreconditionRTException.class);
+        ifEmpty(c, RuntimeException.class);
     }
     
     /**
@@ -243,7 +259,7 @@ public final class Reject {
      *            Message that explains the reason of the thrown exception.
      */
     public static void ifEmpty(Collection<?> c, String reason) {
-        ifEmpty(c, PreconditionRTException.class, reason);
+        ifEmpty(c, RuntimeException.class, reason);
     }
     
     /**
@@ -259,7 +275,7 @@ public final class Reject {
      */
     public static 
     void ifEmpty(Collection<?> c, 
-                 Class<? extends PreconditionRTException> exceptionType,
+                 Class<? extends RuntimeException> exceptionType,
                  Object... exceptionArguments) {
        
         checkCondition(
@@ -287,11 +303,11 @@ public final class Reject {
      */
     private static void 
     checkCondition(boolean condition,
-                   Class<? extends PreconditionRTException> conditionException,
+                   Class<? extends RuntimeException> conditionException,
                    Object... constructorArgs) {
         
         if (!condition) {
-            AbstractConditionRTException e = instantiateConditionException(
+            RuntimeException e = instantiateConditionException(
                 conditionException,
                 constructorArgs
             );
@@ -303,7 +319,7 @@ public final class Reject {
     /** instantiates an AbstractConditionRTException of the supplied type
      * using the supplied constructor arguments. 
      **/
-    private static <T extends AbstractConditionRTException> 
+    private static <T extends RuntimeException> 
     T instantiateConditionException(Class<T> exceptionClass, 
                                     Object... constructorArgs) {
         

@@ -58,6 +58,31 @@ public class RejectTest extends TestCase {
     }
     
     /**
+     *  Check with a subclass of RuntimeException
+     * Checks {@link Reject#ifNull(Object)}.
+     */
+    public void testIfNull2() {
+        try {
+            Reject.ifNull(null, IllegalArgumentException.class, "My String");
+            fail("Bad implementatino of Reject.isNull(null)");
+        } catch (IllegalArgumentException e) { }
+        try {
+            Reject.ifEmpty("", IllegalArgumentException.class, "My String");
+            fail("Bad implementatino of Reject.isEmpty(null)");
+        } catch (IllegalArgumentException e) { }
+        try {
+            Reject.ifFalse(false, IllegalArgumentException.class, "My String");
+            fail("Bad implementatino of Reject.ifFalse(null)");
+        } catch (IllegalArgumentException e) { }
+        
+        try {
+            Reject.ifNull(new Object(), IllegalArgumentException.class, "");
+        } catch (IllegalArgumentException e) {
+            fail("Bad implementatino of Reject.isNull(new Object())");
+        }
+    }
+    
+    /**
      * Checks {@link Reject#ifEmpty(Collection)}.
      */
     public void testIfEmptyCollection() {
