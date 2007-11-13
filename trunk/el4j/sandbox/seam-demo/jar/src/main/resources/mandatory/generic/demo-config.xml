@@ -1,8 +1,13 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
-    "http://www.springframework.org/dtd/spring-beans.dtd">
-    
-<beans>
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+
 	<!-- NOTE: This is sort of an unusually "monolithic" EL4J configuration.
 	           It is only used to simplify the configuration of this
 	           demo application. In a real world application, the beans herein
@@ -104,7 +109,7 @@
 	
 	<!-- DAO prototype to be used for DAO auto-creation  -->
 	<bean id="DaoPrototype" class="ch.elca.j4persist.hibernate.dao.GenericHibernateDao"
-		parent="abstractDao" singleton="false">				
+		parent="abstractDao" scope="prototype">				
 	</bean>
 	
 	<!--

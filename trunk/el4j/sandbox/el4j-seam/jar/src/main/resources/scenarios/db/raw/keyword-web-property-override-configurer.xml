@@ -1,16 +1,16 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
-	"http://www.springframework.org/dtd/spring-beans.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
-<beans>
-    <!-- Version: $Revision: 425 $ -->
-    <!-- URL: $URL: svn://cvs/subversion/el4j-internal/trunk/framework/apps/keyword/web/jar/src/main/resources/scenarios/db/raw/keyword-web-property-override-configurer.xml $ -->
-    <!-- Date: $Date: 2006-03-23 16:16:57 +0100 (Do, 23 Mrz 2006) $ -->
-    <!-- Author: $Author: mze $ -->
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
 
     <bean id="keywordWebDbRawOverrideConfigurer"
         class="ch.elca.el4j.core.config.RefreshPropertyOverrideConfigurer"
-        singleton="false">
+        scope="prototype">
         <property name="locations">
             <list>
                 <value>classpath:scenarios/db/raw/el4j-seam-jar-override-${db.name}.properties</value>
