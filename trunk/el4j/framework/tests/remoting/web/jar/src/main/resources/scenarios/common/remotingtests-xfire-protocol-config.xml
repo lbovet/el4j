@@ -1,12 +1,13 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
-<beans>
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
-    <!-- Version: $Revision$ -->
-    <!-- URL: $URL$ -->
-    <!-- Date: $Date$ -->
-    <!-- Author: $Author$ -->
-
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
     <import resource="classpath:org/codehaus/xfire/spring/xfire.xml" />
 
     <!-- Abstract XFireProtocol -->
@@ -118,8 +119,7 @@
     <!-- Service Factories -->
 
     <bean id="xfireJaxbServiceFactory"
-        class="org.codehaus.xfire.jaxb2.JaxbServiceFactory"
-        singleton="true">
+        class="org.codehaus.xfire.jaxb2.JaxbServiceFactory">
         <constructor-arg index="0">
             <ref bean="xfire.transportManager" />
         </constructor-arg>
@@ -129,8 +129,7 @@
     </bean>
 
     <bean id="xfireJaxbServiceFactoryWithoutAnnotations"
-        class="ch.elca.el4j.services.remoting.protocol.xfire.JaxbServiceFactoryWithoutWebAnnotations"
-        singleton="true">
+        class="ch.elca.el4j.services.remoting.protocol.xfire.JaxbServiceFactoryWithoutWebAnnotations">
         <constructor-arg index="0">
             <ref bean="xfire.transportManager" />
         </constructor-arg>
