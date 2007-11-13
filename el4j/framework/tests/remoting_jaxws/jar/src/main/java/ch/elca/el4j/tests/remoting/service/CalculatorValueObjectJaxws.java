@@ -20,6 +20,8 @@ package ch.elca.el4j.tests.remoting.service;
 import java.util.List;
 import java.util.Set;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 
 /**
  * This is a value object for test reason.
@@ -91,6 +93,18 @@ public class CalculatorValueObjectJaxws {
     
     // Map is not yet supported. Use list of tuples intead
     //private Map<Integer, Integer> m_myIntegerMap;
+    
+    // Neither multi-dimensional arrays nor nested collections like
+    // List<List<...>> are supported.
+    
+    /**
+     * A two dimensional array.
+     * 
+     * ATTENTION: Do not use {@link XmlJavaTypeAdapter} annotation here
+     * but on setter method, otherwise wsgen generates
+     * an additional element called m_myIntMatrix
+     */
+    private int[][] m_myIntMatrix;
     
 
     /**
@@ -239,5 +253,22 @@ public class CalculatorValueObjectJaxws {
      */
     public void setMyIntegerSet(Set<Integer> myIntegerSet) {
         m_myIntegerSet = myIntegerSet;
+    }
+
+    /**
+     * @return Returns the myIntMatrix.
+     * 
+     * ATTENTION: strange: {@link XmlJavaTypeAdapter} is not accepted here
+     */
+    public int[][] getMyIntMatrix() {
+        return m_myIntMatrix;
+    }
+
+    /**
+     * @param myIntMatrix Is the myIntMatrix to set.
+     */
+    @XmlJavaTypeAdapter(type = int[][].class, value = IntMatrixAdapter.class)
+    public void setMyIntMatrix(int[][] myIntMatrix) {
+        m_myIntMatrix = myIntMatrix;
     }
 }

@@ -65,6 +65,7 @@ public class TestImplicitContextPassingRegistry implements
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     public Map getAssembledImplicitContext() {
         Map map = new HashMap();
         map.put("testMessage", "Hello everybody, I am THE test message.");
@@ -74,6 +75,7 @@ public class TestImplicitContextPassingRegistry implements
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     public void pushAssembledImplicitContext(Map contexts) {
         s_logger.info("Test message: " + contexts.get("testMessage"));
     }

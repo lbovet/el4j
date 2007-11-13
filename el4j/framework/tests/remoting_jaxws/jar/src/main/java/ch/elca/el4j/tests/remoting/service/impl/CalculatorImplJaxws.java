@@ -36,9 +36,8 @@ import ch.elca.el4j.tests.remoting.service.SpecialCalculatorException;
  * );</script>
  *
  * @author Stefan Wismer (SWI)
- */
-
-/**
+ * 
+ * 
  * IMPORTANT:
  * 
  * WebService naming convention:
@@ -46,12 +45,20 @@ import ch.elca.el4j.tests.remoting.service.SpecialCalculatorException;
  * serviceName = name of implemented core interface + "WSService"
  * targetNamespace = "http://gen." + package name of implemented core interface
  */
-@WebService(name = "CalculatorJaxwsWS", serviceName="CalculatorJaxwsWSService", targetNamespace="http://gen.service.remoting.tests.el4j.elca.ch/")
+@WebService(name = "CalculatorJaxwsWS",
+    serviceName = "CalculatorJaxwsWSService",
+    targetNamespace = "http://gen.service.remoting.tests.el4j.elca.ch/")
 public class CalculatorImplJaxws implements CalculatorJaxws {
-    private CalculatorImpl delegate;
+    /**
+     * The actual Calculator.
+     */
+    private CalculatorImpl m_delegate;
     
+    /**
+     * The default constructor.
+     */
     public CalculatorImplJaxws() {
-        delegate = new CalculatorImpl();
+        m_delegate = new CalculatorImpl();
     }
 
     /**
@@ -59,14 +66,16 @@ public class CalculatorImplJaxws implements CalculatorJaxws {
      */
     @WebMethod
     public int countNumberOfUppercaseLetters(String text) {
-        return delegate.countNumberOfUppercaseLetters(text);
+        return m_delegate.countNumberOfUppercaseLetters(text);
     }
 
     /**
      * {@inheritDoc}
      */
     @WebMethod
-    public CalculatorValueObjectJaxws echoValueObjectJaxws(CalculatorValueObjectJaxws o) {
+    public CalculatorValueObjectJaxws echoValueObjectJaxws(
+        CalculatorValueObjectJaxws o) {
+        
         return o;
     }
 
@@ -75,7 +84,7 @@ public class CalculatorImplJaxws implements CalculatorJaxws {
      */
     @WebMethod
     public double getArea(double a, double b) {
-        return delegate.getArea(a, b);
+        return m_delegate.getArea(a, b);
     }
 
     /**
@@ -84,7 +93,7 @@ public class CalculatorImplJaxws implements CalculatorJaxws {
     @WebMethod
     public void throwMeASpecialException(
         String action) throws SpecialCalculatorException {
-        delegate.throwMeASpecialException(action);
+        m_delegate.throwMeASpecialException(action);
     }
 
     /**
@@ -92,7 +101,7 @@ public class CalculatorImplJaxws implements CalculatorJaxws {
      */
     @WebMethod
     public void throwMeAnException() throws CalculatorException {
-        delegate.throwMeAnException();
+        m_delegate.throwMeAnException();
     }
 
 }

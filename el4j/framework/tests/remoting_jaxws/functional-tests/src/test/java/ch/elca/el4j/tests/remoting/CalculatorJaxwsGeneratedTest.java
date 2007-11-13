@@ -26,6 +26,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
+import ch.elca.el4j.tests.remoting.service.IntMatrixAdapter;
 import ch.elca.el4j.tests.remoting.service.gen.CalculatorException_Exception;
 import ch.elca.el4j.tests.remoting.service.gen.CalculatorJaxwsWS;
 import ch.elca.el4j.tests.remoting.service.gen.CalculatorValueObjectJaxws;
@@ -131,11 +132,20 @@ public class CalculatorJaxwsGeneratedTest extends TestCase {
         o.setMyLong(MY_LONG);
         o.setMyDouble(MY_DOUBLE);
         o.setMyString(MY_STRING);
-        o.setMyByteArray(MY_BYTE_ARRAY);
         
         // test int[]
+        o.setMyByteArray(MY_BYTE_ARRAY);
         o.getMyIntArray().add(9);
         o.getMyIntArray().add(2);
+        
+        // test int[][]
+        IntMatrixAdapter adapter = new IntMatrixAdapter();
+        try {
+            o.setMyIntMatrix(adapter.marshal(
+                new int[][]{new int[] {5, 8}, new int[] {1, -4}}));
+        } catch (Exception e) {
+            fail("Error occured while marshalling matrix.");
+        }
         
         SomeIntValueJaxws v = new SomeIntValueJaxws();
         v.setSomeValue(MY_INT);
@@ -164,10 +174,6 @@ public class CalculatorJaxwsGeneratedTest extends TestCase {
             o.getSomeValue().getSomeValue(),
             echo.getSomeValue().getSomeValue());
         
-        assertTrue("int[] is not equal.",
-            echo.getMyIntArray().get(0).equals(9)
-            && echo.getMyIntArray().get(1).equals(2));
-        
         if (echo.getMyIntegerList().size() == 2) {
             assertTrue("List items are not equal.",
                 echo.getMyIntegerList().get(0).equals(new Integer(4))
@@ -183,6 +189,21 @@ public class CalculatorJaxwsGeneratedTest extends TestCase {
         } else {
             fail("Set size is not equal.");
         }
+        
+        assertTrue("int[] is not equal.",
+            echo.getMyIntArray().get(0).equals(9)
+            && echo.getMyIntArray().get(1).equals(2));
+        
+        int[][] matrixEcho = null;
+        try {
+            matrixEcho = adapter.unmarshal(o.getMyIntMatrix());
+        } catch (Exception e) {
+            fail("Error occured while unmarshalling matrix.");
+        }
+        
+        assertTrue("int[][] is not equal.",
+            matrixEcho[0][0] == 5 && matrixEcho[0][1] == 8
+            && matrixEcho[1][0] == 1 && matrixEcho[1][1] == -4);
     }
     
     /**

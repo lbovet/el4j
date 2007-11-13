@@ -16,27 +16,48 @@
  */
 package ch.elca.el4j.tests.remoting.service;
 
+/**
+ * This class simply stores an integer value.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Stefan Wismer (SWI)
+ */
 public class SomeIntValueJaxws {
-    private int someValue;
+    /**
+     * An integer value.
+     */
+    private int m_someValue;
     
-    public SomeIntValueJaxws() {}
+    /**
+     * Default constructor for JAX-WS.
+     */
+    public SomeIntValueJaxws() { }
     
+    /**
+     * @param value    the new value
+     */
     public SomeIntValueJaxws(int value) {
-        someValue = value;
+        m_someValue = value;
     }
 
     /**
      * @return Returns the someValue.
      */
     public int getSomeValue() {
-        return someValue;
+        return m_someValue;
     }
 
     /**
      * @param someValue Is the someValue to set.
      */
     public void setSomeValue(int someValue) {
-        this.someValue = someValue;
+        this.m_someValue = someValue;
     }
     
 }
