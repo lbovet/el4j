@@ -40,7 +40,7 @@
                             <serviceURL>*.Jaxws.Remotingtests</serviceURL>
                             <sei>*</sei>
                             <genWsdl>true</genWsdl>
-                            <wsdlDirectory>${basedir}/src/main/resources/wsdl</wsdlDirectory>
+                            <wsdlDirectory>${project.build.directory}/jaxws/wsgen/wsdl</wsdlDirectory>
                         </configuration>
                     </execution>
                 </executions>
