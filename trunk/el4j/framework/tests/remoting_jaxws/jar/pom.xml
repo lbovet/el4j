@@ -38,9 +38,6 @@
                             <hostURL>http://${jee-web.host}:${jee-web.port}</hostURL>
                             <contextURL>${jee-web.context}</contextURL>
                             <serviceURL>*.Jaxws.Remotingtests</serviceURL>
-                            <sei>*</sei>
-                            <genWsdl>true</genWsdl>
-                            <wsdlDirectory>${project.build.directory}/jaxws/wsgen/wsdl</wsdlDirectory>
                         </configuration>
                     </execution>
                 </executions>
