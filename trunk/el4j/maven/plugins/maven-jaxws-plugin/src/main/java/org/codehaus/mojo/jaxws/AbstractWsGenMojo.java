@@ -50,7 +50,7 @@ abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
     /**
      * Specify that a WSDL file should be generated in ${resourceDestDir}
      * 
-     * @parameter default-value="false"
+     * @parameter default-value="true"
      */
     private boolean genWsdl;
 
@@ -66,7 +66,7 @@ abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
     /**
      * service endpoint implementation class name.
      * 
-     * @parameter 
+     * @parameter  default-value="*"
      * @required
      */
     private String sei;

@@ -61,7 +61,7 @@ abstract class WsImportMojo extends AbstractJaxwsMojo
     /**
      * Directory containing wsdl files.
      * 
-     * @parameter default-value="${basedir}/src/wsdl"
+     * @parameter default-value="${project.build.directory}/jaxws/wsgen/wsdl"
      */
     private File wsdlDirectory;
 
