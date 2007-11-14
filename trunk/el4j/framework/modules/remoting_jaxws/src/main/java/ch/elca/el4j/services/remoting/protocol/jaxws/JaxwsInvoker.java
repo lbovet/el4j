@@ -350,6 +350,8 @@ public class JaxwsInvoker implements java.lang.reflect.InvocationHandler {
             if (targetPd.getWriteMethod() != null) {
                 copyProperty = true;
             }
+            
+            // check access to collections using getter
             if (targetPd.getReadMethod() != null) {
                 if (List.class.isAssignableFrom(
                     targetPd.getReadMethod().getReturnType())) {
@@ -393,6 +395,7 @@ public class JaxwsInvoker implements java.lang.reflect.InvocationHandler {
                         
                         // convert value if necessary
                         if (value != null) {
+                            // check if adapter is used
                             if (m_adapters.containsKey(targetPd.getName())) {
                                 XmlAdapter adapter = m_adapters
                                     .get(targetPd.getName()).newInstance();
@@ -409,6 +412,7 @@ public class JaxwsInvoker implements java.lang.reflect.InvocationHandler {
                         
                         // write value
                         if (writeMethod == null) {
+                            // collections only have read methods
                             Collection collection = (Collection) targetPd
                                 .getReadMethod().invoke(target);
                             if (collection != null && value != null) {

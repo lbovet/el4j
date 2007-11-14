@@ -20,7 +20,6 @@ import java.lang.reflect.Method;
 
 import javax.xml.ws.Service;
 
-import org.apache.log4j.Logger;
 import org.jvnet.jax_ws_commons.spring.SpringService;
 
 import com.sun.xml.ws.client.sei.SEIStub;
