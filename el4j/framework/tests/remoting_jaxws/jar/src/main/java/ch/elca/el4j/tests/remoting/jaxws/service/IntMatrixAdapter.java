@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.tests.remoting.service;
+package ch.elca.el4j.tests.remoting.jaxws.service;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 

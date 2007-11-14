@@ -6,4 +6,4 @@
 //@javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter(
 //    value = CalculatorExceptionAdapter.class, type = CalculatorException.class
 //    )
-package ch.elca.el4j.tests.remoting.service;
+package ch.elca.el4j.tests.remoting.jaxws.service;
