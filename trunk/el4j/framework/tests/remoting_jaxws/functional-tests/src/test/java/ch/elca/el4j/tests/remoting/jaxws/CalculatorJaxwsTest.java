@@ -14,29 +14,33 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.tests.remoting;
+package ch.elca.el4j.tests.remoting.jaxws;
 
 //Checkstyle: EmptyBlock off
 //Checkstyle: MagicNumber off
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
-import ch.elca.el4j.tests.remoting.service.IntMatrixAdapter;
-import ch.elca.el4j.tests.remoting.service.gen.CalculatorException_Exception;
-import ch.elca.el4j.tests.remoting.service.gen.CalculatorValueObject;
-import ch.elca.el4j.tests.remoting.service.gen.CalculatorWS;
-import ch.elca.el4j.tests.remoting.service.gen.SomeIntValue;
+import ch.elca.el4j.tests.remoting.jaxws.service.Calculator;
+import ch.elca.el4j.tests.remoting.jaxws.service.CalculatorException;
+import ch.elca.el4j.tests.remoting.jaxws.service.CalculatorValueObject;
+import ch.elca.el4j.tests.remoting.jaxws.service.SomeIntValue;
 
 import junit.framework.TestCase;
 
 /**
  * 
- * This class is a test for JAX-WS using the generated classes directly.
+ * This class is a test for JAX-WS using proxies on the generated classes
+ * to get the same interfaces as on the server.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -48,7 +52,7 @@ import junit.framework.TestCase;
  * @author Philippe Jacot (PJA)
  * @author Stefan Wismer (SWI)
  */
-public class CalculatorJaxwsGeneratedTest extends TestCase {
+public class CalculatorJaxwsTest extends TestCase {
     /**
      * Is the delta to doubles can have to be equal.
      */
@@ -99,7 +103,7 @@ public class CalculatorJaxwsGeneratedTest extends TestCase {
         try {
             getCalc().throwMeAnException();
             fail("No exception was thrown.");
-        } catch (CalculatorException_Exception e) {
+        } catch (CalculatorException e) {
             // This is expected
         }
     }
@@ -132,33 +136,28 @@ public class CalculatorJaxwsGeneratedTest extends TestCase {
         o.setMyLong(MY_LONG);
         o.setMyDouble(MY_DOUBLE);
         o.setMyString(MY_STRING);
+        o.setMyByteArray(MY_BYTE_ARRAY);
         
         // test int[]
-        o.setMyByteArray(MY_BYTE_ARRAY);
-        o.getMyIntArray().add(9);
-        o.getMyIntArray().add(2);
+        o.setMyIntArray(new int[] {9, 2});
         
         // test int[][]
-        IntMatrixAdapter adapter = new IntMatrixAdapter();
-        try {
-            o.setMyIntMatrix(adapter.marshal(
-                new int[][]{new int[] {5, 8}, new int[] {1, -4}}));
-        } catch (Exception e) {
-            fail("Error occured while marshalling matrix.");
-        }
+        o.setMyIntMatrix(new int[][]{new int[] {5, 8}, new int[] {1, -4}});
         
-        SomeIntValue v = new SomeIntValue();
-        v.setSomeValue(MY_INT);
+        SomeIntValue v = new SomeIntValue(MY_INT);
         o.setSomeValue(v);
-
-        o.getMyIntegerList().add(4);
-        o.getMyIntegerList().add(7);
         
-        o.getMyIntegerSet().add(2);
-        o.getMyIntegerSet().add(5);
+        List<Integer> list = new ArrayList<Integer>();
+        list.add(4);
+        list.add(7);
+        o.setMyIntegerList(list);
         
+        Set<Integer> set = new HashSet<Integer>();
+        set.add(2);
+        set.add(5);
+        o.setMyIntegerSet(set);
         
-        CalculatorValueObject echo = getCalc().echoValueObjectJaxws(o);
+        CalculatorValueObject echo = getCalc().echoValueObject(o);
         
         assertEquals("Int values are not equals.", 
             o.getMyInt(), echo.getMyInt());
@@ -174,7 +173,7 @@ public class CalculatorJaxwsGeneratedTest extends TestCase {
             o.getSomeValue().getSomeValue(),
             echo.getSomeValue().getSomeValue());
         
-        if (echo.getMyIntegerList().size() == 2) {
+        if (echo.getMyIntegerList().size() == list.size()) {
             assertTrue("List items are not equal.",
                 echo.getMyIntegerList().get(0).equals(new Integer(4))
                 && echo.getMyIntegerList().get(1).equals(new Integer(7)));
@@ -182,8 +181,8 @@ public class CalculatorJaxwsGeneratedTest extends TestCase {
             fail("List size is not equal.");
         }
         
-        if (echo.getMyIntegerSet().size() == 2) {
-            assertTrue("Set is not equal.",
+        if (echo.getMyIntegerSet().size() == set.size()) {
+            assertTrue("Set items are not equal.",
                 echo.getMyIntegerSet().contains(new Integer(2))
                 && echo.getMyIntegerSet().contains(new Integer(5)));
         } else {
@@ -191,28 +190,22 @@ public class CalculatorJaxwsGeneratedTest extends TestCase {
         }
         
         assertTrue("int[] is not equal.",
-            echo.getMyIntArray().get(0).equals(9)
-            && echo.getMyIntArray().get(1).equals(2));
-        
-        int[][] matrixEcho = null;
-        try {
-            matrixEcho = adapter.unmarshal(o.getMyIntMatrix());
-        } catch (Exception e) {
-            fail("Error occured while unmarshalling matrix.");
-        }
+            echo.getMyIntArray()[0] == 9
+            && echo.getMyIntArray()[1] == 2);
         
         assertTrue("int[][] is not equal.",
-            matrixEcho[0][0] == 5 && matrixEcho[0][1] == 8
-            && matrixEcho[1][0] == 1 && matrixEcho[1][1] == -4);
+            echo.getMyIntMatrix()[0][0] == 5
+            && echo.getMyIntMatrix()[0][1] == 8
+            && echo.getMyIntMatrix()[1][0] == 1
+            && echo.getMyIntMatrix()[1][1] == -4);
     }
     
     /**
      * Get the calculator to use.
      * @return Calculator to use
      */
-    public CalculatorWS getCalc() {
-        return (CalculatorWS) getApplicationContext().
-            getBean("calculatorGenerated");
+    public Calculator getCalc() {
+        return (Calculator) getApplicationContext().getBean("calculator");
     }
     
     

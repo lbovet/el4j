@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.tests.remoting.service;
+package ch.elca.el4j.tests.remoting.jaxws.service;
 
 /**
  * This class simply stores an integer value.

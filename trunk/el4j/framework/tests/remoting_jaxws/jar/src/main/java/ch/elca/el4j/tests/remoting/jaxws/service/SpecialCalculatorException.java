@@ -15,12 +15,12 @@
  * For alternative licensing, please contact info@elca.ch
  */
 
-package ch.elca.el4j.tests.remoting.service;
+package ch.elca.el4j.tests.remoting.jaxws.service;
 
 import ch.elca.el4j.core.exceptions.BaseException;
 
 /**
- * This exception is used for testing.
+ * This special exception is used for testing.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -31,20 +31,15 @@ import ch.elca.el4j.core.exceptions.BaseException;
  *
  * @author Martin Zeltner (MZE)
  */
-public class CalculatorException extends BaseException {
+public class SpecialCalculatorException extends BaseException {
     /**
-     * Default constructor.
+     * Constructor.
+     * 
+     * @param action
+     *            Is the dynamic part of this exception.
      */
-    public CalculatorException() {
-        super("This is a test exception.", (Object[]) null);
-    }
-    
-    /**
-     * Set the message. Used to serialize with XFire. If this is not wanted
-     * remove the exception test for xfire.
-     * @param message The message
-     */
-    public void setMessage(String message) {
-        m_message = message;
+    public SpecialCalculatorException(String action) {
+        super("This is a test exception with action {0}.", 
+            new Object[] {action});
     }
 }

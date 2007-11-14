@@ -16,7 +16,7 @@
             <ref bean="jaxwsProtocol" />
         </property>
         <property name="serviceInterface">
-            <value>ch.elca.el4j.tests.remoting.service.Calculator</value>
+            <value>ch.elca.el4j.tests.remoting.jaxws.service.Calculator</value>
         </property>
         <property name="serviceName">
             <value>Calculator.Jaxws.Remotingtests</value>
@@ -27,5 +27,5 @@
     </bean>
 
     <bean id="jaxwsCalculatorImpl"
-        class="ch.elca.el4j.tests.remoting.service.impl.CalculatorImplJaxws" />
+        class="ch.elca.el4j.tests.remoting.jaxws.service.impl.CalculatorImplJaxws" />
 </beans>

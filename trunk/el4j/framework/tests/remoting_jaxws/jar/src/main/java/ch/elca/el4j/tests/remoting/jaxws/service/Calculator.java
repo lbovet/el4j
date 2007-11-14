@@ -15,7 +15,7 @@
  * For alternative licensing, please contact info@elca.ch
  */
 
-package ch.elca.el4j.tests.remoting.service;
+package ch.elca.el4j.tests.remoting.jaxws.service;
 
 
 /**
@@ -72,6 +72,5 @@ public interface Calculator {
      * @param o Is the object to echo.
      * @return Returns the received object.
      */
-    public CalculatorValueObject echoValueObjectJaxws(
-        CalculatorValueObject o);
+    public CalculatorValueObject echoValueObject(CalculatorValueObject o);
 }

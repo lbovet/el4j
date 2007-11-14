@@ -28,7 +28,7 @@
     </bean>
 
     <bean id="jaxwsImplicitContextPassingRegistry" 
-        class="ch.elca.el4j.tests.remoting.service.TestImplicitContextPassingRegistry" />
+        class="ch.elca.el4j.tests.remoting.jaxws.service.TestImplicitContextPassingRegistry" />
         
     <!-- JAXBContext used by the JaxwsJaxb protocol to marshall the implicit context -->
     <bean id="jaxwsContextPassingContext"
@@ -37,7 +37,7 @@
         <constructor-arg index="0">
             <list>
                 <value>
-                    ch.elca.el4j.tests.remoting.service.TestJaxwsContextPassingValue
+                    ch.elca.el4j.tests.remoting.jaxws.service.TestJaxwsContextPassingValue
                 </value>
             </list>
         </constructor-arg>
