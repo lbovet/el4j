@@ -71,6 +71,7 @@ public class WSSpringServlet extends HttpServlet {
 
         Set<SpringBinding> bindings = new LinkedHashSet<SpringBinding>();
 
+        // search for Jaxws RemotingServiceExporter objects
         Map<?, ?> map = wac.getBeansOfType(RemotingServiceExporter.class);
         for (Object instance : map.values()) {
             RemotingServiceExporter exporter
