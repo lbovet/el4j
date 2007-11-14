@@ -333,10 +333,9 @@ abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
      */
     private void replaceURLinWSDL(String serviceName, String url)
         throws MojoExecutionException {
-        File file = new File(getDestDir().getParentFile().getAbsolutePath()
-            + File.separatorChar + "jaxws" + File.separatorChar + "wsgen"
-            + File.separatorChar + "wsdl" + File.separatorChar
-            + serviceName + "WSService.wsdl");
+        
+        File file = new File(resourceDestDir.getAbsolutePath()
+            + File.separatorChar + serviceName + "WSService.wsdl");
         
         if (file.exists()) {
             String line;
