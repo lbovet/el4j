@@ -294,6 +294,9 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 //                + currentDependency.getArtifactId()
 //                + "-override-" + getDbName() + ".properties";
             
+            getLog().info("Search artifact "
+                + currentDependency.getArtifactId() + "...");
+   
             
             //create pattern from template
             
