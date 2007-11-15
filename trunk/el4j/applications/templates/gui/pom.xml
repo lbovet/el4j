@@ -25,7 +25,4 @@
         <module>thin-client</module>
         <module>standalone-client</module>
     </modules>
-    <properties>
-        <db.connectionPropertiesSource>scenarios/db/raw/refdb-gui-override-${db.name}.properties</db.connectionPropertiesSource>
-    </properties>
 </project>
