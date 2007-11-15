@@ -26,6 +26,25 @@
             <value>true</value>
         </property>
     </bean>
+	
+	<bean id="number" scope="prototype"
+        class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target">
+            <bean id="numberTarget"
+                class="ch.elca.el4j.demos.model.MyNumber" scope="prototype" />
+        </property>
+        <property name="exposeProxy">
+            <value>true</value>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>propertyChangeListenerAdvisor</value>
+            </list>
+        </property>
+        <property name="proxyTargetClass">
+            <value>true</value>
+        </property>
+    </bean>
 
 
     <bean id="propertyChangeListenerMixin"
