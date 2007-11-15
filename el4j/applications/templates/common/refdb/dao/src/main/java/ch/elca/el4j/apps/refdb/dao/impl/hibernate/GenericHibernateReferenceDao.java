@@ -4,6 +4,9 @@ package ch.elca.el4j.apps.refdb.dao.impl.hibernate;
 import java.io.Serializable;
 import java.util.List;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.impl.CriteriaImpl;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.transaction.annotation.Propagation;
@@ -46,31 +49,20 @@ public class GenericHibernateReferenceDao<T extends Reference,
     /**
      * {@inheritDoc}
      */
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<T> getAll() throws DataAccessException {
-        String domainClassName = getPersistentClassName();
-        String domainClassNameLowerCase = domainClassName.toLowerCase();
-        String queryString = "from " + domainClassName + " "
-            + domainClassNameLowerCase + " left join fetch "
-            + domainClassNameLowerCase + ".keywords";
-        return getConvenienceHibernateTemplate().find(queryString);
-    }
-    
-    
-    /**
-     * {@inheritDoc}
-     */
     @SuppressWarnings("unchecked")
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<T> getByName(String name) throws DataAccessException,
         DataRetrievalFailureException {
         Reject.ifEmpty(name);
-        String domainClassName = getPersistentClassName();
-        String queryString = "from " + domainClassName + " " 
-            + domainClassName.toLowerCase() + " where name = :name"; 
-        List<T> result = getConvenienceHibernateTemplate()
-            .findByNamedParam(queryString, "name", name);
+        
+        DetachedCriteria criteria
+            = DetachedCriteria.forClass(getPersistentClass());
+        criteria.add(Restrictions.like("name", name));
+        List<T> result
+            = getConvenienceHibernateTemplate().findByCriteria(criteria);
+        
+        // TODO MZE: Is this really needed although lazy loading is already
+        // switched off?
         for (T reference : result) {
             getConvenienceHibernateTemplate().initialize(
                 reference.getKeywords());

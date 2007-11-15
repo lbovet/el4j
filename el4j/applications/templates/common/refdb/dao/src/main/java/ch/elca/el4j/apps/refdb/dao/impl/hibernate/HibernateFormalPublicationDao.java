@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,26 +43,6 @@ public class HibernateFormalPublicationDao
      */
     public HibernateFormalPublicationDao() {
         setPersistentClass(FormalPublication.class);
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<FormalPublication> getAll() throws DataAccessException {
-        List<FormalPublication> result = getConvenienceHibernateTemplate()
-            .find("from FormalPublication formalPublication left join "
-                + "fetch formalPublication.keywords");
-        
-        List finalResult = new ArrayList();
-        for (FormalPublication currentPublication : result) {
-            if (!(currentPublication instanceof Book)) {
-                finalResult.add(currentPublication);
-            } 
-        }
-        return finalResult;
     }
     
     /**
@@ -131,30 +112,21 @@ public class HibernateFormalPublicationDao
     }
     
     /**
+     * The result set just contains "real" formal publications.
+     * 
      * {@inheritDoc}
      */
-    @Override
     @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<FormalPublication> getByName(String name)
-        throws DataAccessException {
-        Reject.ifEmpty(name);
-        String queryString = "from FormalPublication formalPublication "
-            + "where name = :name";
-        List<? extends FormalPublication> result
-            = getConvenienceHibernateTemplate()
-                .findByNamedParam(queryString, "name", name);
-        
-        List<FormalPublication> finalResult 
-            = new ArrayList<FormalPublication>();
-        for (FormalPublication currentPublication : result) {
-            if (!(currentPublication instanceof Book)) {
-                getConvenienceHibernateTemplate().initialize(
-                    currentPublication.getKeywords());
-                finalResult.add(currentPublication);
+    @Override
+    public List<FormalPublication> getAll() throws DataAccessException {
+        //TODO MZE: Find a better solution. Perhaps rewrite the hibernate file.
+        List<FormalPublication> mixedFps = super.getAll();
+        List<FormalPublication> fps = new ArrayList<FormalPublication>();
+        for (FormalPublication fp : mixedFps) {
+            if (fp.getClass() == FormalPublication.class) {
+                fps.add(fp);
             }
         }
-        return finalResult;
+        return fps;
     }
-    
 }
