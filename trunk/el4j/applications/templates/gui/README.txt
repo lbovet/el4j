@@ -11,7 +11,7 @@ distributed mode:
 
    cd server/war
    mvn db:prepareDB cargo:undeploy cargo:deploy cargo:start 
-   # the server should now be available under http://localhost:8080/module-remoting-demos-web 
+   # the server should now be available under http://localhost:8080/refdb-gui-server
 
 
   start gui (in a separate console): 
