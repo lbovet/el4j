@@ -1665,7 +1665,7 @@
             1.3-SNAPSHOT
         </version.maven-file-collector-plugin>
         <version.maven-database-plugin>
-            1.3-SNAPSHOT
+            1.4-SNAPSHOT
         </version.maven-database-plugin>
         <version.maven-depgraph-plugin>
         	1.3-SNAPSHOT
