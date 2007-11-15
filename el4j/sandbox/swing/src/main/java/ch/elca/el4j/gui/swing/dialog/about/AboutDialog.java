@@ -53,35 +53,22 @@ public class AboutDialog extends JDialog {
         JPanel panel = new JPanel(new BorderLayout());
 
         // image on the left
-        ImageIcon icon = createImageIcon(getRes("aboutImage"));
-        JLabel logo = new JLabel(icon);
-        panel.add(logo, BorderLayout.WEST);
+        String aboutImage = getRes("aboutImage");
+        if (aboutImage != null) {
+            ImageIcon icon = createImageIcon(aboutImage);
+            JLabel logo = new JLabel(icon);
+            panel.add(logo, BorderLayout.WEST);
+        }
 
         // about-text on the right
-        final String lineSep = "<br> ";
-        
-        StringBuilder sb = new StringBuilder();
-        sb.append("<html>");
-        sb.append(getRes("Application.title")).append(lineSep).append(lineSep);
-        sb.append(getRes("Application.description")).append(lineSep).append(
-                lineSep);
-        sb.append(getRes("versionText")).append(" ");
-        sb.append(getRes("Application.version")).append(lineSep);
-        sb.append(getRes("buildIdText")).append(" ");
-        sb.append(getRes("Application.buildId")).append(lineSep)
-                .append(lineSep);
-        sb.append(getRes("Application.copyright")).append(lineSep);
-        sb.append(getRes("Application.homepage"));
-        sb.append("</html>");
-
-        JLabel infoLabel = new JLabel(sb.toString());
+        JLabel infoLabel = new JLabel(getAboutText());
         infoLabel.setName("infoLabel");
         infoLabel.setBorder(new EmptyBorder(3, 6, 3, 3)); // top, left,
                                                             // bottom, right
         panel.add(infoLabel, BorderLayout.CENTER);
 
         // button to close the dialog
-        JButton closeButton = new JButton(getRes("closeButton.Action.text"));
+        JButton closeButton = new JButton();
         closeButton.setSelected(true);
         getRootPane().setDefaultButton(closeButton);
 
@@ -109,10 +96,13 @@ public class AboutDialog extends JDialog {
         m_resourceMap.injectComponents(this);
 
         // little hack to make button larger
-        Insets s = closeButton.getMargin();
-        s.right = Integer.parseInt(getRes("closeButton.space"));
-        s.left = s.right;
-        closeButton.setMargin(s);
+        String space = getRes("close.space");
+        if (space != null) {
+            Insets s = closeButton.getMargin();
+            s.right = Integer.parseInt(space);
+            s.left = s.right;
+            closeButton.setMargin(s);
+        }
 
         // prepare to show
         pack();
@@ -122,11 +112,34 @@ public class AboutDialog extends JDialog {
     }
 
     /**
-     * Close the dialog
+     * Close the dialog.
      */
     @Action
     public void close() {
         dispose();
+    }
+    
+    /**
+     * @return   the about text
+     */
+    protected String getAboutText() {
+        final String BR = "<br> ";
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append("<html>");
+        sb.append(getRes("Application.title")).append(BR).append(BR);
+        sb.append(getRes("Application.description")).append(BR).append(
+                BR);
+        sb.append(getRes("versionText")).append(" ");
+        sb.append(getRes("Application.version")).append(BR);
+        sb.append(getRes("buildIdText")).append(" ");
+        sb.append(getRes("Application.buildId")).append(BR)
+                .append(BR);
+        sb.append(getRes("Application.copyright")).append(BR);
+        sb.append(getRes("Application.homepage"));
+        sb.append("</html>");
+        
+        return sb.toString();
     }
 
     /**
