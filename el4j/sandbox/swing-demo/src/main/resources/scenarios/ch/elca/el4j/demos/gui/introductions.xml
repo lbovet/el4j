@@ -12,7 +12,7 @@
         class="org.springframework.aop.framework.ProxyFactoryBean">
         <property name="target">
             <bean id="personTarget"
-                class="ch.elca.el4j.demos.gui.model.DefaultPerson" scope="prototype" />
+                class="ch.elca.el4j.demos.model.DefaultPerson" scope="prototype" />
         </property>
         <property name="exposeProxy">
             <value>true</value>
@@ -29,7 +29,7 @@
 
 
     <bean id="propertyChangeListenerMixin"
-        class="ch.elca.el4j.gui.model.mixin.PropertyChangeListenerMixin"
+        class="ch.elca.el4j.model.mixin.PropertyChangeListenerMixin"
         scope="prototype">
     </bean>
 
