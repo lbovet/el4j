@@ -141,9 +141,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
     @SuppressWarnings("unchecked")
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<T> getAll() throws DataAccessException {
-        DetachedCriteria criteria = DetachedCriteria
-            .forClass(getPersistentClass());
-        return getConvenienceHibernateTemplate().findByCriteria(criteria);
+        return getConvenienceHibernateTemplate().loadAll(getPersistentClass());
     }
 
     /**
