@@ -167,14 +167,19 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
         setDbName(getProject().getProperties().getProperty("db.name"));
       
         
+        getLog().info("maven-database-plugin is working...");
+        
         if (getDbName() != null) {
             getLog().info("DbName: " + getDbName());
+        } else {
+            getLog().info("DbName: NOT SPECIFIED!");
         }
         
     
         getLog().info("Current artifact: " + getProject().getArtifactId());
         
-        getLog().info("Tree: ");
+        getLog().info("Dependency tree: ");
+        getLog().info("============");
         
         List<Artifact> deps = getGraphWalker().
             getDependencyArtifacts();
@@ -185,7 +190,8 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
             getLog().info(dep.getArtifactId());
         }
        
-       
+        getLog().info("============");
+        
 //        getLog().info("Resources:");
 //        
 //        Resource[] res = getHolder().getResources("classpath*:" 
@@ -226,6 +232,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
                     + "'db.dbName'");
             } else {
             
+                getLog().info("No .properties file was specified via POM or parameter.");
                 getLog().info("Looking for .properties file...");
                 
                 connectionPropertiesSource = getPropertiesFile();
@@ -235,6 +242,9 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
                 getHolder().loadConnectionProperties(
                     connectionPropertiesSource);
             }
+        } else {
+            getLog().info(".properties file was specified via" +
+            		" POM or parameter: " + connectionPropertiesSource);
         }
     
         

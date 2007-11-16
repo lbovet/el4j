@@ -118,8 +118,8 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
      */
     public void loadConnectionProperties(String sourceDir) {
         if (sourceDir != null) {
+            String source = replaceDbName(sourceDir);
             try {
-                String source = replaceDbName(sourceDir);
                 Resource[] resources = getResources("classpath*:" + source);
                 Properties properties = getProperties(resources);
                 m_url = properties.getProperty("dataSource.url");
@@ -127,7 +127,7 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
                 m_password = properties.getProperty("dataSource.password");
             } catch (Exception e) {
                 throw new DatabaseHolderException(
-                    "Error reading connection properties", e);
+                    "Error reading connection properties at " + source, e);
             }
         }
     }
@@ -139,14 +139,16 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
      *            Path where to find properties file
      */
     private void loadDriverName(String sourceDir) {
+        String source = replaceDbName(sourceDir);
         try {
-            String source = replaceDbName(sourceDir);
+            
             Resource[] resources = getResources("classpath*:" + source);
             Properties properties = getProperties(resources);
             m_driverName = properties.getProperty("dataSource.driverClassName");
         } catch (Exception e) {
+            
             throw new DatabaseHolderException(
-                "Error reading Driver Name properties", e);
+                "Error reading Driver Name properties at " + source, e);
         }
     }
     
