@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Expression;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +19,6 @@ import ch.elca.el4j.services.persistence.hibernate.criteria.CriteriaTransformer;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.AbstractCriteria;
 import ch.elca.el4j.services.search.criterias.IncludeCriteria;
-import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
  * 
@@ -121,6 +120,21 @@ public class HibernateFormalPublicationDao
     public List<FormalPublication> getAll() throws DataAccessException {
         //TODO MZE: Find a better solution. Perhaps rewrite the hibernate file.
         List<FormalPublication> mixedFps = super.getAll();
+        List<FormalPublication> fps = new ArrayList<FormalPublication>();
+        for (FormalPublication fp : mixedFps) {
+            if (fp.getClass() == FormalPublication.class) {
+                fps.add(fp);
+            }
+        }
+        return fps;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public List<FormalPublication> getByName(String name)
+        throws DataAccessException, DataRetrievalFailureException {
+        //TODO MZE: Find a better solution. Perhaps rewrite the hibernate file.
+        List<FormalPublication> mixedFps = super.getByName(name);
         List<FormalPublication> fps = new ArrayList<FormalPublication>();
         for (FormalPublication fp : mixedFps) {
             if (fp.getClass() == FormalPublication.class) {
