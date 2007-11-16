@@ -273,9 +273,9 @@
 
                 <!-- Tomcat5x -->
                 <tomcat5x.basedir>${el4j.project.tools}/tomcat</tomcat5x.basedir>
-                <tomcat5x.version>5.5.23</tomcat5x.version>
+                <tomcat5x.version>5.5.25</tomcat5x.version>
                 <tomcat5x.home>${tomcat5x.basedir}/apache-tomcat-${tomcat5x.version}/apache-tomcat-${tomcat5x.version}</tomcat5x.home>
-                <tomcat5x.zipDownloadUrl>http://www.apache.org/dist/tomcat/tomcat-5/v${tomcat5x.version}/bin/apache-tomcat-${tomcat5x.version}.zip</tomcat5x.zipDownloadUrl>
+                <tomcat5x.zipDownloadUrl>http://el4.elca-services.ch/el4j/tools/tomcat/apache-tomcat-${tomcat5x.version}.zip</tomcat5x.zipDownloadUrl>
                 <tomcat5x.container.log.file>${project.build.directory}/logs/tomcat5x/output.log</tomcat5x.container.log.file>
                 <tomcat5x.cargo.log.file>${project.build.directory}/logs/tomcat5x/cargo.log</tomcat5x.cargo.log.file>
                 <tomcat5x.eclipse.runtime.facet.name>Apache Tomcat v5.5</tomcat5x.eclipse.runtime.facet.name>
