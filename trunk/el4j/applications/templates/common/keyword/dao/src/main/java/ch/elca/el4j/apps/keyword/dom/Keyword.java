@@ -62,7 +62,7 @@ public class Keyword extends AbstractIntKeyIntOptimisticLockingDto {
      */
     @NotNull
     @Length(min = 3)
-    @Pattern(regex = "[-'.a-zA-Z ]*")
+    @Pattern(regex = "[-'.a-zA-Z0-9 ]*")
     @Column(unique = true)
     public String getName() {
         return m_name;
