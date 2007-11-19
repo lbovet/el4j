@@ -17,7 +17,8 @@
     <bean id="fileDescriptorViewDao" parent="abstractDao" class="ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateFileDescriptorViewDao"/>
     
     <!-- Hibernate Session Factory Bean -->
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+    <!--  use a one that makes annotations possible -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="mappingResources">
             <list>
                 <value>etc/hibernate/Keyword.hbm.xml</value>
@@ -29,7 +30,7 @@
         </property>
         <property name="hibernateProperties">
             <props>
-                <prop key="hibernate.dialect">${databaseDialect}</prop>
+               	<prop key="hibernate.dialect">${databaseDialect}</prop>
                 <prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>
                 <prop key="hibernate.max_fetch_depth">3</prop>
             </props>
