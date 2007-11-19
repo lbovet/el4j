@@ -1,0 +1,25 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                             "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:el4j="http://www.elca.ch/el4j/taglib"
+				template="layout/template.xhtml">
+
+<ui:define name="body">
+	<ui:decorate template="layout/detailView.xhtml">
+		<ui:param name="entityShortName" value="client"/>
+		<ui:define name="fields">
+			<el4j:fieldGroup group="company">
+				<el4j:fieldSet shown="enterprise,activity"/>
+			</el4j:fieldGroup>
+			<el4j:fieldGroup group="contact">
+				<el4j:fieldSet shown="address"/>
+			</el4j:fieldGroup>
+		</ui:define>
+	</ui:decorate>
+	<p><b><h:outputText value="Detail level 4."/></b></p>
+</ui:define>
+
+</ui:composition>
+
