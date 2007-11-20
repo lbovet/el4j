@@ -18,7 +18,6 @@
 package ch.elca.el4j.tests.util.codingsupport;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import ch.elca.el4j.util.codingsupport.Reject;
@@ -64,27 +63,29 @@ public class RejectTest extends TestCase {
     public void testIfNull2() {
         try {
             Reject.ifNull(null, IllegalArgumentException.class, "My String");
-            fail("Bad implementatino of Reject.isNull(null)");
+            fail("Bad implementation of Reject.isNull()");
         } catch (IllegalArgumentException e) { }
         try {
             Reject.ifEmpty("", IllegalArgumentException.class, "My String");
-            fail("Bad implementatino of Reject.isEmpty(null)");
+            fail("Bad implementation of Reject.isEmpty()");
         } catch (IllegalArgumentException e) { }
         try {
-            Reject.ifFalse(false, IllegalArgumentException.class, "My String");
-            fail("Bad implementatino of Reject.ifFalse(null)");
+            Reject.ifCondition(true, IllegalArgumentException.class,
+                "My String");
+            fail("Bad implementation of Reject.ifCondition()");
         } catch (IllegalArgumentException e) { }
         
         try {
             Reject.ifNull(new Object(), IllegalArgumentException.class, "");
         } catch (IllegalArgumentException e) {
-            fail("Bad implementatino of Reject.isNull(new Object())");
+            fail("Bad implementation of Reject.isNull(new Object())");
         }
     }
     
     /**
      * Checks {@link Reject#ifEmpty(Collection)}.
      */
+    @SuppressWarnings("unchecked")
     public void testIfEmptyCollection() {
         try {
             Reject.ifEmpty((List) null);

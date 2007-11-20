@@ -214,7 +214,7 @@ public class CrossCheckingMessageSource implements MessageSource,
             } else if (ms instanceof ResourceBundleMessageSource) {
                 ((ResourceBundleMessageSource) ms).setBasenames(m_basenames);
             } else {
-                Reject.ifFalse(false, "unsupported type");
+                Reject.ifCondition(true, "unsupported type");
             }            
             m_sources[i] = ms;
         }

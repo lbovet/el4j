@@ -78,7 +78,7 @@ public class TextToDate extends AbstractFormattingConverter {
     protected Object doConvert(Object source, Class targetClass)
         throws Exception {
         Reject.ifNull(targetClass);
-        Reject.ifFalse(source instanceof String);
+        Reject.ifNotAssignableTo(source, String.class);
         String s = (String) source;
         Object result = null;
         if (!m_allowEmpty || StringUtils.hasText((String) source)) {

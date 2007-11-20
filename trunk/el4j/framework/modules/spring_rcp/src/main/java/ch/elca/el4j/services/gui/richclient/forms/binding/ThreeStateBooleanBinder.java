@@ -88,7 +88,7 @@ public class ThreeStateBooleanBinder extends AbstractBinder {
      */
     protected Binding doBind(JComponent control, FormModel formModel,
         String formPropertyPath, Map context) {
-        Reject.ifFalse(control instanceof ThreeStateBooleanJPanel, 
+        Reject.ifNotAssignableTo(control, ThreeStateBooleanJPanel.class, 
             "Given control must of type " 
             + ThreeStateBooleanJPanel.class.getName() + ".");
         return new ThreeStateBooleanBinding((ThreeStateBooleanJPanel) control, 

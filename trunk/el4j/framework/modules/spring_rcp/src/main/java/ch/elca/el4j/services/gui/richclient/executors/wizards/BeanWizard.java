@@ -60,7 +60,7 @@ public class BeanWizard extends AbstractWizard {
     public void addPages() {
         FormModel formModel = m_executor.getFormModel();
         Reject.ifNull(formModel);
-        Reject.ifFalse(formModel instanceof HierarchicalFormModel,
+        Reject.ifNotAssignableTo(formModel, HierarchicalFormModel.class,
             "Form model must be of type " 
             + HierarchicalFormModel.class.getName() 
             + ". Current form model is of type " 

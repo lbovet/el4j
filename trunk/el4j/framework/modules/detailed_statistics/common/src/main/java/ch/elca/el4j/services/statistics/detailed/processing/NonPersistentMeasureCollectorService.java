@@ -61,7 +61,7 @@ public class NonPersistentMeasureCollectorService implements
      *            The maximum number of Measurements in the cache.
      */
     public NonPersistentMeasureCollectorService(int maxCacheSize) {
-        Reject.ifFalse(maxCacheSize >= 0);
+        Reject.ifCondition(maxCacheSize < 0);
         m_cache = new LRUCache<String, List<MeasureItem>>(maxCacheSize);
     }
 

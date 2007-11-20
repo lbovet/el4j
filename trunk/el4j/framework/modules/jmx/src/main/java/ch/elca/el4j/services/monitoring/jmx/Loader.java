@@ -256,9 +256,9 @@ public class Loader implements ApplicationContextAware, InitializingBean,
      *            ApplicationContextAware
      */
     public void setApplicationContext(ApplicationContext applicationContext) {
-        Reject.ifFalse(applicationContext 
-            instanceof ConfigurableApplicationContext);
-        this.m_applicationContext 
+        Reject.ifNotAssignableTo(applicationContext, 
+            ConfigurableApplicationContext.class);
+        m_applicationContext 
             = (ConfigurableApplicationContext) applicationContext;
 
     }

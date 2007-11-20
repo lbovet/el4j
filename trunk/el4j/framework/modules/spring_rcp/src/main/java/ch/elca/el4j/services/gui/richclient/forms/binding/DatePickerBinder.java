@@ -71,7 +71,7 @@ public class DatePickerBinder extends AbstractBinder {
      */
     protected Binding doBind(JComponent control, FormModel formModel,
         String formPropertyPath, Map context) {
-        Reject.ifFalse(control instanceof DatePicker);
+        Reject.ifNotAssignableTo(control, DatePicker.class);
         DatePicker datePicker = (DatePicker) control;
         Binding binding 
             = new DatePickerBinding(datePicker, formModel, formPropertyPath);

@@ -61,7 +61,7 @@ public class DateToSqlType extends AbstractConverter {
         if (source == null) {
             return null;
         }
-        Reject.ifFalse(source instanceof java.util.Date);
+        Reject.ifNotAssignableTo(source, java.util.Date.class);
         java.util.Date dateSource = (java.util.Date) source;
         Object result = null;
         if (Date.class.isAssignableFrom(targetClass)) {

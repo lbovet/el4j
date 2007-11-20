@@ -80,7 +80,7 @@ public abstract class AbstractIntKeyIntOptimisticLockingDto
      */
     public final void setKey(Object keyObject) {
         Reject.ifNull(keyObject);
-        Reject.ifFalse(keyObject instanceof Number);
+        Reject.ifNotAssignableTo(keyObject, Number.class);
         int key = ((Number) keyObject).intValue();
         setKey(key);
     }

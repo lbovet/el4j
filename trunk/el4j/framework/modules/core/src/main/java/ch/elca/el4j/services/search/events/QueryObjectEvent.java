@@ -68,8 +68,7 @@ public class QueryObjectEvent extends ApplicationEvent {
      */
     public QueryObjectEvent(Object source, Collection queryObjects) {
         super(source);
-        Reject.ifFalse(queryObjects != null && queryObjects.size() > 0, 
-            "Minimum one query object required.");
+        Reject.ifEmpty(queryObjects, "Minimum one query object required.");
         CollectionUtils.containsOnlyObjectsOfType(
             queryObjects, QueryObject.class);
         m_queryObjects 

@@ -166,7 +166,7 @@ public class TextToBoolean extends AbstractConverter {
      */
     protected Object doConvert(Object source, Class targetClass) 
         throws Exception {
-        Reject.ifFalse(source instanceof String);
+        Reject.ifNotAssignableTo(source, String.class);
         String text = (String) source;
         Object result = null;
         if (StringUtils.hasText(text)) {
