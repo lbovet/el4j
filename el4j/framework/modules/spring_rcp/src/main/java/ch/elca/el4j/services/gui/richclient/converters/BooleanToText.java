@@ -100,7 +100,7 @@ public class BooleanToText extends AbstractConverter {
      */
     protected Object doConvert(Object source, Class targetClass) 
         throws Exception {
-        Reject.ifFalse(source instanceof Boolean);
+        Reject.ifNotAssignableTo(source, Boolean.class);
         Boolean b = (Boolean) source;
         String result = null;
         if (b != null) {

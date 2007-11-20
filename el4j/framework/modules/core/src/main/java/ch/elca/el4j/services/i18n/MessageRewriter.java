@@ -528,7 +528,7 @@ public class MessageRewriter {
         /** not implemented. */
         @Override
         public Object parseObject(String source, ParsePosition pos) {
-            Reject.ifFalse(false, "not implemented");
+            Reject.ifCondition(true, "not implemented");
             return null;
         }
     }

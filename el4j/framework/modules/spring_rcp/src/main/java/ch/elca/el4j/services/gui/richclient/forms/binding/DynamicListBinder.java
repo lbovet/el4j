@@ -73,7 +73,7 @@ public class DynamicListBinder extends ListBinder {
      */
     protected Binding doBind(JComponent control, FormModel formModel, 
         String formPropertyPath, Map context) {
-        Reject.ifFalse(control instanceof JList);
+        Reject.ifNotAssignableTo(control, JList.class);
         JList listControl = (JList) control;
         AbstractDynamicListBinding binding = instantiateBinding(
             listControl, formModel, formPropertyPath, context);

@@ -129,8 +129,7 @@ public final class CollectionUtils {
     public static boolean containsOnlyObjectsOfType(
         Collection c, Class<?>[] containingClassTypes) {
         Reject.ifNull(c);
-        Reject.ifNull(containingClassTypes);
-        Reject.ifFalse(containingClassTypes.length > 0);
+        Reject.ifEmpty(containingClassTypes);
         Iterator it = c.iterator();
         while (it.hasNext()) {
             Class<?> elementClass = it.next().getClass();
