@@ -38,6 +38,7 @@
             <column name="DOCUMENTDATE"/>
         </property>
         
+        <!--  readonly, lazy -->
         <!--<set name="annotations" cascade="all-delete-orphan">
             <key column="KEYTOREFERENCE"/>
             <one-to-many class="ch.elca.el4j.apps.refdb.dom.Annotation"/>

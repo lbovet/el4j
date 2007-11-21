@@ -17,6 +17,8 @@
 package ch.elca.el4j.apps.refdb.dom;
 
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 import org.hibernate.validator.Pattern;
 
@@ -35,6 +37,8 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  * @author Martin Zeltner (MZE)
  */
 @Entity
+@Table(name = "BOOKS")
+@PrimaryKeyJoinColumn(name=  "KEYTOREFERENCE")
 public class Book extends FormalPublication {
     /**
      * ISBN number of a book.

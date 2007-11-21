@@ -17,6 +17,8 @@
 package ch.elca.el4j.apps.refdb.dom;
 
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
@@ -34,6 +36,8 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  * @author Martin Zeltner (MZE)
  */
 @Entity
+@Table(name = "LINKS")
+@PrimaryKeyJoinColumn(name = "KEYTOREFERENCE")
 public class Link extends Reference {
     /**
      * Contains the url of a web page.

@@ -17,6 +17,9 @@
 package ch.elca.el4j.apps.refdb.dom;
 
 import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
@@ -38,6 +41,9 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  * @author Martin Zeltner (MZE)
  */
 @Entity
+//@MappedSuperclass
+@Table(name = "FORMALPUBLICATIONS")
+@PrimaryKeyJoinColumn(name=  "KEYTOREFERENCE")
 public class FormalPublication extends Reference {
     /**
      * Name of the author.
@@ -59,8 +65,8 @@ public class FormalPublication extends Reference {
     /**
      * @return Returns the authorName.
      */
-    @NotNull
-    @Length(min = 3)
+    //@NotNull
+    //@Length(min = 3)
     public String getAuthorName() {
         return m_authorName;
     }
@@ -78,7 +84,7 @@ public class FormalPublication extends Reference {
     /**
      * @return Returns the pageNum.
      */
-    @Pattern(regex = "[0-9]*")
+    //@Pattern(regex = "[0-9]*")
     public int getPageNum() {
         return m_pageNum;
     }

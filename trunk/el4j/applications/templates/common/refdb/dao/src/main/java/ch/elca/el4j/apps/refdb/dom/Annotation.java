@@ -19,6 +19,9 @@ package ch.elca.el4j.apps.refdb.dom;
 import java.sql.Timestamp;
 
 import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import org.hibernate.validator.NotNull;
 
@@ -38,7 +41,10 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  *
  * @author Martin Zeltner (MZE)
  */
+
 @Entity
+@Table(name="ANNOTATIONS")
+@SequenceGenerator(name="keyid_generator", sequenceName="annotation_sequence")
 public class Annotation extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * Primary key of related reference.

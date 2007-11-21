@@ -22,10 +22,14 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
+//import org.hibernate.annotations.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.Type;
 import org.hibernate.validator.AssertTrue;
-import org.hibernate.validator.Length;
+
 import org.hibernate.validator.NotNull;
 
 import ch.elca.el4j.apps.keyword.dom.Keyword;
@@ -58,6 +62,10 @@ import ch.elca.el4j.util.dom.annotations.MemberOrder;
     "keywords"
 })
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "REFERENCESTABLE")
+@SequenceGenerator(name = "keyid_generator", 
+    sequenceName = "reference_sequence")
 public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * Name of the reference (book title, ...).
@@ -120,6 +128,9 @@ public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * @return Returns the date.
      */
+    @Column(name = "DOCUMENTDATE")
+    //type is necessary for hibernate to parse date correctly
+    @Type(type = "date")
     public Date getDate() {
         return m_date;
     }
@@ -195,7 +206,7 @@ public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
      * @return Returns the name.
      */
     @NotNull
-    @Length(min = 3)
+    //@Length(min = 3)
     public String getName() {
         return m_name;
     }
@@ -228,7 +239,6 @@ public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * @return Returns the whenInserted.
      */
-    @NotNull
     public Timestamp getWhenInserted() {
         if (m_whenInserted == null) {
             m_whenInserted = new Timestamp(System.currentTimeMillis());
@@ -247,6 +257,14 @@ public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * @return Returns the keywords.
      */
+    @OneToMany ( 
+        cascade = { CascadeType.PERSIST, CascadeType.REFRESH })
+    @JoinTable(
+            name = "REFERENCEKEYWORDRELATIONSHIPS",
+            joinColumns = { @JoinColumn(name = "KEYREFERENCE") },
+            inverseJoinColumns = { @JoinColumn(name = "KEYKEYWORD") }
+    )
+    @LazyCollection(value=LazyCollectionOption.FALSE)
     public Set<Keyword> getKeywords() {
         return m_keywords;
     }
@@ -263,6 +281,7 @@ public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
      * @return Returns the set of annotations for this reference (only used if
      *         Hibernate is used to perform ORM).
      */
+    @Transient
     public Set<Annotation> getAnnotations() {
         return m_annotations;
     }
@@ -280,6 +299,7 @@ public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
      * @return Returns the set of files for this reference (only used if
      *         Hibernate is used to perform ORM).
      */
+    @Transient
     public Set<File> getFiles() {
         return m_files;
     }
@@ -297,6 +317,7 @@ public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
      * @return Returns the set of file descriptor views for this reference (only
      *         used if Hibernate is used to perform ORM).
      */
+    @Transient
     public Set<FileDescriptorView> getFileDescriptorViews() {
         return m_fileDescriptorViews;
     }

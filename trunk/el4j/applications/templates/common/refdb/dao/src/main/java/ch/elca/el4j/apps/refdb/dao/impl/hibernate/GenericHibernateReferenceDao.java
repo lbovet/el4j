@@ -63,10 +63,10 @@ public class GenericHibernateReferenceDao<T extends Reference,
         
         // TODO MZE: Is this really needed although lazy loading is already
         // switched off?
-        for (T reference : result) {
-            getConvenienceHibernateTemplate().initialize(
-                reference.getKeywords());
-        }
+//        for (T reference : result) {
+//            getConvenienceHibernateTemplate().initialize(
+//                reference.getKeywords());
+//        }
         return result;
     }
     
