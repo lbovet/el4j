@@ -19,6 +19,11 @@ package ch.elca.el4j.services.persistence.generic.dto;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
+
 /**
  * This is an abstract class for optimistic locking. The used version type is an
  * integer. Here an example, how this dto must be used in combination with 
@@ -62,6 +67,7 @@ import java.io.Serializable;
  *
  * @author Martin Zeltner (MZE)
  */
+@MappedSuperclass
 public abstract class AbstractIntOptimisticLockingDto
     implements Serializable, OptimisticLockingObject {
     /**
@@ -73,6 +79,8 @@ public abstract class AbstractIntOptimisticLockingDto
     /**
      * @return Returns the optimistic locking version.
      */
+    @Version
+    @Column(name="OPTIMISTICLOCKINGVERSION")
     public int getOptimisticLockingVersion() {
         return m_optimisticLockingVersion;
     }

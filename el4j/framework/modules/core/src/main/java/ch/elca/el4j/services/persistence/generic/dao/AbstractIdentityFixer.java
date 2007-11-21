@@ -16,8 +16,10 @@
  */
 package ch.elca.el4j.services.persistence.generic.dao;
 
+import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
@@ -39,6 +41,7 @@ import org.springframework.aop.support.IntroductionInfoSupport;
 import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.NewEntityState;
 import ch.elca.el4j.services.persistence.generic.dao.annotations.ReturnsUnchangedParameter;
 import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoChangeNotifier;
+import ch.elca.el4j.util.metadata.MetaDataCollector;
 
 /**
  * Fixes object identities mangled by loosing ORM context or by remoting.
@@ -175,6 +178,41 @@ public abstract class AbstractIdentityFixer {
         }
         return fs;
     }
+    
+    
+    /**
+     * Returns a list of all non-static AccessibleObjects
+     * (fields and methods, no constructors) of class {@code c}.
+     * Also searches in superclasses.
+     * 
+     * @param c the concerned class
+     * @return
+     */    protected static List<AccessibleObject> instanceAccessibleObjects(Class<?> c) {
+        List<AccessibleObject> fs = new ArrayList<AccessibleObject>();
+        
+        
+      
+        //TODO: also search interfaces?
+        for (Class<?> sc = c; sc != null; sc = sc.getSuperclass()) {
+           
+            //first, get fields
+            for (Field f : sc.getDeclaredFields()) {
+                if (!Modifier.isStatic(f.getModifiers())) {
+                    fs.add(f);
+                }
+            }
+            
+            //next, get methods
+            for (Method m : sc.getDeclaredMethods()) {
+                if (!Modifier.isStatic(m.getModifiers())) {
+                    fs.add(m);
+                }
+            }
+        }
+        return fs;
+    }
+    
+    
     
     /**
      * Returns the Fields corresponding to fields in class {@code c}. The fields
