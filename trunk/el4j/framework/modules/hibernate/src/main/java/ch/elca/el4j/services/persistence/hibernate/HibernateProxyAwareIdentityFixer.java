@@ -16,21 +16,26 @@
  */
 package ch.elca.el4j.services.persistence.hibernate;
 
+import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 import org.hibernate.collection.PersistentCollection;
 import org.hibernate.proxy.HibernateProxy;
+import org.springframework.util.Assert;
 
 import ch.elca.el4j.services.persistence.generic.dao.AbstractIdentityFixer;
 import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
+import ch.elca.el4j.util.metadata.MetaDataCollector;
 
 /**
  * An identity fixer for objects loaded by hibernate.
@@ -101,43 +106,54 @@ public class HibernateProxyAwareIdentityFixer
         }
     }
     
-    /** Cache for {@link #idField(Class)}. */
-    private static Map<Class<?>, Field> s_cachedIdFields
-        = new HashMap<Class<?>, Field>();
+    /** Cache for {@link #idAccessibleObject(Class)}. */
+    private static Map<Class<?>, AccessibleObject> s_cachedAccessibleObjects
+        = new HashMap<Class<?>, AccessibleObject>();
     
     /**
-     * Returns the field holding the identifier in objects of class {@code c}.
+     * Returns the AccessibleObject holding the identifier in objects of class {@code c}.
      * @param c see above
      * @return see above
      */
-    private static Field idField(Class<?> c) {
-        Field idf = s_cachedIdFields.get(c);
-        if (idf == null) {
-            for (Field f : instanceFields(c)) {
-                if (f.getAnnotation(Id.class) != null) {
-                    if (idf == null) {
-                        idf = f;
+    //TODO FBI what when there are more then one possible 
+    //AccessibleObjects annotated with @Id?
+    private static AccessibleObject idAccessibleObject(Class<?> c) {
+        AccessibleObject cachedAo = s_cachedAccessibleObjects.get(c);
+        if (cachedAo == null) {
+            for (AccessibleObject ao : instanceAccessibleObjects(c)) {
+                
+                if (ao.getAnnotation(Id.class) != null) {
+                    if (cachedAo == null) {
+                       cachedAo = ao;
                     } else {
                         assert false 
                             : "Composite identifiers are not supported.";
                     }
+                } else if (ao.getAnnotation(EmbeddedId.class) != null) {
+                    throw new RuntimeException(
+                        "@EmbeddedId annotations currently not supported.");
                 }
             }
-            assert idf != null : c;
+            assert cachedAo != null : c;
             
-            if (!Modifier.isPublic(idf.getModifiers())) {
-                final Field IDF = idf;
-                AccessController.doPrivileged(new PrivilegedAction<Object>() {
-                    public Object run() {
-                        IDF.setAccessible(true);
-                        return null;
-                    }
-                });                
+          
+            if (cachedAo instanceof Field) {
+                Field idf = (Field) cachedAo;
+                
+                if (!Modifier.isPublic(idf.getModifiers())) {
+                    final Field IDF = idf;
+                    AccessController.doPrivileged(new PrivilegedAction<Object>() {
+                        public Object run() {
+                            IDF.setAccessible(true);
+                            return null;
+                        }
+                    });                
+                }
+            
             }
-            
-            s_cachedIdFields.put(c, idf);
+            s_cachedAccessibleObjects.put(c, cachedAo);
         }
-        return idf;
+        return cachedAo;
     }
     
     /** {@inheritDoc} */
@@ -145,8 +161,30 @@ public class HibernateProxyAwareIdentityFixer
     protected Object id(Object o) {
         if (o.getClass().isAnnotationPresent(Entity.class)) {
             try {
-                Field idf = idField(o.getClass());
-                Object hid = idf.get(o);
+                AccessibleObject ao = idAccessibleObject(o.getClass());
+                
+                Object hid = null;
+                //Accessible object holding the ID is a field
+                //--> directly get its value
+                if (ao instanceof Field){
+                    hid = ((Field)ao).get(o);
+                    
+                 //it is a method, so get its return value   
+                } else if (ao instanceof Method) {
+                    
+                    Method m = (Method) ao;
+                    
+                    //but only if it has a return type different from void
+                    Assert.isTrue(m.getReturnType() != void.class);
+                   
+                    
+                    try {
+                        hid = m.invoke(o, (Object[]) null);
+                    } catch (Exception e) {
+                        hid = null;
+                    }        
+                }
+               
                 if (hid == null) {
                     return null;
                 } else {
