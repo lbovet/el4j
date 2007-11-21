@@ -19,7 +19,7 @@
     <!-- Hibernate Session Factory Bean -->
     <!--  use a one that makes annotations possible -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-        <property name="mappingResources">
+        <!-- <property name="mappingResources">
             <list>
                 <value>etc/hibernate/Keyword.hbm.xml</value>
                 <value>etc/hibernate/Reference.hbm.xml</value>
@@ -27,6 +27,18 @@
                 <value>etc/hibernate/File.hbm.xml</value>
                 <value>etc/hibernate/FileDescriptorView.hbm.xml</value>
             </list>
+        </property>-->
+        <property name="annotatedClasses">
+            <list>
+            	<value>ch.elca.el4j.apps.keyword.dom.Keyword</value>
+            	<value>ch.elca.el4j.apps.refdb.dom.Annotation</value>
+            	<value>ch.elca.el4j.apps.refdb.dom.File</value>
+            	<value>ch.elca.el4j.apps.refdb.dom.FileDescriptorView</value>
+            	<value>ch.elca.el4j.apps.refdb.dom.Reference</value>
+            	<value>ch.elca.el4j.apps.refdb.dom.Link</value>
+            	<value>ch.elca.el4j.apps.refdb.dom.FormalPublication</value>
+            	<value>ch.elca.el4j.apps.refdb.dom.Book</value>
+        	</list>
         </property>
         <property name="hibernateProperties">
             <props>

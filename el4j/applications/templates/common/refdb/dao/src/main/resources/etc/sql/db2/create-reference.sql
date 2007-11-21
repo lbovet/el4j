@@ -71,5 +71,6 @@ CREATE TABLE files (
   mimeType                  VARCHAR(32)    NOT NULL,
   contentSize               DOUBLE         NOT NULL,
   content                   BLOB           NOT NULL,
-  optimisticLockingVersion  INTEGER        NOT NULL
+  optimisticLockingVersion  INTEGER        NOT NULL,
+  dtype						VARCHAR(100)
 );

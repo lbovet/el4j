@@ -46,6 +46,7 @@ import ch.elca.el4j.tests.keyword.AbstractTestCaseBase;
  * 
  * @author Alex Mathey (AMA)
  */
+
 public abstract class AbstractKeywordDaoTest
     extends AbstractTestCaseBase {
     

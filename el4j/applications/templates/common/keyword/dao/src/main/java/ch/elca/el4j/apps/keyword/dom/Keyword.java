@@ -19,7 +19,10 @@ package ch.elca.el4j.apps.keyword.dom;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-import org.hibernate.validator.Length;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+
 import org.hibernate.validator.NotNull;
 import org.hibernate.validator.Pattern;
 
@@ -43,7 +46,11 @@ import ch.elca.el4j.util.dom.annotations.MemberOrder;
     "name",
     "description"
 })
+
+
 @Entity
+@Table(name = "KEYWORDS")
+@SequenceGenerator(name = "keyid_generator", sequenceName = "keyword_sequence")
 public class Keyword extends AbstractIntKeyIntOptimisticLockingDto {
     
     /**
@@ -61,7 +68,7 @@ public class Keyword extends AbstractIntKeyIntOptimisticLockingDto {
      * @return Returns the name.
      */
     @NotNull
-    @Length(min = 3)
+    //@Length(min = 3)
     @Pattern(regex = "[-'.a-zA-Z0-9 ]*")
     @Column(unique = true)
     public String getName() {
@@ -81,6 +88,7 @@ public class Keyword extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * @return Returns the description.
      */
+    //@Column(name="DESCRIPTION") this is not necessary
     public String getDescription() {
         return m_description;
     }

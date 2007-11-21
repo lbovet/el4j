@@ -388,7 +388,7 @@ public abstract class AbstractReferenceServiceTest
         for (Reference l : list) {
             l.getWhenInserted().setNanos(0);
             if (!(((Link) l).equals(link) || ((Link) l).equals(link2))) {
-                fail("There is an unexpected link.");
+                fail("There is an unexpected link (1).");
             }
         }
 
@@ -402,7 +402,7 @@ public abstract class AbstractReferenceServiceTest
         link4.getWhenInserted().setNanos(0);
         link2.getWhenInserted().setNanos(0);          
         
-        assertTrue("There is an unexpected link.", link4.equals(link2));
+        assertTrue("There is an unexpected link (2).", link4.equals(link2));
     }
 
     /**
