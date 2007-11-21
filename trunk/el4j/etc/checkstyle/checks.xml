@@ -85,10 +85,12 @@
         <!-- Naming Conventions -->
 
         <module name="AbstractClassName" />
-        <module name="ConstantName" />
-        <module name="LocalFinalVariableName">
+        <module name="ConstantName">
             <property name="format"
-                value="^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*|logger$" />
+                value="^([A-Z][A-Z0-9]*(_[A-Z0-9]+)*)|(s_log[a-zA-Z0-9]*)$" />
+        </module>
+        <module name="LocalFinalVariableName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$" />
         </module>
         <module name="LocalVariableName" />
         <module name="MemberName">
