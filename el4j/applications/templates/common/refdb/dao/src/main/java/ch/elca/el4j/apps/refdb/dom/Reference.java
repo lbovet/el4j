@@ -24,7 +24,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-//import org.hibernate.annotations.*;
+
+import org.hibernate.annotations.ForceDiscriminator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
@@ -63,6 +64,9 @@ import ch.elca.el4j.util.dom.annotations.MemberOrder;
 })
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING,
+    name = "CLASSTYPE")
+@DiscriminatorValue("REFERENCE")
 @Table(name = "REFERENCESTABLE")
 @SequenceGenerator(name = "keyid_generator", 
     sequenceName = "reference_sequence")
@@ -129,7 +133,7 @@ public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
      * @return Returns the date.
      */
     @Column(name = "DOCUMENTDATE")
-    //type is necessary for hibernate to parse date correctly
+    //FBI: in this case, type is necessary for hibernate to parse date correctly
     @Type(type = "date")
     public Date getDate() {
         return m_date;
@@ -257,14 +261,14 @@ public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * @return Returns the keywords.
      */
-    @OneToMany ( 
+    @OneToMany (
         cascade = { CascadeType.PERSIST, CascadeType.REFRESH })
     @JoinTable(
             name = "REFERENCEKEYWORDRELATIONSHIPS",
             joinColumns = { @JoinColumn(name = "KEYREFERENCE") },
             inverseJoinColumns = { @JoinColumn(name = "KEYKEYWORD") }
     )
-    @LazyCollection(value=LazyCollectionOption.FALSE)
+    @LazyCollection(value = LazyCollectionOption.FALSE)
     public Set<Keyword> getKeywords() {
         return m_keywords;
     }

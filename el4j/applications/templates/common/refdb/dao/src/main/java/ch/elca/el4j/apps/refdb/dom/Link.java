@@ -16,9 +16,12 @@
  */
 package ch.elca.el4j.apps.refdb.dom;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.ForeignKey;
 
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
@@ -37,6 +40,7 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  */
 @Entity
 @Table(name = "LINKS")
+@DiscriminatorValue("LINK")
 @PrimaryKeyJoinColumn(name = "KEYTOREFERENCE")
 public class Link extends Reference {
     /**

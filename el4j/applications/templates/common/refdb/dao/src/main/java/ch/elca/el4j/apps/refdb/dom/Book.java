@@ -16,6 +16,7 @@
  */
 package ch.elca.el4j.apps.refdb.dom;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -38,7 +39,8 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  */
 @Entity
 @Table(name = "BOOKS")
-@PrimaryKeyJoinColumn(name=  "KEYTOREFERENCE")
+@DiscriminatorValue("BOOK")
+@PrimaryKeyJoinColumn(name = "KEYTOREFERENCE")
 public class Book extends FormalPublication {
     /**
      * ISBN number of a book.

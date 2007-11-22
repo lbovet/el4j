@@ -27,10 +27,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import ch.elca.el4j.apps.refdb.dao.AnnotationDao;
+import ch.elca.el4j.apps.refdb.dao.BookDao;
 import ch.elca.el4j.apps.refdb.dao.FileDao;
+import ch.elca.el4j.apps.refdb.dao.FormalPublicationDao;
 import ch.elca.el4j.apps.refdb.dao.LinkDao;
 import ch.elca.el4j.apps.refdb.dom.Annotation;
+import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.File;
+import ch.elca.el4j.apps.refdb.dom.FormalPublication;
 import ch.elca.el4j.apps.refdb.dom.Link;
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
@@ -70,7 +74,19 @@ public abstract class AbstractTestCaseBase extends TestCase {
      * Link DAO. Created by application context.
      */
     private LinkDao m_linkDao;
+    
+    
+    /**
+     * FormalPublication DAO. Created by application context.
+     */
+    private FormalPublicationDao m_formalPublicationDao;
 
+    /**
+     * Book DAO. Created by application context.
+     */
+    private BookDao m_bookDao;
+
+    
     /**
      * Annotation DAO. Created by application context.
      */
@@ -206,6 +222,38 @@ public abstract class AbstractTestCaseBase extends TestCase {
         }
         return m_linkDao;
     }
+    
+    /**
+     * @return Returns the formalPublication DAO.
+     */
+    protected FormalPublicationDao getFormalPublicationDao() {
+        if (m_formalPublicationDao == null) {
+            DefaultDaoRegistry daoRegistry 
+                = (DefaultDaoRegistry) getApplicationContext()
+                    .getBean("daoRegistry");
+            m_formalPublicationDao 
+                   = (FormalPublicationDao) daoRegistry.getFor(
+                    FormalPublication.class);
+        }
+        return m_formalPublicationDao;
+    }
+    
+    
+    /**
+    * @return Returns the book DAO.
+    */
+   protected BookDao getBookDao() {
+       if (m_bookDao == null) {
+           DefaultDaoRegistry daoRegistry 
+               = (DefaultDaoRegistry) getApplicationContext()
+                   .getBean("daoRegistry");
+           m_bookDao 
+                  = (BookDao) daoRegistry.getFor(
+                   Book.class);
+       }
+       return m_bookDao;
+   }
+    
     
     /**
      * @return Returns the annotation DAO.

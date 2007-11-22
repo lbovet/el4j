@@ -33,8 +33,11 @@ import org.springframework.dao.OptimisticLockingFailureException;
 
 import ch.elca.el4j.apps.refdb.dao.AnnotationDao;
 import ch.elca.el4j.apps.refdb.dao.FileDao;
+import ch.elca.el4j.apps.refdb.dao.FormalPublicationDao;
 import ch.elca.el4j.apps.refdb.dom.Annotation;
+import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.File;
+import ch.elca.el4j.apps.refdb.dom.FormalPublication;
 import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
 
 // Checkstyle: MagicNumber off
@@ -481,6 +484,52 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
         String mimeType = "application/x-pdf";
         internalTestInsertGetRemoveFile(
             MAX_BLOB_SIZE, filepath, name, mimeType);
+        
+    }
+    /**
+     * Tests inheritance.
+     * Create a FormalPublication, a Book and a reference. Then, getAll() on
+     * FormalPublicationDAO must only return the FormalPublication
+     * object, not the Reference and not the Bool
+     */
+    public void testInsertGetFormalPublication() {
+        this.addFakeReference("Testref");
+        
+        //at first, reference
+        FormalPublication fp = new FormalPublication();
+        
+        //next, FormalPublication
+        fp.setName("TestFormalPublication");
+        fp.setAuthorName("Mister X");
+        fp.setPageNum(21);
+        
+        FormalPublicationDao dao = getFormalPublicationDao();
+        
+        dao.saveOrUpdate(fp);
+        
+        //and at least the Book
+        Book book = new Book();
+        
+        book.setName("Testbook");
+        book.setAuthorName("Mister Y");
+        book.setPageNum(22);
+        
+        getBookDao().saveOrUpdate(book);
+        
+        
+  
+        //now only! load all FormalPublications
+        List list = dao.getAll();
+        
+        
+        
+        assertTrue("Not only FormalPublication returned",
+            list.size() == 1 && 
+            list.get(0).getClass() == FormalPublication.class );
+        
+        
+        
+        
     }
 
     /**
@@ -554,5 +603,8 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
         assertEquals("The removed file is still in the DB.", 
             0, list.size());
     }
+    
+    
+    
 }
 //Checkstyle: MagicNumber on

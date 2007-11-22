@@ -17,13 +17,12 @@
 package ch.elca.el4j.apps.refdb.dom;
 
 import javax.persistence.Entity;
-import javax.persistence.MappedSuperclass;
+
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import org.hibernate.validator.Length;
-import org.hibernate.validator.NotNull;
-import org.hibernate.validator.Pattern;
+
 
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
@@ -41,9 +40,9 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  * @author Martin Zeltner (MZE)
  */
 @Entity
-//@MappedSuperclass
+@DiscriminatorValue("FORMALPUBLICATION")
 @Table(name = "FORMALPUBLICATIONS")
-@PrimaryKeyJoinColumn(name=  "KEYTOREFERENCE")
+@PrimaryKeyJoinColumn(name = "KEYTOREFERENCE")
 public class FormalPublication extends Reference {
     /**
      * Name of the author.

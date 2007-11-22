@@ -19,9 +19,7 @@ package ch.elca.el4j.apps.refdb.dom;
 import java.util.Arrays;
 
 import javax.persistence.Entity;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+
 
 import org.hibernate.validator.NotNull;
 
@@ -83,6 +81,8 @@ public class File extends FileDescriptorView {
         m_content = content;
     }
 
+    
+    //the following properties are inherited by FiledescriptorView
     /**
      * @return Returns the mimeType
      */
