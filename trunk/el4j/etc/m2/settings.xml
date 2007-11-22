@@ -279,7 +279,16 @@
                 <tomcat5x.container.log.file>${project.build.directory}/logs/tomcat5x/output.log</tomcat5x.container.log.file>
                 <tomcat5x.cargo.log.file>${project.build.directory}/logs/tomcat5x/cargo.log</tomcat5x.cargo.log.file>
                 <tomcat5x.eclipse.runtime.facet.name>Apache Tomcat v5.5</tomcat5x.eclipse.runtime.facet.name>
-                
+
+                <!-- Tomcat6x -->
+                <tomcat6x.basedir>${el4j.project.tools}/tomcat</tomcat6x.basedir>
+                <tomcat6x.version>6.0.14</tomcat6x.version>
+                <tomcat6x.home>${tomcat6x.basedir}/apache-tomcat-${tomcat6x.version}/apache-tomcat-${tomcat6x.version}</tomcat6x.home>
+                <tomcat6x.zipDownloadUrl>http://el4.elca-services.ch/el4j/tools/tomcat/apache-tomcat-${tomcat6x.version}.zip</tomcat6x.zipDownloadUrl>
+                <tomcat6x.container.log.file>${project.build.directory}/logs/tomcat6x/output.log</tomcat6x.container.log.file>
+                <tomcat6x.cargo.log.file>${project.build.directory}/logs/tomcat6x/cargo.log</tomcat6x.cargo.log.file>
+                <tomcat6x.eclipse.runtime.facet.name>Apache Tomcat v6.0</tomcat6x.eclipse.runtime.facet.name>
+
                 <!-- Weblogic9x -->
                 <weblogic9x.home>${el4j.project.tools}/bea/weblogic90</weblogic9x.home>
                 <weblogic9x.server.name>myserver</weblogic9x.server.name>
