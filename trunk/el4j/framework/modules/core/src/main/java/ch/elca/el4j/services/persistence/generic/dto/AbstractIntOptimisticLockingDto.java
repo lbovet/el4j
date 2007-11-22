@@ -20,7 +20,6 @@ package ch.elca.el4j.services.persistence.generic.dto;
 import java.io.Serializable;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
@@ -80,7 +79,7 @@ public abstract class AbstractIntOptimisticLockingDto
      * @return Returns the optimistic locking version.
      */
     @Version
-    @Column(name="OPTIMISTICLOCKINGVERSION")
+    @Column(name = "OPTIMISTICLOCKINGVERSION")
     public int getOptimisticLockingVersion() {
         return m_optimisticLockingVersion;
     }
