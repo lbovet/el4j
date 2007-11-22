@@ -17,7 +17,14 @@
 
 package ch.elca.el4j.services.persistence.generic.dto;
 
+import javax.persistence.Column;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
+
 
 import ch.elca.el4j.util.codingsupport.Reject;
 
@@ -35,6 +42,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  *
  * @author Martin Zeltner (MZE)
  */
+@MappedSuperclass
 public abstract class AbstractIntKeyIntOptimisticLockingDto
     extends AbstractIntOptimisticLockingDto
     implements PrimaryKeyOptimisticLockingObject {
@@ -42,7 +50,6 @@ public abstract class AbstractIntKeyIntOptimisticLockingDto
     /**
      * Primary key.
      */
-    @Id
     private int m_key;
     
     /**
@@ -53,6 +60,9 @@ public abstract class AbstractIntKeyIntOptimisticLockingDto
     /**
      * @return Returns the key.
      */
+    @Id @GeneratedValue(strategy = GenerationType.AUTO, 
+        generator = "keyid_generator")
+    @Column(name = "KEYID")
     public final int getKey() {
         return m_key;
     }
@@ -60,6 +70,7 @@ public abstract class AbstractIntKeyIntOptimisticLockingDto
     /**
      * {@inheritDoc}
      */
+    @Transient
     public final Object getKeyAsObject() {
         return isKeyNew() ? null : new Integer(getKey());
     }
@@ -89,6 +100,7 @@ public abstract class AbstractIntKeyIntOptimisticLockingDto
      * @return Returns <code>true</code> if the key has never be set by using
      *         method <code>setKey</code>.
      */
+    @Transient
     public final boolean isKeyNew() {
         return m_keyNew;
     }
