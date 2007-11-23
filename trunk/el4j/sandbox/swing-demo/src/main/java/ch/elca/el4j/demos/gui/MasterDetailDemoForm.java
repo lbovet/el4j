@@ -1,28 +1,28 @@
 /*
  * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
  * the spring framework, http://el4j.sf.net
- * Copyright (C) 2006 by ELCA Informatique SA, Av. de la Harpe 22-24,
+ * Copyright (C) 2005 by ELCA Informatique SA, Av. de la Harpe 22-24,
  * 1000 Lausanne, Switzerland, http://www.elca.ch
  *
- * EL4J is published under the GNU General Public License (GPL) Version 2.0.
- * http://www.gnu.org/licenses/
+ * EL4J is published under the GNU Lesser General Public License (LGPL)
+ * Version 2.1. See http://www.gnu.org/licenses/
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
+ * GNU Lesser General Public License for more details.
  *
  * For alternative licensing, please contact info@elca.ch
  */
 package ch.elca.el4j.demos.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import org.jdesktop.application.Action;
@@ -33,8 +33,6 @@ import org.jdesktop.beansbinding.BindingGroup;
 import org.jdesktop.beansbinding.Bindings;
 import org.jdesktop.beansbinding.Property;
 import org.jdesktop.swingbinding.validation.ValidatedProperty;
-import org.jdesktop.swingx.JXTable;
-import org.springframework.context.ApplicationContext;
 
 import com.silvermindsoftware.hitch.Binder;
 import com.silvermindsoftware.hitch.BinderManager;
@@ -44,9 +42,10 @@ import com.silvermindsoftware.hitch.binding.components.TableBinding;
 
 import ch.elca.el4j.demos.model.DefaultPerson;
 import ch.elca.el4j.demos.model.Person;
-import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
 import ch.elca.el4j.gui.swing.GUIApplication;
 import ch.elca.el4j.gui.swing.widgets.IntegerField;
+import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
+import ch.elca.el4j.model.tablemodel.TableSorter;
 
 import zappini.designgridlayout.DesignGridLayout;
 
@@ -70,7 +69,7 @@ public class MasterDetailDemoForm extends JPanel {
     private JCheckBox smart;
     private JTextField age;
     
-    private JXTable children;
+    private JTable children;
     
     private JButton m_createButton;
     private JButton m_deleteButton;
@@ -79,11 +78,6 @@ public class MasterDetailDemoForm extends JPanel {
      * The binder instance variable.
      */
     private final Binder binder = BinderManager.getBinder(this);
-    
-    /**
-     * The current Spring context.
-     */
-    private ApplicationContext m_springContext;
 
     /**
      * The model to bind to this form.
@@ -91,8 +85,8 @@ public class MasterDetailDemoForm extends JPanel {
     @ModelObject(isDefault = true)
     private Person person;
 
-    public MasterDetailDemoForm(GUIApplication app) {
-        m_springContext = app.getSpringContext();
+    public MasterDetailDemoForm() {
+        GUIApplication app = GUIApplication.getInstance();
         
         createComponents();
         createLayout();
@@ -110,7 +104,8 @@ public class MasterDetailDemoForm extends JPanel {
      */
     @Action
     public void create() {
-        Person newChild = (Person) m_springContext.getBean("person");
+        Person newChild = new DefaultPerson();
+        newChild = PropertyChangeListenerMixin.addPropertyChangeMixin(newChild);
         newChild.setFirstName(firstName.getText());
         newChild.setLastName(lastName.getText());
         newChild.setSmart(smart.isSelected());
@@ -143,11 +138,9 @@ public class MasterDetailDemoForm extends JPanel {
         firstName = new JTextField();
         lastName = new JTextField();
         smart = new JCheckBox();
-        // Checkstyle: MagicNumber off
-        age = new IntegerField(new Color(255, 128, 128));
-        // Checkstyle: MagicNumber on        
+        age = new IntegerField();     
         
-        children = new JXTable();
+        children = new JTable();
         
         m_createButton = new JButton();
         m_deleteButton = new JButton();
@@ -253,15 +246,22 @@ public class MasterDetailDemoForm extends JPanel {
         masterDetail.addBinding(tmpBinding);
         
         masterDetail.bind();
+        
+        // add sorting functionality to table
+        TableSorter sorter = new TableSorter(
+            children.getModel(), children.getTableHeader());
+        children.setModel(sorter);
+        
     }
     
     /**
      * Add sample data to the model.
      */
     private void addData() {
-        // add a child, shows how to get a model instance via Spring
-        Person child1 = (Person) m_springContext.getBean("person");
-
+        // add a child
+        Person child1 = new DefaultPerson();
+        child1 = PropertyChangeListenerMixin.addPropertyChangeMixin(child1);
+        
         // Checkstyle: MagicNumber off
         child1.setFirstName("FirstName of Child1");
         child1.setLastName("LastName of Child1");
@@ -269,7 +269,8 @@ public class MasterDetailDemoForm extends JPanel {
         person.getChildren().add(child1);
         
         // add another child to the table
-        Person child2 = (Person) m_springContext.getBean("person");
+        Person child2 = new DefaultPerson();
+        child2 = PropertyChangeListenerMixin.addPropertyChangeMixin(child2);
         child2.setFirstName("FirstName of Child2");
         child2.setLastName("LastName of Child2");
         child2.setAge(3);

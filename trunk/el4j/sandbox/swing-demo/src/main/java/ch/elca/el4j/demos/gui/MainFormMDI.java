@@ -14,50 +14,40 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-
 package ch.elca.el4j.demos.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JInternalFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.InternalFrameEvent;
 
 import org.bushe.swing.event.EventBus;
 import org.jdesktop.application.Action;
-import org.jdesktop.application.Application;
-import org.jdesktop.application.ApplicationContext;
 
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.jgoodies.looks.plastic.theme.ExperienceBlue;
 
-import ch.elca.el4j.core.context.ModuleApplicationContext;
+import ch.elca.el4j.core.context.ModuleApplicationContextConfiguration;
 import ch.elca.el4j.demos.gui.events.ExampleEvent;
 import ch.elca.el4j.demos.gui.exceptions.ExampleExceptionHandler;
-import ch.elca.el4j.demos.gui.util.JInteralFrameWrapper;
 import ch.elca.el4j.gui.swing.GUIApplication;
 import ch.elca.el4j.gui.swing.MDIApplication;
-import ch.elca.el4j.gui.swing.dialog.about.AboutDialog;
-import ch.elca.el4j.gui.swing.dialog.search.AbstractSearchDialog;
 import ch.elca.el4j.gui.swing.exceptions.Exceptions;
-import ch.elca.el4j.gui.swing.layout.EqualsLayout;
 import ch.elca.el4j.gui.swing.splash.ImageSplashScreen;
 
 /**
  * Sample MDI application that demonstrates how to use the framework.
  * 
- * See also associated MainForm.properties file that contains resources
+ * See also associated MainFormMDI.properties file that contains resources
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -86,31 +76,19 @@ public class MainFormMDI extends MDIApplication {
     @Override
     protected void startup() {
         getMainFrame().setJMenuBar(createMenuBar());
-        show(createMainPanel());
+        showMain(createMainPanel());
     }
     
-    
+    /**
+     * @return    the created main panel
+     */
     private JComponent createMainPanel() {
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(createToolBar(), BorderLayout.NORTH);
         
         createDefaultDesktopPane();
-
-        /*
-        // create panel on bottom of MDI "desktop"
-        JPanel bottomPanel = new JPanel(new EqualsLayout(3,5));
-        bottomPanel.setBorder(BorderFactory.createTitledBorder("Test"));
-        JButton addButton2 = new JButton("sendEvent");
-        addButton2.setAction(getAction("sendExampleEvent"));
-        JButton addButton3 = new JButton("debug");
-        addButton3.setAction(getAction("debug"));
-        bottomPanel.add(addButton2);
-        bottomPanel.add(addButton3);
         
-        panel.add(bottomPanel, BorderLayout.SOUTH);
-        */
-        
-        // popup menu
+        // show a popup menu consisting of menu items
         m_popup = createPopup(new String[] {
             "showDemo1", "showDemo2", "---", "quit"});
         m_desktopPane.addMouseListener(new MouseAdapter() {
@@ -122,50 +100,47 @@ public class MainFormMDI extends MDIApplication {
             }
         });
         
+        // set default size (if size has not yet been saved by AppFW)
+        getMainFrame().getContentPane().setPreferredSize(
+            new Dimension(640, 480));
+        
         panel.add(m_desktopPane, BorderLayout.CENTER);
         return panel;
     }
 
     @Action
     public void showDemo1() {
-        JInternalFrame jif = new JInteralFrameWrapper(
-            "demo1", new ResourceInjectionDemoForm(this));
-        showInternalFrame(jif);
+        show("ResourceInjectionDemoForm");
     }
     
     @Action
     public void showDemo2() {
-        JInternalFrame jif = new JInteralFrameWrapper(
-            "demo2", new CancelableDemoForm(this));
-        showInternalFrame(jif);
+        show("CancelableDemoForm");
     }
 
     @Action
     public void showDemo3() {
-        JInternalFrame jif = new JInteralFrameWrapper(
-            "demo3", new MasterDetailDemoForm(this));
-        showInternalFrame(jif);
+        show("MasterDetailDemoForm");
     }
     
     @Action
     public void showDemo4() {
-        JInternalFrame jif = new JInteralFrameWrapper(
-            "demo4", new BindingDemoForm(this));
-        showInternalFrame(jif);
+        show("BindingDemoForm");
     }
     
     @Action
     public void showDemo5() {
-        JInternalFrame jif = new JInteralFrameWrapper(
-            "demo5", new EventBusDemoForm(this));
-        showInternalFrame(jif);
+        show("EventBusDemoForm");
     }
     
     @Action
     public void showSearch() {
-        JInternalFrame jif = new JInteralFrameWrapper(
-            "search", new SearchDialog(this));
-        showInternalFrame(jif);
+        show("SearchDialog");
+    }
+    
+    @Action
+    public void showRefDB() {
+        show("RefDBDemoForm");
     }
     
     @Action
@@ -173,20 +148,10 @@ public class MainFormMDI extends MDIApplication {
         EventBus.publish(new ExampleEvent("I'm an Example Event!"));
     }
     
-    /**
-     * Toggle admin flag (for visibility of menu entry)
-     */
-    @Action
-    public void debug() {
-        // enable help menuItem
-        boolean oldAdmin = m_admin;
-        m_admin = true;
-        firePropertyChange("admin", oldAdmin, m_admin);
-        
-        // print event subscribers
-        System.out.println(EventBus.getSubscribers(InternalFrameEvent.class));
-    }
 
+    /**
+     * A "special" help only for admins (for demo purpose only).
+     */
     @Action(enabledProperty = "admin")
     public void help() {
         /*
@@ -212,24 +177,38 @@ public class MainFormMDI extends MDIApplication {
         */
     }
     
+    /**
+     * Toggle admin flag (for visibility of menu entry).
+     */
     @Action
-    public void about() {
-        if (aboutDialog == null) {
-            aboutDialog = new AboutDialog(this);
-        }
-        show(aboutDialog);
+    public void toggleAdmin() {
+        // enable help menuItem
+        boolean oldAdmin = m_admin;
+        m_admin = !m_admin;
+        firePropertyChange("admin", oldAdmin, m_admin);
     }
     
-    protected AboutDialog aboutDialog;
+    /**
+     * Show the about dialog.
+     */
+    @Action
+    public void about() {
+        show("AboutDialog");
+    }
     
     /**
      * Indicates whether permission "admin" is set
      *  (used via enabledProperty field of \@Action).
+     *  @return    <code>true</code> if user has admin rights
      */
     public boolean isAdmin() {
         return hasRole("ROLE_SUPERVISOR");
     }
     
+    /**
+     * @param requestedRole    the role to check
+     * @return                 <code>true</code> if user has specified role.
+     */
     public boolean hasRole(String requestedRole) {
         /*  commented out for now (until acegi security is set up):
          *   
@@ -244,15 +223,18 @@ public class MainFormMDI extends MDIApplication {
         return m_admin;
     }  
  
-
+    /**
+     * @return    the created menu bar
+     */
     private JMenuBar createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
         String[] fileMenuActionNames = {"quit"};
         String[] editMenuActionNames = {"cut", "copy", "paste", "delete"};
         String[] demoMenuActionNames
             = {"showDemo1", "showDemo2", "showDemo3", "showDemo4", "---",
-            "showSearch", "---", "showDemo5", "sendExampleEvent"};
-        String[] helpMenuActionNames = {"help", "about"};
+                "showSearch", "showRefDB", "---",
+                "showDemo5", "sendExampleEvent"};
+        String[] helpMenuActionNames = {"help", "toggleAdmin", "about"};
         menuBar.add(createMenu("fileMenu", fileMenuActionNames));
         menuBar.add(createMenu("editMenu", editMenuActionNames));
         menuBar.add(createMenu("demoMenu", demoMenuActionNames));
@@ -260,12 +242,14 @@ public class MainFormMDI extends MDIApplication {
         return menuBar;
     }
     
-
+    /**
+     * @return    the created tool bar
+     */
     private JToolBar createToolBar() {
-        String[] toolbarActionNames = {"quit", "help"};
+        String[] toolbarActionNames = {"quit"};
         JToolBar toolBar = new JToolBar();
         toolBar.setFloatable(false);
-        Border border = new EmptyBorder(2, 9, 2, 9); // top, left, bottom, right
+        Border border = new EmptyBorder(2, 9, 2, 9);
         for (String actionName : toolbarActionNames) {
             JButton button = new JButton();
             button.setBorder(border);
@@ -295,16 +279,22 @@ public class MainFormMDI extends MDIApplication {
 
             PlasticLookAndFeel.setPlasticTheme(new ExperienceBlue());
 
-            String[] applicationContextPaths = {"classpath*:mandatory/*.xml",
+            String[] applicationContextPaths = {
+                "classpath*:mandatory/*.xml",
+                "classpath*:mandatory/refdb/*.xml",
                 "classpath*:scenarios/db/raw/*.xml",
                 "classpath*:scenarios/dataaccess/hibernate/*.xml",
                 "classpath*:scenarios/dataaccess/hibernate/refdb/*.xml",
-                "classpath:scenarios/ch/elca/el4j/demos/gui/*.xml"};
+                "classpath*:optional/interception/transactionJava5Annotations.xml",
+                "classpath:scenarios/swing/demo/*.xml"};
+            
+            ModuleApplicationContextConfiguration contextConfig
+                = new ModuleApplicationContextConfiguration();
+            
+            contextConfig.setInclusiveConfigLocations(applicationContextPaths);
 
-            ModuleApplicationContext springContext = new ModuleApplicationContext(
-                applicationContextPaths, false);
 
-            GUIApplication.launch(MainFormMDI.class, args, springContext);
+            GUIApplication.launch(MainFormMDI.class, args, contextConfig);
 
         } finally {
             if (splashScreen != null) {

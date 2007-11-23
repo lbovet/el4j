@@ -1,16 +1,16 @@
 /*
  * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
  * the spring framework, http://el4j.sf.net
- * Copyright (C) 2006 by ELCA Informatique SA, Av. de la Harpe 22-24,
+ * Copyright (C) 2005 by ELCA Informatique SA, Av. de la Harpe 22-24,
  * 1000 Lausanne, Switzerland, http://www.elca.ch
  *
- * EL4J is published under the GNU General Public License (GPL) Version 2.0.
- * http://www.gnu.org/licenses/
+ * EL4J is published under the GNU Lesser General Public License (LGPL)
+ * Version 2.1. See http://www.gnu.org/licenses/
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
+ * GNU Lesser General Public License for more details.
  *
  * For alternative licensing, please contact info@elca.ch
  */
@@ -59,14 +59,15 @@ public class SearchDialog extends AbstractSearchDialog {
     private Task m_currentSearch = null;
     
     /**
-     * @param app    the appFramework application
+     * The constructor.
      */
-    public SearchDialog(GUIApplication app) {
-        super(app);
+    public SearchDialog() {
+        super();
         
-        m_application = app;
-        m_resourceMap = app.getContext().getResourceMap(SearchDialog.class);
-        m_searchButton.setAction(app.getAction(this, "search"));
+        m_application = GUIApplication.getInstance();
+        m_resourceMap = m_application.getContext()
+            .getResourceMap(SearchDialog.class);
+        m_searchButton.setAction(m_application.getAction(this, "search"));
     }
     
     /** {@inheritDoc} */
@@ -137,6 +138,11 @@ public class SearchDialog extends AbstractSearchDialog {
             m_currentSearch = null;
         }
         
+        /**
+         * Sends a progess event via eventbus.
+         * 
+         * @param message    the message to send
+         */
         private void sendEvent(String message) {
             EventBus.publish(new SearchProgressEvent(message));
         }
@@ -165,6 +171,6 @@ public class SearchDialog extends AbstractSearchDialog {
      * @return      the String associated with the given resource ID
      */
     protected String getRes(String id) {
-        return m_resourceMap.getString(id, new Object[0]);
+        return m_resourceMap.getString(id);
     }
 }

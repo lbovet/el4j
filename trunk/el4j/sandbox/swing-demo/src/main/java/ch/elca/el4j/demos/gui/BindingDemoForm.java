@@ -1,8 +1,24 @@
+/*
+ * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
+ * the spring framework, http://el4j.sf.net
+ * Copyright (C) 2005 by ELCA Informatique SA, Av. de la Harpe 22-24,
+ * 1000 Lausanne, Switzerland, http://www.elca.ch
+ *
+ * EL4J is published under the GNU Lesser General Public License (LGPL)
+ * Version 2.1. See http://www.gnu.org/licenses/
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * For alternative licensing, please contact info@elca.ch
+ */
 package ch.elca.el4j.demos.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -13,20 +29,20 @@ import org.jdesktop.beansbinding.Binding;
 import org.jdesktop.beansbinding.BindingGroup;
 import org.jdesktop.beansbinding.Bindings;
 import org.jdesktop.beansbinding.Property;
-import org.springframework.context.ApplicationContext;
 
 import com.silvermindsoftware.hitch.Binder;
 import com.silvermindsoftware.hitch.BinderManager;
 import com.silvermindsoftware.hitch.annotations.Form;
 import com.silvermindsoftware.hitch.annotations.ModelObject;
 import com.silvermindsoftware.hitch.binding.components.ListBinding;
+import com.silvermindsoftware.hitch.validation.response.ValidationResponder;
 
+import ch.elca.el4j.demos.gui.validation.CustomValidationResponder;
 import ch.elca.el4j.demos.model.DefaultPerson;
 import ch.elca.el4j.demos.model.MyNumber;
 import ch.elca.el4j.demos.model.Person;
-import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
-import ch.elca.el4j.gui.swing.GUIApplication;
 import ch.elca.el4j.gui.swing.widgets.IntegerField;
+import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
 
 import zappini.designgridlayout.DesignGridLayout;
 import zappini.designgridlayout.Row;
@@ -52,16 +68,13 @@ public class BindingDemoForm extends JPanel {
 
     private JTextField m_curListSelection;
     private JList numbers;
+    
+    private JLabel validationMessage;
 
     /**
      * The binder instance variable.
      */
     private final Binder m_binder = BinderManager.getBinder(this);
-    
-    /**
-     * The current Spring context.
-     */
-    private ApplicationContext m_springContext;
 
     /**
      * The model to bind to this form.
@@ -70,9 +83,7 @@ public class BindingDemoForm extends JPanel {
     private Person person;
 
     @SuppressWarnings("unchecked")
-    public BindingDemoForm(GUIApplication app) {
-        m_springContext = app.getSpringContext();
-        
+    public BindingDemoForm() {
         createComponents();
         createLayout();
 
@@ -90,12 +101,12 @@ public class BindingDemoForm extends JPanel {
     private void createComponents() {
         firstName = new JTextField();
         lastName = new JTextField();
-        // Checkstyle: MagicNumber off
-        age = new IntegerField(new Color(255, 128, 128));
-        // Checkstyle: MagicNumber on
+        age = new IntegerField();
         m_curListSelection = new JTextField();
 
         numbers = new JList();
+        
+        validationMessage = new JLabel();
     }
     
     /**
@@ -116,18 +127,22 @@ public class BindingDemoForm extends JPanel {
         layout.row().left().add(
             "These fields are bound to the underlying Person model.");
         layout.row().left().add(
-            "Validation: Firstname must be longer than 3 charcters.");
-        layout.row().add("First Name").add(firstName, 2).
-            add("Last Name").add(lastName, 2);
+            "Validation Info: Firstname must be longer than 3 charcters.");
+
+        layout.row().add("First Name").add(firstName, 2)
+            .add("Last Name").add(lastName, 2);
         layout.row().add("Age").add(age, 2).add(Row.EMPTY, 3);
+        layout.row().add("Current Validation Message:")
+        .add(validationMessage, 3);
         
         // add a vertical spacer
         layout.row().height(20);
         
         layout.row().left().add(
             "Edit list items. Negative numbers are invalid.");
-        layout.row().add("List Selection").add(m_curListSelection, 2).
-            add("The list").add(numbers, 2);
+        layout.row().add("List Selection").add(m_curListSelection, 2)
+            .add("The list").add(numbers, 2);
+        
         // Checkstyle: MagicNumber on
     }
     
@@ -148,17 +163,25 @@ public class BindingDemoForm extends JPanel {
 
         // add initial numbers
         // Checkstyle: MagicNumber off
-        MyNumber aNumber = (MyNumber) m_springContext.getBean("number");
+        MyNumber aNumber = new MyNumber();
+        aNumber = PropertyChangeListenerMixin.addPropertyChangeMixin(aNumber);
         aNumber.setValue(3);
         person.getNumbers().add(aNumber);
         
-        aNumber = (MyNumber) m_springContext.getBean("number");
+        aNumber = new MyNumber();
+        aNumber = PropertyChangeListenerMixin.addPropertyChangeMixin(aNumber);
         aNumber.setValue(2);
         person.getNumbers().add(aNumber);
         // Checkstyle: MagicNumber on
         
         // show the "value" property in the JList
         m_binder.registerBinding(numbers, new ListBinding("value"));
+        
+        ValidationResponder responder
+            = new CustomValidationResponder(validationMessage);
+        
+        m_binder.registerValidationResponder(
+            m_binder.getAutoBinding(this, false), responder);
 
         // bind the variable "person" to "this"
         // this interprets the @ModelObject annotation (see above)
@@ -167,6 +190,7 @@ public class BindingDemoForm extends JPanel {
 
         
         // bind value of selected item in the list to a textField
+        // there is no explicit validation (invalid values are silently dropped)
         Property selectedlistP = BeanProperty.create("selectedElement.value");
         Property textP = BeanProperty.create("text");
         Binding selListBinding = Bindings.createAutoBinding(
@@ -185,7 +209,8 @@ public class BindingDemoForm extends JPanel {
         person.setLastName("Binding");
 
         // add a validated number to the list
-        MyNumber aNumber = (MyNumber) m_springContext.getBean("number");
+        MyNumber aNumber = new MyNumber();
+        aNumber = PropertyChangeListenerMixin.addPropertyChangeMixin(aNumber);
         // Checkstyle: MagicNumber off
         aNumber.setValue(-7);
         // Checkstyle: MagicNumber on
