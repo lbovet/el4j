@@ -90,13 +90,14 @@ import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
  * @author Martin Zeltner (MZE)
  */
 public class ModuleApplicationContext extends AbstractXmlApplicationContext {
-    public final static String EL4J_DEBUGGING_LOGGER = "el4j.debugging";
+    public static final String EL4J_DEBUGGING_LOGGER = "el4j.debugging";
     
     /** 
-     * This logger is used to print out some global debugging info. Consult it for
-     *   info what is going on.
+     * This logger is used to print out some global debugging info.
+     * Consult it for info what is going on.
      */
-    protected static Log s_el4jLogger = LogFactory.getLog( EL4J_DEBUGGING_LOGGER);
+    protected static Log s_el4jLogger
+        = LogFactory.getLog(EL4J_DEBUGGING_LOGGER);
     
     /**
      * Inclusive config locations.
