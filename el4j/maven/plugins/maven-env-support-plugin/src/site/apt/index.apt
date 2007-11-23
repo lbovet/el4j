@@ -7,10 +7,10 @@
 
 Environment support plugin
 
-  The Environment support plugin is used to have environment variables available
-  in Maven for build system task and available while the application is running.
+  The Environment plugin is used to have the same environment variables 
+  available (1) in maven for build system tasks and (2) while applications are running.
   
-  Mostly an environment variable is defined as a property in a Maven pom file.
+  Typically an environment variable is defined as a property in a maven pom file.
   Here an example:
   
 +----------------
@@ -32,15 +32,16 @@ Environment support plugin
 </project>
 +----------------
 
-  To have the properties <<<rmi.host>>> and <<<rmi.port>>> now available on 
-  application runtime we have to <share> these properties. In EL4J this is done
+  To have the properties <<<rmi.host>>> and <<<rmi.port>>> also available during 
+  application runtime we have to <share> these properties between the 2 "worlds" 
+  (maven and the application runtime). In EL4J this is done
   the Spring way via a properties file. The EL4J <<env-module>> expects the
-  file <<<env/env.properties>>> on classpath.
+  file <<<env/env.properties>>> in the classpath.
   
   Maven is able to filter resources, that means that placeholders will be 
-  replaced by its value. To have now the properties <<<rmi.host>>> and 
-  <<<rmi.port>>> with exactly the same name on runtime we have to write the 
-  <<<env.properties>>> file like the following:
+  replaced by their values. To have now the properties <<<rmi.host>>> and 
+  <<<rmi.port>>> with exactly the same name during runtime we have to write the 
+  <<<env.properties>>> file like this:
   
 +----------------
 rmi.host=${rmi.host}
@@ -50,7 +51,7 @@ rmi.port=${rmi.port}
   You already know the path <<<src/main/resources>>>. Resources placed in this
   path will be copied 1:1 to the place where the compiled Java sources are 
   (by default <<<target/classes>>>). Now we have similar path <<<src/main/env>>>.
-  Resources in this path will be copied filtered i.e. the placeholders will be
+  Resources in this path will be copied and filtered i.e. the placeholders will be
   replaced. The default target path for filtered files is <<<target/env>>>. This
   path is handled like the <<<src/main/resources>>> path. To have this behaviour
   we must define the following in our parent pom (this is already made for in 
@@ -97,7 +98,7 @@ rmi.port=${rmi.port}
 </project>
 +----------------
 
-  The complete the example above we have to place the <<<env.properties>>> file 
+  To complete the example above we have to place the <<<env.properties>>> file 
   in <<<src/main/env/env>>>.
   
   The filtered <<<env.properties>>> file will look like the following and can 
@@ -108,7 +109,7 @@ rmi.host=localhost
 rmi.port=8099
 +----------------
 
-  If you create an Eclipse project for your not-pom artifact you will have path
+  If you create an Eclipse project for your non-pom artifact you will have the path
   <<<target/env>>> as source folder available. By this you can clean your Eclipse
   project without loosing the filtered file.
   
