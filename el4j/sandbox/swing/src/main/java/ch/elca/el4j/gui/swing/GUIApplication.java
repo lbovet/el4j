@@ -14,30 +14,33 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-
 package ch.elca.el4j.gui.swing;
 
-import java.awt.Component;
 import java.awt.EventQueue;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.Action;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
 import org.springframework.context.ApplicationContext;
 
+import ch.elca.el4j.core.context.ModuleApplicationContext;
+import ch.elca.el4j.core.context.ModuleApplicationContextConfiguration;
 import ch.elca.el4j.gui.swing.exceptions.Exceptions;
+import ch.elca.el4j.gui.swing.wrapper.JFrameWrapper;
+import ch.elca.el4j.gui.swing.wrapper.JFrameWrapperFactory;
 
-/** 
+/**
  * Parent class for new applications. (For MDI applications refer to 
  *  {@link ch.elca.el4j.gui.swing.MDIApplication })
  * 
@@ -50,14 +53,23 @@ import ch.elca.el4j.gui.swing.exceptions.Exceptions;
  *   * defines a getAction(String) method
  *      (refer to recommended programming pattern with this method of 
  *       the app framework )
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Stefan Wismer (SWI)
  */
 public abstract class GUIApplication extends SingleFrameApplication {
 
     /**
      * The logger.
      */
-    private static final Logger s_logger = Logger.getLogger(
-        GUIApplication.class.getName());
+    private static final Log s_logger = LogFactory.getLog(
+        GUIApplication.class);
 
     /**
      * The Spring context.
@@ -92,12 +104,12 @@ public abstract class GUIApplication extends SingleFrameApplication {
      *            the application class to launch
      * @param args
      *            command line arguments
-     * @param springContext
-     *            spring application context
+     * @param contextConfig
+     *            spring application context configuration
      */
     public static synchronized <T extends GUIApplication> void launch(
         final Class<T> applicationClass, final String[] args,
-        final ApplicationContext springContext) {
+        final ModuleApplicationContextConfiguration contextConfig) {
 
         // install exception handler
         Thread.setDefaultUncaughtExceptionHandler(Exceptions.getInstance());
@@ -110,19 +122,58 @@ public abstract class GUIApplication extends SingleFrameApplication {
                     Application.setInstance(application);
 
                     // new: set the spring context early
-                    application.setSpringContext(springContext);
+                    application.setSpringContext(new ModuleApplicationContext(
+                        contextConfig));
                     application.initialize(args);
                     application.startup();
                     application.waitForReady();
                 } catch (Exception e) {
                     String msg = String.format(
                         "Application %s failed to launch", applicationClass);
-                    s_logger.log(Level.SEVERE, msg, e);
+                    s_logger.error(msg, e);
                     throw (new Error(msg, e));
                 }
             }
         };
         EventQueue.invokeLater(doCreateAndShowGUI);
+    }
+    
+    /**
+     * @return    the current instance
+     */
+    public static GUIApplication getInstance() {
+        return (GUIApplication) Application.getInstance();
+    }
+    
+    /**
+     * Show a component which should be created by Spring.
+     * @param beanName    the Spring bean name
+     */
+    @SuppressWarnings("unchecked")
+    public void show(String beanName) {
+        Class beanClass = m_springContext.getType(beanName);
+        if (JComponent.class.isAssignableFrom(beanClass)) {
+            show((JComponent) m_springContext.getBean(beanName));
+        } else if (JDialog.class.isAssignableFrom(beanClass)) {
+            show((JDialog) m_springContext.getBean(beanName));
+        }
+    }
+    
+    /**
+     * Show a nested component.
+     * @param component    the component to show
+     */
+    public void show(JComponent component) {
+        JFrameWrapper wrapper = JFrameWrapperFactory.wrap(component);
+        show(wrapper);
+    }
+    
+    /**
+     * Show the main frame.
+     * @param component    the component to put into the main frame
+     */
+    public void showMain(JComponent component) {
+        super.show(component);
     }
 
     /**
@@ -219,7 +270,7 @@ public abstract class GUIApplication extends SingleFrameApplication {
         org.jdesktop.application.ApplicationContext ac
             = Application.getInstance().getContext();
 
-        return ac.getResourceMap().getString(id, new Object[0]);
+        return ac.getResourceMap().getString(id);
     }
     
     /**

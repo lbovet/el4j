@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
+    <bean id="invalidColor" class="java.awt.Color">
+        <constructor-arg value="255"/>
+        <constructor-arg value="128"/>
+        <constructor-arg value="128"/>
+    </bean>
+    
+    <bean id="selectedColor" class="java.awt.Color">
+        <constructor-arg value="184"/>
+        <constructor-arg value="207"/>
+        <constructor-arg value="229"/>
+    </bean>
+    
+    <bean id="responder" class="com.silvermindsoftware.hitch.validation.response.DefaultValidationResponder" lazy-init="true"/>
+    <bean id="cellRenderer" class="com.silvermindsoftware.hitch.validation.response.DefaultValidatingCellRenderer" lazy-init="true"/>
+    <bean id="tableCellRenderer" class="com.silvermindsoftware.hitch.validation.response.DefaultValidatingTableCellRenderer" lazy-init="true"/>
+    <bean id="tableCellEditor" class="com.silvermindsoftware.hitch.validation.response.ValidatingCellEditor" lazy-init="true"/>
+    
+</beans>

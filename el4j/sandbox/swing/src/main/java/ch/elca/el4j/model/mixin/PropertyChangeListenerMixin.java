@@ -1,3 +1,19 @@
+/*
+ * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
+ * the spring framework, http://el4j.sf.net
+ * Copyright (C) 2005 by ELCA Informatique SA, Av. de la Harpe 22-24,
+ * 1000 Lausanne, Switzerland, http://www.elca.ch
+ *
+ * EL4J is published under the GNU Lesser General Public License (LGPL)
+ * Version 2.1. See http://www.gnu.org/licenses/
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * For alternative licensing, please contact info@elca.ch
+ */
 package ch.elca.el4j.model.mixin;
 
 import java.beans.BeanInfo;
@@ -18,7 +34,9 @@ import org.hibernate.validator.InvalidValue;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
 import org.jdesktop.swingbinding.validation.ValidationCapability;
+import org.springframework.aop.Advisor;
 import org.springframework.aop.IntroductionAdvisor;
+import org.springframework.aop.framework.Advised;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.support.DefaultIntroductionAdvisor;
@@ -71,6 +89,7 @@ public class PropertyChangeListenerMixin extends
     /**
      * Hibernate class validator.
      */
+    @SuppressWarnings("unchecked")
     private ClassValidator m_classValidator;
     
 
@@ -91,13 +110,36 @@ public class PropertyChangeListenerMixin extends
      * @return the same object wrapped with a spring proxy that has the
      *         {@link PropertyChangeListenerMixin} as {@link Advisor}
      */
+    @SuppressWarnings("unchecked")
     public static <T> T addPropertyChangeMixin(T object) {
+        Advisor[] existingAdvisors = null;
+        
+        if (object instanceof Advised) {
+            Advised advised = (Advised) object;
+            existingAdvisors = advised.getAdvisors();
+            
+            // replace object by the wrapped object 
+            try {
+                object = (T) advised.getTargetSource().getTarget();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         ProxyFactory pc = new ProxyFactory(object);
+                
         IntroductionAdvisor ii = new DefaultIntroductionAdvisor(
-                new PropertyChangeListenerMixin());
+            new PropertyChangeListenerMixin());
         pc.setProxyTargetClass(true);
         pc.setExposeProxy(true);
+        
+        if (existingAdvisors != null) {
+            for (Advisor a : existingAdvisors) {
+                pc.addAdvisor(a);
+            }
+        }
+        
         pc.addAdvisor(0, ii);
+    
         object = (T) pc.getProxy();
         return object;
     }
@@ -288,7 +330,8 @@ public class PropertyChangeListenerMixin extends
     }
 
     /** {@inheritDoc} */
-    public ClassValidator<?> getClassValidator() {
+    @SuppressWarnings("unchecked")
+    public ClassValidator getClassValidator() {
         return m_classValidator;
     }
     

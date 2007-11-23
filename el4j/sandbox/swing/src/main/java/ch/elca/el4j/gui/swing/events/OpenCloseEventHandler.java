@@ -14,14 +14,10 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package com.silvermindsoftware.hitch.binding;
-
-import javax.swing.JComponent;
-
-import org.jdesktop.beansbinding.AutoBinding;
+package ch.elca.el4j.gui.swing.events;
 
 /**
- * A user defined "binding template" for a special widget.
+ * This interface defines event handlers for open and close events.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -29,26 +25,17 @@ import org.jdesktop.beansbinding.AutoBinding;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
- * @param <T> the type of widget to bind
  *
  * @author Stefan Wismer (SWI)
  */
-public interface SpecialBindingCreator<T extends JComponent> {
+public interface OpenCloseEventHandler {
     /**
-     * Create the concrete binding.
-     * 
-     * @param object            the object to bind
-     * @param formComponent     the widget to bound to
-     * @return                  the corresponding binding
+     * Called when opened.
      */
-    @SuppressWarnings("unchecked")
-    public AutoBinding createBinding(Object object, T formComponent);
+    public void onOpen();
     
     /**
-     * Add validation capability.
-     * 
-     * @param formComponent     the widget showing the values
+     * Called when closed.
      */
-    public void addValidation(T formComponent);
+    public void onClose();
 }

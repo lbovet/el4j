@@ -1,3 +1,19 @@
+/*
+ * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
+ * the spring framework, http://el4j.sf.net
+ * Copyright (C) 2005 by ELCA Informatique SA, Av. de la Harpe 22-24,
+ * 1000 Lausanne, Switzerland, http://www.elca.ch
+ *
+ * EL4J is published under the GNU Lesser General Public License (LGPL)
+ * Version 2.1. See http://www.gnu.org/licenses/
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * For alternative licensing, please contact info@elca.ch
+ */
 package ch.elca.el4j.gui.swing.dialog.about;
 
 import java.awt.BorderLayout;
@@ -14,7 +30,8 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ApplicationActionMap;
 import org.jdesktop.application.ApplicationContext;
@@ -38,59 +55,50 @@ public class AboutDialog extends JDialog {
     /**
      * The logger.
      */
-    private static Logger s_logger = Logger.getLogger(JDialog.class);
+    private static Log s_logger = LogFactory.getLog(JDialog.class);
     
     /**
      * The resource map.
      */
-    private ResourceMap m_resourceMap;
+    protected ResourceMap m_resourceMap;
+    
+    
+    /**
+     * The main panel.
+     */
+    protected JPanel m_panel;
+    
+    /**
+     * The logo.
+     */
+    protected JLabel m_logo;
+    
+    /**
+     * The about text.
+     */
+    protected JLabel m_infoLabel;
+    /**
+     * The button for closing the about dialog.
+     */
+    protected JButton m_closeButton; 
 
-    public AboutDialog(GUIApplication app) {
+    /**
+     * The constructor.
+     */
+    public AboutDialog() {
+        GUIApplication app = GUIApplication.getInstance();
         ApplicationContext appContext = app.getContext();
         m_resourceMap = appContext.getResourceMap(AboutDialog.class);
 
         setTitle(getRes("aboutText"));
-        JPanel panel = new JPanel(new BorderLayout());
-
-        // image on the left
-        String aboutImage = getRes("aboutImage");
-        if (aboutImage != null) {
-            ImageIcon icon = createImageIcon(aboutImage);
-            JLabel logo = new JLabel(icon);
-            panel.add(logo, BorderLayout.WEST);
-        }
-
-        // about-text on the right
-        JLabel infoLabel = new JLabel(getAboutText());
-        infoLabel.setName("infoLabel");
-        infoLabel.setBorder(new EmptyBorder(3, 6, 3, 3)); // top, left,
-                                                            // bottom, right
-        panel.add(infoLabel, BorderLayout.CENTER);
-
-        // button to close the dialog
-        JButton closeButton = new JButton();
-        closeButton.setSelected(true);
-        getRootPane().setDefaultButton(closeButton);
-
-        // make button right aligned
-        FlowLayout layout = new FlowLayout();
-        layout.setAlignment(FlowLayout.TRAILING);
-        JPanel closePanel = new JPanel(layout);
-        closePanel.add(closeButton);
-
-        // compose button and separator
-        JPanel bottom = new JPanel();
-        bottom.setLayout(new BoxLayout(bottom, BoxLayout.PAGE_AXIS));
-        bottom.add(new JSeparator(SwingConstants.HORIZONTAL));
-        bottom.add(closePanel);
-
-        panel.add(bottom, BorderLayout.SOUTH);
+        
+        createComponents();
 
         // assign actions
         ApplicationActionMap actionMap = appContext.getActionMap(this);
-        closeButton.setAction(actionMap.get("close"));
+        m_closeButton.setAction(actionMap.get("close"));
 
-        add(panel);
+        add(m_panel);
 
         // inject values from properties file
         m_resourceMap.injectComponents(this);
@@ -98,10 +106,10 @@ public class AboutDialog extends JDialog {
         // little hack to make button larger
         String space = getRes("close.space");
         if (space != null) {
-            Insets s = closeButton.getMargin();
+            Insets s = m_closeButton.getMargin();
             s.right = Integer.parseInt(space);
             s.left = s.right;
-            closeButton.setMargin(s);
+            m_closeButton.setMargin(s);
         }
 
         // prepare to show
@@ -109,6 +117,50 @@ public class AboutDialog extends JDialog {
         setResizable(false);
         setLocationRelativeTo(null);
         setModal(true);
+    }
+    
+    /**
+     * Create the form components.
+     */
+    private void createComponents() {
+        m_panel = new JPanel(new BorderLayout());
+        
+        // image on the left
+        String aboutImage = getRes("aboutImage");
+        if (aboutImage != null) {
+            ImageIcon icon = createImageIcon(aboutImage);
+            m_logo = new JLabel(icon);
+            m_panel.add(m_logo, BorderLayout.WEST);
+        }
+        
+        // about-text on the right
+        m_infoLabel = new JLabel(getAboutText());
+        m_infoLabel.setName("infoLabel");
+        // Checkstyle: MagicNumber off
+        m_infoLabel.setBorder(new EmptyBorder(3, 6, 3, 3));
+        // Checkstyle: MagicNumber on
+        
+        m_panel.add(m_infoLabel, BorderLayout.CENTER);
+        
+        // button to close the dialog
+        m_closeButton = new JButton();
+        m_closeButton.setSelected(true);
+        getRootPane().setDefaultButton(m_closeButton);
+        
+        // make button right aligned
+        FlowLayout layout = new FlowLayout();
+        layout.setAlignment(FlowLayout.TRAILING);
+        JPanel closePanel = new JPanel(layout);
+        closePanel.add(m_closeButton);
+
+        // compose button and separator
+        JPanel bottom = new JPanel();
+        bottom.setLayout(new BoxLayout(bottom, BoxLayout.PAGE_AXIS));
+        bottom.add(new JSeparator(SwingConstants.HORIZONTAL));
+        bottom.add(closePanel);
+
+        m_panel.add(bottom, BorderLayout.SOUTH);
+        
     }
 
     /**
@@ -123,19 +175,19 @@ public class AboutDialog extends JDialog {
      * @return   the about text
      */
     protected String getAboutText() {
-        final String BR = "<br> ";
+        final String br = "<br> ";
         
         StringBuilder sb = new StringBuilder();
         sb.append("<html>");
-        sb.append(getRes("Application.title")).append(BR).append(BR);
-        sb.append(getRes("Application.description")).append(BR).append(
-                BR);
+        sb.append(getRes("Application.title")).append(br).append(br);
+        sb.append(getRes("Application.description")).append(br).append(
+                br);
         sb.append(getRes("versionText")).append(" ");
-        sb.append(getRes("Application.version")).append(BR);
+        sb.append(getRes("Application.version")).append(br);
         sb.append(getRes("buildIdText")).append(" ");
-        sb.append(getRes("Application.buildId")).append(BR)
-                .append(BR);
-        sb.append(getRes("Application.copyright")).append(BR);
+        sb.append(getRes("Application.buildId")).append(br)
+                .append(br);
+        sb.append(getRes("Application.copyright")).append(br);
         sb.append(getRes("Application.homepage"));
         sb.append("</html>");
         
@@ -147,7 +199,7 @@ public class AboutDialog extends JDialog {
      * @return      the String associated with the given resource ID
      */
     protected String getRes(String id) {
-        return m_resourceMap.getString(id, new Object[0]);
+        return m_resourceMap.getString(id);
     }
 
     /**
