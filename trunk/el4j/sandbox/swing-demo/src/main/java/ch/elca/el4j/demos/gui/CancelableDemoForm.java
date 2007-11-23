@@ -80,7 +80,6 @@ public class CancelableDemoForm extends JPanel {
         // creating model entirely programmatically:
         person = new DefaultPerson();
         person = PropertyChangeListenerMixin.addPropertyChangeMixin(person);
-        person = PropertyChangeListenerMixin.addPropertyChangeMixin(person);
 
         // initialize model
         person.setFirstName("Nobody");
