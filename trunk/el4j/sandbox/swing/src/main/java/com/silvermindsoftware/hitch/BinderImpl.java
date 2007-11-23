@@ -1,15 +1,30 @@
+/*
+ * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
+ * the spring framework, http://el4j.sf.net
+ * Copyright (C) 2005 by ELCA Informatique SA, Av. de la Harpe 22-24,
+ * 1000 Lausanne, Switzerland, http://www.elca.ch
+ *
+ * EL4J is published under the GNU Lesser General Public License (LGPL)
+ * Version 2.1. See http://www.gnu.org/licenses/
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * For alternative licensing, please contact info@elca.ch
+ */
 package com.silvermindsoftware.hitch;
 
 import java.awt.Container;
 import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 import javax.swing.JComponent;
 
 import org.jdesktop.beansbinding.AutoBinding;
+import org.jdesktop.beansbinding.Binding;
 import org.jdesktop.beansbinding.BindingGroup;
 
 import com.silvermindsoftware.hitch.binding.BindingFactory;
@@ -17,7 +32,7 @@ import com.silvermindsoftware.hitch.binding.SpecialBindingCreator;
 import com.silvermindsoftware.hitch.meta.ComponentMeta;
 import com.silvermindsoftware.hitch.meta.FormMeta;
 import com.silvermindsoftware.hitch.meta.ModelMeta;
-import com.silvermindsoftware.hitch.validation.response.DefaultValidationResponder;
+import com.silvermindsoftware.hitch.validation.response.ValidationResponder;
 
 /**
  * The implementation of the binder.
@@ -32,25 +47,16 @@ import com.silvermindsoftware.hitch.validation.response.DefaultValidationRespond
  * @author Stefan Wismer (SWI), based on Hitch by Brandon Goodin
  */
 public class BinderImpl extends AbstractBinder implements Binder {
-
     /**
      * The factory for bindings.
      */
     private static final BindingFactory BINDING_FACTORY
         = BindingFactory.getInstance();
-
-    /**
-     * A cache for the property-to-component mapping.
-     */
-    protected Map<String, Map<String, JComponent>> m_propertyToComponentCache;
     
     /**
-     * The constructor.
+     * Use {@link BinderManager#getBinder(java.awt.Component)} instead.
      */
-    public BinderImpl() {
-        m_propertyToComponentCache
-            = new HashMap<String, Map<String, JComponent>>();
-    }
+    BinderImpl() { }
     
     /** {@inheritDoc} */
     public BindingGroup getAutoBinding(Container container, String... modelId) {
@@ -108,7 +114,7 @@ public class BinderImpl extends AbstractBinder implements Binder {
                 componentMeta.getModelPropertyName(), formComponent);
             if (performValidate) {
                 b.addBindingListener(BINDING_FACTORY.getValidationListener(
-                    formComponent, new DefaultValidationResponder()));
+                    formComponent));
             }
             
             bindings.addBinding(b);
@@ -116,9 +122,44 @@ public class BinderImpl extends AbstractBinder implements Binder {
         return bindings;
     }
     
+    
     /** {@inheritDoc} */
-    public void registerBinding(JComponent component, SpecialBindingCreator binding) {
+    @SuppressWarnings("unchecked")
+    public AutoBinding getSpecialBinding(Object model, JComponent component,
+        SpecialBindingCreator creator, boolean performValidate) {
+        
+        AutoBinding b = creator.createBinding(model, component);
+        if (performValidate) {
+            creator.addValidation(component);
+            b.addBindingListener(BINDING_FACTORY.getValidationListener(
+                component));
+        }
+        return b;
+    }
+    
+    /** {@inheritDoc} */
+    @SuppressWarnings("unchecked")
+    public void registerBinding(JComponent component,
+        SpecialBindingCreator binding) {
+        
         BINDING_FACTORY.register(component, binding);
+    }
+    
+    /** {@inheritDoc} */
+    public void registerValidationResponder(JComponent component,
+        ValidationResponder responder) {
+        
+        BINDING_FACTORY.registerValidationResponder(component, responder);
+    }
+    
+    /** {@inheritDoc} */
+    @SuppressWarnings("unchecked")
+    public void registerValidationResponder(BindingGroup group,
+        ValidationResponder responder) {
+        for (Binding binding : group.getBindings()) {
+            JComponent component = (JComponent) binding.getTargetObject();
+            BINDING_FACTORY.registerValidationResponder(component, responder);
+        }
     }
     
     /**

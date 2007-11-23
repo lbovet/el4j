@@ -20,9 +20,11 @@ import java.awt.Container;
 
 import javax.swing.JComponent;
 
+import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.BindingGroup;
 
 import com.silvermindsoftware.hitch.binding.SpecialBindingCreator;
+import com.silvermindsoftware.hitch.validation.response.ValidationResponder;
 
 public interface Binder {
     
@@ -49,7 +51,20 @@ public interface Binder {
      *                     multiple models)
      * @return             the binding group
      */
-    public BindingGroup getAutoBinding(Container container, boolean performValidate, String... modelId);
+    public BindingGroup getAutoBinding(Container container,
+        boolean performValidate, String... modelId);
+    
+    /** Binds a component to a model using a special binding creator.
+     * 
+     * @param model              the model to bind
+     * @param component          the form component to bind
+     * @param creator            the special binding creator
+     * @param performValidate    determines if a validation should be performed
+     * @return                   the created binding
+     */
+    @SuppressWarnings("unchecked")
+    public AutoBinding getSpecialBinding(Object model, JComponent component,
+        SpecialBindingCreator creator, boolean performValidate);
     
     /**
      * Registers a custom binding strategy.
@@ -57,5 +72,26 @@ public interface Binder {
      * @param component     the component to bind
      * @param binding       the custom binding
      */
-    public void registerBinding(JComponent component, SpecialBindingCreator binding);
+    @SuppressWarnings("unchecked")
+    public void registerBinding(JComponent component,
+        SpecialBindingCreator binding);
+    
+    /**
+     * Registers a custom validation responder.
+     * 
+     * @param component     the bound component
+     * @param responder     the custom validation responder
+     */
+    public void registerValidationResponder(JComponent component,
+        ValidationResponder responder);
+    
+    /**
+     * Registers a custom validation responder to all bindings contained
+     * in the binding group.
+     * 
+     * @param group         the binding group
+     * @param responder     the custom validation responder
+     */
+    public void registerValidationResponder(BindingGroup group,
+        ValidationResponder responder);
 }

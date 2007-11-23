@@ -1,3 +1,19 @@
+/*
+ * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
+ * the spring framework, http://el4j.sf.net
+ * Copyright (C) 2005 by ELCA Informatique SA, Av. de la Harpe 22-24,
+ * 1000 Lausanne, Switzerland, http://www.elca.ch
+ *
+ * EL4J is published under the GNU Lesser General Public License (LGPL)
+ * Version 2.1. See http://www.gnu.org/licenses/
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * For alternative licensing, please contact info@elca.ch
+ */
 package ch.elca.el4j.gui.swing.splash;
 
 import java.awt.Dimension;
@@ -17,7 +33,14 @@ import java.awt.Window;
  * <li> Make some application initialization, such as set up spring app context
  * <li> Launch the main application window via GuiApplication.launch
  * </ul>
- * 
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
  * @author Philipp Oser (POS)
  * @author Stefan Wismer (SWI)
  */
@@ -44,6 +67,9 @@ public class ImageSplashScreen {
      */
     private String m_imageResourcePath;
 
+    /**
+     * The splash window.
+     */
     private static class SplashWindow extends Window {
         /**
          * The splash image.
@@ -116,7 +142,9 @@ public class ImageSplashScreen {
         mediaTracker.addImage(m_image, 0);
         try {
             mediaTracker.waitForID(0);
-        } catch (InterruptedException e) { }
+        } catch (InterruptedException e) {
+            return;
+        }
         m_frame.setSize(m_image.getWidth(null), m_image.getHeight(null));
         center();
         new SplashWindow(m_frame, m_image);

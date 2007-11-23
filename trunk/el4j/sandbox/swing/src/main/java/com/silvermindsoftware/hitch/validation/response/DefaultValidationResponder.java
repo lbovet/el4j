@@ -1,8 +1,26 @@
+/*
+ * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
+ * the spring framework, http://el4j.sf.net
+ * Copyright (C) 2005 by ELCA Informatique SA, Av. de la Harpe 22-24,
+ * 1000 Lausanne, Switzerland, http://www.elca.ch
+ *
+ * EL4J is published under the GNU Lesser General Public License (LGPL)
+ * Version 2.1. See http://www.gnu.org/licenses/
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * For alternative licensing, please contact info@elca.ch
+ */
 package com.silvermindsoftware.hitch.validation.response;
 
 import java.awt.Color;
 
 import javax.swing.JComponent;
+
+import ch.elca.el4j.gui.swing.GUIApplication;
 
 /**
  * A default ValidationResponder that makes the background of the corresponding
@@ -21,22 +39,20 @@ public class DefaultValidationResponder implements ValidationResponder {
     /**
      * Identifier for valid color in component's client property.
      */
-    private static final String VALID_COLOR = "Valid Color";
+    protected static final String VALID_COLOR = "Valid Color";
     
     /**
      * Color to mark value as invalid.
      */
-    private Color m_invalidColor;
+    protected final Color m_invalidColor;
 
     /**
-     * Default constructor. Makes background reddish if value is invalid.
+     * The default contructor reading the invalidColor from Spring config.
      */
     public DefaultValidationResponder() {
-        // Checkstyle: MagicNumber off
-        this(new Color(255, 128, 128));
-        // Checkstyle: MagicNumber on
+        this((Color) GUIApplication.getInstance().getSpringContext()
+            .getBean("invalidColor"));
     }
-    
     /**
      * @param color    the background color if value is invalid
      */
@@ -45,7 +61,16 @@ public class DefaultValidationResponder implements ValidationResponder {
     }
     
     /** {@inheritDoc} */
-    public void setValid(JComponent component) {
+    public void setValid(Object object, JComponent component, boolean valid) {
+        if (valid) {
+            setValid(object, component);
+        } else {
+            setInvalid(object, component, null);
+        }
+    }
+    
+    /** {@inheritDoc} */
+    public void setValid(Object object, JComponent component) {
         if (component != null) {
             if (component.getBackground().equals(m_invalidColor)) {
                 component.setBackground(
@@ -55,16 +80,9 @@ public class DefaultValidationResponder implements ValidationResponder {
     }
     
     /** {@inheritDoc} */
-    public void setValid(JComponent component, boolean valid) {
-        if (valid) {
-            setValid(component);
-        } else {
-            setInvalid(component, "");
-        }
-    }
-    
-    /** {@inheritDoc} */
-    public void setInvalid(JComponent component, String message) {
+    public void setInvalid(Object object, JComponent component,
+        String message) {
+        
         if (component != null) {
             if (!component.getBackground().equals(m_invalidColor)) {
                 component.putClientProperty(
