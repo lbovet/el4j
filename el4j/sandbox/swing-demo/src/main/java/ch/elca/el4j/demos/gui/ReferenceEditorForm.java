@@ -20,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.bushe.swing.event.EventBus;
 import org.jdesktop.application.Action;
 import org.jdesktop.beansbinding.BindingGroup;
 
@@ -28,17 +29,17 @@ import com.silvermindsoftware.hitch.BinderManager;
 import com.silvermindsoftware.hitch.annotations.Form;
 import com.silvermindsoftware.hitch.annotations.ModelObject;
 
-import ch.elca.el4j.demos.model.DefaultPerson;
-import ch.elca.el4j.demos.model.Person;
+import ch.elca.el4j.apps.refdb.dom.Reference;
+import ch.elca.el4j.demos.gui.events.ReferenceUpdateEvent;
 import ch.elca.el4j.gui.swing.GUIApplication;
+import ch.elca.el4j.gui.swing.wrapper.AbstractWrapperFactory;
 import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
 import ch.elca.el4j.model.mixin.SaveRestoreCapability;
 
 import zappini.designgridlayout.DesignGridLayout;
 
 /**
- * This class demonstrates a form that has a cancel button to restore the
- * original value.
+ * This GUI can be used to edit a reference from the refDB.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -50,65 +51,86 @@ import zappini.designgridlayout.DesignGridLayout;
  * @author Stefan Wismer (SWI)
  */
 @Form(autoBind = true)
-public class CancelableDemoForm extends JPanel {
-    /**
-     * The first name. Bound to the model.
-     */
-    private JTextField firstName;
+public class ReferenceEditorForm extends JPanel {
+    private JTextField name;
+    private JTextField description;
     
     private JButton m_okButton;
     private JButton m_cancelButton;
     
     @ModelObject(isDefault = true)
-    private Person person;
+    private Reference m_reference = null;
+    
+    
+    /**
+     * The key of the current reference. This property cannot be stored by
+     * SaveRestoreCapability because Cglib2AopProxy is unable to proxy 
+     * final methods.
+     */
+    private int m_key;
     
     /**
      * The binder instance variable.
      */
     private final Binder m_binder = BinderManager.getBinder(this);
     
-    public CancelableDemoForm() {
+    public ReferenceEditorForm() {
         GUIApplication app = GUIApplication.getInstance();
-        
         createComponents();
         createLayout();
         
         // assign actions
         m_okButton.setAction(app.getAction(this, "applyChanges"));
         m_cancelButton.setAction(app.getAction(this, "discardChanges"));
-        
-        // creating model entirely programmatically:
-        person = new DefaultPerson();
-        person = PropertyChangeListenerMixin.addPropertyChangeMixin(person);
-        person = PropertyChangeListenerMixin.addPropertyChangeMixin(person);
-
-        // initialize model
-        person.setFirstName("Nobody");
+    }
+    
+    /**
+     * @param reference    the refernce to be edited on the GUI
+     */
+    public void setReference(Reference reference) {
+        m_reference = PropertyChangeListenerMixin
+            .addPropertyChangeMixin(reference);
+        m_key = reference.getKey();
         
         // save properties
-        ((SaveRestoreCapability) person).save();
+        ((SaveRestoreCapability) m_reference).save();
         
-        // bind the variable "person" to "this"
+        // bind the variable "m_reference" to "this"
         // this interprets the @ModelObject annotation (see above)
         BindingGroup group = m_binder.getAutoBinding(this);
         group.bind();
     }
     
+    
+    /**
+     * Apply changes to the model.
+     */
     @Action
     public void applyChanges() {
-        ((SaveRestoreCapability) person).save();
+        ((SaveRestoreCapability) m_reference).save();
+        m_reference.setKey(m_key);
+        
+        EventBus.publish(new ReferenceUpdateEvent(m_reference.getKey()));
+        AbstractWrapperFactory.getWrapper(this).dispose();
     }
     
+    /**
+     * Discard changes.
+     */
     @Action
     public void discardChanges() {
-        ((SaveRestoreCapability) person).restore();
+        ((SaveRestoreCapability) m_reference).restore();
+        m_reference.setKey(m_key);
+        
+        AbstractWrapperFactory.getWrapper(this).dispose();
     }
     
     /**
      * Create the form components.
      */
     private void createComponents() {
-        firstName = new JTextField();
+        name = new JTextField();
+        description = new JTextField();
         m_okButton = new JButton();
         m_cancelButton = new JButton();
     }
@@ -122,7 +144,8 @@ public class CancelableDemoForm extends JPanel {
         setLayout(layout);
 
         // the first two rows contains a label and a text field each
-        layout.row().label("First Name").add(firstName);
+        layout.row().label("Name").add(name);
+        layout.row().label("Description").add(description);
         layout.row().add(m_okButton).add(m_cancelButton);
     }
 }

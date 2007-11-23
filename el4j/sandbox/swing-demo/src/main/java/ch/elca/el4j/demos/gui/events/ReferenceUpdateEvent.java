@@ -14,16 +14,10 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.demos.gui;
-
-import java.awt.Dimension;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+package ch.elca.el4j.demos.gui.events;
 
 /**
- * This class is a very simple resource injection demo form.
- * See ResourceInjectionDemoForm.properties.
+ * This event is sent if a reference has been modified.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -34,14 +28,33 @@ import javax.swing.JPanel;
  *
  * @author Stefan Wismer (SWI)
  */
-@SuppressWarnings("unchecked")
-public class ResourceInjectionDemoForm extends JPanel {
-    public ResourceInjectionDemoForm() {
-        JLabel someLabel = new JLabel();
-        someLabel.setName("someLabel");
-        add(someLabel);
-        
-        setPreferredSize(new Dimension(700, 50));
-        setBounds(0, 0, 500, 50);
+public class ReferenceUpdateEvent {
+    /**
+     * The key of the reference.
+     */
+    private int m_key;
+    
+    /**
+     * @param key    set the key of the reference
+     */
+    public ReferenceUpdateEvent(int key) {
+        m_key = key;
     }
+
+    /**
+     * @return    the key of the reference
+     */
+    public int getKey() {
+        return m_key;
+    }
+
+    /**
+     * @param key    set the key of the reference
+     */
+    public void setKey(int key) {
+        m_key = key;
+    }
+
+   
+
 }
