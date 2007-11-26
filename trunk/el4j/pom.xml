@@ -357,7 +357,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>2.0.3</version>
+                    <version>2.0.4</version>
                     <executions>
                         <execution>
                             <id>createSourceJars</id>
@@ -539,10 +539,6 @@
                         dep mgt, just lookup the config in reporting section.
                         
                         For more information see http://jira.codehaus.org/browse/MNG-1931
-                        
-                        
-                        Due to bugs fix built snapshot version is used.
-                           * maven-javadoc-plugin (revision 450405 + patch http://jira.codehaus.org/browse/MJAVADOC-93)
                     -->
                     <version>${version.maven-javadoc-plugin}</version>
                     <configuration>
@@ -1843,7 +1839,7 @@
         <version.maven-project-info-reports-plugin>2.0.1</version.maven-project-info-reports-plugin>
         <version.maven-checkstyle-plugin>2.1</version.maven-checkstyle-plugin>
         <version.maven-surefire-report-plugin>2.1-20060925.113400-3</version.maven-surefire-report-plugin>
-        <version.maven-javadoc-plugin>2.1</version.maven-javadoc-plugin>
+        <version.maven-javadoc-plugin>2.3</version.maven-javadoc-plugin>
         <version.maven-jxr-plugin>2.1</version.maven-jxr-plugin>
         <version.taglist-maven-plugin>2.0</version.taglist-maven-plugin>
         <version.maven-plugin-plugin>2.3</version.maven-plugin-plugin>
