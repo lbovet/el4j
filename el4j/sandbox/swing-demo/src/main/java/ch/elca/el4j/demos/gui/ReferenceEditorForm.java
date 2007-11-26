@@ -40,6 +40,10 @@ import zappini.designgridlayout.DesignGridLayout;
 
 /**
  * This GUI can be used to edit a reference from the refDB.
+ * 
+ * This form is used by {@link RefDBDemoForm}. It extends the features shown in
+ * {@link CancelableDemoForm}. It is shown how to close the window containing
+ * this panel (<code>AbstractWrapperFactory.getWrapper(this).dispose()</code>).
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",

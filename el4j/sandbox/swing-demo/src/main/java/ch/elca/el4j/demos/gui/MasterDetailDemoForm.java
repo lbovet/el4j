@@ -51,6 +51,13 @@ import zappini.designgridlayout.DesignGridLayout;
 
 /**
  * Demonstrates master/detail view.
+ * 
+ * This demo extends the concepts used in {@link BindingDemoForm}.
+ * 
+ * The table can be sorted by clicking onto the column headers. This feature is
+ * provided by the {@link TableSorter} class, which is adapted to beans
+ * binding. Specialized tables like JXTable by swinglabs.org don't work
+ * properly!
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
