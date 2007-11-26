@@ -29,6 +29,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.bushe.swing.event.EventBus;
 import org.jdesktop.application.Action;
+import org.noos.xing.mydoggy.ToolWindowAnchor;
 
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.jgoodies.looks.plastic.theme.ExperienceBlue;
@@ -111,7 +112,7 @@ public class MainFormDocking extends DockingApplication {
     
     @Action
     public void showSearch() {
-        show("SearchDialog");
+        show("SearchDialog", ToolWindowAnchor.LEFT);
     }
     
     @Action

@@ -16,6 +16,8 @@
  */
 package ch.elca.el4j.demos.gui;
 
+import java.awt.Dimension;
+
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -26,6 +28,7 @@ import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.Task;
 
 import ch.elca.el4j.demos.gui.events.SearchProgressEvent;
+import ch.elca.el4j.demos.gui.events.SearchRefDBEvent;
 import ch.elca.el4j.gui.swing.GUIApplication;
 import ch.elca.el4j.gui.swing.dialog.search.AbstractSearchDialog;
 
@@ -68,6 +71,10 @@ public class SearchDialog extends AbstractSearchDialog {
         m_resourceMap = m_application.getContext()
             .getResourceMap(SearchDialog.class);
         m_searchButton.setAction(m_application.getAction(this, "search"));
+        
+        // Checkstyle: MagicNumber off
+        setPreferredSize(new Dimension(200, 300));
+        // Checkstyle: MagicNumber on
     }
     
     /** {@inheritDoc} */
@@ -105,6 +112,10 @@ public class SearchDialog extends AbstractSearchDialog {
         /** {@inheritDoc} */
         @Override
         protected Void doInBackground() throws InterruptedException {
+            // send refBD event
+            EventBus.publish(new SearchRefDBEvent("description",
+                "%" + m_searchField.getText() + "%"));
+            
             // Checkstyle: MagicNumber off
             for (int i = 0; i < 10; i++) {
                 sendEvent(String.format(getRes("progress"), i));

@@ -7,7 +7,17 @@ Execute:
 
 cd ../swing
 mvn clean install
+
 cd ../swing-demo
 mvn clean install
 mvn exec:java
 
+
+To use the refDB demos execute:
+
+start server:
+    cd ../../applications/templates/common/refdb/tests
+    mvn db:prepare db:start
+
+start GUI:
+    mvn exec:java
