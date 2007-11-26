@@ -39,6 +39,9 @@ import zappini.designgridlayout.DesignGridLayout;
 /**
  * This class demonstrates a form that has a cancel button to restore the
  * original value.
+ * 
+ * Adding the ability to save and restore values (simple undo) is simple:
+ * Just apply a mixin using <code>addPropertyChangeMixin</code>.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",

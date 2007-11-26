@@ -31,6 +31,21 @@ import ch.elca.el4j.gui.swing.events.OpenCloseEventHandler;
 
 /**
  * This class demonstates the basic use of EventBus.
+ * 
+ * Event handlers are all methods having the following form:
+ * <code>
+ * @EventSubscriber(eventClass=SomeEvent.class)
+ * public void onEvent(SomeEvent event) { ... }
+ * </code>
+ * 
+ * To subscribe to these events, it is necessary to call
+ * <code>AnnotationProcessor.process(this)</code>, unsubscription is done by
+ * <code>AnnotationProcessor.unsubscribe(this)</code>
+ * 
+ * In this example, the <code>OpenCloseEventHandler</code> is used to get the
+ * methods <code>onOpen</code> and <code>onClose</code> called which do the
+ * event (un)subscription task.
+ * 
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",

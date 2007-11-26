@@ -56,6 +56,19 @@ import zappini.designgridlayout.DesignGridLayout;
 
 /**
  * This class demonstrates how to connect to the refDB.
+ * 
+ * A single click on a table entry highlight the whole row. A double click opens
+ * a simple editor ({@link ReferenceEditorForm}) that allows editing the
+ * selected entry.
+ * 
+ * Binding is done manually (see m_listBinding.getSpecialBinding).
+ * This form listens to two events:
+ * <ul>
+ *   <li>ReferenceUpdateEvent: The editor commits the changes: we need to
+ *       update the table.</li>
+ *   <li>SearchRefDBEvent: A search on the refDB is requested: query the
+ *       database and show the result</li>
+ * </ul>
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -159,12 +172,14 @@ public class RefDBDemoForm extends JPanel implements OpenCloseEventHandler {
         references.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
+                // make the whole row selected.
                 int index = references.rowAtPoint(e.getPoint());
                 
                 references.setRowSelectionInterval(index, index);
                 references.setColumnSelectionInterval(0,
                     references.getColumnCount() - 1);
             }
+            
             @Override
             public void mouseClicked(MouseEvent e) {
                 int index = references.rowAtPoint(e.getPoint());
@@ -176,7 +191,7 @@ public class RefDBDemoForm extends JPanel implements OpenCloseEventHandler {
                         m_editor.setReference((Reference) p.getParent());
                         if (AbstractWrapperFactory
                             .getWrapper(m_editor) == null) {
-                            
+                            // open the editor for this reference
                             GUIApplication.getInstance().show(m_editor);
                         }
                     }
@@ -212,7 +227,7 @@ public class RefDBDemoForm extends JPanel implements OpenCloseEventHandler {
      */
     @SuppressWarnings("unchecked")
     private void updateBinding() {
-     // prepare table bindings
+        // prepare table bindings
         String[] propertyNames = new String[] {
             "name", "description", "incomplete",
             "version", "date", "whenInserted"};

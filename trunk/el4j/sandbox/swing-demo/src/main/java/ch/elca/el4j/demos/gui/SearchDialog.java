@@ -34,6 +34,11 @@ import ch.elca.el4j.gui.swing.dialog.search.AbstractSearchDialog;
 
 /**
  * This class represents a simple search dialog.
+ * 
+ * A search triggers two events: The {@link SearchRefDBEvent} is used to query
+ * the refDB and the various {@link SearchProgressEvent} events are just to
+ * generate status events for long running tasks. They can be tracked in the
+ * {@link EventBusDemoForm}.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",

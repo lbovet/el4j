@@ -49,6 +49,25 @@ import zappini.designgridlayout.Row;
 
 /**
  * Demonstrates how to use the automatic bean binding.
+ * 
+ * This demo shows have form components having the same name as properties of
+ * the model (like <code>firstName</code>) get automatically bound. Binding
+ * is done using <code>m_binder.getAutoBinding(this)</code>.
+ * 
+ * Non-trivial bindings like lists or tables need special information. In this
+ * demo the <code>JList</code> should show the <code>value</code> property of
+ * each list element. Therfore, it is necessary to specify that by
+ * (<code>m_binder.registerBinding(numbers, new ListBinding("value"))</code>)
+ * before binding.
+ * 
+ * There is also shown how to manually bind components: the textfield
+ * <code>m_curListSelection</code> is set to always show the selected list item
+ * value.
+ * 
+ * Another aspect shown here is the ability to provide a custom validation
+ * responder (a class that knows how to react on (in)valid values). Our
+ * <code>CustomValidationResponder</code> shows the validation messages on a
+ * label on the form (see {@link CustomValidationResponder}).
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -180,6 +199,9 @@ public class BindingDemoForm extends JPanel {
         ValidationResponder responder
             = new CustomValidationResponder(validationMessage);
         
+        // (nearly) chicken - egg problem: registering a validation
+        // responder need the bindings (which needs the responder to be
+        // registered first). So get the binding without validation.
         m_binder.registerValidationResponder(
             m_binder.getAutoBinding(this, false), responder);
 

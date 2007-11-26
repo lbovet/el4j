@@ -31,6 +31,8 @@ import com.silvermindsoftware.hitch.validation.response.DefaultValidationRespond
 
 /**
  * This validation responder sets the validation message on a text component.
+ * 
+ * @see BindingDemoForm
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
