@@ -38,17 +38,19 @@ import org.jdesktop.swingx.JXTable;
 
 import com.silvermindsoftware.hitch.Binder;
 import com.silvermindsoftware.hitch.BinderManager;
-import com.silvermindsoftware.hitch.annotations.Form;
-import com.silvermindsoftware.hitch.annotations.ModelObject;
 import com.silvermindsoftware.hitch.binding.components.TableBinding;
 
 import ch.elca.el4j.apps.refdb.dom.Reference;
+import ch.elca.el4j.apps.refdb.service.ReferenceService;
 import ch.elca.el4j.demos.gui.events.ReferenceUpdateEvent;
-import ch.elca.el4j.demos.model.ReferenceModel;
+import ch.elca.el4j.demos.gui.events.SearchRefDBEvent;
+import ch.elca.el4j.demos.model.ServiceBroker;
 import ch.elca.el4j.gui.swing.GUIApplication;
 import ch.elca.el4j.gui.swing.events.OpenCloseEventHandler;
 import ch.elca.el4j.gui.swing.wrapper.AbstractWrapperFactory;
 import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
+import ch.elca.el4j.services.search.QueryObject;
+import ch.elca.el4j.services.search.criterias.LikeCriteria;
 
 import zappini.designgridlayout.DesignGridLayout;
 
@@ -64,7 +66,6 @@ import zappini.designgridlayout.DesignGridLayout;
  *
  * @author Stefan Wismer (SWI)
  */
-@Form(autoBind = false)
 public class RefDBDemoForm extends JPanel implements OpenCloseEventHandler {
     
     private JXTable references;
@@ -80,13 +81,15 @@ public class RefDBDemoForm extends JPanel implements OpenCloseEventHandler {
     @SuppressWarnings("unchecked")
     private AutoBinding m_listBinding;
     
+    /**
+     * The editor GUI for a reference.
+     */
     private ReferenceEditorForm m_editor;
     
     /**
      * The model to bind to this form.
      */
-    @ModelObject(isDefault = true)
-    private ReferenceModel model;
+    private ReferenceService m_service;
     
     /**
      * The binder instance variable.
@@ -94,8 +97,9 @@ public class RefDBDemoForm extends JPanel implements OpenCloseEventHandler {
     private final Binder m_binder = BinderManager.getBinder(this);
     
     public RefDBDemoForm() {
-        model = new ReferenceModel(
+        ServiceBroker.setApplicationContext(
             GUIApplication.getInstance().getSpringContext());
+        m_service = ServiceBroker.getReferenceService();
         
         createComponents();
         createLayout();
@@ -137,32 +141,12 @@ public class RefDBDemoForm extends JPanel implements OpenCloseEventHandler {
      */
     @SuppressWarnings("unchecked")
     private void createDataBinding() {
-        model = PropertyChangeListenerMixin
-                .addPropertyChangeMixin(model);
+        m_service = PropertyChangeListenerMixin
+                .addPropertyChangeMixin(m_service);
         
-        m_refList = model.getReferences();
+        m_refList = m_service.getAllReferences();
 
-        // prepare table bindings
-        String[] propertyNames = new String[] {
-            "name", "description", "incomplete",
-            "version", "date", "whenInserted"};
-        String[] columnLabels = new String[] {
-            "Name", "Description", "Incomplete?",
-            "Version", "Date", "Insertion Timestamp"};
-        Class[] columnClasses = new Class[] {
-            String.class, String.class, Boolean.class,
-            String.class, Date.class, Timestamp.class};
-        
-        TableBinding tb = new TableBinding(propertyNames,
-            columnLabels, columnClasses);
-        
-        // table is not directly editable
-        tb.setUpdateStrategy(UpdateStrategy.READ);
-        
-        // bind the table manually
-        m_listBinding = m_binder.getSpecialBinding(
-            m_refList, references, tb, true);
-        m_listBinding.bind();
+        updateBinding();
         
         references.setRowSelectionAllowed(true);
         references.setColumnSelectionAllowed(true);
@@ -206,13 +190,14 @@ public class RefDBDemoForm extends JPanel implements OpenCloseEventHandler {
                 if (binding.getSourceObject() instanceof Reference) {
                     Reference r = (Reference) binding.getSourceObject();
                     try {
-                        model.saveReference(r);
+                        m_service.saveReference(r);
                     } catch (Throwable t) {
                         // reload value on optimistic locking exception
                         for (int i = 0; i < m_refList.size(); i++) {
                             if (m_refList.get(i).equals(r)) {
                                 m_refList.remove(i);
-                                m_refList.add(i, model.getRefByKey(r.getKey()));
+                                m_refList.add(i,
+                                    m_service.getReferenceByKey(r.getKey()));
                                 break;
                             }
                         }
@@ -220,6 +205,37 @@ public class RefDBDemoForm extends JPanel implements OpenCloseEventHandler {
                 }
             }
         });
+    }
+    
+    /**
+     * Update the reference binding.
+     */
+    @SuppressWarnings("unchecked")
+    private void updateBinding() {
+     // prepare table bindings
+        String[] propertyNames = new String[] {
+            "name", "description", "incomplete",
+            "version", "date", "whenInserted"};
+        String[] columnLabels = new String[] {
+            "Name", "Description", "Incomplete?",
+            "Version", "Date", "Insertion Timestamp"};
+        Class[] columnClasses = new Class[] {
+            String.class, String.class, Boolean.class,
+            String.class, Date.class, Timestamp.class};
+        
+        TableBinding tb = new TableBinding(propertyNames,
+            columnLabels, columnClasses);
+        
+        // table is not directly editable
+        tb.setUpdateStrategy(UpdateStrategy.READ);
+        
+        // bind the table manually
+        if (m_listBinding != null && m_listBinding.isBound()) {
+            m_listBinding.unbind();
+        }
+        m_listBinding = m_binder.getSpecialBinding(
+            m_refList, references, tb, true);
+        m_listBinding.bind();
     }
     
     /**
@@ -233,11 +249,11 @@ public class RefDBDemoForm extends JPanel implements OpenCloseEventHandler {
             if (m_refList.get(i).getKey() == event.getKey()) {
                 Reference ref = m_refList.get(i);
                 try {
-                    model.saveReference(ref);
+                    m_service.saveReference(ref);
                 } catch (Throwable t) {
                     // reload value on optimistic locking exception
                     m_refList.remove(i);
-                    m_refList.add(i, model.getRefByKey(ref.getKey()));
+                    m_refList.add(i, m_service.getReferenceByKey(ref.getKey()));
                     break;
                 }
                 break;
@@ -247,6 +263,21 @@ public class RefDBDemoForm extends JPanel implements OpenCloseEventHandler {
         m_listBinding.unbind();
         m_listBinding.bind();
         
+    }
+    
+    /**
+     * Called when a reference is searched.
+     * 
+     * @param event    the SearchRefDBEvent
+     */
+    @EventSubscriber(eventClass = SearchRefDBEvent.class)
+    public void onEvent(SearchRefDBEvent event) {
+        QueryObject query = new QueryObject();
+        query.addCriteria(LikeCriteria.caseInsensitive(
+            event.getField(), event.getValue()));
+        m_refList = m_service.searchReferences(query);
+        
+        updateBinding();
     }
     
     /** {@inheritDoc} */

@@ -98,7 +98,7 @@
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
             <configuration>
-                <mainClass>ch.elca.el4j.demos.gui.MainForm</mainClass>
+                <mainClass>ch.elca.el4j.demos.gui.MainFormMDI</mainClass>
                 <keepAlive>false</keepAlive>
             </configuration>
         </plugin>
