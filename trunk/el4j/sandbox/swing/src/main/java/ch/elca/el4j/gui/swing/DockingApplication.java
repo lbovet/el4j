@@ -74,7 +74,7 @@ public abstract class DockingApplication extends GUIApplication {
      */
     @SuppressWarnings("unchecked")
     public void show(String beanName, ToolWindowAnchor anchor) {
-        show((JPanel) m_springContext.getBean(beanName));
+        show((JPanel) m_springContext.getBean(beanName), anchor);
     }
     
     /** {@inheritDoc} */
