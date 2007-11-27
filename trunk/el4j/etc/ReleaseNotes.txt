@@ -5,7 +5,7 @@
 
 * Core
   = Base log4j configuration added as log4j.properties file. If a project would 
-    like to overwrite this default configuration, a log4j.xml can be used, (xml 
+    like to overwrite this default configuration, a log4j.xml must be used, (xml 
     file has precedence over properties file).
   = Upgraded to Spring 2.5, Tomcat 6 and WebLogic 10.
   = Apache Commons Attributes not supported anymore
@@ -14,7 +14,7 @@
     during runtime. This allows to get further info about a running application.
 	A sample use (see reference doc) is to allow a remote shell to a JVM.
   = The Reject (light precondition checking) class supports now all subclasses 
-    of RuntimeException.
+    of RuntimeException. Further some convenience methods where added.
   = Added possibility to log basic application context startup parameters
     (via special logger "el4j.debugging" and level "debug").
   = A lot of small cleanups and XML validation (checkstyle checks, Spring 2-style 
