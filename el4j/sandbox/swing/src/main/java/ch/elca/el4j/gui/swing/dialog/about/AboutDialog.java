@@ -69,11 +69,6 @@ public class AboutDialog extends JDialog {
     protected JPanel m_panel;
     
     /**
-     * The logo.
-     */
-    protected JLabel m_logo;
-    
-    /**
      * The about text.
      */
     protected JLabel m_infoLabel;
@@ -125,20 +120,19 @@ public class AboutDialog extends JDialog {
     private void createComponents() {
         m_panel = new JPanel(new BorderLayout());
         
-        // image on the left
-        String aboutImage = getRes("aboutImage");
-        if (aboutImage != null) {
-            ImageIcon icon = createImageIcon(aboutImage);
-            m_logo = new JLabel(icon);
-            m_panel.add(m_logo, BorderLayout.WEST);
-        }
-        
         // about-text on the right
         m_infoLabel = new JLabel(getAboutText());
         m_infoLabel.setName("infoLabel");
         // Checkstyle: MagicNumber off
         m_infoLabel.setBorder(new EmptyBorder(3, 6, 3, 3));
         // Checkstyle: MagicNumber on
+        
+        // image on the left
+        String aboutImage = getRes("aboutImage");
+        if (aboutImage != null) {
+            ImageIcon icon = createImageIcon(aboutImage);
+            m_infoLabel.setIcon(icon);
+        }
         
         m_panel.add(m_infoLabel, BorderLayout.CENTER);
         

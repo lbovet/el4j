@@ -85,13 +85,6 @@ public abstract class MDIApplication extends GUIApplication {
         }
     }
     
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    @Override
-    public void show(String beanName) {
-        show((JPanel) m_springContext.getBean(beanName));
-    }
-    
     /**
      * @param component    the panel to show as MDI child window
      */
