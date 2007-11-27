@@ -1323,6 +1323,21 @@
                 <scope>test</scope>
             </dependency>
 
+            <!-- module-swing -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-swing</artifactId>
+                <version>${version.module-swing}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-swing</artifactId>
+                <version>${version.module-swing}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
             <!-- module-tcp_forwarder -->
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
@@ -1789,6 +1804,9 @@
         <version.module-spring_rcp>
             1.6-SNAPSHOT
         </version.module-spring_rcp>
+        <version.module-swing>
+            1.0-SNAPSHOT
+        </version.module-swing>
         <version.module-tcp_forwarder>
             1.3-SNAPSHOT
         </version.module-tcp_forwarder>
