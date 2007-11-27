@@ -61,13 +61,6 @@ public abstract class DockingApplication extends GUIApplication {
         }
     }
     
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    @Override
-    public void show(String beanName) {
-        show((JPanel) m_springContext.getBean(beanName));
-    }
-    
     /**
      * @param beanName    the Spring bean name
      * @param anchor      the anchor of the docked window
