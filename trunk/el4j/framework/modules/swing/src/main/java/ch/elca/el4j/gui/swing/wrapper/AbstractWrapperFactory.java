@@ -55,7 +55,14 @@ public abstract class AbstractWrapperFactory<T extends FrameWrapper> {
      * @param component    the component to wrap
      * @return             the wrapper
      */
+    @SuppressWarnings("unchecked")
     protected T wrapComponent(JComponent component) {
+        // check if component has already a wrapper
+        if (s_componentToWrapper.get(component) != null) {
+            if (s_componentToWrapper.get(component).get() != null) {
+                return (T) s_componentToWrapper.get(component).get();
+            }
+        }
         T wrapper = createWrapper();
         
         ApplicationContext appContext = Application.getInstance().getContext();
