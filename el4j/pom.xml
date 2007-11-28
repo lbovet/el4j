@@ -1510,7 +1510,31 @@
                 <type>jar</type>
             </dependency>
 
-
+            <!-- Swing demo -->
+            <dependency>
+                <groupId>ch.elca.el4j.applications</groupId>
+                <artifactId>swing-demo-common</artifactId>
+                <version>${version.application-refdb}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.applications</groupId>
+                <artifactId>swing-demo-server-jar</artifactId>
+                <version>${version.application-refdb}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.applications</groupId>
+                <artifactId>swing-demo-thin-client</artifactId>
+                <version>${version.application-refdb}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.applications</groupId>
+                <artifactId>swing-demo-standalone-client</artifactId>
+                <version>${version.application-refdb}</version>
+                <type>jar</type>
+            </dependency>
 
             <!-- **************************** -->
             <!-- *    Other dependencies    * -->
