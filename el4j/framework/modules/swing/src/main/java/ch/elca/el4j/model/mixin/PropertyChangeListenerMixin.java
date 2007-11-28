@@ -68,7 +68,7 @@ public class PropertyChangeListenerMixin extends
     /**
      * The logger.
      */
-    private static Log s_logger = LogFactory
+    private static final Log s_logger = LogFactory
             .getLog(PropertyChangeListenerMixin.class);
     
     /**
