@@ -50,10 +50,11 @@ To start working with the EL4J sources
        o mvn install:install-file -DgroupId=com.ibm -DartifactId=db2jcc_license_c -Dversion=20040819 -Dpackaging=jar -Dfile=db2jcc_license_c.jar
      * mvn clean install  
        
-To start with the gui application template (for the moment the convenience zip is only available within ELCA)
-* Follow the instructions under http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/SpringRcpApplicationTemplate or 
-  set the application up yourself by downloading the source from svn under
-   https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/applications/templates/
+To start a new GUI application 
+ * Check out the GUI demo application under external/applications/templates/gui (assuming you have downloaded the
+   source code of el4j)
+ * Set up your EL4J environment (see the examples above)
+ * Follow the steps in the file external/applications/templates/gui/README.txt 
  
 To start with the web application template (due to proprietary technology, this is only available within ELCA)
  * Download http://leaffy.elca.ch/java/el4j/templates/web-template-1.1.3.zip and unzip it to el4j/web-template
@@ -64,16 +65,9 @@ To start with the web application template (due to proprietary technology, this 
  * Open your browser and go to the webpage http://localhost:8080/web-template-web/
  * More info: http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/WebApplicationTemplate
  
-To start with the seam application template do the following (this is not yet tested a lot)
- * Download el4j-seam.zip application template from sf.net or 
-    http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/JbossSeam and unzip it to the 
-    EL4J directory
- * Open a shell and go to EL4J/el4j-seam, where the template is located.
- * Execute  source ../setupPathsAndEnvironment.sh 
- * Execute  mvn clean install -DinitDB=true
- * cd  war/ 
- * Run   mvn db:start jetty:run   to start the Derby network server and run jetty
- * You can access the application now at http://localhost:8080/
+To check out the seam demo application (this is not yet tested a lot)
+ * Go to the directory external/sandbox/el4j-seam and invoke a "mvn install"
+ * Go to the directory external/sandbox/seam-demo and follow the steps under README.txt
  
 More information:
  * The local ./docs directory
