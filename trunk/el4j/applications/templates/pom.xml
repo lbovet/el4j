@@ -21,7 +21,7 @@
     <description>Templates of the EL4J framework.</description>
     <modules>
 		<module>common</module>
-		<module>gui</module>
+		<module>guiOld</module>
     </modules>
     <!-- Former profile for API generation (site) -->
     <!--
