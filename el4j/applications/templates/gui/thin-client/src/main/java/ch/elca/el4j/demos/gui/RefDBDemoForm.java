@@ -257,7 +257,7 @@ public class RefDBDemoForm extends JPanel implements OpenCloseEventHandler {
         if (m_listBinding != null && m_listBinding.isBound()) {
             m_listBinding.unbind();
         }
-        m_listBinding = m_binder.getSpecialBinding(
+        m_listBinding = m_binder.getManualBinding(
             m_refList, references, tb, true);
         m_listBinding.bind();
     }
