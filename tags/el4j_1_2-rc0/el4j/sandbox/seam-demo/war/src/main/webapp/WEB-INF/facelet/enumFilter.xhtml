@@ -1,0 +1,29 @@
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                 xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns:f="http://java.sun.com/jsf/core"
+                 xmlns:s="http://jboss.com/products/seam/taglib"
+				 xmlns:el4j="http://www.elca.ch/el4j/taglib">
+	
+	
+	<p><b>#{el4j:h10nFieldName(entityShortName, filterName)}:</b></p>
+	
+	<ul>
+		<ui:repeat value="#{utils.getFilterEnumList(entityClassName,filterName)}" var="item">
+			<li>
+				<s:link value="#{el4j:h10nFieldEnumName(entityShortName, filterName, item)}"
+				   styleClass="#{searching.isRestrictionInEffect(param.restrict, filterName, item)?'bold':''}">
+					<f:param name="restrict" value="#{searching.computeNewRestrictionsParameter(param.restrict,filterName,item)}"/>
+				</s:link>
+			</li>
+		</ui:repeat>
+		<li>
+			<s:link value="All"
+			   styleClass="#{searching.isRestrictionInEffect(param.restrict, filterName, null)?'bold':''}">
+				<f:param name="restrict" value="#{searching.computeNewRestrictionsParameter(param.restrict,filterName,null)}"/>
+			</s:link>
+		</li>
+	</ul>
+	
+
+</ui:composition>

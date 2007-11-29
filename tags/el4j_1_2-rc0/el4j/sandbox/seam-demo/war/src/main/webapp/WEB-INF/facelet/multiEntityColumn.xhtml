@@ -1,0 +1,34 @@
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                 xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns:f="http://java.sun.com/jsf/core"
+				 xmlns:c="http://java.sun.com/jstl/core"
+                 xmlns:s="http://jboss.com/products/seam/taglib"
+				 xmlns:rich="http://richfaces.ajax4jsf.org/rich"
+				 xmlns:el4j="http://www.elca.ch/el4j/taglib">
+
+	<h:column>
+		<f:facet name="header">#{el4j:h10nFieldName(entityShortName, columnName)}</f:facet>
+		
+		<c:set var="relatedSize" value="#{entity[columnName].size()}"/>
+		
+		<s:span rendered="#{relatedSize == 0}">
+			<el4j:columnText text="No #{el4j:h10nEntityName(utils.getRelatedEntityShortName(entity, columnName))}"
+						   doLink="#{doLink}"/>
+		</s:span>
+		
+		<s:span rendered="#{(relatedSize gt 0) and (relatedSize le 3)}">
+			<ui:repeat value="#{entity[columnName].toArray()}" var="ent">
+				<el4j:columnText text="#{ent.toString()}"
+							   doLink="#{doLink}"/><br/>
+			</ui:repeat>
+		</s:span>
+		
+		<s:span rendered="#{relatedSize gt 3}">
+			<c:set var="relatedH10n" value="#{el4j:h10nEntityNamePlural(utils.getRelatedEntityShortName(entity, columnName))}"/>
+			<el4j:columnText text="#{entity[columnName].size()} #{relatedH10n}"
+						   doLink="#{doLink}"/>
+		</s:span>
+	</h:column>
+	
+</ui:composition>
