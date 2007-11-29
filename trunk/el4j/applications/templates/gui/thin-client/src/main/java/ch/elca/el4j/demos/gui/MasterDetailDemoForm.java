@@ -24,6 +24,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import org.jdesktop.application.Action;
 import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
@@ -111,6 +114,9 @@ public class MasterDetailDemoForm extends JPanel {
      */
     @Action
     public void create() {
+        if (children.getCellEditor() != null) {
+            children.getCellEditor().cancelCellEditing();
+        }
         Person newChild = new DefaultPerson();
         newChild = PropertyChangeListenerMixin.addPropertyChangeMixin(newChild);
         newChild.setFirstName(firstName.getText());
@@ -126,10 +132,11 @@ public class MasterDetailDemoForm extends JPanel {
     @Action
     public void delete() {
         if (children.getSelectedRow() >= 0) {
+            int selectedRow = children.getSelectedRow();
             if (children.getCellEditor() != null) {
                 children.getCellEditor().cancelCellEditing();
             }
-            Object o = children.getValueAt(children.getSelectedRow(), 0);
+            Object o = children.getValueAt(selectedRow, 0);
             if (o != null) {
                 Person selectedPerson = (Person) ((ValidatedProperty) o)
                     .getParent();
@@ -258,7 +265,6 @@ public class MasterDetailDemoForm extends JPanel {
         TableSorter sorter = new TableSorter(
             children.getModel(), children.getTableHeader());
         children.setModel(sorter);
-        
     }
     
     /**

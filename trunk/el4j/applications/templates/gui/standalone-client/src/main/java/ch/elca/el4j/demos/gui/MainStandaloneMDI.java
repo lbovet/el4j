@@ -78,7 +78,6 @@ public final class MainStandaloneMDI {
             
             contextConfig.setInclusiveConfigLocations(applicationContextPaths);
 
-
             GUIApplication.launch(MainFormMDI.class, args, contextConfig);
 
         } finally {
