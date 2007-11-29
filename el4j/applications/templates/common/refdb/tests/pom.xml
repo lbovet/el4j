@@ -30,15 +30,19 @@
                 <artifactId>maven-database-plugin</artifactId>
                 <executions>
                     <execution>
-                        <configuration>
-                            <connectionPropertiesSource>
-                                scenarios/db/raw/refdb-tests-override-{db.name}.properties
-                            </connectionPropertiesSource>
-                        </configuration>
+                        <id>prepare</id>
                         <goals>
                             <goal>prepare</goal>
                         </goals>
                         <phase>pre-integration-test</phase>
+                    </execution>
+                    <!-- Delete tables and stop Network Server -->
+                    <execution>
+                        <id>cleanUp</id>
+                        <goals>
+                            <goal>cleanUp</goal>
+                        </goals>
+                        <phase>post-integration-test</phase>
                     </execution>
                 </executions>
             </plugin>
@@ -60,25 +64,6 @@
                         <configuration>
                             <skip>false</skip>
                         </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- Delete tables and stop Network Server -->
-            <plugin>
-                <groupId>ch.elca.el4j.maven.plugins</groupId>
-                <artifactId>maven-database-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <configuration>
-                            <connectionPropertiesSource>
-                                scenarios/db/raw/refdb-tests-override-{db.name}.properties
-                            </connectionPropertiesSource>
-                        </configuration>
-                        <goals>
-                            <goal>cleanUp</goal>
-                        </goals>
-                        <phase>post-integration-test</phase>
                     </execution>
                 </executions>
             </plugin>
