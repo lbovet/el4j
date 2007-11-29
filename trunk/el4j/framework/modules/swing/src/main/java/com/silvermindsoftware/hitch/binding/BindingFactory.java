@@ -63,7 +63,7 @@ public class BindingFactory {
      * Map containing user defined binding mappings.
      */
     @SuppressWarnings("unchecked")
-    private Map<JComponent, SpecialBindingCreator> m_specialBinding;
+    private Map<JComponent, BindingCreator> m_specialBinding;
     
     /**
      * Map containing user defined validation responder.
@@ -77,7 +77,7 @@ public class BindingFactory {
      */
     @SuppressWarnings("unchecked")
     protected BindingFactory() {
-        m_specialBinding = new HashMap<JComponent, SpecialBindingCreator>();
+        m_specialBinding = new HashMap<JComponent, BindingCreator>();
         m_specialValidationResponder
             = new HashMap<JComponent, ValidationResponder>();
     }
@@ -106,7 +106,7 @@ public class BindingFactory {
      * @param binding       the custom binding
      */
     @SuppressWarnings("unchecked")
-    public void register(JComponent component, SpecialBindingCreator binding) {
+    public void register(JComponent component, BindingCreator binding) {
         m_specialBinding.put(component, binding);
     }
     
@@ -128,7 +128,7 @@ public class BindingFactory {
      * @return                  a AutoBinding object representing the binding
      */
     @SuppressWarnings("unchecked")
-    public AutoBinding getBinding(Object modelObject, String modelProperty,
+    public AutoBinding createBinding(Object modelObject, String modelProperty,
         JComponent formComponent) {
         
         Property modelPropertyName = BeanProperty.create(modelProperty);
@@ -153,7 +153,7 @@ public class BindingFactory {
      *                         validation
      */
     @SuppressWarnings("unchecked")
-    public BindingListener getValidationListener(JComponent formComponent) {
+    public BindingListener createValidationListener(JComponent formComponent) {
         ValidationResponder responder;
         if (m_specialValidationResponder.containsKey(formComponent)) {
             responder = m_specialValidationResponder.get(formComponent);

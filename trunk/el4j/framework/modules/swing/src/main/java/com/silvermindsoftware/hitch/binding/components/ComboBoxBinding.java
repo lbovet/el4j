@@ -26,7 +26,7 @@ import org.jdesktop.swingbinding.JComboBoxBinding;
 import org.jdesktop.swingbinding.SwingBindings;
 import org.springframework.context.ApplicationContext;
 
-import com.silvermindsoftware.hitch.binding.AbstractSpecialBindingCreator;
+import com.silvermindsoftware.hitch.binding.AbstractBindingCreator;
 
 import ch.elca.el4j.gui.swing.GUIApplication;
 
@@ -42,7 +42,7 @@ import ch.elca.el4j.gui.swing.GUIApplication;
  *
  * @author Stefan Wismer (SWI)
  */
-public class ComboBoxBinding extends AbstractSpecialBindingCreator<JComboBox> {
+public class ComboBoxBinding extends AbstractBindingCreator<JComboBox> {
     
     /** {@inheritDoc} */
     @SuppressWarnings("unchecked")

@@ -23,7 +23,7 @@ import javax.swing.JComponent;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.BindingGroup;
 
-import com.silvermindsoftware.hitch.binding.SpecialBindingCreator;
+import com.silvermindsoftware.hitch.binding.BindingCreator;
 import com.silvermindsoftware.hitch.validation.response.ValidationResponder;
 
 public interface Binder {
@@ -54,17 +54,29 @@ public interface Binder {
     public BindingGroup getAutoBinding(Container container,
         boolean performValidate, String... modelId);
     
-    /** Binds a component to a model using a special binding creator.
+    /** Binds a component to a model using the standard binding creator.
      * 
      * @param model              the model to bind
+     * @param property           the property of the model to bind
      * @param component          the form component to bind
-     * @param creator            the special binding creator
      * @param performValidate    determines if a validation should be performed
      * @return                   the created binding
      */
     @SuppressWarnings("unchecked")
-    public AutoBinding getSpecialBinding(Object model, JComponent component,
-        SpecialBindingCreator creator, boolean performValidate);
+    public AutoBinding getManualBinding(Object model, String property,
+        JComponent component, boolean performValidate);
+    
+    /** Binds a component to a model using a specific binding creator.
+     * 
+     * @param model              the model to bind
+     * @param component          the form component to bind
+     * @param creator            the specific binding creator
+     * @param performValidate    determines if a validation should be performed
+     * @return                   the created binding
+     */
+    @SuppressWarnings("unchecked")
+    public AutoBinding getManualBinding(Object model, JComponent component,
+        BindingCreator creator, boolean performValidate);
     
     /**
      * Registers a custom binding strategy.
@@ -74,7 +86,7 @@ public interface Binder {
      */
     @SuppressWarnings("unchecked")
     public void registerBinding(JComponent component,
-        SpecialBindingCreator binding);
+        BindingCreator binding);
     
     /**
      * Registers a custom validation responder.
