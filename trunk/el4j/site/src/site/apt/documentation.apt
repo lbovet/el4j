@@ -15,7 +15,7 @@ Documentation
     * {{{docs/pdf/GettingStarted.pdf}
       Getting Started Documentation (PDF)}}
       
-    * {{{docs/pdf/Maven2Course_v1_2.pdf}
+    * {{{docs/pdf/Maven2Course_v1_3.pdf}
       A presentation about our use of Maven (PDF)}}    
 
     * {{{docs/pdf/MavenCheatSheet_EL4J.pdf}
@@ -47,8 +47,6 @@ Documentation
     * Blogs: {{{http://philhoser.blogspot.com/}
       Philipp's Blog}}
 
-    * (A bit dated) {{{docs/pdf/EL4JFeatures.pdf}
-      Short presentation with essential features of EL4J (PDF)}}
 
 * Links to external documenation (selection)
 
