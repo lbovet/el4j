@@ -79,6 +79,14 @@
             <timezone>+1</timezone>
         </developer>
 		<developer>
+            <id>poesch</id>
+            <name>Philipp Oesch</name>
+            <roles>
+                <role>Java Developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>		
+		<developer>
             <id>franky_b</id>
             <name>Frank Bitzer</name>
             <roles>
