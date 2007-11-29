@@ -6,28 +6,35 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
 
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
+	<context-param>
+        <param-name>inclusiveLocations</param-name>
         <param-value>
-            WEB-INF/remotingtemplate-servlet.xml
-        </param-value>
+            classpath*:mandatory/*.xml,
+            classpath:etc/template/server/web/jaxws-server-config.xml
+		</param-value>
     </context-param>
-   
-    <listener>
-        <listener-class>
-            org.springframework.web.context.ContextLoaderListener
-        </listener-class>
-    </listener>
-    
+	<context-param>
+        <param-name>overrideBeanDefinitions</param-name>
+        <param-value>false</param-value>
+    </context-param>
+	<context-param>
+        <param-name>mergeResources</param-name>
+        <param-value>false</param-value>
+    </context-param>
+	
+	<servlet>
+        <servlet-name>module-context-loader</servlet-name>
+        <servlet-class>ch.elca.el4j.web.context.ModuleContextLoaderServlet</servlet-class>
+		<load-on-startup>100</load-on-startup>
+    </servlet>
     <servlet>
         <servlet-name>jaxws-servlet-spring</servlet-name>
-        <servlet-class>
-            ch.elca.el4j.services.remoting.servlet.WSSpringServlet
-        </servlet-class>
+        <servlet-class>ch.elca.el4j.services.remoting.servlet.WSSpringServlet</servlet-class>
+		<load-on-startup>101</load-on-startup>
     </servlet>
-
+    
     <servlet-mapping>
         <servlet-name>jaxws-servlet-spring</servlet-name>
-        <url-pattern>*.RemotingTemplateJaxws</url-pattern>
+        <url-pattern>*.RemotingTemplate</url-pattern>
     </servlet-mapping>
 </web-app>
