@@ -70,23 +70,23 @@
             </roles>
             <timezone>+1</timezone>
         </developer>
-		<developer>
-            <id>swi</id>
+        <developer>
+            <id>swismer</id>
             <name>Stefan Wismer</name>
             <roles>
                 <role>Java developer</role>
             </roles>
             <timezone>+1</timezone>
         </developer>
-		<developer>
+        <developer>
             <id>poesch</id>
             <name>Philipp Oesch</name>
             <roles>
                 <role>Java Developer</role>
             </roles>
             <timezone>+1</timezone>
-        </developer>		
-		<developer>
+        </developer>
+        <developer>
             <id>franky_b</id>
             <name>Frank Bitzer</name>
             <roles>
@@ -94,7 +94,7 @@
             </roles>
             <timezone>+1</timezone>
         </developer>
-		<developer>
+        <developer>
             <id>chumard</id>
             <name>Claude Humard</name>
             <roles>
@@ -137,41 +137,37 @@
             </roles>
             <timezone>+1</timezone>
         </contributor>
-		<developer>
-            <id>cba</id>
+        <contributor>
             <name>Christoph Baeni</name>
             <roles>
                 <role>Ex-Intern</role>
                 <role>Java developer</role>				
             </roles>
             <timezone>+1</timezone>
-        </developer>	
-        <developer>
-            <id>fsuess</id>
+        </contributor>	
+        <contributor>
             <name>Florian Suess</name>
             <roles>
                 <role>Java developer</role>
             </roles>
             <timezone>+1</timezone>
-        </developer>
-        <developer>
-            <id>enylaios</id>
+        </contributor>
+        <contributor>
             <name>David Stefan</name>
             <roles>
                 <role>Ex-Intern</role>
                 <role>Java developer</role>
             </roles>
             <timezone>+1</timezone>
-        </developer>
-        <developer>
-            <id>phlipside</id>
+        </contributor>
+        <contributor>
             <name>Philippe Jacot</name>
             <roles>
                 <role>Ex-Intern</role>
                 <role>Java developer</role>
             </roles>
             <timezone>+1</timezone>
-        </developer>		
+        </contributor>		
     </contributors>
 
     <licenses>
