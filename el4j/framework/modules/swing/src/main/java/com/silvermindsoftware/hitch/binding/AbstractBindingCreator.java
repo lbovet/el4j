@@ -18,10 +18,10 @@ package com.silvermindsoftware.hitch.binding;
 
 import javax.swing.JComponent;
 
-import org.jdesktop.beansbinding.AutoBinding;
+import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
 
 /**
- * A user defined "binding template" for a special widget.
+ * This abstract class just provides an update strategy field to its subclasses.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -30,25 +30,29 @@ import org.jdesktop.beansbinding.AutoBinding;
  *    "$Author$"
  * );</script>
  * 
- * @param <T> the type of widget to bind
+ * @param <T>    the type of form component it belongs to
  *
  * @author Stefan Wismer (SWI)
  */
-public interface SpecialBindingCreator<T extends JComponent> {
-    /**
-     * Create the concrete binding.
-     * 
-     * @param object            the object to bind
-     * @param formComponent     the widget to bound to
-     * @return                  the corresponding binding
-     */
-    @SuppressWarnings("unchecked")
-    public AutoBinding createBinding(Object object, T formComponent);
+public abstract class AbstractBindingCreator<T extends JComponent>
+    implements BindingCreator<T> {
     
     /**
-     * Add validation capability.
-     * 
-     * @param formComponent     the widget showing the values
+     * The update strategy (r/r once, rw).
      */
-    public void addValidation(T formComponent);
+    protected UpdateStrategy m_updateStrategy = UpdateStrategy.READ_WRITE;
+
+    /**
+     * @return    the update strategy
+     */
+    public UpdateStrategy getUpdateStrategy() {
+        return m_updateStrategy;
+    }
+
+    /**
+     * @param updateStrategy    the update strategy to set
+     */
+    public void setUpdateStrategy(UpdateStrategy updateStrategy) {
+        m_updateStrategy = updateStrategy;
+    }
 }

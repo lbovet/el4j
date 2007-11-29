@@ -32,7 +32,7 @@ import org.jdesktop.swingbinding.SwingBindings;
 import org.jdesktop.swingbinding.validation.ValidatedProperty;
 import org.springframework.context.ApplicationContext;
 
-import com.silvermindsoftware.hitch.binding.AbstractSpecialBindingCreator;
+import com.silvermindsoftware.hitch.binding.AbstractBindingCreator;
 
 import ch.elca.el4j.gui.swing.GUIApplication;
 
@@ -48,7 +48,7 @@ import ch.elca.el4j.gui.swing.GUIApplication;
  *
  * @author Stefan Wismer (SWI)
  */
-public class TableBinding extends AbstractSpecialBindingCreator<JTable> {
+public class TableBinding extends AbstractBindingCreator<JTable> {
     /**
      * Which property to show in the table.
      */

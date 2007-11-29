@@ -28,7 +28,7 @@ import org.jdesktop.beansbinding.Binding;
 import org.jdesktop.beansbinding.BindingGroup;
 
 import com.silvermindsoftware.hitch.binding.BindingFactory;
-import com.silvermindsoftware.hitch.binding.SpecialBindingCreator;
+import com.silvermindsoftware.hitch.binding.BindingCreator;
 import com.silvermindsoftware.hitch.meta.ComponentMeta;
 import com.silvermindsoftware.hitch.meta.FormMeta;
 import com.silvermindsoftware.hitch.meta.ModelMeta;
@@ -109,15 +109,9 @@ public class BinderImpl extends AbstractBinder implements Binder {
                         + componentField.getName() + " was not found");
             }
             
-            
-            AutoBinding b = BINDING_FACTORY.getBinding(modelObject,
-                componentMeta.getModelPropertyName(), formComponent);
-            if (performValidate) {
-                b.addBindingListener(BINDING_FACTORY.getValidationListener(
-                    formComponent));
-            }
-            
-            bindings.addBinding(b);
+            bindings.addBinding(getManualBinding(
+                modelObject, componentMeta.getModelPropertyName(),
+                formComponent, performValidate));
         }
         return bindings;
     }
@@ -125,13 +119,27 @@ public class BinderImpl extends AbstractBinder implements Binder {
     
     /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
-    public AutoBinding getSpecialBinding(Object model, JComponent component,
-        SpecialBindingCreator creator, boolean performValidate) {
+    public AutoBinding getManualBinding(Object model, String property,
+        JComponent component, boolean performValidate) {
+        
+        AutoBinding b = BINDING_FACTORY.createBinding(
+            model, property, component);
+        if (performValidate) {
+            b.addBindingListener(BINDING_FACTORY.createValidationListener(
+                component));
+        }
+        return b;
+    }
+    
+    /** {@inheritDoc} */
+    @SuppressWarnings("unchecked")
+    public AutoBinding getManualBinding(Object model, JComponent component,
+        BindingCreator creator, boolean performValidate) {
         
         AutoBinding b = creator.createBinding(model, component);
         if (performValidate) {
             creator.addValidation(component);
-            b.addBindingListener(BINDING_FACTORY.getValidationListener(
+            b.addBindingListener(BINDING_FACTORY.createValidationListener(
                 component));
         }
         return b;
@@ -140,7 +148,7 @@ public class BinderImpl extends AbstractBinder implements Binder {
     /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
     public void registerBinding(JComponent component,
-        SpecialBindingCreator binding) {
+        BindingCreator binding) {
         
         BINDING_FACTORY.register(component, binding);
     }

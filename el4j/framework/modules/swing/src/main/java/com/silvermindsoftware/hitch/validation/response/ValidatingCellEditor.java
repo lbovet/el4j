@@ -92,7 +92,7 @@ public class ValidatingCellEditor extends AbstractCellEditor implements
         }
 
         BindingFactory factory = BindingFactory.getInstance();
-        m_binding = factory.getBinding(m_property.getParent(),
+        m_binding = factory.createBinding(m_property.getParent(),
             m_property.getProperty(), (JComponent) component);
         ApplicationContext ctx
             = GUIApplication.getInstance().getSpringContext();

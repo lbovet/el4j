@@ -28,7 +28,7 @@ import org.jdesktop.swingbinding.JListBinding;
 import org.jdesktop.swingbinding.SwingBindings;
 import org.springframework.context.ApplicationContext;
 
-import com.silvermindsoftware.hitch.binding.AbstractSpecialBindingCreator;
+import com.silvermindsoftware.hitch.binding.AbstractBindingCreator;
 
 import ch.elca.el4j.gui.swing.GUIApplication;
 
@@ -44,7 +44,7 @@ import ch.elca.el4j.gui.swing.GUIApplication;
  *
  * @author Stefan Wismer (SWI)
  */
-public class ListBinding extends AbstractSpecialBindingCreator<JList> {
+public class ListBinding extends AbstractBindingCreator<JList> {
     /**
      * Which property to show in the list.
      */
