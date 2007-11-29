@@ -2,12 +2,15 @@
  Reference Projects
  -----
  -----
- 15 Aug 2007
+ 29 Nov 2007
  -----
 
 Reference Projects
 
-  Within ELCA, EL4J has been used for more than 18 projects so far. The project sizes
-  and domains vary a lot. They include a soft real-time application to supervise
-  vehicles, several administration-support applications of the public and 
+  Within ELCA, EL4J has been used for more than 20 projects so far (the projects were mostly for  
+  external clients). The project sizes and domains vary a lot. They include a soft real-time
+  application to supervise vehicles, several administration-support applications of the public and 
   private sector or an user-interface for a bi-temporal database.
+  
+  There are other uses of EL4J outside of ELCA (mainly initiated via personal contacts). Unfortunately
+  we cannot disclose futher details here.
