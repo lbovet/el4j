@@ -6,14 +6,14 @@
 	<parent>
 		<groupId>ch.elca.el4j.applications</groupId>
 		<artifactId>el4j-applications</artifactId>
-		<version>1.1.4-SNAPSHOT</version>
+		<version>1.2</version>
 	</parent>
 	
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ch.elca.el4j.applications</groupId>
 	<artifactId>seam-demo</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>${el4j-seam.version}</version>
 	<name>seam-demo</name>
 	<description>Demo of generic master/detail views using Seam EL4J/Spring</description>
 	
@@ -139,7 +139,7 @@
 		<hibernate.jdbc.batch_size>20</hibernate.jdbc.batch_size>
 		<hibernate.show_sql>true</hibernate.show_sql>
 		<hibernate.cache.use_second_level_cache>true</hibernate.cache.use_second_level_cache>
-		<el4j-seam.version>1.0-SNAPSHOT</el4j-seam.version>
+		<el4j-seam.version>1.0</el4j-seam.version>
 	</properties>
 	
 	<modules>
