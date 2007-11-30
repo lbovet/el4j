@@ -24,7 +24,7 @@ Used Libraries:
 Build Instructions:
  - First compile it, using mvn install.
  - To execute it, change to the war directory an run the following command:
-      mvn db:prepareDB cargo:undeploy cargo:deploy cargo:start
+      mvn db:prepare cargo:undeploy cargo:deploy cargo:start
  - After the application has started you can access it at
       http://localhost:8080/seam-demo-war/
 
