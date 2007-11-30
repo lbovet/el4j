@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <parent>
+        <groupId>ch.elca.el4j.applications</groupId>
+        <artifactId>el4j-templates</artifactId>
+        <version>1.1.4-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>webstart-demo</artifactId>
+    <version>0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <name>EL4J Webstart Demo</name>
+    <description>
+        Demo-application for the webstart-module of the EL4J framework using the swing-demo-thin-client.
+    </description>
+    <dependencies>
+        <dependency>
+            <groupId>com.sun.java.jnlp</groupId>
+            <artifactId>jnlp-servlet</artifactId>
+            <version>6.0</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>el4j-framework-module-webstart</artifactId>
+            <version>0.1-SNAPSHOT</version>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+        
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>webstart-maven-plugin</artifactId>
+                <version>${version.webstart-maven-plugin}</version>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <configuration>
+                    <deployer>
+                        <deployables>
+                            <deployable>
+                                <location>${jee-web.war.location}</location>
+                                <properties>
+                                    <context>${jee-web.context}</context>
+                                </properties>
+                            </deployable>
+                        </deployables>
+                    </deployer>
+                </configuration>
+            </plugin>
+            
+        </plugins>
+    </build>
+    <properties>
+        <!-- Webstart Properties -->
+        <!--webstart.outputDirectory>webstart</webstart.outputDirectory-->
+        <!--webstart.jnlpFilename>launch.jnlp</webstart.jnlpFilename-->
+        <webstart.resource.groupId>ch.elca.el4j.applications</webstart.resource.groupId>
+        <webstart.resource.artifactId>swing-demo-thin-client</webstart.resource.artifactId>
+        <webstart.resource.version>${version.application-refdb}</webstart.resource.version>
+        <webstart.resource.mainClass>ch.elca.el4j.demos.gui.MainFormDistributedMDI</webstart.resource.mainClass>
+        <jee-web.webapp.directory>${project.build.directory}/${jee-web.war.name}</jee-web.webapp.directory> <!-- must be changed to comply with the maven webstart plugin -->
+    </properties>
+</project>
