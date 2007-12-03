@@ -41,7 +41,8 @@
                 <!--
                     Due to incomplete alpha-status a patched snapshot version is used.
                        * maven-webstart-plugin (revision 5622
-                           + patch http://jira.codehaus.org/browse/MWEBSTART-1 "handleAlreadySignedJars.diff")
+                           + patch http://jira.codehaus.org/browse/MWEBSTART-1 "MWEBSTART-1-patch.diff"
+                           + patch http://jira.codehaus.org/browse/MWEBSTART-59 "MWEBSTART-59-patch.diff")
                 <version>1.0-alpha-2-20071130.102344-1</version>
                 -->
                 <version>${version.webstart-maven-plugin}</version>
