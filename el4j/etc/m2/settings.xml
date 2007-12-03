@@ -298,6 +298,18 @@
                 <weblogic9x.manager.password>weblogic</weblogic9x.manager.password>
                 <weblogic9x.container.log.file>${project.build.directory}/logs/weblogic9x/output.log</weblogic9x.container.log.file>
                 <weblogic9x.cargo.log.file>${project.build.directory}/logs/weblogic9x/cargo.lo</weblogic9x.cargo.log.file>
+				
+				
+				 <!-- Weblogic10 -->
+                <weblogic10.home>${el4j.project.tools}/bea/wlserver_10.0</weblogic10.home>
+                <weblogic10.server.name>testServer</weblogic10.server.name>
+                <weblogic10.domains.home>${el4j.project.tools}/bea/wlserver_10.0/samples/domains/${weblogic10.domain.name}</weblogic10.domains.home>
+                <weblogic10.domain.name>el4j</weblogic10.domain.name>
+                <weblogic10.manager.username>weblogic</weblogic10.manager.username>
+                <weblogic10.manager.password>weblogic</weblogic10.manager.password>
+                <weblogic10.container.log.file>${project.build.directory}/output.log</weblogic10.container.log.file>
+                <weblogic10.cargo.log.file>${project.build.directory}/cargo.log</weblogic10.cargo.log.file>
+    
                 
                 <!-- Birt -->
                 <birt.home>${el4j.project.tools}/birt-runtime-2_1_0</birt.home>
