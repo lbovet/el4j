@@ -96,7 +96,7 @@
                     <!-- MDL 2006-11-23
                         Due to a Bug within the Cargo plugin, we need to sleep here.
                         Note that the time is crucial: 5 seconds are not enough. -->
-                    <plugin>
+                   <!-- <plugin>
                         <artifactId>maven-antrun-plugin</artifactId>
                         <executions>
                             <execution>
@@ -128,11 +128,11 @@
                             </execution>
                         </executions>
                     </plugin>
-
+-->
                     <!-- MDL 2006-11-23
                         Due to a Bug within the Cargo plugin, we need to sleep here.
                         Note that the time is crucial: 5 seconds are not enough. -->
-                    <plugin>
+                <!--    <plugin>
                         <artifactId>maven-antrun-plugin</artifactId>
                         <executions>
                             <execution>
@@ -150,13 +150,13 @@
                             </execution>
                         </executions>
                     </plugin>
-
+-->
                     <plugin>
                         <groupId>org.codehaus.cargo</groupId>
                         <artifactId>cargo-maven2-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>deploy-after-undeploy</id>
+                                <id>deploy</id>
                                 <phase>integration-test</phase>
                                 <goals>
                                     <goal>deploy</goal>
@@ -168,7 +168,7 @@
                     <!-- MDL 2006-11-23
                         Due to a Bug within the Cargo plugin, we need to sleep here.
                         Note that the time is crucial: 5 seconds are not enough. -->
-                    <plugin>
+                   <!-- <plugin>
                         <artifactId>maven-antrun-plugin</artifactId>
                         <executions>
                             <execution>
@@ -185,7 +185,7 @@
                                 </goals>
                             </execution>
                         </executions>
-                    </plugin>
+                    </plugin>-->
 
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
