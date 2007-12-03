@@ -1050,7 +1050,7 @@
                                         </dependency>
 									
                                         <dependency>
-                                            <location>${weblogic10.home}/../JROCKI~1/lib/tools.jar</location>
+                                            <location>${weblogic10.jrockit.home}/lib/tools.jar</location>
                                         </dependency>
 										
 										
@@ -1102,6 +1102,7 @@
                                         <cargo.weblogic.administrator.password>${weblogic10.manager.password}</cargo.weblogic.administrator.password>
                                         <cargo.servlet.port>${jee-web.port}</cargo.servlet.port>
                                         <cargo.weblogic.deployable.folder>autodeploy</cargo.weblogic.deployable.folder>
+										<cargo.weblogic.jvm>${weblogic10.jrockit.home}/bin/java</cargo.weblogic.jvm>
                                     </properties>
                                 </configuration>
                             </configuration>
