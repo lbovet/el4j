@@ -14,6 +14,7 @@
     <!-- Author: $Author$ -->
 
     <container-descriptor>
-        <prefer-web-inf-classes>true</prefer-web-inf-classes>
+        <prefer-web-inf-classes>false</prefer-web-inf-classes>
     </container-descriptor>
+	
 </weblogic-web-app>
