@@ -651,6 +651,12 @@
                     <version>${version.taglist-maven-plugin}</version>
                 </plugin>
 
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>cobertura-maven-plugin</artifactId>
+                    <version>${version.cobertura-maven-plugin}</version>
+                </plugin>
+                
                 <!-- Further EL4J specific plugins -->
                 <plugin>
                     <groupId>ch.elca.el4j.maven.plugins</groupId>
@@ -2098,7 +2104,7 @@
         <checkstyle.config.location>${el4j.external}/etc/checkstyle/checks.xml</checkstyle.config.location>
         <checkstyle.enable.rss>false</checkstyle.enable.rss>
         <checkstyle.enable.rules.summary>false</checkstyle.enable.rules.summary>
-
+        
         <!-- Maven plugin versions. Needed due to false dep mgt. -->
         <version.maven-project-info-reports-plugin>2.0.1</version.maven-project-info-reports-plugin>
         <version.maven-checkstyle-plugin>2.1</version.maven-checkstyle-plugin>
@@ -2107,6 +2113,8 @@
         <version.maven-jxr-plugin>2.1</version.maven-jxr-plugin>
         <version.taglist-maven-plugin>2.0</version.taglist-maven-plugin>
         <version.maven-plugin-plugin>2.3</version.maven-plugin-plugin>
+        <version.cobertura-maven-plugin>2.1</version.cobertura-maven-plugin>
+        <version.webstart-maven-plugin>1.0-alpha-2-20071130.102344-1</version.webstart-maven-plugin>
         
         <!-- Used Maven version -->
         <el4j.java.version>1.5</el4j.java.version>
