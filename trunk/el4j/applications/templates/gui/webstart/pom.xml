@@ -73,24 +73,24 @@
                     </jnlpFiles>
 
                     <sign>
-                        <keystore></keystore> <!-- path or URI (if empty, the default keystore ".keystore"-file in the user-homedir is used) -->
+                        <keystore>webstartDemoKeyStore</keystore> <!-- path or URI (if empty, the default keystore ".keystore"-file in the user-homedir is used) -->
                         <keypass>password</keypass>  <!-- we need to override passwords easily from the command line. ${keypass} -->
                         <storepass>password</storepass> <!-- ${storepass} -->
                         <alias>webstart</alias> <!-- alias of the key to  use -->
                         <!-- the following key-settings are only used if the keystore and key has to be generated at build-time -->
-                        <!--storetype>jks</storetype>
+                        <storetype>jks</storetype>
                         <validity>365</validity>
-                        <dnameCn>Claude Humard</dnameCn>
+                        <dnameCn>Firstname Lastname</dnameCn>
                         <dnameOu>EL4J</dnameOu>
                         <dnameO>ELCA</dnameO>
                         <dnameL>Zurich</dnameL>
                         <dnameSt>Zurich</dnameSt>
-                        <dnameC>CH</dnameC-->
+                        <dnameC>CH</dnameC>
 
                         <!-- KEYSTORE MANGEMENT -->
                         <keystoreConfig>
                             <delete>false</delete> <!-- delete the keystore at build time -->
-                            <gen>false</gen>       <!-- generate keystore and key at build time -->
+                            <gen>true</gen>       <!-- generate keystore and key at build time -->
                         </keystoreConfig>
 
                         <verify>false</verify> <!-- verify the signature after signing -->
