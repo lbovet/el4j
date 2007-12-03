@@ -22,6 +22,7 @@
     <description>
         Demo-application for the webstart-module of the EL4J framework using the swing-demo-thin-client.
     </description>
+    
     <dependencies>
         <dependency>
             <groupId>com.sun.java.jnlp</groupId>
@@ -29,20 +30,74 @@
             <version>6.0</version>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>ch.elca.el4j.modules</groupId>
-            <artifactId>el4j-framework-module-webstart</artifactId>
-            <version>0.1-SNAPSHOT</version>
-            <scope>runtime</scope>
-        </dependency>
     </dependencies>
+    
     <build>
         <plugins>
         
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>webstart-maven-plugin</artifactId>
+                <!--
+                    Due to incomplete alpha-status a patched snapshot version is used.
+                       * maven-webstart-plugin (revision 5622
+                           + patch http://jira.codehaus.org/browse/MWEBSTART-1 "handleAlreadySignedJars.diff")
+                <version>1.0-alpha-2-20071130.102344-1</version>
+                -->
                 <version>${version.webstart-maven-plugin}</version>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>jnlp-download-servlet</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <outputDirectoryName>webstart</outputDirectoryName>
+                    <jnlpFiles>
+                        <jnlpFile>
+                            <templateFilename>launchTemplate.vm</templateFilename>
+                            <outputFilename>launch.jnlp</outputFilename>
+                            <jarResources>
+                                <jarResource>
+                                    <groupId>ch.elca.el4j.applications</groupId>
+                                    <artifactId>swing-demo-thin-client</artifactId>
+                                    <version>${version.application-refdb}</version>
+                                    <mainClass>ch.elca.el4j.demos.gui.MainFormDistributedMDI</mainClass>
+                                </jarResource>
+                            </jarResources>
+                        </jnlpFile>
+                    </jnlpFiles>
+
+                    <sign>
+                        <keystore></keystore> <!-- path or URI (if empty, the default keystore ".keystore"-file in the user-homedir is used) -->
+                        <keypass>password</keypass>  <!-- we need to override passwords easily from the command line. ${keypass} -->
+                        <storepass>password</storepass> <!-- ${storepass} -->
+                        <alias>webstart</alias> <!-- alias of the key to  use -->
+                        <!-- the following key-settings are only used if the keystore and key has to be generated at build-time -->
+                        <!--storetype>jks</storetype>
+                        <validity>365</validity>
+                        <dnameCn>Claude Humard</dnameCn>
+                        <dnameOu>EL4J</dnameOu>
+                        <dnameO>ELCA</dnameO>
+                        <dnameL>Zurich</dnameL>
+                        <dnameSt>Zurich</dnameSt>
+                        <dnameC>CH</dnameC-->
+
+                        <!-- KEYSTORE MANGEMENT -->
+                        <keystoreConfig>
+                            <delete>false</delete> <!-- delete the keystore at build time -->
+                            <gen>false</gen>       <!-- generate keystore and key at build time -->
+                        </keystoreConfig>
+
+                        <verify>false</verify> <!-- verify the signature after signing -->
+                    </sign>
+                    <unsign>true</unsign> <!-- unsign already signed packages and sign them with own key -->
+
+                    <verifyjar>false</verifyjar>
+                </configuration>
             </plugin>
             
             <plugin>
@@ -65,13 +120,7 @@
         </plugins>
     </build>
     <properties>
-        <!-- Webstart Properties -->
-        <!--webstart.outputDirectory>webstart</webstart.outputDirectory-->
-        <!--webstart.jnlpFilename>launch.jnlp</webstart.jnlpFilename-->
-        <webstart.resource.groupId>ch.elca.el4j.applications</webstart.resource.groupId>
-        <webstart.resource.artifactId>swing-demo-thin-client</webstart.resource.artifactId>
-        <webstart.resource.version>${version.application-refdb}</webstart.resource.version>
-        <webstart.resource.mainClass>ch.elca.el4j.demos.gui.MainFormDistributedMDI</webstart.resource.mainClass>
-        <jee-web.webapp.directory>${project.build.directory}/${jee-web.war.name}</jee-web.webapp.directory> <!-- must be changed to comply with the maven webstart plugin -->
+        <!-- must be changed to comply with the maven webstart plugin -->
+        <jee-web.webapp.directory>${project.build.directory}/${jee-web.war.name}</jee-web.webapp.directory> 
     </properties>
 </project>
