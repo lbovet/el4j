@@ -309,7 +309,7 @@
                 <weblogic10.manager.password>weblogic</weblogic10.manager.password>
                 <weblogic10.container.log.file>${project.build.directory}/output.log</weblogic10.container.log.file>
                 <weblogic10.cargo.log.file>${project.build.directory}/cargo.log</weblogic10.cargo.log.file>
-    
+				<weblogic10.jrockit.home>${weblogic10.home}/../JROCKI~1</weblogic10.jrockit.home>
                 
                 <!-- Birt -->
                 <birt.home>${el4j.project.tools}/birt-runtime-2_1_0</birt.home>
