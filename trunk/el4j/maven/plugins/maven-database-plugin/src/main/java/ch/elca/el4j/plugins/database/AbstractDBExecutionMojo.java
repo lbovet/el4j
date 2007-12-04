@@ -178,19 +178,19 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
     
         getLog().info("Current artifact: " + getProject().getArtifactId());
         
-        getLog().info("Dependency tree: ");
-        getLog().info("============");
-        
-        List<Artifact> deps = getGraphWalker().
-            getDependencyArtifacts();
-        //add current artifact to search-list
-        if (deps != null) { deps.add(getProject().getArtifact()); }
-        
-        for (Artifact dep : deps) {
-            getLog().info(dep.getArtifactId());
-        }
-       
-        getLog().info("============");
+//        getLog().info("Dependency tree: ");
+//        getLog().info("============");
+//        
+//        List<Artifact> deps = getGraphWalker().
+//            getDependencyArtifacts();
+//        //add current artifact to search-list
+//        if (deps != null) { deps.add(getProject().getArtifact()); }
+//        
+//        for (Artifact dep : deps) {
+//            getLog().info(dep.getArtifactId());
+//        }
+//       
+//        getLog().info("============");
         
 //        getLog().info("Resources:");
 //        
