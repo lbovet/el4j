@@ -824,7 +824,7 @@
                                         Must be set to version 5 due cargo
                                         has no version 6 impl.
                                	    -->
-                                    <containerId>tomcat5x</containerId>
+                                    <containerId>tomcat6x</containerId>
                                     <zipUrlInstaller>
                                         <url>${tomcat6x.zipDownloadUrl}</url>
                                         <installDir>${tomcat6x.basedir}</installDir>
