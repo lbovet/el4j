@@ -35,7 +35,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate</artifactId>
-            <version>3.2.4.sp1</version>
+            <version>3.2.5.ga</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -51,11 +51,6 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-commons-annotations</artifactId>
             <version>3.0.0.ga</version>
-        </dependency>
-        <dependency>
-            <groupId>antlr</groupId>
-            <artifactId>antlr</artifactId>
-            <version>2.7.6</version>
         </dependency>
     </dependencies>
 </project>
