@@ -73,7 +73,7 @@
                     </jnlpFiles>
 
                     <sign>
-                        <keystore>webstartDemoKeyStore</keystore> <!-- path or URI (if empty, the default keystore ".keystore"-file in the user-homedir is used) -->
+                        <keystore>c:\webstartDemoKeyStore</keystore> <!-- path or URI (if empty, the default keystore ".keystore"-file in the user-homedir is used) -->
                         <keypass>password</keypass>  <!-- we need to override passwords easily from the command line. ${keypass} -->
                         <storepass>password</storepass> <!-- ${storepass} -->
                         <alias>webstart</alias> <!-- alias of the key to  use -->
@@ -89,7 +89,7 @@
 
                         <!-- KEYSTORE MANGEMENT -->
                         <keystoreConfig>
-                            <delete>false</delete> <!-- delete the keystore at build time -->
+                            <delete>true</delete> <!-- delete the keystore at build time -->
                             <gen>true</gen>       <!-- generate keystore and key at build time -->
                         </keystoreConfig>
 
