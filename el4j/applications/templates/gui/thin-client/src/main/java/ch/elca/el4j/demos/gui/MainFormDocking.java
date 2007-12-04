@@ -241,43 +241,4 @@ public class MainFormDocking extends DockingApplication {
         }
         return toolBar;
     }
-    
-    /**
-     * Sample main application for a GUI.
-     * @param args command line arguments
-     */
-    public static void main(String[] args) {
-
-        ImageSplashScreen splashScreen = null;
-        try {
-            // uses default splash screen
-            splashScreen = new ImageSplashScreen();
-
-            // add special exception handler
-            Exceptions.getInstance().addHandler(new ExampleExceptionHandler());
-
-            PlasticLookAndFeel.setPlasticTheme(new ExperienceBlue());
-
-            String[] applicationContextPaths = {
-                "classpath*:mandatory/*.xml",
-                "classpath*:mandatory/refdb/*.xml",
-                "classpath*:scenarios/db/raw/*.xml",
-                "classpath*:scenarios/dataaccess/hibernate/*.xml",
-                "classpath*:scenarios/dataaccess/hibernate/refdb/*.xml",
-                "classpath*:optional/interception/transactionJava5Annotations.xml",
-                "classpath:scenarios/swing/demo/*.xml"};
-            
-            ModuleApplicationContextConfiguration contextConfig
-                = new ModuleApplicationContextConfiguration();
-            
-            contextConfig.setInclusiveConfigLocations(applicationContextPaths);
-
-            GUIApplication.launch(MainFormDocking.class, args, contextConfig);
-
-        } finally {
-            if (splashScreen != null) {
-                splashScreen.dispose();
-            }
-        }
-    }
 }
