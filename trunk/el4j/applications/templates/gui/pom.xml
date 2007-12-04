@@ -24,5 +24,6 @@
         <module>server</module>
         <module>thin-client</module>
         <module>standalone-client</module>
+        <module>webstart</module>
     </modules>
 </project>
