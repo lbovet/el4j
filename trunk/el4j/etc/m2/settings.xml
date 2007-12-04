@@ -162,6 +162,38 @@
         	<url>http://leaffy.elca.ch:18080/repository/codehaus.release</url>
         </mirror-->
         
+        <!-- Uncomment if you are inside ELCA! -->
+        <!--mirror>
+        	<id>proximityJBoss</id>
+        	<mirrorOf>jboss</mirrorOf>
+        	<name>Proxmity mirrored jboss.</name>
+        	<url>http://leaffy.elca.ch:18080/repository/jboss.release</url>
+        </mirror-->
+        
+        <!-- Uncomment if you are inside ELCA! -->
+        <!--mirror>
+        	<id>proximityBaka</id>
+        	<mirrorOf>baka</mirrorOf>
+        	<name>Proxmity mirrored baka.</name>
+        	<url>http://leaffy.elca.ch:18080/repository/baka.release</url>
+        </mirror-->
+        
+        <!-- Uncomment if you are inside ELCA! -->
+        <!--mirror>
+        	<id>proximityJavaNetMaven1</id>
+        	<mirrorOf>java.net</mirrorOf>
+        	<name>Proxmity mirrored java-net-maven-1.</name>
+        	<url>http://leaffy.elca.ch:18080/repository/java-net-maven-1.release</url>
+        </mirror-->
+        
+        <!-- Uncomment if you are inside ELCA! -->
+        <!--mirror>
+        	<id>proximityJavaNetMaven2</id>
+        	<mirrorOf>maven2-repository.dev.java.net</mirrorOf>
+        	<name>Proxmity mirrored java-net-maven-2.</name>
+        	<url>http://leaffy.elca.ch:18080/repository/java-net-maven-2.release</url>
+        </mirror-->
+        
         <!-- Uncomment if you are inside ELCA but not at Lausanne! -->
         <!--mirror>
         	<id>proximityEl4ElcaServices</id>
