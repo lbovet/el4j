@@ -743,69 +743,6 @@
     
         <!-- Web -->
         <profile>
-            <id>tomcat5x</id>
-<!--<activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>-->
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>org.codehaus.cargo</groupId>
-                            <artifactId>cargo-maven2-plugin</artifactId>
-                            <configuration>
-                                <wait>true</wait>
-                                <container>
-                                    <containerId>${jee-web.containerId}</containerId>
-                                    <zipUrlInstaller>
-                                        <url>${tomcat5x.zipDownloadUrl}</url>
-                                        <installDir>${tomcat5x.basedir}</installDir>
-                                    </zipUrlInstaller>
-                                    <!--log>${tomcat5x.container.log.file}</log-->
-                                    <!--output>${tomcat5x.cargo.log.file}</output-->
-                                </container>
-                                <configuration>
-                                    <type>existing</type>
-                                    <home>${tomcat5x.home}</home>
-                                </configuration>
-                                
-                            </configuration>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-eclipse-plugin</artifactId>
-                            <configuration>
-                                <wtpContextName>${jee-web.context}</wtpContextName>
-<!--                                <projectRuntimeFacets>-->
-<!--                                    <projectRuntimeFacet>${tomcat5x.eclipse.runtime.facet.name}</projectRuntimeFacet>-->
-<!--                                </projectRuntimeFacets>-->
-<!--                                <additionalWarClasspathContainers>-->
-<!--                                    <additionalWarClasspathContainer>org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/${tomcat5x.eclipse.runtime.facet.name}</additionalWarClasspathContainer>-->
-<!--                                    <additionalWarClasspathContainer>org.eclipse.jst.j2ee.internal.web.container</additionalWarClasspathContainer>-->
-<!--                                    <additionalWarClasspathContainer>org.eclipse.jst.j2ee.internal.module.container</additionalWarClasspathContainer>-->
-<!--                                </additionalWarClasspathContainers>-->
-                            </configuration>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-            </build>
-            <properties>
-                <jee-web.containerId>tomcat5x</jee-web.containerId>
-                
-                <jee-web.host>localhost</jee-web.host>
-                <jee-web.port>8080</jee-web.port>
-                <jee-web.war.name>${project.build.finalName}</jee-web.war.name>
-                <jee-web.webapp.directory>${project.build.directory}/exploded-wars/${jee-web.war.name}</jee-web.webapp.directory>
-                <jee-web.context>${project.artifactId}</jee-web.context>
-
-                <!-- Deploy exploded war. -->
-                <jee-web.war.location>${jee-web.webapp.directory}</jee-web.war.location>
-                
-                <!-- Default value for tomcat-eclipse integration. Please override this in your settings.xml -->
-                <tomcat5x.eclipse.runtime.facet.name>Apache Tomcat v5.5</tomcat5x.eclipse.runtime.facet.name>
-            </properties>
-        </profile>
-        <profile>
             <id>tomcat6x</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
