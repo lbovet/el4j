@@ -745,9 +745,6 @@
         <!-- Web -->
          <profile>
             <id>tomcat5x</id>
-           <!--<activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>-->
             <build>
                 <pluginManagement>
                     <plugins>
