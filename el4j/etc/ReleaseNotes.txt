@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------------
- Date :   28.11.07
+ Date :   07.12.07
                             EL4J version  1.2
 --------------------------------------------------------------------------------
 
@@ -7,7 +7,7 @@
   = Base log4j configuration added as log4j.properties file. If a project would 
     like to overwrite this default configuration, a log4j.xml must be used, (xml 
     file has precedence over properties file).
-  = Upgraded to Spring 2.5, Tomcat 6 and WebLogic 10.
+  = Upgraded to Spring 2.5, Hibernate 3.2.5.ga, Tomcat 6 and WebLogic 10.
   = Apache Commons Attributes not supported anymore
     (replaced by Java 5 Annotations)
   = Beanshell module added: it launches a Java/bsh expression from command line
