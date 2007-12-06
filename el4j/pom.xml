@@ -2109,6 +2109,6 @@
         
         <!-- Used Maven version -->
         <el4j.java.version>1.5</el4j.java.version>
-        <el4j.maven.version>2.0.8-el4j-20071205</el4j.maven.version>
+        <el4j.maven.version>2.0.7</el4j.maven.version>
     </properties>
 </project>
