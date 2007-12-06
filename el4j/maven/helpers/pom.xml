@@ -21,7 +21,8 @@
     <name>EL4J helpers</name>
     <modules>
         <module>upload</module>
-        <module>packer</module>
+		<!-- This module is only used for releases and then it gets called manually -->
+        <!-- <module>packer</module> -->
         <!-- This module was only here because of the helloworld demo that is now an archetype -->
         <!-- <module>collector</module> -->
     </modules>
