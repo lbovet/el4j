@@ -7,7 +7,7 @@
   = Base log4j configuration added as log4j.properties file. If a project would 
     like to overwrite this default configuration, a log4j.xml must be used, (xml 
     file has precedence over properties file).
-  = Upgraded to Maven 2.0.8, Spring 2.5, Hibernate 3.2.5.ga, Tomcat 6 and WebLogic 10.
+  = Upgraded to Spring 2.5, Hibernate 3.2.5.ga, Tomcat 6 and WebLogic 10.
   = Apache Commons Attributes not supported anymore
     (replaced by Java 5 Annotations)
   = Beanshell module added: it launches a Java/bsh expression from command line
@@ -34,7 +34,8 @@
   = Support for the Spring POJO programming model with sun's JAX-WS web service stack.
     It can use the same Java service interface on the client and server side
 	(typically with JAX-WS you generate a new service interface on the client side,
-	to improve the isolation between client and server).
+	to improve the isolation between client and server). This JAX-WS stack does n't
+	work on WebLogic 10 yet.
   = With this step we deprecate the dated Axis 1 web service stack (called module-soap).
   
 * Maven 
