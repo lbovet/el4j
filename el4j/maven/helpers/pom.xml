@@ -20,10 +20,9 @@
     <packaging>pom</packaging>
     <name>EL4J helpers</name>
     <modules>
-		<module>upload</module>
-		<!-- This module was only here because of the helloworld demo that is now an archetype -->
-       <!-- <module>collector</module> -->
-       <!-- This module was there for assembling the (essential, convenience) zip files -->
-       <!-- <module>packer</module> -->
+        <module>upload</module>
+        <module>packer</module>
+        <!-- This module was only here because of the helloworld demo that is now an archetype -->
+        <!-- <module>collector</module> -->
     </modules>
 </project>
