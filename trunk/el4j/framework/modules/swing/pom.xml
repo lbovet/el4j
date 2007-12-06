@@ -19,7 +19,7 @@
     <artifactId>module-swing</artifactId>
     <version>${version.module-swing}</version>
     <packaging>jar</packaging>
-    <name>EL4J swing demo</name>
+    <name>EL4J module swing</name>
     <description>
         Module swing of the EL4J framework.
     </description>
@@ -34,6 +34,10 @@
         <dependency>
             <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-hibernate</artifactId>
         </dependency>
 
         <!-- Components -->
@@ -93,21 +97,6 @@
             <version>1.0</version>
         </dependency>
         
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-annotations</artifactId>
-            <version>3.3.0.ga</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>3.0.0.ga</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-commons-annotations</artifactId>
-            <version>3.0.0.ga</version>
-        </dependency>
         <dependency>
             <groupId>com.jgoodies.looks</groupId>
             <artifactId>looks</artifactId>
