@@ -1,0 +1,258 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<f:view> 
+<f:loadBundle var="text" basename="#{personList.bundleName}"/>
+    <head>
+        <title><h:outputText value="#{text['personList.title']}"/></title>
+        <meta name="heading" content="#{text['personList.heading']}"/>
+        <meta name="menu" content="PersonMenu"/>
+    </head>
+<body id="personList">
+
+
+<ice:form id="editPerson">
+
+<h:commandButton value="#{text['button.add']}" action="#{personList.add}" id="add" styleClass="button"/>
+<h:commandButton value="#{text['button.done']}" action="mainMenu" id="cancel" 
+	styleClass="button" style="margin-left: 5px" immediate="true"/>
+
+
+
+<!--  ICEfaces DataTable -->
+
+
+<ice:panelGroup  styleClass="formBorderHighlight">
+
+<ice:dataPaginator id="scroll_2"
+                        for="persons"
+                        rowsCountVar="rowsCount"
+                        displayedRowsCountVar="displayedRowsCountVar"
+                        firstRowIndexVar="firstRowIndex"
+                        lastRowIndexVar="lastRowIndex"
+                        pageCountVar="pageCount"
+                        pageIndexVar="pageIndex"
+                        >
+ 
+                 <ice:outputFormat value="#{text['component.dataPaginator.text']}" styleClass="standard" >
+                        <f:param value="#{rowsCount}" />
+                        <f:param value="#{displayedRowsCountVar}" />
+                        <f:param value="#{firstRowIndex}" />
+                        <f:param value="#{lastRowIndex}" />
+                        <f:param value="#{pageIndex}" />
+                        <f:param value="#{pageCount}" />
+                </ice:outputFormat>
+ 
+        </ice:dataPaginator>
+
+<ice:dataTable
+		id="persons"
+        var="person"
+        value="#{personList.persons}"
+        rows="5"
+        sortColumn="#{personList.sortColumn}"
+        sortAscending="#{personList.ascending}"
+        styleClass="scrollerTable table"
+    	headerClass="standardTable_Header" 
+    	rowClasses="standardTable_Row1,standardTable_Row2"
+    	columnClasses="standardTable_Column,standardTable_Column,standardTable_Column,standardTable_Column,standardTable_ColumnCentered">
+     
+        <ice:column>
+                <f:facet name="header">
+                	<ice:commandSortHeader columnName="id"
+                                                       arrow="true"
+                                                       disabled="false">
+                      	<ice:outputText value="#{text['person.id']}" />
+                      </ice:commandSortHeader>
+                 </f:facet>
+                
+				
+                <h:commandLink actionListener="#{personList.edit}" value="#{person.id}" immediate="true">
+            		<f:param id="currentId" name="currentId" value="#{person.id}"/>
+        		</h:commandLink>
+				
+<!--
+				<h:outputText value="#{person.id}" />
+               -->
+        </ice:column>
+  
+        <ice:column>
+                <f:facet name="header">
+                	 <ice:commandSortHeader columnName="firstName"
+                                                       arrow="true">
+                         <ice:outputText value="#{text['person.firstName']}" />
+                     </ice:commandSortHeader>
+                </f:facet>
+                
+                <ice:outputText value="#{person.firstName}" />
+               
+        </ice:column>
+        
+         <ice:column>
+                <f:facet name="header">
+                	 <ice:commandSortHeader columnName="lastName"
+                                                       arrow="true">
+                         <ice:outputText value="#{text['person.lastName']}" />
+                     </ice:commandSortHeader>
+                </f:facet>
+                
+                <ice:outputText value="#{person.lastName}" />
+               
+        </ice:column>
+ 
+</ice:dataTable>
+
+<!-- Set up the buttons and links for browsing through the table
+No. of pages to fast forward or rewind: 3
+No. of direct links to pages: 4 -->
+<ice:dataPaginator id="dataScroll_1"
+					styleClass="formBorderHighlight"
+                   for="persons" fastStep="3"
+                   pageCountVar="pageCount" pageIndexVar="pageIndex"
+                   paginator="true"
+                   paginatorMaxPages="999"
+                   rendered="true">
+    <f:facet name="first">
+        <!-- <ice:graphicImage id="firstpage_1"
+                url="xmlhttp/css/xp/css-images/arrow-first.gif"
+                style="border:none;"
+                title="#{text['component.dataPaginator.firstpage']}"/>-->
+                <t:graphicImage url="/images/arrow-first.gif"/>
+    </f:facet>
+    <f:facet name="last">
+        <ice:graphicImage id="lastpage_1"
+                url="xmlhttp/css/xp/css-images/arrow-last.gif"
+                style="border:none;"
+                title="#{text['component.dataPaginator.lastpage']}"/>
+    </f:facet>
+    <f:facet name="previous">
+        <ice:graphicImage id="previouspage_1"
+                url="xmlhttp/css/xp/css-images/arrow-previous.gif"
+                style="border:none;"
+                title="#{text['component.dataPaginator.previouspage']}"/>
+    </f:facet>
+    <f:facet name="next">
+        <ice:graphicImage id="nextpage_1"
+                url="xmlhttp/css/xp/css-images/arrow-next.gif"
+                style="border:none;"
+                title="#{text['component.dataPaginator.nextpage']}"/>
+    </f:facet>
+    <f:facet name="fastforward">
+        <ice:graphicImage id="fastforward_1"
+                          url="xmlhttp/css/xp/css-images/arrow-ff.gif"
+                          style="border:none;"
+                          title="#{text['component.dataPaginator.fastforward']}"/>
+    </f:facet>
+    <f:facet name="fastrewind">
+        <ice:graphicImage id="fastrewind_1"
+                          url="xmlhttp/css/xp/css-images/arrow-fr.gif"
+                          style="border:none;"
+                          title="#{text['component.dataPaginator.fastbackward']}"/>
+    </f:facet>
+</ice:dataPaginator>
+ 
+ </ice:panelGroup>
+
+ 
+
+<!-- 
+<ui:include src="/common/tableFooter.xhtml">
+    <ui:param name="tableName" value="persons"/>
+</ui:include>
+
+ <script type="text/javascript">
+    highlightTableRows("editPerson:persons");
+</script>
+-->
+</ice:form>
+
+<ice:form>
+
+<!-- Popup for Person Details -->
+<ice:panelPopup id="popupDiv"
+					draggable="true"
+                    rendered="#{personList.popupVisible}"
+                    visible="#{personList.popupVisible}"
+                    style="position:absolute; z-index:1000;  width: 300px; height: 200px; top:30%; left:29%;">
+
+        <f:facet name="header">
+            <ice:outputText styleClass="popupTitle"
+                            value="#{text['popup.title']}"/>
+        </f:facet>
+
+        <f:facet name="body">
+            <ice:panelGrid id="modalPanelGrid"
+                           width="100%" cellpadding="0"
+                           cellspacing="0" columns="1"
+                           styleClass="popupModalBody">
+              	
+              	
+              	<h:outputLabel styleClass="desc" for="firstName" value="#{text['person.firstName']}"/>
+			    
+			    
+			    <ice:message for="firstName" styleClass="fieldError" style="color: red;"/>
+			    <ice:inputText styleClass="text medium" id="firstName"
+			    	 value="#{personList.currentPerson.firstName}" required="true"
+			    	  partialSubmit="true">
+			    </ice:inputText>
+			    
+			    
+			    <h:outputLabel styleClass="desc" for="lastName" 
+			    	value="#{text['person.lastName']}"/>
+			    
+			    <ice:message for="lastName" styleClass="fieldError" style="color: red;"/>
+			    
+			    <h:inputText styleClass="text medium" id="lastName"
+			    	 value="#{personList.currentPerson.lastName}" required="true"
+			    	 partialSubmit="true">
+			    </h:inputText>
+			
+				<br/>
+				
+			    <h:panelGroup styleClass="buttonBar bottom">
+			        <h:commandButton value="#{text['button.save']}" action="#{personList.save}" 
+			        	id="save" styleClass="button"/>
+			
+			        <c:if test="${not empty personList.currentPerson.id}">
+			        
+			        <h:commandButton value="#{text['button.delete']}" action="#{personList.delete}"
+			            id="delete" styleClass="button" immediate="true"/>
+			        </c:if>
+			
+			        <h:commandButton value="#{text['button.cancel']}" action="#{personList.cancelPopup}" immediate="true"
+			            id="cancel" styleClass="button"/>
+			            
+			    </h:panelGroup>
+			   
+			   
+			   
+			   
+              
+            </ice:panelGrid>
+        </f:facet>
+
+</ice:panelPopup>
+
+<!-- 
+<ui:include src="/common/tableFooter.xhtml">
+    <ui:param name="tableName" value="persons"/>
+</ui:include>
+
+ <script type="text/javascript">
+    highlightTableRows("editPerson:persons");
+</script>
+-->
+
+</ice:form>
+
+
+
+
+</body>
+
+
+</f:view>
+</html> 

@@ -1,0 +1,9 @@
+Using DB2 Database and jetty.
+
+- mvn clean install -Dmaven.test.skip (tests not implemented yet)
+- add jar files from this directory to your local maven repository as supposed by error message and build again
+- cd core
+- mvn db:start hibernate3:hbm2ddl (creates tables for annotated objects coming with AppFuse)
+- cd ../web
+- mvn db:prepare jetty:run -DdatabaseDialect=ch.elca.el4j.services.persistence.hibernate.dialect.PatchedDerbyDialect
+- browse to http://localhost:8080/ and enjoy
