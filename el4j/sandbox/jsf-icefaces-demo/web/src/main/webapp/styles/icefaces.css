@@ -1,0 +1,19 @@
+/* additional styling information for ICEfaces
+*/
+
+.formBorderHighlight, .treeNodeControlButtonsBorder, .effectsControlsBorder {
+    vertical-align: top; /*width: 100%;*/
+    border: 1px solid #CCCCCC;
+    padding: 10px;
+    padding-right: 29px;
+}
+
+.formBorderHighlight table {
+    border-collapse: collapse;
+}
+
+/* vertical alignment of labels */
+.formBorderHighlight td input,
+    .formBorderHighlight td label {
+    vertical-align: middle;
+}
