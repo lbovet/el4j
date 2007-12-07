@@ -59,7 +59,7 @@
                     <outputDirectoryName>webstart</outputDirectoryName>
                     <jnlpFiles>
                         <jnlpFile>
-                            <templateFilename>launchTemplate.vm</templateFilename>
+                            <templateFilename>jnlpTemplate.vm</templateFilename>
                             <outputFilename>launch.jnlp</outputFilename>
                             <jarResources>
                                 <jarResource>
