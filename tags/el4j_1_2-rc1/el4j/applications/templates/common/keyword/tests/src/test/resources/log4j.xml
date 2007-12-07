@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration 
+    xmlns:log4j="http://jakarta.apache.org/log4j/" 
+    debug="false">
+    
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <!---
+        This is the basic log4j.xml definition file, referenced by all
+        components via a symlink.
+
+        If you wish to get a custom output during the development, either extend
+        this file with your current logger or replace the symlink with your own
+        file. Make sure not to check in your changes to the repository.
+
+        MDL 06-09-12
+    -->
+
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %5p [%c] %m%n" />
+        </layout>   
+    </appender>
+
+    <!-- uncommend this block if you want to have an output into a log file -->
+
+    <appender name="logfile" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="c:/tmp/el4j_logging_output.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" 
+                value="%d %5p [%c] %m%n"/>
+        </layout>
+    </appender>
+
+    <!-- EL4J framwork: show only warnings -->
+
+    <logger name="ch.elca.el4j">
+        <level value="WARN"/>
+    </logger>
+    
+    <!-- More info about db mvn plugin -->
+
+    <logger name="ch.elca.el4j.plugins.database">
+        <level value="DEBUG"/>
+    </logger>
+
+    
+    <!-- External tools: show only warnings -->
+
+    <root>
+        <level value="ERROR"/>
+        <appender-ref ref="console"/>
+        <appender-ref ref="logfile"/>
+    </root>
+</log4j:configuration>
+

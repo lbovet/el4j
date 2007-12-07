@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Version: $Revision:1122 $ -->
+    <!-- URL: $URL:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/site/pom.xml $ -->
+    <!-- Date: $Date:2006-09-11 06:46:44 +0000 (Mo, 11 Sep 2006) $ -->
+    <!-- Author: $Author:swisswheel $ -->
+
+    <parent>
+        <groupId>ch.elca.el4j</groupId>
+        <artifactId>el4j</artifactId>
+        <version>1.1.4-SNAPSHOT</version>
+    </parent>
+
+    <groupId>ch.elca.el4j.sites</groupId>
+    <artifactId>el4j-site</artifactId>
+    <packaging>pom</packaging>
+    <name>EL4J website</name>
+    <description>
+        Website of the EL4J project.
+    </description>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>clean-site-target</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.0.1</version>
+                <configuration>
+                    <executable>mvn</executable>
+                    <workingDirectory>${el4j.external}/framework</workingDirectory>
+                </configuration>
+                <executions>
+                
+                    <execution>
+                        <id>install.root-pom</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${el4j.external}</workingDirectory>
+                            <arguments>
+                                <argument>-N</argument>
+                                <argument>clean</argument>
+                                <argument>install</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    
+                    <execution>
+                        <id>clean.generated.doc</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>
+                                <argument>-N</argument>
+                                <argument>clean</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    
+                    <execution>
+                        <id>generate.doc.set.framework-modules</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>
+                                <argument>-Pgenerate.doc.set.framework-modules</argument>
+                                <argument>collector:aggregate-files</argument>
+                                <argument>javadoc:javadoc</argument>
+                                <argument>jxr:jxr</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    
+                    <!-- Excluded applications from site generation -->
+                    <!-- 
+                    <execution>
+                        <id>generate.doc.set.framework-applications</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+							<workingDirectory>${el4j.external}/applications/templates/common/</workingDirectory>
+                            <arguments>
+                                <argument>-Pgenerate.doc.set.framework-applications</argument>
+                                <argument>collector:aggregate-files</argument>
+                                <argument>javadoc:javadoc</argument>
+                                <argument>jxr:jxr</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    -->
+                    <execution>
+                        <id>generate.doc.set.framework-tests</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>
+                                <argument>-Pgenerate.doc.set.framework-tests</argument>
+                                <argument>collector:aggregate-files</argument>
+                                <argument>javadoc:javadoc</argument>
+                                <argument>jxr:jxr</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <!-- Excluded Demos from site generation -->
+                    <!--
+                    <execution>
+                        <id>generate.doc.set.framework-demos</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+							<workingDirectory>${el4j.external}/applications/demos</workingDirectory>
+                            <arguments>
+                                <argument>-Pgenerate.doc.set.framework-demos</argument>
+                                <argument>collector:aggregate-files</argument>
+                                <argument>javadoc:javadoc</argument>
+                                <argument>jxr:jxr</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    -->
+                    <execution>
+                        <id>generate.plugin.sites</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${el4j.external}/maven/plugins</workingDirectory>
+                            <arguments>
+                                <argument>clean</argument>
+                                <argument>install</argument>
+                                <argument>site</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+			<!-- 
+				Copied surefire report plugin from reporting section of tomcat profile, 
+				because otherwise the necessary html files for the test reports are not generated.
+				
+				This is not a satisfying solution and should be fixed when there is time to do so.
+			-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>generate-surefire-reports-html-page</id>
+						<phase>pre-site</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration> 
+							<reportsDirectory>
+								${project.build.directory}/${surefire-report.name.tomcat6-derby10}
+							</reportsDirectory>
+							<linkXRef>true</linkXRef>
+							<xrefLocation>
+								${set.framework-tests.xref.location}
+							</xrefLocation>
+							<outputName>
+								${surefire-report.name.tomcat6-derby10}
+							</outputName>
+							<windowTitle>
+								${surefire-report.title.tomcat6-derby10}
+							</windowTitle>
+							<docTitle>
+								${surefire-report.title.tomcat6-derby10}
+							</docTitle>
+							<docDescription>
+								${surefire-report.description.tomcat6-derby10}
+							</docDescription>
+						</configuration>
+						
+					</execution>
+				</executions>
+			</plugin>
+			
+
+            <plugin>
+                <groupId>ch.elca.el4j.maven.plugins</groupId>
+                <artifactId>maven-file-collector-plugin</artifactId>
+                <executions>
+                
+                    <execution>
+                        <id>collect-set-docs</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>aggregate-files</goal>
+                        </goals>
+                        <configuration>
+                            <rootSourceDirectory>${el4j.external}/framework/target/site</rootSourceDirectory>
+                            <sourceFileIncludePatterns>framework-*</sourceFileIncludePatterns>
+                            <targetDirectory>${basedir}/target/site</targetDirectory>
+                            <allowOverwrite>false</allowOverwrite>
+                        </configuration>
+                    </execution>
+                    
+                     <execution>
+                        <id>collect.site.maven-database-plugin</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>aggregate-files</goal>
+                        </goals>
+                        <configuration>
+                            <rootSourceDirectory>${el4j.external}/maven/plugins/maven-database-plugin/target/site</rootSourceDirectory>
+                            <sourceFileIncludePatterns>**/*</sourceFileIncludePatterns>
+                            <targetDirectory>${basedir}/target/site/plugins/maven-database-plugin</targetDirectory>
+                            <copyFilesOnly>true</copyFilesOnly>
+                            <allowOverwrite>false</allowOverwrite>
+                        </configuration>
+                    </execution>  
+                    
+                    
+                   <execution>
+                        <id>collect.site.maven-depgraph-plugin</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>aggregate-files</goal>
+                        </goals>
+                        <configuration>
+                            <rootSourceDirectory>${el4j.external}/maven/plugins/maven-depgraph-plugin/target/site</rootSourceDirectory>
+                            <sourceFileIncludePatterns>**/*</sourceFileIncludePatterns>
+                            <targetDirectory>${basedir}/target/site/plugins/maven-depgraph-plugin</targetDirectory>
+                            <copyFilesOnly>true</copyFilesOnly>
+                            <allowOverwrite>false</allowOverwrite>
+                        </configuration>
+                    </execution>    
+                      
+                    
+                    <execution>
+                        <id>collect.site.maven-checkclipse-helper-plugin</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>aggregate-files</goal>
+                        </goals>
+                        <configuration>
+                            <rootSourceDirectory>${el4j.external}/maven/plugins/maven-checkclipse-helper-plugin/target/site</rootSourceDirectory>
+                            <sourceFileIncludePatterns>**/*</sourceFileIncludePatterns>
+                            <targetDirectory>${basedir}/target/site/plugins/maven-checkclipse-helper-plugin</targetDirectory>
+                            <copyFilesOnly>true</copyFilesOnly>
+                            <allowOverwrite>false</allowOverwrite>
+                        </configuration>
+                    </execution>
+                    
+                    <execution>
+                        <id>collect.site.maven-env-support-plugin</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>aggregate-files</goal>
+                        </goals>
+                        <configuration>
+                            <rootSourceDirectory>${el4j.external}/maven/plugins/maven-env-support-plugin/target/site</rootSourceDirectory>
+                            <sourceFileIncludePatterns>**/*</sourceFileIncludePatterns>
+                            <targetDirectory>${basedir}/target/site/plugins/maven-env-support-plugin</targetDirectory>
+                            <copyFilesOnly>true</copyFilesOnly>
+                            <allowOverwrite>false</allowOverwrite>
+                        </configuration>
+                    </execution>
+                    
+                    <execution>
+                        <id>collect.site.maven-file-collector-plugin</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>aggregate-files</goal>
+                        </goals>
+                        <configuration>
+                            <rootSourceDirectory>${el4j.external}/maven/plugins/maven-file-collector-plugin/target/site</rootSourceDirectory>
+                            <sourceFileIncludePatterns>**/*</sourceFileIncludePatterns>
+                            <targetDirectory>${basedir}/target/site/plugins/maven-file-collector-plugin</targetDirectory>
+                            <copyFilesOnly>true</copyFilesOnly>
+                            <allowOverwrite>false</allowOverwrite>
+                        </configuration>
+                    </execution>
+                    
+                    <execution>
+                        <id>collect.site.maven-manifest-decorator-plugin</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>aggregate-files</goal>
+                        </goals>
+                        <configuration>
+                            <rootSourceDirectory>${el4j.external}/maven/plugins/maven-manifest-decorator-plugin/target/site</rootSourceDirectory>
+                            <sourceFileIncludePatterns>**/*</sourceFileIncludePatterns>
+                            <targetDirectory>${basedir}/target/site/plugins/maven-manifest-decorator-plugin</targetDirectory>
+                            <copyFilesOnly>true</copyFilesOnly>
+                            <allowOverwrite>false</allowOverwrite>
+                        </configuration>
+                    </execution>
+                    
+                    <execution>
+                        <id>collect.site.maven-repohelper-plugin</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>aggregate-files</goal>
+                        </goals>
+                        <configuration>
+                            <rootSourceDirectory>${el4j.external}/maven/plugins/maven-repohelper-plugin/target/site</rootSourceDirectory>
+                            <sourceFileIncludePatterns>**/*</sourceFileIncludePatterns>
+                            <targetDirectory>${basedir}/target/site/plugins/maven-repohelper-plugin</targetDirectory>
+                            <copyFilesOnly>true</copyFilesOnly>
+                            <allowOverwrite>false</allowOverwrite>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
+        </plugins>
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>${version.maven-project-info-reports-plugin}</version>
+                <reportSets>
+                    <reportSet>
+                        <id>standardReports</id>
+                        <reports>
+                            <report>issue-tracking</report>
+                            <report>mailing-list</report>
+                            <report>project-team</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
+
+    <profiles>
+
+        <profile>
+            <id>no-surefire-reports</id>
+        </profile>
+
+        <profile>
+            <id>surefire-report.tomcat6-derby10</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>execute.tests.tomcat6-derby10</id>
+                                <phase>pre-site</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>
+                                        <argument>-Ptest.quiet,tomcat6x,db2,auto</argument>
+                                        <argument>-Dsurefire.reports.directory=${project.build.directory}/${surefire-report.name.tomcat6-derby10}</argument>
+                                        <argument>install</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-report-plugin</artifactId>
+                        <reportSets>
+                            <reportSet>
+                                <id>surefire-report.tomcat6-derby10</id>
+                                <reports>
+                                    <report>report</report>
+                                </reports>
+                                <configuration>
+                                    <reportsDirectory>${project.build.directory}/${surefire-report.name.tomcat6-derby10}</reportsDirectory>
+                                    <linkXRef>true</linkXRef>
+                                    <xrefLocation>${set.framework-tests.xref.location}</xrefLocation>
+                                    <outputName>${surefire-report.name.tomcat6-derby10}</outputName>
+                                    <windowTitle>${surefire-report.title.tomcat6-derby10}</windowTitle>
+                                    <docTitle>${surefire-report.title.tomcat6-derby10}</docTitle>
+                                    <docDescription>${surefire-report.description.tomcat6-derby10}</docDescription>
+                                </configuration>
+                            </reportSet>
+                        </reportSets>
+                    </plugin>
+                </plugins>
+            </reporting>
+        </profile>
+
+        <profile>
+            <id>surefire-report.weblogic9-oracle9</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>execute.tests.weblogic9-oracle9</id>
+                                <phase>pre-site</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>
+                                        <argument>-Ptest.quiet,weblogic9x,oracle,auto</argument>
+                                        <argument>-Dsurefire.reports.directory=${project.build.directory}/${surefire-report.name.weblogic9-oracle9}</argument>
+                                        <argument>install</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-report-plugin</artifactId>
+                        <reportSets>
+                            <reportSet>
+                                <id>surefire-report.weblogic9-oracle9</id>
+                                <reports>
+                                    <report>report</report>
+                                </reports>
+                                <configuration>
+                                    <reportsDirectory>${project.build.directory}/${surefire-report.name.weblogic9-oracle9}</reportsDirectory>
+                                    <linkXRef>true</linkXRef>
+                                    <xrefLocation>${set.framework-tests.xref.location}</xrefLocation>
+                                    <outputName>${surefire-report.name.weblogic9-oracle9}</outputName>
+                                    <windowTitle>${surefire-report.title.weblogic9-oracle9}</windowTitle>
+                                    <docTitle>${surefire-report.title.weblogic9-oracle9}</docTitle>
+                                    <docDescription>${surefire-report.description.weblogic9-oracle9}</docDescription>
+                                </configuration>
+                            </reportSet>
+                        </reportSets>
+                    </plugin>
+                </plugins>
+            </reporting>
+        </profile>
+
+        <profile>
+            <id>release.site</id>
+            <distributionManagement>
+                <site>
+                    <id>${distmgt.site.id.external}</id>
+                    <name>${distmgt.site.name.external}</name>
+                    <url>${distmgt.site.url.external}</url>
+                </site>
+            </distributionManagement>
+        </profile>
+
+        <profile>
+            <id>internal.site</id>
+            <distributionManagement>
+                <site>
+                    <id>${distmgt.site.id.nightly}</id>
+                    <name>${distmgt.site.name.nightly}</name>
+                    <url>${distmgt.site.url.nightly}</url>
+                </site>
+            </distributionManagement>
+        </profile>
+
+    </profiles>
+
+    <distributionManagement>
+        <site>
+            <id>${distmgt.snapshot-site.id.external}</id>
+            <name>${distmgt.snapshot-site.name.external}</name>
+            <url>${distmgt.snapshot-site.url.external}</url>
+        </site>
+    </distributionManagement>
+
+    <properties>
+        <set.framework-tests.xref.location>target/site/framework-tests/xref</set.framework-tests.xref.location>
+    
+        <surefire-report.name.tomcat6-derby10>surefire-report-tomcat6-derby10</surefire-report.name.tomcat6-derby10>
+        <surefire-report.title.tomcat6-derby10>Surefire Test Report - Tomcat 6 and Derby 10</surefire-report.title.tomcat6-derby10>
+        <surefire-report.description.tomcat6-derby10>The following document contains the summarized test results of test profile with Tomcat 6 as webserver and Derby 10 as database.</surefire-report.description.tomcat6-derby10>
+
+        <surefire-report.name.weblogic9-oracle9>surefire-report-weblogic9-oracle9</surefire-report.name.weblogic9-oracle9>
+        <surefire-report.title.weblogic9-oracle9>Surefire Test Report - Weblogic 9 and Oracle 9</surefire-report.title.weblogic9-oracle9>
+        <surefire-report.description.weblogic9-oracle9>The following document contains the summarized test results of test profile with Weblogic 9 as webserver and Oracle 9 as database.</surefire-report.description.weblogic9-oracle9>
+    </properties>
+
+</project>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+
+    <parent>
+        <groupId>ch.elca.el4j.modules</groupId>
+        <artifactId>el4j-framework-module-web</artifactId>
+        <version>1.1.4-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>module-web-war</artifactId>
+    <version>${version.module-web}</version>
+    <packaging>war</packaging>
+    <name>EL4J module web - war</name>
+    <description>
+       War part of module web of the EL4J framework.
+    </description>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <configuration>
+                    <deployer>
+                        <deployables>
+                            <deployable>
+                                <location>${jee-web.war.location}</location>
+                                <properties>
+                                    <context>${jee-web.context}</context>
+                                </properties>
+                            </deployable>
+                        </deployables>
+                    </deployer>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>ch.elca.el4j.maven.plugins</groupId>
+                <artifactId>maven-file-collector-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>collect-wepapp-resources</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>aggregate-files</goal>
+                        </goals>
+                        <configuration>
+                            <rootSourceDirectory>${basedir}/../../../../skin/src/main/resources</rootSourceDirectory>
+                            <sourceFileIncludePatterns>css/**/*,images/**/*,favicon.ico</sourceFileIncludePatterns>
+                            <sourceFileExcludePatterns>**/.svn,**/.svn/**/*</sourceFileExcludePatterns>
+                            <copyFilesOnly>true</copyFilesOnly>
+                            <targetDirectory>${basedir}/src/main/webapp</targetDirectory>
+                            <allowOverwrite>false</allowOverwrite>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${basedir}/src/main/webapp</directory>
+                            <includes>
+                                <include>css</include>
+                                <include>images</include>
+                                <include>favicon.ico</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <!-- EL4J framework modules -->
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-web-jar</artifactId>
+        </dependency>
+    </dependencies>
+    <properties>
+        <jee-web.context>module-web</jee-web.context>
+    </properties>
+</project>

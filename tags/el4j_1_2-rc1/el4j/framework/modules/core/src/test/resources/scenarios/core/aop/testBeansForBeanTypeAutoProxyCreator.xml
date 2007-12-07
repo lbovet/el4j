@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
+    <bean id="shortcutInterceptorA" 
+        class="ch.elca.el4j.tests.core.aop.ShortcutInterceptor">
+        <property name="methodName"><value>doitA</value></property>
+        <property name="result"><value>shortcutA</value></property>
+    </bean>
+    
+    <bean id="shortcutInterceptorB" 
+        class="ch.elca.el4j.tests.core.aop.ShortcutInterceptor">
+        <property name="methodName"><value>doitB</value></property>
+        <property name="result"><value>shortcutB</value></property>
+    </bean>
+    
+    <bean id="aBeanTypeProxyCreator" 
+        class="ch.elca.el4j.core.aop.BeanTypeAutoProxyCreator">
+        <property name="proxyTargetClass"><value>true</value></property>
+        <property name="interfaceNames"><value>ch.elca.el4j.tests.core.aop.MarkerA</value></property>
+        <property name="interceptorNames">
+            <list>
+                <value>shortcutInterceptorA</value>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="bBeanTypeProxyCreator" 
+        class="ch.elca.el4j.core.aop.BeanTypeAutoProxyCreator">
+        <property name="proxyTargetClass"><value>true</value></property>
+        <property name="interfaceNames"><value>ch.elca.el4j.tests.core.aop.MarkerB</value></property>
+        <property name="interceptorNames">
+            <list>
+                <value>shortcutInterceptorB</value>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="cBeanTypeProxyCreator" 
+        class="ch.elca.el4j.core.aop.BeanTypeAutoProxyCreator">
+        <property name="proxyTargetClass"><value>true</value></property>
+        <property name="interfaceNames"><value>ch.elca.el4j.tests.core.aop.MarkerC</value></property>
+        <property name="interceptorNames">
+            <list>
+                <value>shortcutInterceptorA</value>
+                <value>shortcutInterceptorB</value>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="A" class="ch.elca.el4j.tests.core.aop.A"/>
+    <bean id="B" class="ch.elca.el4j.tests.core.aop.B"/>
+    <bean id="C" class="ch.elca.el4j.tests.core.aop.C"/>
+    <bean id="D" class="ch.elca.el4j.tests.core.aop.D"/>
+</beans>

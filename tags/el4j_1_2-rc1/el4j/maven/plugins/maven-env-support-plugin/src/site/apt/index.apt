@@ -1,0 +1,127 @@
+ -----
+ Environment support plugin
+ -----
+ -----
+ 26 Sep 2006
+ -----
+
+Environment support plugin
+
+  The Environment plugin is used to have the same environment variables 
+  available (1) in maven for build system tasks and (2) while applications are running.
+  
+  Typically an environment variable is defined as a property in a maven pom file.
+  Here an example:
+  
++----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    ...
+    
+    <properties>
+        <rmi.host>localhost</rmi.host>
+        <rmi.port>8099</rmi.port>
+        
+        ...
+        
+    </properties>
+</project>
++----------------
+
+  To have the properties <<<rmi.host>>> and <<<rmi.port>>> also available during 
+  application runtime we have to <share> these properties between the 2 "worlds" 
+  (maven and the application runtime). In EL4J this is done
+  the Spring way via a properties file. The EL4J <<env-module>> expects the
+  file <<<env/env.properties>>> in the classpath.
+  
+  Maven is able to filter resources, that means that placeholders will be 
+  replaced by their values. To have now the properties <<<rmi.host>>> and 
+  <<<rmi.port>>> with exactly the same name during runtime we have to write the 
+  <<<env.properties>>> file like this:
+  
++----------------
+rmi.host=${rmi.host}
+rmi.port=${rmi.port}
++----------------
+
+  You already know the path <<<src/main/resources>>>. Resources placed in this
+  path will be copied 1:1 to the place where the compiled Java sources are 
+  (by default <<<target/classes>>>). Now we have similar path <<<src/main/env>>>.
+  Resources in this path will be copied and filtered i.e. the placeholders will be
+  replaced. The default target path for filtered files is <<<target/env>>>. This
+  path is handled like the <<<src/main/resources>>> path. To have this behaviour
+  we must define the following in our parent pom (this is already made for in 
+  the <root> pom of EL4J):
+  
++----------------
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    ...
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+            </resource>
+
+            <!-- Used for the environment support of EL4J -->
+            <resource>
+                <directory>target/env</directory>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>false</filtering>
+            </testResource>
+
+            <!-- Used for the environment support of EL4J -->
+            <testResource>
+                <directory>target/env-test</directory>
+                <filtering>false</filtering>
+            </testResource>
+        </testResources>
+    </build>
+    
+    ...
+    
+</project>
++----------------
+
+  To complete the example above we have to place the <<<env.properties>>> file 
+  in <<<src/main/env/env>>>.
+  
+  The filtered <<<env.properties>>> file will look like the following and can 
+  be found at <<<target/env/env>>>
+  
++----------------
+rmi.host=localhost
+rmi.port=8099
++----------------
+
+  If you create an Eclipse project for your non-pom artifact you will have the path
+  <<<target/env>>> as source folder available. By this you can clean your Eclipse
+  project without loosing the filtered file.
+  
+  [Test scope] The equivalent part for the test scope must be placed in 
+  <<<src/test/env>>> and filtered files will be placed by default in 
+  <<<target/env-test>>>.
+  
+  [Global environment resource directory] You can define to use a global resource
+  directory so you do not have to have the <<<src/main/env>>> path in each artifact.
+  But be aware that you have the <<<env.properties>>> file only one time in 
+  your classpath!
+  
+  []
+  
+  For detailed usage {{{plugin-info.html}see the plugin info page}}.

@@ -1,0 +1,70 @@
+<!DOCTYPE pages PUBLIC
+          "-//JBoss/Seam Pages Configuration DTD 1.2//EN"
+          "http://jboss.com/products/seam/pages-1.2.dtd">
+
+<pages>
+
+    <page view-id="*">
+        <navigation>
+            <rule if-outcome="home">
+                <redirect view-id="/index.xhtml" />
+            </rule>
+        </navigation>
+    </page>
+
+    <page view-id="/login.xhtml">
+        <navigation from-action="#{identity.login}">
+            <rule if-outcome="success">
+                <redirect view-id="/index.xhtml" />
+            </rule>
+        </navigation>
+    </page>
+    
+    <exception class="org.springframework.dao.DataRetrievalFailureException">
+        <end-conversation/>
+        <redirect view-id="/error.xhtml">
+            <message>Unable to retrieve requested data</message>
+        </redirect>
+    </exception>
+    
+    <exception class="org.springframework.orm.hibernate3.HibernateOptimisticLockingFailureException">
+        <end-conversation/>
+        <redirect view-id="/error.xhtml">
+            <message>Another user changed the same data, please try again</message>
+        </redirect>
+    </exception>
+        
+    <exception class="javax.persistence.EntityNotFoundException">
+        <redirect view-id="/error.xhtml">
+            <message>Not found</message>
+        </redirect>
+    </exception>
+
+    <exception class="javax.persistence.OptimisticLockException">
+        <end-conversation />
+        <redirect view-id="/error.xhtml">
+            <message>
+                Another user changed the same data, please try again
+            </message>
+        </redirect>
+    </exception>
+
+    <exception class="org.jboss.seam.security.AuthorizationException">
+        <redirect>
+            <message>You don't have permission to do this</message>
+        </redirect>
+    </exception>
+
+    <exception class="org.jboss.seam.security.NotLoggedInException">
+        <redirect view-id="/login.xhtml">
+            <message>Please log in first</message>
+        </redirect>
+    </exception>
+
+    <exception>
+        <redirect view-id="/error.xhtml">
+            <message>Unexpected error, please try again</message>
+        </redirect>
+    </exception>
+
+</pages>

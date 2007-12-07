@@ -1,0 +1,77 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                             "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:c="http://java.sun.com/jstl/core"
+                xmlns:rich="http://richfaces.ajax4jsf.org/rich"
+				xmlns:el4j="http://www.elca.ch/el4j/taglib">
+	
+	<c:if test="#{empty entityShortName}">
+		<el4j:set var="entityShortName" value="#{utils.deriveEntityShortName()}"/>
+	</c:if>
+	
+	<el4j:set var="entityClassName" value="#{utils.getEntityClassName(entityShortName)}"/>
+	
+	<c:if test="#{empty entities}">
+		<el4j:set var="entities" value="#{objectManager.getEntities(entityClassName)}"/>
+	</c:if>
+	
+	
+	<c:if test="#{empty detailPage}">
+		<el4j:set var="detailPage" value="#{utils.getDefaultDetailPage(entityShortName)}"/>
+	</c:if>
+	
+    <h:messages globalOnly="true" styleClass="message"/>
+    
+    <rich:panel>
+        <f:facet name="header">List of #{el4j:h10nEntityNamePlural(entityShortName)}</f:facet>
+        
+		<h:panelGrid columns="2" columnClasses="gridContent" rowClasses="vertTop">
+			<ui:insert name="filters">
+				<h:form rendered="#{not empty filterOn}">
+					<el4j:filters rendered="#{not empty filterOn}">
+						<el4j:filterSet/>
+					</el4j:filters>
+				</h:form>
+			</ui:insert>
+			
+			<h:panelGroup>
+			<div class="results">
+				<h:outputText value="There are no #{el4j:h10nEntityNamePlural(entityShortName)}" 
+						   rendered="#{empty entities}"/>
+				
+				<h:form rendered="#{not empty entities}">
+					<rich:dataTable width="320"
+									   id="#{entityShortName}Table"
+									 rows="3"
+							columnClasses="col"
+									value="#{entities}"
+									  var="entity">
+						
+						<ui:insert name="columns">
+							<c:if test="#{not empty entities}">
+								<el4j:columnSet/>
+							</c:if>
+						</ui:insert>
+						
+					</rich:dataTable>
+					
+					<rich:spacer height="20"/>
+					<rich:datascroller  for="#{entityShortName}Table" maxPages="20"/>
+				</h:form>
+			</div>
+			</h:panelGroup>
+		</h:panelGrid>
+    </rich:panel>
+    
+    <div class="actionButtons">
+        <s:button id="done" 
+               value="Create #{el4j:h10nEntityName(entityShortName)}"
+                view="#{detailPage}"/>			  
+    </div>
+	
+</ui:composition>
+
