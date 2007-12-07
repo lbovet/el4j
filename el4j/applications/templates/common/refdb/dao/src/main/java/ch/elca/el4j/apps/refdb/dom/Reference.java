@@ -143,6 +143,8 @@ public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
      * @param date
      *            The date to set.
      */
+    //FBI: in this case, type is necessary for hibernate to parse date correctly
+    @Type(type = "date")
     public void setDate(Date date) {
         if (date != null) {
             Calendar c = Calendar.getInstance();
