@@ -327,5 +327,34 @@
                 </pluginManagement>
             </build>
         </profile>
+        <profile>
+            <id>weblogic10</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <!-- Skip tests if weblogic 10. It's not compatible with JAX-WS 2.1 -->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-surefire-plugin</artifactId>
+                            <configuration>
+                                <skip>true</skip>
+                            </configuration>
+                            <executions>
+                                <execution>
+                                    <id>surefire-it</id>
+                                    <phase>integration-test</phase>
+                                    <goals>
+                                        <goal>test</goal>
+                                    </goals>
+                                    <configuration>
+                                        <skip>true</skip>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
     </profiles>
 </project>
