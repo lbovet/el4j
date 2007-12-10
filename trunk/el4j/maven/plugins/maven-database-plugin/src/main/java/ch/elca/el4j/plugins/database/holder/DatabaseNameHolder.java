@@ -66,13 +66,12 @@ public class DatabaseNameHolder extends AbstractDatabaseHolder {
      * Constructor.
      * @param repository Maven repository
      * @param project Maven project
-     * @param dbName Name of database from maven parameter
      * @param walker The dependency graph walker
      */
     public DatabaseNameHolder(ArtifactRepository repository, 
-        MavenProject project, DepGraphWalker walker, String dbName) {
+        MavenProject project, DepGraphWalker walker) {
         super(repository, project, walker);
-        loadDBName(getProjectURLs(), dbName);
+        loadDBName(getProjectURLs(), project);
     }
     
     /**
@@ -133,19 +132,27 @@ public class DatabaseNameHolder extends AbstractDatabaseHolder {
      * Get name of database (either db2 or oracle) from project's 
      * env.properties file or configuration tag. 
      * 
-     * If neither of both is set, goal might be to start NetworkServer
-     * and therefore database name isn't needed.
+     * At first, system property db.name is checked.
+     * If not set, classpath is searched for .env files containing
+     * db.name .
+     * 
      * 
      * @param urls The Project URLs (to build classpath)
-     * @param dbName dbName from configuration tag in pom file
+     * @param project The current MavenProject (to get system properties)
+     * 
+     *
+     * 
      */
-    private void loadDBName(List<URL> urls, String dbName) {
+    private void loadDBName(List<URL> urls, MavenProject project) {
 
         // Check if DB Name was set with configuration tag or should be
         // read from project's env.properties
-        if ((dbName == null)
-            || (!dbName.equalsIgnoreCase("db2") && !dbName
-                .equalsIgnoreCase("oracle"))) {
+        
+        String dbFromConfig = project.getProperties().getProperty("db.name");
+        
+        
+        if (dbFromConfig == null) {
+           
             try {
                 // Create own classloader and resovler for env.properties,
                 // because we only want the file from the project we're
@@ -172,13 +179,21 @@ public class DatabaseNameHolder extends AbstractDatabaseHolder {
                     } catch (IllegalArgumentException e1) {
                         throw new DatabaseHolderException(e1);
                     }
+                    
+                    
+                    s_logger.info("DB name set from env.properties to: " 
+                        +  getDbName());
                 }
             } catch (IOException e) {
                 throw new DatabaseHolderException(e);
 
             }
         } else {
-            m_dbName = dbName;
+            m_dbName = dbFromConfig;
+            
+            s_logger.info("DB name set from system property to: " 
+                + getDbName());
+            
         }
     }
 }

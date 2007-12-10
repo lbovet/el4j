@@ -65,15 +65,14 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
      * Constructor.
      * @param repository Maven repository
      * @param project Maven project
-     * @param dbName Name of database from maven parameter
      * @param connectionSource Path to properties file of connection properties
      * @param driverSource Path to properties file for Driver Property
      * @param walker The Dependency Graph walker
      */
     public ConnectionPropertiesHolder(ArtifactRepository repository,
-        MavenProject project, DepGraphWalker walker, String dbName, 
+        MavenProject project, DepGraphWalker walker, 
         String connectionSource, String driverSource) {
-        super(repository, project, walker, dbName);
+        super(repository, project, walker);
         loadDriverName(driverSource);
         loadConnectionProperties(connectionSource);
     }

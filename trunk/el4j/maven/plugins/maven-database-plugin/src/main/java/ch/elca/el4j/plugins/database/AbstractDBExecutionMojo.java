@@ -163,19 +163,9 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
             connectionPropertiesDir = connectionPropertiesDir + "/";
         }
         
-        //set the dbName to global db.name
-        setDbName(getProject().getProperties().getProperty("db.name"));
-      
-        
         getLog().info("maven-database-plugin is working...");
         
-        if (getDbName() != null) {
-            getLog().info("DbName: " + getDbName());
-        } else {
-            getLog().info("DbName: NOT SPECIFIED!");
-        }
         
-    
         getLog().info("Current artifact: " + getProject().getArtifactId());
         
 //        getLog().info("Dependency tree: ");
@@ -226,7 +216,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
             //hint: since there is a default value for dbName, 
             //this case should never occur
             
-            if (!StringUtils.hasText(getDbName())) {
+            if (!StringUtils.hasText(getDbNameHolder().getDbName())) {
                 getLog().error("Please provide a value for either "
                     + "the parameter 'db.connectionPropertiesSource' or "
                     + "'db.dbName'");
@@ -239,7 +229,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
                 
                 
                 //load the found properties (possible even if nothing found)
-                getHolder().loadConnectionProperties(
+                getConnPropHolder().loadConnectionProperties(
                     connectionPropertiesSource);
             }
         } else {
@@ -253,7 +243,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
         if (connectionPropertiesSource != null) {
             
             getLog().info("Using connectionPropertiesSource at '" 
-                + getHolder().replaceDbName(connectionPropertiesSource) + "'");
+                + getConnPropHolder().replaceDbName(connectionPropertiesSource) + "'");
             
             List<Resource> resources = getResources(getSqlSourcesPath(goal));
             if (reversed) {
@@ -323,7 +313,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
             ("{groupId}", currentDependency.getGroupId());
             
             //and at least, db.name using the function of the holder
-            pattern = getHolder().replaceDbName(pattern);
+            pattern = getConnPropHolder().replaceDbName(pattern);
             
             
             //search must be executed in classpath
@@ -331,7 +321,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
             
             getLog().info("Using pattern " + pattern);
             
-            Resource[] res = getHolder().getResources(pattern);
+            Resource[] res = getConnPropHolder().getResources(pattern);
             
             
             if (res.length == 0) {
@@ -436,7 +426,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 
         try {
             for (String source : sourcePaths) {
-                resources = getHolder().getResources(source);
+                resources = getConnPropHolder().getResources(source);
                 for (Resource resource : resources) {
                     if (!resourcesMap.containsKey(resource.getURL())) {
                         result.add(resource);
@@ -480,7 +470,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
             fullPath = fullPath + separator;
         }
         while ((index = fullPath.indexOf(separator)) != -1) {
-            part = getHolder().replaceDbName(
+            part = getConnPropHolder().replaceDbName(
                 fullPath.substring(0, index).trim());
             result.add(part);
             // check if sourceDir has input after separator. If so, continue.
@@ -543,17 +533,19 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
      */
     private Connection getConnection() {
         Properties prop = new Properties();
-        prop.put("user", getHolder().getUsername());
-        prop.put("password", getHolder().getPassword());
-        Driver driver = getHolder().getDriver();
+        prop.put("user", getConnPropHolder().getUsername());
+        prop.put("password", getConnPropHolder().getPassword());
+        Driver driver = getConnPropHolder().getDriver();
         getLog().info("Trying to connect to db '" 
-            + getHolder().getDbName() + "' at '" + getHolder().getUrl() + "'");
+            + getConnPropHolder().getDbName() + "' at '" 
+            + getConnPropHolder().getUrl() + "'");
 
         try {
-            return driver.connect(getHolder().getUrl(), prop);
+            return driver.connect(getConnPropHolder().getUrl(), prop);
         } catch (SQLException e) {
             getLog().info("Error connecting to db " 
-                + getHolder().getDbName() + " at " + getHolder().getUrl() + "");
+                + getConnPropHolder().getDbName() + " at " 
+                + getConnPropHolder().getUrl() + "");
             throw new DatabaseHolderException(e);
         }   
     }
@@ -561,7 +553,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
     /**
      * @return The Data Holder
      */
-    private ConnectionPropertiesHolder getHolder() {
+    private ConnectionPropertiesHolder getConnPropHolder() {
         
         
         if (m_holder == null) {
@@ -569,7 +561,6 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
                 getRepository(),
                 getProject(), 
                 getGraphWalker(),
-                getDbName(), 
                 connectionPropertiesSource, 
                 driverPropertiesSource);
         } 
