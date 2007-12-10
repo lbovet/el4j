@@ -59,12 +59,6 @@ public abstract class AbstractDBMojo extends AbstractMojo {
      */
     private boolean wait;
     
-    /**
-     * Name of database to use (either db2 or oracle).
-     * 
-     * 
-     */
-    private String dbName;
 
     /**
      * Directory of tools (such as application servers or local 
@@ -125,24 +119,46 @@ public abstract class AbstractDBMojo extends AbstractMojo {
     
     // Checkstyle: MemberName on
    
+    
+    
+    
+    
+    
+    
     /**
      * Returns true if database needs to be started.
+     * That is, check database name.
+     * Currently, only db2 databases can be started.
      * 
      * @return Return whether database need to be started.
      */
     protected boolean needStartup() {
-        /*
-         * HACK: Because we only support derby and oracle, we can find out if we
-         * have to start database by checking the head of the URL.
-         * 
-         * In case of an exception, start NetworkServer just to be on the
-         * safe side.
-         */
+       
         try {
-            String db = getHolder().getDbName();
-            return (db == null || db.equalsIgnoreCase("db2"));
+            
+            String db = getDbNameHolder().getDbName();
+            
+            boolean result;
+            if (db.equalsIgnoreCase("db2")) {
+                
+                result = true;
+                
+            } else {
+                
+                getLog().warn("Database " + db + " can not be started "
+                    + "by this plugin.");
+                
+                result = false;
+            }
+            
+            return result;
+           
+           
         } catch (Exception e) {
-            return true;
+            
+            getLog().error("Error getting DbName: " + e.getMessage());
+            
+            return false;
         }
     }
     
@@ -177,20 +193,6 @@ public abstract class AbstractDBMojo extends AbstractMojo {
         return project;
     }
 
-    /**
-     * @return The Database name
-     */
-    protected String getDbName() {
-        return dbName;
-    }
-    
-    /**
-     * 
-     * @param value the database name
-     */
-    public void setDbName(String value) {
-        this.dbName = value;
-    }
 
     /**
      * @return The Dependency GraphWalker
@@ -206,13 +208,12 @@ public abstract class AbstractDBMojo extends AbstractMojo {
     /**
      * @return The holder
      */
-    private DatabaseNameHolder getHolder() {
+    protected DatabaseNameHolder getDbNameHolder() {
         if (m_holder == null) {
             m_holder = new DatabaseNameHolder(
                 repository, 
                 project, 
-                getGraphWalker(), 
-                dbName);
+                getGraphWalker());
         }
         return m_holder;
     }
