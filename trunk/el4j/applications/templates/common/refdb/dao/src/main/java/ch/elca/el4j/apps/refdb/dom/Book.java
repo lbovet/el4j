@@ -50,7 +50,7 @@ public class Book extends FormalPublication {
     /**
      * @return Returns the isbnNumber.
      */
-    @Pattern(regex = "[-0-9]{10,13}")
+    @Pattern(regex = "[0-9-]{10,17}")
     public String getIsbnNumber() {
         return m_isbnNumber;
     }
