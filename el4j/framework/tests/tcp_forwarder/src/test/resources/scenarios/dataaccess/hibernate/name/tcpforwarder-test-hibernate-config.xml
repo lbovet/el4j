@@ -17,18 +17,14 @@
 
     <!-- Hibernate Session Factory Bean -->
     <bean id="sessionFactory"
-        class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-        <property name="mappingResources">
-            <list>
-                <value>
-                    scenarios/dataaccess/hibernate/name/Name.hbm.xml
-                </value>
-            </list>
+        class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="annotatedClasses">
+            <value>ch.elca.el4j.tests.tcpforwarder.dom.Name</value>
         </property>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${databaseDialect}</prop>
-                                <prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>                
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>                
                 <prop key="hibernate.max_fetch_depth">3</prop>
             </props>
         </property>

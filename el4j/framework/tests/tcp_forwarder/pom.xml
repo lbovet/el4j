@@ -47,7 +47,7 @@
     </dependencies>
     <build>
         <plugins>
-                <!-- EL4J Database plugin to start and fill DB automatically -->
+            <!-- EL4J Database plugin to start and fill DB automatically -->
             <plugin>
                 <groupId>ch.elca.el4j.maven.plugins</groupId>
                 <artifactId>maven-database-plugin</artifactId>
@@ -105,13 +105,11 @@
                     </execution>
                 </executions>
             </plugin>
-        
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <configuration>
                     <mainClass>ch.elca.el4j.services.tcpforwarder.TcpForwarderRunner</mainClass>
-                    <keepAlive>true</keepAlive>
                 </configuration>
             </plugin>
         </plugins>
@@ -119,6 +117,12 @@
     <profiles>
         <profile>
             <id>bridge-derby</id>
+            <activation>
+                <property>
+                    <name>db.name</name>
+                    <value>db2</value>
+                </property>
+            </activation>
             <build>
                 <plugins>
                     <plugin>
@@ -136,6 +140,12 @@
         </profile>
         <profile>
             <id>bridge-oracle</id>
+            <activation>
+                <property>
+                    <name>db.name</name>
+                    <value>oracle</value>
+                </property>
+            </activation>
             <build>
                 <plugins>
                     <plugin>
