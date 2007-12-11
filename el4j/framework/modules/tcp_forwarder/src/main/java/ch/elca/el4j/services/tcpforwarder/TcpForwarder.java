@@ -97,7 +97,9 @@ public class TcpForwarder implements Runnable {
     public TcpForwarder(int listenPort, InetSocketAddress targetAddress) {
         m_listenPort = listenPort;
         m_targetAddress = targetAddress;
-        new Thread(this).start();
+        Thread t = new Thread(this);
+        t.setDaemon(true);
+        t.start();
     }
     
     /**
