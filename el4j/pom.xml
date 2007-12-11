@@ -101,7 +101,7 @@
                 <role>Java Developer</role>
             </roles>
             <timezone>+1</timezone>
-        </developer>		
+        </developer>        
     </developers>
 
     <contributors>
@@ -141,10 +141,10 @@
             <name>Christoph Baeni</name>
             <roles>
                 <role>Ex-Intern</role>
-                <role>Java developer</role>				
+                <role>Java developer</role>                
             </roles>
             <timezone>+1</timezone>
-        </contributor>	
+        </contributor>    
         <contributor>
             <name>Florian Suess</name>
             <roles>
@@ -167,7 +167,7 @@
                 <role>Java developer</role>
             </roles>
             <timezone>+1</timezone>
-        </contributor>		
+        </contributor>        
     </contributors>
 
     <licenses>
@@ -397,7 +397,7 @@
                         Due to bugs fix built snapshot version is used.
                            * maven-war-plugin (revision 429069)
                     <version>2.0.2-20060907.100703-1</version>
-		    -->
+            -->
                     <version>2.0.2</version>
                     <configuration>
                         <warName>${jee-web.war.name}</warName>
@@ -423,7 +423,7 @@
                            * maven-install-plugin (revision 427494 + patch http://jira.codehaus.org/browse/MINSTALL-34)
                            * archiva (revision 439966)
                     <version>2.2-20060922.131747-1</version>
-		    -->
+            -->
                     <version>2.2</version>
                 </plugin>
                 <plugin>
@@ -453,7 +453,7 @@
                                + patch http://jira.codehaus.org/browse/CARGO-412)
                     -->
                    <!-- <version>0.3-20060918.130206-4</version>-->
-				   <version>1.0-SNAPSHOT</version>
+                   <version>1.0-SNAPSHOT</version>
                 </plugin>
 
                 <!-- Execution -->
@@ -465,7 +465,7 @@
                            * exec-maven-plugin (revision 2586
                                + patch http://jira.codehaus.org/browse/MEXEC-11)
                     <version>1.0.3-20061204.110918-2</version>
-		    -->
+            -->
                     <version>1.1-beta-1</version>
                 </plugin>
 
@@ -531,9 +531,9 @@
                         Due to bugs fix built snapshot version is used.
                            * maven-site-plugin (revision 433356)
                            * doxia (revision 434153)
-			   
-			   See change request [ 1717260 ] on sf.net. Thanks to
-			   Tobias Vogel!
+               
+               See change request [ 1717260 ] on sf.net. Thanks to
+               Tobias Vogel!
                     -->
                     <version>2.0-beta-5</version>
                 </plugin>
@@ -803,7 +803,7 @@
                 <tomcat5x.eclipse.runtime.facet.name>Apache Tomcat v5.5</tomcat5x.eclipse.runtime.facet.name>
             </properties>
         </profile>
-		<profile>
+        <profile>
             <id>tomcat6x</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -817,10 +817,10 @@
                             <configuration>
                                 <wait>true</wait>
                                 <container>
-                                	<!--
+                                    <!--
                                         Must be set to version 5 due cargo
                                         has no version 6 impl.
-                               	    -->
+                                       -->
                                     <containerId>tomcat6x</containerId>
                                     <zipUrlInstaller>
                                         <url>${tomcat6x.zipDownloadUrl}</url>
@@ -884,17 +884,17 @@
                                     <containerId>${jee-web.containerId}</containerId>
                                     <home>${weblogic9x.home}</home>
                                     <systemProperties>
-										<com.sun.xml.namespace.QName.useCompatibleSerialVersionUID>1.0</com.sun.xml.namespace.QName.useCompatibleSerialVersionUID>
+                                        <com.sun.xml.namespace.QName.useCompatibleSerialVersionUID>1.0</com.sun.xml.namespace.QName.useCompatibleSerialVersionUID>
                                         <java.security.policy>${weblogic9x.home}/server/lib/weblogic.policy</java.security.policy>
                                     </systemProperties>
                                     <dependencies>
-										<dependency>
+                                        <dependency>
                                             <location>${weblogic9x.home}/server/lib/weblogic_sp.jar</location>
                                         </dependency>
-										<dependency>
+                                        <dependency>
                                             <location>${weblogic9x.home}/server/lib/weblogic.jar</location>
                                         </dependency>
-										
+                                        
                                         <dependency>
                                             <location>${weblogic9x.home}/common/eval/pointbase/lib/pbclient51.jar</location>
                                         </dependency>
@@ -949,57 +949,57 @@
                 <jee-web.war.location>${project.build.directory}/${jee-web.war.name}.war</jee-web.war.location>
             </properties>
         </profile>
-		
-		
-		<!-- Weblogic 10 -->
-		<profile>
+        
+        
+        <!-- Weblogic 10 -->
+        <profile>
             <id>weblogic10</id>
-			<!--<activation>
+            <!--<activation>
                 <activeByDefault>true</activeByDefault>
             </activation>-->
-			
-			<!--we add some dependencies here just to make sure they are downloaded into the local repsoitory (see below)-->
-			<dependencies>
-				<dependency>
-					<groupId>com.sun.xml.stream.buffer</groupId>
-					<artifactId>streambuffer</artifactId>
-					<version>0.6</version>
-				</dependency>
-				
-				<dependency>
-					<groupId>com.sun.xml.ws</groupId>
-					<artifactId>jaxws-rt</artifactId>
-					<version>2.1.2</version>
-				</dependency>
-				
-				<dependency>
-					<groupId>javax.xml.ws</groupId>
-					<artifactId>jaxws-api</artifactId>
-					<version>2.1</version>
-				</dependency>
-				
-				<dependency>
-					<groupId>javax.xml.bind</groupId>
-					<artifactId>jaxb-api</artifactId>
-					<version>2.1</version>
-				</dependency>
-				
-				<dependency>
-					<groupId>com.sun.xml.bind</groupId>
-					<artifactId>jaxb-impl</artifactId>
-					<version>2.1.5</version>
-				</dependency>
-				
-				
-				<dependency>
-					<groupId>javax.xml</groupId>
-					<artifactId>xml-apis</artifactId>
-					<version>1.3</version>
-				</dependency>
-				
-			</dependencies>
-			
-			
+            
+            <!--we add some dependencies here just to make sure they are downloaded into the local repsoitory (see below)-->
+            <dependencies>
+                <dependency>
+                    <groupId>com.sun.xml.stream.buffer</groupId>
+                    <artifactId>streambuffer</artifactId>
+                    <version>0.6</version>
+                </dependency>
+                
+                <dependency>
+                    <groupId>com.sun.xml.ws</groupId>
+                    <artifactId>jaxws-rt</artifactId>
+                    <version>2.1.2</version>
+                </dependency>
+                
+                <dependency>
+                    <groupId>javax.xml.ws</groupId>
+                    <artifactId>jaxws-api</artifactId>
+                    <version>2.1</version>
+                </dependency>
+                
+                <dependency>
+                    <groupId>javax.xml.bind</groupId>
+                    <artifactId>jaxb-api</artifactId>
+                    <version>2.1</version>
+                </dependency>
+                
+                <dependency>
+                    <groupId>com.sun.xml.bind</groupId>
+                    <artifactId>jaxb-impl</artifactId>
+                    <version>2.1.5</version>
+                </dependency>
+                
+                
+                <dependency>
+                    <groupId>javax.xml</groupId>
+                    <artifactId>xml-apis</artifactId>
+                    <version>1.3</version>
+                </dependency>
+                
+            </dependencies>
+            
+            
             <build>
                 <pluginManagement>
                     <plugins>
@@ -1012,82 +1012,82 @@
                                     <containerId>${jee-web.containerId}</containerId>
                                     <home>${weblogic10.home}</home>
                                     <systemProperties>
-										<!--<com.sun.xml.namespace.QName.useCompatibleSerialVersionUID>1.0</com.sun.xml.namespace.QName.useCompatibleSerialVersionUID>-->
+                                        <!--<com.sun.xml.namespace.QName.useCompatibleSerialVersionUID>1.0</com.sun.xml.namespace.QName.useCompatibleSerialVersionUID>-->
                                         <!--<java.security.policy>${weblogic10.home}/server/lib/weblogic.policy</java.security.policy>
-										<weblogic.management.discover>true</weblogic.management.discover>-->
+                                        <weblogic.management.discover>true</weblogic.management.discover>-->
                                     </systemProperties>
-									
-									<dependencies>
-									
-										<!-- these files are added to CLASSPATH when starting weblogic, because the original XML handlers coming with weblogic are just a little bit crappy... -->
-										
-										<dependency>
+                                    
+                                    <dependencies>
+                                    
+                                        <!-- these files are added to CLASSPATH when starting weblogic, because the original XML handlers coming with weblogic are just a little bit crappy... -->
+                                        
+                                        <dependency>
                                             <location>${localRepository}/com/sun/xml/ws/jaxws-rt/2.1.2/jaxws-rt-2.1.2.jar</location>
                                         </dependency>
-										
-										<dependency>
+                                        
+                                        <dependency>
                                             <location>${localRepository}/javax/xml/ws/jaxws-api/2.1/jaxws-api-2.1.jar</location>
                                         </dependency>
-										
-										<dependency>
+                                        
+                                        <dependency>
                                             <location>${localRepository}/javax/xml/bind/jaxb-api/2.1/jaxb-api-2.1.jar</location>
                                         </dependency>
-										
-										<dependency>
+                                        
+                                        <dependency>
                                             <location>${localRepository}/com/sun/xml/bind/jaxb-impl/2.1.5/jaxb-impl-2.1.5.jar</location>
                                         </dependency>
-										
-										
-										<dependency>
+                                        
+                                        
+                                        <dependency>
                                             <location>${localRepository}/com/sun/xml/stream/buffer/streambuffer/0.6/streambuffer-0.6.jar</location>
                                         </dependency>
-										
-										
-										<dependency>
+                                        
+                                        
+                                        <dependency>
                                             <location>${localRepository}/javax/xml/xml-apis/1.3/xml-apis-1.3.jar</location>
                                         </dependency>
-									
+                                    
                                         <dependency>
                                             <location>${weblogic10.jrockit.home}/lib/tools.jar</location>
                                         </dependency>
-										
-										
-										<dependency>
+                                        
+                                        
+                                        <dependency>
                                             <location>${weblogic10.home}/server/lib/weblogic_sp.jar</location>
                                         </dependency>
-										<dependency>
+                                        <dependency>
                                             <location>${weblogic10.home}/server/lib/weblogic.jar</location>
                                         </dependency>
-										
-										<dependency>
+                                        
+                                        <dependency>
                                             <location>${weblogic10.home}/../modules/features/weblogic.server.modules_10.0.0.0.jar</location>
                                         </dependency>
-										<dependency>
+                                        <dependency>
                                             <location>${weblogic10.home}/../modules/features/com.bea.cie.common-plugin.launch_2.1.0.0.jar</location>
                                         </dependency>
 
-										<dependency>
+                                        <dependency>
                                             <location>${weblogic10.home}/server/lib/webservices.jar</location>
                                         </dependency>
-										<dependency>
+                                        <dependency>
                                             <location>${weblogic10.home}/../modules/ORGAPA~1.5/lib/ant-all.jar</location>
                                         </dependency>
-										<dependency>
+                                        <dependency>
                                             <location>${weblogic10.home}/../modules/NETSFA~1.0/lib/ant-contrib.jar</location>
                                         </dependency>
-										<dependency>
+                                        <dependency>
                                             <location>${weblogic10.home}/common/eval/pointbase/lib/pbclient51.jar</location>
                                         </dependency>
-										<dependency>
+                                        <dependency>
                                             <location>${weblogic10.home}/server/lib/xqrl.jar</location>
                                         </dependency>
-										<dependency>
+                                        <dependency>
                                             <location>${weblogic10.home}/common/eval/pointbase/lib/pbclient51.jar</location>
                                         </dependency>
-										
+                                        
                                     </dependencies>
                                     <!--log>${weblogic10.container.log.file}</log-->
-									<!--enable log only for debugging purposes-->
+                                    <!--enable log only for debugging purposes-->
                                     <!--<output>${weblogic10.cargo.log.file}</output>-->
                                </container>
                                 <configuration>
@@ -1100,7 +1100,7 @@
                                         <cargo.weblogic.administrator.password>${weblogic10.manager.password}</cargo.weblogic.administrator.password>
                                         <cargo.servlet.port>${jee-web.port}</cargo.servlet.port>
                                         <cargo.weblogic.deployable.folder>autodeploy</cargo.weblogic.deployable.folder>
-										<cargo.weblogic.jvm>${weblogic10.jrockit.home}/bin/java</cargo.weblogic.jvm>
+                                        <cargo.weblogic.jvm>${weblogic10.jrockit.home}/bin/java</cargo.weblogic.jvm>
                                     </properties>
                                 </configuration>
                             </configuration>
@@ -1120,7 +1120,7 @@
                 </pluginManagement>
             </build>
             <properties>
-			
+            
                 <jee-web.containerId>weblogic10x</jee-web.containerId>
 
                 <jee-web.host>localhost</jee-web.host>
@@ -1133,8 +1133,6 @@
                 <jee-web.war.location>${project.build.directory}/${jee-web.war.name}.war</jee-web.war.location>
             </properties>
         </profile>
-		
-		
 
         <!-- DB -->
         <profile>
@@ -1183,7 +1181,7 @@
             <name>External snapshot repository of the EL4J project</name>
             <url>http://el4.elca-services.ch/el4j/maven2snapshots</url>
         </repository>
-		<repository>
+        <repository>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
@@ -1398,8 +1396,8 @@
                 <type>war</type>
                 <scope>runtime</scope>
             </dependency>
-			
-			  <!-- module-detailed_statistics -->
+            
+            <!-- module-detailed_statistics -->
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-detailed_statistics-jmx</artifactId>
@@ -1458,8 +1456,8 @@
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
-			
-			<!-- module-remoting_jaxws -->
+            
+            <!-- module-remoting_jaxws -->
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
                 <artifactId>module-remoting_jaxws</artifactId>
@@ -1758,6 +1756,20 @@
                 <version>3.8.2</version>
                 <scope>test</scope>
             </dependency>
+            
+            <!-- Easymock -->
+            <dependency>
+                <groupId>org.easymock</groupId>
+                <artifactId>easymock</artifactId>
+                <version>[2.2]</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.easymock</groupId>
+                <artifactId>easymockclassextension</artifactId>
+                <version>[2.2.1]</version>
+                <scope>test</scope>
+            </dependency>
 
             <!-- Springframework -->
             <dependency>
@@ -1903,13 +1915,6 @@
                 <version>1.3.1</version>
             </dependency>
 
-            <!-- Apache projects -->
-            <dependency>
-                <groupId>oro</groupId>
-                <artifactId>oro</artifactId>
-                <version>2.0.8</version>
-            </dependency>
-
             <!-- SourceForge projects -->
             <dependency>
                 <groupId>net.sf.ehcache</groupId>
@@ -1983,13 +1988,13 @@
             1.4-SNAPSHOT
         </version.maven-database-plugin>
         <version.maven-depgraph-plugin>
-        	1.3-SNAPSHOT
+            1.3-SNAPSHOT
         </version.maven-depgraph-plugin>
         <version.maven-version-plugin>
-        	1.3-SNAPSHOT
+            1.3-SNAPSHOT
         </version.maven-version-plugin>
-		<version.maven-jaxws-plugin>
-        	1.0-SNAPSHOT
+        <version.maven-jaxws-plugin>
+            1.0-SNAPSHOT
         </version.maven-jaxws-plugin>
 
         <!-- EL4J framework module version numbers -->
@@ -2032,7 +2037,7 @@
         <version.module-remoting_xfire>
             2.4-SNAPSHOT
         </version.module-remoting_xfire>
-		<version.module-remoting_jaxws>
+        <version.module-remoting_jaxws>
             1.0-SNAPSHOT
         </version.module-remoting_jaxws>
         <version.module-remoting_ejb>
@@ -2065,7 +2070,7 @@
         <version.module-remoting-tests>
             1.3-SNAPSHOT
         </version.module-remoting-tests>
-		<version.module-remoting-jaxws-tests>
+        <version.module-remoting-jaxws-tests>
             1.0-SNAPSHOT
         </version.module-remoting-jaxws-tests>
         <version.module-tcp_forwarder-tests>
