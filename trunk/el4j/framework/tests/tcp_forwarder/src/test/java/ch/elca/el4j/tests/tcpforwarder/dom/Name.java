@@ -16,7 +16,13 @@
  */
 package ch.elca.el4j.tests.tcpforwarder.dom;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+import org.hibernate.validator.NotNull;
 
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
@@ -38,6 +44,9 @@ import ch.elca.el4j.util.dom.annotations.MemberOrder;
     "name"
 })
 @Entity
+@Table(name = "NAMES")
+@AttributeOverride(name = "key", column = @Column(name = "NAMEID"))
+@SequenceGenerator(name = "keyid_generator", sequenceName = "name_sequence")
 public class Name extends AbstractIntKeyIntOptimisticLockingDto {
     
     /**
@@ -48,6 +57,7 @@ public class Name extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * @return Returns the name.
      */
+    @NotNull
     public String getName() {
         return m_name;
     }
