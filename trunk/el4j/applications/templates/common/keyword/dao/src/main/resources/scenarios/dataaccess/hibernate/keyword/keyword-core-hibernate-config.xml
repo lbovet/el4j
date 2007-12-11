@@ -12,17 +12,9 @@
     
     <!-- Hibernate Session Factory Bean -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-        <!-- <property name="mappingResources">
-            <list>
-                <value>etc/hibernate/Keyword.hbm.xml</value>
-            </list>
-        </property>-->
         <property name="annotatedClasses">
-	         <list>
-	             <value>ch.elca.el4j.apps.keyword.dom.Keyword</value>
-	          </list>
+	        <value>ch.elca.el4j.apps.keyword.dom.Keyword</value>
       	</property>
-       
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${databaseDialect}</prop>
