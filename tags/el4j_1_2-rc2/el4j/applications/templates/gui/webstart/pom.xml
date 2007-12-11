@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <parent>
+        <groupId>ch.elca.el4j.applications</groupId>
+        <artifactId>el4j-templates-swing-demo</artifactId>
+        <version>1.1.4-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>webstart-demo</artifactId>
+    <version>${version.application-refdb}</version>
+    <packaging>war</packaging>
+    <name>EL4J Webstart Demo</name>
+    <description>
+        Demo-application for the webstart-module of the EL4J framework using the swing-demo-thin-client.
+    </description>
+    
+    <dependencies>
+        <dependency>
+            <groupId>com.sun.java.jnlp</groupId>
+            <artifactId>jnlp-servlet</artifactId>
+            <version>6.0</version>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <plugins>
+        
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>webstart-maven-plugin</artifactId>
+                <!--
+                    Due to incomplete alpha-status a patched snapshot version is used.
+                       * maven-webstart-plugin (revision 5622
+                           + patch http://jira.codehaus.org/browse/MWEBSTART-1 "MWEBSTART-1-patch.diff"
+                           + patch http://jira.codehaus.org/browse/MWEBSTART-59 "MWEBSTART-59-patch.diff")
+                <version>1.0-alpha-2-20071130.102344-1</version>
+                -->
+                <version>${version.webstart-maven-plugin}</version>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>jnlp-download-servlet</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <outputDirectoryName>webstart</outputDirectoryName>
+                    <jnlpFiles>
+                        <jnlpFile>
+                            <templateFilename>jnlpTemplate.vm</templateFilename>
+                            <outputFilename>launch.jnlp</outputFilename>
+                            <jarResources>
+                                <jarResource>
+                                    <groupId>ch.elca.el4j.applications</groupId>
+                                    <artifactId>swing-demo-thin-client</artifactId>
+                                    <version>${version.application-refdb}</version>
+                                    <mainClass>ch.elca.el4j.demos.gui.MainFormDistributedMDI</mainClass>
+                                </jarResource>
+                            </jarResources>
+                        </jnlpFile>
+                    </jnlpFiles>
+
+                    <sign>
+                        <keystore>${project.build.directory}/webstartDemoKeyStore</keystore> <!-- path or URI (if empty, the default keystore ".keystore"-file in the user-homedir is used) -->
+                        <keypass>password</keypass>  <!-- we need to override passwords easily from the command line. ${keypass} -->
+                        <storepass>password</storepass> <!-- ${storepass} -->
+                        <alias>webstart</alias> <!-- alias of the key to  use -->
+                        <!-- the following key-settings are only used if the keystore and key has to be generated at build-time -->
+                        <storetype>jks</storetype>
+                        <validity>365</validity>
+                        <dnameCn>Firstname Lastname</dnameCn>
+                        <dnameOu>EL4J</dnameOu>
+                        <dnameO>ELCA</dnameO>
+                        <dnameL>Zurich</dnameL>
+                        <dnameSt>Zurich</dnameSt>
+                        <dnameC>CH</dnameC>
+
+                        <!-- KEYSTORE MANGEMENT -->
+                        <keystoreConfig>
+                            <delete>true</delete> <!-- delete the keystore at build time -->
+                            <gen>true</gen>       <!-- generate keystore and key at build time -->
+                        </keystoreConfig>
+
+                        <verify>false</verify> <!-- verify the signature after signing -->
+                    </sign>
+                    <unsign>true</unsign> <!-- unsign already signed packages and sign them with own key -->
+
+                    <verifyjar>false</verifyjar>
+                </configuration>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <configuration>
+                    <deployer>
+                        <deployables>
+                            <deployable>
+                                <location>${jee-web.war.location}</location>
+                                <properties>
+                                    <context>${jee-web.context}</context>
+                                </properties>
+                            </deployable>
+                        </deployables>
+                    </deployer>
+                </configuration>
+            </plugin>
+            
+        </plugins>
+    </build>
+    <properties>
+        <!-- must be changed to comply with the maven webstart plugin -->
+        <jee-web.webapp.directory>${project.build.directory}/${jee-web.war.name}</jee-web.webapp.directory> 
+    </properties>
+</project>

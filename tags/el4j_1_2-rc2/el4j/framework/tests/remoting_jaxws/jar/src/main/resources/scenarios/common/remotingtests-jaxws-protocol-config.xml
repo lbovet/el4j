@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+
+	<!-- JAX-WS Soap Protocol -->
+    <bean id="jaxwsProtocol" class="ch.elca.el4j.services.remoting.protocol.JaxwsSoapHeaderContextPassing">
+        <property name="serviceHost">
+            <value>${jee-web.host}</value>
+        </property>
+        <property name="servicePort">
+            <value>${jee-web.port}</value>
+        </property>
+        <property name="contextPath">
+            <value>module-remoting-jaxws-tests</value>
+        </property>
+        <property name="implicitContextPassingRegistry">
+            <ref local="jaxwsImplicitContextPassingRegistry" />
+        </property>
+        <property name="contextPassingContext">
+            <ref bean="jaxwsContextPassingContext" />
+        </property>
+    </bean>
+
+    <bean id="jaxwsImplicitContextPassingRegistry" 
+        class="ch.elca.el4j.tests.remoting.jaxws.service.TestImplicitContextPassingRegistry" />
+        
+    <!-- JAXBContext used by the JaxwsJaxb protocol to marshall the implicit context -->
+    <bean id="jaxwsContextPassingContext"
+        class="javax.xml.bind.JAXBContext"
+        factory-method="newInstance">
+        <constructor-arg index="0">
+            <list>
+                <value>
+                    ch.elca.el4j.tests.remoting.jaxws.service.TestJaxwsContextPassingValue
+                </value>
+            </list>
+        </constructor-arg>
+    </bean>
+</beans>

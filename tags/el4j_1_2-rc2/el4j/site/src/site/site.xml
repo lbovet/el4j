@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="EL4J">
+
+    <!-- Version: $Revision:1122 $ -->
+    <!-- URL: $URL:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/site/src/site/site.xml $ -->
+    <!-- Date: $Date:2006-09-11 06:46:44 +0000 (Mo, 11 Sep 2006) $ -->
+    <!-- Author: $Author:swisswheel $ -->
+
+	<!-- dirty hack due to bug in maven-site-plugin -->
+	<bannerLeft>
+        <name>EL4J Logo</name>
+        <href>index.html</href>
+        <src>images/el4j_logo.gif</src>
+    </bannerLeft>
+    <bannerRight>
+        <name>ELCA - We make it work.</name>
+        <href>http://www.elca.ch</href>
+        <src>images/elca_banner-we_make_it_work.jpg</src>
+    </bannerRight>
+    <publishDate format="dd MMMM yyyy HH:mm" />
+    <skin>
+        <groupId>ch.elca.el4j</groupId>
+        <artifactId>el4j-skin</artifactId>
+        <version>1.1.4-SNAPSHOT</version>
+    </skin>
+    <poweredBy>
+        <logo name="SourceForge.net" 
+            href="http://sourceforge.net/" 
+            img="http://sourceforge.net/sflogo.php?group_id=147215&amp;amp;type=2"/>
+        <logo name="Built by Maven 2" 
+            href="http://maven.apache.org/" 
+            img="images/logos/maven-feather.png"/>
+        <!--logo 
+            name="Valid XHTML 1.0 Transitional" 
+            href="http://validator.w3.org/" 
+            img="images/logos/valid-xhtml10.png"/-->
+    </poweredBy>
+	
+    <body>
+	    <head>
+            <link rel="icon"
+                href="/favicon.ico"
+                type="image/x-icon" />
+            <link rel="shortcut icon"
+                href="/favicon.ico"
+                type="image/x-icon" />
+        </head>
+ 
+        <menu name="EL4J">
+            <item name="Overview" href="index.html" />
+            <item name="News" href="news.html" />
+            <item name="License" href="license.html" />
+            <item name="SF Project Page" 
+                href="http://sourceforge.net/projects/el4j/" />
+        </menu>
+        <menu name="Download">
+            <item name="Individual sources (svn)"  
+	        href="source-repository.html"/>
+            <item name="Binary packages"
+                href="http://sourceforge.net/project/showfiles.php?group_id=147215" />
+        </menu>
+        <menu name="Documentation">
+            <item name="General" href="documentation.html" />
+            <item name="API" href="framework-modules/apidocs/index.html" />
+            <item name="FAQ" href="docs/pdf/FrequentlyAskedQuestions.pdf" />
+            <item name="Maven plugins" href="plugins/index.html" />
+        </menu>
+        <menu name="Support">
+            <item name="General" href="support.html" />
+            <item name="Mailing Lists" href="mail-lists.html" />
+            <item name="Issue Tracking" href="issue-tracking.html" />
+        </menu>
+        <menu name="Reports">
+            <item name="Tests" href="test-reports.html" />
+        </menu>
+        <menu name="More about EL4J">
+            <item name="Project Team" href="team-list.html" />
+            <item name="Reference Projects" href="reference_projects.html" />
+            <item name="Related Projects" href="related_projects.html" />
+            <item name="Sponsor" href="sponsor.html" />
+        </menu>
+		
+		<links>
+            <item name="EL4NET"
+                href="http://el4net.sourceforge.net" />
+            <item name="IIOP.NET"
+                href="http://iiop-net.sourceforge.net" />
+            <item name="ELCA"
+                href="http://www.elca.ch" />
+        </links>
+        <menu ref="parent" />
+        <menu ref="modules" />
+        <menu ref="reports" />
+    </body>
+</project>

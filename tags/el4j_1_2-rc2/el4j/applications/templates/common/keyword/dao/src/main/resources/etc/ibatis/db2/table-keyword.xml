@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="keyword-core">
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+    
+    <!-- 
+        ATTENTION: Dynamic parts are only used due to badly implemented jdbc 
+        driver from ibm, which does not support java.sql.Types.NULL!
+    -->
+    <insert id="insertKeyword">
+        insert into KEYWORDS (NAME, DESCRIPTION, OPTIMISTICLOCKINGVERSION) 
+            values (
+            <dynamic>
+                <isNotNull property="name">
+                    #name#
+                </isNotNull>
+                <isNull property="name">
+                    null
+                </isNull>
+                ,
+                <isNotNull property="description">
+                    #description#
+                </isNotNull>
+                <isNull property="description">
+                    null
+                </isNull>
+                ,
+            </dynamic>
+            #optimisticLockingVersion#)
+        <selectKey resultClass="int" keyProperty="key">
+            values IDENTITY_VAL_LOCAL()
+        </selectKey>
+    </insert>
+
+    <update id="updateKeyword">
+        update KEYWORDS set 
+            <dynamic>
+                <isNotNull property="name">
+                    NAME=#name#
+                </isNotNull>
+                <isNull property="name">
+                    NAME=null
+                </isNull>
+                ,
+                <isNotNull property="description">
+                    DESCRIPTION=#description#
+                </isNotNull>
+                <isNull property="description">
+                    DESCRIPTION=null
+                </isNull>
+                ,
+            </dynamic>
+            OPTIMISTICLOCKINGVERSION=OPTIMISTICLOCKINGVERSION+1 where
+            KEYID=#key# AND OPTIMISTICLOCKINGVERSION=#optimisticLockingVersion#
+    </update>
+</sqlMap>
