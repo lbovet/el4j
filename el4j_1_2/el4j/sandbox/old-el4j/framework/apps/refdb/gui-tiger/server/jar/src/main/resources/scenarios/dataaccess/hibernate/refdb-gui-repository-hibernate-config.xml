@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+
+    <!-- Property merge configurer for the refdb application's SessionFactory
+    	properties-->
+    <bean id="refdbGuiTigerDataaccessHibernatePropertyConfigurer" 
+        class="org.springframework.beans.factory.config.PropertyOverrideConfigurer">
+        <property name="location">
+            <value>classpath:scenarios/dataaccess/hibernate/refdbGuiTigerSessionFactory.properties</value>
+        </property>
+    </bean>
+
+	<bean id="keywordRepo"
+		class="ch.elca.el4j.services.persistence.dao.GenericHibernateRepository">
+    	<property name="persistentClass"><value>ch.elca.el4j.apps.lightrefdb.dom.Keyword</value></property>
+    	<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+    </bean>
+    
+	<bean id="referenceRepo"
+		class="ch.elca.el4j.services.persistence.dao.GenericHibernateRepository">
+    	<property name="persistentClass"><value>ch.elca.el4j.apps.lightrefdb.dom.Reference</value></property>
+    	<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+    </bean>
+</beans>

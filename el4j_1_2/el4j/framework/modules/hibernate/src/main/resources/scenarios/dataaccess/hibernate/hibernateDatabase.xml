@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Spring bean configuration file for data source and transaction manager.
+
+    Needed beans which are not defined in this file:
+       * sessionFactory
+
+    Following properties must be overwritten:
+       * dataSource.driverClassName
+       * dataSource.url
+       * dataSource.username
+       * dataSource.password
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+
+    <!-- The DBCP DataSource -->
+     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName">
+            <value>oracle.jdbc.driver.OracleDriver</value>
+        </property>
+        <property name="url">
+            <value>jdbc:oracle:thin:@host:port:sid</value>
+        </property>
+        <property name="username">
+            <value>myUsername</value>
+        </property>
+        <property name="password">
+            <value>myPassword</value>
+        </property>
+
+        <!--
+            The initial number of connections that are created when the pool
+            is started.
+        -->
+        <property name="initialSize">
+            <value>0</value>
+        </property>
+        <!--
+             The maximum number of active connections that can be allocated
+             from this pool at the same time, or zero for no limit.
+        -->
+        <property name="maxActive">
+            <value>8</value>
+        </property>
+        <!--
+             The maximum number of active connections that can remain idle in
+             the pool, without extra ones being released, or zero for no limit.
+        -->
+        <property name="maxIdle">
+            <value>8</value>
+        </property>
+        <!--
+             The minimum number of active connections that can remain idle in
+             the pool, without extra ones being created, or zero to create none.
+        -->
+        <property name="minIdle">
+            <value>0</value>
+        </property>
+        <!--
+             The maximum number of milliseconds that the pool will wait (when
+             there are no available connections) for a connection to be
+             returned before throwing an exception, or -1 to wait indefinitely.
+        -->
+        <property name="maxWait">
+            <value>10000</value>
+        </property>
+
+
+        <!--
+            The SQL query that will be used to validate connections from this
+            pool before returning them to the caller. If specified, this query
+            MUST be an SQL SELECT statement that returns at least one row.
+        -->
+        <property name="validationQuery">
+            <null/>
+        </property>
+        <!--
+             The indication of whether objects will be validated before being
+             borrowed from the pool. If the object fails to validate, it will
+             be dropped from the pool, and we will attempt to borrow another.
+        -->
+        <property name="testOnBorrow">
+            <value>true</value>
+        </property>
+        <!--
+             The indication of whether objects will be validated before being
+             returned to the pool.
+        -->
+        <property name="testOnReturn">
+            <value>false</value>
+        </property>
+        <!--
+             The indication of whether objects will be validated by the idle
+             object evictor (if any). If an object fails to validate, it will
+             be dropped from the pool.
+        -->
+        <property name="testWhileIdle">
+            <value>false</value>
+        </property>
+    <!-- Auto commits are switched off -->
+         <property name="defaultAutoCommit">
+            <value>false</value>
+        </property>                
+    </bean>
+
+    <!-- The transactionmanager to use for regular non JTA datasource -->
+    <bean id="transactionManager"
+        class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="dataSource">
+            <ref local="dataSource"/>
+        </property>
+        <property name="sessionFactory">
+            <ref bean="sessionFactory"/>
+        </property>
+    </bean>
+    
+    <bean id="abstractDao" abstract="true">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory"/>
+        </property>
+    </bean>
+</beans>

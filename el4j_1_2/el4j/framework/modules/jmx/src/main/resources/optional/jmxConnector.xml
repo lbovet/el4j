@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Spring bean configuration file to export information via jmx messaging
+    protocol (jmxmp).
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
+    <!-- In case you want to access the MBeans via the jmxmp protocol,
+         use this connector -->
+    <bean id="jmxConnector" 
+        class="org.springframework.jmx.support.ConnectorServerFactoryBean">
+        <property name="server">
+            <ref bean="mBeanServer" />
+        </property>
+        <!-- This is the default URL anyway -->
+        <property name="serviceUrl">
+            <value>service:jmx:jmxmp://localhost:9876</value>
+        </property>
+    </bean>
+</beans>
