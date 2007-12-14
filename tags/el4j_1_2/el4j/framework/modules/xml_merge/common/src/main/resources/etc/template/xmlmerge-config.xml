@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
+    <bean name="merged" class="ch.elca.el4j.services.xmlmerge.springframework.XmlMergeResource">
+        <property name="resources">
+            <list>
+                <bean class="org.springframework.core.io.ClassPathResource">
+                    <constructor-arg>
+                        <value>ch/elca/el4j/tests/xmlmerge/r1.xml</value>
+                    </constructor-arg>
+                </bean>
+                <bean class="org.springframework.core.io.ClassPathResource">
+                    <constructor-arg>
+                        <value>ch/elca/el4j/tests/xmlmerge/r2.xml</value>
+                    </constructor-arg>
+                </bean>
+            </list>            
+        </property>
+        <property name="properties">
+            <map>
+                <entry key="action.default" value="COMPLETE"/>
+                <entry key="xpath.path1" value="/root/a"/>
+                <entry key="action.path1" value="MERGE"/> 
+            </map>
+        </property>
+    </bean>
+</beans>

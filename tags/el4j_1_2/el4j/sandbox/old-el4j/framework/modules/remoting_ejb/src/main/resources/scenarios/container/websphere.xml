@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Spring bean configuration file for jndi environment support in websphere.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+
+	<bean name="websphereJndiConfig" class="ch.elca.el4j.util.codingsupport.Properties">
+	    <property name="properties">
+	        <props>
+				<prop key="java.naming.factory.initial">com.ibm.websphere.naming.WsnInitialContextFactory</prop>
+				<prop key="ch.elca.el4j.jndi.prefix">iiop://</prop>
+				<prop key="java.naming.factory.url.pkgs">com.ibm.ws.naming</prop>
+			</props>
+	    </property>
+	</bean>
+</beans>

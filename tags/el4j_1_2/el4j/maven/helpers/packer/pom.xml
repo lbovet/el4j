@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+
+    <parent>
+        <groupId>ch.elca.el4j.maven.helpers</groupId>
+    	<artifactId>el4j-helpers</artifactId>
+        <version>1.1.4-SNAPSHOT</version>
+    </parent>
+    
+    <artifactId>el4j-packer-helper</artifactId>
+    <packaging>pom</packaging>
+    <name>EL4J helper packer</name>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <finalName>el4j-${version}</finalName>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>ch.elca.el4j.maven.plugins</groupId>
+                <artifactId>maven-env-support-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+    <profiles>
+        <profile>
+            <id>convenience-zip</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/assemble/convenience.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>create-convenience-zip</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>assembly</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-windows-settings-xml</id>
+                                <phase>generate-resources</phase>
+                                <configuration>
+                                    <tasks>
+                                        <property name="sourceFile" value="${el4j.external}/etc/m2/settings.xml"/>
+                                        <property name="targetFile" value="${el4j.external}/maven/helpers/packer/target/convenience/etc/m2/settings.xml"/>
+                                        <property name="installDir" value="d:"/>
+                                        <copy file="${sourceFile}" tofile="${targetFile}"/>
+                                        <replace file="${targetFile}">
+                                            <replacefilter token="~/.m2/repository" value="${installDir}/m2repository"/>
+                                            <replacefilter token="~/myproject" value="${installDir}/Projects/EL4J"/> 
+                                        </replace>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>copy-linux-settings-xml</id>
+                                <phase>generate-resources</phase>
+                                <configuration>
+                                    <tasks>
+                                        <property name="sourceFile" value="${el4j.external}/etc/m2/settings.xml"/>
+                                        <property name="targetFile" value="${el4j.external}/maven/helpers/packer/target/convenience/etc/m2/settingsLINUX.xml"/>
+                                        <property name="installDir" value="/data"/>
+                                        <copy file="${sourceFile}" tofile="${targetFile}"/>
+                                        <replace file="${targetFile}">
+                                            <replacefilter token="~/.m2/repository" value="${installDir}/m2repository"/>
+                                            <replacefilter token="~/myproject" value="${installDir}/Projects/EL4J"/> 
+                                        </replace>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>            
+        </profile>
+    </profiles>
+</project>

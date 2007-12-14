@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Version: $Revision: 1140 $ -->
+    <!-- URL: $URL: https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/tests/remoting/functional-tests/pom.xml $ -->
+    <!-- Date: $Date: 2006-09-14 13:55:13 +0200 (Do, 14 Sep 2006) $ -->
+    <!-- Author: $Author: fsuess $ -->
+
+    <parent>
+        <groupId>ch.elca.el4j.tests</groupId>
+        <artifactId>module-remoting-tests-apps</artifactId>
+        <version>1.1.4-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>module-remoting-tests-apps-common</artifactId>
+    <version>${version.module-remoting-tests}</version>
+    <packaging>jar</packaging>
+    <name>EL4J test remoting apps - common</name>
+    <description>
+        Test module for apps tests of remoting modules (common) of the EL4J
+        framework.
+    </description>
+    <dependencies>
+        <!-- EL4J framework modules -->
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-core</artifactId>
+        </dependency>
+    </dependencies>
+    <build>
+
+
+    </build>
+    <profiles>
+        <profile>
+            <id>manual</id>
+        </profile>
+        <profile>
+            <id>auto</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <!--
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>pre-integration-test</phase>
+                                <configuration>
+                                    <tasks>
+                                        <java
+                                            classname="ch.elca.el4j.tests.services.remoting.loadbalancing.server.LbTestServerNoContextPassing"
+                                            fork="false" spawn="false">
+                                            <classpath
+                                                refid="maven.test.classpath">
+                                            </classpath>
+                                        </java>
+                                        <echo>
+                                            ################### RUNNING ANT TASK ########################
+                                        </echo>
+
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>surefire-it</id>
+                                <phase>integration-test</phase>
+                                <goals>
+                                    <goal>test</goal>
+                                </goals>
+                                <configuration>
+                                    <skip>false</skip>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+-->
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

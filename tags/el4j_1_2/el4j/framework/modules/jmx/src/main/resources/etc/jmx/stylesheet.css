@@ -1,0 +1,44 @@
+/*
+ * ELCA color css for jmx.
+ */
+body { 
+    font-family: Helvetica, Arial, sans-serif;
+    background-color: #FFFFFF
+    font-size: 80%;
+}
+
+h1 {
+    font-size: 250%;
+    background: #CC3300;
+    color: #CCCC99;
+    padding-bottom: 0.5em;
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+    padding-top: 0.5em;
+    text-align: center
+}
+
+h2 {
+    font-size: 200%;
+    color: #999966;
+    margin-top: 1.5cm;
+    text-align: left;
+}
+
+h3 {
+    font-size: 150%;
+    color: #CC3300;
+    margin-top: 1cm;
+    text-align: left;
+}
+
+h4 {
+    font-size: 100%;
+    color: #CC6600;
+    text-align: left;
+    margin-top: 0.5cm;
+}
+
+a:link { color: #000000; }
+a:visited { color: #666633; }
+a:hover { color: #CC3300; }

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="refdb-core">
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <!-- 
+        Reference related invocations
+    -->
+    <!-- 
+        ATTENTION: Dynamic parts are only used due to badly implemented jdbc 
+        driver from ibm, which does not support java.sql.Types.NULL!
+    -->
+    <insert id="insertReference">
+        insert into REFERENCESTABLE (NAME, HASHVALUE, DESCRIPTION, 
+            VERSION, DOCUMENTDATE, INCOMPLETE, WHENINSERTED, 
+            OPTIMISTICLOCKINGVERSION) 
+            values ( 
+                <dynamic>
+                    <isNotNull property="name">
+                        #name#
+                    </isNotNull>
+                    <isNull property="name">
+                        null
+                    </isNull>
+                    ,
+                    <isNotNull property="hashValue">
+                        #hashValue#
+                    </isNotNull>
+                    <isNull property="hashValue">
+                        null
+                    </isNull>
+                    ,
+                    <isNotNull property="description">
+                        #description#
+                    </isNotNull>
+                    <isNull property="description">
+                        null
+                    </isNull>
+                    ,
+                    <isNotNull property="version">
+                        #version#
+                    </isNotNull>
+                    <isNull property="version">
+                        null
+                    </isNull>
+                    ,
+                    <isNotNull property="date">
+                        #date#
+                    </isNotNull>
+                    <isNull property="date">
+                        null
+                    </isNull>
+                    ,
+                </dynamic>
+                #incomplete#, #whenInserted#, 
+                #optimisticLockingVersion#)
+        <selectKey resultClass="int" keyProperty="key">
+            values IDENTITY_VAL_LOCAL()
+        </selectKey>
+    </insert>
+
+    <update id="updateReference">
+        update REFERENCESTABLE set
+            <dynamic>
+                <isNotNull property="name">
+                    NAME=#name#
+                </isNotNull>
+                <isNull property="name">
+                    NAME=null
+                </isNull>
+                ,
+                <isNotNull property="hashValue">
+                    HASHVALUE=#hashValue#
+                </isNotNull>
+                <isNull property="hashValue">
+                    HASHVALUE=null
+                </isNull>
+                ,
+                <isNotNull property="description">
+                    DESCRIPTION=#description#
+                </isNotNull>
+                <isNull property="description">
+                    DESCRIPTION=null
+                </isNull>
+                ,
+                <isNotNull property="version">
+                    VERSION=#version#
+                </isNotNull>
+                <isNull property="version">
+                    VERSION=null
+                </isNull>
+                ,
+                <isNotNull property="date">
+                    DOCUMENTDATE=#date#
+                </isNotNull>
+                <isNull property="date">
+                    DOCUMENTDATE=null
+                </isNull>
+                ,
+            </dynamic>
+            INCOMPLETE=#incomplete#, 
+            OPTIMISTICLOCKINGVERSION=OPTIMISTICLOCKINGVERSION+1 
+            where KEYID=#key# 
+                and OPTIMISTICLOCKINGVERSION=#optimisticLockingVersion#
+    </update>
+</sqlMap>
