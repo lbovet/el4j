@@ -21,5 +21,6 @@ echo
 echo
 echo do the following steps if within elca:
 echo  \* uncomment the proxy tag in settings.xml
+echo  \* uncomment the mirror tags in settings.xml
 echo
 
