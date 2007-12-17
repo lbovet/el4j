@@ -48,7 +48,10 @@ To start working with the EL4J sources
        o mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc14_g -Dversion=10.2.0.1.0 -Dpackaging=jar -Dfile=ojdbc14_g.jar
        o mvn install:install-file -DgroupId=com.ibm -DartifactId=db2jcc -Dversion=20040819 -Dpackaging=jar -Dfile=db2jcc.jar
        o mvn install:install-file -DgroupId=com.ibm -DartifactId=db2jcc_license_c -Dversion=20040819 -Dpackaging=jar -Dfile=db2jcc_license_c.jar
+	 * if you are using JDK 6 and want the jaxws support working, set up jaxws 2.1 like described here: 
+	     http://weblogs.java.net/blog/ramapulavarthi/archive/2007/01/problems_using.html
      * mvn clean install  
+	 
        
 To start a new GUI application 
  * Check out the GUI demo application under external/applications/templates/gui (assuming you have downloaded the
