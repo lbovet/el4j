@@ -1968,6 +1968,11 @@
         <distmgt.snapshot-site.name.external>External EL4J snapshot website</distmgt.snapshot-site.name.external>
         <distmgt.snapshot-site.url.external>scpexe://leaffy/home/java/el4j/snapshot/website/external</distmgt.snapshot-site.url.external>
 
+        <!-- Current version of EL4J-Framework. Must be the same as defined in the version-tag above -->
+        <version.el4j-framework.current>
+            1.1.4-SNAPSHOT
+        </version.el4j-framework.current>
+        
         <!-- EL4J framework plugin version numbers -->
         <version.maven-repohelper-plugin>
             1.3
