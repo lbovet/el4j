@@ -85,6 +85,24 @@
             <version>1.0-beta-1</version>
         </extension>
     </extensions>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.0.4</version>
+        <executions>
+          <execution>
+            <id>createSourceJars</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
   </build>
 
   <profiles>
@@ -123,26 +141,39 @@
         </plugin>
     </plugins>
   </reporting>
-  
-    <distributionManagement>
-        <repository>
-            <id>${distmgt.repository.id.external}</id>
-            <name>${distmgt.repository.name.external}</name>
-            <url>${distmgt.repository.url.external}</url>
-        </repository>
-        <snapshotRepository>
-            <id>${distmgt.snapshot-repository.id.external}</id>
-            <name>${distmgt.snapshot-repository.name.external}</name>
-            <url>${distmgt.snapshot-repository.url.external}</url>
-        </snapshotRepository>
-    </distributionManagement>
-    <properties>
-        <distmgt.repository.id.external>ftpEl4ElcaServices</distmgt.repository.id.external>
-        <distmgt.repository.name.external>External EL4J repository</distmgt.repository.name.external>
-        <distmgt.repository.url.external>ftp://el4.elca-services.ch/htdocs/el4j/maven2repository</distmgt.repository.url.external>
 
-        <distmgt.snapshot-repository.id.external>ftpEl4ElcaServicesSnapshot</distmgt.snapshot-repository.id.external>
-        <distmgt.snapshot-repository.name.external>External EL4J snapshot repository</distmgt.snapshot-repository.name.external>
-        <distmgt.snapshot-repository.url.external>ftp://el4.elca-services.ch/htdocs/el4j/maven2snapshots</distmgt.snapshot-repository.url.external>
-    </properties>
+  <distributionManagement>
+      <repository>
+          <id>${distmgt.repository.id.external}</id>
+          <name>${distmgt.repository.name.external}</name>
+          <url>${distmgt.repository.url.external}</url>
+      </repository>
+      <snapshotRepository>
+          <id>${distmgt.snapshot-repository.id.external}</id>
+          <name>${distmgt.snapshot-repository.name.external}</name>
+          <url>${distmgt.snapshot-repository.url.external}</url>
+      </snapshotRepository>
+  </distributionManagement>
+
+  <properties>
+      <distmgt.repository.id.external>
+          ftpEl4ElcaServices
+      </distmgt.repository.id.external>
+      <distmgt.repository.name.external>
+          External EL4J repository
+      </distmgt.repository.name.external>
+      <distmgt.repository.url.external>
+          ftp://el4.elca-services.ch/htdocs/el4j/maven2repository
+      </distmgt.repository.url.external>
+
+      <distmgt.snapshot-repository.id.external>
+          ftpEl4ElcaServicesSnapshot
+      </distmgt.snapshot-repository.id.external>
+      <distmgt.snapshot-repository.name.external>
+          External EL4J snapshot repository
+      </distmgt.snapshot-repository.name.external>
+      <distmgt.snapshot-repository.url.external>
+          ftp://el4.elca-services.ch/htdocs/el4j/maven2snapshots
+      </distmgt.snapshot-repository.url.external>
+  </properties>
 </project>
