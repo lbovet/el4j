@@ -53,4 +53,4 @@ if [ $performInternal != "y" ] ; then
 fi
 
 makeRelease "internal" "https://cvs.elca.ch/subversion/el4j-internal" ""
-echo "Hint: The next script to execute is deploy.sh"
+echo "Hint: The next script to execute is update.sh"
