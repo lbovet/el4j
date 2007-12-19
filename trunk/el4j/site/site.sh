@@ -1,13 +1,11 @@
 #!/bin/bash -e
 
-if [ $# -ne 1 ] ; then
-	echo "Parameter must be external or internal."
+if [ ! -e ../../external/site ] ; then
+	echo "This script has to be run from external/site."
 	exit 1
 fi
-cd $1
 
 # clean generated docs
-cd site
 mvn clean
 cd ..
 
@@ -21,12 +19,15 @@ mvn clean install -N
 # generate doc for modules
 mvn -Pgenerate.doc.set.framework-modules collector:aggregate-files javadoc:javadoc jxr:jxr
 
-# Excluded applications from site generation
+# generate doc for applications
+#mvn -Pgenerate.doc.set.framework-applications collector:aggregate-files javadoc:javadoc jxr:jxr
 
 # generate doc for tests
 mvn -Pgenerate.doc.set.framework-tests collector:aggregate-files javadoc:javadoc jxr:jxr
 
-# Excluded Demos from site generation
+# generate doc for demos
+#mvn -Pgenerate.doc.set.framework-demos collector:aggregate-files javadoc:javadoc jxr:jxr
+
 cd ..
 
 # generate doc for plugins
@@ -43,17 +44,18 @@ mvn install -Pauto,weblogic10,oracle
 mvn antrun:run -f site/pom.xml -Pcopy.surefire-report.weblogic-oracle
 
 # aggregate files
-mvn collector:aggregate-files -f site/pom.xml -Pcollect-doc
+cd site
+mvn collector:aggregate-files -Pcollect-doc
 for p in $plugins ; do
-	mvn collector:aggregate-files -f site/pom.xml -Pcollect-plugin-doc -Dplugin=$p
+	mvn collector:aggregate-files -Pcollect-plugin-doc -Dplugin=$p
 done
 
 # hack due to bug in surefire repor plugin
-mv site/target/site/framework-tests/xref/ site/target/site/xref-test
+#mv site/target/site/framework-tests/xref/ site/target/site/xref-test
 
 # make site
-mvn site -f site/pom.xml -Psurefire-report.tomcat-derby
-mvn site -f site/pom.xml -Psurefire-report.weblogic-oracle
+mvn site -Psurefire-report.tomcat-derby
+mvn site -Psurefire-report.weblogic-oracle
 
 # deploy site
-mvn site-deploy -f site/pom.xml
+mvn site-deploy

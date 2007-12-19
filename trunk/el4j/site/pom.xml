@@ -9,7 +9,7 @@
     <!-- Date: $Date:2006-09-11 06:46:44 +0000 (Mo, 11 Sep 2006) $ -->
     <!-- Author: $Author:swisswheel $ -->
 
-	<!-- use site.sh to create site (must be called from directory external) -->
+	<!-- use site.sh to create site (must be called from this directory) -->
     <parent>
         <groupId>ch.elca.el4j</groupId>
         <artifactId>el4j</artifactId>
