@@ -96,7 +96,7 @@
                         <artifactId>maven-jxr-plugin</artifactId>
                         <configuration>
                             <aggregate>false</aggregate>
-                            <sourcePaths>${aggregated.files.output.directory}</sourcePaths>
+                            <sourcePath>${aggregated.files.output.directory}</sourcePath>
                             <destDir>${jxr.output.directory}</destDir>
                             <javadocDir>${javadoc.output.directory}</javadocDir>
                             <linkJavadoc>true</linkJavadoc>
