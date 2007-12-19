@@ -1,0 +1,148 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <artifactId>mojo</artifactId>
+    <groupId>org.codehaus.mojo</groupId>
+    <version>14</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>webstart-maven-plugin-parent</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0-alpha-2-el4j_20071219_1427</version>
+  <name>Maven Webstart Plugin Parent</name>
+  <inceptionYear>2005</inceptionYear>
+  <url>http://mojo.codehaus.org/webstart-maven-plugin-parent</url>
+  <issueManagement>
+    <system>jira</system>
+    <url>http://jira.codehaus.org/browse/MWEBSTART</url>
+  </issueManagement>
+
+  <licenses>
+    <license>
+      <name>Apache License 2</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <!-- work-around a maven issue MOJO-361 -->
+  <scm>
+    <url>https://svn.codehaus.org/mojo/trunk/mojo/webstart-maven-plugin</url>
+    <connection>scm:svn:https://svn.codehaus.org/mojo/trunk/mojo/webstart-maven-plugin</connection>
+    <developerConnection>scm:svn:https://svn.codehaus.org/mojo/trunk/mojo/webstart-maven-plugin</developerConnection>
+  </scm>
+
+  <developers>
+    <developer>
+      <name>Jerome Lacoste</name>
+      <email>jerome@coffeebreaks.org</email>
+      <organization>CoffeeBreaks</organization>
+      <organizationUrl>http://www.coffeebreaks.org</organizationUrl>
+      <timezone>+1</timezone>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
+  </developers>
+  <contributors>
+    <contributor>
+      <name>David Boden</name>
+      <email>dave@daveboden.com</email>
+    </contributor>
+    <contributor>
+      <!--<id>ge0ffrey</id>-->
+      <name>Geoffrey De Smet</name>
+      <email>ge0ffrey.spam_AT_gmail.com</email>
+      <roles>
+        <role>Java developer</role>
+      </roles>
+      <timezone>+1</timezone>
+    </contributor>
+    <contributor>
+      <!--<id>ge0ffrey</id>-->
+      <name>Kevin Stembridge</name>
+      <!--email></email-->
+      <roles>
+        <role>Java developer</role>
+      </roles>
+      <!--timezone>+1</timezone-->
+    </contributor>
+  </contributors>
+
+  <modules>
+    <module>webstart-jarsigner-api</module>
+    <module>plugin</module> <!-- TODO: better name ??-->
+    <module>pack200-anttasks</module>
+    <!--module>jnlp-servlet</module-->
+    <module>pack200-jdk14</module>
+  </modules>
+  
+  <build>
+    <extensions>
+        <!-- Transport -->
+        <extension>
+            <groupId>org.apache.maven.wagon</groupId>
+            <artifactId>wagon-ftp</artifactId>
+            <version>1.0-beta-1</version>
+        </extension>
+    </extensions>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>jdk15</id>
+      <activation>
+        <jdk>1.5</jdk>
+      </activation>
+
+      <modules>
+        <module>pack200-jdk15</module>
+      </modules>
+    </profile>
+
+    <profile>
+      <id>jdk16</id>
+      <activation>
+        <jdk>1.6</jdk>
+      </activation>
+
+      <modules>
+        <module>pack200-jdk15</module>
+      </modules>
+    </profile>
+
+  </profiles>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>2.0</version>
+         <configuration>
+            <checkoutDirectoryName>webstart-maven-plugin</checkoutDirectoryName>
+          </configuration>
+        </plugin>
+    </plugins>
+  </reporting>
+  
+    <distributionManagement>
+        <repository>
+            <id>${distmgt.repository.id.external}</id>
+            <name>${distmgt.repository.name.external}</name>
+            <url>${distmgt.repository.url.external}</url>
+        </repository>
+        <snapshotRepository>
+            <id>${distmgt.snapshot-repository.id.external}</id>
+            <name>${distmgt.snapshot-repository.name.external}</name>
+            <url>${distmgt.snapshot-repository.url.external}</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <properties>
+        <distmgt.repository.id.external>ftpEl4ElcaServices</distmgt.repository.id.external>
+        <distmgt.repository.name.external>External EL4J repository</distmgt.repository.name.external>
+        <distmgt.repository.url.external>ftp://el4.elca-services.ch/htdocs/el4j/maven2repository</distmgt.repository.url.external>
+
+        <distmgt.snapshot-repository.id.external>ftpEl4ElcaServicesSnapshot</distmgt.snapshot-repository.id.external>
+        <distmgt.snapshot-repository.name.external>External EL4J snapshot repository</distmgt.snapshot-repository.name.external>
+        <distmgt.snapshot-repository.url.external>ftp://el4.elca-services.ch/htdocs/el4j/maven2snapshots</distmgt.snapshot-repository.url.external>
+    </properties>
+</project>
