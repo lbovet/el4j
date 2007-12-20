@@ -20,7 +20,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
 
 
 /**
- * Marker interface for a criteria.
+ * Abstract parent class for Criteria implementations.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
