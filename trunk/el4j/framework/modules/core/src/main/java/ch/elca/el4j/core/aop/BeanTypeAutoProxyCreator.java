@@ -35,7 +35,7 @@ import org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator;
 public class BeanTypeAutoProxyCreator extends AbstractAutoProxyCreator {
 
     /** The classes which subtypes have to be proxied. */
-    private Class[] m_interfaces;
+    private Class<?>[] m_interfaces;
     
     /**
      * Sets the classes to be proxied.
@@ -43,7 +43,7 @@ public class BeanTypeAutoProxyCreator extends AbstractAutoProxyCreator {
      * @param interfaceNames
      *      Classes to proxy.
      */
-    public void setInterfaceNames(Class[] interfaceNames) {
+    public void setInterfaceNames(Class<?>[] interfaceNames) {
         m_interfaces = interfaceNames;
     }
 

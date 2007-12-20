@@ -73,7 +73,7 @@ public final class CollectionUtils {
      * @param c Is the given collection
      * @return Returns true if the given collection is null or empty.
      */
-    public static boolean isEmpty(Collection c) {
+    public static boolean isEmpty(Collection<?> c) {
         return c == null || c.isEmpty();
     }
     
@@ -85,8 +85,8 @@ public final class CollectionUtils {
      * @return Returns the given list if it is not null. Otherwise it returns an
      *         empty list.
      */
-    public static List asList(List list) {
-        return list == null ? new LinkedList() : list;
+    public static <T> List<T> asList(List<T> list) {
+        return list == null ? new LinkedList<T>() : list;
     }
 
     /**
@@ -97,8 +97,8 @@ public final class CollectionUtils {
      * @return Returns the given set if it is not null. Otherwise it returns an
      *         empty set.
      */
-    public static Set asSet(Set set) {
-        return set == null ? new HashSet() : set;
+    public static <T> Set<T> asSet(Set<T> set) {
+        return set == null ? new HashSet<T>() : set;
     }
 
     /**
@@ -109,8 +109,8 @@ public final class CollectionUtils {
      * @return Returns the given map if it is not null. Otherwise it returns an
      *         empty map.
      */
-    public static Map asMap(Map map) {
-        return map == null ? new HashMap() : map;
+    public static <K,V> Map<K,V> asMap(Map<K,V> map) {
+        return map == null ? new HashMap<K,V>() : map;
     }
 
     /**
@@ -127,10 +127,10 @@ public final class CollectionUtils {
      *         given classes
      */
     public static boolean containsOnlyObjectsOfType(
-        Collection c, Class<?>[] containingClassTypes) {
+        Collection<?> c, Class<?>[] containingClassTypes) {
         Reject.ifNull(c);
         Reject.ifEmpty(containingClassTypes);
-        Iterator it = c.iterator();
+        Iterator<?> it = c.iterator();
         while (it.hasNext()) {
             Class<?> elementClass = it.next().getClass();
             boolean noClassMatches = true;
@@ -148,7 +148,7 @@ public final class CollectionUtils {
                     sb.append("' which is not in assignable form for one of ");
                     sb.append("the following types: ");
                     for (int i = 0; i < containingClassTypes.length; i++) {
-                        Class containingClassType = containingClassTypes[i];
+                        Class<?> containingClassType = containingClassTypes[i];
                         if (i > 0) { sb.append(", "); }
                         sb.append(containingClassType.getName());
                     }
@@ -174,7 +174,7 @@ public final class CollectionUtils {
      *         class.
      */
     public static boolean containsOnlyObjectsOfType(
-        Collection c, Class containingClassType) {
+        Collection<?> c, Class<?> containingClassType) {
         Reject.ifNull(c);
         Reject.ifNull(containingClassType);
         return containsOnlyObjectsOfType(c, new Class[] {containingClassType});

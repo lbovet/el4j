@@ -71,8 +71,8 @@ public class Properties extends java.util.Properties {
      *      The properties to copy.
      */
     public void setProperties(java.util.Properties props) {
-        for (Iterator iter = props.entrySet().iterator(); iter.hasNext();) {
-            Map.Entry next = (Map.Entry) iter.next();
+        for (Iterator<Map.Entry<Object,Object>> iter = props.entrySet().iterator(); iter.hasNext();) {
+            Map.Entry<Object,Object> next = (Map.Entry<Object,Object>) iter.next();
             put(next.getKey(), next.getValue());
         }
     }

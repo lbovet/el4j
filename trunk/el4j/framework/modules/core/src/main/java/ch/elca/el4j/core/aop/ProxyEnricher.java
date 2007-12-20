@@ -82,7 +82,7 @@ public class ProxyEnricher {
      * @return Returns the enriched proxy or <code>null</code> if enrichment 
      *         failed for some reason.
      */
-    public static Object enrichProxy(Class beanClass, String beanName, 
+    public static Object enrichProxy(Class<?> beanClass, String beanName, 
         Object[] specificInterceptors, TargetSource targetSource,
         String[] interceptorNames, BeanFactory beanFactory,
         AdvisorAdapterRegistry advisorAdapterRegistry,
@@ -134,7 +134,7 @@ public class ProxyEnricher {
      * @return Returns <code>true</code> if the given bean is a proxy and if it
      *         is possible to enrich it.
      */
-    public static boolean isProxyEnrichable(Class beanClass, 
+    public static boolean isProxyEnrichable(Class<?> beanClass, 
         String beanName, Object[] specificInterceptors, 
         TargetSource targetSource, BeanFactory beanFactory) {
         boolean isProxyEnrichable = true;

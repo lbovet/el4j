@@ -50,10 +50,6 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * @author Raphael Boog (RBO)
  */
 public class PropertiesHelper {
-    /**
-     * Private logger.
-     */
-    private static Log s_logger = LogFactory.getLog(PropertiesHelper.class);
 
     /**
      * Resolves the given file name to an absolute file name and then loads the

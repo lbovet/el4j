@@ -71,7 +71,7 @@ public final class CoreNotificationHelper {
         assert propertyName != null && propertyName.length() > 0;
         assert concernedBean != null;
 
-        Class beanClass = concernedBean.getClass();
+        Class<?> beanClass = concernedBean.getClass();
         String beanClassName = beanClass.getName();
         String beanName;
         try {
