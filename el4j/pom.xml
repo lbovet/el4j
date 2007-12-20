@@ -2124,7 +2124,7 @@
         <version.taglist-maven-plugin>2.0</version.taglist-maven-plugin>
         <version.maven-plugin-plugin>2.3</version.maven-plugin-plugin>
         <version.cobertura-maven-plugin>2.1</version.cobertura-maven-plugin>
-        <version.webstart-maven-plugin>1.0-alpha-2-20071130.102344-1</version.webstart-maven-plugin>
+        <version.webstart-maven-plugin>1.0-alpha-2-el4j_20071219_1427</version.webstart-maven-plugin>
         
         <!-- Eclipse -->
         <eclipse.reactorProjectGroupIdPrefixes></eclipse.reactorProjectGroupIdPrefixes>
