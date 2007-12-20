@@ -91,7 +91,12 @@ public class GenericHibernateDao<T, ID extends Serializable>
 
     /**
      * Retrieves a domain object by identifier, optionally obtaining a database
-     * lock for this operation.
+     * lock for this operation.  <br>
+     * 
+     * (For hibernate specialists: we do a "get()"
+     * in this method. In case you require only a "load()" (e.g. for lazy 
+     * loading to work) we recommend that you write your own find method in the
+     * interface's subclass.)
      * 
      * @param id
      *            The id of a domain object
