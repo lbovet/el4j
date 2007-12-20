@@ -81,7 +81,7 @@ public class BeanLocator implements ApplicationContextAware, InitializingBean {
      * An array of the classes whose instances have to be located, converted
      * from the <code>m_classes</code> String.
      */
-    private Class[] m_classesArray;
+    private Class<?>[] m_classesArray;
 
     /**
      * A comma-delimited String of all bean names that have to be excluded from
@@ -202,8 +202,8 @@ public class BeanLocator implements ApplicationContextAware, InitializingBean {
      * @return A map with the matching beans, containing the bean names as keys
      *         and the corresponding bean instances as values.
      */
-    public Map getBeans() {
-        Map beans = new HashMap();
+    public Map<String,Object> getBeans() {
+        Map<String,Object> beans = new HashMap<String,Object>();
         if (m_classesArray != null) {
             for (int i = 0; i < m_classesArray.length; i++) {
                 Map addbeans = m_applicationContext.getBeansOfType(
@@ -229,7 +229,7 @@ public class BeanLocator implements ApplicationContextAware, InitializingBean {
      * @param beanName
      *            Is the name of the bean to include.
      */
-    private void handleIncludedBeanNames(Map beans, String beanName) {
+    private void handleIncludedBeanNames(Map<String,Object> beans, String beanName) {
         if (m_includeBeanNamesArray != null) {
             for (int j = 0; j < m_includeBeanNamesArray.length; j++) {
                 if (isMatch(beanName, m_includeBeanNamesArray[j])) {

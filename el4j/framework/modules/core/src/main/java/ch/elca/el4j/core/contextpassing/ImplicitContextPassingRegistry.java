@@ -65,7 +65,7 @@ public interface ImplicitContextPassingRegistry {
      * 
      * @return The implicit context map.
      */
-    public Map getAssembledImplicitContext();
+    public Map<String,Object> getAssembledImplicitContext();
 
     /**
      * This method is used by remoting infrastructures on the server side to 
@@ -80,6 +80,6 @@ public interface ImplicitContextPassingRegistry {
      *            "id -> context" mappings that are passed with the remote
      *            invocation.
      */
-    public void pushAssembledImplicitContext(Map contexts);
+    public void pushAssembledImplicitContext(Map<String,Object> contexts);
 
 }

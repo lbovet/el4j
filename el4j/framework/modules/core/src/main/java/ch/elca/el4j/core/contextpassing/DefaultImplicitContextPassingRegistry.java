@@ -36,7 +36,8 @@ public class DefaultImplicitContextPassingRegistry implements
         ImplicitContextPassingRegistry {
 
     /** All registered passers. */
-    private Map m_registeredPassers = new HashMap();
+    private Map<String,ImplicitContextPasser> m_registeredPassers = 
+        new HashMap<String,ImplicitContextPasser>();
 
     /**
      * {@inheritDoc}
@@ -59,9 +60,9 @@ public class DefaultImplicitContextPassingRegistry implements
     /**
      * {@inheritDoc}
      */
-    public Map getAssembledImplicitContext() {
-        Map context = new HashMap();
-        Iterator it = m_registeredPassers.keySet().iterator();
+    public Map<String,Object> getAssembledImplicitContext() {
+        Map<String,Object> context = new HashMap<String,Object>();
+        Iterator<String> it = m_registeredPassers.keySet().iterator();
         while (it.hasNext()) {
             String id = (String) it.next();
             ImplicitContextPasser passer 
@@ -75,8 +76,8 @@ public class DefaultImplicitContextPassingRegistry implements
     /**
      * {@inheritDoc}
      */
-    public void pushAssembledImplicitContext(Map contexts) {
-        Iterator it = m_registeredPassers.keySet().iterator();
+    public void pushAssembledImplicitContext(Map<String,Object> contexts) {
+        Iterator<String> it = m_registeredPassers.keySet().iterator();
         while (it.hasNext()) {
             String id = (String) it.next();
             ImplicitContextPasser passer 

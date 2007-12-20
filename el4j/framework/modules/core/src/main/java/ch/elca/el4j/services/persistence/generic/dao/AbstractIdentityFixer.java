@@ -41,7 +41,6 @@ import org.springframework.aop.support.IntroductionInfoSupport;
 import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.NewEntityState;
 import ch.elca.el4j.services.persistence.generic.dao.annotations.ReturnsUnchangedParameter;
 import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoChangeNotifier;
-import ch.elca.el4j.util.metadata.MetaDataCollector;
 
 /**
  * Fixes object identities mangled by loosing ORM context or by remoting.

@@ -112,7 +112,8 @@ public abstract class AbstractDefaultEnum implements Serializable {
     /**
      * A hastable containing all instances of this class.
      */
-    protected static Hashtable s_singletons = new Hashtable();
+    protected static Hashtable<String,Object> s_singletons = 
+        new Hashtable<String,Object>();
 
     /**
      * The name of this enum element.
@@ -147,7 +148,7 @@ public abstract class AbstractDefaultEnum implements Serializable {
      * @param name Is the name of the instantiated class.
      * @return the named enum or null in case it is not found.
      */
-    protected static Object get(Class myClass, String name) {
+    protected static Object get(Class<?> myClass, String name) {
         return s_singletons.get(myClass.getName() + "." + name);
     }
 

@@ -81,7 +81,7 @@ public final class ClassUtils {
      *      
      * @return Returns the canonical name of the given class.
      */
-    public static String getCanonicalClassName(Class clazz) {
+    public static String getCanonicalClassName(Class<?> clazz) {
         String name = clazz.getName();
         
         int arrayDimension = name.lastIndexOf(ARRAY_DIM_SYMBOL) + 1;
@@ -128,7 +128,7 @@ public final class ClassUtils {
      *      
      * @return Returns the given class' package name.
      */
-    public static String getPackageName(Class clazz) {
+    public static String getPackageName(Class<?> clazz) {
         String pkgName;
         if (clazz.getPackage() != null 
                 && StringUtils.hasText(clazz.getPackage().getName())) {
@@ -149,7 +149,7 @@ public final class ClassUtils {
      * @return Returns a string representation of the given method's signature.
      */
     public static String getMethodSignature(Method method) {
-        Class[] types = method.getParameterTypes();
+        Class<?>[] types = method.getParameterTypes();
         
         StringBuffer buffer = new StringBuffer();
         buffer.append(method.getName());

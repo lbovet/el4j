@@ -16,10 +16,6 @@
  */
 package ch.elca.el4j.util.observer.impl;
 
-import static ch.elca.el4j.util.observer.impl.LiveValue.Currency.current;
-import static ch.elca.el4j.util.observer.impl.LiveValue.Currency.dirty;
-import static ch.elca.el4j.util.observer.impl.LiveValue.Currency.updating;
-
 import java.util.ArrayList;
 import java.util.Collection;
 

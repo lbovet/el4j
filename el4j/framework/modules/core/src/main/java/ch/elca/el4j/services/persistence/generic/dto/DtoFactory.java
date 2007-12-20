@@ -75,7 +75,7 @@ public class DtoFactory implements InitializingBean {
      *            Is the dto class.
      * @return Returns the created dto.
      */
-    public AbstractDto createDto(Class clazz) {
+    public AbstractDto createDto(Class<?> clazz) {
         Object o;
         try {
             o = clazz.newInstance();
@@ -107,12 +107,12 @@ public class DtoFactory implements InitializingBean {
      *            Where the modification key generator has to be set.
      * @return Returns the dto list.
      */
-    public List initializeDtos(List dtos) {
+    public List<Object> initializeDtos(List<Object> dtos) {
         if (dtos == null) {
-            return new ArrayList();
+            return new ArrayList<Object>();
         }
 
-        Iterator it = dtos.iterator();
+        Iterator<Object> it = dtos.iterator();
         while (it.hasNext()) {
             initializeDto(it.next());
         }

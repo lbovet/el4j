@@ -155,7 +155,7 @@ public class DefaultModuleSorter implements ModuleSorter {
             List<Module> children = m_children.get(nextRoot.getName());
             if (children != null) {
                 for (Module child : children) {
-                    List deps = m_dependencies.get(child);
+                    List<String> deps = m_dependencies.get(child);
                     if (deps != null) {
                         deps.remove(nextRoot.getName());
                         if (deps.size() == 0) {

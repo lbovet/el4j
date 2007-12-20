@@ -64,11 +64,12 @@ import java.util.NoSuchElementException;
  * @author Raphael Boog (RBO)
  */
 public abstract class AbstractComparableEnum extends AbstractDefaultEnum
-    implements Comparable {
+    implements Comparable<AbstractComparableEnum> {
     /**
      * The list of all comparable enums ever created.
      */
-    protected static final ArrayList ENUM_LIST = new ArrayList();
+    protected static final ArrayList<AbstractComparableEnum> ENUM_LIST = 
+        new ArrayList<AbstractComparableEnum>();
 
     /**
      * The ordinal assigned to this comparable enum. This value is directly used
@@ -95,7 +96,7 @@ public abstract class AbstractComparableEnum extends AbstractDefaultEnum
      * @param myClass Is the type to count.
      * @return Return the number of enums of an enumeration.
      */
-    protected static int size(Class myClass) {
+    protected static int size(Class<?> myClass) {
         int result = 0;
 
         synchronized (AbstractComparableEnum.class) {
@@ -113,8 +114,8 @@ public abstract class AbstractComparableEnum extends AbstractDefaultEnum
      * @param myClass Is the class to be used.
      * @return Return an iterator for the elements of the specified enum class.
      */
-    protected static Iterator iterator(final Class myClass) {
-        Iterator it = new Iterator() {
+    protected static Iterator<AbstractComparableEnum> iterator(final Class<?> myClass) {
+        Iterator<AbstractComparableEnum> it = new Iterator<AbstractComparableEnum>() {
             private int m_currentOrdinal = -1;
 
             public boolean hasNext() {
@@ -132,7 +133,7 @@ public abstract class AbstractComparableEnum extends AbstractDefaultEnum
                 return false;
             }
 
-            public Object next() {
+            public AbstractComparableEnum next() {
                 synchronized (AbstractComparableEnum.class) {
                     for (int i = m_currentOrdinal + 1; 
                         i < ENUM_LIST.size(); i++) {
@@ -158,7 +159,7 @@ public abstract class AbstractComparableEnum extends AbstractDefaultEnum
     /**
      * {@inheritDoc}
      */
-    public int compareTo(Object o) {
+    public int compareTo(AbstractComparableEnum o) {
         return m_ordinal - ((AbstractComparableEnum) o).m_ordinal;
     }
 }
