@@ -477,11 +477,14 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
      *   
      *   This class is duplicated in {@link ModuleWebApplicationContext}
      */
+    @SuppressWarnings("unchecked")
     @Override
     protected void invokeBeanFactoryPostProcessors(ConfigurableListableBeanFactory beanFactory) {
         // Invoke factory processors registered with the context instance.
-        for (Iterator it = getBeanFactoryPostProcessors().iterator(); it.hasNext();) {
-            BeanFactoryPostProcessor factoryProcessor = (BeanFactoryPostProcessor) it.next();
+        for (Iterator<BeanFactoryPostProcessor> it = 
+               (Iterator<BeanFactoryPostProcessor>) getBeanFactoryPostProcessors().iterator(); it.hasNext();) {
+            BeanFactoryPostProcessor factoryProcessor = 
+                (BeanFactoryPostProcessor) it.next();
             factoryProcessor.postProcessBeanFactory(beanFactory);
         }
 

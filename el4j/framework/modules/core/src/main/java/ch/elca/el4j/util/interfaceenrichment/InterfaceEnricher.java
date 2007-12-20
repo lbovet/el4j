@@ -86,7 +86,7 @@ public class InterfaceEnricher {
      *            to be changed.
      * @return Returns the generated shadow interface as a byte array.
      */
-    public byte[] createShadowInterface(Class serviceInterfaceOld,
+    public byte[] createShadowInterface(Class<?> serviceInterfaceOld,
             EnrichmentDecorator interfaceDecorator) {
         JavaClass jc = internalCreateShadowInterface(serviceInterfaceOld,
                 interfaceDecorator, null);
@@ -106,8 +106,8 @@ public class InterfaceEnricher {
      *            Is the ClassLoader where to load the generated class.
      * @return Returns the generated shadow interface as a class.
      */
-    public Class createShadowInterfaceAndLoadItDirectly(
-            Class serviceInterfaceOld, EnrichmentDecorator interfaceDecorator,
+    public Class<?> createShadowInterfaceAndLoadItDirectly(
+            Class<?> serviceInterfaceOld, EnrichmentDecorator interfaceDecorator,
             ClassLoader cl) {
         JavaClass jc = internalCreateShadowInterface(serviceInterfaceOld,
                 interfaceDecorator, null);
@@ -118,7 +118,7 @@ public class InterfaceEnricher {
             s_logger.info("Seams that class does not already exist in class "
                     + "loader. Trying to define a new one.");
             
-            Class classToReturn = null;
+            Class<?> classToReturn = null;
             try {
                 classToReturn = ReflectUtils.defineClass(jc.getClassName(), jc
                         .getBytes(), cl);
@@ -144,7 +144,7 @@ public class InterfaceEnricher {
      *            the string is <code>null</code> the file will not be saved.
      * @return Returns the generated shadow interface as a BCEL JavaClass.
      */
-    private JavaClass internalCreateShadowInterface(Class serviceInterfaceOld,
+    private JavaClass internalCreateShadowInterface(Class<?> serviceInterfaceOld,
         EnrichmentDecorator interfaceDecorator, 
         String pathToSaveClassOnDisk) {
         if (serviceInterfaceOld == null || !serviceInterfaceOld.isInterface()) {
@@ -200,14 +200,14 @@ public class InterfaceEnricher {
             shadowMethodNew.setName(nmd.getMethodName());
             shadowMethodNew.setArgumentTypes(getArgumentTypes(nmd
                     .getParameterTypes()));
-            Class c = nmd.getReturnType();
+            Class<?> c = nmd.getReturnType();
             if (c == null) {
                 shadowMethodNew.setReturnType(Type.VOID);
             } else {
                 shadowMethodNew.setReturnType(Type.getType(c));
             }
             shadowMethodNew.removeExceptions();
-            Class[] thrownExceptionsNew = nmd.getThrownExceptions();
+            Class<?>[] thrownExceptionsNew = nmd.getThrownExceptions();
             for (int j = 0; j < thrownExceptionsNew.length; j++) {
                 shadowMethodNew.addException(thrownExceptionsNew[j].getName());
             }
@@ -224,7 +224,7 @@ public class InterfaceEnricher {
          */
         String[] extendedInterfacesOld = cgShadowInterfaceNew
                 .getInterfaceNames();
-        Class[] extendedInterfaceClassesOld 
+        Class<?>[] extendedInterfaceClassesOld 
             = new Class[extendedInterfacesOld.length];
         ClassLoader cl = serviceInterfaceOld.getClassLoader();
         for (int i = 0; i < extendedInterfaceClassesOld.length; i++) {
@@ -237,7 +237,7 @@ public class InterfaceEnricher {
                         + extendedInterfacesOld[i] + "' could not be found.");
             }
         }
-        Class[] extendedInterfaceClassesNew = interfaceDecorator
+        Class<?>[] extendedInterfaceClassesNew = interfaceDecorator
                 .changedExtendedInterface(extendedInterfaceClassesOld);
         for (int i = 0; i < extendedInterfaceClassesNew.length; i++) {
             cgShadowInterfaceNew.addInterface(extendedInterfaceClassesNew[i]
@@ -300,7 +300,7 @@ public class InterfaceEnricher {
      *            Are the classes which have to be converted.
      * @return Returns the converted BCEL type objects.
      */
-    private Type[] getArgumentTypes(Class[] classes) {
+    private Type[] getArgumentTypes(Class<?>[] classes) {
         Type[] types = new Type[classes.length];
         for (int i = 0; i < classes.length; i++) {
             types[i] = Type.getType(classes[i]);
@@ -316,9 +316,9 @@ public class InterfaceEnricher {
      *            Is the BCEL method which has to be extracted.
      * @return Returns the extracted parameters as classes.
      */
-    private Class[] getParamTypes(Method method) {
+    private Class<?>[] getParamTypes(Method method) {
         Type[] types = method.getArgumentTypes();
-        Class[] classes = new Class[types.length];
+        Class<?>[] classes = new Class[types.length];
         for (int i = 0; i < types.length; i++) {
             classes[i] = getClass(types[i]);
         }
@@ -333,12 +333,12 @@ public class InterfaceEnricher {
      *            Is the BCEL exception table which has to be extracted.
      * @return Returns the extracted exceptions as classes.
      */
-    private Class[] getExceptionTypes(ExceptionTable table) {
+    private Class<?>[] getExceptionTypes(ExceptionTable table) {
         if (table == null) {
             return new Class[0];
         }
         String[] exceptionNames = table.getExceptionNames();
-        Class[] classes = new Class[exceptionNames.length];
+        Class<?>[] classes = new Class[exceptionNames.length];
         for (int i = 0; i < exceptionNames.length; i++) {
             try {
                 classes[i] = Class.forName(exceptionNames[i]);
@@ -357,8 +357,8 @@ public class InterfaceEnricher {
      *            Is the BCEL type which should be converted.
      * @return Returns the converted class object.
      */
-    private Class getClass(Type type) {
-        Class clazz = null;
+    private Class<?> getClass(Type type) {
+        Class<?> clazz = null;
         if (type instanceof ObjectType) {
             try {
                 clazz = Class.forName(((ObjectType) type).getClassName());
@@ -367,7 +367,7 @@ public class InterfaceEnricher {
             }
         } else if (type instanceof ArrayType) {
             ArrayType at = (ArrayType) type;
-            Class baseType = getClass(at.getBasicType());
+            Class<?> baseType = getClass(at.getBasicType());
             int [] dim = new int[at.getDimensions()];
             clazz = Array.newInstance(baseType, dim).getClass();
         } else if (type == Type.BOOLEAN) {
