@@ -40,10 +40,6 @@
             <groupId>ch.elca.el4j.applications</groupId>
             <artifactId>refdb-service</artifactId>
         </dependency>
-        <dependency>
-            <groupId>ch.elca.el4j.applications</groupId>
-            <artifactId>swing-demo-server-jar</artifactId>
-        </dependency>
 
         <!-- EL4J framework modules -->
         <dependency>
