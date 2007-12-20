@@ -34,11 +34,11 @@
     <dependencies>
         <dependency>
             <groupId>ch.elca.el4j.applications</groupId>
-            <artifactId>swing-demo-server-jar</artifactId>
+            <artifactId>swing-demo-thin-client</artifactId>
         </dependency>
         <dependency>
             <groupId>ch.elca.el4j.applications</groupId>
-            <artifactId>swing-demo-thin-client</artifactId>
+            <artifactId>swing-demo-server-jar</artifactId>
         </dependency>
     </dependencies>
 </project>
