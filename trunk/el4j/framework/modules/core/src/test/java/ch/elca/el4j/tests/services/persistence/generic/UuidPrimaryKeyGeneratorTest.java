@@ -52,7 +52,7 @@ public class UuidPrimaryKeyGeneratorTest extends TestCase {
      */
     public void testKeyUnicity() {
         PrimaryKeyGenerator pkg = getPrimaryKeyGenerator();
-        Set set = new HashSet();
+        Set<String> set = new HashSet<String>();
         int count = 2000;
         for (int i = 0; i < count; i++) {
             set.add(pkg.getPrimaryKey());

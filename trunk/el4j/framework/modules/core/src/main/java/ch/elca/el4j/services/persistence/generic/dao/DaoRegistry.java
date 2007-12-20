@@ -35,8 +35,11 @@ public interface DaoRegistry {
      * Returns the generic DAO for entities of type {@code entityType}.
      * 
      * @param entityType
-     *            The domain class for which a generic DAO will be returned
-     * @return A generic DAO for the given type
+     *            The domain class for which a generic DAO should be returned.
+     *            The class does some basic handling to tolerate (i.e. unwrap) 
+     *            Spring proxies.
+     * @return A fully generic or partially specific DAO for the given type, 
+     *            null if none was found.
      */
     public <T> GenericDao<T> getFor(Class<T> entityType);
     

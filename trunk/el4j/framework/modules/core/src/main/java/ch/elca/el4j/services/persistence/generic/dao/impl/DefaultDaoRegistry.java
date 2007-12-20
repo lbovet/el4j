@@ -17,10 +17,18 @@
 
 package ch.elca.el4j.services.persistence.generic.dao.impl;
 
+import java.lang.reflect.Proxy;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.aop.framework.AopProxyUtils;
+
+import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
+
+import net.sf.cglib.proxy.Enhancer;
 
 /**
  * A DaoRegistry where DAOs can be registered.
@@ -37,6 +45,12 @@ import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
  */
 public class DefaultDaoRegistry implements DaoRegistry {
 
+    /**
+     * Private logger of this class.
+     */
+    private static Log s_logger 
+        = LogFactory.getLog(DefaultDaoRegistry.class);    
+    
     /** 
      * The map containing the registered DAOs.
      */
@@ -47,7 +61,35 @@ public class DefaultDaoRegistry implements DaoRegistry {
      */
     @SuppressWarnings("unchecked")
     public <T> GenericDao<T> getFor(Class<T> entityType) {
-        return (GenericDao<T>) m_daos.get(entityType);
+        
+        // ensure this works when the entityType is proxied by an cglib proxy:
+        //  Thanks Ky (QKP) for the hint!
+        if (Enhancer.isEnhanced(entityType)) {
+            // "undo" cglib proxying:
+            entityType = (Class<T>) entityType.getSuperclass(); 
+        } 
+       
+        GenericDao<T> candidateReturn = (GenericDao<T>) m_daos.get(entityType);
+        
+        if (candidateReturn != null){
+            return candidateReturn;            
+        } else if (Proxy.isProxyClass(entityType)) {
+            // if a jdk proxy and candidateReturn is null, try improving
+            Class[] otherPossibilities = 
+                AopProxyUtils.proxiedUserInterfaces(entityType);
+            if (otherPossibilities != null){
+                s_logger.info("Trying to unwrap JDK proxy to get DAO for type");                
+                for (Class c :otherPossibilities){
+                    candidateReturn = (GenericDao<T>) m_daos.get(c);
+                    if (candidateReturn != null){
+                        return candidateReturn;
+                    }
+                }
+            }
+        }
+        // we give up
+        return null;
+
     }
 
     /**
