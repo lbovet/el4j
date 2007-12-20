@@ -355,6 +355,10 @@ public class AggregateFilesMojo extends AbstractMojo {
                         + sourceDirectoryString + "' by using pattern '" 
                         + filePattern + "'.");
                 }
+            } catch (MojoExecutionException e) {
+                throw e;
+            } catch (FileException e) {
+                throw new MojoExecutionException(e.getMessage(), e.getCause());
             } catch (Exception e) {
                 throw new MojoExecutionException(
                     "Exception occured while lookup/copying source files.", e);
