@@ -1,9 +1,14 @@
 This is the convenience zip for EL4J ${project.version}
 
 The scripts work under unix and windows/cygwin!
-For a more complete list of (manual) steps to follow, please refer to 
+
+If you are new to Maven and EL4J, please refer to 
 http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/GettingStarted or 
-docs/pdf/GettingStarted.pdf. In case of disagreement of this automatic and the 
+docs/pdf/GettingStarted.pdf and follow the step-by-step tutorial. 
+The following instructions describe the fast-track and are recommended 
+for advanced users. 
+
+In case of disagreement of this automatic and the 
 manual set up in those files, the manual set up takes precedence. 
 
 Prerequisites:
@@ -57,11 +62,11 @@ To start a new GUI application
  * Follow the steps in the file external/applications/templates/gui/README.txt 
  
 To start with the web application template (due to proprietary technology, this is only available within ELCA)
- * Download http://leaffy.elca.ch/java/el4j/templates/web-template-1.1.3.zip and unzip it to el4j/web-template
+ * Download the latest web-template-[version].zip from http://leaffy.elca.ch/java/el4j/templates/ and unzip it to el4j/web-template
  * Open a cygwin console and go to el4j/web-template, where the template is located.
  * Type mvn clean install to install the template.
  * cd web/war
- * Type in the command mvn db:prepareDB cargo:undeploy cargo:deploy cargo:start to prepare the database and deploy the template to tomcat
+ * Type in the command mvn db:prepare cargo:undeploy cargo:deploy cargo:start to prepare the database and deploy the template to tomcat
  * Open your browser and go to the webpage http://localhost:8080/web-template-web/
  * More info: http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/WebApplicationTemplate
  
