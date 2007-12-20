@@ -10,6 +10,7 @@ import org.hibernate.criterion.Expression;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.AbstractCriteria;
 import ch.elca.el4j.services.search.criterias.ComparisonCriteria;
+import ch.elca.el4j.services.search.criterias.Criteria;
 import ch.elca.el4j.services.search.criterias.LikeCriteria;
 
 /**
@@ -46,17 +47,17 @@ public class CriteriaTransformer {
      *         <code>QueryObject</code>'s EL4J criteria.
      */
     public static DetachedCriteria transform(QueryObject query,
-        Class domainObjectClass) {
+        Class<?> domainObjectClass) {
         
         // Hibernate criteria for the domain object.
         DetachedCriteria hibernateCriteria
             = DetachedCriteria.forClass(domainObjectClass);
         
         // List of EL4J criteria.
-        List el4jCriteriaList = query.getCriteriaList();
+        List<Criteria> el4jCriteriaList = query.getCriteriaList();
         
         // Conversion from EL4J criteria to Hibernate criteria.
-        Iterator it = el4jCriteriaList.iterator();
+        Iterator<Criteria> it = el4jCriteriaList.iterator();
         
         AbstractCriteria currentEl4jCriteria;
         LikeCriteria currentEl4jLikeCriteria;
