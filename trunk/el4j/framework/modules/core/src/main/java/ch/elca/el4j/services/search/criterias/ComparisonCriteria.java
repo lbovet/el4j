@@ -54,14 +54,16 @@ public class ComparisonCriteria extends AbstractCriteria {
     protected ComparisonCriteria() { }
     
     /**
-     * Constructor.
+     * Constructor to create new special comparison Criteria objects.
      * 
      * @param field Is the field the criteria is made for.
      * @param value Is the value of this criteria.
      * @param operator Is the compare operator.
      * @param typeSuffix is the type suffix of this criteria.
+     *    (we use the unqualified class name of the basic Java types (
+     *     Boolean,Integer, ...))
      */
-    protected ComparisonCriteria(String field, Object value, String operator,
+    public ComparisonCriteria(String field, Object value, String operator,
         String typeSuffix) {
         super(field, value);
         Reject.ifEmpty(field);
@@ -134,7 +136,7 @@ public class ComparisonCriteria extends AbstractCriteria {
      * @param value Is the value of this criteria.
      * @return Returns an equals comparison criteria.
      */
-    public static ComparisonCriteria equals(String field, Enum value) {
+    public static ComparisonCriteria equals(String field, Enum<?> value) {
         return new ComparisonCriteria(
             field, value, "=", "Enum");
     }
@@ -148,6 +150,16 @@ public class ComparisonCriteria extends AbstractCriteria {
         return new ComparisonCriteria(
             field, new Float(value), "=", "Float");
     }
+
+    /**
+     * @param field Is the field the criteria is made for.
+     * @param value Is the value of this criteria.
+     * @return Returns an equals comparison criteria.
+     */
+    public static ComparisonCriteria equals(String field, String value) {
+        return new ComparisonCriteria(
+            field, value, "=", "String");
+    }    
     
     /**
      * @return Returns the compare operator.
@@ -162,4 +174,10 @@ public class ComparisonCriteria extends AbstractCriteria {
     public String getType() {
         return m_type;
     }
+    
+    @Override
+    public String toString(){
+        return getField()+" "+getOperator()+" \'"+getValue()+"\'";
+    }
+    
 }

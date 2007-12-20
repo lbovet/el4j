@@ -25,7 +25,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
  * Object to holds criterias to execute queries. A query object can be specified
- * for exactly one class.
+ * for exactly one class. A query object is an AND-joined set of Criteria objects.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -40,12 +40,12 @@ public class QueryObject implements Serializable {
     /**
      * The bean class the query object is for.
      */
-    private Class m_beanClass;
+    private Class<?> m_beanClass;
     
     /**
      * Are the criterias for this query.
      */
-    private List m_criterias = new ArrayList();
+    private List<Criteria> m_criterias = new ArrayList<Criteria>();
     
     /**
      * Specifies a general query object.
@@ -59,14 +59,14 @@ public class QueryObject implements Serializable {
      * 
      * @param beanClass Is the bean class this query object is made for.
      */
-    public QueryObject(Class beanClass) {
+    public QueryObject(Class<?> beanClass) {
         m_beanClass = beanClass;
     }
 
     /**
      * @return Returns the bean class this query object is made for.
      */
-    public Class getBeanClass() {
+    public Class<?> getBeanClass() {
         return m_beanClass;
     }
     
@@ -85,7 +85,7 @@ public class QueryObject implements Serializable {
      * 
      * @param criterias Are the criterias to add.
      */
-    public void addCriterias(Criteria[] criterias) {
+    public void addCriterias(Criteria... criterias) {
         Reject.ifNull(criterias);
         for (int i = 0; i < criterias.length; i++) {
             Criteria criteria = criterias[i];
@@ -96,8 +96,8 @@ public class QueryObject implements Serializable {
     /**
      * @return Returns a list of criterias.
      */
-    public List getCriteriaList() {
-        return new ArrayList(m_criterias);
+    public List<Criteria> getCriteriaList() {
+        return new ArrayList<Criteria>(m_criterias);
     }
     
     /**
