@@ -44,7 +44,7 @@ public class QueryObjectEvent extends ApplicationEvent {
     /**
      * Are the query objecs of this event.
      */
-    private final List m_queryObjects;
+    private final List<QueryObject> m_queryObjects;
 
     /**
      * Constructor for one query object.
@@ -55,7 +55,7 @@ public class QueryObjectEvent extends ApplicationEvent {
     public QueryObjectEvent(Object source, QueryObject queryObject) {
         super(source);
         Reject.ifNull(queryObject);
-        List queryObjects = new ArrayList();
+        List<QueryObject> queryObjects = new ArrayList<QueryObject>();
         queryObjects.add(queryObject);
         m_queryObjects = Collections.unmodifiableList(queryObjects);
     }
@@ -66,13 +66,13 @@ public class QueryObjectEvent extends ApplicationEvent {
      * @param source Is the place this event has been created.
      * @param queryObjects Are the query objects of this event.
      */
-    public QueryObjectEvent(Object source, Collection queryObjects) {
+    public QueryObjectEvent(Object source, Collection<QueryObject> queryObjects) {
         super(source);
         Reject.ifEmpty(queryObjects, "Minimum one query object required.");
         CollectionUtils.containsOnlyObjectsOfType(
             queryObjects, QueryObject.class);
         m_queryObjects 
-            = Collections.unmodifiableList(new ArrayList(queryObjects));
+            = Collections.unmodifiableList(new ArrayList<QueryObject>(queryObjects));
     }
 
     
@@ -90,9 +90,9 @@ public class QueryObjectEvent extends ApplicationEvent {
      *            Is the bean class the requested query object must be made for.
      * @return Returns the query object that is made for the given bean class.
      */
-    public QueryObject getQueryObject(Class beanClass) {
+    public QueryObject getQueryObject(Class<?> beanClass) {
         QueryObject queryObject = null;
-        Iterator it = m_queryObjects.iterator();
+        Iterator<QueryObject> it = m_queryObjects.iterator();
         while (queryObject == null && it.hasNext()) {
             QueryObject element = (QueryObject) it.next();
             if (element.getBeanClass() == beanClass) {
@@ -105,7 +105,7 @@ public class QueryObjectEvent extends ApplicationEvent {
     /**
      * @return Returns the list of query objects of this event.
      */
-    public List getQueryObjects() {
+    public List<QueryObject> getQueryObjects() {
         return m_queryObjects;
     }
 }
