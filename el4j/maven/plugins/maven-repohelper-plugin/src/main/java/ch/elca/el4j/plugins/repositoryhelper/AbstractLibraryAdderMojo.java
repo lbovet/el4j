@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -490,9 +491,10 @@ public abstract class AbstractLibraryAdderMojo extends AbstractMojo {
      * @return Return the created maven dependency where the version and the
      *         artifact id are set. Returns <code>null</code> if the values
      *         could not be extracted.
+     * @throws MojoExecutionException 
      */
     protected MavenDependency extractAndSetVersionAndArtifactId(
-        String filenamePrefix) {
+        String filenamePrefix) throws MojoExecutionException {
         String version = null;
         int dashIndex = filenamePrefix.indexOf('-');
         while (version == null 
@@ -509,6 +511,10 @@ public abstract class AbstractLibraryAdderMojo extends AbstractMojo {
             dashIndex = filenamePrefix.lastIndexOf('-');
             if (dashIndex > 0 && dashIndex + 1 < filenamePrefix.length()) {
                 version = filenamePrefix.substring(dashIndex + 1);
+                if (!(Pattern.matches(".*\\p{Digit}.*", version))) {
+                    throw new MojoExecutionException(
+                        "Version does not contain a number (" + version + ")");
+                }
             }
         }
         
