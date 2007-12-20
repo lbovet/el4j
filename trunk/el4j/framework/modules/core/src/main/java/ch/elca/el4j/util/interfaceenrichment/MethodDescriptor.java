@@ -43,17 +43,17 @@ public class MethodDescriptor {
     /**
      * Parameter types.
      */
-    protected Class[] m_parameterTypes;
+    protected Class<?>[] m_parameterTypes;
     
     /**
      * Exceptions which this method can throw.
      */
-    protected Class[] m_thrownExceptions;
+    protected Class<?>[] m_thrownExceptions;
     
     /**
      * The return type of this method.
      */
-    protected Class m_returnType;
+    protected Class<?> m_returnType;
 
     /**
      * @return Returns the m_methodName.
@@ -73,7 +73,7 @@ public class MethodDescriptor {
     /**
      * @return Returns the m_parameterTypes.
      */
-    public Class[] getParameterTypes() {
+    public Class<?>[] getParameterTypes() {
         return m_parameterTypes;
     }
 
@@ -81,14 +81,14 @@ public class MethodDescriptor {
      * @param types
      *            The m_parameterTypes to set.
      */
-    public void setParameterTypes(Class[] types) {
+    public void setParameterTypes(Class<?>[] types) {
         m_parameterTypes = types;
     }
 
     /**
      * @return Returns the m_returnType.
      */
-    public Class getReturnType() {
+    public Class<?> getReturnType() {
         return m_returnType;
     }
 
@@ -96,14 +96,14 @@ public class MethodDescriptor {
      * @param type
      *            The m_returnType to set.
      */
-    public void setReturnType(Class type) {
+    public void setReturnType(Class<?> type) {
         m_returnType = type;
     }
 
     /**
      * @return Returns the m_thrownExceptions.
      */
-    public Class[] getThrownExceptions() {
+    public Class<?>[] getThrownExceptions() {
         return m_thrownExceptions;
     }
 
@@ -111,7 +111,7 @@ public class MethodDescriptor {
      * @param exceptions
      *            The m_thrownExceptions to set.
      */
-    public void setThrownExceptions(Class[] exceptions) {
+    public void setThrownExceptions(Class<?>[] exceptions) {
         m_thrownExceptions = exceptions;
     }
 

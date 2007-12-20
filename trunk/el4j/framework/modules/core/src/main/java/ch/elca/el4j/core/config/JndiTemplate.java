@@ -18,6 +18,7 @@
 package ch.elca.el4j.core.config;
 
 import javax.naming.Context;
+import javax.naming.NameClassPair;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 
@@ -52,11 +53,12 @@ public class JndiTemplate extends org.springframework.jndi.JndiTemplate {
      * @throws NamingException
      *      If a naming exception is encountered.
      */
-    public NamingEnumeration list(final String name) throws NamingException {
+    @SuppressWarnings("unchecked")
+    public NamingEnumeration<NameClassPair> list(final String name) throws NamingException {
         if (logger.isInfoEnabled()) {
             logger.debug("Listing JNDI objects with name [" + name + "]");
         }
-        return (NamingEnumeration) execute(new JndiCallback() {
+        return (NamingEnumeration<NameClassPair>) execute(new JndiCallback() {
             public Object doInContext(Context ctx) throws NamingException {
                 return ctx.list(name);
             } 
@@ -76,13 +78,14 @@ public class JndiTemplate extends org.springframework.jndi.JndiTemplate {
      * @throws NamingException
      *      If a naming exception is encountered.
      */
-    public NamingEnumeration listBindings(final String name)
+    @SuppressWarnings("unchecked")
+    public NamingEnumeration<NameClassPair> listBindings(final String name)
         throws NamingException {
         
         if (logger.isInfoEnabled()) {
             logger.debug("Listing JNDI bindings with name [" + name + "]");
         }
-        return (NamingEnumeration) execute(new JndiCallback() {
+        return (NamingEnumeration<NameClassPair>) execute(new JndiCallback() {
             public Object doInContext(Context ctx) throws NamingException {
                 return ctx.listBindings(name);
             }

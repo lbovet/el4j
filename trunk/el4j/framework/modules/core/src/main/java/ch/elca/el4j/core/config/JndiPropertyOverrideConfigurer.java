@@ -107,6 +107,7 @@ public class JndiPropertyOverrideConfigurer extends PropertyOverrideConfigurer {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     protected void processProperties(
             ConfigurableListableBeanFactory beanFactory,
             Properties props) throws BeansException {
@@ -114,7 +115,7 @@ public class JndiPropertyOverrideConfigurer extends PropertyOverrideConfigurer {
         logger.debug("process properties");
         Properties p = props;
         try {
-            NamingEnumeration enumeration
+            NamingEnumeration<NameClassPair> enumeration
                 = getJndiPropertyConfigurationgHelper().getJndiTemplate().
                     list(getJndiPropertyConfigurationgHelper().getContext());
             p = createProperties(enumeration);
@@ -138,7 +139,7 @@ public class JndiPropertyOverrideConfigurer extends PropertyOverrideConfigurer {
      * @throws NamingException
      *      If a naming exception is encountered.
      */
-    protected Properties createProperties(NamingEnumeration enumeration)
+    protected Properties createProperties(NamingEnumeration<NameClassPair> enumeration)
         throws NamingException {
         
         Properties props = new Properties();

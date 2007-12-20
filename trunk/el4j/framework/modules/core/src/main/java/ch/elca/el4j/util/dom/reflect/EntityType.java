@@ -157,7 +157,7 @@ public class EntityType {
     }
 
     /** @return the entityType describing the domain class c. */
-    public static EntityType get(Class c) {
+    public static EntityType get(Class<?> c) {
         EntityType t = s_types.get(c);
         if (t == null) {
             t = new EntityType(c);

@@ -51,7 +51,7 @@ public interface EnrichmentDecorator {
      *            Are the extended interfaces of the original interface.
      * @return Returns the extended interfaces for the new interface.
      */
-    public Class[] changedExtendedInterface(Class[] extendedInterfaces);
+    public Class<?>[] changedExtendedInterface(Class<?>[] extendedInterfaces);
 
     /**
      * Method to change the signature of given method.
