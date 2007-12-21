@@ -1,6 +1,0 @@
-SRC URL: https://beansbinding.dev.java.net/files/documents/6779/73673/beansbinding-1.2.1-src.zip
-APPLIED PATCHES:
-   * see beansbinding.patch
-CURRENTLY USED VERSION: 1.2.1-patch1
-DEPENDENT CUSTOMIZED ARTIFACTS:
-   * n/a
