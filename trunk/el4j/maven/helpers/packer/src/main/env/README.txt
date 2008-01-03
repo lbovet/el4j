@@ -33,7 +33,7 @@ To set up:
 To start with a trivial program (1 class and 1 test)
  * open a shell, cd EL4J
  * execute source ./setupPathsAndEnvironment.sh
- * mvn archetype:create -DarchetypeGroupId=ch.elca.el4j -DarchetypeArtifactId=EL4JArchetypeCore -DarchetypeVersion=1.4 -DgroupId=ch.elca.el4j -DartifactId=myFirstProject -DremoteRepositories=http://el4.elca-services.ch/el4j/maven2repository 
+ * mvn archetype:create -DarchetypeGroupId=ch.elca.el4j -DarchetypeArtifactId=EL4JArchetypeCore -DarchetypeVersion=1.5 -DgroupId=ch.elca.el4j -DartifactId=myFirstProject -DremoteRepositories=http://el4.elca-services.ch/el4j/maven2repository 
  * cd myFirstProject
  * mvn install
  * mvn exec:java
