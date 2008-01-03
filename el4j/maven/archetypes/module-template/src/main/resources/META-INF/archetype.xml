@@ -6,8 +6,7 @@
   </sources>
   <resources>
     <resource>src/main/resources/License.txt</resource>
-    <resource>src/main/resources/ReleaseNotes.txt</resource>
-    <resource>src/main/resources/log4j/log4j.xml</resource>
+    <resource>src/main/resources/log4j.xml</resource>
   </resources>
   <testSources>
     <source>src/test/java/CalculatorTest.java</source>

@@ -1,7 +1,7 @@
 /*
  * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
  * the spring framework, http://el4j.sf.net
- * Copyright (C) 2006 by ELCA Informatique SA, Av. de la Harpe 22-24,
+ * Copyright (C) 2008 by ELCA Informatique SA, Av. de la Harpe 22-24,
  * 1000 Lausanne, Switzerland, http://www.elca.ch
  *
  * EL4J is published under the GNU Lesser General Public License (LGPL)
@@ -16,7 +16,8 @@
  */
 package ${groupId};
 
-import ${groupId}.Calculator;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import junit.framework.TestCase;
 
@@ -26,6 +27,11 @@ import junit.framework.TestCase;
  * @author Martin Zeltner (MZE)
  */
 public class CalculatorTest extends TestCase {
+    /**
+     * Private logger.
+     */
+    private static Log s_logger 
+        = LogFactory.getLog(CalculatorTest.class);
 
     /**
      * Tests the division method of calculator.
@@ -41,12 +47,11 @@ public class CalculatorTest extends TestCase {
         assertEquals(dividend / divisor, result, delta);
         
         divisor = 0;
-        // Checkstyle: EmptyBlock off
         try {
             c.div(dividend, divisor);
             fail("No exception on division by zero!");
-        } catch (RuntimeException e) { }
-        // Checkstyle: EmptyBlock on
+        } catch (RuntimeException e) {
+            s_logger.debug("Expected exception caught.", e);
+        }
     }
-    
 }
