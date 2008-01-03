@@ -9,6 +9,12 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
     
+    <parent>
+        <groupId>ch.elca.el4j</groupId>
+        <artifactId>el4j</artifactId>
+        <version>1.2</version>
+    </parent>
+    
     <groupId>ch.elca.el4j</groupId>
     <artifactId>EL4JArchetypeCore</artifactId>
     <version>1.5</version>
