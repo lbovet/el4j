@@ -118,6 +118,11 @@ public class GraphvizProjector implements DepGraphProjector {
      * The file to write the image to.
      */
     private File m_imageFile;
+    
+    /**
+     * Whether the edges should be labeled.
+     */
+    private boolean edgeLabel = false;
 
     /**
      * Create a new projector with a stream to write to.
@@ -139,6 +144,20 @@ public class GraphvizProjector implements DepGraphProjector {
         }
 
         m_imageFile = outputFile;
+    }
+    
+    /**
+     * Create a new projector with a stream to write to. Define whether the
+     * edges should be labeled with the dependency-scope (default: false).
+     * 
+     * @param outputFile
+     *            The File to write to
+     * @param edgeLabel
+     *            set to true to label the edges with dependency-scope.
+     */
+    public GraphvizProjector(File outputFile, boolean edgeLabel) {
+        this(outputFile);
+        this.edgeLabel = edgeLabel;
     }
 
     /**
@@ -197,7 +216,11 @@ public class GraphvizProjector implements DepGraphProjector {
                 out.print("\"" + getId(art) + "\"");
                 out.print(" -> \"");
                 out.print(getId(dep) + "\"");
-                out.println(" [ ];");
+                out.print(" [");
+                if (edgeLabel) {
+                    out.print("label=\"" + dep.getScope() + "\"");
+                }
+                out.println(" ];");
             }
         }
     }

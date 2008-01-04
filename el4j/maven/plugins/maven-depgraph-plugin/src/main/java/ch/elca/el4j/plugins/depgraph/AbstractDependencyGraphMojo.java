@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -118,7 +119,7 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
      * @parameter expression="${localRepository}"
      * @required
      */
-    private ArtifactRepository m_localRepository;
+    protected ArtifactRepository m_localRepository;
 
     /**
      * The *.dot file to write to. Will be a temporary file if unset.
@@ -126,6 +127,13 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
      * @parameter expression="${depgraph.dotFile}"
      */
     private File dotFile;
+
+    /**
+     * Whether to label the edges with name of dependency-scope. 
+     * 
+     * @parameter expression="${depgraph.edgeLabel}" default-value="false"
+     */
+    private boolean edgeLabel;
 
     /**
      * @component
@@ -137,7 +145,7 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
      * 
      * @component
      */
-    private ArtifactMetadataSource m_artifactMetadataSource;
+    protected ArtifactMetadataSource m_artifactMetadataSource;
 
     /**
      * The projector used to project the graph.
@@ -150,6 +158,8 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
      * @component
      */
     private ArtifactCollector m_collector;
+
+    private DepGraphResolutionListener listener;
 
     /**
      * Initialize the output directory/file.
@@ -225,8 +235,7 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
 
         project.getDependencyArtifacts();
 
-        DepGraphResolutionListener listener = new DepGraphResolutionListener(
-            graph, filter);
+        listener = new DepGraphResolutionListener(graph, filter);
 
         try {
 
@@ -242,6 +251,11 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
             s_log.error("Error resolving artifacts", e);
         }
 
+    }
+    
+    protected Set<Artifact> getDependentArtifacts()
+    {
+        return listener.getDependentArtifacts();
     }
 
     /**
@@ -306,7 +320,7 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
             s_log.info(
                 "Writing dependency graph to " + outFile.getAbsolutePath());
 
-            GraphvizProjector projector = new GraphvizProjector(getOutFile());
+            GraphvizProjector projector = new GraphvizProjector(getOutFile(), edgeLabel);
             try {
                 if (dotFile != null) {
                     if (outDir != null) {

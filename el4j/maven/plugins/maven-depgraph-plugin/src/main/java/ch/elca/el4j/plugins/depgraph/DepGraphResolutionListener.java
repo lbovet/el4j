@@ -1,5 +1,7 @@
 package ch.elca.el4j.plugins.depgraph;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Stack;
 
 import org.apache.commons.logging.Log;
@@ -55,6 +57,8 @@ public class DepGraphResolutionListener implements ResolutionListener {
      * Integer to keep track of how "deep" we are in a tree that's filtered.
      */
     private int m_filterDepth = NOT_FILTERING;
+
+    private Set<Artifact> dependentArtifacts;
     
     /**
      * Default constructor, without a filter.
@@ -78,6 +82,15 @@ public class DepGraphResolutionListener implements ResolutionListener {
         } else {
             m_filter = filter;
         }
+
+        dependentArtifacts = new HashSet<Artifact>();
+    }
+    
+    /**
+     * @return set of included dependency artifacts.
+     */
+    public Set<Artifact> getDependentArtifacts() {
+        return dependentArtifacts;
     }
 
     /**
@@ -126,6 +139,9 @@ public class DepGraphResolutionListener implements ResolutionListener {
                 startFiltering();
                 return;
             }
+            
+            // collect included dependencies
+            dependentArtifacts.add(artifact);
             
             if (!m_artifactStack.isEmpty()) {
                 DepGraphArtifact dependant = getArtifact(
