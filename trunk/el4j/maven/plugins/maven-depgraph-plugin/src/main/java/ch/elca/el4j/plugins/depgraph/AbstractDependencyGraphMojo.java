@@ -131,7 +131,7 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
     /**
      * Whether to label the edges with name of dependency-scope. 
      * 
-     * @parameter expression="${depgraph.edgeLabel}" default-value="false"
+     * @parameter expression="${depgraph.edgeLabel}" default-value="true"
      */
     private boolean edgeLabel;
 
