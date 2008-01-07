@@ -136,6 +136,9 @@ public class RecursiveDependencyGraphMojo extends AbstractDependencyGraphMojo {
 
     }
 
+    /**
+     * @return a FIFO-queue to store MavenProjects
+     */
     private Queue<MavenProject> createQueue() {
         Comparator<MavenProject> comparator = new Comparator<MavenProject>() {
 
