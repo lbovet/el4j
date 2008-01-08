@@ -47,7 +47,13 @@ import ch.elca.el4j.core.context.ModuleApplicationContextConfiguration;
  * @author Martin Zeltner (MZE)
  * @author Alex Mathey (AMA)
  * @see Application
+ * 
+ * @deprecated EL4J has dropped the support for the Spring RCP framework
+ *   (it did not advance much, there is little documentation, it was rarely used
+ *    by projects, we have a better solution)
+ *    Please refer to the new Swing module instead. 
  */
+@Deprecated
 public class ApplicationLauncher {
     /**
      * Id of the splash screen bean.
