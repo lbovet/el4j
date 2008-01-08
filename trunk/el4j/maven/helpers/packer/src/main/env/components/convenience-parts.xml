@@ -37,14 +37,19 @@
             <outputDirectory></outputDirectory>
             <fileMode>0755</fileMode>
             <lineEnding>unix</lineEnding>
+            <includes>
+                <include>tools/bin/*</include>
+            </includes>					
             <excludes>
                 <exclude>**/.*/**</exclude>
             </excludes>
         </fileSet>
+		
         <fileSet>
-            <directory>${el4j.external}/maven/helpers/packer/target/convenience</directory>
+            <directory>${el4j.external}/maven/helpers/packer/target/convenience</directory>	
             <outputDirectory></outputDirectory>
         </fileSet>
+		
         <fileSet>
             <directory>${el4j.external}/maven/helpers/packer/target/env</directory>
             <outputDirectory></outputDirectory>
