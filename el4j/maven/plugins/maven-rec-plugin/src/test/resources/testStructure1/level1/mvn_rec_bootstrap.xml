@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localProjects xmlns="http://el4j.elca.ch/maven/plugins/maven-rec-plugin/1.0">
+  <project groupId="ch.elca.testProject" artifactId="level1_3_1" version="1.0">
+    <path>D:\Projects\EL4J\external\maven\plugins\maven-rec-plugin\src\test\resources\testStructure1\level1\level1_3\level1_3_1\pom.xml</path>
+    <dependencies />
+  </project>
+  <project groupId="ch.elca.testProject" artifactId="level1_2" version="1.0">
+    <path>D:\Projects\EL4J\external\maven\plugins\maven-rec-plugin\src\test\resources\testStructure1\level1\level1_2\pom.xml</path>
+    <dependencies>
+      <dependency projectId="ch.elca.testProject:level1_3_1:1.0" />
+    </dependencies>
+  </project>
+  <project groupId="ch.elca.testProject" artifactId="level1_1_1" version="1.0">
+    <path>D:\Projects\EL4J\external\maven\plugins\maven-rec-plugin\src\test\resources\testStructure1\level1\level1_1\level1_1_1\pom.xml</path>
+    <dependencies>
+      <dependency projectId="ch.elca.testProject:level1_2:1.0" />
+      <dependency projectId="ch.elca.testProject:level1_3_1:1.0" />
+    </dependencies>
+  </project>
+</localProjects>
+
