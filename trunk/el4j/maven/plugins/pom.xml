@@ -41,6 +41,7 @@
         <module>maven-depgraph-plugin</module>
         <module>maven-version-plugin</module>
         <module>maven-jaxws-plugin</module>
+        <module>maven-rec-plugin</module>
     </modules>
     <dependencies>
         <dependency>
