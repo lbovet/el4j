@@ -52,6 +52,11 @@ public class DependencyGraph {
     private String m_name;
     
     /**
+     * Whether to draw artifact scope.
+     */
+    private boolean drawScope = true;
+    
+    /**
      * Get the Artifact for the given attributes.
      * @param artifactId The artifact ID
      * @param groupId The group ID
@@ -60,11 +65,26 @@ public class DependencyGraph {
      * @param type The type
      * @return A DepgraphArtifact
      */
+    public DepGraphArtifact getArtifact(String artifactId, String groupId,
+        String version, String scope, String type) {
+        return getArtifact(artifactId, groupId, version, scope, type, false);
+    }
+    
+    /**
+     * Get the Artifact for the given attributes.
+     * @param artifactId The artifact ID
+     * @param groupId The group ID
+     * @param version The version
+     * @param scope The scope
+     * @param type The type
+     * @param omitted Whether artifact is omitted
+     * @return A DepgraphArtifact
+     */
     public DepGraphArtifact getArtifact(
         String artifactId, String groupId, 
-        String version, String scope, String type) {
+        String version, String scope, String type, boolean omitted) {
         DepGraphArtifact newArtifact 
-            = new DepGraphArtifact(artifactId, groupId, version, scope, type);
+            = new DepGraphArtifact(artifactId, groupId, version, scope, type, omitted);
         
         if (m_artifacts.containsKey(newArtifact.getQualifiedName())) {
             return m_artifacts.get(newArtifact.getQualifiedName());
@@ -107,5 +127,19 @@ public class DependencyGraph {
      */
     public void setName(String name) {
         m_name = name;
+    }
+
+    /**
+     * @return whether to draw the artifact scope.
+     */
+    public boolean drawScope() {
+        return drawScope;
+    }
+
+    /**
+     * @param enable set to true to enable drawing of artifact scope.
+     */
+    public void setDrawScope(boolean enable) {
+        drawScope = enable;
     }
 }

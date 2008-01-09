@@ -47,7 +47,11 @@ import org.apache.maven.project.ProjectBuildingException;
  * @author Claude Humard (CHD)
  * @goal rec
  * @requiresDependencyResolution compile|test
+ * @deprecated Does not work any longer. Is no longer required. Otherwise, it
+ *             must be re-engineered to comply with new
+ *             DependencyGraphMojo-behaviour (using DependencyTreeBuilder etc.)
  */
+@Deprecated
 public class RecursiveDependencyGraphMojo extends AbstractDependencyGraphMojo {
 
     private Set<Artifact> dependentArtifacts = new HashSet<Artifact>();
@@ -82,7 +86,7 @@ public class RecursiveDependencyGraphMojo extends AbstractDependencyGraphMojo {
             // add processed artifact to list 
             processedArtifacts.add(project.getArtifact());
             // get list of dependencies of current project
-            dependentArtifacts = getDependentArtifacts();
+            dependentArtifacts = new HashSet();
             // already processed artifacts should not be processed again
             dependentArtifacts.removeAll(processedArtifacts);
 
