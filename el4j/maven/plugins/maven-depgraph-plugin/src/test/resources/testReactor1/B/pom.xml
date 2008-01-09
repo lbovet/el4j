@@ -1,0 +1,23 @@
+<?xml version="1.0"?><project>
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>ch.test</groupId>
+    <artifactId>A</artifactId>
+    <version>1.0</version>
+  </parent>
+  
+  <artifactId>B</artifactId>
+  <packaging>jar</packaging>
+  <name>Project B</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>ch.test</groupId>
+            <artifactId>Y</artifactId>
+            <version>1.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+  
+</project>
