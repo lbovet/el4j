@@ -20,23 +20,24 @@ package ch.elca.el4j.plugins.depgraph;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.maven.artifact.Artifact;
+import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
 import org.apache.maven.artifact.repository.ArtifactRepository;
-import org.apache.maven.artifact.resolver.AbstractArtifactResolutionException;
 import org.apache.maven.artifact.resolver.ArtifactCollector;
 import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
+import org.apache.maven.shared.dependency.tree.DependencyNode;
+import org.apache.maven.shared.dependency.tree.DependencyTreeBuilder;
+import org.apache.maven.shared.dependency.tree.DependencyTreeBuilderException;
 
 /**
  * 
@@ -79,6 +80,13 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
      * @parameter expression="${depgraph.outFile}"
      */
     private File outFile;
+    
+    /**
+     * The output file extension.
+     * 
+     * @parameter expression="${depgraph.ext}"
+     */
+    private String outFileExtension;
 
     /**
      * The directory to write to.
@@ -129,11 +137,18 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
     private File dotFile;
 
     /**
-     * Whether to label the edges with name of dependency-scope. 
+     * Whether to label the edges with name of dependency-scope.
      * 
-     * @parameter expression="${depgraph.edgeLabel}" default-value="true"
+     * @parameter expression="${depgraph.drawScope}" default-value="true"
      */
-    private boolean edgeLabel;
+    private boolean drawScope;
+
+    /**
+     * Whether to draw omitted artifacts.
+     * 
+     * @parameter expression="${depgraph.drawOmitted}" default-value="false"
+     */
+    private boolean drawOmitted;
 
     /**
      * @component
@@ -158,8 +173,24 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
      * @component
      */
     private ArtifactCollector m_collector;
+    
+    /**
+     * The dependency tree builder to use.
+     * 
+     * @component
+     * @required
+     * @readonly
+     */
+    private DependencyTreeBuilder dependencyTreeBuilder;
 
-    private DepGraphResolutionListener listener;
+    /**
+     * The artifact factory to use.
+     * 
+     * @component
+     * @required
+     * @readonly
+     */
+    private ArtifactFactory artifactFactory;
 
     /**
      * Initialize the output directory/file.
@@ -168,7 +199,7 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
      */
     protected void initOutput() throws MojoExecutionException {
         if (outFile == null) {
-            outFile = new File(m_project.getName() + "." + DEFAULT_EXTENSION);
+            outFile = new File(m_project.getName() + "." + getExtension());
         }
 
         // First, check if there was an output directory given
@@ -211,6 +242,21 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
             }
         }
     }
+    
+    /**
+     * Returns the extension of the output file. This can be set from outside
+     * via the depgraph.ext property. It has to be a file extensions supported
+     * by the used projector.
+     * 
+     * @return the extension of the output file.
+     */
+    private String getExtension() {
+        if (outFileExtension != null) {
+            return outFileExtension;
+        } else {
+            return DEFAULT_EXTENSION;
+        }
+    }
 
     /**
      * {@inheritDoc}
@@ -228,34 +274,24 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
      *            Graph to store results
      */
     protected void processProject(MavenProject project, DependencyGraph graph) {
-        Artifact projectArtifact = project.getArtifact();
+        
+        graph.setDrawScope(drawScope);
 
         RegexArtifactFilter filter = new RegexArtifactFilter(artifactFilter,
             groupFilter, versionFilter);
 
-        project.getDependencyArtifacts();
-
-        listener = new DepGraphResolutionListener(graph, filter);
-
+        DependencyNode rootNode = null;
         try {
-
-            m_artifactResolver.resolve(projectArtifact, project
-                .getRemoteArtifactRepositories(), m_localRepository);
-
-            m_collector.collect(project.getDependencyArtifacts(), project
-                .getArtifact(), m_localRepository, project
-                .getRemoteArtifactRepositories(), m_artifactMetadataSource,
-                filter, Collections.singletonList(listener));
-
-        } catch (AbstractArtifactResolutionException e) {
+            rootNode = dependencyTreeBuilder.buildDependencyTree(project,
+                m_localRepository, artifactFactory, m_artifactMetadataSource,
+                filter, m_collector);
+        } catch (DependencyTreeBuilderException e) {
             s_log.error("Error resolving artifacts", e);
         }
 
-    }
-    
-    protected Set<Artifact> getDependentArtifacts()
-    {
-        return listener.getDependentArtifacts();
+        s_log.debug(rootNode.toNodeString());
+
+        transformDependencyNodeToGraph(rootNode, graph);
     }
 
     /**
@@ -274,9 +310,32 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
      *            The graph to project
      * @throws MojoExecutionException
      */
-    protected void project(DependencyGraph graph) 
-        throws MojoExecutionException {
+    protected void project(DependencyGraph graph) throws MojoExecutionException {
 
+        /*
+         * Remove all DepGraphArtifacts, which do not contain any dependencies
+         * and are not referenced by any artifact
+         */
+        removeUnusedArtifacts(graph);
+
+        if (graph.getArtifacts().size() == 0) {
+            s_log.error("There were no Artifacts resolved. "
+                + "Maybe there's a problem with a user supplied filter.");
+            throw new MojoExecutionException("No artifacts resolved");
+        }
+
+        getProjector().project(graph);
+    }
+
+    /**
+     * Removes all DepGraphArtifacts from DependencyGraph, which do not contain
+     * any dependency AND which are not referenced by any other DepGraphArtifact
+     * (both conditions must be met to be removed).
+     * 
+     * @param graph
+     *            DependencyGraph to remove unused DepGraphArtifacts from.
+     */
+    private void removeUnusedArtifacts(DependencyGraph graph) {
         if (filterEmptyArtifacts) {
             // Create a list artifacts someone is depending on
             Map<String, DepGraphArtifact> dependencies = new HashMap();
@@ -297,15 +356,6 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
                 }
             }
         }
-
-        if (graph.getArtifacts().size() == 0) {
-            s_log.error(
-                "There were no Artifacts resolved. "
-                    + "Maybe there's a problem with a user supplied filter.");
-            throw new MojoExecutionException("No artifacts resolved");
-        }
-
-        getProjector().project(graph);
     }
 
     /**
@@ -320,7 +370,7 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
             s_log.info(
                 "Writing dependency graph to " + outFile.getAbsolutePath());
 
-            GraphvizProjector projector = new GraphvizProjector(getOutFile(), edgeLabel);
+            GraphvizProjector projector = new GraphvizProjector(getOutFile());
             try {
                 if (dotFile != null) {
                     if (outDir != null) {
@@ -341,5 +391,70 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
             m_projector = projector;
         }
         return m_projector;
+    }
+
+    /**
+     * Transform the DependencyNode-tree into the DependencyGraph. Creates
+     * DepGraphArtifacts for each DependencyNode and stores them in the
+     * DependencyGraph-object.
+     * 
+     * @param node
+     *            root node containing tree of DependencyNodes.
+     * @param graph
+     *            DependencyGraph where to create DepGraphArtifacts.
+     */
+    @SuppressWarnings("unchecked")
+    private void transformDependencyNodeToGraph(DependencyNode node,
+        DependencyGraph graph) {
+        DepGraphArtifact artifact = createDepGraphArtifact(node, graph);
+
+        // do not draw children if artifact is omitted
+        if (artifact == null || artifact.isOmitted()) {
+            return;
+        } else {
+            for (DependencyNode child : (List<DependencyNode>) node
+                .getChildren()) {
+                DepGraphArtifact depGraphChild = createDepGraphArtifact(child,
+                    graph);
+                if (depGraphChild != null) {
+                    try {
+                        artifact.addDependency(depGraphChild);
+                    } catch (IllegalArgumentException e) {
+                        s_log.debug("Ignore dependency "
+                            + depGraphChild.getArtifactId() + ". "
+                            + artifact.getArtifactId()
+                            + " already depends on it.");
+                    }
+                    transformDependencyNodeToGraph(child, graph);
+                }
+            }
+        }
+    }
+
+    /**
+     * Creates a DepGraphArtifact from the specified node and returns the
+     * DepGraphArtifact. The DepGraphArtifact is stored in the specified
+     * DependencyGraph. Returns null if the node is omitted and drawOmitted is
+     * set to false. If the artifact already exists in the DependencyGraph, the
+     * stored instance is returned.
+     * 
+     * @param node
+     *            the node to create a DepGraphArtifact from
+     * @param graph
+     *            DependencyGraph where to store the created DepGraphArtifact
+     * @return the created or stored DepGraphArtifact or null, if artifact is
+     *         omitted.
+     */
+    private DepGraphArtifact createDepGraphArtifact(DependencyNode node,
+        DependencyGraph graph) {
+        Artifact a = node.getArtifact();
+        boolean omitted = (node.getState() != DependencyNode.INCLUDED);
+
+        if (!drawOmitted && omitted) {
+            return null;
+        }
+        DepGraphArtifact artifact = graph.getArtifact(a.getArtifactId(), a
+            .getGroupId(), a.getVersion(), a.getScope(), a.getType(), omitted);
+        return artifact;
     }
 }

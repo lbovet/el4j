@@ -147,7 +147,7 @@ public class DepGraphResolutionListener implements ResolutionListener {
                 DepGraphArtifact dependant = getArtifact(
                     m_artifactStack.peek());
                 try {
-                    dependant.addDependencie(getArtifact(artifact));
+                    dependant.addDependency(getArtifact(artifact));
                 } catch (IllegalArgumentException e) {
                     s_log.debug("Ignore dependency " 
                         + getArtifact(artifact).getArtifactId() + ". " 

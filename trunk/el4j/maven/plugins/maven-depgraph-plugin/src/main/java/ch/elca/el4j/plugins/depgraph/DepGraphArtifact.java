@@ -59,11 +59,16 @@ public class DepGraphArtifact {
     private String m_type;
     
     /**
+     * Whether this artifact has been omitted
+     */
+    private boolean m_omitted;
+    
+    /**
      * All dependencies of this artifact.
      */
     private Collection<DepGraphArtifact> m_artifacts 
         = new LinkedList<DepGraphArtifact>();
-    
+
     /**
      * Create a new DepGraphArtifact.
      * 
@@ -75,6 +80,21 @@ public class DepGraphArtifact {
      */
     public DepGraphArtifact(String artifactId, String groupId, String version,
         String scope, String type) {
+        this(artifactId, groupId, version, scope, type, false);
+    }
+    
+    /**
+     * Create a new DepGraphArtifact.
+     * 
+     * @param artifactId The id to set
+     * @param groupId The group to set
+     * @param version The version to set
+     * @param scope The scope to set
+     * @param type The type to set
+     * @param omitted Whether this artifact is omitted
+     */
+    public DepGraphArtifact(String artifactId, String groupId, String version,
+        String scope, String type, boolean omitted) {
         if (artifactId == null) {
             throw new NullPointerException("ArtifactId null");
         }
@@ -92,6 +112,7 @@ public class DepGraphArtifact {
         m_version = version;
         m_scope = scope;
         m_type = type;
+        m_omitted = omitted;
     }
     
     /**
@@ -136,17 +157,17 @@ public class DepGraphArtifact {
     
     /**
      * Get a qualified name of this artifact.
-     * @return groupId:version:artifactId
+     * @return groupId:version:artifactId:omitted
      */
     public String getQualifiedName() {
-        return m_groupId + ":" + m_version + ":" + m_artifactId;
+        return m_groupId + ":" + m_version + ":" + m_artifactId + ":" + m_omitted;
     }
     
     /**
      * Add a new dependency.
      * @param dependency The dependency to add
      */
-    public void addDependencie(DepGraphArtifact dependency) {
+    public void addDependency(DepGraphArtifact dependency) {
         if (dependency == null) {
             throw new NullPointerException("Dependency null");
         }
@@ -188,6 +209,23 @@ public class DepGraphArtifact {
      */
     public int hashCode() {
         return getQualifiedName().hashCode();
+    }
+
+    /**
+     * @return whether this artifact has been omitted.
+     */
+    public boolean isOmitted() {
+        return m_omitted;
+    }
+
+    /**
+     * Set to true to omit this artifact.
+     * 
+     * @param omitted
+     *            whether this artifact is to omit.
+     */
+    public void setOmitted(boolean omitted) {
+        this.m_omitted = omitted;
     }
 
 }
