@@ -149,16 +149,28 @@ public class GenericHibernateDao<T, ID extends Serializable>
         return getConvenienceHibernateTemplate().loadAll(getPersistentClass());
     }
 
+    
     /**
      * {@inheritDoc}
+     * 
+     * This method supports paging (see QueryObject for info on 
+     *  how to use this).
+     * 
      */
     @SuppressWarnings("unchecked")
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<T> findByQuery(QueryObject q) throws DataAccessException {
         DetachedCriteria hibernateCriteria = CriteriaTransformer.transform(q,
             getPersistentClass());
-        return getConvenienceHibernateTemplate()
-            .findByCriteria(hibernateCriteria);
+        
+        ConvenienceHibernateTemplate template = getConvenienceHibernateTemplate(); 
+        template.setMaxResults(q.getMaxResults());
+        
+        if (q.getFirstResult() != QueryObject.NO_CONSTRAINT){
+            template.setFirstResult(q.getFirstResult());
+        }      
+        
+        return template.findByCriteria(hibernateCriteria);
     }
 
     /**

@@ -111,6 +111,10 @@
             <type>jar</type>
             <version>1.0</version>
         </dependency>
-        
+<!--          <dependency>-->
+<!--      		<groupId>org.oser</groupId>-->
+<!--      		<artifactId>datadumper</artifactId>-->
+<!--      		<version>0.9</version>-->
+<!--  		</dependency>-->
     </dependencies>
 </project>
