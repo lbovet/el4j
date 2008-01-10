@@ -92,7 +92,9 @@ public class CriteriaTransformer {
             
             Criterion hibernateCriterion = 
                 el4jCriteria2HibernateCriterion(currentEl4jCriteria);
-            hibernateCriteria.add(hibernateCriterion);
+            if (hibernateCriterion != null) {
+                hibernateCriteria.add(hibernateCriterion);
+            }
         }
         
         addOrderConstraints(hibernateCriteria, query);
