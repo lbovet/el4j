@@ -3,6 +3,7 @@ REVISION: 1546
 APPLIED PATCHES: 
    * Made org.codehaus.cargo:cargo-extensions pom to the root pom by merging it with org.codehaus.cargo:cargo-parent pom
    * Removed unused module-references in org.codehaus.cargo:cargo-extensions pom and org.codehaus.cargo:cargo-extensions-maven2 pom
+   * Added dependency org.codehaus.plexus:plexus-utils:1.4.8 to org.codehaus.cargo:cargo-maven2-plugin pom
 CURRENTLY USED VERSION: 1.0-el4j_20080110_1000
 DEPENDENT CUSTOMIZED ARTIFACTS: 
    * groupId=org.codehaus.cargo artifactId=cargo-extensions-maven2
