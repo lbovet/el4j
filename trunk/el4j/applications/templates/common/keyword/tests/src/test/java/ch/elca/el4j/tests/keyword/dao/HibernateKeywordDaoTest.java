@@ -16,24 +16,22 @@
  */
 package ch.elca.el4j.tests.keyword.dao;
 
-import java.util.List;
+import static ch.elca.el4j.services.search.criterias.CriteriaHelper.and;
+import static ch.elca.el4j.services.search.criterias.CriteriaHelper.like;
+import static ch.elca.el4j.services.search.criterias.CriteriaHelper.not;
+import static ch.elca.el4j.services.search.criterias.CriteriaHelper.or;
 
-import org.hibernate.criterion.DetachedCriteria;
-import org.oser.utils.datadumper.DataDumper;
-import org.oser.utils.datadumper.ReflectionObjectDumper;
+import java.util.List;
 
 import ch.elca.el4j.apps.keyword.dao.KeywordDao;
 import ch.elca.el4j.apps.keyword.dom.Keyword;
-import ch.elca.el4j.services.persistence.hibernate.criteria.CriteriaTransformer;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.AndCriteria;
 import ch.elca.el4j.services.search.criterias.ComparisonCriteria;
-import ch.elca.el4j.services.search.criterias.Criteria;
 import ch.elca.el4j.services.search.criterias.LikeCriteria;
 import ch.elca.el4j.services.search.criterias.NotCriteria;
 import ch.elca.el4j.services.search.criterias.OrCriteria;
 import ch.elca.el4j.services.search.criterias.Order;
-import static ch.elca.el4j.services.search.criterias.CriteriaHelper.*;
 
 /**
  * 
