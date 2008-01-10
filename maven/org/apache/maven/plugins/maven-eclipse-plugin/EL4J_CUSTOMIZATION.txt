@@ -1,0 +1,7 @@
+SVN URL: http://svn.apache.org/repos/asf/maven/plugins/trunk/maven-eclipse-plugin
+REVISION: 610838
+APPLIED PATCHES: 
+   * changed version of dependency org.apache.maven.shared:maven-plugin-testing-tools from "1.0-alpha-3-SNAPSHOT" to "1.0-alpha-3" in pom
+   * changed version of dependency org.apache.maven.shared:maven-osgi from "0.2.0-SNAPSHOT" to "0.2.0" in pom
+CURRENTLY USED VERSION: 2.5-el4j_20080110_1715
+DEPENDENT CUSTOMIZED ARTIFACTS: -
