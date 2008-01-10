@@ -129,6 +129,12 @@ public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,
      * responsible for, the statement in the ibatis xml config file
      * which is associated with this operation must be called 
      * searchOBJECTNAMEs.
+     * 
+     * It is very complex to write the ibatis configuration for such
+     *  queries. We only implement it partially in EL4J.
+     *  
+     *  In addition, the paging support needs to be added by hand.
+     * 
      */
     @SuppressWarnings("unchecked")
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

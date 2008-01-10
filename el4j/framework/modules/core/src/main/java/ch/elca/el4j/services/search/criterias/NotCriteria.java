@@ -4,8 +4,8 @@
  * Copyright (C) 2006 by ELCA Informatique SA, Av. de la Harpe 22-24,
  * 1000 Lausanne, Switzerland, http://www.elca.ch
  *
- * This program is published under the GNU General Public License (GPL) license.
- * http://www.gnu.org/licenses/gpl.txt
+ * EL4J is published under the GNU General Public License (GPL) Version 2.0.
+ * http://www.gnu.org/licenses/
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -16,10 +16,8 @@
  */
 package ch.elca.el4j.services.search.criterias;
 
-
 /**
- * 
- * Criteria for the include pattern.
+ * A Criteria that negates the Criteria it wraps.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -28,37 +26,32 @@ package ch.elca.el4j.services.search.criterias;
  *    "$Author$"
  * );</script>
  *
- * @deprecated no longer needed.
- * @author Alex Mathey (AMA)
+ * @author Philipp Oser (POS)
  */
-public class IncludeCriteria extends AbstractCriteria {
+public class NotCriteria implements Criteria {
 
-    /**
-     * Default constructor for remoting protocols like hessian and burlap added.
-     */
-    protected IncludeCriteria() { }
+    protected Criteria m_criteria;
     
-    /**
-     * Constructor.
-     * 
-     * @param field
-     *            Is the field the criteria is made for.
-     * @param value
-     *            Is the value of this criteria.
-     */
-    public IncludeCriteria(String field, Object value) {
-        super(field, value);
+    public NotCriteria (Criteria c) {
+        m_criteria = c;
     }
-        
+    
     /**
      * {@inheritDoc}
      */
     public String getType() {
-        return "include";
-    }
-
-    public String getSqlWhereCondition() {
         return "";
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public String getSqlWhereCondition() {
+        return "( NOT "+ m_criteria.getSqlWhereCondition() + " ) ";
+    }
+
+    public Criteria getCriteria() {
+        return m_criteria;
+    }    
+    
 }

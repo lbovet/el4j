@@ -30,14 +30,15 @@ import ch.elca.el4j.services.search.QueryObject;
 
 /**
  *
- * This interface serves as generic access to DAOs. It is the interface for 
+ * Interface for generic DAOs. It is the interface that implements 
  * the DDD-Book's (http://www.domaindrivendesign.org/) Repository pattern. 
  * This interface is implemented generically and it can be extended in case 
  * you need more specific methods. Based on an idea from the Hibernate website.
  *
  * This is the canonical form of this interface. We recommend it when a generic
  * DAO is used in tools (to make the contract minimal). 
- * For direct programmer-usage we recommend to use the convenience subclasses. 
+ * For direct programmer-usage we recommend to use the convenience subclasses
+ *  (@link ConvenienceGenericDao). 
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -64,6 +65,8 @@ public interface GenericDao<T> {
     
     /**
      * Executes a query based on a given query object.
+     *  This method may also support paging (see javadoc
+     *   of implementing class).
      * 
      * @param q The search query object
      * @throws  DataAccessException

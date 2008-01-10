@@ -42,8 +42,7 @@ public class ConvenienceHibernateDaoSupport extends HibernateDaoSupport {
     /**
      * {@inheritDoc}
      */
-    protected HibernateTemplate 
-    createHibernateTemplate(SessionFactory sessionFactory) {
-            return new ConvenienceHibernateTemplate(sessionFactory);
+    protected HibernateTemplate createHibernateTemplate(SessionFactory sessionFactory) {
+        return new ConvenienceHibernateTemplate(sessionFactory);
     }
 }

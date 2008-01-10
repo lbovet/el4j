@@ -1,9 +1,9 @@
 package ch.elca.el4j.services.persistence.hibernate.dao;
 
-
 import java.io.Serializable;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -12,11 +12,20 @@ import org.springframework.orm.hibernate3.HibernateOptimisticLockingFailureExcep
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
+import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
  * 
  * This is a convenience class for the Hibernate template.
+ *  Features: 
+ *   <ul>
+ *      <li> improved paging support: allows to specify id of 1st element of a
+ *            query
+ *      <li> methods that signal an error if no element is found
+ *            (they use the <em>Strong</em> suffixes)
+ *   </ul>
+ *    
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/hibernate/src/main/java/ch/elca/el4j/services/persistence/hibernate/dao/ConvenienceHibernateTemplate.java $",
@@ -39,7 +48,7 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
     
     /**
      * Retrieves the persistent instance given by its identifier in a strong
-     * way: does the same as the <code>get(Class, java.io.Serializable)</code>
+     * way: does the same as the <code>getById(Class, java.io.Serializable)</code>
      * method, but throws a <code>DataRetrievalException</code> instead of
      * <code>null</code> if the persistent instance could not be found.
      * 
@@ -56,7 +65,7 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
      * @throws org.springframework.dao.DataRetrievalFailureException
      *             in case the persistent instance is null
      */
-    public Object getByIdStrong(Class entityClass, Serializable id,
+    public Object getByIdStrong(Class<?> entityClass, Serializable id,
         final String objectName) throws DataAccessException,
         DataRetrievalFailureException {
 
@@ -169,7 +178,7 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
      * @throws org.springframework.dao.DataRetrievalFailureException
      *             in case the persistent instance to delete is null
      */
-    public void deleteStrong(Class entityClass, Serializable id,
+    public void deleteStrong(Class<?> entityClass, Serializable id,
         final String objectName) throws DataRetrievalFailureException {
         Reject.ifEmpty(objectName, "The name of the persistent object type "
             + "must not be empty.");
@@ -184,4 +193,34 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
         }
         delete(toDelete);
     }
+    
+    //// paging support /////
+    
+    /**
+     * for paging: what is the id of the first result to return?
+     *  NO_CONSTRAINT means we do not constrain anything 
+     */
+    int m_firstResult = QueryObject.NO_CONSTRAINT;
+    
+    /**
+     * Overload parent class to support also a constraint
+     *  of the id of the first result to load. 
+     * {@inheritDoc}
+     */
+    protected void prepareQuery(Query queryObject) {
+        super.prepareQuery(queryObject);
+        
+        if (getFirstResult() != QueryObject.NO_CONSTRAINT){
+            queryObject.setFirstResult(getFirstResult());
+        }
+        
+    }
+
+    public int getFirstResult() {
+        return m_firstResult;
+    }
+
+    public void setFirstResult(int firstResult) {
+        m_firstResult = firstResult;
+    }    
 }

@@ -30,7 +30,7 @@ package ch.elca.el4j.services.search.criterias;
  */
 public class LikeCriteria extends AbstractCriteria {
     /**
-     * Marks if the pattern is case sensitive.
+     * Marks whether the pattern is case sensitive.
      */
     private Boolean m_caseSensitive;
     
@@ -40,7 +40,7 @@ public class LikeCriteria extends AbstractCriteria {
     protected LikeCriteria() { }
     
     /**
-     * Constructor.
+     * Hidden constructor.
      * 
      * @param field Is the field the criteria is made for.
      * @param value Is the value of this criteria.
@@ -83,4 +83,13 @@ public class LikeCriteria extends AbstractCriteria {
     public String getType() {
         return "like";
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getSqlWhereCondition() {
+        // TODO: consider also case sensitivity
+        return " ( "+getField()+" LIKE "+getValue()+ " ) ";
+    }    
+    
 }

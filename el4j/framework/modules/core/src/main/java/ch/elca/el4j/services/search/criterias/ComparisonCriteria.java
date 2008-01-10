@@ -21,7 +21,7 @@ import org.springframework.util.StringUtils;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
- * Criteria to compare.
+ * Criteria to compare fields to values.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -175,9 +175,19 @@ public class ComparisonCriteria extends AbstractCriteria {
         return m_type;
     }
     
-    @Override
-    public String toString(){
-        return getField()+" "+getOperator()+" \'"+getValue()+"\'";
+    /**
+     * {@inheritDoc}
+     */
+    @Override    
+    public String toString() {
+        return getSqlWhereCondition();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getSqlWhereCondition() {
+        return " ( "+getField()+" "+getOperator()+" "+getValue()+ " ) ";
+    }      
     
 }
