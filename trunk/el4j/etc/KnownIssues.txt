@@ -1,4 +1,10 @@
 --------------------------------------------------------------------------------
                         Known issues for EL4J version  1.2
 --------------------------------------------------------------------------------
- * 
+
+ * The README.txt of the convenience zip is marked for usage with 
+   EL4J 1.2.1-SNAPSHOT but the zip is made for EL4J 1.2 of course.
+ * The archetype for EL4J 1.2 is not 1.4 but 1.5:
+   * mvn archetype:create -DarchetypeGroupId=ch.elca.el4j -DarchetypeArtifactId=EL4JArchetypeCore -DarchetypeVersion=1.5 -DgroupId=ch.elca.el4j -DartifactId=myFirstProject -DremoteRepositories=http://el4.elca-services.ch/el4j/maven2repository
+ * The correct link to the web-template is the following:
+   * http://leaffy.elca.ch/java/el4j/templates/web-template-1.2.zip
