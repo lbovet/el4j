@@ -7,9 +7,12 @@ The scripts work under unix and windows/cygwin!
 
 If you are new to Maven and EL4J, please refer to 
 http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/GettingStarted or 
-docs/pdf/GettingStarted.pdf and follow the step-by-step tutorial. 
+docs/pdf/GettingStarted.pdf and follow the step-by-step tutorial.
+If you are an EL4J developer please refer 
+http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/GettingStartedDeveloper or 
+docs/pdf/GettingStartedDeveloper.pdf too.
 The following instructions describe the fast-track and are recommended 
-for advanced users. 
+for advanced users.
 
 In case of disagreement of this automatic and the 
 manual set up in those files, the manual set up takes precedence. 
