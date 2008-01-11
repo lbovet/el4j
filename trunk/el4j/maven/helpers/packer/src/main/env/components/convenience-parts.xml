@@ -11,6 +11,8 @@
                 <include>subversion/*</include>
                 <include>javadoc/*</include>
                 <include>checkstyle/*</include>
+                <include>log4j/*</include>
+                <include>tomcat/*</include>
             </includes>
             <excludes>
                 <exclude>**/.*/**</exclude>
@@ -44,12 +46,12 @@
                 <exclude>**/.*/**</exclude>
             </excludes>
         </fileSet>
-		
+
         <fileSet>
-            <directory>${el4j.external}/maven/helpers/packer/target/convenience</directory>	
+            <directory>${el4j.external}/maven/helpers/packer/target/convenience</directory>
             <outputDirectory></outputDirectory>
         </fileSet>
-		
+
         <fileSet>
             <directory>${el4j.external}/maven/helpers/packer/target/env</directory>
             <outputDirectory></outputDirectory>
