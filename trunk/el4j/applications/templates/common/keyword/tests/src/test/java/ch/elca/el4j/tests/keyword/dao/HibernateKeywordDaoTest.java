@@ -25,6 +25,7 @@ import java.util.List;
 
 import ch.elca.el4j.apps.keyword.dao.KeywordDao;
 import ch.elca.el4j.apps.keyword.dom.Keyword;
+import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.AndCriteria;
 import ch.elca.el4j.services.search.criterias.ComparisonCriteria;
@@ -184,8 +185,12 @@ public class HibernateKeywordDaoTest
         // should return 5 results (= all results)
         query = new QueryObject();
 
+        int count = dao.findCountByQuery(query);
+        
+        assertEquals("Search count was wrong.", 5, count);
+        
         // now we constraint them to 2
-        query.setMaxResults(2);
+        query.setMaxResults(2);        
         
         list = dao.findByQuery(query);
         assertEquals("Search for name like '%' results not in one keyword.",

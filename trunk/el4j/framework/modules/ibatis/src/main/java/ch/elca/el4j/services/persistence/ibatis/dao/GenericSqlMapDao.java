@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -233,5 +234,13 @@ public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,
      */
     protected String getPersistentClassName() {
         return getPersistentClass().getSimpleName();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public int findCountByQuery(QueryObject query) throws DataAccessException {
+        throw new NotImplementedException("findCountByQuery is not implemented " 
+            +" by default");
     }
 }
