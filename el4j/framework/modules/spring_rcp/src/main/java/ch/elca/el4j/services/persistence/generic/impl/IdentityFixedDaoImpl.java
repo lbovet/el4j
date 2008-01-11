@@ -111,4 +111,8 @@ public class IdentityFixedDaoImpl<T>
         return m_fixer.merge(entity, m_backing.saveOrUpdate(entity));
         // ensures that return value is a representative
     }
+
+    public int findCountByQuery(QueryObject query) throws DataAccessException {
+        return m_backing.findCountByQuery(query);
+    }
 }
