@@ -149,106 +149,106 @@
 
    <!-- Uncomment this block if you are inside ELCA! -->
    <!--mirror>
-        	<id>proximityCentral</id>
-        	<mirrorOf>central</mirrorOf>
-        	<name>Proxmity mirrored central.</name>
-        	<url>http://leaffy.elca.ch:18080/repository/apache.release</url>
+            <id>proximityCentral</id>
+            <mirrorOf>central</mirrorOf>
+            <name>Proxmity mirrored central.</name>
+            <url>http://leaffy.elca.ch:18080/repository/apache.release</url>
         </mirror>
         
        <mirror>
-        	<id>proximityCodehaus</id>
-        	<mirrorOf>codehaus</mirrorOf>
-        	<name>Proxmity mirrored codehaus.</name>
-        	<url>http://leaffy.elca.ch:18080/repository/codehaus.release</url>
+            <id>proximityCodehaus</id>
+            <mirrorOf>codehaus</mirrorOf>
+            <name>Proxmity mirrored codehaus.</name>
+            <url>http://leaffy.elca.ch:18080/repository/codehaus.release</url>
         </mirror>
         
         <mirror>
-        	<id>proximityJBoss</id>
-        	<mirrorOf>jboss</mirrorOf>
-        	<name>Proxmity mirrored jboss.</name>
-        	<url>http://leaffy.elca.ch:18080/repository/jboss.release</url>
+            <id>proximityJBoss</id>
+            <mirrorOf>jboss</mirrorOf>
+            <name>Proxmity mirrored jboss.</name>
+            <url>http://leaffy.elca.ch:18080/repository/jboss.release</url>
         </mirror>
 
         <mirror>
-        	<id>proximityBaka</id>
-        	<mirrorOf>baka</mirrorOf>
-        	<name>Proxmity mirrored baka.</name>
-        	<url>http://leaffy.elca.ch:18080/repository/baka.release</url>
+            <id>proximityBaka</id>
+            <mirrorOf>baka</mirrorOf>
+            <name>Proxmity mirrored baka.</name>
+            <url>http://leaffy.elca.ch:18080/repository/baka.release</url>
         </mirror>
         
         <mirror>
-        	<id>proximityJavaNetMaven1</id>
-        	<mirrorOf>java.net</mirrorOf>
-        	<name>Proxmity mirrored java-net-maven-1.</name>
-        	<url>http://leaffy.elca.ch:18080/repository/java-net-maven-1.release</url>
+            <id>proximityJavaNetMaven1</id>
+            <mirrorOf>java.net</mirrorOf>
+            <name>Proxmity mirrored java-net-maven-1.</name>
+            <url>http://leaffy.elca.ch:18080/repository/java-net-maven-1.release</url>
         </mirror>
         
         <mirror>
-        	<id>proximityJavaNetMaven2</id>
-        	<mirrorOf>maven2-repository.dev.java.net</mirrorOf>
-        	<name>Proxmity mirrored java-net-maven-2.</name>
-        	<url>http://leaffy.elca.ch:18080/repository/java-net-maven-2.release</url>
+            <id>proximityJavaNetMaven2</id>
+            <mirrorOf>maven2-repository.dev.java.net</mirrorOf>
+            <name>Proxmity mirrored java-net-maven-2.</name>
+            <url>http://leaffy.elca.ch:18080/repository/java-net-maven-2.release</url>
         </mirror>
         
         <mirror>
-        	<id>proximityLeaffy</id>
-        	<mirrorOf>el4jReleaseRepositoryInternal</mirrorOf>
-        	<name>Proxmity mirrored el4jReleaseRepositoryInternal.</name>
-        	<url>http://leaffy.elca.ch:18080/repository/leaffy.release</url>
+            <id>proximityLeaffy</id>
+            <mirrorOf>el4jReleaseRepositoryInternal</mirrorOf>
+            <name>Proxmity mirrored el4jReleaseRepositoryInternal.</name>
+            <url>http://leaffy.elca.ch:18080/repository/leaffy.release</url>
         </mirror-->
         
        
    <!-- ######  Snapshot mirrors  ###### -->
    <!-- Uncomment if you are inside ELCA! -->
    <!--mirror>
-        	<id>proximityCentralSnapshot</id>
-        	<mirrorOf>apache.snapshots</mirrorOf>
-        	<name>Proxmity mirrored apache.snapshots.</name>
-        	<url>http://leaffy.elca.ch:18080/repository/apache.snapshot</url>
+            <id>proximityCentralSnapshot</id>
+            <mirrorOf>apache.snapshots</mirrorOf>
+            <name>Proxmity mirrored apache.snapshots.</name>
+            <url>http://leaffy.elca.ch:18080/repository/apache.snapshot</url>
         </mirror>
 
         <mirror>
-        	<id>proximityCodehausSnapshot</id>
-        	<mirrorOf>codehaus.snapshot</mirrorOf>
-        	<name>Proxmity mirrored codehaus.snapshot.</name>
-        	<url>http://leaffy.elca.ch:18080/repository/codehaus.snapshot</url>
+            <id>proximityCodehausSnapshot</id>
+            <mirrorOf>codehaus.snapshot</mirrorOf>
+            <name>Proxmity mirrored codehaus.snapshot.</name>
+            <url>http://leaffy.elca.ch:18080/repository/codehaus.snapshot</url>
         </mirror>
 
         <mirror>
-        	<id>proximityLeaffySnapshot</id>
-        	<mirrorOf>el4jSnapshotRepositoryInternal</mirrorOf>
-        	<name>Proxmity mirrored el4jSnapshotRepositoryInternal.</name>
-        	<url>http://leaffy.elca.ch:18080/repository/leaffy.snapshot</url>
+            <id>proximityLeaffySnapshot</id>
+            <mirrorOf>el4jSnapshotRepositoryInternal</mirrorOf>
+            <name>Proxmity mirrored el4jSnapshotRepositoryInternal.</name>
+            <url>http://leaffy.elca.ch:18080/repository/leaffy.snapshot</url>
         </mirror-->
         
 
    <!-- Uncomment if you are inside ELCA but not at Lausanne! -->
    <!--mirror>
-        	<id>proximityEl4ElcaServices</id>
-        	<mirrorOf>el4jReleaseRepositoryExternal</mirrorOf>
-        	<name>Proxmity mirrored el4jReleaseRepositoryExternal.</name>
-        	<url>http://leaffy.elca.ch:18080/repository/el4-elca-services.release</url>
+            <id>proximityEl4ElcaServices</id>
+            <mirrorOf>el4jReleaseRepositoryExternal</mirrorOf>
+            <name>Proxmity mirrored el4jReleaseRepositoryExternal.</name>
+            <url>http://leaffy.elca.ch:18080/repository/el4-elca-services.release</url>
         </mirror>
         
        <mirror>
-        	<id>proximityEl4ElcaServicesSnapshot</id>
-        	<mirrorOf>el4jSnapshotRepositoryExternal</mirrorOf>
-        	<name>Proxmity mirrored el4jSnapshotRepositoryExternal.</name>
-        	<url>http://leaffy.elca.ch:18080/repository/el4-elca-services.snapshot</url>
+            <id>proximityEl4ElcaServicesSnapshot</id>
+            <mirrorOf>el4jSnapshotRepositoryExternal</mirrorOf>
+            <name>Proxmity mirrored el4jSnapshotRepositoryExternal.</name>
+            <url>http://leaffy.elca.ch:18080/repository/el4-elca-services.snapshot</url>
         </mirror>
         
         <mirror>
-        	<id>proximityPluginEl4ElcaServices</id>
-        	<mirrorOf>el4jReleasePluginRepositoryExternal</mirrorOf>
-        	<name>Proxmity mirrored el4jReleasePluginRepositoryExternal.</name>
-        	<url>http://leaffy.elca.ch:18080/repository/el4-elca-services.release</url>
+            <id>proximityPluginEl4ElcaServices</id>
+            <mirrorOf>el4jReleasePluginRepositoryExternal</mirrorOf>
+            <name>Proxmity mirrored el4jReleasePluginRepositoryExternal.</name>
+            <url>http://leaffy.elca.ch:18080/repository/el4-elca-services.release</url>
         </mirror>
         
         <mirror>
-        	<id>proximityPluginEl4ElcaServicesSnapshot</id>
-        	<mirrorOf>el4jSnapshotPluginRepositoryExternal</mirrorOf>
-        	<name>Proxmity mirrored el4jSnapshotPluginRepositoryExternal.</name>
-        	<url>http://leaffy.elca.ch:18080/repository/el4-elca-services.snapshot</url>
+            <id>proximityPluginEl4ElcaServicesSnapshot</id>
+            <mirrorOf>el4jSnapshotPluginRepositoryExternal</mirrorOf>
+            <name>Proxmity mirrored el4jSnapshotPluginRepositoryExternal.</name>
+            <url>http://leaffy.elca.ch:18080/repository/el4-elca-services.snapshot</url>
         </mirror-->
     </mirrors>
 
@@ -282,11 +282,11 @@
                 <el4j.project.home>~/myproject</el4j.project.home>
                 <el4j.project.tools>${el4j.project.home}/tools</el4j.project.tools>
 
-              <!-- EL4J developer specific properties -->
+                <!-- EL4J developer specific properties -->
                 <el4j.root>${el4j.project.home}</el4j.root>
                 <el4j.external>${el4j.root}/external</el4j.external>
-                <el4j.internal>${el4j.root}/internal</el4j.internal>				
-				
+                <el4j.internal>${el4j.root}/internal</el4j.internal>                
+                
                 <!-- Tomcat5x -->
                 <tomcat5x.basedir>${el4j.project.tools}/tomcat</tomcat5x.basedir>
                 <tomcat5x.version>5.5.25</tomcat5x.version>
@@ -314,9 +314,9 @@
                 <weblogic9x.manager.password>weblogic</weblogic9x.manager.password>
                 <weblogic9x.container.log.file>${project.build.directory}/logs/weblogic9x/output.log</weblogic9x.container.log.file>
                 <weblogic9x.cargo.log.file>${project.build.directory}/logs/weblogic9x/cargo.lo</weblogic9x.cargo.log.file>
-				
-				
-				 <!-- Weblogic10 -->
+                
+                
+                 <!-- Weblogic10 -->
                 <weblogic10.home>${el4j.project.tools}/bea/wlserver_10.0</weblogic10.home>
                 <weblogic10.server.name>testServer</weblogic10.server.name>
                 <weblogic10.domains.home>${el4j.project.tools}/bea/wlserver_10.0/samples/domains/${weblogic10.domain.name}</weblogic10.domains.home>
@@ -325,7 +325,7 @@
                 <weblogic10.manager.password>weblogic</weblogic10.manager.password>
                 <weblogic10.container.log.file>${project.build.directory}/output.log</weblogic10.container.log.file>
                 <weblogic10.cargo.log.file>${project.build.directory}/cargo.log</weblogic10.cargo.log.file>
-				<weblogic10.jrockit.home>${weblogic10.home}/../JROCKI~1</weblogic10.jrockit.home>
+                <weblogic10.jrockit.home>${weblogic10.home}/../JROCKI~1</weblogic10.jrockit.home>
                 
                 <!-- Birt -->
                 <birt.home>${el4j.project.tools}/birt-runtime-2_1_0</birt.home>
