@@ -268,8 +268,8 @@
                         Due to bugs fix built snapshot version is used.
                            * maven-compiler-plugin (revision 438050 + patch http://jira.codehaus.org/browse/MCOMPILER-35)
                     -->
-                    <!--version>2.1-20060908.102132-1</version-->
-                    <version>2.1-el4j_20080110_1520</version> <!-- EL4J CUSTOMIZATION -->
+                    <version>2.1-20060908.102132-1</version>
+                    <!--version>2.1-el4j_20080110_1520</version--> <!-- EL4J CUSTOMIZATION -->
                     <configuration>
                         <source>${el4j.java.version}</source>
                         <target>${el4j.java.version}</target>
