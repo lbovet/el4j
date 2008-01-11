@@ -51,7 +51,7 @@ public class Version {
         // ensure we get an error with JDK 1.10 and later JDKs
         assert !version110OrNewer : " JDK is 1.10 or newer, update Version class";
         
-        return (versionString.compareTo("1.6")<=0);
+        return (versionString.compareTo("1.6")>=0);
     }
     
 }
