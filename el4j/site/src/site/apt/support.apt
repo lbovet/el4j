@@ -2,7 +2,7 @@
  Support
  -----
  -----
- 15 Aug 2006
+ 11 Jan 2008
  -----
 
 Support
@@ -19,9 +19,16 @@ Support
     {{{http://www.elca.ch/Solutions/Technology_Frameworks/EL4J/EL4J.php}
     commercial EL4J website}}.
 
+Known Issues
+
+  Here is a list of {{{http://el4j.svn.sourceforge.net/viewvc/*checkout*/el4j/trunk/el4j/etc/KnownIssues.txt}known issues}}.
+
+
 Forum Usage Guidelines
 
   Before posting to the forum, please:
+  
+  * Check if issue is {{{http://el4j.svn.sourceforge.net/viewvc/*checkout*/el4j/trunk/el4j/etc/KnownIssues.txt}already known}}.
 
   * Search for an existing answer to your question.
     This will save you and us time.
