@@ -1,5 +1,8 @@
 This is the convenience zip for EL4J ${project.version}
 
+A list of known issues can be found at:
+http://el4j.svn.sourceforge.net/viewvc/*checkout*/el4j/trunk/el4j/etc/KnownIssues.txt
+
 The scripts work under unix and windows/cygwin!
 
 If you are new to Maven and EL4J, please refer to 
