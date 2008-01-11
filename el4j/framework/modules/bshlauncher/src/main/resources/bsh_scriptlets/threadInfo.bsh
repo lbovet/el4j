@@ -1,10 +1,11 @@
 import java.lang.management.*;
+import ch.elca.el4j.util.codingsupport.Version;
 
 threadInfo(){
     ThreadMXBean tmb = ManagementFactory.getThreadMXBean();
     System.out.println("Peak thread cnt:"+ tmb.getPeakThreadCount() );
     
-    if (System.getProperty("java.specification.version").equals("1.6")) {
+    if (Version.isJdk16OrNewer()) {
     	System.out.println("Deadlocked Thread:"+ tmb.findDeadlockedThreads() );
     }
 }
