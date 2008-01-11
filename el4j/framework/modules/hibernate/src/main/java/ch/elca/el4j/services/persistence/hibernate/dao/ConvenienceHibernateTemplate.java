@@ -3,13 +3,20 @@ package ch.elca.el4j.services.persistence.hibernate.dao;
 import java.io.Serializable;
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.HibernateOptimisticLockingFailureException;
 import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.util.Assert;
 
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.search.QueryObject;
@@ -206,6 +213,9 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
      * Overload parent class to support also a constraint
      *  of the id of the first result to load. 
      * {@inheritDoc}
+     * 
+     *  TODO shall we drop this and instead use the
+     *   findByCriteria(DetachedCriteria,int,int) method? 
      */
     protected void prepareQuery(Query queryObject) {
         super.prepareQuery(queryObject);
@@ -216,6 +226,32 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
         
     }
 
+    /**
+     * Count number of results of a search.
+     * @param criteria
+     * @param firstResult
+     * @param maxResults
+     * @return
+     * @throws DataAccessException
+     */
+    public int findCountByCriteria(final DetachedCriteria criteria)
+       throws DataAccessException {
+
+        Assert.notNull(criteria, "DetachedCriteria must not be null");
+        Object result =  execute(new HibernateCallback() {
+            public Object doInHibernate(Session session) throws HibernateException {
+                Criteria executableCriteria = criteria.getExecutableCriteria(session);
+                executableCriteria.setProjection( Projections.rowCount() );
+                
+                prepareCriteria(executableCriteria);
+
+                return executableCriteria.uniqueResult();
+            }
+        }, true);
+                      
+        return (Integer)result; 
+    }
+    
     public int getFirstResult() {
         return m_firstResult;
     }

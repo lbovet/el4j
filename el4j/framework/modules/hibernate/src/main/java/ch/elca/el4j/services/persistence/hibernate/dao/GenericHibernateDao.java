@@ -175,6 +175,30 @@ public class GenericHibernateDao<T, ID extends Serializable>
 
     /**
      * {@inheritDoc}
+     * 
+     * This method supports paging (see QueryObject for info on 
+     *  how to use this).
+     * 
+     * @return how many elements do we find with the given query 
+     */
+    @SuppressWarnings("unchecked")
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public int findCountByQuery(QueryObject q) throws DataAccessException {
+        DetachedCriteria hibernateCriteria = CriteriaTransformer.transform(q,
+            getPersistentClass());
+        
+        ConvenienceHibernateTemplate template = getConvenienceHibernateTemplate(); 
+        template.setMaxResults(q.getMaxResults());
+        
+        if (q.getFirstResult() != QueryObject.NO_CONSTRAINT){
+            template.setFirstResult(q.getFirstResult());
+        }      
+        
+        return template.findCountByCriteria(hibernateCriteria);
+    }    
+    
+    /**
+     * {@inheritDoc}
      */
     @ReturnsUnchangedParameter
     @SuppressWarnings("unchecked")
