@@ -65,6 +65,7 @@ import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.logging.LogEnabled;
 import org.codehaus.plexus.logging.Logger;
 import org.codehaus.plexus.util.IOUtil;
+import org.codehaus.plexus.util.StringUtils;
 
 /**
  * Abstract base plugin which takes care of the common stuff usually needed by maven IDE plugins. A plugin extending
@@ -197,6 +198,22 @@ public abstract class AbstractIdeSupportMojo
      * @parameter expression="${downloadJavadocs}"
      */
     protected boolean downloadJavadocs;
+    
+    /**
+     * Artifacts with groupIds that starts with the given strings will always be
+     * handled as reactor projects. By default this feature is disabled.
+     * 
+     * Multiple groupId prefixes must be delimited with a comma. 
+     * 
+     * @parameter expression="${reactorProjectGroupIdPrefixes}"
+     */
+    private String reactorProjectGroupIdPrefixes;
+    
+    /**
+     * Interal parsed version of the parameter
+     * {@link #reactorProjectGroupIdPrefixes}.
+     */
+    private String[] internalReactorProjectGroupIdPrefixes;
 
     /**
      * Plexus logger needed for debugging manual artifact resolution.
@@ -401,6 +418,22 @@ public abstract class AbstractIdeSupportMojo
     public void setDownloadSources( boolean downloadSources )
     {
         this.downloadSources = downloadSources;
+    }
+
+    /**
+     * @return Returns the reactorProjectGroupIdPrefixes.
+     */
+    public String getReactorProjectGroupIdPrefixes() {
+        return reactorProjectGroupIdPrefixes;
+    }
+
+    /**
+     * @param reactorProjectGroupIdPrefixes 
+     *        Are the reactorProjectGroupIdPrefixes to set.
+     */
+    public void setReactorProjectGroupIdPrefixes(
+        String reactorProjectGroupIdPrefixes) {
+        this.reactorProjectGroupIdPrefixes = reactorProjectGroupIdPrefixes;
     }
 
     protected void setResolveDependencies( boolean resolveDependencies )
@@ -777,6 +810,36 @@ public abstract class AbstractIdeSupportMojo
      */
     private boolean isAvailableAsAReactorProject( Artifact artifact )
     {
+        /** 
+         * If the given artifact's groupId starts with the given string, the 
+         * artifact will be handled as a reactor project.
+         */
+        if (!StringUtils.isEmpty(getReactorProjectGroupIdPrefixes())) {
+            if (internalReactorProjectGroupIdPrefixes == null) {
+                internalReactorProjectGroupIdPrefixes 
+                    = getReactorProjectGroupIdPrefixes().split(",");
+                List l = new ArrayList();
+                for (int i = 0; i < internalReactorProjectGroupIdPrefixes.length; i++) {
+                    if (!StringUtils.isEmpty(internalReactorProjectGroupIdPrefixes[i])) {
+                        l.add(internalReactorProjectGroupIdPrefixes[i].trim());
+                    }
+                }
+                if (l.size() > 0) {
+                    internalReactorProjectGroupIdPrefixes
+                        = (String[]) l.toArray(new String[l.size()]);
+                } else {
+                    internalReactorProjectGroupIdPrefixes = new String[0];
+                }
+            }
+            String groupId = artifact.getGroupId();
+            for (int i = 0; i < internalReactorProjectGroupIdPrefixes.length; i++) {
+                if (groupId.startsWith(
+                    internalReactorProjectGroupIdPrefixes[i])) {
+                    return true;
+                }
+            }
+        }
+        
         if ( reactorProjects != null )
         {
             for ( Iterator iter = reactorProjects.iterator(); iter.hasNext(); )
