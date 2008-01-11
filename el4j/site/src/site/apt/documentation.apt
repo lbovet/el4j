@@ -2,7 +2,7 @@
  Documentation
  -----
  -----
- 15 Aug 2006
+ 11 Jan 2008
  -----
 
 Documentation
@@ -14,7 +14,10 @@ Documentation
 
     * {{{docs/pdf/GettingStarted.pdf}
       Getting Started Documentation (PDF)}}
-      
+
+    * {{{docs/pdf/GettingStartedDeveloper.pdf}
+      Additional Getting Started Documentation for developers (PDF)}}
+
     * {{{docs/pdf/Maven2Course_v1_3.pdf}
       A presentation about our use of Maven (PDF)}}    
 
