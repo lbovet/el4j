@@ -97,31 +97,6 @@
 		</plugins>
 	</reporting>
 	
-	<repositories>
-		<repository>
-			<id>apache-repo</id>
-			<name>apache-repo</name>
-			<url>http://myfaces.zones.apache.org/dist/maven-repository</url>
-		</repository>
-		<repository>
-			<id>softeu-repo</id>
-			<url>http://maven.softeu.cz</url>
-		</repository>
-		<!-- maybe one day you'll find useful seam stuff here... -->
-		<!-- <repository>
-			<id>jboss-repo</id>
-			<url>http://repository.jboss.org/maven2</url>
-		</repository> -->
-		<repository>
-			<id>el4j-repo</id>
-			<url>http://el4.elca-services.ch/el4j/maven2repository</url>
-		</repository>
-		<repository>
-			<id>el4j-repo-snapshots</id>
-			<url>http://el4.elca-services.ch/el4j/maven2snapshots/</url>
-		</repository>				
-	</repositories>
-	
 	<pluginRepositories>
         <pluginRepository>
             <id>codehaus-repo</id>
@@ -134,7 +109,7 @@
 	</pluginRepositories>
 
 	<properties>
-		<seam.version>2.0.0.BETA1</seam.version>
+		<seam.version>2.0.0.GA</seam.version>
 		<hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
 		<hibernate.jdbc.batch_size>20</hibernate.jdbc.batch_size>
 		<hibernate.show_sql>true</hibernate.show_sql>
