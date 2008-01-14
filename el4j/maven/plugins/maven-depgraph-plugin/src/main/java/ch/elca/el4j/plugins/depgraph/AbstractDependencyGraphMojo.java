@@ -21,6 +21,7 @@ package ch.elca.el4j.plugins.depgraph;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -32,12 +33,16 @@ import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.resolver.ArtifactCollector;
 import org.apache.maven.artifact.resolver.ArtifactResolver;
+import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.shared.dependency.tree.DependencyNode;
 import org.apache.maven.shared.dependency.tree.DependencyTreeBuilder;
 import org.apache.maven.shared.dependency.tree.DependencyTreeBuilderException;
+import org.apache.maven.shared.dependency.tree.filter.ArtifactDependencyNodeFilter;
+import org.apache.maven.shared.dependency.tree.traversal.BuildingDependencyNodeVisitor;
+import org.apache.maven.shared.dependency.tree.traversal.FilteringDependencyNodeVisitor;
 
 /**
  * 
@@ -50,7 +55,7 @@ import org.apache.maven.shared.dependency.tree.DependencyTreeBuilderException;
  *    "$Author$"
  * );</script>
  *
- * @author Philippe Jacot (PJA)
+ * @author Philippe Jacot (PJA), Claude Humard (CHD)
  * @requiresDependencyResolution test
  */
 public abstract class AbstractDependencyGraphMojo extends AbstractMojo {   
@@ -288,10 +293,12 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
         } catch (DependencyTreeBuilderException e) {
             s_log.error("Error resolving artifacts", e);
         }
+        
+        DependencyNode filteredNodes = applyDependencyFilter(rootNode, filter);
 
-        s_log.debug(rootNode.toNodeString());
+        s_log.debug(filteredNodes.toNodeString());
 
-        transformDependencyNodeToGraph(rootNode, graph);
+        transformDependencyNodeToGraph(filteredNodes, graph);
     }
 
     /**
@@ -335,6 +342,7 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
      * @param graph
      *            DependencyGraph to remove unused DepGraphArtifacts from.
      */
+    @SuppressWarnings("unchecked")
     private void removeUnusedArtifacts(DependencyGraph graph) {
         if (filterEmptyArtifacts) {
             // Create a list artifacts someone is depending on
@@ -364,7 +372,7 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
      * @return The projector
      */
     protected DepGraphProjector getProjector() {
-        // TODO: Implement properly so the actual projector used can be inejcted
+        // TODO: Implement properly so the actual projector used can be injected
 
         if (m_projector == null) {
             s_log.info(
@@ -456,5 +464,69 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
         DepGraphArtifact artifact = graph.getArtifact(a.getArtifactId(), a
             .getGroupId(), a.getVersion(), a.getScope(), a.getType(), omitted);
         return artifact;
+    }
+    
+    /**
+     * Apply specified ArtifactFilter to the dependency tree with the specified rootNode on top.
+     * The rootNode can not be filtered out to avoid several not connected subtrees.
+     * The resulting dependency tree contains at least the rootNode and all dependent artifacts, which 
+     * satisfy the specified filter. The children of a filtered out artifact are also traversed.
+     * <code><pre>
+     * Example 1
+     * 
+     * Input tree: A -> B -> C
+     * Filter: "C"
+     * Output tree: A -> C
+     * </pre></code>
+     * (Root node "A" is added anyway, "B" is filtered out, "C" and "D" satisfy filter and is added)
+     * 
+     * <code><pre>
+     * Example 2
+     * 
+     * Input tree: A --> B -> D
+     *               \-> C
+     * Filter: "C | D"
+     * Output tree: A --> D
+     *                \-> C
+     * </pre></code>
+     * (This example shows why the root node has to be added anyway: if node "A" would be ignored, we
+     * had two non-connecting trees with D and C as root nodes)
+     * 
+     * <code><pre>
+     * Example 3
+     * 
+     * Input tree: A -> B --> D
+     *                    \-> C
+     * Filter: "C | D"
+     * Output tree: A --> D
+     *                \-> C
+     * </pre></code>
+     * 
+     * @param rootNode
+     * @param filter
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    private DependencyNode applyDependencyFilter(DependencyNode rootNode,
+        ArtifactFilter filter) {
+        BuildingDependencyNodeVisitor buildingVisitor = new BuildingDependencyNodeVisitor();
+        FilteringDependencyNodeVisitor filteringVisitor = new FilteringDependencyNodeVisitor(
+            buildingVisitor, new ArtifactDependencyNodeFilter(filter));
+
+        // force adding of rootNode to result tree, i.e. rootNode can not be filtered out
+        buildingVisitor.visit(rootNode);
+
+        // traverse children of rootNode using filteringVisitor
+        for (Iterator iterator = rootNode.getChildren().iterator(); iterator
+            .hasNext();) {
+            DependencyNode child = (DependencyNode) iterator.next();
+
+            child.accept(filteringVisitor);
+        }
+
+        // force endVisit of rootNode
+        buildingVisitor.endVisit(rootNode);
+
+        return buildingVisitor.getDependencyTree();
     }
 }
