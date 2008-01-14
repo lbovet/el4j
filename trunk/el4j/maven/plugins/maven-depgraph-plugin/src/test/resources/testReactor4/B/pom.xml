@@ -1,0 +1,18 @@
+<?xml version="1.0"?><project>
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>ch.elca.tr4.g1</groupId>
+  <artifactId>B</artifactId>
+  <packaging>jar</packaging>
+  <name>Project B</name>
+  <version>1.0</version>
+  
+  <dependencies>
+    <dependency>
+      <groupId>ch.elca.tr4.g2</groupId>
+      <artifactId>C</artifactId>
+      <version>1.0</version>
+    </dependency>
+  </dependencies>
+  
+</project>
