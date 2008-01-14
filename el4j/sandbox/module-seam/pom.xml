@@ -8,25 +8,8 @@
 	<artifactId>module-seam</artifactId>
 	<name>JBoss Seam Module</name>
 	<packaging>jar</packaging>
-	<version>2.0.0.CR1</version>
+	<version>1.0-SNAPSHOT</version>
 	<description>JBoss Seam Module including JSF/Facelets and RichFaces</description>
-	
-	<organization>
-		<name>JBoss Inc.</name>
-		<url>http://www.jboss.com</url>
-	</organization>
-
-	<licenses>
-		<license>
-			<name>LGPL</name>
-			<url>http://www.gnu.org/licenses/lgpl.html</url>
-		</license>
-	</licenses>
-
-	<issueManagement>
-		<system>JIRA</system>
-		<url>http://jira.jboss.org/jira/browse/JBSEAM</url>
-	</issueManagement>
 	
 	<parent>
 		<groupId>ch.elca.el4j.modules</groupId>
@@ -36,64 +19,53 @@
 
 	<!-- NOTE: You can't find usable Seam / RichFaces stuff in maven repositories
 	           by the end of september 2007. So we had to manually install the
-			   .jar files delivered with Seam into our elca-services repository. -->
+			  .jar files delivered with Seam into our elca-services repository.
+			  TODO we now use the official repository -> delete jars on elca-services? -->
 	<dependencies>
 		<!-- JBoss Seam -->
 		<dependency>
 			<groupId>org.jboss.seam</groupId>
 			<artifactId>jboss-seam</artifactId>
-			<version>2.0.0.CR1</version>
+			<version>2.0.0.GA</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.seam</groupId>
 			<artifactId>jboss-seam-ui</artifactId>
-			<version>2.0.0.CR1</version>
+			<version>2.0.0.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.seam</groupId>
+			<artifactId>jboss-seam-ioc</artifactId>
+			<version>2.0.0.GA</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.seam</groupId>
 			<artifactId>jboss-seam-debug</artifactId>
-			<version>2.0.0.CR1</version>
+			<version>2.0.0.GA</version>
 		</dependency>
 		
 		<!-- JBoss EL -->
 		<dependency>
-			<groupId>org.jboss.el</groupId>
-			<artifactId>jboss-el</artifactId>
-			<version>2.0.0.CR1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.el</groupId>
-			<artifactId>jboss-el-api</artifactId>
-			<version>2.0.0.CR1</version>
-		</dependency>
-		
-		<!-- The ominous thirdparty-all & jboss-common .jar's -->
-		<dependency>
 			<groupId>org.jboss.seam</groupId>
-			<artifactId>thirdparty-all</artifactId>
-			<version>2.0.0.CR1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss</groupId>
-			<artifactId>jboss-common</artifactId>
-			<version>2.0.0.CR1</version>
+			<artifactId>jboss-el</artifactId>
+			<version>2.0.0.GA</version>
 		</dependency>
 		
 		<!-- JBoss RichFaces -->
 		<dependency>
-			<groupId>org.richfaces</groupId>
+			<groupId>org.richfaces.framework</groupId>
 			<artifactId>richfaces-api</artifactId>
-			<version>3.1.1-SNAPSHOT</version>
+			<version>3.1.3.GA</version>
 		</dependency>
 		<dependency>
-			<groupId>org.richfaces</groupId>
+			<groupId>org.richfaces.framework</groupId>
 			<artifactId>richfaces-impl</artifactId>
-			<version>3.1.1-SNAPSHOT</version>
+			<version>3.1.3.GA</version>
 		</dependency>
 		<dependency>
-			<groupId>org.richfaces</groupId>
+			<groupId>org.richfaces.ui</groupId>
 			<artifactId>richfaces-ui</artifactId>
-			<version>3.1.1-SNAPSHOT</version>
+			<version>3.1.3.GA</version>
 		</dependency>
 		
 		<!-- Java Server Faces and Facelets -->
@@ -113,4 +85,19 @@
 			<version>1.1.13</version>
 		</dependency>
 	</dependencies>
+	<repositories>
+		<repository>
+			<id>apache-repo</id>
+			<name>apache-repo</name>
+			<url>http://myfaces.zones.apache.org/dist/maven-repository</url>
+		</repository>
+		<repository>
+			<id>softeu-repo</id>
+			<url>http://maven.softeu.cz</url>
+		</repository>
+		<repository>
+			<id>jboss-repo</id>
+			<url>http://repository.jboss.org/maven2</url>
+		</repository>				
+	</repositories>
 </project>
