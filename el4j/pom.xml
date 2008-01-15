@@ -686,6 +686,11 @@
                     <artifactId>maven-jaxws-plugin</artifactId>
                     <version>${version.maven-jaxws-plugin}</version>
                 </plugin>
+                <plugin>
+                    <groupId>ch.elca.el4j.maven.plugins</groupId>
+                    <artifactId>maven-rec-plugin</artifactId>
+                    <version>${version.maven-rec-plugin}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
         <extensions>
@@ -2015,6 +2020,9 @@
         <version.maven-jaxws-plugin>
             1.1-SNAPSHOT
         </version.maven-jaxws-plugin>
+        <version.maven-rec-plugin>
+            1.0-SNAPSHOT
+        </version.maven-rec-plugin>
 
         <!-- EL4J framework module version numbers -->
         <version.module-core>
