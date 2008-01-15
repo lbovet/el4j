@@ -1,45 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
     <!-- $Revision$ -->
     <!-- $URL$ -->
     <!-- $Date$ -->
     <!-- $Author$ -->
-    
-    <bean id="keywordDao" parent="abstractDao" class="ch.elca.el4j.apps.keyword.dao.impl.hibernate.HibernateKeywordDao"/>
+
+ 	 <!--  we show here one old-style dao configuration (the nicer way is to auto collect them, see the
+ 	        context:component-scan section) -->
     <bean id="linkDao" parent="abstractDao" class="ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateLinkDao"/>
-    <bean id="formalPublicationDao" parent="abstractDao" class="ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateFormalPublicationDao"/>
-    <bean id="bookDao" parent="abstractDao" class="ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateBookDao"/>
-    <bean id="annotationDao" parent="abstractDao" class="ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateAnnotationDao"/>
-    <bean id="fileDao" parent="abstractDao" class="ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateFileDao"/>
-    <bean id="fileDescriptorViewDao" parent="abstractDao" class="ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateFileDescriptorViewDao"/>
     
-    <!-- Hibernate Session Factory Bean -->
-    <!--  use a one that makes annotations possible -->
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-        <!-- <property name="mappingResources">
-            <list>
-                <value>etc/hibernate/Keyword.hbm.xml</value>
-                <value>etc/hibernate/Reference.hbm.xml</value>
-                <value>etc/hibernate/Annotation.hbm.xml</value>
-                <value>etc/hibernate/File.hbm.xml</value>
-                <value>etc/hibernate/FileDescriptorView.hbm.xml</value>
-            </list>
-        </property>-->
-        <property name="annotatedClasses">
-            <list>
-            	<value>ch.elca.el4j.apps.keyword.dom.Keyword</value>
-            	<value>ch.elca.el4j.apps.refdb.dom.Annotation</value>
-            	<value>ch.elca.el4j.apps.refdb.dom.File</value>
-            	<value>ch.elca.el4j.apps.refdb.dom.FileDescriptorView</value>
-            	<value>ch.elca.el4j.apps.refdb.dom.Reference</value>
-            	<value>ch.elca.el4j.apps.refdb.dom.Link</value>
-            	<value>ch.elca.el4j.apps.refdb.dom.FormalPublication</value>
-            	<value>ch.elca.el4j.apps.refdb.dom.Book</value>
-        	</list>
-        </property>
+     
+      <!--  This section scans for DAOs annotated with @AutocollectedGenericDao that should be 
+	       added to the spring application context (as beans). Later, the DAO Registry
+	       automatically collects these DAOs. -->
+       <!-- 	The attribute base-packages indicates the packages where we look for DAOs  -->	       
+	<context:component-scan use-default-filters="false"
+		annotation-config="false"	
+		base-package="ch.elca.el4j.apps.keyword.dao,ch.elca.el4j.apps.refdb.dao.impl.hibernate">
+		<context:include-filter type="annotation"
+			expression="ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao" />
+	</context:component-scan>
+
+
+	<!-- Inits the session factory in all the GenericDaos registered in the spring application context-->
+	<bean id="injectionPostProcessor"
+		class="ch.elca.el4j.services.persistence.hibernate.dao.HibernateSessionFactoryInjectorBeanPostProcessor" />
+    
+    
+    <!-- Convenience Hibernate Session Factory Bean: it autocollects all @entity-annotated classes in 
+          the Java packages given under the property autoDetectEntityPackage -->
+    <bean id="sessionFactory" class="ch.elca.el4j.services.persistence.hibernate.entityfinder.EntityDetectorAnnotationSessionFactoryBean">
+    
+    		<!-- the packages that entity auto-detection will browse.	-->
+        <property name="autoDetectEntityPackage">
+           <list>
+	         <value>ch.elca.el4j.apps.keyword.dom</value>
+             <value>ch.elca.el4j.apps.refdb.dom</value>        
+	       </list>
+      	</property>
         <property name="hibernateProperties">
             <props>
                	<prop key="hibernate.dialect">${databaseDialect}</prop>

@@ -18,6 +18,7 @@ package ch.elca.el4j.apps.refdb.dao.impl.ibatis;
 
 import ch.elca.el4j.apps.refdb.dao.FileDao;
 import ch.elca.el4j.apps.refdb.dom.File;
+import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
 
 /**
  * 
@@ -32,6 +33,7 @@ import ch.elca.el4j.apps.refdb.dom.File;
  *
  * @author Alex Mathey (AMA)
  */
+@AutocollectedGenericDao("fileDao")
 public class SqlMapFileDao extends GenericSqlMapFileDao<File, Integer>
     implements FileDao {
     

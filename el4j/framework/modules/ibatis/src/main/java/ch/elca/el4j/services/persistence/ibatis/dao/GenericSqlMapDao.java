@@ -18,6 +18,7 @@
 package ch.elca.el4j.services.persistence.ibatis.dao;
 
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 import java.util.List;
 
@@ -59,25 +60,33 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * 
  * @author Alex Mathey (AMA)
  */
-public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,
-    ID extends Serializable> 
-    extends ConvenienceSqlMapClientDaoSupport
-    implements ConvenienceGenericDao<T, ID>, InitializingBean {
-    
+public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,ID extends Serializable> 
+        extends ConvenienceSqlMapClientDaoSupport implements ConvenienceGenericDao<T, ID>, InitializingBean {
+
+    @SuppressWarnings("unchecked")
+       public GenericSqlMapDao() {
+        try {
+            this.m_persistentClass = (Class<T>) ((ParameterizedType) 
+                    getClass().getGenericSuperclass()).
+                    getActualTypeArguments()[0];
+        } catch (Exception e){ 
+            // ignore issues (e.g. when the subclass is not a parametrized type)
+            //  in that case, one needs to set the persistencClass otherwise.
+        }
+    }
+
     /**
      * The domain class this DAO is responsible for.
      */
     private Class<T> m_persistentClass;
-    
+
     /**
+     * This call is no longer required
+     * 
      * @param c
      *            Mandatory. The domain class this DAO is responsible for.
      */
-    // Since it is impossible to determine the actual type of a type 
-    // parameter (!), we resort to requiring the caller to provide the
-    // actual type as parameter, too.
     public void setPersistentClass(Class<T> c) {
-        assert m_persistentClass == null;
         Reject.ifNull(c);
         m_persistentClass = c;
     }
@@ -101,9 +110,9 @@ public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,
     @SuppressWarnings("unchecked")
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public T findById(ID id) 
-        throws DataAccessException, DataRetrievalFailureException {
+    	throws DataAccessException, DataRetrievalFailureException {
         return (T) getConvenienceSqlMapClientTemplate()
-            .queryForObjectStrong("get" + getPersistentClassName() + "ByKey",
+        .queryForObjectStrong("get" + getPersistentClassName() + "ByKey",
                 id, getPersistentClassName());
     }
 
@@ -119,7 +128,7 @@ public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<T> getAll() throws DataAccessException {
         List<T> result = getConvenienceSqlMapClientTemplate().queryForList(
-            "getAll" + getPersistentClassName() + "s", null);
+                "getAll" + getPersistentClassName() + "s", null);
         return CollectionUtils.asList(result);
     }
 
@@ -142,7 +151,7 @@ public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,
     public List<T> findByQuery(QueryObject q) throws DataAccessException {
         Reject.ifNull(q);
         List<T> result = getConvenienceSqlMapClientTemplate().queryForList(
-            "search" + getPersistentClassName() + "s", q.getCriteriaList());
+                "search" + getPersistentClassName() + "s", q.getCriteriaList());
         return CollectionUtils.asList(result);
     }
 
@@ -157,11 +166,11 @@ public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,
     @ReturnsUnchangedParameter
     @SuppressWarnings("unchecked")
     @Transactional(propagation = Propagation.REQUIRED)
-    public T saveOrUpdate(T entity) throws DataAccessException,
-        DataIntegrityViolationException, OptimisticLockingFailureException {
+    public T saveOrUpdate(T entity) throws DataAccessException, 
+    		DataIntegrityViolationException, OptimisticLockingFailureException {
         Reject.ifNull(entity);
         getConvenienceSqlMapClientTemplate().insertOrUpdate(entity,
-            getPersistentClassName());
+                getPersistentClassName());
         return entity;
     }
 
@@ -175,12 +184,12 @@ public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public void delete(T entity) throws DataAccessException,
-        DataIntegrityViolationException, OptimisticLockingFailureException {
+    		DataIntegrityViolationException, OptimisticLockingFailureException {
         getConvenienceSqlMapClientTemplate().deleteStrong(
-            "delete" + getPersistentClassName(), entity,
-            getPersistentClassName());
+                "delete" + getPersistentClassName(), entity,
+                getPersistentClassName());
     }
-    
+
     /**
      * {@inheritDoc}
      * 
@@ -191,13 +200,12 @@ public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,
      */
     @SuppressWarnings("unchecked")
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public T refresh(T entity)
-        throws DataAccessException, DataRetrievalFailureException {
+    public T refresh(T entity) throws DataAccessException, DataRetrievalFailureException {
         return (T) getConvenienceSqlMapClientTemplate()
-            .queryForObjectStrong("refresh" + getPersistentClassName(),
+        .queryForObjectStrong("refresh" + getPersistentClassName(),
                 entity, getPersistentClassName());
     }
-    
+
     /**
      * {@inheritDoc}
      * 
@@ -207,24 +215,23 @@ public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,
      * deleteOBJECTNAMEById.
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void delete(ID id)
-        throws OptimisticLockingFailureException, DataAccessException {
+    public void delete(ID id) throws OptimisticLockingFailureException, DataAccessException {
         getConvenienceSqlMapClientTemplate().deleteStrong(
-            "delete" + getPersistentClassName() + "ById", id, 
-            getPersistentClassName());
+                "delete" + getPersistentClassName() + "ById", id, 
+                getPersistentClassName());
     }
 
     /** {@inheritDoc} */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void delete(Collection<T> entities)
-        throws OptimisticLockingFailureException, DataAccessException {
+    public void delete(Collection<T> entities) 
+    	throws OptimisticLockingFailureException, DataAccessException {
         for (T entity : entities) {
             getConvenienceSqlMapClientTemplate().deleteStrong("delete" 
-                + getPersistentClassName(), entity.getKeyAsObject(),
-                getPersistentClassName());
+                    + getPersistentClassName(), entity.getKeyAsObject(),
+                    getPersistentClassName());
         }
     }
-    
+
     /**
      * Returns the simple name of the persistent class this DAO is responsible
      * for.
@@ -241,6 +248,6 @@ public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,
      */
     public int findCountByQuery(QueryObject query) throws DataAccessException {
         throw new NotImplementedException("findCountByQuery is not implemented " 
-            +" by default");
+                +" by default");
     }
 }

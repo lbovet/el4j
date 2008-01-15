@@ -12,6 +12,9 @@
     <!-- $Date$ -->
     <!-- $Author$ -->
 
+    <!--  This is still old-style configu.
+          for new-style configuration with ibatis, please refer to the refdb demo -->
+
     <bean id="keywordDao" parent="abstractDao" class="ch.elca.el4j.apps.keyword.dao.impl.ibatis.SqlMapKeywordDao"/>
         
 </beans>

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.elca.el4j.apps.refdb.dao.BookDao;
 import ch.elca.el4j.apps.refdb.dom.Book;
+import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
 import ch.elca.el4j.services.persistence.hibernate.criteria.CriteriaTransformer;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.AbstractCriteria;
@@ -31,6 +32,7 @@ import ch.elca.el4j.services.search.criterias.IncludeCriteria;
  *
  * @author Alex Mathey (AMA)
  */
+@AutocollectedGenericDao("bookDao")
 public class HibernateBookDao
     extends GenericHibernateReferenceDao<Book, Integer>
     implements BookDao {

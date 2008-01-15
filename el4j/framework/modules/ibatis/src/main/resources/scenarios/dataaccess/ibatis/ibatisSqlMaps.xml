@@ -18,6 +18,7 @@
     <!-- $Date$ -->
     <!-- $Author$ -->
     
+    		  
     <bean id="convenienceSqlMapClientTemplate" 
         name="sqlMapClientTemplate"
         class="ch.elca.el4j.services.persistence.ibatis.dao.ConvenienceSqlMapClientTemplate">
@@ -35,6 +36,7 @@
             </bean>
         </property>
     </bean>
+    
     <bean id="sqlMapClientConfigurator" 
         class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
         <property name="configLocation">
