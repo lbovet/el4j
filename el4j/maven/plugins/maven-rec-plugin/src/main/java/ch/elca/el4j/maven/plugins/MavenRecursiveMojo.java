@@ -112,11 +112,13 @@ public class MavenRecursiveMojo extends AbstractMojo {
      */
     public void execute() throws MojoExecutionException, MojoFailureException {
         if (command == null || command.trim().equals("")) {
-            System.exit(300);
+            getLog().error("No commands defined!");
+            System.exit(1);
         }
 
         if (!isAllowedPackaging(m_project.getPackaging())) {
-            System.exit(600);
+            getLog().error("Wrong packaging type: " + m_project.getPackaging());
+            System.exit(2);
         }
 
         /*
@@ -142,7 +144,21 @@ public class MavenRecursiveMojo extends AbstractMojo {
         /*
          * Execute the provided shell-command within all directories in the list
          */
-        executeCommandInDirectories(executionDirectories);
+        List<File> successDirs = executeCommandInDirectories(executionDirectories);
+        
+        /*
+         * Printout list of directories where command execution failed
+         */
+        executionDirectories.removeAll(successDirs);
+        if (executionDirectories.size() > 0) {
+            getLog().info(
+                "[MavenRec] Execution failed in the following directories:");
+            getLog().info(executionDirectories.toString());
+        } else {
+            getLog().info("");
+            getLog().info("[MavenRec] Successful done!");
+            getLog().info("");
+        }
     }
 
     /**
@@ -325,9 +341,12 @@ public class MavenRecursiveMojo extends AbstractMojo {
      * 
      * @param executionDirectories
      *            list of directories where to execute the shell-command.
+     * @return List of directories where command has been executed successfully.
      */
-    private void executeCommandInDirectories(List<File> executionDirectories) {
+    private List<File> executeCommandInDirectories(List<File> executionDirectories) {
 
+        List<File> successfulExecuted = new ArrayList<File>();
+        
         for (File dir : executionDirectories) {
             getLog().info(
                 "[MavenRec] Execute command \"mvn " + command + "\" in <"
@@ -347,17 +366,15 @@ public class MavenRecursiveMojo extends AbstractMojo {
 
                 CommandLineUtils.executeCommandLine(cl, systemOut, systemOut);
 
-                // Runtime.getRuntime().exec(command, null, dir);
-                // } catch (IOException e) {
-                // getLog().warn(
-                // "Command could not be executed in " + dir.getAbsolutePath()
-                // + "!", e);
+                successfulExecuted.add(dir);
             } catch (CommandLineException e) {
                 getLog().warn(
                     "Command could not be executed in " + dir.getAbsolutePath()
-                        + "!", e);
+                        + "!\n" + e.getMessage());
             }
         }
+        
+        return successfulExecuted;
     }
 
     /**
@@ -395,7 +412,8 @@ public class MavenRecursiveMojo extends AbstractMojo {
     /**
      * Searches recursively in the specified directory and in all subdirectories
      * for pom-files which define local jar/war-projects. Creates a
-     * ProjectData-object and puts them into the specified map.
+     * ProjectData-object and puts them into the specified map. If this
+     * directory does not contain a pom-file, subdirectories are ignored.
      * 
      * @param dir
      *            the directory where to start the recursive search.
@@ -410,15 +428,18 @@ public class MavenRecursiveMojo extends AbstractMojo {
         File pom = new File(dir, pomFileName);
         ProjectData projectData = null;
         
-        if (pom.isFile()) {
-            try {
-                projectData = parsePom(pom);
-            } catch (Exception e) {
-                // skip current pom if an exception occurs and print warn
-                // message
-                getLog().warn(e);
-                projectData = null;
-            }
+        // ignore dir and its sub-dirs if no pom exists
+        if (!pom.isFile()) {
+            return;
+        }
+        
+        try {
+            projectData = parsePom(pom);
+        } catch (Exception e) {
+            // skip current pom if an exception occurs and print warn
+            // message
+            getLog().warn(e);
+            projectData = null;
         }
 
         if (projectData != null
@@ -433,7 +454,7 @@ public class MavenRecursiveMojo extends AbstractMojo {
             }
         }
 
-        // call recursive for each subdir
+        // recursive call for each subdir
         File[] subDirs = dir.listFiles(new FileFilter() {
             public boolean accept(File file) {
                 return (file != null && file.isDirectory());
