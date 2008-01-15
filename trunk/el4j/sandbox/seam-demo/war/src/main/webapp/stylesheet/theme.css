@@ -1,3 +1,7 @@
+.rich-stglpanel-body {
+overflow: auto;
+} 
+
 a:active, a:link, a:visited {
 	color: #0D5798;    
 }
