@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.elca.el4j.apps.refdb.dao.AnnotationDao;
 import ch.elca.el4j.apps.refdb.dom.Annotation;
+import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
 import ch.elca.el4j.util.codingsupport.CollectionUtils;
 import ch.elca.el4j.util.codingsupport.Reject;
 
@@ -40,6 +41,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  *
  * @author Alex Mathey (AMA)
  */
+@AutocollectedGenericDao("annotationDao")
 public class SqlMapAnnotationDao
     extends GenericSqlMapReferencedObjectDao<Annotation, Integer>
     implements AnnotationDao {

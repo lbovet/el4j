@@ -18,6 +18,7 @@ package ch.elca.el4j.apps.refdb.dao.impl.ibatis;
 
 import ch.elca.el4j.apps.refdb.dao.BookDao;
 import ch.elca.el4j.apps.refdb.dom.Book;
+import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
 
 /**
  * 
@@ -32,6 +33,7 @@ import ch.elca.el4j.apps.refdb.dom.Book;
  *
  * @author Alex Mathey (AMA)
  */
+@AutocollectedGenericDao("bookDao")
 public class SqlMapBookDao extends GenericSqlMapReferenceDao<Book> 
     implements BookDao {
     

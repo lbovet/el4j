@@ -18,6 +18,7 @@ package ch.elca.el4j.apps.refdb.dao.impl.ibatis;
 
 import ch.elca.el4j.apps.refdb.dao.FormalPublicationDao;
 import ch.elca.el4j.apps.refdb.dom.FormalPublication;
+import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
 
 /**
  * 
@@ -32,6 +33,7 @@ import ch.elca.el4j.apps.refdb.dom.FormalPublication;
  *
  * @author Alex Mathey (AMA)
  */
+@AutocollectedGenericDao("formalPublicationDao")
 public class SqlMapFormalPublicationDao
     extends GenericSqlMapReferenceDao<FormalPublication> 
     implements FormalPublicationDao {

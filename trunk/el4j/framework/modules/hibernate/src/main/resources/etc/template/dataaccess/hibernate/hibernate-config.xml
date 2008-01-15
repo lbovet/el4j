@@ -14,11 +14,21 @@
     <!-- $URL$ -->
     <!-- $Date$ -->
     <!-- $Author$ -->
-        <!-- Hibernate Session Factory Bean -->
-    <bean id="sessionFactory"
-        class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-
-        <!-- List of Hibernate mapping files -->
+    
+    
+    <!-- Convenience Hibernate Session Factory Bean: it autocollects all @entity-annotated classes in 
+          the Java packages given under the property autoDetectEntityPackage -->
+    <bean id="sessionFactory" class="ch.elca.el4j.services.persistence.hibernate.entityfinder.EntityDetectorAnnotationSessionFactoryBean">
+    
+    		<!-- the packages that our entity auto-detection will browse.	-->
+        <property name="autoDetectEntityPackage">
+           <list>
+	         <value>ch.elca.el4j.apps.keyword.dom</value>
+             <value>ch.elca.el4j.apps.refdb.dom</value>        
+	       </list>
+      	</property>        
+      	
+      	 <!-- List of Hibernate mapping files -->
         <property name="mappingResources">
             <list>
                 <value>hibernate/Booking.hbm.xml</value>
@@ -97,4 +107,6 @@
             <ref bean="dataSource" />
         </property>
     </bean>
+    
+       
 </beans>

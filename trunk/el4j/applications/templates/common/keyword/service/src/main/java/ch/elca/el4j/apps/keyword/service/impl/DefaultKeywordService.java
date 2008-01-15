@@ -85,6 +85,7 @@ public class DefaultKeywordService
      * {@inheritDoc}
      */
     public void afterPropertiesSet() throws Exception {
+    	    	
         CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
             getKeywordDao(), "keywordDao",
             this);
@@ -97,7 +98,7 @@ public class DefaultKeywordService
     public void deleteKeywords(Collection<?> keys)
         throws OptimisticLockingFailureException, DataAccessException {
         if (keys != null) {
-            Iterator it = keys.iterator();
+            Iterator<?> it = keys.iterator();
             while (it.hasNext()) {
                 Object element = it.next();
                 if (element instanceof Number) {

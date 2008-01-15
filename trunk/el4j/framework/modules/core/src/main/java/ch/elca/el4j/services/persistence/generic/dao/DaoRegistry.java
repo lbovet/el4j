@@ -39,7 +39,7 @@ public interface DaoRegistry {
      *            The class does some basic handling to tolerate (i.e. unwrap) 
      *            Spring proxies.
      * @return A fully generic or partially specific DAO for the given type, 
-     *            null if none was found.
+     *            or null if none was found.
      */
     public <T> GenericDao<T> getFor(Class<T> entityType);
     

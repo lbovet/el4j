@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.elca.el4j.apps.keyword.dao.KeywordDao;
 import ch.elca.el4j.apps.keyword.dom.Keyword;
+import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
 import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
 
 /**
@@ -40,6 +41,7 @@ import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
  *
  * @author Alex Mathey (AMA)
  */
+@AutocollectedGenericDao("keywordDao")
 public class HibernateKeywordDao
     extends GenericHibernateDao<Keyword, Integer>
     implements KeywordDao {

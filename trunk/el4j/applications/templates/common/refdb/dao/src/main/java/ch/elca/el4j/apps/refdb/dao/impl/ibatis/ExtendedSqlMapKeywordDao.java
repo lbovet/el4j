@@ -19,6 +19,7 @@ package ch.elca.el4j.apps.refdb.dao.impl.ibatis;
 import org.springframework.dao.DataAccessException;
 
 import ch.elca.el4j.apps.keyword.dao.impl.ibatis.SqlMapKeywordDao;
+import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
 
 /**
  * 
@@ -34,6 +35,7 @@ import ch.elca.el4j.apps.keyword.dao.impl.ibatis.SqlMapKeywordDao;
  *
  * @author Alex Mathey (AMA)
  */
+@AutocollectedGenericDao("keywordDao")
 public class ExtendedSqlMapKeywordDao extends SqlMapKeywordDao {
     
     /**

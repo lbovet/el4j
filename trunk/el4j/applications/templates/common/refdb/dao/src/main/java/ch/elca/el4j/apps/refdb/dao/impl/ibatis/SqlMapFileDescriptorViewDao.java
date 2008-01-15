@@ -26,6 +26,7 @@ import ch.elca.el4j.apps.refdb.Constants;
 import ch.elca.el4j.apps.refdb.dao.FileDescriptorViewDao;
 import ch.elca.el4j.apps.refdb.dom.FileDescriptorView;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
+import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
@@ -41,6 +42,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  *
  * @author Alex Mathey (AMA)
  */
+@AutocollectedGenericDao("fileDescriptorViewDao")
 public class SqlMapFileDescriptorViewDao 
     extends GenericSqlMapFileDao<FileDescriptorView, Integer>
         implements FileDescriptorViewDao {

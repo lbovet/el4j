@@ -1,23 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    Beans defined by module-core:
-       * sqlMapClientTemplate
--->
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
-
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+	
     <!-- $Revision$ -->
     <!-- $URL$ -->
     <!-- $Date$ -->
-    <!-- $Author$ -->
-    
-    <bean id="keywordDao" parent="abstractDao" class="ch.elca.el4j.apps.refdb.dao.impl.ibatis.ExtendedSqlMapKeywordDao"/>
+    <!-- $Author$ -->	
+		
+  	 <!--     Beans defined by module-core:       * sqlMapClientTemplate -->
+
+ 	 <!--  we show here one old-style dao configuration (the nicer way is to auto collect them, see the
+ 	        context:component-scan section) -->
     <bean id="linkDao" parent="abstractDao" class="ch.elca.el4j.apps.refdb.dao.impl.ibatis.SqlMapLinkDao"/>
-    <bean id="formalPublicationDao" parent="abstractDao" class="ch.elca.el4j.apps.refdb.dao.impl.ibatis.SqlMapFormalPublicationDao"/>
-    <bean id="bookDao" parent="abstractDao" class="ch.elca.el4j.apps.refdb.dao.impl.ibatis.SqlMapBookDao"/>
-    <bean id="annotationDao" parent="abstractDao" class="ch.elca.el4j.apps.refdb.dao.impl.ibatis.SqlMapAnnotationDao"/>
-    <bean id="fileDao" parent="abstractDao" class="ch.elca.el4j.apps.refdb.dao.impl.ibatis.SqlMapFileDao"/>
-    <bean id="fileDescriptorViewDao" parent="abstractDao" class="ch.elca.el4j.apps.refdb.dao.impl.ibatis.SqlMapFileDescriptorViewDao"/>
+
+
+       <!--  This section scans for DAOs annotated with @AutocollectedGenericDao that should be 
+	       added to the spring application context (as beans). Later, the DAO Registry
+	       automatically collects these DAOs. -->
+       <!-- 	The attribute "base-packages" indicates the packages where we look for DAOs  -->	       
+	<context:component-scan use-default-filters="false"
+		annotation-config="false"	
+		base-package="ch.elca.el4j.apps.refdb.dao.impl.ibatis">
+		<context:include-filter type="annotation"
+			expression="ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao" />
+	</context:component-scan>
+
+
+	<!-- Inits the sqlMapClientTemplate in all the GenericDaos registered in the spring application context-->
+	<bean id="injectionPostProcessor"
+		class="ch.elca.el4j.services.persistence.ibatis.dao.IbatisSqlMapClientTemplateInjectorBeanPostProcessor" />
     
 </beans>

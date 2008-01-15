@@ -18,6 +18,7 @@
 package ch.elca.el4j.services.persistence.hibernate.dao;
 
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 import java.util.List;
 
@@ -62,21 +63,32 @@ public class GenericHibernateDao<T, ID extends Serializable>
     implements ConvenienceGenericDao<T, ID>, InitializingBean {
     
     /**
+     * Set up the Generic Dao. Auto-derive the parametrized type.
+     */
+    @SuppressWarnings("unchecked")
+    public GenericHibernateDao() {
+    	try {
+    		this.m_persistentClass = (Class<T>) ((ParameterizedType) getClass()
+    				.getGenericSuperclass()).getActualTypeArguments()[0];
+    	} catch (Exception e){
+    		// ignore issues (e.g. when the subclass is not a parametrized type)
+    		//  in that case, one needs to set the persistencClass otherwise.
+    	}
+     }
+    
+    /**
      * The domain class this DAO is responsible for.
      */
     private Class<T> m_persistentClass;
     
     /** 
+     * New: this callback is in general no longer required (the constructor
+     *  figures the type out itself) 
+     * 
      * @param c
      *           Mandatory. The domain class this DAO is responsible for.
      */
-    // Since it is impossible to determine the actual type of a type 
-    // parameter (!), we resort to requiring the caller to provide the
-    // actual type as parameter, too.
-    // Not set in a constructor to enable easy CGLIB-proxying (passing 
-    // constructor arguments to Spring AOP proxies is quite cumbersome).
     public void setPersistentClass(Class<T> c) {
-        assert m_persistentClass == null;
         Reject.ifNull(c);
         m_persistentClass = c;
     }
