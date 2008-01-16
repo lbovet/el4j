@@ -37,13 +37,6 @@
 	        <value>ch.elca.el4j.apps.keyword.dom</value>
       	</property>
       	
-      	<!-- where package annotation are set. Is this needed?-->
-		<property name="annotatedPackages">
-			<list>
-				<value>ch.elca.el4j.apps.keyword.dom</value>
-			</list>
-		</property>
-      	
       	<property name="annotatedClasses">
 			<list>
 				<!-- only add here entities that are not automatically discovered
