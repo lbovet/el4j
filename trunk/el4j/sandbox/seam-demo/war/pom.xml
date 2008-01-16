@@ -45,6 +45,25 @@
 					<wait>false</wait>
                 </configuration>
 			</plugin>
+			
+			<!-- maven jetty plugin for comfortabke development -->
+			<plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>maven-jetty-plugin</artifactId>
+                <version>6.1.5</version>
+                <configuration>
+					<classesDirectory>../jar/target/classes</classesDirectory><!-- classes are taken from seam-demo-jar -->
+                    <scanIntervalSeconds>3</scanIntervalSeconds>
+                    <scanTargetPatterns>
+                        <scanTargetPattern>
+                            <directory>src/main/webapp/WEB-INF</directory>
+                            <includes>
+                                <include>**/*.*</include>
+                            </includes>
+                        </scanTargetPattern>
+                    </scanTargetPatterns>
+                </configuration>
+            </plugin>
 
         </plugins>
     </build>
@@ -94,5 +113,7 @@
             <artifactId>seam-demo-jar</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+		
+	
     </dependencies>
 </project>
