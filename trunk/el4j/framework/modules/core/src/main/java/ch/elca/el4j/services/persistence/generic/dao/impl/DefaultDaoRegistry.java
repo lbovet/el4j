@@ -124,8 +124,12 @@ public class DefaultDaoRegistry implements DaoRegistry, ApplicationContextAware 
             m_applicationContext.getBeanNamesForType(GenericDao.class);
         for (String name : beanNamesToLoad){
             GenericDao<?> dao = (GenericDao<?>) m_applicationContext.getBean(name);
-            initDao(dao);
-            m_daos.put(dao.getPersistentClass(),dao);
+            
+            // avoid adding a DAO again
+            if (!m_daos.values().contains(dao)) {
+            	initDao(dao);
+            	m_daos.put(dao.getPersistentClass(),dao);
+            }
         }
     }
     
