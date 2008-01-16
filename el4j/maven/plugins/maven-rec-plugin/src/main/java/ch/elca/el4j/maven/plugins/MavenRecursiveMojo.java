@@ -92,7 +92,7 @@ public class MavenRecursiveMojo extends AbstractMojo {
     /**
      * Set to true to create a bootstrap-file.
      * 
-     * @parameter expression="${bootstrap}" default-value="false"
+     * @parameter expression="${mvn.rec.bootstrap}" default-value="false"
      */
     private boolean bootstrap;
 
