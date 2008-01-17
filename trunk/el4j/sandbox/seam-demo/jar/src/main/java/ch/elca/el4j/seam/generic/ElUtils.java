@@ -140,7 +140,7 @@ public class ElUtils {
 		String relatedEntityClassName = getRelatedEntityClassName(entity, fieldName);
 		ObjectManager objectManager = (ObjectManager)Component.getInstance("objectManager");
 		
-		return objectManager.getEntities(relatedEntityClassName);
+		return objectManager.getEntitiesAsObject(relatedEntityClassName);
 	}
 	
 	public String getDefaultRelatedDetailPage(Object entity, String fieldName) {

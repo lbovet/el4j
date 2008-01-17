@@ -4,6 +4,7 @@ import static org.jboss.seam.ScopeType.CONVERSATION;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.hibernate.EntityMode;
@@ -54,7 +55,7 @@ public class ObjectManager implements Serializable, PagedEntityManager {
 	private Object m_Entity;
 	private boolean m_Managed;
 	
-	private HashMap<String,HashMap<String,Object[]>> m_Entities = new HashMap<String,HashMap<String,Object[]>>();
+	private HashMap<String,HashMap<String,List>> m_Entities = new HashMap<String,HashMap<String,List>>();
 	
 	private SerializationStrategy m_SerializationStrategy = new SimpleIntSerializationStrategy();
 	private HashMap<Object,String> m_CachedSerializedIds = new HashMap<Object,String>();
@@ -173,20 +174,20 @@ public class ObjectManager implements Serializable, PagedEntityManager {
 	 *          Sad but true... 
 	 */
 	//x @Begin(join=true)
-	public Object[] getEntities(String entityClassName) {
+	public List getEntities(String entityClassName) {
 		String restrict = searching.getRestrictionString();
 		
 		if (m_Entities.get(entityClassName) == null) {
-			m_Entities.put(entityClassName, new HashMap<String,Object[]>());
+			m_Entities.put(entityClassName, new HashMap<String,List>());
 		}
 		
-		HashMap<String,Object[]> restrictionMap = m_Entities.get(entityClassName);
+		HashMap<String,List> restrictionMap = m_Entities.get(entityClassName);
 		if (restrictionMap.get(restrict) == null) {
 			ConvenienceGenericDao dao = getDao(entityClassName);
 			QueryObject queryObject = getQuery(entityClassName);
 			
 			
-			restrictionMap.put(restrict, dao.findByQuery(queryObject).toArray());
+			restrictionMap.put(restrict, dao.findByQuery(queryObject));
 		}
 		
 		return restrictionMap.get(restrict);
@@ -199,7 +200,7 @@ public class ObjectManager implements Serializable, PagedEntityManager {
 	 * @param count
 	 * @return
 	 */
-	public Object[] getEntities(String entityClassName, int firstResult, int count) {
+	public Object[] getEntitiesAsObject(String entityClassName) {
       
         
         ConvenienceGenericDao dao = getDao(entityClassName);
@@ -207,8 +208,8 @@ public class ObjectManager implements Serializable, PagedEntityManager {
             
        
             
-        queryObject.setFirstResult(firstResult);
-        queryObject.setMaxResults(count);
+      //  queryObject.setFirstResult(firstResult);
+       // queryObject.setMaxResults(count);
         
         return dao.findByQuery(queryObject).toArray();
     }

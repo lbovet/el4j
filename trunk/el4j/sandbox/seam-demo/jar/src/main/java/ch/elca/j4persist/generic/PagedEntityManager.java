@@ -16,6 +16,8 @@
  */
 package ch.elca.j4persist.generic;
 
+import java.util.List;
+
 /**
  * Provides methods needed for paging.
  *
@@ -40,16 +42,26 @@ public interface PagedEntityManager {
     public int getEntityCount(String entityClassName);
     
     
+    
+    /**
+     * Sets the range of the data to be returned when 
+     *<code>getEntities</code> is called.
+     *
+     * @param firstResult
+     * @param count
+     */
     public void setRange(int firstResult, int count);
     
     
 
-//    /**
-//     * Support for paging. Returns entities in given range.
-//     * @param entityClassName
-//     * @param firstResult
-//     * @param count
-//     * @return
-//     */
-    //public Object[] getEntities(String entityClassName, int firstResult, int count);
+    /**
+     * Support for paging. Returns entities after range was set using 
+     * <code>setRange</code>.
+     * 
+     * @param entityClassName
+     * @return
+     */
+    public List getEntities(String entityClassName);
+    
+    
 }
