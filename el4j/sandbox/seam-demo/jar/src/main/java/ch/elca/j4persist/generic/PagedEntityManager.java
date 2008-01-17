@@ -38,13 +38,18 @@ public interface PagedEntityManager {
      * @return
      */
     public int getEntityCount(String entityClassName);
+    
+    
+    public void setRange(int firstResult, int count);
+    
+    
 
-    /**
-     * Support for paging. Returns entities in given range.
-     * @param entityClassName
-     * @param firstResult
-     * @param count
-     * @return
-     */
-    public Object[] getEntities(String entityClassName, int firstResult, int count);
+//    /**
+//     * Support for paging. Returns entities in given range.
+//     * @param entityClassName
+//     * @param firstResult
+//     * @param count
+//     * @return
+//     */
+    //public Object[] getEntities(String entityClassName, int firstResult, int count);
 }

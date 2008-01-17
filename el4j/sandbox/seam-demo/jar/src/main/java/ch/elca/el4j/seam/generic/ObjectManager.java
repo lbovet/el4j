@@ -232,7 +232,12 @@ public class ObjectManager implements Serializable, PagedEntityManager {
 	
 	
 	
-	private QueryObject getQuery(String entityClassName) {
+	public void setRange(int firstResult, int count) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    private QueryObject getQuery(String entityClassName) {
 		Map<String,String> restrictions = searching.getRestrictionMap();
 		Class entityClass;
 		try {
