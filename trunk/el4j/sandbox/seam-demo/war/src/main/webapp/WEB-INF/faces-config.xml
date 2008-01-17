@@ -17,5 +17,17 @@
       <view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
       -->
    </application>
-
+   
+   
+   <!-- custom datatable used for support of paging -->
+   <component>
+      <component-type>
+        ch.elca.el4j.PagedRichHtmlDataTable
+      </component-type>
+  	<component-class>
+  	  ch.elca.el4j.jsf.component.html.PagedRichHtmlDataTable
+  	</component-class>
+  </component>
+   
+   
 </faces-config>

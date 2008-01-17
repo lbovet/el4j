@@ -13,6 +13,8 @@
         <param-value>blueSky</param-value>
     </context-param>
     
+   
+    
     <!-- Seam -->
          
     <listener>              
@@ -55,6 +57,7 @@
       <url-pattern>/*</url-pattern>
     </filter-mapping>  
     
+
     <!-- Faces Servlet -->
     
     <servlet>              
@@ -96,7 +99,7 @@
 	<!-- Custom Facelet Tag libraries -->
 	<context-param>
 		<param-name>facelets.LIBRARIES</param-name>
-		<param-value>/WEB-INF/facelet/el4jtags.taglib.xml</param-value>
+		<param-value>/WEB-INF/taglib/datatable.taglib.xml;/WEB-INF/facelet/el4jtags.taglib.xml;</param-value>
 	</context-param>
     
     <session-config>
