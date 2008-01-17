@@ -17,6 +17,7 @@
 package ch.elca.el4j.jsf.component.html;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -117,45 +118,20 @@ public class PagedRichHtmlDataTable extends HtmlDataTable {
             int listSize = pagedEntityManager.getEntityCount(
                 entityName);
     
-//            //load entities for the page to be displayed
-//            Object[] entities = pagedEntityManager.getEntities(
-//                entityName, first, count);
-//    
-//            //transform array of objects into ArrayList
-//            //maybe there is a more elegant way to do this?
-//            ArrayList l = new ArrayList();
-//            
-//            for (int i = 0; i < entities.length; i++) {
-//                l.add(entities[i]);
-//            }
-            
-            
+            //load entities for the page to be displayed
             pagedEntityManager.setRange(first, count);
             
-            //now get the attribute that was magically updated by seam
-           // DataModel model = (DataModel)getAttributes().get("value");
             
-            DataModel model = (DataModel)FacesContext.getCurrentInstance()
-                    .getExternalContext().getSessionMap().get("entities");           
-            
-            
-            if (model == null){
-                Logger.getAnonymousLogger().log(Level.SEVERE,"entities is null");
-            } else {
-                //create paged datamodel holding the entities of current page
+            List entities = pagedEntityManager.getEntities(
+                entityName);
+     
+            PagedListDataModel dataModel = new PagedListDataModel(
+                    entities, listSize, count);
                 
-               
-                    
-                PagedListDataModel dataModel = new PagedListDataModel(
-                    (ArrayList)model.getWrappedData(),
-                    listSize, count);
-                
-                this.setValue(dataModel);
-            }
             
+            
+            this.setValue(dataModel);
           
-        
-        
         }
     }
     
