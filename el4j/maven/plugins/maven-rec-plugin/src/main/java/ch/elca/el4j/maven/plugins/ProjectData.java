@@ -4,7 +4,27 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Data-container containing project information required by 
+ * MavenRecursivePlugin.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ * 
+ * @author chd
+ *
+ */
 public class ProjectData {
+    
+    public static final short SKIPPED = 0;
+    
+    public static final short SUCCESS = 1;
+    
+    public static final short FAILED = 2;
 
     private File pom = null;
 
@@ -15,6 +35,12 @@ public class ProjectData {
     private String version = null;
 
     private String packaging = null;
+    
+    private String name = null;
+    
+    private short executionState = SKIPPED;
+    
+    private long duration = 0;
 
     private List<String> dependencies = new ArrayList<String>();
 
@@ -24,17 +50,19 @@ public class ProjectData {
 
     }
 
-    public ProjectData(String groupId, String artifactId, String version) {
-        this(null, groupId, artifactId, version, null);
+    public ProjectData(String groupId, String artifactId, String version,
+        String name) {
+        this(null, groupId, artifactId, version, null, name);
     }
 
     public ProjectData(File pom, String groupId, String artifactId,
-        String version, String packaging) {
+        String version, String packaging, String name) {
         this.pom = pom;
         this.groupId = groupId;
         this.artifactId = artifactId;
         this.version = version;
         this.packaging = packaging;
+        this.name = name;
     }
 
     /**
@@ -110,6 +138,74 @@ public class ProjectData {
      */
     public void setPackaging(String packaging) {
         this.packaging = packaging;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return avoidNull(name);
+    }
+
+    /**
+     * @param name
+     *            the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return get the state of execution of this project.
+     */
+    public short getExecutionState() {
+        return executionState;
+    }
+
+    /**
+     * @param executionState
+     *            set the state of execution of this project.
+     * @see ProjectData#SKIPPED
+     * @see ProjectData#SUCCESS
+     * @see ProjectData#FAILED
+     */
+    public void setExecutionState(short state) {
+        if (state == SKIPPED || state == SUCCESS || state == FAILED) {
+            this.executionState = state;
+        } else {
+            throw new IllegalStateException("Unknown state number: " + state);
+        }
+    }
+    
+    /**
+     * @return String describing the defined execution state.
+     */
+    public String getStateDescription() {
+        switch (getExecutionState()) {
+            case ProjectData.SKIPPED:
+                return "SKIPPED";
+            case ProjectData.SUCCESS:
+                return "SUCCESS";
+            case ProjectData.FAILED:
+                return "FAILED";
+            default:
+                return "UNKNOWN";
+        }
+    }
+
+    /**
+     * @return the duration of the execution
+     */
+    public long getDuration() {
+        return duration;
+    }
+
+    /**
+     * @param duration
+     *            the duration of the execution to set
+     */
+    public void setDuration(long duration) {
+        this.duration = duration;
     }
 
     /**

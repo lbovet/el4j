@@ -6,15 +6,12 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 
 import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
 import org.apache.maven.artifact.repository.ArtifactRepository;
-import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -22,21 +19,25 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.profiles.DefaultProfileManager;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectBuilder;
-import org.apache.maven.project.ProjectBuildingException;
 import org.codehaus.plexus.DefaultPlexusContainer;
-import org.codehaus.plexus.PlexusContainerException;
+import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
-import org.codehaus.plexus.util.cli.Commandline;
 import org.codehaus.plexus.util.cli.CommandLineUtils.StringStreamConsumer;
+import org.codehaus.plexus.util.cli.Commandline;
 import org.jdom.Document;
-import org.jdom.Element;
 import org.jdom.JDOMException;
-import org.jdom.Text;
-import org.jdom.input.SAXBuilder;
-import org.jdom.xpath.XPath;
 
 /**
+ * Plugin to execute maven commands recursive on dependent projects.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ * 
  * @author chd
  * @goal execute
  */
@@ -52,16 +53,6 @@ public class MavenRecursiveMojo extends AbstractMojo {
      * @readonly
      */
     protected MavenProject m_project;
-
-    /**
-     * Artifact resolver, needed to download source jars for inclusion in
-     * classpath.
-     * 
-     * @component
-     * @required
-     * @readonly
-     */
-    private ArtifactResolver artifactResolver;
 
     /**
      * The project's artifact metadata source, used to resolve transitive
@@ -81,20 +72,19 @@ public class MavenRecursiveMojo extends AbstractMojo {
     private ArtifactRepository localRepository;
 
     /**
-     * The collection of remote artifact repositories.
-     * 
-     * @parameter expression="${project.remoteArtifactRepositories}"
-     * @required
-     * @readonly
-     */
-    private List remoteRepositories;
-
-    /**
      * Set to true to create a bootstrap-file.
      * 
      * @parameter expression="${mvn.rec.bootstrap}" default-value="false"
      */
     private boolean bootstrap;
+    
+    /**
+     * Set the behaviour in case of failure. Set to true to get fail-fast
+     * behaviour, otherwise fail-at-end behaviour is activated (default).
+     * 
+     * @parameter expression="${mvn.rec.ff}" default-value="false"
+     */
+    private boolean failFast;
 
     /**
      * The shell-command to execute in each directory of all dependent projects
@@ -112,53 +102,46 @@ public class MavenRecursiveMojo extends AbstractMojo {
      */
     public void execute() throws MojoExecutionException, MojoFailureException {
         if (command == null || command.trim().equals("")) {
-            getLog().error("No commands defined!");
+            getLog().error("[MavenRec] No commands defined!");
             System.exit(1);
         }
 
         if (!isAllowedPackaging(m_project.getPackaging())) {
-            getLog().error("Wrong packaging type: " + m_project.getPackaging());
+            getLog().error("[MavenRec] Wrong packaging type: " + m_project.getPackaging());
             System.exit(2);
         }
+        
+        /*
+         * Print out flags
+         */
+        printSettings();
 
         /*
          * get projectId-to-ProjectData-mapping
          */
-        Map<String, ProjectData> bootstrapMap = getBootstrapMap();
-
-        // write map to log
-        for (String projectId : bootstrapMap.keySet()) {
-            ProjectData projectData = bootstrapMap.get(projectId);
-            getLog().info("Project found: ".concat(projectData.getProjectId()));
-            for (String dependencyId : projectData.getDependencies()) {
-                getLog().info(" - " + dependencyId);
-            }
-        }
+        Map<String, ProjectData> projectIdToDataMap = getBootstrapMap();
 
         /*
          * Create sorted list of directories where the shell-command should be
          * executed for the given project
          */
-        List<File> executionDirectories = createExecutionDirectoryList(bootstrapMap);
+        List<ProjectData> executionProjectList = createExecutionProjectList(projectIdToDataMap);
 
         /*
-         * Execute the provided shell-command within all directories in the list
+         * Print out a list of projects to execute
          */
-        List<File> successDirs = executeCommandInDirectories(executionDirectories);
+        printExecutionPlan(executionProjectList);
         
         /*
-         * Printout list of directories where command execution failed
+         * Execute the provided shell-command within the directories of all
+         * ProjectDatas in the list
          */
-        executionDirectories.removeAll(successDirs);
-        if (executionDirectories.size() > 0) {
-            getLog().info(
-                "[MavenRec] Execution failed in the following directories:");
-            getLog().info(executionDirectories.toString());
-        } else {
-            getLog().info("");
-            getLog().info("[MavenRec] Successful done!");
-            getLog().info("");
-        }
+        executeCommandForProjects(executionProjectList);
+        
+        /*
+         * Print out a summary list
+         */
+        printSummary(executionProjectList);
     }
 
     /**
@@ -177,29 +160,47 @@ public class MavenRecursiveMojo extends AbstractMojo {
         return allowedPackaging.contains(packaging);
     }
 
+    /**
+     * Returns a mapping of projectId-Strings to their ProjectData-objects.
+     * The map is either loaded from an existing bootstrap.xml-file or created
+     * by scanning the directory structure. 
+     * 
+     * @return a mapping of projectId-Strings to ProjectData-objects
+     */
     private Map<String, ProjectData> getBootstrapMap() {
         File rootDir = getRootDir(m_project);
+        File targetDir = new File(rootDir, "target");
         Map<String, ProjectData> bootstrapMap = null;
 
         if (!bootstrap) {
             // load already existing bootstrap-map from file
             try {
-                bootstrapMap = loadBootstrapMap(rootDir);
+                bootstrapMap = loadBootstrapMap(targetDir);
             } catch (Exception e) {
                 bootstrapMap = null;
-                getLog()
-                    .warn("Error loading bootstrap-file: " + e.getMessage());
+                getLog().debug(
+                    "[MavenRec] Failed loading bootstrap-file: "
+                        + e.getMessage());
             }
         }
 
         if (bootstrapMap == null) {
-            // Create a bootstrap map
-            bootstrapMap = createBootstrapMap(rootDir);
-            // store bootstrap map to file
             try {
-                storeBootstrapMap(bootstrapMap, rootDir);
+                // Create a bootstrap map
+                bootstrapMap = createBootstrapMap(rootDir);
+                // store bootstrap map to file
+                storeBootstrapMap(bootstrapMap, targetDir);
             } catch (IOException e) {
                 getLog().warn(e);
+            }
+        }
+
+        // DEBUG: write map to log
+        for (String projectId : bootstrapMap.keySet()) {
+            ProjectData projectData = bootstrapMap.get(projectId);
+            getLog().debug("Project found: ".concat(projectData.getProjectId()));
+            for (String dependencyId : projectData.getDependencies()) {
+                getLog().debug(" - " + dependencyId);
             }
         }
 
@@ -217,13 +218,14 @@ public class MavenRecursiveMojo extends AbstractMojo {
      */
     private Map<String, ProjectData> createBootstrapMap(File rootDir) {
         getLog()
-            .info(
-                "Create new boostrap-map from rootdir "
+            .debug(
+                "[MavenRec] Create new boostrap-map from rootdir "
                     + rootDir.getAbsolutePath());
         /*
          * Retrieve set of ProjectData-objects of local projects (with packaging
          * "jar" or "war")
          */
+        getLog().info("[MavenRec] Scanning for projects...");
         Map<String, ProjectData> localProjectMap = new HashMap<String, ProjectData>();
         searchLocalProjects(rootDir, localProjectMap);
 
@@ -248,9 +250,15 @@ public class MavenRecursiveMojo extends AbstractMojo {
      */
     private void storeBootstrapMap(Map<String, ProjectData> bootstrapMap,
         File dir) throws IOException {
+        // create target-dir if it doesn't exist
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        
         File bootstrapXml = new File(dir, BOOTSTRAP_FILENAME);
-        getLog().info(
-            "Store bootstrap-map into " + bootstrapXml.getAbsolutePath());
+        getLog().debug(
+            "[MavenRec] Store bootstrap-map into "
+                + bootstrapXml.getAbsolutePath());
 
         Document bootstrapDom = BootstrapFileHandler
             .createDomFromBoostrapMap(bootstrapMap);
@@ -272,8 +280,9 @@ public class MavenRecursiveMojo extends AbstractMojo {
         throws JDOMException, IOException {
         File bootstrapXml = new File(dir, BOOTSTRAP_FILENAME);
 
-        getLog().info(
-            "Load bootstrap-map from " + bootstrapXml.getAbsolutePath());
+        getLog().debug(
+            "[MavenRec] Load bootstrap-map from "
+                + bootstrapXml.getAbsolutePath());
 
         Document bootstrapDom = BootstrapFileHandler
             .loadDomFromXml(bootstrapXml);
@@ -284,73 +293,82 @@ public class MavenRecursiveMojo extends AbstractMojo {
     }
 
     /**
-     * Creates a sorted list of directory-paths where the execute the
-     * shell-command. The position of the directories in the list corresponds to
-     * the order in which they have to be processed.
+     * Creates a sorted list of ProjectData-objects for which the shell-command
+     * shall be executed. The position of the ProjectDatas in the list
+     * corresponds to the order in which they must be processed.
      * 
-     * @param bootstrapMap
+     * @param projectIdToDataMap
      *            mapping of projectIds to ProjectData-objects.
-     * @return list of directories where to execute the shell-command.
+     * @return list of ProjectDatas for which to execute the shell-command.
      */
-    private List<File> createExecutionDirectoryList(
-        Map<String, ProjectData> bootstrapMap) {
-        List<File> directoryList = new ArrayList<File>();
+    private List<ProjectData> createExecutionProjectList(
+        Map<String, ProjectData> projectIdToDataMap) {
+        List<ProjectData> projectList = new ArrayList<ProjectData>();
 
         String startProjectId = ProjectData.createProjectIdString(m_project
             .getGroupId(), m_project.getArtifactId(), m_project.getVersion());
 
-        postOrderTraverseDependencyGraph(startProjectId, bootstrapMap,
-            directoryList);
+        postOrderTraverseDependencyGraph(startProjectId, projectIdToDataMap,
+            projectList);
 
-        return directoryList;
+        return projectList;
     }
 
     /**
-     * Traverse the dependent project of the specified project in postorder. Add
-     * the directory of the visited projects to the directory-list.
+     * Traverses the dependent project of the specified project in postorder.
+     * Adds the ProjectData of the visited projects to the ProjectData-list.
      * 
      * @param projectId
      *            the project whose dependencies are to traverse.
      * @param bootstrapMap
      *            the map containing the projectId to ProjectData-mapping.
-     * @param directoryList
-     *            list where to add the directories of the visited projects.
+     * @param projectList
+     *            list where to add the ProjectDatas of the visited projects.
      */
     private void postOrderTraverseDependencyGraph(String projectId,
-        Map<String, ProjectData> bootstrapMap, List<File> directoryList) {
+        Map<String, ProjectData> bootstrapMap, List<ProjectData> projectList) {
 
         ProjectData projectData = bootstrapMap.get(projectId);
         // traverse all dependent projects
         for (String dependentProjectId : projectData.getDependencies()) {
             postOrderTraverseDependencyGraph(dependentProjectId, bootstrapMap,
-                directoryList);
+                projectList);
         }
         /*
-         * add the directory of current project after the directories of all
+         * add the ProjectData of current project after the ProjectDatas of all
          * dependent projects. Before a project can be processed, all its
-         * dependent projects have to be up to date at that moment.
+         * dependent projects have to be already processed at that moment.
          */
-        // avoid listing a directory more than once
-        if (!directoryList.contains(projectData.getDirectory())) {
-            directoryList.add(projectData.getDirectory());
+        // avoid listing a ProjectData more than once
+        if (!projectList.contains(projectData)) {
+            projectList.add(projectData);
         }
     }
 
     /**
-     * Execute the provided shell-command within the directories in the list.
+     * Execute the provided shell-command within the directories of the Projects
+     * in the list. Sets execution result (isSuccessful) and duration of
+     * execution in each project.
      * 
-     * @param executionDirectories
-     *            list of directories where to execute the shell-command.
-     * @return List of directories where command has been executed successfully.
+     * @param executionProjectList
+     *            list of Projects for which to execute the shell-command.
      */
-    private List<File> executeCommandInDirectories(List<File> executionDirectories) {
-
-        List<File> successfulExecuted = new ArrayList<File>();
+    private void executeCommandForProjects(List<ProjectData> executionProjectList) {
         
-        for (File dir : executionDirectories) {
+        for (ProjectData project : executionProjectList) {
+            File dir = project.getDirectory();
             getLog().info(
-                "[MavenRec] Execute command \"mvn " + command + "\" in <"
-                    + dir.getAbsolutePath() + ">.");
+                "[MavenRec] Execute \"mvn " + command + "\" in \""
+                    + project.getName() + "\"...");
+            getLog()
+                .debug(
+                    "[MavenRec] Working Directory: \"" + dir.getAbsolutePath()
+                        + "\"");
+            
+            // timer variables
+            long start = 0;
+            long end = 0;
+            
             try {
                 Commandline cl = new Commandline();
                 cl.setWorkingDirectory(dir);
@@ -363,18 +381,30 @@ public class MavenRecursiveMojo extends AbstractMojo {
                         System.out.println(line);
                     }
                 };
-
+                // start timer
+                start = System.currentTimeMillis();
+                // execute command
                 CommandLineUtils.executeCommandLine(cl, systemOut, systemOut);
 
-                successfulExecuted.add(dir);
+                project.setExecutionState(ProjectData.SUCCESS);
+                
             } catch (CommandLineException e) {
                 getLog().warn(
-                    "Command could not be executed in " + dir.getAbsolutePath()
-                        + "!\n" + e.getMessage());
+                    "[MavenRec] Failed to execute command in \""
+                        + project.getName() + "\": " + e.getMessage());
+                project.setExecutionState(ProjectData.FAILED);
+                
+                // end execution if fail-fast behaviour is activated
+                if (failFast) {
+                    return;
+                }
+            }
+            finally {
+                // stop timer
+                end = System.currentTimeMillis();
+                project.setDuration(end - start);
             }
         }
-        
-        return successfulExecuted;
     }
 
     /**
@@ -449,8 +479,8 @@ public class MavenRecursiveMojo extends AbstractMojo {
             if (before != null) {
                 // log warn message if there was already a project with same id
                 getLog().warn(
-                    "Project <" + projectData.getProjectId()
-                        + "> is defined twice!");
+                    "Project \"" + projectData.getProjectId()
+                        + "\" is defined twice!");
             }
         }
 
@@ -512,6 +542,7 @@ public class MavenRecursiveMojo extends AbstractMojo {
         projectData.setArtifactId(project.getArtifactId());
         projectData.setVersion(project.getVersion());
         projectData.setPackaging(project.getPackaging());
+        projectData.setName(project.getName());
         // if no groupId is set, get it from parent artifact
         if (project.getGroupId() != null) {
             projectData.setGroupId(project.getGroupId());
@@ -559,5 +590,65 @@ public class MavenRecursiveMojo extends AbstractMojo {
             }
             projectData.setDependencies(newDependencyList);
         }
+    }
+
+    /**
+     * Print flag settings to debug-log.
+     */
+    private void printSettings() {
+        getLog().debug("Force project scanning: " + (bootstrap ? "ON" : "OFF"));
+        getLog().debug(
+            "Termination behaviour: "
+                + (failFast ? "fail-fast" : "fail-at-end"));
+        getLog().debug("Maven command(s): " + command);
+    }
+
+    /**
+     * Print an overview of the projects for which the command will be executed.
+     * 
+     * @param executionProjectList
+     *            list of projects for which the command will be executed.
+     */
+    private void printExecutionPlan(List<ProjectData> executionProjectList) {
+        // Checkstyle: MagicNumber off
+        getLog().info(StringUtils.repeat("-", 72));
+        getLog().info("MavenRec Execution Order:");
+        getLog().info(StringUtils.repeat("-", 72));
+
+        for (ProjectData projectData : executionProjectList) {
+            getLog().info("  " + projectData.getName());
+        }
+        
+        getLog().info(StringUtils.repeat("-", 72));
+        // Checkstyle: MagicNumber on
+    }
+
+    /**
+     * Print a summary of the projects for which the command has been executed.
+     * Prints execution status and execution duration.
+     * 
+     * @param executionProjectList
+     *            list of projects for which the command has been executed.
+     */
+    private void printSummary(List<ProjectData> executionProjectList) {
+        // Checkstyle: MagicNumber off
+        getLog().info(StringUtils.repeat("-", 72));
+        getLog().info("MavenRec Execution Summary:");
+        getLog().info(StringUtils.repeat("-", 72));
+
+        for (ProjectData projectData : executionProjectList) {
+            StringBuffer line = new StringBuffer(StringUtils.rightPad(
+                projectData.getName().concat(" "), 55, "."));
+            line.append(" ");
+            Double duration = (Double.parseDouble(new Long(projectData
+                .getDuration()).toString()) / 1000);
+            line.append(projectData.getStateDescription());
+            line.append(" [").append(String.format("%.3f", duration)).append(
+                "s]");
+            getLog().info(line.toString());
+        }
+        
+        getLog().info(StringUtils.repeat("-", 72));
+        // Checkstyle: MagicNumber on
     }
 }
