@@ -1,0 +1,50 @@
+/*
+ * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
+ * the spring framework, http://el4j.sf.net
+ * Copyright (C) 2006 by ELCA Informatique SA, Av. de la Harpe 22-24,
+ * 1000 Lausanne, Switzerland, http://www.elca.ch
+ *
+ * EL4J is published under the GNU General Public License (GPL) Version 2.0.
+ * http://www.gnu.org/licenses/
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * For alternative licensing, please contact info@elca.ch
+ */
+package ch.elca.j4persist.generic;
+
+/**
+ * Provides methods needed for paging.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Frank Bitzer (FBI)
+ */
+public interface PagedEntityManager {
+    
+    
+   
+    /**
+     * Count total number of entities of given type.
+     * @param entityClassName
+     * @return
+     */
+    public int getEntityCount(String entityClassName);
+
+    /**
+     * Support for paging. Returns entities in given range.
+     * @param entityClassName
+     * @param firstResult
+     * @param count
+     * @return
+     */
+    public Object[] getEntities(String entityClassName, int firstResult, int count);
+}
