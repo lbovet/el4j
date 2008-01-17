@@ -12,12 +12,23 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.Namespace;
-import org.jdom.Text;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
-import org.jdom.xpath.XPath;
 
+/**
+ * Convenient handler to store and load BootstrapMap to and from XML-files.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ * 
+ * @author chd
+ *
+ */
 public class BootstrapFileHandler {
     /**
      * The namespace of the bootstrap-xml-file.
@@ -45,6 +56,7 @@ public class BootstrapFileHandler {
             project.setAttribute("groupId", projectData.getGroupId());
             project.setAttribute("artifactId", projectData.getArtifactId());
             project.setAttribute("version", projectData.getVersion());
+            project.setAttribute("name", projectData.getName());
             // <path>
             Element path = new Element("path", namespace);
             path.addContent(projectData.getPom().getAbsolutePath());
@@ -89,7 +101,8 @@ public class BootstrapFileHandler {
             ProjectData projectData = new ProjectData(project
                 .getAttributeValue("groupId"), project
                 .getAttributeValue("artifactId"), project
-                .getAttributeValue("version"));
+                .getAttributeValue("version"), project
+                .getAttributeValue("name"));
             Element path = project.getChild("path", namespace);
             projectData.setPom(new File(path.getTextTrim()));
             Element dependencies = project.getChild("dependencies", namespace);
