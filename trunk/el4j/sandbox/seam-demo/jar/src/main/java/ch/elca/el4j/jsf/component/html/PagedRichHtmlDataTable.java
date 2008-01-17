@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.faces.context.FacesContext;
+import javax.faces.model.DataModel;
 
 import org.richfaces.component.html.HtmlDataTable;
 
@@ -116,24 +117,41 @@ public class PagedRichHtmlDataTable extends HtmlDataTable {
             int listSize = pagedEntityManager.getEntityCount(
                 entityName);
     
-            //load entities for the page to be displayed
-            Object[] entities = pagedEntityManager.getEntities(
-                entityName, first, count);
-    
-            //transform array of objects into ArrayList
-            //maybe there is a more elegant way to do this?
-            ArrayList l = new ArrayList();
+//            //load entities for the page to be displayed
+//            Object[] entities = pagedEntityManager.getEntities(
+//                entityName, first, count);
+//    
+//            //transform array of objects into ArrayList
+//            //maybe there is a more elegant way to do this?
+//            ArrayList l = new ArrayList();
+//            
+//            for (int i = 0; i < entities.length; i++) {
+//                l.add(entities[i]);
+//            }
             
-            for (int i = 0; i < entities.length; i++) {
-                l.add(entities[i]);
+            
+            pagedEntityManager.setRange(first, count);
+            
+            //now get the attribute that was magically updated by seam
+            DataModel model = (DataModel)getAttributes().get("value");
+            
+           
+            
+            if (model == null){
+                Logger.getAnonymousLogger().log(Level.SEVERE,"entities is null");
+            } else {
+                //create paged datamodel holding the entities of current page
+                
+               
+                    
+                PagedListDataModel dataModel = new PagedListDataModel(
+                    (ArrayList)model.getWrappedData(),
+                    listSize, count);
+                
+                this.setValue(dataModel);
             }
             
-            //create paged datamodel holding the entities of current page
-            PagedListDataModel dataModel = new PagedListDataModel(l,
-                listSize, count);
-    
-            
-            this.setValue(dataModel);
+          
         
         
         }
