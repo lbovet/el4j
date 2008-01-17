@@ -133,9 +133,11 @@ public class PagedRichHtmlDataTable extends HtmlDataTable {
             pagedEntityManager.setRange(first, count);
             
             //now get the attribute that was magically updated by seam
-            DataModel model = (DataModel)getAttributes().get("value");
+           // DataModel model = (DataModel)getAttributes().get("value");
             
-           
+            DataModel model = (DataModel)FacesContext.getCurrentInstance()
+                    .getExternalContext().getSessionMap().get("entities");           
+            
             
             if (model == null){
                 Logger.getAnonymousLogger().log(Level.SEVERE,"entities is null");
