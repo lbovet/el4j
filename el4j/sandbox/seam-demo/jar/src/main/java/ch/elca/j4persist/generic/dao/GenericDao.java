@@ -74,6 +74,18 @@ public interface GenericDao {
 
     
     /**
+     * Counts results that would be returned by a query 
+     * based on a given query object.
+     * 
+     * @param q The search query object
+     * @throws  DataAccessException
+     *             If general data access problem occurred
+     * @return Number of results
+     */
+    int findCountByQuery(QueryObject q) throws DataAccessException;
+    
+    
+    /**
      * Retrieves all the domain objects of type T.
      * 
      * @return The list containing all the domain objects of type T; if no such

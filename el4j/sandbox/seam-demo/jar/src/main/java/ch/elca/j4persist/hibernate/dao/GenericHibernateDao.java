@@ -34,6 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.elca.j4persist.generic.dao.ConvenienceGenericDao;
 import ch.elca.el4j.services.persistence.generic.dao.annotations.ReturnsUnchangedParameter;
 import ch.elca.el4j.services.persistence.hibernate.criteria.CriteriaTransformer;
+import ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceHibernateTemplate;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.Reject;
 
@@ -146,6 +147,31 @@ public class GenericHibernateDao
         return getConvenienceHibernateTemplate().findByCriteria(criteria);
     }
 
+    
+    /**
+     * {@inheritDoc}
+     * 
+     * 
+     * @return how many elements do we find with the given query 
+     */
+    @SuppressWarnings("unchecked")
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public int findCountByQuery(QueryObject q) throws DataAccessException {
+        DetachedCriteria hibernateCriteria = CriteriaTransformer.transform(q,
+            getPersistentClass());
+        
+        ch.elca.j4persist.hibernate.dao.ConvenienceHibernateTemplate template 
+        = getConvenienceHibernateTemplate();
+        
+        template.setMaxResults(q.getMaxResults());
+        
+        if (q.getFirstResult() != QueryObject.NO_CONSTRAINT){
+            template.setFirstResult(q.getFirstResult());
+        }      
+        
+        return template.findCountByCriteria(hibernateCriteria);
+    }    
+    
     /**
      * {@inheritDoc}
      */
@@ -154,9 +180,24 @@ public class GenericHibernateDao
     public List findByQuery(QueryObject q) throws DataAccessException {
         DetachedCriteria hibernateCriteria = CriteriaTransformer.transform(q,
             getPersistentClass());
-        return getConvenienceHibernateTemplate()
+        
+        List result;
+        if (q.getFirstResult() == QueryObject.NO_CONSTRAINT) {
+            
+            result = getConvenienceHibernateTemplate()
             .findByCriteria(hibernateCriteria);
+            
+        } else {
+            
+            result = getConvenienceHibernateTemplate()
+            .findByCriteria(hibernateCriteria,q.getFirstResult(),
+                q.getMaxResults());
+        }
+        
+        return result;
     }
+    
+    
 
     /**
      * {@inheritDoc}

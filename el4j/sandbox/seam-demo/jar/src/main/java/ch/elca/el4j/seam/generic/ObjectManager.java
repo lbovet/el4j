@@ -22,6 +22,7 @@ import ch.elca.el4j.seam.generic.metadata.FieldInfo;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.ComparisonCriteria;
 import ch.elca.el4j.services.search.criterias.Criteria;
+import ch.elca.j4persist.generic.PagedEntityManager;
 import ch.elca.j4persist.generic.dao.ConvenienceGenericDao;
 import ch.elca.j4persist.generic.dao.impl.DefaultDaoRegistry;
 
@@ -36,7 +37,7 @@ import ch.elca.j4persist.generic.dao.impl.DefaultDaoRegistry;
  */
 @Name("objectManager")
 @Scope(CONVERSATION)
-public class ObjectManager implements Serializable {
+public class ObjectManager implements Serializable, PagedEntityManager {
 	@In("#{daoRegistry}")
 	private DefaultDaoRegistry m_DaoRegistry;
 	
@@ -184,11 +185,52 @@ public class ObjectManager implements Serializable {
 			ConvenienceGenericDao dao = getDao(entityClassName);
 			QueryObject queryObject = getQuery(entityClassName);
 			
+			
 			restrictionMap.put(restrict, dao.findByQuery(queryObject).toArray());
 		}
 		
 		return restrictionMap.get(restrict);
 	}
+	
+	/**
+	 * Support for paging. Returns entities in given range.
+	 * @param entityClassName
+	 * @param firstResult
+	 * @param count
+	 * @return
+	 */
+	public Object[] getEntities(String entityClassName, int firstResult, int count) {
+      
+        
+        ConvenienceGenericDao dao = getDao(entityClassName);
+        QueryObject queryObject = getQuery(entityClassName);
+            
+       
+            
+        queryObject.setFirstResult(firstResult);
+        queryObject.setMaxResults(count);
+        
+        return dao.findByQuery(queryObject).toArray();
+    }
+	
+	/**
+	 * Count total number of entities of given type.
+	 
+	 * @param entityClassName
+	 * @return
+	 */
+    public int getEntityCount(String entityClassName) {
+      
+        
+        ConvenienceGenericDao dao = getDao(entityClassName);
+        QueryObject queryObject = getQuery(entityClassName);
+            
+        
+        
+        return dao.findCountByQuery(queryObject);
+    }
+	
+	
 	
 	private QueryObject getQuery(String entityClassName) {
 		Map<String,String> restrictions = searching.getRestrictionMap();
@@ -235,6 +277,7 @@ public class ObjectManager implements Serializable {
 		try {
 			return (ConvenienceGenericDao) m_DaoRegistry.getFor(Class.forName(entityClassName));
 		} catch (ClassNotFoundException e) {
+		   
 			return null;
 		}
 	}
