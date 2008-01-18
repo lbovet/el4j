@@ -22,6 +22,7 @@ import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.tests.remoting.service.Calculator;
 import ch.elca.el4j.tests.remoting.service.CalculatorException;
+import ch.elca.el4j.tests.remoting.service.CalculatorOperation;
 
 import junit.framework.TestCase;
 
@@ -68,12 +69,12 @@ public abstract class AbstractCalculatorTest extends TestCase {
      * This test tests the area calculation method.
      */
     public void testAreaCalculation() {
-        final double VALUE_A = 2.3;
-        final double VALUE_B = 5.7;
-        final double FAULT_DELTA = 0.00000001;
-        double result = m_calc.getArea(VALUE_A, VALUE_B);
+        final double a = 2.3;
+        final double b = 5.7;
+        final double delta = 0.00000001;
+        double result = m_calc.getArea(a, b);
         assertEquals("The area is not correctly calculated.", result, 
-            VALUE_A * VALUE_B, FAULT_DELTA);
+            a * b, delta);
     }
     
     /**
@@ -87,5 +88,19 @@ public abstract class AbstractCalculatorTest extends TestCase {
         } catch (CalculatorException e) {
             s_logger.debug("Expected exception caught.", e);
         }
+    }
+    
+    /**
+     * Tests if the protocol is able to handle enumerations.
+     */
+    public void testAbilityToHandleEnumerations() {
+        // Checkstyle: MagicNumber off
+        double result
+            = m_calc.calculate(1.2, 2.5, CalculatorOperation.ADDITION);
+        assertEquals(3.7, result);
+        result
+            = m_calc.calculate(1.2, 2.5, CalculatorOperation.SUBTRACTION);
+        assertEquals(-1.3, result);
+        //Checkstyle: MagicNumber on
     }
 }
