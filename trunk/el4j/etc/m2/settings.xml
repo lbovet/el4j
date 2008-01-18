@@ -329,6 +329,13 @@
                 
                 <!-- Birt -->
                 <birt.home>${el4j.project.tools}/birt-runtime-2_1_0</birt.home>
+                
+                <!-- Eclipse -->
+                <!--eclipse.reactorProjectGroupIdPrefixes>
+                    ch.elca.el4j.modules,
+                    ch.elca.el4j.tests,
+                    ch.elca.el4j.applications
+                </eclipse.reactorProjectGroupIdPrefixes-->
             </properties>
         </profile>
         
