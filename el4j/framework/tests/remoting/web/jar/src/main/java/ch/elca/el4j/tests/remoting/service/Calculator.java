@@ -1,7 +1,7 @@
 /*
  * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
  * the spring framework, http://el4j.sf.net
- * Copyright (C) 2005 by ELCA Informatique SA, Av. de la Harpe 22-24,
+ * Copyright (C) 2008 by ELCA Informatique SA, Av. de la Harpe 22-24,
  * 1000 Lausanne, Switzerland, http://www.elca.ch
  *
  * EL4J is published under the GNU Lesser General Public License (LGPL)
@@ -14,9 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-
 package ch.elca.el4j.tests.remoting.service;
-
 
 import javax.jws.WebService;
 
@@ -76,4 +74,15 @@ public interface Calculator {
      * @return Returns the received object.
      */
     public CalculatorValueObject echoValueObject(CalculatorValueObject o);
+    
+    /**
+     * Executes the given operation with <code>a</code> and <code>b</code> and
+     * returns the result.
+     * 
+     * @param a Is the first parameter for the calculation.
+     * @param b Is the second parameter for the calculation.
+     * @param operation Is the operation to execute.
+     * @return Returns the calculated result.
+     */
+    public double calculate(double a, double b, CalculatorOperation operation);
 }

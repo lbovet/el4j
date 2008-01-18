@@ -79,12 +79,12 @@ public abstract class AbstractXFireTest extends TestCase {
      * This test tests the area calulation method.
      */
     public void testAreaCalculation() {
-        final double VALUE_A = 2.3;
-        final double VALUE_B = 5.7;
-        final double FAULT_DELTA = 0.00000001;
-        double result = getCalc().getArea(VALUE_A, VALUE_B);
+        final double a = 2.3;
+        final double b = 5.7;
+        final double delta = 0.00000001;
+        double result = getCalc().getArea(a, b);
         assertEquals("The area is not correctly calculated.", result, 
-            VALUE_A * VALUE_B, FAULT_DELTA);
+            a * b, delta);
     }
     
     /**
@@ -116,19 +116,19 @@ public abstract class AbstractXFireTest extends TestCase {
      * deserialized correctly.
      */
     public void testEchoOfValueObject() {
-        final int MY_INT = 449312154;
-        final long MY_LONG = 3121846575454654L;
-        final double MY_DOUBLE = 6994.641368469;
-        final String MY_STRING 
+        final int myInt = 449312154;
+        final long myLong = 3121846575454654L;
+        final double myDouble = 6994.641368469;
+        final String myString 
             = "I can not find any ä, ö, ü, é, è or à character on my keyboard.";
-        final byte[] MY_BYTE_ARRAY = MY_STRING.getBytes();
+        final byte[] myByteArray = myString.getBytes();
         
         CalculatorValueObject o = new CalculatorValueObject();
-        o.setMyInt(MY_INT);
-        o.setMyLong(MY_LONG);
-        o.setMyDouble(MY_DOUBLE);
-        o.setMyString(MY_STRING);
-        o.setMyByteArray(MY_BYTE_ARRAY);
+        o.setMyInt(myInt);
+        o.setMyLong(myLong);
+        o.setMyDouble(myDouble);
+        o.setMyString(myString);
+        o.setMyByteArray(myByteArray);
         
         CalculatorValueObject echo = getCalc().echoValueObject(o);
         assertEquals("Int values are not equals.", 

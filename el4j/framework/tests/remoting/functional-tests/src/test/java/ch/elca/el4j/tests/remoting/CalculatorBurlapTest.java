@@ -15,32 +15,45 @@
  * For alternative licensing, please contact info@elca.ch
  */
 package ch.elca.el4j.tests.remoting;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 
 /**
- * This class is a test for the calculator.
- *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
- *
+ * This class is a test for the calculator. <script
+ * type="text/javascript">printFileStatus ("$URL:
+ * https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/tests/remoting/functional-tests/src/test/java/ch/elca/el4j/tests/remoting/CalculatorBurlapTest.java
+ * $", "$Revision$", "$Date: 2006-10-31 15:42:42 +0100 (Di, 31 Okt 2006)
+ * $", "$Author$" );</script>
+ * 
  * @author Martin Zeltner (MZE)
  * @author Waraich Rashid (RWA)
  */
 public class CalculatorBurlapTest extends AbstractCalculatorTest {
-    
+    /**
+     * Private logger.
+     */
+    private static Log s_logger = LogFactory.getLog(CalculatorBurlapTest.class);
+
     /**
      * {@inheritDoc}
      */
     ApplicationContext getContext() {
-        return  new ModuleApplicationContext(
-            new String[] {"classpath*:mandatory/*.xml",
-                "scenarios/client/remotingtests-burlap-client-config.xml"}, 
-                false);
+        return new ModuleApplicationContext(new String[] {
+            "classpath*:mandatory/*.xml",
+            "scenarios/client/remotingtests-burlap-client-config.xml"}, false);
+    }
+
+    /**
+     * Test 'testAbilityToHandleEnumerations' disabled due burlap is not able to
+     * handle enumerations. {@inheritDoc}
+     */
+    @Override
+    public void testAbilityToHandleEnumerations() {
+        s_logger.info("Test 'testAbilityToHandleEnumerations' disabled due"
+            + "burlap is not able to handle enumerations.");
     }
 }

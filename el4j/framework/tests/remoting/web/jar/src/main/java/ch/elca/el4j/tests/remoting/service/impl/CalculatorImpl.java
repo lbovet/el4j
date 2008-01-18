@@ -19,6 +19,7 @@ package ch.elca.el4j.tests.remoting.service.impl;
 
 import ch.elca.el4j.tests.remoting.service.Calculator;
 import ch.elca.el4j.tests.remoting.service.CalculatorException;
+import ch.elca.el4j.tests.remoting.service.CalculatorOperation;
 import ch.elca.el4j.tests.remoting.service.CalculatorValueObject;
 import ch.elca.el4j.tests.remoting.service.SpecialCalculatorException;
 
@@ -82,5 +83,25 @@ public class CalculatorImpl implements Calculator {
     public CalculatorValueObject echoValueObject(
         CalculatorValueObject valueObject) {
         return valueObject;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public double calculate(double a, double b, CalculatorOperation operation) {
+        double result;
+        if (operation == CalculatorOperation.ADDITION) {
+            result = a + b;
+        } else if (operation == CalculatorOperation.SUBTRACTION) {
+            result = a - b;
+        } else if (operation == CalculatorOperation.MULTIPLICATION) {
+            result = a * b;
+        } else if (operation == CalculatorOperation.DIVISION) {
+            result = a / b;
+        } else {
+            throw new IllegalArgumentException(
+                "Unknown calculator operation: " + operation);
+        }
+        return result;
     }
 }
