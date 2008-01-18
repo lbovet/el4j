@@ -82,17 +82,5 @@
       <artifactId>jdom</artifactId>
       <version>1.0</version>
     </dependency>
-    <dependency>
-      <groupId>jaxen</groupId>
-      <artifactId>jaxen</artifactId>
-      <version>1.0-FCS</version>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>saxpath</groupId>
-      <artifactId>saxpath</artifactId>
-      <version>1.0-FCS</version>
-      <optional>true</optional>
-    </dependency>
   </dependencies>
 </project>

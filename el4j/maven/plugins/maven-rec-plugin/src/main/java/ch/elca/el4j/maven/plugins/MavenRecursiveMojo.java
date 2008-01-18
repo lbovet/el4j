@@ -23,7 +23,6 @@ import org.codehaus.plexus.DefaultPlexusContainer;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
-import org.codehaus.plexus.util.cli.CommandLineUtils.StringStreamConsumer;
 import org.codehaus.plexus.util.cli.Commandline;
 import org.jdom.Document;
 import org.jdom.JDOMException;
@@ -43,6 +42,9 @@ import org.jdom.JDOMException;
  */
 public class MavenRecursiveMojo extends AbstractMojo {
 
+    /**
+     * Name of bootstrap-xml-file.
+     */
     private static final String BOOTSTRAP_FILENAME = "mvn_rec_bootstrap.xml";
 
     /**
@@ -357,9 +359,6 @@ public class MavenRecursiveMojo extends AbstractMojo {
         
         for (ProjectData project : executionProjectList) {
             File dir = project.getDirectory();
-            getLog().info(
-                "[MavenRec] Execute \"mvn " + command + "\" in \""
-                    + project.getName() + "\"...");
             getLog()
                 .debug(
                     "[MavenRec] Working Directory: \"" + dir.getAbsolutePath()
@@ -375,17 +374,23 @@ public class MavenRecursiveMojo extends AbstractMojo {
                 cl.setExecutable("mvn");
                 cl.createArg().setLine(command);
 
-                StringStreamConsumer systemOut = new CommandLineUtils.StringStreamConsumer() {
-                    @Override
-                    public void consumeLine(String line) {
-                        System.out.println(line);
-                    }
-                };
+                BufferedLogConsumer blg = new BufferedLogConsumer(
+                    getLog());
+                int result = -1;
+
+                getLog().info(
+                    "[MavenRec] Executing \"" + cl.toString() + "\" in \""
+                        + project.getName() + "\"...");
                 // start timer
                 start = System.currentTimeMillis();
                 // execute command
-                CommandLineUtils.executeCommandLine(cl, systemOut, systemOut);
+                result = CommandLineUtils.executeCommandLine(cl, blg, blg);
 
+                String output = blg.toString();
+                if (result != 0 || !output.contains("BUILD SUCCESSFUL")) {
+                    throw new CommandLineException("BUILD ERROR");
+                }
+                
                 project.setExecutionState(ProjectData.SUCCESS);
                 
             } catch (CommandLineException e) {
