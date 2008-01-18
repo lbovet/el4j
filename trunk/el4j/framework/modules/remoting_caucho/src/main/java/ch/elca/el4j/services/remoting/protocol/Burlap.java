@@ -37,7 +37,11 @@ import ch.elca.el4j.services.remoting.RemotingServiceExporter;
  * );</script>
  *
  * @author Martin Zeltner (MZE)
+ * 
+ * @deprecated Due it is no more supported by caucho.com.
+ *             Use protocol Hessian or HttpInvoker instead.
  */
+@Deprecated
 public class Burlap extends AbstractInetSocketAddressWebProtocol {
     /**
      * {@inheritDoc}
