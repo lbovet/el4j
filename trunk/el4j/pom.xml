@@ -1176,7 +1176,7 @@
             <name>External release repository of the EL4J project</name>
             <url>http://el4.elca-services.ch/el4j/maven2repository</url>
         </repository>
-        <repository>
+        <!--repository>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
@@ -1184,10 +1184,10 @@
                 <enabled>false</enabled>
             </releases>
             <id>el4jSnapshotRepositoryExternal</id>
-            <!--id>apache.snapshots</id-->
+            <!- -id>apache.snapshots</id- ->
             <name>External snapshot repository of the EL4J project</name>
             <url>http://el4.elca-services.ch/el4j/maven2snapshots</url>
-        </repository>
+        </repository-->
         <repository>
             <snapshots>
                 <enabled>false</enabled>
