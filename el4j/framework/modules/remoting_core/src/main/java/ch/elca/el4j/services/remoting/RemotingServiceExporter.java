@@ -32,23 +32,21 @@ import ch.elca.el4j.util.interfaceenrichment.InterfaceEnricher;
 
 /**
  * This class is the global remote service exporter bean.
- *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
- *
+ * 
+ * <script type="text/javascript">printFileStatus ("$URL:
+ * https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/remoting_core/src/main/java/ch/elca/el4j/services/remoting/RemotingServiceExporter.java
+ * $", "$Revision$", "$Date: 2006-12-18 16:15:46 +0100 (Mo, 18 Dez 2006)
+ * $", "$Author$" );</script>
+ * 
  * @author Martin Zeltner (MZE)
  */
 public class RemotingServiceExporter extends AbstractRemotingBase implements
-        FactoryBean, BeanNameAware, ApplicationContextAware {
+    FactoryBean, BeanNameAware, ApplicationContextAware {
     /**
      * Private logger.
      */
     private static Log s_logger = LogFactory
-            .getLog(RemotingServiceExporter.class);
+        .getLog(RemotingServiceExporter.class);
 
     /**
      * This is the application context, which was used to create this bean.
@@ -74,9 +72,9 @@ public class RemotingServiceExporter extends AbstractRemotingBase implements
      * Name of the service bean.
      */
     private String m_service;
-    
+
     /**
-     * Whether the objects returned by the factory are singletons. 
+     * Whether the objects returned by the factory are singletons.
      */
     private boolean m_singleton = true;
 
@@ -86,8 +84,8 @@ public class RemotingServiceExporter extends AbstractRemotingBase implements
     public void afterPropertiesSet() throws Exception {
         super.afterPropertiesSet();
 
-        CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-                getService(), "service", this);
+        CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(getService(),
+            "service", this);
         getRemoteProtocol().checkRemotingExporter(this);
     }
 
@@ -96,30 +94,29 @@ public class RemotingServiceExporter extends AbstractRemotingBase implements
      * passing stuff.
      * 
      * @param serviceInterface
-     *      The interface to enrich.
+     *            The interface to enrich.
      * 
      * @return Returns the enriched class.
      */
     public Class getServiceInterfaceWithContext(Class serviceInterface) {
         if (m_serviceInterfaceWithContext == null) {
-            
+
             ClassLoader cl = Thread.currentThread().getContextClassLoader();
-            
+
             /**
              * Create the service interface to be able to send context
              * information.
              */
             InterfaceEnricher interfaceIndirector = new InterfaceEnricher();
-            EnrichmentDecorator interfaceDecorator 
-                = new ContextEnrichmentDecorator();
+            EnrichmentDecorator interfaceDecorator = new ContextEnrichmentDecorator();
             m_serviceInterfaceWithContext = interfaceIndirector
-                .createShadowInterfaceAndLoadItDirectly(
-                    serviceInterface, interfaceDecorator, cl);
+                .createShadowInterfaceAndLoadItDirectly(serviceInterface,
+                    interfaceDecorator, cl);
         }
-        
+
         return m_serviceInterfaceWithContext;
     }
-    
+
     /**
      * Creates a fresh exporter bean wraps a potentially enriched service
      * interface.
@@ -127,79 +124,76 @@ public class RemotingServiceExporter extends AbstractRemotingBase implements
      * @return Returns the exporter bean.
      */
     protected Object getFreshExporterBean() {
-        
+
         Object exporterBean;
-        
+
         boolean useImplicitContextPassing = getRemoteProtocol()
             .getImplicitContextPassingRegistry() != null;
-        
+
         /**
          * Get service from application context. This allows to delegate
-         * lifecycle handling. 
+         * lifecycle handling.
          */
         Object service = getApplicationContext().getBean(getService());
-        
-        if (useImplicitContextPassing && !getRemoteProtocol()
-            .getProtocolSpecificContextPassing()) {
+
+        if (useImplicitContextPassing
+            && !getRemoteProtocol().getProtocolSpecificContextPassing()) {
             s_logger.info("Implicit context passing in enabled.");
-            
+
             /**
              * Get the context class loader from current thread.
              */
             ClassLoader cl = Thread.currentThread().getContextClassLoader();
-            
-            Class serviceInterfaceWithContext
-                = getServiceInterfaceWithContext(getServiceInterface());
-            
+
+            Class serviceInterfaceWithContext = getServiceInterfaceWithContext(getServiceInterface());
+
             /**
              * Wrap the service implementation with the generated interface to
              * be able to extract context information.
              */
-            ServerContextInvocationHandler invocationHandler 
-                = new ServerContextInvocationHandler(
-                    service, getServiceInterface(),
-                    getRemoteProtocol().getImplicitContextPassingRegistry());
+            ServerContextInvocationHandler invocationHandler = new ServerContextInvocationHandler(
+                service, getServiceInterface(), getRemoteProtocol()
+                    .getImplicitContextPassingRegistry());
             Object serviceProxy = Proxy.newProxyInstance(cl,
-                    new Class[] {serviceInterfaceWithContext},
-                    invocationHandler);
-            
+                new Class[] {serviceInterfaceWithContext}, invocationHandler);
+
             /**
              * Create the exporter servlet.
              */
             exporterBean = getRemoteProtocol().createExporterBean(this,
-                    serviceInterfaceWithContext, serviceProxy);
+                serviceInterfaceWithContext, serviceProxy);
         } else {
             if (!getRemoteProtocol().getProtocolSpecificContextPassing()) {
                 s_logger.warn("Implicit context passing in disabled.");
             } else {
-                s_logger.info(
-                    "Protocol Specific implicit context passing in enabled.");
+                s_logger
+                    .info("Protocol Specific implicit context passing in enabled.");
             }
-            
+
             exporterBean = getRemoteProtocol().createExporterBean(this,
-                    getServiceInterface(), service);
+                getServiceInterface(), service);
         }
-        
+
         /**
          * Prepare exporter dependent beans.
          */
         getRemoteProtocol().prepareExporterDependentBeans(this);
-        
+
         return exporterBean;
     }
-    
+
     /**
      * {@inheritDoc}
      */
     public Object getObject() throws Exception {
         Object exporterBean;
-        
+
         if (isSingleton()) {
             if (m_exporterBean == null) {
                 m_exporterBean = getFreshExporterBean();
             }
             exporterBean = m_exporterBean;
-            
+
         } else {
             s_logger.info("I'm a prototype");
             exporterBean = getFreshExporterBean();
@@ -217,19 +211,24 @@ public class RemotingServiceExporter extends AbstractRemotingBase implements
      * {@inheritDoc}
      */
     public Class getObjectType() {
-        return getRemoteProtocol().getExporterObjectType();
+        if (getRemoteProtocol() != null) {
+            return getRemoteProtocol().getExporterObjectType();
+        } else {
+            return null;
+        }
     }
 
     /**
      * Sets whether the objects returned by the factory are singltons or
      * prototypes. Default is singletons.
      * 
-     * @param singleton <code>true</code> for returning singletons.
+     * @param singleton
+     *            <code>true</code> for returning singletons.
      */
     public void setSingleton(boolean singleton) {
         m_singleton = singleton;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -275,7 +274,8 @@ public class RemotingServiceExporter extends AbstractRemotingBase implements
     /**
      * Sets the service's bean name.
      * 
-     * @param service The bean name to set.
+     * @param service
+     *            The bean name to set.
      */
     public void setService(String service) {
         m_service = service;
