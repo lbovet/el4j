@@ -25,7 +25,6 @@ import java.util.List;
 
 import ch.elca.el4j.apps.keyword.dao.KeywordDao;
 import ch.elca.el4j.apps.keyword.dom.Keyword;
-import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.AndCriteria;
 import ch.elca.el4j.services.search.criterias.ComparisonCriteria;
@@ -180,6 +179,29 @@ public class HibernateKeywordDaoTest
         
         // ---
         
+        // test paging with an empty query
+        query = new QueryObject();
+        query.addOrder(Order.desc("name"));
+        
+        // load them all together:
+        List<Keyword> allEntriesInOrder = dao.findByQuery(query);
+        
+        
+        // and load them one by one:
+        query.setMaxResults(1);
+        for (int i = 0; i < allEntriesInOrder.size(); i++) {
+        	query.setFirstResult(i);
+        	
+        	List<Keyword> oneElementList = dao.findByQuery(query);
+        	
+        	assertEquals(" We expected only one element ", 1, oneElementList.size());
+        	System.out.println(i+" element: "+oneElementList.get(0).getName());
+        	System.out.println(i+" element: "+allEntriesInOrder.get(i).getName());
+        	assertEquals(" wrong Element returned "+i,allEntriesInOrder.get(i), oneElementList.get(0));
+        }
+        
+                
+        
         // test paging 1:
 
         // should return 5 results (= all results)
@@ -188,6 +210,8 @@ public class HibernateKeywordDaoTest
         int count = dao.findCountByQuery(query);
         
         assertEquals("Search count was wrong.", 5, count);
+        
+         
         
         // now we constraint them to 2
         query.setMaxResults(2);        
@@ -198,21 +222,22 @@ public class HibernateKeywordDaoTest
         
         // test paging 2:
 
-        // now we select the last 2 (name field ordered aphabetically) 
+        // now we select the last 2 (name field ordered alphabetically) 
         query.addOrder(Order.desc("name"));
-        query.setFirstResult(4);
+        query.setFirstResult(3);
         
         list = dao.findByQuery(query);
         assertEquals("Search for name like '%' results not in one keyword.",
             2, list.size());
         
         for (Keyword k : list) {
-            if (!(k.equals(keyword2) || k.equals(keyword5))) {
+            if (!(k.equals(keyword3) || k.equals(keyword4))) {
                 System.out.println ("k.name="+k.getName());
                 fail("Not expected keyword with paging test");
             }
         }
         
+
         // test convenience methods:
         
         query = new QueryObject();
