@@ -99,6 +99,10 @@ public class IdentityFixedDaoImpl<T>
         return m_backing.getPersistentClass();
     }
 
+    public void setPersistentClass(Class<T> c) {
+        m_backing.setPersistentClass(c);
+    }
+
     /** {@inheritDoc} */
     public T refresh(T entity) {
         return m_fixer.merge(entity, m_backing.refresh(entity));
