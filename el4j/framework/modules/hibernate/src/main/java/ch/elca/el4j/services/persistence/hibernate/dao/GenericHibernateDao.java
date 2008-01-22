@@ -200,11 +200,6 @@ public class GenericHibernateDao<T, ID extends Serializable>
             getPersistentClass());
         
         ConvenienceHibernateTemplate template = getConvenienceHibernateTemplate(); 
-        template.setMaxResults(q.getMaxResults());
-        
-        if (q.getFirstResult() != QueryObject.NO_CONSTRAINT){
-            template.setFirstResult(q.getFirstResult());
-        }      
         
         return template.findCountByCriteria(hibernateCriteria);
     }    
