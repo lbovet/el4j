@@ -25,7 +25,7 @@ import javax.faces.context.FacesContext;
 import org.richfaces.component.html.HtmlDatascroller;
 
 import ch.elca.el4j.jsf.model.PagedListDataModel;
-import ch.elca.j4persist.generic.PagedEntityManager;
+import ch.elca.el4j.seam.generic.PagedEntityManager;
 
 /**
  * Extended HtmlDataScroller to support paging. Always belongs to a

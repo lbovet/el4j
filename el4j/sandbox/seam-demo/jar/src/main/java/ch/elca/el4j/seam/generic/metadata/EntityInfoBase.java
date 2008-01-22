@@ -1,5 +1,6 @@
 package ch.elca.el4j.seam.generic.metadata;
 
+import java.util.Date;
 import java.util.HashMap;
 
 import org.hibernate.SessionFactory;
@@ -52,7 +53,9 @@ public class EntityInfoBase {
 				type = "integer";
 			} else if (Boolean.class.isAssignableFrom(returnedClass)) {
 				type = "boolean";
-			} else if (returnedClass.isPrimitive()) {
+			} else if (Date.class.isAssignableFrom(returnedClass)) {
+                type = "date";
+            } else if (returnedClass.isPrimitive()) {
 				if ((returnedClass == Integer.TYPE) || (returnedClass == Long.TYPE)) {
 					type = "integer";
 				} else if (returnedClass == Boolean.TYPE) {

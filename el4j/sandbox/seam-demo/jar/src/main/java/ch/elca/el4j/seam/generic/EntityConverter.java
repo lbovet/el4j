@@ -14,6 +14,7 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.faces.Converter;
 import org.jboss.seam.annotations.intercept.BypassInterceptors;
 
+
 /**
  * Replacement JSF converter for seam's EntityConverter.
  * Seam's EntityConverter cannot be used without a seam managed persistence context!
@@ -28,7 +29,7 @@ import org.jboss.seam.annotations.intercept.BypassInterceptors;
 @BypassInterceptors
 public class EntityConverter implements javax.faces.convert.Converter, Serializable {
 	private HashMap<Long,Object> mapping = new HashMap<Long,Object>();
-	private ObjectManager m_ObjectManager;
+	private EntityManager m_entityManager;
 	private Long m_NextId = new Long(1);
 
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -47,11 +48,11 @@ public class EntityConverter implements javax.faces.convert.Converter, Serializa
 		return m_NextId++;
 	}
 
-	private ObjectManager getObjectManager() {
-		if (m_ObjectManager == null) {
-			m_ObjectManager = (ObjectManager)Component.getInstance("objectManager");
+	private EntityManager getObjectManager() {
+		if (m_entityManager == null) {
+			m_entityManager = (EntityManager)Component.getInstance("entityManager");
 		}
 		
-		return m_ObjectManager;
+		return m_entityManager;
 	}
 }

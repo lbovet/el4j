@@ -7,11 +7,8 @@
 				 xmlns:el4j="http://www.elca.ch/el4j/taglib">
 
 	<h:commandLink value="#{text}" 
-			   action="#{objectManager.redirectTo(detailPage)}"
-			   rendered="#{utils.getBooleanValue(doLink)}">
-		
-		<f:param name="entityId" value="#{objectManager.serializeId(entity)}"/>
-	</h:commandLink>
+			   action="#{entityManager.edit(entity, detailPage)}"
+			   rendered="#{utils.getBooleanValue(doLink)}" />
 	
 	<h:outputText value="#{text}" rendered="#{not utils.getBooleanValue(doLink)}"/>
 	

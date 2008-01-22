@@ -17,6 +17,9 @@
 		<c:when test="#{fieldType == 'boolean'}">
 			<el4j:booleanField fieldName="#{fieldName}"/>
 		</c:when>
+		<c:when test="#{fieldType == 'date'}">
+            <el4j:dateField fieldName="#{fieldName}"/>
+        </c:when>
 		<c:when test="#{fieldType == 'enum'}">
 			<el4j:enumField fieldName="#{fieldName}"/>
 		</c:when>

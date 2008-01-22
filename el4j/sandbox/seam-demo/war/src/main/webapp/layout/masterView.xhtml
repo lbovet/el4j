@@ -7,18 +7,14 @@
                 xmlns:h="http://java.sun.com/jsf/html"
 				xmlns:c="http://java.sun.com/jstl/core"
                 xmlns:rich="http://richfaces.ajax4jsf.org/rich"
+                xmlns:d="http://elca.ch/tags/datatable"
 				xmlns:el4j="http://www.elca.ch/el4j/taglib">
 	
 	<c:if test="#{empty entityShortName}">
-		<el4j:set var="entityShortName" value="#{utils.deriveEntityShortName()}"/>
-	</c:if>
+        <el4j:set var="entityShortName" value="#{utils.deriveEntityShortName()}"/>
+    </c:if>
 	
 	<el4j:set var="entityClassName" value="#{utils.getEntityClassName(entityShortName)}"/>
-	
-	<c:if test="#{empty entities}">
-		<el4j:set var="entities" value="#{objectManager.getEntities(entityClassName)}"/>
-	</c:if>
-	
 	
 	<c:if test="#{empty detailPage}">
 		<el4j:set var="detailPage" value="#{utils.getDefaultDetailPage(entityShortName)}"/>
@@ -44,12 +40,20 @@
 						   rendered="#{empty entities}"/>
 				
 				<h:form rendered="#{not empty entities}">
-					<rich:dataTable width="320"
+					<!-- <rich:dataTable width="320"
 									   id="#{entityShortName}Table"
 									 rows="3"
 							columnClasses="col"
 									value="#{entities}"
-									  var="entity">
+									  var="entity"> -->
+						 <d:pagedRichDataTable 
+						       entityName="#{entityClassName}"
+					   pagedEntityManager="#{entityManager}"
+						            width="320"
+                                       id="#{entityShortName}Table"
+                                     rows="3"
+                            columnClasses="col"
+                                      var="entity">
 						
 						<ui:insert name="columns">
 							<c:if test="#{not empty entities}">
@@ -57,10 +61,7 @@
 							</c:if>
 						</ui:insert>
 						
-					</rich:dataTable>
-					
-					<rich:spacer height="20"/>
-					<rich:datascroller  for="#{entityShortName}Table" maxPages="20"/>
+					</d:pagedRichDataTable>
 				</h:form>
 			</div>
 			</h:panelGroup>
@@ -68,9 +69,12 @@
     </rich:panel>
     
     <div class="actionButtons">
-        <s:button id="done" 
-               value="Create #{el4j:h10nEntityName(entityShortName)}"
-                view="#{detailPage}"/>			  
+        <h:form>
+            <h:commandButton id="create" 
+                      value="Create #{el4j:h10nEntityName(entityShortName)}" 
+                     action="#{entityManager.create(entityClassName,detailPage)}"
+                  immediate="true"/>
+        </h:form>		  
     </div>
 	
 </ui:composition>

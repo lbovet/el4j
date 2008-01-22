@@ -1,11 +1,14 @@
 package ch.elca.el4j.seam.demo.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Version;
-import org.hibernate.validator.*;
+
+import org.hibernate.validator.Length;
+import org.hibernate.validator.NotNull;
 
 @Entity
 public class Client implements Serializable {

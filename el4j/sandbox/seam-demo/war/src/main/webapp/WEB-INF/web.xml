@@ -39,23 +39,7 @@
     <servlet-mapping>
       <servlet-name>Seam Resource Servlet</servlet-name>
       <url-pattern>/seam/resource/*</url-pattern>
-    </servlet-mapping>
-
-	<!-- Open Session In View Filter (avoids hibernate LazyInitializationException) -->
-
-	<filter>
-      <filter-name>OpenSessionInViewFilter</filter-name>
-      <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
-	  <!-- <init-param>
-		<param-name>singleSession</param-name>
-		<param-value>false</param-value>
-	  </init-param> -->
-    </filter>
-
-    <filter-mapping>
-      <filter-name>OpenSessionInViewFilter</filter-name>
-      <url-pattern>/*</url-pattern>
-    </filter-mapping>  
+    </servlet-mapping> 
     
 
     <!-- Faces Servlet -->

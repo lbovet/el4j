@@ -1,11 +1,20 @@
 package ch.elca.el4j.seam.demo.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.Collection;
+import java.util.HashSet;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Version;
+
+import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 import org.hibernate.validator.Range;
-import org.hibernate.validator.Length;
-import java.util.*;
 
 @Entity
 public class Offer implements Serializable {

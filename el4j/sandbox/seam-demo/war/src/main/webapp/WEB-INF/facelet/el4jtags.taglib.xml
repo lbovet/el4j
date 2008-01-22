@@ -31,6 +31,10 @@
 		<source>booleanField.xhtml</source>
 	</tag>
 	<tag>
+        <tag-name>dateField</tag-name>
+        <source>stringField.xhtml</source>
+    </tag>
+	<tag>
 		<tag-name>enumField</tag-name>
 		<source>enumField.xhtml</source>
 	</tag>
@@ -54,6 +58,10 @@
 		<tag-name>columnText</tag-name>
 		<source>columnText.xhtml</source>
 	</tag>
+    <tag>
+        <tag-name>columnDate</tag-name>
+        <source>columnDate.xhtml</source>
+    </tag>
 	<tag>
 		<tag-name>stringColumn</tag-name>
 		<source>stringColumn.xhtml</source>
@@ -62,6 +70,10 @@
 		<tag-name>booleanColumn</tag-name>
 		<source>booleanColumn.xhtml</source>
 	</tag>
+	<tag>
+        <tag-name>dateColumn</tag-name>
+        <source>dateColumn.xhtml</source>
+    </tag>
 	<tag>
 		<tag-name>enumColumn</tag-name>
 		<source>enumColumn.xhtml</source>
