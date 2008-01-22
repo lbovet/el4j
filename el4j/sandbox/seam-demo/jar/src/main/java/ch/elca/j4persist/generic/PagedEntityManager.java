@@ -64,4 +64,19 @@ public interface PagedEntityManager {
     public List getEntities(String entityClassName);
     
     
+    /**
+     * Underlying data was changed. If this property is true, a complete reload 
+     * and reset of the DataTable is forced.
+     * 
+     * @return
+     */
+    public boolean isViewReset();
+    
+    /**
+     * Setter for viewReset. viewReset is set to false again when the DataTable 
+     * was  refreshed.
+     * 
+     * @param value
+     */
+    public void setViewReset(boolean value);
 }

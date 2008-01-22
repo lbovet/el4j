@@ -27,7 +27,10 @@ package ch.elca.el4j.jsf.model;
  */
 
 import java.util.List;
+
 import javax.faces.model.DataModel;
+
+
 
 public class PagedListDataModel extends DataModel {
 
@@ -76,6 +79,11 @@ public class PagedListDataModel extends DataModel {
 
     public int getRowCount() {
         return totalNumRows;
+        
+    }
+    
+    public void setRowCount(int value) {
+        totalNumRows = value;
     }
 
     public Object getRowData() {

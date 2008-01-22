@@ -16,125 +16,135 @@
  */
 package ch.elca.el4j.jsf.component.html;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.model.DataModel;
 
+import org.jboss.seam.jsf.SeamApplication;
 import org.richfaces.component.html.HtmlDataTable;
 
-import ch.elca.el4j.jsf.model.PagedListDataModel;
 import ch.elca.j4persist.generic.PagedEntityManager;
 
 /**
- * A custom component adding paging to RichFaces DataTable.
- * 
- * The paging works with any dataScroller bound to this DataTable.
- * 
- * It requires the following attributes to be specified:
+ * A custom component adding paging to RichFaces DataTable. The paging works
+ * with any dataScroller bound to this DataTable. It requires the following
+ * attributes to be specified:
  * <ul>
- *  <li> entityName <br/>
- *  Fully Qualified Class Name of the entity to be displayed in the table.
- *  
- *  <li> pagedEntityManager <br/>
- *  Bean implementing the interface <code>PagedEntityManager</code>. 
- *  This is used to fetch data from db.
- *  Hint: if you don't want your dao's to implement this interface directly,
- *  you may write a wrapper around them.
+ * <li> entityName <br/> Fully Qualified Class Name of the entity to be
+ * displayed in the table.
+ * <li> pagedEntityManager <br/> Bean implementing the interface
+ * <code>PagedEntityManager</code>. This is used to fetch data from db. Hint:
+ * if you don't want your dao's to implement this interface directly, you may
+ * write a wrapper around them.
  * </ul>
- *
  * Example of usage:
  * 
  * <pre>
- * &lt;d:pagedRichDataTable id="myTable" 
- *                   entityName="ch.elca.el4j.apps.refdb.dom.Reference"
- *                   pagedEntityManager="#{referenceList}"
- *                   var="reference"
- *                   rows="5"&gt;
+ * &lt;d:pagedRichDataTable id=&quot;myTable&quot; 
+ *                   entityName=&quot;ch.elca.el4j.apps.refdb.dom.Reference&quot;
+ *                   pagedEntityManager=&quot;#{referenceList}&quot;
+ *                   var=&quot;reference&quot;
+ *                   rows=&quot;5&quot;&gt;
  *                   
- *         &lt;!-- column defs go here as normal using var "reference"--&gt;
+ *   &lt;!-- column defs go here as normal using var &quot;reference&quot;--&gt;
  *         
  * &lt;/d:pagedRichDataTable&gt;
- * &lt;!-- this is the datascroller to enable switching between the pages --&gt;         
- * &lt;rich:datascroller align="left"  for="myTable" maxPages="5" /&gt;
- * </pre>        
+ * &lt;!-- you do not need a datascroller to enable switching between the pages;
+ * it is rendered automatically by the table  --&gt;         
+ * </pre>
  * 
- *
- * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
- * );</script>
- *
+ * <script type="text/javascript">printFileStatus ("$URL:
+ * https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/sandbox/seam-demo/jar/src/main/java/ch/elca/el4j/jsf/component/html/PagedRichHtmlDataTable.java
+ * $", "$Revision$", "$Date: 2008-01-17 15:40:29 +0100 (Do, 17 Jan 2008)
+ * $", "$Author$" );</script>
+ * 
  * @author Frank Bitzer (FBI)
  */
 public class PagedRichHtmlDataTable extends HtmlDataTable {
 
+    /**
+     * value for MaxPages property of datascroller.
+     */
+    private static final int MAX_PAGES = 10;
     
     /**
-     * {@inheritDoc}
-     * encodeBegin is called before the response is returned to the client.
+     * Provides access to the current PagedEntityManager which is used to 
+     * fetch data from the database.
      * 
-     * We intercept the lifecycle and initiate the loading of the entities
-     * for the currently displayed page of the datatable.
+     * @return current instance of PagedEntityManager specified as attribute
+     * for this table
      */
-    public void encodeBegin(FacesContext context){
+    public PagedEntityManager getCurrentPagedEntityManager() {
+        PagedEntityManager pagedEntityManager 
+            = (PagedEntityManager) getAttributes().get("pagedEntityManager");
+
+        return pagedEntityManager;
+    }
+
+    /**
+     * Provides access to the fully qualified classname of the currently 
+     * displayed entity.
+     * 
+     * @return entityName specified via attribute
+     */
+    public String getCurrentEntityName() {
+        String em = (String) getAttributes().get("entityName");
+
+        return em;
+    }
+
+    
+    /**
+     * {@inheritDoc} encodeBegin is called before the response is returned to
+     * the client. 
+     * We intercept the lifecycle and initiate the loading of the
+     * entities by setting up a PagedRichHtmlDatascroller.
+     */
+    public void encodeBegin(FacesContext context) {
+
         
-        this.updateDataModel(getFirst(),getRows());
+        createDataScroller(context);
         
+
         try {
             super.encodeBegin(context);
         } catch (Exception ex) {
             Logger.getAnonymousLogger().log(Level.SEVERE, ex.getMessage());
         }
-        
+
     }
+
     
+
     
     /**
-     * Updates datamodel by loading <code>count</code> entities 
-     * starting with <code>first</code>
+     * creates and configures a datascroller for the table and adds it as 
+     * footer facet.
      * 
-     * @param first
-     * @param count
+     * @param ctx FacesContext
      */
-    private void updateDataModel(int first, int count){
-        
-        String entityName = (String)getAttributes().get("entityName");
-        
-        PagedEntityManager pagedEntityManager = 
-            (PagedEntityManager)getAttributes().get("pagedEntityManager");
-        
-        
-        if ((pagedEntityManager != null) && (entityName != null)){
-            
-            
-            //total number of entities in database
-            //this is used to calculate the number of pages
-            int listSize = pagedEntityManager.getEntityCount(
-                entityName);
-    
-            //load entities for the page to be displayed
-            pagedEntityManager.setRange(first, count);
-            
-            
-            List entities = pagedEntityManager.getEntities(
-                entityName);
-     
-            PagedListDataModel dataModel = new PagedListDataModel(
-                    entities, listSize, count);
-                
-            
-            
-            this.setValue(dataModel);
-          
-        }
+    private void createDataScroller(FacesContext ctx) {
+
+        SeamApplication a = (SeamApplication) ctx.getApplication();
+
+        PagedRichHtmlDatascroller s = (PagedRichHtmlDatascroller) a
+            .createComponent(PagedRichHtmlDatascroller.COMPONENT_TYPE);
+
+        s.setId(this.getId() + "Scroller");
+        s.setFor(this.getId());
+        s.setMaxPages(MAX_PAGES);
+
+        s.setRenderIfSinglePage(false);
+
+      
+
+        Map<String, UIComponent> facets = this.getFacets();
+        facets.put("footer", s);
+
     }
-    
-    
-    
+
 }
