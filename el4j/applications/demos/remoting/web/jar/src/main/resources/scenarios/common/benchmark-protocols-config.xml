@@ -29,7 +29,7 @@
             <value>${jee-web.port}</value>
         </property>
         <property name="contextPath">
-            <value>module-remoting-demos-web</value>
+            <value>${jee-web.context}</value>
         </property>
         <property name="implicitContextPassingRegistry">
             <ref local="implicitContextPassingRegistry" />
@@ -43,7 +43,7 @@
             <value>${jee-web.port}</value>
         </property>
         <property name="contextPath">
-            <value>module-remoting-demos-web</value>
+            <value>${jee-web.context}</value>
         </property>
         <property name="implicitContextPassingRegistry">
             <ref local="implicitContextPassingRegistry" />
@@ -57,7 +57,7 @@
             <value>${jee-web.port}</value>
         </property>
         <property name="contextPath">
-            <value>module-remoting-demos-web</value>
+            <value>${jee-web.context}</value>
         </property>
         <property name="implicitContextPassingRegistry">
             <ref local="implicitContextPassingRegistry" />
@@ -71,7 +71,7 @@
             <value>${jee-web.port}</value>
         </property>
         <property name="contextPath">
-            <value>module-remoting-demos-web</value>
+            <value>${jee-web.context}</value>
         </property>
         <property name="implicitContextPassingRegistry">
             <ref local="implicitContextPassingRegistry" />
@@ -93,7 +93,7 @@
             <value>${jee-web.port}</value>
         </property>
         <property name="contextPath">
-            <value>module-remoting-demos-web</value>
+            <value>${jee-web.context}</value>
         </property>
         <property name="protocolSpecificConfiguration">
             <ref local="soapProtocolSpecificConfiguration"/>
