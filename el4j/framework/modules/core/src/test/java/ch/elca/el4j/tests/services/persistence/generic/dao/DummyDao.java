@@ -63,6 +63,10 @@ public class DummyDao<T> implements GenericDao<T>{
 	public Class<T> getPersistentClass() {
 		return m_persistentClass;
 	}
+	
+	public void setPersistentClass(Class<T> c) {
+	    m_persistentClass = c;
+	}
 
 	public T refresh(T entity) throws DataAccessException,
 			DataRetrievalFailureException {

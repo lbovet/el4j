@@ -61,7 +61,15 @@ public interface GenericDao<T> {
      *  information.
      * @return Returns the domain class this DAO is responsible for.
      */
-    public Class<T> getPersistentClass();    
+    public Class<T> getPersistentClass();
+    
+    /** 
+     * New: this callback is in general no longer required (the constructor
+     *  should figure the type out itself) 
+     * 
+     * @param c    Mandatory. The domain class this DAO is responsible for.
+     */
+    public void setPersistentClass(Class<T> c);
     
     /**
      * Executes a query based on a given query object.
