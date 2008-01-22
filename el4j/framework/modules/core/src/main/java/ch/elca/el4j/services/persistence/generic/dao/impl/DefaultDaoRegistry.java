@@ -67,7 +67,7 @@ public class DefaultDaoRegistry implements DaoRegistry, ApplicationContextAware 
     /** 
      * The map containing the registered DAOs.
      */
-    private Map<Class<?>, GenericDao<?>> m_daos = 
+    protected Map<Class<?>, GenericDao<?>> m_daos = 
         new HashMap<Class<?>, GenericDao<?>>();
 
     protected ApplicationContext m_applicationContext;
