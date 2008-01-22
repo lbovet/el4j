@@ -1,9 +1,12 @@
 package ch.elca.el4j.seam.generic;
 
-import java.io.Serializable;
-import org.jboss.seam.annotations.*;
 import static org.jboss.seam.ScopeType.EVENT;
-import java.util.*;
+
+import java.io.Serializable;
+import java.util.HashMap;
+
+import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
 
 /**
  * 

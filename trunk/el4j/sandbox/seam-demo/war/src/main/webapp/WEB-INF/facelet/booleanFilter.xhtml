@@ -10,22 +10,19 @@
 	
 	<ul>
 		<li>
-			<s:link value="#{el4j:h10nFieldBoolText(entityShortName, filterName, true)}"
-			   styleClass="#{searching.isRestrictionInEffect(param.restrict, filterName, true)?'bold':''}">
-				<f:param name="restrict" value="#{searching.computeNewRestrictionsParameter(param.restrict,filterName,true)}"/>
-			</s:link>
+		    <h:commandLink value="#{el4j:h10nFieldBoolText(entityShortName, filterName, true)}"
+		        styleClass="#{entityManager.isConditionActive(filterName, 'true') ? 'bold' : ''}"
+		        action="#{entityManager.addCondition(filterName, 'true')}" />
 		</li>
 		<li>
-			<s:link value="#{el4j:h10nFieldBoolText(entityShortName, filterName, false)}"
-			   styleClass="#{searching.isRestrictionInEffect(param.restrict, filterName, false)?'bold':''}">
-				<f:param name="restrict" value="#{searching.computeNewRestrictionsParameter(param.restrict,filterName,false)}"/>
-			</s:link>
+		    <h:commandLink value="#{el4j:h10nFieldBoolText(entityShortName, filterName, false)}"
+                styleClass="#{entityManager.isConditionActive(filterName, 'false') ? 'bold' : ''}"
+                action="#{entityManager.addCondition(filterName, 'false')}" />
 		</li>
 		<li>
-			<s:link value="All"
-			   styleClass="#{searching.isRestrictionInEffect(param.restrict, filterName, null)?'bold':''}">
-				<f:param name="restrict" value="#{searching.computeNewRestrictionsParameter(param.restrict,filterName,null)}"/>
-			</s:link>
+		    <h:commandLink value="All"
+                styleClass="#{entityManager.isConditionActive(filterName, null) ? 'bold' : ''}"
+                action="#{entityManager.removeCondition(filterName)}" />
 		</li>
 	</ul>
 	

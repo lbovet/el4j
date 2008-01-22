@@ -17,6 +17,9 @@
 		<c:when test="#{columnType == 'boolean'}">
 			<el4j:booleanColumn columnName="#{columnName}" doLink="#{doLink}"/>
 		</c:when>
+		<c:when test="#{columnType == 'date'}">
+            <el4j:dateColumn columnName="#{columnName}" doLink="#{doLink}"/>
+        </c:when>
 		<c:when test="#{columnType == 'enum'}">
 			<el4j:enumColumn columnName="#{columnName}" doLink="#{doLink}"/>
 		</c:when>

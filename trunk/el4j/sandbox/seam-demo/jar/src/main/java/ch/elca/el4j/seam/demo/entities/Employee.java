@@ -1,13 +1,18 @@
 package ch.elca.el4j.seam.demo.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Version;
-import org.hibernate.validator.*;
+
+import org.hibernate.validator.Length;
+import org.hibernate.validator.NotNull;
+import org.jboss.seam.annotations.Name;
 
 @Entity
+@Name("employee")
 public class Employee implements Serializable {
 	private Integer id;
 	private Integer version;

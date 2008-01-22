@@ -27,7 +27,7 @@ import javax.faces.context.FacesContext;
 import org.jboss.seam.jsf.SeamApplication;
 import org.richfaces.component.html.HtmlDataTable;
 
-import ch.elca.j4persist.generic.PagedEntityManager;
+import ch.elca.el4j.seam.generic.PagedEntityManager;
 
 /**
  * A custom component adding paging to RichFaces DataTable. The paging works

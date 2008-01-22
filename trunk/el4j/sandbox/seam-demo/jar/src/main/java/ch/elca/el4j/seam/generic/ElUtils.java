@@ -1,5 +1,7 @@
 package ch.elca.el4j.seam.generic;
 
+import java.util.List;
+
 import org.jboss.seam.Component;
 
 import ch.elca.el4j.seam.generic.metadata.EntityInfoBase;
@@ -95,9 +97,9 @@ public class ElUtils {
 		return getFieldType(entityClassName, columnName);
 	}
 	
-	public boolean isRequired(Object entity, String fieldName) {
-		return getFieldInfo(entity.getClass().getName(), fieldName).isRequired();
-	}
+	public boolean isRequired(String entityClassName, String fieldName) {
+        return getFieldInfo(entityClassName, fieldName).isRequired();
+    }
 	
 	public Object[] getEnumList(String entityClassName, String fieldName) {
 		EnumFieldInfo enumFieldInfo = (EnumFieldInfo)(getFieldInfo(entityClassName, fieldName));
@@ -105,9 +107,9 @@ public class ElUtils {
 		return enumFieldInfo.getEnumList();
 	}
 	
-	public Object[] getEnumList(Object entity, String fieldName) {
+	/*public Object[] getEnumList(Object entity, String fieldName) {
 		return getEnumList(entity.getClass().getName(), fieldName);
-	}
+	}*/
 	
 	/* Default master/detail page view id support */
 	
@@ -125,26 +127,26 @@ public class ElUtils {
 	
 	/* Relation support */
 	
-	public String getRelatedEntityClassName(Object entity, String fieldName) {
-		FieldInfo fieldInfo = getFieldInfo(entity.getClass().getName(), fieldName);
+	public String getRelatedEntityClassName(String entityClassName, String fieldName) {
+		FieldInfo fieldInfo = getFieldInfo(entityClassName, fieldName);
 		Class relatedClass = ((RelationFieldInfo)fieldInfo).getRelatedClass();
 		
 		return relatedClass.getName();
 	}
 	
-	public String getRelatedEntityShortName(Object entity, String fieldName) {
-		return getEntityShortName(getRelatedEntityClassName(entity, fieldName));
+	public String getRelatedEntityShortName(String entityClassName, String fieldName) {
+		return getEntityShortName(getRelatedEntityClassName(entityClassName, fieldName));
 	}
 	
-	public Object[] getRelatedEntities(Object entity, String fieldName) {
-		String relatedEntityClassName = getRelatedEntityClassName(entity, fieldName);
-		ObjectManager objectManager = (ObjectManager)Component.getInstance("objectManager");
+	public Object[] getRelatedEntities(String entityClassName, String fieldName) {
+		String relatedEntityClassName = getRelatedEntityClassName(entityClassName, fieldName);
+		EntityManager entityManager = (EntityManager)Component.getInstance("entityManager");
 		
-		return objectManager.getEntitiesAsObject(relatedEntityClassName);
+		return entityManager.getAllEntities(relatedEntityClassName);
 	}
 	
-	public String getDefaultRelatedDetailPage(Object entity, String fieldName) {
-		String relatedEntityShortName = getRelatedEntityShortName(entity, fieldName);
+	public String getDefaultRelatedDetailPage(String entityClassName, String fieldName) {
+		String relatedEntityShortName = getRelatedEntityShortName(entityClassName, fieldName);
 		
 		return getDefaultDetailPage(relatedEntityShortName);
 	}

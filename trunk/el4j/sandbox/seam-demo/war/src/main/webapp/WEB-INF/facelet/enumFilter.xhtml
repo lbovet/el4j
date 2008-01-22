@@ -9,19 +9,17 @@
 	<p><b>#{el4j:h10nFieldName(entityShortName, filterName)}:</b></p>
 	
 	<ul>
-		<ui:repeat value="#{utils.getFilterEnumList(entityClassName,filterName)}" var="item">
+		<ui:repeat value="#{utils.getFilterEnumList(entityClassName, filterName)}" var="item">
 			<li>
-				<s:link value="#{el4j:h10nFieldEnumName(entityShortName, filterName, item)}"
-				   styleClass="#{searching.isRestrictionInEffect(param.restrict, filterName, item)?'bold':''}">
-					<f:param name="restrict" value="#{searching.computeNewRestrictionsParameter(param.restrict,filterName,item)}"/>
-				</s:link>
+			    <h:commandLink value="#{el4j:h10nFieldEnumName(entityShortName, filterName, item)}"
+                    styleClass="#{entityManager.isConditionActive(filterName, item) ? 'bold' : ''}"
+                    action="#{entityManager.addCondition(filterName, item)}" />
 			</li>
 		</ui:repeat>
 		<li>
-			<s:link value="All"
-			   styleClass="#{searching.isRestrictionInEffect(param.restrict, filterName, null)?'bold':''}">
-				<f:param name="restrict" value="#{searching.computeNewRestrictionsParameter(param.restrict,filterName,null)}"/>
-			</s:link>
+		    <h:commandLink value="All"
+                    styleClass="#{entityManager.isConditionActive(filterName, null) ? 'bold' : ''}"
+                    action="#{entityManager.removeCondition(filterName)}" />
 		</li>
 	</ul>
 	

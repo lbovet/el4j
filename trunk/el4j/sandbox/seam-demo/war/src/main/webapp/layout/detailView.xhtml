@@ -15,10 +15,6 @@
 	
 	<el4j:set var="entityClassName" value="#{utils.getEntityClassName(entityShortName)}"/>
 	
-	<c:if test="#{entity == null}">
-		<el4j:set var="entity" value="#{objectManager.getInstance(entityClassName)}"/>
-	</c:if>
-	
 	<c:if test="#{empty title}">
 		<el4j:set var="title" value="#{el4j:h10nEntityName(entityShortName)}"/>
 	</c:if>
@@ -28,7 +24,7 @@
 	</c:if>
 
     <h:messages globalOnly="true" styleClass="message"/>
-    
+
     <h:form id="editForm">
         <rich:panel>
             <f:facet name="header">#{title}</f:facet>

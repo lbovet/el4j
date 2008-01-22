@@ -20,7 +20,7 @@
 	-->
 
 	<!-- Hibernate Session Factory Bean -->
-	<bean id="sessionFactory"
+	<bean id="hibernateSessionFactory"
 	   class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		
 		<!-- IMPORTANT: All classes containing hibernate annotations have to
@@ -31,6 +31,11 @@
 				<value>ch.elca.el4j.seam.demo.entities.Client</value>
 				<value>ch.elca.el4j.seam.demo.entities.Employee</value>
 				<value>ch.elca.el4j.seam.demo.entities.Offer</value>
+<!--                 <value>ch.elca.el4j.seam.demo.entities.refdb.Annotation</value>
+                <value>ch.elca.el4j.seam.demo.entities.refdb.Book</value>
+                <value>ch.elca.el4j.seam.demo.entities.refdb.File</value>
+                <value>ch.elca.el4j.seam.demo.entities.refdb.Link</value> -->
+                <value>ch.elca.el4j.seam.demo.entities.SeamReference</value>
 			</list>
 		</property>
 		
@@ -61,12 +66,19 @@
 				<prop key="hibernate.hbm2ddl.auto">update</prop>				
 				<prop key="hibernate.show_sql">true</prop>
 				
-				<!-- IMPORTANT: these prop's are needed for Open Session In View: -->
-				<prop key="hibernate.connection.autocommit">false</prop>				
-				<prop key="hibernate.connection.release_mode">after_transaction</prop>		
+				<!-- IMPORTANT: these prop's are needed for Open Session In View: 
+				<prop key="hibernate.connection.autocommit">false</prop>		
+				
+				<prop key="hibernate.transaction.manager_lookup_class">org.hibernate.transaction.JBossTransactionManagerLookup</prop>
+                <prop key="hibernate.transaction.factory_class">org.hibernate.transaction.JTATransactionFactory</prop>
+				-->		
+				
+				<prop key="hibernate.transaction.flush_before_completion">true</prop>
+				<prop key="hibernate.connection.release_mode">after_transaction</prop>
+                
 			</props>
 		</property>
-		
+	
 		<property name="useTransactionAwareDataSource">
 			<value>true</value>
 		</property>
@@ -76,6 +88,10 @@
 		</property>
 	</bean>
 	
+	<bean id="sessionFactory" class="org.jboss.seam.ioc.spring.SeamManagedSessionFactoryBean">
+        <property name="sessionName" value="hibernateSession" />
+    </bean>
+	
 	<!--
 	*********************************************************************************
 	  DAO related beans:
@@ -84,7 +100,7 @@
 
 	<!-- the dao registry -->
 	<bean id="daoRegistry"
-	   class="ch.elca.j4persist.generic.dao.impl.DefaultDaoRegistry">
+	   class="ch.elca.el4j.services.persistence.generic.dao.impl.FallbackDaoRegistry">
 		
 		<!-- mapping from qualified class names to daos -->
 		<property name="daos">
@@ -96,19 +112,19 @@
 			</map>
 		</property>
 		
-		<!-- session factory needed for dao auto-creation -->
-		<property name="sessionFactory">
-			<ref bean="sessionFactory"/> 
-		</property>	
+		<property name="daoPrototypeBeanName">
+		    <idref bean="daoPrototype"/>
+		</property>
+			
 	</bean>
 
 	<!-- example of an explicit declaration of a dao -->
-	<bean id="kwDao" class="ch.elca.j4persist.hibernate.dao.GenericHibernateDao" parent="abstractDao">
+	<bean id="kwDao" class="ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao" parent="abstractDao">
 		<property name="persistentClass" value="ch.elca.el4j.apps.keyword.dom.Keyword"/>				
 	</bean>
 	
 	<!-- DAO prototype to be used for DAO auto-creation  -->
-	<bean id="DaoPrototype" class="ch.elca.j4persist.hibernate.dao.GenericHibernateDao"
+	<bean id="daoPrototype" class="ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao"
 		parent="abstractDao" scope="prototype">				
 	</bean>
 	
@@ -133,12 +149,12 @@
 	
 	<!-- Entity info base: provides (mostly metadata related) info about entities -->
 	<bean id="entityInfoBase" class="ch.elca.el4j.seam.generic.metadata.EntityInfoBase">
-		<property name="sessionFactory" ref="sessionFactory"/>
+		<property name="sessionFactory" ref="hibernateSessionFactory"/>
 	</bean>
 
 	<!-- Field lists: computes field/column lists (metadata & given in/exclusion lists) -->
 	<bean id="fieldLists" class="ch.elca.el4j.seam.generic.metadata.FieldLists">
-		<property name="sessionFactory" ref="sessionFactory"/>
+		<property name="sessionFactory" ref="hibernateSessionFactory"/>
 		<property name="shortNameMapping" ref="shortNameMapping"/>
 	</bean>
 	

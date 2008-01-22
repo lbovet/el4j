@@ -11,7 +11,7 @@
 		<div class="prop">
 			<s:label styleClass="name #{invalid?'errors':''}">
 				#{el4j:h10nFieldName(entityShortName, fieldName)}
-				<s:span styleClass="required" rendered="#{utils.isRequired(entity,fieldName)}">*</s:span>
+				<s:span styleClass="required" rendered="#{utils.isRequired(entityClassName,fieldName)}">*</s:span>
 			</s:label>
 				
 			<span class="value #{invalid?'errors':''}">
@@ -19,11 +19,11 @@
 					<a4j:outputPanel id="#{fieldName}OutputPanel">
 					<a4j:region>
 						<c:if test="#{relEntities == null}">
-							<el4j:set var="relEntities" value="#{utils.getRelatedEntities(entity,fieldName)}"/>
+							<el4j:set var="relEntities" value="#{utils.getRelatedEntities(entityClassName,fieldName)}"/>
 						</c:if>
 						
 						<c:if test="#{detailPage == null}">
-							<el4j:set var="detailPage" value="#{utils.getDefaultRelatedDetailPage(entity,fieldName)}"/>
+							<el4j:set var="detailPage" value="#{utils.getDefaultRelatedDetailPage(entityClassName,fieldName)}"/>
 						</c:if>
 						
 						<ul>
@@ -35,9 +35,7 @@
 											  reRender="#{fieldName}OutputPanel"
 												action="#{entity[fieldName].remove(ent)}"/>
 								<h:outputText value=" "/>
-								<s:link view="#{detailPage}" value="Edit" propagation="none">
-									<f:param name="entityId" value="#{objectManager.serializeId(ent)}"/>
-								</s:link>
+								<h:commandLink value="Edit" action="#{entityManager.edit(ent, detailPage)}"/>
 							</li>
 						</ui:repeat>
 						</ul>
