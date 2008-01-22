@@ -55,7 +55,4 @@
             <type>war</type>
         </dependency>
     </dependencies>
-    <properties>
-        <jee-web.context>module-remoting-demos-web</jee-web.context>
-    </properties>
 </project>
