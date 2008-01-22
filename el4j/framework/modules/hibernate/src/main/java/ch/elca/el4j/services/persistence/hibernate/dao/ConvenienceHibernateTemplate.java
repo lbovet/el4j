@@ -217,6 +217,7 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
      *  TODO shall we drop this and instead use the
      *   findByCriteria(DetachedCriteria,int,int) method? 
      */
+    @Override
     protected void prepareQuery(Query queryObject) {
         super.prepareQuery(queryObject);
         
@@ -224,6 +225,16 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
             queryObject.setFirstResult(getFirstResult());
         }
         
+    }
+    
+    @Override
+	protected void prepareCriteria(Criteria criteria) {
+    	super.prepareCriteria(criteria);
+
+        if (getFirstResult() != QueryObject.NO_CONSTRAINT){
+            criteria.setFirstResult(getFirstResult());
+        }
+    	
     }
 
     /**
