@@ -1,11 +1,9 @@
 package ch.elca.el4j.tests.services.persistence.hibernate.entityfinder;
 
-import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
-
+import junit.framework.TestCase;
 import ch.elca.el4j.services.persistence.hibernate.entityfinder.EntityDetectorAnnotationSessionFactoryBean;
 import ch.elca.el4j.tests.services.persistence.hibernate.entityfinder.entities.Entity1;
 import ch.elca.el4j.tests.services.persistence.hibernate.entityfinder.entities.Entity2;
-import junit.framework.TestCase;
 
 /**
  * Test for {@link EntityDetectorAnnotationSessionFactoryBean}
@@ -27,7 +25,6 @@ public class EntityDetectorTest extends TestCase {
 		try {
 			testee.afterPropertiesSet();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
