@@ -31,11 +31,6 @@
 				<value>ch.elca.el4j.seam.demo.entities.Client</value>
 				<value>ch.elca.el4j.seam.demo.entities.Employee</value>
 				<value>ch.elca.el4j.seam.demo.entities.Offer</value>
-<!--                 <value>ch.elca.el4j.seam.demo.entities.refdb.Annotation</value>
-                <value>ch.elca.el4j.seam.demo.entities.refdb.Book</value>
-                <value>ch.elca.el4j.seam.demo.entities.refdb.File</value>
-                <value>ch.elca.el4j.seam.demo.entities.refdb.Link</value> -->
-                <value>ch.elca.el4j.seam.demo.entities.SeamReference</value>
 			</list>
 		</property>
 		
