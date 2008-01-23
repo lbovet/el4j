@@ -181,7 +181,8 @@ public class QueryObject implements Serializable {
     public static final int NO_CONSTRAINT = -1;    
     
     /**
-     * Can be updated via setter {@link setDefaultMaxResults}
+     * Default can be updated via static setter 
+     *  {@link setDefaultMaxResults}
      */
     static int s_defaultMaxResults = 100;
     
@@ -198,6 +199,7 @@ public class QueryObject implements Serializable {
     /**
      * What is the id of the first result we want to get back?
      * By default there is no constraint on the first result.
+     * The counting starts at 0 (i.e. the first result is 0)!
      * @param firstResult
      */
     public void setFirstResult(int firstResult) {
@@ -207,7 +209,7 @@ public class QueryObject implements Serializable {
     /**
      * How many results do we want to get back at most?
      *  (The default can be set via the {@link setDefaultMaxResults}
-     *   method). It defaults to 100.
+     *   method). It defaults to 100. -1 means there is no constraint.
      * @param maxResults
      */
     public void setMaxResults(int maxResults) {
@@ -240,7 +242,7 @@ public class QueryObject implements Serializable {
 
     /**
      * How many results shall we return by default?
-     *   Defaults to 100.
+     *   Defaults to 100. -1 stands for no constraint.
      * @param defaultMaxResults
      */
     public static void setDefaultMaxResults(int defaultMaxResults) {

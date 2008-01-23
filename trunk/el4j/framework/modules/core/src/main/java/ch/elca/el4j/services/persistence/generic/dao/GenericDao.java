@@ -85,11 +85,11 @@ public interface GenericDao<T> {
 
     
     /**
-     * Count number of results of a search. Ignores constraints
-     *  on max number of elements to return!
+     * Count number of results of a search. 
+     * 
      * @param query
      * @return the number of results that this query could at most
-     *   return (without taking into account query.maxResults).
+     *   return.
      * @throws DataAccessException
      */
     int findCountByQuery(final QueryObject query)
