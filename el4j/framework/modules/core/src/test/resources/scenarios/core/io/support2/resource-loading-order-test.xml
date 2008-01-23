@@ -11,9 +11,8 @@
     <bean id="employee1" 
         class="ch.elca.el4j.tests.core.io.support.helper.Employee"/>
     
-    <bean id="refreshPropertyOverrideConfigurer1"
-        class="org.springframework.beans.factory.config.PropertyOverrideConfigurer"
-        scope="prototype">
+    <bean id="propertyOverrideConfigurer1"
+        class="org.springframework.beans.factory.config.PropertyOverrideConfigurer">
         <property name="locations">
             <list>
                 <value>classpath:scenarios/core/io/support2/resource-loading-order-test.properties</value>
