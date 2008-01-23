@@ -9,8 +9,7 @@
     <!-- $Author$ -->
 
     <bean id="keywordWebDbRawOverrideConfigurer"
-        class="ch.elca.el4j.core.config.RefreshPropertyOverrideConfigurer"
-        scope="prototype">
+        class="org.springframework.beans.factory.config.PropertyOverrideConfigurer">
         <property name="locations">
             <list>
                 <value>classpath:scenarios/db/raw/seam-demo-jar-override-${db.name}.properties</value>

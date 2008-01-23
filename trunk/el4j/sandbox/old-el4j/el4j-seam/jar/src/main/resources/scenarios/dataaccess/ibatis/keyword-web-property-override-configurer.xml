@@ -11,8 +11,7 @@
     <import resource="classpath:scenarios/dataaccess/ibatisSqlMaps.xml"/>
 
     <bean id="keywordWebDataaccessIbatisOverrideConfigurer"
-        class="ch.elca.el4j.core.config.RefreshPropertyOverrideConfigurer"
-        scope="prototype">
+        class="org.springframework.beans.factory.config.PropertyOverrideConfigurer">
         <property name="locations">
             <list>
                 <value>classpath:scenarios/dataaccess/ibatis/keyword-web-override-${db.name}.properties</value>
