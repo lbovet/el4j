@@ -199,7 +199,9 @@ public class GenericHibernateDao<T, ID extends Serializable>
         DetachedCriteria hibernateCriteria = CriteriaTransformer.transform(q,
             getPersistentClass());
         
-        ConvenienceHibernateTemplate template = getConvenienceHibernateTemplate(); 
+        ConvenienceHibernateTemplate template = getConvenienceHibernateTemplate();
+        template.setMaxResults(0);
+        template.setFirstResult(0);
         
         return template.findCountByCriteria(hibernateCriteria);
     }    
