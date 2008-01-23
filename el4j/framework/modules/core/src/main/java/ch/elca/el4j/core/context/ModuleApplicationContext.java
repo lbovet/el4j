@@ -20,14 +20,26 @@ package ch.elca.el4j.core.context;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.PropertyValue;
+import org.springframework.beans.PropertyValues;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.config.TypedStringValue;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.AbstractXmlApplicationContext;
+import org.springframework.core.OrderComparator;
 import org.springframework.core.Ordered;
+import org.springframework.core.PriorityOrdered;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.util.Assert;
@@ -497,5 +509,19 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
             isMergeWithOuterResources());
         m_patternResolver = patternResolver;
         return m_patternResolver; 
+    }
+    
+    /**
+     * Not just method {@link BeanFactoryPostProcessor#postProcessBeanFactory(
+     * ConfigurableListableBeanFactory)} is invoked ordered but also the
+     * creation of the factory post processor beans!
+     * 
+     * {@inheritDoc}
+     */
+    protected void invokeBeanFactoryPostProcessors(
+        ConfigurableListableBeanFactory beanFactory) {
+        ModuleApplicationContextUtils ctxUtil 
+            = new ModuleApplicationContextUtils(this);
+        ctxUtil.invokeBeanFactoryPostProcessorsStrictlyOrdered(beanFactory);
     }
 }
