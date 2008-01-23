@@ -33,13 +33,13 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
  * but searches for JNDI entries instead. This allows to configure an
  * application more easily at deployment time through the container's admin 
  * console for instance.
- * 
+ *
  * <script type="text/javascript">printFileStatus
-*   ("$URL$",
-    *    "$Revision$",
-    *    "$Date$",
-    *    "$Author$"
-    * );</script>
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Sylvain Laurent (SLA)
  * @author Andreas Bur (ABU)
