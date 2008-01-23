@@ -237,8 +237,9 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
     	
     }
 
+    
     /**
-     * Count number of results of a search.
+     * Count number of results of a search. 
      * @param criteria
      * @param firstResult
      * @param maxResults
@@ -253,13 +254,16 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
             public Object doInHibernate(Session session) throws HibernateException {
                 Criteria executableCriteria = criteria.getExecutableCriteria(session);
                 executableCriteria.setProjection( Projections.rowCount() );
-                
+                                
                 prepareCriteria(executableCriteria);
-
+                
                 return executableCriteria.uniqueResult();
             }
         }, true);
-                      
+        if (result == null){
+        	result = 0;
+        }
+        
         return (Integer)result; 
     }
     
