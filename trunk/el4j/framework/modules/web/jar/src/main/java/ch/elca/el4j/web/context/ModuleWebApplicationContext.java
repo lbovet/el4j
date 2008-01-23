@@ -26,6 +26,8 @@ import javax.servlet.ServletContext;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
@@ -378,5 +380,19 @@ public class ModuleWebApplicationContext extends XmlWebApplicationContext {
             isMergeWithOuterResources());
         m_patternResolver = patternResolver;
         return m_patternResolver; 
+    }
+    
+    /**
+     * Not just method {@link BeanFactoryPostProcessor#postProcessBeanFactory(
+     * ConfigurableListableBeanFactory)} is invoked ordered but also the
+     * creation of the factory post processor beans!
+     * 
+     * {@inheritDoc}
+     */
+    protected void invokeBeanFactoryPostProcessors(
+        ConfigurableListableBeanFactory beanFactory) {
+        ModuleApplicationContextUtils ctxUtil 
+            = new ModuleApplicationContextUtils(this);
+        ctxUtil.invokeBeanFactoryPostProcessorsStrictlyOrdered(beanFactory);
     }
 }
