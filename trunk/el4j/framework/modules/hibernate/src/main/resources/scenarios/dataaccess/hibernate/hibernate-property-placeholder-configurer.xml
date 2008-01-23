@@ -9,8 +9,7 @@
     <!-- $Author$ -->
 
     <bean id="hibernatePropertyPlaceholderConfigurer"
-        class="ch.elca.el4j.core.config.RefreshPropertyPlaceholderConfigurer"
-        scope="prototype">
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
                 <value>classpath:scenarios/dataaccess/hibernate/hibernate-placeholder-${db.name}.properties</value>
