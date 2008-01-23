@@ -176,13 +176,8 @@ public class GenericHibernateDao<T, ID extends Serializable>
             getPersistentClass());
         
         ConvenienceHibernateTemplate template = getConvenienceHibernateTemplate(); 
-        template.setMaxResults(q.getMaxResults());
         
-        if (q.getFirstResult() != QueryObject.NO_CONSTRAINT){
-            template.setFirstResult(q.getFirstResult());
-        }      
-        
-        return template.findByCriteria(hibernateCriteria);
+        return template.findByCriteria(hibernateCriteria,q.getFirstResult(),q.getMaxResults());
     }
 
     /**
@@ -199,10 +194,8 @@ public class GenericHibernateDao<T, ID extends Serializable>
         DetachedCriteria hibernateCriteria = CriteriaTransformer.transform(q,
             getPersistentClass());
         
-        ConvenienceHibernateTemplate template = getConvenienceHibernateTemplate();
-        template.setMaxResults(0);
-        template.setFirstResult(0);
-        
+        ConvenienceHibernateTemplate template = getConvenienceHibernateTemplate();                
+
         return template.findCountByCriteria(hibernateCriteria);
     }    
     
