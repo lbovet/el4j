@@ -86,7 +86,7 @@ public class ModuleContextLoader extends ContextLoader {
         ServletContext servletContext, ApplicationContext parent)
         throws BeansException {
 
-        Class contextClass = determineContextClass(servletContext);
+        Class<?> contextClass = determineContextClass(servletContext);
         if (!ConfigurableWebApplicationContext.class
             .isAssignableFrom(contextClass)) {
             throw new ApplicationContextException("Custom context class ["
@@ -129,7 +129,7 @@ public class ModuleContextLoader extends ContextLoader {
     /**
      * {@inheritDoc}
      */
-    protected Class determineContextClass(ServletContext servletContext)
+    protected Class<?> determineContextClass(ServletContext servletContext)
         throws ApplicationContextException {
         String contextClassName = servletContext
             .getInitParameter(CONTEXT_CLASS_PARAM);
