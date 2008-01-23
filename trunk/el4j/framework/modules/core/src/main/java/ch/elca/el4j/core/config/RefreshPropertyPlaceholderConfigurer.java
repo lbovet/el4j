@@ -43,8 +43,13 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  *    "$Author$"
  * );</script>
  *
+ * @deprecated This former hack is no longer required. It is solved in 
+ *             <code>ModuleApplicationContext</code> and
+ *             <code>ModuleWebApplicationContext</code>.
+ *
  * @author Alex Mathey (AMA)
  */
+@Deprecated
 public class RefreshPropertyPlaceholderConfigurer extends
     PropertyPlaceholderConfigurer implements BeanNameAware {
 

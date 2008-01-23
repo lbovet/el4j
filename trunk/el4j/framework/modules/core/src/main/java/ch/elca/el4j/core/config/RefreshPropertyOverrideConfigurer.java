@@ -21,6 +21,7 @@ import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.PropertyOverrideConfigurer;
 
+import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 
 /**
@@ -43,7 +44,9 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  *    "$Author$"
  * );</script>
  *
- * @deprecated This former hack is no longer required (spring 2 has better hocks to fix it properly)
+ * @deprecated This former hack is no longer required. It is solved in 
+ *             <code>ModuleApplicationContext</code> and
+ *             <code>ModuleWebApplicationContext</code>.
  *
  * @author Martin Zeltner (MZE)
  */
