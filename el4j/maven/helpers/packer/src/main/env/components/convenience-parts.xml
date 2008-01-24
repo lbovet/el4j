@@ -39,9 +39,6 @@
             <outputDirectory></outputDirectory>
             <fileMode>0755</fileMode>
             <lineEnding>unix</lineEnding>
-            <includes>
-                <include>tools/bin/*</include>
-            </includes>					
             <excludes>
                 <exclude>**/.*/**</exclude>
             </excludes>
