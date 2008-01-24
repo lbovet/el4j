@@ -9,15 +9,8 @@
     <!-- $Author$ -->
     
     <bean id="moduleEnvOverrideConfigurer"
-        class="org.springframework.beans.factory.config.PropertyOverrideConfigurer">
-        <property name="locations">
-        	<list>
-	            <value>classpath:env/env.properties</value>
-	            <value>classpath:env-placeholder.properties</value>
-            </list>
-        </property>
-        <property name="ignoreInvalidKeys" value="true"/>
+        class="ch.elca.el4j.env.beans.EnvPropertyOverrideConfigurer.java">
         <property name="ignoreResourceNotFound" value="true"/>
-        <property name="order" value="-1"/>
+        <property name="order" value="-3"/>
     </bean>
 </beans>
