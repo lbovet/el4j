@@ -159,7 +159,17 @@ public class ComparisonCriteria extends AbstractCriteria {
     public static ComparisonCriteria equals(String field, String value) {
         return new ComparisonCriteria(
             field, value, "=", "String");
-    }    
+    }
+    
+    /**
+     * @param field Is the field the criteria is made for.
+     * @param value Is the value of this criteria.
+     * @return Returns an equals comparison criteria.
+     */
+    public static ComparisonCriteria equalsObject(String field, Object value) {
+        return new ComparisonCriteria(
+            field, value, "=", "Object");
+    }
     
     /**
      * @return Returns the compare operator.
