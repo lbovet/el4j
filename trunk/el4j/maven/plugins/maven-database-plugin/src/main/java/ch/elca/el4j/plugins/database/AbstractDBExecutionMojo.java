@@ -57,7 +57,7 @@ import ch.elca.el4j.plugins.database.holder.DatabaseHolderException;
 public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 
     // Checkstyle: MemberName off
-    
+
     /**
      * Base path (in <code>classpath*:</code>)where properties files can be 
      * found.
@@ -66,8 +66,8 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
      *  "scenarios/db/raw/"
      */
     private String connectionPropertiesDir;
-    
-    
+
+
     /**
      * Path to properties file where connection properties (username, password 
      * and url)can be found.
@@ -81,9 +81,9 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
      * @parameter expression="${db.connectionPropertiesSource}"
      */
     private String connectionPropertiesSource;
-    
-    
-    
+
+
+
     /**
      * Template for filenames for .properties files used to read the
      * connection settings of the database.
@@ -96,8 +96,8 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
      * default-value="{artifactId}-override-{db.name}.properties"
      */
     private String connectionPropertiesSourceTemplate;
-    
-    
+
+
     /**
      * Path to properties file where JDBC driver name can be found.
      * 
@@ -109,14 +109,14 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
      *  "scenarios/db/raw/module-database-override-{db.name}.properties"
      */
     private String driverPropertiesSource;
-    
+
     /**
      * Separator for string lists.
      *
      * @parameter expression="${separator}" default-value=","
      */
     private String separator;
-    
+
     /**
      * SQL Source Directories, i.e. directories where to find the .sql files.
      * 
@@ -138,9 +138,9 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
      * The Data Holder.
      */
     private ConnectionPropertiesHolder m_holder;
-    
+
     // Checkstyle: MemberName on
-    
+
     /**
      * Execute a given goal.
      * Looks for matching sql resources in <code>sqlSourceDir</code>, extracts
@@ -155,103 +155,104 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
      */
     protected void executeAction(String goal, boolean reversed, 
         boolean isSilent) {
-        
-        
+
+
         //first make sure, that connectionPropertiesDir ends with a "/"
         //because this is needed for further operations
         if (!connectionPropertiesDir.endsWith("/")) {
             connectionPropertiesDir = connectionPropertiesDir + "/";
         }
-        
+
         getLog().info("maven-database-plugin is working...");
-        
-        
+
+
         getLog().info("Current artifact: " + getProject().getArtifactId());
-        
-//        getLog().info("Dependency tree: ");
-//        getLog().info("============");
-//        
-//        List<Artifact> deps = getGraphWalker().
-//            getDependencyArtifacts();
-//        //add current artifact to search-list
-//        if (deps != null) { deps.add(getProject().getArtifact()); }
-//        
-//        for (Artifact dep : deps) {
-//            getLog().info(dep.getArtifactId());
-//        }
-//       
-//        getLog().info("============");
-        
-//        getLog().info("Resources:");
-//        
-//        Resource[] res = getHolder().getResources("classpath*:" 
-//            + connectionPropertiesDir);
-//        //res now holds all resources matching path-pattern
-//         
-//        for (Resource r : res) {
-//            try {
-//                getLog().info("  " 
-//                     + r.getURL().getFile());
-//            } catch (Exception e) {
-//                 getLog().info("Error getting URL of resource.");
-//            }
-//        }
-        
+
+//      getLog().info("Dependency tree: ");
+//      getLog().info("============");
+
+//      List<Artifact> deps = getGraphWalker().
+//      getDependencyArtifacts();
+//      //add current artifact to search-list
+//      if (deps != null) { deps.add(getProject().getArtifact()); }
+
+//      for (Artifact dep : deps) {
+//      getLog().info(dep.getArtifactId());
+//      }
+
+//      getLog().info("============");
+
+//      getLog().info("Resources:");
+
+//      Resource[] res = getHolder().getResources("classpath*:" 
+//      + connectionPropertiesDir);
+//      //res now holds all resources matching path-pattern
+
+//      for (Resource r : res) {
+//      try {
+//      getLog().info("  " 
+//      + r.getURL().getFile());
+//      } catch (Exception e) {
+//      getLog().info("Error getting URL of resource.");
+//      }
+//      }
+
         //shows dependencies of current artifact
         //very nice but very useless...
         /**
         List<URL> dependencies=getGraphWalker().getDependencyURLs();
-        
+
         getLog().info("Dependencies are: ");
         for (URL url : dependencies) {
             getLog().info(url.getFile());
         }
-        */
-        
+         */
+
         //no file for connection-properties was specified, so search it
         if (!StringUtils.hasText(connectionPropertiesSource)) {
-            
+
             //then dbName must be provided, so that corrent 
             //properties file can be found
             //hint: since there is a default value for dbName, 
             //this case should never occur
-            
+
             if (!StringUtils.hasText(getDbNameHolder().getDbName())) {
                 getLog().error("Please provide a value for either "
                     + "the parameter 'db.connectionPropertiesSource' or "
                     + "'db.dbName'");
             } else {
-            
-                getLog().info("No .properties file was specified via POM or parameter.");
+                getLog().info(
+                    "No .properties file was specified via POM or parameter.");
                 getLog().info("Looking for .properties file...");
-                
+
                 connectionPropertiesSource = getPropertiesFile();
-                
-                
+
+
                 //load the found properties (possible even if nothing found)
                 getConnPropHolder().loadConnectionProperties(
                     connectionPropertiesSource);
             }
         } else {
-            getLog().info(".properties file was specified via" +
-            		" POM or parameter: " + connectionPropertiesSource);
+            getLog().info(".properties file was specified via"
+                + " POM or parameter: " + connectionPropertiesSource);
         }
-    
-        
-        
+
+
+
         // If no connection properties are given, skip goal
         if (connectionPropertiesSource != null) {
-            
+
             getLog().info("Using connectionPropertiesSource at '" 
-                + getConnPropHolder().replaceDbName(connectionPropertiesSource) + "'");
-            
+                + getConnPropHolder().replaceDbName(connectionPropertiesSource)
+                + "'");
+
             List<Resource> resources = getResources(getSqlSourcesPath(goal));
             if (reversed) {
                 Collections.reverse(resources);
             }
             processResources(resources, goal, isSilent);
         } else {
-            
+
             getLog().info("-----------------------------------------------");
             getLog().error("Missing parameter: connectionPropertiesSource!");
             getLog().info("Skipping goal...");
@@ -270,88 +271,88 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
      * @return relative path of properties file (relative to classpath*:)
      */
     private String getPropertiesFile() {
-        
+
         String result = null;
-        
+
         //create list of dependencies
-        List<Artifact>dependencies = getGraphWalker().
-            getDependencyArtifacts();
-       
+        List<Artifact>dependencies
+            = getGraphWalker().getDependencyArtifacts();
+
         //add current artifact to search-list
         if (dependencies != null) { 
             dependencies.add(getProject().getArtifact());
         }
-        
-        
+
+
         //reverse to search bottom-up
         Collections.reverse(dependencies);
-        
+
         String pattern;
-        
+
         for (Artifact currentDependency : dependencies) {
-            
-//            pattern = "classpath*:" + connectionPropertiesDir
-//                + currentDependency.getArtifactId()
-//                + "-override-" + getDbName() + ".properties";
-            
+
+//          pattern = "classpath*:" + connectionPropertiesDir
+//          + currentDependency.getArtifactId()
+//          + "-override-" + getDbName() + ".properties";
+
             getLog().info("Search artifact "
                 + currentDependency.getArtifactId() + "...");
-   
-            
+
+
             //create pattern from template
-            
+
             //at first, set variable artifactId
             pattern = this.connectionPropertiesSourceTemplate.replace
             ("{artifactId}", currentDependency.getArtifactId());
-            
+
             //next, version
             pattern = pattern.replace
             ("{version}", currentDependency.getVersion());
-            
+
             //then groupId
             pattern = pattern.replace
             ("{groupId}", currentDependency.getGroupId());
-            
+
             //and at least, db.name using the function of the holder
             pattern = getConnPropHolder().replaceDbName(pattern);
-            
-            
+
+
             //search must be executed in classpath
             pattern = "classpath*:" + connectionPropertiesDir + pattern;
-            
+
             getLog().info("Using pattern " + pattern);
-            
+
             Resource[] res = getConnPropHolder().getResources(pattern);
-            
-            
+
+
             if (res.length == 0) {
                 //no properties found for this artifact, so try parent artifact
                 getLog().info("Artifact " + currentDependency.getArtifactId()
                     + " has no .properties file. Trying next dependency...");
-                
-                
+
+
             } else if (res.length == 1) {
                 //exactly one .properties file was found, so return its path
                 result = connectionPropertiesDir + res[0].getFilename();
-                
+
                 break;
             } else {
                 //ambiguous properties files found 
                 getLog().error("More then one .properties file found in "
                     + currentDependency.getArtifactId());
-                
+
                 result = null;
-                
+
                 break;
-                
+
             }
-            
-           
+
+
         }
-         
+
         return result;
-        
-        
+
+
 
     }
     /**
@@ -411,7 +412,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
                 "Error during sql statement execution", sqlExceptions.get(0));
         }
     }
-    
+
     /**
      * Process all source paths and return resources (without duplicates).
      * 
@@ -439,7 +440,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
         }
         return result;
     }
-    
+
     /**
      * Returns array of source paths of sql files.
      * 
@@ -454,7 +455,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
         }
         return result;
     }
-    
+
     /**
      * Seperate source paths in sourceDir and return them as an array.
      * 
@@ -484,7 +485,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
         }
         return result;
     }
-    
+
     /**
      * Extract sql statements from given file.
      * 
@@ -497,7 +498,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
         String part;
         String stmt = "";
         int index;
-        
+
         try {
             BufferedReader buffRead = new BufferedReader(new InputStreamReader(
                 fileURL.openStream()));
@@ -525,7 +526,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
         }
         return result;
     }
-    
+
     /**
      * Establish a database connection.
      * 
@@ -549,13 +550,13 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
             throw new DatabaseHolderException(e);
         }   
     }
-    
+
     /**
      * @return The Data Holder
      */
     private ConnectionPropertiesHolder getConnPropHolder() {
-        
-        
+
+
         if (m_holder == null) {
             m_holder = new ConnectionPropertiesHolder(
                 getRepository(),
