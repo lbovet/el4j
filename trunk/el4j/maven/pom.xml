@@ -18,7 +18,7 @@
     <groupId>ch.elca.el4j.maven</groupId>
     <artifactId>el4j-maven</artifactId>
     <packaging>pom</packaging>
-    <name>EL4J Maven artifacts</name>
+    <name>EL4J maven</name>
     <description>
         EL4J artifacts related to Maven.
     </description>
