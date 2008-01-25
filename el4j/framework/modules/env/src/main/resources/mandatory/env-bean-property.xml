@@ -9,7 +9,7 @@
     <!-- $Author$ -->
     
     <bean id="moduleEnvOverrideConfigurer"
-        class="ch.elca.el4j.env.beans.EnvPropertyOverrideConfigurer.java">
+        class="ch.elca.el4j.env.beans.EnvPropertyOverrideConfigurer">
         <property name="ignoreResourceNotFound" value="true"/>
         <property name="order" value="-3"/>
     </bean>
