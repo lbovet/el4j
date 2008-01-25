@@ -38,5 +38,12 @@
                 <db.password>myOraclePassword</db.password>
             </properties>
         </profile>
+        <profile>
+            <id>mysql</id>
+            <properties>
+                <db.username>myMySqlUsername</db.username>
+                <db.password>myMySqlPassword</db.password>
+            </properties>
+        </profile>
     </profiles>
 </project>
