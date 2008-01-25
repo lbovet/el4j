@@ -21,8 +21,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
@@ -63,43 +61,37 @@ import ch.elca.el4j.plugins.depgraph.RegexArtifactFilter;
  * @author David Stefan (DST)
  */
 public class DepGraphWalker {
-
-    /**
-     * Logger.
-     */
-    private static Log s_logger = LogFactory.getLog(DependencyGraph.class);
-    
     /**
      * The Intermediate Dependency Graph as used by the DepGraph plugin.
      */
     private DependencyGraph m_graph;
-    
+
     /**
      * The Directed Acyclic Graph of the dependencies.
      */
     private DAG m_dag;
-    
+
     /**
      * The Maven Project.
      */
     private MavenProject m_project;
-    
+
     /**
      * The Maven Artifact Repository.
      */
     private ArtifactRepository m_repo;
-    
+
     /**
      * The Maven Artifact Resolver.
      */
     private ArtifactResolver m_resolver;
-    
+
     /**
      * The Maven Artifact Factory.
      */
     private ArtifactFactory m_factory;
-    
-    
+
+
     /**
      * Constructor.
      * 
@@ -132,8 +124,8 @@ public class DepGraphWalker {
         createGraph(m_graph, resolver, collector, metaSrc);
     }
 
-   
-      
+
+
     /**
      * Collects and returns list of artifact-objects of all dependencies of 
      * this project,
@@ -143,8 +135,9 @@ public class DepGraphWalker {
      * 
      * @return List of dependencies as Artifact
      */
+    @SuppressWarnings("unchecked")
     public List<Artifact> getDependencyArtifacts() {
-       // Get the root artifact from the created dependency m_graph
+        // Get the root artifact from the created dependency m_graph
         DepGraphArtifact rootArtifact 
             = m_graph.getArtifact(
                 m_project.getArtifactId(), 
@@ -158,21 +151,22 @@ public class DepGraphWalker {
         List<String> list = TopologicalSorter.sort(m_dag);
         // Remove root artifact as it is not a dependency
         list.remove(rootArtifact.getQualifiedName());
-        
+
         List<Artifact> result = resolveArtifacts(
             m_resolver, m_factory, m_graph, list);
-        
+
         return result;
     }
-    
+
     /**
      * Collects and returns list of urls of all dependencies of this project,
      * topologically sorted.
      * 
      * @return List of dependencies jar URLs
      */
+    @SuppressWarnings("unchecked")
     public List<URL> getDependencyURLs() {
-       // Get the root artifact from the created dependency m_graph
+        // Get the root artifact from the created dependency m_graph
         DepGraphArtifact rootArtifact 
             = m_graph.getArtifact(
                 m_project.getArtifactId(), 
@@ -186,11 +180,11 @@ public class DepGraphWalker {
         List<String> list = TopologicalSorter.sort(m_dag);
         // Remove root artifact as it is not a dependency
         list.remove(rootArtifact.getQualifiedName());
-        
+
         return resolveArtifactsToURL(m_resolver, m_factory, m_graph, list);
     }
-    
-    
+
+
     /**
      * Resolves the sorted DepGraphArtifacts back to (Maven) Artifacts and
      * finally URLs.
@@ -216,13 +210,13 @@ public class DepGraphWalker {
                 parts[1], "", "");
 
             Artifact artifact = factory.createArtifact(
-                    art.getGroupId(), 
-                    art.getArtifactId(), 
-                    art.getVersion(), 
-                    art.getScope(), 
-                    art.getType());
-            
-            
+                art.getGroupId(), 
+                art.getArtifactId(), 
+                art.getVersion(), 
+                art.getScope(), 
+                art.getType());
+
+
             try {
                 resolver.resolve(artifact, m_project
                     .getRemoteArtifactRepositories(), m_repo);
@@ -233,9 +227,9 @@ public class DepGraphWalker {
         }
         return artifactURLs;
     }
-    
-    
-    
+
+
+
     /**
      * Resolves the sorted DepGraphArtifacts back to (Maven) Artifacts
      * and returns a list of them.
@@ -263,13 +257,13 @@ public class DepGraphWalker {
                 parts[1], "", "");
 
             Artifact artifact = factory.createArtifact(
-                    art.getGroupId(), 
-                    art.getArtifactId(), 
-                    art.getVersion(), 
-                    art.getScope(), 
-                    art.getType());
-            
-            
+                art.getGroupId(), 
+                art.getArtifactId(), 
+                art.getVersion(), 
+                art.getScope(), 
+                art.getType());
+
+
             try {
                 resolver.resolve(artifact, m_project
                     .getRemoteArtifactRepositories(), m_repo);
@@ -280,11 +274,11 @@ public class DepGraphWalker {
         }
         return artifacts;
     }
-    
-    
-    
-    
-   /**
+
+
+
+
+    /**
      * Creates the Intermediate dependency graph with help of the Dependency
      * Graph plugin.
      * 
@@ -311,7 +305,7 @@ public class DepGraphWalker {
              * this method is called (which is usuall in the pre- and 
              * post-integration phase)
              */
-            
+
             // resolver.resolve(m_project.getArtifact(), m_project
             // .getRemoteArtifactRepositories(), m_repo);
 
@@ -325,7 +319,7 @@ public class DepGraphWalker {
         }
 
     }
-    
+
     /**
      * Goes recursively through Intermediate dependency graph and creates a DAG
      * out of it, where Artifacts denote Vertices and Dependencies between them
