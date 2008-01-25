@@ -11,18 +11,18 @@
 	<ul>
 		<li>
 		    <h:commandLink value="#{el4j:h10nFieldBoolText(entityShortName, filterName, true)}"
-		        styleClass="#{entityManager.isConditionActive(filterName, 'true') ? 'bold' : ''}"
-		        action="#{entityManager.addCondition(filterName, 'true')}" />
+		        styleClass="#{filters.isActive(filterName, 'true') ? 'bold' : ''}"
+		        action="#{filters.addExact(filterName, 'true')}" />
 		</li>
 		<li>
 		    <h:commandLink value="#{el4j:h10nFieldBoolText(entityShortName, filterName, false)}"
-                styleClass="#{entityManager.isConditionActive(filterName, 'false') ? 'bold' : ''}"
-                action="#{entityManager.addCondition(filterName, 'false')}" />
+                styleClass="#{filters.isActive(filterName, 'false') ? 'bold' : ''}"
+                action="#{filters.addExact(filterName, 'false')}" />
 		</li>
 		<li>
 		    <h:commandLink value="All"
-                styleClass="#{entityManager.isConditionActive(filterName, null) ? 'bold' : ''}"
-                action="#{entityManager.removeCondition(filterName)}" />
+                styleClass="#{filters.isActive(filterName, null) ? 'bold' : ''}"
+                action="#{filters.remove(filterName)}" />
 		</li>
 	</ul>
 	

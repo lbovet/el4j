@@ -1,5 +1,7 @@
 package ch.elca.el4j.seam.generic.metadata;
 
+import org.hibernate.type.Type;
+
 /**
  * Enum Field info. Provides metadata information about an enum field of an entity. 
  * 
@@ -8,12 +10,8 @@ package ch.elca.el4j.seam.generic.metadata;
  * @author  Baeni Christoph (CBA)
  */
 public class EnumFieldInfo extends FieldInfo {
-	public EnumFieldInfo(Class returnedClass, boolean required) {
-		super("enum", returnedClass, required);
-	}
-	
-	public EnumFieldInfo(String type, Class returnedClass, boolean required) {
-		super(type, returnedClass, required);
+	public EnumFieldInfo(Class returnedClass, boolean required, Type hibernateType) {
+		super(returnedClass, required, hibernateType);
 	}
 
 	public Class getEnumClass() {
@@ -22,5 +20,10 @@ public class EnumFieldInfo extends FieldInfo {
 	
 	public Object[] getEnumList() {
 		return getEnumClass().getEnumConstants();
+	}
+	
+	@Override
+	public String getTypeString() {
+	    return "@enum";
 	}
 }

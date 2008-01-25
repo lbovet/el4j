@@ -1,0 +1,70 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:s="http://jboss.com/products/seam/taglib"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:rich="http://richfaces.ajax4jsf.org/rich"
+                template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:messages globalOnly="true" styleClass="message"/>
+
+		<rich:panel>
+			<f:facet name="header">Conversation Test</f:facet>
+			<h2>Actions</h2>
+			<h:form>
+				<ul>
+				    <li><h:commandLink value="refresh"
+                        action="#{conversationTester.refresh()}" /></li>
+					<li><h:commandLink value="begin (no active conversation allowed)"
+						action="#{conversationTester.begin()}" /></li>
+					<li><h:commandLink value="begin(join)"
+						action="#{conversationTester.beginJoin()}" /></li>
+					<li><h:commandLink value="end"
+						action="#{conversationTester.end()}" /></li>
+				</ul>
+			</h:form>
+            Number of pages in conversation: #{counter}
+            <h2>Conversations</h2>
+			<h:dataTable
+				value="#{org.jboss.seam.debug.contexts.conversationEntries}"
+				rendered="#{not empty org.jboss.seam.debug.contexts.conversationEntries}"
+				var="entry">
+				<h:column>
+					<f:facet name="header">conversation id</f:facet>
+        #{entry.id}
+      </h:column>
+				<h:column>
+					<f:facet name="header">activity</f:facet>
+					<h:outputText value="#{entry.startDatetime}">
+						<f:convertDateTime type="time" />
+					</h:outputText>
+        - 
+        <h:outputText value="#{entry.lastDatetime}">
+						<f:convertDateTime type="time" />
+					</h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">description</f:facet>
+        #{entry.description}
+      </h:column>
+				<h:column>
+					<f:facet name="header">view id</f:facet>
+        #{entry.viewId}
+      </h:column>
+				<h:column>
+					<h:outputLink>
+          Select conversation context
+          <f:param
+							name="#{org.jboss.seam.core.manager.conversationIdParameter}"
+							value="#{entry.id}" />
+					</h:outputLink>
+				</h:column>
+			</h:dataTable>
+		</rich:panel>
+
+	</ui:define> 
+</ui:composition>

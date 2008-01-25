@@ -11,7 +11,8 @@
     <ui:define name="body">
         <el4j:set var="entityClassName" value="ch.elca.el4j.seam.demo.entities.Employee" />
     
-        <p>Edit employee:</p>
+        <h:messages />
+        <h2>Edit employee (non-generic):</h2>
         <h:form>
             <s:validateAll>
                 <h:panelGrid columns="2">
@@ -20,9 +21,18 @@ First Name: <h:inputText value="#{entity.firstName}" required="true" />
 Last Name: <h:inputText value="#{entity.lastName}" required="true" />
                 </h:panelGrid>
             </s:validateAll>
-            <h:messages />
-            <h:commandButton value="Save" action="#{entityManager.persistAndRedirect(entity, '/employeeOverview.xhtml')}" />
-            <h:commandButton value="Cancel" action="#{entityManager.redirectTo('/employeeOverview.xhtml')}" />
+            
+            <h:commandButton value="Save" action="#{entityManager.saveOrUpdateAndRedirect(entity, '/employeeOverview.xhtml')}" />
+            <s:button value="Cancel" view="/employeeOverview.xhtml" />
+        </h:form>
+        
+        <h2>Edit employee (generic):</h2>
+        <h:form>
+            <el4j:fieldSet shown="visa,firstName,lastName"/>
+            <div style="clear:both"/>
+            
+            <h:commandButton value="Save" action="#{entityManager.saveOrUpdateAndRedirect(entity, '/employeeOverview.xhtml')}" />
+            <s:button value="Cancel" view="/employeeOverview.xhtml" />
         </h:form>
     </ui:define>
 

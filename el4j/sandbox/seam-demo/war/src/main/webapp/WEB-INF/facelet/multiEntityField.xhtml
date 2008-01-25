@@ -33,7 +33,7 @@
 								<h:outputText value=" "/>
 								<a4j:commandLink value="Remove"
 											  reRender="#{fieldName}OutputPanel"
-												action="#{entity[fieldName].remove(ent)}"/>
+												action="#{entity[fieldName].delete(ent)}"/>
 								<h:outputText value=" "/>
 								<h:commandLink value="Edit" action="#{entityManager.edit(ent, detailPage)}"/>
 							</li>

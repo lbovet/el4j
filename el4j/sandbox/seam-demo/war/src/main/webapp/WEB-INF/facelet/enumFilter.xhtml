@@ -12,14 +12,14 @@
 		<ui:repeat value="#{utils.getFilterEnumList(entityClassName, filterName)}" var="item">
 			<li>
 			    <h:commandLink value="#{el4j:h10nFieldEnumName(entityShortName, filterName, item)}"
-                    styleClass="#{entityManager.isConditionActive(filterName, item) ? 'bold' : ''}"
-                    action="#{entityManager.addCondition(filterName, item)}" />
+                    styleClass="#{filters.isActive(filterName, item) ? 'bold' : ''}"
+                    action="#{filters.addExact(filterName, item)}" />
 			</li>
 		</ui:repeat>
 		<li>
 		    <h:commandLink value="All"
-                    styleClass="#{entityManager.isConditionActive(filterName, null) ? 'bold' : ''}"
-                    action="#{entityManager.removeCondition(filterName)}" />
+                    styleClass="#{filters.isActive(filterName, null) ? 'bold' : ''}"
+                    action="#{filters.remove(filterName)}" />
 		</li>
 	</ul>
 	

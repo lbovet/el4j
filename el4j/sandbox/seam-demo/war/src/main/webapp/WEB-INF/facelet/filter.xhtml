@@ -8,10 +8,10 @@
 	
 	<el4j:set var="filterType" value="#{utils.getFilterType(entityClassName,filterName)}"/>
 	<c:choose>
-		<c:when test="#{filterType == 'boolean'}">
+		<c:when test="#{filterType == 'Boolean'}">
 			<el4j:booleanFilter filterName="#{filterName}"/>
 		</c:when>
-		<c:when test="#{filterType == 'enum'}">
+		<c:when test="#{filterType == '@enum'}">
 			<el4j:enumFilter filterName="#{filterName}"/>
 		</c:when>
 	</c:choose>

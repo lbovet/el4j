@@ -16,6 +16,8 @@
  */
 package ch.elca.el4j.seam.generic.metadata;
 
+import org.hibernate.type.Type;
+
 /**
  * Field info. Provides metadata information about a field of an entity. 
  * 
@@ -38,6 +40,7 @@ public class FieldInfo {
      * The type of the field as special String (TODO used for tags???).
      */
     private String m_typeString;
+    private Type m_type;
     
     /**
      * The type of the field as Class.
@@ -54,10 +57,11 @@ public class FieldInfo {
      * @param returnedClass    the type of the field as Class
      * @param required         <code>true</code> if field is required
      */
-    public FieldInfo(String type, Class<?> returnedClass, boolean required) {
-        this.m_typeString = type;
+    public FieldInfo(Class<?> returnedClass, boolean required, Type hibernateType) {
+        this.m_typeString = returnedClass.getSimpleName();
         this.m_returnedClass = returnedClass;
         this.m_required = required;
+        this.m_type = hibernateType;
     }
 
     /**
@@ -79,5 +83,9 @@ public class FieldInfo {
      */
     public boolean isRequired() {
         return m_required;
+    }
+
+    public Type getType() {
+        return m_type;
     }
 }

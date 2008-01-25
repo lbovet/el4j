@@ -8,12 +8,21 @@
 	xmlns:s="http://jboss.com/products/seam/taglib">
 
 	<ui:define name="body">
-	
-	    <el4j:set var="entityClassName" value="ch.elca.el4j.seam.demo.entities.Employee" />
+
+		<el4j:set var="entityClassName" value="ch.elca.el4j.seam.demo.entities.Employee" />
 		
-		<p>List of all employees:</p>
 		<h:form>
-			<h:dataTable value="#{entities}" var="e">
+		    Last Name: 
+			<h:inputText id="search" value="#{searchString}"></h:inputText>
+			<h:commandButton value="Find"
+				action="#{filters.add('lastName')}" />
+				<s:button value="Clear"
+                action="#{filters.removeAll()}" />
+		</h:form>
+		
+		<h2>List of all employees (using h:dataTable):</h2>
+		<h:form>
+			<h:dataTable value="#{entityManager.getEntities()}" var="e">
 				<h:column>
 					<h:outputText value="#{e.visa}" />
 				</h:column>
@@ -24,13 +33,12 @@
                     <h:commandLink value="edit" action="#{entityManager.edit(e, '/employeeEdit.xhtml')}" />
                 </h:column>
 				<h:column>
-					<h:commandLink value="delete" action="#{entityManager.remove(e)}" />
+					<h:commandLink value="delete" action="#{entityManager.delete(e)}" />
 				</h:column>
 			</h:dataTable>
-			<h:commandButton value="Test"
-                action="#{entityManager.setCondition('visa=www')}" />
 		</h:form>
 
+        <h2>List of all employees (using ui:repeat):</h2>
 		<h:form>
 			<ui:repeat value="#{entities}" var="e">
 				<div>#{e.lastName} 
@@ -39,11 +47,11 @@
                     action="#{entityManager.edit(e, '/employeeEdit.xhtml')}" />
                 <h:outputText value=" "/>
                 <h:commandLink value="delete"
-					action="#{entityManager.remove(e)}" /></div>
+					action="#{entityManager.delete(e)}" /></div>
 			</ui:repeat>
 		</h:form>
 		
-		<p>Insert employee:</p>
+		<h2>Insert employee:</h2>
 		<h:form>
 			<s:validateAll>
 				<h:panelGrid columns="2">
@@ -54,7 +62,7 @@ Last Name: <h:inputText value="#{employee.lastName}" required="true" />
 			</s:validateAll>
 			<h:messages />
 			<h:commandButton value="Add"
-				action="#{entityManager.persist(employee)}" />
+				action="#{entityManager.saveOrUpdate(employee)}" />
 		</h:form>
 	</ui:define>
 

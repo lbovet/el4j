@@ -17,31 +17,23 @@
 package ch.elca.el4j.seam.generic;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.jboss.seam.Component;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Begin;
+import org.jboss.seam.annotations.Create;
+import org.jboss.seam.annotations.Destroy;
 import org.jboss.seam.annotations.End;
 import org.jboss.seam.annotations.Factory;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.core.Conversation;
 import org.jboss.seam.faces.FacesMessages;
 
-import ch.elca.el4j.seam.generic.metadata.EntityInfoBase;
-import ch.elca.el4j.seam.generic.metadata.EnumFieldInfo;
-import ch.elca.el4j.seam.generic.metadata.FieldInfo;
 import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
 import ch.elca.el4j.services.persistence.generic.dao.impl.FallbackDaoRegistry;
 import ch.elca.el4j.services.search.QueryObject;
-import ch.elca.el4j.services.search.criterias.ComparisonCriteria;
-import ch.elca.el4j.services.search.criterias.Criteria;
-import ch.elca.el4j.services.search.criterias.LikeCriteria;
 
 
 /**
@@ -58,6 +50,7 @@ import ch.elca.el4j.services.search.criterias.LikeCriteria;
  */
 @Name("entityManager")
 @Scope(ScopeType.CONVERSATION)
+@SuppressWarnings("unchecked")
 public class EntityManager implements Serializable, PagedEntityManager {
     /**
      * The injected DAO registry (from Spring config xml).
@@ -66,11 +59,11 @@ public class EntityManager implements Serializable, PagedEntityManager {
     private FallbackDaoRegistry m_daoRegistry;
     
     /**
-     * The injected type information provider class (from Spring config xml).
+     * The currently selected filters.
+     * @see EntityFilters
      */
-    @In("#{entityInfoBase}")
-    private EntityInfoBase m_entityInfoBase;
-
+    @In(value = "#{filters}", required = false)
+    private EntityFilters m_filters;
    
     /**
      * The injected entity class name.
@@ -107,12 +100,6 @@ public class EntityManager implements Serializable, PagedEntityManager {
      * The currently active entity class name.
      */
     private String m_currentEntityClassName;
-    
-    /**
-     * The conditions applied to the entity list (map: fieldname -> value).
-     */
-    private Map<String, String> m_currentConditions
-        = new HashMap<String, String>();
 
     /**
      * @see QueryObject#setFirstResult(int)
@@ -128,26 +115,58 @@ public class EntityManager implements Serializable, PagedEntityManager {
      * Is view reset (for paged table). <code>true</code> if view should be
      * reset to the first page.
      */
-    private boolean m_viewReset;
+    private boolean m_viewReset = true;
     
     /**
      * The dirty flag for m_entities.
      */
     private boolean m_entitiesDirtyFlag = true;
     
-    //private String m_previousPage;
+    @Create
+    public void create() {
+        System.out.println("@create");
+    }
+    
+    @Destroy
+    public void destroy() {
+        System.out.println("@destroy");
+    }
+    
+    /**
+     * Invalidates the current entites.
+     */
+    public void invalidate() {
+        System.out.println("invalidate");
+        m_entitiesDirtyFlag = true;
+        m_viewReset = true;
+    }
+    
+    /**
+     * @return    the number of entities
+     */
+    @Begin(join = true)
+    public int getEntityCount() {
+        System.out.println("getEntityCount()");
+        return getEntityCount(getEntityClassName());
+    }
     
     /** {@inheritDoc} */
     public int getEntityCount(String entityClassName) {
+        System.out.println("getEntityCount(" + entityClassName + ")");
         QueryObject queryObject = getQuery(entityClassName);
         
         ConvenienceGenericDao dao = getDao();
-        System.out.println("There are " + dao.findCountByQuery(queryObject) + " entites available.");
-        return dao.findCountByQuery(queryObject);
+        if (dao == null) {
+            return 0;
+        } else {
+            System.out.println("There are " + dao.findCountByQuery(queryObject) + " entites available.");
+            return dao.findCountByQuery(queryObject);
+        }
     }
     
     /** {@inheritDoc} */
     public void setRange(int first, int count) {
+        System.out.println("setRange(" + first + ", " + count + ")");
         if (first != m_firstResult || m_maxResults != count) {
             m_entitiesDirtyFlag = true;
         }
@@ -169,7 +188,7 @@ public class EntityManager implements Serializable, PagedEntityManager {
      * @return    the entities of the currently selected entity class
      */
     @Begin(join = true)
-    @Factory(value = "entities", scope = ScopeType.PAGE)
+    @Factory(value = "entities", scope = ScopeType.EVENT)
     public List<Object> getEntities() {
         System.out.println("--createEntities");
         return getEntities(getEntityClassName());
@@ -205,116 +224,49 @@ public class EntityManager implements Serializable, PagedEntityManager {
         return dao != null ? dao.getAll().toArray() : null;
     }
     
-    /**
-     * Remove all conditions on the current entities.
-     */
-    public void removeAllConditions() {
-        if (m_currentConditions.size() > 0) {
-            m_currentConditions.clear();
-            m_entitiesDirtyFlag = true;
-            m_viewReset = true;
-        }
-    }
     
-    /**
-     * @param fieldName    the field name whose condition should be removed
-     */
-    public void removeCondition(String fieldName) {
-        if (m_currentConditions.containsKey(fieldName)) {
-            m_currentConditions.remove(fieldName);
-            m_entitiesDirtyFlag = true;
-            m_viewReset = true;
-        }
-    }
-    
-    /**
-     * @param fieldName    the field name which this condition applies to
-     * @param value        the value that this field has to hold
-     * @return             <code>null</code> (stay on this page)
-     */
-    public String addCondition(String fieldName, String value) {
-        if (!m_currentConditions.containsKey(fieldName)
-            || !m_currentConditions.get(fieldName).equals(value)) {
-            
-            m_currentConditions.put(fieldName, value);
-            m_entitiesDirtyFlag = true;
-            m_viewReset = true;
-        }
-        return null;
-    }
-    
-    /**
-     * @param fieldName    does this field name hold a condition
-     * @param value        does this field has to be equal to this value
-     *                     ("" means any value)
-     * @return             <code>true</code> if condition does match
-     */
-    public boolean isConditionActive(String fieldName, String value) {
-        if (m_currentConditions.containsKey(fieldName)) {
-            return m_currentConditions.get(fieldName).equals(value);
-        } else {
-            // if value is empty then check if no condition is active on field
-            return value.equals("");
-        }
-    }
     
     
     /**
-     * @param newEntity    the new object to persist
+     * @param newEntity    the new object to save or update
      * @param viewId       the view to redirect to afterwards
      * @return             the viewId again (used by Seam)
      */
     @End(beforeRedirect = true)
-    public String persistAndRedirect(Object newEntity, String viewId) {
-        persist(newEntity);
+    public String saveOrUpdateAndRedirect(Object newEntity, String viewId) {
+        saveOrUpdate(newEntity);
 
         return viewId;
     }
     
     /**
-     * @param newEntity    the object to persist
+     * @param newEntity    the object to save or update
      * @return             <code>null</code> (used by Seam)
      */
-    public String persist(Object newEntity) {
+    public String saveOrUpdate(Object newEntity) {
         ConvenienceGenericDao dao = getDao();
         dao.saveOrUpdate(newEntity);
         
         return null;
     }
     
-    // TODO updateAndRedirect = persistAndRedirect
-    @End(beforeRedirect = true)
-    public String updateAndRedirect(Object newEntity, String viewId) {
-        update(newEntity);
-
-        return viewId;
-    }
-
-    // TODO update = persist
-    public String update(Object newEntity) {
-        ConvenienceGenericDao dao = getDao();
-        dao.saveOrUpdate(newEntity);
-
-        return null;
-    }
-    
     /**
-     * @param selEntity    the object to remove
+     * @param selEntity    the object to delete
      * @param viewId       the view to redirect to afterwards
      * @return             the viewId again (used by Seam)
      */
     @End(beforeRedirect = true)
-    public String removeAndRedirect(Object selEntity, String viewId) {
-        remove(selEntity);
+    public String deleteAndRedirect(Object selEntity, String viewId) {
+        delete(selEntity);
 
         return viewId;
     }
 
     /**
-     * @param selEntity    the object to remove
+     * @param selEntity    the object to delete
      * @return             <code>null</code> (used by Seam)
      */
-    public String remove(Object selEntity) {
+    public String delete(Object selEntity) {
         ConvenienceGenericDao dao = getDao();
         if (selEntity == m_entity) {
             m_entity = null;
@@ -328,7 +280,7 @@ public class EntityManager implements Serializable, PagedEntityManager {
      * @param viewId       the view to redirect to
      * @return             the viewId again (used by Seam)
      */
-    @End(beforeRedirect = false)
+    @End(beforeRedirect = true)
     public String redirectTo(String viewId) {
         m_entities = null;
         m_entity = null;
@@ -343,14 +295,18 @@ public class EntityManager implements Serializable, PagedEntityManager {
     public String edit(Object sel, String viewId) {
         m_entity = sel;
         m_isEntityNew = false;
-        //Conversation conv = (Conversation) Component.getInstance("org.jboss.seam.core.conversation");
-        //m_previousPage = conv.getViewId();
         return viewId;
     }
     
-    /*public String cancelEdit() {
-        return m_previousPage;
-    }*/
+    /**
+     * Cancels editing (and ends Seam conversation).
+     * 
+     * Normally used like this:
+     * <pre>&lt;s:button value="Cancel" view="redirectPage"
+     *  action="entityManager.cancelEdit()"&gt;</pre>
+     */
+    @End(beforeRedirect = true)
+    public void cancelEdit() { }
     
     /**
      * @param clsName      the class name of the the new entity to create
@@ -358,7 +314,7 @@ public class EntityManager implements Serializable, PagedEntityManager {
      * @return             the viewId again (used by Seam)
      */
     @Begin(join = true)
-    public String create(String clsName, String viewId) {
+    public String createEntity(String clsName, String viewId) {
         try {
             m_currentEntityClassName = clsName;
             m_entity = Class.forName(clsName).newInstance();
@@ -391,20 +347,20 @@ public class EntityManager implements Serializable, PagedEntityManager {
      * Flush entites and cache, restore default values.
      */
     protected void flush() {
-        m_currentConditions.clear();
         m_entities = null;
         m_entitiesDirtyFlag = true;
         m_firstResult = 0;
-        m_maxResults = 100;
+        m_maxResults = QueryObject.getDefaultMaxResults();
     }
-
+    
     /**
-     * @return    the entity class that should be used
+     * @param className    the name of the class
+     * @return             the entity class that should be used
      */
-    protected Class<?> getEntityClass() {
+    protected Class<?> getEntityClass(String className) {
         try {
-            return getEntityClassName() != null
-                ? Class.forName(getEntityClassName()) : null;
+            return className != null
+                ? Class.forName(className) : null;
         } catch (ClassNotFoundException e) {
             return null;
         }
@@ -412,6 +368,8 @@ public class EntityManager implements Serializable, PagedEntityManager {
     
     /**
      * Load entities into member variable m_entities.
+     * 
+     * @param className    the name of the class which entites should be loaded
      */
     protected void loadEntities(String className) {
         if (className == null) {
@@ -439,49 +397,19 @@ public class EntityManager implements Serializable, PagedEntityManager {
     }
     
     /**
+     * @param className    the name of the class which entites should be loaded
      * @return    the query which fits the current entity class name and
-     *            the conditions.
+     *            the filters or <code>null</code> if an error occured.
      */
     protected QueryObject getQuery(String className) {
-        Class<?> entityClass = getEntityClass();
+        Class<?> entityClass = getEntityClass(className);
         if (entityClass == null) {
             return null;
         }
         
         QueryObject queryObject = new QueryObject(entityClass);
         
-        for (String fieldName : m_currentConditions.keySet()) {
-            String value = m_currentConditions.get(fieldName);
-            
-            FieldInfo fieldInfo = m_entityInfoBase.getEntityInfo(
-                className).getFieldInfo(fieldName);
-            String fieldType = fieldInfo.getTypeString();
-            
-            Criteria criteria;
-            // TODO complete list
-            if (fieldType.equals("boolean")) {
-                criteria = ComparisonCriteria.equals(fieldName, Boolean
-                    .parseBoolean(value));
-            } else if (fieldType.equals("enum")) {
-                if ((value == null) || (value.equals(""))) {
-                    criteria = null;
-                } else {
-                    Class enumClass = ((EnumFieldInfo) fieldInfo)
-                        .getEnumClass();
-                    Enum enumValue = Enum.valueOf(enumClass, value);
-
-                    criteria = ComparisonCriteria.equals(fieldName, enumValue);
-                }
-            } else if (fieldType.equals("string")) {
-                criteria = LikeCriteria.caseInsensitive(fieldName, value);
-            } else {
-                criteria = null;
-            }
-
-            if (criteria != null) {
-                queryObject.addCriteria(criteria);
-            }
-        }
+        m_filters.apply(queryObject);
         
         queryObject.setFirstResult(m_firstResult);
         queryObject.setMaxResults(m_maxResults);

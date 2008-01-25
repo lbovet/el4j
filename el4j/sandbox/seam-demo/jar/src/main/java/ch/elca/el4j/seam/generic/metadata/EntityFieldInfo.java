@@ -1,6 +1,7 @@
 package ch.elca.el4j.seam.generic.metadata;
 
-import ch.elca.el4j.seam.generic.MultiEntityFieldInfo;
+import org.hibernate.type.Type;
+
 
 /**
  * Entity Field info. Provides metadata information about an entity field of an entity.
@@ -13,11 +14,16 @@ import ch.elca.el4j.seam.generic.MultiEntityFieldInfo;
  * @author  Baeni Christoph (CBA)
  */
 public class EntityFieldInfo extends FieldInfo implements RelationFieldInfo{
-	public EntityFieldInfo(String type, Class returnedClass, boolean required) {
-		super(type, returnedClass, required);
+	public EntityFieldInfo(Class returnedClass, boolean required, Type hibernateType) {
+		super(returnedClass, required, hibernateType);
 	}
 
 	public Class getRelatedClass() {
 		return getReturnedClass();
+	}
+	
+	@Override
+	public String getTypeString() {
+	    return "@entity";
 	}
 }
