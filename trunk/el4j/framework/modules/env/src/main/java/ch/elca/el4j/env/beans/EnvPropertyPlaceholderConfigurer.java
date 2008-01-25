@@ -45,13 +45,6 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 public class EnvPropertyPlaceholderConfigurer
     extends PropertyPlaceholderConfigurer implements ApplicationContextAware {
     
-    /** 
-     * This logger is used to print out some global debugging info.
-     * Consult it for info what is going on.
-     */
-    protected static Log s_el4jLogger
-        = LogFactory.getLog(ModuleApplicationContext.EL4J_DEBUGGING_LOGGER);
-    
     /**
      * The correct env location.
      */
@@ -64,6 +57,13 @@ public class EnvPropertyPlaceholderConfigurer
     public static final String OLD_ENV_PROPERTIES_LOCATION
         = "classpath:env/env.properties";
 
+    /** 
+     * This logger is used to print out some global debugging info.
+     * Consult it for info what is going on.
+     */
+    protected static Log s_el4jLogger
+        = LogFactory.getLog(ModuleApplicationContext.EL4J_DEBUGGING_LOGGER);
+    
     /**
      * Is the used application context.
      */
@@ -159,8 +159,7 @@ public class EnvPropertyPlaceholderConfigurer
      * {@inheritDoc}
      */
     public void setApplicationContext(ApplicationContext applicationContext)
-            throws BeansException {
+        throws BeansException {
         m_applicationContext = applicationContext;
     }
-
 }

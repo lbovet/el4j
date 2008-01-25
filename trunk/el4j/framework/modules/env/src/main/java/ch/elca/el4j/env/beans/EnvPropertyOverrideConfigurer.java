@@ -45,19 +45,19 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 public class EnvPropertyOverrideConfigurer
     extends PropertyOverrideConfigurer implements ApplicationContextAware {
     
-    /** 
-     * This logger is used to print out some global debugging info.
-     * Consult it for info what is going on.
-     */
-    protected static Log s_el4jLogger
-        = LogFactory.getLog(ModuleApplicationContext.EL4J_DEBUGGING_LOGGER);
-    
     /**
      * The env bean property location.
      */
     public static final String ENV_BEAN_PROPERTY_PROPERTIES_LOCATION
         = "classpath:env-bean-property.properties";
     
+    /** 
+     * This logger is used to print out some global debugging info.
+     * Consult it for info what is going on.
+     */
+    protected static Log s_el4jLogger
+        = LogFactory.getLog(ModuleApplicationContext.EL4J_DEBUGGING_LOGGER);
+
     /**
      * Is the used application context.
      */
@@ -125,8 +125,7 @@ public class EnvPropertyOverrideConfigurer
      * {@inheritDoc}
      */
     public void setApplicationContext(ApplicationContext applicationContext)
-            throws BeansException {
+        throws BeansException {
         m_applicationContext = applicationContext;
     }
-
 }
