@@ -8,25 +8,28 @@
 	
 	<el4j:set var="columnType" value="#{utils.getColumnType(entityClassName,columnName)}"/>
 	<c:choose>
-		<c:when test="#{columnType == 'string'}">
+		<c:when test="#{columnType == 'String'}">
 			<el4j:stringColumn columnName="#{columnName}" doLink="#{doLink}"/>
 		</c:when>
-		<c:when test="#{columnType == 'integer'}">
+		<c:when test="#{columnType == 'Integer'}">
 			<el4j:stringColumn columnName="#{columnName}" doLink="#{doLink}"/>
 		</c:when>
-		<c:when test="#{columnType == 'boolean'}">
+		<c:when test="#{columnType == 'Long'}">
+            <el4j:stringColumn columnName="#{columnName}" doLink="#{doLink}"/>
+        </c:when>
+		<c:when test="#{columnType == 'Boolean'}">
 			<el4j:booleanColumn columnName="#{columnName}" doLink="#{doLink}"/>
 		</c:when>
-		<c:when test="#{columnType == 'date'}">
+		<c:when test="#{columnType == 'Date'}">
             <el4j:dateColumn columnName="#{columnName}" doLink="#{doLink}"/>
         </c:when>
-		<c:when test="#{columnType == 'enum'}">
+		<c:when test="#{columnType == '@enum'}">
 			<el4j:enumColumn columnName="#{columnName}" doLink="#{doLink}"/>
 		</c:when>
-		<c:when test="#{columnType == 'entity'}">
+		<c:when test="#{columnType == '@entity'}">
 			<el4j:stringColumn columnName="#{columnName}" doLink="#{doLink}"/>
 		</c:when>
-		<c:when test="#{columnType == 'multiEntity'}">
+		<c:when test="#{columnType == '@multiEntity'}">
 			<el4j:multiEntityColumn columnName="#{columnName}" doLink="#{doLink}"/>
 		</c:when>
 	</c:choose>

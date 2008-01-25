@@ -1,6 +1,5 @@
 package ch.elca.el4j.seam.generic.metadata;
 
-import ch.elca.el4j.seam.generic.MultiEntityFieldInfo;
 
 /**
  * Relation Entity Field info. Provides metadata information about a relation field of an entity.

@@ -7,21 +7,20 @@
 	<div class="actionButtons">
 		<h:commandButton id="save" 
 					  value="Create" 
-					 action="#{entityManager.persistAndRedirect(entity, masterPage)}"
+					 action="#{entityManager.saveOrUpdateAndRedirect(entity, masterPage)}"
 				   rendered="#{newEntity}"/>
 		<h:commandButton id="update" 
 					  value="Save" 
-					 action="#{entityManager.updateAndRedirect(entity, masterPage)}"
+					 action="#{entityManager.saveOrUpdateAndRedirect(entity, masterPage)}"
 				   rendered="#{not newEntity}"/>                  
 		<h:commandButton id="delete" 
 					  value="Delete" 
-					 action="#{entityManager.removeAndRedirect(entity, masterPage)}"
+					 action="#{entityManager.deleteAndRedirect(entity, masterPage)}"
 				  immediate="true"
 				   rendered="#{not newEntity}"/>
-		<h:commandButton id="done" 
-					  value="Cancel" 
-					 action="#{entityManager.redirectTo(masterPage)}"
-				  immediate="true"/>
+		<s:button id="done"
+		        view="#{masterPage}"
+			   value="Cancel"/>
 	</div>
 
 </ui:composition>

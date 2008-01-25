@@ -25,19 +25,21 @@
 
     <h:messages globalOnly="true" styleClass="message"/>
 
-    <h:form id="editForm">
-        <rich:panel>
-            <f:facet name="header">#{title}</f:facet>
-			
-			<ui:insert name="fields">
-				<el4j:fieldSet/>
-			</ui:insert>
-            
-            <div style="clear:both"/>
-        </rich:panel>
+	<h:form id="editForm">
+		<rich:panel>
+			<f:facet name="header">#{title}</f:facet>
 
-         <el4j:crudBar entityHome="#{entityHome}" masterPage="#{masterPage}"/>
-    </h:form>
-	
+			<ui:insert name="fields">
+				<el4j:fieldSet />
+			</ui:insert>
+
+			<div style="clear: both" />
+		</rich:panel>
+
+		<ui:insert name="crudBar">
+			<el4j:crudBar masterPage="#{masterPage}" />
+		</ui:insert>
+	</h:form>
+
 </ui:composition>
 

@@ -20,6 +20,8 @@
 		<el4j:set var="detailPage" value="#{utils.getDefaultDetailPage(entityShortName)}"/>
 	</c:if>
 	
+	<c:set var="entitiesCount" value="#{entityManager.getEntityCount()}"/>
+	
     <h:messages globalOnly="true" styleClass="message"/>
     
     <rich:panel>
@@ -37,14 +39,14 @@
 			<h:panelGroup>
 			<div class="results">
 				<h:outputText value="There are no #{el4j:h10nEntityNamePlural(entityShortName)}" 
-						   rendered="#{empty entities}"/>
+						   rendered="#{entitiesCount == 0}"/>
 				
-				<h:form rendered="#{not empty entities}">
+				<h:form rendered="#{entitiesCount > 0}">
 					<!-- <rich:dataTable width="320"
-									   id="#{entityShortName}Table"
+									   id="{entityShortName}Table"
 									 rows="3"
 							columnClasses="col"
-									value="#{entities}"
+									value="{entities}"
 									  var="entity"> -->
 						 <d:pagedRichDataTable 
 						       entityName="#{entityClassName}"
@@ -56,7 +58,7 @@
                                       var="entity">
 						
 						<ui:insert name="columns">
-							<c:if test="#{not empty entities}">
+							<c:if test="#{entitiesCount > 0}">
 								<el4j:columnSet/>
 							</c:if>
 						</ui:insert>
@@ -72,7 +74,7 @@
         <h:form>
             <h:commandButton id="create" 
                       value="Create #{el4j:h10nEntityName(entityShortName)}" 
-                     action="#{entityManager.create(entityClassName,detailPage)}"
+                     action="#{entityManager.createEntity(entityClassName,detailPage)}"
                   immediate="true"/>
         </h:form>		  
     </div>

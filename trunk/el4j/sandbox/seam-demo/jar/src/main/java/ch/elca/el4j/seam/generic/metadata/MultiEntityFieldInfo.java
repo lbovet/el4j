@@ -1,7 +1,7 @@
-package ch.elca.el4j.seam.generic;
+package ch.elca.el4j.seam.generic.metadata;
 
-import ch.elca.el4j.seam.generic.metadata.FieldInfo;
-import ch.elca.el4j.seam.generic.metadata.RelationFieldInfo;
+import org.hibernate.type.Type;
+
 
 /**
  * Multi Entity Field info. Provides metadata information about a multi entity field of an entity.
@@ -15,12 +15,17 @@ import ch.elca.el4j.seam.generic.metadata.RelationFieldInfo;
 public class MultiEntityFieldInfo extends FieldInfo implements RelationFieldInfo {
 	private Class relatedClass;
 
-	public MultiEntityFieldInfo(String type, Class returnedClass, Class relatedClass, boolean required) {
-		super(type, returnedClass, required);
+	public MultiEntityFieldInfo(Class returnedClass, Class relatedClass, boolean required, Type hibernateType) {
+		super(returnedClass, required, hibernateType);
 		this.relatedClass = relatedClass;
 	}
 
 	public Class getRelatedClass() {
 		return relatedClass;
+	}
+	
+	@Override
+	public String getTypeString() {
+	    return "@multiEntity";
 	}
 }
