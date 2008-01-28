@@ -1163,7 +1163,7 @@
                 <db.port>1527</db.port>
                 <db.database-name>el4j</db.database-name>
                 <db.create-database>true</db.create-database>
-                <db.url>jdbc:derby:net://${db.host}:${db.port}/"${db.database-name};create=${db.create-database};":retrieveMessagesFromServerOnGetMessage=true;</db.url>
+                <db.url>jdbc:derby://${db.host}:${db.port}/${db.database-name};create=${db.create-database}</db.url>
             </properties>
         </profile>
         <profile>

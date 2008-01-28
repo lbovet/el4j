@@ -50,18 +50,15 @@ To start working with the EL4J sources
  * svn co https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j external
  * cd external
  * mvn clean install
- * if you're outside of ELCA, this will fail due to missing database drivers
-    (we don't have the right to publish them). In this case, do the following (you could also remove the oracle or db2 dependencies):
-     * Download the Oracle driver (ojdbc14.jar) from "http://www.oracle.com/technology/software/tech/java/sqlj_jdbc/". Note: You can also use the 10g driver for version 9 databases.
-     * Download the DB2/Derby JDBC driver (db2jcc.jar and db2jcc_license_c.jar) from "http://www.ibm.com/developerworks/db2/downloads/jcc/".
+ * if you're outside of ELCA, this will fail due to missing database driver
+    (we don't have the right to publish it). In this case, do the following (you could also remove the oracle dependency):
+     * Download the Oracle driver (ojdbc14_g.jar) from "http://www.oracle.com/technology/software/tech/java/sqlj_jdbc/". Note: You can also use the 10g driver for version 9 databases.
      * Open a console and change to the directory where you have saved the downloaded jar files (but within the EL4J/external directory).
-     * Execute the following commands:
-       o mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc14_g -Dversion=10.2.0.1.0 -Dpackaging=jar -Dfile=ojdbc14_g.jar
-       o mvn install:install-file -DgroupId=com.ibm -DartifactId=db2jcc -Dversion=20040819 -Dpackaging=jar -Dfile=db2jcc.jar
-       o mvn install:install-file -DgroupId=com.ibm -DartifactId=db2jcc_license_c -Dversion=20040819 -Dpackaging=jar -Dfile=db2jcc_license_c.jar
+     * Execute the following command:
+       o mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc14_g -Dversion=10.2.0.3.0 -Dpackaging=jar -Dfile=ojdbc14_g.jar
 	 * if you are using JDK 6 and want the jaxws support working, set up jaxws 2.1 like described here: 
 	     http://weblogs.java.net/blog/ramapulavarthi/archive/2007/01/problems_using.html
-     * mvn clean install  
+     * mvn clean install
        
 To start a new GUI application 
  * Check out the GUI demo application under external/applications/templates/gui (assuming you have downloaded the

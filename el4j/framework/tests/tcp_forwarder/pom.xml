@@ -133,7 +133,7 @@
                 <db.port>6786</db.port>
                 <db.host.effective>localhost</db.host.effective>
                 <db.port.effective>1527</db.port.effective>
-                <db.url.effective>jdbc:derby:net://${db.host.effective}:${db.port.effective}/"${db.database-name};create=${db.create-database};":retrieveMessagesFromServerOnGetMessage=true;</db.url.effective>
+                <db.url.effective>jdbc:derby://${db.host.effective}:${db.port.effective}/${db.database-name};create=${db.create-database}</db.url.effective>
             </properties>
         </profile>
         <profile>
