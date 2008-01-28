@@ -202,14 +202,13 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 //      }
 //      }
 
-        // Try to load the database properties over the EL4J environment.
-        boolean propertiesFoundViaEnvironment
-            = tryLoadingDatabasePropertiesViaEnvironment();
-
-        if (propertiesFoundViaEnvironment) {
+        if (StringUtils.hasText(connectionPropertiesSource)) {
+            getLog().info("Connection properties defined via pom parameter "
+                + "'connectionPropertiesSource':" + connectionPropertiesSource);
+        } else if (tryLoadingDatabasePropertiesViaEnvironment()) {
             getLog().info("Connection properties found via the environment: "
                 + connectionPropertiesSource);
-        } else if (!StringUtils.hasText(connectionPropertiesSource)) {
+        } else {
             //no file for connection-properties was specified, so search it
 
             //then dbName must be provided, so that corrent 
@@ -233,9 +232,6 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
                 getConnPropHolder().loadConnectionProperties(
                     connectionPropertiesSource);
             }
-        } else {
-            getLog().info(".properties file was specified via"
-                + " POM or parameter: " + connectionPropertiesSource);
         }
 
         // If no connection properties are given, skip goal
