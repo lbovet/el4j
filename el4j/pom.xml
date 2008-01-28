@@ -698,12 +698,22 @@
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-ftp</artifactId>
-                <version>1.0-beta-1</version>
+                <version>1.0-beta-2</version>
             </extension>
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-ssh-external</artifactId>
-                <version>1.0-beta-1</version>
+                <version>1.0-beta-2</version>
+            </extension>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh</artifactId>
+                <version>1.0-beta-2</version>
+            </extension>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-file</artifactId>
+                <version>1.0-beta-2</version>
             </extension>
         </extensions>
     </build>
@@ -1821,6 +1831,27 @@
                 <artifactId>ant</artifactId>
                 <version>1.6.5</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.derby</groupId>
+                <artifactId>derby</artifactId>
+                <version>${version.derby}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.derby</groupId>
+                <artifactId>derbyclient</artifactId>
+                <version>${version.derby}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.derby</groupId>
+                <artifactId>derbynet</artifactId>
+                <version>${version.derby}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.derby</groupId>
+                <artifactId>derbytools</artifactId>
+                <version>${version.derby}</version>
+            </dependency>
+
 
             <!-- Apache Commons Projects -->
             <dependency>
@@ -1988,17 +2019,33 @@
         <distmgt.repository.name.external>External EL4J repository</distmgt.repository.name.external>
         <distmgt.repository.url.external>ftp://el4.elca-services.ch/htdocs/el4j/maven2repository</distmgt.repository.url.external>
 
+        <distmgt.repository.id.internal>sshLeaffy</distmgt.repository.id.internal>
+        <distmgt.repository.name.internal>Internal EL4J repository</distmgt.repository.name.internal>
+        <distmgt.repository.url.internal>file://leaffy.elca.ch/home/java/maven2repository</distmgt.repository.url.internal>
+
         <distmgt.site.id.external>sshSourceForgeEL4J</distmgt.site.id.external>
         <distmgt.site.name.external>SourceForge EL4J website</distmgt.site.name.external>
-        <distmgt.site.url.external>scp://shell.sourceforge.net/home/groups/e/el/el4j/htdocs</distmgt.site.url.external>
+        <distmgt.site.url.external>scpexe://shell.sourceforge.net/home/groups/e/el/el4j/htdocs</distmgt.site.url.external>
+
+        <distmgt.site.id.internal>sshLeaffy</distmgt.site.id.internal>
+        <distmgt.site.name.internal>Internal EL4J website</distmgt.site.name.internal>
+        <distmgt.site.url.internal>file://leaffy.elca.ch/home/java/el4j/website/internal</distmgt.site.url.internal>
 
         <distmgt.snapshot-repository.id.external>ftpEl4ElcaServicesSnapshot</distmgt.snapshot-repository.id.external>
         <distmgt.snapshot-repository.name.external>External EL4J snapshot repository</distmgt.snapshot-repository.name.external>
         <distmgt.snapshot-repository.url.external>ftp://el4.elca-services.ch/htdocs/el4j/maven2snapshots</distmgt.snapshot-repository.url.external>
 
+        <distmgt.snapshot-repository.id.internal>sshLeaffySnapshot</distmgt.snapshot-repository.id.internal>
+        <distmgt.snapshot-repository.name.internal>Internal EL4J snapshot repository</distmgt.snapshot-repository.name.internal>
+        <distmgt.snapshot-repository.url.internal>file://leaffy.elca.ch/home/java/maven2snapshots</distmgt.snapshot-repository.url.internal>
+
         <distmgt.snapshot-site.id.external>sshLeaffy</distmgt.snapshot-site.id.external>
         <distmgt.snapshot-site.name.external>External EL4J snapshot website</distmgt.snapshot-site.name.external>
-        <distmgt.snapshot-site.url.external>scpexe://leaffy/home/java/el4j/snapshot/website/external</distmgt.snapshot-site.url.external>
+        <distmgt.snapshot-site.url.external>file://leaffy.elca.ch/home/java/el4j/snapshot/website/external</distmgt.snapshot-site.url.external>
+
+        <distmgt.snapshot-site.id.internal>sshLeaffy</distmgt.snapshot-site.id.internal>
+        <distmgt.snapshot-site.name.internal>Internal EL4J snapshot website</distmgt.snapshot-site.name.internal>
+        <distmgt.snapshot-site.url.internal>file://leaffy.elca.ch/home/java/el4j/snapshot/website/internal</distmgt.snapshot-site.url.internal>
 
         <!-- Current version of EL4J-Framework. Must be the same as defined in the version-tag above -->
         <version.el4j-framework.current>
@@ -2137,6 +2184,9 @@
         <checkstyle.config.location>${el4j.external}/etc/checkstyle/checks.xml</checkstyle.config.location>
         <checkstyle.enable.rss>false</checkstyle.enable.rss>
         <checkstyle.enable.rules.summary>false</checkstyle.enable.rules.summary>
+        
+        <!-- Dependency versions -->
+        <version.derby>10.3.2.1</version.derby>
         
         <!-- Maven plugin versions. Needed due to false dep mgt. -->
         <version.maven-project-info-reports-plugin>2.0.1</version.maven-project-info-reports-plugin>
