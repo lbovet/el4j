@@ -2,7 +2,7 @@
  Environment support plugin
  -----
  -----
- 26 Sep 2006
+ 28 Jan 2008
  -----
 
 Environment support plugin
@@ -26,6 +26,9 @@ Environment support plugin
         <rmi.host>localhost</rmi.host>
         <rmi.port>8099</rmi.port>
         
+        <db.username>refdb_user</db.username>
+        <db.password>my_secret_password</db.password>
+        
         ...
         
     </properties>
@@ -36,12 +39,12 @@ Environment support plugin
   application runtime we have to <share> these properties between the 2 "worlds" 
   (maven and the application runtime). In EL4J this is done
   the Spring way via a properties file. The EL4J <<env-module>> expects the
-  file <<<env/env.properties>>> in the classpath.
+  file <<<env-placeholder.properties>>> in the classpath.
   
   Maven is able to filter resources, that means that placeholders will be 
   replaced by their values. To have now the properties <<<rmi.host>>> and 
   <<<rmi.port>>> with exactly the same name during runtime we have to write the 
-  <<<env.properties>>> file like this:
+  <<<env-placeholder.properties>>> file like this:
   
 +----------------
 rmi.host=${rmi.host}
@@ -98,11 +101,11 @@ rmi.port=${rmi.port}
 </project>
 +----------------
 
-  To complete the example above we have to place the <<<env.properties>>> file 
-  in <<<src/main/env/env>>>.
+  To complete the example above we have to place the
+  <<<env-placeholder.properties>>> file in <<<src/main/env>>>.
   
-  The filtered <<<env.properties>>> file will look like the following and can 
-  be found at <<<target/env/env>>>
+  The filtered <<<env-placeholder.properties>>> file will look like the
+  following and can be found at <<<target/env>>>.
   
 +----------------
 rmi.host=localhost
@@ -117,9 +120,24 @@ rmi.port=8099
   <<<src/test/env>>> and filtered files will be placed by default in 
   <<<target/env-test>>>.
   
+  [Overriding bean properties] At the same locations as the
+  <<<env-placeholder.properties>>> files you can place a further properties 
+  file with name <<<env-bean-property.properties>>>. Properties in this file
+  will be used to override Spring bean properties.
+
++----------------
+dataSource.username=${db.username}
+dataSource.password=${db.password}
+dataSource.url=${db.url}
++----------------
+
+  The bean properties <<<username>>> and <<<password>>> of bean <<<dataSource>>>
+  will be overridden. BTW the value of <<<db.url>>> is already set when using the 
+  corresponding database profile of the EL4J (root) pom (by default DB2).
+  
   [Global environment resource directory] You can define to use a global resource
   directory so you do not have to have the <<<src/main/env>>> path in each artifact.
-  But be aware that you have the <<<env.properties>>> file only one time in 
+  But be aware that you have the <<<env-placeholder.properties>>> file only one time in 
   your classpath!
   
   []
