@@ -97,6 +97,14 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
      */
     private String connectionPropertiesSourceTemplate;
 
+    /**
+     * Base path (in <code>classpath*:</code>)where properties files can be 
+     * found.
+     * 
+     * @parameter expression="${db.environmentBeanPropertyPropertiesPath}" 
+     *            default-value="classpath:env-bean-property.properties"
+     */
+    private String environmentBeanPropertyPropertiesPath;
 
     /**
      * Path to properties file where JDBC driver name can be found.
@@ -155,8 +163,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
      */
     protected void executeAction(String goal, boolean reversed, 
         boolean isSilent) {
-
-
+        
         //first make sure, that connectionPropertiesDir ends with a "/"
         //because this is needed for further operations
         if (!connectionPropertiesDir.endsWith("/")) {
@@ -164,8 +171,6 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
         }
 
         getLog().info("maven-database-plugin is working...");
-
-
         getLog().info("Current artifact: " + getProject().getArtifactId());
 
 //      getLog().info("Dependency tree: ");
@@ -197,19 +202,15 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 //      }
 //      }
 
-        //shows dependencies of current artifact
-        //very nice but very useless...
-        /**
-        List<URL> dependencies=getGraphWalker().getDependencyURLs();
+        // Try to load the database properties over the EL4J environment.
+        boolean propertiesFoundViaEnvironment
+            = tryLoadingDatabasePropertiesViaEnvironment();
 
-        getLog().info("Dependencies are: ");
-        for (URL url : dependencies) {
-            getLog().info(url.getFile());
-        }
-         */
-
-        //no file for connection-properties was specified, so search it
-        if (!StringUtils.hasText(connectionPropertiesSource)) {
+        if (propertiesFoundViaEnvironment) {
+            getLog().info("Connection properties found via the environment: "
+                + connectionPropertiesSource);
+        } else if (!StringUtils.hasText(connectionPropertiesSource)) {
+            //no file for connection-properties was specified, so search it
 
             //then dbName must be provided, so that corrent 
             //properties file can be found
@@ -237,11 +238,8 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
                 + " POM or parameter: " + connectionPropertiesSource);
         }
 
-
-
         // If no connection properties are given, skip goal
         if (connectionPropertiesSource != null) {
-
             getLog().info("Using connectionPropertiesSource at '" 
                 + getConnPropHolder().replaceDbName(connectionPropertiesSource)
                 + "'");
@@ -252,13 +250,59 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
             }
             processResources(resources, goal, isSilent);
         } else {
-
-            getLog().info("-----------------------------------------------");
+            getLog().error("-----------------------------------------------");
             getLog().error("Missing parameter: connectionPropertiesSource!");
-            getLog().info("Skipping goal...");
-            getLog().info("-----------------------------------------------");
+            getLog().error("Skipping goal...");
+            getLog().error("-----------------------------------------------");
         }
     }
+    
+    /**
+     * Tries to load the database connection properties via the environment.
+     * 
+     * @return Returns <code>true</code> if the properties could be successfully
+     *         loaded.
+     */
+    private boolean tryLoadingDatabasePropertiesViaEnvironment() {
+        boolean propertiesFound = false;
+        if (StringUtils.hasText(environmentBeanPropertyPropertiesPath)) {
+            List<String> pathList = new ArrayList<String>();
+            pathList.add(environmentBeanPropertyPropertiesPath);
+            List<Resource> resources = getResources(pathList);
+            if (resources != null && resources.size() > 0) {
+                Resource r = resources.get(0);
+                String rUrlString;
+                try {
+                    rUrlString = r.getURL().toString();
+                } catch (IOException e) {
+                    rUrlString = "UNKNOWN_PATH/" + r.getFilename();
+                }
+                if (resources.size() > 1) {
+                    getLog().warn("More than one environment file could be "
+                        + "found! Only the first resource '"
+                        + rUrlString + "' will be used!");
+                }
+                boolean necessaryPropertiesLoaded
+                    = getConnPropHolder().loadConnectionProperties(r);
+                if (necessaryPropertiesLoaded) {
+                    connectionPropertiesSource
+                        = environmentBeanPropertyPropertiesPath;
+                    propertiesFound = true;
+                } else {
+                    getLog().warn("Environment file '" + rUrlString
+                        + "' could not be used to load all necessary "
+                        + "database properties.");
+                }
+            } else {
+                getLog().warn("No environment file at '"
+                    + environmentBeanPropertyPropertiesPath
+                    + "' could be found. Database properties will be looked up "
+                    + "in standard way.");
+            }
+        }
+        return propertiesFound;
+    }
+    
     /**
      * Searches the resources for a .properties file containing connection 
      * properties for current dbName.

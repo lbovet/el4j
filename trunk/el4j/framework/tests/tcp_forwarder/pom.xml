@@ -55,7 +55,7 @@
                     <execution>
                         <configuration>
                             <connectionPropertiesSource>
-                                scenarios/db/raw/module-tcp_forwarder-tests-override-{db.name}.properties
+                                env-bean-property_spezially-for-tcp-forwarder.properties
                             </connectionPropertiesSource>
                         </configuration>
                         <goals>
@@ -106,60 +106,59 @@
                 </executions>
             </plugin>
             <plugin>
+                <!-- Configuration to start db bridging via "mvn exec:java" -->
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <configuration>
                     <mainClass>ch.elca.el4j.services.tcpforwarder.TcpForwarderRunner</mainClass>
+                        <arguments>
+                            <argument>${db.port}</argument>
+                            <argument>${db.host.effective}:${db.port.effective}</argument>
+                        </arguments>
                 </configuration>
             </plugin>
         </plugins>
     </build>
     <profiles>
+        <!-- DB -->
         <profile>
-            <id>bridge-derby</id>
+            <id>db2</id>
             <activation>
-                <property>
-                    <name>db.name</name>
-                    <value>db2</value>
-                </property>
+                <activeByDefault>true</activeByDefault>
             </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <configuration>
-                            <arguments>
-                                <argument>6786</argument>
-                                <argument>1527</argument>
-                            </arguments>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
+            <properties>
+                <db.username>tcp_forwarder</db.username>
+                <db.password>tcp_forwarder</db.password>
+                <db.host>localhost</db.host>
+                <db.port>6786</db.port>
+                <db.host.effective>localhost</db.host.effective>
+                <db.port.effective>1527</db.port.effective>
+                <db.url.effective>jdbc:derby:net://${db.host.effective}:${db.port.effective}/"${db.database-name};create=${db.create-database};":retrieveMessagesFromServerOnGetMessage=true;</db.url.effective>
+            </properties>
         </profile>
         <profile>
-            <id>bridge-oracle</id>
-            <activation>
-                <property>
-                    <name>db.name</name>
-                    <value>oracle</value>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <configuration>
-                            <arguments>
-                                <argument>6786</argument>
-                                <argument>tulipe.elca.ch:1521</argument>
-                            </arguments>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
+            <id>oracle</id>
+            <properties>
+                <db.username>LEAF4</db.username>
+                <db.password>LEAF</db.password>
+                <db.host>localhost</db.host>
+                <db.port>6786</db.port>
+                <db.host.effective>tulipe.elca.ch</db.host.effective>
+                <db.port.effective>1521</db.port.effective>
+                <db.url.effective>jdbc:oracle:thin:@${db.host.effective}:${db.port.effective}:${db.database-name}</db.url.effective>
+            </properties>
+        </profile>
+        <profile>
+            <id>mysql</id>
+            <properties>
+                <db.username>root</db.username>
+                <db.password>admin</db.password>
+                <db.host>localhost</db.host>
+                <db.port>6786</db.port>
+                <db.host.effective>localhost</db.host.effective>
+                <db.port.effective>3306</db.port.effective>
+                <db.url.effective>jdbc:mysql://${db.host.effective}:${db.port.effective}/${db.database-name}?zeroDateTimeBehavior=convertToNull</db.url.effective>
+            </properties>
         </profile>
     </profiles>
 </project>

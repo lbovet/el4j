@@ -39,4 +39,31 @@
             <artifactId>module-web-jar</artifactId>
         </dependency>
     </dependencies>
+    <profiles>
+        <!-- DB -->
+        <profile>
+            <id>db2</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <db.username>refdb_user</db.username>
+                <db.password>refdb_user</db.password>
+            </properties>
+        </profile>
+        <profile>
+            <id>oracle</id>
+            <properties>
+                <db.username>LEAF4</db.username>
+                <db.password>LEAF</db.password>
+            </properties>
+        </profile>
+        <profile>
+            <id>mysql</id>
+            <properties>
+                <db.username>root</db.username>
+                <db.password>admin</db.password>
+            </properties>
+        </profile>
+    </profiles>
 </project>

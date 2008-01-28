@@ -1149,18 +1149,31 @@
             </activation>
             <properties>
                 <db.name>db2</db.name>
+                <db.host>localhost</db.host>
+                <db.port>1527</db.port>
+                <db.database-name>el4j</db.database-name>
+                <db.create-database>true</db.create-database>
+                <db.url>jdbc:derby:net://${db.host}:${db.port}/"${db.database-name};create=${db.create-database};":retrieveMessagesFromServerOnGetMessage=true;</db.url>
             </properties>
         </profile>
         <profile>
             <id>oracle</id>
             <properties>
                 <db.name>oracle</db.name>
+                <db.host>tulipe.elca.ch</db.host>
+                <db.port>1521</db.port>
+                <db.database-name>d92a</db.database-name>
+                <db.url>jdbc:oracle:thin:@${db.host}:${db.port}:${db.database-name}</db.url>
             </properties>
         </profile>
         <profile>
             <id>mysql</id>
             <properties>
                 <db.name>mysql</db.name>
+                <db.host>localhost</db.host>
+                <db.port>3306</db.port>
+                <db.database-name>el4j</db.database-name>
+                <db.url>jdbc:mysql://${db.host}:${db.port}/${db.database-name}?zeroDateTimeBehavior=convertToNull</db.url>
             </properties>
         </profile>
     </profiles>
