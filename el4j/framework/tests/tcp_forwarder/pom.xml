@@ -94,9 +94,9 @@
                 <executions>
                     <execution>
                         <configuration>
-                            <db.connectionProperties>
-                                scenarios/db/raw/module-tcp_forwarder-tests-override-{db.name}.properties
-                            </db.connectionProperties>
+                            <connectionPropertiesSource>
+                                env-bean-property_spezially-for-tcp-forwarder.properties
+                            </connectionPropertiesSource>
                         </configuration>
                         <goals>
                             <goal>cleanUp</goal>
