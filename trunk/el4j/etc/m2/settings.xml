@@ -79,7 +79,7 @@
             <password>********</password>
         </server>
         <server>
-            <id>sshLeaffy</id>
+            <id>fileLeaffy</id>
             <username>********</username>
             <password>********</password>
         </server>
@@ -89,7 +89,7 @@
             <password>********</password>
         </server>
         <server>
-            <id>sshLeaffySnapshot</id>
+            <id>fileLeaffySnapshot</id>
             <username>********</username>
             <password>********</password>
         </server-->
