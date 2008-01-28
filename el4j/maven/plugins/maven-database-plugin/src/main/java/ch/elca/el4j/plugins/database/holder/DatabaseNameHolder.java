@@ -112,7 +112,7 @@ public class DatabaseNameHolder extends AbstractDatabaseHolder {
      * @throws IOException
      * @throws IllegalAccessException
      */
-    protected Properties getProperties(Resource[] resources) 
+    protected Properties getProperties(Resource... resources) 
         throws IOException {
         if (resources.length == 0) {
             throw new IllegalArgumentException(
