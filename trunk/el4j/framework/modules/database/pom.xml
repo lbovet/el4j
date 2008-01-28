@@ -31,41 +31,27 @@
             <artifactId>commons-pool</artifactId>
         </dependency>
 
-        <!-- Universal IBM driver -->
+        <!-- Derby network driver -->
         <dependency>
-            <groupId>com.ibm</groupId>
-            <artifactId>db2jcc</artifactId>
-            <version>20040819</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.ibm</groupId>
-            <artifactId>db2jcc_license_c</artifactId>
-            <version>20040819</version>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derbyclient</artifactId>
             <scope>runtime</scope>
         </dependency>
         
         <!-- Oracle driver -->
-        <!--  
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc14</artifactId>
-            <version>10.2.0.2.0</version>
-        </dependency> -->
-        
         <dependency>
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc14_g</artifactId>
-            <version>10.2.0.1.0</version>
+            <version>10.2.0.3.0</version>
             <scope>runtime</scope>
         </dependency>
         
+        <!-- MySQL driver -->
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector</artifactId>
             <version>5.0.6</version>
             <scope>runtime</scope>
         </dependency>
-        
     </dependencies>
 </project>
