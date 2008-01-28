@@ -26,6 +26,8 @@ Plugins
 *----------------------------+-------------------+  
 | {{{maven-depgraph-plugin/index.html}dependency-graph}}               | Tool to visualize depedency graph.
 *----------------------------+-------------------+  
+| {{{maven-rec-plugin/index.html}mvn-rec}}               			   | Tool run maven commands for a project and all its dependent projets.
+*----------------------------+-------------------+  
 
   Please refer also the plugin section of the reference document and the maven cheat sheet for more information. 
 
