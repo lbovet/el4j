@@ -2,7 +2,7 @@
  Plugins
  -----
  -----
- 26 Sep 2006
+ 28 Jan 2008
  -----
 
 Plugins
@@ -17,6 +17,8 @@ Plugins
 | {{{maven-env-support-plugin/index.html}env-support}}                 | To share environment variables between Maven and the running application.
 *----------------------------+-------------------+
 | {{{maven-file-collector-plugin/index.html}file-collector}}           | Powerful copy tool.
+*----------------------------+-------------------+
+| {{{maven-jaxws-plugin/index.html}JAX-WS}}                            | Integrates the wsgen and wsimport tool into the automated build process.
 *----------------------------+-------------------+
 | {{{maven-manifest-decorator-plugin/index.html}manifest-decorator}}   | Collects information about artifacts to reconstruct artifact dependency order on runtime.
 *----------------------------+-------------------+
