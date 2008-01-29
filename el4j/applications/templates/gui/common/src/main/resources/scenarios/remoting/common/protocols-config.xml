@@ -23,7 +23,7 @@
             <value>${jee-web.port}</value>
         </property>
         <property name="contextPath">
-            <value>swing-demo-server</value>
+            <value>${jee-web.context}</value>
         </property>
     </bean>    
     

@@ -26,4 +26,7 @@
         <module>standalone-client</module>
         <module>webstart</module>
     </modules>
+    <properties>
+        <jee-web.context>swing-demo-server</jee-web.context>
+    </properties>
 </project>
