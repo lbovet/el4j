@@ -5,30 +5,15 @@
                  xmlns:s="http://jboss.com/products/seam/taglib"
 				 xmlns:el4j="http://www.elca.ch/el4j/taglib">
 
-	<s:decorate id="#{fieldName}Decoration">
-		<div class="prop">
-			<s:label styleClass="name #{invalid?'errors':''}">
-				#{el4j:h10nFieldName(entityShortName, fieldName)}
-				<s:span styleClass="required" rendered="#{utils.isRequired(entityClassName,fieldName)}">*</s:span>
-			</s:label>
-				
-			<span class="value #{invalid?'errors':''}">
-				<s:validateAll>
-					<h:selectOneMenu id="#{fieldName}"
-								  value="#{entity[fieldName]}"
-							   required="#{utils.isRequired(entityClassName,fieldName)}">
-						<s:selectItems value="#{utils.getEnumList(entityClassName,fieldName)}"
-										 var="item"
-									   label="#{el4j:h10nFieldEnumName(entityShortName, fieldName, item)}"
-							noSelectionLabel="Select..."/>
-						<s:convertEnum/>
-					</h:selectOneMenu>
-				</s:validateAll>
-			</span>
-				
-			<s:message styleClass="error errors"/>
-		</div>
-	</s:decorate>
 
+	<h:selectOneMenu id="#{fieldName}"
+				  value="#{entity[fieldName]}"
+			   required="#{utils.isRequired(entityClassName,fieldName)}">
+		<s:selectItems value="#{utils.getEnumList(entityClassName,fieldName)}"
+						 var="item"
+					   label="#{el4j:h10nFieldEnumName(entityShortName, fieldName, item)}"
+			noSelectionLabel="Select..."/>
+		<s:convertEnum/>
+	</h:selectOneMenu>
 
 </ui:composition>

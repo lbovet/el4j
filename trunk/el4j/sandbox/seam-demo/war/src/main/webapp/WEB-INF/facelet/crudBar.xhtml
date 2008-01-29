@@ -6,21 +6,21 @@
 
 	<div class="actionButtons">
 		<h:commandButton id="save" 
-					  value="Create" 
+					  value="#{messages.Create}" 
 					 action="#{entityManager.saveOrUpdateAndRedirect(entity, masterPage)}"
 				   rendered="#{newEntity}"/>
 		<h:commandButton id="update" 
-					  value="Save" 
+					  value="#{messages.Save}" 
 					 action="#{entityManager.saveOrUpdateAndRedirect(entity, masterPage)}"
 				   rendered="#{not newEntity}"/>                  
 		<h:commandButton id="delete" 
-					  value="Delete" 
+					  value="#{messages.Delete}" 
 					 action="#{entityManager.deleteAndRedirect(entity, masterPage)}"
 				  immediate="true"
 				   rendered="#{not newEntity}"/>
 		<s:button id="done"
-		        view="#{masterPage}"
-			   value="Cancel"/>
+		       value="#{messages.Cancel}"
+		        view="#{masterPage}"/>
 	</div>
 
 </ui:composition>

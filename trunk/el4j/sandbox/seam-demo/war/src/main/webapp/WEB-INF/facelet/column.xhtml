@@ -7,31 +7,39 @@
 				 xmlns:el4j="http://www.elca.ch/el4j/taglib">
 	
 	<el4j:set var="columnType" value="#{utils.getColumnType(entityClassName,columnName)}"/>
-	<c:choose>
-		<c:when test="#{columnType == 'String'}">
-			<el4j:stringColumn columnName="#{columnName}" doLink="#{doLink}"/>
-		</c:when>
-		<c:when test="#{columnType == 'Integer'}">
-			<el4j:stringColumn columnName="#{columnName}" doLink="#{doLink}"/>
-		</c:when>
-		<c:when test="#{columnType == 'Long'}">
-            <el4j:stringColumn columnName="#{columnName}" doLink="#{doLink}"/>
-        </c:when>
-		<c:when test="#{columnType == 'Boolean'}">
-			<el4j:booleanColumn columnName="#{columnName}" doLink="#{doLink}"/>
-		</c:when>
-		<c:when test="#{columnType == 'Date'}">
-            <el4j:dateColumn columnName="#{columnName}" doLink="#{doLink}"/>
-        </c:when>
-		<c:when test="#{columnType == '@enum'}">
-			<el4j:enumColumn columnName="#{columnName}" doLink="#{doLink}"/>
-		</c:when>
-		<c:when test="#{columnType == '@entity'}">
-			<el4j:stringColumn columnName="#{columnName}" doLink="#{doLink}"/>
-		</c:when>
-		<c:when test="#{columnType == '@multiEntity'}">
-			<el4j:multiEntityColumn columnName="#{columnName}" doLink="#{doLink}"/>
-		</c:when>
-	</c:choose>
+	
+	<h:column>
+        <f:facet name="header">#{el4j:h10nFieldName(entityShortName, columnName)}</f:facet>
+        
+		<c:choose>
+			<c:when test="#{columnType == 'String'}">
+				<h:outputText value="#{entity[columnName]}"/>
+			</c:when>
+			<c:when test="#{columnType == 'Integer'}">
+				<h:outputText value="#{entity[columnName]}"/>
+			</c:when>
+			<c:when test="#{columnType == 'Long'}">
+	            <h:outputText value="#{entity[columnName]}"/>
+	        </c:when>
+			<c:when test="#{columnType == 'Boolean'}">
+				<h:outputText value="#{el4j:h10nFieldBoolText(entityShortName, columnName, entity[columnName])}"/>
+			</c:when>
+			<c:when test="#{columnType == 'Date'}">
+                <h:outputText value="#{entity[columnName]}">
+                    <s:convertDateTime />
+                </h:outputText>
+	        </c:when>
+			<c:when test="#{columnType == '@enum'}">
+				<h:outputText value="#{el4j:h10nFieldEnumName(entityShortName, columnName, entity[columnName])}"/>
+			</c:when>
+			<c:when test="#{columnType == '@entity'}">
+				<h:outputText value="#{entity[columnName]}"/>
+			</c:when>
+			<c:when test="#{columnType == '@multiEntity'}">
+				<el4j:multiEntityColumn columnName="#{columnName}"/>
+			</c:when>
+		</c:choose>
+		
+    </h:column>
 	
 </ui:composition>

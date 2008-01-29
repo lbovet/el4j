@@ -32,7 +32,7 @@
 	</tag>
 	<tag>
         <tag-name>dateField</tag-name>
-        <source>stringField.xhtml</source>
+        <source>dateField.xhtml</source>
     </tag>
 	<tag>
 		<tag-name>enumField</tag-name>

@@ -2,15 +2,11 @@
                  xmlns:ui="http://java.sun.com/jsf/facelets"
                  xmlns:h="http://java.sun.com/jsf/html"
                  xmlns:f="http://java.sun.com/jsf/core"
-				 xmlns:c="http://java.sun.com/jstl/core"
                  xmlns:s="http://jboss.com/products/seam/taglib"
 				 xmlns:el4j="http://www.elca.ch/el4j/taglib">
 
-	<h:column>
-		<f:facet name="header">#{el4j:h10nFieldName(entityShortName, columnName)}</f:facet>
-		
-		<el4j:columnText text="#{el4j:h10nFieldEnumName(entityShortName, columnName, entity[columnName])}"
-					   doLink="#{doLink}"/>
-	</h:column>
-	
+	<h:inputText id="#{fieldName}" required="#{utils.isRequired(entityClassName,fieldName)}"
+		value="#{entity[fieldName]}">
+		<s:convertDateTime />
+	</h:inputText>
 </ui:composition>

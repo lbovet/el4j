@@ -79,7 +79,7 @@ public class ElUtils {
 		return m_FieldLists.computeFieldList(entityClassName, shown, hidden);
 	}
 	
-	public TableColumn[] computeColumnList(String entityClassName, String shown, String hidden) {
+	public String[] computeColumnList(String entityClassName, String shown, String hidden) {
 		return m_FieldLists.computeColumnList(entityClassName, shown, hidden);
 	}
 	

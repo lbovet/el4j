@@ -28,7 +28,6 @@ import org.hibernate.metadata.ClassMetadata;
 
 import ch.elca.el4j.seam.generic.EntityShortNameMapping;
 import ch.elca.el4j.seam.generic.ResultCache;
-import ch.elca.el4j.seam.generic.TableColumn;
 import ch.elca.el4j.seam.generic.humanization.HumanizationComparator;
 
 /**
@@ -150,40 +149,39 @@ public class FieldLists {
         return (String[]) cache.lookup(cacheKey);
     }
 
-    private TableColumn[] makeTableColumnArray(String[] fieldArray,
-        boolean allLinked) {
-        TableColumn[] columnArray = new TableColumn[fieldArray.length];
+    private String[] makeTableColumnArray(String[] fieldArray) {
+        String[] columnArray = new String[fieldArray.length];
 
         for (int i = 0; i < fieldArray.length; i++) {
-            columnArray[i] = new TableColumn(fieldArray[i], allLinked);
+            columnArray[i] = new String(fieldArray[i]);
         }
 
         return columnArray;
     }
 
-    private TableColumn[] computeColumnListInternal(String entityClassName,
+    private String[] computeColumnListInternal(String entityClassName,
         String shown, String hidden) {
-        TableColumn[] columnArray;
+        String[] columnArray;
 
         if ((shown == null) || shown.equals("")) {
             String[] fieldArray = getCompleteFieldList(entityClassName);
-            columnArray = makeTableColumnArray(fieldArray, true);
+            columnArray = makeTableColumnArray(fieldArray);
         } else {
             String[] fieldArray = parseList(shown);
-            columnArray = makeTableColumnArray(fieldArray, false);
+            columnArray = makeTableColumnArray(fieldArray);
         }
 
-        LinkedHashSet<TableColumn> columns = new LinkedHashSet<TableColumn>(
+        LinkedHashSet<String> columns = new LinkedHashSet<String>(
             Arrays.asList(columnArray));
         if ((hidden != null) && !hidden.equals("")) {
             columns.removeAll(Arrays.asList(makeTableColumnArray(
-                parseList(hidden), false)));
+                parseList(hidden))));
         }
 
-        return columns.toArray(new TableColumn[0]);
+        return columns.toArray(new String[0]);
     }
 
-    public TableColumn[] computeColumnList(String entityClassName,
+    public String[] computeColumnList(String entityClassName,
         String shown, String hidden) {
         String cacheKey = cache.computeKey("computeColumnList",
             entityClassName, shown, hidden);
@@ -193,6 +191,6 @@ public class FieldLists {
                 shown, hidden));
         }
 
-        return (TableColumn[]) cache.lookup(cacheKey);
+        return (String[]) cache.lookup(cacheKey);
     }
 }

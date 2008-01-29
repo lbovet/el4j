@@ -18,40 +18,13 @@ package ch.elca.el4j.seam.demo;
 
 import java.io.Serializable;
 
-import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.Begin;
-import org.jboss.seam.annotations.End;
 import org.jboss.seam.annotations.Name;
-import org.jboss.seam.annotations.Out;
-import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.remoting.WebRemote;
 
-@Name("conversationTester")
-@Scope(ScopeType.CONVERSATION)
-public class ConversationTester implements Serializable {
-    @Out
-    private int counter = 0;
-    
-    public void refresh() {
-        System.out.println("refresh");
-        counter++;
+@Name("remotingTest")
+public class RemotingTest implements Serializable {
+    @WebRemote
+    public String sayHello(String name) {
+        return "Hello, " + name;
     }
-    
-    @Begin
-    public void begin() {
-        System.out.println("begin");
-        counter++;
-    }
-    
-    @Begin(join = true)
-    public void beginJoin() {
-        System.out.println("begin(join = true)");
-        counter++;
-    }
-    
-    @End
-    public void end() {
-        System.out.println("end");
-        counter++;
-    }
-
 }

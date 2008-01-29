@@ -8,7 +8,7 @@
 		
 	<el4j:set var="columnList" value="#{utils.computeColumnList(entityClassName, shown, hidden)}"/>
 	<c:forEach items="#{columnList}" var="col">
-		<el4j:column columnName="#{col.name}" doLink="#{col.linked}"/>
+		<el4j:column columnName="#{col}"/>
 	</c:forEach>
 	
 </ui:composition>

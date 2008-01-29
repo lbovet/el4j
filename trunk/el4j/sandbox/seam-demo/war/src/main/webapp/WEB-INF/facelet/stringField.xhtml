@@ -5,24 +5,9 @@
                  xmlns:s="http://jboss.com/products/seam/taglib"
 				 xmlns:el4j="http://www.elca.ch/el4j/taglib">
 
-	<s:decorate id="#{fieldName}Decoration">
-		<div class="prop">
-			<s:label styleClass="name #{invalid?'errors':''}">
-				#{el4j:h10nFieldName(entityShortName, fieldName)}
-				<s:span styleClass="required" rendered="#{utils.isRequired(entityClassName,fieldName)}">*</s:span>
-			</s:label>
-				
-			<span class="value #{invalid?'errors':''}">
-				<s:validateAll>
-					<h:inputText id="#{fieldName}" required="#{utils.isRequired(entityClassName,fieldName)}"
-						value="#{entity[fieldName]}">
-					</h:inputText>
-				</s:validateAll>
-			</span>
-				
-			<s:message styleClass="error errors"/>
-		</div>
-	</s:decorate>
 
+    <h:inputText id="#{fieldName}" required="#{utils.isRequired(entityClassName,fieldName)}"
+        value="#{entity[fieldName]}">
+    </h:inputText>
 
 </ui:composition>

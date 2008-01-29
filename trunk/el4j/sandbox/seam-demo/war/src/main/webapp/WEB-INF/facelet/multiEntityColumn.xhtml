@@ -7,28 +7,22 @@
 				 xmlns:rich="http://richfaces.ajax4jsf.org/rich"
 				 xmlns:el4j="http://www.elca.ch/el4j/taglib">
 
-	<h:column>
-		<f:facet name="header">#{el4j:h10nFieldName(entityShortName, columnName)}</f:facet>
 		
 		<c:set var="relatedSize" value="#{entity[columnName].size()}"/>
 		
 		<s:span rendered="#{relatedSize == 0}">
-			<el4j:columnText text="No #{el4j:h10nEntityName(utils.getRelatedEntityShortName(entityClassName, columnName))}"
-						   doLink="#{doLink}"/>
+			<h:outputText value="No #{el4j:h10nEntityName(utils.getRelatedEntityShortName(entityClassName, columnName))}"/>
 		</s:span>
 		
 		<s:span rendered="#{(relatedSize gt 0) and (relatedSize le 3)}">
 			<ui:repeat value="#{entity[columnName].toArray()}" var="ent">
-				<el4j:columnText text="#{ent.toString()}"
-							   doLink="#{doLink}"/><br/>
+				<h:outputText value="#{ent.toString()}"/><br/>
 			</ui:repeat>
 		</s:span>
 		
 		<s:span rendered="#{relatedSize gt 3}">
 			<c:set var="relatedH10n" value="#{el4j:h10nEntityNamePlural(utils.getRelatedEntityShortName(entityClassName, columnName))}"/>
-			<el4j:columnText text="#{entity[columnName].size()} #{relatedH10n}"
-						   doLink="#{doLink}"/>
+			<h:outputText value="#{entity[columnName].size()} #{relatedH10n}"/>
 		</s:span>
-	</h:column>
 	
 </ui:composition>
