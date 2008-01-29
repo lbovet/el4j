@@ -126,6 +126,13 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
     private String separator;
 
     /**
+     * Separator for sql statements.
+     *
+     * @parameter expression="${delimiter}" default-value=";"
+     */
+    private String delimiter;
+    
+    /**
      * SQL Source Directories, i.e. directories where to find the .sql files.
      * 
      * By convention these are <code>classpath*:/etc/sql/general/</code> for 
@@ -545,13 +552,14 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
             while ((part = buffRead.readLine()) != null) {
                 // Filter out comments and blank lines
                 if (StringUtils.hasText(part) && !part.startsWith("--")) {
-                    // Sort statements by ';'
-                    while ((index = part.indexOf(';')) != -1) {
+                    // Sort statements by delimiter, by default ';'
+                    while ((index = part.indexOf(delimiter)) != -1) {
                         // add statement to result array
                         result.add(stmt + part.substring(0, index));
                         // reset statement string
                         stmt = "";
-                        // check if Part has input after ';'. If so, continue.
+                        // check if Part has input after the delimiter.
+                        // If so, continue.
                         if (index < part.length()) {
                             part = part.substring(index + 1, part.length());
                         } else {
