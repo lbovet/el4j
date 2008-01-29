@@ -113,7 +113,8 @@ public class PagedRichHtmlDataTable extends HtmlDataTable {
         try {
             super.encodeBegin(context);
         } catch (Exception ex) {
-            Logger.getAnonymousLogger().log(Level.SEVERE, ex.getMessage());
+            Logger.getAnonymousLogger().log(Level.SEVERE, 
+                "error in super.encodeBegin: " + ex.getMessage());
         }
 
     }
