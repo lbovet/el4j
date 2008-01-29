@@ -336,6 +336,10 @@
                     ch.elca.el4j.tests,
                     ch.elca.el4j.applications
                 </eclipse.reactorProjectGroupIdPrefixes-->
+                
+                <!-- EL4J team specific settings -->
+                <!-- Uncomment the following on leaffy -->
+                <!--project-server.path>file:/home/java</project-server.path-->
             </properties>
         </profile>
         
