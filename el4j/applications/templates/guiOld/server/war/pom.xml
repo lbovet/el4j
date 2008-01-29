@@ -51,7 +51,4 @@
             <type>war</type>
         </dependency>
     </dependencies>
-    <properties>
-        <jee-web.context>refdb-gui-server</jee-web.context>
-    </properties>
 </project>
