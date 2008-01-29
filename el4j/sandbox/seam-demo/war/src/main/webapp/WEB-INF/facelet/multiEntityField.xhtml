@@ -7,56 +7,41 @@
                 xmlns:s="http://jboss.com/products/seam/taglib"
 				xmlns:el4j="http://www.elca.ch/el4j/taglib">
 
-	<s:decorate id="#{fieldName}Decoration">
-		<div class="prop">
-			<s:label styleClass="name #{invalid?'errors':''}">
-				#{el4j:h10nFieldName(entityShortName, fieldName)}
-				<s:span styleClass="required" rendered="#{utils.isRequired(entityClassName,fieldName)}">*</s:span>
-			</s:label>
-				
-			<span class="value #{invalid?'errors':''}">
-				<s:validateAll>
-					<a4j:outputPanel id="#{fieldName}OutputPanel">
-					<a4j:region>
-						<c:if test="#{relEntities == null}">
-							<el4j:set var="relEntities" value="#{utils.getRelatedEntities(entityClassName,fieldName)}"/>
-						</c:if>
-						
-						<c:if test="#{detailPage == null}">
-							<el4j:set var="detailPage" value="#{utils.getDefaultRelatedDetailPage(entityClassName,fieldName)}"/>
-						</c:if>
-						
-						<ul>
-						<ui:repeat value="#{entity[fieldName].toArray()}" var="ent">
-							<li>
-								<h:outputText value="#{ent.toString()}"/>
-								<h:outputText value=" "/>
-								<a4j:commandLink value="Remove"
-											  reRender="#{fieldName}OutputPanel"
-												action="#{entity[fieldName].delete(ent)}"/>
-								<h:outputText value=" "/>
-								<h:commandLink value="Edit" action="#{entityManager.edit(ent, detailPage)}"/>
-							</li>
-						</ui:repeat>
-						</ul>
-						
-						<h:selectOneMenu id="#{fieldName}Add"
-									  value="#{temporary.map[fieldName]}">
-							<s:selectItems value="#{relEntities}" var="selEntity"
-								label="#{selEntity.toString()}" noSelectionLabel="Select..."/>
-							<f:converter converterId="ch.elca.el4j.seam.generic.EntityConverter"/> 
-						</h:selectOneMenu>
-						
-						<a4j:commandButton value="Add"
-										reRender="#{fieldName}OutputPanel"
-										  action="#{entity[fieldName].add(temporary.map[fieldName])}"/>
-					</a4j:region>
-					</a4j:outputPanel>
-				</s:validateAll>
-			</span>
-				
-			<s:message styleClass="error errors"/>
-		</div>
-	</s:decorate>
+	<a4j:outputPanel id="#{fieldName}OutputPanel">
+	<a4j:region>
+		<c:if test="#{relEntities == null}">
+			<el4j:set var="relEntities" value="#{utils.getRelatedEntities(entityClassName,fieldName)}"/>
+		</c:if>
+		
+		<c:if test="#{detailPage == null}">
+			<el4j:set var="detailPage" value="#{utils.getDefaultRelatedDetailPage(entityClassName,fieldName)}"/>
+		</c:if>
+		
+		<ul>
+		<ui:repeat value="#{entity[fieldName].toArray()}" var="ent">
+			<li>
+				<h:outputText value="#{ent.toString()}"/>
+				<h:outputText value=" "/>
+				<a4j:commandLink value="Remove"
+							  reRender="#{fieldName}OutputPanel"
+								action="#{entity[fieldName].delete(ent)}"/>
+				<h:outputText value=" "/>
+				<h:commandLink value="Edit" action="#{entityManager.edit(ent, detailPage)}"/>
+			</li>
+		</ui:repeat>
+		</ul>
+		
+		<h:selectOneMenu id="#{fieldName}Add"
+					  value="#{temporary.map[fieldName]}">
+			<s:selectItems value="#{relEntities}" var="selEntity"
+				label="#{selEntity.toString()}" noSelectionLabel="Select..."/>
+			<f:converter converterId="ch.elca.el4j.seam.generic.EntityConverter"/> 
+		</h:selectOneMenu>
+		
+		<a4j:commandButton value="Add"
+						reRender="#{fieldName}OutputPanel"
+						  action="#{entity[fieldName].add(temporary.map[fieldName])}"/>
+	</a4j:region>
+	</a4j:outputPanel>
 	
 </ui:composition>

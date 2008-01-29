@@ -20,12 +20,14 @@
 		<el4j:set var="detailPage" value="#{utils.getDefaultDetailPage(entityShortName)}"/>
 	</c:if>
 	
+	<el4j:set var="h10nEntityName" value="#{el4j:h10nEntityName(entityShortName)}"/>
+	<el4j:set var="h10nEntityNamePlural" value="#{el4j:h10nEntityNamePlural(entityShortName)}"/>
 	<c:set var="entitiesCount" value="#{entityManager.getEntityCount()}"/>
 	
     <h:messages globalOnly="true" styleClass="message"/>
     
     <rich:panel>
-        <f:facet name="header">List of #{el4j:h10nEntityNamePlural(entityShortName)}</f:facet>
+        <f:facet name="header">#{messages.ListOfEntities}</f:facet>
         
 		<h:panelGrid columns="2" columnClasses="gridContent" rowClasses="vertTop">
 			<ui:insert name="filters">
@@ -38,7 +40,7 @@
 			
 			<h:panelGroup>
 			<div class="results">
-				<h:outputText value="There are no #{el4j:h10nEntityNamePlural(entityShortName)}" 
+				<h:outputText value="#{messages.NoEntities}" 
 						   rendered="#{entitiesCount == 0}"/>
 				
 				<h:form rendered="#{entitiesCount > 0}">
@@ -59,7 +61,15 @@
 						
 						<ui:insert name="columns">
 							<c:if test="#{entitiesCount > 0}">
-								<el4j:columnSet/>
+								<el4j:columnSet />
+								<h:column>
+									<f:facet name="header">#{messages.Actions}</f:facet>
+									<h:commandLink value="#{messages.Edit}"
+										action="#{entityManager.edit(entity, detailPage)}" />
+									<h:outputText value=" "/>
+									<h:commandLink value="#{messages.Delete}"
+                                        action="#{entityManager.delete(entity)}" />
+								</h:column>
 							</c:if>
 						</ui:insert>
 						
@@ -73,7 +83,7 @@
     <div class="actionButtons">
         <h:form>
             <h:commandButton id="create" 
-                      value="Create #{el4j:h10nEntityName(entityShortName)}" 
+                      value="#{messages.CreateEntity}" 
                      action="#{entityManager.createEntity(entityClassName,detailPage)}"
                   immediate="true"/>
         </h:form>		  

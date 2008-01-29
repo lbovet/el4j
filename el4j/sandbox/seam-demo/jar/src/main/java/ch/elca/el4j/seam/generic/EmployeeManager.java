@@ -16,6 +16,8 @@
  */
 package ch.elca.el4j.seam.generic;
 
+import java.io.Serializable;
+
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Begin;
 import org.jboss.seam.annotations.In;
@@ -24,7 +26,7 @@ import org.jboss.seam.annotations.Scope;
 
 @Name("employeeManager")
 @Scope(ScopeType.CONVERSATION)
-public class EmployeeManager {
+public class EmployeeManager implements Serializable {
     @In(value = "#{searchString}", required = false)
     private String m_search;
     

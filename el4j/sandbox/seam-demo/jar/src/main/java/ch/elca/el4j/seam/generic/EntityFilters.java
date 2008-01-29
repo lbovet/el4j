@@ -87,7 +87,7 @@ public class EntityFilters implements Serializable {
     public void removeAll() {
         if (m_filters.size() > 0) {
             m_filters.clear();
-            m_entityManager.invalidate();
+            m_entityManager.invalidateView();
         }
     }
     
@@ -97,7 +97,7 @@ public class EntityFilters implements Serializable {
     public void remove(String fieldName) {
         if (m_filters.containsKey(fieldName)) {
             m_filters.remove(fieldName);
-            m_entityManager.invalidate();
+            m_entityManager.invalidateView();
         }
     }
     
@@ -111,7 +111,7 @@ public class EntityFilters implements Serializable {
             || !m_filters.get(fieldName).equals(value)) {
             
             m_filters.put(fieldName, value);
-            m_entityManager.invalidate();
+            m_entityManager.invalidateView();
         }
     }
     
