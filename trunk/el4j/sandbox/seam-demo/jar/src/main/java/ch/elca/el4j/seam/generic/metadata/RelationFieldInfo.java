@@ -12,5 +12,5 @@ package ch.elca.el4j.seam.generic.metadata;
  * @author  Baeni Christoph (CBA)
  */
 public interface RelationFieldInfo {
-	public Class getRelatedClass();
+	public Class<?> getRelatedClass();
 }

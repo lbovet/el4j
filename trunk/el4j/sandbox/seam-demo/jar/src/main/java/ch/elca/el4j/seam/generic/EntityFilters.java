@@ -20,9 +20,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.hibernate.type.BooleanType;
-import org.hibernate.type.EntityType;
-import org.hibernate.type.EnumType;
 import org.hibernate.type.NullableType;
 import org.hibernate.type.StringType;
 import org.hibernate.type.Type;

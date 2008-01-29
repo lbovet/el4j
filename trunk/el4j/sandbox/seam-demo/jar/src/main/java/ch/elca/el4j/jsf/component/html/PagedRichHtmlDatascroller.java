@@ -30,8 +30,8 @@ import ch.elca.el4j.seam.generic.PagedEntityManager;
 /**
  * Extended HtmlDataScroller to support paging. Always belongs to a
  * PagedRichHtmlDataTable, by which is it created.<br/> Reloads data only for
- * the currently displayed page. Uses PagedEntityManaher interface to get corret
- * data from database.
+ * the currently displayed page. Uses the {@link PagedEntityManager} interface 
+ * to get correct data from database, just in time it is required.
  * 
  * @see PagedRichHtmlDataTable <script type="text/javascript"> printFileStatus
  *      ("$URL$", "$Revision$", "$Date$", "$Author$" ); </script>

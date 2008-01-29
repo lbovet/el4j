@@ -69,6 +69,7 @@
       <param-value>.xhtml</param-value>    
     </context-param>
     
+    <!--  change the following comment to deploy the application -->
     <context-param>        
       <param-name>facelets.DEVELOPMENT</param-name>        
       <param-value>true</param-value>    

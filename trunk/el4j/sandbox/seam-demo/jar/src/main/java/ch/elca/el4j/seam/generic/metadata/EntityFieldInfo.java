@@ -14,11 +14,11 @@ import org.hibernate.type.Type;
  * @author  Baeni Christoph (CBA)
  */
 public class EntityFieldInfo extends FieldInfo implements RelationFieldInfo{
-	public EntityFieldInfo(Class returnedClass, boolean required, Type hibernateType) {
+	public EntityFieldInfo(Class<?> returnedClass, boolean required, Type hibernateType) {
 		super(returnedClass, required, hibernateType);
 	}
 
-	public Class getRelatedClass() {
+	public Class<?> getRelatedClass() {
 		return getReturnedClass();
 	}
 	
