@@ -25,5 +25,6 @@ Maven JAX-WS Plugin
 
   * The default value for <<<\<wsdlDirectory\>>>> is <<<${project.build.directory}/jaxws/wsgen/wsdl>>> (in contrast to <<<${basedir}/src/wsdl>>> in the original). This enables the generation of all needed files in one maven install pass.
   
+ This plugin uses JAXB 2.1 which conflicts with the version 2.0 included in JavaSE 6. {{https://jaxb.dev.java.net/guide/Migrating_JAXB_2_0_applications_to_JavaSE_6.html}} section 7.1.2 explains how to solve this problem.
   
  For usage {{{plugin-info.html}see the plugin info page}}.
