@@ -74,15 +74,7 @@
 			</testResource>
 		</testResources>
     </build>
-<<<<<<< .mine
-	
-	
-	
 
-
-    
-=======
->>>>>>> .r2561
 	<profiles>
         <profile>
             <id>initDB</id>
@@ -122,7 +114,6 @@
 
 	<!-- Project dependencies -->
     <dependencies>
-		
 		<dependency>
 		    <groupId>org.testng</groupId>
 		    <artifactId>testng</artifactId>
