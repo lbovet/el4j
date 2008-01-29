@@ -34,6 +34,13 @@ import org.jboss.seam.international.LocaleSelector;
  * fallback humanization of the "fooBarBaz -> Foo Bar Baz" scheme. 
  * Humanization can be internationalized.
  * 
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *  
  * @author Baeni Christoph (CBA)
  */
 public class Humanization {
