@@ -1,7 +1,5 @@
 package ch.elca.el4j.seam.generic;
 
-import java.util.List;
-
 import org.jboss.seam.Component;
 
 import ch.elca.el4j.seam.generic.metadata.EntityInfoBase;
@@ -129,7 +127,7 @@ public class ElUtils {
 	
 	public String getRelatedEntityClassName(String entityClassName, String fieldName) {
 		FieldInfo fieldInfo = getFieldInfo(entityClassName, fieldName);
-		Class relatedClass = ((RelationFieldInfo)fieldInfo).getRelatedClass();
+		Class<?> relatedClass = ((RelationFieldInfo)fieldInfo).getRelatedClass();
 		
 		return relatedClass.getName();
 	}

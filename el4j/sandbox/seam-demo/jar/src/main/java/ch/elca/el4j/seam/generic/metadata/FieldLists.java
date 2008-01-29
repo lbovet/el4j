@@ -86,12 +86,12 @@ public class FieldLists {
         }
 
         String[] propertyNames = metadata.getPropertyNames();
-        List<String> propertyList = new ArrayList(Arrays.asList(propertyNames));
+        List<String> propertyList = new ArrayList<String>(Arrays.asList(propertyNames));
         propertyList.remove("version");
         propertyList.remove("optimisticLockingVersion");
         String entityShortName = m_shortNameMapping
             .getShortName(entityClassName);
-        Comparator humanizationComparator = new HumanizationComparator(
+        Comparator<String> humanizationComparator = new HumanizationComparator(
             entityShortName);
         Collections.sort(propertyList, humanizationComparator);
 

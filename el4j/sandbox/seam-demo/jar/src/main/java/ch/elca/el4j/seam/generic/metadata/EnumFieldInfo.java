@@ -10,11 +10,11 @@ import org.hibernate.type.Type;
  * @author  Baeni Christoph (CBA)
  */
 public class EnumFieldInfo extends FieldInfo {
-	public EnumFieldInfo(Class returnedClass, boolean required, Type hibernateType) {
+	public EnumFieldInfo(Class<?> returnedClass, boolean required, Type hibernateType) {
 		super(returnedClass, required, hibernateType);
 	}
 
-	public Class getEnumClass() {
+	public Class<?> getEnumClass() {
 		return getReturnedClass();
 	}
 	

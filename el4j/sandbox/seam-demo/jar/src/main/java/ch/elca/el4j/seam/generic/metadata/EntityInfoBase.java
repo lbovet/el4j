@@ -1,6 +1,5 @@
 package ch.elca.el4j.seam.generic.metadata;
 
-import java.util.Date;
 import java.util.HashMap;
 
 import org.hibernate.SessionFactory;
@@ -30,13 +29,13 @@ public class EntityInfoBase {
     private FieldInfo createFieldInfo(ClassMetadata metadata, String fieldName,
         boolean required) {
         Type hibernateType = metadata.getPropertyType(fieldName);
-        Class returnedClass = hibernateType.getReturnedClass();
+        Class<?> returnedClass = hibernateType.getReturnedClass();
 
         if (hibernateType instanceof EntityType) {
             return new EntityFieldInfo(returnedClass, required, hibernateType);
         } else if (hibernateType instanceof CollectionType) {
             CollectionType collectionType = (CollectionType) hibernateType;
-            Class relatedClass = collectionType.getElementType(
+            Class<?> relatedClass = collectionType.getElementType(
                 (SessionFactoryImplementor) m_SessionFactory)
                 .getReturnedClass();
 
@@ -50,7 +49,7 @@ public class EntityInfoBase {
         }
     }
 
-    private HashMap<String, FieldInfo> computeFieldInfos(Class entityClass) {
+    private HashMap<String, FieldInfo> computeFieldInfos(Class<?> entityClass) {
         HashMap<String, FieldInfo> fieldInfos = new HashMap<String, FieldInfo>();
         ClassMetadata metadata = m_SessionFactory.getClassMetadata(entityClass);
         String[] fieldList = metadata.getPropertyNames();
@@ -68,7 +67,7 @@ public class EntityInfoBase {
     }
 
     private EntityInfo computeEntityInfo(String entityClassName) {
-        Class entityClass;
+        Class<?> entityClass;
         try {
             entityClass = Class.forName(entityClassName);
         } catch (ClassNotFoundException e) {
@@ -88,7 +87,7 @@ public class EntityInfoBase {
         return m_EntityInfos.get(entityClassName);
     }
 
-    public EntityInfo getEntityInfo(Class entityClass) {
+    public EntityInfo getEntityInfo(Class<?> entityClass) {
         return getEntityInfo(entityClass.getName());
     }
 }

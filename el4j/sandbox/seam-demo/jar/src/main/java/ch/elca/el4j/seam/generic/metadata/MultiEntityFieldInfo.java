@@ -13,14 +13,14 @@ import org.hibernate.type.Type;
  * @author  Baeni Christoph (CBA)
  */
 public class MultiEntityFieldInfo extends FieldInfo implements RelationFieldInfo {
-	private Class relatedClass;
+	private Class<?> relatedClass;
 
-	public MultiEntityFieldInfo(Class returnedClass, Class relatedClass, boolean required, Type hibernateType) {
+	public MultiEntityFieldInfo(Class<?> returnedClass, Class<?> relatedClass, boolean required, Type hibernateType) {
 		super(returnedClass, required, hibernateType);
 		this.relatedClass = relatedClass;
 	}
 
-	public Class getRelatedClass() {
+	public Class<?> getRelatedClass() {
 		return relatedClass;
 	}
 	
