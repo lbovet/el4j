@@ -442,7 +442,19 @@
                         </tagBase>
                     </configuration>
                 </plugin>
-
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>webstart-maven-plugin</artifactId>
+                    <!--
+                        Due to incomplete alpha-status a patched snapshot version is used.
+                           * maven-webstart-plugin (revision 5622
+                               + patch http://jira.codehaus.org/browse/MWEBSTART-1 "MWEBSTART-1-patch.diff"
+                               + patch http://jira.codehaus.org/browse/MWEBSTART-59 "MWEBSTART-59-patch.diff")
+                    <version>1.0-alpha-2-20071130.102344-1</version>
+                    -->
+                    <version>1.0-alpha-2-el4j_20071219_1427</version>
+                </plugin>
+                
                 <!-- Deployment -->
                 <plugin>
                     <groupId>org.codehaus.cargo</groupId>
@@ -2200,7 +2212,6 @@
         <version.taglist-maven-plugin>2.0</version.taglist-maven-plugin>
         <version.maven-plugin-plugin>2.3</version.maven-plugin-plugin>
         <version.cobertura-maven-plugin>2.1</version.cobertura-maven-plugin>
-        <version.webstart-maven-plugin>1.0-alpha-2-el4j_20071219_1427</version.webstart-maven-plugin>
         
         <!-- Eclipse -->
         <eclipse.reactorProjectGroupIdPrefixes></eclipse.reactorProjectGroupIdPrefixes>
