@@ -46,4 +46,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <properties>
+        <jee-web.context>module-remoting-tests-web</jee-web.context>
+    </properties>
 </project>

@@ -55,9 +55,9 @@
                                     <artifactId>module-remoting-jaxws-tests-war</artifactId>
                                     <type>war</type>
                                     <properties>
-                                        <context>module-remoting-jaxws-tests</context>
+                                        <context>${jee-web.context}</context>
                                     </properties>
-                                    <pingURL>http://${jee-web.host}:${jee-web.port}/module-remoting-jaxws-tests</pingURL>
+                                    <pingURL>http://${jee-web.host}:${jee-web.port}/${jee-web.context}</pingURL>
                                     <pingTimeout>120000</pingTimeout>
                                 </deployable>
                             </deployables>

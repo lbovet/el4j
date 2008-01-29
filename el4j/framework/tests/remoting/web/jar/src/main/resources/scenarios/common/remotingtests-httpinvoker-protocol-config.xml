@@ -17,7 +17,7 @@
             <value>${jee-web.port}</value>
         </property>
         <property name="contextPath">
-            <value>module-remoting-tests-web</value>
+            <value>${jee-web.context}</value>
         </property>
         <property name="implicitContextPassingRegistry">
             <ref local="httpInvokerImplicitContextPassingRegistry" />
