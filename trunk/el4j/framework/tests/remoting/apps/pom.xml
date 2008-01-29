@@ -27,11 +27,4 @@
 		<module>server</module>
 		<module>functional_tests</module>
 	</modules>
-	<dependencies>
-	</dependencies>
-	<build>
-
-	</build>
-	<profiles>
-	</profiles>
 </project>

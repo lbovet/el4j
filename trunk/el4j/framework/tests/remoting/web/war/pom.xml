@@ -54,7 +54,4 @@
             <type>war</type>
         </dependency>
     </dependencies>
-    <properties>
-        <jee-web.context>module-remoting-tests-web</jee-web.context>
-    </properties>
 </project>
