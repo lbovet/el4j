@@ -95,7 +95,7 @@
         <description>
             Configuration for the EL4J Application Context
         </description>
-        <param-name>contextConfigLocation</param-name>
+        <param-name>inclusiveLocations</param-name>
         <param-value>
             classpath*:mandatory/*.xml,
             classpath*:mandatory/generic/*.xml,
