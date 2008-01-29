@@ -26,8 +26,13 @@ import org.jboss.seam.international.LocaleSelector;
 
 /**
  * Static humanization functions intended to be included in facelets tag
- * library. Backed by .properties file but also offers a fallback humanization
- * of the "fooBarBaz -> Foo Bar Baz" scheme.
+ * library. We use the term <em>humanization</em> for the translation 
+ * between technical names (e.g. names of entities and entity field) 
+ * and names that are visible to users. <br> <br> 
+ *  
+ * The implementation is backed by .properties file but also offers a 
+ * fallback humanization of the "fooBarBaz -> Foo Bar Baz" scheme. 
+ * Humanization can be internationalized.
  * 
  * @author Baeni Christoph (CBA)
  */
