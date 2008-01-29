@@ -25,4 +25,7 @@
         <module>thin-client</module>
         <module>standalone-client</module>
     </modules>
+    <properties>
+        <jee-web.context>refdb-gui-server</jee-web.context>
+    </properties>
 </project>
