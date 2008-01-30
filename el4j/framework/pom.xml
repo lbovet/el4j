@@ -87,7 +87,20 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
                 <version>${version.maven-jxr-plugin}</version>
+				<configuration>
+					<aggregate>true</aggregate>
+				</configuration>
             </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>${version.maven-pmd-plugin}</version>
+				<configuration>
+					<targetJdk>${el4j.java.version}</targetJdk>
+					<aggregate>true</aggregate>
+					<format>html</format>
+				</configuration>						
+			</plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
