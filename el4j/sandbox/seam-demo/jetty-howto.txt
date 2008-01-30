@@ -2,21 +2,14 @@
 =========
 You now can use jetty and its hot deployment features for a improved roundtrip.
 
-In order to do this, jump to the war folder and simply type
+In order to do this, jump to the war folder.
+
+To run the app simply type
 > mvn jetty:run
 
-If you want to start/prepare the database first, you can use
-> mvn db:start jetty:run
-or
-> mvn db:prepare jetty:run
+The database is started  automatically.
 
-But it is recommended that you control the database from another console using
-> mvn db:start db:block
-or
-> mvn db:prepare db:block
-before executing jetty:run like explained above.
-
-The application is available under http://localhost:8080/seam-demo-war/ .
+The application is available under http://localhost:8080/seam-demo .
 
 Whenever a file in the seam-demo-jar or seam-demo-war project is changed, the changes are detected and the application is updated on the server.
 

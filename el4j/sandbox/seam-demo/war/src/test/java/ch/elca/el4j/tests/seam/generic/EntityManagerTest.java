@@ -23,6 +23,7 @@ import org.jboss.seam.Component;
 import org.jboss.seam.contexts.Contexts;
 
 import ch.elca.el4j.seam.demo.entities.Client;
+import ch.elca.el4j.seam.generic.EntityFilters;
 import ch.elca.el4j.seam.generic.EntityManager;
 import ch.elca.el4j.tests.seam.BaseEntityManagerTest;
 
@@ -49,11 +50,25 @@ public class EntityManagerTest
     extends BaseEntityManagerTest {
     
     
+    //values for testClient object
+    static final String ENTERPRISE = "Cool Test Enterprise";
+    static final String ADRESS = "Rue du test";
+    static final String ACTIVITY = "Testing bad software";
+    
+    static Client testClient;
+    
+    /**
+     * number of entities in db before test
+     */
+    static int entityCount;
+    
+    
+    
     /**
      * This testcase serves as an example for a Seam integration test.
      * It simulates three requests.
      * At first, a Client object is created and stored in the database. 
-     * Next, it is loaded again and deleted.
+     * Next, the insertion is checked and the object is deleted again.
      * The third request checks whether the deletion was successfull.
      * 
      * @throws Exception
@@ -63,6 +78,8 @@ public class EntityManagerTest
          
             assert !super.isSessionInvalid();
        
+            
+            
             //first request
             new FacesRequest() {
                 
@@ -75,6 +92,7 @@ public class EntityManagerTest
                         .set("entityClassName", 
                         "ch.elca.el4j.seam.demo.entities.Client");
                     
+                    
                     //make sure that beans are successfully loaded
                     assert (getValue("#daoRegistry") != null);
                 }
@@ -83,11 +101,11 @@ public class EntityManagerTest
                 protected void invokeApplication() throws Exception
                 {                  
                     //create object to be stored
-                    Client c = new Client();
+                    testClient = new Client();
                   
-                    c.setEnterprise("Cool Test Enterprise");
-                    c.setAddress("Rue du Test");
-                    c.setActivity("Testing bad software");
+                    testClient.setEnterprise(ENTERPRISE);
+                    testClient.setAddress(ADRESS);
+                    testClient.setActivity(ACTIVITY);
                     
                     
                     //get object reference of seam-managed entityManager 
@@ -96,12 +114,11 @@ public class EntityManagerTest
                          Component.getInstance("entityManager");
                
                      
-                    int size = em.getEntityCount();
-                    //DB was cleaned before test so it should be empty 
-                    assert (size==0);
+                    entityCount = em.getEntityCount();
+                    
                      
                     //save client and end conversation 
-                    em.saveOrUpdateAndRedirect(c, null);
+                    em.saveOrUpdateAndRedirect(testClient, null);
                     
                     
                 }
@@ -114,7 +131,7 @@ public class EntityManagerTest
             //second request
             new FacesRequest() {
                 
-              
+                                
                 @Override
                 protected void invokeApplication() throws Exception
                 {
@@ -125,21 +142,12 @@ public class EntityManagerTest
                     
                     int size = em.getEntityCount();
                     //the currently saved client should be there 
-                    assert (size == 1);
+                    assert (size == entityCount + 1);
                     
-                     
-                    //load client...
-                    em.setRange(0,50);
                     
-                    List entities = em.getEntities(
-                        "ch.elca.el4j.seam.demo.entities.Client");
-                     
-                    assert (entities.size() == 1);
-                    
-                    Client c = (Client)entities.get(0);
                     
                     //...and delete it again
-                    em.deleteAndRedirect(c, null);
+                    em.deleteAndRedirect(testClient, null);
                     
                 }
 
@@ -156,8 +164,8 @@ public class EntityManagerTest
                         Component.getInstance("entityManager");
           
                     int size = em.getEntityCount();
-                    //table is empty again, so deletion was successfull
-                    assert (size == 0);
+                    //table has old size again, so deletion was successfull
+                    assert (size == entityCount);
                     
                    
                 }

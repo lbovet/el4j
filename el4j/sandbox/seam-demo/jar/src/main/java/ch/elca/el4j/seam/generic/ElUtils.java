@@ -1,5 +1,8 @@
 package ch.elca.el4j.seam.generic;
 
+import java.util.List;
+import java.util.logging.Logger;
+
 import org.jboss.seam.Component;
 
 import ch.elca.el4j.seam.generic.metadata.EntityInfoBase;
@@ -96,7 +99,18 @@ public class ElUtils {
 	}
 	
 	public boolean isRequired(String entityClassName, String fieldName) {
-        return getFieldInfo(entityClassName, fieldName).isRequired();
+       
+	    //modified 2008-1-30, FBI
+	    //for boolean fields, always return false because a boolean field
+	    //can not be required (letting it out means setting it to false)
+	    FieldInfo fi = getFieldInfo(entityClassName, fieldName);
+	    
+	    if (fi.getTypeString().toLowerCase().equals("boolean")) {
+	        return false;
+	    } else {
+	        return fi.isRequired();
+	    }
+	    
     }
 	
 	public Object[] getEnumList(String entityClassName, String fieldName) {
@@ -127,7 +141,7 @@ public class ElUtils {
 	
 	public String getRelatedEntityClassName(String entityClassName, String fieldName) {
 		FieldInfo fieldInfo = getFieldInfo(entityClassName, fieldName);
-		Class<?> relatedClass = ((RelationFieldInfo)fieldInfo).getRelatedClass();
+		Class relatedClass = ((RelationFieldInfo)fieldInfo).getRelatedClass();
 		
 		return relatedClass.getName();
 	}

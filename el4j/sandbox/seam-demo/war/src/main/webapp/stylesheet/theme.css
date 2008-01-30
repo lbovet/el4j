@@ -299,3 +299,9 @@ td.seam-date-hover
 .bold {
 	font-weight: bold;
 }
+
+.topPanel {
+	font-size: 14px;
+	background-image : url();
+	background-color : #09C6E1;
+}

@@ -59,7 +59,7 @@ public abstract class BaseEntityManagerTest extends SeamTest{
 
     
     /**
-     * Set up Spring application context and call method to clean database
+     * Set up Spring application context
      * before tests are executed.
      * 
      * {@inheritDoc}
@@ -87,10 +87,7 @@ public abstract class BaseEntityManagerTest extends SeamTest{
         startupContextLoader(m_springApplicationContext);
         
         
-        
-        //clean database
-        cleanDatabase();
-           
+       
         
     }
     
@@ -160,42 +157,6 @@ public abstract class BaseEntityManagerTest extends SeamTest{
     }
    
    
-    /**
-     * Deletes all entries from Client table in database.
-     * 
-     * @throws Exception
-     */
-    protected void cleanDatabase() throws Exception {
-        Connection con = null;
-        
-        try {
-            con = getDataSource().getConnection();
-            
-            try {
-                con.createStatement().execute(
-                    "DELETE FROM Client");
-            } catch (SQLException e) {
-                Logger.getAnonymousLogger().info(
-                    "There was a problem while deleting rows of "
-                    + "table 'Client'. Maybe the table "
-                    + "does not exist.");
-            }
-            
-            con.commit();
-        } finally {
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (SQLException e) {
-                    Logger.getAnonymousLogger().info(
-                        "Connection could not be closed.");
-                }
-            }
-        }
-        
-        
-    }
-    
     /**
      * @return Returns the dataSource.
      */
