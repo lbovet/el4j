@@ -316,16 +316,16 @@
                 <weblogic9x.cargo.log.file>${project.build.directory}/logs/weblogic9x/cargo.lo</weblogic9x.cargo.log.file>
                 
                 
-                <!-- Weblogic10 -->
-                <weblogic10.home>${el4j.project.tools}/bea/wlserver_10.0</weblogic10.home>
-                <weblogic10.server.name>testServer</weblogic10.server.name>
-                <weblogic10.domains.home>${el4j.project.tools}/bea/wlserver_10.0/samples/domains/${weblogic10.domain.name}</weblogic10.domains.home>
-                <weblogic10.domain.name>el4j</weblogic10.domain.name>
-                <weblogic10.manager.username>weblogic</weblogic10.manager.username>
-                <weblogic10.manager.password>weblogic</weblogic10.manager.password>
-                <weblogic10.container.log.file>${project.build.directory}/output.log</weblogic10.container.log.file>
-                <weblogic10.cargo.log.file>${project.build.directory}/cargo.log</weblogic10.cargo.log.file>
-                <weblogic10.jrockit.home>${weblogic10.home}/../JROCKI~1</weblogic10.jrockit.home>
+                <!-- Weblogic10x -->
+                <weblogic10x.home>${el4j.project.tools}/bea/wlserver_10.0</weblogic10x.home>
+                <weblogic10x.server.name>testServer</weblogic10x.server.name>
+                <weblogic10x.domains.home>${el4j.project.tools}/bea/wlserver_10.0/samples/domains/${weblogic10x.domain.name}</weblogic10x.domains.home>
+                <weblogic10x.domain.name>el4j</weblogic10x.domain.name>
+                <weblogic10x.manager.username>weblogic</weblogic10x.manager.username>
+                <weblogic10x.manager.password>weblogic</weblogic10x.manager.password>
+                <weblogic10x.container.log.file>${project.build.directory}/output.log</weblogic10x.container.log.file>
+                <weblogic10x.cargo.log.file>${project.build.directory}/cargo.log</weblogic10x.cargo.log.file>
+                <weblogic10x.jrockit.home>${weblogic10x.home}/../JROCKI~1</weblogic10x.jrockit.home>
                 
                 <!-- Birt -->
                 <birt.home>${el4j.project.tools}/birt-runtime-2_1_0</birt.home>
