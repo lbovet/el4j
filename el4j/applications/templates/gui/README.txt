@@ -1,4 +1,8 @@
-How to launch the gui demo application (standalone mode):
+How to launch the gui demo application 
+======================================
+
+standalone mode
+===============
 
  cd ..; mvn clean install
  
@@ -6,7 +10,8 @@ How to launch the gui demo application (standalone mode):
  mvn db:prepareDB exec:java
 
 
-distributed mode:
+distributed mode
+================
 
   start server:
 
@@ -19,3 +24,15 @@ distributed mode:
  
    cd thin-client
    mvn exec:java
+
+
+JAR mode
+========
+ 
+ cd standalone-client
+
+ # create a JAR with all dependencies (see maven-assembly-plugin in the pom.xml)
+ mvn assembly:assembly
+
+ # Start the JAR in the console or make a double-click on the JAR file
+ java -jar target/swing-demo-standalone-client-2.5-SNAPSHOT-jar-with-dependencies.jar
