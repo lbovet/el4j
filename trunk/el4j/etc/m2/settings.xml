@@ -316,7 +316,7 @@
                 <weblogic9x.cargo.log.file>${project.build.directory}/logs/weblogic9x/cargo.lo</weblogic9x.cargo.log.file>
                 
                 
-                 <!-- Weblogic10 -->
+                <!-- Weblogic10 -->
                 <weblogic10.home>${el4j.project.tools}/bea/wlserver_10.0</weblogic10.home>
                 <weblogic10.server.name>testServer</weblogic10.server.name>
                 <weblogic10.domains.home>${el4j.project.tools}/bea/wlserver_10.0/samples/domains/${weblogic10.domain.name}</weblogic10.domains.home>
@@ -413,11 +413,21 @@
         | List of profiles that are active for all builds.
         -->
     <activeProfiles>
+        <!-- DO NOT DELETE THE FOLLOWING LINE! -->
         <activeProfile>el4j.general</activeProfile>
+        
+        <!-- Web container -->
+        <!--activeProfile>tomcat6x</activeProfile-->
+        <!--activeProfile>weblogic10x</activeProfile-->
+        
+        <!-- Database -->
+        <!--activeProfile>db2</activeProfile-->
+        <!--activeProfile>oracle</activeProfile-->
     </activeProfiles>
     
     <pluginGroups>
         <pluginGroup>org.codehaus.cargo</pluginGroup>
+        <pluginGroup>org.codehaus.mojo</pluginGroup>
         <pluginGroup>ch.elca.el4j.maven.plugins</pluginGroup>
     </pluginGroups>
 </settings>
