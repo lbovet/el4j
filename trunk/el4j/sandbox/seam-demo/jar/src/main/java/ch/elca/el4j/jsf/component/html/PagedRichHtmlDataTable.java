@@ -139,13 +139,14 @@ public class PagedRichHtmlDataTable extends HtmlDataTable {
         s.setFor(this.getId());
         s.setMaxPages(MAX_PAGES);
 
-        s.setRenderIfSinglePage(false);
+        s.setRenderIfSinglePage(true);
 
-      
-
-        Map<String, UIComponent> facets = this.getFacets();
-        facets.put("footer", s);
-
+        this.setFooter(s);
+        
+//        Map<String, UIComponent> facets = this.getFacets();
+//        facets.put("footer", s);
+        
+        
     }
 
 }
