@@ -995,7 +995,7 @@
         
         <!-- Weblogic 10 -->
         <profile>
-            <id>weblogic10</id>
+            <id>weblogic10x</id>
             <!--<activation>
                 <activeByDefault>true</activeByDefault>
             </activation>-->
@@ -1052,10 +1052,10 @@
                                 <wait>true</wait>
                                 <container>
                                     <containerId>${jee-web.containerId}</containerId>
-                                    <home>${weblogic10.home}</home>
+                                    <home>${weblogic10x.home}</home>
                                     <systemProperties>
                                         <!--<com.sun.xml.namespace.QName.useCompatibleSerialVersionUID>1.0</com.sun.xml.namespace.QName.useCompatibleSerialVersionUID>-->
-                                        <!--<java.security.policy>${weblogic10.home}/server/lib/weblogic.policy</java.security.policy>
+                                        <!--<java.security.policy>${weblogic10x.home}/server/lib/weblogic.policy</java.security.policy>
                                         <weblogic.management.discover>true</weblogic.management.discover>-->
                                     </systemProperties>
                                     
@@ -1090,59 +1090,59 @@
                                         </dependency>
                                     
                                         <dependency>
-                                            <location>${weblogic10.jrockit.home}/lib/tools.jar</location>
+                                            <location>${weblogic10x.jrockit.home}/lib/tools.jar</location>
                                         </dependency>
                                         
                                         
                                         <dependency>
-                                            <location>${weblogic10.home}/server/lib/weblogic_sp.jar</location>
+                                            <location>${weblogic10x.home}/server/lib/weblogic_sp.jar</location>
                                         </dependency>
                                         <dependency>
-                                            <location>${weblogic10.home}/server/lib/weblogic.jar</location>
+                                            <location>${weblogic10x.home}/server/lib/weblogic.jar</location>
                                         </dependency>
                                         
                                         <dependency>
-                                            <location>${weblogic10.home}/../modules/features/weblogic.server.modules_10.0.0.0.jar</location>
+                                            <location>${weblogic10x.home}/../modules/features/weblogic.server.modules_10.0.0.0.jar</location>
                                         </dependency>
                                         <dependency>
-                                            <location>${weblogic10.home}/../modules/features/com.bea.cie.common-plugin.launch_2.1.0.0.jar</location>
+                                            <location>${weblogic10x.home}/../modules/features/com.bea.cie.common-plugin.launch_2.1.0.0.jar</location>
                                         </dependency>
 
                                         <dependency>
-                                            <location>${weblogic10.home}/server/lib/webservices.jar</location>
+                                            <location>${weblogic10x.home}/server/lib/webservices.jar</location>
                                         </dependency>
                                         <dependency>
-                                            <location>${weblogic10.home}/../modules/ORGAPA~1.5/lib/ant-all.jar</location>
+                                            <location>${weblogic10x.home}/../modules/ORGAPA~1.5/lib/ant-all.jar</location>
                                         </dependency>
                                         <dependency>
-                                            <location>${weblogic10.home}/../modules/NETSFA~1.0/lib/ant-contrib.jar</location>
+                                            <location>${weblogic10x.home}/../modules/NETSFA~1.0/lib/ant-contrib.jar</location>
                                         </dependency>
                                         <dependency>
-                                            <location>${weblogic10.home}/common/eval/pointbase/lib/pbclient51.jar</location>
+                                            <location>${weblogic10x.home}/common/eval/pointbase/lib/pbclient51.jar</location>
                                         </dependency>
                                         <dependency>
-                                            <location>${weblogic10.home}/server/lib/xqrl.jar</location>
+                                            <location>${weblogic10x.home}/server/lib/xqrl.jar</location>
                                         </dependency>
                                         <dependency>
-                                            <location>${weblogic10.home}/common/eval/pointbase/lib/pbclient51.jar</location>
+                                            <location>${weblogic10x.home}/common/eval/pointbase/lib/pbclient51.jar</location>
                                         </dependency>
                                         
                                     </dependencies>
-                                    <!--log>${weblogic10.container.log.file}</log-->
+                                    <!--log>${weblogic10x.container.log.file}</log-->
                                     <!--enable log only for debugging purposes-->
-                                    <!--<output>${weblogic10.cargo.log.file}</output>-->
+                                    <!--<output>${weblogic10x.cargo.log.file}</output>-->
                                </container>
                                 <configuration>
                                     <type>existing</type>
-                                    <home>${weblogic10.domains.home}</home>
+                                    <home>${weblogic10x.domains.home}</home>
                                     <properties>
-                                        <cargo.weblogic.domain>${weblogic10.domain.name}</cargo.weblogic.domain>
-                                        <cargo.weblogic.server>${weblogic10.server.name}</cargo.weblogic.server>
-                                        <cargo.weblogic.administrator.user>${weblogic10.manager.username}</cargo.weblogic.administrator.user>
-                                        <cargo.weblogic.administrator.password>${weblogic10.manager.password}</cargo.weblogic.administrator.password>
+                                        <cargo.weblogic.domain>${weblogic10x.domain.name}</cargo.weblogic.domain>
+                                        <cargo.weblogic.server>${weblogic10x.server.name}</cargo.weblogic.server>
+                                        <cargo.weblogic.administrator.user>${weblogic10x.manager.username}</cargo.weblogic.administrator.user>
+                                        <cargo.weblogic.administrator.password>${weblogic10x.manager.password}</cargo.weblogic.administrator.password>
                                         <cargo.servlet.port>${jee-web.port}</cargo.servlet.port>
                                         <cargo.weblogic.deployable.folder>autodeploy</cargo.weblogic.deployable.folder>
-                                        <cargo.weblogic.jvm>${weblogic10.jrockit.home}/bin/java</cargo.weblogic.jvm>
+                                        <cargo.weblogic.jvm>${weblogic10x.jrockit.home}/bin/java</cargo.weblogic.jvm>
                                     </properties>
                                 </configuration>
                             </configuration>
