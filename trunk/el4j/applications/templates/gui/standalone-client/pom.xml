@@ -29,7 +29,21 @@
                     <mainClass>ch.elca.el4j.demos.gui.MainStandaloneMDI</mainClass>
                 </configuration>
             </plugin>
-        </plugins>
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>					
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+						  <mainClass>ch.elca.el4j.demos.gui.MainStandaloneMDI</mainClass>
+						</manifest>
+					</archive>						
+				</configuration>
+			</plugin>									
+        </plugins>		
     </build>
     <dependencies>
         <dependency>
