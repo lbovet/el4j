@@ -29,12 +29,15 @@ import javax.persistence.TemporalType;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 
+import ch.elca.el4j.seam.demo.NullableBoolean;
+
 @Entity
 public class EntityTest implements Serializable {
     private Integer id;
     
     private String name;
     private Date date;
+    private NullableBoolean big;
     
     @Id @GeneratedValue
     public Integer getId() { return id; }
@@ -51,6 +54,12 @@ public class EntityTest implements Serializable {
     }
     public void setDate(Date date) {
         this.date = date;
+    }
+    public NullableBoolean getBig() {
+        return big;
+    }
+    public void setBig(NullableBoolean big) {
+        this.big = big;
     }
 
 }

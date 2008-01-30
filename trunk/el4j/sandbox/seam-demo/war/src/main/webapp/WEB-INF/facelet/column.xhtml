@@ -10,36 +10,9 @@
 	
 	<h:column>
         <f:facet name="header">#{el4j:h10nFieldName(entityShortName, columnName)}</f:facet>
-        
-		<c:choose>
-			<c:when test="#{columnType == 'String'}">
-				<h:outputText value="#{entity[columnName]}"/>
-			</c:when>
-			<c:when test="#{columnType == 'Integer'}">
-				<h:outputText value="#{entity[columnName]}"/>
-			</c:when>
-			<c:when test="#{columnType == 'Long'}">
-	            <h:outputText value="#{entity[columnName]}"/>
-	        </c:when>
-			<c:when test="#{columnType == 'Boolean'}">
-				<h:outputText value="#{el4j:h10nFieldBoolText(entityShortName, columnName, entity[columnName])}"/>
-			</c:when>
-			<c:when test="#{columnType == 'Date'}">
-                <h:outputText value="#{entity[columnName]}">
-                    <s:convertDateTime />
-                </h:outputText>
-	        </c:when>
-			<c:when test="#{columnType == '@enum'}">
-				<h:outputText value="#{el4j:h10nFieldEnumName(entityShortName, columnName, entity[columnName])}"/>
-			</c:when>
-			<c:when test="#{columnType == '@entity'}">
-				<h:outputText value="#{entity[columnName]}"/>
-			</c:when>
-			<c:when test="#{columnType == '@multiEntity'}">
-				<el4j:multiEntityColumn columnName="#{columnName}"/>
-			</c:when>
-		</c:choose>
-		
+        <ui:insert name="customMapping">
+            <el4j:defaultViewMapping/>
+		</ui:insert>
     </h:column>
 	
 </ui:composition>

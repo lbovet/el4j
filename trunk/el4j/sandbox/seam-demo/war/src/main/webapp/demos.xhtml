@@ -1,6 +1,7 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:c="http://java.sun.com/jstl/core"
                 xmlns:s="http://jboss.com/products/seam/taglib"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
@@ -8,10 +9,10 @@
                 xmlns:rich="http://richfaces.ajax4jsf.org/rich"
                 xmlns:el4j="http://www.elca.ch/el4j/taglib"
                 template="layout/template.xhtml">
-                
-<ui:define name="JavaScripts">
-<s:remote include="remotingTest"/>
-<script type="text/javascript">
+
+	<ui:define name="JavaScripts">
+		<s:remote include="remotingTest" />
+		<script type="text/javascript">
 //<![CDATA[
 function sayHello() {
 var name = prompt("What is your name?");
@@ -21,20 +22,33 @@ function sayHelloCallback(result) {
 alert(result);
 }
 // ]]>
-</script>
-</ui:define>
+        </script>
+	</ui:define>
+	
 
-<ui:define name="body">
+	<ui:define name="body">
 
     <h:messages globalOnly="true" styleClass="message"/>
     <h2>AJAX integration</h2>
     <button onclick="javascript:sayHello()">Say Hello</button>
     
     <h2>Entity Test</h2>
-    <el4j:set var="entityShortName" value="entityTest"/>
-    <ui:decorate template="layout/masterView.xhtml"/>
-    
-    <h2>Conversation Test</h2>
+        <el4j:set var="entityShortName" value="entityTest"/>
+        <c:set var="detailPage" value="/entityTest.xhtml"/>
+		<ui:decorate template="layout/masterView.xhtml">
+			<ui:define name="customMapping">
+				<c:choose>
+					<c:when test="#{columnName == 'big'}">
+						<el4j:enumView fieldName="#{fieldName}"/>
+					</c:when>
+					<c:otherwise>
+					    <el4j:defaultViewMapping/>
+					</c:otherwise>
+				</c:choose>
+			</ui:define>
+		</ui:decorate>
+
+		<h2>Conversation Test</h2>
 		<rich:panel>
 			<f:facet name="header">Tests</f:facet>
 			<h3>Actions</h3>
