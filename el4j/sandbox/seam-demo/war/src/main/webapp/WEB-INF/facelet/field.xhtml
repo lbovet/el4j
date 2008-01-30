@@ -8,52 +8,20 @@
 	
 	<el4j:set var="fieldType" value="#{utils.getFieldType(entityClassName,fieldName)}"/>
 	<el4j:set var="fieldName" value="#{fieldName}"/>
-	
-	<s:decorate id="#{fieldName}Decoration">
-        <div class="prop">
-            <s:label styleClass="name #{invalid?'errors':''}">
-                #{el4j:h10nFieldName(entityShortName, fieldName)}
-                <s:span styleClass="required" rendered="#{utils.isRequired(entityClassName,fieldName)}">*</s:span>
-            </s:label>
-                
-            <span class="value #{invalid?'errors':''}">
-                <s:validateAll>
 
-	<c:choose>
-		<c:when test="#{fieldType == 'String'}">
-			<el4j:stringField fieldName="#{fieldName}"/>
-		</c:when>
-		<c:when test="#{fieldType == 'Integer'}">
-			<el4j:integerField fieldName="#{fieldName}"/>
-		</c:when>
-		<c:when test="#{fieldType == 'Long'}">
-            <el4j:integerField fieldName="#{fieldName}"/>
-        </c:when>
-		<c:when test="#{fieldType == 'Boolean'}">
-			<el4j:booleanField fieldName="#{fieldName}"/>
-		</c:when>
-		<c:when test="#{fieldType == 'Date'}">
-            <el4j:dateField fieldName="#{fieldName}"/>
-        </c:when>
-		<c:when test="#{fieldType == '@enum'}">
-			<el4j:enumField fieldName="#{fieldName}"/>
-		</c:when>
-		<c:when test="#{fieldType == '@entity'}">
-			<el4j:entityField fieldName="#{fieldName}"/>
-		</c:when>
-		<c:when test="#{fieldType == '@multiEntity'}" >
-			<el4j:multiEntityField fieldName="#{fieldName}"/>
-		</c:when>
-		<c:otherwise>
-			<h:outputText value="Unknown Field Type (#{fieldType})"/><br/>
-		</c:otherwise>
-	</c:choose>
-	
-	                </s:validateAll>
-            </span>
-                
-            <s:message styleClass="error errors"/>
-        </div>
-    </s:decorate>
-	
+	<s:decorate id="#{fieldName}Decoration">
+		<div class="prop"><s:label
+			styleClass="name #{invalid?'errors':''}">
+                #{el4j:h10nFieldName(entityShortName, fieldName)}
+                <s:span styleClass="required"
+				rendered="#{utils.isRequired(entityClassName,fieldName)}">*</s:span>
+		</s:label> <span class="value #{invalid?'errors':''}"> <s:validateAll>
+
+			<ui:insert name="customMapping">
+				<el4j:defaultEditMapping />
+			</ui:insert>
+
+		</s:validateAll> </span> <s:message styleClass="error errors" /></div>
+	</s:decorate>
+
 </ui:composition>

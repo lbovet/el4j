@@ -8,42 +8,22 @@ Purpose:
  - Provide the foundations for generic master/detail views
  - Demonstrate usage of JBoss Seam, Richfaces and JSF / Facelets in general.
 
-Author:
+Authors:
  CBA (Christoph Baeni)
-
+ FBI (Frank Bitzer)
+ SWI (Stefan Wismer)
+ 
 Requirements: 
- - Maven 2.1-SNAPSHOT
- - Tomcat 5.5
-
-Used Libraries:
- - JBoss Seam 2.0.0.CR1
- - JBoss RichFaces 3.1.1-SNAPSHOT (includes Ajax4JSF now)
- - Sun JSF reference implementation 1.2_04-b16-p02
- - Sun Facelets implementation 1.1.13
+ - Java 1.5.0_14 or newer
 
 Build Instructions:
  - First compile it, using mvn install.
  - To execute it, change to the war directory an run the following command:
+      mvn jetty:run
+   or if you want to use tomcat
       mvn db:prepare cargo:undeploy cargo:deploy cargo:start
  - After the application has started you can access it at
-      http://localhost:8080/seam-demo-war/
-
-Severe Problems:
-
-- BUG: Paginating Offer master view throws LazyInitializationException. This bug is triggered by
-  any (Multi)EntityColumn in a master view. The LIE is thrown because the entities live within
-  a long running conversation and are detached from the hibernate session after the first request
-  is processed. The entities should either be reassociated with the new session in each request
-  or the session should somehow be associated with the seam conversation rather than with the
-  Spring OpenSessionInViewFilter. This is in fact an integration issue that was only introduced
-  with the abandonment of seam managed persistence in favor of EL4J/Spring persistence. 
-
-- Master view always loads _all_(!!) entities of a given type from the db, not just those
-   being displayed on the current page. This renders the whole master view very unscalable.
- - Reason /problem:
-  - The heavyily ajaxed rich:dataTable and rich:datascroller do not support a reasonable DataModel
-    but instead require a list of all entries from the first request on. Only a better JSF table
-    component could enable us to solve this issue. (For example Trinidad's DataTable).
+      http://localhost:8080/seam-demo/
 
 Minor Problems:
 
@@ -72,14 +52,4 @@ Missing Features / TODO:
    Example: Clicking on "Done" in the Employee detail view always returns
    to the employee master view, no matter where we came from (maybe Offer
    detail view). Furthermore pagination and filter states are not remembered.
-
-Misc:
-
-- This example does not really use Seam conversations a lot, because they are just not
-   needed for such a simple data driven CRUD master/detail view sample application. Conversations
-   are rather designed for interactions involving multiple steps like wizzards, shop checkouts,
-   user registrations etc. Nevertheless you have to take care of conversations!!! If you
-   forget to terminate a long running conversation in the right place, you may struggle with
-   "stale" data popping up out of nowhere in forms that were supposed to be empty as well as
-   many other nasty effects.
 

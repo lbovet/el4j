@@ -38,6 +38,11 @@
 			<artifactId>jboss-seam-ioc</artifactId>
 			<version>2.0.0.GA</version>
 		</dependency>
+        <dependency>
+            <groupId>org.jboss.seam</groupId>
+            <artifactId>jboss-seam-remoting</artifactId>
+            <version>2.0.0.GA</version>
+        </dependency>
 		<dependency>
 			<groupId>org.jboss.seam</groupId>
 			<artifactId>jboss-seam-debug</artifactId>
@@ -72,12 +77,12 @@
 		<dependency>
 			<groupId>javax.faces</groupId>
 			<artifactId>jsf-api</artifactId>
-			<version>1.2</version>
+			<version>1.2_07</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.faces</groupId>
 			<artifactId>jsf-impl</artifactId>
-			<version>1.2</version>
+			<version>1.2_07</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.facelets</groupId>
@@ -87,17 +92,13 @@
 	</dependencies>
 	<repositories>
 		<repository>
-			<id>apache-repo</id>
-			<name>apache-repo</name>
-			<url>http://myfaces.zones.apache.org/dist/maven-repository</url>
-		</repository>
-		<repository>
-			<id>softeu-repo</id>
-			<url>http://maven.softeu.cz</url>
-		</repository>
-		<repository>
 			<id>jboss-repo</id>
 			<url>http://repository.jboss.org/maven2</url>
-		</repository>				
+		</repository>
+		<repository>
+			<id>jsf-repo</id>
+			<url>https://maven-repository.dev.java.net/nonav/repository/</url>
+			<layout>legacy</layout>
+		</repository>
 	</repositories>
 </project>

@@ -44,12 +44,12 @@
 						   rendered="#{entitiesCount == 0}"/>
 				
 				<h:form rendered="#{entitiesCount > 0}">
-					<!-- <rich:dataTable width="320"
+					<ui:remove><rich:dataTable width="320"
 									   id="{entityShortName}Table"
 									 rows="3"
 							columnClasses="col"
 									value="{entities}"
-									  var="entity"> -->
+									  var="entity"></rich:dataTable></ui:remove>
 						 <d:pagedRichDataTable 
 						       entityName="#{entityClassName}"
 					   pagedEntityManager="#{entityManager}"
@@ -62,14 +62,16 @@
 						<ui:insert name="columns">
 							<c:if test="#{entitiesCount > 0}">
 								<el4j:columnSet />
-								<h:column>
-									<f:facet name="header">#{messages.Actions}</f:facet>
-									<h:commandLink value="#{messages.Edit}"
-										action="#{entityManager.edit(entity, detailPage)}" />
-									<h:outputText value=" "/>
-									<h:commandLink value="#{messages.Delete}"
-                                        action="#{entityManager.delete(entity)}" />
-								</h:column>
+								<ui:insert name="actionColumn">
+									<h:column>
+										<f:facet name="header">#{messages.Actions}</f:facet>
+										<h:commandLink value="#{messages.Edit}"
+											action="#{entityManager.edit(entity, detailPage)}" />
+										<h:outputText value=" "/>
+										<h:commandLink value="#{messages.Delete}"
+	                                        action="#{entityManager.delete(entity)}" />
+									</h:column>
+								</ui:insert>
 							</c:if>
 						</ui:insert>
 						

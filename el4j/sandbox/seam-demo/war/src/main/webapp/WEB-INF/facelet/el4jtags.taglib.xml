@@ -6,6 +6,15 @@
 	<namespace>http://www.elca.ch/el4j/taglib</namespace>
 	
 	<!-- declaratively defined facelets tags -->
+    <tag>
+        <tag-name>defaultViewMapping</tag-name>
+        <source>defaultViewMapping.xhtml</source>
+    </tag>
+    <tag>
+        <tag-name>defaultEditMapping</tag-name>
+        <source>defaultEditMapping.xhtml</source>
+    </tag>
+    
 	<tag>
 		<tag-name>field</tag-name>
 		<source>field.xhtml</source>
@@ -30,6 +39,14 @@
 		<tag-name>booleanField</tag-name>
 		<source>booleanField.xhtml</source>
 	</tag>
+    <tag>
+        <tag-name>enumView</tag-name>
+        <source>enumView.xhtml</source>
+    </tag>
+    <tag>
+        <tag-name>enumEdit</tag-name>
+        <source>enumEdit.xhtml</source>
+    </tag>
 	<tag>
         <tag-name>dateField</tag-name>
         <source>dateField.xhtml</source>
@@ -53,30 +70,6 @@
 	<tag>
 		<tag-name>columnSet</tag-name>
 		<source>columnSet.xhtml</source>
-	</tag>
-	<tag>
-		<tag-name>columnText</tag-name>
-		<source>columnText.xhtml</source>
-	</tag>
-    <tag>
-        <tag-name>columnDate</tag-name>
-        <source>columnDate.xhtml</source>
-    </tag>
-	<tag>
-		<tag-name>stringColumn</tag-name>
-		<source>stringColumn.xhtml</source>
-	</tag>
-	<tag>
-		<tag-name>booleanColumn</tag-name>
-		<source>booleanColumn.xhtml</source>
-	</tag>
-	<tag>
-        <tag-name>dateColumn</tag-name>
-        <source>dateColumn.xhtml</source>
-    </tag>
-	<tag>
-		<tag-name>enumColumn</tag-name>
-		<source>enumColumn.xhtml</source>
 	</tag>
 	<tag>
 		<tag-name>multiEntityColumn</tag-name>
