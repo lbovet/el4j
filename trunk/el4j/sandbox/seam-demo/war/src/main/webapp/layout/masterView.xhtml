@@ -26,7 +26,7 @@
 	
     <h:messages globalOnly="true" styleClass="message"/>
     
-    <rich:panel>
+    <rich:panel headerClass="topPanel">
         <f:facet name="header">#{messages.ListOfEntities}</f:facet>
         
 		<h:panelGrid columns="2" columnClasses="gridContent" rowClasses="vertTop">
@@ -78,16 +78,20 @@
 			</div>
 			</h:panelGroup>
 		</h:panelGrid>
+		
+		<br/>
+				
+		<div class="actionButtons">
+        	<h:form>
+            	<h:commandButton id="create" 
+                     value="#{messages.CreateEntity}" 
+                	 action="#{entityManager.createEntity(entityClassName,detailPage)}"
+            	     immediate="true"/>
+        	</h:form>		  
+    	</div>
     </rich:panel>
     
-    <div class="actionButtons">
-        <h:form>
-            <h:commandButton id="create" 
-                      value="#{messages.CreateEntity}" 
-                     action="#{entityManager.createEntity(entityClassName,detailPage)}"
-                  immediate="true"/>
-        </h:form>		  
-    </div>
+    
 	
 </ui:composition>
 

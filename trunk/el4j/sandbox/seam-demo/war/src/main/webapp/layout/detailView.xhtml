@@ -26,7 +26,7 @@
     <h:messages globalOnly="true" styleClass="message"/>
 
 	<h:form id="editForm">
-		<rich:panel>
+		<rich:panel headerClass="topPanel">
 			<f:facet name="header">#{title}</f:facet>
 
 			<ui:insert name="fields">
@@ -34,11 +34,15 @@
 			</ui:insert>
 
 			<div style="clear: both" />
+			
+			<p style="font-size:10px">*) #{messages.RequiredFieldNote}</p>
+			
+			<ui:insert name="crudBar">
+				<el4j:crudBar masterPage="#{masterPage}" />
+			</ui:insert>
+		
 		</rich:panel>
 
-		<ui:insert name="crudBar">
-			<el4j:crudBar masterPage="#{masterPage}" />
-		</ui:insert>
 	</h:form>
 
 </ui:composition>
