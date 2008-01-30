@@ -50,7 +50,8 @@
 							columnClasses="col"
 									value="{entities}"
 									  var="entity"></rich:dataTable></ui:remove>
-						 <d:pagedRichDataTable 
+						 <d:pagedRichDataTable
+						 	  footerClass="scrollerTableFooter" 
 						       entityName="#{entityClassName}"
 					   pagedEntityManager="#{entityManager}"
 						            width="320"

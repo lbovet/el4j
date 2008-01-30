@@ -305,3 +305,10 @@ td.seam-date-hover
 	background-image : url();
 	background-color : #09C6E1;
 }
+
+
+.scrollerTableFooter {
+	background-image : url();
+	background-color : transparent;
+	padding: 0px 0px 0px 0px;
+}	
