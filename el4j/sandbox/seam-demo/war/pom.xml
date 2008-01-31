@@ -69,7 +69,8 @@
                 <artifactId>maven-jetty-plugin</artifactId>
                 <version>6.1.5</version>
                 <configuration>
-					<classesDirectory>../jar/target/classes</classesDirectory><!-- classes are taken from seam-demo-jar -->
+					<!--<classesDirectory>../jar/target/classes</classesDirectory>--><!-- classes are taken from seam-demo-jar -->
+					<!--but this causes duplicate classes because the dependency to seam-demo-jar still exists-->
                     <scanIntervalSeconds>3</scanIntervalSeconds>
                     <scanTargetPatterns>
                         <scanTargetPattern>
@@ -81,6 +82,16 @@
                                 <exclude>**/*.svn*</exclude>
                             </excludes>
                         </scanTargetPattern>
+						<!-- this lets restart jetty when code is changed, but does not force a recompile so changes are not reflected -->
+						<!--<scanTargetPattern>
+                            <directory>../jar/target/classes</directory>
+                            <includes>
+                                <include>**/*.*</include>
+                            </includes>
+							<excludes>
+                                <exclude>**/*.svn*</exclude>
+                            </excludes>
+                        </scanTargetPattern>-->
                     </scanTargetPatterns>
 					<!-- webdefault.xml is needed to disable file locking for static files-->
 					<webDefaultXml>src/main/resources/webdefault.xml</webDefaultXml>

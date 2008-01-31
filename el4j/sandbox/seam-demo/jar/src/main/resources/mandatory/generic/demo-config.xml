@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
     <!-- $Revision$ -->
@@ -13,43 +14,24 @@
 	           demo application. In a real world application, the beans herein
 	           will be scattered in several config files of different EL4J modules. -->
 
+
+
 	<!--
 	*********************************************************************************
 	  Hibernate related beans:
 	*********************************************************************************
 	-->
-
+	
 	<!-- Hibernate Session Factory Bean -->
 	<bean id="hibernateSessionFactory"
-	   class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+	   class="ch.elca.el4j.services.persistence.hibernate.entityfinder.EntityDetectorAnnotationSessionFactoryBean">
 		
-		<!-- IMPORTANT: All classes containing hibernate annotations have to
-		                be listed here or hibernate won't be able to provide
-		                access to their metadata at runtime. -->
-		<property name="annotatedClasses">
+		<property name="autoDetectEntityPackage">
 			<list>
-				<value>ch.elca.el4j.seam.demo.entities.Client</value>
-				<value>ch.elca.el4j.seam.demo.entities.Employee</value>
-				<value>ch.elca.el4j.seam.demo.entities.Offer</value>
-                <value>ch.elca.el4j.seam.demo.entities.EntityTest</value>
-			</list>
-		</property>
-		
-		<!-- NOTE: The annotatedPackages property does not seem to be needed.
-		           It is not even clear, "what package level annotations" would
-		           be used by hibernate from the hibernate documentation anyway. -->
-		<!-- <property name="annotatedPackages">
-			<list>
-				<value>ch.elca.el4j.seam.generic</value>
-			</list>
-		</property> -->
-		
-		<!-- Example usage of explicit hibernate mapping resources -->
-		<property name="mappingResources">
-			<list>
-				<value>etc/hibernate/Keyword.hbm.xml</value>
-			</list>
-		</property>
+	        	<value>ch.elca.el4j.apps.keyword.dom</value>
+	        	<value>ch.elca.el4j.seam.demo.entities</value>
+	        </list>
+  		</property>    
 		
 		<!-- The hibernate properties  -->
 		<property name="hibernateProperties">
@@ -98,27 +80,12 @@
 	<bean id="daoRegistry"
 	   class="ch.elca.el4j.services.persistence.generic.dao.impl.FallbackDaoRegistry">
 		
-		<!-- mapping from qualified class names to daos -->
-		<property name="daos">
-			<map>
-				<!-- the example below illustrates, how a dao can be registered explicitly -->
-				<entry key="ch.elca.el4j.apps.keyword.dom.Keyword">
-					<ref bean="kwDao"/>
-				</entry>
-			</map>
-		</property>
-		
 		<property name="daoPrototypeBeanName">
 		    <idref bean="daoPrototype"/>
 		</property>
 			
 	</bean>
 
-	<!-- example of an explicit declaration of a dao -->
-	<bean id="kwDao" class="ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao" parent="abstractDao">
-		<property name="persistentClass" value="ch.elca.el4j.apps.keyword.dom.Keyword"/>				
-	</bean>
-	
 	<!-- DAO prototype to be used for DAO auto-creation  -->
 	<bean id="daoPrototype" class="ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao"
 		parent="abstractDao" scope="prototype">				

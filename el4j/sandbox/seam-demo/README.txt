@@ -7,6 +7,7 @@ Purpose:
  - Test Seam's POJO functionality; run without EJB Container on Plain Tomcat
  - Provide the foundations for generic master/detail views
  - Demonstrate usage of JBoss Seam, Richfaces and JSF / Facelets in general.
+ - Show quick deployment with jetty
 
 Authors:
  CBA (Christoph Baeni)
@@ -24,6 +25,7 @@ Build Instructions:
       mvn db:prepare cargo:undeploy cargo:deploy cargo:start
  - After the application has started you can access it at
       http://localhost:8080/seam-demo/
+
 
 Minor Problems:
 

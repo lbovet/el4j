@@ -119,9 +119,6 @@ public class PagedRichHtmlDataTable extends HtmlDataTable {
 
     }
 
-    
-
-    
     /**
      * creates and configures a datascroller for the table and adds it as 
      * footer facet.
@@ -130,6 +127,7 @@ public class PagedRichHtmlDataTable extends HtmlDataTable {
      */
     private void createDataScroller(FacesContext ctx) {
 
+        
         SeamApplication a = (SeamApplication) ctx.getApplication();
 
         PagedRichHtmlDatascroller s = (PagedRichHtmlDatascroller) a
@@ -139,14 +137,10 @@ public class PagedRichHtmlDataTable extends HtmlDataTable {
         s.setFor(this.getId());
         s.setMaxPages(MAX_PAGES);
 
-        s.setRenderIfSinglePage(true);
+        s.setRenderIfSinglePage(false);
 
         this.setFooter(s);
-        
-//        Map<String, UIComponent> facets = this.getFacets();
-//        facets.put("footer", s);
-        
-        
+               
     }
 
 }

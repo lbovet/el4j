@@ -30,7 +30,7 @@ import java.util.List;
  *
  * @author Frank Bitzer (FBI)
  */
-public interface PagedEntityManager {
+public interface PagedEntityManager<T> {
     
     
    
@@ -61,7 +61,7 @@ public interface PagedEntityManager {
      * @param entityClassName
      * @return
      */
-    public List getEntities(String entityClassName);
+    public List<T> getEntities(String entityClassName);
     
     
     /**
