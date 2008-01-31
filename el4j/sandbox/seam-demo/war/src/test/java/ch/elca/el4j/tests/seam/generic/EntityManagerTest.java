@@ -25,7 +25,7 @@ import org.jboss.seam.contexts.Contexts;
 import ch.elca.el4j.seam.demo.entities.Client;
 import ch.elca.el4j.seam.generic.EntityFilters;
 import ch.elca.el4j.seam.generic.EntityManager;
-import ch.elca.el4j.tests.seam.BaseEntityManagerTest;
+import ch.elca.el4j.tests.seam.AbstractEntityManagerTest;
 
 import org.testng.annotations.*;
 
@@ -47,7 +47,7 @@ import org.testng.annotations.*;
  */
 
 public class EntityManagerTest
-    extends BaseEntityManagerTest {
+    extends AbstractEntityManagerTest {
     
     
     //values for testClient object
