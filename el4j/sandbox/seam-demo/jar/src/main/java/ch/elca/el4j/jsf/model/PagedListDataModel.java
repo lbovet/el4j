@@ -16,35 +16,47 @@
  */
 package ch.elca.el4j.jsf.model;
 
-/**
- * Extended DataModel for DataTable that implements "real" paging. 
- * 
- * <script
- * type="text/javascript">printFileStatus ("$URL$", "$Revision$", "$Date$",
- * "$Author$" );</script>
- * 
- * @author Frank Bitzer (FBI)
- */
 
 import java.util.List;
 
 import javax.faces.model.DataModel;
 
 
-
+/**
+ * Extended DataModel for DataTable that implements "real" paging. 
+ * 
+ * <script
+ * type="text/javascript">
+ * printFileStatus 
+ * ("$URL$",
+ *  "$Revision$", "$Date$",
+ * "$Author$" );</script>
+ * 
+ * @author Frank Bitzer (FBI)
+ */
 public class PagedListDataModel extends DataModel {
 
-    private int rowIndex = -1;
+    /**
+     * Index of selected row.
+     */
+    private int m_rowIndex = -1;
 
-    private int totalNumRows;
+    /**
+     * total number of rows.
+     */
+    private int m_totalNumRows;
 
-    private int pageSize;
+    /**
+     * rows per page.
+     */
+    private int m_pageSize;
 
-    private List list;
+    /**
+     * List of underlying data.
+     */
+    private List<Object> m_list;
 
-    public PagedListDataModel() {
-        super();
-    }
+    
 
     /**
      * Constructor takes arguments to initialize the model.
@@ -59,58 +71,105 @@ public class PagedListDataModel extends DataModel {
      *            number of items to be displayed on one page (should be equal
      *            to <code>DataTable.getRows()</code>)
      */
-    public PagedListDataModel(List list, int totalNumRows, int pageSize) {
+    public PagedListDataModel(List<Object> list, int totalNumRows, 
+        int pageSize) {
+        
         super();
         setWrappedData(list);
-        this.totalNumRows = totalNumRows;
-        this.pageSize = pageSize;
+        this.m_totalNumRows = totalNumRows;
+        this.m_pageSize = pageSize;
     }
 
+    /**
+     * 
+     * {@inheritDoc}
+     */
     public boolean isRowAvailable() {
-        if (list == null)
+        boolean result = false;
+        
+        if (m_list == null) {
             return false;
+        }
 
         int rowIndex = getRowIndex();
-        if (rowIndex >= 0 && rowIndex < list.size())
-            return true;
-        else
-            return false;
+        
+        if (rowIndex >= 0 && rowIndex < m_list.size()) {
+            result =  true;
+        } 
+        
+        return result;
     }
 
+    /**
+     * 
+     * {@inheritDoc}
+     */
     public int getRowCount() {
-        return totalNumRows;
+        return m_totalNumRows;
         
     }
     
+    /**
+     * 
+     * @param value value to set
+     */
     public void setRowCount(int value) {
-        totalNumRows = value;
+        m_totalNumRows = value;
     }
 
+    
+    /**
+     * 
+     * {@inheritDoc}
+     */
     public Object getRowData() {
-        if (list == null)
+        
+        if (m_list == null) {
+            
             return null;
-        else if (!isRowAvailable())
+            
+        } else if (!isRowAvailable()) {
+            
             throw new IllegalArgumentException();
-        else {
+        
+        } else {
+            
             int dataIndex = getRowIndex();
-            return list.get(dataIndex);
+            return m_list.get(dataIndex);
+            
         }
     }
 
+    /**
+     * 
+     * {@inheritDoc}
+     */
     public int getRowIndex() {
-        return (rowIndex % pageSize);
+        return (m_rowIndex % m_pageSize);
     }
 
+    /**
+     * 
+     * {@inheritDoc}
+     */
     public void setRowIndex(int rowIndex) {
-        this.rowIndex = rowIndex;
+        this.m_rowIndex = rowIndex;
     }
 
+    /**
+     * 
+     * {@inheritDoc}
+     */
     public Object getWrappedData() {
-        return list;
+        return m_list;
     }
 
+    /**
+     * 
+     * {@inheritDoc}
+     */
     public void setWrappedData(Object list) {
-        this.list = (List) list;
+        this.m_list = (List<Object>) list;
     }
 
 }

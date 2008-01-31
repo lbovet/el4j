@@ -33,19 +33,26 @@ import ch.elca.el4j.seam.generic.PagedEntityManager;
  * the currently displayed page. Uses the {@link PagedEntityManager} interface 
  * to get correct data from database, just in time it is required.
  * 
- * @see PagedRichHtmlDataTable <script type="text/javascript"> printFileStatus
- *      ("$URL$", "$Revision$", "$Date$", "$Author$" ); </script>
+ * @see PagedRichHtmlDataTable 
+ * <script type="text/javascript"> 
+ * printFileStatus
+ *      ("$URL$", 
+ *      "$Revision$", "$Date$", "$Author$" ); </script>
+ * 
  * @author Frank Bitzer (FBI)
  */
 public class PagedRichHtmlDatascroller extends HtmlDatascroller {
 
+    /**
+     * Component type for this component.
+     */
     public static final String COMPONENT_TYPE 
         = "ch.elca.el4j.PagedRichHtmlDatascroller";
 
     /**
      * Retrieves the PagedRichHtmlDataTable to which this scroller belongs.
      * 
-     * @return
+     * @return PagedRichHtmlDataTable
      */
     public PagedRichHtmlDataTable getTable() {
 
@@ -66,7 +73,7 @@ public class PagedRichHtmlDatascroller extends HtmlDatascroller {
         //get bound table and its PagedEntityManager
         PagedRichHtmlDataTable t = getTable();
 
-        PagedEntityManager p = t.getCurrentPagedEntityManager();
+        PagedEntityManager<Object> p = t.getCurrentPagedEntityManager();
 
         //calculate first recordset to display
         //depending on whether a new page was requested or the
@@ -92,7 +99,7 @@ public class PagedRichHtmlDatascroller extends HtmlDatascroller {
         p.setRange(first, t.getRows());
 
         //now get entities
-        List ent = p.getEntities(t.getCurrentEntityName());
+        List<Object> ent = p.getEntities(t.getCurrentEntityName());
 
         //and set model for datatable
         PagedListDataModel m = new PagedListDataModel(ent, size, t.getRows());
