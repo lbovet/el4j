@@ -17,11 +17,10 @@
 package ch.elca.el4j.jsf.component.html;
 
 
-import java.util.Map;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
 import org.jboss.seam.jsf.SeamApplication;
@@ -31,8 +30,8 @@ import ch.elca.el4j.seam.generic.PagedEntityManager;
 
 /**
  * A custom component adding paging to RichFaces DataTable. The paging works
- * with any dataScroller bound to this DataTable. It requires the following
- * attributes to be specified:
+ * with a dataScroller which is created and bound to this DataTable.
+ * It requires the following attributes to be specified:
  * <ul>
  * <li> entityName <br/> Fully Qualified Class Name of the entity to be
  * displayed in the table.
@@ -78,9 +77,10 @@ public class PagedRichHtmlDataTable extends HtmlDataTable {
      * @return current instance of PagedEntityManager specified as attribute
      * for this table
      */
-    public PagedEntityManager getCurrentPagedEntityManager() {
-        PagedEntityManager pagedEntityManager 
-            = (PagedEntityManager) getAttributes().get("pagedEntityManager");
+    public PagedEntityManager<Object> getCurrentPagedEntityManager() {
+        PagedEntityManager<Object> pagedEntityManager 
+            = (PagedEntityManager<Object>) getAttributes()
+                .get("pagedEntityManager");
 
         return pagedEntityManager;
     }
