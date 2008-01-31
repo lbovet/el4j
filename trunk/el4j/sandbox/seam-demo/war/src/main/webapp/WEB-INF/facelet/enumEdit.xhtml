@@ -2,11 +2,18 @@
                  xmlns:ui="http://java.sun.com/jsf/facelets"
                  xmlns:h="http://java.sun.com/jsf/html"
                  xmlns:f="http://java.sun.com/jsf/core"
-                 xmlns:s="http://jboss.com/products/seam/taglib">
+                 xmlns:s="http://jboss.com/products/seam/taglib"
+				 xmlns:el4j="http://www.elca.ch/el4j/taglib">
 
-	<h:selectOneMenu value="#{entity[fieldName]}">
-		<s:selectItems value="#{utils.getEnumList(entityClassName, fieldName)}"
-		    var="enum" label="#{messages[enum.toString()]}"/>
-		<s:convertEnum />
+
+	<h:selectOneMenu id="#{fieldName}"
+				  value="#{entity[fieldName]}"
+			   required="#{utils.isRequired(entityClassName,fieldName)}">
+		<s:selectItems value="#{utils.getEnumList(entityClassName,fieldName)}"
+						 var="item"
+					   label="#{el4j:h10nFieldEnumName(entityShortName, fieldName, item)}"
+			noSelectionLabel="Select..."/>
+		<s:convertEnum/>
 	</h:selectOneMenu>
+
 </ui:composition>

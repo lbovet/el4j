@@ -28,40 +28,32 @@
 		<source>fieldGroup.xhtml</source>
 	</tag>
 	<tag>
-		<tag-name>stringField</tag-name>
-		<source>stringField.xhtml</source>
+		<tag-name>stringEdit</tag-name>
+		<source>stringEdit.xhtml</source>
 	</tag>
 	<tag>
-		<tag-name>integerField</tag-name>
-		<source>stringField.xhtml</source>
+		<tag-name>integerEdit</tag-name>
+		<source>stringEdit.xhtml</source>
 	</tag>
 	<tag>
-		<tag-name>booleanField</tag-name>
-		<source>booleanField.xhtml</source>
+		<tag-name>booleanEdit</tag-name>
+		<source>booleanEdit.xhtml</source>
 	</tag>
-    <tag>
-        <tag-name>enumView</tag-name>
-        <source>enumView.xhtml</source>
-    </tag>
-    <tag>
-        <tag-name>enumEdit</tag-name>
-        <source>enumEdit.xhtml</source>
+	<tag>
+        <tag-name>dateEdit</tag-name>
+        <source>dateEdit.xhtml</source>
     </tag>
 	<tag>
-        <tag-name>dateField</tag-name>
-        <source>dateField.xhtml</source>
-    </tag>
-	<tag>
-		<tag-name>enumField</tag-name>
-		<source>enumField.xhtml</source>
+		<tag-name>enumEdit</tag-name>
+		<source>enumEdit.xhtml</source>
 	</tag>
 	<tag>
-		<tag-name>entityField</tag-name>
-		<source>entityField.xhtml</source>
+		<tag-name>entityEdit</tag-name>
+		<source>entityEdit.xhtml</source>
 	</tag>
 	<tag>
-		<tag-name>multiEntityField</tag-name>
-		<source>multiEntityField.xhtml</source>
+		<tag-name>multiEntityEdit</tag-name>
+		<source>multiEntityEdit.xhtml</source>
 	</tag>
 	<tag>
 		<tag-name>column</tag-name>
@@ -72,8 +64,8 @@
 		<source>columnSet.xhtml</source>
 	</tag>
 	<tag>
-		<tag-name>multiEntityColumn</tag-name>
-		<source>multiEntityColumn.xhtml</source>
+		<tag-name>multiEntityView</tag-name>
+		<source>multiEntityView.xhtml</source>
 	</tag>
 	<tag>
 		<tag-name>crudBar</tag-name>

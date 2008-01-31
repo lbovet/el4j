@@ -21,8 +21,24 @@ import java.io.Serializable;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.remoting.WebRemote;
 
+/**
+ * This is a very simple demo for Seam Remoting (AJAX).
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Stefan Wismer (SWI)
+ */
 @Name("remotingTest")
 public class RemotingTest implements Serializable {
+    /**
+     * @param name    the name to say hello to
+     * @return        a nice greeting
+     */
     @WebRemote
     public String sayHello(String name) {
         return "Hello, " + name;

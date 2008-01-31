@@ -19,6 +19,8 @@ package ch.elca.el4j.seam.generic;
 import java.io.Serializable;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Begin;
 import org.jboss.seam.annotations.Create;
@@ -29,6 +31,7 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.core.Conversation;
 import org.jboss.seam.faces.FacesMessages;
 
 import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
@@ -52,6 +55,10 @@ import ch.elca.el4j.services.search.QueryObject;
 @Scope(ScopeType.CONVERSATION)
 @SuppressWarnings("unchecked")
 public class EntityManager implements Serializable, PagedEntityManager {
+    /**
+     * The logger.
+     */
+    private static Log s_logger = LogFactory.getLog(EntityManager.class);
     /**
      * The injected DAO registry (from Spring config xml).
      */
@@ -81,6 +88,7 @@ public class EntityManager implements Serializable, PagedEntityManager {
     /**
      * Is the outjected <code>entity</code> a new empty object?
      */
+    @SuppressWarnings("unused")
     @Out(value = "newEntity", required = false)
     private boolean m_isEntityNew;
     
@@ -96,6 +104,9 @@ public class EntityManager implements Serializable, PagedEntityManager {
      */
     private List<Object> m_entities;
     
+    /**
+     * The number of entites currently available.
+     */
     private int m_entitiesCount = -1;
     
     /**
@@ -119,29 +130,27 @@ public class EntityManager implements Serializable, PagedEntityManager {
      */
     private boolean m_viewReset = true;
     
+    /**
+     * Create the Seam component.
+     */
     @Create
     public void create() {
-        System.out.println("@create");
+        s_logger.debug("@create");
     }
     
+    /**
+     * Destroy the Seam component.
+     */
     @Destroy
     public void destroy() {
-        System.out.println("@destroy");
-    }
-    
-    public Boolean debug(String value) {
-        if (value.equals("null")) {
-            return null;
-        } else {
-            return Boolean.valueOf(value);
-        }
+        s_logger.debug("@destroy");
     }
     
     /**
      * Invalidates the current entites.
      */
     public void invalidateView() {
-        //System.out.println("invalidate");
+        //s_logger.debug("invalidate");
         m_entitiesCount = -1;
         m_entities = null;
         m_viewReset = true;
@@ -151,7 +160,7 @@ public class EntityManager implements Serializable, PagedEntityManager {
      * Flush entites and restore default values.
      */
     public void reset() {
-        //System.out.println("reset");
+        //s_logger.debug("reset");
         invalidateView();
         m_entity = null;
         m_firstResult = 0;
@@ -163,12 +172,12 @@ public class EntityManager implements Serializable, PagedEntityManager {
      */
     @Begin(join = true)
     public int getEntityCount() {
-        System.out.print("getEntityCount()");
+        s_logger.debug("getEntityCount()");
         if (m_entitiesCount == -1) {
             refreshEntityClassName();
             m_entitiesCount = getEntityCount(m_currentEntityClassName);
         }
-        System.out.println(" > " + m_entitiesCount);
+        s_logger.debug(" > " + m_entitiesCount);
         return m_entitiesCount;
     }
     
@@ -178,7 +187,7 @@ public class EntityManager implements Serializable, PagedEntityManager {
             m_facesMessages.add("entityClassName must not be null!");
             return 0;
         }
-        //System.out.println("getEntityCount(" + entityClassName + ")");
+        //s_logger.debug("getEntityCount(" + entityClassName + ")");
         if (!entityClassName.equals(m_currentEntityClassName)
             || m_entitiesCount == -1) {
             
@@ -189,7 +198,8 @@ public class EntityManager implements Serializable, PagedEntityManager {
                 m_entitiesCount = -1;
             } else {
                 m_entitiesCount = dao.findCountByQuery(queryObject);
-                //System.out.println("There are " + m_entitiesCount + " entites available.");
+                //s_logger.debug("There are " + m_entitiesCount
+                //    + " entites available.");
             }
         }
         return m_entitiesCount;
@@ -198,7 +208,7 @@ public class EntityManager implements Serializable, PagedEntityManager {
     
     /** {@inheritDoc} */
     public void setRange(int first, int count) {
-        //System.out.println("setRange(" + first + ", " + count + ")");
+        //s_logger.debug("setRange(" + first + ", " + count + ")");
         if (first != m_firstResult || m_maxResults != count) {
             m_entities = null;
         }
@@ -222,7 +232,7 @@ public class EntityManager implements Serializable, PagedEntityManager {
     @Begin(join = true)
     @Factory(value = "entities", scope = ScopeType.EVENT)
     public List<Object> getEntities() {
-        //System.out.println("--createEntities");
+        //s_logger.debug("--createEntities");
         refreshEntityClassName();
         return getEntities(m_currentEntityClassName);
     }
@@ -230,7 +240,7 @@ public class EntityManager implements Serializable, PagedEntityManager {
     /** {@inheritDoc} */
     @Begin(join = true)
     public List<Object> getEntities(String entityClassName) {
-        //System.out.println("--getEntities(" + entityClassName + ")");
+        //s_logger.debug("--getEntities(" + entityClassName + ")");
 
         if (entityClassName == null) {
             m_facesMessages.add("No entity class defined.");
@@ -335,10 +345,19 @@ public class EntityManager implements Serializable, PagedEntityManager {
      * 
      * Normally used like this:
      * <pre>&lt;s:button value="Cancel" view="redirectPage"
-     *  action="entityManager.cancelEdit()"&gt;</pre>
+     *  action="entityManager.cancelEdit(entity)"&gt;</pre>
+     *  
+     * @param currentEntity    the edited entity
+     * @param viewId           the view to redirect to
      */
-    @End(beforeRedirect = true)
-    public void cancelEdit() { }
+    public String cancelEdit(Object currentEntity, String viewId) {
+        if (!getEntityClass(m_currentEntityClassName).isAssignableFrom(
+            currentEntity.getClass())) {
+            Conversation.instance().end(true);
+            reset();
+        }
+        return viewId;
+    }
     
     /**
      * @param clsName      the class name of the the new entity to create
@@ -396,24 +415,13 @@ public class EntityManager implements Serializable, PagedEntityManager {
     protected void loadEntities(String className) {
         if (className == null) {
             m_facesMessages.add("No entity class defined.");
-            /*for (StackTraceElement e : Thread.getAllStackTraces().get(Thread.currentThread())) {
-                System.out.println(e.toString());
-            }*/
             return;
         }
         if (m_entities == null) {
             QueryObject queryObject = getQuery(className);
             
-            //System.out.println("---- Execute query: " + queryObject);
-            //System.out.println("----  from: " + queryObject.getFirstResult() + " size: " + queryObject.getMaxResults());
-            
             ConvenienceGenericDao dao = getDao();
             m_entities = dao.findByQuery(queryObject);
-            //System.out.println(m_entities.size() + " entites loaded.");
-            
-            for (Object o : m_entities) {
-                //System.out.println("    " + o.toString());
-            }
         }
     }
     

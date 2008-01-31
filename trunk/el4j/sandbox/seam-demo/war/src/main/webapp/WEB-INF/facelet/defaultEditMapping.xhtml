@@ -7,28 +7,28 @@
                  xmlns:el4j="http://www.elca.ch/el4j/taglib">
     <c:choose>
         <c:when test="#{fieldType == 'String'}">
-            <el4j:stringField fieldName="#{fieldName}"/>
+            <el4j:stringEdit fieldName="#{fieldName}"/>
         </c:when>
         <c:when test="#{fieldType == 'Integer'}">
-            <el4j:integerField fieldName="#{fieldName}"/>
+            <el4j:integerEdit fieldName="#{fieldName}"/>
         </c:when>
         <c:when test="#{fieldType == 'Long'}">
-            <el4j:integerField fieldName="#{fieldName}"/>
+            <el4j:integerEdit fieldName="#{fieldName}"/>
         </c:when>
         <c:when test="#{fieldType == 'Boolean'}">
-            <el4j:booleanField fieldName="#{fieldName}"/>
+            <el4j:booleanEdit fieldName="#{fieldName}"/>
         </c:when>
         <c:when test="#{fieldType == 'Date'}">
-            <el4j:dateField fieldName="#{fieldName}"/>
+            <el4j:dateEdit fieldName="#{fieldName}"/>
         </c:when>
         <c:when test="#{fieldType == '@enum'}">
-            <el4j:enumField fieldName="#{fieldName}"/>
+            <el4j:enumEdit fieldName="#{fieldName}"/>
         </c:when>
         <c:when test="#{fieldType == '@entity'}">
-            <el4j:entityField fieldName="#{fieldName}"/>
+            <el4j:entityEdit fieldName="#{fieldName}"/>
         </c:when>
         <c:when test="#{fieldType == '@multiEntity'}" >
-            <el4j:multiEntityField fieldName="#{fieldName}"/>
+            <el4j:multiEntityEdit fieldName="#{fieldName}"/>
         </c:when>
         <c:otherwise>
             <h:outputText value="Unknown Field Type (#{fieldType})"/><br/>
