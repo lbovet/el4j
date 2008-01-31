@@ -24,7 +24,7 @@
 				<h:outputText value=" "/>
 				<a4j:commandLink value="Remove"
 							  reRender="#{fieldName}OutputPanel"
-								action="#{entity[fieldName].delete(ent)}"/>
+								action="#{entity[fieldName].remove(ent)}"/>
 				<h:outputText value=" "/>
 				<h:commandLink value="Edit" action="#{entityManager.edit(ent, detailPage)}"/>
 			</li>
@@ -32,7 +32,7 @@
 		</ul>
 		
 		<h:selectOneMenu id="#{fieldName}Add"
-					  value="#{temporary.map[fieldName]}">
+					  value="#{temporary[fieldName]}">
 			<s:selectItems value="#{relEntities}" var="selEntity"
 				label="#{selEntity.toString()}" noSelectionLabel="Select..."/>
 			<f:converter converterId="ch.elca.el4j.seam.generic.EntityConverter"/> 
@@ -40,7 +40,7 @@
 		
 		<a4j:commandButton value="Add"
 						reRender="#{fieldName}OutputPanel"
-						  action="#{entity[fieldName].add(temporary.map[fieldName])}"/>
+						  action="#{entity[fieldName].add(temporary[fieldName])}"/>
 	</a4j:region>
 	</a4j:outputPanel>
 	

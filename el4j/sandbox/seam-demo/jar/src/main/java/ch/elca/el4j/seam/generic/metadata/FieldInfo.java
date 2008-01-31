@@ -37,9 +37,14 @@ import org.hibernate.type.Type;
  */
 public class FieldInfo {
     /**
-     * The type of the field as special String (TODO used for tags???).
+     * The type of the field as special String. This is generally the simple
+     * name of the class or one of the following: @enum or @multiEntity
      */
     private String m_typeString;
+    
+    /**
+     * The hibernate type.
+     */
     private Type m_type;
     
     /**
@@ -53,15 +58,17 @@ public class FieldInfo {
     private boolean m_required;
     
     /**
-     * @param type             the type of the field as special String
      * @param returnedClass    the type of the field as Class
      * @param required         <code>true</code> if field is required
+     * @param hibernateType    the hibernate type of the field
      */
-    public FieldInfo(Class<?> returnedClass, boolean required, Type hibernateType) {
-        this.m_typeString = returnedClass.getSimpleName();
-        this.m_returnedClass = returnedClass;
-        this.m_required = required;
-        this.m_type = hibernateType;
+    public FieldInfo(Class<?> returnedClass, boolean required,
+        Type hibernateType) {
+        
+        m_typeString = returnedClass.getSimpleName();
+        m_returnedClass = returnedClass;
+        m_required = required;
+        m_type = hibernateType;
     }
 
     /**
@@ -85,6 +92,9 @@ public class FieldInfo {
         return m_required;
     }
 
+    /**
+     * @return    the hibernate type
+     */
     public Type getType() {
         return m_type;
     }

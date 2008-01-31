@@ -16,24 +16,22 @@
  */
 package ch.elca.el4j.seam.demo;
 
-import org.jboss.seam.annotations.Name;
-
-@Name("nullableBoolean")
+/**
+ * This class represents a nullable boolean that is ready for JSF.
+ * java.lang.Boolean does not work because null has a special meaning in JSF.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Stefan Wismer (SWI)
+ */
 public enum NullableBoolean {
-    NULL, TRUE, FALSE;
-
-    
-    public String toString() {
-        switch (this) {
-        case NULL:
-            return "null";
-        case TRUE:
-            return "true";
-        case FALSE:
-            return "false";
-
-        default:
-            return "null";
-        }
-    }
+    /**
+     * The three states.
+     */
+    NULL, TRUE, FALSE
 }

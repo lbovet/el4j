@@ -43,32 +43,52 @@ import org.jboss.seam.international.LocaleSelector;
  *  
  * @author Baeni Christoph (CBA)
  */
-public class Humanization {
-    private static ResourceBundle resourceBundle = null;
-    private static String localeString = null;
+public final class Humanization {
+    /**
+     * The resource bundle holding the humanization strings.
+     */
+    private static ResourceBundle s_resourceBundle = null;
+    
+    /**
+     * The locale string of the currently loaded resource bundle.
+     */
+    private static String s_localeString = null;
+    
+    /**
+     * The hidden constructor.
+     */
+    private Humanization() { }
 
+    /**
+     * @return    the currently loaded resource bundle
+     */
     private static ResourceBundle getResourceBundle() {
         Locale locale = LocaleSelector.instance().getLocale();
-        if (resourceBundle == null || !localeString.equals(locale.toString())) {
+        if (s_resourceBundle == null
+            || !s_localeString.equals(locale.toString())) {
+            
             try {
-                System.out.println(LocaleSelector.instance().getLocaleString());
-                resourceBundle = ResourceBundle.getBundle("humanization",
+                s_resourceBundle = ResourceBundle.getBundle("humanization",
                     LocaleSelector.instance().getLocale());
-                localeString = locale.toString();
+                s_localeString = locale.toString();
             } catch (MissingResourceException e) {
-                resourceBundle = new ListResourceBundle() {
-                    private final Object[][] contents = {};
+                s_resourceBundle = new ListResourceBundle() {
+                    private final Object[][] m_contents = {};
 
                     public Object[][] getContents() {
-                        return contents;
+                        return m_contents;
                     }
                 };
             }
         }
 
-        return resourceBundle;
+        return s_resourceBundle;
     }
 
+    /**
+     * @param str    the string to capitalize
+     * @return       the capitalized string
+     */
     public static String capitalize(String str) {
         if (str.length() >= 1) {
             return str.substring(0, 1).toUpperCase() + str.substring(1);
@@ -77,6 +97,10 @@ public class Humanization {
         }
     }
 
+    /**
+     * @param str    the string to uncapitalize
+     * @return       the uncapitalized string
+     */
     public static String uncapitalize(String str) {
         if (str.length() >= 1) {
             return str.substring(0, 1).toLowerCase() + str.substring(1);
@@ -85,6 +109,10 @@ public class Humanization {
         }
     }
 
+    /**
+     * @param str    the string to humanize
+     * @return       the humanized string
+     */
     public static String defaultHumanize(String str) {
         java.util.regex.Pattern capitalWord = java.util.regex.Pattern
             .compile("\\p{javaUpperCase}?[^\\p{javaUpperCase}]*");
@@ -102,6 +130,11 @@ public class Humanization {
         return capitalize(buffer.toString().trim());
     }
 
+    /**
+     * @param context         the context
+     * @param propertyName    the property name
+     * @return                the corresponding string from the resource bundle
+     */
     private static String fetchProperty(String context, String propertyName) {
         ResourceBundle resourceBundle = getResourceBundle();
         String str;
@@ -117,6 +150,12 @@ public class Humanization {
         return str;
     }
 
+    /**
+     * @param context         the context
+     * @param propertyName    the property name
+     * @return                the corresponding string from the resource bundle
+     *                        or the humanized property name if not available
+     */
     private static String fetchPropertyOrHumnaize(String context,
         String propertyName) {
         String str = fetchProperty(context, propertyName);
@@ -128,10 +167,18 @@ public class Humanization {
         return str;
     }
 
+    /**
+     * @param entityShortName    the entity short name
+     * @return                   the humanized entity short name
+     */
     public static String getEntityName(String entityShortName) {
         return fetchPropertyOrHumnaize("singular", entityShortName);
     }
 
+    /**
+     * @param entityShortName    the entity short name
+     * @return                   the humanized entity short name (plural)
+     */
     public static String getEntityNamePlural(String entityShortName) {
         String str = fetchProperty("plural", entityShortName);
 
@@ -142,29 +189,60 @@ public class Humanization {
         return str;
     }
 
-    public static String getFieldName(String entityShortName, String fieldName) {
+    /**
+     * @param entityShortName    the entity short name
+     * @param fieldName          the field name in that entity
+     * @return                   the humanized field name
+     */
+    public static String getFieldName(
+        String entityShortName, String fieldName) {
+        
         return fetchPropertyOrHumnaize("label." + entityShortName, fieldName);
     }
 
-    public static String getFieldHint(String entityShortName, String fieldName) {
+    /**
+     * @param entityShortName    the entity short name
+     * @param fieldName          the field name in that entity
+     * @return                   the humanized field hint name
+     */
+    public static String getFieldHint(
+        String entityShortName, String fieldName) {
+        
         return fetchProperty("hint." + entityShortName, fieldName);
     }
 
+    /**
+     * @param entityShortName    the entity short name
+     * @param groupName          the field group name
+     * @return                   the humanized field group name
+     */
     public static String getFieldGroupName(String entityShortName,
         String groupName) {
         return fetchPropertyOrHumnaize("group." + entityShortName, groupName);
     }
 
+    /**
+     * @param entityShortName    the entity short name
+     * @param fieldName          the field name in that entity
+     * @param enumName           the enum member
+     * @return                   the humanized enum member name
+     */
     public static String getFieldEnumName(String entityShortName,
         String fieldName, String enumName) {
         return fetchPropertyOrHumnaize("enum." + entityShortName + "."
             + fieldName, enumName);
     }
 
+    /**
+     * @param entityShortName    the entity short name
+     * @param fieldName          the field name in that entity
+     * @param value              the boolean value
+     * @return                   the humanized boolean value name
+     */
     public static String getFieldBoolText(String entityShortName,
         String fieldName, boolean value) {
         String str = fetchProperty("bool." + entityShortName + "." + fieldName,
-            new Boolean(value).toString());
+            Boolean.valueOf(value).toString());
 
         if (str == null) {
             str = value ? "Yes" : "No";

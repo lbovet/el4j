@@ -33,8 +33,6 @@ import ch.elca.el4j.seam.generic.humanization.HumanizationComparator;
 /**
  * A class to compute field/column lists based on hibernate metadata as well
  * as given inclusion("shown") / exclusion ("hidden") field lists.
- * 
- * CAUTION: This code is (partially) hibernate specific, thus not portable!
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -56,18 +54,31 @@ public class FieldLists {
      */
     private EntityShortNameMapping m_shortNameMapping;
 
-    private ResultCache cache = new ResultCache();
+    /**
+     * A simple cache to store type information.
+     */
+    private ResultCache m_cache = new ResultCache();
 
+    /**
+     * @param sessionFactory    the hibernate session factory to set
+     */
     public void setSessionFactory(SessionFactory sessionFactory) {
         m_sessionFactory = sessionFactory;
     }
 
+    /**
+     * @param entityShortnameMapping    the short <-> full entity name mapping
+     */
     public void setShortNameMapping(
         EntityShortNameMapping entityShortnameMapping) {
         
         m_shortNameMapping = entityShortnameMapping;
     }
 
+    /**
+     * @param entityClassName    the entity class name
+     * @return                   all reasonable fields (without db related)
+     */
     private String[] getCompleteFieldListInternal(String entityClassName) {
         if (m_sessionFactory == null) {
             throw new RuntimeException("Session factory not set.");
@@ -86,7 +97,8 @@ public class FieldLists {
         }
 
         String[] propertyNames = metadata.getPropertyNames();
-        List<String> propertyList = new ArrayList<String>(Arrays.asList(propertyNames));
+        List<String> propertyList
+            = new ArrayList<String>(Arrays.asList(propertyNames));
         propertyList.remove("version");
         propertyList.remove("optimisticLockingVersion");
         String entityShortName = m_shortNameMapping
@@ -98,18 +110,26 @@ public class FieldLists {
         return propertyList.toArray(new String[0]);
     }
 
+    /**
+     * @param entityClassName    the entity class name
+     * @return                   all reasonable fields (without db related)
+     */
     private String[] getCompleteFieldList(String entityClassName) {
-        String cacheKey = cache.computeKey("getCompleteFieldList",
+        String cacheKey = m_cache.computeKey("getCompleteFieldList",
             entityClassName);
 
-        if (!cache.doesExist(cacheKey)) {
-            cache.store(cacheKey,
+        if (!m_cache.doesExist(cacheKey)) {
+            m_cache.store(cacheKey,
                 getCompleteFieldListInternal(entityClassName));
         }
 
-        return (String[]) cache.lookup(cacheKey);
+        return (String[]) m_cache.lookup(cacheKey);
     }
 
+    /**
+     * @param fieldsString    a comma sepatared list
+     * @return                the corresponding array
+     */
     public String[] parseList(String fieldsString) {
         if (fieldsString.trim().equals("")) {
             return new String[0];
@@ -117,6 +137,14 @@ public class FieldLists {
         return fieldsString.trim().split(" *, *");
     }
 
+    /**
+     * @param entityClassName    the entity class name
+     * @param shown              comma separated list of fields that
+     *                           should be rendered
+     * @param hidden             comma separated list of fields that
+     *                           should not be rendered
+     * @return                   an array of all visible fields
+     */
     private String[] computeFieldListInternal(String entityClassName,
         String shown, String hidden) {
         String[] fieldArray;
@@ -136,61 +164,24 @@ public class FieldLists {
         return fields.toArray(new String[0]);
     }
 
+    /**
+     * @param entityClassName    the entity class name
+     * @param shown              comma separated list of fields that
+     *                           should be rendered
+     * @param hidden             comma separated list of fields that
+     *                           should not be rendered
+     * @return                   an array of all visible fields
+     */
     public String[] computeFieldList(String entityClassName, String shown,
         String hidden) {
-        String cacheKey = cache.computeKey("computeFieldList", entityClassName,
-            shown, hidden);
+        String cacheKey = m_cache.computeKey(
+            "computeFieldList", entityClassName, shown, hidden);
 
-        if (!cache.doesExist(cacheKey)) {
-            cache.store(cacheKey, computeFieldListInternal(entityClassName,
+        if (!m_cache.doesExist(cacheKey)) {
+            m_cache.store(cacheKey, computeFieldListInternal(entityClassName,
                 shown, hidden));
         }
 
-        return (String[]) cache.lookup(cacheKey);
-    }
-
-    private String[] makeTableColumnArray(String[] fieldArray) {
-        String[] columnArray = new String[fieldArray.length];
-
-        for (int i = 0; i < fieldArray.length; i++) {
-            columnArray[i] = new String(fieldArray[i]);
-        }
-
-        return columnArray;
-    }
-
-    private String[] computeColumnListInternal(String entityClassName,
-        String shown, String hidden) {
-        String[] columnArray;
-
-        if ((shown == null) || shown.equals("")) {
-            String[] fieldArray = getCompleteFieldList(entityClassName);
-            columnArray = makeTableColumnArray(fieldArray);
-        } else {
-            String[] fieldArray = parseList(shown);
-            columnArray = makeTableColumnArray(fieldArray);
-        }
-
-        LinkedHashSet<String> columns = new LinkedHashSet<String>(
-            Arrays.asList(columnArray));
-        if ((hidden != null) && !hidden.equals("")) {
-            columns.removeAll(Arrays.asList(makeTableColumnArray(
-                parseList(hidden))));
-        }
-
-        return columns.toArray(new String[0]);
-    }
-
-    public String[] computeColumnList(String entityClassName,
-        String shown, String hidden) {
-        String cacheKey = cache.computeKey("computeColumnList",
-            entityClassName, shown, hidden);
-
-        if (!cache.doesExist(cacheKey)) {
-            cache.store(cacheKey, computeColumnListInternal(entityClassName,
-                shown, hidden));
-        }
-
-        return (String[]) cache.lookup(cacheKey);
+        return (String[]) m_cache.lookup(cacheKey);
     }
 }

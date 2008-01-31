@@ -28,36 +28,54 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
+import org.jboss.seam.annotations.Name;
 
 import ch.elca.el4j.seam.demo.NullableBoolean;
 
 @Entity
+@Name("entityTest")
 public class EntityTest implements Serializable {
     private Integer id;
-    
+
     private String name;
     private Date date;
     private NullableBoolean big;
-    
-    @Id @GeneratedValue
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
-    
-    
-    @NotNull @Length(max=64)
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    
-    @Basic @Temporal(TemporalType.DATE) 
+
+    @Id
+    @GeneratedValue
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    @NotNull
+    @Length(max = 64)
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Basic
+    @Temporal(TemporalType.DATE)
     public Date getDate() {
         return date;
     }
+
     public void setDate(Date date) {
         this.date = date;
     }
+
+    @NotNull
     public NullableBoolean getBig() {
         return big;
     }
+
     public void setBig(NullableBoolean big) {
         this.big = big;
     }

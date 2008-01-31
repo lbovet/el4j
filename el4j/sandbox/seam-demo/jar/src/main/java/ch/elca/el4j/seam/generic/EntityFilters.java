@@ -103,7 +103,6 @@ public class EntityFilters implements Serializable {
      * @param value        the value that this field has to hold
      */
     public void addExact(String fieldName, String value) {
-        System.out.println("addFilter(" + fieldName + ", " + value);
         if (!m_filters.containsKey(fieldName)
             || !m_filters.get(fieldName).equals(value)) {
             
@@ -153,8 +152,8 @@ public class EntityFilters implements Serializable {
      * @param queryObject    the {@link QueryObject} to apply the filters.
      * @return               the modified {@link QueryObject}
      */
+    @SuppressWarnings("unchecked")
     public QueryObject apply(QueryObject queryObject) {
-        System.out.println(m_filters);
         for (String fieldName : m_filters.keySet()) {
             String value = m_filters.get(fieldName);
             
