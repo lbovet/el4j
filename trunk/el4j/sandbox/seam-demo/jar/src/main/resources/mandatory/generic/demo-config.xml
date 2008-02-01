@@ -88,7 +88,8 @@
 
 	<!-- DAO prototype to be used for DAO auto-creation  -->
 	<bean id="daoPrototype" class="ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao"
-		parent="abstractDao" scope="prototype">				
+		parent="abstractDao" scope="prototype">
+		<property name="persistentClass" value="java.lang.Object"/>				
 	</bean>
 	
 	<!--

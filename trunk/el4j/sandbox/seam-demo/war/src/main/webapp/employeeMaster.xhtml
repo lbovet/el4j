@@ -9,11 +9,10 @@
 	
 <ui:define name="body">
     <el4j:set var="entityShortName" value="employee"/>
-    <el4j:set var="shown" value="visa,lastName,firstName,active"/>
+    <ui:param name="hidden" value="firstName"/>
     <el4j:set var="filterOn" value="active"/>
     
 	<ui:decorate template="layout/masterView.xhtml"/>	
-	<p><b><h:outputText value="Master Level 999"/></b></p>
 </ui:define>
 	
 	

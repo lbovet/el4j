@@ -341,14 +341,11 @@ public class EntityManager implements Serializable, PagedEntityManager {
     }
     
     /**
-     * Cancels editing (and ends Seam conversation).
-     * 
-     * Normally used like this:
-     * <pre>&lt;s:button value="Cancel" view="redirectPage"
-     *  action="entityManager.cancelEdit(entity)"&gt;</pre>
+     * Cancels editing (and ends Seam conversation if necessary).
      *  
      * @param currentEntity    the edited entity
      * @param viewId           the view to redirect to
+     * @return                 the viewId again (used by Seam)
      */
     public String cancelEdit(Object currentEntity, String viewId) {
         if (!getEntityClass(m_currentEntityClassName).isAssignableFrom(
