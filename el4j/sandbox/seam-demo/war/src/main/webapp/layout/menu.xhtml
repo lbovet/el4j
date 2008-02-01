@@ -11,7 +11,7 @@
 		<h:outputText value="#{projectName}:" />
 		<h:form>
 			<h:commandLink value="Home"
-				action="#{entityManager.redirectTo('/home.xhtml')}" />
+				action="#{entityManager.redirectTo('/main.xhtml')}" />
 			<rich:spacer width="8" />
 			<el4j:menuItem entityShortName="client" />
 			<el4j:menuItem entityShortName="employee" />
@@ -40,7 +40,7 @@
 			rendered="#{identity.loggedIn}" />
 		<s:link view="/login.xhtml" value="Login"
 			rendered="#{not identity.loggedIn}" />
-		<s:link view="/home.xhtml" action="#{identity.logout}" value="Logout"
+		<s:link view="/main.xhtml" action="#{identity.logout}" value="Logout"
 			rendered="#{identity.loggedIn}" />
 	</rich:toolBarGroup>
 </rich:toolBar>
