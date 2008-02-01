@@ -32,6 +32,18 @@ import org.jboss.seam.annotations.Name;
 
 import ch.elca.el4j.seam.demo.NullableBoolean;
 
+/**
+ * This class is used to test various aspects of entities (converters etc.).
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Stefan Wismer (SWI)
+ */
 @Entity
 @Name("entityTest")
 public class EntityTest implements Serializable {
