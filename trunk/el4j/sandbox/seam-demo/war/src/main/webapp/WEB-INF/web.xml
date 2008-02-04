@@ -41,6 +41,15 @@
       <url-pattern>/seam/resource/*</url-pattern>
     </servlet-mapping> 
     
+    <filter>
+        <filter-name>Seam Exception Filter</filter-name>
+        <filter-class>org.jboss.seam.servlet.SeamExceptionFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Seam Exception Filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
 
     <!-- Faces Servlet -->
     
@@ -72,7 +81,7 @@
     <!--  change the following comment to deploy the application -->
     <context-param>        
       <param-name>facelets.DEVELOPMENT</param-name>        
-      <param-value>true</param-value>    
+      <param-value>false</param-value>    
     </context-param>
 	
 	<context-param>        
