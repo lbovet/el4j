@@ -27,12 +27,17 @@
 		value="#{el4j:h10nEntityName(entityShortName)}" />
 	<el4j:set var="h10nEntityNamePlural"
 		value="#{el4j:h10nEntityNamePlural(entityShortName)}" />
+	<el4j:set var="listOfEntities"
+		value="#{el4j:h10nEntitySentence(entityShortName, 'listOf')}" />
+	<c:if test="#{empty listOfEntities}">
+		<el4j:set var="listOfEntities" value="#{messages.ListOfEntities}" />
+	</c:if>
 	<c:set var="entitiesCount" value="#{entityManager.getEntityCount()}" />
 
 	<h:messages globalOnly="true" styleClass="message" />
 
 	<rich:panel headerClass="topPanel">
-		<f:facet name="header">#{messages.ListOfEntities}</f:facet>
+		<f:facet name="header">#{listOfEntities}</f:facet>
 
 		<h:panelGrid columns="2" columnClasses="gridContent"
 			rowClasses="vertTop">

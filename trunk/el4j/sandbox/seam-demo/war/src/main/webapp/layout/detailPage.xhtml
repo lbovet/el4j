@@ -10,11 +10,10 @@
 	xmlns:el4j="http://www.elca.ch/el4j/taglib" template="template.xhtml">
 
 	<ui:define name="body">
-		<ui:decorate template="detailView.xhtml">
-		</ui:decorate>
-
+		<ui:decorate template="detailView.xhtml"/>
+		
+		<ui:remove>Press Ctrl-Shift-M in your browser to open a debug window.</ui:remove>
 		<ui:debug hotkey="M" />
 	</ui:define>
-
 </ui:composition>
 
