@@ -42,6 +42,8 @@ import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.support.DefaultIntroductionAdvisor;
 import org.springframework.aop.support.DelegatingIntroductionInterceptor;
 
+import ch.elca.el4j.util.codingsupport.AopHelper;
+
 import com.silvermindsoftware.hitch.events.PropertyChangeListenerCapability;
 import com.silvermindsoftware.hitch.validation.HibernateValidationCapability;
 
@@ -112,36 +114,7 @@ public class PropertyChangeListenerMixin extends
      */
     @SuppressWarnings("unchecked")
     public static <T> T addPropertyChangeMixin(T object) {
-        Advisor[] existingAdvisors = null;
-        
-        if (object instanceof Advised) {
-            Advised advised = (Advised) object;
-            existingAdvisors = advised.getAdvisors();
-            
-            // replace object by the wrapped object 
-            try {
-                object = (T) advised.getTargetSource().getTarget();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        ProxyFactory pc = new ProxyFactory(object);
-                
-        IntroductionAdvisor ii = new DefaultIntroductionAdvisor(
-            new PropertyChangeListenerMixin());
-        pc.setProxyTargetClass(true);
-        pc.setExposeProxy(true);
-        
-        if (existingAdvisors != null) {
-            for (Advisor a : existingAdvisors) {
-                pc.addAdvisor(a);
-            }
-        }
-        
-        pc.addAdvisor(0, ii);
-    
-        object = (T) pc.getProxy();
-        return object;
+    	return AopHelper.addAdvice(object, new PropertyChangeListenerMixin());
     }
 
     /** {@inheritDoc} */
