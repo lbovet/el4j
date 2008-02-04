@@ -124,6 +124,12 @@
 	</function>
 	
 	<function>
+        <function-name>h10nEntitySentence</function-name>
+        <function-class>ch.elca.el4j.seam.generic.humanization.Humanization</function-class>
+        <function-signature>java.lang.String getEntitySentence(java.lang.String, java.lang.String)</function-signature>
+    </function>
+	
+	<function>
 		<function-name>h10nFieldName</function-name>
 		<function-class>ch.elca.el4j.seam.generic.humanization.Humanization</function-class>
 		<function-signature>java.lang.String getFieldName(java.lang.String, java.lang.String)</function-signature>

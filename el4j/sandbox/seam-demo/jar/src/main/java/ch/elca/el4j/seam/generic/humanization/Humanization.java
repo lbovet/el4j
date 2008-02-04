@@ -188,6 +188,12 @@ public final class Humanization {
 
         return str;
     }
+    
+    public static String getEntitySentence(String entityShortName,
+        String sentence) {
+        
+        return fetchProperty(sentence, entityShortName);
+    }
 
     /**
      * @param entityShortName    the entity short name
