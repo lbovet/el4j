@@ -278,7 +278,7 @@ public class ListResourcePatternResolverDecorator
             if (singleResource != null) {
                 resources = new Resource[] {singleResource};
             } else {
-                s_logger.info("Ordered resource loading not supported for "
+                s_logger.debug("Ordered resource loading not supported for "
                     + "location pattern '" + locationPattern + "'!");
                 resources = delegateResourcesLookup(locationPattern);
             }
@@ -308,7 +308,7 @@ public class ListResourcePatternResolverDecorator
      */
     protected Resource[] delegateResourcesLookup(String locationPattern) 
         throws IOException {
-        s_logger.info("Delegating resources lookup with pattern '" 
+        s_logger.trace("Delegating resources lookup with pattern '" 
             + locationPattern + "'.");
         return m_patternResolver.getResources(locationPattern);
     }
@@ -322,7 +322,7 @@ public class ListResourcePatternResolverDecorator
      * @return Returns the resolved resource.
      */
     protected Resource delegateResourceLookup(String location) {
-        s_logger.info("Delegating resource lookup for location '"
+        s_logger.trace("Delegating resource lookup for location '"
             + location + "'.");
         return m_patternResolver.getResource(location);
     }
@@ -383,8 +383,7 @@ public class ListResourcePatternResolverDecorator
             // Treat a FileNotFoundException differently to avoid stacktraces
             // in setups where the file later gets found by delegation to 
             // another resource locator.
-            s_logger.info("Resource not found: " + location);
-            s_logger.debug("Exception was: ", e);
+            s_logger.debug("Resource not found: " + location, e);
         } catch (IOException e) {
             s_logger.warn("Exception occurred while lookup of single class "
                 + "path resource at location '" + location + "'.", e);
