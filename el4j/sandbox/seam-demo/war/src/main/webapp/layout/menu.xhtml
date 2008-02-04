@@ -1,11 +1,10 @@
-<rich:toolBar 
-     xmlns="http://www.w3.org/1999/xhtml"
-     xmlns:ui="http://java.sun.com/jsf/facelets"
-     xmlns:h="http://java.sun.com/jsf/html"
-     xmlns:f="http://java.sun.com/jsf/core"
-     xmlns:s="http://jboss.com/products/seam/taglib"
-     xmlns:rich="http://richfaces.ajax4jsf.org/rich"
-	 xmlns:el4j="http://www.elca.ch/el4j/taglib">
+<rich:toolBar xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:rich="http://richfaces.ajax4jsf.org/rich"
+	xmlns:el4j="http://www.elca.ch/el4j/taglib">
 
 	<rich:toolBarGroup>
 		<h:outputText value="#{projectName}:" />
@@ -21,9 +20,9 @@
 				action="#{entityManager.redirectTo('/employeeOverview.xhtml')}" />
 			<rich:spacer width="8" />
 			<h:commandLink value="Demos"
-                action="#{entityManager.redirectTo('/demos.xhtml')}" />
-            <rich:spacer width="8" />
-			
+				action="#{entityManager.redirectTo('/demos.xhtml')}" />
+			<rich:spacer width="8" />
+
 		</h:form>
 	</rich:toolBarGroup>
 	<rich:toolBarGroup location="right">
