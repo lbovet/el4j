@@ -1,29 +1,32 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
                              "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:s="http://jboss.com/products/seam/taglib"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-				xmlns:c="http://java.sun.com/jstl/core"
-                xmlns:rich="http://richfaces.ajax4jsf.org/rich"
-				xmlns:el4j="http://www.elca.ch/el4j/taglib">
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:rich="http://richfaces.ajax4jsf.org/rich"
+	xmlns:el4j="http://www.elca.ch/el4j/taglib">
 
 	<c:if test="#{empty entityShortName}">
-		<el4j:set var="entityShortName" value="#{utils.deriveEntityShortName()}"/>
-	</c:if>
-	
-	<el4j:set var="entityClassName" value="#{utils.getEntityClassName(entityShortName)}"/>
-	
-	<c:if test="#{empty title}">
-		<el4j:set var="title" value="#{el4j:h10nEntityName(entityShortName)}"/>
-	</c:if>
-	
-	<c:if test="#{empty masterPage}">
-		<el4j:set var="masterPage" value="#{utils.getDefaultMasterPage(entityShortName)}"/>
+		<el4j:set var="entityShortName"
+			value="#{utils.deriveEntityShortName()}" />
 	</c:if>
 
-    <h:messages globalOnly="true" styleClass="message"/>
+	<el4j:set var="entityClassName"
+		value="#{utils.getEntityClassName(entityShortName)}" />
+
+	<c:if test="#{empty title}">
+		<el4j:set var="title" value="#{el4j:h10nEntityName(entityShortName)}" />
+	</c:if>
+
+	<c:if test="#{empty masterPage}">
+		<el4j:set var="masterPage"
+			value="#{utils.getDefaultMasterPage(entityShortName)}" />
+	</c:if>
+
+	<h:messages globalOnly="true" styleClass="message" />
 
 	<h:form id="editForm">
 		<rich:panel headerClass="topPanel">
@@ -34,13 +37,15 @@
 			</ui:insert>
 
 			<div style="clear: both" />
-			
-			<p style="font-size:10px">*) #{messages.RequiredFieldNote}</p>
-			
+
+			<p style="font-size: 10px">
+				*) #{messages.RequiredFieldNote}
+			</p>
+
 			<ui:insert name="crudBar">
 				<el4j:crudBar masterPage="#{masterPage}" />
 			</ui:insert>
-		
+
 		</rich:panel>
 
 	</h:form>

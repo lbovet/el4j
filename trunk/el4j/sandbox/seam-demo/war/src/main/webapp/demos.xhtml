@@ -1,96 +1,115 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:c="http://java.sun.com/jstl/core"
-                xmlns:s="http://jboss.com/products/seam/taglib"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:rich="http://richfaces.ajax4jsf.org/rich"
-                xmlns:el4j="http://www.elca.ch/el4j/taglib"
-                template="layout/template.xhtml">
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.ajax4jsf.org/rich"
+	xmlns:el4j="http://www.elca.ch/el4j/taglib"
+	template="layout/template.xhtml">
 
 	<ui:define name="JavaScripts">
 		<s:remote include="remotingTest" />
 		<script type="text/javascript">
 //<![CDATA[
 function sayHello() {
-var name = prompt("What is your name?");
-Seam.Component.getInstance("remotingTest").sayHello(name, sayHelloCallback);
+  var name = prompt("What is your name?");
+  Seam.Component.getInstance("remotingTest").sayHello(name, sayHelloCallback);
 }
 function sayHelloCallback(result) {
-alert(result);
+  alert(result);
 }
 // ]]>
         </script>
 	</ui:define>
-	
+
 
 	<ui:define name="body">
 
-    <h:messages globalOnly="true" styleClass="message"/>
-    <h2>AJAX integration</h2>
-    <button onclick="javascript:sayHello()">Say Hello</button>
-    
-    <h2>Entity Test</h2>
-        <el4j:set var="entityShortName" value="entityTest"/>
-        <c:set var="detailPage" value="/entityTest.xhtml"/>
-		<ui:decorate template="layout/masterView.xhtml"/>
+		<h:messages globalOnly="true" styleClass="message" />
+		<h2>
+			AJAX integration
+		</h2>
+		<button onclick="javascript:sayHello()">
+			Say Hello
+		</button>
 
-		<h2>Conversation Test</h2>
+		<h2>
+			Entity Test
+		</h2>
+		<el4j:set var="entityShortName" value="entityTest" />
+		<c:set var="detailPage" value="/entityTest.xhtml" />
+		<ui:decorate template="layout/masterView.xhtml" />
+
+		<h2>
+			Conversation Test
+		</h2>
 		<rich:panel>
 			<f:facet name="header">Tests</f:facet>
-			<h3>Actions</h3>
+			<h3>
+				Actions
+			</h3>
 			<h:form>
 				<ul>
-				    <li><h:commandLink value="refresh"
-                        action="#{conversationTester.refresh()}" /></li>
-					<li><h:commandLink value="begin (no active conversation allowed)"
-						action="#{conversationTester.begin()}" /></li>
-					<li><h:commandLink value="begin(join)"
-						action="#{conversationTester.beginJoin()}" /></li>
-					<li><h:commandLink value="end"
-						action="#{conversationTester.end()}" /></li>
+					<li>
+						<h:commandLink value="refresh"
+							action="#{conversationTester.refresh()}" />
+					</li>
+					<li>
+						<h:commandLink value="begin (no active conversation allowed)"
+							action="#{conversationTester.begin()}" />
+					</li>
+					<li>
+						<h:commandLink value="begin(join)"
+							action="#{conversationTester.beginJoin()}" />
+					</li>
+					<li>
+						<h:commandLink value="end" action="#{conversationTester.end()}" />
+					</li>
 				</ul>
 			</h:form>
             Number of pages in conversation: #{counter}
-            <h3>Conversations</h3>
+            <h3>
+				Conversations
+			</h3>
 			<h:dataTable
 				value="#{org.jboss.seam.debug.contexts.conversationEntries}"
 				rendered="#{not empty org.jboss.seam.debug.contexts.conversationEntries}"
 				var="entry">
 				<h:column>
 					<f:facet name="header">conversation id</f:facet>
-        #{entry.id}
-      </h:column>
+			        #{entry.id}
+			    </h:column>
 				<h:column>
 					<f:facet name="header">activity</f:facet>
 					<h:outputText value="#{entry.startDatetime}">
 						<f:convertDateTime type="time" />
 					</h:outputText>
-        - 
-        <h:outputText value="#{entry.lastDatetime}">
+			        - 
+			        <h:outputText value="#{entry.lastDatetime}">
 						<f:convertDateTime type="time" />
 					</h:outputText>
 				</h:column>
 				<h:column>
 					<f:facet name="header">description</f:facet>
-        #{entry.description}
-      </h:column>
+			        #{entry.description}
+			    </h:column>
 				<h:column>
 					<f:facet name="header">view id</f:facet>
-        #{entry.viewId}
-      </h:column>
+			        #{entry.viewId}
+			     </h:column>
 				<h:column>
 					<h:outputLink>
-          Select conversation context
-          <f:param
-							name="#{org.jboss.seam.core.manager.conversationIdParameter}"
-							value="#{entry.id}" />
+			          Select conversation context
+			          <f:param
+						  name="#{org.jboss.seam.core.manager.conversationIdParameter}"
+						  value="#{entry.id}" />
 					</h:outputLink>
 				</h:column>
 			</h:dataTable>
 		</rich:panel>
 
-	</ui:define> 
+	</ui:define>
 </ui:composition>
