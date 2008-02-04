@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pages xmlns="http://jboss.com/products/seam/pages"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:f="http://java.sun.com/jsf/facelets"
        xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.0.xsd"
 
        no-conversation-view-id="/main.xhtml"
@@ -24,10 +25,4 @@
         
     </page>
     
-    <exception class="org.jboss.seam.security.NotLoggedInException">
-        <redirect view-id="/main.xhtml">
-            <message severity="warn">You must be logged in to use this feature</message>
-        </redirect>
-    </exception>
-
 </pages>

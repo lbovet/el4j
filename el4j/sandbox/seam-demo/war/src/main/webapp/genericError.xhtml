@@ -10,19 +10,25 @@
 
 	<ui:define name="body">
 
-		<h:messages globalOnly="true" styleClass="message" />
-
-		<rich:panel>
-			<f:facet name="header">Unexpected failure</f:facet>
+		<rich:panel headerClass="topPanel">
+			<f:facet name="header">Error!</f:facet>
 			<p>
-				An unexpected failure has happened.
+				 An unexpected problem occurred!
 			</p>
-			<ul>
-				<li>
-					This sample error page could provide more information about the
-					problem.
-				</li>
-			</ul>
+			<p>
+			     <!-- here we show how to access the handled exception
+			     and to perform some action with it -->
+			     <b>#{errorResolver.getErrorMessage(org.jboss.seam.exception)}</b>
+			</p>
+			<p>
+                 The conversation was ended.
+            </p>			
+			<p>
+			     Technical details:
+			</p>
+			<p>
+			     <h:messages globalOnly="true" />
+			</p>
 		</rich:panel>
 
 	</ui:define>
