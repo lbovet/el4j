@@ -12,11 +12,11 @@
 
     <parent>
         <groupId>ch.elca.el4j.modules</groupId>
-        <artifactId>el4j-framework-module-light_statistics</artifactId>
+        <artifactId>module-light_statistics</artifactId>
         <version>1.2.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>el4j-framework-module-light_statistics-web</artifactId>
+    <artifactId>module-light_statistics-web</artifactId>
     <packaging>pom</packaging>
     <name>EL4J module light statistics for web</name>
     <description>
