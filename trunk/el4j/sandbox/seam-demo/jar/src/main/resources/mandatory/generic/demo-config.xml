@@ -44,13 +44,6 @@
 				<prop key="hibernate.hbm2ddl.auto">update</prop>				
 				<prop key="hibernate.show_sql">true</prop>
 				
-				<!-- IMPORTANT: these prop's are needed for Open Session In View: 
-				<prop key="hibernate.connection.autocommit">false</prop>		
-				
-				<prop key="hibernate.transaction.manager_lookup_class">org.hibernate.transaction.JBossTransactionManagerLookup</prop>
-                <prop key="hibernate.transaction.factory_class">org.hibernate.transaction.JTATransactionFactory</prop>
-				-->		
-				
 				<prop key="hibernate.transaction.flush_before_completion">true</prop>
 				<prop key="hibernate.connection.release_mode">after_transaction</prop>
                 

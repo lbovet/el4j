@@ -168,6 +168,7 @@ public class PagedListDataModel extends DataModel {
      * 
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     public void setWrappedData(Object list) {
         this.m_list = (List<Object>) list;
     }

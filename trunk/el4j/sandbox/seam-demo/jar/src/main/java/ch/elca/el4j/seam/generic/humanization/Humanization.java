@@ -189,6 +189,11 @@ public final class Humanization {
         return str;
     }
     
+    /**
+     * @param entityShortName    the entity short name
+     * @param sentence           the sentence identifier
+     * @return                   the humanized sentence
+     */
     public static String getEntitySentence(String entityShortName,
         String sentence) {
         

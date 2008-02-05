@@ -56,10 +56,12 @@ import ch.elca.el4j.seam.generic.PagedEntityManager;
  * it is rendered automatically by the table  --&gt;         
  * </pre>
  * 
- * <script type="text/javascript">printFileStatus ("$URL:
- * https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/sandbox/seam-demo/jar/src/main/java/ch/elca/el4j/jsf/component/html/PagedRichHtmlDataTable.java
- * $", "$Revision$", "$Date: 2008-01-17 15:40:29 +0100 (Do, 17 Jan 2008)
- * $", "$Author$" );</script>
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$", 
+ *    "$Date$",
+ *    "$Author$"
+ *  );</script>
  * 
  * @author Frank Bitzer (FBI)
  */
@@ -77,6 +79,7 @@ public class PagedRichHtmlDataTable extends HtmlDataTable {
      * @return current instance of PagedEntityManager specified as attribute
      * for this table
      */
+    @SuppressWarnings("unchecked")
     public PagedEntityManager<Object> getCurrentPagedEntityManager() {
         PagedEntityManager<Object> pagedEntityManager 
             = (PagedEntityManager<Object>) getAttributes()
