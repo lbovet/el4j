@@ -16,7 +16,7 @@
         <version>1.2.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>el4j-framework-module-jsf</artifactId>
+    <artifactId>module-jsf</artifactId>
     <packaging>pom</packaging>
     <name>EL4J module JSF</name>
     <description>
