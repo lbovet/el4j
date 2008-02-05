@@ -1430,6 +1430,21 @@
                 <scope>test</scope>
             </dependency>
 
+            <!-- module-jsf -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-jsf</artifactId>
+                <version>${version.module-jsf}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-jsf</artifactId>
+                <version>${version.module-jsf}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
             <!-- module-light_statistics -->
             <dependency>
                 <groupId>ch.elca.el4j.modules</groupId>
@@ -2134,6 +2149,9 @@
         <version.module-jmx>
             1.7-SNAPSHOT
         </version.module-jmx>
+        <version.module-jsf>
+            1.0-SNAPSHOT
+        </version.module-jsf>
         <version.module-light_statistics>
             1.5-SNAPSHOT
         </version.module-light_statistics>
