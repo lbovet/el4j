@@ -21,17 +21,19 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.FlushMode;
+import org.hibernate.Session;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Begin;
 import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.Destroy;
 import org.jboss.seam.annotations.End;
 import org.jboss.seam.annotations.Factory;
+import org.jboss.seam.annotations.FlushModeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.core.Conversation;
 import org.jboss.seam.faces.FacesMessages;
 
 import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
@@ -64,6 +66,12 @@ public class EntityManager implements Serializable, PagedEntityManager {
      */
     @In("#{daoRegistry}")
     private FallbackDaoRegistry m_daoRegistry;
+    
+    /**
+     * The current hibernate session.
+     */
+    @In("#{hibernateSession}")
+    private Session m_session;
     
     /**
      * The currently selected filters.
@@ -267,9 +275,6 @@ public class EntityManager implements Serializable, PagedEntityManager {
         return dao != null ? dao.getAll().toArray() : null;
     }
     
-    
-    
-    
     /**
      * @param newEntity    the new object to save or update
      * @param viewId       the view to redirect to afterwards
@@ -287,6 +292,7 @@ public class EntityManager implements Serializable, PagedEntityManager {
      * @return             <code>null</code> (used by Seam)
      */
     public String saveOrUpdate(Object newEntity) {
+        m_session.setFlushMode(FlushMode.COMMIT);
         ConvenienceGenericDao dao = getDao();
         dao.saveOrUpdate(newEntity);
         
@@ -310,6 +316,7 @@ public class EntityManager implements Serializable, PagedEntityManager {
      * @return             <code>null</code> (used by Seam)
      */
     public String delete(Object selEntity) {
+        m_session.setFlushMode(FlushMode.COMMIT);
         ConvenienceGenericDao dao = getDao();
         if (selEntity == m_entity) {
             m_entity = null;
@@ -334,6 +341,7 @@ public class EntityManager implements Serializable, PagedEntityManager {
      * @param viewId       the view to redirect to
      * @return             the viewId again (used by Seam)
      */
+    @Begin(join = true, flushMode = FlushModeType.MANUAL)
     public String edit(Object sel, String viewId) {
         m_entity = sel;
         m_isEntityNew = false;
@@ -347,12 +355,8 @@ public class EntityManager implements Serializable, PagedEntityManager {
      * @param viewId           the view to redirect to
      * @return                 the viewId again (used by Seam)
      */
+    @End(beforeRedirect = true)
     public String cancelEdit(Object currentEntity, String viewId) {
-        if (!getEntityClass(m_currentEntityClassName).isAssignableFrom(
-            currentEntity.getClass())) {
-            Conversation.instance().end(true);
-            reset();
-        }
         return viewId;
     }
     

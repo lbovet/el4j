@@ -161,7 +161,6 @@ public class EntityFilters implements Serializable {
                 queryObject.getBeanClass().getName()).getFieldInfo(fieldName);
             Type hibernateType = fieldInfo.getType();
             
-            // TODO improve type support
             Criteria criteria = null;
             if (hibernateType instanceof NullableType) {
                 if (hibernateType instanceof StringType) {

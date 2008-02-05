@@ -34,10 +34,12 @@ import ch.elca.el4j.seam.generic.PagedEntityManager;
  * to get correct data from database, just in time it is required.
  * 
  * @see PagedRichHtmlDataTable 
- * <script type="text/javascript"> 
- * printFileStatus
- *      ("$URL$", 
- *      "$Revision$", "$Date$", "$Author$" ); </script>
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  * 
  * @author Frank Bitzer (FBI)
  */

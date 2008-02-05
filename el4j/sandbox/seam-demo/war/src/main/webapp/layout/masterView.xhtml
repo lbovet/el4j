@@ -55,7 +55,7 @@
 						rendered="#{entitiesCount == 0}" />
 
 					<h:form rendered="#{entitiesCount > 0}">
-						<ui:remove>
+						<ui:remove>non-paged table:
 							<rich:dataTable width="320" id="{entityShortName}Table" rows="3"
 								columnClasses="col" value="{entities}" var="entity"></rich:dataTable>
 						</ui:remove>
