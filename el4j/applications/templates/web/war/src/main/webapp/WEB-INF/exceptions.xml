@@ -1,0 +1,29 @@
+<exceptions>
+	
+	<exception class="javax.persistence.EntityNotFoundException">
+		<http-error error-code="404" />
+	</exception>
+	
+	<exception class="javax.persistence.PersistenceException">
+		<render>Database access failed</render>
+		<end-conversation />
+	</exception>
+	
+	<exception class="org.jboss.seam.security.NotLoggedInException">
+        <redirect view-id="/main.xhtml">
+            <message severity="warn">
+                You must be logged in to use this feature.
+            </message>
+        </redirect>
+    </exception>
+    
+    <!--  all other exceptions are handled by the generic 
+    custom error page-->
+	<exception class="java.lang.Exception">
+        <redirect view-id="/genericError.xhtml">
+        </redirect>
+        <end-conversation/>
+   </exception>
+   
+   
+</exceptions>

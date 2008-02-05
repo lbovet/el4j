@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE facelet-taglib PUBLIC "-//Sun Microsystems, Inc.//DTD Facelet Taglib 1.0//EN"
+    "http://java.sun.com/dtd/facelet-taglib_1_0.dtd">
+<facelet-taglib>
+	<namespace>http://elca.ch/tags/datatable</namespace>
+
+	<!-- tag for custom datatable for paging is defined here -->
+
+	<tag>
+		<tag-name>pagedRichDataTable</tag-name>
+		<component>
+			<component-type>ch.elca.el4j.PagedRichHtmlDataTable</component-type>
+		</component>
+	</tag>	
+
+
+</facelet-taglib>

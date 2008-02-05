@@ -1,0 +1,76 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                             "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:el4j="http://www.elca.ch/el4j/taglib"
+	template="layout/template.xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+
+	<ui:define name="body">
+
+		<el4j:set var="entityClassName"
+			value="ch.elca.el4j.seam.demo.entities.Employee" />
+
+		<h:form>
+		    Last Name: 
+			<h:inputText id="search" value="#{searchString}"></h:inputText>
+			<h:commandButton value="Find" action="#{filters.add('lastName')}" />
+			<s:button value="Clear" action="#{filters.removeAll()}" />
+		</h:form>
+
+		<h2>
+			List of all employees (using h:dataTable):
+		</h2>
+		<h:form>
+			<h:dataTable value="#{entityManager.getEntities()}" var="e">
+				<h:column>
+					<h:outputText value="#{e.visa}" />
+				</h:column>
+				<h:column>
+					<h:outputText value="#{e.lastName}" />
+				</h:column>
+				<h:column>
+					<h:commandLink value="edit"
+						action="#{entityManager.edit(e, '/employeeEdit.xhtml')}" />
+				</h:column>
+				<h:column>
+					<h:commandLink value="delete" action="#{entityManager.delete(e)}" />
+				</h:column>
+			</h:dataTable>
+		</h:form>
+
+		<h2>
+			List of all employees (using ui:repeat):
+		</h2>
+		<h:form>
+			<ui:repeat value="#{entities}" var="e">
+				<div>
+					#{e.lastName}
+					<h:outputText value=" " />
+					<h:commandLink value="edit"
+						action="#{entityManager.edit(e, '/employeeEdit.xhtml')}" />
+					<h:outputText value=" " />
+					<h:commandLink value="delete" action="#{entityManager.delete(e)}" />
+				</div>
+			</ui:repeat>
+		</h:form>
+
+		<h2>
+			Insert employee:
+		</h2>
+		<h:form>
+			<s:validateAll>
+				<h:panelGrid columns="2">
+					Visa: <h:inputText value="#{employee.visa}" required="true" />
+					First Name: <h:inputText value="#{employee.firstName}" required="true" />
+					Last Name: <h:inputText value="#{employee.lastName}" required="true" />
+				</h:panelGrid>
+			</s:validateAll>
+			<h:messages />
+			<h:commandButton value="Add"
+				action="#{entityManager.saveOrUpdate(employee)}" />
+		</h:form>
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,27 @@
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                 xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns:f="http://java.sun.com/jsf/core"
+                 xmlns:s="http://jboss.com/products/seam/taglib"
+				 xmlns:el4j="http://www.elca.ch/el4j/taglib">
+	
+	
+	<p><b>#{el4j:h10nFieldName(entityShortName, filterName)}:</b></p>
+	
+	<ul>
+		<ui:repeat value="#{utils.getFilterEnumList(entityClassName, filterName)}" var="item">
+			<li>
+			    <h:commandLink value="#{el4j:h10nFieldEnumName(entityShortName, filterName, item)}"
+                    styleClass="#{filters.isActive(filterName, item) ? 'bold' : ''}"
+                    action="#{filters.addExact(filterName, item)}" />
+			</li>
+		</ui:repeat>
+		<li>
+		    <h:commandLink value="All"
+                    styleClass="#{filters.isActive(filterName, null) ? 'bold' : ''}"
+                    action="#{filters.remove(filterName)}" />
+		</li>
+	</ul>
+	
+
+</ui:composition>
