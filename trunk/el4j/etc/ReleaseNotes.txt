@@ -1,4 +1,47 @@
 --------------------------------------------------------------------------------
+ Date :   8.2.08
+                            EL4J version  1.3
+--------------------------------------------------------------------------------
+
+* Core
+  = Simplified handling of data access: 
+    + Better QueryObject pattern support for Hibernate with real OR- and NOT-Queries, simple paging
+	   (loading all entries in batches of maximal N elements) and sorting support
+    + More convention over configuration: Autocollected @Entity classes (Hibernate), automatically
+  	   colleted DAOs (DAOs are added to the spring application context and to the DAORegistry), 
+	   automatically injected SessionFactory and SqlMapClientTemplate, automatically determined type
+	   T of GenericDao<T> classes
+    + The newly added feature are backward compatible
+  = Simplified and homogenized multi-environment support
+    + Helps with properties shared between Maven and Spring: they are only defined once and
+	  they available both in Maven (during build/ launch time) and Spring (during run time).
+	+ We have added 2 new configuration files:
+	   env-placeholder.properties and env-bean-property.properties. The former
+	   is for Spring placeholders (of the form ${placeholder-name}), the latter are for
+	   renaming of beans (for the Spring PropertyOverrideConfigurer).
+	+ The new support is backward compatible.
+	+ Please refer to the corresponding plugin documentation for details.
+  = Added AopHelper with easy programmatic interceptor/mixin addition.
+  = Upgrade to Spring 2.5.1  
+  = Some clean ups and improved documentation
+
+* Build system
+  = Upgrade to new maven 2.0.8
+  = Introduced recursive maven "mvnrec" (recursively build the current module and 
+     all modules it requires). Please refer to the documentation of the corresponding 
+	 maven plugin.
+  = We added artificial versions to all required external maven plugin snapshots. Benefit:
+     be no longer dependent on external parties.
+  = Added shell scripts for Windows (.bat files).
+  
+* New JSF module based on Facelets, JSF and Seam
+  = Basic module (module JSF) with libraries and simplified generic DAO support.
+  = Jsf Application Template that demonstrates the use of JSF.
+  = Please refer to the documentation of the reference document and the application
+    template.
+
+
+--------------------------------------------------------------------------------
  Date :   14.12.07
                             EL4J version  1.2
 --------------------------------------------------------------------------------
