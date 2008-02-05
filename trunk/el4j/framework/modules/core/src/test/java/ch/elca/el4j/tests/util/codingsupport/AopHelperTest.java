@@ -95,6 +95,23 @@ public class AopHelperTest extends TestCase {
 //			System.out.println(DataDumper.dump(p.getClass().getInterfaces() ));		
 		}
 
+		public void testLightAopHelperUsage() {
+			DefaultPerson p = new DefaultPerson();
+			
+			p = AopHelper.addAdvice(p, new MethodInterceptor(){
+
+				public Object invoke(MethodInvocation invocation) throws Throwable {
+			    	System.out.println(" Invocation on my test object "+invocation.getMethod().getName());					
+			    	Object returnValue = invocation.proceed(); 
+			    	return returnValue;
+				}
+				
+			});
+			
+			p.getAge();
+			
+		}
+	
 	}
 
 // some helper test classes:
