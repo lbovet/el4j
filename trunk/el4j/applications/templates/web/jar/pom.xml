@@ -9,49 +9,46 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
     
-	<parent>
-		<groupId>ch.elca.el4j.applications</groupId>
-		<artifactId>el4j-templates-jsf-demo</artifactId>
-		<version>1.2.1-SNAPSHOT</version>
-	</parent>
-	
-	<artifactId>jsf-demo-jar</artifactId>
-	<packaging>jar</packaging>
-	<name>EL4J JSF demo jar</name>
-	<description>JAR part of Seam Demo</description>
-	
-	<build>
-		<!-- maven-seam-plugin provides seam-gen like functionality. its all optional -->
-		<!-- <plugins>
-			<plugin>
-				<groupId>cz.softeu.seamgen</groupId>
-				<artifactId>maven-seam-plugin</artifactId>
-				<configuration>
-					<modelPackage>ch.elca.el4j.applications.el4jseam.model</modelPackage>
-					<actionPackage>ch.elca.el4j.applications.el4jseam.action</actionPackage>
-					<testPackage>ch.elca.el4j.applications.el4jseam.test</testPackage>
-				</configuration>
-			</plugin>
-		</plugins>
-		-->
-	</build>
-	
-	<!-- Project dependencies -->
-	<dependencies>
-		<dependency>
+    <parent>
+        <groupId>ch.elca.el4j.applications</groupId>
+        <artifactId>el4j-templates-jsf-demo</artifactId>
+        <version>1.2.1-SNAPSHOT</version>
+    </parent>
+    
+    <artifactId>jsf-demo-jar</artifactId>
+    <version>${version.application-keyword}</version>
+    <packaging>jar</packaging>
+    <name>EL4J JSF demo jar</name>
+    <description>JAR part of Seam Demo</description>
+    
+    <build>
+        <!-- maven-seam-plugin provides seam-gen like functionality. its all optional -->
+        <!-- <plugins>
+            <plugin>
+                <groupId>cz.softeu.seamgen</groupId>
+                <artifactId>maven-seam-plugin</artifactId>
+                <configuration>
+                    <modelPackage>ch.elca.el4j.applications.el4jseam.model</modelPackage>
+                    <actionPackage>ch.elca.el4j.applications.el4jseam.action</actionPackage>
+                    <testPackage>ch.elca.el4j.applications.el4jseam.test</testPackage>
+                </configuration>
+            </plugin>
+        </plugins>
+        -->
+    </build>
+    
+    <!-- Project dependencies -->
+    <dependencies>
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
         </dependency>
-	
-		<!--  EL4J framework modules -->
-		<dependency>
-			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-jsf-jar</artifactId>
-		</dependency>
-		<dependency>
+    
+        <!--  EL4J framework modules -->
+        <dependency>
             <groupId>ch.elca.el4j.modules</groupId>
-            <artifactId>module-env</artifactId>
+            <artifactId>module-jsf-jar</artifactId>
         </dependency>
         <dependency>
             <groupId>ch.elca.el4j.modules</groupId>
@@ -62,18 +59,23 @@
             <artifactId>module-database</artifactId>
             <exclusions>
                 <exclusion>            
-            			<groupId>com.oracle</groupId>
-						<artifactId>ojdbc14_g</artifactId>
-			 	</exclusion>
-			 	<exclusion>
-						<groupId>com.mysql</groupId>
-						<artifactId>mysql-connector</artifactId>
-				</exclusion>
+                        <groupId>com.oracle</groupId>
+                        <artifactId>ojdbc14_g</artifactId>
+                 </exclusion>
+                 <exclusion>
+                        <groupId>com.mysql</groupId>
+                        <artifactId>mysql-connector</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-env</artifactId>
+            <type>jar</type>
+        </dependency>
 
-		<!-- EL4J keyword dao -->
-		<dependency>
+        <!-- EL4J keyword dao -->
+        <dependency>
             <groupId>ch.elca.el4j.applications</groupId>
             <artifactId>keyword-dao</artifactId>
             <exclusions>
@@ -83,7 +85,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-	</dependencies>
+    </dependencies>
     <profiles>
         <!-- DB -->
         <profile>
