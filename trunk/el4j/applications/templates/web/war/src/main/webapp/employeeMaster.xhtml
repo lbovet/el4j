@@ -1,0 +1,20 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                             "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="layout/masterPage.xhtml"
+	xmlns:el4j="http://www.elca.ch/el4j/taglib">
+
+
+	<ui:define name="body">
+		<el4j:set var="entityShortName" value="employee" />
+		<ui:param name="hidden" value="firstName" />
+		<el4j:set var="filterOn" value="active" />
+
+		<ui:decorate template="layout/masterView.xhtml" />
+	</ui:define>
+
+
+</ui:composition>
+
