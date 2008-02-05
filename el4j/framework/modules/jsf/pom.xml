@@ -1,26 +1,29 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" 
-	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>ch.elca.el4j.modules</groupId>
-	<artifactId>module-seam</artifactId>
-	<name>JBoss Seam Module</name>
-	<packaging>jar</packaging>
-	<version>1.0-SNAPSHOT</version>
-	<description>JBoss Seam Module including JSF/Facelets and RichFaces</description>
-	
-	<parent>
-		<groupId>ch.elca.el4j.modules</groupId>
-		<artifactId>el4j-framework-modules</artifactId>
-		<version>1.2.1-SNAPSHOT</version>
-	</parent>
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <!-- Version: $Revision: 2344 $ -->
+    <!-- URL: $URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/jsf/pom.xml $ -->
+    <!-- Date: $Date: 2007-12-17 09:24:26 +0100 (Mo, 17 Dez 2007) $ -->
+    <!-- Author: $Author: swismer $ -->
 
-	<!-- NOTE: You can't find usable Seam / RichFaces stuff in maven repositories
-	           by the end of september 2007. So we had to manually install the
-			  .jar files delivered with Seam into our elca-services repository.
-			  TODO we now use the official repository -> delete jars on elca-services? -->
+    <parent>
+        <groupId>ch.elca.el4j.modules</groupId>
+        <artifactId>el4j-framework-modules</artifactId>
+        <version>1.2.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>module-jsf</artifactId>
+    <version>${version.module-jsf}</version>
+    <packaging>jar</packaging>
+    <name>EL4J module JSF</name>
+    <description>
+        Module JSF (JBoss Seam) of the EL4J framework.
+    </description>
+    <build>
+    </build>
 	<dependencies>
 		<!-- JBoss Seam -->
 		<dependency>
