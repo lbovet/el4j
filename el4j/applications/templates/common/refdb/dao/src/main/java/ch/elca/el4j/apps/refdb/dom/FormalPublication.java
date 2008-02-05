@@ -16,9 +16,9 @@
  */
 package ch.elca.el4j.apps.refdb.dom;
 
-import javax.persistence.Entity;
 
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 

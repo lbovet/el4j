@@ -25,7 +25,7 @@ import java.util.Set;
 import javax.persistence.*;
 
 
-import org.hibernate.annotations.ForceDiscriminator;
+
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
@@ -36,7 +36,6 @@ import org.hibernate.validator.NotNull;
 import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
-import ch.elca.el4j.util.dom.annotations.MemberOrder;
 
 /**
  * Reference domain object. This is the base reference class and describes a
@@ -52,16 +51,7 @@ import ch.elca.el4j.util.dom.annotations.MemberOrder;
  * @author Martin Zeltner (MZE)
  * @author Alex Mathey (AMA)
  */
-@MemberOrder({
-    "name",
-    "hashValue",
-    "description",
-    "version",
-    "incomplete",
-    "whenInserted",
-    "date",
-    "keywords"
-})
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING,
@@ -143,8 +133,6 @@ public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
      * @param date
      *            The date to set.
      */
-    //FBI: in this case, type is necessary for hibernate to parse date correctly
-    @Type(type = "date")
     public void setDate(Date date) {
         if (date != null) {
             Calendar c = Calendar.getInstance();
@@ -287,6 +275,8 @@ public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
      * @return Returns the set of annotations for this reference (only used if
      *         Hibernate is used to perform ORM).
      */
+    //relation to Annotation is not saved in REFERENCESTABLE, 
+    //because it is unidirectional from Annotation to Reference
     @Transient
     public Set<Annotation> getAnnotations() {
         return m_annotations;
@@ -305,6 +295,8 @@ public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
      * @return Returns the set of files for this reference (only used if
      *         Hibernate is used to perform ORM).
      */
+    //relation to File is not saved in REFERENCESTABLE, 
+    //because it is unidirectional from File to Reference
     @Transient
     public Set<File> getFiles() {
         return m_files;
@@ -323,6 +315,8 @@ public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
      * @return Returns the set of file descriptor views for this reference (only
      *         used if Hibernate is used to perform ORM).
      */
+    //relation to FileDescriptorView is not saved in REFERENCESTABLE, 
+    //because it is unidirectional from FileDescriptorView to Reference
     @Transient
     public Set<FileDescriptorView> getFileDescriptorViews() {
         return m_fileDescriptorViews;

@@ -17,11 +17,7 @@
 package ch.elca.el4j.apps.refdb.dom;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.validator.NotNull;
 

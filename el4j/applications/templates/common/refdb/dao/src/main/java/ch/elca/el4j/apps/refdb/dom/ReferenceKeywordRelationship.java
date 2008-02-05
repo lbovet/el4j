@@ -21,6 +21,7 @@ import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimistic
 /**
  * ReferenceKeywordRelationship domain object. This class describes a
  * relationship between a keyword and a reference.
+ * It is only required for ibatis.
  * 
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
