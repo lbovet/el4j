@@ -28,7 +28,6 @@ import org.hibernate.validator.Pattern;
 
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
-import ch.elca.el4j.util.dom.annotations.MemberOrder;
 
 /**
  * Keyword domain object.
@@ -42,10 +41,6 @@ import ch.elca.el4j.util.dom.annotations.MemberOrder;
  *
  * @author Martin Zeltner (MZE)
  */
-@MemberOrder({
-    "name",
-    "description"
-})
 
 
 @Entity
@@ -88,7 +83,6 @@ public class Keyword extends AbstractIntKeyIntOptimisticLockingDto {
     /**
      * @return Returns the description.
      */
-    //@Column(name="DESCRIPTION") this is not necessary
     public String getDescription() {
         return m_description;
     }
