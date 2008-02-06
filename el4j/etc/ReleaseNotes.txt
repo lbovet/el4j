@@ -3,6 +3,9 @@
                             EL4J version  1.3
 --------------------------------------------------------------------------------
 
+* SourceForge Change Requests CLOSED:
+  1523763 - throw more specific exception in ConvenienceHibernateTemplate
+
 * Core
   = Simplified handling of data access: 
     + Better QueryObject pattern support for Hibernate with real OR- and NOT-Queries, simple paging
@@ -12,6 +15,9 @@
 	   automatically injected SessionFactory and SqlMapClientTemplate, automatically determined type
 	   T of GenericDao<T> classes
     + The newly added feature are backward compatible
+	+ Dao registry now handles spring proxied classes also correctly (idea from Ky)
+	+ New FallbackDaoRegistry (alternative implementation to DefaultDaoRegistry): If no DAO can be
+   	  found for an entityType, a generic DAO is created
   = Simplified and homogenized multi-environment support
     + Helps with properties shared between Maven and Spring: they are only defined once and
 	  they available both in Maven (during build/ launch time) and Spring (during run time).
@@ -19,12 +25,35 @@
 	   env-placeholder.properties and env-bean-property.properties. The former
 	   is for Spring placeholders (of the form ${placeholder-name}), the latter are for
 	   renaming of beans (for the Spring PropertyOverrideConfigurer).
+    + Db properties are now defined in the pom.xml files and the new environment property file
+  	 (env-bean-property.properties). Changing the database to use is now made by enabling the
+	 corresponding profile (no setting of system property db.name allowed!). Refer to the FAQ
+	 for more information on how to change your profile.
+	+ The web context string is now also handled via the environment support.
 	+ The new support is backward compatible.
 	+ Please refer to the corresponding plugin documentation for details.
   = Added AopHelper with easy programmatic interceptor/mixin addition.
   = Upgrade to Spring 2.5.1  
-  = Some clean ups and improved documentation
+  = Clean ups (less warnings, unneeded dependency removed, fixed some inconsistencies in 
+    naming and documentation) and improved documentation
+  = Added 2 helper methods to check for a certain JDK version 
+  = We have added a file "etc/KnownIssues.txt" that we keep up to dates with small short 
+    term issues of EL4J. We make the file's version of the Subversion trunk available on the EL4J
+	website.
+  = The file etc/m2/settings.xml has been updated (we added mostly just commented-out 
+    sections so that you have an example in case you want to enable some functionality)
+  = RefreshPropertyOverrideConfigurer no more needed du fix in ModuleAppCtxs. See
+    http://jira.springframework.org/browse/SPR-4378
 
+* Remoting
+  = Upgrade to Hessian 3.1.3
+  = Burlap is now deprecated (it is no more supported by caucho.com)
+  = Upgrade to jax-ws-commons 1.8
+	
+* Databases
+  = Upgraded to new Derby JDBC driver. Advantage: it can be freely distributed.
+  = Upgraded to newest oracle driver
+	
 * Build system
   = Upgrade to new maven 2.0.8
   = Introduced recursive maven "mvnrec" (recursively build the current module and 
@@ -33,13 +62,31 @@
   = We added artificial versions to all required external maven plugin snapshots. Benefit:
      be no longer dependent on external parties.
   = Added shell scripts for Windows (.bat files).
+  = Improvements of the dependency graph plugin: use maven mechanism to collect information
+     (this fixes some issues). One can now also show the type of dependencies on edges of the 
+	 graph.
+  = Database plugin: The delimiter of SQL statements can now be changed. This is used i.e. with
+    PL/SQL code where the delimiter is normally "/" instead of a ";".
+  = We have set up some more report plugins (PMD and CPD).
+  = There is a demo for the maven assembly plugin that allows to publish your application as
+    a single jar (refer to module applications/templates/gui/standalone-client).
   
-* New JSF module based on Facelets, JSF and Seam
+* New JSF module based on Facelets 1.1.14, JSF 1.2, Richfaces 3.1.4.GA and Seam 2.0.1
   = Basic module (module JSF) with libraries and simplified generic DAO support.
   = Jsf Application Template that demonstrates the use of JSF.
   = Please refer to the documentation of the reference document and the application
     template.
+  = We recommend to use Jetty (as replacement for Tomcat) for the development as it allows
+    faster round-trips.
+  = There is a new facility to test your JSF interactions (based on TestNG and Seam support). 
+    Refer to the sample test.
 
+* Modules for GUI development
+  = Swing module
+   + Beans binding 1.2.1 added (we use a slightly patched version)
+  = Module Spring RCP
+   + This module is deprecated (too little momentum of the project and too few uses of it)  
+  = We have removed the old Tiger GUI demo
 
 --------------------------------------------------------------------------------
  Date :   14.12.07
