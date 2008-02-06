@@ -31,7 +31,7 @@ Plugins
 | {{{maven-rec-plugin/index.html}mvn-rec}}               			   | Tool run maven commands for a project and all its dependent projets.
 *----------------------------+-------------------+  
 
-  Please refer also the plugin section of the reference document and the maven cheat sheet for more information. 
+  Please refer also the plugin section of the {{{http://el4j.sourceforge.net/docs/pdf/ReferenceDoc.pdf}reference document}} and the maven cheat sheet for more information. 
 
   The plugins can also be used from outside of EL4J, they are in our repository. Here's a sample config for your pom.xml file: 
 

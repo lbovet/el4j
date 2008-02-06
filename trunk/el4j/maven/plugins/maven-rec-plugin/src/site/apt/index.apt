@@ -1,0 +1,13 @@
+ -----
+ Maven recursive plugin
+ -----
+ -----
+ 06 Feb 2008
+ -----
+
+Maven recursive plugin
+
+  The maven-rec-plugin can be used to execute commands recursive on all
+  dependencies of a project.
+  
+  For usage {{{plugin-info.html}see the plugin info page}}.
