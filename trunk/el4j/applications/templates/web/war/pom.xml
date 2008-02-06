@@ -71,6 +71,8 @@
                 <version>6.1.7</version>
                 <configuration>
                     <classesDirectory>../../../../framework/modules/jsf/jar/target/classes</classesDirectory>
+                    <!-- ATTENTION: if you change classes in jsf-demo-jar you have to execute mvn install to start a redeploy -->
+                    
                     <!--<classesDirectory>../jar/target/classes</classesDirectory>--><!-- classes are taken from seam-demo-jar -->
                     <!--but this causes duplicate classes because the dependency to seam-demo-jar still exists-->
                     <scanIntervalSeconds>3</scanIntervalSeconds>
@@ -84,16 +86,6 @@
                                 <exclude>**/*.svn*</exclude>
                             </excludes>
                         </scanTargetPattern>
-                        <!-- this lets restart jetty when code is changed, but does not force a recompile so changes are not reflected -->
-                        <!--<scanTargetPattern>
-                            <directory>../jar/target/classes</directory>
-                            <includes>
-                                <include>**/*.*</include>
-                            </includes>
-                            <excludes>
-                                <exclude>**/*.svn*</exclude>
-                            </excludes>
-                        </scanTargetPattern>-->
                     </scanTargetPatterns>
                     <!-- webdefault.xml is needed to disable file locking for static files-->
                     <webDefaultXml>src/main/resources/webdefault.xml</webDefaultXml>
