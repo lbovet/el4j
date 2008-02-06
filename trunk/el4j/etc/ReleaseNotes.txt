@@ -20,10 +20,10 @@
    	  found for an entityType, a generic DAO is created
   = Simplified and homogenized multi-environment support
     + Helps with properties shared between Maven and Spring: they are only defined once and
-	  they available both in Maven (during build/ launch time) and Spring (during run time).
+	  they are available both in Maven (during build/ launch time) and Spring (during run time).
 	+ We have added 2 new configuration files:
 	   env-placeholder.properties and env-bean-property.properties. The former
-	   is for Spring placeholders (of the form ${placeholder-name}), the latter are for
+	   is for Spring placeholders (of the form ${placeholder-name}), the latter is for
 	   renaming of beans (for the Spring PropertyOverrideConfigurer).
     + Db properties are now defined in the pom.xml files and the new environment property file
   	 (env-bean-property.properties). Changing the database to use is now made by enabling the
@@ -42,7 +42,7 @@
 	website.
   = The file etc/m2/settings.xml has been updated (we added mostly just commented-out 
     sections so that you have an example in case you want to enable some functionality)
-  = RefreshPropertyOverrideConfigurer no more needed du fix in ModuleAppCtxs. See
+  = The RefreshPropertyOverrideConfigurer no more needed due to a fix in ModuleAppCtxs. See
     http://jira.springframework.org/browse/SPR-4378
 
 * Remoting
@@ -71,9 +71,9 @@
   = There is a demo for the maven assembly plugin that allows to publish your application as
     a single jar (refer to module applications/templates/gui/standalone-client).
   
-* New JSF module based on Facelets 1.1.14, JSF 1.2, Richfaces 3.1.4.GA and Seam 2.0.1
+* New JSF module based on Facelets 1.1.14, JSF 1.2 (RI), Richfaces 3.1.4.GA and Seam 2.0.1
   = Basic module (module JSF) with libraries and simplified generic DAO support.
-  = Jsf Application Template that demonstrates the use of JSF.
+  = JSF Application Template that demonstrates the use of JSF.
   = Please refer to the documentation of the reference document and the application
     template.
   = We recommend to use Jetty (as replacement for Tomcat) for the development as it allows
@@ -84,6 +84,7 @@
 * Modules for GUI development
   = Swing module
    + Beans binding 1.2.1 added (we use a slightly patched version)
+   + Small documentation upgrades
   = Module Spring RCP
    + This module is deprecated (too little momentum of the project and too few uses of it)  
   = We have removed the old Tiger GUI demo
