@@ -51,6 +51,17 @@
 
 			<h:panelGroup>
 				<div class="results">
+				
+				    <h:panelGroup rendered="#{not empty filters.stringList}">
+					     <b>
+					        <h:outputText value="Filtered by #{filters.stringList}"/>
+	                     </b>
+	                     <br/>
+	                     <br/>
+                    </h:panelGroup>
+                        
+                     
+                     
 					<h:outputText value="#{messages.NoEntities}"
 						rendered="#{entitiesCount == 0}" />
 
