@@ -18,6 +18,7 @@
 	+ Dao registry now handles spring proxied classes also correctly (idea from Ky)
 	+ New FallbackDaoRegistry (alternative implementation to DefaultDaoRegistry): If no DAO can be
    	  found for an entityType, a generic DAO is created
+	+ Moved getAll() method from GenericDao to ConvenienceGenericDao (improving canonicality)
   = Simplified and homogenized multi-environment support
     + Helps with properties shared between Maven and Spring: they are only defined once and
 	  they are available both in Maven (during build/ launch time) and Spring (during run time).
