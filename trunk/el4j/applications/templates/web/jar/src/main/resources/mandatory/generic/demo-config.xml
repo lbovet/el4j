@@ -62,6 +62,9 @@
 	<bean id="sessionFactory" class="org.jboss.seam.ioc.spring.SeamManagedSessionFactoryBean">
         <property name="sessionName" value="hibernateSession" />
     </bean>
+    
+    <bean id="conflicts" class="ch.elca.el4j.seam.generic.Temporary" />
+    
 	
 	<!--
 	*********************************************************************************
