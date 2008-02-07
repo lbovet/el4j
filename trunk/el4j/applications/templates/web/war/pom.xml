@@ -55,9 +55,10 @@
                     </execution>
                     <!-- Delete tables and stop Network Server -->
                     <execution>
-                        <id>cleanUp</id>
+                        <id>clean up</id>
                         <goals>
-                            <goal>cleanUp</goal>
+                            <goal>silentDrop</goal>
+							<goal>stop</goal>
                         </goals>
                         <phase>package</phase>
                     </execution>
