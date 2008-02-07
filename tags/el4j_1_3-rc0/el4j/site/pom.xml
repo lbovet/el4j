@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Version: $Revision:1122 $ -->
+    <!-- URL: $URL:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/site/pom.xml $ -->
+    <!-- Date: $Date:2006-09-11 06:46:44 +0000 (Mo, 11 Sep 2006) $ -->
+    <!-- Author: $Author:swisswheel $ -->
+
+	<!-- use site.sh to create site (must be called from this directory) -->
+    <parent>
+        <groupId>ch.elca.el4j</groupId>
+        <artifactId>el4j</artifactId>
+        <version>1.2.1-SNAPSHOT</version>
+    </parent>
+
+    <groupId>ch.elca.el4j.sites</groupId>
+    <artifactId>el4j-site</artifactId>
+    <packaging>pom</packaging>
+    <name>EL4J website</name>
+    <description>
+        Website of the EL4J project.
+    </description>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>${version.maven-project-info-reports-plugin}</version>
+                <reportSets>
+                    <reportSet>
+                        <id>standardReports</id>
+                        <reports>
+                            <report>issue-tracking</report>
+                            <report>mailing-list</report>
+                            <report>project-team</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
+
+    <profiles>
+        <profile>
+            <id>collect-doc</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>ch.elca.el4j.maven.plugins</groupId>
+                        <artifactId>maven-file-collector-plugin</artifactId>
+                        <configuration>
+                            <rootSourceDirectory>${el4j.external}/framework/target/site</rootSourceDirectory>
+                            <sourceFileIncludePatterns>framework-*</sourceFileIncludePatterns>
+                            <targetDirectory>${el4j.external}/site/target/site</targetDirectory>
+                            <allowOverwrite>false</allowOverwrite>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>collect-plugin-doc</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>ch.elca.el4j.maven.plugins</groupId>
+                        <artifactId>maven-file-collector-plugin</artifactId>
+                        <configuration>
+                            <rootSourceDirectory>${el4j.external}/maven/plugins/${plugin}/target/site</rootSourceDirectory>
+                            <sourceFileIncludePatterns>**/*</sourceFileIncludePatterns>
+                            <targetDirectory>${el4j.external}/site/target/site/plugins/${plugin}</targetDirectory>
+                            <copyFilesOnly>true</copyFilesOnly>
+                            <allowOverwrite>false</allowOverwrite>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
+        <profile>
+            <id>copy.surefire-report.tomcat-derby</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.1</version>
+                        <configuration>
+                            <tasks>
+                                <echo message="Copy tomcat-derby surefire reports"/>
+                                <move overwrite="true" flatten="true"
+                                    todir="${el4j.external}/site/target/${surefire-report.name.tomcat6-derby10}">
+                                    <fileset dir="${el4j.external}">
+                                        <filename name="**/target/surefire-reports/*"/>
+                                    </fileset>
+                                </move>
+                            </tasks>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>surefire-report.tomcat-derby</id>
+            <build>
+                <plugins>
+                    <!-- 
+                        Copied surefire report plugin from reporting section of tomcat profile, 
+                        because otherwise the necessary html files for the test reports are not generated.
+                        
+                        This is not a satisfying solution and should be fixed when there is time to do so.
+                    -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-report-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>generate-surefire-reports-html-page</id>
+                                <phase>pre-site</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-report-plugin</artifactId>
+                        <reportSets>
+                            <reportSet>
+                                <id>surefire-report.tomcat6-derby10</id>
+                                <reports>
+                                    <report>report</report>
+                                </reports>
+                                <configuration>
+                                    <reportsDirectory>${el4j.external}/site/target/${surefire-report.name.tomcat6-derby10}</reportsDirectory>
+                                    <linkXRef>true</linkXRef>
+                                    <xrefLocation>${set.framework-tests.xref.location}</xrefLocation>
+                                    <outputName>${surefire-report.name.tomcat6-derby10}</outputName>
+                                    <windowTitle>${surefire-report.title.tomcat6-derby10}</windowTitle>
+                                    <docTitle>${surefire-report.title.tomcat6-derby10}</docTitle>
+                                    <docDescription>${surefire-report.description.tomcat6-derby10}</docDescription>
+                                </configuration>
+                            </reportSet>
+                        </reportSets>
+                    </plugin>
+                </plugins>
+            </reporting>
+        </profile>
+
+        <profile>
+            <id>copy.surefire-report.weblogic-oracle</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.1</version>
+                        <configuration>
+                            <tasks>
+                                <echo message="Copy weblogic-oracle surefire reports"/>
+                                <move overwrite="true" flatten="true"
+                                    todir="${el4j.external}/site/target/${surefire-report.name.weblogic10-oracle10}">
+                                    <fileset dir="${el4j.external}">
+                                        <filename name="**/target/surefire-reports/*"/>
+                                    </fileset>
+                                </move>
+                            </tasks>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
+        <profile>
+            <id>surefire-report.weblogic-oracle</id>
+            <build>
+                <plugins>
+                    <!-- 
+                        Copied surefire report plugin from reporting section of tomcat profile, 
+                        because otherwise the necessary html files for the test reports are not generated.
+                        
+                        This is not a satisfying solution and should be fixed when there is time to do so.
+                    -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-report-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>generate-surefire-reports-html-page</id>
+                                <phase>pre-site</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-report-plugin</artifactId>
+                        <reportSets>
+                            <reportSet>
+                                <id>surefire-report.weblogic10-oracle10</id>
+                                <reports>
+                                    <report>report</report>
+                                </reports>
+                                <configuration>
+                                    <reportsDirectory>${el4j.external}/site/target/${surefire-report.name.weblogic10-oracle10}</reportsDirectory>
+                                    <linkXRef>true</linkXRef>
+                                    <xrefLocation>${set.framework-tests.xref.location}</xrefLocation>
+                                    <outputName>${surefire-report.name.weblogic10-oracle10}</outputName>
+                                    <windowTitle>${surefire-report.title.weblogic10-oracle10}</windowTitle>
+                                    <docTitle>${surefire-report.title.weblogic10-oracle10}</docTitle>
+                                    <docDescription>${surefire-report.description.weblogic10-oracle10}</docDescription>
+                                </configuration>
+                            </reportSet>
+                        </reportSets>
+                    </plugin>
+                </plugins>
+            </reporting>
+        </profile>
+
+        <profile>
+            <id>release.site</id>
+            <distributionManagement>
+                <site>
+                    <id>${distmgt.site.id.external}</id>
+                    <name>${distmgt.site.name.external}</name>
+                    <url>${distmgt.site.url.external}</url>
+                </site>
+            </distributionManagement>
+        </profile>
+
+        <profile>
+            <id>internal.site</id>
+            <distributionManagement>
+                <site>
+                    <id>${distmgt.site.id.nightly}</id>
+                    <name>${distmgt.site.name.nightly}</name>
+                    <url>${distmgt.site.url.nightly}</url>
+                </site>
+            </distributionManagement>
+        </profile>
+
+    </profiles>
+
+    <distributionManagement>
+        <site>
+            <id>${distmgt.snapshot-site.id.external}</id>
+            <name>${distmgt.snapshot-site.name.external}</name>
+            <url>${distmgt.snapshot-site.url.external}</url>
+        </site>
+    </distributionManagement>
+
+    <properties>
+        <set.framework-tests.xref.location>${el4j.external}/site/target/site/xref-test</set.framework-tests.xref.location>
+    
+        <surefire-report.name.tomcat6-derby10>surefire-report-tomcat6-derby10</surefire-report.name.tomcat6-derby10>
+        <surefire-report.title.tomcat6-derby10>Surefire Test Report - Tomcat 6 and Derby 10</surefire-report.title.tomcat6-derby10>
+        <surefire-report.description.tomcat6-derby10>The following document contains the summarized test results of test profile with Tomcat 6 as webserver and Derby 10 as database.</surefire-report.description.tomcat6-derby10>
+
+        <surefire-report.name.weblogic10-oracle10>surefire-report-weblogic10-oracle10</surefire-report.name.weblogic10-oracle10>
+        <surefire-report.title.weblogic10-oracle10>Surefire Test Report - Weblogic 10 and Oracle 10</surefire-report.title.weblogic10-oracle10>
+        <surefire-report.description.weblogic10-oracle10>The following document contains the summarized test results of test profile with Weblogic 10 as webserver and Oracle 10 as database.</surefire-report.description.weblogic10-oracle10>
+    </properties>
+
+</project>

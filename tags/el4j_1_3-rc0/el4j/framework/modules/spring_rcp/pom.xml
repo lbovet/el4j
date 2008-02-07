@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+
+    <parent>
+        <groupId>ch.elca.el4j.modules</groupId>
+        <artifactId>el4j-framework-modules</artifactId>
+        <version>1.2.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>module-spring_rcp</artifactId>
+    <version>${version.module-spring_rcp}</version>
+    <packaging>jar</packaging>
+    <name>EL4J module spring rcp</name>
+    <description>
+        Module spring rcp of the EL4J framework.
+    </description>
+    <build>
+    </build>
+    <dependencies>
+        <!-- EL4J framework modules -->
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-core</artifactId>
+        </dependency>
+    
+        <!-- SpringRCP library -->
+        <dependency>
+            <groupId>org.springframework.richclient</groupId>
+            <artifactId>spring-richclient-full</artifactId>
+            <version>0.2.0-el4j-20060618</version>
+        </dependency>
+        
+        <!-- Spring extra and sandbox modules -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-binding</artifactId>
+            <version>0.2005-07-22</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-modules-sandbox</artifactId>
+            <version>0.1-20060304</version>
+        </dependency>
+
+        <!-- Components -->
+        <dependency>
+            <groupId>com.jgoodies.forms</groupId>
+            <artifactId>forms</artifactId>
+            <version>1.0.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jgoodies.looks</groupId>
+            <artifactId>looks</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>ca.odell.glazedlists</groupId>
+            <artifactId>glazedlists</artifactId>
+            <version>1.6.0_java15</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jdesktop.swingx</groupId>
+            <artifactId>swingx</artifactId>
+            <version>0.2005-06-02</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jdesktop.jdnc</groupId>
+            <artifactId>jdnc</artifactId>
+            <version>0.7-all</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.microba</groupId>
+            <artifactId>microba</artifactId>
+            <version>0.4.1</version>
+        </dependency>
+
+        <!-- Utils -->
+        <dependency>
+            <groupId>edu.oswego.concurrent</groupId>
+            <artifactId>concurrent</artifactId>
+            <version>1.3.4</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.help</groupId>
+            <artifactId>javahelp</artifactId>
+            <version>2.0</version>
+        </dependency>
+
+        <!-- Docking -->
+        <dependency>
+            <groupId>net.java.dev.flexdock</groupId>
+            <artifactId>flexdock</artifactId>
+            <version>0.4.0</version>
+        </dependency>
+        
+        <!-- Others -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+        </dependency>        
+    </dependencies>
+</project>

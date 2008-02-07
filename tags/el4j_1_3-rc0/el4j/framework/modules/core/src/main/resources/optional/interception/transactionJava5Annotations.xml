@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Spring bean configuration file for automatic interception of methods where
+    transaction Java5 annotations are defined.
+
+    Needed beans which are not defined in this file:
+       * transactionManager
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+
+    <!--
+        General AOP definitions.
+    -->
+    <bean id="transactionAutoproxy" 
+        class="ch.elca.el4j.core.aop.IntelligentAdvisorAutoProxyCreator">
+        <property name="proxyTargetClass">
+            <!-- 
+                false: 
+                    Jdk proxies will be used. 
+                    Only interface methods will be intercepted.
+                    
+                true: 
+                    Cglib will be used to intercept methods. 
+                    Intercepted beans must have a default constructor and 
+                    must not be final.
+            -->
+            <value>false</value>
+        </property>
+    </bean>
+    
+    <!--
+        Transaction configurations.
+    -->
+    <bean id="transactionAdvisor" 
+        class="org.springframework.transaction.interceptor.TransactionAttributeSourceAdvisor">
+        <constructor-arg>
+            <ref local="transactionInterceptor"/>
+        </constructor-arg>
+    </bean>
+    <bean id="transactionInterceptor" 
+        class="org.springframework.transaction.interceptor.TransactionInterceptor">
+        <property name="transactionManager">
+            <ref bean="transactionManager"/>
+        </property>
+        <property name="transactionAttributeSource">
+            <ref local="transactionAttributeSource"/>
+        </property>
+    </bean>
+    <bean id="transactionAttributeSource" 
+        class="ch.elca.el4j.core.transaction.AnnotationTransactionMetaDataSource">
+        <property name="metaDataDelegator">
+            <ref local="metaDataCollector"/>
+        </property>
+    </bean>
+
+    <bean id="metaDataCollector" 
+        class="ch.elca.el4j.util.metadata.MetaDataCollector">
+        <property name="metaDataDelegator">
+            <ref local="annotations"/>
+        </property>
+    </bean>
+
+    <bean id="annotations" 
+        class="ch.elca.el4j.util.metadata.annotations.Annotations"/>
+</beans>

@@ -1,0 +1,2434 @@
+Index: api/container/pom.xml
+===================================================================
+--- api/container/pom.xml	(revision 1548)
++++ api/container/pom.xml	(working copy)
+@@ -21,7 +21,7 @@
+   <parent>
+     <groupId>org.codehaus.cargo</groupId>
+     <artifactId>cargo-core-api</artifactId>
+-    <version>1.0-SNAPSHOT</version>
++    <version>1.0-el4j_20080110_1000</version>
+   </parent>
+   <artifactId>cargo-core-api-container</artifactId>
+   <name>Cargo Core Container API</name>
+Index: api/container/src/main/java/org/codehaus/cargo/container/deployable/WAR.java
+===================================================================
+--- api/container/src/main/java/org/codehaus/cargo/container/deployable/WAR.java	(revision 1548)
++++ api/container/src/main/java/org/codehaus/cargo/container/deployable/WAR.java	(working copy)
+@@ -32,7 +32,7 @@
+     /**
+      * The web context parsed from the name of the WAR file. 
+      */
+-    private String context;
++    protected String context;
+ 
+     /**
+      * @param war the location of the WAR being wrapped. This must point to either a WAR file or an
+Index: api/container/src/main/java/org/codehaus/cargo/container/spi/AbstractInstalledLocalContainer.java
+===================================================================
+--- api/container/src/main/java/org/codehaus/cargo/container/spi/AbstractInstalledLocalContainer.java	(revision 1548)
++++ api/container/src/main/java/org/codehaus/cargo/container/spi/AbstractInstalledLocalContainer.java	(working copy)
+@@ -227,51 +227,14 @@
+     {
+         return this.home;
+     }
+-
++    
+     /**
+-     * Implementation of {@link org.codehaus.cargo.container.LocalContainer#start()} that all
+-     * containers extending this class must implement.
+-     *
+-     * @param java the predefined Ant {@link org.apache.tools.ant.taskdefs.Java} command to use to
+-     *             start the container
+-     * @throws Exception if any error is raised during the container start
+-     */
+-    protected abstract void doStart(Java java) throws Exception;
+-
+-    /**
+-     * Implementation of {@link org.codehaus.cargo.container.LocalContainer#stop()} that all
+-     * containers extending this class must implement.
+-     *
+-     * @param java the predefined Ant {@link Java} command to use to stop the container
+-     * @throws Exception if any error is raised during the container stop
+-     */
+-    protected abstract void doStop(Java java) throws Exception;
+-
+-    /**
+-     * {@inheritDoc}
+-     * @see org.codehaus.cargo.container.spi.AbstractLocalContainer#startInternal()
+-     */
+-    protected final void startInternal() throws Exception
+-    {
+-        doStart(createJavaTask());
+-    }
+-
+-    /**
+-     * {@inheritDoc}
+-     * @see org.codehaus.cargo.container.spi.AbstractLocalContainer#stopInternal()
+-     */
+-    protected final void stopInternal() throws Exception
+-    {
+-        doStop(createJavaTask());
+-    }
+-
+-    /**
+      * Creates a preinitialized instance of the Ant Java task to be used for starting and shutting
+      * down the container.
+      *
+      * @return The created task instance
+      */
+-    private Java createJavaTask()
++    public Java createJavaTask()
+     {
+         Java java = (Java) getAntUtils().createAntTask("java");
+         java.setFork(true);
+@@ -304,8 +267,48 @@
+         
+         return java;
+     }
++    
+ 
+     /**
++     * Implementation of {@link org.codehaus.cargo.container.LocalContainer#start()} that all
++     * containers extending this class must implement.
++     *
++     * @param java the predefined Ant {@link org.apache.tools.ant.taskdefs.Java} command to use to
++     *             start the container
++     * @throws Exception if any error is raised during the container start
++     */
++    protected abstract void doStart(Java java) throws Exception;
++
++    /**
++     * Implementation of {@link org.codehaus.cargo.container.LocalContainer#stop()} that all
++     * containers extending this class must implement.
++     *
++     * @param java the predefined Ant {@link Java} command to use to stop the container
++     * @throws Exception if any error is raised during the container stop
++     */
++    protected abstract void doStop(Java java) throws Exception;
++
++    /**
++     * {@inheritDoc}
++     * @see org.codehaus.cargo.container.spi.AbstractLocalContainer#startInternal()
++     */
++    protected final void startInternal() throws Exception
++    {
++        doStart(createJavaTask());
++    }
++
++    /**
++     * {@inheritDoc}
++     * @see org.codehaus.cargo.container.spi.AbstractLocalContainer#stopInternal()
++     */
++    protected final void stopInternal() throws Exception
++    {
++        doStop(createJavaTask());
++    }
++
++    
++
++    /**
+      * Add system properties to the Ant java command used to start the container.
+      * 
+      * @param java the java command that will start the container
+Index: api/container/src/main/java/org/codehaus/cargo/container/spi/AbstractLocalContainer.java
+===================================================================
+--- api/container/src/main/java/org/codehaus/cargo/container/spi/AbstractLocalContainer.java	(revision 1548)
++++ api/container/src/main/java/org/codehaus/cargo/container/spi/AbstractLocalContainer.java	(working copy)
+@@ -49,7 +49,7 @@
+     /**
+      * Default timeout for starting/stopping the container.
+      */
+-    private long timeout = 120000L;
++    private long timeout = 500000L;//120000L;
+ 
+     /**
+      * The local configuration implementation to use.
+Index: api/container/src/main/java/org/codehaus/cargo/container/spi/deployer/AbstractCopyingInstalledLocalDeployer.java
+===================================================================
+--- api/container/src/main/java/org/codehaus/cargo/container/spi/deployer/AbstractCopyingInstalledLocalDeployer.java	(revision 1548)
++++ api/container/src/main/java/org/codehaus/cargo/container/spi/deployer/AbstractCopyingInstalledLocalDeployer.java	(working copy)
+@@ -155,10 +155,11 @@
+     protected boolean canBeDeployed(final Deployable newDeployable)
+     {
+         final Set newDeployableContextSet = getWebContextsSet(newDeployable);
+-        final int size = this.deployedDeployables.size();
++        final List dd = getDeployedDeployables();
++        final int size = dd.size();
+         for (int i = 0; i < size; i++)
+         {
+-            final Deployable deployedDeployable = (Deployable) this.deployedDeployables.get(i);
++            final Deployable deployedDeployable = (Deployable) dd.get(i);
+             for (Iterator contextIterator = getWebContextsIterator(deployedDeployable);
+                  contextIterator.hasNext();)
+             {
+@@ -274,4 +275,32 @@
+         getFileHandler().copyDirectory(
+             war.getFile(), getFileHandler().append(deployableDir, war.getContext()));
+     }
++
++    /**
++     * @param d Is the deployed deployable.
++     * @return Returns <code>true</code> if the deployable could be added to the
++     *         list of deployed deployables.
++     */
++    protected boolean notifyDeployableDeployed(Deployable d)
++    {
++        return deployedDeployables.add(d);
++    }
++
++    /**
++     * @param d Is the undeployed deployable.
++     * @return Returns <code>true</code> if the deployable could be removed from
++     *         the list of deployed deployables.
++     */
++    protected boolean notifyDeployableUndeployed(Deployable d)
++    {
++        return deployedDeployables.remove(d);
++    }
++
++    /**
++     * @return Returns a copy of the deployed deployables list.
++     */
++    protected List getDeployedDeployables()
++    {
++        return new ArrayList(deployedDeployables);
++    }
+ }
+Index: api/generic/pom.xml
+===================================================================
+--- api/generic/pom.xml	(revision 1548)
++++ api/generic/pom.xml	(working copy)
+@@ -21,7 +21,7 @@
+   <parent>
+     <groupId>org.codehaus.cargo</groupId>
+     <artifactId>cargo-core-api</artifactId>
+-    <version>1.0-SNAPSHOT</version>
++    <version>1.0-el4j_20080110_1000</version>
+   </parent>
+   <artifactId>cargo-core-api-generic</artifactId>
+   <name>Cargo Core Generic API</name>
+Index: api/generic/src/main/java/org/codehaus/cargo/generic/configuration/DefaultConfigurationCapabilityFactory.java
+===================================================================
+--- api/generic/src/main/java/org/codehaus/cargo/generic/configuration/DefaultConfigurationCapabilityFactory.java	(revision 1548)
++++ api/generic/src/main/java/org/codehaus/cargo/generic/configuration/DefaultConfigurationCapabilityFactory.java	(working copy)
+@@ -144,6 +144,26 @@
+         registerConfigurationCapability("tomcat5x", ContainerType.REMOTE,
+             ConfigurationType.RUNTIME, "org.codehaus.cargo.container.tomcat.internal."
+                 + "TomcatRuntimeConfigurationCapability");
++        
++        
++        //for tomcat 6 we can use the classes of tomcat 5
++        registerConfigurationCapability("tomcat6x", ContainerType.INSTALLED,
++                ConfigurationType.STANDALONE, "org.codehaus.cargo.container.tomcat.internal."
++                    + "TomcatStandaloneLocalConfigurationCapability");
++            registerConfigurationCapability("tomcat6x", ContainerType.EMBEDDED,
++                ConfigurationType.STANDALONE, "org.codehaus.cargo.container.tomcat.internal."
++                    + "TomcatStandaloneLocalConfigurationCapability");
++            registerConfigurationCapability("tomcat6x", ContainerType.INSTALLED,
++                ConfigurationType.EXISTING, "org.codehaus.cargo.container.tomcat.internal."
++                    + "TomcatExistingLocalConfigurationCapability");
++            registerConfigurationCapability("tomcat6x", ContainerType.EMBEDDED,
++                ConfigurationType.EXISTING, "org.codehaus.cargo.container.tomcat.internal."
++                    + "TomcatExistingLocalConfigurationCapability");
++            registerConfigurationCapability("tomcat6x", ContainerType.REMOTE,
++                ConfigurationType.RUNTIME, "org.codehaus.cargo.container.tomcat.internal."
++                    + "TomcatRuntimeConfigurationCapability");
++        
++        
+ 
+         registerConfigurationCapability("weblogic8x", ContainerType.INSTALLED,
+             ConfigurationType.STANDALONE, "org.codehaus.cargo.container.weblogic.internal."
+@@ -151,6 +171,15 @@
+         registerConfigurationCapability("weblogic8x", ContainerType.INSTALLED,
+             ConfigurationType.EXISTING, "org.codehaus.cargo.container.weblogic.internal."
+                 + "WebLogicExistingLocalConfigurationCapability");
++        
++        
++        registerConfigurationCapability("weblogic10x", ContainerType.INSTALLED,
++                ConfigurationType.STANDALONE, "org.codehaus.cargo.container.weblogic.internal."
++                    + "WebLogic10xStandaloneLocalConfigurationCapability");
++        
++        registerConfigurationCapability("weblogic10x", ContainerType.INSTALLED,
++                ConfigurationType.EXISTING, "org.codehaus.cargo.container.weblogic.internal."
++                    + "WebLogic10xExistingLocalConfigurationCapability");
+     }
+ 
+     /**
+Index: api/generic/src/main/java/org/codehaus/cargo/generic/configuration/DefaultConfigurationFactory.java
+===================================================================
+--- api/generic/src/main/java/org/codehaus/cargo/generic/configuration/DefaultConfigurationFactory.java	(revision 1548)
++++ api/generic/src/main/java/org/codehaus/cargo/generic/configuration/DefaultConfigurationFactory.java	(working copy)
+@@ -130,11 +130,33 @@
+             "org.codehaus.cargo.container.tomcat.TomcatExistingLocalConfiguration");
+         registerConfiguration("tomcat5x", ContainerType.REMOTE, ConfigurationType.RUNTIME,
+             "org.codehaus.cargo.container.tomcat.TomcatRuntimeConfiguration");
+-
++        
++        
++        
++        registerConfiguration("tomcat6x", ContainerType.INSTALLED, ConfigurationType.STANDALONE,
++	        "org.codehaus.cargo.container.tomcat.Tomcat6xStandaloneLocalConfiguration");
++	    registerConfiguration("tomcat6x", ContainerType.EMBEDDED, ConfigurationType.STANDALONE,
++	        "org.codehaus.cargo.container.tomcat.Tomcat6xStandaloneLocalConfiguration");
++	    registerConfiguration("tomcat6x", ContainerType.INSTALLED, ConfigurationType.EXISTING,
++	        "org.codehaus.cargo.container.tomcat.TomcatExistingLocalConfiguration");
++	    registerConfiguration("tomcat6x", ContainerType.EMBEDDED, ConfigurationType.EXISTING,
++	        "org.codehaus.cargo.container.tomcat.TomcatExistingLocalConfiguration");
++	    registerConfiguration("tomcat6x", ContainerType.REMOTE, ConfigurationType.RUNTIME,
++	        "org.codehaus.cargo.container.tomcat.TomcatRuntimeConfiguration");
++    
++        
++        
+         registerConfiguration("weblogic8x", ContainerType.INSTALLED, ConfigurationType.STANDALONE,
+             "org.codehaus.cargo.container.weblogic.WebLogicStandaloneLocalConfiguration");
+         registerConfiguration("weblogic8x", ContainerType.INSTALLED, ConfigurationType.EXISTING,
+             "org.codehaus.cargo.container.weblogic.WebLogicExistingLocalConfiguration");
++        
++        
++        registerConfiguration("weblogic10x", ContainerType.INSTALLED, ConfigurationType.STANDALONE,
++        "org.codehaus.cargo.container.weblogic.WebLogic10xStandaloneLocalConfiguration");
++        registerConfiguration("weblogic10x", ContainerType.INSTALLED, ConfigurationType.EXISTING,
++        "org.codehaus.cargo.container.weblogic.WebLogic10xExistingLocalConfiguration");
++
+     }
+ 
+     /**
+Index: api/generic/src/main/java/org/codehaus/cargo/generic/DefaultContainerCapabilityFactory.java
+===================================================================
+--- api/generic/src/main/java/org/codehaus/cargo/generic/DefaultContainerCapabilityFactory.java	(revision 1548)
++++ api/generic/src/main/java/org/codehaus/cargo/generic/DefaultContainerCapabilityFactory.java	(working copy)
+@@ -87,8 +87,14 @@
+         registerContainerCapability("tomcat5x",
+             "org.codehaus.cargo.container.internal.ServletContainerCapability");
+ 
++        registerContainerCapability("tomcat6x",
++        "org.codehaus.cargo.container.internal.ServletContainerCapability");
++        
+         registerContainerCapability("weblogic8x",
+             "org.codehaus.cargo.container.internal.J2EEContainerCapability");
++        
++        registerContainerCapability("weblogic10x",
++        "org.codehaus.cargo.container.internal.J2EEContainerCapability");
+     }
+ 
+     /**
+Index: api/generic/src/main/java/org/codehaus/cargo/generic/DefaultContainerFactory.java
+===================================================================
+--- api/generic/src/main/java/org/codehaus/cargo/generic/DefaultContainerFactory.java	(revision 1548)
++++ api/generic/src/main/java/org/codehaus/cargo/generic/DefaultContainerFactory.java	(working copy)
+@@ -119,8 +119,22 @@
+         registerContainer("tomcat5x", ContainerType.EMBEDDED,
+             "org.codehaus.cargo.container.tomcat.Tomcat5xEmbeddedLocalContainer");
+ 
++        //for tomcat 6 installed local we have a special class
++        registerContainer("tomcat6x", ContainerType.INSTALLED,
++	        "org.codehaus.cargo.container.tomcat.Tomcat6xInstalledLocalContainer");
++	    //for other modes, we use tomcat 5 implementation
++        registerContainer("tomcat6x", ContainerType.REMOTE,
++	        "org.codehaus.cargo.container.tomcat.Tomcat5xRemoteContainer");
++	    registerContainer("tomcat6x", ContainerType.EMBEDDED,
++	        "org.codehaus.cargo.container.tomcat.Tomcat5xEmbeddedLocalContainer");
++
++        
++        
+         registerContainer("weblogic8x", ContainerType.INSTALLED,
+             "org.codehaus.cargo.container.weblogic.WebLogic8xInstalledLocalContainer");
++        
++        registerContainer("weblogic10x", ContainerType.INSTALLED,
++        "org.codehaus.cargo.container.weblogic.WebLogic10xInstalledLocalContainer");
+     }
+ 
+     /**
+Index: api/generic/src/main/java/org/codehaus/cargo/generic/deployable/DefaultDeployableFactory.java
+===================================================================
+--- api/generic/src/main/java/org/codehaus/cargo/generic/deployable/DefaultDeployableFactory.java	(revision 1548)
++++ api/generic/src/main/java/org/codehaus/cargo/generic/deployable/DefaultDeployableFactory.java	(working copy)
+@@ -74,6 +74,9 @@
+ 
+         registerDeployable("tomcat5x", DeployableType.WAR,
+             "org.codehaus.cargo.container.tomcat.TomcatWAR");
++        
++        registerDeployable("tomcat6x", DeployableType.WAR,
++        "org.codehaus.cargo.container.tomcat.TomcatWAR");
+ 
+         registerDeployable("geronimo1x", DeployableType.WAR,
+             "org.codehaus.cargo.container.geronimo.deployable.GeronimoWAR");
+@@ -81,6 +84,10 @@
+             "org.codehaus.cargo.container.geronimo.deployable.GeronimoEJB");
+         registerDeployable("geronimo1x", DeployableType.EAR,
+             "org.codehaus.cargo.container.geronimo.deployable.GeronimoEAR");
++        
++        
++        registerDeployable("weblogic10x", DeployableType.WAR,
++        	"org.codehaus.cargo.container.weblogic.WeblogicWAR");
+ 
+         // TODO: Register JBossWAR here when we add JBoss support
+     }
+Index: api/generic/src/main/java/org/codehaus/cargo/generic/deployer/DefaultDeployerFactory.java
+===================================================================
+--- api/generic/src/main/java/org/codehaus/cargo/generic/deployer/DefaultDeployerFactory.java	(revision 1548)
++++ api/generic/src/main/java/org/codehaus/cargo/generic/deployer/DefaultDeployerFactory.java	(working copy)
+@@ -100,6 +100,20 @@
+             "org.codehaus.cargo.container.tomcat.Tomcat5xRemoteDeployer");
+         registerDeployer("tomcat5x", DeployerType.EMBEDDED,
+             "org.codehaus.cargo.container.tomcat.Tomcat5xEmbeddedLocalDeployer");
++   
++        //for tomcat 6 we can use the classes of tomcat 5
++        registerDeployer("tomcat6x", DeployerType.INSTALLED,
++        	"org.codehaus.cargo.container.tomcat.TomcatCopyingInstalledLocalDeployer");
++        registerDeployer("tomcat6x", DeployerType.REMOTE,
++        	"org.codehaus.cargo.container.tomcat.Tomcat5xRemoteDeployer");
++    	registerDeployer("tomcat6x", DeployerType.EMBEDDED,
++        	"org.codehaus.cargo.container.tomcat.Tomcat5xEmbeddedLocalDeployer");
++    
++    
++    
++        registerDeployer("weblogic10x", DeployerType.INSTALLED,
++        "org.codehaus.cargo.container.weblogic.Weblogic10xInstalledLocalDeployer");
++    
+     }
+ 
+     /**
+Index: api/generic/src/main/java/org/codehaus/cargo/generic/packager/DefaultPackagerFactory.java
+===================================================================
+--- api/generic/src/main/java/org/codehaus/cargo/generic/packager/DefaultPackagerFactory.java	(revision 1548)
++++ api/generic/src/main/java/org/codehaus/cargo/generic/packager/DefaultPackagerFactory.java	(working copy)
+@@ -65,6 +65,8 @@
+             "org.codehaus.cargo.container.tomcat.TomcatDirectoryPackager");
+         registerPackager("tomcat5x", PackagerType.DIRECTORY,
+             "org.codehaus.cargo.container.tomcat.TomcatDirectoryPackager");
++        registerPackager("tomcat6x", PackagerType.DIRECTORY,
++        "org.codehaus.cargo.container.tomcat.TomcatDirectoryPackager");
+     }
+ 
+     /**
+Index: api/module/pom.xml
+===================================================================
+--- api/module/pom.xml	(revision 1548)
++++ api/module/pom.xml	(working copy)
+@@ -21,7 +21,7 @@
+   <parent>
+     <groupId>org.codehaus.cargo</groupId>
+     <artifactId>cargo-core-api</artifactId>
+-    <version>1.0-SNAPSHOT</version>
++    <version>1.0-el4j_20080110_1000</version>
+   </parent>
+   <artifactId>cargo-core-api-module</artifactId>
+   <name>Cargo Core Module API</name>
+@@ -59,23 +59,23 @@
+       <artifactId>xmlunit</artifactId>
+       <version>1.0</version>
+       <scope>test</scope>
+-    </dependency>
+-    <dependency>
+-      <groupId>dom4j</groupId>
+-      <artifactId>dom4j</artifactId>
+-      <version>1.4</version>
+-    </dependency>    
+-    <dependency>
+-      <groupId>jdom</groupId>
+-      <artifactId>jdom</artifactId>
+-      <version>1.0</version>
+-    </dependency>
+-    <dependency>
+-      <groupId>jaxen</groupId>
+-      <artifactId>jaxen</artifactId>
+-      <version>1.0-FCS</version>
+     </dependency>
+     <dependency>
++      <groupId>dom4j</groupId>
++      <artifactId>dom4j</artifactId>
++      <version>1.4</version>
++    </dependency>    
++    <dependency>
++      <groupId>jdom</groupId>
++      <artifactId>jdom</artifactId>
++      <version>1.0</version>
++    </dependency>
++    <dependency>
++      <groupId>jaxen</groupId>
++      <artifactId>jaxen</artifactId>
++      <version>1.0-FCS</version>
++    </dependency>
++    <dependency>
+       <groupId>org.codehaus.cargo</groupId>
+       <artifactId>cargo-core-api-util</artifactId>
+       <version>${version}</version>
+Index: api/module/src/main/java/org/codehaus/cargo/module/webapp/DefaultWarArchive.java
+===================================================================
+--- api/module/src/main/java/org/codehaus/cargo/module/webapp/DefaultWarArchive.java	(revision 1548)
++++ api/module/src/main/java/org/codehaus/cargo/module/webapp/DefaultWarArchive.java	(working copy)
+@@ -59,18 +59,22 @@
+  */
+ public class DefaultWarArchive extends DefaultJarArchive implements WarArchive
+ {
++	
++	
++	 /**
++     * The filename.
++     */
++    protected String file;
++
++    
++    
+     /**
+      * The parsed deployment descriptor.
+      */
+     private WebXml webXml;
+ 
++   
+     /**
+-     * The filename.
+-     */
+-    private String file;
+-
+-    
+-    /**
+      * {@inheritDoc}
+      * @see DefaultJarArchive#DefaultJarArchive(String)
+      */
+Index: api/module/src/main/java/org/codehaus/cargo/module/webapp/tomcat/TomcatWarArchive.java
+===================================================================
+--- api/module/src/main/java/org/codehaus/cargo/module/webapp/tomcat/TomcatWarArchive.java	(revision 1548)
++++ api/module/src/main/java/org/codehaus/cargo/module/webapp/tomcat/TomcatWarArchive.java	(working copy)
+@@ -24,7 +24,6 @@
+ import java.io.IOException;
+ import java.io.InputStream;
+ 
+-import org.codehaus.cargo.module.DefaultJarArchive;
+ import org.codehaus.cargo.module.JarArchive;
+ import org.codehaus.cargo.module.JarArchiveIo;
+ import org.jdom.JDOMException;
+Index: api/module/src/main/java/org/codehaus/cargo/module/webapp/weblogic/WeblogicWARArchive.java
+===================================================================
+--- api/module/src/main/java/org/codehaus/cargo/module/webapp/weblogic/WeblogicWARArchive.java	(revision 0)
++++ api/module/src/main/java/org/codehaus/cargo/module/webapp/weblogic/WeblogicWARArchive.java	(revision 0)
+@@ -0,0 +1,250 @@
++/**
++ * 
++ */
++package org.codehaus.cargo.module.webapp.weblogic;
++
++import java.io.File;
++import java.io.FileInputStream;
++import java.io.FileOutputStream;
++import java.io.IOException;
++import java.io.InputStream;
++import java.util.jar.JarEntry;
++import java.util.jar.JarInputStream;
++import java.util.jar.JarOutputStream;
++import org.codehaus.cargo.module.JarArchive;
++import org.codehaus.cargo.module.JarArchiveIo;
++import org.codehaus.cargo.module.webapp.DefaultWarArchive;
++import org.codehaus.cargo.util.DefaultFileHandler;
++import org.codehaus.cargo.util.FileHandler;
++
++import org.jdom.JDOMException;
++
++import sun.security.action.GetLongAction;
++
++/**
++ * 
++ * WAR file of weblogic application
++ * 
++ * @author Frank Bitzer (FBI)
++ *
++ */
++public class WeblogicWARArchive extends DefaultWarArchive {
++
++//	 /**
++//     * The file representing either the WAR file or the expanded WAR directory.
++//     */
++//    private String file;
++    
++    /**
++     * The parsed deployment descriptor.
++     */
++    private WeblogicXml weblogicXml;
++
++    /**
++     * Constructor.
++     * 
++     * @param warFile The web application archive
++     * @throws IOException If there was a problem reading the  deployment
++     *         descriptor in the WAR
++     * @throws JDOMException If the deployment descriptor of the WAR could not
++     *         be parsed
++     */
++    public WeblogicWARArchive(String warFile)
++        throws IOException, JDOMException
++    {
++    	
++    	
++    	super(warFile);
++    	
++        //this.warFile = warFile;
++        this.weblogicXml = parseWeblogicXml();
++    }
++    
++    
++    
++    /**
++     * Returns the <code>weblogic.xml</code> deployment descriptor of the web application.
++     * 
++     * @return The parsed deployment descriptor, or <code>null</code> if no such file exists.
++     */
++    public final WeblogicXml getWeblogicXml()
++    {
++        return this.weblogicXml;
++    }
++
++    
++    /**
++     * Edits the deployable and writes the given WeblogicXml deployment 
++     * descriptor to WEB-INF/weblogic.xml.
++     * If it already exists, it is replaced
++     * 
++     * @param weblogicXML
++     * @throws IOException
++     */
++    public void updateWeblogicXML(WeblogicXml weblogicXML)
++    		throws IOException
++    	{
++    	try {
++    		
++    		//exploded war, so we can easily replace weblogic.xml
++	    	if (new File(this.file).isDirectory())
++	        {
++	            File contextXmlFile = new File(this.file, "WEB-INF/weblogic.xml");
++	            
++	            //delete old file at first
++	            try {
++	            	contextXmlFile.delete();
++	            } catch (Exception ex) {
++	            }
++	            
++	            FileOutputStream out = new FileOutputStream(contextXmlFile);
++	                
++	            WeblogicXmlIo.writeDescriptor(weblogicXml, out, null, true);
++	                
++	            out.close();
++	           
++	        }
++	        else
++	        {
++	        	//the deployable is a packed war file, so we
++	        	//have to modify this war
++	        	FileHandler fileHandler = new DefaultFileHandler();
++	       
++	        	JarInputStream in = getContentAsStream();
++	        	
++	        	
++	        	File tempWAR = File.createTempFile("war.tmp", null);
++	        	tempWAR.deleteOnExit();
++	        	
++	        	//System.out.println("Created temp file at " + tempWAR.getAbsolutePath());
++	        	
++	        	
++	        	JarOutputStream out = new JarOutputStream(new FileOutputStream(tempWAR));
++	        	
++	        	
++	        	// Copy all entries from the original WAR file except
++	        	//weblogic.xml
++	            JarEntry entry;
++	           
++	            
++	            while ((entry = in.getNextJarEntry()) != null)
++	            {
++	                if (!entry.getName().toLowerCase().endsWith("weblogic.xml"))
++	                {
++	                    out.putNextEntry(entry);
++	                    fileHandler.copy(in, out);
++	                }
++	            }
++	            in.close();
++	        	
++	        	//create new entry in war for weblogic.xml
++	        	JarEntry descriptorEntry = new JarEntry("WEB-INF/weblogic.xml");
++	            out.putNextEntry(descriptorEntry);
++	            
++	            WeblogicXmlIo.writeDescriptor(weblogicXml, out, null, true);
++	            
++	            out.close();
++	            
++	            //rename temp file
++	            File origFile = new File(this.file);
++	            
++	            
++	            
++	            if (!origFile.delete()) {
++	            	throw new IOException("Failed to delete original war file.");
++	            }
++	            //if (!tempWAR.renameTo(origFile)){
++	            	
++	            	//throw new IOException("Renaming of WAR file failed: ");
++	            	
++	            	//renaming not successful, so try to copy manually
++	            //System.out.println("Copying temp file back to original...");
++	            this.getFileHandler().copyFile(tempWAR.getAbsolutePath(), this.file);
++	            	
++	            //}
++	            
++	            
++	            //delete temp file
++	            tempWAR.delete();
++	             
++	        }
++    	
++	    	
++	    } catch (Exception ex){
++	    	throw new IOException("Writing deployment descriptor failed: " + ex.getLocalizedMessage());
++	    }
++    	
++        
++    	
++    }
++    
++//    /** Copies src file to dst file.
++//     * 	If the dst file does not exist, it is created
++//     */
++//    private void copy(File src, File dst) throws IOException {
++//        InputStream in = new FileInputStream(src);
++//        OutputStream out = new FileOutputStream(dst);
++//    
++//        // Transfer bytes from in to out
++//        byte[] buf = new byte[1024];
++//        int len;
++//        while ((len = in.read(buf)) > 0) {
++//            out.write(buf, 0, len);
++//        }
++//        in.close();
++//        out.close();
++//    }
++    
++
++    /**
++     * @return the parsed <code>weblogic.xml</code> descriptor or null
++     *         if none exists 
++     * @throws IOException If there was a problem reading the  deployment
++     *         descriptor in the WAR
++     * @throws JDOMException If the deployment descriptor of the WAR could not
++     *         be parsed
++     */
++    private WeblogicXml parseWeblogicXml()
++        throws IOException, JDOMException
++    {
++    	WeblogicXml context = null;
++
++    	
++        InputStream in = null;
++        try
++        {
++            // Are we manipulating a WAR file or an expanded WAR directory?
++            if (new File(this.file).isDirectory())
++            {
++                File contextXmlFile = new File(this.file, "WEB-INF/weblogic.xml");
++                if (contextXmlFile.exists())
++                {
++                    in = new FileInputStream(contextXmlFile);
++                }
++            }
++            else
++            {
++                JarArchive jarArchive = JarArchiveIo.open(new File(this.file));
++                in = jarArchive.getResource("WEB-INF/weblogic.xml");
++            }
++
++
++            if (in != null)
++            {
++                context = WeblogicXmlIo.parseWeblogicXml(in);
++            }
++        }
++        finally
++        {
++            if (in != null)
++            {
++                in.close();
++            }
++        }
++
++        return context;
++    }
++    
++    
++}
++
+
+Property changes on: api\module\src\main\java\org\codehaus\cargo\module\webapp\weblogic\WeblogicWARArchive.java
+___________________________________________________________________
+Name: svn:keywords
+   + URL Date Author Revision Id
+Name: svn:eol-style
+   + native
+
+Index: api/pom.xml
+===================================================================
+--- api/pom.xml	(revision 1548)
++++ api/pom.xml	(working copy)
+@@ -21,10 +21,10 @@
+   <parent>
+     <groupId>org.codehaus.cargo</groupId>
+     <artifactId>cargo-core</artifactId>
+-    <version>1.0-SNAPSHOT</version>
++    <version>1.0-el4j_20080110_1000</version>
+   </parent>
+   <artifactId>cargo-core-api</artifactId>
+-  <version>1.0-SNAPSHOT</version>
++  <version>1.0-el4j_20080110_1000</version>
+   <name>Cargo Core API</name>
+   <packaging>pom</packaging>
+   <description>The Cargo Core API</description>
+Index: api/util/pom.xml
+===================================================================
+--- api/util/pom.xml	(revision 1548)
++++ api/util/pom.xml	(working copy)
+@@ -21,7 +21,7 @@
+   <parent>
+     <groupId>org.codehaus.cargo</groupId>
+     <artifactId>cargo-core-api</artifactId>
+-    <version>1.0-SNAPSHOT</version>
++    <version>1.0-el4j_20080110_1000</version>
+   </parent>
+   <artifactId>cargo-core-api-util</artifactId>
+   <name>Cargo Core Util API</name>
+Index: api/util/src/main/java/org/codehaus/cargo/util/DefaultFileHandler.java
+===================================================================
+--- api/util/src/main/java/org/codehaus/cargo/util/DefaultFileHandler.java	(revision 1548)
++++ api/util/src/main/java/org/codehaus/cargo/util/DefaultFileHandler.java	(working copy)
+@@ -180,7 +180,7 @@
+         catch (IOException e)
+         {
+             throw new CargoException("Failed to copy input stream [" + in.toString()
+-                + "] to output stream [" + out.toString() + "]", e);
++                + "] to output stream [" + out.toString() + "] : " + e.getLocalizedMessage(), e);
+         }
+     }
+ 
+Index: containers/geronimo/pom.xml
+===================================================================
+--- containers/geronimo/pom.xml	(revision 1548)
++++ containers/geronimo/pom.xml	(working copy)
+@@ -21,7 +21,7 @@
+   <parent>
+     <groupId>org.codehaus.cargo</groupId>
+     <artifactId>cargo-core-containers</artifactId>
+-    <version>1.0-SNAPSHOT</version>
++    <version>1.0-el4j_20080110_1000</version>
+   </parent>
+   <artifactId>cargo-core-container-geronimo</artifactId>
+   <name>Cargo Core Geronimo Container</name>
+Index: containers/jboss/pom.xml
+===================================================================
+--- containers/jboss/pom.xml	(revision 1548)
++++ containers/jboss/pom.xml	(working copy)
+@@ -21,7 +21,7 @@
+   <parent>
+     <groupId>org.codehaus.cargo</groupId>
+     <artifactId>cargo-core-containers</artifactId>
+-    <version>1.0-SNAPSHOT</version>
++    <version>1.0-el4j_20080110_1000</version>
+   </parent>
+   <artifactId>cargo-core-container-jboss</artifactId>
+   <name>Cargo Core JBoss Container</name>
+Index: containers/jetty/pom.xml
+===================================================================
+--- containers/jetty/pom.xml	(revision 1548)
++++ containers/jetty/pom.xml	(working copy)
+@@ -21,7 +21,7 @@
+   <parent>
+     <groupId>org.codehaus.cargo</groupId>
+     <artifactId>cargo-core-containers</artifactId>
+-    <version>1.0-SNAPSHOT</version>
++    <version>1.0-el4j_20080110_1000</version>
+   </parent>
+   <artifactId>cargo-core-container-jetty</artifactId>
+   <name>Cargo Core Jetty Container</name>
+Index: containers/jo/pom.xml
+===================================================================
+--- containers/jo/pom.xml	(revision 1548)
++++ containers/jo/pom.xml	(working copy)
+@@ -21,7 +21,7 @@
+   <parent>
+     <groupId>org.codehaus.cargo</groupId>
+     <artifactId>cargo-core-containers</artifactId>
+-    <version>1.0-SNAPSHOT</version>
++    <version>1.0-el4j_20080110_1000</version>
+   </parent>
+   <artifactId>cargo-core-container-jo</artifactId>
+   <name>Cargo Core jo! Container</name>
+Index: containers/orion/pom.xml
+===================================================================
+--- containers/orion/pom.xml	(revision 1548)
++++ containers/orion/pom.xml	(working copy)
+@@ -21,7 +21,7 @@
+   <parent>
+     <groupId>org.codehaus.cargo</groupId>
+     <artifactId>cargo-core-containers</artifactId>
+-    <version>1.0-SNAPSHOT</version>
++    <version>1.0-el4j_20080110_1000</version>
+   </parent>
+   <artifactId>cargo-core-container-orion</artifactId>
+   <name>Cargo Core Orion Container</name>
+Index: containers/pom.xml
+===================================================================
+--- containers/pom.xml	(revision 1548)
++++ containers/pom.xml	(working copy)
+@@ -21,10 +21,10 @@
+   <parent>
+     <groupId>org.codehaus.cargo</groupId>
+     <artifactId>cargo-core</artifactId>
+-    <version>1.0-SNAPSHOT</version>
++    <version>1.0-el4j_20080110_1000</version>
+   </parent>
+   <artifactId>cargo-core-containers</artifactId>
+-  <version>1.0-SNAPSHOT</version>
++  <version>1.0-el4j_20080110_1000</version>
+   <name>Cargo Core Containers</name>
+   <packaging>pom</packaging>
+   <description>Core API Container Implementations</description>
+Index: containers/resin/pom.xml
+===================================================================
+--- containers/resin/pom.xml	(revision 1548)
++++ containers/resin/pom.xml	(working copy)
+@@ -21,7 +21,7 @@
+   <parent>
+     <groupId>org.codehaus.cargo</groupId>
+     <artifactId>cargo-core-containers</artifactId>
+-    <version>1.0-SNAPSHOT</version>
++    <version>1.0-el4j_20080110_1000</version>
+   </parent>
+   <artifactId>cargo-core-container-resin</artifactId>
+   <name>Cargo Core Resin Container</name>
+Index: containers/tomcat/pom.xml
+===================================================================
+--- containers/tomcat/pom.xml	(revision 1548)
++++ containers/tomcat/pom.xml	(working copy)
+@@ -21,7 +21,7 @@
+   <parent>
+     <groupId>org.codehaus.cargo</groupId>
+     <artifactId>cargo-core-containers</artifactId>
+-    <version>1.0-SNAPSHOT</version>
++    <version>1.0-el4j_20080110_1000</version>
+   </parent>
+   <artifactId>cargo-core-container-tomcat</artifactId>
+   <name>Cargo Core Tomcat Container</name>
+Index: containers/tomcat/src/main/java/org/codehaus/cargo/container/tomcat/internal/AbstractTomcatManagerDeployer.java
+===================================================================
+--- containers/tomcat/src/main/java/org/codehaus/cargo/container/tomcat/internal/AbstractTomcatManagerDeployer.java	(revision 1548)
++++ containers/tomcat/src/main/java/org/codehaus/cargo/container/tomcat/internal/AbstractTomcatManagerDeployer.java	(working copy)
+@@ -52,7 +52,7 @@
+      * The version of the user agent when communicating with Tomcat manager.
+      * @TODO Do not hardcode the version!!!
+      */
+-    private static final String VERSION = "0.9-SNAPSHOT";
++    private static final String VERSION = "1.0-SNAPSHOT";
+ 
+     /**
+      * The Tomcat manager wrapper.
+Index: containers/tomcat/src/main/java/org/codehaus/cargo/container/tomcat/Tomcat6xInstalledLocalContainer.java
+===================================================================
+--- containers/tomcat/src/main/java/org/codehaus/cargo/container/tomcat/Tomcat6xInstalledLocalContainer.java	(revision 0)
++++ containers/tomcat/src/main/java/org/codehaus/cargo/container/tomcat/Tomcat6xInstalledLocalContainer.java	(revision 0)
+@@ -0,0 +1,49 @@
++package org.codehaus.cargo.container.tomcat;
++
++import org.codehaus.cargo.container.configuration.LocalConfiguration;
++import org.codehaus.cargo.container.tomcat.internal.AbstractCatalinaInstalledLocalContainer;
++
++/**
++ * Special container support for the Apache Tomcat 6.x servlet container.
++ * 
++ * 
++ * @author Frank Bitzer (FBI)
++ * @version $Id$
++ */
++public class Tomcat6xInstalledLocalContainer extends AbstractCatalinaInstalledLocalContainer
++{
++    /**
++     * Unique container id.
++     */
++    public static final String ID = "tomcat6x";
++
++    /**
++     * Perform Tomcat 6.x-specific initializations.
++     *
++     * {@inheritDoc}
++     * @see AbstractCatalinaInstalledLocalContainer#AbstractCatalinaInstalledLocalContainer(org.codehaus.cargo.container.configuration.LocalConfiguration) 
++     */
++    public Tomcat6xInstalledLocalContainer(LocalConfiguration configuration)
++    {
++        super(configuration);
++    }
++
++    /**
++     * {@inheritDoc}
++     * @see org.codehaus.cargo.container.Container#getId()
++     */
++    public final String getId()
++    {
++        return ID;
++    }
++
++    /**
++     * {@inheritDoc}
++     * @see org.codehaus.cargo.container.Container#getName()
++     */
++    public final String getName()
++    {
++        return "Tomcat " + getVersion("6.x");
++    }
++}
++
+
+Property changes on: containers\tomcat\src\main\java\org\codehaus\cargo\container\tomcat\Tomcat6xInstalledLocalContainer.java
+___________________________________________________________________
+Name: svn:keywords
+   + URL Date Author Revision Id
+Name: svn:eol-style
+   + native
+
+Index: containers/tomcat/src/main/java/org/codehaus/cargo/container/tomcat/Tomcat6xStandaloneLocalConfiguration.java
+===================================================================
+--- containers/tomcat/src/main/java/org/codehaus/cargo/container/tomcat/Tomcat6xStandaloneLocalConfiguration.java	(revision 0)
++++ containers/tomcat/src/main/java/org/codehaus/cargo/container/tomcat/Tomcat6xStandaloneLocalConfiguration.java	(revision 0)
+@@ -0,0 +1,111 @@
++
++package org.codehaus.cargo.container.tomcat;
++
++import java.io.File;
++
++import org.apache.tools.ant.taskdefs.Copy;
++import org.apache.tools.ant.types.FileSet;
++import org.codehaus.cargo.container.LocalContainer;
++import org.codehaus.cargo.container.InstalledLocalContainer;
++import org.codehaus.cargo.container.EmbeddedLocalContainer;
++import org.codehaus.cargo.container.property.DatasourcePropertySet;
++import org.codehaus.cargo.container.property.DataSource;
++import org.codehaus.cargo.container.tomcat.internal.AbstractCatalinaStandaloneLocalConfiguration;
++
++/**
++ * Catalina standalone {@link org.codehaus.cargo.container.spi.configuration.ContainerConfiguration}
++ * implementation.
++ *
++ * <p>
++ * This code needs to work with both {@link Tomcat6xInstalledLocalContainer}
++ * and {@link Tomcat6xEmbeddedLocalContainer}.
++ *  
++ * @version $Id$
++ */
++public class Tomcat6xStandaloneLocalConfiguration
++    extends AbstractCatalinaStandaloneLocalConfiguration
++{
++    /**
++     * {@inheritDoc}
++     * @see AbstractCatalinaStandaloneLocalConfiguration#AbstractCatalinaStandaloneLocalConfiguration(String)
++     */
++    public Tomcat6xStandaloneLocalConfiguration(String dir)
++    {
++        super(dir);
++    }
++
++    /**
++     * {@inheritDoc}
++     * @see AbstractCatalinaStandaloneLocalConfiguration#setupManager(org.codehaus.cargo.container.LocalContainer)
++     */
++    protected void setupManager(LocalContainer container)
++    {
++        if (container instanceof EmbeddedLocalContainer)
++        {
++            // when running in the embedded mode, there's no need
++            // of any manager application.
++        }
++        else
++        {
++            Copy copy = (Copy) getAntUtils().createAntTask("copy");
++
++            FileSet fileSet = new FileSet();
++            fileSet.setDir(new File(((InstalledLocalContainer) container).getHome()));
++            fileSet.createInclude().setName("conf/Catalina/localhost/manager.xml");
++            fileSet.createInclude().setName("server/lib/catalina.jar");
++            fileSet.createInclude().setName("server/webapps/manager/**");
++            copy.addFileset(fileSet);
++
++            copy.setTodir(new File(getHome()));
++
++            copy.execute();
++        }
++    }
++
++    /**
++     * @return the XML to be put into the server.xml file
++     */
++    protected String createDatasourceTokenValue()
++    {
++        getLogger().debug("Tomcat 6x createDatasourceTokenValue", this.getClass().getName());
++
++        final String dataSourceProperty = getPropertyValue(DatasourcePropertySet.DATASOURCE);
++        getLogger().debug("Datasource property value [" + dataSourceProperty + "]",
++            this.getClass().getName());
++
++        if (dataSourceProperty == null)
++        {
++            // have to return a non-empty string, as Ant's token stuff doesn't work otherwise
++            return " ";
++        }
++        else
++        {
++            DataSource ds = new DataSource(dataSourceProperty);
++            return
++                "<Resource name='" + ds.getJndiLocation() + "'\n"
++                    + "    auth='Container'\n"
++                    + "    type='" + ds.getDataSourceType() + "'\n"
++                    + "    username='" + ds.getUsername() + "'\n"
++                    + "    password='" + ds.getPassword() + "'\n"
++                    + "    driverClassName='" + ds.getDriverClass() + "'\n"
++                    + "    url='" + ds.getUrl() + "'\n"
++                    + "/>\n"
++                    // As we are using a database - we will likely need a transaction factory too.
++                    + "<Resource jotm.timeout='60' " 
++                    + "    factory='org.objectweb.jotm.UserTransactionFactory' "
++                    + "    name='UserTransaction' "
++                    + "    type='javax.transaction.UserTransaction' "
++                    + "    auth='Container'>\n"
++                    + "</Resource>";
++        }
++    }
++
++    /**
++     * {@inheritDoc}
++     * @see Object#toString()
++     */
++    public String toString()
++    {
++        return "Tomcat 6.x Standalone Configuration";
++    }
++}
+
+Property changes on: containers\tomcat\src\main\java\org\codehaus\cargo\container\tomcat\Tomcat6xStandaloneLocalConfiguration.java
+___________________________________________________________________
+Name: svn:keywords
+   + URL Date Author Revision Id
+Name: svn:eol-style
+   + native
+
+Index: containers/tomcat/src/main/java/org/codehaus/cargo/container/tomcat/TomcatCopyingInstalledLocalDeployer.java
+===================================================================
+--- containers/tomcat/src/main/java/org/codehaus/cargo/container/tomcat/TomcatCopyingInstalledLocalDeployer.java	(revision 1548)
++++ containers/tomcat/src/main/java/org/codehaus/cargo/container/tomcat/TomcatCopyingInstalledLocalDeployer.java	(working copy)
+@@ -19,7 +19,12 @@
+  */
+ package org.codehaus.cargo.container.tomcat;
+ 
++import java.io.File;
++
++import org.codehaus.cargo.container.ContainerException;
+ import org.codehaus.cargo.container.InstalledLocalContainer;
++import org.codehaus.cargo.container.deployable.Deployable;
++import org.codehaus.cargo.container.deployable.DeployableType;
+ import org.codehaus.cargo.container.deployable.WAR;
+ import org.codehaus.cargo.container.property.GeneralPropertySet;
+ import org.codehaus.cargo.container.spi.deployer.AbstractCopyingInstalledLocalDeployer;
+@@ -144,4 +149,64 @@
+             }
+         }
+     }
++
++    /**
++     * {@inheritDoc}
++     */
++    public void undeploy(Deployable deployable)
++    {
++        // Check that the container supports the deployable type to undeploy
++        if (!getContainer().getCapability().supportsDeployableType(
++            deployable.getType()))
++        {
++            throw new ContainerException(
++                deployable.getType().getType().toUpperCase()
++                + " archives are not supported in [" + getContainer().getId()
++                + "]. Got [" + deployable.getFile() + "]");
++        }
++
++        String deployableDir = getDeployableDir();
++        try
++        {
++            if (deployable.getType() == DeployableType.WAR)
++            {
++                WAR war = (WAR) deployable;
++                String context = war.getContext();
++                getLogger().info("Undeploying context [" + context
++                    + "] from [" + deployableDir + "]...",
++                    TomcatCopyingInstalledLocalDeployer.class.getName());
++
++                File warPacked = new File(deployableDir, context + ".war");
++                if (warPacked.exists())
++                {
++                    getLogger().info("Trying to delete packed war ["
++                        + warPacked.getPath() + "]...",
++                        TomcatCopyingInstalledLocalDeployer.class.getName());
++                    getFileHandler().delete(warPacked.getPath());
++                }
++
++                File warExpanded = new File(deployableDir, context);
++                if (warExpanded.exists())
++                {
++                    getLogger().info("Trying to delete expanded war ["
++                        + warExpanded.getPath() + "]...",
++                        TomcatCopyingInstalledLocalDeployer.class.getName());
++                    getFileHandler().delete(warExpanded.getPath());
++                }
++            }
++            else
++            {
++                throw new ContainerException(
++                    "Only WAR is currently supported.");
++            }
++        }
++        catch (Exception e)
++        {
++            throw new ContainerException("Failed to undeploy ["
++                + deployable.getFile() + "] from ["
++                + deployableDir + "]", e);
++        }
++
++        notifyDeployableUndeployed(deployable);
++    }
+ }
+Index: containers/weblogic/pom.xml
+===================================================================
+--- containers/weblogic/pom.xml	(revision 1548)
++++ containers/weblogic/pom.xml	(working copy)
+@@ -21,7 +21,7 @@
+   <parent>
+     <groupId>org.codehaus.cargo</groupId>
+     <artifactId>cargo-core-containers</artifactId>
+-    <version>1.0-SNAPSHOT</version>
++    <version>1.0-el4j_20080110_1000</version>
+   </parent>
+   <artifactId>cargo-core-container-weblogic</artifactId>
+   <name>Cargo Core WebLogic Container</name>
+Index: containers/weblogic/src/main/java/org/codehaus/cargo/container/weblogic/internal/AbstractWebLogicInstalledLocalContainer.java
+===================================================================
+--- containers/weblogic/src/main/java/org/codehaus/cargo/container/weblogic/internal/AbstractWebLogicInstalledLocalContainer.java	(revision 1548)
++++ containers/weblogic/src/main/java/org/codehaus/cargo/container/weblogic/internal/AbstractWebLogicInstalledLocalContainer.java	(working copy)
+@@ -22,7 +22,9 @@
+  */
+ package org.codehaus.cargo.container.weblogic.internal;
+ 
++import org.apache.tools.ant.RuntimeConfigurable;
+ import org.apache.tools.ant.taskdefs.Java;
++import org.apache.tools.ant.taskdefs.Property;
+ import org.apache.tools.ant.types.Path;
+ import org.codehaus.cargo.container.ContainerCapability;
+ import org.codehaus.cargo.container.ContainerException;
+@@ -33,7 +35,12 @@
+ import org.codehaus.cargo.container.spi.AbstractInstalledLocalContainer;
+ import org.codehaus.cargo.container.weblogic.WebLogicPropertySet;
+ 
++import sun.management.OperatingSystemImpl;
++
++import java.io.BufferedReader;
+ import java.io.File;
++import java.io.InputStreamReader;
++import java.io.OutputStream;
+ 
+ /**
+  * Basic support for the WebLogic application server.
+@@ -104,17 +111,22 @@
+      * {@inheritDoc}
+      * @see AbstractInstalledLocalContainer#doStart(Java)
+      */
+-    public final void doStart(Java java) throws Exception
++    public void doStart(Java java) throws Exception
+     {
+         initBeaHome();
++ 
++        
++        File domainDir = new File(getConfiguration().getHome());
++        
++        java.setDir(domainDir);
+ 
+-        java.setDir(new File(getConfiguration().getHome()));
+-
+-        File serverDir = new File(this.getHome(), "server");
+-
+-        java.addSysproperty(getAntUtils().createSysProperty("weblogic.name",
++       
++        java.addSysproperty(getAntUtils().createSysProperty("weblogic.Name",
+             getConfiguration().getPropertyValue(WebLogicPropertySet.SERVER)));
+-        java.addSysproperty(getAntUtils().createSysProperty("bea.home", this.beaHome));
++        
++        //TODO: add domain name here as weblogic.Domain
++        
++        //java.addSysproperty(getAntUtils().createSysProperty("bea.home", this.beaHome));
+         java.addSysproperty(getAntUtils().createSysProperty("weblogic.management.username",
+             getConfiguration().getPropertyValue(WebLogicPropertySet.ADMIN_USER)));
+         java.addSysproperty(getAntUtils().createSysProperty("weblogic.management.password",
+@@ -126,25 +138,46 @@
+         // (otherwise, we would end up with:
+         //   -Djava.security.policy=./server/lib/weblogic.policy, which
+         //  will not add to the security policy but instead replace it).
++        //java.addSysproperty(getAntUtils().createSysProperty("java.security.policy",
++        //    "=./server/lib/weblogic.policy"));
++
++        
++        //update 28.11.07, FBI: use only standard security policy
+         java.addSysproperty(getAntUtils().createSysProperty("java.security.policy",
+-            "=./server/lib/weblogic.policy"));
++                    new File(this.getHome(),"server/lib/weblogic.policy").getPath()));
++        
++        
++        
++        
++        //update 28.11.07, FBI:
++        //classpath dependencies are specified in pom file and therefore not added 
++        //here again
++        
++        //Path classpath = java.createClasspath();
++        //classpath.createPathElement().setLocation(new File(serverDir, "lib/weblogic_sp.jar"));
++        //classpath.createPathElement().setLocation(new File(serverDir, "lib/weblogic.jar"));
+ 
+-        Path classpath = java.createClasspath();
+-        classpath.createPathElement().setLocation(new File(serverDir, "lib/weblogic_sp.jar"));
+-        classpath.createPathElement().setLocation(new File(serverDir, "lib/weblogic.jar"));
+-
+         // The WebLogic startup scripts automatically includes the domain root folder in the
+         // classpath. This folder is a common place to include configuration files, property files,
+         // log4j configurations, etc. This is why we're adding it here.
+-        classpath.createPathElement().setLocation(new File(getConfiguration().getHome()));
++        //classpath.createPathElement().setLocation(new File(getConfiguration().getHome()));
+ 
+         // Add the tools jar to the classpath so deployment will succeed due to appc compiles
+-        addToolsJarToClasspath(classpath);
+-
++       // addToolsJarToClasspath(classpath);
++        
++        
++        
++       
++        
++        
+         java.setClassname("weblogic.Server");
+-
++        
++        
+         AntContainerExecutorThread webLogicRunner = new AntContainerExecutorThread(java);
+         webLogicRunner.start();
++        
++       
++        
+     }
+ 
+     /**
+@@ -153,12 +186,8 @@
+      */
+     public final void doStop(Java java) throws Exception
+     {
+-        File serverDir = new File(this.getHome(), "server");
+-
+-        Path classpath = java.createClasspath();
+-        classpath.createPathElement().setLocation(new File(serverDir, "lib/weblogic_sp.jar"));
+-        classpath.createPathElement().setLocation(new File(serverDir, "lib/weblogic.jar"));
+-
++        
++        
+         java.setClassname("weblogic.Admin");
+         java.createArg().setValue("-url");
+         java.createArg().setValue("t3://localhost:"
+@@ -176,4 +205,6 @@
+         AntContainerExecutorThread webLogicRunner = new AntContainerExecutorThread(java);
+         webLogicRunner.start();
+     }
+-}
++    
++    
++}   
+Index: containers/weblogic/src/main/java/org/codehaus/cargo/container/weblogic/WebLogic10xExistingLocalConfiguration.java
+===================================================================
+--- containers/weblogic/src/main/java/org/codehaus/cargo/container/weblogic/WebLogic10xExistingLocalConfiguration.java	(revision 0)
++++ containers/weblogic/src/main/java/org/codehaus/cargo/container/weblogic/WebLogic10xExistingLocalConfiguration.java	(revision 0)
+@@ -0,0 +1,117 @@
++/**
++ * 
++ */
++package org.codehaus.cargo.container.weblogic;
++
++import java.io.File;
++import java.util.Iterator;
++
++import org.apache.tools.ant.util.FileUtils;
++import org.codehaus.cargo.container.Container;
++import org.codehaus.cargo.container.ContainerException;
++import org.codehaus.cargo.container.LocalContainer;
++import org.codehaus.cargo.container.configuration.ConfigurationCapability;
++import org.codehaus.cargo.container.deployable.Deployable;
++import org.codehaus.cargo.container.deployable.DeployableType;
++import org.codehaus.cargo.container.deployable.WAR;
++import org.codehaus.cargo.container.spi.configuration.AbstractExistingLocalConfiguration;
++import org.codehaus.cargo.container.weblogic.internal.WebLogicExistingLocalConfigurationCapability;
++
++/**
++ * 
++ * ExistingLocalConfiguration class for Weblogic 10x
++ * 
++ * @author Frank Bitzer (FBI)
++ *
++ */
++public class WebLogic10xExistingLocalConfiguration extends AbstractExistingLocalConfiguration {
++
++	/**
++     * Capability of the WebLogic standalone configuration.
++     */
++    private static ConfigurationCapability capability =
++        new WebLogicExistingLocalConfigurationCapability();
++
++    /**
++     * {@inheritDoc}
++     * @see AbstractExistingLocalConfiguration#AbstractExistingLocalConfiguration(String)
++     */
++    public WebLogic10xExistingLocalConfiguration(String dir)
++    {
++        super(dir);
++
++        setProperty(WebLogicPropertySet.ADMIN_USER, "weblogic");
++        setProperty(WebLogicPropertySet.ADMIN_PWD, "weblogic");
++        setProperty(WebLogicPropertySet.SERVER, "server");
++        setProperty(WebLogicPropertySet.DOMAIN, "domain");
++    
++    }
++
++    /**
++     * {@inheritDoc}
++     * @see AbstractExistingLocalConfiguration#configure(LocalContainer)
++     */
++    protected void doConfigure(LocalContainer container) throws Exception
++    {
++        setupDeployables(container);
++    }
++
++    /**
++     * {@inheritDoc}
++     * @see AbstractExistingLocalConfiguration#getCapability()
++     */
++    public ConfigurationCapability getCapability()
++    {
++        return capability;
++    }
++
++    /**
++     * {@inheritDoc}
++     * @see Object#toString()
++     */
++    public String toString()
++    {
++        return "WebLogic Existing Configuration";
++    }
++
++    /**
++     * Deploy the Deployables to the weblogic configuration.
++     * 
++     * @param container the container to configure
++     */
++    protected void setupDeployables(Container container)
++    {
++        try
++        {
++            FileUtils fileUtils = FileUtils.newFileUtils();
++
++            // Create the applications directory
++            String appDir = getFileHandler().createDirectory(getHome(), "autodeploy");
++
++            // Deploy all deployables into the applications directory
++            Iterator it = getDeployables().iterator();
++            while (it.hasNext())
++            {
++                Deployable deployable = (Deployable) it.next();
++                if ((deployable.getType() == DeployableType.WAR)
++                    && ((WAR) deployable).isExpandedWar())
++                {
++                    continue;
++                }
++
++                fileUtils.copyFile(deployable.getFile(),
++                    getFileHandler().append(appDir, getFileHandler().getName(deployable.getFile())),
++                    null, true);
++            }
++
++            // Deploy the cargocpc web-app by copying the WAR file
++            getResourceUtils().copyResource(RESOURCE_PATH + "cargocpc.war",
++                new File(appDir, "cargocpc.war"));
++        }
++        catch (Exception e)
++        {
++            throw new ContainerException("Failed to deploy Deployables in the "
++                + container.getName() + " [" + getHome() + "] domain directory", e);
++        }
++    }
++}
+
+Property changes on: containers\weblogic\src\main\java\org\codehaus\cargo\container\weblogic\WebLogic10xExistingLocalConfiguration.java
+___________________________________________________________________
+Name: svn:keywords
+   + URL Date Author Revision Id
+Name: svn:eol-style
+   + native
+
+Index: containers/weblogic/src/main/java/org/codehaus/cargo/container/weblogic/WebLogic10xInstalledLocalContainer.java
+===================================================================
+--- containers/weblogic/src/main/java/org/codehaus/cargo/container/weblogic/WebLogic10xInstalledLocalContainer.java	(revision 0)
++++ containers/weblogic/src/main/java/org/codehaus/cargo/container/weblogic/WebLogic10xInstalledLocalContainer.java	(revision 0)
+@@ -0,0 +1,142 @@
++/**
++ * 
++ */
++package org.codehaus.cargo.container.weblogic;
++
++import java.io.File;
++
++
++import org.apache.tools.ant.taskdefs.Java;
++import org.codehaus.cargo.container.configuration.LocalConfiguration;
++import org.codehaus.cargo.container.spi.AbstractInstalledLocalContainer;
++import org.codehaus.cargo.container.weblogic.internal.AbstractWebLogicInstalledLocalContainer;;
++
++/**
++ * 
++ * Support for Bea WebLogic 10.x application server.
++ * 
++ * 
++ * @author Frank Bitzer (FBI)
++ *
++ *@version $Id$
++ */
++public class WebLogic10xInstalledLocalContainer extends
++		org.codehaus.cargo.container.weblogic.internal.AbstractWebLogicInstalledLocalContainer {
++
++	
++	/**
++     * Unique container id.
++     */
++    public static final String ID = "weblogic10x";
++
++    /**
++     * {@inheritDoc}
++     * @see AbstractWebLogicInstalledLocalContainer#AbstractInstalledLocalContainer(org.codehaus.cargo.container.configuration.LocalConfiguration)
++     */
++    public WebLogic10xInstalledLocalContainer(LocalConfiguration configuration)
++    {
++        super(configuration);
++    }
++
++    /**
++     * {@inheritDoc}
++     * @see org.codehaus.cargo.container.Container#getName()
++     */
++    public final String getName()
++    {
++        return "WebLogic 10.x";
++    }
++
++    /**
++     * {@inheritDoc}
++     * @see org.codehaus.cargo.container.Container#getId()
++     */
++    public final String getId()
++    {
++        return ID;
++    }
++    
++    
++    
++    /**
++     * {@inheritDoc}
++     * @see AbstractInstalledLocalContainer#doStart(Java)
++     */
++    public void doStart(Java java) throws Exception
++    {
++    	File domainDir = new File(getConfiguration().getHome());
++    	
++    	//we need to do some more configuration here than its necessary for WebLogic 8x
++    	
++    	
++    	//check if config file exists
++    	//if not, domain and server must be generated at first
++    	//this is done by the weblogic.Server Java application
++    	//when weblogic.management.GenerateDefaultConfig is set to "true"
++    	if (!new File(domainDir,"config/config.xml").exists()){
++         	java.addSysproperty(getAntUtils().
++        			createSysProperty("weblogic.management.GenerateDefaultConfig","true"));
++        }
++        
++    	
++    	//memory limitations
++       //java.createArg().setValue("-Xms256m");
++       //java.createArg().setValue("-Xmx512m");
++    	
++    	
++    	//we use Jrockit because SUN JVM sometimes causes OutOfMemory Exceptions
++    	java.setJvm(new File(
++    			getConfiguration().getPropertyValue(
++    					WebLogicPropertySet.JVM)).getPath());
++    	
++    	
++    	
++    	
++    	
++        java.setFork(true);
++        java.setFailonerror(true);
++    	
++        
++        java.createJvmarg().setValue("-jrockit");
++        
++        java.createJvmarg().setValue("-Xms256m");
++        java.createJvmarg().setValue("-Xmx512m");
++        
++        java.createJvmarg().setValue("-Xverify:none");
++        java.createJvmarg().setValue("-da");
++        
++       // java.createJvmarg().setValue("-verbose");
++        
++        
++    	java.addSysproperty(getAntUtils().createSysProperty("platform.home", 
++    			new File(this.getHome()).getPath()));
++    	
++    	java.addSysproperty(getAntUtils().createSysProperty("wls.home", 
++    			new File(this.getHome(),"server").getPath()));
++    	
++    	java.addSysproperty(getAntUtils().createSysProperty("weblogic.home", 
++    			new File(this.getHome(),"server").getPath()));
++    	
++    	
++    	java.addSysproperty(getAntUtils().createSysProperty("wli.home", 
++    			new File(this.getHome(),"integration").getPath()));
++    	
++    	
++    	java.addSysproperty(getAntUtils().createSysProperty("weblogic.management.discover", 
++    			"true"));
++    	
++    	
++       // java.addSysproperty(getAntUtils().createSysProperty("weblogic.Domain",
++        //        getConfiguration().getPropertyValue(WebLogicPropertySet.DOMAIN)));
++
++        
++        
++    	
++        
++         
++    	super.doStart(java);
++    	
++    }
++    
++    
++}
+
+Property changes on: containers\weblogic\src\main\java\org\codehaus\cargo\container\weblogic\WebLogic10xInstalledLocalContainer.java
+___________________________________________________________________
+Name: svn:keywords
+   + URL Date Author Revision Id
+Name: svn:eol-style
+   + native
+
+Index: containers/weblogic/src/main/java/org/codehaus/cargo/container/weblogic/Weblogic10xInstalledLocalDeployer.java
+===================================================================
+--- containers/weblogic/src/main/java/org/codehaus/cargo/container/weblogic/Weblogic10xInstalledLocalDeployer.java	(revision 0)
++++ containers/weblogic/src/main/java/org/codehaus/cargo/container/weblogic/Weblogic10xInstalledLocalDeployer.java	(revision 0)
+@@ -0,0 +1,370 @@
++/**
++ * 
++ */
++package org.codehaus.cargo.container.weblogic;
++
++
++
++import java.io.File;
++
++import org.apache.tools.ant.taskdefs.Java;
++import org.apache.tools.ant.types.Path;
++import org.codehaus.cargo.container.ContainerException;
++import org.codehaus.cargo.container.InstalledLocalContainer;
++import org.codehaus.cargo.container.LocalContainer;
++import org.codehaus.cargo.container.deployable.Deployable;
++import org.codehaus.cargo.container.deployable.DeployableType;
++import org.codehaus.cargo.container.deployable.WAR;
++import org.codehaus.cargo.container.internal.AntContainerExecutorThread;
++import org.codehaus.cargo.container.property.ServletPropertySet;
++import org.codehaus.cargo.container.spi.deployer.AbstractCopyingInstalledLocalDeployer;
++import org.codehaus.cargo.container.spi.deployer.AbstractInstalledLocalDeployer;
++import org.codehaus.cargo.container.weblogic.internal.AbstractWebLogicInstalledLocalContainer;
++
++/**
++ * 
++ * Deploying functionalities for WebLogic 10x
++ * 
++ * @author Frank Bitzer (FBI)
++ *
++ */
++public class Weblogic10xInstalledLocalDeployer extends
++		AbstractInstalledLocalDeployer {
++	
++	 /**
++     * {@inheritDoc}
++     * @see AbstractCopyingInstalledLocalDeployer#AbstractCopyingInstalledLocalDeployer(InstalledLocalContainer)
++     */
++    public Weblogic10xInstalledLocalDeployer(InstalledLocalContainer container)
++    {
++        super(container);
++    }
++
++    /**
++     * Specifies the directory {@link org.codehaus.cargo.container.deployable.Deployable}s should
++     * be copied to. For Weblogic 10x this is the <code>autodeploy</code> directory.
++     *
++     * @return Deployable directory
++     */
++    public String getDeployableDir()
++    {
++        return getFileHandler().append(getContainer().getConfiguration().getHome(), "autodeploy");
++    }
++
++    
++    /**
++     * Deploy files to WebLogic by calling weblogic.Deployer utility
++     * 
++     * @author Frank Bitzer (FBI)
++     */
++	public void deploy(Deployable deployable) {
++		
++		
++	
++        getLogger().info("Deploying [" + deployable.getFile()+ "]",
++        		this.getClass().getName());
++
++        
++		try 
++        {
++			
++				//commented out - deployment is done by using weblogic.deployer
++//            FileUtils fileUtils = FileUtils.newFileUtils();
++//
++//            
++//
++//            //deploy WAR or exploded war
++//            //for target dir/filename, use name of application as 
++//            //received from "deployable.getContext()"
++//            if ((deployable.getType() == DeployableType.WAR) 
++//                   || ((WAR) deployable).isExpandedWar())
++//            {
++//                 
++//            	
++//               fileUtils.copyFile(deployable.getFile(),
++//                    getFileHandler().append(appDir,  ((WAR) deployable).getContext()),
++//                    null, true);
++//                
++//            } else {
++//            	
++//            	 throw new ContainerException("Deployable " 
++//            			 + deployable.getFile() + " must be a WAR or"
++//            			 + " exploded WAR file.");
++//            	
++//            }
++            
++			
++			
++			Java java = this.createWeblogicDeployerTask(deployable,true);
++			
++		   
++	        
++	        //deploy should be performed
++	        java.createArg().setValue("-deploy");
++	        
++	        
++	        
++	        
++	        //and name of file to deploy must be provided
++	        
++	        java.createArg().setValue("-source");
++	        java.createArg().setValue(deployable.getFile());
++	        
++	        
++	        //run task
++	        //AntContainerExecutorThread webLogicRunner = new AntContainerExecutorThread(java);
++	        //webLogicRunner.start();
++			
++			//dont run in a seperate thread, because we want to block until
++	        //operation is complete and we want to get the exit code
++	        if (java.executeJava() != 0){
++	        	throw new ContainerException("weblogic.Deployer could not " +
++	        			"complete operation. See message above.");
++	        }
++	        
++	        
++           
++        }
++        catch (Exception e)
++        {
++            throw new ContainerException("Failed to deploy the following " +
++            		"deployable to " 
++                + "Weblogic 10x:  " + deployable.getFile(), e);
++        }
++		
++	}
++
++	/**
++	 * Redeploy.
++	 * Currently, this only delegates to deploy(), because redeployment of whole apps
++	 * is not supported in Weblogic
++	 */
++	public void redeploy(Deployable deployable) {
++		
++		
++		 getLogger().info("Redeploying [" + deployable.getFile()+ "]",
++	        		this.getClass().getName());
++		
++		try 
++        {
++		
++//			Java java = this.createWeblogicDeployerTask(deployable);
++//			
++//		   
++//	        
++//	        //redeploy should be performed
++//	        java.createArg().setValue("-redeploy");
++//	        
++//	        
++//	        //and name of file to redeploy must be provided
++//	       
++//	        java.createArg().setValue(deployable.getFile());
++//	        
++//	        
++//	        //run task
++//	        AntContainerExecutorThread webLogicRunner = new AntContainerExecutorThread(java);
++//	        webLogicRunner.start();
++	    	
++			
++			//-redeploy option of weblogic.Deployer doesn't work with whole 
++			//applications such as wars, but only with single files or dirs as 
++			//parameter
++			//so use normal deploy command instead
++			
++			
++			deploy(deployable);
++			
++			
++        } catch (Exception e)
++        {
++            throw new ContainerException("Failed to redeploy the following deployable from " 
++                + "Weblogic 10x: " + deployable.getFile(), e);
++        }
++		
++		
++	}
++
++	/**
++	 * Undeploys deployable by calling weblogic.Deployer utility with proper parameters
++	 * 
++	 * @author Frank Bitzer (FBI)
++	 */
++	public void undeploy(Deployable deployable) {
++		
++		 getLogger().info("Undeploying [" + deployable.getFile()+ "]",
++	        		this.getClass().getName());
++		
++		try 
++        {
++		
++			Java java = this.createWeblogicDeployerTask(deployable,false);
++			
++		   
++	        
++	        //undeploy should be performed
++	        java.createArg().setValue("-undeploy");
++	        
++	        
++	        //run task
++	        //AntContainerExecutorThread webLogicRunner = new AntContainerExecutorThread(java);
++	        //webLogicRunner.start();
++	        
++	       
++	      //dont run in a seperate thread, because we want to block until
++	       //operation is complete and we want to get the exit code
++	       if (java.executeJava() != 0){
++	        	throw new ContainerException("weblogic.Deployer could not " +
++	        			"complete operation. See message above.");
++	       }
++	        
++	    	
++        } catch (Exception e)
++        {
++            throw new ContainerException("Failed to undeploy the following deployable from " 
++                + "Weblogic 10x: " + deployable.getFile(), e);
++        }
++	    
++	    	
++	}
++	
++	/**
++	 * 
++	 * Creates a java Ant task for weblogic.Deployer utility and sets
++	 * common parameters and classpath needed for all deployment tasks
++	 * 
++	 * 
++	 * 
++	 * @param deployable
++	 * @param isDeploy true, if planed action is -deploy, false else
++	 * @return the java with necessary common parameters set
++	 */
++	private Java createWeblogicDeployerTask(Deployable deployable,
++			boolean isDeploy){
++		
++		LocalContainer theContainer = this.getContainer();
++	    
++	    
++	    if (!(theContainer instanceof 
++	    		org.codehaus.cargo.container.weblogic.internal.AbstractWebLogicInstalledLocalContainer)){
++
++	    	throw new ContainerException("Invalid Container.");
++	    
++	    	
++	    }
++	    
++	    	
++	    AbstractWebLogicInstalledLocalContainer myContainer 
++	    		= (AbstractWebLogicInstalledLocalContainer) theContainer;
++	    	
++	    	
++	    //create java task to interact with weblogic.deployer	
++	    Java java = myContainer.createJavaTask();
++	    	
++	    java.setClassname("weblogic.Deployer");
++	    
++	    java.setFailonerror(true);
++        java.setFork(true);
++        
++        
++	    
++	    setClasspath(java, myContainer.getHome());
++	    
++	    
++        setParameters(java, deployable,isDeploy);
++        
++        
++        return java;
++		
++	}
++	
++	
++	
++	/**
++	 * Adds weblogic.jar and patches to classpath for java task
++	 * 
++	 * @param java
++	 * @param homeDir home directory of weblogic installation 
++	 * (not of current domain/server!)
++	 */
++	private void setClasspath(Java java, String homeDir){
++		
++		File serverDir = new File(homeDir, "server");
++		
++		
++        Path classpath = java.createClasspath();
++        classpath.createPathElement().setLocation(new File(serverDir, "lib/weblogic_sp.jar"));
++        classpath.createPathElement().setLocation(new File(serverDir, "lib/weblogic.jar"));
++
++	}
++	
++	
++	/**
++	 * Sets the follwing parameters to a Java task
++	 * 
++	 *  * adminurl
++	 *  * user
++	 *  * password
++	 *  * name (of application to deploy/undeploy/redeploy)
++	 *  
++	 * @param java the task to edit
++	 * @param deployable the deployable with which the task is performed. this is used to
++	 * determine name of web application
++	 * @param isDeploy true, if planed action is -deploy, false else
++	 */
++	private void setParameters(Java java, Deployable deployable, 
++			boolean isDeploy){
++		
++		
++		//java.createArg().setValue("-debug");
++		
++		
++		java.createArg().setValue("-adminurl");
++        java.createArg().setValue("t3://localhost:"
++            + this.getContainer().getConfiguration().getPropertyValue(ServletPropertySet.PORT));
++        
++        java.createArg().setValue("-user");
++        java.createArg().setValue(
++        		this.getContainer().getConfiguration().getPropertyValue(WebLogicPropertySet.ADMIN_USER));
++        
++        java.createArg().setValue("-password");
++        java.createArg().setValue(
++        		this.getContainer().getConfiguration().getPropertyValue(WebLogicPropertySet.ADMIN_PWD));
++
++        
++        //if possible, provide name for webapp
++        //else use filename
++        //but name param must be specified so that module can be identified again
++        //when undeploying
++        String appName = "";
++        if (deployable.getType() == DeployableType.WAR){
++        	 	
++        	appName = ((WeblogicWAR)deployable).getContext();
++        	
++        	getLogger().info("Name of application: " + appName,
++            		this.getClass().getName());
++        	
++        	//we now must save the appname as context-root in the weblogic.xml 
++        	//so that it is actually used by weblogic
++        	if (isDeploy) {
++        		((WeblogicWAR)deployable).setWeblogicContext(appName);
++        	}
++        	
++        } else {
++        	
++        	appName = getFileHandler().getName(deployable.getFile());
++        	
++        	getLogger().info("Unable to get name of web application. " +
++        			"Using filename: " + appName,
++            		this.getClass().getName());
++        	
++        }
++        
++        java.createArg().setValue("-name");
++    	java.createArg().setValue(appName);
++   
++        
++       
++	}
++	
++
++}
+
+Property changes on: containers\weblogic\src\main\java\org\codehaus\cargo\container\weblogic\Weblogic10xInstalledLocalDeployer.java
+___________________________________________________________________
+Name: svn:keywords
+   + URL Date Author Revision Id
+Name: svn:eol-style
+   + native
+
+Index: containers/weblogic/src/main/java/org/codehaus/cargo/container/weblogic/WebLogic10xStandaloneLocalConfiguration.java
+===================================================================
+--- containers/weblogic/src/main/java/org/codehaus/cargo/container/weblogic/WebLogic10xStandaloneLocalConfiguration.java	(revision 0)
++++ containers/weblogic/src/main/java/org/codehaus/cargo/container/weblogic/WebLogic10xStandaloneLocalConfiguration.java	(revision 0)
+@@ -0,0 +1,170 @@
++/**
++ * 
++ */
++package org.codehaus.cargo.container.weblogic;
++
++import java.io.File;
++import java.util.Iterator;
++
++import org.apache.tools.ant.types.FilterChain;
++import org.apache.tools.ant.util.FileUtils;
++import org.codehaus.cargo.container.Container;
++import org.codehaus.cargo.container.ContainerException;
++import org.codehaus.cargo.container.LocalContainer;
++import org.codehaus.cargo.container.configuration.ConfigurationCapability;
++import org.codehaus.cargo.container.deployable.Deployable;
++import org.codehaus.cargo.container.deployable.DeployableType;
++import org.codehaus.cargo.container.deployable.WAR;
++import org.codehaus.cargo.container.spi.configuration.AbstractStandaloneLocalConfiguration;
++import org.codehaus.cargo.container.weblogic.internal.WebLogicStandaloneLocalConfigurationCapability;
++
++/**
++ * 
++ * StandaloneLocalConfiguration class for WebLogic 10x
++ * 
++ * @author Frank Bitzer (FBI)
++ *
++ */
++public class WebLogic10xStandaloneLocalConfiguration extends
++		AbstractStandaloneLocalConfiguration {
++
++	/**
++     * Capability of the WebLogic standalone configuration.
++     */
++    private static ConfigurationCapability capability = 
++        new WebLogicStandaloneLocalConfigurationCapability();
++
++    /**
++     * {@inheritDoc}
++     * @see AbstractStandaloneLocalConfiguration#AbstractStandaloneLocalConfiguration(String)
++     */
++    public WebLogic10xStandaloneLocalConfiguration(String dir)
++    {
++        super(dir);
++
++        setProperty(WebLogicPropertySet.ADMIN_USER, "weblogic");
++        setProperty(WebLogicPropertySet.ADMIN_PWD, "weblogic");
++        setProperty(WebLogicPropertySet.SERVER, "server");
++        setProperty(WebLogicPropertySet.DOMAIN, "domain");
++        
++    }
++
++    /**
++     * {@inheritDoc}
++     * @see org.codehaus.cargo.container.configuration.Configuration#getCapability()
++     */
++    public ConfigurationCapability getCapability()
++    {
++        return capability;
++    }
++    
++    /**
++     * {@inheritDoc}
++     * @see AbstractStandaloneLocalConfiguration#configure(LocalContainer)
++     */
++    protected void doConfigure(LocalContainer container) throws Exception
++    {
++        setupConfigurationDir();
++
++        FilterChain filterChain = createWebLogicFilterChain();
++
++        getResourceUtils().copyResource(RESOURCE_PATH + container.getId() + "/config.xml",
++            new File(getHome(), "config.xml"), filterChain);
++
++        getResourceUtils().copyResource(RESOURCE_PATH + container.getId()
++            + "/DefaultAuthenticatorInit.ldift",
++            new File(getHome(), "DefaultAuthenticatorInit.ldift"), filterChain);
++
++        setupDeployables(container);
++    }
++
++    /**
++     * @return an Ant filter chain containing implementation for the filter tokens used in the 
++     *         WebLogic configuration files
++     */
++    private FilterChain createWebLogicFilterChain()
++    {
++        FilterChain filterChain = createFilterChain();
++        
++        StringBuffer appTokenValue = new StringBuffer(" ");
++        
++        Iterator it = getDeployables().iterator();
++        while (it.hasNext())
++        {
++            Deployable deployable = (Deployable) it.next();
++
++            if ((deployable.getType() == DeployableType.WAR) && ((WAR) deployable).isExpandedWar())
++            {
++                String context = ((WAR) deployable).getContext();
++                appTokenValue.append("<Application "); 
++                appTokenValue.append("Name=\"_" + context + "_app\" ");
++                appTokenValue.append(
++                    "Path=\"" + getFileHandler().getParent(deployable.getFile()) + "\" "); 
++                appTokenValue.append(
++                    "StagedTargets=\"server\" StagingMode=\"stage\" TwoPhase=\"true\"");
++                appTokenValue.append(">");
++                
++                appTokenValue.append("<WebAppComponent ");
++                appTokenValue.append("Name=\"" + context + "\" "); 
++                appTokenValue.append("Targets=\"server\" ");
++                appTokenValue.append("URI=\"" + context + "\"");
++                appTokenValue.append("/></Application>");
++            }
++        }
++        
++        getAntUtils().addTokenToFilterChain(filterChain, "weblogic.apps", appTokenValue.toString());
++            
++        return filterChain;
++    }
++
++    /**
++     * Deploy the Deployables to the weblogic configuration.
++     * 
++     * @param container the container to configure
++     */
++    protected void setupDeployables(Container container)
++    {
++        try 
++        {
++            FileUtils fileUtils = FileUtils.newFileUtils();
++
++            // Create the applications directory
++            String appDir = getFileHandler().createDirectory(getHome(), "autodeploy");
++            
++            // Deploy all deployables into the applications directory
++            Iterator it = getDeployables().iterator();
++            while (it.hasNext())
++            {
++                Deployable deployable = (Deployable) it.next();
++                if ((deployable.getType() == DeployableType.WAR) 
++                    && ((WAR) deployable).isExpandedWar())
++                {
++                    continue;
++                }
++
++                fileUtils.copyFile(deployable.getFile(),
++                    getFileHandler().append(appDir, getFileHandler().getName(deployable.getFile())),
++                    null, true);
++            }
++            
++            // Deploy the cargocpc web-app by copying the WAR file
++            getResourceUtils().copyResource(RESOURCE_PATH + "cargocpc.war",
++                new File(appDir, "cargocpc.war"));
++        }
++        catch (Exception e)
++        {
++            throw new ContainerException("Failed to deploy Deployables in the " 
++                + container.getName() + " [" + getHome() + "] domain directory", e);
++        }
++    }    
++
++    /**
++     * {@inheritDoc}
++     * @see Object#toString()
++     */
++    public String toString()
++    {
++        return "WebLogic Standalone Configuration";
++    }
++
++}
+
+Property changes on: containers\weblogic\src\main\java\org\codehaus\cargo\container\weblogic\WebLogic10xStandaloneLocalConfiguration.java
+___________________________________________________________________
+Name: svn:keywords
+   + URL Date Author Revision Id
+Name: svn:eol-style
+   + native
+
+Index: containers/weblogic/src/main/java/org/codehaus/cargo/container/weblogic/WebLogicPropertySet.java
+===================================================================
+--- containers/weblogic/src/main/java/org/codehaus/cargo/container/weblogic/WebLogicPropertySet.java	(revision 1548)
++++ containers/weblogic/src/main/java/org/codehaus/cargo/container/weblogic/WebLogicPropertySet.java	(working copy)
+@@ -40,4 +40,18 @@
+      * WebLogic server name.
+      */
+     String SERVER = "cargo.weblogic.server";
++    
++    /**
++     * Domain name
++     * 
++     * @author Frank Bitzer, added 26.11.07
++     */
++    String DOMAIN = "cargo.weblogic.domain";
++    
++    
++    /**
++     * JVM to use. JRockit is strongly recommended.
++     */
++    String JVM = "cargo.weblogic.jvm";
++    
+ }
+Index: containers/weblogic/src/main/java/org/codehaus/cargo/container/weblogic/WeblogicWAR.java
+===================================================================
+--- containers/weblogic/src/main/java/org/codehaus/cargo/container/weblogic/WeblogicWAR.java	(revision 0)
++++ containers/weblogic/src/main/java/org/codehaus/cargo/container/weblogic/WeblogicWAR.java	(revision 0)
+@@ -0,0 +1,201 @@
++/**
++ * 
++ */
++package org.codehaus.cargo.container.weblogic;
++
++
++import java.util.Iterator;
++import java.util.List;
++
++import org.codehaus.cargo.container.ContainerException;
++import org.codehaus.cargo.container.deployable.WAR;
++import org.codehaus.cargo.module.DescriptorElement;
++import org.codehaus.cargo.module.webapp.weblogic.WeblogicWARArchive;
++import org.codehaus.cargo.module.webapp.weblogic.WeblogicXml;
++import org.codehaus.cargo.module.webapp.weblogic.WeblogicXmlTag;
++import org.jdom.Element;
++
++/**
++ * 
++ * Extension of WAR deployable to support Weblogic weblogic.xml deployment
++ * descriptor.
++ * 
++ * @author Frank Bitzer (FBI)
++ * 
++ * @see TomcatWAR
++ *
++ */
++public class WeblogicWAR extends WAR {
++	
++	/**
++     * The parsed Weblogic descriptors in the WAR.
++     */
++    private WeblogicWARArchive warArchive;
++    
++    /**
++     * @param war the location of the WAR being wrapped. This must point to either a WAR file or an
++     *        expanded WAR directory.
++     */
++    public WeblogicWAR(String war)
++    {
++        super(war);
++        
++        try
++        {
++            this.warArchive = new WeblogicWARArchive(getFile());
++        }
++        catch (Exception e)
++        {
++            throw new ContainerException("Failed to parse Weblogic WAR file "
++                + "in [" + getFile() + "]", e);
++        }
++    }
++
++    /**
++     * root context for deployment to Weblogic.
++     * 
++     * @return if no context is specified yet, get the context defined 
++     * 			in <code>weblogic.xml</code> if any.
++     *         If there is no <code>weblogic.xml</code> or if it doesn't
++     *         define any root context, then return {@link WAR#getContext()}
++     *         (that is, derive it from filename).
++     */
++    public synchronized String getContext()
++    {
++    	String result = this.context;
++    	
++    	if (this.context == null){
++	        result = parseWeblogicContextXml();
++	        if (result == null)
++	        {
++	            result = super.getContext();
++	        }
++    	}
++    	
++    	return result;
++    }
++    
++    
++    /**
++     * Sets the <context-root> element in weblogic.xml to given value.
++     * If no <context-root> element exists, it is created.
++     * 
++     * @param value
++     */
++    public void setWeblogicContext(String value){
++    	
++    	 if (this.warArchive.getWeblogicXml() != null) {
++    		 
++    		 WeblogicXml xml = this.warArchive.getWeblogicXml();
++    		 
++    		
++    		 //edit current context-root, if existing
++    		 Iterator elements = xml.getElements(xml.getDescriptorType().getTagByName(
++    		            WeblogicXmlTag.CONTEXT_ROOT));
++    		 
++    		 //helper variable
++    		 //becomes true, if a context root is already specified
++    		 boolean ctxExists = false;
++    		 //becomes true, if there were changes necessary in weblogic.xml
++    		 boolean wasModified = false;
++    		 
++    		 while (elements.hasNext())
++    		 {
++    		     Element e = (Element) elements.next();
++    		     
++    		     //only modify value if context root 
++    		     //is not already set correctly
++    		     if (!e.getText().equals(value)) {
++    		    	 e.setText(value);
++    		    	 wasModified = true;
++    		     }
++    		     
++    		     ctxExists = true;
++    		    
++    		 }
++    		 
++    		 //add context-root element if it does not already exist
++    		 if (!ctxExists) {
++    			 this.addContextRoot(xml,value);
++    			 wasModified = true;
++    		 }
++    		 
++    		 
++    		 try {
++    		
++    			 if (wasModified){
++    				 this.warArchive.updateWeblogicXML(xml);
++    			 }
++    			 
++    			
++    			 
++    		 } catch (Exception ex){
++    			 throw new ContainerException("Error modifying weblogic.xml: "
++    					 + ex.getLocalizedMessage());
++    		 }
++    		 
++    	 } else {
++    		 
++    		 throw new ContainerException("Deployment without " +
++    		 		"weblogic.xml is currently not supported!");
++    		 
++    	 }
++    	 
++    }
++    
++    /**
++     * Helper function, adds a brand new <context-root> element with given value
++     * to weblogic.xml
++     * 
++     * @param xml the weblogic.xml to edit
++     * @param value String value to set context-root to
++     */
++    private void addContextRoot(WeblogicXml xml, String value){
++    	Element contextroot;
++    	
++    	contextroot =
++            new Element(WeblogicXmlTag.CONTEXT_ROOT);
++    	
++    	contextroot.addContent(value);
++    	
++    	
++    	xml.addElement(xml.getDescriptorType().getTagByName(
++            WeblogicXmlTag.CONTEXT_ROOT), contextroot, xml.getRootElement());
++    
++
++	}
++    
++
++//    /**
++//     * @return true if the WAR contains a <code>weblogic.xml</code>
++//     *              */
++//    private boolean containsWeblogicXml()
++//    {
++//        return (this.warArchive.getWeblogicXml() != null);
++//    
++//    }
++    
++    
++    /**
++     * @return the context-root from Weblogic's <code>weblogic.xml</code> if
++     *         it is defined or <code>null</code> otherwise.
++     */
++    private String parseWeblogicContextXml()
++    {
++        String context = null;
++        
++        if (this.warArchive.getWeblogicXml() != null)
++        {
++            List l = this.warArchive.getWeblogicXml().getTags(WeblogicXmlTag.CONTEXT_ROOT);
++            
++            if (l != null && l.size() == 1){
++            	context = ((DescriptorElement)l.get(0)).getTextNormalize();
++            	
++            }
++            
++        }
++        
++        return context;
++    }   
++
++}
+
+Property changes on: containers\weblogic\src\main\java\org\codehaus\cargo\container\weblogic\WeblogicWAR.java
+___________________________________________________________________
+Name: svn:keywords
+   + URL Date Author Revision Id
+Name: svn:eol-style
+   + native
+

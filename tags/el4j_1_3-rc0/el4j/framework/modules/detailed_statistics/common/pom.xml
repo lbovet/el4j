@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <parent>
+        <groupId>ch.elca.el4j.modules</groupId>
+        <artifactId>module-detailed_statistics</artifactId>
+        <version>1.2.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>module-detailed_statistics-common</artifactId>
+    <version>${version.module-detailed_statistics}</version>
+    <packaging>jar</packaging>
+    <name>EL4J module detailed statistics common</name>
+    <description>
+        Module detailed statistics, common parts of the EL4J framework.
+    </description>
+    <dependencies>
+        <!-- EL4J framework modules -->
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-remoting_core</artifactId>
+            <!--<version>${version.module-remoting_core}</version>-->
+        </dependency>
+           
+        <dependency>
+            <groupId>com.zanthan</groupId>
+            <artifactId>sequence</artifactId>
+            <version>1.0</version>
+        </dependency>
+        
+    </dependencies>
+</project>

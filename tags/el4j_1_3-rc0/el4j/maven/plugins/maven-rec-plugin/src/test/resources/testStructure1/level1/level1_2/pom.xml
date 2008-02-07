@@ -1,0 +1,22 @@
+<?xml version="1.0"?><project>
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <artifactId>level1</artifactId>
+    <groupId>ch.elca.testProject</groupId>
+    <version>1.0</version>
+  </parent>
+  
+  <artifactId>level1_2</artifactId>
+  <packaging>jar</packaging>
+  <name>test-project level1_2</name>
+  <version>${level1_2.version}</version>
+
+  <dependencies>
+    <dependency>
+        <groupId>ch.elca.testProject</groupId>
+        <artifactId>level1_3_1</artifactId>
+        <version>1.0</version>
+    </dependency>
+  </dependencies>
+</project>

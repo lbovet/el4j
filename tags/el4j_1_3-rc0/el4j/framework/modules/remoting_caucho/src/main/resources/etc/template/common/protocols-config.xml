@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Spring bean configuration file to setup hessian and burlap.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
+    <bean id="hessianProtocol" class="ch.elca.el4j.services.remoting.protocol.Hessian">
+        <property name="serviceHost">
+            <value>localhost</value>
+        </property>
+        <property name="servicePort">
+            <value>8080</value>
+        </property>
+        <property name="contextPath">
+            <value>module-remoting_and_interface_enrichment-tests-web</value>
+        </property>
+        <property name="implicitContextPassingRegistry">
+            <ref local="implicitContextPassingRegistry" />
+        </property>
+    </bean>
+
+    <bean id="burlapProtocol" class="ch.elca.el4j.services.remoting.protocol.Burlap">
+        <property name="serviceHost">
+            <value>localhost</value>
+        </property>
+        <property name="servicePort">
+            <value>8080</value>
+        </property>
+        <property name="contextPath">
+            <value>module-remoting_and_interface_enrichment-tests-web</value>
+        </property>
+        <property name="implicitContextPassingRegistry">
+            <ref local="implicitContextPassingRegistry" />
+        </property>
+    </bean>
+
+    <bean id="implicitContextPassingRegistry" class="ch.elca.el4j.tests.remoting.service.TestImplicitContextPassingRegistry" />
+</beans>

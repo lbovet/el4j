@@ -1,0 +1,20 @@
+<?xml version="1.0"?><project>
+  <modelVersion>4.0.0</modelVersion>
+  
+  <groupId>ch.elca.tr4</groupId>
+  <artifactId>Parent</artifactId>
+  <packaging>pom</packaging>
+  <name>Project Parent</name>
+  <version>1.0</version>
+
+  <modules>
+    <module>A</module>
+    <module>B</module>
+    <module>C</module>
+    <module>D</module>
+    <module>E</module>
+    <module>F</module>
+    <module>M1</module>
+  </modules>
+  
+</project>

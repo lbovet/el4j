@@ -1,0 +1,15 @@
+
+<archetype>
+  <id>EL4JArchetypeCore</id>
+  <sources>
+    <source>src/main/java/Calculator.java</source>
+  </sources>
+  <resources>
+    <resource>src/main/resources/License.txt</resource>
+    <resource>src/main/resources/log4j.xml</resource>
+  </resources>
+  <testSources>
+    <source>src/test/java/CalculatorTest.java</source>
+  </testSources>
+  <allowPartial>true</allowPartial> 
+</archetype>

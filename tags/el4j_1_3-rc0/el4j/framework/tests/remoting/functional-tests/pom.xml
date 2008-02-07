@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <parent>
+        <groupId>ch.elca.el4j.tests</groupId>
+        <artifactId>el4j-framework-tests-remoting</artifactId>
+        <version>1.2.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>module-remoting-tests-functional_tests</artifactId>
+    <version>${version.module-remoting-tests}</version>
+    <packaging>jar</packaging>
+    <name>EL4J test remoting functional</name>
+    <description>
+        Test module for functional tests of remoting modules of the EL4J framework.
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>ch.elca.el4j.tests</groupId>
+            <artifactId>module-remoting-tests-web-jar</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j.tests</groupId>
+            <artifactId>module-remoting-tests-web-war</artifactId>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.cargo</groupId>
+                    <artifactId>cargo-maven2-plugin</artifactId>
+                    <configuration>
+                        <wait>false</wait>
+                        <deployer>
+                            <deployables>
+                                <deployable>
+                                    <groupId>ch.elca.el4j.tests</groupId>
+                                    <artifactId>module-remoting-tests-web-war</artifactId>
+                                    <type>war</type>
+                                    <properties>
+                                        <context>${jee-web.context}</context>
+                                    </properties>
+                                    <pingURL>http://${jee-web.host}:${jee-web.port}/${jee-web.context}</pingURL>
+                                    <pingTimeout>120000</pingTimeout>
+                                </deployable>
+                            </deployables>
+                        </deployer>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    <profiles>
+        <profile>
+            <id>manual</id>
+        </profile>
+        <profile>
+            <id>auto</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+
+                    <plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>start-container</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>start</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- MDL 2006-11-23
+                        Due to a Bug within the Cargo plugin, we need to sleep here.
+                        Note that the time is crucial: 5 seconds are not enough. -->
+                   <!-- <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>pre-integration-test</phase>
+                                <id>Sleep</id>
+                                <configuration>
+                                    <tasks>
+                                        <echo message="sleeping now"></echo>
+                                        <sleep seconds="10"></sleep>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>-->
+
+                   <!-- <plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>undeploy-after-container-start</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>undeploy</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>-->
+
+                    <!-- MDL 2006-11-23
+                        Due to a Bug within the Cargo plugin, we need to sleep here.
+                        Note that the time is crucial: 5 seconds are not enough. -->
+                   <!-- <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>Sleep</id>
+                                <phase>pre-integration-test</phase>
+                                <configuration>
+                                    <tasks>
+                                        <echo message="sleeping now"></echo>
+                                        <sleep seconds="10"></sleep>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>-->
+
+                    <plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>deploy</id>
+                                <phase>integration-test</phase>
+                                <goals>
+                                    <goal>deploy</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- MDL 2006-11-23
+                        Due to a Bug within the Cargo plugin, we need to sleep here.
+                        Note that the time is crucial: 5 seconds are not enough. -->
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>Sleep</id>
+                                <phase>integration-test</phase>
+                                <configuration>
+                                    <tasks>
+                                        <echo message="sleeping now"></echo>
+                                        <sleep seconds="10"></sleep>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>surefire-it</id>
+                                <phase>integration-test</phase>
+                                <goals>
+                                    <goal>test</goal>
+                                </goals>
+                                <configuration>
+                                    <skip>false</skip>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>undeploy-after-testing</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>undeploy</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>stop-container</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>tomcat5x</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <!-- 
+                            Copy the needed files to the Tomcat Folder.
+                            Otherwise a "fresh" installation of tomcat at least stops
+                            the functional tests from working.
+                            If possible it would suffice to copy the files ones as soon
+                            as tomcat is downloaded, however cargo does not - as far 
+                            as I know - provide an option for configuring the installed
+                            tomcat.
+                        -->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-antrun-plugin</artifactId>
+                            <version>1.1</version>
+                            <inherited>true</inherited>
+                            <executions>
+                                <execution>
+                                    <id>configure-tomcat</id>
+                                    <phase>pre-integration-test</phase>
+                                    <goals>
+                                        <goal>run</goal>
+                                    </goals>
+                                    <configuration>
+                                        <tasks>
+                                            <copy overwrite="true"
+                                                todir="${tomcat5x.home}/conf">
+                                                <fileset
+                                                    dir="${el4j.external}/etc/tomcat"
+                                                    excludes="**/.svn" />
+                                            </copy>
+                                        </tasks>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        <profile>
+            <id>tomcat6x</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <!-- 
+                            Copy the needed files to the Tomcat Folder.
+                            Otherwise a "fresh" installation of tomcat at least stops
+                            the functional tests from working.
+                            If possible it would suffice to copy the files ones as soon
+                            as tomcat is downloaded, however cargo does not - as far 
+                            as I know - provide an option for configuring the installed
+                            tomcat.
+                        -->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-antrun-plugin</artifactId>
+                            <version>1.1</version>
+                            <inherited>true</inherited>
+                            <executions>
+                                <execution>
+                                    <id>configure-tomcat</id>
+                                    <phase>pre-integration-test</phase>
+                                    <goals>
+                                        <goal>run</goal>
+                                    </goals>
+                                    <configuration>
+                                        <tasks>
+                                            <copy overwrite="true"
+                                                todir="${tomcat6x.home}/conf">
+                                                <fileset
+                                                    dir="${el4j.external}/etc/tomcat"
+                                                    excludes="**/.svn" />
+                                            </copy>
+                                        </tasks>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+    </profiles>
+</project>

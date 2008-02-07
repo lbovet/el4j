@@ -1,0 +1,115 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                             "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:rich="http://richfaces.ajax4jsf.org/rich"
+	xmlns:d="http://elca.ch/tags/datatable"
+	xmlns:el4j="http://www.elca.ch/el4j/taglib">
+
+	<c:if test="#{empty entityShortName}">
+		<el4j:set var="entityShortName"
+			value="#{utils.deriveEntityShortName()}" />
+	</c:if>
+
+	<el4j:set var="entityClassName"
+		value="#{utils.getEntityClassName(entityShortName)}" />
+
+	<c:if test="#{empty detailPage}">
+		<el4j:set var="detailPage"
+			value="#{utils.getDefaultDetailPage(entityShortName)}" />
+	</c:if>
+
+	<el4j:set var="h10nEntityName"
+		value="#{el4j:h10nEntityName(entityShortName)}" />
+	<el4j:set var="h10nEntityNamePlural"
+		value="#{el4j:h10nEntityNamePlural(entityShortName)}" />
+	<el4j:set var="listOfEntities"
+		value="#{el4j:h10nEntitySentence(entityShortName, 'listOf')}" />
+	<c:if test="#{empty listOfEntities}">
+		<el4j:set var="listOfEntities" value="#{messages.ListOfEntities}" />
+	</c:if>
+	<c:set var="entitiesCount" value="#{entityManager.getEntityCount()}" />
+
+	<h:messages globalOnly="true" styleClass="message" />
+
+	<rich:panel headerClass="topPanel">
+		<f:facet name="header">#{listOfEntities}</f:facet>
+
+		<h:panelGrid columns="2" columnClasses="gridContent"
+			rowClasses="vertTop">
+			<ui:insert name="filters">
+				<h:form rendered="#{not empty filterOn}">
+					<el4j:filters rendered="#{not empty filterOn}">
+						<el4j:filterSet />
+					</el4j:filters>
+				</h:form>
+			</ui:insert>
+
+			<h:panelGroup>
+				<div class="results">
+				
+				    <h:panelGroup rendered="#{not empty filters.stringList}">
+					     <b>
+					        <h:outputText value="Filtered by #{filters.stringList}"/>
+	                     </b>
+	                     <br/>
+	                     <br/>
+                    </h:panelGroup>
+                        
+                     
+                     
+					<h:outputText value="#{messages.NoEntities}"
+						rendered="#{entitiesCount == 0}" />
+
+					<h:form rendered="#{entitiesCount > 0}">
+						<ui:remove>non-paged table:
+							<rich:dataTable width="320" id="{entityShortName}Table" rows="3"
+								columnClasses="col" value="{entities}" var="entity"></rich:dataTable>
+						</ui:remove>
+						<d:pagedRichDataTable footerClass="scrollerTableFooter"
+							entityName="#{entityClassName}"
+							pagedEntityManager="#{entityManager}" width="320"
+							id="#{entityShortName}Table" rows="3" columnClasses="col"
+							var="entity">
+
+							<ui:insert name="columns">
+								<c:if test="#{entitiesCount > 0}">
+									<el4j:columnSet />
+									<ui:insert name="actionColumn">
+										<h:column>
+											<f:facet name="header">#{messages.Actions}</f:facet>
+											<h:commandLink value="#{messages.Edit}"
+												action="#{entityManager.edit(entity, detailPage)}" />
+											<h:outputText value=" " />
+											<h:commandLink value="#{messages.Delete}"
+												action="#{entityManager.delete(entity)}" />
+										</h:column>
+									</ui:insert>
+								</c:if>
+							</ui:insert>
+
+						</d:pagedRichDataTable>
+					</h:form>
+				</div>
+			</h:panelGroup>
+		</h:panelGrid>
+
+		<br />
+
+		<div class="actionButtons">
+			<h:form>
+				<h:commandButton id="create" value="#{messages.CreateEntity}"
+					action="#{entityManager.createEntity(entityClassName,detailPage)}"
+					immediate="true" />
+			</h:form>
+		</div>
+	</rich:panel>
+
+
+
+</ui:composition>
+

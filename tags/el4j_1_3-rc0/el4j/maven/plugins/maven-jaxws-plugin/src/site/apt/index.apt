@@ -1,0 +1,30 @@
+ -----
+ Maven JAX-WS Plugin
+ -----
+ -----
+ 28 Jan 2008
+ -----
+ 
+Maven JAX-WS Plugin
+
+  The JAX-WS maven plugin integrates the <<<wsgen>>> and <<<wsimport>>> tool into the automated build process. These tools are commonly used to generate WSDL files out of annotated class files and to create client stubs.
+
+  This plugin extends the official plugin ({{https://jax-ws-commons.dev.java.net/jaxws-maven-plugin/}}) by the following features:
+
+  * The service endpoint implementation class name (<<<\<sei\>>>>) does not have to be set explicitly. If this parameter is set to a star (<<<\<sei\>*\</sei\>>>>) or omitted (as this is the default value) all classes having a <<<@WebService>>> annotation are included.
+
+  * Three new parameters set the webservice URL that the client should contact. These parameters are concatenated to get the full URL.
+
+    * The <<<\<hostURL\>>>> parameter sets the base URL part (for example <<<http://localhost:8080>>>)
+
+    * The <<<\<contextURL\>>>> parameter sets the context part (for example <<<module-remoting-jaxws-tests>>>)
+
+    * The <<<\<serviceURL\>>>> parameter sets the service name (for example <<<Calculator.Jaxws.Remotingtests>>>). All star characters (<<<*>>>) are replaced by the corresponding service interface name specified by the annotated class (for example <<<*.Jaxws.Remotingtests>>>).
+
+  * The default value for <<<\<genwsdl\>>>> is true (in contrast to the original plugin)
+
+  * The default value for <<<\<wsdlDirectory\>>>> is <<<${project.build.directory}/jaxws/wsgen/wsdl>>> (in contrast to <<<${basedir}/src/wsdl>>> in the original). This enables the generation of all needed files in one maven install pass.
+  
+ This plugin uses JAXB 2.1 which conflicts with the version 2.0 included in JavaSE 6. {{https://jaxb.dev.java.net/guide/Migrating_JAXB_2_0_applications_to_JavaSE_6.html}} section 7.1.2 explains how to solve this problem.
+  
+ For usage {{{plugin-info.html}see the plugin info page}}.
