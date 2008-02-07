@@ -5,6 +5,13 @@
 <facelet-taglib>
 	<namespace>http://www.elca.ch/el4j/taglib</namespace>
 	
+	<tag>
+		<tag-name>pagedRichDataTable</tag-name>
+		<component>
+			<component-type>ch.elca.el4j.PagedRichHtmlDataTable</component-type>
+		</component>
+	</tag>
+	
 	<!-- declaratively defined facelets tags -->
     <tag>
         <tag-name>defaultViewMapping</tag-name>
