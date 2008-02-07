@@ -16,13 +16,18 @@
  */
 package ch.elca.el4j.tests.refdb.idfixer;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.sql.rowset.serial.SerialClob;
 
 import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.services.persistence.generic.dao.AbstractIdentityFixer;
+import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
+import ch.elca.el4j.services.persistence.generic.dao.ConvenienceIdentityFixedDao;
 import ch.elca.el4j.services.persistence.generic.dao.DaoChangeListener;
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
@@ -52,17 +57,17 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
     protected AbstractIdentityFixer m_fixer;
 
     /** The identity-fixed keyword DAO.*/
-    private IdentityFixedDao<Keyword> m_keywordDao;
+    private ConvenienceGenericDao<Keyword, Integer> m_keywordDao;
     /** The identity-fixed book DAO.*/
-    private IdentityFixedDao<Book> m_bookDao;
+    private ConvenienceGenericDao<Book, Integer> m_bookDao;
     
     /**
      * Returns the identity fixing proxy for the DAO that is responsible
      * for entities of type {@code T}.
      */
     @SuppressWarnings("unchecked")
-    private <T> IdentityFixedDao<T> identityFixedDaoFor(Class<T> c) {
-        return (IdentityFixedDao<T>) m_fixer.new GenericInterceptor(
+    private <T,ID extends Serializable> ConvenienceGenericDao<T,ID> identityFixedDaoFor(Class<T> c) {
+        return (ConvenienceGenericDao<T,ID>) m_fixer.new GenericInterceptor(
             IdentityFixedDao.class).decorate(getDaoRegistry().getFor(c));
     }
     
@@ -71,7 +76,7 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        m_keywordDao = identityFixedDaoFor(Keyword.class);
+        m_keywordDao =  identityFixedDaoFor(Keyword.class);
         m_bookDao = identityFixedDaoFor(Book.class);
     }
     
@@ -135,8 +140,8 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
     
     /** Renames the only keyword to "another name". */
     private void renameKeyword() {
-        GenericDao<Keyword> otherKeywordDao
-            = getDaoRegistry().getFor(Keyword.class);
+        ConvenienceGenericDao<Keyword, Integer> otherKeywordDao
+            = (ConvenienceGenericDao<Keyword, Integer>) getDaoRegistry().getFor(Keyword.class);
         Keyword okw = otherKeywordDao.getAll().iterator().next();
         okw.setName("Another name");
         otherKeywordDao.saveOrUpdate(okw);
