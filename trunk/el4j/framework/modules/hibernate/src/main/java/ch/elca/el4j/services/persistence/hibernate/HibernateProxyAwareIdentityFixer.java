@@ -35,7 +35,6 @@ import org.springframework.util.Assert;
 
 import ch.elca.el4j.services.persistence.generic.dao.AbstractIdentityFixer;
 import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
-import ch.elca.el4j.util.metadata.MetaDataCollector;
 
 /**
  * An identity fixer for objects loaded by hibernate.

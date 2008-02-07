@@ -94,16 +94,7 @@ public interface GenericDao<T> {
      */
     int findCountByQuery(final QueryObject query)
        throws DataAccessException;
-    
-    /**
-     * Retrieves all the domain objects of type T.
-     * 
-     * @return The list containing all the domain objects of type T; if no such
-     *         domain objects exist, an empty list will be returned
-     * @throws DataAccessException
-     *             If general data access problem occurred
-     */
-    List<T> getAll() throws DataAccessException;   
+     
     
     /**
      * Re-reads the state of the given domain object from the underlying
