@@ -72,6 +72,7 @@
     a single jar (refer to module applications/templates/gui/standalone-client).
   
 * New JSF module based on Facelets 1.1.14, JSF 1.2 (RI), Richfaces 3.1.4.GA and Seam 2.0.1
+   (beta quality)
   = Basic module (module JSF) with libraries and simplified generic DAO support.
   = JSF Application Template that demonstrates the use of JSF.
   = Please refer to the documentation of the reference document and the application
