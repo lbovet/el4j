@@ -18,8 +18,9 @@
 					 action="#{entityManager.deleteAndRedirect(entity, masterPage)}"
 				  immediate="true"
 				   rendered="#{not newEntity}"/>
-	    <h:commandButton id="done" 
+	    <s:button id="done" 
                       value="#{messages.Cancel}" 
+                       view="#{masterPage}"
                      action="#{entityManager.cancelEdit(entity, masterPage)}"/>
 	</div>
 
