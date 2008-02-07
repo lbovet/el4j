@@ -17,6 +17,7 @@
 package ch.elca.el4j.seam.generic.errorhandling;
 
 import java.beans.PropertyDescriptor;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -49,7 +50,7 @@ import ch.elca.el4j.seam.generic.Temporary;
  */
 @Name("oleResolver")
 @Scope(ScopeType.CONVERSATION)
-public class OptimisticLockingExceptionResolver {
+public class OptimisticLockingExceptionResolver implements Serializable {
     /**
      * The ID of the conflict.
      */
