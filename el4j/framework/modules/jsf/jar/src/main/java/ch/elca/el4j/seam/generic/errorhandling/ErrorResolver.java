@@ -18,6 +18,7 @@
 package ch.elca.el4j.seam.generic.errorhandling;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.faces.application.ViewExpiredException;
 import javax.servlet.ServletException;
@@ -48,7 +49,7 @@ import com.sun.facelets.tag.TagException;
  */
 @Name("errorResolver")
 @Scope(ScopeType.CONVERSATION)
-public class ErrorResolver {
+public class ErrorResolver implements Serializable {
 
     /**
      * Returns a funny text describing the root cause of specified exception.

@@ -21,9 +21,14 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.EntityMode;
 import org.hibernate.FlushMode;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.StaleObjectStateException;
+import org.hibernate.metadata.ClassMetadata;
 import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.ApplicationException;
 import org.jboss.seam.annotations.Begin;
 import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.Destroy;
@@ -34,8 +39,10 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.core.Conversation;
 import org.jboss.seam.faces.FacesMessages;
 
+import ch.elca.el4j.seam.generic.errorhandling.EntityConflict;
 import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
 import ch.elca.el4j.services.persistence.generic.dao.impl.FallbackDaoRegistry;
 import ch.elca.el4j.services.search.QueryObject;
@@ -56,6 +63,7 @@ import ch.elca.el4j.services.search.QueryObject;
 @Name("entityManager")
 @Scope(ScopeType.CONVERSATION)
 @SuppressWarnings("unchecked")
+@ApplicationException(rollback = true)
 public class EntityManager implements Serializable, PagedEntityManager {
     /**
      * The logger.
@@ -72,6 +80,18 @@ public class EntityManager implements Serializable, PagedEntityManager {
      */
     @In("#{hibernateSession}")
     private Session m_session;
+    
+    /**
+     * The hibernate session factory.
+     */
+    @In("#{hibernateSessionFactory}")
+    private SessionFactory m_sessionFactory;
+    
+    /**
+     * A map containing all optimistic locking conflicts.
+     */
+    @In("#{conflicts}")
+    private Temporary m_conflicts;
     
     /**
      * The currently selected filters.
@@ -282,8 +302,44 @@ public class EntityManager implements Serializable, PagedEntityManager {
      */
     @End(beforeRedirect = true)
     public String saveOrUpdateAndRedirect(Object newEntity, String viewId) {
-        saveOrUpdate(newEntity);
-
+        m_session.setFlushMode(FlushMode.COMMIT);
+        ConvenienceGenericDao dao = getDao();
+        try {
+            dao.saveOrUpdate(newEntity);
+            m_session.flush();
+        } catch (StaleObjectStateException e) {
+            m_session.setFlushMode(FlushMode.MANUAL);
+            EntityConflict conflict = new EntityConflict();
+            
+            // reload
+            Serializable id = m_session.getIdentifier(newEntity);
+            m_session.evict(newEntity);
+            conflict.setStaleObject(newEntity);
+            
+            Object fresh = m_session.get(m_currentEntityClassName, id); 
+            
+            // get version
+            ClassMetadata meta
+                = m_sessionFactory.getClassMetadata(m_currentEntityClassName);
+            int versionFieldIndex = meta.getVersionProperty();
+            String propName = meta.getPropertyNames()[versionFieldIndex];
+            Object version = meta.getPropertyValue(
+                fresh, propName, EntityMode.POJO);
+            
+            //set version
+            meta.setPropertyValue(
+                newEntity, propName, version, EntityMode.POJO);
+            
+            m_session.evict(fresh);
+            
+            conflict.setCurrentObject(fresh);
+            conflict.setRedirectPage(viewId);
+            
+            String convId = Conversation.instance().getId();
+            m_conflicts.put(convId, conflict);
+            return "/lockingResolver.xhtml?conflictId=" + convId;
+        }
+        
         return viewId;
     }
     
