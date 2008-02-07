@@ -17,6 +17,7 @@
 package ch.elca.el4j.services.persistence.generic.dao;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -74,6 +75,16 @@ public interface ConvenienceGenericDao<T, ID extends Serializable>
             OptimisticLockingFailureException.class })
     void delete(ID id) 
         throws OptimisticLockingFailureException, DataAccessException;
+    
+    /**
+     * Retrieves all the domain objects of type T.
+     * 
+     * @return The list containing all the domain objects of type T; if no such
+     *         domain objects exist, an empty list will be returned
+     * @throws DataAccessException
+     *             If general data access problem occurred
+     */
+    List<T> getAll() throws DataAccessException;      
     
     /**
      * Deletes the given domain object.

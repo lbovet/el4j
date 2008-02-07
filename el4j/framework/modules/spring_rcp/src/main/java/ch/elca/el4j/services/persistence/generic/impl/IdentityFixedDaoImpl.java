@@ -86,7 +86,8 @@ public class IdentityFixedDaoImpl<T>
     
     /** {@inheritDoc} */
     public List<T> getAll() throws DataAccessException {
-        return fixed(m_backing.getAll());        
+    	QueryObject queryObject = new QueryObject(getPersistentClass());
+        return fixed(m_backing.findByQuery(queryObject));        
     }
 
     /** {@inheritDoc} */
