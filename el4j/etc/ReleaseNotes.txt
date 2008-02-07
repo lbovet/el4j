@@ -77,7 +77,8 @@
   = Please refer to the documentation of the reference document and the application
     template.
   = We recommend to use Jetty (as replacement for Tomcat) for the development as it allows
-    faster round-trips.
+    faster round-trips: you typically do not need to redeploy changes in your code or xhtml
+	files, jetty takes them up automatically.
   = There is a new facility to test your JSF interactions (based on TestNG and Seam support). 
     Refer to the sample test.
 
