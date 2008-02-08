@@ -4,6 +4,8 @@
 	xmlns:s="http://jboss.com/products/seam/taglib"
 	xmlns:c="http://java.sun.com/jstl/core"
 	xmlns:el4j="http://www.elca.ch/el4j/taglib">
+	
+	<ui:remove><!-- default mapping of fieldType to JSF components to show values --></ui:remove>
 	<c:choose>
 		<c:when test="#{fieldType == 'String'}">
 			<h:outputText value="#{entity[fieldName]}" />

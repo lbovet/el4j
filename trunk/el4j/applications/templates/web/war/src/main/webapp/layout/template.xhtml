@@ -5,6 +5,17 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:s="http://jboss.com/products/seam/taglib">
+	
+	<ui:remove><!--
+	
+		The main template
+		------------------
+		Component fragments:
+			body            : the region containing the body of the page
+			JavaScripts     : a region inside the header (for scripts etc.)
+		
+	--></ui:remove>
+	
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>Tender Tracker using JBoss Seam</title>

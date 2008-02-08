@@ -6,6 +6,8 @@
 	xmlns:el4j="http://www.elca.ch/el4j/taglib"
 	template="layout/template.xhtml">
 
+	<ui:remove><!-- a detail view on clients (grouped into to boxes) --></ui:remove>
+	
 	<ui:define name="body">
 		<ui:decorate template="layout/detailView.xhtml">
 			<ui:param name="entityShortName" value="client" />

@@ -3,6 +3,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:s="http://jboss.com/products/seam/taglib">
 
+	<ui:remove><!-- component to choose a member of an enumeration --></ui:remove>
+	
 	<h:selectOneMenu id="#{fieldName}"
 				  value="#{entity[fieldName]}"
 			   required="#{utils.isRequired(entityClassName,fieldName)}">

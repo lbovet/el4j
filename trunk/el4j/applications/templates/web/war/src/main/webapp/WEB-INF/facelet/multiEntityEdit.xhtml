@@ -7,6 +7,8 @@
 	xmlns:s="http://jboss.com/products/seam/taglib"
 	xmlns:el4j="http://www.elca.ch/el4j/taglib">
 
+	<ui:remove><!-- component to select multiple referenced entities --></ui:remove>
+	
 	<a4j:outputPanel id="#{fieldName}OutputPanel">
 		<a4j:region>
 			<c:if test="#{relEntities == null}">
@@ -40,6 +42,7 @@
 				<f:converter converterId="ch.elca.el4j.seam.generic.EntityConverter"/> 
 			</h:selectOneMenu>
 			
+			<ui:remove><!-- a button to add selected entity to the list --></ui:remove>
 			<a4j:commandButton value="Add"
 							reRender="#{fieldName}OutputPanel"
 							  action="#{entity[fieldName].add(temporary[fieldName])}"/>

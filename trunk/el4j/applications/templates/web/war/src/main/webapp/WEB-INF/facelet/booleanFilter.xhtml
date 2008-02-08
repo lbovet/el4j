@@ -2,6 +2,9 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:el4j="http://www.elca.ch/el4j/taglib">
+	
+	<ui:remove><!-- Filter entities by a boolean criterion:
+		links for 'true', 'false' and 'not set' --></ui:remove>
 
 	<p><b>#{el4j:h10nFieldName(entityShortName, filterName)}:</b></p>
 

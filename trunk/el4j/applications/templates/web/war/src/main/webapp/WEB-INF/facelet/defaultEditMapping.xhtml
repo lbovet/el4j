@@ -3,6 +3,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:c="http://java.sun.com/jstl/core"
 	xmlns:el4j="http://www.elca.ch/el4j/taglib">
+	
+	<ui:remove><!-- default mapping of fieldType to JSF components for editing --></ui:remove>
 	<c:choose>
 		<c:when test="#{fieldType == 'String'}">
 			<el4j:stringEdit fieldName="#{fieldName}" />
