@@ -409,6 +409,11 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
+					<!--
+					Due to problems with  version 2.2-beta-1 we use 2.1.
+					swing-demo-standalone-client assembly with 2.2-beta-1 don't run, 
+					because of changes in the META-INF directory.
+					-->
                     <version>2.1</version>
                 </plugin>
                 <plugin>
