@@ -9,7 +9,6 @@
     <!-- Date: $Date$ -->
     <!-- Author: $Author$ -->
 
-
     <parent>
         <groupId>ch.elca.el4j.modules</groupId>
         <artifactId>module-jsf</artifactId>
@@ -19,7 +18,7 @@
     <artifactId>module-jsf-war</artifactId>
     <version>${version.module-jsf}</version>
     <packaging>war</packaging>
-    <name>EL4J module JSF - war</name>
+    <name>EL4J module jsf - war</name>
     <description>
        War part of module JSF of the EL4J framework.
     </description>
