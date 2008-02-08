@@ -30,8 +30,6 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 
-import sun.text.CompactShortArray.Iterator;
-
 import ch.elca.el4j.seam.generic.metadata.EntityInfoBase;
 import ch.elca.el4j.seam.generic.metadata.EnumFieldInfo;
 import ch.elca.el4j.seam.generic.metadata.FieldInfo;
@@ -190,7 +188,7 @@ public class EntityFilters implements Serializable {
     }
     
     /**
-     * Creates a ";" seperated list of active filters and its values
+     * Creates a ";" seperated list of active filters and its values.
      * @return String with currently filtered fields
      */
     public String getStringList() {

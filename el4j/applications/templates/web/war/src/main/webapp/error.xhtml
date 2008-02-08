@@ -11,20 +11,20 @@
 	<ui:define name="body">
 
 		<rich:panel headerClass="topPanel">
-			<f:facet name="header">Error!</f:facet>
+			<f:facet name="header">#{messages.Error}</f:facet>
 			<p>
-				 An unexpected problem occurred!
+				 #{messages.ErrorDesc}
 			</p>
 			<p>
 			     <!-- here we show how to access the handled exception
 			     and to perform some action with it -->
-			     <b>#{errorResolver.getErrorMessage(org.jboss.seam.exception)}</b>
+			     <b>#{messages[errorResolver.getErrorMessage(org.jboss.seam.exception)]}</b>
 			</p>
 			<p>
-                 The conversation was ended.
-            </p>			
+                 #{messages.ConversationEnd}
+            </p>
 			<p>
-			     Technical details:
+			     #{messages.TechDetails}
 			</p>
 			<p>
 			     <h:messages globalOnly="true" />

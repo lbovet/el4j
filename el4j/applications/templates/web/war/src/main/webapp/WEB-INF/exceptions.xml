@@ -20,7 +20,7 @@
     <!--  all other exceptions are handled by the generic 
     custom error page-->
 	<exception class="java.lang.Exception">
-        <redirect view-id="/genericError.xhtml">
+        <redirect view-id="/error.xhtml">
         </redirect>
         <end-conversation/>
    </exception>
