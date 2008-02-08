@@ -16,8 +16,11 @@
 			<el4j:menuItem entityShortName="employee" />
 			<el4j:menuItem entityShortName="offer" />
 			<el4j:menuItem entityShortName="keyword" />
-			<h:commandLink value="Employee2 (non-generic)"
-				action="#{entityManager.redirectTo('/employeeOverview.xhtml')}" />
+			<h:commandLink value="Employee (half-generic)"
+				action="#{entityManager.redirectTo('/employeeOverviewGeneric.xhtml')}" />
+			<rich:spacer width="8" />
+			<h:commandLink value="Employee (non-generic)"
+				action="#{entityManager.redirectTo('/employeeOverviewEmpMgr.xhtml')}" />
 			<rich:spacer width="8" />
 			<h:commandLink value="Demos"
 				action="#{entityManager.redirectTo('/demos.xhtml')}" />

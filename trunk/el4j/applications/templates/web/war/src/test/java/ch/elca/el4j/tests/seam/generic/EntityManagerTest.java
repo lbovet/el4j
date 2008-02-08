@@ -16,18 +16,15 @@
  */
 package ch.elca.el4j.tests.seam.generic;
 
-import java.util.List;
-
-
 import org.jboss.seam.Component;
 import org.jboss.seam.contexts.Contexts;
+import org.testng.annotations.Test;
 
 import ch.elca.el4j.seam.demo.entities.Client;
-import ch.elca.el4j.seam.generic.EntityFilters;
 import ch.elca.el4j.seam.generic.EntityManager;
 import ch.elca.el4j.tests.seam.AbstractEntityManagerTest;
 
-import org.testng.annotations.*;
+
 
 // Checkstyle: MagicNumber off
 
@@ -55,12 +52,12 @@ public class EntityManagerTest
     static final String ADRESS = "Rue du test";
     static final String ACTIVITY = "Testing bad software";
     
-    static Client testClient;
+    static Client s_testClient;
     
     /**
-     * number of entities in db before test
+     * number of entities in db before test.
      */
-    static int entityCount;
+    static int s_entityCount;
     
     
     
@@ -75,106 +72,83 @@ public class EntityManagerTest
      */
     @Test
     public void testPersistEntity() throws Exception {
-         
-            assert !super.isSessionInvalid();
-       
-            
-            
-            //first request
-            new FacesRequest() {
-                
-                @Override
-                protected void updateModelValues() throws Exception
-                {
-                    //store entityClassName in Session context
-                    //for further use
-                    Contexts.getSessionContext()
-                        .set("entityClassName", 
-                        "ch.elca.el4j.seam.demo.entities.Client");
-                    
-                    
-                    //make sure that beans are successfully loaded
-                    assert (getValue("#daoRegistry") != null);
-                }
-                
-                @Override
-                protected void invokeApplication() throws Exception
-                {                  
-                    //create object to be stored
-                    testClient = new Client();
-                  
-                    testClient.setEnterprise(ENTERPRISE);
-                    testClient.setAddress(ADRESS);
-                    testClient.setActivity(ACTIVITY);
-                    
-                    
-                    //get object reference of seam-managed entityManager 
-                    //component
-                    EntityManager em = (EntityManager) 
-                         Component.getInstance("entityManager");
-               
-                     
-                    entityCount = em.getEntityCount();
-                    
-                     
-                    //save client and end conversation 
-                    em.saveOrUpdateAndRedirect(testClient, null);
-                    
-                    
-                }
 
-                
-                
-            }.run();
-            
-            
-            //second request
-            new FacesRequest() {
-                
-                                
-                @Override
-                protected void invokeApplication() throws Exception
-                {
-                   
-                    EntityManager em = (EntityManager) 
-                        Component.getInstance("entityManager");
-          
-                    
-                    int size = em.getEntityCount();
-                    //the currently saved client should be there 
-                    assert (size == entityCount + 1);
-                    
-                    
-                    
-                    //...and delete it again
-                    em.deleteAndRedirect(testClient, null);
-                    
-                }
+        assert !super.isSessionInvalid();
 
-            }.run();
-            
-            
-            //third request
-            new FacesRequest() {
-                
-                @Override
-                protected void invokeApplication() throws Exception
-                {                   
-                    EntityManager em = (EntityManager) 
-                        Component.getInstance("entityManager");
-          
-                    int size = em.getEntityCount();
-                    //table has old size again, so deletion was successfull
-                    assert (size == entityCount);
-                    
-                   
-                }
+        //first request
+        new FacesRequest() {
 
-            }.run();
-     
+            @Override
+            protected void updateModelValues() throws Exception {
+                //store entityClassName in Session context
+                //for further use
+                Contexts.getSessionContext().set("entityClassName",
+                    "ch.elca.el4j.seam.demo.entities.Client");
+
+                //make sure that beans are successfully loaded
+                assert (getValue("#daoRegistry") != null);
+            }
+
+            @Override
+            protected void invokeApplication() throws Exception {
+                //create object to be stored
+                s_testClient = new Client();
+
+                s_testClient.setEnterprise(ENTERPRISE);
+                s_testClient.setAddress(ADRESS);
+                s_testClient.setActivity(ACTIVITY);
+
+                //get object reference of seam-managed entityManager 
+                //component
+                EntityManager em = (EntityManager) Component
+                    .getInstance("entityManager");
+
+                s_entityCount = em.getEntityCount();
+
+                //save client and end conversation 
+                em.saveOrUpdateAndRedirect(s_testClient, null);
+
+            }
+
+        }.run();
+
+        //second request
+        new FacesRequest() {
+
+            @Override
+            protected void invokeApplication() throws Exception {
+
+                EntityManager em = (EntityManager) Component
+                    .getInstance("entityManager");
+
+                int size = em.getEntityCount();
+                //the currently saved client should be there 
+                assert (size == s_entityCount + 1);
+
+                //...and delete it again
+                em.deleteAndRedirect(s_testClient, null);
+
+            }
+
+        }.run();
+
+        //third request
+        new FacesRequest() {
+
+            @Override
+            protected void invokeApplication() throws Exception {
+                EntityManager em = (EntityManager) Component
+                    .getInstance("entityManager");
+
+                int size = em.getEntityCount();
+                //table has old size again, so deletion was successfull
+                assert (size == s_entityCount);
+
+            }
+
+        }.run();
+
     }
-    
-    
- 
+
 }
 //Checkstyle: MagicNumber on
