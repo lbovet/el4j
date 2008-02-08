@@ -1,96 +1,111 @@
 --------------------------------------------------------------------------------
- Date :   8.2.08
+ Date :   08.02.08
                             EL4J version  1.3
 --------------------------------------------------------------------------------
 
 * SourceForge Change Requests CLOSED:
   1523763 - throw more specific exception in ConvenienceHibernateTemplate
 
-* Core
+* Core and general
   = Simplified handling of data access: 
-    + Better QueryObject pattern support for Hibernate with real OR- and NOT-Queries, simple paging
-	   (loading all entries in batches of maximal N elements) and sorting support
-    + More convention over configuration: Autocollected @Entity classes (Hibernate), automatically
-  	   colleted DAOs (DAOs are added to the spring application context and to the DAORegistry), 
-	   automatically injected SessionFactory and SqlMapClientTemplate, automatically determined type
-	   T of GenericDao<T> classes
-    + The newly added feature are backward compatible
-	+ Dao registry now handles spring proxied classes also correctly (idea from Ky)
-	+ New FallbackDaoRegistry (alternative implementation to DefaultDaoRegistry): If no DAO can be
-   	  found for an entityType, a generic DAO is created
-	+ Moved getAll() method from GenericDao to ConvenienceGenericDao (improving canonicality)
-  = Simplified and homogenized multi-environment support
-    + Helps with properties shared between Maven and Spring: they are only defined once and
-	  they are available both in Maven (during build/ launch time) and Spring (during run time).
-	+ We have added 2 new configuration files:
-	   env-placeholder.properties and env-bean-property.properties. The former
-	   is for Spring placeholders (of the form ${placeholder-name}), the latter is for
-	   renaming of beans (for the Spring PropertyOverrideConfigurer).
-    + Db properties are now defined in the pom.xml files and the new environment property file
-  	 (env-bean-property.properties). Changing the database to use is now made by enabling the
-	 corresponding profile (no setting of system property db.name allowed!). Refer to the FAQ
-	 for more information on how to change your profile.
-	+ The web context string is now also handled via the environment support.
-	+ The new support is backward compatible.
-	+ Please refer to the corresponding plugin documentation for details.
+    + Better QueryObject pattern support for Hibernate with real OR- and 
+      NOT-Queries, simple paging (loading all entries in batches of maximal 
+      N elements) and sorting support.
+    + More convention over configuration:
+      Autocollected @Entity classes (Hibernate), automatically colleted DAOs
+      (DAOs are added to the spring application context and to the DAORegistry), 
+      automatically injected SessionFactory and SqlMapClientTemplate, 
+      automatically determined type T of GenericDao<T> classes.
+    + The newly added feature are backward compatible.
+    + Dao registry now handles spring proxied classes also correctly (idea from Ky).
+    + New FallbackDaoRegistry (alternative implementation to DefaultDaoRegistry):
+      If no DAO can be found for an entityType, a generic DAO is created.
+    + Moved getAll() method from GenericDao to ConvenienceGenericDao (improving canonicality)
+  = Simplified and homogenized multi-environment support:
+    + Helps with properties shared between Maven and Spring: they are only
+      defined once and they are available both in Maven (during build/launch
+      time) and Spring (during run time).
+    + We have added 2 new configuration files:
+      "env-placeholder.properties" and "env-bean-property.properties". The former
+      is for Spring placeholders (of the form ${placeholder-name}). The old name
+      of it is "env/env.properties, the latter is for overriding properties of
+      beans (for the Spring PropertyOverrideConfigurer).
+    + Db properties are now defined in the pom.xml files and transferred via 
+      the new environment property file "env-bean-property.properties" into
+      Spring to override bean properties of bean "dataSource". Changing the
+      database to use is now made by enabling the corresponding profile
+      (no setting of system property db.name allowed!). Refer to the FAQ
+      for more information on how to change your profile.
+    + The web context string in EL4J's examples is now also handled via the
+      placeholder environment support.
+    + The new support is backward compatible.
+    + Please refer to the corresponding plugin documentation for details.
   = Added AopHelper with easy programmatic interceptor/mixin addition.
   = Upgrade to Spring 2.5.1  
-  = Clean ups (less warnings, unneeded dependency removed, fixed some inconsistencies in 
-    naming and documentation) and improved documentation
+  = Clean ups (less warnings, unneeded dependency removed, fixed some 
+    inconsistencies in naming and documentation) and improved documentation.
   = Added 2 helper methods to check for a certain JDK version 
-  = We have added a file "etc/KnownIssues.txt" that we keep up to dates with small short 
-    term issues of EL4J. We make the file's version of the Subversion trunk available on the EL4J
-	website.
-  = The file etc/m2/settings.xml has been updated (we added mostly just commented-out 
-    sections so that you have an example in case you want to enable some functionality)
-  = The RefreshPropertyOverrideConfigurer no more needed due to a fix in ModuleAppCtxs. See
-    http://jira.springframework.org/browse/SPR-4378
+  = We have added a file "etc/KnownIssues.txt" that we keep up to dates with
+    small short term issues of EL4J. We make the file's version of the
+    Subversion trunk available on the EL4J website.
+  = The file "etc/m2/settings.xml" has been updated (we added mostly just
+    commented-out sections so that you have an example in case you want to
+    enable some functionality i.e. permanent database profile activation).
+  = The RefreshPropertyOverrideConfigurer no more needed due to a fix in 
+    ModuleApplicationContext and ModuleWebApplicationContext.
+    See http://jira.springframework.org/browse/SPR-4378
 
 * Remoting
   = Upgrade to Hessian 3.1.3
   = Burlap is now deprecated (it is no more supported by caucho.com)
   = Upgrade to jax-ws-commons 1.8
-	
+
 * Databases
-  = Upgraded to new Derby JDBC driver. Advantage: it can be freely distributed.
-  = Upgraded to newest oracle driver
-	
+  = Upgraded to new Derby JDBC driver (no more IBM driver).
+    Advantage: it can be freely distributed.
+    Please upgrade to new Db configuration support as mentioned above.
+  = Upgraded to newest Oracle driver.
+
+* Hibernate
+  = Upgrade to Hibernate 3.2.6.ga
+
 * Build system
-  = Upgrade to new maven 2.0.8
+  = Upgrade to maven 2.0.8 patched by EL4J. Effective version: 2.0.8-el4j-20071205
   = Introduced recursive maven "mvnrec" (recursively build the current module and 
-     all modules it requires). Please refer to the documentation of the corresponding 
-	 maven plugin.
-  = We added artificial versions to all required external maven plugin snapshots. Benefit:
-     be no longer dependent on external parties.
+    all modules it requires). Please refer to the documentation of the corresponding 
+    maven plugin.
+  = We added artificial versions to all required external maven plugin snapshots.
+    Benefit: be no longer dependent on external parties.
   = Added shell scripts for Windows (.bat files).
-  = Improvements of the dependency graph plugin: use maven mechanism to collect information
-     (this fixes some issues). One can now also show the type of dependencies on edges of the 
-	 graph.
-  = Database plugin: The delimiter of SQL statements can now be changed. This is used i.e. with
-    PL/SQL code where the delimiter is normally "/" instead of a ";".
+  = Improvements of the dependency graph plugin: use maven mechanism to collect
+    information (this fixes some issues). One can now also show the type of
+    dependencies on edges of the graph.
+  = Database plugin: The delimiter of SQL statements can now be changed. This is
+    used i.e. with PL/SQL code where the delimiter is normally "/" instead of a ";".
   = We have set up some more report plugins (PMD and CPD).
-  = There is a demo for the maven assembly plugin that allows to publish your application as
-    a single jar (refer to module applications/templates/gui/standalone-client).
+  = There is a demo for the maven assembly plugin that allows to publish your 
+    application as a single jar (refer to module "applications/templates/gui/standalone-client").
   
-* New JSF module based on Facelets 1.1.14, JSF 1.2 (RI), Richfaces 3.1.4.GA and Seam 2.0.1
-   (beta quality)
-  = Basic module (module JSF) with libraries and simplified generic DAO support.
+* New JSF module based on Facelets 1.1.14, JSF 1.2 (RI), Richfaces 3.1.4.GA and
+  Seam 2.0.1 (beta quality)
+  = Basic module (module-jsf) with libraries and simplified generic DAO support.
   = JSF Application Template that demonstrates the use of JSF.
-  = Please refer to the documentation of the reference document and the application
-    template.
-  = We recommend to use Jetty (as replacement for Tomcat) for the development as it allows
-    faster round-trips: you typically do not need to redeploy changes in your code or xhtml
-	files, jetty takes them up automatically.
-  = There is a new facility to test your JSF interactions (based on TestNG and Seam support). 
-    Refer to the sample test.
+  = Please refer to the documentation of the reference document and the
+    application template.
+  = We recommend to use Jetty (as replacement for Tomcat) for the development
+    as it allows faster round-trips: you typically do not need to redeploy
+    changes in your code or xhtml files, jetty takes them up automatically.
+  = There is a new facility to test your JSF interactions (based on TestNG
+    and Seam support). Refer to the sample test.
 
 * Modules for GUI development
   = Swing module
-   + Beans binding 1.2.1 added (we use a slightly patched version)
-   + Small documentation upgrades
+   + Beans binding 1.2.1 added (we use a slightly patched version).
+   + Small documentation upgrades.
   = Module Spring RCP
-   + This module is deprecated (too little momentum of the project and too few uses of it)  
-  = We have removed the old Tiger GUI demo
+   + This module is deprecated (too little momentum of the project and too few
+     uses of it).  
+  = We have removed the old Tiger GUI demo.
 
 --------------------------------------------------------------------------------
  Date :   14.12.07
@@ -106,7 +121,7 @@
     (replaced by Java 5 Annotations)
   = Beanshell module added: it launches a Java/bsh expression from command line
     during runtime. This allows to get further info about a running application.
-	A sample use (see reference doc) is to allow a remote shell to a JVM.
+    A sample use (see reference doc) is to allow a remote shell to a JVM.
   = The Reject (light precondition checking) class supports now all subclasses 
     of RuntimeException. Further some convenience methods where added.
   = Added possibility to log basic application context startup parameters
@@ -119,17 +134,17 @@
     with various little helper classes and a very light application framework.
   = Among the new features: Binding of POJOs to Swing components, Event Bus,
     Docking and MDI support, Exception handling, i18n and resource management,
-	user preference management, simple way to define Actions and selectively enable
-	them, convenience code to simplify the design of forms, ...
+    user preference management, simple way to define Actions and selectively enable
+    them, convenience code to simplify the design of forms, ...
   = Please refer to the documentation (reference document) and the demo application.
   = This Swing GUI Framework replaces the old GUI framework based on Spring RCP.
 
 * New webservice stack (beta quality)
   = Support for the Spring POJO programming model with sun's JAX-WS web service stack.
     It can use the same Java service interface on the client and server side
-	(typically with JAX-WS you generate a new service interface on the client side,
-	to improve the isolation between client and server). This JAX-WS stack does n't
-	work on WebLogic 10 yet.
+    (typically with JAX-WS you generate a new service interface on the client side,
+    to improve the isolation between client and server). This JAX-WS stack does n't
+    work on WebLogic 10 yet.
   = With this step we deprecate the dated Axis 1 web service stack (called module-soap).
   
 * Maven 
@@ -137,7 +152,7 @@
     be explicitly set (simplifies when launching plugin goals in isolation)).
   = Better WTP platform support of maven eclipse plugin. Support for 
     <reactorProjectGroupIdPrefixes> config to ensure certain project links
-	are always local ( http://jira.codehaus.org/browse/MECLIPSE-334 ).
+    are always local ( http://jira.codehaus.org/browse/MECLIPSE-334 ).
   = Rework of the maven concept presentation
   = Prototyping with webstart maven plugin
   = Updated versions of external maven plugins: maven-source-plugin 2.0.4,
