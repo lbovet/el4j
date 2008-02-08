@@ -1,13 +1,11 @@
-<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
-                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                 xmlns:h="http://java.sun.com/jsf/html"
-                 xmlns:f="http://java.sun.com/jsf/core"
-                 xmlns:s="http://jboss.com/products/seam/taglib"
-				 xmlns:c="http://java.sun.com/jstl/core"
-				 xmlns:el4j="http://www.elca.ch/el4j/taglib">
-	
-	<el4j:set var="fieldType" value="#{utils.getFieldType(entityClassName,fieldName)}"/>
-	<el4j:set var="fieldName" value="#{fieldName}"/>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:el4j="http://www.elca.ch/el4j/taglib">
+
+	<el4j:set var="fieldType" value="#{utils.getFieldType(entityClassName,fieldName)}" />
+	<el4j:set var="fieldName" value="#{fieldName}" />
 
 	<s:decorate id="#{fieldName}Decoration">
 		<div class="prop">

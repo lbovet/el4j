@@ -16,8 +16,8 @@
 				 #{messages.ErrorDesc}
 			</p>
 			<p>
-			     <!-- here we show how to access the handled exception
-			     and to perform some action with it -->
+			     <ui:remove><!-- here we show how to access the handled exception
+			     and to perform some action with it --></ui:remove>
 			     <b>#{messages[errorResolver.getErrorMessage(org.jboss.seam.exception)]}</b>
 			</p>
 			<p>

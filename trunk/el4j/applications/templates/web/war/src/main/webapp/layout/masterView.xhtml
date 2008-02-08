@@ -9,6 +9,7 @@
 	xmlns:rich="http://richfaces.ajax4jsf.org/rich"
 	xmlns:el4j="http://www.elca.ch/el4j/taglib">
 
+	<ui:remove><!-- assign values to JSF variables --></ui:remove>
 	<c:if test="#{empty entityShortName}">
 		<el4j:set var="entityShortName"
 			value="#{utils.deriveEntityShortName()}" />
@@ -40,6 +41,8 @@
 
 		<h:panelGrid columns="2" columnClasses="gridContent"
 			rowClasses="vertTop">
+			
+			<ui:remove><!-- add filter panel --></ui:remove>
 			<ui:insert name="filters">
 				<h:form rendered="#{not empty filterOn}">
 					<el4j:filters rendered="#{not empty filterOn}">
@@ -65,7 +68,7 @@
 						rendered="#{entitiesCount == 0}" />
 
 					<h:form rendered="#{entitiesCount > 0}">
-						<ui:remove>non-paged table:
+						<ui:remove><!-- non-paged table (not used here):  -->
 							<rich:dataTable width="320" id="{entityShortName}Table" rows="3"
 								columnClasses="col" value="{entities}" var="entity"></rich:dataTable>
 						</ui:remove>
@@ -78,6 +81,8 @@
 							<ui:insert name="columns">
 								<c:if test="#{entitiesCount > 0}">
 									<el4j:columnSet />
+									
+									<ui:remove><!-- insert basic operation buttons --></ui:remove>
 									<ui:insert name="actionColumn">
 										<h:column>
 											<f:facet name="header">#{messages.Actions}</f:facet>

@@ -1,17 +1,17 @@
-<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
-                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                 xmlns:h="http://java.sun.com/jsf/html"
-                 xmlns:f="http://java.sun.com/jsf/core"
-				 xmlns:c="http://java.sun.com/jstl/core"
-                 xmlns:s="http://jboss.com/products/seam/taglib"
-				 xmlns:el4j="http://www.elca.ch/el4j/taglib">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:el4j="http://www.elca.ch/el4j/taglib">
 
 	<c:if test="#{relEntities == null}">
-		<el4j:set var="relEntities" value="#{utils.getRelatedEntities(entityClassName,fieldName)}"/>
+		<el4j:set var="relEntities" value="#{utils.getRelatedEntities(entityClassName,fieldName)}" />
 	</c:if>
-	
+
 	<c:if test="#{detailPage == null}">
-		<el4j:set var="detailPage" value="#{utils.getDefaultRelatedDetailPage(entityClassName,fieldName)}"/>
+		<el4j:set var="detailPage" value="#{utils.getDefaultRelatedDetailPage(entityClassName,fieldName)}" />
 	</c:if>
 	
 	<h:selectOneMenu id="#{fieldName}"
@@ -23,7 +23,9 @@
 			noSelectionLabel="Select..."/>
 		<f:converter converterId="ch.elca.el4j.seam.generic.EntityConverter"/> 
 	</h:selectOneMenu>
-	
-	<h:outputText value=" "/>
-	<h:commandLink value="Edit" action="#{entityManager.edit(entity[fieldName], detailPage)}" rendered="#{entity[fieldName] != null}"/>
+
+	<h:outputText value=" " />
+	<h:commandLink value="Edit"
+		action="#{entityManager.edit(entity[fieldName], detailPage)}"
+		rendered="#{entity[fieldName] != null}" />
 </ui:composition>
