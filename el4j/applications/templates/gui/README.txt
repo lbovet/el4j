@@ -31,10 +31,13 @@ Deploy the application as a single jar
  
  cd standalone-client
 
- # create a JAR with all dependencies (see maven-assembly-plugin configuration in the pom.xml)
+ # Create a JAR with all dependencies (see maven-assembly-plugin configuration in the pom.xml).
  mvn assembly:assembly
+ 
+ # Open a new console and start the database.
+ mvn db:prepare db:block
 
- # Start the JAR in the console or make a double-click on the JAR file
+ # Start the JAR in the first console or make a double-click on the JAR file.
  java -jar target/swing-demo-standalone-client-2.5-SNAPSHOT-jar-with-dependencies.jar
 
 Remark: The generation of the single jar only works in all cases, when there are no
