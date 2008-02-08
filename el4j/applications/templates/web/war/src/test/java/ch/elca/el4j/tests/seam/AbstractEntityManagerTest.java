@@ -16,23 +16,17 @@
  */
 package ch.elca.el4j.tests.seam;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
-import java.util.logging.Logger;
-
 import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
 import org.jboss.seam.contexts.ServletLifecycle;
-
 import org.jboss.seam.mock.SeamTest;
 import org.springframework.web.context.ConfigurableWebApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 import ch.elca.el4j.web.context.ModuleWebApplicationContext;
-
-import org.testng.annotations.*;
 
 /**
  * This class is a base class for tests in module <code>seam-war</code> using

@@ -12,6 +12,9 @@
 		<el4j:set var="entityClassName"
 			value="ch.elca.el4j.seam.demo.entities.Employee" />
 
+		<h2>
+			Search employees using EntityManager
+		</h2>
 		<h:form>
 		    Last Name: 
 			<h:inputText id="search" value="#{searchString}"></h:inputText>
@@ -19,9 +22,9 @@
 			<s:button value="Clear" action="#{filters.removeAll()}" />
 		</h:form>
 
-		<h2>
-			List of all employees (using h:dataTable):
-		</h2>
+		<h3>
+			List of found employees (using generic EntityManager and h:dataTable):
+		</h3>
 		<h:form>
 			<h:dataTable value="#{entityManager.getEntities()}" var="e">
 				<h:column>
@@ -32,7 +35,7 @@
 				</h:column>
 				<h:column>
 					<h:commandLink value="edit"
-						action="#{entityManager.edit(e, '/employeeEdit.xhtml')}" />
+						action="#{entityManager.edit(e, '/employeeEditGeneric.xhtml')}" />
 				</h:column>
 				<h:column>
 					<h:commandLink value="delete" action="#{entityManager.delete(e)}" />
@@ -40,16 +43,16 @@
 			</h:dataTable>
 		</h:form>
 
-		<h2>
-			List of all employees (using ui:repeat):
-		</h2>
+		<h3>
+			List of found employees (using generic EntityManager and ui:repeat):
+		</h3>
 		<h:form>
 			<ui:repeat value="#{entities}" var="e">
 				<div>
 					#{e.lastName}
 					<h:outputText value=" " />
 					<h:commandLink value="edit"
-						action="#{entityManager.edit(e, '/employeeEdit.xhtml')}" />
+						action="#{entityManager.edit(e, '/employeeEditGeneric.xhtml')}" />
 					<h:outputText value=" " />
 					<h:commandLink value="delete" action="#{entityManager.delete(e)}" />
 				</div>
