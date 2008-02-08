@@ -40,7 +40,7 @@ cd ../..
 mvn install -Pauto,tomcat6x,db2
 mvn antrun:run -f site/pom.xml -Pcopy.surefire-report.tomcat-derby
 
-mvn install -Pauto,weblogic10,oracle
+mvn install -Pauto,weblogic10x,oracle
 mvn antrun:run -f site/pom.xml -Pcopy.surefire-report.weblogic-oracle
 
 # aggregate files
