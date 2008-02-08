@@ -9,7 +9,10 @@
 	xmlns:rich="http://richfaces.ajax4jsf.org/rich"
 	xmlns:el4j="http://www.elca.ch/el4j/taglib"
 	template="layout/template.xhtml">
+	
+	<ui:remove><!-- a demo page showing various features --></ui:remove>
 
+	<ui:remove><!-- demo 1 part 1: JavaScripts for Seam Remoting (AJAX) --></ui:remove>
 	<ui:define name="JavaScripts">
 		<s:remote include="remotingTest" />
 		<script type="text/javascript">
@@ -25,10 +28,10 @@ function sayHelloCallback(result) {
         </script>
 	</ui:define>
 
-
 	<ui:define name="body">
-
 		<h:messages globalOnly="true" styleClass="message" />
+		
+		<ui:remove><!-- demo 1 part 2: "UI" for Seam Remoting (AJAX) --></ui:remove>
 		<h2>
 			AJAX integration
 		</h2>
@@ -36,6 +39,7 @@ function sayHelloCallback(result) {
 			Say Hello
 		</button>
 
+		<ui:remove><!-- demo 2: Embed master view of entity containing a date field --></ui:remove>
 		<h2>
 			Entity Test
 		</h2>
@@ -43,8 +47,9 @@ function sayHelloCallback(result) {
 		<c:set var="detailPage" value="/entityTest.xhtml" />
 		<ui:decorate template="layout/masterView.xhtml" />
 
+		<ui:remove><!-- demo 3: Playground for conversations --></ui:remove>
 		<h2>
-			Conversation Test
+			Conversation Playground
 		</h2>
 		<rich:panel>
 			<f:facet name="header">Tests</f:facet>

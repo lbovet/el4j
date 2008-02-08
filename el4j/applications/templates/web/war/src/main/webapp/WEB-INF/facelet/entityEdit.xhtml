@@ -6,6 +6,8 @@
 	xmlns:s="http://jboss.com/products/seam/taglib"
 	xmlns:el4j="http://www.elca.ch/el4j/taglib">
 
+	<ui:remove><!-- component to select one referenced entity --></ui:remove>
+	
 	<c:if test="#{relEntities == null}">
 		<el4j:set var="relEntities" value="#{utils.getRelatedEntities(entityClassName,fieldName)}" />
 	</c:if>
@@ -24,6 +26,7 @@
 		<f:converter converterId="ch.elca.el4j.seam.generic.EntityConverter"/> 
 	</h:selectOneMenu>
 
+	<ui:remove><!-- link to edit selected referenced entity --></ui:remove>
 	<h:outputText value=" " />
 	<h:commandLink value="Edit"
 		action="#{entityManager.edit(entity[fieldName], detailPage)}"

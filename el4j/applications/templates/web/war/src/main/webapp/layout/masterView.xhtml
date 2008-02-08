@@ -9,6 +9,24 @@
 	xmlns:rich="http://richfaces.ajax4jsf.org/rich"
 	xmlns:el4j="http://www.elca.ch/el4j/taglib">
 
+	<ui:remove><!--
+	
+		Master View Parameters (all are optional, if not set they are derived from pageId)
+		----------------------
+		String values:
+			entityShortName : short name of entity (see ch.elca.el4j.seam.generic.EntityShortNameMapping)
+			entityClassName : fully qualified class name
+			detailPage      : pageId of corresponding detail page
+			
+		Component fragments:
+			filters         : the region containing the filter selection user interface
+			columns         : the region containing all colums showing the field values
+			customMapping   : a mapping of fieldName (or fieldType) to JSF components
+			                  (see entityTest.xhtml for an example)
+			actionColumn    : the region containing basic operations on an entry (edit, delete)
+		
+	--></ui:remove>
+	
 	<ui:remove><!-- assign values to JSF variables --></ui:remove>
 	<c:if test="#{empty entityShortName}">
 		<el4j:set var="entityShortName"

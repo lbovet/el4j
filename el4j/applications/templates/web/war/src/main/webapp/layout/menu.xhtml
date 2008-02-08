@@ -6,6 +6,7 @@
 	xmlns:rich="http://richfaces.ajax4jsf.org/rich"
 	xmlns:el4j="http://www.elca.ch/el4j/taglib">
 
+	<ui:remove><!-- The toolbar, first part: demo pages --></ui:remove>
 	<rich:toolBarGroup>
 		<h:outputText value="#{projectName}:" />
 		<h:form>
@@ -28,6 +29,8 @@
 
 		</h:form>
 	</rich:toolBarGroup>
+	
+	<ui:remove><!-- second part: select language --></ui:remove>
 	<rich:toolBarGroup location="right">
 		<h:form>
 			<h:selectOneMenu value="#{localeSelector.localeString}">
@@ -37,6 +40,8 @@
 				value="#{messages['ChangeLanguage']}" />
 		</h:form>
 	</rich:toolBarGroup>
+	
+	<ui:remove><!-- third part: login/logout --></ui:remove>
 	<rich:toolBarGroup location="right">
 		<h:outputText value="Welcome, #{identity.username}"
 			rendered="#{identity.loggedIn}" />

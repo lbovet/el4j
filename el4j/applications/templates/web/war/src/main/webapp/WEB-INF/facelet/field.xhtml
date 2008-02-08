@@ -9,11 +9,14 @@
 
 	<s:decorate id="#{fieldName}Decoration">
 		<div class="prop">
+			<ui:remove><!-- field label --></ui:remove>
 			<s:label styleClass="name #{invalid?'errors':''}">
                 #{el4j:h10nFieldName(entityShortName, fieldName)}
                 <s:span styleClass="required"
 				rendered="#{utils.isRequired(entityClassName,fieldName)}">*</s:span>
 			</s:label>
+			
+			<ui:remove><!-- edit field --></ui:remove>
 			<span class="value #{invalid?'errors':''}">
 				<s:validateAll>
 				
@@ -22,6 +25,8 @@
 					</ui:insert>
 				</s:validateAll>
 				<h:outputText value=" "/>
+				
+				<ui:remove><!-- remark to field --></ui:remove>
 				<ui:insert name="customRemark"/>
 			</span>
 			<s:message styleClass="error errors" />

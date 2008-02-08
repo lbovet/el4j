@@ -17,6 +17,8 @@
 				     action="#{entityManager.deleteAndRedirect(entity, masterPage)}"
 				  immediate="true"
 				   rendered="#{not newEntity}"/>
+
+		<ui:remove><!-- Cancel has to be a s:button to avoid validation --></ui:remove>
 	    <s:button id="done"
 	    	   value="#{messages.Cancel}"
 	    	    view="#{masterPage}"
