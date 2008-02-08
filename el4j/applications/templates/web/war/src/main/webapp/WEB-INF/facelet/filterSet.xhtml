@@ -1,15 +1,12 @@
-<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
-                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                 xmlns:h="http://java.sun.com/jsf/html"
-                 xmlns:f="http://java.sun.com/jsf/core"
-                 xmlns:s="http://jboss.com/products/seam/taglib"
-				 xmlns:c="http://java.sun.com/jstl/core"
-				 xmlns:el4j="http://www.elca.ch/el4j/taglib">
-	
-	<el4j:set var="filterList" value="#{utils.parseFilterList(filterOn)}"/>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:el4j="http://www.elca.ch/el4j/taglib">
+
+	<el4j:set var="filterList" value="#{utils.parseFilterList(filterOn)}" />
 	<c:forEach items="#{filterList}" var="filterName">
 		<p>#{filter}</p>
-		<el4j:filter filterName="#{filterName}"/>
+		<el4j:filter filterName="#{filterName}" />
 	</c:forEach>
-	
+
 </ui:composition>

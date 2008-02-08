@@ -8,7 +8,7 @@
 	xmlns:rich="http://richfaces.ajax4jsf.org/rich"
 	xmlns:el4j="http://www.elca.ch/el4j/taglib">
 
-	<ui:remove>Assign values to JSF variables.</ui:remove>
+	<ui:remove><!-- assign values to JSF variables --></ui:remove>
 	<c:if test="#{empty entityShortName}">
 		<el4j:set var="entityShortName"
 			value="#{utils.deriveEntityShortName()}" />
@@ -32,6 +32,7 @@
 		<rich:panel headerClass="topPanel">
 			<f:facet name="header">#{title}</f:facet>
 
+			<ui:remove><!-- insert all fields --></ui:remove>
 			<ui:insert name="fields">
 				<el4j:fieldSet />
 			</ui:insert>
@@ -42,6 +43,7 @@
 				*) #{messages.RequiredFieldNote}
 			</p>
 
+			<ui:remove><!-- insert buttons (save, update, delete, cancel) --></ui:remove>
 			<ui:insert name="crudBar">
 				<el4j:crudBar masterPage="#{masterPage}" />
 			</ui:insert>

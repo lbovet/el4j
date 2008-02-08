@@ -1,14 +1,11 @@
-<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
-                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                 xmlns:h="http://java.sun.com/jsf/html"
-                 xmlns:f="http://java.sun.com/jsf/core"
-                 xmlns:s="http://jboss.com/products/seam/taglib"
-				 xmlns:rich="http://richfaces.ajax4jsf.org/rich"
-				 xmlns:el4j="http://www.elca.ch/el4j/taglib">
-	
-	<rich:panel  bodyClass="inpanelBody" rendered="#{rendered != false}">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.ajax4jsf.org/rich">
+
+	<rich:panel bodyClass="inpanelBody" rendered="#{rendered != false}">
 		<f:facet name="header">Filters</f:facet>
-		<ui:insert/>
+		<ui:insert />
 	</rich:panel>
-	
+
 </ui:composition>

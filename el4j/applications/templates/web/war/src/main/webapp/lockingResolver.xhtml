@@ -18,8 +18,11 @@
 			<el4j:set var="entityShortName" value="#{utils.getEntityShortName(entityClassName)}" />
 			
 			<el4j:set var="fieldList" value="#{oleResolver.getChangedFields()}" />
+			
+			<ui:remove><!-- list all changed fields --></ui:remove>
 			<c:forEach items="#{fieldList}" var="fieldName">
 				<ui:decorate template="WEB-INF/facelet/field.xhtml">
+					<ui:remove><!-- append value of currentObject --></ui:remove>
 					<ui:define name="customRemark">
 						<el4j:defaultViewMapping entity="#{currentObject}"/>
 					</ui:define>
@@ -33,6 +36,7 @@
 			</p>
 
 			<h:commandButton value="#{messages.Save}" action="#{oleResolver.save()}" />
+			<s:button value="#{messages.Cancel}" view="#{masterPage}" />
 		</h:form>
 		<h:messages styleClass="message" />
 

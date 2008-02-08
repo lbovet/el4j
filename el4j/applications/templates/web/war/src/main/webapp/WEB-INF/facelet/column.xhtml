@@ -1,18 +1,16 @@
-<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
-                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                 xmlns:h="http://java.sun.com/jsf/html"
-                 xmlns:f="http://java.sun.com/jsf/core"
-                 xmlns:s="http://jboss.com/products/seam/taglib"
-				 xmlns:c="http://java.sun.com/jstl/core"
-				 xmlns:el4j="http://www.elca.ch/el4j/taglib">
-	
-	<el4j:set var="fieldType" value="#{utils.getFieldType(entityClassName,fieldName)}"/>
-	
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:el4j="http://www.elca.ch/el4j/taglib">
+
+	<el4j:set var="fieldType" value="#{utils.getFieldType(entityClassName,fieldName)}" />
+
 	<h:column>
-        <f:facet name="header">#{el4j:h10nFieldName(entityShortName, fieldName)}</f:facet>
-        <ui:insert name="customMapping">
-            <el4j:defaultViewMapping/>
+		<f:facet name="header">#{el4j:h10nFieldName(entityShortName, fieldName)}</f:facet>
+		<ui:insert name="customMapping">
+			<el4j:defaultViewMapping />
 		</ui:insert>
-    </h:column>
-	
+	</h:column>
+
 </ui:composition>
