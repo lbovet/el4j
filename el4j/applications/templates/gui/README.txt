@@ -26,13 +26,22 @@ distributed mode
    mvn exec:java
 
 
-JAR mode
-========
+Deploy the application as a single jar
+=======================================
  
  cd standalone-client
 
- # create a JAR with all dependencies (see maven-assembly-plugin in the pom.xml)
+ # create a JAR with all dependencies (see maven-assembly-plugin configuration in the pom.xml)
  mvn assembly:assembly
 
  # Start the JAR in the console or make a double-click on the JAR file
  java -jar target/swing-demo-standalone-client-2.5-SNAPSHOT-jar-with-dependencies.jar
+
+Remark: The generation of the single jar only works in all cases, when there are no
+duplicate configuration files in the jar files to merge (this is due to the fact that the order maven uses
+to unpack the jar files is only approximately the same as the one we use when reading the configuration files).
+This should typically not be an issue.
+If we create a single jar for a project A with a dependecy to project B and this has a dependecy to project C, 
+Maven starts unpacking at project B followed by project C and finishes at project A. Maven follows up the 
+dependencies and unpacks successively the jar files but it always finishes at your own project.
+
