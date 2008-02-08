@@ -28,10 +28,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.StaleObjectStateException;
 import org.hibernate.metadata.ClassMetadata;
 import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.ApplicationException;
 import org.jboss.seam.annotations.Begin;
-import org.jboss.seam.annotations.Create;
-import org.jboss.seam.annotations.Destroy;
 import org.jboss.seam.annotations.End;
 import org.jboss.seam.annotations.Factory;
 import org.jboss.seam.annotations.FlushModeType;
@@ -63,7 +60,6 @@ import ch.elca.el4j.services.search.QueryObject;
 @Name("entityManager")
 @Scope(ScopeType.CONVERSATION)
 @SuppressWarnings("unchecked")
-@ApplicationException(rollback = true)
 public class EntityManager implements Serializable, PagedEntityManager {
     /**
      * The logger.
@@ -158,27 +154,11 @@ public class EntityManager implements Serializable, PagedEntityManager {
      */
     private boolean m_viewReset = true;
     
-    /**
-     * Create the Seam component.
-     */
-    @Create
-    public void create() {
-        s_logger.debug("@create");
-    }
-    
-    /**
-     * Destroy the Seam component.
-     */
-    @Destroy
-    public void destroy() {
-        s_logger.debug("@destroy");
-    }
     
     /**
      * Invalidates the current entites.
      */
     public void invalidateView() {
-        //s_logger.debug("invalidate");
         m_entitiesCount = -1;
         m_entities = null;
         m_viewReset = true;
@@ -188,7 +168,6 @@ public class EntityManager implements Serializable, PagedEntityManager {
      * Flush entites and restore default values.
      */
     public void reset() {
-        //s_logger.debug("reset");
         invalidateView();
         m_entity = null;
         m_firstResult = 0;
@@ -200,12 +179,10 @@ public class EntityManager implements Serializable, PagedEntityManager {
      */
     @Begin(join = true)
     public int getEntityCount() {
-        s_logger.debug("getEntityCount()");
         if (m_entitiesCount == -1) {
             refreshEntityClassName();
             m_entitiesCount = getEntityCount(m_currentEntityClassName);
         }
-        s_logger.debug(" > " + m_entitiesCount);
         return m_entitiesCount;
     }
     
@@ -215,7 +192,6 @@ public class EntityManager implements Serializable, PagedEntityManager {
             m_facesMessages.add("entityClassName must not be null!");
             return 0;
         }
-        //s_logger.debug("getEntityCount(" + entityClassName + ")");
         if (!entityClassName.equals(m_currentEntityClassName)
             || m_entitiesCount == -1) {
             
@@ -226,8 +202,6 @@ public class EntityManager implements Serializable, PagedEntityManager {
                 m_entitiesCount = -1;
             } else {
                 m_entitiesCount = dao.findCountByQuery(queryObject);
-                //s_logger.debug("There are " + m_entitiesCount
-                //    + " entites available.");
             }
         }
         return m_entitiesCount;
@@ -236,7 +210,6 @@ public class EntityManager implements Serializable, PagedEntityManager {
     
     /** {@inheritDoc} */
     public void setRange(int first, int count) {
-        //s_logger.debug("setRange(" + first + ", " + count + ")");
         if (first != m_firstResult || m_maxResults != count) {
             m_entities = null;
         }
@@ -260,7 +233,6 @@ public class EntityManager implements Serializable, PagedEntityManager {
     @Begin(join = true)
     @Factory(value = "entities", scope = ScopeType.EVENT)
     public List<Object> getEntities() {
-        //s_logger.debug("--createEntities");
         refreshEntityClassName();
         return getEntities(m_currentEntityClassName);
     }
@@ -268,7 +240,6 @@ public class EntityManager implements Serializable, PagedEntityManager {
     /** {@inheritDoc} */
     @Begin(join = true)
     public List<Object> getEntities(String entityClassName) {
-        //s_logger.debug("--getEntities(" + entityClassName + ")");
 
         if (entityClassName == null) {
             m_facesMessages.add("No entity class defined.");
@@ -337,6 +308,9 @@ public class EntityManager implements Serializable, PagedEntityManager {
             
             String convId = Conversation.instance().getId();
             m_conflicts.put(convId, conflict);
+            
+            s_logger.debug("StaleObjectStateException handled");
+            
             return "/lockingResolver.xhtml?conflictId=" + convId;
         }
         
@@ -347,12 +321,13 @@ public class EntityManager implements Serializable, PagedEntityManager {
      * @param newEntity    the object to save or update
      * @return             <code>null</code> (used by Seam)
      */
+    @End(beforeRedirect = true)
     public String saveOrUpdate(Object newEntity) {
-        m_session.setFlushMode(FlushMode.COMMIT);
-        ConvenienceGenericDao dao = getDao();
-        dao.saveOrUpdate(newEntity);
+        String viewId = saveOrUpdateAndRedirect(newEntity,
+            Conversation.instance().getViewId());
+        invalidateView();
         
-        return null;
+        return viewId;
     }
     
     /**
@@ -362,7 +337,12 @@ public class EntityManager implements Serializable, PagedEntityManager {
      */
     @End(beforeRedirect = true)
     public String deleteAndRedirect(Object selEntity, String viewId) {
-        delete(selEntity);
+        m_session.setFlushMode(FlushMode.COMMIT);
+        ConvenienceGenericDao dao = getDao();
+        if (selEntity == m_entity) {
+            m_entity = null;
+        }
+        dao.delete(selEntity);
 
         return viewId;
     }
@@ -371,13 +351,10 @@ public class EntityManager implements Serializable, PagedEntityManager {
      * @param selEntity    the object to delete
      * @return             <code>null</code> (used by Seam)
      */
+    @End(beforeRedirect = true)
     public String delete(Object selEntity) {
-        m_session.setFlushMode(FlushMode.COMMIT);
-        ConvenienceGenericDao dao = getDao();
-        if (selEntity == m_entity) {
-            m_entity = null;
-        }
-        dao.delete(selEntity);
+        deleteAndRedirect(selEntity, null);
+        invalidateView();
         
         return null;
     }
@@ -406,13 +383,18 @@ public class EntityManager implements Serializable, PagedEntityManager {
     
     /**
      * Cancels editing (and ends Seam conversation if necessary).
+     */
+    @End(beforeRedirect = true)
+    public void cancelEdit() { }
+    
+    /**
+     * Cancels editing (and ends Seam conversation if necessary).
      *  
-     * @param currentEntity    the edited entity
      * @param viewId           the view to redirect to
      * @return                 the viewId again (used by Seam)
      */
     @End(beforeRedirect = true)
-    public String cancelEdit(Object currentEntity, String viewId) {
+    public String cancelEdit(String viewId) {
         return viewId;
     }
     
