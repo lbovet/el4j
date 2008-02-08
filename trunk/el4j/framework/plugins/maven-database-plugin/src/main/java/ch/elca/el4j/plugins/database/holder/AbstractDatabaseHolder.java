@@ -29,6 +29,9 @@ import org.apache.maven.project.MavenProject;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
+import ch.elca.el4j.core.io.support.ListResourcePatternResolverDecorator;
+import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
+import ch.elca.el4j.core.io.support.ModuleSorter;
 import ch.elca.el4j.plugins.database.DepGraphWalker;
 
 /**
@@ -63,6 +66,7 @@ public abstract class AbstractDatabaseHolder {
      * Path matcher to find sql files.
      */
     private PathMatchingResourcePatternResolver m_resolver;
+    //private ListResourcePatternResolverDecorator m_resolver;
     
     /**
      * URLs of dependency artifacts.
@@ -176,6 +180,10 @@ public abstract class AbstractDatabaseHolder {
         m_classloader = URLClassLoader.newInstance(urls.toArray(new URL[1]),
             Thread.currentThread().getContextClassLoader());
         m_resolver = new PathMatchingResourcePatternResolver(m_classloader);
+        
+       // m_resolver = new ListResourcePatternResolverDecorator();
+        
+        
     }
     
 }

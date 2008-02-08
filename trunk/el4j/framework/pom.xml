@@ -50,6 +50,7 @@
     </build>
     <modules>
         <module>modules</module>
+		<module>plugins</module>
         <module>tests</module>
     </modules>
     <dependencies>

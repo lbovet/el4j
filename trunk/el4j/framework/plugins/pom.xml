@@ -16,9 +16,9 @@
     </parent>
     
     <groupId>ch.elca.el4j.maven.plugins</groupId>
-    <artifactId>el4j-maven-plugins</artifactId>
+    <artifactId>el4j-maven-plugins-framework</artifactId>
     <packaging>pom</packaging>
-    <name>EL4J maven plugins</name>
+    <name>EL4J maven plugins depending on framework</name>
     <description>
         Maven 2 plugins of EL4J.
     </description>
@@ -32,15 +32,7 @@
         </plugins>
     </build>
     <modules>
-        <module>maven-checkclipse-helper-plugin</module>
-        <module>maven-env-support-plugin</module>
-        <module>maven-repohelper-plugin</module>
-        <module>maven-manifest-decorator-plugin</module>
-        <module>maven-file-collector-plugin</module>
-        <module>maven-depgraph-plugin</module>
-        <module>maven-version-plugin</module>
-        <module>maven-jaxws-plugin</module>
-        <module>maven-rec-plugin</module>
+        <module>maven-database-plugin</module>
     </modules>
     <dependencies>
         <dependency>

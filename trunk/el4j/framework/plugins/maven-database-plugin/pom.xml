@@ -50,6 +50,14 @@
         </plugins>
     </build>
     <dependencies>
+	
+		<!--dependency to module-core, so we can use its ResourceLoader -->
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-core</artifactId>
+<!--    <version>${version.module-core}</version>-->
+		</dependency>
+		
         <dependency>
             <groupId>ch.elca.el4j.maven.plugins</groupId>
             <artifactId>maven-depgraph-plugin</artifactId>
