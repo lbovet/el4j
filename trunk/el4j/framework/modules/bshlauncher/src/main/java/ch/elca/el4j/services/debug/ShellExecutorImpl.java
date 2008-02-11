@@ -5,6 +5,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.io.StringReader;
 
+import org.springframework.context.ApplicationContext;
+
 import bsh.EvalError;
 import bsh.Interpreter;
 import bsh.InterpreterError;
@@ -18,8 +20,12 @@ import bsh.TargetError;
  * 
  * For now it uses bsh. Later it should also be able to support other shells (via bean scripting or the jdk 1.6 mechanism).
  *
- * Features:
- *   bsh.show=true shows more eval output
+ * Features: <br> 
+ *   bsh.show=true shows more eval output <br>
+ *   Variables available in the shell script: <ul>
+ *   	<li> {@code ac} the current application context
+ *      <li> {@code $_} the last return result
+ *    </ul>
  *   
  *   
  * 
@@ -40,12 +46,19 @@ public class ShellExecutorImpl implements ShellExecutor {
 
     private Interpreter interpreter;
     
+    protected ApplicationContext m_ac;
 
     public ShellExecutorImpl() {
         startup();
     }
 
+    public ShellExecutorImpl(ApplicationContext ac) {
+    	this();
+        m_ac = ac;
+    }
 
+    
+    
     protected synchronized void startup () {
 
         out = new ByteArrayOutputStream();
@@ -68,6 +81,10 @@ public class ShellExecutorImpl implements ShellExecutor {
             if (retVal != Primitive.VOID) {
                 interpreter.set ("$_", retVal);
             }
+            if (m_ac != null){
+            	interpreter.set ("ac", m_ac);
+            }
+            
             Object show = interpreter.get ("bsh.show");
             if ( (retVal != null) && show instanceof Boolean &&
                 ((Boolean) show).booleanValue() == true){
