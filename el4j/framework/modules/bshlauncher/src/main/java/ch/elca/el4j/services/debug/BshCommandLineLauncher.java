@@ -2,6 +2,10 @@ package ch.elca.el4j.services.debug;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.util.StringUtils;
 
 
@@ -38,7 +42,7 @@ import org.springframework.util.StringUtils;
  * @author Philipp H. Oser (POS)
  *
  */
-public class BshCommandLineLauncher {
+public class BshCommandLineLauncher implements ApplicationContextAware, InitializingBean {
 
     public static final String BSH_LAUNCH_STRING = "el4j.bsh.launchstr";
     public static final String BSH_SCRIPLET_CLASSPATH = "/bsh_scriptlets";
@@ -49,16 +53,7 @@ public class BshCommandLineLauncher {
     protected ShellExecutorImpl shell;
     
     public BshCommandLineLauncher() {
-        String toLaunch;
-        ResultHolder result; 
-        if (StringUtils.hasText(toLaunch = System.getProperty(BSH_LAUNCH_STRING))) {
-            shell = new ShellExecutorImpl();
-            addScriptletClasspath(BSH_SCRIPLET_CLASSPATH);
-            result = shell.eval(toLaunch);
-            s_logger.warn("result of launching launchstr: "+result);            
-        } else {
-            s_logger.warn("No bsh launch string defined.");
-        }
+
     }
     
     public ShellExecutor getShellExecutor () {
@@ -68,5 +63,25 @@ public class BshCommandLineLauncher {
     public void addScriptletClasspath (String cp) {
         shell.getInterpreter().getNameSpace().importCommands(cp);
     }
+
+	public void setApplicationContext(ApplicationContext applicationContext)
+			throws BeansException {
+		m_ac = applicationContext;
+	}
     
+	protected ApplicationContext m_ac;
+
+	public void afterPropertiesSet() throws Exception {
+        String toLaunch;
+        ResultHolder result; 
+        if (StringUtils.hasText(toLaunch = System.getProperty(BSH_LAUNCH_STRING))) {
+            shell = new ShellExecutorImpl(m_ac);
+            addScriptletClasspath(BSH_SCRIPLET_CLASSPATH);
+            result = shell.eval(toLaunch);
+            s_logger.warn("result of launching launchstr: "+result);            
+        } else {
+            s_logger.warn("No bsh launch string defined.");
+        }		
+	}
+	
 }
