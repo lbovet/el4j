@@ -47,6 +47,8 @@
 			List of found employees (using generic EntityManager and ui:repeat):
 		</h3>
 		<h:form>
+			<ui:remove><!-- entities is the outjected list of all loaded entites.
+				This is equal to entityManager.getEntities() --></ui:remove>
 			<ui:repeat value="#{entities}" var="e">
 				<div>
 					#{e.lastName}
@@ -65,6 +67,7 @@
 		<h:form>
 			<s:validateAll>
 				<h:panelGrid columns="2">
+					<ui:remove><!-- employee stands for a new instance of Employee --></ui:remove>
 					Visa: <h:inputText value="#{employee.visa}" required="true" />
 					First Name: <h:inputText value="#{employee.firstName}" required="true" />
 					Last Name: <h:inputText value="#{employee.lastName}" required="true" />

@@ -14,6 +14,7 @@
 		</h2>
 		<h:form>
 		    Last Name: 
+		    <ui:remove><!-- searchEmployee will be injected when calling employeeManager.find(...) --></ui:remove>
 			<h:inputText id="search" value="#{searchEmployee}"></h:inputText>
 			<h:commandButton value="Find" action="#{employeeManager.find('lastName')}" />
 			<s:button value="Clear" action="#{employeeManager.reset()}" />
@@ -41,6 +42,7 @@
 		<h:form>
 			<s:validateAll>
 				<h:panelGrid columns="2">
+					<ui:remove><!-- employee stands for a new instance of Employee --></ui:remove>
 					Visa: <h:inputText value="#{employee.visa}" required="true" />
 					First Name: <h:inputText value="#{employee.firstName}" required="true" />
 					Last Name: <h:inputText value="#{employee.lastName}" required="true" />

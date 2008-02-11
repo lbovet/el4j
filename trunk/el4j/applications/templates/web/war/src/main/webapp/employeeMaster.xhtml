@@ -5,6 +5,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	template="layout/masterPage.xhtml"
 	xmlns:el4j="http://www.elca.ch/el4j/taglib">
+	
+	<ui:remove><!-- fully generic view using masterPage.xhtml --></ui:remove>
 
 	<ui:define name="body">
 		<el4j:set var="entityShortName" value="employee" />

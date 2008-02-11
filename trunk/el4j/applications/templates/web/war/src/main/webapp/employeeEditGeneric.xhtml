@@ -9,6 +9,8 @@
 	xmlns:s="http://jboss.com/products/seam/taglib">
 
 	<ui:define name="body">
+		<ui:remove><!-- entityClassName or entityShortName must be set
+			to use entityManager (and <el4j:fieldSet>) --></ui:remove>
 		<el4j:set var="entityClassName"
 			value="ch.elca.el4j.seam.demo.entities.Employee" />
 
@@ -17,10 +19,11 @@
 			Edit employee:
 		</h2>
 		<h:form>
-			<ui:remove><!-- insert fields for visa, firstName, and lastName --></ui:remove>
+			<ui:remove><!-- insert generic fields for visa, firstName, and lastName --></ui:remove>
 			<el4j:fieldSet shown="visa,firstName,lastName" />
 			<div style="clear: both" />
 
+			<ui:remove><!-- insert save and cancel button --></ui:remove>
 			<h:commandButton value="#{messages.Save}"
 				action="#{entityManager.saveOrUpdateAndRedirect(entity, '/employeeOverviewGeneric.xhtml')}" />
 			<s:button value="#{messages.Cancel}"
