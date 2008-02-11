@@ -1,4 +1,4 @@
-How to launch the gui demo application 
+How to launch the gui demo application
 ======================================
 
 standalone mode
@@ -7,7 +7,7 @@ standalone mode
  cd ..; mvn clean install
  
  cd standalone-client
- mvn db:prepareDB exec:java
+ mvn db:prepare exec:java
 
 
 distributed mode
@@ -16,7 +16,7 @@ distributed mode
   start server:
 
    cd server/war
-   mvn db:prepareDB cargo:undeploy cargo:deploy cargo:start 
+   mvn db:prepare cargo:undeploy cargo:deploy cargo:start 
    # the server should now be available under http://localhost:8080/swing-demo-server
 
 
@@ -46,5 +46,5 @@ to unpack the jar files is only approximately the same as the one we use when re
 This should typically not be an issue.
 If we create a single jar for a project A with a dependecy to project B and this has a dependecy to project C, 
 Maven starts unpacking at project B followed by project C and finishes at project A. Maven follows up the 
-dependencies and unpacks successively the jar files but it always finishes at your own project.
+dependencies and unpacks successively the jar files but it always finishes with your own project.
 
