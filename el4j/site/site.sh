@@ -36,6 +36,11 @@ mvn clean install site
 plugins=$(find -maxdepth 1 -name "maven-*-plugin"  -exec basename {} \;)
 cd ../..
 
+cd framework/plugins
+mvn clean install site
+plugins="$plugins $(find -maxdepth 1 -name "maven-*-plugin"  -exec basename {} \;)"
+cd ../..
+
 # generate test reports (no -Ptest.quiet)
 mvn install -Pauto,tomcat6x,db2
 mvn antrun:run -f site/pom.xml -Pcopy.surefire-report.tomcat-derby
