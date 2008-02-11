@@ -48,7 +48,7 @@ import ch.elca.el4j.seam.generic.Temporary;
  *
  * @author Stefan Wismer (SWI)
  */
-@Name("oleResolver")
+@Name("optimisticLockingExceptionResolver")
 @Scope(ScopeType.CONVERSATION)
 public class OptimisticLockingExceptionResolver implements Serializable {
     /**

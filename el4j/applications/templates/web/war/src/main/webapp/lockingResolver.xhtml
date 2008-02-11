@@ -14,10 +14,10 @@
 		<h1>#{messages.OptimisticLockingResolver}</h1>
 		<p>#{messages.OptimisticLockingExceptionMessage}</p>
 		<h:form>
-			<el4j:set var="entityClassName" value="#{oleResolver.getEntityClassName()}" />
+			<el4j:set var="entityClassName" value="#{optimisticLockingExceptionResolver.getEntityClassName()}" />
 			<el4j:set var="entityShortName" value="#{utils.getEntityShortName(entityClassName)}" />
 			
-			<el4j:set var="fieldList" value="#{oleResolver.getChangedFields()}" />
+			<el4j:set var="fieldList" value="#{optimisticLockingExceptionResolver.getChangedFields()}" />
 			
 			<ui:remove><!-- list all changed fields --></ui:remove>
 			<c:forEach items="#{fieldList}" var="fieldName">
@@ -35,7 +35,7 @@
 				*) #{messages.RequiredFieldNote}
 			</p>
 
-			<h:commandButton value="#{messages.Save}" action="#{oleResolver.save()}" />
+			<h:commandButton value="#{messages.Save}" action="#{optimisticLockingExceptionResolver.save()}" />
 			<s:button value="#{messages.Cancel}" view="#{masterPage}" />
 		</h:form>
 		<h:messages styleClass="message" />
