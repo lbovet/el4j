@@ -21,10 +21,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.project.MavenProject;
 import org.springframework.core.io.Resource;
@@ -87,6 +89,7 @@ public abstract class AbstractDatabaseHolder {
         MavenProject project, DepGraphWalker walker) {
         
         m_dependencyURLs = walker.getDependencyURLs();
+        Collections.reverse(m_dependencyURLs);
         m_projectURLs = getProjectUrls(repository, project);
         createEnrichedClassloader(m_dependencyURLs, m_projectURLs);
     }
@@ -134,7 +137,7 @@ public abstract class AbstractDatabaseHolder {
         res.addAll(project.getTestResources());
         try {
             for (org.apache.maven.model.Resource resource : res) {
-                urls.add(new URL("file", "", resource.getDirectory() + "/"));
+                urls.add(new URL("file", "", "/" + resource.getDirectory() + "/"));
             }
         } catch (MalformedURLException e) {
             s_logger.error("Malformed resource URL: " + e);
@@ -155,15 +158,15 @@ public abstract class AbstractDatabaseHolder {
      */
     private void createEnrichedClassloader(List<URL> urls, 
         List<URL> projectURLs) {
-        urls.addAll(projectURLs);
+        projectURLs.addAll(urls);
+        
         // Set thread's classloader as parent classloader
-        m_classloader = URLClassLoader.newInstance(urls.toArray(new URL[0]),
-            Thread.currentThread().getContextClassLoader());
+        m_classloader = URLClassLoader.newInstance(projectURLs.toArray(new URL[0]));
         
         m_resolver = new ListResourcePatternResolverDecorator(
             new ManifestOrderedConfigLocationProvider(),
             new PathMatchingResourcePatternResolver(m_classloader));
-        m_resolver.setMostSpecificResourceLast(true);
+        m_resolver.setMostSpecificResourceLast(false);
         m_resolver.setMergeWithOuterResources(true);
         
     }
