@@ -1449,13 +1449,7 @@
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
-            <dependency>
-                <groupId>ch.elca.el4j.modules</groupId>
-                <artifactId>module-jsf-war</artifactId>
-                <version>${version.module-jsf}</version>
-                <type>war</type>
-                <scope>runtime</scope>
-            </dependency>
+            
 
             <!-- module-light_statistics -->
             <dependency>
