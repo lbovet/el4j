@@ -17,6 +17,7 @@
 package ch.elca.el4j.plugins.database.holder;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -31,7 +32,6 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import ch.elca.el4j.core.io.support.ListResourcePatternResolverDecorator;
 import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
-import ch.elca.el4j.core.io.support.ModuleSorter;
 import ch.elca.el4j.plugins.database.DepGraphWalker;
 
 /**
@@ -65,8 +65,7 @@ public abstract class AbstractDatabaseHolder {
     /**
      * Path matcher to find sql files.
      */
-    private PathMatchingResourcePatternResolver m_resolver;
-    //private ListResourcePatternResolverDecorator m_resolver;
+    private ListResourcePatternResolverDecorator m_resolver;
     
     /**
      * URLs of dependency artifacts.
@@ -120,69 +119,52 @@ public abstract class AbstractDatabaseHolder {
     }
     
     /**
-     * Collects and returns list of project urls. This includes the normal jar
-     * as well as the {project-name}-tests.jar file in case we work on a test
-     * project.
+     * Collects and returns list of project resource urls.
      * 
      * @param repo The artifact repository.
      * @param project The projects we're working on.
      * @return List of project's jar URLs
      */
+    @SuppressWarnings("unchecked")
     private ArrayList<URL> getProjectUrls(ArtifactRepository repo, 
             MavenProject project) {
-        String path;
-        ArrayList<URL> urls = new ArrayList<URL>();      
+        ArrayList<URL> urls = new ArrayList<URL>();
+
+        List<org.apache.maven.model.Resource> res = project.getResources();
+        res.addAll(project.getTestResources());
         try {
-            // Construct URL for /target directory of project (where we will 
-            // find the jar files taken for the test phase).
-            path = "/" + project.getBasedir().getAbsolutePath() + "/"
-                + "target";
-            URL url = new URL("file", "", path + "/");
-
-            // Create own classloader and path matcher for /target directory
-            URLClassLoader projectClasspath = URLClassLoader
-                .newInstance(new URL[] {url}, Thread.currentThread()
-                    .getContextClassLoader());
-            PathMatchingResourcePatternResolver projectResolver 
-                = new PathMatchingResourcePatternResolver(projectClasspath);
-
-            // Look for .jar files in target directory and add them to
-            // projectUrls
-            Resource[] res = projectResolver.getResources("classpath*:*.jar");
-
-            for (Resource r : res) {
-                // Relies on the naming convention that the jar files in the
-                // target directories are *-sources.jar, *-test-sources.jar,
-                // *-tests.jar and *.jar (where we only need the latter two)
-                if (r.getFilename().endsWith("-sources.jar")) {
-                    s_logger
-                        .info("Adding resource to classpath: " + r.getURL());
-                    urls.add(r.getURL());
-                }
+            for (org.apache.maven.model.Resource resource : res) {
+                urls.add(new URL("file", "", resource.getDirectory() + "/"));
             }
-        } catch (IOException e) {
+        } catch (MalformedURLException e) {
+            s_logger.error("Malformed resource URL: " + e);
             throw new DatabaseHolderException(e);
         }
+
         return urls;
     }
     
     /**
-     * Add all project dependencies as well as project specific resources
-     * to actual classpath and generate PathResolver.
+     * Add all project dependencies as well as project specific resources to
+     * actual classpath and generate PathResolver.
      * 
-     * @param urls Urls from dependencies to include into classpath.
-     * @param projectURLs URLs from project to include.
+     * @param urls
+     *            Urls from dependencies to include into classpath.
+     * @param projectURLs
+     *            URLs from project to include.
      */
     private void createEnrichedClassloader(List<URL> urls, 
         List<URL> projectURLs) {
         urls.addAll(projectURLs);
         // Set thread's classloader as parent classloader
-        m_classloader = URLClassLoader.newInstance(urls.toArray(new URL[1]),
+        m_classloader = URLClassLoader.newInstance(urls.toArray(new URL[0]),
             Thread.currentThread().getContextClassLoader());
-        m_resolver = new PathMatchingResourcePatternResolver(m_classloader);
         
-       // m_resolver = new ListResourcePatternResolverDecorator();
-        
+        m_resolver = new ListResourcePatternResolverDecorator(
+            new ManifestOrderedConfigLocationProvider(),
+            new PathMatchingResourcePatternResolver(m_classloader));
+        m_resolver.setMostSpecificResourceLast(true);
+        m_resolver.setMergeWithOuterResources(true);
         
     }
     
