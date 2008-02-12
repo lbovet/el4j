@@ -33,10 +33,6 @@
         </dependency>
         <dependency>
             <groupId>ch.elca.el4j.modules</groupId>
-            <artifactId>module-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-hibernate</artifactId>
         </dependency>
 
