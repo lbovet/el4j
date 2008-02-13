@@ -84,6 +84,9 @@
         </profile>
         <profile>
             <id>auto</id>
+            <!-- auto profile deactives all test.
+                   This is a hack because the EL4J nightly builds run the weblogic tests with the profile 'auto'
+                   and Weblogic 9 and 10 are incompatible to the JAX-WS version used here -->
             <build>
                 <plugins>
                     <plugin>
