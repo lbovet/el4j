@@ -1,0 +1,16 @@
+ -----
+ Test reports
+ -----
+ -----
+ 14 Dec 2007
+ -----
+
+Test reports
+
+*----------------------------+-------------------*
+| <<Test environment>>       | <<Test report>>
+*----------------------------+-------------------*
+| Tomcat 6 and Derby 10      | {{{surefire-report-tomcat6-derby10.html}Test report}}
+*----------------------------+-------------------* 
+| Weblogic 10 and Oracle 10  | {{{surefire-report-weblogic10-oracle10.html}Test report}}
+*----------------------------+-------------------* 

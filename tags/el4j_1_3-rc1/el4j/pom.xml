@@ -1,0 +1,2276 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <!--
+       =====================================================================
+       Used version of Maven 2:
+       URL: https://svn.apache.org/repos/asf/maven/components/trunk
+       Revision: 440287
+
+       + Patch http://jira.codehaus.org/browse/MNG-1412
+            To fix this issue just replace every occurence of
+            java.util.HashSet with java.util.LinkedHashSet and
+            java.util.HashMap with java.util.LinkedHashMap in component
+            artifacts "maven-project", "maven-artifact" and
+            "maven-artifact-manager".
+       + Patch http://jira.codehaus.org/browse/MNG-2583
+       =====================================================================
+    -->
+
+    <groupId>ch.elca.el4j</groupId>
+    <artifactId>el4j</artifactId>
+    <packaging>pom</packaging>
+    <name>EL4J</name>
+    <version>1.2.1-SNAPSHOT</version>
+    <description>
+        EL4J, the Extension Library for the J2EE, adds incremental improvements
+        to the Spring Java framework (http://www.springframework.org/).
+    </description>
+    <prerequisites>
+        <maven>${el4j.maven.version}</maven>
+    </prerequisites>
+    <issueManagement>
+        <system>Sourceforge</system>
+        <url>http://sourceforge.net/tracker/?group_id=147215&amp;atid=779814</url>
+    </issueManagement>
+    <inceptionYear>2005</inceptionYear>
+    
+    <mailingLists>
+        <mailingList>
+            <name>Version control commits</name>
+            <subscribe>https://lists.sourceforge.net/lists/listinfo/el4j-commits</subscribe>
+            <unsubscribe>https://lists.sourceforge.net/lists/listinfo/el4j-commits</unsubscribe>
+            <post>el4j-commits@lists.sourceforge.net</post>
+            <archive>http://sourceforge.net/mailarchive/forum.php?forum=el4j-commits</archive>
+        </mailingList>
+    </mailingLists>
+
+    <developers>
+        <developer>
+            <id>poser55</id>
+            <name>Philipp Oser</name>
+            <roles>
+                <role>Project leader</role>
+                <role>Java developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <id>swisswheel</id>
+            <name>Martin Zeltner</name>
+            <roles>
+                <role>Java developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <id>swismer</id>
+            <name>Stefan Wismer</name>
+            <roles>
+                <role>Java developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <id>poesch</id>
+            <name>Philipp Oesch</name>
+            <roles>
+                <role>Java Developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <id>franky_b</id>
+            <name>Frank Bitzer</name>
+            <roles>
+                <role>Intern</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <id>chumard</id>
+            <name>Claude Humard</name>
+            <roles>
+                <role>Java Developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>        
+    </developers>
+
+    <contributors>
+        <contributor>
+            <name>Alex Mathey</name>
+            <roles>
+                <role>Alumnus</role>
+                <role>Java developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </contributor>
+        <contributor>
+            <name>Andreas Bur</name>
+            <roles>
+                <role>Ex-Intern</role>
+                <role>Java developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </contributor>
+        <contributor>
+            <name>Adrian Moos</name>
+            <roles>
+                <role>Ex-Intern</role>
+                <role>Java developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </contributor>
+        <contributor>
+            <name>Rashid Waraich</name>
+            <roles>
+                <role>Ex-Intern</role>
+                <role>Java developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </contributor>
+        <contributor>
+            <name>Christoph Baeni</name>
+            <roles>
+                <role>Ex-Intern</role>
+                <role>Java developer</role>                
+            </roles>
+            <timezone>+1</timezone>
+        </contributor>    
+        <contributor>
+            <name>Florian Suess</name>
+            <roles>
+                <role>Java developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </contributor>
+        <contributor>
+            <name>David Stefan</name>
+            <roles>
+                <role>Ex-Intern</role>
+                <role>Java developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </contributor>
+        <contributor>
+            <name>Philippe Jacot</name>
+            <roles>
+                <role>Ex-Intern</role>
+                <role>Java developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </contributor>        
+    </contributors>
+
+    <licenses>
+        <license>
+            <name>LGPL version 2.1</name>
+            <url>http://www.gnu.org/licenses/lgpl.txt</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>
+            scm:svn:https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/
+        </connection>
+        <developerConnection>
+            scm:svn:https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/
+        </developerConnection>
+        <url>
+            http://el4j.svn.sourceforge.net/viewvc/el4j/trunk/el4j/
+        </url>
+    </scm>
+
+    <organization>
+        <name>ELCA</name>
+        <url>http://www.elca.ch</url>
+    </organization>
+
+    <build>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+            </resource>
+
+            <!-- Used for the environment support of EL4J -->
+            <resource>
+                <directory>target/env</directory>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>false</filtering>
+            </testResource>
+
+            <!-- Used for the environment support of EL4J -->
+            <testResource>
+                <directory>target/env-test</directory>
+                <filtering>false</filtering>
+            </testResource>
+        </testResources>
+
+        <defaultGoal>install</defaultGoal>
+
+        <pluginManagement>
+            <plugins>
+                <!--
+                    For version synchronization see
+                    http://news.gmane.org/gmane.comp.apache.maven.announce
+                -->
+
+                <!-- Building -->
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-help-plugin</artifactId>
+                    <version>2.0.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>2.1.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>ch.elca.el4j.maven.plugins</groupId>
+                    <artifactId>maven-env-support-plugin</artifactId>
+                    <version>${version.maven-env-support-plugin}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>resources</goal>
+                                <goal>testResources</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <!--
+                        Due to bugs fix built snapshot version is used.
+                           * maven-compiler-plugin (revision 438050 + patch http://jira.codehaus.org/browse/MCOMPILER-35)
+                    -->
+                    <!--version>2.1-20060908.102132-1</version-->
+                    <version>2.1-el4j_20080110_1520</version> <!-- EL4J CUSTOMIZATION -->
+                    <configuration>
+                        <source>${el4j.java.version}</source>
+                        <target>${el4j.java.version}</target>
+                        <neverSkipCompiling>true</neverSkipCompiling>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <!--
+                        Due to bugs fix built snapshot version is used.
+                           * maven-surefire-plugin (revision 439735)
+                           * surefire (revision 439785)
+                    <version>2.3-20060921.102756-1</version>
+                    -->
+                    <version>2.3.1</version>
+                    <configuration>
+                        <testFailureIgnore>false</testFailureIgnore>
+                        <forkMode>never</forkMode>
+                        <includes>
+                            <include>**/*Test.java</include>
+                        </includes>
+                        <excludes>
+                            <exclude>**/Abstract*</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>1.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-plugin-plugin</artifactId>
+                    <version>${version.maven-plugin-plugin}</version>
+                </plugin>
+
+                <!-- Webservice annotation processing -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>jaxws-maven-plugin</artifactId>
+                    <version>1.7</version>
+                </plugin>
+
+                <!-- Packaging -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.1</version>
+                    <configuration>
+                        <archive>
+                            <manifestSections>
+                                <manifestSection>
+                                    <name>el4j-config</name>
+                                    <manifestEntries>
+                                        <Module>${el4j-config.module}</Module>
+                                        <Files>${el4j-config.files}</Files>
+                                        <Dependencies>${el4j-config.dependencies}</Dependencies>
+                                    </manifestEntries>
+                                </manifestSection>
+                            </manifestSections>
+                        </archive>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>createTestJar</id>
+                            <goals>
+                                <goal>test-jar</goal>
+                            </goals>
+                            <configuration>
+                                <archive>
+                                    <manifestSections>
+                                        <manifestSection>
+                                            <name>el4j-config</name>
+                                            <manifestEntries>
+                                                <Module>${el4j-config.testmodule}</Module>
+                                                <Files>${el4j-config.testfiles}</Files>
+                                                <Dependencies>${el4j-config.testdependencies}</Dependencies>
+                                            </manifestEntries>
+                                        </manifestSection>
+                                    </manifestSections>
+                                </archive>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>ch.elca.el4j.maven.plugins</groupId>
+                    <artifactId>maven-manifest-decorator-plugin</artifactId>
+                    <version>${version.maven-manifest-decorator-plugin}</version>
+                    <executions>
+                        <execution>
+                            <!--
+                                Due to bug that goals are not executed in the
+                                defined order in the same phase the goal below
+                                must be executed before the package phase!
+                                Please see: http://jira.codehaus.org/browse/MNG-2258
+                            -->
+                            <phase>test</phase>
+                            <goals>
+                                <goal>manifest-prepare-config-section</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.0.4</version>
+                    <executions>
+                        <execution>
+                            <id>createSourceJars</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>jar</goal>
+                                <goal>test-jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <!--
+                        Due to bugs fix built snapshot version is used.
+                           * maven-war-plugin (revision 429069)
+                    <version>2.0.2-20060907.100703-1</version>
+            -->
+                    <version>2.0.2</version>
+                    <configuration>
+                        <warName>${jee-web.war.name}</warName>
+                        <webappDirectory>${jee-web.webapp.directory}</webappDirectory>
+                        <archiveClasses>false</archiveClasses>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+					<!--
+					Due to problems with  version 2.2-beta-1 we use 2.1.
+					swing-demo-standalone-client assembly with 2.2-beta-1 don't run, 
+					because of changes in the META-INF directory.
+					-->
+                    <version>2.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-archetype-plugin</artifactId>
+                    <version>1.0-alpha-4</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <!--
+                        Due to bugs fix built snapshot version is used.
+                           * maven-install-plugin (revision 427494 + patch http://jira.codehaus.org/browse/MINSTALL-34)
+                           * archiva (revision 439966)
+                    <version>2.2-20060922.131747-1</version>
+            -->
+                    <version>2.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.3</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>2.0-beta-6</version>
+                    <configuration>
+                        <tagBase>
+                            https://el4j.svn.sourceforge.net/svnroot/el4j/tags/
+                        </tagBase>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>webstart-maven-plugin</artifactId>
+                    <!--
+                        Due to incomplete alpha-status a patched snapshot version is used.
+                           * maven-webstart-plugin (revision 5622
+                               + patch http://jira.codehaus.org/browse/MWEBSTART-1 "MWEBSTART-1-patch.diff"
+                               + patch http://jira.codehaus.org/browse/MWEBSTART-59 "MWEBSTART-59-patch.diff")
+                    <version>1.0-alpha-2-20071130.102344-1</version>
+                    -->
+                    <version>1.0-alpha-2-el4j_20071219_1427</version>
+                </plugin>
+                
+                <!-- Deployment -->
+                <plugin>
+                    <groupId>org.codehaus.cargo</groupId>
+                    <artifactId>cargo-maven2-plugin</artifactId>
+                    <!--
+                        Due to bugs fix built snapshot version is used.
+                           * cargo-maven2-plugin (revision 1180
+                               + patch http://jira.codehaus.org/browse/CARGO-411
+                               + patch http://jira.codehaus.org/browse/CARGO-412)
+                    -->
+                   <!-- <version>0.3-20060918.130206-4</version>-->
+                   <version>1.0-el4j_20080110_1000</version> <!-- EL4J CUSTOMIZATION -->
+                </plugin>
+
+                <!-- Execution -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <!--
+                        Due to bugs fix built snapshot version is used.
+                           * exec-maven-plugin (revision 2586
+                               + patch http://jira.codehaus.org/browse/MEXEC-11)
+                    <version>1.0.3-20061204.110918-2</version>
+            -->
+                    <version>1.1-beta-1</version>
+                </plugin>
+
+                <!-- IDE -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-eclipse-plugin</artifactId>
+                    <!--
+                        New features in snapshot version available.
+                           * maven-eclipse-plugin (revision 587020
+                               + patch http://jira.codehaus.org/browse/MECLIPSE-333 "just first patch!"
+                               + patch http://jira.codehaus.org/browse/MECLIPSE-334)
+                    -->
+                    <!--version>2.5-20071029.085417-4</version-->
+                    <version>2.5-el4j_20080110_1715</version> <!-- EL4J CUSTOMIZATION -->
+                    <configuration>
+                        <additionalProjectnatures>
+                            <projectnature>de.mvmsoft.checkclipse.CheckclipseNature</projectnature>
+                        </additionalProjectnatures>
+                        <additionalBuildcommands>
+                            <buildcommand>de.mvmsoft.checkclipse.CheckclipseBuilder</buildcommand>
+                        </additionalBuildcommands>
+                        <workspace>${basedir}/workspace</workspace>
+                        <wtpversion>2.0</wtpversion>
+                        <reactorProjectGroupIdPrefixes>${eclipse.reactorProjectGroupIdPrefixes}</reactorProjectGroupIdPrefixes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>actualizeEclipseProjects</id>
+                            <phase>test-compile</phase>
+                            <goals>
+                                <goal>eclipse</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>cleanEclipseProjects</id>
+                            <phase>clean</phase>
+                            <goals>
+                                <goal>clean</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>ch.elca.el4j.maven.plugins</groupId>
+                    <artifactId>maven-checkclipse-helper-plugin</artifactId>
+                    <version>${version.maven-checkclipse-helper-plugin}</version>
+                    <executions>
+                        <execution>
+                            <id>actualizeEclipseProjects</id>
+                            <phase>test-compile</phase>
+                            <goals>
+                                <goal>checkclipse-config-settings</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <!-- Site -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <!--
+                        Due to bugs fix built snapshot version is used.
+                           * maven-site-plugin (revision 433356)
+                           * doxia (revision 434153)
+               
+               See change request [ 1717260 ] on sf.net. Thanks to
+               Tobias Vogel!
+                    -->
+                    <version>2.0-beta-5</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <!--
+                        Version defined as property because dep mgt works not 
+                        if the plugin is not directly invoked. When the
+                        maven-site-plugin collects all reports of plugins defined
+                        in reporting section it will not lookup config made in
+                        dep mgt, just lookup the config in reporting section.
+                        
+                        For more information see http://jira.codehaus.org/browse/MNG-1931
+                    -->
+                    <version>${version.maven-project-info-reports-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <!--
+                        Version defined as property because dep mgt works not 
+                        if the plugin is not directly invoked. When the
+                        maven-site-plugin collects all reports of plugins defined
+                        in reporting section it will not lookup config made in
+                        dep mgt, just lookup the config in reporting section.
+                        
+                        For more information see http://jira.codehaus.org/browse/MNG-1931
+                    -->
+                    <version>${version.maven-javadoc-plugin}</version>
+                    <configuration>
+                        <!--
+                            !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            !!  ATTENTION: COPY CONFIGURATION TO DEPENDENCY MANAGEMENT   !!
+                            !!             AND REPORTING SECTION DUE TO ISSUE            !!
+                            !!             http://jira.codehaus.org/browse/MNG-1931      !!
+                            !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        -->
+                        <stylesheetfile>${javadoc.stylesheet.path}</stylesheetfile>
+                        <source>${el4j.java.version}</source>
+                        <links>
+                            <link>${javadoc.link.jdk}</link>
+                            <link>${javadoc.link.spring}</link>
+                            <link>${javadoc.link.hibernate}</link>
+                        </links>
+                        <header>${javadoc.header}</header>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-report-plugin</artifactId>
+                    <!--
+                        Version defined as property because dep mgt works not 
+                        if the plugin is not directly invoked. When the
+                        maven-site-plugin collects all reports of plugins defined
+                        in reporting section it will not lookup config made in
+                        dep mgt, just lookup the config in reporting section.
+                        
+                        For more information see http://jira.codehaus.org/browse/MNG-1931
+
+
+                        Due to bugs fix built snapshot version is used.
+                           * maven-surefire-report-plugin (revision 439746
+                               + patch http://jira.codehaus.org/browse/MSUREFIREREP-28
+                               + patch http://jira.codehaus.org/browse/MSUREFIREREP-29
+                               + patch http://jira.codehaus.org/browse/MSUREFIREREP-30
+                               + patch http://jira.codehaus.org/browse/MSUREFIREREP-31
+                               + patch http://jira.codehaus.org/browse/MSUREFIREREP-32)
+                    -->
+                    <version>${version.maven-surefire-report-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jxr-plugin</artifactId>
+                    <!--
+                        Version defined as property because dep mgt works not 
+                        if the plugin is not directly invoked. When the
+                        maven-site-plugin collects all reports of plugins defined
+                        in reporting section it will not lookup config made in
+                        dep mgt, just lookup the config in reporting section.
+                        
+                        For more information see http://jira.codehaus.org/browse/MNG-1931
+
+
+                        Due to bugs fix built snapshot version is used.
+                           * maven-jxr-plugin (revision 433277 + patch http://jira.codehaus.org/browse/MJXR-15)
+                    -->
+                    <version>${version.maven-jxr-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <!--
+                        Version defined as property because dep mgt works not 
+                        if the plugin is not directly invoked. When the
+                        maven-site-plugin collects all reports of plugins defined
+                        in reporting section it will not lookup config made in
+                        dep mgt, just lookup the config in reporting section.
+                        
+                        For more information see http://jira.codehaus.org/browse/MNG-1931
+                    -->
+                    <version>${version.maven-checkstyle-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>taglist-maven-plugin</artifactId>
+                     <!--
+                        Version defined as property because dep mgt works not 
+                        if the plugin is not directly invoked. When the
+                        maven-site-plugin collects all reports of plugins defined
+                        in reporting section it will not lookup config made in
+                        dep mgt, just lookup the config in reporting section.
+                        
+                        For more information see http://jira.codehaus.org/browse/MNG-1931
+                    -->
+                    <version>${version.taglist-maven-plugin}</version>
+                </plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-pmd-plugin</artifactId>
+                     <!--
+                        Version defined as property because dep mgt works not 
+                        if the plugin is not directly invoked. When the
+                        maven-site-plugin collects all reports of plugins defined
+                        in reporting section it will not lookup config made in
+                        dep mgt, just lookup the config in reporting section.
+                        
+                        For more information see http://jira.codehaus.org/browse/MNG-1931
+                    -->					
+					<version>${version.maven-pmd-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>cobertura-maven-plugin</artifactId>
+                    <version>${version.cobertura-maven-plugin}</version>
+                </plugin>
+                
+                <!-- Further EL4J specific plugins -->
+                <plugin>
+                    <groupId>ch.elca.el4j.maven.plugins</groupId>
+                    <artifactId>maven-repohelper-plugin</artifactId>
+                    <version>${version.maven-repohelper-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>ch.elca.el4j.maven.plugins</groupId>
+                    <artifactId>maven-file-collector-plugin</artifactId>
+                    <version>${version.maven-file-collector-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>ch.elca.el4j.maven.plugins</groupId>
+                    <artifactId>maven-database-plugin</artifactId>
+                    <version>${version.maven-database-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>ch.elca.el4j.maven.plugins</groupId>
+                    <artifactId>maven-depgraph-plugin</artifactId>
+                    <version>${version.maven-depgraph-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>ch.elca.el4j.maven.plugins</groupId>
+                    <artifactId>maven-jaxws-plugin</artifactId>
+                    <version>${version.maven-jaxws-plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>ch.elca.el4j.maven.plugins</groupId>
+                    <artifactId>maven-rec-plugin</artifactId>
+                    <version>${version.maven-rec-plugin}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <extensions>
+            <!-- Transport -->
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ftp</artifactId>
+                <version>1.0-beta-2</version>
+            </extension>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh-external</artifactId>
+                <version>1.0-beta-2</version>
+            </extension>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh</artifactId>
+                <version>1.0-beta-2</version>
+            </extension>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-file</artifactId>
+                <version>1.0-beta-2</version>
+            </extension>
+        </extensions>
+    </build>
+    <modules>
+        <module>maven</module>
+        <module>skin</module>
+        <module>framework</module>
+        <module>applications</module>
+        <module>site</module>
+    </modules>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${version.maven-javadoc-plugin}</version>
+                <configuration>
+                    <!--
+                        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        !!  ATTENTION: COPY CONFIGURATION TO DEPENDENCY MANAGEMENT   !!
+                        !!             AND REPORTING SECTION DUE TO ISSUE            !!
+                        !!             http://jira.codehaus.org/browse/MNG-1931      !!
+                        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    -->
+                    <stylesheetfile>${javadoc.stylesheet.path}</stylesheetfile>
+                    <source>${el4j.java.version}</source>
+                    <links>
+                        <link>${javadoc.link.jdk}</link>
+                        <link>${javadoc.link.spring}</link>
+                        <link>${javadoc.link.hibernate}</link>
+                    </links>
+                    <header>${javadoc.header}</header>
+                </configuration>
+                <inherited>true</inherited>
+            </plugin>
+        </plugins>
+    </reporting>
+    <profiles>
+        <profile>
+            <id>manual</id>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+            </properties>
+        </profile>
+    
+        <!-- Web -->
+         <profile>
+            <id>tomcat5x</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.codehaus.cargo</groupId>
+                            <artifactId>cargo-maven2-plugin</artifactId>
+                            <configuration>
+                                <wait>true</wait>
+                                <container>
+                                    <containerId>${jee-web.containerId}</containerId>
+                                    <zipUrlInstaller>
+                                        <url>${tomcat5x.zipDownloadUrl}</url>
+                                        <installDir>${tomcat5x.basedir}</installDir>
+                                    </zipUrlInstaller>
+                                    <!--log>${tomcat5x.container.log.file}</log-->
+                                    <!--output>${tomcat5x.cargo.log.file}</output-->
+                                </container>
+                                <configuration>
+                                    <type>existing</type>
+                                    <home>${tomcat5x.home}</home>
+                                </configuration>
+                                
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-eclipse-plugin</artifactId>
+                            <configuration>
+                                <wtpContextName>${jee-web.context}</wtpContextName>
+<!--                                <projectRuntimeFacets>-->
+<!--                                    <projectRuntimeFacet>${tomcat5x.eclipse.runtime.facet.name}</projectRuntimeFacet>-->
+<!--                                </projectRuntimeFacets>-->
+<!--                                <additionalWarClasspathContainers>-->
+<!--                                    <additionalWarClasspathContainer>org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/${tomcat5x.eclipse.runtime.facet.name}</additionalWarClasspathContainer>-->
+<!--                                    <additionalWarClasspathContainer>org.eclipse.jst.j2ee.internal.web.container</additionalWarClasspathContainer>-->
+<!--                                    <additionalWarClasspathContainer>org.eclipse.jst.j2ee.internal.module.container</additionalWarClasspathContainer>-->
+<!--                                </additionalWarClasspathContainers>-->
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+            <properties>
+                <jee-web.containerId>tomcat5x</jee-web.containerId>
+                
+                <jee-web.host>localhost</jee-web.host>
+                <jee-web.port>8080</jee-web.port>
+                <jee-web.war.name>${project.build.finalName}</jee-web.war.name>
+                <jee-web.webapp.directory>${project.build.directory}/exploded-wars/${jee-web.war.name}</jee-web.webapp.directory>
+                <jee-web.context>${project.artifactId}</jee-web.context>
+
+                <!-- Deploy exploded war. -->
+                <jee-web.war.location>${jee-web.webapp.directory}</jee-web.war.location>
+                
+                <!-- Default value for tomcat-eclipse integration. Please override this in your settings.xml -->
+                <tomcat5x.eclipse.runtime.facet.name>Apache Tomcat v5.5</tomcat5x.eclipse.runtime.facet.name>
+            </properties>
+        </profile>
+        <profile>
+            <id>tomcat6x</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.codehaus.cargo</groupId>
+                            <artifactId>cargo-maven2-plugin</artifactId>
+                            <configuration>
+                                <wait>true</wait>
+                                <container>
+                                    <!--
+                                        Must be set to version 5 due cargo
+                                        has no version 6 impl.
+                                       -->
+                                    <containerId>tomcat6x</containerId>
+                                    <zipUrlInstaller>
+                                        <url>${tomcat6x.zipDownloadUrl}</url>
+                                        <installDir>${tomcat6x.basedir}</installDir>
+                                    </zipUrlInstaller>
+                                    <!--log>${tomcat6x.container.log.file}</log-->
+                                    <!--output>${tomcat6x.cargo.log.file}</output-->
+                                </container>
+                                <configuration>
+                                    <type>existing</type>
+                                    <home>${tomcat6x.home}</home>
+                                </configuration>
+                                
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-eclipse-plugin</artifactId>
+                            <configuration>
+                                <wtpContextName>${jee-web.context}</wtpContextName>
+<!--                                <projectRuntimeFacets>-->
+<!--                                    <projectRuntimeFacet>${tomcat6x.eclipse.runtime.facet.name}</projectRuntimeFacet>-->
+<!--                                </projectRuntimeFacets>-->
+<!--                                <additionalWarClasspathContainers>-->
+<!--                                    <additionalWarClasspathContainer>org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/${tomcat6x.eclipse.runtime.facet.name}</additionalWarClasspathContainer>-->
+<!--                                    <additionalWarClasspathContainer>org.eclipse.jst.j2ee.internal.web.container</additionalWarClasspathContainer>-->
+<!--                                    <additionalWarClasspathContainer>org.eclipse.jst.j2ee.internal.module.container</additionalWarClasspathContainer>-->
+<!--                                </additionalWarClasspathContainers>-->
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+            <properties>
+                <jee-web.containerId>tomcat6x</jee-web.containerId>
+                
+                <jee-web.host>localhost</jee-web.host>
+                <jee-web.port>8080</jee-web.port>
+                <jee-web.war.name>${project.build.finalName}</jee-web.war.name>
+                <jee-web.webapp.directory>${project.build.directory}/exploded-wars/${jee-web.war.name}</jee-web.webapp.directory>
+                <jee-web.context>${project.artifactId}</jee-web.context>
+
+                <!-- Deploy exploded war. -->
+                <jee-web.war.location>${jee-web.webapp.directory}</jee-web.war.location>
+                
+                <!-- Default value for tomcat-eclipse integration. Please override this in your settings.xml -->
+                <tomcat6x.eclipse.runtime.facet.name>Apache Tomcat v6.0</tomcat6x.eclipse.runtime.facet.name>
+            </properties>
+        </profile>
+        <profile>
+            <id>weblogic9x</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.codehaus.cargo</groupId>
+                            <artifactId>cargo-maven2-plugin</artifactId>
+                            <configuration>
+                                <wait>true</wait>
+                                <container>
+                                    <containerId>${jee-web.containerId}</containerId>
+                                    <home>${weblogic9x.home}</home>
+                                    <systemProperties>
+                                        <com.sun.xml.namespace.QName.useCompatibleSerialVersionUID>1.0</com.sun.xml.namespace.QName.useCompatibleSerialVersionUID>
+                                        <java.security.policy>${weblogic9x.home}/server/lib/weblogic.policy</java.security.policy>
+                                    </systemProperties>
+                                    <dependencies>
+                                        <dependency>
+                                            <location>${weblogic9x.home}/server/lib/weblogic_sp.jar</location>
+                                        </dependency>
+                                        <dependency>
+                                            <location>${weblogic9x.home}/server/lib/weblogic.jar</location>
+                                        </dependency>
+                                        
+                                        <dependency>
+                                            <location>${weblogic9x.home}/common/eval/pointbase/lib/pbclient51.jar</location>
+                                        </dependency>
+                                        <dependency>
+                                            <location>${weblogic9x.home}/server/lib/xqrl.jar</location>
+                                        </dependency>
+                                        <dependency>
+                                            <location>${java.home}/../lib/tools.jar</location>
+                                        </dependency>
+                                    </dependencies>
+                                    <!--log>${weblogic9x.container.log.file}</log-->
+                                    <!--output>${weblogic9x.cargo.log.file}</output-->
+                                </container>
+                                <configuration>
+                                    <type>existing</type>
+                                    <home>${weblogic9x.domains.home}</home>
+                                    <properties>
+                                        <cargo.weblogic.domain>${weblogic9x.domain.name}</cargo.weblogic.domain>
+                                        <cargo.weblogic.server>${weblogic9x.server.name}</cargo.weblogic.server>
+                                        <cargo.weblogic.administrator.user>${weblogic9x.manager.username}</cargo.weblogic.administrator.user>
+                                        <cargo.weblogic.administrator.password>${weblogic9x.manager.password}</cargo.weblogic.administrator.password>
+                                        <cargo.servlet.port>${jee-web.port}</cargo.servlet.port>
+                                        <cargo.weblogic.deployable.folder>autodeploy</cargo.weblogic.deployable.folder>
+                                    </properties>
+                                </configuration>
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-eclipse-plugin</artifactId>
+                            <configuration>
+                                <wtpContextName>${jee-web.context}</wtpContextName>
+<!--                                <additionalWarClasspathContainers>-->
+<!--                                    <additionalWarClasspathContainer>org.eclipse.jst.j2ee.internal.web.container</additionalWarClasspathContainer>-->
+<!--                                    <additionalWarClasspathContainer>org.eclipse.jst.j2ee.internal.module.container</additionalWarClasspathContainer>-->
+<!--                                </additionalWarClasspathContainers>-->
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+            <properties>
+                <jee-web.containerId>weblogic9x</jee-web.containerId>
+
+                <jee-web.host>localhost</jee-web.host>
+                <jee-web.port>7001</jee-web.port>
+                <jee-web.war.name>${project.build.finalName}</jee-web.war.name>
+                <jee-web.webapp.directory>${project.build.directory}/exploded-wars/${jee-web.war.name}</jee-web.webapp.directory>
+                <jee-web.context>${project.artifactId}</jee-web.context>
+
+                <!-- Deploy packed war by default. -->
+                <jee-web.war.location>${project.build.directory}/${jee-web.war.name}.war</jee-web.war.location>
+            </properties>
+        </profile>
+        
+        
+        <!-- Weblogic 10 -->
+        <profile>
+            <id>weblogic10x</id>
+            <!--<activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>-->
+            
+            <!--we add some dependencies here just to make sure they are downloaded into the local repsoitory (see below)-->
+            <dependencies>
+                <dependency>
+                    <groupId>com.sun.xml.stream.buffer</groupId>
+                    <artifactId>streambuffer</artifactId>
+                    <version>0.6</version>
+                </dependency>
+                
+                <dependency>
+                    <groupId>com.sun.xml.ws</groupId>
+                    <artifactId>jaxws-rt</artifactId>
+                    <version>2.1.2</version>
+                </dependency>
+                
+                <dependency>
+                    <groupId>javax.xml.ws</groupId>
+                    <artifactId>jaxws-api</artifactId>
+                    <version>2.1</version>
+                </dependency>
+                
+                <dependency>
+                    <groupId>javax.xml.bind</groupId>
+                    <artifactId>jaxb-api</artifactId>
+                    <version>2.1</version>
+                </dependency>
+                
+                <dependency>
+                    <groupId>com.sun.xml.bind</groupId>
+                    <artifactId>jaxb-impl</artifactId>
+                    <version>2.1.5</version>
+                </dependency>
+                
+                
+                <dependency>
+                    <groupId>javax.xml</groupId>
+                    <artifactId>xml-apis</artifactId>
+                    <version>1.3</version>
+                </dependency>
+                
+            </dependencies>
+            
+            
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.codehaus.cargo</groupId>
+                            <artifactId>cargo-maven2-plugin</artifactId>
+                            <configuration>
+                                <wait>true</wait>
+                                <container>
+                                    <containerId>${jee-web.containerId}</containerId>
+                                    <home>${weblogic10x.home}</home>
+                                    <systemProperties>
+                                        <!--<com.sun.xml.namespace.QName.useCompatibleSerialVersionUID>1.0</com.sun.xml.namespace.QName.useCompatibleSerialVersionUID>-->
+                                        <!--<java.security.policy>${weblogic10x.home}/server/lib/weblogic.policy</java.security.policy>
+                                        <weblogic.management.discover>true</weblogic.management.discover>-->
+                                    </systemProperties>
+                                    
+                                    <dependencies>
+                                    
+                                        <!-- these files are added to CLASSPATH when starting weblogic, because the original XML handlers coming with weblogic are just a little bit crappy... -->
+                                        
+                                        <dependency>
+                                            <location>${localRepository}/com/sun/xml/ws/jaxws-rt/2.1.2/jaxws-rt-2.1.2.jar</location>
+                                        </dependency>
+                                        
+                                        <dependency>
+                                            <location>${localRepository}/javax/xml/ws/jaxws-api/2.1/jaxws-api-2.1.jar</location>
+                                        </dependency>
+                                        
+                                        <dependency>
+                                            <location>${localRepository}/javax/xml/bind/jaxb-api/2.1/jaxb-api-2.1.jar</location>
+                                        </dependency>
+                                        
+                                        <dependency>
+                                            <location>${localRepository}/com/sun/xml/bind/jaxb-impl/2.1.5/jaxb-impl-2.1.5.jar</location>
+                                        </dependency>
+                                        
+                                        
+                                        <dependency>
+                                            <location>${localRepository}/com/sun/xml/stream/buffer/streambuffer/0.6/streambuffer-0.6.jar</location>
+                                        </dependency>
+                                        
+                                        
+                                        <dependency>
+                                            <location>${localRepository}/javax/xml/xml-apis/1.3/xml-apis-1.3.jar</location>
+                                        </dependency>
+                                    
+                                        <dependency>
+                                            <location>${weblogic10x.jrockit.home}/lib/tools.jar</location>
+                                        </dependency>
+                                        
+                                        
+                                        <dependency>
+                                            <location>${weblogic10x.home}/server/lib/weblogic_sp.jar</location>
+                                        </dependency>
+                                        <dependency>
+                                            <location>${weblogic10x.home}/server/lib/weblogic.jar</location>
+                                        </dependency>
+                                        
+                                        <dependency>
+                                            <location>${weblogic10x.home}/../modules/features/weblogic.server.modules_10.0.0.0.jar</location>
+                                        </dependency>
+                                        <dependency>
+                                            <location>${weblogic10x.home}/../modules/features/com.bea.cie.common-plugin.launch_2.1.0.0.jar</location>
+                                        </dependency>
+
+                                        <dependency>
+                                            <location>${weblogic10x.home}/server/lib/webservices.jar</location>
+                                        </dependency>
+                                        <dependency>
+                                            <location>${weblogic10x.home}/../modules/ORGAPA~1.5/lib/ant-all.jar</location>
+                                        </dependency>
+                                        <dependency>
+                                            <location>${weblogic10x.home}/../modules/NETSFA~1.0/lib/ant-contrib.jar</location>
+                                        </dependency>
+                                        <dependency>
+                                            <location>${weblogic10x.home}/common/eval/pointbase/lib/pbclient51.jar</location>
+                                        </dependency>
+                                        <dependency>
+                                            <location>${weblogic10x.home}/server/lib/xqrl.jar</location>
+                                        </dependency>
+                                        <dependency>
+                                            <location>${weblogic10x.home}/common/eval/pointbase/lib/pbclient51.jar</location>
+                                        </dependency>
+                                        
+                                    </dependencies>
+                                    <!--log>${weblogic10x.container.log.file}</log-->
+                                    <!--enable log only for debugging purposes-->
+                                    <!--<output>${weblogic10x.cargo.log.file}</output>-->
+                               </container>
+                                <configuration>
+                                    <type>existing</type>
+                                    <home>${weblogic10x.domains.home}</home>
+                                    <properties>
+                                        <cargo.weblogic.domain>${weblogic10x.domain.name}</cargo.weblogic.domain>
+                                        <cargo.weblogic.server>${weblogic10x.server.name}</cargo.weblogic.server>
+                                        <cargo.weblogic.administrator.user>${weblogic10x.manager.username}</cargo.weblogic.administrator.user>
+                                        <cargo.weblogic.administrator.password>${weblogic10x.manager.password}</cargo.weblogic.administrator.password>
+                                        <cargo.servlet.port>${jee-web.port}</cargo.servlet.port>
+                                        <cargo.weblogic.deployable.folder>autodeploy</cargo.weblogic.deployable.folder>
+                                        <cargo.weblogic.jvm>${weblogic10x.jrockit.home}/bin/java</cargo.weblogic.jvm>
+                                    </properties>
+                                </configuration>
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-eclipse-plugin</artifactId>
+                            <configuration>
+                                <wtpContextName>${jee-web.context}</wtpContextName>
+<!--                                <additionalWarClasspathContainers>-->
+<!--                                    <additionalWarClasspathContainer>org.eclipse.jst.j2ee.internal.web.container</additionalWarClasspathContainer>-->
+<!--                                    <additionalWarClasspathContainer>org.eclipse.jst.j2ee.internal.module.container</additionalWarClasspathContainer>-->
+<!--                                </additionalWarClasspathContainers>-->
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+            <properties>
+            
+                <jee-web.containerId>weblogic10x</jee-web.containerId>
+
+                <jee-web.host>localhost</jee-web.host>
+                <jee-web.port>7001</jee-web.port>
+                <jee-web.war.name>${project.build.finalName}</jee-web.war.name>
+                <jee-web.webapp.directory>${project.build.directory}/exploded-wars/${jee-web.war.name}</jee-web.webapp.directory>
+                <jee-web.context>${project.artifactId}</jee-web.context>
+
+                <!-- Deploy packed war by default. -->
+                <jee-web.war.location>${project.build.directory}/${jee-web.war.name}.war</jee-web.war.location>
+            </properties>
+        </profile>
+
+        <!-- DB -->
+        <profile>
+            <id>db2</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <db.name>db2</db.name>
+                <db.host>localhost</db.host>
+                <db.port>1527</db.port>
+                <db.database-name>el4j</db.database-name>
+                <db.create-database>true</db.create-database>
+                <db.url>jdbc:derby://${db.host}:${db.port}/${db.database-name};create=${db.create-database}</db.url>
+            </properties>
+        </profile>
+        <profile>
+            <id>oracle</id>
+            <properties>
+                <db.name>oracle</db.name>
+                <db.host>tulipe.elca.ch</db.host>
+                <db.port>1521</db.port>
+                <db.database-name>d92a</db.database-name>
+                <db.url>jdbc:oracle:thin:@${db.host}:${db.port}:${db.database-name}</db.url>
+            </properties>
+        </profile>
+        <profile>
+            <id>mysql</id>
+            <properties>
+                <db.name>mysql</db.name>
+                <db.host>localhost</db.host>
+                <db.port>3306</db.port>
+                <db.database-name>el4j</db.database-name>
+                <db.url>jdbc:mysql://${db.host}:${db.port}/${db.database-name}?zeroDateTimeBehavior=convertToNull</db.url>
+            </properties>
+        </profile>
+    </profiles>
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <id>el4jReleaseRepositoryExternal</id>
+            <name>External release repository of the EL4J project</name>
+            <url>http://el4.elca-services.ch/el4j/maven2repository</url>
+        </repository>
+        <!--repository>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <id>el4jSnapshotRepositoryExternal</id>
+            <!- -id>apache.snapshots</id- ->
+            <name>External snapshot repository of the EL4J project</name>
+            <url>http://el4.elca-services.ch/el4j/maven2snapshots</url>
+        </repository-->
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <id>maven2-repository.dev.java.net</id>
+            <name>Java.net Repository for Maven</name>
+            <url>http://download.java.net/maven/2</url>
+        </repository>
+        
+        <!-- 
+            The internal leaffy respository is listed here for convenience.
+            ELCA interal developers do not have to deploy the db2 driver by
+            hand.
+         -->
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <id>el4jReleaseRepositoryInternal</id>
+            <name>Internal release repository of the EL4J project</name>
+            <url>http://leaffy.elca.ch/java/maven2repository</url>
+        </repository>
+
+
+       <!--
+            Internal snapshot repository commented because it is currently empty.
+            ==> Faster build-process
+        -->
+        <!--repository>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <id>el4jSnapshotRepositoryInternal</id>
+            <name>Internal snapshot repository of the EL4J project</name>
+            <url>http://leaffy.elca.ch/java/maven2snapshots</url>
+        </repository-->
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <id>el4jReleasePluginRepositoryExternal</id>
+            <name>External release repository of the EL4J project</name>
+            <url>http://el4.elca-services.ch/el4j/maven2repository</url>
+        </pluginRepository>
+        <pluginRepository>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <id>el4jSnapshotPluginRepositoryExternal</id>
+            <!--id>apache.snapshots</id-->
+            <name>External snapshot repository of the EL4J project</name>
+            <url>http://el4.elca-services.ch/el4j/maven2snapshots</url>
+        </pluginRepository>
+    </pluginRepositories>
+    <distributionManagement>
+        <repository>
+            <id>${distmgt.repository.id.external}</id>
+            <name>${distmgt.repository.name.external}</name>
+            <url>${distmgt.repository.url.external}</url>
+        </repository>
+        <snapshotRepository>
+            <id>${distmgt.snapshot-repository.id.external}</id>
+            <name>${distmgt.snapshot-repository.name.external}</name>
+            <url>${distmgt.snapshot-repository.url.external}</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <dependencyManagement>
+        <dependencies>
+            <!-- **************************** -->
+            <!-- *  EL4J framework modules  *-->
+            <!-- **************************** -->
+
+            <!-- module-core -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-core</artifactId>
+                <version>${version.module-core}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-core</artifactId>
+                <version>${version.module-core}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- module-database -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-database</artifactId>
+                <version>${version.module-database}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-database</artifactId>
+                <version>${version.module-database}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            
+            <!-- module-env -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-env</artifactId>
+                <version>${version.module-env}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-env-tests</artifactId>
+                <version>${version.module-env}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- module-exception_handling -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-exception_handling</artifactId>
+                <version>${version.module-exception_handling}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-exception_handling</artifactId>
+                <version>${version.module-exception_handling}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- module-hibernate -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-hibernate</artifactId>
+                <version>${version.module-hibernate}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-hibernate</artifactId>
+                <version>${version.module-hibernate}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- module-ibatis -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-ibatis</artifactId>
+                <version>${version.module-ibatis}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-ibatis</artifactId>
+                <version>${version.module-ibatis}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- module-jmx -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-jmx</artifactId>
+                <version>${version.module-jmx}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-jmx</artifactId>
+                <version>${version.module-jmx}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- module-jsf -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-jsf-jar</artifactId>
+                <version>${version.module-jsf}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-jsf-jar</artifactId>
+                <version>${version.module-jsf}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            
+
+            <!-- module-light_statistics -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-light_statistics-jmx</artifactId>
+                <version>${version.module-light_statistics}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-light_statistics-jmx</artifactId>
+                <version>${version.module-light_statistics}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-light_statistics-web</artifactId>
+                <version>${version.module-light_statistics}</version>
+                <type>war</type>
+                <scope>runtime</scope>
+            </dependency>
+            
+            <!-- module-detailed_statistics -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-detailed_statistics-jmx</artifactId>
+                <version>${version.module-detailed_statistics}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-detailed_statistics-jmx</artifactId>
+                <version>${version.module-detailed_statistics}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- module-remoting_core -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-remoting_core</artifactId>
+                <version>${version.module-remoting_core}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-remoting_core</artifactId>
+                <version>${version.module-remoting_core}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- module-remoting_caucho -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-remoting_caucho</artifactId>
+                <version>${version.module-remoting_caucho}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-remoting_caucho</artifactId>
+                <version>${version.module-remoting_caucho}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- module-remoting_xfire -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-remoting_xfire</artifactId>
+                <version>${version.module-remoting_xfire}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-remoting_xfire</artifactId>
+                <version>${version.module-remoting_xfire}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            
+            <!-- module-remoting_jaxws -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-remoting_jaxws</artifactId>
+                <version>${version.module-remoting_jaxws}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-remoting_jaxws</artifactId>
+                <version>${version.module-remoting_jaxws}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- module-remoting_soap -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-remoting_soap</artifactId>
+                <version>${version.module-remoting_soap}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-remoting_soap</artifactId>
+                <version>${version.module-remoting_soap}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- module-remoting_ejb -->
+            <!--dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-remoting_ejb</artifactId>
+                <version>${version.module-remoting_ejb}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-remoting_ejb</artifactId>
+                <version>${version.module-remoting_ejb}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency-->
+
+            <!-- module-security -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-security</artifactId>
+                <version>${version.module-security}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-security</artifactId>
+                <version>${version.module-security}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- module-spring_rcp -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-spring_rcp</artifactId>
+                <version>${version.module-spring_rcp}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-spring_rcp</artifactId>
+                <version>${version.module-spring_rcp}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- module-swing -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-swing</artifactId>
+                <version>${version.module-swing}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-swing</artifactId>
+                <version>${version.module-swing}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- module-tcp_forwarder -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-tcp_forwarder</artifactId>
+                <version>${version.module-tcp_forwarder}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-tcp_forwarder</artifactId>
+                <version>${version.module-tcp_forwarder}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- module-web -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-web-jar</artifactId>
+                <version>${version.module-web}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-web-jar</artifactId>
+                <version>${version.module-web}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-web-war</artifactId>
+                <version>${version.module-web}</version>
+                <type>war</type>
+                <scope>runtime</scope>
+            </dependency>
+
+            <!-- module-webtest -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-webtest</artifactId>
+                <version>${version.module-webtest}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-webtest</artifactId>
+                <version>${version.module-webtest}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- module-xml_merge -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-xml_merge-console</artifactId>
+                <version>${version.module-xml_merge}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-xml_merge-console</artifactId>
+                <version>${version.module-xml_merge}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-xml_merge-web-jar</artifactId>
+                <version>${version.module-xml_merge}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-xml_merge-web-jar</artifactId>
+                <version>${version.module-xml_merge}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-xml_merge-web-war</artifactId>
+                <version>${version.module-xml_merge}</version>
+                <type>war</type>
+                <scope>runtime</scope>
+            </dependency>
+
+            <!-- module-core -->
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-bshlauncher</artifactId>
+                <version>${version.module-bshlauncher}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.modules</groupId>
+                <artifactId>module-bshlauncher</artifactId>
+                <version>${version.module-bshlauncher}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- **************************** -->
+            <!-- * Application dependencies *-->
+            <!-- **************************** -->
+
+            <!-- Keyword -->
+            <dependency>
+                <groupId>ch.elca.el4j.applications</groupId>
+                <artifactId>keyword-service</artifactId>
+                <version>${version.application-keyword}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.applications</groupId>
+                <artifactId>keyword-dao</artifactId>
+                <version>${version.application-keyword}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.applications</groupId>
+                <artifactId>keyword-tests</artifactId>
+                <version>${version.application-keyword}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- RefDb -->
+            <dependency>
+                <groupId>ch.elca.el4j.applications</groupId>
+                <artifactId>refdb-service</artifactId>
+                <version>${version.application-refdb}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.applications</groupId>
+                <artifactId>refdb-dao</artifactId>
+                <version>${version.application-refdb}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.applications</groupId>
+                <artifactId>refdb-tests</artifactId>
+                <version>${version.application-refdb}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.applications</groupId>
+                <artifactId>refdb-gui-common</artifactId>
+                <version>${version.application-refdb}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.applications</groupId>
+                <artifactId>refdb-gui-server-jar</artifactId>
+                <version>${version.application-refdb}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.applications</groupId>
+                <artifactId>refdb-gui-thin-client</artifactId>
+                <version>${version.application-refdb}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.applications</groupId>
+                <artifactId>refdb-gui-standalone-client</artifactId>
+                <version>${version.application-refdb}</version>
+                <type>jar</type>
+            </dependency>
+
+            <!-- Swing demo -->
+            <dependency>
+                <groupId>ch.elca.el4j.applications</groupId>
+                <artifactId>swing-demo-common</artifactId>
+                <version>${version.application-refdb}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.applications</groupId>
+                <artifactId>swing-demo-server-jar</artifactId>
+                <version>${version.application-refdb}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.applications</groupId>
+                <artifactId>swing-demo-thin-client</artifactId>
+                <version>${version.application-refdb}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.applications</groupId>
+                <artifactId>swing-demo-standalone-client</artifactId>
+                <version>${version.application-refdb}</version>
+                <type>jar</type>
+            </dependency>
+
+            <!-- JSF demo -->
+            <dependency>
+                <groupId>ch.elca.el4j.applications</groupId>
+                <artifactId>jsf-demo-jar</artifactId>
+                <version>${version.application-keyword}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>ch.elca.el4j.applications</groupId>
+                <artifactId>jsf-demo-war</artifactId>
+                <version>${version.application-keyword}</version>
+                <type>war</type>
+                <scope>runtime</scope>
+            </dependency>
+
+            <!-- **************************** -->
+            <!-- *    Other dependencies    * -->
+            <!-- **************************** -->
+
+            <!-- Testing -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>3.8.2</version>
+                <scope>test</scope>
+            </dependency>
+            
+            <!-- Easymock -->
+            <dependency>
+                <groupId>org.easymock</groupId>
+                <artifactId>easymock</artifactId>
+                <version>[2.2]</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.easymock</groupId>
+                <artifactId>easymockclassextension</artifactId>
+                <version>[2.2.1]</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- Springframework -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring</artifactId>
+                <version>2.5.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>2.5.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc-struts</artifactId>
+                <version>2.5.1</version>
+            </dependency>
+            
+            <!-- Logging -->
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>1.2.14</version>
+            </dependency>
+
+            <!-- Apache projects -->
+            <dependency>
+                <groupId>org.apache.tools.ant</groupId>
+                <artifactId>ant</artifactId>
+                <version>1.6.5</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.derby</groupId>
+                <artifactId>derby</artifactId>
+                <version>${version.derby}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.derby</groupId>
+                <artifactId>derbyclient</artifactId>
+                <version>${version.derby}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.derby</groupId>
+                <artifactId>derbynet</artifactId>
+                <version>${version.derby}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.derby</groupId>
+                <artifactId>derbytools</artifactId>
+                <version>${version.derby}</version>
+            </dependency>
+
+
+            <!-- Apache Commons Projects -->
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>1.7.0</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>1.3</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>3.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-configuration</artifactId>
+                <version>1.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-daemon</artifactId>
+                <version>1.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-dbcp</groupId>
+                <artifactId>commons-dbcp</artifactId>
+                <version>1.2.2</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-digester</groupId>
+                <artifactId>commons-digester</artifactId>
+                <version>1.8</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-discovery</artifactId>
+                <version>0.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-email</artifactId>
+                <version>1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>1.2</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-httpclient</groupId>
+                <artifactId>commons-httpclient</artifactId>
+                <version>3.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>1.3.2</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>2.3</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>1.1</version>
+                <exclusions>
+                    <exclusion>
+                    <!-- we use fully qualified domain as groupId -->
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>javax.servlet</groupId>
+                        <artifactId>servlet-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>logkit</groupId>
+                        <artifactId>logkit</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>junit</groupId>
+                        <artifactId>junit</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>avalon-framework</groupId>
+                        <artifactId>avalon-framework</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-logging-adapters</artifactId>
+                <version>1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-math</artifactId>
+                <version>1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-net</artifactId>
+                <version>1.4.1</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-pool</groupId>
+                <artifactId>commons-pool</artifactId>
+                <version>1.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-primitives</artifactId>
+                <version>1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-validator</groupId>
+                <artifactId>commons-validator</artifactId>
+                <version>1.3.1</version>
+            </dependency>
+
+            <!-- SourceForge projects -->
+            <dependency>
+                <groupId>net.sf.ehcache</groupId>
+                <artifactId>ehcache</artifactId>
+                <version>1.2.4</version>
+            </dependency>
+
+            <!-- JavaX projects -->
+            <dependency>
+                <groupId>javax.mail</groupId>
+                <artifactId>javamail</artifactId>
+                <version>1.4</version>
+            </dependency>
+            <dependency>
+                <groupId>wsdl4j</groupId>
+                <artifactId>wsdl4j</artifactId>
+                <version>1.6.1</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.activation</groupId>
+                <artifactId>activation</artifactId>
+                <version>1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+                <version>2.5</version>
+                <scope>provided</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <properties>
+        <!-- RMI -->
+        <rmi.host>localhost</rmi.host>
+        <rmi.port>8099</rmi.port>
+        
+        <!-- Network properties -->
+        <project-server.path>file:////leaffy.elca.ch/java</project-server.path>
+
+        <!-- Distribution mgt repository ids, names and urls -->
+        <distmgt.repository.id.external>ftpEl4ElcaServices</distmgt.repository.id.external>
+        <distmgt.repository.name.external>External EL4J repository</distmgt.repository.name.external>
+        <distmgt.repository.url.external>ftp://el4.elca-services.ch/htdocs/el4j/maven2repository</distmgt.repository.url.external>
+
+        <distmgt.repository.id.internal>fileLeaffy</distmgt.repository.id.internal>
+        <distmgt.repository.name.internal>Internal EL4J repository</distmgt.repository.name.internal>
+        <distmgt.repository.url.internal>${project-server.path}/maven2repository</distmgt.repository.url.internal>
+
+        <distmgt.site.id.external>sshSourceForgeEL4J</distmgt.site.id.external>
+        <distmgt.site.name.external>SourceForge EL4J website</distmgt.site.name.external>
+        <distmgt.site.url.external>scpexe://shell.sourceforge.net/home/groups/e/el/el4j/htdocs</distmgt.site.url.external>
+
+        <distmgt.site.id.internal>fileLeaffy</distmgt.site.id.internal>
+        <distmgt.site.name.internal>Internal EL4J website</distmgt.site.name.internal>
+        <distmgt.site.url.internal>${project-server.path}/el4j/website/internal</distmgt.site.url.internal>
+
+        <distmgt.snapshot-repository.id.external>ftpEl4ElcaServicesSnapshot</distmgt.snapshot-repository.id.external>
+        <distmgt.snapshot-repository.name.external>External EL4J snapshot repository</distmgt.snapshot-repository.name.external>
+        <distmgt.snapshot-repository.url.external>ftp://el4.elca-services.ch/htdocs/el4j/maven2snapshots</distmgt.snapshot-repository.url.external>
+
+        <distmgt.snapshot-repository.id.internal>fileLeaffySnapshot</distmgt.snapshot-repository.id.internal>
+        <distmgt.snapshot-repository.name.internal>Internal EL4J snapshot repository</distmgt.snapshot-repository.name.internal>
+        <distmgt.snapshot-repository.url.internal>${project-server.path}/maven2snapshots</distmgt.snapshot-repository.url.internal>
+
+        <distmgt.snapshot-site.id.external>fileLeaffy</distmgt.snapshot-site.id.external>
+        <distmgt.snapshot-site.name.external>External EL4J snapshot website</distmgt.snapshot-site.name.external>
+        <distmgt.snapshot-site.url.external>${project-server.path}/el4j/snapshot/website/external</distmgt.snapshot-site.url.external>
+
+        <distmgt.snapshot-site.id.internal>fileLeaffy</distmgt.snapshot-site.id.internal>
+        <distmgt.snapshot-site.name.internal>Internal EL4J snapshot website</distmgt.snapshot-site.name.internal>
+        <distmgt.snapshot-site.url.internal>${project-server.path}/el4j/snapshot/website/internal</distmgt.snapshot-site.url.internal>
+
+        <!-- Current version of EL4J-Framework. Must be the same as defined in the version-tag above -->
+        <version.el4j-framework.current>
+            1.2.1-SNAPSHOT
+        </version.el4j-framework.current>
+
+        <!-- EL4J framework plugin version numbers -->
+        <version.maven-repohelper-plugin>
+            1.4-SNAPSHOT
+        </version.maven-repohelper-plugin>
+        <version.maven-manifest-decorator-plugin>
+            1.4-SNAPSHOT
+        </version.maven-manifest-decorator-plugin>
+        <version.maven-checkclipse-helper-plugin>
+            1.4-SNAPSHOT
+        </version.maven-checkclipse-helper-plugin>
+        <version.maven-env-support-plugin>
+            1.4-SNAPSHOT
+        </version.maven-env-support-plugin>
+        <version.maven-file-collector-plugin>
+            1.4-SNAPSHOT
+        </version.maven-file-collector-plugin>
+        <version.maven-database-plugin>
+            1.5-SNAPSHOT
+        </version.maven-database-plugin>
+        <version.maven-depgraph-plugin>
+            1.4-SNAPSHOT
+        </version.maven-depgraph-plugin>
+        <version.maven-version-plugin>
+            1.4-SNAPSHOT
+        </version.maven-version-plugin>
+        <version.maven-jaxws-plugin>
+            1.1-SNAPSHOT
+        </version.maven-jaxws-plugin>
+        <version.maven-rec-plugin>
+            1.0-SNAPSHOT
+        </version.maven-rec-plugin>
+
+        <!-- EL4J framework module version numbers -->
+        <version.module-core>
+            1.9-SNAPSHOT
+        </version.module-core>
+        <version.module-database>
+            1.7-SNAPSHOT
+        </version.module-database>
+        <version.module-env>
+            1.7-SNAPSHOT
+        </version.module-env>
+        <version.module-exception_handling>
+            1.5-SNAPSHOT
+        </version.module-exception_handling>
+        <version.module-hibernate>
+            1.6-SNAPSHOT
+        </version.module-hibernate>
+        <version.module-ibatis>
+            1.5-SNAPSHOT
+        </version.module-ibatis>
+        <version.module-jmx>
+            1.7-SNAPSHOT
+        </version.module-jmx>
+        <version.module-jsf>
+            1.0-SNAPSHOT
+        </version.module-jsf>
+        <version.module-light_statistics>
+            1.5-SNAPSHOT
+        </version.module-light_statistics>
+        <version.module-detailed_statistics>
+            1.5-SNAPSHOT
+        </version.module-detailed_statistics>
+        <version.module-remoting_core>
+            2.5-SNAPSHOT
+        </version.module-remoting_core>
+        <version.module-remoting_caucho>
+            2.5-SNAPSHOT
+        </version.module-remoting_caucho>
+        <version.module-remoting_soap>
+            2.5-SNAPSHOT
+        </version.module-remoting_soap>
+        <version.module-remoting_xfire>
+            2.5-SNAPSHOT
+        </version.module-remoting_xfire>
+        <version.module-remoting_jaxws>
+            1.1-SNAPSHOT
+        </version.module-remoting_jaxws>
+        <version.module-remoting_ejb>
+            2.5-SNAPSHOT
+        </version.module-remoting_ejb>
+        <version.module-security>
+            1.6-SNAPSHOT
+        </version.module-security>
+        <version.module-spring_rcp>
+            1.7-SNAPSHOT
+        </version.module-spring_rcp>
+        <version.module-swing>
+            1.1-SNAPSHOT
+        </version.module-swing>
+        <version.module-tcp_forwarder>
+            1.4-SNAPSHOT
+        </version.module-tcp_forwarder>
+        <version.module-web>
+            1.8-SNAPSHOT
+        </version.module-web>
+        <version.module-webtest>
+            1.4-SNAPSHOT
+        </version.module-webtest>
+        <version.module-xml_merge>
+            1.4-SNAPSHOT
+        </version.module-xml_merge>
+        <version.module-bshlauncher>
+            1.1-SNAPSHOT
+        </version.module-bshlauncher>
+        <version.module-remoting-tests>
+            1.4-SNAPSHOT
+        </version.module-remoting-tests>
+        <version.module-remoting-jaxws-tests>
+            1.1-SNAPSHOT
+        </version.module-remoting-jaxws-tests>
+        <version.module-tcp_forwarder-tests>
+            1.4-SNAPSHOT
+        </version.module-tcp_forwarder-tests>
+        <version.module-remoting-demos>
+            1.4-SNAPSHOT
+        </version.module-remoting-demos>
+        <version.application-keyword>
+            2.5-SNAPSHOT
+        </version.application-keyword>
+        <version.application-refdb>
+            2.5-SNAPSHOT
+        </version.application-refdb>
+
+        <!-- Javadoc config -->
+        <javadoc.stylesheet.path>${el4j.external}/etc/javadoc/stylesheet.css</javadoc.stylesheet.path>
+        <javadoc.link.jdk>http://java.sun.com/j2se/${el4j.java.version}/docs/api</javadoc.link.jdk>
+        <javadoc.link.spring>http://static.springframework.org/spring/docs/2.5.x/api</javadoc.link.spring>
+        <javadoc.link.hibernate>http://www.hibernate.org/hib_docs/v3/api</javadoc.link.hibernate>
+        <javadoc.header><![CDATA[&lt;script type='text/javascript'&gt;function removeKeyword(str) { i = str.indexOf(':'); str = str.substring(i+1); i = str.length; str = str.substring(0, i-1); return str; } function removeHead (str) { v=str.substring(47); return v.substring(0, v.length-2); } function printFileStatus (url_kw, revision_kw, date_kw, author_kw) { document.write ('&lt;br/&gt;&lt;dl&gt;&lt;dt&gt;&lt;b&gt;File-location:&lt;/b&gt;&lt;/dt&gt;&lt;dd&gt;&lt;a href="http://el4j.svn.sourceforge.net/viewvc/'); document.write(removeHead(url_kw)); document.write('"&gt;'); document.write(removeHead(url_kw)); document.write('&lt;/a&gt;&lt;/dd&gt;&lt;/dl&gt;'); document.write('&lt;dl&gt;&lt;dt&gt;&lt;b&gt;Last check-in date &lt;/b&gt;'); document.write(removeKeyword(date_kw)); document.write('&lt;b&gt; by &lt;/b&gt;'); document.write(removeKeyword(author_kw)); document.write('&lt;b&gt; for revision &lt;/b&gt;'); document.write(removeKeyword(revision_kw)); document.write('&lt;/dt&gt;&lt;/dl&gt;'); } &lt;/script&gt;]]></javadoc.header>
+        
+        <!-- Checkstyle config -->
+        <checkstyle.config.location>${el4j.external}/etc/checkstyle/checks.xml</checkstyle.config.location>
+        <checkstyle.enable.rss>false</checkstyle.enable.rss>
+        <checkstyle.enable.rules.summary>false</checkstyle.enable.rules.summary>
+        
+        <!-- Dependency versions -->
+        <version.derby>10.3.2.1</version.derby>
+        
+        <!-- Maven plugin versions. Needed due to false dep mgt. -->
+        <version.maven-project-info-reports-plugin>2.0.1</version.maven-project-info-reports-plugin>
+        <version.maven-checkstyle-plugin>2.1</version.maven-checkstyle-plugin>
+        <version.maven-surefire-report-plugin>2.3.1</version.maven-surefire-report-plugin>
+        <version.maven-javadoc-plugin>2.3</version.maven-javadoc-plugin>
+        <version.maven-jxr-plugin>2.1</version.maven-jxr-plugin>
+		<version.maven-pmd-plugin>2.2</version.maven-pmd-plugin>
+        <version.taglist-maven-plugin>2.0</version.taglist-maven-plugin>
+        <version.maven-plugin-plugin>2.3</version.maven-plugin-plugin>
+        <version.cobertura-maven-plugin>2.1</version.cobertura-maven-plugin>
+        
+        <!-- Eclipse -->
+        <eclipse.reactorProjectGroupIdPrefixes></eclipse.reactorProjectGroupIdPrefixes>
+        
+        <!-- Used Maven version -->
+        <el4j.java.version>1.5</el4j.java.version>
+        <el4j.maven.version>2.0.8-el4j-20071205</el4j.maven.version>
+    </properties>
+</project>

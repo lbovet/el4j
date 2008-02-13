@@ -1,0 +1,57 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                             "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:el4j="http://www.elca.ch/el4j/taglib"
+	template="layout/template.xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+
+	<ui:define name="body">
+		
+		<h2>
+			Search employees using EmployeeManager
+		</h2>
+		<h:form>
+		    Last Name: 
+		    <ui:remove><!-- searchEmployee will be injected when calling employeeManager.find(...) --></ui:remove>
+			<h:inputText id="search" value="#{searchEmployee}"></h:inputText>
+			<h:commandButton value="Find" action="#{employeeManager.find('lastName')}" />
+			<s:button value="Clear" action="#{employeeManager.reset()}" />
+		</h:form>
+		
+		<h3>
+			List of found employees (using EmployeeManager and ui:repeat):
+		</h3>
+		<h:form>
+			<ui:repeat value="#{employeeManager.getEmployees()}" var="e">
+				<div>
+					#{e.lastName}
+					<h:outputText value=" " />
+					<h:commandLink value="edit"
+						action="#{employeeManager.edit(e, '/employeeEditEmpMgr.xhtml')}" />
+					<h:outputText value=" " />
+					<h:commandLink value="delete" action="#{employeeManager.delete(e)}" />
+				</div>
+			</ui:repeat>
+		</h:form>
+
+		<h2>
+			Insert employee:
+		</h2>
+		<h:form>
+			<s:validateAll>
+				<h:panelGrid columns="2">
+					<ui:remove><!-- employee stands for a new instance of Employee --></ui:remove>
+					Visa: <h:inputText value="#{employee.visa}" required="true" />
+					First Name: <h:inputText value="#{employee.firstName}" required="true" />
+					Last Name: <h:inputText value="#{employee.lastName}" required="true" />
+				</h:panelGrid>
+			</s:validateAll>
+			<h:messages />
+			<h:commandButton value="Add"
+				action="#{employeeManager.save(employee)}" />
+		</h:form>
+	</ui:define>
+
+</ui:composition>

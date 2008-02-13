@@ -1,0 +1,40 @@
+<?xml version="1.0"?><project>
+  <modelVersion>4.0.0</modelVersion>
+  
+  <groupId>ch.elca.testProject</groupId>
+  <artifactId>level1</artifactId>
+  <packaging>pom</packaging>
+  <name>test-project level1</name>
+  <version>1.0</version>
+  
+  <build>
+  <plugins>
+    <plugin>
+        <groupId>ch.elca.el4j.maven.plugins</groupId>
+        <artifactId>maven-rec-plugin</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </plugin>
+  </plugins>
+  </build>
+  
+  <modules>
+    <module>level1_1</module>
+    <module>level1_2</module>
+    <module>level1_3</module>
+  </modules>
+  
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>ch.elca.testProject</groupId>
+                <artifactId>level1_2</artifactId>
+                <version>1.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+  <properties>
+    <level1_2.version>1.0</level1_2.version>
+  </properties>
+  
+</project>

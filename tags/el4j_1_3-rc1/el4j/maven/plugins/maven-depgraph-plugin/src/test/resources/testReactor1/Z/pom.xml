@@ -1,0 +1,25 @@
+<?xml version="1.0"?><project>
+  <modelVersion>4.0.0</modelVersion>
+  
+  <groupId>ch.test</groupId>
+  <artifactId>Z</artifactId>
+  <packaging>jar</packaging>
+  <name>Project Z</name>
+  <version>1.0</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>ch.test</groupId>
+            <artifactId>ZZ</artifactId>
+            <version>1.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.test</groupId>
+            <artifactId>ZS</artifactId>
+            <version>1.0</version>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+  
+</project>

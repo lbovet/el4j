@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Spring bean configuration file to prepare ibatis sqlmaps client. This bean
+    is normally used in daos.
+
+    Needed beans which are not defined in this file:
+       * dataSource
+           
+    Following properties must be overwritten:
+       * sqlMapClientConfigurator.configLocation
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
+    		  
+    <bean id="convenienceSqlMapClientTemplate" 
+        name="sqlMapClientTemplate"
+        class="ch.elca.el4j.services.persistence.ibatis.dao.ConvenienceSqlMapClientTemplate">
+        <property name="sqlMapClient">
+            <ref local="sqlMapClientConfigurator"/>
+        </property>
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+        <property name="exceptionTranslator">
+            <bean class="org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator">
+                <constructor-arg>
+                    <ref bean="dataSource"/>
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean>
+    
+    <bean id="sqlMapClientConfigurator" 
+        class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+        <property name="configLocation">
+            <value>etc/ibatis/my-sqlmap-config.xml</value>
+        </property>
+    </bean>
+</beans>

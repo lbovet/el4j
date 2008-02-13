@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- Version: $Revision$ -->
+	<!-- URL: $URL$ -->
+	<!-- Date: $Date$ -->
+	<!-- Author: $Author$ -->
+
+	<parent>
+		<groupId>ch.elca.el4j</groupId>
+		<artifactId>el4j</artifactId>
+		<version>1.2.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>el4j-rcp-demo</artifactId>
+	<packaging>jar</packaging>
+	<name>El4J Spring RCP v.0.3 Demo</name>
+	<build>
+		<plugins>
+			<!-- Building -->
+			<plugin>
+				<groupId>ch.elca.el4j.maven.plugins</groupId>
+				<artifactId>maven-env-support-plugin</artifactId>
+			</plugin>
+
+			<!-- Packaging -->
+			<plugin>
+				<groupId>ch.elca.el4j.maven.plugins</groupId>
+				<artifactId>maven-manifest-decorator-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+			</plugin>
+
+			<!-- IDE -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>ch.elca.el4j.maven.plugins</groupId>
+				<artifactId>maven-checkclipse-helper-plugin</artifactId>
+			</plugin>
+			<!-- EL4J Database plugin to start and fill DB automatically -->
+			<plugin>
+				<groupId>ch.elca.el4j.maven.plugins</groupId>
+				<artifactId>maven-database-plugin</artifactId>
+				<configuration>
+					<connectionPropertiesSource>
+						scenarios/db/raw/el4j-rcp-demo-override-{db.name}.properties
+					</connectionPropertiesSource>
+					<dbName>db2</dbName>
+				</configuration>
+			</plugin>
+			
+			<!--  Exec Plugin -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>
+						ch.elca.el4j.demos.rcp.app.ApplicationStarter	
+					</mainClass>
+					<!--keepAlive>true</keepAlive-->
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<!-- Spring dependencies -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-binding</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<!--  Spring RCP v.0.3 -->
+		<dependency>
+			<groupId>org.springframework.richclient</groupId>
+			<artifactId>spring-richclient-tiger</artifactId>
+			<version>0.3.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.richclient</groupId>
+			<artifactId>spring-richclient-core</artifactId>
+			<version>0.3.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.richclient</groupId>
+			<artifactId>spring-richclient-support</artifactId>
+			<version>0.3.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.richclient</groupId>
+			<artifactId>spring-richclient-binding</artifactId>
+			<version>0.3.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.richclient</groupId>
+			<artifactId>spring-richclient-form</artifactId>
+			<version>0.3.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.richclient</groupId>
+			<artifactId>spring-richclient-sandbox</artifactId>
+			<version>0.3.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-env</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jgoodies</groupId>
+			<artifactId>looks</artifactId>
+			<version>2.0.4</version>
+		</dependency>
+		<dependency>
+    		<groupId>jgoodies</groupId>
+    		<artifactId>forms</artifactId>
+    		<version>1.0.5</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.help</groupId>
+			<artifactId>javahelp</artifactId>
+			<version>2.0.02</version>
+		</dependency>
+		<dependency>
+			<groupId>ca.odell</groupId>
+			<artifactId>glazedlists</artifactId>
+			<version>0.9.7</version>
+		</dependency>
+
+		<!-- Dataaccess depenendcies -->
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-hibernate</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-database</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.elca.el4j.applications</groupId>
+			<artifactId>refdb-service</artifactId>
+			<version>${version.application-refdb}</version>
+		</dependency>
+	</dependencies>
+    <profiles>
+        <!-- DB -->
+        <profile>
+            <id>db2</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <db.username>refdb_user</db.username>
+                <db.password>refdb_user</db.password>
+            </properties>
+        </profile>
+        <profile>
+            <id>oracle</id>
+            <properties>
+                <db.username>LEAF4</db.username>
+                <db.password>LEAF</db.password>
+            </properties>
+        </profile>
+        <profile>
+            <id>mysql</id>
+            <properties>
+                <db.username>root</db.username>
+                <db.password>admin</db.password>
+            </properties>
+        </profile>
+    </profiles>
+</project>

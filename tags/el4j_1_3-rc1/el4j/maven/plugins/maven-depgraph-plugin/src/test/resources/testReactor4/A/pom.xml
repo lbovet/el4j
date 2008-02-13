@@ -1,0 +1,57 @@
+<?xml version="1.0"?><project>
+  <modelVersion>4.0.0</modelVersion>
+  
+  <groupId>ch.elca.tr4</groupId>
+  <artifactId>A</artifactId>
+  <packaging>jar</packaging>
+  <name>Project A</name>
+  <version>1.0</version>
+  
+  <build>
+    <plugins>
+        <plugin>
+            <groupId>ch.elca.el4j.maven.plugins</groupId>
+            <artifactId>maven-depgraph-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>create_depgraph</id>
+                <phase>process-resources</phase>
+                <goals>
+                    <goal>depgraph</goal>
+                </goals>
+                <configuration>
+                  <outDir>target/site/images</outDir>
+                  <outFile>${artifactId}1.png</outFile>
+                </configuration>
+              </execution>
+              <execution>
+                <id>create_fullgraph</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>fullgraph</goal>
+                </goals>
+                <configuration>
+                  <outDir>target/site/images</outDir>
+                  <outFile>${artifactId}2.png</outFile>
+                  <groupFilter>ch.elca.tr4.g2</groupFilter>
+                </configuration>
+              </execution>
+            </executions>
+        </plugin> 
+    </plugins>
+  </build>
+  
+    <dependencies>
+        <dependency>
+            <groupId>ch.elca.tr4.g1</groupId>
+            <artifactId>B</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.elca.tr4.g3</groupId>
+            <artifactId>D</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
+  
+</project>
