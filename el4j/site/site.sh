@@ -17,16 +17,20 @@ cd framework
 mvn clean install -N
 
 # generate doc for modules
-mvn -Pgenerate.doc.set.framework-modules collector:aggregate-files javadoc:javadoc jxr:jxr
+mvn -N -Pgenerate.doc.set.framework-modules collector:aggregate-files
+mvn -Pgenerate.doc.set.framework-modules javadoc:javadoc jxr:jxr
 
 # generate doc for applications
-#mvn -Pgenerate.doc.set.framework-applications collector:aggregate-files javadoc:javadoc jxr:jxr
+#mvn -N -Pgenerate.doc.set.framework-applications collector:aggregate-files
+#mvn -Pgenerate.doc.set.framework-applications javadoc:javadoc jxr:jxr
 
 # generate doc for tests
-mvn -Pgenerate.doc.set.framework-tests collector:aggregate-files javadoc:javadoc jxr:jxr
+mvn -N -Pgenerate.doc.set.framework-tests collector:aggregate-files
+mvn -Pgenerate.doc.set.framework-tests javadoc:javadoc jxr:jxr
 
 # generate doc for demos
-#mvn -Pgenerate.doc.set.framework-demos collector:aggregate-files javadoc:javadoc jxr:jxr
+#mvn -N -Pgenerate.doc.set.framework-demos collector:aggregate-files
+#mvn -Pgenerate.doc.set.framework-demos javadoc:javadoc jxr:jxr
 
 cd ..
 
