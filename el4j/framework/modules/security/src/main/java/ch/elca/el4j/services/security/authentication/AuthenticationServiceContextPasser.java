@@ -49,72 +49,22 @@ public class AuthenticationServiceContextPasser extends
     private static Log s_logger = LogFactory
         .getLog(AuthenticationServiceContextPasser.class);
 
-    /** The authentication service where the autentication data is stored. */
-    private DefaultAuthenticationService m_authenticationService;
-
     /**
-     * Sets the authentication service to get the authentication data.
-     * 
-     * @param authenticationService
-     *            The authentication service to get the authentication data.
-     */
-    public void setAuthenticationService(
-        DefaultAuthenticationService authenticationService) {
-        m_authenticationService = authenticationService;
-    }
-
-    /**
-     * Get the secure context.
-     * 
-     * @return the secure context
-     */
-    public SecurityContext getSecureContext() {
-        return (SecurityContext) SecurityContextHolder.getContext();
-    }
-
-    /**
-     * @return Returns the authentication data.
-     */
-    public Authentication getAuthenticationData() {
-        Authentication ad = (Authentication) getSecureContext()
-            .getAuthentication();
-        return ad;
-    }
-
-    /**
-     * @param authenticationData
-     *            Is the authentication data to set.
-     */
-    public void setAuthenticationData(Authentication authenticationData) {
-        getSecureContext().setAuthentication(authenticationData);
-    }
-
-    /**
-     * Removes current authentication data.
-     */
-    public void removeAuthenticationData() {
-        getSecureContext().setAuthentication(null);
-    }
-
-    /**
-     * This method is called by the stub that makes a remote invocation to
+     * This method is called by the client that makes a remote invocation to
      * collect the implicitly passed context and add it to the request. The
-     * authentication data is fetched from the authentication service.
+     * authentication data is fetched from the SecurityContextHolder.
      * 
      * @return The authentication data for the currently logged in user
      * @see ch.elca.el4j.core.contextpassing.AbstractImplicitContextPasser
      */
     public Object getImplicitlyPassedContext() {
-        CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-                m_authenticationService, "authenticationService", this);
-        Authentication ad = m_authenticationService.getAuthenticationData();
-        return ad;
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 
     /**
-     * This method is called by the skeleton that receives a remote invocation
+     * This method is called by the server that receives a remote invocation
      * to push the context to the service. The authentication data is stored in
-     * a ThreadLocal variable.
+     * the SecurityContextHolder.
      * 
      * @param context
      *            The received implicit context for this passer.
@@ -123,15 +73,11 @@ public class AuthenticationServiceContextPasser extends
      */
     public void pushImplicitlyPassedContext(Object context) {
         if (context == null) {
+            s_logger.warn("Authentication == null");
             return;
         }
         Authentication ad = (Authentication) context;
-        if (ad == null) {
-            s_logger.warn("ad == null");
-            return;
-        }
-
-        getSecureContext().setAuthentication(ad);
+        SecurityContextHolder.getContext().setAuthentication(ad);
     }
 
 }

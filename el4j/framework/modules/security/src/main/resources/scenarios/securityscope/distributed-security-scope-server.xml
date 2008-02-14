@@ -20,7 +20,7 @@
             <value>authenticationManager</value>
         </property>
     </bean>
-    
+
     <bean id="authenticationServiceContextPasser"
         class="ch.elca.el4j.services.security.authentication.AuthenticationServiceContextPasser">
         <property name="implicitContextPassingRegistry">

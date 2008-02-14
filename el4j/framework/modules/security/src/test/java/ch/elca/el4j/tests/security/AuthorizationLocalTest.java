@@ -90,6 +90,8 @@ public class AuthorizationLocalTest extends TestCase {
                     + "login");
         } catch (AuthenticationCredentialsNotFoundException e) {
             // o.k.
+        }catch (Exception e) {
+            System.out.println(e);
         }
 
     }
