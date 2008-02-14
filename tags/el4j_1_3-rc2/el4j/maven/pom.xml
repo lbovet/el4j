@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+    
+    <parent>
+        <groupId>ch.elca.el4j</groupId>
+        <artifactId>el4j</artifactId>
+        <version>1.2.1-SNAPSHOT</version>
+    </parent>
+    
+    <groupId>ch.elca.el4j.maven</groupId>
+    <artifactId>el4j-maven</artifactId>
+    <packaging>pom</packaging>
+    <name>EL4J maven</name>
+    <description>
+        EL4J artifacts related to Maven.
+    </description>
+    <modules>
+		<module>plugins</module>
+		<module>helpers</module>
+    </modules>
+</project>

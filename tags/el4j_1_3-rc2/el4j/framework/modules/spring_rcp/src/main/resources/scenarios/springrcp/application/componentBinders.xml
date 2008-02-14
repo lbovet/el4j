@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
+    <!-- 
+        Binds bean properties to gui components. Listed in service registry.
+    -->
+    <bean id="binderSelectionStrategy" 
+        class="org.springframework.richclient.form.binding.swing.SwingBinderSelectionStrategy">
+        <property name="bindersForPropertyTypes">
+            <map>
+                <entry>
+                    <key><value type="java.lang.Class">java.lang.Boolean</value></key>
+                    <bean class="ch.elca.el4j.services.gui.richclient.forms.binding.ThreeStateBooleanBinder"/>
+                </entry>
+                <entry>
+                    <key><value type="java.lang.Class">java.sql.Date</value></key>
+                    <bean class="ch.elca.el4j.services.gui.richclient.forms.binding.DatePickerBinder"/>
+                </entry>
+            </map>
+        </property>
+    </bean>
+</beans>

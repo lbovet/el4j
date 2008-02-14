@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localProjects xmlns="http://el4j.elca.ch/maven/plugins/maven-rec-plugin/1.0">
+  <project groupId="group1" artifactId="artifact1" version="1.0">
+    <path>D:\path1</path>
+    <dependencies />
+  </project>
+  <project groupId="group2" artifactId="artifact2" version="2.0">
+    <path>D:\path2</path>
+    <dependencies>
+      <dependency projectId="group1:artifact1:1.0" />
+    </dependencies>
+  </project>
+  <project groupId="group3" artifactId="artifact3" version="3.0">
+    <path>D:\path3</path>
+    <dependencies>
+      <dependency projectId="group2:artifact2:2.0" />
+      <dependency projectId="group1:artifact1:1.0" />
+    </dependencies>
+  </project>
+</localProjects>
+

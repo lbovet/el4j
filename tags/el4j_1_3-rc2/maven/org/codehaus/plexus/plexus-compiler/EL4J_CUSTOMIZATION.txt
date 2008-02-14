@@ -1,0 +1,6 @@
+SVN URL: http://svn.codehaus.org/plexus/plexus-components/trunk/plexus-compiler
+REVISION: 7157
+APPLIED PATCHES: 
+   * Removed unused module-references in org.codehaus.plexus:plexus-compiler pom and org.codehaus.plexus:plexus-compilers pom
+CURRENTLY USED VERSION: 1.6-el4j_20080110_1520
+DEPENDENT CUSTOMIZED ARTIFACTS: -

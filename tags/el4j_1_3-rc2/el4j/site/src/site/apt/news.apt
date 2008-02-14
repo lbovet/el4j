@@ -1,0 +1,29 @@
+ -----
+ News
+ -----
+ -----
+ 14 Dec 2007
+ -----
+
+News
+
+  * <14/12/2007> - <<EL4J 1.2 released!>> Main features: New Swing GUI framework, JAXWS usable via POJO programming model, new libraries, improved doc, seam demo, clean-ups, .... 
+
+  * <13/08/2007> - <<EL4J 1.1.3 released!>> Main features: Upgrade to new libraries, mysql support, improved doc, many bugfixes. 
+
+  * <20/02/2007> - <<EL4J 1.1.1 released!>> Main features: Many clean ups and simplifications, new maven artefact, database and dependency maven plugins, JAXB support for webservices.
+  
+  * <03/11/2006> - <<EL4J 1.1>> released!
+
+  * <03/10/2006> - The license of EL4J is weakened to the <<L>>GPL license!  
+
+  * <21/09/2006> - EL4J 1.1 is delayed due to the delay of Spring 2.0. It is planned for the beginning of October.
+
+  * <08/08/2006> - Published article about <<identity fixer>> on {{{documentation.html}documentation page}}.
+  
+  * <21/07/2006> - EL4J 1.1 planned for august: Maven and JDK 1.5 support, generic DAO, more integrations, ...
+  
+  * <25/04/2006> - <<EL4J 1.0.0>> released.
+  
+  * <15/03/2006> - EL4J has been <<moved from CVS to Subversion>>.
+

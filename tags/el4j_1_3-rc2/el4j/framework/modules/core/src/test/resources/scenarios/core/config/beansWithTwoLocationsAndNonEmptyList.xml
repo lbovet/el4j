@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
+    <bean id="ConfigurationTest" 
+        class="ch.elca.el4j.core.config.ListPropertyMergeConfigurer">
+        <property name="locations">
+            <list>
+                <value>scenarios/core/config/OneValueList.properties</value>
+                <value>scenarios/core/config/TwoValuesList.properties</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="ListTest" class="ch.elca.el4j.tests.core.config.ListClass">
+        <property name="listTest">
+            <list>
+                <value>item 0</value>
+            </list>
+        </property>
+    </bean>
+</beans>
