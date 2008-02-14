@@ -21,9 +21,6 @@
     
     <bean id="authenticationServiceContextPasser" 
         class="ch.elca.el4j.services.security.authentication.AuthenticationServiceContextPasser">
-        <property name="authenticationService">
-            <ref local="authenticationService"/>
-        </property>
         <property name="implicitContextPassingRegistry">
             <ref bean="implicitContextPassingRegistry"/>
         </property>

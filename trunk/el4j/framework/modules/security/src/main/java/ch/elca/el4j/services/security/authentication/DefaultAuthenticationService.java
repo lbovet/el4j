@@ -19,6 +19,7 @@ package ch.elca.el4j.services.security.authentication;
 
 import org.acegisecurity.Authentication;
 import org.acegisecurity.AuthenticationManager;
+import org.acegisecurity.context.SecurityContextHolder;
 import org.springframework.beans.factory.InitializingBean;
 
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
@@ -56,9 +57,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  */
 public class DefaultAuthenticationService implements AuthenticationService, 
     InitializingBean {
-
-    /** The authentication data for the user. */
-    private static ThreadLocal s_authenticationData = new ThreadLocal();
+       
 
     /** The LoginService to be used for the login. */
     private AuthenticationManager m_authenticationManager;
@@ -70,9 +69,8 @@ public class DefaultAuthenticationService implements AuthenticationService,
      * @return The authentication data, may be null.
      */
     public Authentication getAuthenticationData() {
-        Authentication authenticationData
-            = (Authentication) s_authenticationData.get();
-        return authenticationData;
+
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 
     /**
@@ -82,7 +80,7 @@ public class DefaultAuthenticationService implements AuthenticationService,
      *            The authentication data to be stored in the ThreadLocal.
      */
     private void setAuthenticationData(Authentication authenticationData) {
-        s_authenticationData.set(authenticationData);
+        SecurityContextHolder.getContext().setAuthentication(authenticationData);
     }
 
     /**
