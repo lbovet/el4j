@@ -204,7 +204,7 @@
 
             <!-- Used for the environment support of EL4J -->
             <resource>
-                <directory>target/env</directory>
+                <directory>${project.build.directory}/env</directory>
                 <filtering>false</filtering>
             </resource>
         </resources>
@@ -217,7 +217,7 @@
 
             <!-- Used for the environment support of EL4J -->
             <testResource>
-                <directory>target/env-test</directory>
+                <directory>${project.build.directory}/env-test</directory>
                 <filtering>false</filtering>
             </testResource>
         </testResources>
