@@ -150,8 +150,8 @@
                         <groupId>ch.elca.el4j.maven.plugins</groupId>
                         <artifactId>maven-file-collector-plugin</artifactId>
                         <configuration>
-                            <rootSourceDirectory>${el4j.external}/framework/modules</rootSourceDirectory>
-                            <sourceDirectoryIncludePatterns>**/src/main/java</sourceDirectoryIncludePatterns>
+                            <rootSourceDirectory>${el4j.external}/framework</rootSourceDirectory>
+                            <sourceDirectoryIncludePatterns>modules/**/src/main/java</sourceDirectoryIncludePatterns>
                             <sourceFileIncludePatterns>**/*.java,**/*.html</sourceFileIncludePatterns>
                             <targetDirectory>${aggregated.files.output.directory}</targetDirectory>
                             <allowOverwrite>false</allowOverwrite>
