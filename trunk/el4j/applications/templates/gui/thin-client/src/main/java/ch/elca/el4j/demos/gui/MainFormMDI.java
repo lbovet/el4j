@@ -24,6 +24,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
@@ -33,16 +34,8 @@ import javax.swing.border.EmptyBorder;
 import org.bushe.swing.event.EventBus;
 import org.jdesktop.application.Action;
 
-import com.jgoodies.looks.plastic.PlasticLookAndFeel;
-import com.jgoodies.looks.plastic.theme.ExperienceBlue;
-
-import ch.elca.el4j.core.context.ModuleApplicationContextConfiguration;
 import ch.elca.el4j.demos.gui.events.ExampleEvent;
-import ch.elca.el4j.demos.gui.exceptions.ExampleExceptionHandler;
-import ch.elca.el4j.gui.swing.GUIApplication;
 import ch.elca.el4j.gui.swing.MDIApplication;
-import ch.elca.el4j.gui.swing.exceptions.Exceptions;
-import ch.elca.el4j.gui.swing.splash.ImageSplashScreen;
 
 /**
  * Sample MDI application that demonstrates how to use the framework.
@@ -154,6 +147,7 @@ public class MainFormMDI extends MDIApplication {
      */
     @Action(enabledProperty = "admin")
     public void help() {
+        JOptionPane.showMessageDialog(null, "Some helpful help...");
         /*
         JHelp helpViewer = null;
         try {
