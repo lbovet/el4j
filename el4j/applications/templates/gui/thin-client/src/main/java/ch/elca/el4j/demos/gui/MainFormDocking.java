@@ -22,6 +22,7 @@ import java.awt.Component;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.border.Border;
@@ -31,16 +32,8 @@ import org.bushe.swing.event.EventBus;
 import org.jdesktop.application.Action;
 import org.noos.xing.mydoggy.ToolWindowAnchor;
 
-import com.jgoodies.looks.plastic.PlasticLookAndFeel;
-import com.jgoodies.looks.plastic.theme.ExperienceBlue;
-
-import ch.elca.el4j.core.context.ModuleApplicationContextConfiguration;
 import ch.elca.el4j.demos.gui.events.ExampleEvent;
-import ch.elca.el4j.demos.gui.exceptions.ExampleExceptionHandler;
 import ch.elca.el4j.gui.swing.DockingApplication;
-import ch.elca.el4j.gui.swing.GUIApplication;
-import ch.elca.el4j.gui.swing.exceptions.Exceptions;
-import ch.elca.el4j.gui.swing.splash.ImageSplashScreen;
 
 /**
  * Sample Docking application that demonstrates how to use the framework.
@@ -131,6 +124,7 @@ public class MainFormDocking extends DockingApplication {
      */
     @Action(enabledProperty = "admin")
     public void help() {
+        JOptionPane.showMessageDialog(null, "Some helpful help...");
         /*
         JHelp helpViewer = null;
         try {
