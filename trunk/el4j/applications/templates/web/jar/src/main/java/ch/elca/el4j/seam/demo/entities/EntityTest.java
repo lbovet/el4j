@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -74,6 +75,7 @@ public class EntityTest implements Serializable {
     }
 
     @Basic
+    @Column(name = "TEST_DATE")
     @Temporal(TemporalType.DATE)
     public Date getDate() {
         return date;

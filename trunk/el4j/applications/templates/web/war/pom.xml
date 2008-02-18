@@ -126,6 +126,11 @@
             <groupId>ch.elca.el4j.applications</groupId>
             <artifactId>jsf-demo-jar</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-web-war</artifactId>
+            <type>war</type>
+        </dependency>
     </dependencies>
     
 </project>
