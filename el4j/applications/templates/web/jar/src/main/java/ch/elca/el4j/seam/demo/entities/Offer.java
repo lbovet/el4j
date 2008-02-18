@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -96,6 +97,7 @@ public class Offer implements Serializable {
     }
 
     @NotNull
+    @Column(name = "NR")
     @Range(min = 1)
     public long getNumber() {
         return number;
@@ -124,6 +126,7 @@ public class Offer implements Serializable {
         this.cost = cost;
     }
 
+    @Column(name = "OFFER_STATE")
     public State getState() {
         return state;
     }
