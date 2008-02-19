@@ -46,7 +46,7 @@
     <dependencies>
         <dependency>
             <groupId>ch.elca.el4j.tests</groupId>
-            <artifactId>module-remoting-jaxws-tests-jar</artifactId>
+            <artifactId>module-remoting-jaxws-tests-jar-wsgen</artifactId>
         </dependency>
         <dependency>
             <groupId>ch.elca.el4j.modules</groupId>

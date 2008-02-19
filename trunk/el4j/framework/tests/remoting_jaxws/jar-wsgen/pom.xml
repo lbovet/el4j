@@ -16,7 +16,7 @@
         <version>1.2.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>module-remoting-jaxws-tests-jar</artifactId>
+    <artifactId>module-remoting-jaxws-tests-jar-wsgen</artifactId>
     <version>${version.module-remoting-jaxws-tests}</version>
     <packaging>jar</packaging>
     <name>EL4J test remoting-jaxws jar</name>
