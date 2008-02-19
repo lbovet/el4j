@@ -431,6 +431,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
                 for (String sqlString : sqlStmts) {
                     try {
                         stmt = connection.createStatement();
+                        sqlString = sqlString.replace("###SEMICOLUMN###", ";");
                         stmt.execute(sqlString);
                     } catch (SQLException e) {
                         sqlExceptions.add(e);
