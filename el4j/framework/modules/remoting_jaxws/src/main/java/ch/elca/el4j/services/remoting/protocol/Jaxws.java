@@ -27,6 +27,7 @@ import com.sun.xml.ws.transport.http.servlet.SpringBinding;
 
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.remoting.AbstractRemotingBase;
+import ch.elca.el4j.services.remoting.ProtocolSpecificConfiguration;
 import ch.elca.el4j.services.remoting.RemotingProxyFactoryBean;
 import ch.elca.el4j.services.remoting.RemotingServiceExporter;
 import ch.elca.el4j.services.remoting.protocol.jaxws.JaxwsInvoker;
@@ -94,7 +95,19 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
         try {
             Class wsServiceClass;
             String methodName;
-            if (serviceName.endsWith("WS") && serviceName.contains(".gen.")) {
+            
+            ProtocolSpecificConfiguration cfg
+                = proxyBean.getProtocolSpecificConfiguration();
+            if (cfg != null && cfg instanceof JaxwsProtocolConfiguration) {
+                JaxwsProtocolConfiguration jaxWsConfig
+                    = (JaxwsProtocolConfiguration) cfg;
+               
+                // use wsimport-generated classes directly (no dynamic proxies)
+                wsServiceClass = jaxWsConfig.getServiceImplementation();
+                methodName = "get" + serviceInterface.getSimpleName();
+            } else if (serviceName.endsWith("WS")
+                && serviceName.contains(".gen.")) {
+                
                 // use generated classes directly (no dynamic proxies)
                 wsServiceClass = Class.forName(serviceName + "Service");
                 methodName = "get" + serviceInterface.getSimpleName() + "Port";
