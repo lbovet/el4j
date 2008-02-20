@@ -29,6 +29,7 @@ import org.noos.xing.mydoggy.ToolWindowAnchor;
 import org.noos.xing.mydoggy.ToolWindowManager;
 import org.noos.xing.mydoggy.ToolWindowType;
 import org.noos.xing.mydoggy.plaf.MyDoggyToolWindowManager;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import ch.elca.el4j.gui.swing.wrapper.JFrameWrapper;
 import ch.elca.el4j.gui.swing.wrapper.JFrameWrapperFactory;
@@ -66,7 +67,12 @@ public abstract class DockingApplication extends GUIApplication {
      * @param anchor      the anchor of the docked window
      */
     @SuppressWarnings("unchecked")
-    public void show(String beanName, ToolWindowAnchor anchor) {
+    public void show(String beanName, ToolWindowAnchor anchor)
+        throws NoSuchBeanDefinitionException {
+        
+        if (!m_springContext.containsBean(beanName)) {
+            throw new NoSuchBeanDefinitionException(beanName);
+        }
         show((JPanel) m_springContext.getBean(beanName), anchor);
     }
     
