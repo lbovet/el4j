@@ -181,7 +181,7 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-jxr-plugin</artifactId>
                         <configuration>
-                            <aggregate>false</aggregate>
+                            <aggregate>true</aggregate>
                             <sourcePaths>${aggregated.files.output.directory}</sourcePaths>
                             <destDir>${jxr.output.directory}</destDir>
                             <javadocDir>${javadoc.output.directory}</javadocDir>
@@ -248,7 +248,7 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-jxr-plugin</artifactId>
                         <configuration>
-                            <aggregate>false</aggregate>
+                            <aggregate>true</aggregate>
                             <sourcePaths>${aggregated.files.output.directory}</sourcePaths>
                             <destDir>${jxr.output.directory}</destDir>
                             <javadocDir>${javadoc.output.directory}</javadocDir>
@@ -321,7 +321,7 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-jxr-plugin</artifactId>
                         <configuration>
-                            <aggregate>false</aggregate>
+                            <aggregate>true</aggregate>
                             <sourcePaths>${aggregated.files.output.directory}</sourcePaths>
                             <destDir>${jxr.output.directory}</destDir>
                             <javadocDir>${javadoc.output.directory}</javadocDir>
@@ -396,7 +396,7 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-jxr-plugin</artifactId>
                         <configuration>
-                            <aggregate>false</aggregate>
+                            <aggregate>true</aggregate>
                             <sourcePaths>${aggregated.files.output.directory}</sourcePaths>
                             <destDir>${jxr.output.directory}</destDir>
                             <javadocDir>${javadoc.output.directory}</javadocDir>
