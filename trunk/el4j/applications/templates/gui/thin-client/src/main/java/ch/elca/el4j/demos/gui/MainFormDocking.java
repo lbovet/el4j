@@ -31,6 +31,7 @@ import javax.swing.border.EmptyBorder;
 import org.bushe.swing.event.EventBus;
 import org.jdesktop.application.Action;
 import org.noos.xing.mydoggy.ToolWindowAnchor;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import ch.elca.el4j.demos.gui.events.ExampleEvent;
 import ch.elca.el4j.gui.swing.DockingApplication;
@@ -124,7 +125,13 @@ public class MainFormDocking extends DockingApplication {
      */
     @Action(enabledProperty = "admin")
     public void help() {
-        JOptionPane.showMessageDialog(null, "Some helpful help...");
+        try {
+            show("SecurityDemoForm");
+        } catch (NoSuchBeanDefinitionException e) {
+            JOptionPane.showMessageDialog(null,
+                "This demo doesn't support security. "
+                + "Use swing-demo-secure-... instead.");
+        }
         /*
         JHelp helpViewer = null;
         try {
