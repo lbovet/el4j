@@ -46,9 +46,5 @@
             <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-swing</artifactId>
         </dependency>
-        <dependency>
-            <groupId>ch.elca.el4j.modules</groupId>
-            <artifactId>module-remoting_core</artifactId>
-        </dependency>
     </dependencies>
 </project>

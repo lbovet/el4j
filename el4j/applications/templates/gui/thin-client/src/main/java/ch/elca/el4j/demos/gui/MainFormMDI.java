@@ -33,6 +33,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.bushe.swing.event.EventBus;
 import org.jdesktop.application.Action;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import ch.elca.el4j.demos.gui.events.ExampleEvent;
 import ch.elca.el4j.gui.swing.MDIApplication;
@@ -147,7 +148,13 @@ public class MainFormMDI extends MDIApplication {
      */
     @Action(enabledProperty = "admin")
     public void help() {
-        JOptionPane.showMessageDialog(null, "Some helpful help...");
+        try {
+            show("SecurityDemoForm");
+        } catch (NoSuchBeanDefinitionException e) {
+            JOptionPane.showMessageDialog(null,
+                "This demo doesn't support security. "
+                + "Use swing-demo-secure-... instead.");
+        }
         /*
         JHelp helpViewer = null;
         try {

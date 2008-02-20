@@ -25,5 +25,9 @@
             <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-env</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-remoting_core</artifactId>
+        </dependency>
     </dependencies>
 </project>
