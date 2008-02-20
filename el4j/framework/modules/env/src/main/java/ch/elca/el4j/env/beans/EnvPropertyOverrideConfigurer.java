@@ -21,6 +21,7 @@ import java.io.IOException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.PropertyOverrideConfigurer;
 import org.springframework.context.ApplicationContext;
@@ -64,6 +65,11 @@ public class EnvPropertyOverrideConfigurer
     protected ApplicationContext m_applicationContext;
     
     /**
+     * Should invalid bean names be ignored?
+     */
+    protected boolean m_ignoreBeanNameNotFound = false;
+    
+    /**
      * Sets the location of the env bean property properties file.
      * 
      * {@inheritDoc}
@@ -99,6 +105,25 @@ public class EnvPropertyOverrideConfigurer
         super.postProcessBeanFactory(beanFactory);
     }
     
+    @Override
+    protected void applyPropertyValue(ConfigurableListableBeanFactory factory,
+        String beanName, String property, String value) {
+        try {
+            super.applyPropertyValue(factory, beanName, property, value);
+        } catch (NoSuchBeanDefinitionException e) {
+            if (m_ignoreBeanNameNotFound) {
+                s_el4jLogger.warn(
+                    "No bean with name '" + beanName + "' found. Therefore "
+                    + "no properties could be applied.");
+            } else {
+                s_el4jLogger.error(
+                    "No bean with name '" + beanName + "' found. Therefore "
+                    + "no properties could be applied.");
+                throw e;
+            }
+        }
+    }
+    
     /**
      * NOT ALLOWED TO USE!
      * 
@@ -127,5 +152,19 @@ public class EnvPropertyOverrideConfigurer
     public void setApplicationContext(ApplicationContext applicationContext)
         throws BeansException {
         m_applicationContext = applicationContext;
+    }
+
+    /**
+     * @return Returns <code>true</code> if ignoreBeanNameNotFound is set.
+     */
+    public boolean isIgnoreBeanNameNotFound() {
+        return m_ignoreBeanNameNotFound;
+    }
+
+    /**
+     * @param ignoreBeanNameNotFound  Should invalid bean names be ignored?
+     */
+    public void setIgnoreBeanNameNotFound(boolean ignoreBeanNameNotFound) {
+        this.m_ignoreBeanNameNotFound = ignoreBeanNameNotFound;
     }
 }
