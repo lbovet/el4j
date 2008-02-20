@@ -32,6 +32,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
@@ -150,7 +151,10 @@ public abstract class GUIApplication extends SingleFrameApplication {
      * @param beanName    the Spring bean name
      */
     @SuppressWarnings("unchecked")
-    public void show(String beanName) {
+    public void show(String beanName) throws NoSuchBeanDefinitionException {
+        if (!m_springContext.containsBean(beanName)) {
+            throw new NoSuchBeanDefinitionException(beanName);
+        }
         Class beanClass = m_springContext.getType(beanName);
         if (JComponent.class.isAssignableFrom(beanClass)) {
             show((JComponent) m_springContext.getBean(beanName));
