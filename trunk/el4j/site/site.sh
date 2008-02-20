@@ -42,7 +42,7 @@ cd ../..
 
 cd framework/plugins
 mvn clean install site
-plugins="$plugins $(find -maxdepth 1 -name "maven-*-plugin"  -exec basename {} \;)"
+frameworkPlugins=$(find -maxdepth 1 -name "maven-*-plugin"  -exec basename {} \;)
 cd ../..
 
 # generate test reports (no -Ptest.quiet)
@@ -58,9 +58,12 @@ mvn collector:aggregate-files -Pcollect-doc
 for p in $plugins ; do
 	mvn collector:aggregate-files -Pcollect-plugin-doc -Dplugin=$p
 done
+for p in $frameworkPlugins ; do
+	mvn collector:aggregate-files -Pcollect-framework-plugin-doc -Dplugin=$p
+done
 
 # hack due to bug in surefire repor plugin
-#mv site/target/site/framework-tests/xref/ site/target/site/xref-test
+#mv target/site/framework-tests/xref/ target/site/xref-test
 
 # make site
 mvn site -Psurefire-report.tomcat-derby
