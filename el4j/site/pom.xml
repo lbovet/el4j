@@ -80,6 +80,24 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>collect-framework-plugin-doc</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>ch.elca.el4j.maven.plugins</groupId>
+                        <artifactId>maven-file-collector-plugin</artifactId>
+                        <configuration>
+                            <rootSourceDirectory>${el4j.external}/framework/plugins/${plugin}/target/site</rootSourceDirectory>
+                            <sourceFileIncludePatterns>**/*</sourceFileIncludePatterns>
+                            <targetDirectory>${el4j.external}/site/target/site/plugins/${plugin}</targetDirectory>
+                            <copyFilesOnly>true</copyFilesOnly>
+                            <allowOverwrite>false</allowOverwrite>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         
         <profile>
             <id>copy.surefire-report.tomcat-derby</id>
