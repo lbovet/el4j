@@ -1,5 +1,12 @@
 #!/bin/bash -e
 
+#Create a clean environment to see if a freshly checked out EL4J works. I assume it's =D:/el4jFresh=
+#
+#   * %box% =cd "D:\el4jFresh"=
+#   * %box% =svn checkout <nop>https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j external=
+#   * %box% =svn checkout <nop>https://cvs.elca.ch/subversion/el4j-internal/trunk internal=
+#   * %box% Copy settings.xml from etc/m2/ to ~/.m2/ (Backup your settings before)
+
 freshDir="el4jFresh"
 cd d:
 mkdir $freshDir

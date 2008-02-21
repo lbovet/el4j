@@ -1,5 +1,12 @@
 #!/bin/bash -e
 
+#   * %box% Switch the working copy back to development branch
+#      * %box% In external =svn switch <nop>https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j=
+#      * %box% In internal =svn switch <nop>https://cvs.elca.ch/subversion/el4j-internal/trunk=
+#   * %box% Update the development version in the framework (e.g. from 1.1.1-SNAPSHOT to 1.1.2-SNAPSHOT)
+#   * %box% Update the version of all modules to a new development version.
+#   * %box% Update the archetype to use the new modules.
+
 function update() {
 	awk -F= '\
     {if ($1 ~ /-SNAPSHOT$/) {
