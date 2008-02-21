@@ -1,0 +1,1 @@
+set MAVEN_OPTS=-Xmx1024M -Xss128k -XX:MaxPermSize=512M -Duser.language=en -Duser.region=US

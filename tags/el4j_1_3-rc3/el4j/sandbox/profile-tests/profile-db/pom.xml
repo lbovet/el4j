@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <parent>
+        <groupId>ch.elca.el4j.sandbox.profile-tests</groupId>
+        <artifactId>el4j-profile-tests</artifactId>
+        <version>1.2.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>el4j-profile-tests-db</artifactId>
+    <packaging>pom</packaging>
+    <name>EL4J profile tests db</name>
+    <description>Used to test db profiles.</description>
+    <profiles>
+        <!-- DB -->
+        <profile>
+            <id>db2</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <db.username>myDb2Username</db.username>
+                <db.password>myDb2Password</db.password>
+            </properties>
+        </profile>
+        <profile>
+            <id>oracle</id>
+            <properties>
+                <db.username>myOracleUsername</db.username>
+                <db.password>myOraclePassword</db.password>
+            </properties>
+        </profile>
+        <profile>
+            <id>mysql</id>
+            <properties>
+                <db.username>myMySqlUsername</db.username>
+                <db.password>myMySqlPassword</db.password>
+            </properties>
+        </profile>
+    </profiles>
+</project>

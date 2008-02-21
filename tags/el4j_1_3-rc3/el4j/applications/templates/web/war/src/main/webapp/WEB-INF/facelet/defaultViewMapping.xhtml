@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:el4j="http://www.elca.ch/el4j/taglib">
+	
+	<ui:remove><!-- default mapping of fieldType to JSF components to show values --></ui:remove>
+	<c:choose>
+		<c:when test="#{fieldType == 'String'}">
+			<h:outputText value="#{entity[fieldName]}" />
+		</c:when>
+		<c:when test="#{fieldType == 'Integer'}">
+			<h:outputText value="#{entity[fieldName]}" />
+		</c:when>
+		<c:when test="#{fieldType == 'Long'}">
+			<h:outputText value="#{entity[fieldName]}" />
+		</c:when>
+		<c:when test="#{fieldType == 'Boolean'}">
+			<h:outputText value="#{el4j:h10nFieldBoolText(entityShortName, fieldName, entity[fieldName])}" />
+		</c:when>
+		<c:when test="#{fieldType == 'Date'}">
+			<h:outputText value="#{entity[fieldName]}">
+				<s:convertDateTime />
+			</h:outputText>
+		</c:when>
+		<c:when test="#{fieldType == '@enum'}">
+			<h:outputText value="#{el4j:h10nFieldEnumName(entityShortName, fieldName, entity[fieldName])}" />
+		</c:when>
+		<c:when test="#{fieldType == '@entity'}">
+			<h:outputText value="#{entity[fieldName]}" />
+		</c:when>
+		<c:when test="#{fieldType == '@multiEntity'}">
+			<el4j:multiEntityView fieldName="#{fieldName}" />
+		</c:when>
+		<c:otherwise>
+			<h:outputText value="Unknown Field Type (#{fieldType})" />
+		</c:otherwise>
+	</c:choose>
+
+</ui:composition>

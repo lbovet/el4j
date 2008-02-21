@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="EL4J">
+
+    <!-- Version: $Revision:1122 $ -->
+    <!-- URL: $URL:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/site/src/site/site.xml $ -->
+    <!-- Date: $Date:2006-09-11 06:46:44 +0000 (Mo, 11 Sep 2006) $ -->
+    <!-- Author: $Author:swisswheel $ -->
+
+    <!-- dirty hack due to bug in maven-site-plugin -->
+    <bannerLeft>
+        <name>EL4J Logo</name>
+        <href>index.html</href>
+        <src>images/el4j_logo.gif</src>
+    </bannerLeft>
+    <bannerRight>
+        <name>ELCA - We make it work.</name>
+        <href>http://www.elca.ch</href>
+        <src>images/elca_banner-we_make_it_work.jpg</src>
+    </bannerRight>
+    <publishDate format="dd MMMM yyyy HH:mm" />
+    <skin>
+        <groupId>ch.elca.el4j</groupId>
+        <artifactId>el4j-skin</artifactId>
+        <version>1.2.1-SNAPSHOT</version>
+    </skin>
+    <poweredBy>
+        <logo name="SourceForge.net" 
+            href="http://sourceforge.net/" 
+            img="http://sourceforge.net/sflogo.php?group_id=147215&amp;amp;type=2"/>
+        <logo name="Built by Maven 2" 
+            href="http://maven.apache.org/" 
+            img="images/logos/maven-feather.png"/>
+        <!--logo 
+            name="Valid XHTML 1.0 Transitional" 
+            href="http://validator.w3.org/" 
+            img="images/logos/valid-xhtml10.png"/-->
+    </poweredBy>
+    
+    <body>
+        <head>
+            <link rel="icon"
+                href="/favicon.ico"
+                type="image/x-icon" />
+            <link rel="shortcut icon"
+                href="/favicon.ico"
+                type="image/x-icon" />
+        </head>
+
+        <menu name="EL4J">
+            <item name="Overview" href="../../index.html" />
+            <item name="Plugins" href="../index.html" />
+        </menu>
+        <menu name="Plugin">
+            <item name="Overview" href="index.html" />
+            <item name="Plugin Info" href="plugin-info.html" />
+        </menu>
+        <menu name="Documentation">
+            <item name="Javadoc" href="apidocs/index.html" />
+            <item name="Xref" href="xref/index.html" />
+        </menu>
+        <menu name="Support">
+            <item name="Mailing Lists" href="mail-lists.html" />
+            <item name="Issue Tracking" href="issue-tracking.html" />
+            <item name="Project Team" href="team-list.html" />
+        </menu>
+        
+        <links>
+            <item name="EL4NET"
+                href="http://el4net.sourceforge.net" />
+            <item name="IIOP.NET"
+                href="http://iiop-net.sourceforge.net" />
+            <item name="ELCA"
+                href="http://www.elca.ch" />
+        </links>
+        <menu ref="parent" />
+        <menu ref="modules" />
+        <menu ref="reports" />
+        
+    </body>
+</project>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" version="2.4">
+
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+	<context-param>
+        <param-name>inclusiveLocations</param-name>
+        <param-value>
+            classpath*:mandatory/*.xml,
+            classpath:etc/template/server/web/jaxws-server-config.xml
+		</param-value>
+    </context-param>
+	<context-param>
+        <param-name>overrideBeanDefinitions</param-name>
+        <param-value>false</param-value>
+    </context-param>
+	<context-param>
+        <param-name>mergeResources</param-name>
+        <param-value>false</param-value>
+    </context-param>
+	
+	<servlet>
+        <servlet-name>module-context-loader</servlet-name>
+        <servlet-class>ch.elca.el4j.web.context.ModuleContextLoaderServlet</servlet-class>
+		<load-on-startup>100</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>jaxws-servlet-spring</servlet-name>
+        <servlet-class>ch.elca.el4j.services.remoting.servlet.WSSpringServlet</servlet-class>
+		<load-on-startup>101</load-on-startup>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>jaxws-servlet-spring</servlet-name>
+        <url-pattern>*.RemotingTemplate</url-pattern>
+    </servlet-mapping>
+</web-app>

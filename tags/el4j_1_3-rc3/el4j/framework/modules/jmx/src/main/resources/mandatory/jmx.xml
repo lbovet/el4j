@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Spring bean configuration file for jmx mBean server and loader.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
+    <!-- The MBean Server created by the MBeanServerFactoryBean -->
+    <bean id="mBeanServer" class="ch.elca.el4j.services.monitoring.jmx.MBeanServerFactoryBean">
+        <property name="defaultDomain">
+            <value>foobar1</value>
+        </property>
+    </bean>
+    <!-- The loader which sets up the JMX world -->
+    <bean id="jmxLoader" class="ch.elca.el4j.services.monitoring.jmx.Loader">
+        <property name="server">
+            <ref bean="mBeanServer" />
+        </property>
+    </bean>
+    <!-- The 'log4jJmxLoader' -->
+    <!-- For adding more appenders, this bean configuration needs -->
+    <!-- to be overwritten.   -->
+    <bean
+        name="log4jJmxLoader"
+        class="ch.elca.el4j.services.monitoring.jmx.Log4jJmxLoader">
+
+        <property name="appenders">
+            <map>
+                <entry>
+                    <key>
+                        <value>nullAppender</value>
+                    </key>
+                    <ref bean="nullAppender" />
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="nullAppender" class="org.apache.log4j.varia.NullAppender" />
+
+</beans>
