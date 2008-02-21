@@ -9,6 +9,8 @@ mkdir tools
 
 svn checkout https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j external
 
+cp external/etc/release-scripts/* .
+
 echo "Checkout internal? (y/n)"
 read performInternal
 
