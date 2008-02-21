@@ -105,6 +105,7 @@ public class EnvPropertyOverrideConfigurer
         super.postProcessBeanFactory(beanFactory);
     }
     
+    /** {@inheritDoc} */
     @Override
     protected void applyPropertyValue(ConfigurableListableBeanFactory factory,
         String beanName, String property, String value) {

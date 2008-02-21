@@ -18,19 +18,26 @@ mvn clean install -N
 
 # generate doc for modules
 mvn -N -Pgenerate.doc.set.framework-modules collector:aggregate-files
-mvn -Pgenerate.doc.set.framework-modules javadoc:javadoc jxr:jxr
+mvn -N -Pgenerate.doc.set.framework-modules jxr:jxr &
+mvn -Pgenerate.doc.set.framework-modules javadoc:javadoc &
 
 # generate doc for applications
 #mvn -N -Pgenerate.doc.set.framework-applications collector:aggregate-files
-#mvn -Pgenerate.doc.set.framework-applications javadoc:javadoc jxr:jxr
+#mvn -N -Pgenerate.doc.set.framework-applications jxr:jxr
+#mvn -Pgenerate.doc.set.framework-applications javadoc:javadoc
 
 # generate doc for tests
 mvn -N -Pgenerate.doc.set.framework-tests collector:aggregate-files
-mvn -Pgenerate.doc.set.framework-tests javadoc:javadoc jxr:jxr
+mvn -N -Pgenerate.doc.set.framework-tests jxr:jxr &
+mvn -Pgenerate.doc.set.framework-tests javadoc:javadoc &
 
 # generate doc for demos
 #mvn -N -Pgenerate.doc.set.framework-demos collector:aggregate-files
-#mvn -Pgenerate.doc.set.framework-demos javadoc:javadoc jxr:jxr
+#mvn -N -Pgenerate.doc.set.framework-demos jxr:jxr
+#mvn -Pgenerate.doc.set.framework-demos javadoc:javadoc
+
+# wait until all parallel processes are done
+wait
 
 cd ..
 
