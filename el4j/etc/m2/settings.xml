@@ -298,7 +298,7 @@
 
                 <!-- Tomcat6x -->
                 <tomcat6x.basedir>${el4j.project.tools}/tomcat</tomcat6x.basedir>
-                <tomcat6x.version>6.0.14</tomcat6x.version>
+                <tomcat6x.version>6.0.16</tomcat6x.version>
                 <tomcat6x.home>${tomcat6x.basedir}/apache-tomcat-${tomcat6x.version}/apache-tomcat-${tomcat6x.version}</tomcat6x.home>
                 <tomcat6x.zipDownloadUrl>http://el4.elca-services.ch/el4j/tools/tomcat/apache-tomcat-${tomcat6x.version}.zip</tomcat6x.zipDownloadUrl>
                 <tomcat6x.container.log.file>${project.build.directory}/logs/tomcat6x/output.log</tomcat6x.container.log.file>
