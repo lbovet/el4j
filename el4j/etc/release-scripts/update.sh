@@ -1,5 +1,9 @@
 #!/bin/bash -e
 
+#* %box% Go through all the pom.xml and set the version number (if present). E.g. =1.1.1-SNAPSHOT= -> =1.1.1= and correct the version of the parent.
+#   * %box% Update the version of all modules to indicate that they changed.
+#      * Remove the =-SNAPSHOT= for modules and plugins that weren't changed. E.g. 1.6-SNAPSHOT -> 1.6
+
 # make sure you are in right folder
 if ! [ -e external ] ; then
 	echo "Error: Folder 'external' not found. Go to its parent folder (el4j)!"
@@ -7,8 +11,9 @@ if ! [ -e external ] ; then
 fi
 
 echo "Update framework (external and internal)"
-echo "Enter current el4j version number (without -SNAPSHOT)"
-read el4jCurrent
+el4jCurrent=$(cat external/pom.xml | grep "<version.el4j-framework.current>" -A 1 | tail -n 1 | tr -d ' \r\n' | sed 's/-SNAPSHOT//')
+echo "Current version is $el4jCurrent-SNAPSHOT, OK?"
+read dummy
 echo "Enter next el4j version number"
 read el4jNext
 

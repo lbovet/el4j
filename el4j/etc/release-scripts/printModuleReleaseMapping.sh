@@ -3,7 +3,7 @@
 version=$(cat external/pom.xml | grep "<version.el4j-framework.current>" -A 1 | tail -n 1 | tr -d ' \n')
 
 function printList {
-	cat $1 | grep "<version.module" -A 1 | grep -v "\-\-" | sed 's/version./| /g' | tr -d '\n' | sed 's/ *//g' | sed 's/\t*//g' | sed 's/>/ | /g' | sed 's/</ |\n/g' | grep -v "\-tests" | grep -v "\-demos"
+	cat $1 | grep "<version.module" -A 1 | grep -v "\-\-" | sed 's/version./| /g' | tr -d '\r\n' | sed 's/ *//g' | sed 's/\t*//g' | sed 's/>/ | /g' | sed 's/</ |\n/g' | grep -v "\-tests" | grep -v "\-demos"
 }
 echo "---++ EL4J $version"
 echo " "

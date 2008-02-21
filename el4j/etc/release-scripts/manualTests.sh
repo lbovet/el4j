@@ -1,5 +1,13 @@
 #!/bin/bash -e
 
+#   * %box% External Demos
+#      * %box% Remoting Benchmark
+#         * Run the benchmark with =mvn -Pexecute,db2,tomcat6x= an check that all test ran cleanly
+#      * %box% Light Statistics
+#         * Run the demo as described in the Readme to see if it works as expected
+#      * %box% Detailed Statistics
+#         * Run the demo as described in the Readme to see if it works as expected
+
 # make sure you are in right folder
 if ! [ -e external ] ; then
 	echo "Error: Folder 'external' not found. Go to its parent folder (el4j)!"
