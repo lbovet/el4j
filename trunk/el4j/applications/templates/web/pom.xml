@@ -17,7 +17,7 @@
 	
 	<artifactId>el4j-templates-jsf-demo</artifactId>
     <packaging>pom</packaging>
-    <name>EL4J application JSF demo</name>
+    <name>EL4J application jsf demo</name>
     <description>JSF demo application of the EL4J framework.</description>
     <modules>
         <module>jar</module>
