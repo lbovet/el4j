@@ -16,13 +16,14 @@ mkdir tools
 
 svn checkout https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j external
 
-cp external/etc/release-scripts/* .
+cp external/etc/release-scripts/*.sh .
 
 echo "Checkout internal? (y/n)"
 read performInternal
 
 if [ $performInternal == "y" ] ; then
 	svn checkout https://cvs.elca.ch/subversion/el4j-internal/trunk internal
+	cp internal/etc/release-scripts/*.sh .
 fi
 
 
