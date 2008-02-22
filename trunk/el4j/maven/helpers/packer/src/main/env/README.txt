@@ -19,7 +19,7 @@ manual set up in those files, the manual set up takes precedence.
 
 Prerequisites:
  * If under Windows: Cygwin (http://www.cygwin.com/) otherwise bash suffices.
- * JDK 1.5 or higher
+ * JDK 1.5.0_14 or higher
 
 To set up:
  * create directory d:/Projects (Windows) or /data/Projects (Linux)
@@ -39,7 +39,7 @@ To set up:
 To start with a trivial program (1 class and 1 test)
  * open a shell, cd EL4J
  * execute source ./setupPathsAndEnvironment.sh
- * mvn archetype:create -DarchetypeGroupId=ch.elca.el4j -DarchetypeArtifactId=EL4JArchetypeCore -DarchetypeVersion=1.5 -DgroupId=ch.elca.el4j -DartifactId=myFirstProject -DremoteRepositories=http://el4.elca-services.ch/el4j/maven2repository 
+ * mvn archetype:create -DarchetypeGroupId=ch.elca.el4j -DarchetypeArtifactId=EL4JArchetypeCore -DarchetypeVersion=1.6 -DgroupId=ch.elca.el4j -DartifactId=myFirstProject -DremoteRepositories=http://el4.elca-services.ch/el4j/maven2repository 
  * cd myFirstProject
  * mvn install
  * mvn exec:java
