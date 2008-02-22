@@ -31,8 +31,8 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <db.username>refdb_user</db.username>
-                <db.password>refdb_user</db.password>
+                <db.username>keyword_user</db.username>
+                <db.password>keyword_user</db.password>
             </properties>
         </profile>
         <profile>
