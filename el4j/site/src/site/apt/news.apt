@@ -2,10 +2,12 @@
  News
  -----
  -----
- 14 Dec 2007
+ 22 Feb 2008
  -----
 
 News
+
+  * <22/2/2008> - <<EL4J 1.3 released!>> Main features: New JSF template, simplified database access, streamlined multi-environment support, improved doc, recursive maven builds, clean-ups, .... 
 
   * <14/12/2007> - <<EL4J 1.2 released!>> Main features: New Swing GUI framework, JAXWS usable via POJO programming model, new libraries, improved doc, seam demo, clean-ups, .... 
 
