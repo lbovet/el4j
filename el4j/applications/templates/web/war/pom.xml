@@ -18,7 +18,7 @@
     <artifactId>jsf-demo-war</artifactId>
     <version>${version.application-keyword}</version>
     <packaging>war</packaging>
-    <name>EL4J JSF demo war</name>
+    <name>EL4J application jsf demo war</name>
     <description>WAR part of JSF Demo</description>
     
     <build>
