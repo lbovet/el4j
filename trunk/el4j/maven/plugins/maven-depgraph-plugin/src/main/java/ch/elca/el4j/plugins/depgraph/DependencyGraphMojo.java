@@ -21,7 +21,9 @@ import org.apache.maven.plugin.MojoExecutionException;
 /**
  * Can be used to draw a dependency graph from the project, the mojo is executed 
  * in. It traverses all dependencies and creates a graph using Graphviz. It 
- * draws a dependency graph just for your project.
+ * draws a dependency graph just for your project. For a simple POM with no submodules, it draws a graph of all
+ * dependencies (including transitive ones) below it. For a POM with
+ * submodules, goes into each leaf POM and generates a separate graph for it.
  * 
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
