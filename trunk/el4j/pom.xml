@@ -1826,13 +1826,13 @@
             <dependency>
                 <groupId>ch.elca.el4j.applications</groupId>
                 <artifactId>jsf-demo-jar</artifactId>
-                <version>${version.application-refdb}</version>
+                <version>${version.application-keyword}</version>
                 <type>jar</type>
             </dependency>
             <dependency>
                 <groupId>ch.elca.el4j.applications</groupId>
                 <artifactId>jsf-demo-war</artifactId>
-                <version>${version.application-refdb}</version>
+                <version>${version.application-keyword}</version>
                 <type>war</type>
                 <scope>runtime</scope>
             </dependency>

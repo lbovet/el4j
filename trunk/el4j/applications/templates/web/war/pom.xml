@@ -16,7 +16,7 @@
     </parent>
 
     <artifactId>jsf-demo-war</artifactId>
-    <version>${version.application-refdb}</version>
+    <version>${version.application-keyword}</version>
     <packaging>war</packaging>
     <name>EL4J application jsf demo war</name>
     <description>WAR part of JSF Demo</description>
@@ -75,7 +75,7 @@
 					<!-- exclude the jsf-demo-jar artifact as it is already included via classesDirectory -->
 					<excludedArtifacts>
 						<excludedArtifact>
-							ch.elca.el4j.applications:jsf-demo-jar:jar:${version.application-refdb}
+							ch.elca.el4j.applications:jsf-demo-jar:jar:${version.application-keyword}
 						</excludedArtifact>
 					</excludedArtifacts>
                     
