@@ -33,7 +33,7 @@ function makeRelease() {
 
 	echo "Executing svn update..."
 	svn update
-	echo "Which revision was the latest release candidate?"
+	echo "Which revision is it?"
 	read revision
 	echo "Revision is $revision, OK?"
 	read dummy
