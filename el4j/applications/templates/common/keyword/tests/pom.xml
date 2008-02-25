@@ -112,7 +112,7 @@
         <profile>
             <id>oracle</id>
             <properties>
-                <db.username>LEAF4</db.username>
+                <db.username>LEAF3</db.username>
                 <db.password>LEAF</db.password>
             </properties>
         </profile>
