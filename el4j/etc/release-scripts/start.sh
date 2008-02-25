@@ -14,6 +14,11 @@ cd $freshDir
 
 mkdir tools
 
+# Copy maven
+echo "Take the following maven version, OK?"
+mvn --version
+cp -r $(which mvn)/../../../maven tools
+
 svn checkout https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j external
 
 cp external/etc/release-scripts/*.sh .
