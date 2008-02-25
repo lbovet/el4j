@@ -1,4 +1,10 @@
 --------------------------------------------------------------------------------
+                        Known issues for EL4J version  1.3
+--------------------------------------------------------------------------------
+ * None so far
+
+
+--------------------------------------------------------------------------------
                         Known issues for EL4J version  1.2
 --------------------------------------------------------------------------------
 
@@ -6,10 +12,10 @@
 
    State: Monday 21 January 2008
    
-   Due some crazy guys in the Maven world have replaced a snspshot artifact it 
-   can be that you can not compile anymore (maven-compiler-plugin)! We know 
-   about the snapshot issue and replaced step-by-step the plugin snapshot 
-   versions with fixed versions. This will be fully supported in the next 
+   Due to the fact that some guys in the Maven world have replaced 
+   a snaspshot artifact, it's possible that you can not compile anymore (maven-compiler-plugin)! We know 
+   about the snapshot issue and have replaced all snapshot versions with fixed versions. 
+   This will be fully supported in the next 
    release of EL4J (Version 1.3). To currently solve this issue in your project 
    with EL4J 1.2 please do the following:
  
