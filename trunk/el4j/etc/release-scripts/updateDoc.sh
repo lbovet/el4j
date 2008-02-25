@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash -e
 
 echo "Since we are going to modify files we have to switch to the trunk."
 echo "Press any key to continue or Ctrl-C to stop."
