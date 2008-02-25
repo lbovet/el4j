@@ -28,7 +28,7 @@
     <artifactId>el4j</artifactId>
     <packaging>pom</packaging>
     <name>EL4J</name>
-    <version>1.2.1-SNAPSHOT</version>
+    <version>1.3.1-SNAPSHOT</version>
     <description>
         EL4J, the Extension Library for the J2EE, adds incremental improvements
         to the Spring Java framework (http://www.springframework.org/).
@@ -2114,131 +2114,131 @@
 
         <!-- Current version of EL4J-Framework. Must be the same as defined in the version-tag above -->
         <version.el4j-framework.current>
-            1.2.1-SNAPSHOT
+            1.3.1-SNAPSHOT
         </version.el4j-framework.current>
 
         <!-- EL4J framework plugin version numbers -->
         <version.maven-repohelper-plugin>
-            1.4-SNAPSHOT
+            1.5-SNAPSHOT
         </version.maven-repohelper-plugin>
         <version.maven-manifest-decorator-plugin>
-            1.4-SNAPSHOT
+            1.5-SNAPSHOT
         </version.maven-manifest-decorator-plugin>
         <version.maven-checkclipse-helper-plugin>
-            1.4-SNAPSHOT
+            1.5-SNAPSHOT
         </version.maven-checkclipse-helper-plugin>
         <version.maven-env-support-plugin>
-            1.4-SNAPSHOT
+            1.5-SNAPSHOT
         </version.maven-env-support-plugin>
         <version.maven-file-collector-plugin>
-            1.4-SNAPSHOT
+            1.5-SNAPSHOT
         </version.maven-file-collector-plugin>
         <version.maven-database-plugin>
-            1.5-SNAPSHOT
+            1.6-SNAPSHOT
         </version.maven-database-plugin>
         <version.maven-depgraph-plugin>
-            1.4-SNAPSHOT
+            1.5-SNAPSHOT
         </version.maven-depgraph-plugin>
         <version.maven-version-plugin>
-            1.4-SNAPSHOT
+            1.5-SNAPSHOT
         </version.maven-version-plugin>
         <version.maven-jaxws-plugin>
-            1.1-SNAPSHOT
+            1.2-SNAPSHOT
         </version.maven-jaxws-plugin>
         <version.maven-rec-plugin>
-            1.0-SNAPSHOT
+            1.1-SNAPSHOT
         </version.maven-rec-plugin>
 
         <!-- EL4J framework module version numbers -->
         <version.module-core>
-            1.9-SNAPSHOT
+            1.10-SNAPSHOT
         </version.module-core>
         <version.module-database>
-            1.7-SNAPSHOT
+            1.8-SNAPSHOT
         </version.module-database>
         <version.module-env>
-            1.7-SNAPSHOT
+            1.8-SNAPSHOT
         </version.module-env>
         <version.module-exception_handling>
-            1.5-SNAPSHOT
+            1.6-SNAPSHOT
         </version.module-exception_handling>
         <version.module-hibernate>
-            1.6-SNAPSHOT
+            1.7-SNAPSHOT
         </version.module-hibernate>
         <version.module-ibatis>
-            1.5-SNAPSHOT
+            1.6-SNAPSHOT
         </version.module-ibatis>
         <version.module-jmx>
-            1.7-SNAPSHOT
+            1.8-SNAPSHOT
         </version.module-jmx>
         <version.module-jsf>
-            1.0-SNAPSHOT
+            1.1-SNAPSHOT
         </version.module-jsf>
         <version.module-light_statistics>
-            1.5-SNAPSHOT
+            1.6-SNAPSHOT
         </version.module-light_statistics>
         <version.module-detailed_statistics>
-            1.5-SNAPSHOT
+            1.6-SNAPSHOT
         </version.module-detailed_statistics>
         <version.module-remoting_core>
-            2.5-SNAPSHOT
+            2.6-SNAPSHOT
         </version.module-remoting_core>
         <version.module-remoting_caucho>
-            2.5-SNAPSHOT
+            2.6-SNAPSHOT
         </version.module-remoting_caucho>
         <version.module-remoting_soap>
-            2.5-SNAPSHOT
+            2.6-SNAPSHOT
         </version.module-remoting_soap>
         <version.module-remoting_xfire>
-            2.5-SNAPSHOT
+            2.6-SNAPSHOT
         </version.module-remoting_xfire>
         <version.module-remoting_jaxws>
-            1.1-SNAPSHOT
+            1.2-SNAPSHOT
         </version.module-remoting_jaxws>
         <version.module-remoting_ejb>
-            2.5-SNAPSHOT
+            2.6-SNAPSHOT
         </version.module-remoting_ejb>
         <version.module-security>
-            1.6-SNAPSHOT
+            1.7-SNAPSHOT
         </version.module-security>
         <version.module-spring_rcp>
-            1.7-SNAPSHOT
+            1.8-SNAPSHOT
         </version.module-spring_rcp>
         <version.module-swing>
-            1.1-SNAPSHOT
+            1.2-SNAPSHOT
         </version.module-swing>
         <version.module-tcp_forwarder>
-            1.4-SNAPSHOT
+            1.5-SNAPSHOT
         </version.module-tcp_forwarder>
         <version.module-web>
-            1.8-SNAPSHOT
+            1.9-SNAPSHOT
         </version.module-web>
         <version.module-webtest>
-            1.4-SNAPSHOT
+            1.5-SNAPSHOT
         </version.module-webtest>
         <version.module-xml_merge>
-            1.4-SNAPSHOT
+            1.5-SNAPSHOT
         </version.module-xml_merge>
         <version.module-bshlauncher>
-            1.1-SNAPSHOT
+            1.2-SNAPSHOT
         </version.module-bshlauncher>
         <version.module-remoting-tests>
-            1.4-SNAPSHOT
+            1.5-SNAPSHOT
         </version.module-remoting-tests>
         <version.module-remoting-jaxws-tests>
-            1.1-SNAPSHOT
+            1.2-SNAPSHOT
         </version.module-remoting-jaxws-tests>
         <version.module-tcp_forwarder-tests>
-            1.4-SNAPSHOT
+            1.5-SNAPSHOT
         </version.module-tcp_forwarder-tests>
         <version.module-remoting-demos>
-            1.4-SNAPSHOT
+            1.5-SNAPSHOT
         </version.module-remoting-demos>
         <version.application-keyword>
-            2.5-SNAPSHOT
+            2.6-SNAPSHOT
         </version.application-keyword>
         <version.application-refdb>
-            2.5-SNAPSHOT
+            2.6-SNAPSHOT
         </version.application-refdb>
 
         <!-- Javadoc config -->
