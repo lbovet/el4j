@@ -4,13 +4,14 @@ A list of known issues can be found at:
 http://el4j.svn.sourceforge.net/viewvc/*checkout*/el4j/trunk/el4j/etc/KnownIssues.txt
 
 The scripts work under unix and windows/cygwin!
+(There are some .bat files for windows without cygwin, but they are less tested.)
 
 If you are new to Maven and EL4J, please refer to 
 http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/GettingStarted or 
 docs/pdf/GettingStarted.pdf and follow the step-by-step tutorial.
-If you are an EL4J developer please refer 
+If you are an EL4J developer please refer additionally to
 http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/GettingStartedDeveloper or 
-docs/pdf/GettingStartedDeveloper.pdf too.
+docs/pdf/GettingStartedDeveloper.pdf.
 The following instructions describe the fast-track and are recommended 
 for advanced users.
 
@@ -36,14 +37,6 @@ To set up:
       This checks your installation. Please look through the output of the 
       command.
       
-To start with a trivial program (1 class and 1 test)
- * open a shell, cd EL4J
- * execute source ./setupPathsAndEnvironment.sh
- * mvn archetype:create -DarchetypeGroupId=ch.elca.el4j -DarchetypeArtifactId=EL4JArchetypeCore -DarchetypeVersion=1.6 -DgroupId=ch.elca.el4j -DartifactId=myFirstProject -DremoteRepositories=http://el4.elca-services.ch/el4j/maven2repository 
- * cd myFirstProject
- * mvn install
- * mvn exec:java
-
 To start working with the EL4J sources
  * open a shell, cd EL4J
  * execute source ./setupPathsAndEnvironment.sh
@@ -59,7 +52,7 @@ To start working with the EL4J sources
 	 * if you are using JDK 6 and want the jaxws support working, set up jaxws 2.1 like described here: 
 	     http://weblogs.java.net/blog/ramapulavarthi/archive/2007/01/problems_using.html
      * mvn clean install
-       
+          
 To start a new GUI application 
  * Check out the GUI demo application under external/applications/templates/gui (assuming you have downloaded the
    source code of el4j)
