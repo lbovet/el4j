@@ -25,8 +25,13 @@ if ! [ -e external ] ; then
 	echo "Error: Folder 'external' not found. Go to its parent folder (el4j)!"
 	exit
 fi
+echo "I have also to revert all changes. Press Ctrl-C to stop."
+read dummy
 
 cd external
+echo "Cleaning ..."
+mvn clean
+svn revert -R ./
 svn switch https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j
 
 echo "Process internal? (y/n)"
@@ -34,6 +39,9 @@ read performInternal
 
 if [ $performInternal == "y" ] ; then
 	cd ../internal
+	echo "Cleaning ..."
+	mvn clean
+	svn revert -R ./
 	svn switch https://cvs.elca.ch/subversion/el4j-internal/trunk
 	cd ..
 fi
