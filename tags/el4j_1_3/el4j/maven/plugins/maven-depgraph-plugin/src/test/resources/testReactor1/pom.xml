@@ -1,0 +1,21 @@
+<?xml version="1.0"?><project>
+  <modelVersion>4.0.0</modelVersion>
+  
+  <groupId>ch.test</groupId>
+  <artifactId>testReactor1</artifactId>
+  <packaging>pom</packaging>
+  <name>DepGraphTestProject</name>
+  <version>1.0</version>
+
+  <modules>
+    <module>A</module>
+    <module>B</module>
+    <module>X</module>
+    <module>XP</module>
+    <module>Y</module>
+    <module>Z</module>
+    <module>ZZ</module>
+    <module>ZS</module>
+  </modules>
+  
+</project>

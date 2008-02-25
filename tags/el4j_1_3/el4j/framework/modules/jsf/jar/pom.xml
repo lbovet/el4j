@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <!-- Version: $Revision: 2344 $ -->
+    <!-- URL: $URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/jsf/pom.xml $ -->
+    <!-- Date: $Date: 2007-12-17 09:24:26 +0100 (Mo, 17 Dez 2007) $ -->
+    <!-- Author: $Author: swismer $ -->
+
+    <parent>
+        <groupId>ch.elca.el4j.modules</groupId>
+        <artifactId>module-jsf</artifactId>
+        <version>1.2.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>module-jsf-jar</artifactId>
+    <version>${version.module-jsf}</version>
+    <packaging>jar</packaging>
+    <name>EL4J module jsf - jar</name>
+    <description>
+        Jar part of module JSF (JBoss Seam) of the EL4J framework.
+    </description>
+    <build>
+    </build>
+    <dependencies>
+        <!-- EL4J framework modules -->
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-hibernate</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+        </dependency>
+
+        <!-- JBoss Seam -->
+        <dependency>
+            <groupId>org.jboss.seam</groupId>
+            <artifactId>jboss-seam</artifactId>
+            <version>2.0.1.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.seam</groupId>
+            <artifactId>jboss-seam-ui</artifactId>
+            <version>2.0.1.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.seam</groupId>
+            <artifactId>jboss-seam-ioc</artifactId>
+            <version>2.0.1.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.seam</groupId>
+            <artifactId>jboss-seam-remoting</artifactId>
+            <version>2.0.1.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.seam</groupId>
+            <artifactId>jboss-seam-debug</artifactId>
+            <version>2.0.1.GA</version>
+        </dependency>
+        
+        <!-- JBoss RichFaces -->
+        <dependency>
+            <groupId>org.richfaces.framework</groupId>
+            <artifactId>richfaces-api</artifactId>
+            <version>3.1.4.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.richfaces.framework</groupId>
+            <artifactId>richfaces-impl</artifactId>
+            <version>3.1.4.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.richfaces.ui</groupId>
+            <artifactId>richfaces-ui</artifactId>
+            <version>3.1.4.GA</version>
+        </dependency>
+        
+        <!-- Java Server Faces and Facelets -->
+        <dependency>
+            <groupId>javax.faces</groupId>
+            <artifactId>jsf-api</artifactId>
+            <version>1.2_07</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.faces</groupId>
+            <artifactId>jsf-impl</artifactId>
+            <version>1.2_07</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.facelets</groupId>
+            <artifactId>jsf-facelets</artifactId>
+            <version>1.1.14</version>
+        </dependency>
+    </dependencies>
+    <repositories>
+        <repository>
+            <id>jboss</id>
+            <url>http://repository.jboss.org/maven2</url>
+        </repository>
+        <repository>
+            <id>java.net</id>
+            <url>http://download.java.net/maven/1</url>
+            <layout>legacy</layout>
+        </repository>
+    </repositories>
+</project>

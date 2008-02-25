@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+
+
+    <parent>
+        <groupId>ch.elca.el4j.modules</groupId>
+        <artifactId>el4j-framework-modules</artifactId>
+        <version>1.2.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>module-webtest</artifactId>
+    <version>${version.module-webtest}</version>
+    <packaging>jar</packaging>
+    <name>EL4J module webtest</name>
+    <description>
+        Module webtest of the EL4J framework.
+    </description>
+    <build>
+    </build>
+    <dependencies>
+        <!-- EL4J framework modules -->
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-web-jar</artifactId>
+        </dependency>
+    
+        <!-- Third party tools -->
+        <dependency>
+            <groupId>net.sf.jwebunit</groupId>
+            <artifactId>jwebunit-core</artifactId>
+            <version>1.3-rc1</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.jwebunit</groupId>
+            <artifactId>jwebunit-htmlunit-plugin</artifactId>
+            <version>1.3-rc1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gargoylesoftware.htmlunit</groupId>
+            <artifactId>htmlunit</artifactId>
+            <version>1.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.regexp</groupId>
+            <artifactId>regexp</artifactId>
+            <version>1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.xml</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mozilla.javascript</groupId>
+            <artifactId>js</artifactId>
+            <version>1.5R4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.cyberneko.html</groupId>
+            <artifactId>nekohtml</artifactId>
+            <version>0.9.5</version>
+        </dependency>
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>2.7.1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jaxen</groupId>
+            <artifactId>jaxen</artifactId>
+            <version>1.1-beta-8</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+</project>

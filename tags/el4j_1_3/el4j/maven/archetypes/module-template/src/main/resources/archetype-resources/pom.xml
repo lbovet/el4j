@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+	    <groupId>ch.elca.el4j.applications</groupId>
+	    <artifactId>el4j-applications</artifactId>
+	    <version>1.2.1-SNAPSHOT</version>
+    </parent>
+    
+    <groupId>${groupId}</groupId>
+    <artifactId>${artifactId}</artifactId>
+    <packaging>jar</packaging>
+    <version>${version}</version>
+    <name>
+        A custom project that uses EL4J.
+        Contains a simple calculator inclusive a JUnit test for it.
+    </name>
+    <url>http://el4j.sourceforge.net</url>
+
+    <dependencies>
+    	<!-- EL4J core module. -->
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-core</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <!--  Maven plugin to run the calculator with "mvn exec:java" -->
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>${groupId}.Calculator</mainClass>
+                    <keepAlive>false</keepAlive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    
+    <repositories>
+    	<!--
+    	    Repository for EL4J modules.
+    	    Needed for the intial download of this pom's parent pom.
+   	    -->
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <id>el4jReleaseRepositoryExternal</id>
+            <name>External release repository of the EL4J project</name>
+            <url>http://el4.elca-services.ch/el4j/maven2repository</url>
+        </repository>
+    </repositories>
+</project>

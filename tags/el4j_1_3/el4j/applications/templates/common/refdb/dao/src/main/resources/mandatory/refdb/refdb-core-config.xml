@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
+    
+
+	<!-- Allows to register DAOs. Automatically collects all GenericDaos from the application context -->		
+	<bean id="daoRegistry"
+		class="ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry">
+		
+		<!--  old-style config (to show how to mix old and new config ways, the other daos
+		       are automatically loaded) -->
+	       <property name="daos">
+            <map>
+                <entry key="ch.elca.el4j.apps.refdb.dom.Link">
+                    <ref bean="linkDao"/>
+                </entry>
+            </map>
+        </property>    	
+	</bean>
+
+
+</beans>

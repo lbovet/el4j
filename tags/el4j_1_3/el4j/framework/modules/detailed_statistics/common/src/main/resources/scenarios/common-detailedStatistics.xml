@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
+    <bean id="rmiProtocol"
+        class="ch.elca.el4j.services.remoting.protocol.Rmi">
+        <property name="serviceHost">
+            <value>${rmiProtocol.serviceHost}</value>
+        </property>
+        <property name="servicePort">
+            <value>${rmiProtocol.servicePort}</value>
+        </property>
+        <property name="implicitContextPassingRegistry">
+            <ref local="implicitContextPassingRegistry" />
+        </property>
+    </bean>
+
+    <!-- Implicit context passing registry -->
+    <bean id="implicitContextPassingRegistry"
+        class="ch.elca.el4j.core.contextpassing.DefaultImplicitContextPassingRegistry" />
+
+
+    <bean id="sharedContextImplicitContextPasser"
+        class="ch.elca.el4j.services.statistics.detailed.contextpassing.DetailedStatisticsImplicitContextPasser">
+        <property name="implicitContextPassingRegistry">
+            <ref bean="implicitContextPassingRegistry" />
+        </property>
+    </bean>
+
+</beans>

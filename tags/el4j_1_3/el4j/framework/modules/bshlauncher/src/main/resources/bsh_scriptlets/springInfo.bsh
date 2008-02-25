@@ -1,0 +1,23 @@
+import org.springframework.util.StringUtils;
+import ch.elca.el4j.util.codingsupport.AopHelper;
+
+springInfo() {
+     // ac is the current Spring application context
+    if (ac != null) {
+       String[] allBeans = ac.getBeanDefinitionNames();
+       System.out.println("\n\nbsh. All defined beans: "+
+         StringUtils.arrayToDelimitedString(allBeans, ",")+"\n\n");
+       
+       System.out.println("Proxied beans: ");
+       for (String beanName : allBeans) {
+          try {
+          Object bean = ac.getBean(beanName);
+          if (AopHelper.isAopProxy(bean)) {
+              System.out.print(" "+beanName);
+          }
+          } catch (Exception e) { }
+       }
+    } else {
+       System.out.println("ac was null");
+    }
+}

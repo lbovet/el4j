@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE sqlMapConfig 
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <sqlMap resource="etc/ibatis/common/table-keyword.xml" />
+    <sqlMap resource="etc/ibatis/common/table-reference.xml" />
+    <sqlMap resource="etc/ibatis/common/table-link.xml" />
+    <sqlMap resource="etc/ibatis/common/table-book.xml" />
+    <sqlMap resource="etc/ibatis/common/table-formalpublication.xml" />
+    <sqlMap resource="etc/ibatis/common/table-annotation.xml" />
+    <sqlMap resource="etc/ibatis/common/table-file.xml" />
+    <sqlMap resource="etc/ibatis/common/table-referencekeywordrelationship.xml" />
+
+    <sqlMap resource="etc/ibatis/db2/table-keyword.xml" />
+    <sqlMap resource="etc/ibatis/db2/table-reference.xml" />
+    <sqlMap resource="etc/ibatis/db2/table-link.xml" />
+    <sqlMap resource="etc/ibatis/db2/table-book.xml" />
+    <sqlMap resource="etc/ibatis/db2/table-formalpublication.xml" />
+    <sqlMap resource="etc/ibatis/db2/table-annotation.xml" />
+    <sqlMap resource="etc/ibatis/db2/table-file.xml" />
+</sqlMapConfig>

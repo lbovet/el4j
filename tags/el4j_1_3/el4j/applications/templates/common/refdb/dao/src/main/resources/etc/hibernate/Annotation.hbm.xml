@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping>
+
+    <class name="ch.elca.el4j.apps.refdb.dom.Annotation" table="ANNOTATIONS">
+        <cache usage="read-write"/>
+        <id name="key">
+            <column name="KEYID"/>
+            <generator class="native">
+                <param name="sequence">annotation_sequence</param>
+            </generator>
+        </id>
+        <version name="optimisticLockingVersion">
+            <column name="OPTIMISTICLOCKINGVERSION"/>
+        </version>
+        <property name="keyToReference" type="integer">
+            <column name="KEYTOREFERENCE"/>
+        </property>
+        <property name="annotator" type="string">
+            <column name="ANNOTATOR"/>
+        </property>
+        <property name="grade" type="integer">
+            <column name="GRADE"/>
+        </property>
+        <property name="content" type="string">
+            <column name="CONTENT"/>
+        </property>
+        <property name="whenInserted" type="timestamp">
+            <column name="WHENINSERTED"/>
+        </property>
+        <!-- <many-to-one name="reference"
+                     column="KEYTOREFERENCE"
+                     class="ch.elca.el4j.apps.refdb.dom.Reference"
+                     not-null="true"/> -->
+    </class>
+
+</hibernate-mapping>
