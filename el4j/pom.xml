@@ -2077,7 +2077,7 @@
         <rmi.port>8099</rmi.port>
         
         <!-- Network properties -->
-        <project-server.path>file:////leaffy.elca.ch/java</project-server.path>
+        <project-server.path>ftp://leaffy.elca.ch//home/java</project-server.path>
 
         <!-- Distribution mgt repository ids, names and urls -->
         <distmgt.repository.id.external>ftpEl4ElcaServices</distmgt.repository.id.external>
