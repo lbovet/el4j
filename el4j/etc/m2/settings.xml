@@ -75,23 +75,23 @@
     <servers>
         <!--server>
             <id>ftpEl4ElcaServices</id>
-            <username>********</username>
-            <password>********</password>
+            <username>__USR_SRV__</username>
+            <password>__PWD_SRV__</password>
         </server>
         <server>
-            <id>fileLeaffy</id>
-            <username>********</username>
-            <password>********</password>
+            <id>ftpLeaffy</id>
+            <username>__USR_LFY__</username>
+            <password>__PWD_LFY__</password>
         </server>
         <server>
             <id>ftpEl4ElcaServicesSnapshot</id>
-            <username>********</username>
-            <password>********</password>
+            <username>__USR_SRV__</username>
+            <password>__PWD_SRV__</password>
         </server>
         <server>
-            <id>fileLeaffySnapshot</id>
-            <username>********</username>
-            <password>********</password>
+            <id>ftpLeaffySnapshot</id>
+            <username>__USR_LFY__</username>
+            <password>__PWD_LFY__</password>
         </server-->
         
         
