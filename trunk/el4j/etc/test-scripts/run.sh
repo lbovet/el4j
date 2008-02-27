@@ -16,6 +16,16 @@ case $1 in
 		cd external
 		mvn -f pom.xml clean install -fae -B
 		;;
+	"internal_nightly")
+		cd internal
+		svn up
+		mvn clean install -fae -B -Pauto,weblogic10x,oracle
+		mvn -f site/pom.xml site-deploy
+		;;
+	"internal_svn")
+		cd internal
+		mvn -f pom.xml clean install -fae -B
+		;;
 	"release_tomcat")
 		mvn -f external/pom.xml clean install -fae -B -Pauto,tomcat6x,db2
 		mvn -f internal/pom.xml clean install -fae -B -Pauto,tomcat6x,db2
