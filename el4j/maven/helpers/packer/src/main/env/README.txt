@@ -36,15 +36,15 @@ To set up:
  * execute  ./checkInstallation.sh
       This checks your installation. Please look through the output of the 
       command.
-      
-To start with a trivial program (1 class and 1 test) 	 
-	  * open a shell, cd EL4J 	 
-	  * execute source ./setupPathsAndEnvironment.sh 	 
-	  * mvn org.apache.maven.plugins:maven-archetype-plugin:1.0-alpha-7:create -DarchetypeGroupId=ch.elca.el4j -DarchetypeArtifactId=EL4JArchetypeCore -DarchetypeVersion=1.6 -DgroupId=ch.elca.el4j -DartifactId=myFirstProject -DremoteRepositories=http://el4.elca-services.ch/el4j/maven2repository
-	  * cd myFirstProject 	 
-	  * mvn install 	 
-	  * mvn exec:java	  
-	  
+
+To start with a trivial program (1 class and 1 test)      
+      * open a shell, cd EL4J
+      * execute source ./setupPathsAndEnvironment.sh
+      * mvn org.apache.maven.plugins:maven-archetype-plugin:1.0-alpha-7:create -DarchetypeGroupId=ch.elca.el4j -DarchetypeArtifactId=EL4JArchetypeCore -DarchetypeVersion=1.6 -DgroupId=ch.elca.el4j -DartifactId=myFirstProject -DremoteRepositories=http://el4.elca-services.ch/el4j/maven2repository
+      * cd myFirstProject
+      * mvn install
+      * mvn exec:java
+
 To start working with the EL4J sources
  * open a shell, cd EL4J
  * execute source ./setupPathsAndEnvironment.sh
@@ -57,15 +57,21 @@ To start working with the EL4J sources
      * Open a console and change to the directory where you have saved the downloaded jar files (but within the EL4J/external directory).
      * Execute the following command:
        o mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc14_g -Dversion=10.2.0.3.0 -Dpackaging=jar -Dfile=ojdbc14_g.jar
-	 * if you are using JDK 6 and want the jaxws support working, set up jaxws 2.1 like described here: 
-	     http://weblogs.java.net/blog/ramapulavarthi/archive/2007/01/problems_using.html
+     * if you are using JDK 6 and want the jaxws support working, set up jaxws 2.1 like described here: 
+         http://weblogs.java.net/blog/ramapulavarthi/archive/2007/01/problems_using.html
      * mvn clean install
-          
+
 To start a new GUI application 
  * Check out the GUI demo application under external/applications/templates/gui (assuming you have downloaded the
    source code of el4j)
  * Set up your EL4J environment (see the examples above)
- * Follow the steps in the file external/applications/templates/gui/README.txt 
+ * Follow the steps in the file external/applications/templates/gui/README.txt
+
+To start a new JSF web application using JBoss Seam
+ * Check out the web demo application under external/applications/templates/web (assuming you have downloaded the
+   source code of el4j)
+ * Set up your EL4J environment (see the examples above)
+ * Follow the steps in the file external/applications/templates/web/README.txt
  
 To start with the web application template (due to proprietary technology, this is only available within ELCA)
  * Download the latest web-template-[version].zip from http://leaffy.elca.ch/java/el4j/templates/ and unzip it to el4j/web-template
@@ -75,10 +81,6 @@ To start with the web application template (due to proprietary technology, this 
  * Type in the command mvn db:prepare cargo:undeploy cargo:deploy cargo:start to prepare the database and deploy the template to tomcat
  * Open your browser and go to the webpage http://localhost:8080/web-template-web/
  * More info: http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/WebApplicationTemplate
- 
-To check out the seam demo application (this is not yet tested a lot)
- * Go to the directory external/sandbox/el4j-seam and invoke a "mvn install"
- * Go to the directory external/sandbox/seam-demo and follow the steps under README.txt
  
 More information:
  * The local ./docs directory
