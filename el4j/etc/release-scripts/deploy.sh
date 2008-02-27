@@ -66,7 +66,10 @@ mvn deploy -N
 
 cd modules
 mvn deploy
+cd ..
 
+cd plugins
+mvn deploy
 cd ../..
 
 cd maven
