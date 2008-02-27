@@ -2084,7 +2084,7 @@
         <distmgt.repository.name.external>External EL4J repository</distmgt.repository.name.external>
         <distmgt.repository.url.external>ftp://el4.elca-services.ch/htdocs/el4j/maven2repository</distmgt.repository.url.external>
 
-        <distmgt.repository.id.internal>fileLeaffy</distmgt.repository.id.internal>
+        <distmgt.repository.id.internal>ftpLeaffy</distmgt.repository.id.internal>
         <distmgt.repository.name.internal>Internal EL4J repository</distmgt.repository.name.internal>
         <distmgt.repository.url.internal>${project-server.path}/maven2repository</distmgt.repository.url.internal>
 
@@ -2092,7 +2092,7 @@
         <distmgt.site.name.external>SourceForge EL4J website</distmgt.site.name.external>
         <distmgt.site.url.external>scpexe://shell.sourceforge.net/home/groups/e/el/el4j/htdocs</distmgt.site.url.external>
 
-        <distmgt.site.id.internal>fileLeaffy</distmgt.site.id.internal>
+        <distmgt.site.id.internal>ftpLeaffy</distmgt.site.id.internal>
         <distmgt.site.name.internal>Internal EL4J website</distmgt.site.name.internal>
         <distmgt.site.url.internal>${project-server.path}/el4j/website/internal</distmgt.site.url.internal>
 
@@ -2100,15 +2100,15 @@
         <distmgt.snapshot-repository.name.external>External EL4J snapshot repository</distmgt.snapshot-repository.name.external>
         <distmgt.snapshot-repository.url.external>ftp://el4.elca-services.ch/htdocs/el4j/maven2snapshots</distmgt.snapshot-repository.url.external>
 
-        <distmgt.snapshot-repository.id.internal>fileLeaffySnapshot</distmgt.snapshot-repository.id.internal>
+        <distmgt.snapshot-repository.id.internal>ftpLeaffySnapshot</distmgt.snapshot-repository.id.internal>
         <distmgt.snapshot-repository.name.internal>Internal EL4J snapshot repository</distmgt.snapshot-repository.name.internal>
         <distmgt.snapshot-repository.url.internal>${project-server.path}/maven2snapshots</distmgt.snapshot-repository.url.internal>
 
-        <distmgt.snapshot-site.id.external>fileLeaffy</distmgt.snapshot-site.id.external>
+        <distmgt.snapshot-site.id.external>ftpLeaffySnapshot</distmgt.snapshot-site.id.external>
         <distmgt.snapshot-site.name.external>External EL4J snapshot website</distmgt.snapshot-site.name.external>
         <distmgt.snapshot-site.url.external>${project-server.path}/el4j/snapshot/website/external</distmgt.snapshot-site.url.external>
 
-        <distmgt.snapshot-site.id.internal>fileLeaffy</distmgt.snapshot-site.id.internal>
+        <distmgt.snapshot-site.id.internal>ftpLeaffySnapshot</distmgt.snapshot-site.id.internal>
         <distmgt.snapshot-site.name.internal>Internal EL4J snapshot website</distmgt.snapshot-site.name.internal>
         <distmgt.snapshot-site.url.internal>${project-server.path}/el4j/snapshot/website/internal</distmgt.snapshot-site.url.internal>
 
