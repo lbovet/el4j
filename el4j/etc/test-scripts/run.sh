@@ -21,6 +21,10 @@ case $1 in
 		svn up
 		mvn clean install -fae -B -Pauto,weblogic10x,oracle
 		mvn -f site/pom.xml site-deploy
+		
+		# test templates
+		./internal/etc/release-scripts/createTemplates.sh
+		./internal/etc/release-scripts/createTemplates.sh clean
 		;;
 	"internal_svn")
 		cd internal
@@ -79,4 +83,5 @@ case $1 in
 
 		mvn -f testarchetype/pom.xml clean install
 		rm -rf testarchetype
+		;;
 esac
