@@ -22,6 +22,7 @@ cat external/etc/m2/settings.xml \
 	| sed 's#<!--server>#<server>#' | sed 's#</server-->#</server>#' \
 	| sed 's#<!--mirror>#<mirror>#' | sed 's#</mirror-->#</mirror>#' \
 	| sed 's#<!--project-server.path>#<project-server.path>#' | sed 's#</project-server.path-->#</project-server.path>#' \
+	| sed 's#${el4j.project.home}/tools#${el4j.project.home}/../tools#' \
 	| sed "s#__USR_SRV__#$USR_SRV#" | sed "s#__PWD_SRV__#$PWD_SRV#" \
 	| sed "s#__USR_LFY__#$USR_LFY#" | sed "s#__PWD_LFY__#$PWD_LFY#" \
 	| sed "s#~/myproject#$WORKING_DIR#" \
