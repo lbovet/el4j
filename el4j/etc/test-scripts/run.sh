@@ -46,10 +46,6 @@ case $1 in
 		#./site.sh
 		#cd ../..
 		;;
-	"copy_run_script")
-		cp external/etc/test-scripts/run.sh ./
-		chmod 770 run.sh
-		;;
 	"clean_checkout")
 		rm -rf external
 		rm -rf internal
