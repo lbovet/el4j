@@ -21,6 +21,7 @@ case $1 in
 		svn up
 		mvn clean install -fae -B -Pauto,weblogic10x,oracle
 		mvn -f site/pom.xml site-deploy
+		cd ..
 		
 		# test templates
 		./internal/etc/release-scripts/createTemplates.sh
@@ -40,13 +41,11 @@ case $1 in
 		;;
 	"release_website")
 		cd external/site
-		chmod 770 site.sh
 		./site.sh
 		cd ../..
 
 		## internal is not necessary
 		#cd internal/site
-		#chmod 770 site.sh
 		#./site.sh
 		#cd ../..
 		;;
