@@ -209,9 +209,8 @@
                         <groupId>ch.elca.el4j.maven.plugins</groupId>
                         <artifactId>maven-file-collector-plugin</artifactId>
                         <configuration>
-                            <rootSourceDirectory>${el4j.external}/framework/apps</rootSourceDirectory>
-                            <sourceDirectoryIncludePatterns>**/src/main/java</sourceDirectoryIncludePatterns>
-                            <sourceDirectoryExcludePatterns>**/gui-tiger/**</sourceDirectoryExcludePatterns>
+                            <rootSourceDirectory>${el4j.external}/applications</rootSourceDirectory>
+                            <sourceDirectoryIncludePatterns>templates/**/src/main/java</sourceDirectoryIncludePatterns>
                             <sourceFileIncludePatterns>**/*.java,**/*.html</sourceFileIncludePatterns>
                             <targetDirectory>${aggregated.files.output.directory}</targetDirectory>
                             <allowOverwrite>false</allowOverwrite>
