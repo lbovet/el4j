@@ -100,11 +100,23 @@ public abstract class AbstractBinder implements Binder {
                                             moMethod.getName().substring(4);
 
                             Field formClassField = null;
-
+                            
+                            // SWI {
+                            // determine if corresponding field starts with m_...
+                            ErrorContext.put("- Attempting to lookup field " + componentFieldName);
                             try {
-                                ErrorContext.put("- Attempting to lookup field " + componentFieldName);
                                 formClassField = ClassManager.getClassInfo(formClass).getField(componentFieldName);
+                            } catch (NoSuchFieldException e) {
+                                // ignored
+                            }
+                            try {
+                                formClassField = ClassManager.getClassInfo(formClass).getField("m_" + componentFieldName);
+                            } catch (NoSuchFieldException e) {
+                                // ignored
+                            }
+                            // } SWI
 
+                            if (formClassField != null) {
                                 if (!formClassField.isAnnotationPresent(BoundComponent.class)) {
                                     ErrorContext.put("- Adding ComponentMeta for " + formClassField.getName() +
                                             " of type " + formClassField.getType().getName());
@@ -118,9 +130,7 @@ public abstract class AbstractBinder implements Binder {
                                     ErrorContext.removeLast();
 
                                 }
-                            } catch (NoSuchFieldException e) {
-                                // ignored
-                            } finally {
+                            } else {
                                 ErrorContext.removeLast();
                             }
                         }
