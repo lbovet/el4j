@@ -55,7 +55,7 @@ import ch.elca.el4j.util.collections.impl.DefaultTransformedList;
  *
  * @author Martin Zeltner (MZE), Adrian Moos (AMS)
  */
-public final class CollectionUtils {
+public class CollectionUtils {
     /**
      * Private logger of this class.
      */
@@ -65,7 +65,7 @@ public final class CollectionUtils {
     /**
      * Hidden constructor.
      */
-    private CollectionUtils() { }
+    protected CollectionUtils() { }
 
     /**
      * Null save check if a collection is empty.
