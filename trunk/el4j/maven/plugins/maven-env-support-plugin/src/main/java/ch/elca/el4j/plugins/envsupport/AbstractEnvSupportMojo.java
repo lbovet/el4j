@@ -111,11 +111,11 @@ public abstract class AbstractEnvSupportMojo extends AbstractMojo {
         initializeFiltering();
     
         if (!resourceDir.exists() || !resourceDir.isDirectory()) {
-            getLog().info("Env " + resourceType + " directory '" 
-                + resourceDir.getAbsolutePath() + "' does not exists.");
+            getLog().debug("Env " + resourceType + " directory '" 
+                + resourceDir.getAbsolutePath() + "' does not exist.");
             return false;
         } else {
-            getLog().info("Will proceed env " + resourceType + " directory '" 
+            getLog().debug("Will process env " + resourceType + " directory '" 
                 + resourceDir.getAbsolutePath() + "'.");
         }
     
@@ -126,10 +126,10 @@ public abstract class AbstractEnvSupportMojo extends AbstractMojo {
         }
         
         if (StringUtils.hasText(encoding)) {
-            getLog().info("Using encoding: '" + encoding
+            getLog().debug("Using encoding: '" + encoding
                     + "' to copy filtered " + resourceType + ".");
         } else {
-            getLog().info("Using default encoding to copy filtered " 
+            getLog().debug("Using default encoding to copy filtered " 
                 + resourceType + ".");
         }
     
