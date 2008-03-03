@@ -27,8 +27,8 @@ import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.Binding;
 import org.jdesktop.beansbinding.BindingGroup;
 
-import com.silvermindsoftware.hitch.binding.BindingFactory;
 import com.silvermindsoftware.hitch.binding.BindingCreator;
+import com.silvermindsoftware.hitch.binding.BindingFactory;
 import com.silvermindsoftware.hitch.meta.ComponentMeta;
 import com.silvermindsoftware.hitch.meta.FormMeta;
 import com.silvermindsoftware.hitch.meta.ModelMeta;
