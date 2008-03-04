@@ -68,7 +68,11 @@
             <version>1.0</version>
         </dependency>
 
-        
+        <dependency>
+            <groupId>info.clearthought.layout</groupId>
+            <artifactId>table-layout</artifactId>
+            <version>20020517</version>
+        </dependency>
         <dependency>
             <groupId>com.jgoodies.looks</groupId>
             <artifactId>looks</artifactId>
