@@ -31,21 +31,13 @@ if [ $performInternal == "y" ] ; then
 	cp internal/etc/release-scripts/*.sh .
 fi
 
-
+# process settings.xml
 mv ~/.m2/settings.xml ~/.m2/settings.xml.backup
-cp external/etc/m2/settings.xml ~/.m2/settings.xml
+cat external/etc/m2/settings.xml \
+	| sed "s#~/.m2/repository#D:/$freshDir/m2repository#" \
+	| sed "s#~/myproject#D:/$freshDir#" \
+	> ~/.m2/settings.xml
 
-echo "Please edit ~/.m2/settings.xml according to checklist (your version is backuped -> settings.xml.backup)"
-echo "These snippets might help you:"
-echo "<localRepository>D:/$freshDir/m2repository</localRepository>"
+echo "Open ~/.m2/settings.xml and fill in all passwords that will be needed for deployment."
 echo ""
-echo "<!-- EL4J developer specific properties -->"
-echo "<el4j.root>D:/$freshDir</el4j.root>"
-echo "<el4j.external>\${el4j.root}/external</el4j.external>"
-echo "<el4j.internal>\${el4j.root}/internal</el4j.internal>"
-echo ""
-echo "<!-- Project properties -->"
-echo "<el4j.project.home>D:/$freshDir</el4j.project.home>"
-echo "<el4j.project.tools>\${el4j.project.home}/tools</el4j.project.tools>"
-echo ""
-echo "Hint: The next step after editing settings.xml is to tag a release candidate"
+echo "Hint: The next step is to tag a release candidate"
