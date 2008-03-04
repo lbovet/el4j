@@ -151,7 +151,7 @@ public abstract class DockingApplication extends GUIApplication {
             contentManager.removeContent(
                 contentManager.getContent(content));
         }
-        return contentManager.addContent(content, content.getTitle(),
+        return contentManager.addContent(content.toString(), content.getTitle(),
             null, content.getContentPane());
     }
 }
