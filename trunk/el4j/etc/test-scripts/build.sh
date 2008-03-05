@@ -14,7 +14,7 @@ mkdir $LOG_DIR
 
 if [ $# -ge 3 ] && [ $3 == "Java6" ] ; then
 	cat settings.xml \
-		| sed 's#jrockit-R27.4.0-jdk1.5.0_12#jrockit-R27.5.0-jre1.6.0_03#' \
+		| sed 's#jrockit-R27.4.0-jdk1.5.0_12#jrockit-R27.5.0-jdk1.6.0_03#' \
 		> ~/.m2/settings.xml
 else
 	cp settings.xml ~/.m2/settings.xml 
