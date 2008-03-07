@@ -117,7 +117,7 @@ public class HibernateKeywordDaoTest
         
         query = new QueryObject();
         query.addCriteria(new ComparisonCriteria("name","Chainsaw","=","String"),
-            new ComparisonCriteria("name","lkasdjflöasdjfa","!=","String"));
+            new ComparisonCriteria("name","lkasdjflÃ¶asdjfa","!=","String"));
         list = dao.findByQuery(query);
         assertEquals(
             "Search for description like 'log4j' results not in one keyword.",

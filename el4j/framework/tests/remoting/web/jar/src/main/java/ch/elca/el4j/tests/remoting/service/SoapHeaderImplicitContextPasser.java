@@ -92,7 +92,7 @@ public class SoapHeaderImplicitContextPasser
         city.setAttributeNS(MY_NAMESPACE, "contextLevel", "4");
         city.setAttributeNS(Constants.URI_DEFAULT_SCHEMA_XSI, "type", 
             "xsd:string");
-        city.appendChild(m_doc.createTextNode("Zürich"));
+        city.appendChild(m_doc.createTextNode("ZÃ¼rich"));
 
         Element address = m_doc.createElementNS(MY_NAMESPACE, "address");
         address.setAttributeNS(MY_NAMESPACE, "contextLevel", "2");
