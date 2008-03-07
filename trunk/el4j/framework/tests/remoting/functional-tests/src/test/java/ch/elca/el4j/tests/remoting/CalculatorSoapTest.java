@@ -115,7 +115,7 @@ public class CalculatorSoapTest extends TestCase {
      * This test tests a special exception behaviour.
      */
     public void testSpecialExceptionBehaviour() {
-        String action = "Hans Müller likes to pay with ¤.";
+        String action = "Hans MÃ¼ller likes to pay with Â¤.";
         try {
             m_calc.throwMeASpecialException(action);
             fail("No exception was thrown.");
@@ -137,7 +137,7 @@ public class CalculatorSoapTest extends TestCase {
      * This test tests the counting of uppercase letters.
      */
     public void testNumberOfUppercaseCharacters() {
-        String message = "Hans Müller likes to pay with ¤.";
+        String message = "Hans MÃ¼ller likes to pay with Â¤.";
         int numberOfUppercaseLetters = 2;
         int result = m_calc.countNumberOfUppercaseLetters(message);
         assertEquals("The number of uppercase letter was not " 
@@ -153,7 +153,7 @@ public class CalculatorSoapTest extends TestCase {
         final long myLong = 3121846575454654L;
         final double myDouble = 6994.641368469;
         final String myString 
-            = "I can not find any ä, ö, ü, é, è or à character on my keyboard.";
+            = "I can not find any Ã¤, Ã¶, Ã¼, Ã©, Ã¨ or Ã  character on my keyboard.";
         final byte[] myByteArray = myString.getBytes();
         
         CalculatorValueObject o = new CalculatorValueObject();
