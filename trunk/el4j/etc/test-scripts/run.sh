@@ -14,7 +14,7 @@ case $1 in
 		;;
 	"external_svn")
 		cd external
-		mvn -f pom.xml clean install -fae -B
+		mvn clean install -fae -B -U
 		;;
 	"internal_nightly")
 		cd internal
@@ -29,7 +29,7 @@ case $1 in
 		;;
 	"internal_svn")
 		cd internal
-		mvn -f pom.xml clean install -fae -B
+		mvn clean install -fae -B -U
 		;;
 	"release_tomcat")
 		mvn -f external/pom.xml clean install -fae -B -Pauto,tomcat6x,db2
