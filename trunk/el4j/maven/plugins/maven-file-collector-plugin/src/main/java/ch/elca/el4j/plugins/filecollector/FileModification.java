@@ -1165,7 +1165,7 @@ public class FileModification {
         validFileName = validFileName.replace('*', '_');
         validFileName = validFileName.replace('<', '_');
         validFileName = validFileName.replace('>', '_');
-        validFileName = validFileName.replace('¦', '_');
+        validFileName = validFileName.replace('\u00a6', '_');
         validFileName = validFileName.replace('|', '_');
         validFileName = validFileName.replace('\n', '_');
         validFileName = validFileName.replace('\t', '_');
