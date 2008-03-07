@@ -39,7 +39,7 @@ import java.text.MessageFormat;
  *  "$Author$" );
  * </script>
  * 
- * @author Alain Borlet-Hote (ABH), Philipp Oser (POS), Paul E. Sevinç (PES),
+ * @author Alain Borlet-Hote (ABH), Philipp Oser (POS), Paul E. SevinÃ§ (PES),
  *         Yves Martin (YMA), Martin Zeltner (MZE)
  * 
  * @see java.text.MessageFormat For more information on the format for the
