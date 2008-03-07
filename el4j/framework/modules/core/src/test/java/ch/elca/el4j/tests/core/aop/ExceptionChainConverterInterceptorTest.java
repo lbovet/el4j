@@ -39,7 +39,7 @@ public class ExceptionChainConverterInterceptorTest extends TestCase {
     public void testBasicInterceptor() {
         MethodInvocation methodInvocation = (MethodInvocation) createMock(MethodInvocation.class);
 
-        String myFancyObject = "alsdkjfasljfaslödjfasdo034023740";
+        String myFancyObject = "alsdkjfasljfaslÃ¶djfasdo034023740";
 
         try {
             expect(methodInvocation.proceed()).andReturn(myFancyObject);
