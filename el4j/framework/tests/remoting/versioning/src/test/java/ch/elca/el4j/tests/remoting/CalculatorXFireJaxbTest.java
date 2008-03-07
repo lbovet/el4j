@@ -97,7 +97,7 @@ public class CalculatorXFireJaxbTest extends TestCase {
      */
     public void testNumberOfUppercaseCharacters() {
         final int NUMBER_OF_UPPERCASE_LETTERS = 3;
-        String message = "Hans Müller likes to pay with Euro.";
+        String message = "Hans MÃ¼ller likes to pay with Euro.";
         int result = m_calc.countNumberOfUppercaseLetters(message);
         assertEquals("The number of uppercase letter was not " 
             + "counted correctly.", result, NUMBER_OF_UPPERCASE_LETTERS);
@@ -112,7 +112,7 @@ public class CalculatorXFireJaxbTest extends TestCase {
         final long MY_LONG = 3121846575454654L;
         final double MY_DOUBLE = 6994.641368469;
         final String MY_STRING 
-            = "I can not find any ä, ö, ü, é, è or à character on my keyboard.";
+            = "I can not find any Ã¤, Ã¶, Ã¼, Ã©, Ã¨ or Ã  character on my keyboard.";
         final byte[] MY_BYTE_ARRAY = MY_STRING.getBytes();
         
         CalculatorValueObject o = new CalculatorValueObject();

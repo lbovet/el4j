@@ -104,7 +104,7 @@ public abstract class AbstractXFireTest extends TestCase {
      * This test tests the counting of uppercase letters.
      */
     public void testNumberOfUppercaseCharacters() {
-        String message = "Hans Müller likes to pay with Euro.";
+        String message = "Hans MÃ¼ller likes to pay with Euro.";
         int numberOfUppercaseLetters = 3;
         int result = getCalc().countNumberOfUppercaseLetters(message);
         assertEquals("The number of uppercase letter was not " 
@@ -120,7 +120,7 @@ public abstract class AbstractXFireTest extends TestCase {
         final long myLong = 3121846575454654L;
         final double myDouble = 6994.641368469;
         final String myString 
-            = "I can not find any ä, ö, ü, é, è or à character on my keyboard.";
+            = "I can not find any Ã¤, Ã¶, Ã¼, Ã©, Ã¨ or Ã  character on my keyboard.";
         final byte[] myByteArray = myString.getBytes();
         
         CalculatorValueObject o = new CalculatorValueObject();
