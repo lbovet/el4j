@@ -47,7 +47,7 @@ public class ExceptionThrowerImpl implements ExceptionThrower {
      */
     public static final String EXCEPTION_MESSAGE 
         = "Something went wrong. Always problems with special characters "
-            + "like ?, %, ç, ä, è and so on.";
+            + "like ?, %, Ã§, Ã¤, Ã¨ and so on.";
     
     /**
      * Any byte data used in exception.
