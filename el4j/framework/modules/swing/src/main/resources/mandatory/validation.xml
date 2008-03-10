@@ -9,15 +9,15 @@
     <!-- $Author$ -->
     
     <bean id="invalidColor" class="java.awt.Color">
-        <constructor-arg value="255"/>
-        <constructor-arg value="128"/>
-        <constructor-arg value="128"/>
+        <constructor-arg type="int" value="255"/>
+        <constructor-arg type="int" value="128"/>
+        <constructor-arg type="int" value="128"/>
     </bean>
     
     <bean id="selectedColor" class="java.awt.Color">
-        <constructor-arg value="184"/>
-        <constructor-arg value="207"/>
-        <constructor-arg value="229"/>
+        <constructor-arg type="int" value="184"/>
+        <constructor-arg type="int" value="207"/>
+        <constructor-arg type="int" value="229"/>
     </bean>
     
     <bean id="responder" class="com.silvermindsoftware.hitch.validation.response.DefaultValidationResponder" lazy-init="true"/>
