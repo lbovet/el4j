@@ -56,14 +56,10 @@ public abstract class AbstractEntityManagerTest extends SeamTest {
      * Set up Spring application context
      * before tests are executed.
      * 
-     * {@inheritDoc}
      */
-    @Override
     @BeforeClass
     public void init() throws Exception {
         
-        super.init();
-               
         
         ServletContext servletContext = ServletLifecycle.getServletContext();
         
