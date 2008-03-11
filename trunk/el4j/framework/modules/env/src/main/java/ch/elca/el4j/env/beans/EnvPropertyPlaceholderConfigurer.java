@@ -21,6 +21,7 @@ import java.io.IOException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanDefinitionStoreException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.ApplicationContext;
@@ -29,6 +30,10 @@ import org.springframework.core.io.Resource;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
+import ch.elca.el4j.util.encryption.AbstractPropertyEncryptor;
+import ch.elca.el4j.util.encryption.EncryptionException;
+import ch.elca.el4j.util.encryption.PasswordSource;
+import ch.elca.el4j.util.env.PropertyEncryptionUtil;
 
 /**
  * Specific property placeholder configurer for the EL4J environment.
@@ -68,6 +73,21 @@ public class EnvPropertyPlaceholderConfigurer
      * Is the used application context.
      */
     protected ApplicationContext m_applicationContext;
+    
+    /** 
+     * This handles encryption.
+     */ 
+    protected PropertyEncryptionUtil m_util = new PropertyEncryptionUtil();
+    
+    /** The cryptor is available in internal and handles resource decryption.
+     *  It is initialized by util.
+     */
+    private AbstractPropertyEncryptor m_cryptor;
+
+    /**
+     * Custom location and name for the cryptor.properties file.
+     */
+    private String m_cryptorFile = null;
     
     /**
      * Sets the location of the env placeholder properties file. A fallback to
@@ -161,5 +181,53 @@ public class EnvPropertyPlaceholderConfigurer
     public void setApplicationContext(ApplicationContext applicationContext)
         throws BeansException {
         m_applicationContext = applicationContext;
+    }
+    
+    /** 
+     * This is meant to be used as a bean property to turn off encryption 
+     * in an internal setting.
+     */
+    public void setNoEncryption() {
+        m_util.deactivate();
+    }
+    
+    /**
+     * Set a true custom password.
+     * @param source
+     */
+    public void setPasswordSource(PasswordSource source) {
+        m_util.setSource(source);
+    }
+    
+    public void setCryptorFile(String file) {
+        m_cryptorFile = file;
+    }
+    
+    /**
+     * Decrypts values read from the env-*.properties files.
+     * @param originalValue  The value read from env-*.properties
+     */
+    protected String convertPropertyValue(String originalValue) {
+    	if ( !m_util.isInited() ) {
+    		if ( m_cryptorFile != null ) {
+    		    m_util.init(m_applicationContext, m_cryptorFile);
+    		} else {
+    		    m_util.init(m_applicationContext);
+    		}
+    		if( m_util.isActive() ) {
+    		    m_cryptor = m_util.getCryptor();
+        	}
+    	}
+    	if ( m_util.isActive() ) {
+        	try {
+        		originalValue = m_cryptor.processString(originalValue);
+        	}
+        	catch ( EncryptionException e ) {
+        		throw new BeanDefinitionStoreException(
+        				  "Error during decryption.");
+        	}
+        	
+        }
+        return super.convertPropertyValue(originalValue);
     }
 }
