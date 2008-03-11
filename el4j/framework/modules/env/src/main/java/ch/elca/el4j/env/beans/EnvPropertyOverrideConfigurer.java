@@ -31,6 +31,13 @@ import org.springframework.core.io.Resource;
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 
+import ch.elca.el4j.util.encryption.AbstractPropertyEncryptor;
+import ch.elca.el4j.util.encryption.EncryptionException;
+import ch.elca.el4j.util.encryption.PasswordSource;
+import ch.elca.el4j.util.env.PropertyEncryptionUtil;
+
+import org.springframework.beans.factory.BeanDefinitionStoreException;
+
 /**
  * Specific property override configurer for the EL4J environment.
  *
@@ -68,6 +75,16 @@ public class EnvPropertyOverrideConfigurer
      * Should invalid bean names be ignored?
      */
     protected boolean m_ignoreBeanNameNotFound = false;
+    
+    /* These handle encryption. */
+    
+    /**
+     * Custom location and name for the cryptor.properties file.
+     */
+    private String m_cryptorFile = null;
+    
+    protected PropertyEncryptionUtil m_util = new PropertyEncryptionUtil();
+    private AbstractPropertyEncryptor m_cryptor;
     
     /**
      * Sets the location of the env bean property properties file.
@@ -167,5 +184,56 @@ public class EnvPropertyOverrideConfigurer
      */
     public void setIgnoreBeanNameNotFound(boolean ignoreBeanNameNotFound) {
         this.m_ignoreBeanNameNotFound = ignoreBeanNameNotFound;
+    }
+    
+    /** 
+     * This is meant to be used as a bean property to turn off encryption 
+     * in an internal setting.
+     */
+    public void setNoEncryption() {
+    	m_util.deactivate();
+    }
+    
+    /**
+     * Set a true custom password.
+     * @param source
+     */
+    public void setPasswordSource(PasswordSource source) {
+    	m_util.setSource(source);
+    }
+    
+    public void setCryptorFile(String file) {
+    	m_cryptorFile = file;
+    }
+    
+    /**
+     * Decrypts values read from the env-*.properties files.
+     * @param originalValue  The value read from env-*.properties
+	 *
+	 * The initialization cannot go in constructor as we don't have 
+	 * all the required properties there yet.
+     */
+    protected String convertPropertyValue(String originalValue) {
+    	if ( !m_util.isInited() ) {
+    		if ( m_cryptorFile != null ) {
+    			m_util.init(m_applicationContext, m_cryptorFile);
+    		} else {
+    			m_util.init(m_applicationContext);
+    		}
+    		if( m_util.isActive() ) {
+    			m_cryptor = m_util.getCryptor();
+        	}
+    	}
+    	if ( m_util.isActive() ) {
+        	try {
+        		originalValue = m_cryptor.processString(originalValue);
+        	}
+        	catch ( EncryptionException e ) {
+        		throw new BeanDefinitionStoreException(
+        				  "Error during decryption.");
+        	}
+        	
+        }
+        return super.convertPropertyValue(originalValue);
     }
 }

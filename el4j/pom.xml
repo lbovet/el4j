@@ -262,6 +262,18 @@
                     </executions>
                 </plugin>
                 <plugin>
+                    <groupId>ch.elca.el4j.maven.plugins</groupId>
+                    <artifactId>maven-encryption-plugin</artifactId>
+                    <version>${version.maven-encryption-plugin}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>encrypt</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <!--
@@ -2130,6 +2142,9 @@
         <version.maven-env-support-plugin>
             1.5-SNAPSHOT
         </version.maven-env-support-plugin>
+        <version.maven-encryption-plugin>
+            1.0-SNAPSHOT
+        </version.maven-encryption-plugin>
         <version.maven-file-collector-plugin>
             1.5-SNAPSHOT
         </version.maven-file-collector-plugin>
@@ -2159,6 +2174,9 @@
         <version.module-env>
             1.8-SNAPSHOT
         </version.module-env>
+        <version.module-encryption>
+            1.0-SNAPSHOT
+        </version.module-encryption>
         <version.module-exception_handling>
             1.6-SNAPSHOT
         </version.module-exception_handling>
