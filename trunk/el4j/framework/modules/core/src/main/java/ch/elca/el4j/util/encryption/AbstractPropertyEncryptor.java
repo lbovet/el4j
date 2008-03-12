@@ -33,9 +33,12 @@ package ch.elca.el4j.util.encryption;
  * @author David Bernhard (DBD)
  */
 public interface AbstractPropertyEncryptor {
-	
-	public String processString(String str) throws EncryptionException;
-	public void deriveKey(String source) throws EncryptionException;
-	public String encrypt(String plain) throws EncryptionException;
-	public String decrypt(String enc) throws EncryptionException;
+
+    public String processString(String str) throws EncryptionException;
+
+    public void deriveKey(String source) throws EncryptionException;
+
+    public String encrypt(String plain) throws EncryptionException;
+
+    public String decrypt(String enc) throws EncryptionException;
 }

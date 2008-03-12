@@ -193,12 +193,15 @@ public class EnvPropertyPlaceholderConfigurer
     
     /**
      * Set a true custom password.
-     * @param source
+     * @param source A PasswordSource (interface).
      */
     public void setPasswordSource(PasswordSource source) {
         m_util.setSource(source);
     }
     
+    /**
+     * @param file Thie file containing the cryptor settings.
+     */
     public void setCryptorFile(String file) {
         m_cryptorFile = file;
     }
@@ -206,28 +209,30 @@ public class EnvPropertyPlaceholderConfigurer
     /**
      * Decrypts values read from the env-*.properties files.
      * @param originalValue  The value read from env-*.properties
+     * @return The value with all encrypted values decrypted.
      */
     protected String convertPropertyValue(String originalValue) {
-    	if ( !m_util.isInited() ) {
-    		if ( m_cryptorFile != null ) {
-    		    m_util.init(m_applicationContext, m_cryptorFile);
-    		} else {
-    		    m_util.init(m_applicationContext);
-    		}
-    		if( m_util.isActive() ) {
-    		    m_cryptor = m_util.getCryptor();
-        	}
-    	}
-    	if ( m_util.isActive() ) {
-        	try {
-        		originalValue = m_cryptor.processString(originalValue);
-        	}
-        	catch ( EncryptionException e ) {
-        		throw new BeanDefinitionStoreException(
-        				  "Error during decryption.");
-        	}
-        	
+        String value = originalValue;
+        
+        if (!m_util.isInited()) {
+            if (m_cryptorFile != null) {
+                m_util.init(m_applicationContext, m_cryptorFile);
+            } else {
+                m_util.init(m_applicationContext);
+            }
+            if (m_util.isActive()) {
+                m_cryptor = m_util.getCryptor();
+            }
         }
-        return super.convertPropertyValue(originalValue);
+        if (m_util.isActive()) {
+            try {
+                value = m_cryptor.processString(originalValue);               
+            } catch (EncryptionException e) {
+                throw new BeanDefinitionStoreException(
+                    "Error during decryption.");
+            }
+        }
+        
+        return super.convertPropertyValue(value);
     }
 }

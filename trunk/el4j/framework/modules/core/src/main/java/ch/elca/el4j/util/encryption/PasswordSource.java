@@ -31,8 +31,8 @@ package ch.elca.el4j.util.encryption;
  * @author David Bernhard (DBD)
  */
 public interface PasswordSource {
-	/**
-	 * @return The password to use. 
-	 */
-	String getPassword();
+    /**
+     * @return The password to use.
+     */
+    String getPassword();
 }
