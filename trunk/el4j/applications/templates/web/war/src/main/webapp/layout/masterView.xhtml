@@ -54,9 +54,51 @@
 
 	<h:messages globalOnly="true" styleClass="message" />
 
-	<rich:panel headerClass="topPanel">
-		<f:facet name="header">#{listOfEntities}</f:facet>
+    <ui:include src="/WEB-INF/facelet/modalPanel.xhtml">
+        
+        <!-- the text to display in the help popup -->
+        <c:set var="panelTitle" value="#{listOfEntities}" />
+    
+    
+        <!-- the text to display in the help popup -->
+        <c:set var="userText" value="This page displays the #{listOfEntities}.
+        You can browse the table by using the 
+         backward/forward button at the bottom, if there is more than one page available. 
+         To filter the list, simply click the
+         desired item in the 'Filters' panel on the left." />
+        
+        
+        <c:set var="technicalText" value="This is a 
+        fully generic master page for the entity '#{entityShortName}'.
+        You can find its template in 'src/main/webapp/layout/masterView.xhtml'.
+        Facelets templating is used to assemble the page based on some custom tags. 
+        These are placed at 'src/main/webapp/WEB-INF/facelet' . The data table is a
+        custom JSF component, which enhances the standard datatable by a paging
+        mechanism. So only the data that is currently displayed is fetched from
+        the database. Reusing this table is very easy. See the sourcecode and the 
+        JavaDoc for more information." />
+         
+    </ui:include>
 
+	<rich:panel headerClass="topPanel">
+		<f:facet name="header">
+		      #{listOfEntities}
+		</f:facet>
+
+		<div align="right">
+                <table border="0">
+                    <tr>
+                        <td>
+                              <h:graphicImage value="img/help.png" style="cursor:pointer" 
+                              onclick="Richfaces.showModalPanel('mp',{width:450, top:200})" />
+                       </td>
+                       <td>
+                               <a style="vertical-align: center;" href="javascript:Richfaces.showModalPanel('mp',{width:450, top:200})">
+                               About this page...</a>
+                       </td>        
+                   </tr>
+               </table>
+            </div>
 		<h:panelGrid columns="2" columnClasses="gridContent"
 			rowClasses="vertTop">
 			

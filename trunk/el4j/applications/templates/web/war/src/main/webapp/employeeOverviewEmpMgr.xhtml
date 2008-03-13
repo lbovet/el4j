@@ -5,9 +5,41 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:el4j="http://www.elca.ch/el4j/taglib"
 	template="layout/template.xhtml"
-	xmlns:s="http://jboss.com/products/seam/taglib">
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:c="http://java.sun.com/jstl/core">
 
 	<ui:define name="body">
+	
+	    <ui:include src="/WEB-INF/facelet/modalPanel.xhtml">
+        
+            <!-- the text to display in the help popup -->
+            
+            <!-- Title  -->
+            <c:set var="panelTitle" value="Employees (non-generic)" />
+        
+        
+            <!--  user instructions -->
+            <c:set var="userText" value="TODO" />
+            
+            <!-- technical explanation -->
+            <c:set var="technicalText" value="TODO" />
+             
+        </ui:include>
+            
+         <div align="right">
+                <table border="0">
+                    <tr>
+                        <td>
+                              <h:graphicImage value="img/help.png" style="cursor:pointer" 
+                              onclick="Richfaces.showModalPanel('mp',{width:450, top:200})" />
+                       </td>
+                       <td>
+                               <a style="vertical-align: center;font-size:11px" href="javascript:Richfaces.showModalPanel('mp',{width:450, top:200})">
+                               About this page...</a>
+                       </td>        
+                   </tr>
+               </table>
+         </div>   
 		
 		<h2>
 			Search employees using EmployeeManager

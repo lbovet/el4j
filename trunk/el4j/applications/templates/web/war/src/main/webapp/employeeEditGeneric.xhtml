@@ -14,7 +14,41 @@
 		<el4j:set var="entityClassName"
 			value="ch.elca.el4j.seam.demo.entities.Employee" />
 
+
+         <ui:include src="/WEB-INF/facelet/modalPanel.xhtml">
+        
+            <!-- the text to display in the help popup -->
+            
+            <!-- Title  -->
+            <c:set var="panelTitle" value="Employees (half-generic)" />
+        
+        
+            <!--  user instructions -->
+            <c:set var="userText" value="TODO" />
+            
+            <!-- technical explanation -->
+            <c:set var="technicalText" value="TODO" />
+             
+        </ui:include>
+            
+         <div align="right">
+                <table border="0">
+                    <tr>
+                        <td>
+                              <h:graphicImage value="img/help.png" style="cursor:pointer" 
+                              onclick="Richfaces.showModalPanel('mp',{width:450, top:200})" />
+                       </td>
+                       <td>
+                               <a style="vertical-align: center;font-size:11px" href="javascript:Richfaces.showModalPanel('mp',{width:450, top:200})">
+                               About this page...</a>
+                       </td>        
+                   </tr>
+               </table>
+         </div>   
+
+
 		<h:messages />
+		
 		<h2>
 			Edit employee:
 		</h2>

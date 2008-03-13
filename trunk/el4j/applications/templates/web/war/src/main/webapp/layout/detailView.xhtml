@@ -46,9 +46,49 @@
 
 	<h:messages globalOnly="true" styleClass="message" />
 
+    <ui:include src="/WEB-INF/facelet/modalPanel.xhtml" >
+        
+        <c:set var="panelTitle" value="#{title}" />
+    
+    
+        <!-- the text to display in the help popup -->
+        <c:set var="userText" value="Here you can enter detailed 
+        information for the current #{entityShortName}. The * marks the fields
+        that have to be filled before you can proceed. Click on one of the buttons at the bottom 
+        to perform the desired action." />
+        
+        
+        <c:set var="technicalText" value="This is a 
+        fully generic detail page for the entity '#{entityShortName}'.
+        You can find its template in 'src/main/webapp/layout/detailView.xhtml'.
+        Facelets templating is used to assemble the page based on some custom tags. 
+        These are placed at 'src/main/webapp/WEB-INF/facelet' . In order to 
+        perform CRUD (create, retrieve, update, delete) actions, a generic DAO 
+        is used. For more information on how to retrieve generic DAOs, 
+        see the package 'ch.elca.el4j.services.persistence.generic.dao.impl' in
+        the sourcecode." />
+    
+    </ui:include>
+
 	<h:form id="editForm">
 		<rich:panel headerClass="topPanel">
 			<f:facet name="header">#{title}</f:facet>
+
+            <div align="right">
+                <table border="0">
+                    <tr>
+                        <td>
+					          <h:graphicImage value="img/help.png" style="cursor:pointer" 
+					          onclick="Richfaces.showModalPanel('mp',{width:450, top:200})" />
+	                   </td>
+	                   <td>
+					           <a style="vertical-align: center;" href="javascript:Richfaces.showModalPanel('mp',{width:450, top:200})">
+					           About this page...</a>
+					   </td>        
+	               </tr>
+	           </table>
+	        </div>
+            
 
 			<ui:remove><!-- insert all fields --></ui:remove>
 			<ui:insert name="fields">

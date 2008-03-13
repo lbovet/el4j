@@ -12,7 +12,27 @@
 	
 	<ui:remove><!-- a demo page showing various features --></ui:remove>
 
+      
+
 	<ui:remove><!-- demo 1 part 1: JavaScripts for Seam Remoting (AJAX) --></ui:remove>
+	
+	<!-- this is not needed since the popup is defined in the
+	included masterView 
+	<ui:include src="/WEB-INF/facelet/modalPanel.xhtml">
+        
+            
+            <c:set var="panelTitle" value="Demos" />
+        
+        
+            
+            <c:set var="userText" value="TODO" />
+            
+            
+            <c:set var="technicalText" value="TODO" />
+             
+    </ui:include>
+    -->
+	
 	<ui:define name="JavaScripts">
 		<s:remote include="remotingTest" />
 		<script type="text/javascript">
@@ -31,7 +51,24 @@ function sayHelloCallback(result) {
 	<ui:define name="body">
 		<h:messages globalOnly="true" styleClass="message" />
 		
-		<ui:remove><!-- demo 1 part 2: "UI" for Seam Remoting (AJAX) --></ui:remove>
+		
+            
+         <div align="right">
+                <table border="0">
+                    <tr>
+                        <td>
+                              <h:graphicImage value="img/help.png" style="cursor:pointer" 
+                              onclick="Richfaces.showModalPanel('mp',{width:450, top:200})" />
+                       </td>
+                       <td>
+                               <a style="vertical-align: center;font-size:11px" href="javascript:Richfaces.showModalPanel('mp',{width:450, top:200})">
+                               About this page...</a>
+                       </td>        
+                   </tr>
+               </table>
+         </div> 
+		
+		
 		<h2>
 			AJAX integration
 		</h2>
