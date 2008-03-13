@@ -10,7 +10,7 @@
 	<rich:toolBarGroup>
 		<h:outputText value="#{projectName}:" />
 		<h:form>
-			<h:commandLink value="Home"
+			<h:commandLink value="Home" style="font-size: 14px;"
 				action="#{entityManager.redirectTo('/main.xhtml')}" />
 			<rich:spacer width="8" />
 			<el4j:menuItem entityShortName="client" />
@@ -18,13 +18,16 @@
 			<el4j:menuItem entityShortName="offer" />
 			<el4j:menuItem entityShortName="keyword" />
 			<h:commandLink value="Employee (half-generic)"
-				action="#{entityManager.redirectTo('/employeeOverviewGeneric.xhtml')}" />
+				action="#{entityManager.redirectTo('/employeeOverviewGeneric.xhtml')}" 
+				style="font-size: 14px;"/>
 			<rich:spacer width="8" />
 			<h:commandLink value="Employee (non-generic)"
-				action="#{entityManager.redirectTo('/employeeOverviewEmpMgr.xhtml')}" />
+				action="#{entityManager.redirectTo('/employeeOverviewEmpMgr.xhtml')}" 
+				style="font-size: 14px;"/>
 			<rich:spacer width="8" />
 			<h:commandLink value="Demos"
-				action="#{entityManager.redirectTo('/demos.xhtml')}" />
+				action="#{entityManager.redirectTo('/demos.xhtml')}" 
+				style="font-size: 14px;"/>
 			<rich:spacer width="8" />
 
 		</h:form>
