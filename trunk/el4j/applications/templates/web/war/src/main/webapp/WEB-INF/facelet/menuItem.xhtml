@@ -3,9 +3,13 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:rich="http://richfaces.ajax4jsf.org/rich">
 
+	
+	
 	<h:commandLink value="#{el4j:h10nEntityNamePlural(entityShortName)}"
-		action="#{entityManager.redirectTo(utils.getDefaultMasterPage(entityShortName))}" />
+		action="#{entityManager.redirectTo(utils.getDefaultMasterPage(entityShortName))}" 
+		style="font-size: 14px;"/>
 
+    
 	<rich:spacer width="8" />
 
 </ui:composition>
