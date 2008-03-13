@@ -1,0 +1,59 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+            
+
+        <script>
+
+         function getRightTop(ref) {
+
+           var position = new Object();
+
+           position.top = 0; //ref.offsetTop;
+
+           position.left =0; // ref.offsetLeft+ref.clientWidth+6;
+
+           return position;
+
+         }
+
+        </script>
+
+        <rich:modalPanel  id="mp" minHeight="200" minWidth="450" 
+
+            height="200" width="500" zindex="2000">
+
+            <f:facet name="header">
+
+                <h:outputText value="Page information - #{panelTitle}" />
+
+            </f:facet>
+
+            <f:facet name="controls">
+
+                <h:graphicImage value="img/close.png" style="cursor:pointer" 
+                onclick="Richfaces.hideModalPanel('mp')" />
+
+            </f:facet>
+
+                <p><b>User instructions</b></p>
+                <p>#{userText}</p>
+                
+                
+
+                <p><b>Technical explanation</b></p>
+                <p>#{technicalText}</p>
+
+                
+
+                
+
+        </rich:modalPanel>
+
+
+
+</ui:composition>
