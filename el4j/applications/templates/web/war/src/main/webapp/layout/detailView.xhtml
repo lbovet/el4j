@@ -47,6 +47,8 @@
 	<h:messages globalOnly="true" styleClass="message" />
 
     <ui:include src="/WEB-INF/facelet/modalPanel.xhtml" >
+        <!-- Id for the popup -->
+        <c:set var="panelId" value="mp" />
         
         <c:set var="panelTitle" value="#{title}" />
     
