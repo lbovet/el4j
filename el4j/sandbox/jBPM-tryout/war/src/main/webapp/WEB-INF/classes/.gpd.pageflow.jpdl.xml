@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="holiday" width="595" height="599">
+  <node name="index" x="403" y="52" width="132" height="36"/>
+  <node name="list" x="120" y="98" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-90" h1="167" w2="-20" h2="-118"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="123" h1="-62" w2="-160" h2="-16"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="137" h1="124" w2="-78" h2="-159"/>
+    </edge>
+  </node>
+  <node name="evaluate" x="50" y="383" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="56" h1="-142" w2="-14" h2="143"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-68" h1="-147" w2="-138" h2="138"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="92" h1="-82" w2="22" h2="203"/>
+    </edge>
+  </node>
+  <node name="provideDetails" x="335" y="381" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-130" h1="-130" w2="85" h2="153"/>
+    </edge>
+  </node>
+</root-container>

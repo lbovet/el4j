@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="createRequest" width="595" height="599">
+  <node name="enterRequest" x="103" y="203" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="34" h1="-61" w2="38" h2="64"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-76" h1="-61" w2="-72" h2="64"/>
+    </edge>
+  </node>
+  <node name="index" x="99" y="78" width="132" height="36"/>
+</root-container>

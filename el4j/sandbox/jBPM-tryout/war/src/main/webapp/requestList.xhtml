@@ -1,0 +1,76 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.ajax4jsf.org/rich"
+    template="layout/template.xhtml">
+
+    <ui:define name="body">
+
+        <rich:panel headerClass="topPanel">
+            <f:facet name="header">Holiday request</f:facet>
+            <p>
+             <b>List of holiday requests to review for user #{loginAction.user}</b>
+            </p>
+            
+            <h:form>
+                   
+                <rich:dataTable value="#{pooledTaskInstanceList}"
+                    var="task" width="320" columnClasses="col">
+                    <!-- 
+                    <h:column>
+                        <f:facet name="header">Id</f:facet>
+                       #{task.id}
+                    </h:column>
+                    -->
+                    <h:column>
+                        <f:facet name="header">
+                        Task
+                        </f:facet>
+                        #{task.name}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                        Holiday request
+                        </f:facet>
+                        #{task.description}
+                    </h:column>
+                    
+                    <h:column rendered="#{actor.groupActorIds.contains('admin')}">
+                        <f:facet name="header">
+                            Action
+                        </f:facet>
+                        <h:commandLink action="toEvaluate"
+                          value="Evaluate">
+                            <f:param name="taskId" value="#{task.id}"/>
+                        </h:commandLink>
+                    </h:column>
+                    
+                    <h:column rendered="#{actor.groupActorIds.contains('user')}">
+                        <f:facet name="header">
+                            Action
+                        </f:facet>
+                        <h:commandLink action="toProvideDetails"
+                          value="Provide details">
+                            <f:param name="taskId" value="#{task.id}"/>
+                        </h:commandLink>
+                    </h:column>
+                </rich:dataTable>
+                
+                
+                
+                <p>
+                     <h:messages/>
+                </p>
+                
+                
+                <h:commandLink value="Back to main page..." 
+                    action="toIndex"></h:commandLink>
+            </h:form>
+        </rich:panel>
+
+    </ui:define>
+</ui:composition>

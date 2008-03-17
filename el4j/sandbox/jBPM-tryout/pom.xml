@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+    <parent>
+        <groupId>ch.elca.el4j.applications</groupId>
+        <artifactId>el4j-applications</artifactId>
+        <version>1.3.1-SNAPSHOT</version>
+    </parent>
+
+    <groupId>ch.elca.el4j.applications</groupId>
+    <artifactId>jBPM-tryout</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>JSF JBPM tryout</name>
+    <description>JSF jBPM tryout</description>
+    <modules>
+		<module>jar</module>
+		<module>war</module>
+    </modules>
+    
+	 <dependencyManagement>
+        <dependencies>
+           
+            <dependency>
+                <groupId>ch.elca.el4j.applications</groupId>
+                <artifactId>jBPM-tryout-jar</artifactId>
+                <version>${version.jBPM-tryout}</version>
+            </dependency>
+            
+        </dependencies>
+    </dependencyManagement>
+
+	<repositories>
+		<repository>
+		<snapshots>
+			<enabled>true</enabled>
+		</snapshots>
+		<releases>
+			<enabled>false</enabled>
+		</releases>
+		<id>el4jSnapshotRepositoryInternal</id>
+		<name>
+			Internal snapshot repository of the EL4J project
+		</name>
+		<url>http://leaffy.elca.ch/java/maven2snapshots</url>
+		</repository>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <id>el4jReleaseRepositoryExternal</id>
+            <name>External release repository of the EL4J project</name>
+            <url>http://el4.elca-services.ch/el4j/maven2repository</url>
+        </repository>
+        <repository>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <id>el4jSnapshotRepositoryExternal</id>
+            <!--id>apache.snapshots</id-->
+            <name>External snapshot repository of the EL4J project</name>
+            <url>http://el4.elca-services.ch/el4j/maven2snapshots</url>
+        </repository>
+	</repositories>
+	
+    <properties>
+		<version.jBPM-tryout>1.0-SNAPSHOT</version.jBPM-tryout>
+	</properties>
+</project>

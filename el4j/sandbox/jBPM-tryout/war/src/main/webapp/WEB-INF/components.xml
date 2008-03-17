@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<components xmlns="http://jboss.com/products/seam/components"
+            xmlns:core="http://jboss.com/products/seam/core"
+            xmlns:persistence="http://jboss.com/products/seam/persistence"
+            xmlns:transaction="http://jboss.com/products/seam/transaction"
+            xmlns:security="http://jboss.com/products/seam/security"
+			xmlns:spring="http://jboss.com/products/seam/spring"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:bpm="http://jboss.com/products/seam/bpm"
+            xsi:schemaLocation=
+                "http://jboss.com/products/seam/bpm http://jboss.com/products/seam/bpm-2.0.xsd
+                 http://jboss.com/products/seam/core http://jboss.com/products/seam/core-2.0.xsd 
+                 http://jboss.com/products/seam/security http://jboss.com/products/seam/security-2.0.xsd
+				 http://jboss.com/products/seam/spring http://jboss.com/products/seam/spring-2.0.xsd
+                 http://jboss.com/products/seam/components http://jboss.com/products/seam/components-2.0.xsd
+                 http://jboss.com/products/seam/persistence http://jboss.com/products/seam/persistence-2.0.xsd
+                 http://jboss.com/products/seam/transaction http://jboss.com/products/seam/transaction-2.0.xsd">
+
+	
+	    
+    <core:manager conversation-timeout="120000" 
+                  concurrent-request-timeout="500"
+                  conversation-id-parameter="cid"/>
+				  
+	<core:init debug="true"/>
+	
+	<security:identity authenticate-method="#{authenticator.authenticate}"/>
+    
+	<spring:spring-transaction platform-transaction-manager-name="transactionManager"/>
+	
+	
+    
+    <persistence:managed-hibernate-session name="hibernateSession" auto-create="true"
+        session-factory="#{hibernateSessionFactory}"/> 
+        
+    <!--<bpm:jbpm>
+        <bpm:process-definitions>
+            <value>/WEB-INF/processdefinition.jpdl.xml</value>
+        </bpm:process-definitions>
+    </bpm:jbpm>-->
+    
+    
+    <!-- this way it was working -->
+    <component class="org.jboss.seam.bpm.Jbpm">
+        <property name="processDefinitions">processdefinition.jpdl.xml</property>
+        <property name="pageflowDefinitions">
+	        
+		        <value>pageflow.jpdl.xml</value>
+		        <value>pageflow.createRequest.jpdl.xml</value>
+	       
+        </property>
+    </component>
+    
+    
+    
+</components>
