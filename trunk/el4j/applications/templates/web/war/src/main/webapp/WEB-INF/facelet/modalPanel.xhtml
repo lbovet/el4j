@@ -23,7 +23,7 @@
 
         </script>
 
-        <rich:modalPanel  id="mp" minHeight="200" minWidth="450" 
+        <rich:modalPanel  id="#{panelId}" minHeight="200" minWidth="450" 
 
             height="200" width="500" zindex="2000">
 
@@ -36,7 +36,7 @@
             <f:facet name="controls">
 
                 <h:graphicImage value="img/close.png" style="cursor:pointer" 
-                onclick="Richfaces.hideModalPanel('mp')" />
+                onclick="Richfaces.hideModalPanel('#{panelId}')" />
 
             </f:facet>
 
