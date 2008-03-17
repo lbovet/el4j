@@ -152,49 +152,49 @@
             <id>proximityCentral</id>
             <mirrorOf>central</mirrorOf>
             <name>Proxmity mirrored central.</name>
-            <url>http://leaffy.elca.ch:18080/repository/apache.release</url>
+            <url>http://leaffy.elca.ch:8081/artifactory/repo</url>
         </mirror>
         
        <mirror>
             <id>proximityCodehaus</id>
             <mirrorOf>codehaus</mirrorOf>
             <name>Proxmity mirrored codehaus.</name>
-            <url>http://leaffy.elca.ch:18080/repository/codehaus.release</url>
+            <url>http://leaffy.elca.ch:8081/artifactory/repo</url>
         </mirror>
         
         <mirror>
             <id>proximityJBoss</id>
             <mirrorOf>jboss</mirrorOf>
             <name>Proxmity mirrored jboss.</name>
-            <url>http://leaffy.elca.ch:18080/repository/jboss.release</url>
+            <url>http://leaffy.elca.ch:8081/artifactory/repo</url>
         </mirror>
 
         <mirror>
             <id>proximityBaka</id>
             <mirrorOf>baka</mirrorOf>
             <name>Proxmity mirrored baka.</name>
-            <url>http://leaffy.elca.ch:18080/repository/baka.release</url>
+            <url>http://leaffy.elca.ch:8081/artifactory/repo</url>
         </mirror>
         
         <mirror>
             <id>proximityJavaNetMaven1</id>
             <mirrorOf>java.net</mirrorOf>
             <name>Proxmity mirrored java-net-maven-1.</name>
-            <url>http://leaffy.elca.ch:18080/repository/java-net-maven-1.release</url>
+            <url>http://leaffy.elca.ch:8081/artifactory/repo</url>
         </mirror>
         
         <mirror>
             <id>proximityJavaNetMaven2</id>
             <mirrorOf>maven2-repository.dev.java.net</mirrorOf>
             <name>Proxmity mirrored java-net-maven-2.</name>
-            <url>http://leaffy.elca.ch:18080/repository/java-net-maven-2.release</url>
+            <url>http://leaffy.elca.ch:8081/artifactory/repo</url>
         </mirror>
         
         <mirror>
             <id>proximityLeaffy</id>
             <mirrorOf>el4jReleaseRepositoryInternal</mirrorOf>
             <name>Proxmity mirrored el4jReleaseRepositoryInternal.</name>
-            <url>http://leaffy.elca.ch:18080/repository/leaffy.release</url>
+            <url>http://leaffy.elca.ch:8081/artifactory/repo</url>
         </mirror-->
         
        
@@ -204,21 +204,21 @@
             <id>proximityCentralSnapshot</id>
             <mirrorOf>apache.snapshots</mirrorOf>
             <name>Proxmity mirrored apache.snapshots.</name>
-            <url>http://leaffy.elca.ch:18080/repository/apache.snapshot</url>
+            <url>http://leaffy.elca.ch:8081/artifactory/repo</url>
         </mirror>
 
         <mirror>
             <id>proximityCodehausSnapshot</id>
             <mirrorOf>codehaus.snapshot</mirrorOf>
             <name>Proxmity mirrored codehaus.snapshot.</name>
-            <url>http://leaffy.elca.ch:18080/repository/codehaus.snapshot</url>
+            <url>http://leaffy.elca.ch:8081/artifactory/repo</url>
         </mirror>
 
         <mirror>
             <id>proximityLeaffySnapshot</id>
             <mirrorOf>el4jSnapshotRepositoryInternal</mirrorOf>
             <name>Proxmity mirrored el4jSnapshotRepositoryInternal.</name>
-            <url>http://leaffy.elca.ch:18080/repository/leaffy.snapshot</url>
+            <url>http://leaffy.elca.ch:8081/artifactory/repo</url>
         </mirror-->
         
 
@@ -227,28 +227,28 @@
             <id>proximityEl4ElcaServices</id>
             <mirrorOf>el4jReleaseRepositoryExternal</mirrorOf>
             <name>Proxmity mirrored el4jReleaseRepositoryExternal.</name>
-            <url>http://leaffy.elca.ch:18080/repository/el4-elca-services.release</url>
+            <url>http://leaffy.elca.ch:8081/artifactory/repo</url>
         </mirror>
         
        <mirror>
             <id>proximityEl4ElcaServicesSnapshot</id>
             <mirrorOf>el4jSnapshotRepositoryExternal</mirrorOf>
             <name>Proxmity mirrored el4jSnapshotRepositoryExternal.</name>
-            <url>http://leaffy.elca.ch:18080/repository/el4-elca-services.snapshot</url>
+            <url>http://leaffy.elca.ch:8081/artifactory/repo</url>
         </mirror>
         
         <mirror>
             <id>proximityPluginEl4ElcaServices</id>
             <mirrorOf>el4jReleasePluginRepositoryExternal</mirrorOf>
             <name>Proxmity mirrored el4jReleasePluginRepositoryExternal.</name>
-            <url>http://leaffy.elca.ch:18080/repository/el4-elca-services.release</url>
+            <url>http://leaffy.elca.ch:8081/artifactory/repo</url>
         </mirror>
         
         <mirror>
             <id>proximityPluginEl4ElcaServicesSnapshot</id>
             <mirrorOf>el4jSnapshotPluginRepositoryExternal</mirrorOf>
             <name>Proxmity mirrored el4jSnapshotPluginRepositoryExternal.</name>
-            <url>http://leaffy.elca.ch:18080/repository/el4-elca-services.snapshot</url>
+            <url>http://leaffy.elca.ch:8081/artifactory/repo</url>
         </mirror-->
     </mirrors>
 
