@@ -46,10 +46,25 @@ function sayHelloCallback(result) {
         
         
             
-            <c:set var="userText" value="TODO" />
+            <c:set var="userText" value="This page serves as a demo/test page.
+            In the AJAX demo, you can click on the button, enter a name, which
+            will then be sent to server and processed, and get the response from
+            the server in as message box.
+            The entity test is just to test entities having fields of some
+            complex type. This is interesting only for developers.
+            The conversation playground is for developers, too." />
             
             
-            <c:set var="technicalText" value="TODO" />
+            <c:set var="technicalText" value="The AJAX demo show the use of Seam
+             Remoting. The class behind is ch.elca.el4j.seam.demo.RemotingTest,
+             which contains a @WebMethod annotated method.
+             Using the entity test you can easily play around with complex
+             types. Extend the class ch.elca.el4j.seam.demo.entities.EntityTest
+             so that it has a field having the type you want to test.
+             Afterwards you can have a look at this page to check if it is
+             displayed correctly.
+             Begin and end conversations manually and look how Seam reacts...
+             Of course, have a look at the source code for all the details." />
              
         </ui:include>
 		
