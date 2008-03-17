@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+    
+    <parent>
+        <groupId>ch.elca.el4j.applications</groupId>
+        <artifactId>jBPM-tryout</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    
+    <artifactId>jBPM-tryout-jar</artifactId>
+    <version>${version.jBPM-tryout}</version>
+    <packaging>jar</packaging>
+    <name>EL4J jBPM-tryout jar</name>
+    <description>JAR part of jBPM-tryout</description>
+    
+    <build>
+        <!-- maven-seam-plugin provides seam-gen like functionality. its all optional -->
+        <!-- <plugins>
+            <plugin>
+                <groupId>cz.softeu.seamgen</groupId>
+                <artifactId>maven-seam-plugin</artifactId>
+                <configuration>
+                    <modelPackage>ch.elca.el4j.applications.el4jseam.model</modelPackage>
+                    <actionPackage>ch.elca.el4j.applications.el4jseam.action</actionPackage>
+                    <testPackage>ch.elca.el4j.applications.el4jseam.test</testPackage>
+                </configuration>
+            </plugin>
+        </plugins>
+        -->
+    </build>
+    
+    <!-- Project dependencies -->
+    <dependencies>
+    
+       <dependency>
+            <groupId>org.jbpm</groupId>
+            <artifactId>jbpm-jpdl</artifactId>
+            <version>3.2.2</version>
+        </dependency>
+        <!--
+       <dependency>
+            <groupId>org.jbpm</groupId>
+            <artifactId>jbpm-identity</artifactId>
+            <version>3.1.4</version>
+        </dependency>-->
+        
+        <!--
+       <dependency>
+    <groupId>org.springmodules</groupId>
+    <artifactId>spring-modules-jbpm31</artifactId>
+    <version>0.8</version>
+     <exclusions>
+                <exclusion>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>jboss</groupId>
+                    <artifactId>jbpm</artifactId>
+                </exclusion>
+            </exclusions>
+            
+</dependency>-->
+        
+        <dependency>
+            <groupId>bsh</groupId>
+            <artifactId>bsh</artifactId>
+            <version>2.0b1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>1.8.0.4</version>
+        </dependency>
+        
+        
+        
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+        </dependency>
+    
+        <!--  JSF web Application Template modules -->
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-jsf-jar</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-web-jar</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-database</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-env</artifactId>
+            <type>jar</type>
+        </dependency>
+
+        <!-- EL4J keyword dao -->
+        
+        <dependency>
+            <groupId>ch.elca.el4j.applications</groupId>
+            <artifactId>keyword-dao</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>ch.elca.el4j.modules</groupId>
+                    <artifactId>module-ibatis</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+    <profiles>
+        <profile>
+            <id>db2</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <db.username>keyword_user</db.username>
+                <db.password>keyword_user</db.password>
+            </properties>
+        </profile>
+        <profile>
+            <id>oracle</id>
+            <properties>
+                <db.username>LEAF4</db.username>
+                <db.password>LEAF</db.password>
+            </properties>
+        </profile>
+        <profile>
+            <id>mysql</id>
+            <properties>
+                <db.username>root</db.username>
+                <db.password>admin</db.password>
+            </properties>
+        </profile>
+    </profiles>
+</project>

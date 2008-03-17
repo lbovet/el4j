@@ -1,0 +1,47 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.ajax4jsf.org/rich"
+	template="layout/template.xhtml">
+
+	<ui:define name="body">
+
+		<h:messages styleClass="message" />
+
+		<h:form id="login">
+
+			<rich:panel>
+				<f:facet name="header">Login</f:facet>
+
+				<p>
+					Please login for the jBPM holiday request example using any username
+				</p>
+
+				<div class="dialog">
+					<h:panelGrid columns="2" rowClasses="prop"
+						columnClasses="name,value">
+						<h:outputLabel for="username">Username</h:outputLabel>
+						<h:inputText id="username" value="#{loginAction.user}" />
+					</h:panelGrid>
+				</div>
+
+			 <br/>
+
+			<div class="actionButtons">
+				
+				<h:commandButton type="submit" value="As User"
+				action="#{loginAction.login}"/>
+				<h:commandButton type="submit" value="As Admin"
+				action="#{loginAction.loginAdmin}"/>
+			</div>
+			
+			</rich:panel>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
