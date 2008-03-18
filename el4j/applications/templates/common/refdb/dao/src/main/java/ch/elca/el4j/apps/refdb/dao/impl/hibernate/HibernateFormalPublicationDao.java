@@ -44,13 +44,6 @@ public class HibernateFormalPublicationDao
     implements FormalPublicationDao {
 
     /**
-     * Creates a new HibernateformalPublicationDao instance.
-     */
-    public HibernateFormalPublicationDao() {
-        setPersistentClass(FormalPublication.class);
-    }
-    
-    /**
      * {@inheritDoc}
      */
     @Override

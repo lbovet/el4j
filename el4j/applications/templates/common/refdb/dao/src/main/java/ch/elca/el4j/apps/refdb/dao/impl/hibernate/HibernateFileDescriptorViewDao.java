@@ -31,13 +31,6 @@ public class HibernateFileDescriptorViewDao
         implements FileDescriptorViewDao {
     
     /**
-     * Creates a new HibernateFileDescriptorViewDao instance.
-     */
-    public HibernateFileDescriptorViewDao() {
-        setPersistentClass(FileDescriptorView.class);
-    }
-    
-    /**
      * {@inheritDoc}
      */
     @Transactional(propagation = Propagation.REQUIRED)
