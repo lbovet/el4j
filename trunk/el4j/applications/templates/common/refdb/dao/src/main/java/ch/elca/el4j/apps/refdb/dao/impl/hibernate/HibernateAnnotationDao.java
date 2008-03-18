@@ -30,13 +30,6 @@ public class HibernateAnnotationDao
     implements AnnotationDao {
     
     /**
-     * Creates a new HibernateAnnotationDao instance.
-     */
-    public HibernateAnnotationDao() {
-        setPersistentClass(Annotation.class);
-    }
-    
-    /**
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")

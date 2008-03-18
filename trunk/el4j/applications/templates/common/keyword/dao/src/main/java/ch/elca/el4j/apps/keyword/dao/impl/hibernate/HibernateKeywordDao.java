@@ -45,14 +45,7 @@ import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
 public class HibernateKeywordDao
     extends GenericHibernateDao<Keyword, Integer>
     implements KeywordDao {
-    
-    /**
-     * Creates a new HibernateKeywordDao instance.
-     */
-    public HibernateKeywordDao() {
-        setPersistentClass(Keyword.class);
-    }
-    
+       
     /**
      * {@inheritDoc}
      */

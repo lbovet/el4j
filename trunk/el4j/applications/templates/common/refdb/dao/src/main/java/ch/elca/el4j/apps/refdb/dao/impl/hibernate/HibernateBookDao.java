@@ -38,13 +38,6 @@ public class HibernateBookDao
     implements BookDao {
 
     /**
-     * Creates a new HibernateBookDao instance.
-     */
-    public HibernateBookDao() {
-        setPersistentClass(Book.class);
-    }
-    
-    /**
      * {@inheritDoc}
      */
     @Override

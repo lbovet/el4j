@@ -35,13 +35,6 @@ public class HibernateLinkDao
     extends GenericHibernateReferenceDao<Link, Integer> implements LinkDao {
 
     /**
-     * Creates a new HibernateLinkDao instance.
-     */
-    public HibernateLinkDao() {
-        setPersistentClass(Link.class);
-    }
-   
-    /**
      * {@inheritDoc}
      */
     @Override

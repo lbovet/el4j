@@ -22,11 +22,4 @@ import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
 public class HibernateFileDao extends GenericHibernateFileDao<File, Integer>
     implements FileDao {
 
-    /**
-     * Creates a new HibernateFileDao instance.
-     */
-    public HibernateFileDao() {
-        setPersistentClass(File.class);
-    }
-    
 }
