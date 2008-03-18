@@ -56,9 +56,9 @@
                             <jarResources>
                                 <jarResource>
                                     <groupId>ch.elca.el4j.applications</groupId>
-                                    <artifactId>swing-demo-thin-client</artifactId>
+                                    <artifactId>swing-demo-standalone-client</artifactId>
                                     <version>${version.application-refdb}</version>
-                                    <mainClass>ch.elca.el4j.demos.gui.MainFormDistributedMDI</mainClass>
+                                    <mainClass>ch.elca.el4j.demos.gui.MainStandaloneDocking</mainClass>
                                 </jarResource>
                             </jarResources>
                         </jnlpFile>
@@ -115,5 +115,6 @@
     <properties>
         <!-- must be changed to comply with the maven webstart plugin -->
         <jee-web.webapp.directory>${project.build.directory}/${jee-web.war.name}</jee-web.webapp.directory> 
+		
     </properties>
 </project>
