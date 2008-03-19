@@ -51,7 +51,7 @@ public interface ConvenienceGenericDao<T, ID extends Serializable>
      * Retrieves a domain object by identifier.
      * 
      * @param id
-     *             The id of the domain object to delete
+     *             The id of the domain object to find
      * @return Returns the found domain object.
      * @throws DataRetrievalFailureException
      *             If no domain object could be found with given id.
