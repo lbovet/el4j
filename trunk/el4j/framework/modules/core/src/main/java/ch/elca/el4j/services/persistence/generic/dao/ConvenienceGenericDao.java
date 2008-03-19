@@ -48,10 +48,13 @@ public interface ConvenienceGenericDao<T, ID extends Serializable>
     extends GenericDao<T> {
     
     /**
-     * Retrieves a domain object by identifier.
+     * Retrieves a domain object by identifier. This method gets the object from
+     * the hibernate cache. It might be that you don't get the actual version
+     * that is in the database. If you want the actual version do a refresh()
+     * after this method call.
      * 
      * @param id
-     *             The id of the domain object to find
+     *            The id of the domain object to find
      * @return Returns the found domain object.
      * @throws DataRetrievalFailureException
      *             If no domain object could be found with given id.
