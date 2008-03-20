@@ -21,10 +21,10 @@ import java.lang.annotation.Target;
  * or may be an explicit java.util.concurrent.Lock.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$URL: $",
- *    "$Revision: $",
- *    "$Date: $",
- *    "$Author: $"
+ *   ("$URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/core/src/main/java/ch/elca/el4j/services/persistence/generic/dao/impl/DefaultDaoRegistry.java $",
+ *    "$Revision: 2489 $",
+ *    "$Date: 2008-01-22 14:05:58 +0100 (Di, 22 Jan 2008) $",
+ *    "$Author: swismer $"
  * );</script>
  *
  * The argument determines which lock guards the annotated field or method:
