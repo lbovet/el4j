@@ -37,6 +37,5 @@
   	  ch.elca.el4j.jsf.component.html.PagedRichHtmlDatascroller
   	</component-class>
   </component>
-   
-   
+  
 </faces-config>
