@@ -20,10 +20,10 @@ import java.lang.annotation.*;
  * part of the caller.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
+ *   ("$URL: $",
+ *    "$Revision: $",
+ *    "$Date$: ",
+ *    "$Author: $"
  * );</script>
  * 
  */

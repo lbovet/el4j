@@ -21,10 +21,10 @@ import java.lang.annotation.Target;
  * or may be an explicit java.util.concurrent.Lock.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
+ *   ("$URL: $",
+ *    "$Revision: $",
+ *    "$Date: $",
+ *    "$Author: $"
  * );</script>
  *
  * The argument determines which lock guards the annotated field or method:
