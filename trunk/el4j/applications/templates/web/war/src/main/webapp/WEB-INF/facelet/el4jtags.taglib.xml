@@ -12,6 +12,11 @@
 		</component>
 	</tag>
 	
+	<tag>
+        <tag-name>editableCombobox</tag-name>
+         <source>editableCombobox.xhtml</source>
+    </tag>
+	
 	<!-- declaratively defined facelets tags -->
     <tag>
         <tag-name>defaultViewMapping</tag-name>

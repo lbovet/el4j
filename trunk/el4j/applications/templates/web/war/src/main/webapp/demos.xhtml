@@ -6,7 +6,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:rich="http://richfaces.ajax4jsf.org/rich"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:el4j="http://www.elca.ch/el4j/taglib"
 	template="layout/template.xhtml">
 	
@@ -50,6 +51,9 @@ function sayHelloCallback(result) {
             In the AJAX demo, you can click on the button, enter a name, which
             will then be sent to server and processed, and get the response from
             the server in as message box.
+            Second, the Editable Combobox either lets you select an item from a list or
+            you can enter a free text. Click on 'Check value' to see the value you
+            entered.
             The entity test is just to test entities having fields of some
             complex type. This is interesting only for developers.
             The conversation playground is for developers, too." />
@@ -58,6 +62,16 @@ function sayHelloCallback(result) {
             <c:set var="technicalText" value="The AJAX demo show the use of Seam
              Remoting. The class behind is ch.elca.el4j.seam.demo.RemotingTest,
              which contains a @WebMethod annotated method.
+             
+             The Editable Combobox shows a way to create a comboxbox with enhanced
+             features. Actually, this is not a combobox (selectOneMenu), but an own
+             tag containing a textbox and a dataTable and some JavaScript to glue
+             them together. Refer to the file 
+             /WEB-INF/facelet/editableCombobox.xhtml for a more extended documentation.
+             Furthermore, the 'Check value' button demonstrates how to send an AJAX
+             request and to refresh a part of the page without having to do a 
+             HTTT request.
+             
              Using the entity test you can easily play around with complex
              types. Extend the class ch.elca.el4j.seam.demo.entities.EntityTest
              so that it has a field having the type you want to test.
@@ -91,6 +105,38 @@ function sayHelloCallback(result) {
 		<button onclick="javascript:sayHello()">
 			Say Hello
 		</button>
+		
+		
+		<ui:remove><!-- Editable combobox control. See editableCombobox.xhtml
+		for more information. --></ui:remove>
+        
+        <h2>
+            Editable Combobox Test
+        </h2>
+        <p>Select an item or enter a new value</p>
+        
+        <rich:panel>
+           <h:form id="form1">
+            
+            <el4j:editableCombobox id="cbo"
+                                   formId="form1"
+                                   width="196px"
+                                   value="#{comboTester.value}"
+                                   listValue="#{comboTester.list}"
+                                   listText="#{var.firstName}"  
+                                   />   
+
+            <a4j:commandButton value="Check value"
+                reRender="testValue" />
+            
+            <a4j:outputPanel id="testValue">
+                <h:outputText value="Current value: #{comboTester.value}" />
+            </a4j:outputPanel>
+            
+            </h:form>
+        </rich:panel>
+        
+	    
 
 		<ui:remove><!-- demo 2: Embed master view of entity containing a date field --></ui:remove>
 		<h2>

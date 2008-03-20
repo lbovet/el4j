@@ -1,0 +1,106 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:el4j="http://www.elca.ch/el4j/taglib">
+
+
+
+    <ui:remove>
+    <!-- 
+    
+    This tag demonstrates a way to create a editable combobox, since
+    there is nothing similar in JSF or Richfaces (except the 
+    suggestionBox from Richfaces, but its behavior is different from
+    a combobox).
+    It has not all the features of a common combobox (mainly, the 
+    functionality of scrolling to the items beginning with a certain letter
+    when entering it, is missing), but it can be enhanced easily.
+    
+    The required attributes when using it are:
+    
+    formId - the id of the form that contains the editableCombobox 
+    (this is required for JavaScript interactions within the control)
+                                   
+    value= - the value binding for the selected value (String)
+                                   
+    listValue - a collection containing the items that should be displayed
+    in the dropdown
+           
+    listText - the property whose value should be displayed as caption in the dropdown.
+    Use "var" to refer to the current element of the iteration.
+    
+    
+    Example usage:
+    
+     <el4j:editableCombobox id="cbo"
+                            formId="form1"
+                            width="196px"
+                            value="#{comboTester.value}"
+                            listValue="#{comboTester.list}"
+                            listText="#{var.firstName}"  
+                             />   
+    
+    
+    
+    -->
+    </ui:remove>
+
+
+    <script language="JavaScript">
+
+        function setValue(toValue) {
+           document.getElementById('#{formId}:#{id}_txt').value = toValue;
+        }
+     
+		function toggleList(listId) {
+		   if (document.getElementById(listId).style.display == ""){
+		       document.getElementById(listId).style.display = "none";
+		   } else {
+		       document.getElementById(listId).style.display = "";
+		   }
+		}
+		
+		function highlight(o) {
+		
+		  o.style.backgroundColor="#316ac5";
+		  o.firstChild.style.color="white";
+		
+		}
+		
+		function deHighlight(o) {
+        
+          o.style.backgroundColor="white";
+          o.firstChild.style.color="black";
+        
+        }
+	</script>
+
+	<h:inputText value="#{value}" id="#{id}_txt" 
+	       style="top:0px;width:#{width};"/>
+
+	<a4j:commandButton value="test" id="#{id}_btn"
+		onclick="javascript:toggleList('#{id}_div')"
+		image="/img/dropdown.png" 
+		style="position:relative;left:-1px;top:4px;"/>
+
+
+    <div id="#{id}_div" style="position:absolute;display:none;width:#{width};border-width:1px;">
+		<rich:dataTable style="border-width:1px;"
+		  id="#{id}_tbl" value="#{listValue}" var="var"
+           onRowClick="javascript:setValue(this.firstChild.innerHTML);toggleList('#{id}_div')"
+           onRowMouseOver="javascript:highlight(this)"
+           onRowMouseOut="javascript:deHighlight(this)"
+           border="0">
+			<rich:column style="cursor:default;border:none;">
+				<h:outputText value="#{listText}" />
+			</rich:column>
+		</rich:dataTable>
+    </div>
+
+
+</ui:composition>
