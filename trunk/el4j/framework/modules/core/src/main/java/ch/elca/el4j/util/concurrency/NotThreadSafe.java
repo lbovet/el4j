@@ -19,10 +19,10 @@ import java.lang.annotation.*;
  * idea to assume a class is thread-safe without good reason.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
+ *   ("$URL: $",
+ *    "$Revision: $",
+ *    "$Date: $",
+ *    "$Author: $"
  * );</script>
  *
  * @see ThreadSafe

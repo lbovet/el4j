@@ -28,10 +28,10 @@ import java.lang.annotation.*;
  * published without synchronization.
  * 
  * <script type="text/javascript">printFileStatus
- *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
+ *   ("$URL: $",
+ *    "$Revision: $",
+ *    "$Date: $",
+ *    "$Author: $"
  * );</script>
  */
 @Documented
