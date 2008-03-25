@@ -75,10 +75,11 @@ case $1 in
 	"archetype")
 		version=$(cat external/maven/archetypes/module-template/pom.xml | grep "<version>" | tail -n 1 | tr -d ' \r\n<>version/' | sed 's/-SNAPSHOT//')
 
-		mvn archetype:create -DarchetypeGroupId=ch.elca.el4j  \
+		#mvn archetype:create -DarchetypeGroupId=ch.elca.el4j
+		mvn org.apache.maven.plugins:maven-archetype-plugin:1.0-alpha-7:create -DarchetypeGroupId=ch.elca.el4j  \
 			 -DarchetypeArtifactId=EL4JArchetypeCore -DarchetypeVersion=$version \
 			 -DgroupId=ch.elca.test -DartifactId=testarchetype  \
-			 -DremoteRepositories=http://el4.elca-services.ch/el4j/maven2repository \
+			 -DremoteRepositories=http://el4.elca-services.ch/el4j/maven2repository
 
 		mvn -f testarchetype/pom.xml clean install $2
 		rm -rf testarchetype
