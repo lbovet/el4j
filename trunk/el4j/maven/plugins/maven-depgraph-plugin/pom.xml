@@ -36,6 +36,10 @@
                     <goalPrefix>depgraph</goalPrefix>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>ch.elca.el4j.maven.plugins</groupId>
+                <artifactId>maven-manifest-decorator-plugin</artifactId>
+            </plugin>
             
             <!-- IDE -->
             <plugin>
