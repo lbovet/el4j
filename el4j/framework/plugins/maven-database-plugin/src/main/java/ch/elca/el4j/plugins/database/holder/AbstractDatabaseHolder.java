@@ -133,12 +133,13 @@ public abstract class AbstractDatabaseHolder {
             MavenProject project) {
         ArrayList<URL> urls = new ArrayList<URL>();
 
-        List<org.apache.maven.model.Resource> res = project.getResources();
-        res.addAll(project.getTestResources());
         try {
-            for (org.apache.maven.model.Resource resource : res) {
-                urls.add(new URL("file", "", "/" + resource.getDirectory() + "/"));
-            }
+            urls.add(new URL("file", "", "/" + 
+                project.getBuild().getOutputDirectory() + "/"));
+            urls.add(new URL("file", "", "/" + 
+                project.getBuild().getTestOutputDirectory() + "/"));
+
+            
         } catch (MalformedURLException e) {
             s_logger.error("Malformed resource URL: " + e);
             throw new DatabaseHolderException(e);
