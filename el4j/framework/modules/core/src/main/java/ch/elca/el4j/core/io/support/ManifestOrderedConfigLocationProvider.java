@@ -191,13 +191,16 @@ public class ManifestOrderedConfigLocationProvider
                     dependencies = "";
                 }
                 
-                String moduleLocation = url.getFile();
-                moduleLocation = moduleLocation.substring(
-                    0, moduleLocation.length() - MANIFEST_FILE.length());
-                
-                m = new Module(module, moduleLocation);
-                m.addAllConfigFiles(files);
-                m.addAllDependencies(dependencies);
+                // skip modules that are not properly decorated
+                if (!module.equals("null")) {
+                    String moduleLocation = url.getFile();
+                    moduleLocation = moduleLocation.substring(
+                        0, moduleLocation.length() - MANIFEST_FILE.length());
+                    
+                    m = new Module(module, moduleLocation);
+                    m.addAllConfigFiles(files);
+                    m.addAllDependencies(dependencies);
+                }
             }
         } finally {
             if (is != null) {
