@@ -64,29 +64,31 @@ public class ValidatingBindingListener implements BindingListener {
     
     /** {@inheritDoc} */
     public void bindingBecameBound(Binding binding) {
-        //s_logger.info("bound");
+        //s_logger.debug("bound");
     }
     
     /** {@inheritDoc} */
     public void bindingBecameUnbound(Binding binding) {
-        //s_logger.info("unbound");
+        //s_logger.debug("unbound");
         m_listener.setValid(binding.getSourceObject(),
             (JComponent) binding.getTargetObject());
     }
     
     /** {@inheritDoc} */
     public void sourceChanged(Binding binding, PropertyStateEvent event) {
-        //s_logger.info("source changed");
+        //s_logger.debug("source changed");
     }
     
     /** {@inheritDoc} */
     public void targetChanged(Binding binding, PropertyStateEvent event) {
-        //s_logger.info("target changed");
+        //s_logger.debug("target changed");
     }
 
     /** {@inheritDoc} */
     public void syncFailed(Binding binding, SyncFailure failure) {
-        //s_logger.info("failed");
+        s_logger.debug("Validate on binding sync failed: "
+            + failure.toString());
+        
         if (binding.getTargetObject() instanceof JComponent) {
             m_listener.setInvalid(binding.getSourceObject(),
                 (JComponent) binding.getTargetObject(),
@@ -101,7 +103,6 @@ public class ValidatingBindingListener implements BindingListener {
 
     /** {@inheritDoc} */
     public void synced(Binding binding) {
-        //s_logger.info("Validate");
         ValidationCapability source = null;
         BeanProperty beanProperty  = null;
         JComponent target = null;
@@ -120,14 +121,19 @@ public class ValidatingBindingListener implements BindingListener {
             }
         }
         if (source != null) {
+            s_logger.debug(
+                "Validate on binding sync: " + source + " <-> " + target);
             if (beanProperty != null) {
                 m_listener.setValid(source, target,
                     source.isValid(beanProperty.getPropertyName()));
             } else {
                 m_listener.setValid(source, target, source.isValid());
             }
-        } /*else {
-            m_listener.setValid(null, (JComponent) binding.getTargetObject());
-        }*/
+        } else {
+            s_logger.debug(
+                "Could not validate on binding sync: Neither " + source
+                + " nor " + target + " implements ValidationCapability");
+            //m_listener.setValid(null, (JComponent) binding.getTargetObject());
+        }
     }
 }
