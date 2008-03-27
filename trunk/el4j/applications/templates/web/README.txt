@@ -20,19 +20,11 @@ Requirements:
 Build Instructions:
  - First compile it, using mvn install.
  - To execute it, change to the war directory an run the following command:
-      mvn jetty:run
+      mvn db:prepare jetty:run (or just mvn jetty:run if you uncomment maven-database-plugin section in war/pom.xml)
    or if you want to use tomcat
       mvn db:prepare cargo:undeploy cargo:deploy cargo:start
  - After the application has started you can access it at
       http://localhost:8080/seam-demo/
-
-
-Minor Problems:
-
-- There is a non-fatal error that shows up each request:
-  "ERROR [org.jboss.seam.contexts.Contexts] could not discover transaction status".
-  This is most likely a seam bug, because <core:init transaction-management-enabled="false"/> has
-  been set in components.xml which is supposed turn seam transaction management off althogether.
 
 
 Missing Features / TODO:

@@ -42,7 +42,8 @@
             
             
             <!-- EL4J Database plugin to start and fill DB automatically -->
-            <plugin>
+			<!-- this simplifies running jetty (mvn jetty:run is enough) -->
+            <!--plugin>
                 <groupId>ch.elca.el4j.maven.plugins</groupId>
                 <artifactId>maven-database-plugin</artifactId>
                 <executions>
@@ -53,7 +54,7 @@
                         </goals>
                         <phase>test-compile</phase>
                     </execution>
-                    <!-- Delete tables and stop Network Server -->
+                    <!- - Delete tables and stop Network Server - ->
                     <execution>
                         <id>clean up</id>
                         <goals>
@@ -63,7 +64,7 @@
                         <phase>package</phase>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin-->
             
             <!-- maven jetty plugin for comfortable development -->
             <plugin>
