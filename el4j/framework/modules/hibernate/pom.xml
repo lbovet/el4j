@@ -95,12 +95,7 @@
             <version>3.0.0.ga</version>
         </dependency>
         
-        <!-- Needed dependencies by hibernate core -->        
-        <dependency>
-            <groupId>net.sf.ehcache</groupId>
-            <artifactId>ehcache</artifactId>
-            <version>1.2.3</version>
-        </dependency>
+        <!-- Needed dependencies by hibernate core -->
         <dependency>
             <groupId>javax.transaction</groupId>
             <artifactId>jta</artifactId>
