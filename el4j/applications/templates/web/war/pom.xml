@@ -40,9 +40,57 @@
                 </configuration>
             </plugin>
             
-            
             <!-- EL4J Database plugin to start and fill DB automatically -->
-			<!-- this simplifies running jetty (mvn jetty:run is enough) -->
+            <plugin>
+                <groupId>ch.elca.el4j.maven.plugins</groupId>
+                <artifactId>maven-database-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare</goal>
+                        </goals>
+                        <phase>pre-integration-test</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <!-- skip unit test run, tests to be executed during integration-test -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>surefire-it</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <skip>false</skip>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <!-- Delete tables and stop Network Server -->
+            <plugin>
+                <groupId>ch.elca.el4j.maven.plugins</groupId>
+                <artifactId>maven-database-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>cleanUp</goal>
+                        </goals>
+                        <phase>post-integration-test</phase>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- EL4J Database plugin to start and fill DB automatically -->
+            <!-- this simplifies running jetty (mvn jetty:run is enough) -->
             <!--plugin>
                 <groupId>ch.elca.el4j.maven.plugins</groupId>
                 <artifactId>maven-database-plugin</artifactId>
@@ -59,7 +107,7 @@
                         <id>clean up</id>
                         <goals>
                             <goal>silentDrop</goal>
-							<goal>stop</goal>
+                            <goal>stop</goal>
                         </goals>
                         <phase>package</phase>
                     </execution>
@@ -73,12 +121,12 @@
                 <version>6.1.5-el4j_20080211_2116</version>
                 <configuration>
                     <classesDirectory>../jar/target/classes</classesDirectory>
-					<!-- exclude the jsf-demo-jar artifact as it is already included via classesDirectory -->
-					<excludedArtifacts>
-						<excludedArtifact>
-							ch.elca.el4j.applications:jsf-demo-jar:jar:${version.application-keyword}
-						</excludedArtifact>
-					</excludedArtifacts>
+                    <!-- exclude the jsf-demo-jar artifact as it is already included via classesDirectory -->
+                    <excludedArtifacts>
+                        <excludedArtifact>
+                            ch.elca.el4j.applications:jsf-demo-jar:jar:${version.application-keyword}
+                        </excludedArtifact>
+                    </excludedArtifacts>
                     
                     <scanIntervalSeconds>3</scanIntervalSeconds>
                     <scanTargetPatterns>
