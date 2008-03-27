@@ -203,10 +203,12 @@
             </resource>
 
             <!-- Used for the environment support of EL4J -->
+
             <resource>
-                <directory>target/env</directory>
-                <filtering>false</filtering>
+                <directory>src/main/env</directory>
+                <filtering>true</filtering>
             </resource>
+
         </resources>
 
         <testResources>
@@ -217,9 +219,10 @@
 
             <!-- Used for the environment support of EL4J -->
             <testResource>
-                <directory>target/env-test</directory>
-                <filtering>false</filtering>
+                <directory>src/test/env</directory>
+                <filtering>true</filtering>
             </testResource>
+
         </testResources>
 
         <defaultGoal>install</defaultGoal>
@@ -248,6 +251,7 @@
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>2.2</version>
                 </plugin>
+                <!--
                 <plugin>
                     <groupId>ch.elca.el4j.maven.plugins</groupId>
                     <artifactId>maven-env-support-plugin</artifactId>
@@ -261,6 +265,7 @@
                         </execution>
                     </executions>
                 </plugin>
+                -->
                 <plugin>
                     <groupId>ch.elca.el4j.maven.plugins</groupId>
                     <artifactId>maven-encryption-plugin</artifactId>
