@@ -18,6 +18,7 @@ package ch.elca.el4j.util.config;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * The base class for generic configurations. It is a hierarchical structure of
@@ -68,10 +69,18 @@ public class GenericConfig {
     }
     
     /**
-     * @param map    the the configuration entries to set
+     * @param map    the configuration entries to set
      */
     public void setMap(Map<String, Object> map) {
         m_map = map;
+    }
+    
+    /**
+     * @param properties    the configuration entries to set
+     */
+    public void setMap(Properties properties) {
+        m_map.clear();
+        setOverrideMap(properties);
     }
     
     /**
@@ -82,6 +91,15 @@ public class GenericConfig {
             m_map.putAll(map);
         } else {
             m_map = map;
+        }
+    }
+    
+    /**
+     * @param properties    the configuration entries to add
+     */
+    public void setOverrideMap(Properties properties) {
+        for (Object key : properties.keySet()) {
+            m_map.put((String) key, properties.get(key));
         }
     }
     

@@ -42,4 +42,13 @@
 			</map>
 		</property>
 	</bean>
+	
+	<bean id="MoreSpecificConfigUsingProperties" class="ch.elca.el4j.util.config.GenericConfig">
+		<property name="parent">
+			<ref bean="SpecificConfig" />
+		</property>
+		<property name="overrideMap">
+			<util:properties location="classpath:scenarios/util/config/specific.properties"/>
+		</property>
+	</bean>
 </beans>

@@ -77,6 +77,17 @@ public class GenericConfigSpringTest extends TestCase {
             .equals("MoreSpecificConfig"));
         assertTrue(config.get("SpecificConfig").equals("SpecificConfig"));
     }
+    
+    /***/
+    public void testMoreSpecificConfigUsingProperties() {
+        GenericConfig config = (GenericConfig)
+             m_appContext.getBean("MoreSpecificConfigUsingProperties");
+        assertTrue(config.get("class").equals(
+            "MoreSpecificConfigUsingProperties"));
+        assertTrue(config.get("MoreSpecificConfigUsingProperties")
+            .equals("MoreSpecificConfigUsingProperties"));
+        assertTrue(config.get("SpecificConfig").equals("SpecificConfig"));
+    }
 }
 // Checkstyle: EmptyBlock on
 // Checkstyle: MagicNumber on
