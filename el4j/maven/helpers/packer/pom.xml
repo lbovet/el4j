@@ -28,10 +28,12 @@
                     <finalName>el4j-${version}</finalName>
                 </configuration>
             </plugin>
+            <!--
             <plugin>
                 <groupId>ch.elca.el4j.maven.plugins</groupId>
                 <artifactId>maven-env-support-plugin</artifactId>
             </plugin>
+            -->
         </plugins>
     </build>
     <profiles>
