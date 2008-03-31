@@ -21,7 +21,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.jdesktop.application.Action;
-import org.jdesktop.beansbinding.BindingGroup;
 
 import com.silvermindsoftware.hitch.Binder;
 import com.silvermindsoftware.hitch.BinderManager;
@@ -92,8 +91,8 @@ public class CancelableDemoForm extends JPanel {
         
         // bind the variable "person" to "this"
         // this interprets the @ModelObject annotation (see above)
-        BindingGroup group = m_binder.getAutoBinding(this);
-        group.bind();
+        m_binder.addAutoBinding(this);
+        m_binder.bindAll();
     }
     
     @Action

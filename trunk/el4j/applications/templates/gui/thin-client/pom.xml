@@ -39,6 +39,16 @@
         <dependency>
             <groupId>ch.elca.el4j.applications</groupId>
             <artifactId>refdb-service</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>ch.elca.el4j.modules</groupId>
+                    <artifactId>module-database</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>ch.elca.el4j.modules</groupId>
+                    <artifactId>module-ibatis</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- EL4J framework modules -->

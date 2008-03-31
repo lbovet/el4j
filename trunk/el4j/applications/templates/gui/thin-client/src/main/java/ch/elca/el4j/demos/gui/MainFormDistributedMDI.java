@@ -77,7 +77,7 @@ public final class MainFormDistributedMDI {
             contextConfig.setAllowBeanDefinitionOverriding(true);
 
 
-            GUIApplication.launch(MainFormMDI.class, args, contextConfig);
+            GUIApplication.launch(MainFormMDIXML.class, args, contextConfig);
 
         } finally {
             if (splashScreen != null) {

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:util="http://www.springframework.org/schema/util"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
 
     <!-- $Revision$ -->
     <!-- $URL$ -->
@@ -18,5 +20,23 @@
     <bean id="RefDBDemoForm" class="ch.elca.el4j.demos.gui.RefDBDemoForm" lazy-init="true"/>
     <bean id="ReferenceEditorForm" class="ch.elca.el4j.demos.gui.ReferenceEditorForm" lazy-init="true"/>
     
+    <bean id="XMLDemoForm" class="ch.elca.el4j.demos.gui.XMLDemoForm" lazy-init="true" scope="prototype"/>
+    
     <bean id="AboutDialog" class="ch.elca.el4j.gui.swing.dialog.about.AboutDialog" lazy-init="true"/>
+    
+    <!-- example how to override default configurations. See ch.elca.el4j.demos.gui.MainFormMDIXML.initialize() -->
+    <bean id="overrideConfig" class="ch.elca.el4j.util.config.GenericConfig" lazy-init="true" scope="prototype">
+        <!-- parent will be set in code -->
+        <property name="overrideMap">
+            <map>
+                <entry key="invalidColor">
+                    <bean class="java.awt.Color">
+                        <constructor-arg type="int" value="255"/>
+                        <constructor-arg type="int" value="64"/>
+                        <constructor-arg type="int" value="64"/>
+                    </bean>
+                </entry>
+            </map>
+        </property>
+    </bean>
 </beans>
