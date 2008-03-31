@@ -34,6 +34,13 @@ public class DefaultPerson implements Person {
         m_numbers = new ArrayList<MyNumber>();
         m_children = new ArrayList<Person>();
     }
+    
+    public DefaultPerson(String firstName, String lastName, int age) {
+        this();
+        m_firstName = firstName;
+        m_lastName = lastName;
+        m_age = age;
+    }
 
     @Length(min = 3)
     public String getFirstName() {
@@ -83,5 +90,11 @@ public class DefaultPerson implements Person {
 
     public void setSmart(boolean smart) {
         m_smart = smart;
+    }
+    
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        return m_firstName + " " + m_lastName + " (" + m_age + ")";
     }
 }

@@ -22,7 +22,6 @@ import javax.swing.JTextField;
 
 import org.bushe.swing.event.EventBus;
 import org.jdesktop.application.Action;
-import org.jdesktop.beansbinding.BindingGroup;
 
 import com.silvermindsoftware.hitch.Binder;
 import com.silvermindsoftware.hitch.BinderManager;
@@ -56,19 +55,14 @@ import zappini.designgridlayout.DesignGridLayout;
  */
 @Form(autoBind = true)
 public class ReferenceEditorForm extends JPanel {
-    private JTextField name;
-    private JTextField description;
+    private JTextField m_name;
+    private JTextField m_description;
     
     private JButton m_okButton;
     private JButton m_cancelButton;
     
     @ModelObject(isDefault = true)
     private Reference m_reference = null;
-    
-    /**
-     * The current binding.
-     */
-    private BindingGroup m_binding;
     
     
     /**
@@ -106,8 +100,8 @@ public class ReferenceEditorForm extends JPanel {
         
         // bind the variable "m_reference" to "this"
         // this interprets the @ModelObject annotation (see above)
-        m_binding = m_binder.getAutoBinding(this);
-        m_binding.bind();
+        m_binder.addAutoBinding(this);
+        m_binder.bindAll();
     }
     
     
@@ -118,10 +112,11 @@ public class ReferenceEditorForm extends JPanel {
     public void applyChanges() {
         ((SaveRestoreCapability) m_reference).save();
         m_reference.setKey(m_key);
-        m_binding.unbind();
+        m_binder.removeAll();
         
         EventBus.publish(new ReferenceUpdateEvent(m_reference.getKey()));
         AbstractWrapperFactory.getWrapper(this).dispose();
+        m_reference = null;
     }
     
     /**
@@ -131,17 +126,18 @@ public class ReferenceEditorForm extends JPanel {
     public void discardChanges() {
         ((SaveRestoreCapability) m_reference).restore();
         m_reference.setKey(m_key);
-        m_binding.unbind();
+        m_binder.removeAll();
         
         AbstractWrapperFactory.getWrapper(this).dispose();
+        m_reference = null;
     }
     
     /**
      * Create the form components.
      */
     private void createComponents() {
-        name = new JTextField();
-        description = new JTextField();
+        m_name = new JTextField();
+        m_description = new JTextField();
         m_okButton = new JButton();
         m_cancelButton = new JButton();
     }
@@ -155,8 +151,8 @@ public class ReferenceEditorForm extends JPanel {
         setLayout(layout);
 
         // the first two rows contains a label and a text field each
-        layout.row().label("Name").add(name);
-        layout.row().label("Description").add(description);
+        layout.row().label("Name").add(m_name);
+        layout.row().label("Description").add(m_description);
         layout.row().add(m_okButton).add(m_cancelButton);
     }
 }

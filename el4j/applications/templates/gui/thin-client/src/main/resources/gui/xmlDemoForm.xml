@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel xmlns="http://cookxml.sf.net/cookswing/"
+	xmlns:cx="http://cookxml.sf.net/"
+	xmlns:cc="http://cookxml.sf.net/common/"
+	xmlns:el4j="http://www.elca.ch/el4j/cookSwing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://cookxml.sf.net/cookswing/ schema/cookSwing.xsd
+		http://www.elca.ch/el4j/cookSwing schema/el4jSwing.xsd
+		http://cookxml.sf.net/common/ schema/cookXmlCommon.xsd
+		http://cookxml.sf.net/ schema/cookXml.xsd"
+	cx:varref="this">
+
+	<borderlayout>
+		<constraint location="North">
+			<el4j:create-component finish-method="setGridPanelLayout">
+				<textfield cx:var="m_firstName">
+					<el4j:binding src="m_person" property="firstName" updateStrategy="read write" validation="true" />
+				</textfield>
+				<textfield cx:var="m_lastName">
+					<el4j:binding src="m_person" property="lastName" updateStrategy="read write" validation="true" />
+				</textfield>
+			</el4j:create-component>
+		</constraint>
+		<constraint location="Center">
+			<scrollpane>
+				<table>
+					<el4j:tablebinding src="m_persons" updateStrategy="read write" validation="true">
+						<el4j:column label="First Name" property="firstName" editable="true" />
+						<el4j:column label="Last Name" property="lastName" />
+						<el4j:column label="Age" property="age" class="java.lang.Integer" editable="true" />
+					</el4j:tablebinding>
+				</table>
+			</scrollpane>
+		</constraint>
+		<constraint location="South">
+			<combobox>
+				<el4j:comboboxbinding src="m_person.children" property="firstName" />
+			</combobox>
+		</constraint>
+	</borderlayout>
+</panel>

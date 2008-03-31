@@ -19,40 +19,44 @@ package ch.elca.el4j.demos.gui;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.TableModel;
 
 import org.bushe.swing.event.annotation.AnnotationProcessor;
 import org.bushe.swing.event.annotation.EventSubscriber;
+import org.jdesktop.application.Action;
 import org.jdesktop.beansbinding.AbstractBindingListener;
 import org.jdesktop.beansbinding.AutoBinding;
-import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
 import org.jdesktop.beansbinding.Binding;
 import org.jdesktop.swingbinding.validation.ValidatedProperty;
 
 import com.silvermindsoftware.hitch.Binder;
 import com.silvermindsoftware.hitch.BinderManager;
-import com.silvermindsoftware.hitch.binding.components.TableBinding;
 
+import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.apps.refdb.service.ReferenceService;
 import ch.elca.el4j.demos.gui.events.ReferenceUpdateEvent;
 import ch.elca.el4j.demos.gui.events.SearchRefDBEvent;
 import ch.elca.el4j.demos.model.ServiceBroker;
 import ch.elca.el4j.gui.swing.GUIApplication;
+import ch.elca.el4j.gui.swing.cookswing.binding.Bindable;
 import ch.elca.el4j.gui.swing.events.OpenCloseEventHandler;
 import ch.elca.el4j.gui.swing.wrapper.AbstractWrapperFactory;
 import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.LikeCriteria;
 
+import cookxml.cookswing.CookSwing;
+
 import zappini.designgridlayout.DesignGridLayout;
+
 
 /**
  * This class demonstrates how to connect to the refDB.
@@ -79,9 +83,15 @@ import zappini.designgridlayout.DesignGridLayout;
  *
  * @author Stefan Wismer (SWI)
  */
-public class RefDBDemoForm extends JPanel implements OpenCloseEventHandler {
+public class RefDBDemoForm extends JPanel implements Bindable, OpenCloseEventHandler {
+    private JTextField m_name;
+    private JTextField m_description;
+    private JCheckBox m_incomplete;
     
-    private JTable references;
+    private JButton m_createButton;
+    private JButton m_deleteButton;
+    
+    private JTable m_references;
     
     /**
      * The list of references.
@@ -110,50 +120,90 @@ public class RefDBDemoForm extends JPanel implements OpenCloseEventHandler {
     private final Binder m_binder = BinderManager.getBinder(this);
     
     public RefDBDemoForm() {
-        ServiceBroker.setApplicationContext(
-            GUIApplication.getInstance().getSpringContext());
-        m_service = ServiceBroker.getReferenceService();
-        
-        createComponents();
-        createLayout();
-        
+        loadModel();
         m_editor = new ReferenceEditorForm();
+
+        setLayout(new BorderLayout());
+        
+        CookSwing cookSwing = new CookSwing(this);
+        add(cookSwing.render("gui/refDBDemoForm.xml"));
+        
+        m_binder.bindAll();
         
         createDataBinding();
     }
-
-    /**
-     * Create the form components.
-     */
-    private void createComponents() {
-        references = new JTable();
+    
+    /** {@inheritDoc} */
+    public Binder getBinder() {
+        return m_binder;
     }
     
     /**
-     * Layout the form components.
+     * Create a new table entry.
      */
-    private void createLayout() {
-        JPanel formPanel = new JPanel();
-
-        setLayout(new BorderLayout());
-        add(formPanel, BorderLayout.NORTH);
+    @Action
+    public void create() {
+        Reference newRef = new Book();
+        newRef.setName(m_name.getText());
+        newRef.setDescription(m_description.getText());
+        newRef.setIncomplete(m_incomplete.isSelected());
         
-        // add the table to the center
-        //children.setColumnControlVisible(true);
-        JScrollPane scrollPane = new JScrollPane(references);
+        m_refList.add(newRef);
+        m_service.saveReference(newRef);
         
-        add(scrollPane, BorderLayout.CENTER);
-        
-        // create the form layout
-        DesignGridLayout layout = new DesignGridLayout(formPanel);
-        formPanel.setLayout(layout);
+        m_name.setText("");
+        m_description.setText("");
+        m_incomplete.setSelected(false);
+    }
+    
+    /**
+     * Delete selected table entry.
+     */
+    @Action
+    public void delete() {
+        if (m_references.getSelectedRow() >= 0) {
+            int selectedRow = m_references.getSelectedRow();
+            
+            Object o = m_references.getValueAt(selectedRow, 0);
+            if (o != null) {
+                Reference selectedReference 
+                    = (Reference) ((ValidatedProperty) o).getParent();
+                m_refList.remove(selectedReference);
+                m_service.deleteReference(selectedReference.getKey());
+            }
+        }
     }
 
     /**
-     * Bind the model to the table.
+     * Layout the form components.
+     * 
+     * @param formPanel    the panel to layout
      */
-    @SuppressWarnings("unchecked")
-    private void createDataBinding() {
+    @SuppressWarnings("unused")
+    private void setGridPanelLayout(JPanel formPanel) {
+        // create the form layout
+        DesignGridLayout layout = new DesignGridLayout(formPanel);
+        formPanel.setLayout(layout);
+
+        // the first two rows contains a label and a text field each
+        
+        layout.row().add("Name").add(m_name);
+        layout.row().add("Description").add(m_description);
+        layout.row().add("Incomplete").add(m_incomplete);
+        layout.row().add(m_createButton).add(m_deleteButton);
+        // Hint: spacers can be inserted using add(Row.EMPTY)
+
+        // Checkstyle: MagicNumber off
+        layout.row().height(10);
+        // Checkstyle: MagicNumber on
+    }
+
+    private void loadModel() {
+        GUIApplication app = GUIApplication.getInstance();
+        ServiceBroker.setApplicationContext(
+            app.getSpringContext());
+        m_service = ServiceBroker.getReferenceService();
+        
         // It would be possible to add the property change mixin directly
         // to the service, which guarantees that all lists coming from the
         // service automatically are observable. The problem is that this
@@ -164,36 +214,43 @@ public class RefDBDemoForm extends JPanel implements OpenCloseEventHandler {
         
         m_refList = PropertyChangeListenerMixin
             .addPropertyChangeMixin(m_service.getAllReferences());
+    }
+    /**
+     * Bind the model to the table.
+     */
+    @SuppressWarnings("unchecked")
+    private void createDataBinding() {
 
-        updateBinding();
+
+        //updateBinding();
         
-        references.setRowSelectionAllowed(true);
-        references.setColumnSelectionAllowed(true);
+        m_references.setRowSelectionAllowed(true);
+        m_references.setColumnSelectionAllowed(true);
         // select first entry
         if (m_refList.size() > 0) {
-            references.setRowSelectionInterval(0, 0);
-            references.setColumnSelectionInterval(0,
-                references.getColumnCount() - 1);
+            m_references.setRowSelectionInterval(0, 0);
+            m_references.setColumnSelectionInterval(0,
+                m_references.getColumnCount() - 1);
         }
         
-        references.addMouseListener(new MouseAdapter() {
+        m_references.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 // make the whole row selected.
-                int index = references.rowAtPoint(e.getPoint());
+                int index = m_references.rowAtPoint(e.getPoint());
                 
                 if (index >= 0) {
-                    references.setRowSelectionInterval(index, index);
-                    references.setColumnSelectionInterval(0,
-                        references.getColumnCount() - 1);
+                    m_references.setRowSelectionInterval(index, index);
+                    m_references.setColumnSelectionInterval(0,
+                        m_references.getColumnCount() - 1);
                 }
             }
             
             @Override
             public void mouseClicked(MouseEvent e) {
-                int index = references.rowAtPoint(e.getPoint());
+                int index = m_references.rowAtPoint(e.getPoint());
                 if (index >= 0 && e.getClickCount() == 2) {
-                    TableModel dlm = references.getModel();
+                    TableModel dlm = m_references.getModel();
                     Object item = dlm.getValueAt(index, 0);
                     if (item instanceof ValidatedProperty) {
                         ValidatedProperty p = (ValidatedProperty) item;
@@ -232,37 +289,6 @@ public class RefDBDemoForm extends JPanel implements OpenCloseEventHandler {
     }
     
     /**
-     * Update the reference binding.
-     */
-    @SuppressWarnings("unchecked")
-    private void updateBinding() {
-        // prepare table bindings
-        String[] propertyNames = new String[] {
-            "name", "description", "incomplete",
-            "version", "date", "whenInserted"};
-        String[] columnLabels = new String[] {
-            "Name", "Description", "Incomplete?",
-            "Version", "Date", "Insertion Timestamp"};
-        Class[] columnClasses = new Class[] {
-            String.class, String.class, Boolean.class,
-            String.class, Date.class, Timestamp.class};
-        
-        TableBinding tb = new TableBinding(propertyNames,
-            columnLabels, columnClasses);
-        
-        // table is not directly editable
-        tb.setUpdateStrategy(UpdateStrategy.READ);
-        
-        // bind the table manually
-        if (m_listBinding != null && m_listBinding.isBound()) {
-            m_listBinding.unbind();
-        }
-        m_listBinding = m_binder.getManualBinding(
-            m_refList, references, tb, true);
-        m_listBinding.bind();
-    }
-    
-    /**
      * Called when reference got updated.
      * 
      * @param event    the ReferenceUpdateEvent
@@ -273,7 +299,10 @@ public class RefDBDemoForm extends JPanel implements OpenCloseEventHandler {
             if (m_refList.get(i).getKey() == event.getKey()) {
                 Reference ref = m_refList.get(i);
                 try {
-                    m_service.saveReference(ref);
+                    Reference r = m_service.saveReference(ref);
+                    // update entry (version!)
+                    m_refList.remove(i);
+                    m_refList.add(i, r);
                 } catch (Throwable t) {
                     // reload value on optimistic locking exception
                     m_refList.remove(i);
@@ -283,10 +312,6 @@ public class RefDBDemoForm extends JPanel implements OpenCloseEventHandler {
                 break;
             }
         }
-        // update table
-        m_listBinding.unbind();
-        m_listBinding.bind();
-        
     }
     
     /**
@@ -299,16 +324,19 @@ public class RefDBDemoForm extends JPanel implements OpenCloseEventHandler {
         QueryObject query = new QueryObject();
         query.addCriteria(LikeCriteria.caseInsensitive(
             event.getField(), event.getValue()));
-        m_refList = PropertyChangeListenerMixin
-            .addPropertyChangeMixin(m_service.searchReferences(query));
         
-        updateBinding();
+        // do not reassign m_refList, otherwise you need to setup the whole
+        // property change mechanism and the binding!
+        m_binder.unbindAll();
+        m_refList.clear();
+        m_refList.addAll(m_service.searchReferences(query));
+        m_binder.bindAll();
         
         // select first entry
         if (m_refList.size() > 0) {
-            references.setRowSelectionInterval(0, 0);
-            references.setColumnSelectionInterval(0,
-                references.getColumnCount() - 1);
+            m_references.setRowSelectionInterval(0, 0);
+            m_references.setColumnSelectionInterval(0,
+                m_references.getColumnCount() - 1);
         }
     }
     
