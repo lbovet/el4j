@@ -17,7 +17,7 @@ There are two pageflows, which each define a conversation. To view them, open th
 Used technologies
 =================
 
-* EL4J JSF web application template, Seam 2.1.0
+* EL4J JSF web application template, Seam 2.1.0 (it does not work with 2.0.1!)
 * JBoss jBPM jpdl 3.2.2
 
 
