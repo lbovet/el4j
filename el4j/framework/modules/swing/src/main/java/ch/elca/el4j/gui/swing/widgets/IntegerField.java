@@ -52,8 +52,8 @@ public class IntegerField extends JTextField {
      * The default constructor.
      */
     public IntegerField() {
-        this((Color) GUIApplication.getInstance().getSpringContext()
-            .getBean("invalidColor"));
+        this((Color) GUIApplication.getInstance().getConfig()
+            .get("invalidColor"));
     }
     
     /**

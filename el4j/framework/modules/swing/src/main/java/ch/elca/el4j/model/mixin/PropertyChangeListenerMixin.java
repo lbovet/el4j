@@ -33,19 +33,16 @@ import org.hibernate.validator.ClassValidator;
 import org.hibernate.validator.InvalidValue;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
+import org.jdesktop.observablecollections.ObservableMap;
 import org.jdesktop.swingbinding.validation.ValidationCapability;
-import org.springframework.aop.Advisor;
-import org.springframework.aop.IntroductionAdvisor;
-import org.springframework.aop.framework.Advised;
 import org.springframework.aop.framework.AopContext;
-import org.springframework.aop.framework.ProxyFactory;
-import org.springframework.aop.support.DefaultIntroductionAdvisor;
 import org.springframework.aop.support.DelegatingIntroductionInterceptor;
-
-import ch.elca.el4j.util.codingsupport.AopHelper;
 
 import com.silvermindsoftware.hitch.events.PropertyChangeListenerCapability;
 import com.silvermindsoftware.hitch.validation.HibernateValidationCapability;
+
+import ch.elca.el4j.util.codingsupport.AopHelper;
+
 
 /**
  * Mixin to enable javaBeans event support and validation in ordinary POJOs.
@@ -112,9 +109,47 @@ public class PropertyChangeListenerMixin extends
      * @return the same object wrapped with a spring proxy that has the
      *         {@link PropertyChangeListenerMixin} as {@link Advisor}
      */
-    @SuppressWarnings("unchecked")
     public static <T> T addPropertyChangeMixin(T object) {
-    	return AopHelper.addAdvice(object, new PropertyChangeListenerMixin());
+        return AopHelper.addAdvice(object, new PropertyChangeListenerMixin());
+    }
+    
+    /**
+     * Wrap a list with the change tracking mixin.
+     * 
+     * @param <T>      the object class
+     * @param list     the list to be wrapped
+     * @return the corresponding {@link ObservableList} 
+     */
+    public static <T> List<T> addPropertyChangeMixin(List<T> list) {
+        List<T> wrappedList
+            = AopHelper.addAdvice(list, new PropertyChangeListenerMixin());
+        
+        if (list instanceof ObservableList) {
+            return wrappedList;
+        } else {
+            // replace List by ObservableList
+            return ObservableCollections.observableList(wrappedList);
+        }
+    }
+    
+    /**
+     * Wrap a map with the change tracking mixin.
+     * 
+     * @param <K>      the key class of the map
+     * @param <V>      the value class of the map
+     * @param map      the map to be wrapped
+     * @return the corresponding {@link ObservableMap} 
+     */
+    public static <K, V> Map<K, V> addPropertyChangeMixin(Map<K, V> map) {
+        Map<K, V> wrappedMap
+            = AopHelper.addAdvice(map, new PropertyChangeListenerMixin());
+        
+        if (map instanceof ObservableMap) {
+            return wrappedMap;
+        } else {
+            // replace Map by ObservableMap
+            return ObservableCollections.observableMap(wrappedMap);
+        }
     }
 
     /** {@inheritDoc} */
@@ -176,7 +211,7 @@ public class PropertyChangeListenerMixin extends
                     Object result = super.invoke(invocation);
 
                     String fieldName = invocation.getMethod().getName()
-                            .substring(3);
+                            .substring("set".length());
                     fieldName = fieldName.substring(0, 1).toLowerCase()
                             + fieldName.substring(1);
 
@@ -190,14 +225,30 @@ public class PropertyChangeListenerMixin extends
                 throw new IllegalArgumentException(
                         "Too many arguments for Interceptor");
             }
-        } else if (invocation.getMethod().getName().startsWith("get")
-                && List.class.isAssignableFrom(invocation.getMethod()
-                        .getReturnType())) {
-
-            List result = (List) super.invoke(invocation);
-            if (!(result instanceof ObservableList)) {
-                // replace list by ObservableList
-                result = ObservableCollections.observableList(result);
+        } else if (invocation.getMethod().getName().startsWith("get")) {
+            Object result = super.invoke(invocation);
+            if (result == null) {
+                return null;
+            }
+            
+            boolean modified = false;
+            if (List.class.isAssignableFrom(result.getClass())) {
+                if (!(result instanceof ObservableList)) {
+                    // replace List by ObservableList
+                    result = ObservableCollections.observableList(
+                        (List) result);
+                    modified = true;
+                }
+            } else if (Map.class.isAssignableFrom(result.getClass())) {
+                if (!(result instanceof ObservableMap)) {
+                    // replace Map by ObservableMap
+                    result = ObservableCollections.observableMap(
+                        (Map) result);
+                    modified = true;
+                }
+            }
+            // reassign value if modified
+            if (modified) {
                 Method setter = getSetter(invocation.getMethod());
                 if (setter != null) {
                     setter.invoke(invocation.getThis(), result);

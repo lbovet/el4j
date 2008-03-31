@@ -16,8 +16,8 @@ package com.silvermindsoftware.hitch.config;
  * limitations under the License.
  */
 
-import com.silvermindsoftware.hitch.AbstractBinder;
 import com.silvermindsoftware.hitch.Binder;
+import com.silvermindsoftware.hitch.BinderManager;
 import com.silvermindsoftware.hitch.ReadOnly;
 import com.silvermindsoftware.hitch.meta.FormMeta;
 import com.silvermindsoftware.hitch.reflect.ClassManager;
@@ -41,8 +41,7 @@ public class BinderConfig {
     }
 
     public BinderConfig(Class componentClass, Binder binder, FormConfig formConfig) {
-        AbstractBinder abstractBinder = (AbstractBinder) binder;
-        this.formMeta = abstractBinder.getFormMeta(componentClass);
+        this.formMeta = BinderManager.getFormMetaData(componentClass);
         this.formConfig = formConfig;
     }
 

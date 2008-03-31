@@ -26,16 +26,17 @@ import javax.swing.JTable;
 import javax.swing.event.CellEditorListener;
 import javax.swing.table.TableCellEditor;
 
+import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
 import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.Binding;
 import org.jdesktop.swingbinding.validation.ValidatedProperty;
-import org.springframework.context.ApplicationContext;
 
 import com.silvermindsoftware.hitch.binding.BindingFactory;
 import com.silvermindsoftware.hitch.validation.ValidatingBindingListener;
 
 import ch.elca.el4j.gui.swing.GUIApplication;
 import ch.elca.el4j.model.tablemodel.TableSorter;
+import ch.elca.el4j.util.config.GenericConfig;
 
 /**
  * A validating cell editor for tables.
@@ -92,12 +93,13 @@ public class ValidatingCellEditor extends AbstractCellEditor implements
         }
 
         BindingFactory factory = BindingFactory.getInstance();
-        m_binding = factory.createBinding(m_property.getParent(),
-            m_property.getProperty(), (JComponent) component);
-        ApplicationContext ctx
-            = GUIApplication.getInstance().getSpringContext();
+        m_binding = factory.createBinding(UpdateStrategy.READ_WRITE, 
+            m_property.getParent(), m_property.getProperty(),
+            (JComponent) component);
+        
+        GenericConfig config = GUIApplication.getInstance().getConfig();
         m_binding.addBindingListener(new ValidatingBindingListener(
-            (ValidationResponder) ctx.getBean("responder")));
+            (ValidationResponder) config.get("validationResponder")));
         m_binding.bind();
         
         component.addKeyListener(new KeyAdapter() {

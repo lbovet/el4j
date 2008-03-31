@@ -40,7 +40,7 @@
         <dependency>
             <groupId>org.jdesktop.application</groupId>
             <artifactId>application</artifactId>
-            <version>1.01-patch1</version>
+            <version>1.03-patch1</version>
         </dependency>
         <dependency>
             <groupId>org.jdesktop.swingworker</groupId>
@@ -65,12 +65,12 @@
 	    <dependency>
             <groupId>org.yuanheng.cookxml</groupId>
             <artifactId>cookxml</artifactId>
-            <version>3.0.1</version>
+            <version>3.0.1-patch1</version>
         </dependency>
 	    <dependency>
             <groupId>org.yuanheng.cookswing</groupId>
             <artifactId>cookswing</artifactId>
-            <version>1.5</version>
+            <version>1.5-patch1</version>
         </dependency>
         
         <dependency>

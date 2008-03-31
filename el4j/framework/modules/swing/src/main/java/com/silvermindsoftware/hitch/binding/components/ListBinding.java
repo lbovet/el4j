@@ -21,6 +21,8 @@ import java.util.List;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.Property;
@@ -31,6 +33,7 @@ import org.springframework.context.ApplicationContext;
 import com.silvermindsoftware.hitch.binding.AbstractBindingCreator;
 
 import ch.elca.el4j.gui.swing.GUIApplication;
+import ch.elca.el4j.util.config.GenericConfig;
 
 /**
  * This class creates bindings for lists.
@@ -45,6 +48,11 @@ import ch.elca.el4j.gui.swing.GUIApplication;
  * @author Stefan Wismer (SWI)
  */
 public class ListBinding extends AbstractBindingCreator<JList> {
+    /**
+     * The logger.
+     */
+    private static Log s_logger = LogFactory.getLog(ListBinding.class);
+    
     /**
      * Which property to show in the list.
      */
@@ -67,6 +75,11 @@ public class ListBinding extends AbstractBindingCreator<JList> {
     /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
     public AutoBinding createBinding(Object object, JList formComponent) {
+        if (!List.class.isAssignableFrom(object.getClass())) {
+            s_logger.error("Cannot bind object " + object.toString()
+                + " to list component, because it is not a list.");
+            return null;
+        }
         List list = (List) object;
         JListBinding lb = SwingBindings.createJListBinding(
             m_updateStrategy, list, formComponent);
@@ -79,10 +92,9 @@ public class ListBinding extends AbstractBindingCreator<JList> {
     
     /** {@inheritDoc} */
     public void addValidation(JList formComponent) {
-        ApplicationContext ctx
-            = GUIApplication.getInstance().getSpringContext();
+        GenericConfig config = GUIApplication.getInstance().getConfig();
         formComponent.setCellRenderer(
-            (ListCellRenderer) ctx.getBean("cellRenderer"));
+            (ListCellRenderer) config.get("cellRenderer"));
     }
 
 }

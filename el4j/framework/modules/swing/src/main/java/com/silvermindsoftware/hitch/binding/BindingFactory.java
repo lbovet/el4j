@@ -27,13 +27,13 @@ import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.BindingListener;
 import org.jdesktop.beansbinding.Bindings;
 import org.jdesktop.beansbinding.Property;
-import org.springframework.context.ApplicationContext;
 
 
 import com.silvermindsoftware.hitch.validation.ValidatingBindingListener;
 import com.silvermindsoftware.hitch.validation.response.ValidationResponder;
 
 import ch.elca.el4j.gui.swing.GUIApplication;
+import ch.elca.el4j.util.config.GenericConfig;
 
 /**
  * This class is used for creating bindings.
@@ -122,29 +122,34 @@ public class BindingFactory {
     }
     
     /**
+     * @param strategy          the binding update strategy
      * @param modelObject       the instance of the model
      * @param modelProperty     the property of the model to bound
      * @param formComponent     the form component to bound to
      * @return                  a AutoBinding object representing the binding
      */
     @SuppressWarnings("unchecked")
-    public AutoBinding createBinding(Object modelObject, String modelProperty,
-        JComponent formComponent) {
+    public AutoBinding createBinding(UpdateStrategy strategy, 
+        Object modelObject, String modelProperty, JComponent formComponent) {
         
         Property modelPropertyName = BeanProperty.create(modelProperty);
         
+        AutoBinding binding = null;
         // is a special binding registered?
         if (m_specialBinding.containsKey(formComponent)) {
-            return m_specialBinding.get(formComponent).createBinding(
+            binding = m_specialBinding.get(formComponent).createBinding(
                 modelPropertyName.getValue(modelObject), formComponent);
         } else {
             // create a default binding
             Property fromPropertyName = DEFAULT_PROPERTIES.getDefaultProperty(
                 formComponent);
-            return Bindings.createAutoBinding(UpdateStrategy.READ_WRITE,
-                modelObject, modelPropertyName,
-                formComponent, fromPropertyName);
+            if (fromPropertyName != null) {
+                binding = Bindings.createAutoBinding(strategy,
+                    modelObject, modelPropertyName,
+                    formComponent, fromPropertyName);
+            }
         }
+        return binding;
     }
     
     /**
@@ -158,9 +163,9 @@ public class BindingFactory {
         if (m_specialValidationResponder.containsKey(formComponent)) {
             responder = m_specialValidationResponder.get(formComponent);
         } else {
-            ApplicationContext ctx
-                = GUIApplication.getInstance().getSpringContext();
-            responder = (ValidationResponder) ctx.getBean("responder");
+            GenericConfig config = GUIApplication.getInstance().getConfig();
+            responder = (ValidationResponder) config.get(
+                "validationResponder");
         }
         
         if (m_specialBinding.containsKey(formComponent)) {
