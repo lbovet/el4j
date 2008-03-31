@@ -52,6 +52,13 @@ public class WindowMenu extends JMenu {
     public void setWindowManager(WindowManager windowManager) {
         m_windowManager = windowManager;
     }
+    
+    /**
+     * @return    the current MDI window manager
+     */
+    public WindowManager getWindowManager() {
+        return m_windowManager;
+    }
 
     /**
      * Create the 'Window' menu.

@@ -2,6 +2,11 @@ package ch.elca.el4j.gui.model.mixin;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
+
+import org.jdesktop.observablecollections.ObservableList;
+import org.jdesktop.observablecollections.ObservableListListener;
+
 import com.silvermindsoftware.hitch.events.PropertyChangeListenerCapability;
 
 import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
@@ -44,7 +49,7 @@ public class PropertyChangeListenerMixinTest extends TestCase {
         assertEquals(model.getProperty1(), "some new text");
     }
     
-    private class TestListener implements PropertyChangeListener {
+    private class PropertyListener implements PropertyChangeListener {
         public PropertyChangeEvent event;
         
         public void propertyChange(PropertyChangeEvent evt) {
@@ -52,14 +57,35 @@ public class PropertyChangeListenerMixinTest extends TestCase {
         }
     }
     
+    @SuppressWarnings("unused")
+    private class ListListener implements ObservableListListener {
+        public String event;
+        
+        public void listElementsAdded(ObservableList list, int index, int length) {
+            event = "add";
+        }
+        public void listElementReplaced(ObservableList list, int index,
+            Object oldElement) {
+            event = "replace";
+        }
+        public void listElementsRemoved(ObservableList list, int index,
+            List oldElements) {
+            event = "remove";
+        }
+        public void listElementPropertyChanged(ObservableList list, int index) {
+            event = "change";
+        }
+    }
+    
     public void testPropertyChangeListener() throws Exception {
+        // create model
         ExampleModel model = new ExampleModelImpl();
-
         model = PropertyChangeListenerMixin.addPropertyChangeMixin(model);
         
-        TestListener testListener = new TestListener();
-        
+        // add listener
+        PropertyListener testListener = new PropertyListener();
         ((PropertyChangeListenerCapability) model).addPropertyChangeListener(testListener);
+        
         model.setProperty1("initial value");
         
         assertEquals(testListener.event.getOldValue(), null);
@@ -98,5 +124,28 @@ public class PropertyChangeListenerMixinTest extends TestCase {
         assertEquals(testListener.event.getNewValue(), "property1 has changed");
         
         ((PropertyChangeListenerCapability) model).removePropertyChangeListener("property99", testListener);
+    }
+    
+    public void testBinding() throws Exception {
+        // create model
+        ExampleModel model = new ExampleModelImpl();
+        model = PropertyChangeListenerMixin.addPropertyChangeMixin(model);
+        
+        // create listener
+        ListListener testListener = new ListListener();
+        
+        assertTrue(model.getList().size() == 0);
+        assertTrue(model.getMap().size() == 0);
+        
+        List<Integer> list = model.getList();
+        ((ObservableList<Integer>) list).addObservableListListener(testListener);
+        list.add(1);
+        assertEquals(testListener.event.toString(), "add");
+        list.remove(0);
+        assertEquals(testListener.event.toString(), "remove");
+        list.add(1);
+        assertEquals(testListener.event.toString(), "add");
+        list.set(0, 2);
+        assertEquals(testListener.event.toString(), "replace");
     }
 }

@@ -23,6 +23,7 @@ import java.util.List;
 import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -37,9 +38,16 @@ import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.core.context.ModuleApplicationContextConfiguration;
+import ch.elca.el4j.gui.swing.config.DefaultConfig;
+import ch.elca.el4j.gui.swing.cookswing.TagLibraryFactory;
 import ch.elca.el4j.gui.swing.exceptions.Exceptions;
 import ch.elca.el4j.gui.swing.wrapper.JFrameWrapper;
 import ch.elca.el4j.gui.swing.wrapper.JFrameWrapperFactory;
+import ch.elca.el4j.util.config.GenericConfig;
+
+import cookxml.cookswing.CookSwing;
+import cookxml.core.exceptionhandler.StrictExceptionHandler;
+
 
 /**
  * Parent class for new applications. (For MDI applications refer to 
@@ -76,7 +84,20 @@ public abstract class GUIApplication extends SingleFrameApplication {
      * The Spring context.
      */
     protected ApplicationContext m_springContext;
-
+    
+    /**
+     * The configuration.
+     */
+    protected GenericConfig m_config;
+    
+    
+    /**
+     * @return      the Spring context
+     */
+    public ApplicationContext getSpringContext() {
+        return m_springContext;
+    }
+    
     /**
      * Sets the Spring context.
      * 
@@ -85,12 +106,19 @@ public abstract class GUIApplication extends SingleFrameApplication {
     public void setSpringContext(ApplicationContext springContext) {
         m_springContext = springContext;
     }
-
+    
     /**
-     * @return      the Spring context
+     * @return    the current configuration
      */
-    public ApplicationContext getSpringContext() {
-        return m_springContext;
+    public GenericConfig getConfig() {
+        return m_config;
+    }
+    
+    /**
+     * @param config    the configuration to set
+     */
+    public void setConfig(GenericConfig config) {
+        m_config = config;
     }
 
     /**
@@ -114,6 +142,12 @@ public abstract class GUIApplication extends SingleFrameApplication {
 
         // install exception handler
         Thread.setDefaultUncaughtExceptionHandler(Exceptions.getInstance());
+        
+        // configure CookSwing
+        CookSwing.setDefaultExceptionHandler(
+            StrictExceptionHandler.getInstance());
+        CookSwing.setDefaultAccessible(true);
+        CookSwing.setSwingTagLibrary(TagLibraryFactory.getTagLibrary());
 
         Runnable doCreateAndShowGUI = new Runnable() {
             public void run() {
@@ -125,6 +159,10 @@ public abstract class GUIApplication extends SingleFrameApplication {
                     // new: set the spring context early
                     application.setSpringContext(new ModuleApplicationContext(
                         contextConfig));
+                    
+                    // set default config
+                    application.setConfig(new DefaultConfig());
+                    
                     application.initialize(args);
                     application.startup();
                     application.waitForReady();
@@ -174,10 +212,26 @@ public abstract class GUIApplication extends SingleFrameApplication {
     
     /**
      * Show the main frame.
+     * @param frame    the main frame
+     */
+    public void showMain(JFrame frame) {
+        setMainFrame(frame);
+        showMain();
+    }
+    
+    /**
+     * Show the main frame.
      * @param component    the component to put into the main frame
      */
     public void showMain(JComponent component) {
         super.show(component);
+    }
+    
+    /**
+     * Show the main frame.
+     */
+    public void showMain() {
+        super.show(getMainFrame());
     }
 
     /**

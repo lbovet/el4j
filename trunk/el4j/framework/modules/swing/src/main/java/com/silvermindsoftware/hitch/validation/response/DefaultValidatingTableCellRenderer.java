@@ -54,10 +54,8 @@ public class DefaultValidatingTableCellRenderer
      * The default contructor reading the invalidColor from Spring config.
      */
     public DefaultValidatingTableCellRenderer() {
-        this((Color) GUIApplication.getInstance().getSpringContext()
-            .getBean("invalidColor"),
-            (Color) GUIApplication.getInstance().getSpringContext()
-            .getBean("selectedColor"));
+        m_invalidColor = null;
+        m_selectedColor = null;
     }
     
     /**
@@ -84,15 +82,39 @@ public class DefaultValidatingTableCellRenderer
         renderer.setForeground(Color.BLACK);
         
         if (!((ValidatedProperty) value).isValid()) {
-            renderer.setBackground(m_invalidColor);
+            renderer.setBackground(getInvalidColor());
         } else {
             if (isSelected) {
-                renderer.setBackground(m_selectedColor);
+                renderer.setBackground(getSelectedColor());
             } else {
                 renderer.setBackground(Color.WHITE);
             }
         }
         
         return renderer;
+    }
+    
+    /**
+     * @return    the color to mark a value as invalid.
+     */
+    private Color getInvalidColor() {
+        if (m_invalidColor != null) {
+            return m_invalidColor;
+        } else {
+            return (Color) GUIApplication.getInstance().getConfig()
+            .get("invalidColor");
+        }
+    }
+    
+    /**
+     * @return    the color to mark row as selected.
+     */
+    private Color getSelectedColor() {
+        if (m_selectedColor != null) {
+            return m_selectedColor;
+        } else {
+            return (Color) GUIApplication.getInstance().getConfig()
+            .get("selectedColor");
+        }
     }
 }

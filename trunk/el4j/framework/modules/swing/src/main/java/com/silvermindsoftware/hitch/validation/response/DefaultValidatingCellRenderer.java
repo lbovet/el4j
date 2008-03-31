@@ -48,8 +48,7 @@ public class DefaultValidatingCellRenderer extends DefaultListCellRenderer {
      * The default contructor reading the invalidColor from Spring config.
      */
     public DefaultValidatingCellRenderer() {
-        this((Color) GUIApplication.getInstance().getSpringContext()
-            .getBean("invalidColor"));
+        m_invalidColor = null;
     }
     
     /**
@@ -69,9 +68,21 @@ public class DefaultValidatingCellRenderer extends DefaultListCellRenderer {
                 cellHasFocus);
         
         if (!((ValidatedProperty) value).isValid()) {
-            renderer.setBackground(m_invalidColor);
+            renderer.setBackground(getInvalidColor());
         }
         
         return renderer;
+    }
+    
+    /**
+     * @return    the color to mark a value as invalid.
+     */
+    private Color getInvalidColor() {
+        if (m_invalidColor != null) {
+            return m_invalidColor;
+        } else {
+            return (Color) GUIApplication.getInstance().getConfig()
+            .get("invalidColor");
+        }
     }
 }

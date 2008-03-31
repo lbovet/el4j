@@ -19,6 +19,7 @@ package com.silvermindsoftware.hitch.binding.components;
 import java.util.List;
 
 import javax.swing.JTable;
+import javax.swing.ListCellRenderer;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
@@ -35,6 +36,7 @@ import org.springframework.context.ApplicationContext;
 import com.silvermindsoftware.hitch.binding.AbstractBindingCreator;
 
 import ch.elca.el4j.gui.swing.GUIApplication;
+import ch.elca.el4j.util.config.GenericConfig;
 
 /**
  * This class creates bindings for tables.
@@ -135,13 +137,12 @@ public class TableBinding extends AbstractBindingCreator<JTable> {
     
     /** {@inheritDoc} */
     public void addValidation(JTable formComponent) {
-        ApplicationContext ctx
-            = GUIApplication.getInstance().getSpringContext();
+        GenericConfig config = GUIApplication.getInstance().getConfig();
         
         formComponent.setDefaultRenderer(ValidatedProperty.class,
-            (TableCellRenderer) ctx.getBean("tableCellRenderer"));
+            (TableCellRenderer) config.get("tableCellRenderer"));
         formComponent.setDefaultEditor(ValidatedProperty.class,
-            (TableCellEditor) ctx.getBean("tableCellEditor"));
+            (TableCellEditor) config.get("tableCellEditor"));
     }
 
 }

@@ -27,8 +27,10 @@ import org.jdesktop.swingbinding.SwingBindings;
 import org.springframework.context.ApplicationContext;
 
 import com.silvermindsoftware.hitch.binding.AbstractBindingCreator;
+import com.silvermindsoftware.hitch.validation.response.ValidationResponder;
 
 import ch.elca.el4j.gui.swing.GUIApplication;
+import ch.elca.el4j.util.config.GenericConfig;
 
 /**
  * This class creates bindings for ComboBoxes.
@@ -56,9 +58,8 @@ public class ComboBoxBinding extends AbstractBindingCreator<JComboBox> {
     
     /** {@inheritDoc} */
     public void addValidation(JComboBox formComponent) {
-        ApplicationContext ctx
-            = GUIApplication.getInstance().getSpringContext();
+        GenericConfig config = GUIApplication.getInstance().getConfig();
         formComponent.setRenderer(
-            (ListCellRenderer) ctx.getBean("cellRenderer"));
+            (ListCellRenderer) config.get("cellRenderer"));
     }
 }
