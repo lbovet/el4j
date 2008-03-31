@@ -30,11 +30,18 @@
         </layout>
     </appender>
 
+	
+	
     <!-- EL4J framwork: show only warnings -->
     <logger name="ch.elca.el4j">
         <level value="WARN"/>
     </logger>
     
+	<!-- EL4J framwork: debug output, such as all Spring configuration files that are loaded -->
+    <!--logger name="el4j.debugging">
+                  <level value="DEBUG"/>
+           </logger-->
+	
     <!-- Show by hibernate generated SQL statements -->
     <!--logger name="org.hibernate.SQL">
         <level value="DEBUG"/>
