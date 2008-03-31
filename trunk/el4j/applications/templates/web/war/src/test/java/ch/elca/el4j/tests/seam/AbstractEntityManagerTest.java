@@ -60,6 +60,7 @@ public abstract class AbstractEntityManagerTest extends SeamTest {
     @BeforeClass
     public void init() throws Exception {
         
+        super.init();
         
         ServletContext servletContext = ServletLifecycle.getServletContext();
         
