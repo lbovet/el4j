@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <!-- ===================================================================== -->
+<!-- Important Notes:       -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- -This file is used only by Jetty -->
+<!-- - If you delete this file Jetty may take a defined standard webdefault.xml  -->
+<!-- - Be aware that your webapplication contains settings here and in web.xml  -->
+<!-- ===================================================================== -->
+
+<!-- ===================================================================== -->
 <!-- This file contains the default descriptor for web applications.       -->
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 <!-- The intent of this descriptor is to include jetty specific or common  -->
