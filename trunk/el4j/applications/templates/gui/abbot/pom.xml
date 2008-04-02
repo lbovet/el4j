@@ -17,61 +17,12 @@
 	<description>Demo for testing with abbot.</description>
 
 	<dependencies>
-		<dependency>
-			<groupId>abbot</groupId>
-			<artifactId>abbot</artifactId>
-			<version>1.0.0.rc5</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>abbot</groupId>
-			<artifactId>costello</artifactId>
-			<version>1.0.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>abbot</groupId>
-			<artifactId>bsh</artifactId>
-			<version>2.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>abbot</groupId>
-			<artifactId>gnu-regexp</artifactId>
-			<version>1.1.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>jdom</groupId>
-			<artifactId>jdom</artifactId>
-			<version>1.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>abbot</groupId>
-			<artifactId>jgraph</artifactId>
-			<version>1.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>abbot</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
-		</dependency>
+		
         
         <dependency>
             <groupId>ch.elca.el4j.applications</groupId>
             <artifactId>swing-demo-standalone-client</artifactId>
         </dependency>
-        
-        
-        <!--
-        <dependency>
-            <groupId>ch.elca.el4j.applications</groupId>
-            <artifactId>refdb-service</artifactId>
-        </dependency>
-        -->
         
 	</dependencies>
 
@@ -85,8 +36,23 @@
 					<skip>false</skip>
 				</configuration>
 			</plugin>
-
+            
+            <plugin>
+                <groupId>ch.elca.el4j.maven.plugins</groupId>
+                <artifactId>maven-abbot-plugin</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>abbot</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
             <!-- EL4J Database plugin to start and fill DB automatically -->
+
             <plugin>
                 <groupId>ch.elca.el4j.maven.plugins</groupId>
                 <artifactId>maven-database-plugin</artifactId>
@@ -98,7 +64,7 @@
                         </goals>
                         <phase>test-compile</phase>
                     </execution>
-                    <!-- Delete tables and stop Network Server -->
+                    
                     <execution>
                         <id>cleanUp</id>
                         <goals>
