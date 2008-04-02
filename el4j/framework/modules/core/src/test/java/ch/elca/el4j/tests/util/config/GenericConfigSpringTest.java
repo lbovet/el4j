@@ -49,7 +49,7 @@ public class GenericConfigSpringTest extends TestCase {
      */
     public GenericConfigSpringTest() {
         m_appContext = new ModuleApplicationContext(
-            "classpath:scenarios/util/config/*.xml", false);
+            "classpath:scenarios/util/config/genericConfig.xml", false);
     }
     
     /***/
@@ -58,6 +58,7 @@ public class GenericConfigSpringTest extends TestCase {
             = (GenericConfig) m_appContext.getBean("DefaultConfig");
         assertTrue(config.get("class").equals("DefaultConfig"));
         assertTrue(config.get("DefaultConfig").equals("DefaultConfig"));
+        assertTrue(config.getMap().size() == 2);
     }
     
     /***/
@@ -66,6 +67,7 @@ public class GenericConfigSpringTest extends TestCase {
             = (GenericConfig) m_appContext.getBean("SpecificConfig");
         assertTrue(config.get("class").equals("SpecificConfig"));
         assertTrue(config.get("SpecificConfig").equals("SpecificConfig"));
+        assertTrue(config.getMap().size() == 3);
     }
     
     /***/
@@ -76,6 +78,7 @@ public class GenericConfigSpringTest extends TestCase {
         assertTrue(config.get("MoreSpecificConfig")
             .equals("MoreSpecificConfig"));
         assertTrue(config.get("SpecificConfig").equals("SpecificConfig"));
+        assertTrue(config.getMap().size() == 4);
     }
     
     /***/
@@ -87,6 +90,7 @@ public class GenericConfigSpringTest extends TestCase {
         assertTrue(config.get("MoreSpecificConfigUsingProperties")
             .equals("MoreSpecificConfigUsingProperties"));
         assertTrue(config.get("SpecificConfig").equals("SpecificConfig"));
+        assertTrue(config.getMap().size() == 4);
     }
 }
 // Checkstyle: EmptyBlock on

@@ -34,10 +34,6 @@ import java.util.Properties;
  * @author Stefan Wismer (SWI)
  */
 public class GenericConfig {
-    /**
-     * The parent {@link GenericConfig} which configuration is inherited.
-     */
-    protected GenericConfig m_parentConfig;
     
     /**
      * The configuration entries that are added or override configurations
@@ -57,15 +53,21 @@ public class GenericConfig {
      *                  is inherited
      */
     public void setParent(GenericConfig parent) {
-        m_parentConfig = parent;
+        Map<String, Object> parentMap = parent.getMap();
+        for (String key : parentMap.keySet()) {
+            if (!m_map.containsKey(key)) {
+                add(key, parentMap.get(key));
+            }
+        }
     }
     
     /**
-     * @return    the configuration entries declared in this config (without 
-     *            the configuration declared in the parent) 
+     * @return    a copy of all configuration entries declared in this config
      */
     public Map<String, Object> getMap() {
-        return m_map;
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.putAll(m_map);
+        return map;
     }
     
     /**
@@ -116,13 +118,7 @@ public class GenericConfig {
      * @return       the corresponding value or <code>null</code> if not found
      */
     public Object get(String key) {
-        if (m_map.containsKey(key)) {
-            return m_map.get(key);
-        } else if (m_parentConfig != null) {
-            return m_parentConfig.get(key);
-        } else {
-            return null;
-        }
+        return m_map.get(key);
     }
 
 
