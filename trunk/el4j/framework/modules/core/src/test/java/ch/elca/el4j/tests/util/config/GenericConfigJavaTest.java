@@ -43,13 +43,16 @@ public class GenericConfigJavaTest extends TestCase {
         GenericConfig config = new DefaultConfig();
         assertTrue(config.get("class").equals("DefaultConfig"));
         assertTrue(config.get("DefaultConfig").equals("DefaultConfig"));
+        assertTrue(config.getMap().size() == 2);
     }
     
     /***/
     public void testSpecificConfig() {
         GenericConfig config = new SpecificConfig();
         assertTrue(config.get("class").equals("SpecificConfig"));
+        assertTrue(config.get("DefaultConfig").equals("DefaultConfig"));
         assertTrue(config.get("SpecificConfig").equals("SpecificConfig"));
+        assertTrue(config.getMap().size() == 3);
     }
     
     /***/
@@ -59,6 +62,8 @@ public class GenericConfigJavaTest extends TestCase {
         assertTrue(config.get("MoreSpecificConfig")
             .equals("MoreSpecificConfig"));
         assertTrue(config.get("SpecificConfig").equals("SpecificConfig"));
+        assertTrue(config.get("DefaultConfig").equals("DefaultConfig"));
+        assertTrue(config.getMap().size() == 4);
     }
     
     /**
@@ -77,7 +82,7 @@ public class GenericConfigJavaTest extends TestCase {
     /**
      * A specific configuration class.
      */
-    private class SpecificConfig extends GenericConfig {
+    private class SpecificConfig extends DefaultConfig {
         /**
          * Default constructor to insert specific configuration.
          */
