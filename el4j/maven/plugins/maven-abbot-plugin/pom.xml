@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <!-- Version: $Revision: 2728 $ -->
+    <!-- URL: $URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/maven/plugins/maven-checkclipse-helper-plugin/pom.xml $ -->
+    <!-- Date: $Date: 2008-02-25 16:47:49 +0100 (Mon, 25 Feb 2008) $ -->
+    <!-- Author: $Author: swismer $ -->
+    
+    <parent>
+        <groupId>ch.elca.el4j.maven.plugins</groupId>
+        <artifactId>el4j-maven-plugins</artifactId>
+        <version>1.3.1-SNAPSHOT</version>
+    </parent>
+    
+    <artifactId>maven-abbot-plugin</artifactId>
+    <packaging>maven-plugin</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>EL4J plugin for automated GUI testing with abbot.</name>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            
+            <!-- IDE -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+            </plugin>
+            <!--
+                Plugin maven-checkclipse-helper-plugin itself should be at this
+                place. Checkclipse will work but Eclipse's project config will
+                not be shown correctly.
+            -->
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-project</artifactId>
+        </dependency>
+        <!--
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+        </dependency>
+        -->
+        <dependency>
+			<groupId>net.sf.abbot</groupId>
+			<artifactId>abbot</artifactId>
+			<version>1.0.0.rc5</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.abbot</groupId>
+			<artifactId>costello</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+        
+        <dependency>
+            <groupId>org.beanshell</groupId>
+            <artifactId>bsh</artifactId>
+            <version>2.0b4</version>
+        </dependency>       
+        <dependency>
+            <groupId>gnu-regexp</groupId>
+            <artifactId>gnu-regexp</artifactId>
+            <version>1.1.4</version>
+        </dependency>
+        <dependency>
+			<groupId>jdom</groupId>
+			<artifactId>jdom</artifactId>
+			<version>1.0</version>
+		</dependency>
+        <dependency>
+            <groupId>jgraph</groupId>
+            <artifactId>jgraph</artifactId>
+            <version>5.8.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.4</version>
+            <scope>compile</scope>
+        </dependency>
+
+    </dependencies>
+</project>
