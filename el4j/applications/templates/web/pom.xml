@@ -22,6 +22,7 @@
     <modules>
         <module>jar</module>
         <module>war</module>
+		<!-- <module>webtest</module> -->
     </modules>
     <profiles>
         <!-- DB -->
