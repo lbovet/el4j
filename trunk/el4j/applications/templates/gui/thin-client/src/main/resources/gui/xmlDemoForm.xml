@@ -26,9 +26,9 @@
 			<scrollpane>
 				<table>
 					<el4j:tablebinding src="m_persons" updateStrategy="read write" validation="true">
-						<el4j:column label="First Name" property="firstName" editable="true" />
-						<el4j:column label="Last Name" property="lastName" />
-						<el4j:column label="Age" property="age" class="java.lang.Integer" editable="true" />
+						<el4j:column label="@FirstName" property="firstName" editable="true" />
+						<el4j:column label="@LastName" property="lastName" />
+						<el4j:column label="@Age" property="age" class="java.lang.Integer" editable="true" />
 					</el4j:tablebinding>
 				</table>
 			</scrollpane>
