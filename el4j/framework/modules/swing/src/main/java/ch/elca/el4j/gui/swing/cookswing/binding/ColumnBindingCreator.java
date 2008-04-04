@@ -19,11 +19,14 @@ package ch.elca.el4j.gui.swing.cookswing.binding;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.jdesktop.application.ApplicationContext;
 import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.Property;
 import org.jdesktop.swingbinding.JTableBinding;
 import org.jdesktop.swingbinding.JTableBinding.ColumnBinding;
 import org.w3c.dom.Element;
+
+import ch.elca.el4j.gui.swing.GUIApplication;
 
 import cookxml.core.DecodeEngine;
 import cookxml.core.exception.CreatorException;
@@ -64,7 +67,21 @@ public class ColumnBindingCreator extends AbstractBindingCreator {
         
         // create binding
         ColumnBinding cb = tb.addColumnBinding(prop);
-        cb.setColumnName(elm.getAttribute(LABEL));
+        
+        // get localized string
+        String columnName = elm.getAttribute(LABEL);
+        if (columnName.startsWith("@")) {
+            GUIApplication app = GUIApplication.getInstance();
+            ApplicationContext appContext = app.getContext();
+            columnName = appContext.getResourceMap(
+                decodeEngine.getVariable("this").getClass())
+                .getString(columnName.substring(1));
+            if (columnName == null) {
+                // no string found -> restore
+                columnName = elm.getAttribute(LABEL).substring(1);
+            }
+        }
+        cb.setColumnName(columnName);
         
         // is editable?
         cb.setEditable(elm.getAttribute(EDITABLE).equalsIgnoreCase("true"));
