@@ -60,9 +60,6 @@
 				</filesets>
 			</configuration>
 			</plugin>
-			
-				
-			
                 <plugin>
                     <groupId>org.codehaus.cargo</groupId>
                     <artifactId>cargo-maven2-plugin</artifactId>
@@ -210,7 +207,7 @@
                     </plugin>
 
                     <!-- start canoo webtests -->
-			<!--<plugin>
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.1-beta-1</version>
@@ -225,7 +222,7 @@
 				<configuration>
 				<executable>webtest.bat</executable>
 				</configuration>	
-			</plugin>	-->
+			</plugin>
 
                     <plugin>
                         <groupId>org.codehaus.cargo</groupId>
