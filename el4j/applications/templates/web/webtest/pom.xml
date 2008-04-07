@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
+
+   <parent>
+		<groupId>ch.elca.el4j.applications.jsf-web-template</groupId>
+		<artifactId>jsf-web-template-web</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>-
+	
+	<artifactId>web-webtest</artifactId>
+	<version>${version.jsf-web-template}</version>
+    <packaging>pom</packaging>
+    <name>Canoo webtests</name>
+    <description>Canoo webtests for the jsf web template demo.</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+        </dependency>
+		<dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-env</artifactId>
+        </dependency>
+		<dependency>
+            <groupId>ch.elca.el4j.applications.jsf-web-template</groupId>
+            <artifactId>web-jar</artifactId>
+			<version>1.0-SNAPSHOT</version>
+        </dependency>
+		<dependency>
+            <groupId>ch.elca.el4j.applications.jsf-web-template</groupId>
+            <artifactId>web-war</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<type>war</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+			
+			<!-- delete the additional files -> means results -->
+			<plugin>
+			<artifactId>maven-clean-plugin</artifactId>
+			<configuration>
+				<filesets>
+				<fileset>
+					<directory>results</directory>
+					<followSymlinks>false</followSymlinks>
+				</fileset>
+				</filesets>
+			</configuration>
+			</plugin>
+			
+				
+			
+                <plugin>
+                    <groupId>org.codehaus.cargo</groupId>
+                    <artifactId>cargo-maven2-plugin</artifactId>
+                    <configuration>
+                        <wait>false</wait>
+                        <deployer>
+                            <deployables>
+                                <deployable>
+                                    <groupId>ch.elca.el4j.applications.jsf-web-template</groupId>
+                                    <artifactId>web-war</artifactId>
+                                    <type>war</type>
+                                    <properties>
+                                        <context>${jee-web.context}</context>
+                                    </properties>
+                                    <pingURL>http://${jee-web.host}:${jee-web.port}/${jee-web.context}</pingURL>
+                                    <pingTimeout>120000</pingTimeout>
+                                </deployable>
+                            </deployables>
+                        </deployer>
+                    </configuration>
+                </plugin>
+				
+				
+            </plugins>
+        </pluginManagement>
+    </build>
+	
+    <profiles>
+        <profile>
+            <id>manual</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-exec-plugin</artifactId>
+                        <configuration>
+                            <skip>false</skip>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+		
+        <profile>
+            <id>tomcat5x</id>
+            <build>
+                <plugins>
+				
+				<!-- EL4J Database plugin to start and fill DB automatically -->
+           <plugin>
+				<groupId>ch.elca.el4j.maven.plugins</groupId>
+				<artifactId>maven-database-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>prepare</id>
+						<goals>
+							<goal>prepare</goal>
+						</goals>
+						<phase>pre-integration-test</phase>
+						<configuration>
+							<filePrefix>fill</filePrefix>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+				
+				
+				
+                    <!-- 
+                        Copy the needed files to the Tomcat Folder.
+                        Otherwise a "fresh" installation of tomcat at least stops
+                        the functional tests from working.
+                        If possible it would suffice to copy the files ones as soon
+                        as tomcat is downloaded, however cargo does not - as far 
+                        as I know - provide an option for configuring the installed
+                        tomcat.
+                    -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>configure-tomcat</id>
+                                <phase>pre-integration-test</phase>
+                                <configuration>
+                                    <tasks>
+                                        <copy overwrite="true"
+                                            todir="${tomcat5x.home}/conf">
+                                            <fileset
+                                                dir="${el4j.external}/etc/tomcat"
+                                                excludes="**/.svn" />
+                                        </copy>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                            
+                            <!-- MDL 2006-11-23
+                            Due to a Bug within the Cargo plugin, we need to sleep here.
+                            Note that the time is crucial: 5 seconds are not enough. -->
+                            <execution>
+                                <id>sleep-after-deployment</id>
+                                <phase>integration-test</phase>
+                                <configuration>
+                                    <tasks>
+                                        <echo message="Sleeping now for 1 seconds after deployment but before executing the Canoo tests with tomcat5x."/>
+                                        <sleep seconds="1"/>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    
+                    <plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>start-container</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>start</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    
+                    <plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>deploy</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>deploy</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- start canoo webtests -->
+			<!--<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.1-beta-1</version>
+				<executions>
+					<execution>
+					<phase>integration-test</phase>
+					<goals>
+						<goal>exec</goal>
+					</goals>
+					</execution>
+				</executions>
+				<configuration>
+				<executable>webtest.bat</executable>
+				</configuration>	
+			</plugin>	-->
+
+                    <plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>undeploy-after-testing</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>undeploy</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>stop-container</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+					
+					
+					<!-- clean up the database -->
+			<plugin>
+				<groupId>ch.elca.el4j.maven.plugins</groupId>
+				<artifactId>maven-database-plugin</artifactId>
+				<executions>		
+					<!-- Delete tables and stop Network Server -->
+					<execution>
+						<id>clean up</id>
+						<goals>
+							<goal>cleanUp</goal>
+						</goals>
+						<phase>post-integration-test</phase>
+					</execution>
+				</executions>
+			</plugin>
+                </plugins>
+            </build>
+        </profile>
+		
+		
+        <profile>
+            <id>tomcat6x</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+				
+				<!-- EL4J Database plugin to start and fill DB automatically -->
+           <plugin>
+				<groupId>ch.elca.el4j.maven.plugins</groupId>
+				<artifactId>maven-database-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>prepare</id>
+						<goals>
+							<goal>prepare</goal>
+						</goals>
+						<phase>pre-integration-test</phase>
+						<configuration>
+							<filePrefix>fill</filePrefix>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+				
+				
+                    <!-- 
+                        Copy the needed files to the Tomcat Folder.
+                        Otherwise a "fresh" installation of tomcat at least stops
+                        the functional tests from working.
+                        If possible it would suffice to copy the files ones as soon
+                        as tomcat is downloaded, however cargo does not - as far 
+                        as I know - provide an option for configuring the installed
+                        tomcat.
+                    -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>configure-tomcat</id>
+                                <phase>pre-integration-test</phase>
+                                <configuration>
+                                    <tasks>
+                                        <copy overwrite="true"
+                                            todir="${tomcat6x.home}/conf">
+                                            <fileset
+                                                dir="${el4j.external}/etc/tomcat"
+                                                excludes="**/.svn" />
+                                        </copy>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                            
+                            <!-- MDL 2006-11-23
+                            Due to a Bug within the Cargo plugin, we need to sleep here.
+                            Note that the time is crucial: 5 seconds are not enough. -->
+                            <execution>
+                                <id>sleep-after-deployment</id>
+                                <phase>integration-test</phase>
+                                <configuration>
+                                    <tasks>
+                                        <echo message="Sleeping now for 1 seconds after deployment but before executing the Canoo tests with tomcat6x."/>
+                                        <sleep seconds="1"/>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    
+                    <plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>start-container</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>start</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    
+                    <plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>deploy</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>deploy</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- start canoo webtests -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.1-beta-1</version>
+				<executions>
+					<execution>
+					<phase>integration-test</phase>
+					<goals>
+						<goal>exec</goal>
+					</goals>
+					</execution>
+				</executions>
+				<configuration>
+				<executable>webtest.bat</executable>
+				</configuration>	
+			</plugin>
+
+                    <plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>undeploy-after-testing</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>undeploy</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>stop-container</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+					
+					
+					<!-- clean up the database -->
+			<plugin>
+				<groupId>ch.elca.el4j.maven.plugins</groupId>
+				<artifactId>maven-database-plugin</artifactId>
+				<executions>		
+					<!-- Delete tables and stop Network Server -->
+					<execution>
+						<id>clean up</id>
+						<goals>
+							<goal>cleanUp</goal>
+						</goals>
+						<phase>post-integration-test</phase>
+					</execution>
+				</executions>
+			</plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
