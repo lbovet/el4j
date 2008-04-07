@@ -17,6 +17,7 @@
 package ch.elca.el4j.util.config;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -58,6 +59,16 @@ public class GenericConfig {
             if (!m_map.containsKey(key)) {
                 add(key, parentMap.get(key));
             }
+        }
+    }
+    
+    /**
+     * @param parents    the parent {@link GenericConfig}s which configuration
+     *                   is inherited
+     */
+    public void setParents(List<GenericConfig> parents) {
+        for (GenericConfig genericConfig : parents) {
+            setParent(genericConfig);
         }
     }
     

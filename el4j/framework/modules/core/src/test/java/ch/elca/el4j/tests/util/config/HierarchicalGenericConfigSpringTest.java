@@ -21,11 +21,8 @@ import org.springframework.context.ApplicationContext;
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.util.config.HierarchicalGenericConfig;
 
-import junit.framework.TestCase;
-
 //Checkstyle: MagicNumber off
 //Checkstyle: EmptyBlock off
-
 
 /**
  * This class tests {@link HierarchicalGenericConfigSpringTest}
@@ -40,7 +37,9 @@ import junit.framework.TestCase;
  *
  * @author Stefan Wismer (SWI)
  */
-public class HierarchicalGenericConfigSpringTest extends TestCase {
+public class HierarchicalGenericConfigSpringTest
+    extends AbstractHierarchicalGenericConfigTest {
+    
     /** The application context. */
     final ApplicationContext m_appContext;
 
@@ -53,50 +52,34 @@ public class HierarchicalGenericConfigSpringTest extends TestCase {
             false);
     }
     
-    /***/
-    public void testGenericConfig() {
-        HierarchicalGenericConfig config = (HierarchicalGenericConfig)
+    /** {@inheritDoc} */
+    @Override
+    protected HierarchicalGenericConfig getDefaultConfig() {
+        return (HierarchicalGenericConfig)
             m_appContext.getBean("DefaultConfig");
-        
-        assertTrue(config.get("ch.elca.el4j").equals("EL4J"));
-        assertTrue(config.get("ch.elca.el4j.tests.core").equals("core"));
-        assertTrue(config.getMap().size() == 6);
-        
-        HierarchicalGenericConfig subConfig
-            = config.getSubConfig("ch.elca.el4j.default");
-        assertTrue(subConfig.getMap().size() == 2);
-        assertTrue(subConfig.get("a").equals("defaultA"));
-        assertTrue(subConfig.get("b").equals("defaultB"));
-        
-        subConfig = config.getSubConfig("ch.elca.el4j.tests");
-        
-        assertTrue(subConfig.get("core").equals("core"));
-        assertTrue(subConfig.get("services").equals("services"));
-        assertTrue(subConfig.get("util").equals("util"));
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    protected HierarchicalGenericConfig getSpecificConfig() {
+        return (HierarchicalGenericConfig)
+            m_appContext.getBean("SpecificConfig");
     }
     
     /***/
-    public void testSpecificConfig() {
+    public void testMultipleParents() {
         HierarchicalGenericConfig config = (HierarchicalGenericConfig)
-            m_appContext.getBean("SpecificConfig");
-        assertTrue(config.get("ch.elca.el4j").equals("EL4J"));
-        assertTrue(config.get("ch.elca.el4j.tests.core").equals("core2"));
-        assertTrue(config.getMap().size() == 7);
+            m_appContext.getBean("configABCD");
         
         HierarchicalGenericConfig subConfig
             = config.getSubConfig("ch.elca.el4j.default");
-        assertTrue(subConfig.getMap().size() == 2);
+        assertTrue(subConfig.getMap().size() == 4);
         assertTrue(subConfig.get("a").equals("defaultA"));
-        assertTrue(subConfig.get("b").equals("defaultB"));
-        
-        subConfig = config.getSubConfig("ch.elca.el4j.tests");
-        
-        assertTrue(subConfig.get("core").equals("core2"));
-        assertTrue(subConfig.get("services").equals("services"));
-        assertTrue(subConfig.get("util").equals("util"));
-        
-        System.out.println(config.toString());
-    }
+        assertTrue(subConfig.get("b").equals("defaultB2"));
+        assertTrue(subConfig.get("c.d").equals("defaultCD"));
+        assertTrue(subConfig.get("c.e").equals("defaultCE2"));
+    }    
 }
+
 //Checkstyle: EmptyBlock on
 //Checkstyle: MagicNumber on
