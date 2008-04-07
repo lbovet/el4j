@@ -8,11 +8,13 @@ Purpose:
  - Provide the foundations for generic master/detail views
  - Demonstrate usage of JBoss Seam, Richfaces and JSF / Facelets in general.
  - Show quick deployment with jetty
+ - Show Canoo test integration (folder webtest)
 
 Authors:
  CBA (Christoph Baeni)
  FBI (Frank Bitzer)
  SWI (Stefan Wismer)
+ FKE (Florian Keusch)
  
 Requirements: 
  - Java 1.5.0_14 or newer
