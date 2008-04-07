@@ -21,11 +21,8 @@ import org.springframework.context.ApplicationContext;
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.util.config.GenericConfig;
 
-import junit.framework.TestCase;
-
 // Checkstyle: MagicNumber off
 // Checkstyle: EmptyBlock off
-
 
 /**
  * This class tests {@link GenericConfig} using Spring.
@@ -39,7 +36,7 @@ import junit.framework.TestCase;
  *
  * @author Stefan Wismer (SWI)
  */
-public class GenericConfigSpringTest extends TestCase {
+public class GenericConfigSpringTest extends AbstractGenericConfigTest {
     
     /** The application context. */
     final ApplicationContext m_appContext;
@@ -52,33 +49,22 @@ public class GenericConfigSpringTest extends TestCase {
             "classpath:scenarios/util/config/genericConfig.xml", false);
     }
     
-    /***/
-    public void testGenericConfig() {
-        GenericConfig config
-            = (GenericConfig) m_appContext.getBean("DefaultConfig");
-        assertTrue(config.get("class").equals("DefaultConfig"));
-        assertTrue(config.get("DefaultConfig").equals("DefaultConfig"));
-        assertTrue(config.getMap().size() == 2);
+    /** {@inheritDoc} */
+    @Override
+    protected GenericConfig getDefaultConfig() {
+        return (GenericConfig) m_appContext.getBean("DefaultConfig");
     }
     
-    /***/
-    public void testSpecificConfig() {
-        GenericConfig config
-            = (GenericConfig) m_appContext.getBean("SpecificConfig");
-        assertTrue(config.get("class").equals("SpecificConfig"));
-        assertTrue(config.get("SpecificConfig").equals("SpecificConfig"));
-        assertTrue(config.getMap().size() == 3);
+    /** {@inheritDoc} */
+    @Override
+    protected GenericConfig getSpecificConfig() {
+        return (GenericConfig) m_appContext.getBean("SpecificConfig");
     }
     
-    /***/
-    public void testMoreSpecificConfig() {
-        GenericConfig config
-            = (GenericConfig) m_appContext.getBean("MoreSpecificConfig");
-        assertTrue(config.get("class").equals("MoreSpecificConfig"));
-        assertTrue(config.get("MoreSpecificConfig")
-            .equals("MoreSpecificConfig"));
-        assertTrue(config.get("SpecificConfig").equals("SpecificConfig"));
-        assertTrue(config.getMap().size() == 4);
+    /** {@inheritDoc} */
+    @Override
+    protected GenericConfig getMoreSpecificConfig() {
+        return (GenericConfig) m_appContext.getBean("MoreSpecificConfig");
     }
     
     /***/

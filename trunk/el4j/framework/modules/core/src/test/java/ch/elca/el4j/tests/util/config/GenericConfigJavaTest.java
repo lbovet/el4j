@@ -18,12 +18,6 @@ package ch.elca.el4j.tests.util.config;
 
 import ch.elca.el4j.util.config.GenericConfig;
 
-import junit.framework.TestCase;
-
-// Checkstyle: MagicNumber off
-// Checkstyle: EmptyBlock off
-
-
 /**
  * This class tests {@link GenericConfig} using pure Java (no Spring).
  *
@@ -36,34 +30,24 @@ import junit.framework.TestCase;
  *
  * @author Stefan Wismer (SWI)
  */
-public class GenericConfigJavaTest extends TestCase {
+public class GenericConfigJavaTest extends AbstractGenericConfigTest {
 
-    /***/
-    public void testGenericConfig() {
-        GenericConfig config = new DefaultConfig();
-        assertTrue(config.get("class").equals("DefaultConfig"));
-        assertTrue(config.get("DefaultConfig").equals("DefaultConfig"));
-        assertTrue(config.getMap().size() == 2);
+    /** {@inheritDoc} */
+    @Override
+    protected GenericConfig getDefaultConfig() {
+        return new DefaultConfig();
     }
     
-    /***/
-    public void testSpecificConfig() {
-        GenericConfig config = new SpecificConfig();
-        assertTrue(config.get("class").equals("SpecificConfig"));
-        assertTrue(config.get("DefaultConfig").equals("DefaultConfig"));
-        assertTrue(config.get("SpecificConfig").equals("SpecificConfig"));
-        assertTrue(config.getMap().size() == 3);
+    /** {@inheritDoc} */
+    @Override
+    protected GenericConfig getSpecificConfig() {
+        return new SpecificConfig();
     }
     
-    /***/
-    public void testMoreSpecificConfig() {
-        GenericConfig config = new MoreSpecificConfig();
-        assertTrue(config.get("class").equals("MoreSpecificConfig"));
-        assertTrue(config.get("MoreSpecificConfig")
-            .equals("MoreSpecificConfig"));
-        assertTrue(config.get("SpecificConfig").equals("SpecificConfig"));
-        assertTrue(config.get("DefaultConfig").equals("DefaultConfig"));
-        assertTrue(config.getMap().size() == 4);
+    /** {@inheritDoc} */
+    @Override
+    protected GenericConfig getMoreSpecificConfig() {
+        return new MoreSpecificConfig();
     }
     
     /**
@@ -105,5 +89,3 @@ public class GenericConfigJavaTest extends TestCase {
         }
     }
 }
-// Checkstyle: EmptyBlock on
-// Checkstyle: MagicNumber on

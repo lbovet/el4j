@@ -135,6 +135,23 @@ public class HierarchicalGenericConfig extends GenericConfig {
         }
     }
     
+    /**
+     * @return    all configuration children
+     */
+    public Map<String, Object> getChildren() {
+        Map<String, Object> map = new HashMap<String, Object>();
+        
+        for (String key : m_map.keySet()) {
+            if (key.startsWith("#")) {
+                map.put(key.substring(1), m_map.get(key));
+            } else {
+                map.put(key, m_map.get(key));
+            }
+        }
+        
+        return map;
+    }
+    
     /** {@inheritDoc} */
     @Override
     public String toString() {
