@@ -35,6 +35,7 @@ import org.springframework.context.ApplicationContext;
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.core.exceptions.BaseException;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
+import ch.elca.el4j.util.codingsupport.ClassloaderTools;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
@@ -344,6 +345,15 @@ public class ApplicationContextMB implements ApplicationContextMBMBean {
             result = new String[] {NOT_MODULE_APPLICATION_CONTEXT};
         }
         return result;
+    }
+    
+    /** {@inheritDoc} */
+    public String[] getURLClassPath() {
+        Class<?> c = m_applicationContext.getClass();
+        if (ClassloaderTools.isURLLoaded(c)) {
+            return ClassloaderTools.getURLs(c);
+        } 
+        return null;
     }
 
     /**

@@ -73,4 +73,28 @@ public abstract class ClassloaderTools {
         classpath = classpath.substring(0, classpath.length() - 2);
         return classpath;
     }
+    
+    /**
+     * @param mainClass A class from which to obtain the classloader and its
+     * classpath. 
+     * @return A String[] of the modules on the current maven
+     * classpath.
+     * @throws RuntimeException - if the class does not
+     * come from an URLClassLoader
+     */
+    public static String[] getURLs(Class < ? > mainClass) {
+        ClassLoader cl = mainClass.getClassLoader();
+        
+        if (!isURLLoaded(mainClass)) {
+            throw new RuntimeException(
+                "The class " + mainClass
+                + " was not loaded via an URLClassLoader.");
+        }
+        URL[] urls = ((URLClassLoader) cl).getURLs();
+        String[] urlStrings = new String[urls.length];
+        for (int i = 0; i < urls.length; i++) {
+            urlStrings[i] = urls[i].toString();
+        }
+        return urlStrings;
+    }
 }

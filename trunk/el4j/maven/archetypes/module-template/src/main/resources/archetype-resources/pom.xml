@@ -26,6 +26,11 @@
             <groupId>ch.elca.el4j.modules</groupId>
             <artifactId>module-core</artifactId>
         </dependency>
+        <!-- EL4J jmx support -->
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-jmx</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

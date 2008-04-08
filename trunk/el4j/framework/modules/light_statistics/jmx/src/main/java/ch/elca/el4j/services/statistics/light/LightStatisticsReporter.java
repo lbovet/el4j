@@ -25,6 +25,11 @@ import javax.management.ObjectName;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 
+import ch.elca.el4j.services.monitoring.jmx.display.DisplayManager;
+import ch.elca.el4j.services.monitoring.jmx.display.HtmlDisplayManager;
+import ch.elca.el4j.services.monitoring.jmx.display.HtmlTabulator;
+import ch.elca.el4j.services.monitoring.jmx.display.Section;
+
 import com.jamonapi.MonitorFactory;
 
 /**
@@ -137,13 +142,13 @@ public class LightStatisticsReporter
         Object[][] dataAsObj = MonitorFactory.getRootMonitor().getBasicData();
         
         if (dataAsObj == null) {
-            return new String[]  { " " };
+            return new String[]  {" "};
         }
         
         // make simple conversion to String[][]
         String[][] data;
         data = new String[dataAsObj.length][];
-        for (int i=0; i < dataAsObj.length; i++) {
+        for (int i = 0; i < dataAsObj.length; i++) {
             String[] line = new String[dataAsObj[i].length];
             for (int j = 0; j < dataAsObj[i].length; j++) {
                 line[j] = (dataAsObj[i][j]).toString(); 
@@ -278,5 +283,32 @@ public class LightStatisticsReporter
         if (m_server != null) {
             m_server.unregisterMBean(new ObjectName(NAME));
         }
+    }
+    
+    /** {@inheritDoc} */
+    public String report() {
+        DisplayManager manager = new HtmlDisplayManager();
+        manager.setTitle("Light Statistics");
+        Section section = new Section("Light Statistics");
+        HtmlTabulator table = new HtmlTabulator(CAPTIONS);
+        Object[][] data = MonitorFactory.getRootMonitor().getBasicData();
+        
+        if (data == null) {
+            section.addWarning("No data.");
+            manager.addSection(section);
+            return manager.getPage();
+        } 
+        
+        for (Object[] row : data) {
+            String[] thisRow = new String[row.length];
+            for (int i = 0; i < row.length; i++) {
+                thisRow[i] = row[i].toString();
+            }
+            table.addRow(thisRow);
+        }
+        section.add(table.tabulate());
+        manager.addSection(section);
+        
+        return manager.getPage();
     }
 }

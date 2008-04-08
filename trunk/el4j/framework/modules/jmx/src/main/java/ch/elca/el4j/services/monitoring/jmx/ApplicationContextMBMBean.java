@@ -68,6 +68,15 @@ public interface ApplicationContextMBMBean {
      * @return Exclusive config locations
      */
     String[] getExclusiveConfigLocations();
+    
+    /**
+     * If loaded via maven, the application's classpath will only contain
+     * classworlds, but the modules loaded will be abailable as URLs from
+     * maven's URLClassLoader that loads the application.
+     * @return If loaded via an URLClassLoader (maven), the URLs in the 
+     * current "classpath". 
+     */
+    String[] getURLClassPath();
 
     /**
      * Returns the JvmMB of this ApplicationContext.

@@ -37,6 +37,11 @@ public interface SpringBeanMBMBean {
      * @return Returns the name.
      */
     String getName();
+    
+    /**
+     * @return The location this bean was defined at.
+     */
+    String getResourceDescription();
 
     /**
      * Returns the configuration parameter as they have been set in the
@@ -88,4 +93,27 @@ public interface SpringBeanMBMBean {
      * @return Returns whether the referenced bean is proxied or not.
      */
     boolean getIsProxied();
+    
+    /**
+     * @return Reflection listing of all methods in this class.
+     */
+    String[] getMethods();
+    
+    /**
+     * @return The properties of this bean. If proxied, the target's properties.
+     */
+    String[] getProperties();
+    
+    /**
+     * @return Result of spring bean introspection on this bean.
+     */
+    String introspect();
+    
+    /**
+     * Try and read a property from this bean.
+     * @param property The property to read.
+     * @return If successful, the value of the property,
+     * otherwise an error message.
+     */
+    public String readProperty(String property);
 }

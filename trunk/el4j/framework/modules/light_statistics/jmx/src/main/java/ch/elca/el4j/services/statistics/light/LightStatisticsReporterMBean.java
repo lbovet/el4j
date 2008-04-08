@@ -81,4 +81,10 @@ public interface LightStatisticsReporterMBean {
      * names.
      */
     public void setFullyQualified(boolean fullyQualified);
+    
+    /**
+     * Shows a Html report of the current data.
+     * @return Data formatted as html. 
+     */
+    public String report();
 }
