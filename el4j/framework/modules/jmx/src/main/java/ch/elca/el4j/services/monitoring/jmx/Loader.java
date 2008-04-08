@@ -159,7 +159,8 @@ public class Loader implements ApplicationContextAware, InitializingBean,
 
                 // execute the following code only on a
                 // JRE, with version >= 1.5
-                if (jreVersion.startsWith("1.5") || jreVersion.startsWith("1.6") || jreVersion.startsWith("1.7") ) {
+                if (jreVersion.startsWith("1.5") || jreVersion.startsWith("1.6")
+                    || jreVersion.startsWith("1.7")) {
                     s_logger.info("Registering Jdk 1.5 Mbean");
                     registerJdk15Mbean(m_server);
                 }
@@ -376,7 +377,11 @@ public class Loader implements ApplicationContextAware, InitializingBean,
             }
 
         } catch (InstanceAlreadyExistsException e1) {
-            e1.printStackTrace();
+            // If we have the system's jmx already running,
+            // we can expect some system beans already to exist.
+            // Therefore, we can ignore these.
+            s_logger.debug("Bean " + e1.getMessage() + "already exists.");
+            // e1.printStackTrace();
         } catch (MBeanRegistrationException e1) {
             e1.printStackTrace();
         } catch (NotCompliantMBeanException e1) {

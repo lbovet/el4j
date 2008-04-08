@@ -14,7 +14,7 @@
     <!-- The MBean Server created by the MBeanServerFactoryBean -->
     <bean id="mBeanServer" class="ch.elca.el4j.services.monitoring.jmx.MBeanServerFactoryBean">
         <property name="defaultDomain">
-            <value>foobar1</value>
+            <value>DefaultDomain</value>
         </property>
     </bean>
     <!-- The loader which sets up the JMX world -->

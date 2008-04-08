@@ -489,6 +489,16 @@
                     -->
                    <!-- <version>0.3-20060918.130206-4</version>-->
                    <version>1.0-el4j_20080110_1000</version> <!-- EL4J CUSTOMIZATION -->
+                   <configuration>
+                       <configuration>
+                         <properties>
+                            <!-- enable jmx server by default -->
+                            <cargo.jvmargs>-Dcom.sun.management.jmxremote</cargo.jvmargs>
+                         </properties>
+                       </configuration>
+                   </configuration>
+                    
+                   
                 </plugin>
 
                 <!-- Execution -->

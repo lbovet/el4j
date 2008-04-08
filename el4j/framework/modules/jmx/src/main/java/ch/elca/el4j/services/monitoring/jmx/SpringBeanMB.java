@@ -17,6 +17,12 @@
 
 package ch.elca.el4j.services.monitoring.jmx;
 
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Method;
+import java.util.Iterator;
+
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.MBeanRegistrationException;
 import javax.management.MBeanServer;
@@ -36,6 +42,11 @@ import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.exceptions.BaseException;
 import ch.elca.el4j.core.exceptions.BaseRTException;
+import ch.elca.el4j.services.monitoring.jmx.display.DisplayManager;
+import ch.elca.el4j.services.monitoring.jmx.display.HtmlDisplayManager;
+import ch.elca.el4j.services.monitoring.jmx.display.HtmlTabulator;
+import ch.elca.el4j.services.monitoring.jmx.display.Section;
+import ch.elca.el4j.services.monitoring.jmx.util.PropertyReflector;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 
 /**
@@ -230,16 +241,21 @@ public class SpringBeanMB implements SpringBeanMBMBean {
     }
 
     /**
+     * @return The bean definition for this bean.
+     */
+    private BeanDefinition getDefinition() {
+        DefaultListableBeanFactory dlbf 
+            = (DefaultListableBeanFactory) m_beanFactory;
+        return dlbf.getBeanDefinition(getName());
+    }
+    
+    /**
      * {@inheritDoc}
      */
     public String[] getConfiguration() {
-
-        DefaultListableBeanFactory dlbf 
-            = (DefaultListableBeanFactory) m_beanFactory;
-        BeanDefinition bd = dlbf.getBeanDefinition(getName());
-
+        
         // Extract the property values from the BeanDefinition object.
-        MutablePropertyValues mpv = bd.getPropertyValues();
+        MutablePropertyValues mpv = getDefinition().getPropertyValues();
 
         PropertyValue[] pv = mpv.getPropertyValues();
         String[] result = new String[pv.length];
@@ -313,4 +329,409 @@ public class SpringBeanMB implements SpringBeanMBMBean {
         return false;
     }
 
+    /** {@inheritDoc} */
+    public String getResourceDescription() {
+        return getDefinition().getResourceDescription();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public String[] getMethods() {
+        MethodReflector r = new MethodReflector(m_class);
+        String[] result = new String[r.countMethods()];
+        while (r.hasNext()) {
+            r.next();
+            result[r.getPosition()] = r.getCurrentAsString();
+        }
+        return result;
+    }
+
+    /** {@inheritDoc} */
+    public String[] getProperties() {
+        Class<?> target = m_class;
+        
+        // Check if proxied, if so use target class.
+        if (getIsProxied()) {
+            try {
+                Method getTarget = m_class.getMethod("getTargetClass", 
+                    new Class[0]);
+                Object bean = m_beanFactory.getBean(m_name);
+                target = (Class<?>) getTarget.invoke(bean, (Object[]) null);
+            } catch (Exception e) {
+                throw new RuntimeException("Exception looking up target.");
+            }
+        }
+        
+        try {
+            PropertyDescriptor[] pd = Introspector.getBeanInfo(target)
+                .getPropertyDescriptors();
+            String[] properties = new String[pd.length];
+            for (int i = 0; i < pd.length; i++) {
+                PropertyReflector r = new PropertyReflector(pd[i]);
+                properties[i] = MethodReflector.className(r.getType())
+                    + " " + r.getName() + " (" + r.getRW() + ")";
+            }
+            return properties;
+        } catch (IntrospectionException e) {
+            throw new RuntimeException("Introspection Exception");
+        }
+    }
+    
+    /** {@inheritDoc} */
+    public String readProperty(String property) { 
+        final String err = "The property could not be read, because ";
+        String result = "";
+        
+        // Uppercase the first letter, as the method will expect this.
+        String propName = property.substring(0, 1).toUpperCase()
+            + property.substring(1);
+        
+        try {
+            Object bean = m_beanFactory.getBean(m_name);
+            Method m = null;
+            try {
+                m = bean.getClass()
+                    .getMethod("get" + propName, new Class<?>[0]);
+            } catch (NoSuchMethodException e) {
+                // Not "get-".
+                try {
+                    m = bean.getClass().getMethod("is" + propName,
+                        new Class<?>[0]);
+                } catch (NoSuchMethodException e2) {
+                    // This time, we are stuck.
+                    return err + "no get/is method was found.";
+                }
+            }
+            // String returnType = MethodReflector
+            //    .className(m.getReturnType().toString());
+            Object o = m.invoke(bean, new Object[0]);
+            result = MethodReflector.className(o.getClass().toString())
+                + " " + property + " = " + o.toString();
+        } catch (Exception e) {
+            result = err + "an excpetion occurred: " 
+                + e.toString(); 
+        }
+        return result;
+    }
+    
+    /**
+     * @param pd An array of descriptors.
+     * @param makeLinks Whether to make links to get*() methods. 
+     * @return A table view of the properties.
+     */
+    private String propertyTable(PropertyDescriptor[] pd, boolean makeLinks) {
+        String result = "";
+        
+        HtmlTabulator table = new HtmlTabulator(
+            "Name", "Type", "RW", "readMethod", "writeMethod"); 
+
+        for (PropertyDescriptor current : pd) {
+            PropertyReflector r = new PropertyReflector(current);
+
+            String readLink = "";
+            if (r.isReadable()) {
+                // TODO : What is with the %2B ? A '+' ?
+                String readUrl = "/InvokeAction//" 
+                    + m_objectName.getCanonicalName() + "/action=readProperty"
+                    + "?action=readProperty&p1%2Bjava.lang.String=" 
+                    + r.getName();
+                    /*
+                     + (r.getReadMethod().startsWith("get") 
+                        ? r.getReadMethod().substring(3) 
+                        : r.getReadMethod().substring(2));
+                    */
+                readLink = makeLinks 
+                    ? "<a href=\"" + readUrl + "\">" 
+                        + r.getReadMethod() + "</a>"
+                    : r.getReadMethod(); 
+            }
+            
+            table.addRow(r.getName(),
+                         MethodReflector.className(r.getType()), 
+                         "<code>" + r.getRW() + "</code>",
+                         readLink,
+                         r.isWritable() ? r.getWriteMethod() : "");
+        }
+
+        result += table.tabulate();
+        return result;
+    }
+    
+    /**
+     * Display a bean's properties.
+     * @param manager The {@link DisplayManager} to use.
+     */
+    public void displayProperties(DisplayManager manager) {
+        
+        Section section = new Section("Properties");
+        
+        PropertyDescriptor[] pd;
+        Class<?> target = m_class;
+        
+        // Check if proxied, if so use target class.
+        if (getIsProxied()) {
+            section.addLine("This bean is proxied");
+            try {
+                Method getTarget = m_class.getMethod("getTargetClass", 
+                    new Class[0]);
+                Object bean = m_beanFactory.getBean(m_name);
+                target = (Class<?>) getTarget.invoke(bean, (Object[]) null);
+            } catch (Exception e) {
+                section.addWarning("Could not find target class, " 
+                    + e.toString());
+            }
+        }
+        
+        try {
+            pd = Introspector.getBeanInfo(target).getPropertyDescriptors();
+            // Trun off links if proxied.
+            // TODO : Can we invoke proxied methods?
+            section.add(propertyTable(pd, !getIsProxied()));
+            
+        } catch (IntrospectionException e) {
+            section.addWarning("Introspection Exception.");
+        }
+        manager.addSection(section);
+        
+        if (getIsProxied()) {
+            // Show the proxy's properties too.
+            Section proxySection = new Section("Proxy Properties");
+            try {
+                proxySection.add(propertyTable(Introspector.getBeanInfo(m_class)
+                        .getPropertyDescriptors(), true));
+            } catch (IntrospectionException e) {
+                proxySection.addWarning(
+                    "Exception looking up proxy properties.");
+            }
+            manager.addSection(proxySection);
+        }
+    }
+    
+    /**
+     * Displays the properties this bean was loaded with.
+     * @param manager The {@link DisplayManager} to add to. 
+     */
+    public void displayConfiguration(DisplayManager manager) {
+        Section section = new Section("Loading Properties");
+        
+        HtmlTabulator table = new HtmlTabulator("Name", "Value");
+        for (String current : getConfiguration()) {
+            // Invariant : getConfiguration returns a string of form
+            // "key = value" .
+            int position = current.indexOf("=");
+            // Split at " = "
+            String key = current.substring(0, position - 1);
+            String value = current.substring(position + 1);
+            table.addRow(key, value);
+        }
+        section.add(table.tabulate());
+        manager.addSection(section);
+    }
+    
+    /**
+     * @return Results of bean introspection on this bean as HTML.
+     */
+    public String introspect() {
+        
+        DisplayManager page = new HtmlDisplayManager();
+
+        page.setTitle("Results of introspection on bean "
+            + MethodReflector.className(m_class.toString()));
+        
+        Section infoSection = new Section("Bean");
+        
+        HtmlTabulator beanInfo = new HtmlTabulator("Item", "Value");
+        beanInfo.addRow("Name", getName());
+        beanInfo.addRow("Proxied", Boolean.toString(getIsProxied()));
+        beanInfo.addRow("Singleton", Boolean.toString(getIsSingleton()));
+        beanInfo.addRow("Defined in", (getResourceDescription() != null) 
+            ? getResourceDescription() : "not available");
+        
+        infoSection.add(beanInfo.tabulate());
+        infoSection.addLine("");
+        
+        // Interceptors.
+        HtmlTabulator iTable = new HtmlTabulator("Interceptors");
+        String[] interceptors = getInterceptors();
+        if (interceptors == null || interceptors.length == 0) {
+            iTable.addRow("none defined");
+        } else {
+            for (String i : interceptors) {
+                iTable.addRow(i);
+            }
+        }
+        infoSection.add(iTable.tabulate());
+        
+        page.addSection(infoSection);
+        
+        displayProperties(page);
+        
+        displayMethods(page);
+        
+        displayConfiguration(page);
+        
+        return page.getPage();
+    }
+    
+    /** 
+     * HTML listing of all methods in this class. 
+     * @param manager The DisplayManager to use.
+     */
+    public void displayMethods(DisplayManager manager) {
+        Section section = new Section("Methods");
+        HtmlTabulator table = new HtmlTabulator(
+            "Return", "Name", "Parameters", "Throws");
+        
+        MethodReflector r = new MethodReflector(m_class);
+        while (r.hasNext()) {
+            r.next();
+            table.addRow(r.getReturns(), r.getName(), 
+                r.getParameters(), r.getThrows());
+        }
+        section.add(table.tabulate());
+        manager.addSection(section);
+    }
+
+    /**
+     * Helper class for investigating a bean's methods. 
+     */
+    static class MethodReflector implements Iterator<Method> {
+        
+        /**
+         * The class to reflect on. 
+         */
+        private Class<?> m_target;
+        
+        /**
+         * Helper variable for iterator functionality. 
+         */
+        private int m_current = -1;
+        
+        /**
+         * The current method of this iterator. 
+         * INVARIANT : m is a valid method once next() 
+         * has been called at least once. 
+         */
+        private Method m_method = null;
+        
+        /**
+         * Creates a MethodReflector from a bean class. 
+         * @param target The target class to reflect upon.
+         */
+        public MethodReflector(Class<?> target) {
+            this.m_target = target;
+        }
+        
+        /**
+         * @return The number of methods in this class.
+         */
+        public int countMethods() {
+            return m_target.getMethods().length;
+        }
+        
+        /**
+         * @return The current iterator position.
+         */
+        public int getPosition() {
+            return m_current;
+        }
+
+        /** {@inheritDoc} */
+        public boolean hasNext() {
+            return (m_current < countMethods() - 1);
+        }
+
+        /** {@inheritDoc} */
+        public Method next() {
+            if (!hasNext()) {
+                throw new IndexOutOfBoundsException();
+            }
+            m_current++;
+            m_method = m_target.getMethods()[m_current];
+            return m_method;
+        }
+
+        /** 
+         * DO NOT USE!
+         * {@inheritDoc}
+         */
+        public void remove() {
+            throw new RuntimeException("Cannot remove methods.");
+        }
+
+        /**
+         * @return The return type of the current method.
+         */
+        public String getReturns() {
+            return className(m_method.getReturnType().toString()); 
+        }
+        
+        /**
+         * @return The name of the current method.
+         */
+        public String getName() {
+            return m_method.getName();
+        }
+        
+        /**
+         * Strips "class" or "interface" from a string.
+         * @param name A class/interface name.
+         * @return The name with its prefix stripped.
+         */
+        public static String className(String name) {
+            final String[] prefixes = new String[] {"class", "interface"};
+            String result = name;
+            
+            for (String current : prefixes) {
+                if (result.startsWith(current)) {
+                    result = result.substring(current.length() + 1);
+                }
+            }
+            return result;
+        }
+        
+        /**
+         * @param classes An array of {@link Class} objects.
+         * @return A comma-separated list of their names.
+         */
+        public static String getClassNames(Class<?>[] classes) {
+            String result = "";
+            for (Class<?> p : classes) {
+                String param = className(p.toString());
+                
+                result += param + ", ";
+            }
+            if (result.endsWith(", ")) {
+                result = result.substring(0, result.length() - 2);
+            }
+            return result;
+        }
+        
+        /**
+         * @return The parameters of the current method.
+         */
+        public String getParameters() {
+            return getClassNames(m_method.getParameterTypes());
+        }
+        
+        /**
+         * @return The declared exceptions of the current method.
+         */
+        public String getThrows() {
+            return getClassNames(m_method.getExceptionTypes());
+        }
+        
+        /**
+         * @return A string describing the curent method.
+         */
+        public String getCurrentAsString() { 
+            
+            return getReturns() + " " + getName() 
+                + "(" + getParameters() + ")" 
+                + ((getThrows().equals("")) 
+                    ? ("") : (" throws " + getThrows()));
+        }
+        
+    }
 }
