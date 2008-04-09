@@ -28,26 +28,26 @@
 <!-- Project dependencies -->
 	<dependencies>
 
-        <!--  EL4J framework modules -->
-        <dependency>
-            <groupId>ch.elca.el4j.modules</groupId>
-            <artifactId>module-env</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.elca.el4j.applications</groupId>
-            <artifactId>keyword-service</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.elca.el4j.modules</groupId>
-            <artifactId>module-web-jar</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.elca.el4j.modules</groupId>
-            <artifactId>module-database</artifactId>
-        </dependency>
-          
-        
-        
+		<!--  EL4J framework modules -->
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-env</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.applications</groupId>
+			<artifactId>keyword-service</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-web-jar</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-database</artifactId>
+		</dependency>
+		
+		
+		
 		<!--<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
@@ -76,31 +76,31 @@
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
-    <profiles>
-        <!-- DB -->
-        <profile>
-            <id>db2</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <db.username>keyword_user</db.username>
-                <db.password>keyword_user</db.password>
-            </properties>
-        </profile>
-        <profile>
-            <id>oracle</id>
-            <properties>
-                <db.username>LEAF4</db.username>
-                <db.password>LEAF</db.password>
-            </properties>
-        </profile>
-        <profile>
-            <id>mysql</id>
-            <properties>
-                <db.username>root</db.username>
-                <db.password>admin</db.password>
-            </properties>
-        </profile>
-    </profiles>
+	<profiles>
+		<!-- DB -->
+		<profile>
+			<id>db2</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<db.username>keyword_user</db.username>
+				<db.password>keyword_user</db.password>
+			</properties>
+		</profile>
+		<profile>
+			<id>oracle</id>
+			<properties>
+				<db.username>LEAF4</db.username>
+				<db.password>LEAF</db.password>
+			</properties>
+		</profile>
+		<profile>
+			<id>mysql</id>
+			<properties>
+				<db.username>root</db.username>
+				<db.password>admin</db.password>
+			</properties>
+		</profile>
+	</profiles>
 </project>
