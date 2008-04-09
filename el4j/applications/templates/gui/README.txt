@@ -24,6 +24,8 @@ distributed mode
  
    cd thin-client
    mvn exec:java
+   -> Remark: Warnings like "No bean with name 'dataSource' found.
+              Therefore no properties could be applied." can be ignored here.
 
 
 Deploy the application as a single jar

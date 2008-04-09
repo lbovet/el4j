@@ -23,12 +23,12 @@
 			<resource>
 				<directory>src/main/resources</directory>
 			</resource>
-            
-            <!-- Used for the environment support of EL4J -->
-            <resource>
-                <directory>target/env</directory>
-                <filtering>false</filtering>
-            </resource>
+			
+			<!-- Used for the environment support of EL4J -->
+			<resource>
+				<directory>target/env</directory>
+				<filtering>false</filtering>
+			</resource>
 		</resources>
 		<testResources>
 			<testResource>
@@ -38,11 +38,11 @@
 			<testResource>
 				<directory>src/test/resources</directory>
 			</testResource>
-            <!-- Used for the environment support of EL4J -->
-            <testResource>
-                <directory>target/env-test</directory>
-                <filtering>false</filtering>
-            </testResource>
+			<!-- Used for the environment support of EL4J -->
+			<testResource>
+				<directory>target/env-test</directory>
+				<filtering>false</filtering>
+			</testResource>
 		</testResources>
 		<plugins>
 			<plugin>
@@ -58,7 +58,7 @@
 			<plugin>
 				<artifactId>maven-eclipse-plugin</artifactId>
 				<configuration>
-				<!--    <downloadSources>true</downloadSources> -->
+				<!--	<downloadSources>true</downloadSources> -->
 				<!-- 	<downloadJavadocs>true</downloadJavadocs> -->
 					<wtpversion>1.0</wtpversion>
 				</configuration>
@@ -116,10 +116,10 @@
 			<id>softeu-repo</id>
 			<url>http://maven.softeu.cz</url>
 		</pluginRepository>
-                <pluginRepository>
-                        <id>codehaus-repo</id>
-                        <url>http://repository.codehaus.org/</url>
-                </pluginRepository>
+				<pluginRepository>
+						<id>codehaus-repo</id>
+						<url>http://repository.codehaus.org/</url>
+				</pluginRepository>
 		<pluginRepository>
 			<id>el4j-repo</id>
 			<url>http://el4.elca-services.ch/el4j/maven2repository</url>
