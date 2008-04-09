@@ -349,7 +349,7 @@
                         <groupId>ch.elca.el4j.maven.plugins</groupId>
                         <artifactId>maven-file-collector-plugin</artifactId>
                         <configuration>
-                            <rootSourceDirectory>${el4j.external}/framework/demos</rootSourceDirectory>
+                            <rootSourceDirectory>${el4j.external}/applications/demos</rootSourceDirectory>
                             <sourceDirectoryIncludePatterns>**/src/main/java,**/src/test/java</sourceDirectoryIncludePatterns>
                             <sourceFileIncludePatterns>**/*.java,**/*.html</sourceFileIncludePatterns>
                             <targetDirectory>${aggregated.files.output.directory}</targetDirectory>
