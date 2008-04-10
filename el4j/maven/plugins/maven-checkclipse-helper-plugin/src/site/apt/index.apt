@@ -7,8 +7,8 @@
 
 Checkclipse helper plugin
 
-  The Checklipse helper plugin is used to configure the existing Eclipse project 
-  of a not-pom artifact like, that the code of this artifact will be checked
+  The Checklipse helper plugin is used to configure an existing Eclipse project 
+  of a non-pom artifact so that the code of this artifact will be checked
   with Checkstyle directly in Eclipse.
   
     * Checkstyle
@@ -17,7 +17,7 @@ Checkclipse helper plugin
       
       * Checkstyle is a development tool to help programmers write Java code 
         that adheres to a coding standard. It automates the process of 
-        checking Java code to spare humans of this boring (but important) task. 
+        checking Java code to spare humans this boring (but important) task. 
         This makes it ideal for projects that want to enforce a coding standard.
         
     * Checkclipse

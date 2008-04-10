@@ -8,14 +8,14 @@
 Manifest decorator plugin
 
   The Manifest decorator plugin is used to list resource files and dependencies
-  (transitively) and save these lists by default comma separated in system 
-  properties. Also the current module will be saved in a system property. This
-  made by default for main and test scope.
+  (transitively) and save these lists - by default comma separated in the system 
+  properties. The current module will also be saved in a system property. This
+  is done by default for the main and test scopes.
   
   The jar manifest file can now take this information to reconstruct the order
-  of modules and resources on runtime.
+  of modules and resources at runtime.
   
-  Here an example configuration for the <<<maven-jar-plugin>>>:
+  Here is an example configuration for the <<<maven-jar-plugin>>>:
   
 +--------------
     <plugin>
@@ -24,7 +24,7 @@ Manifest decorator plugin
         <executions>
             <execution>
                 <!--
-                    Due to bug that goals are not executed in the
+                    Due to the bug that goals are not executed in the
                     defined order in the same phase the goal below
                     must be executed before the package phase!
                     Please see: http://jira.codehaus.org/browse/MNG-2258

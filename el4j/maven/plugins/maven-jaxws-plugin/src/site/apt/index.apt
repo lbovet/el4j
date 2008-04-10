@@ -7,9 +7,9 @@
  
 Maven JAX-WS Plugin
 
-  The JAX-WS maven plugin integrates the <<<wsgen>>> and <<<wsimport>>> tool into the automated build process. These tools are commonly used to generate WSDL files out of annotated class files and to create client stubs.
+  The JAX-WS maven plugin integrates the <<<wsgen>>> and <<<wsimport>>> tools into the automated build process. These tools are commonly used to generate WSDL files out of annotated class files and to create client stubs.
 
-  This plugin extends the official plugin ({{https://jax-ws-commons.dev.java.net/jaxws-maven-plugin/}}) by the following features:
+  This plugin extends the official plugin ({{https://jax-ws-commons.dev.java.net/jaxws-maven-plugin/}}) with the following features:
 
   * The service endpoint implementation class name (<<<\<sei\>>>>) does not have to be set explicitly. If this parameter is set to a star (<<<\<sei\>*\</sei\>>>>) or omitted (as this is the default value) all classes having a <<<@WebService>>> annotation are included.
 
