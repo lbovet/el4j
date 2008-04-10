@@ -2262,6 +2262,7 @@
 		<version.maven-javadoc-plugin>2.3</version.maven-javadoc-plugin>
 		<version.maven-jxr-plugin>2.1</version.maven-jxr-plugin>
 		<version.maven-pmd-plugin>2.3</version.maven-pmd-plugin>
+		<version.taglist-maven-plugin>2.0</version.taglist-maven-plugin>
 		<version.maven-plugin-plugin>2.3</version.maven-plugin-plugin>
 		<version.cobertura-maven-plugin>2.2</version.cobertura-maven-plugin>
 
