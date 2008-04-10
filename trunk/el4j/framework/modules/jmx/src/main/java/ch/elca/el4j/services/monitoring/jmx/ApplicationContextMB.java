@@ -35,8 +35,9 @@ import org.springframework.context.ApplicationContext;
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.core.exceptions.BaseException;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
-import ch.elca.el4j.util.codingsupport.ClassloaderTools;
+
 import ch.elca.el4j.util.codingsupport.Reject;
+import ch.elca.el4j.util.maven.ClassloaderTools;
 
 /**
  * The proxy class for an ApplicationContext.
