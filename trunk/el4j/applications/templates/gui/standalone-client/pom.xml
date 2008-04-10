@@ -42,7 +42,8 @@
 						</manifest>
 					</archive>						
 				</configuration>
-			</plugin>									
+			</plugin>	
+            
 		</plugins>		
 	</build>
 	<dependencies>
@@ -54,5 +55,14 @@
 			<groupId>ch.elca.el4j.applications</groupId>
 			<artifactId>swing-demo-server-jar</artifactId>
 		</dependency>
-	</dependencies>
+        
+        <!-- We shouldn't need this here. 
+        A maven bug with transitive dependencies means we need it for the time being.
+        -->
+        <dependency>
+            <groupId>ch.elca.el4j.modules</groupId>
+            <artifactId>module-database</artifactId>
+        </dependency>
+ 
+    </dependencies>
 </project>
