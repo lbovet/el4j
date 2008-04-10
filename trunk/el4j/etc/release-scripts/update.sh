@@ -11,7 +11,7 @@ if ! [ -e external ] ; then
 fi
 
 echo "Update framework (external and internal)"
-el4jCurrent=$(cat external/pom.xml | grep "<version.el4j-framework.current>" -A 1 | tail -n 1 | tr -d ' \r\n' | sed 's/-SNAPSHOT//')
+el4jCurrent=$(cat external/pom.xml | grep "<version.el4j-framework.current>" -A 1 | tail -n 1 | tr -d ' \t\r\n' | sed 's/-SNAPSHOT//')
 echo "Current version is $el4jCurrent-SNAPSHOT, OK?"
 read dummy
 echo "Enter next el4j version number"
