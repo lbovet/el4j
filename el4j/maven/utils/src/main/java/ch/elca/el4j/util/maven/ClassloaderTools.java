@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.util.codingsupport;
+package ch.elca.el4j.util.maven;
 
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -56,7 +56,8 @@ public abstract class ClassloaderTools {
      * @throws RuntimeException - if the class does not
      * come from an URLClassLoader
      */
-    public static String getClassPath(Class < ? > mainClass) {
+    public static String getClassPath(Class < ? > mainClass) 
+        throws RuntimeException {
         ClassLoader cl = mainClass.getClassLoader();
         
         if (!isURLLoaded(mainClass)) {
@@ -66,9 +67,9 @@ public abstract class ClassloaderTools {
         }
         String classpath = "";
         URL[] urls = ((URLClassLoader) cl).getURLs();
-            for (URL u : urls) {
-                classpath += u.toExternalForm() + ", ";
-            }
+        for (URL u : urls) {
+            classpath += u.toExternalForm() + ", ";
+        }
         // Remove final ", " again.
         classpath = classpath.substring(0, classpath.length() - 2);
         return classpath;
@@ -82,7 +83,8 @@ public abstract class ClassloaderTools {
      * @throws RuntimeException - if the class does not
      * come from an URLClassLoader
      */
-    public static String[] getURLs(Class < ? > mainClass) {
+    public static String[] getURLs(Class < ? > mainClass) 
+        throws RuntimeException {
         ClassLoader cl = mainClass.getClassLoader();
         
         if (!isURLLoaded(mainClass)) {

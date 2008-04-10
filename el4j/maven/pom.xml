@@ -25,5 +25,6 @@
 	<modules>
 		<module>plugins</module>
 		<module>helpers</module>
+		<module>utils</module>
 	</modules>
 </project>
