@@ -26,12 +26,18 @@
 	<build>
 	</build>
 	<dependencies>
+		<!-- Maven tools -->
+		<dependency>
+			<groupId>ch.elca.el4j.maven</groupId>
+			<artifactId>el4j-maven-utils</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 		<!-- EL4J framework modules -->
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-core</artifactId>
 		</dependency>
-	
+
 		<!-- Third party tools -->
 		<dependency>
 			<groupId>javax.management</groupId>
