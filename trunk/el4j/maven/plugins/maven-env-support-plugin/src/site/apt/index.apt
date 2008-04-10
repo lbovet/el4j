@@ -41,8 +41,8 @@ Environment support plugin
   the Spring way via a properties file. The EL4J <<env-module>> expects the
   file <<<env-placeholder.properties>>> in the classpath.
   
-  Maven is able to filter resources, that means that placeholders will be 
-  replaced by their values. To have now the properties <<<rmi.host>>> and 
+  Maven is able to filter resources which means that placeholders will be 
+  replaced by their values. To have the properties <<<rmi.host>>> and 
   <<<rmi.port>>> with exactly the same name during runtime we have to write the 
   <<<env-placeholder.properties>>> file like this:
   
