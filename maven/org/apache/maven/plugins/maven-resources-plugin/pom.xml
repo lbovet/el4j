@@ -8,7 +8,7 @@
   <artifactId>maven-resources-plugin</artifactId>
   <packaging>maven-plugin</packaging>
   <name>Maven Resources Plugin</name>
-  <version>2.2</version>
+  <version>2.2-el4j_20080411_0915</version>
   <dependencies>
     <dependency>
       <groupId>org.apache.maven</groupId>
@@ -38,4 +38,52 @@
     <developerConnection>scm:svn:https://svn.apache.org/repos/asf/maven/plugins/tags/maven-resources-plugin-2.2</developerConnection>
     <url>https://svn.apache.org/repos/asf/maven/plugins/tags/maven-resources-plugin-2.2</url>
   </scm>
+  
+  
+  <!-- added by EL4J -->
+  <build>
+  
+    <extensions>
+        <!-- Transport -->
+        <extension>
+            <groupId>org.apache.maven.wagon</groupId>
+            <artifactId>wagon-ftp</artifactId>
+            <version>1.0-beta-1</version>
+        </extension>
+    </extensions>
+  </build>
+  <distributionManagement>
+      <repository>
+          <id>${distmgt.repository.id.external}</id>
+          <name>${distmgt.repository.name.external}</name>
+          <url>${distmgt.repository.url.external}</url>
+      </repository>
+      <snapshotRepository>
+          <id>${distmgt.snapshot-repository.id.external}</id>
+          <name>${distmgt.snapshot-repository.name.external}</name>
+          <url>${distmgt.snapshot-repository.url.external}</url>
+      </snapshotRepository>
+  </distributionManagement>
+
+  <properties>
+      <distmgt.repository.id.external>
+          ftpEl4ElcaServices
+      </distmgt.repository.id.external>
+      <distmgt.repository.name.external>
+          External EL4J repository
+      </distmgt.repository.name.external>
+      <distmgt.repository.url.external>
+          ftp://el4.elca-services.ch/htdocs/el4j/maven2repository
+      </distmgt.repository.url.external>
+
+      <distmgt.snapshot-repository.id.external>
+          ftpEl4ElcaServicesSnapshot
+      </distmgt.snapshot-repository.id.external>
+      <distmgt.snapshot-repository.name.external>
+          External EL4J snapshot repository
+      </distmgt.snapshot-repository.name.external>
+      <distmgt.snapshot-repository.url.external>
+          ftp://el4.elca-services.ch/htdocs/el4j/maven2snapshots
+      </distmgt.snapshot-repository.url.external>
+  </properties>
 </project>
