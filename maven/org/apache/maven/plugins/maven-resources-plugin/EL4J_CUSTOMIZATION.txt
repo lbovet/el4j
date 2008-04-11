@@ -1,0 +1,6 @@
+SVN URL: http://svn.apache.org/repos/asf/maven/plugins/tags/maven-resources-plugin-2.2
+REVISION: 646804
+APPLIED PATCHES: 
+   * Added override option to ResourcesMojo.java - because project properties override command-line properties, any command-line property prefixed with "override." will override everything else. So "mvn install -Doverride.name=value" will set "name=value" overriding system, pom and filter properties.
+CURRENTLY USED VERSION: 2.2
+DEPENDENT CUSTOMIZED ARTIFACTS: -
