@@ -17,11 +17,11 @@
 package ch.elca.el4j.util.maven;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
@@ -30,7 +30,6 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.MutableTreeNode;
 
 /**
  * A GUI to inspect all defined classes of a project.
@@ -51,12 +50,38 @@ public class ClassInspector {
      */
     private DuplicateClassFinder m_finder;
     
+    /**
+     * Constructor - creates an inspector from a finder
+     * that must have completed its search already.
+     * @param finder The finder to use.
+     */
     public ClassInspector(DuplicateClassFinder finder) {
         m_finder = finder;
     }
 
+    /**
+     * @return A JPanel containing the class inspector.
+     */
     public JPanel getInspector() {
         return new Inspector();
+    }
+    
+    /**
+     * Show the inspector in a new frame.
+     */
+    public void show() {
+        JPanel inspectorPanel = getInspector();
+        JFrame frame = new JFrame("Class inspector");
+        frame.getContentPane().add(inspectorPanel);
+        frame.setSize(600, 400);
+        frame.setVisible(true);
+        while (frame.isVisible()) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException("Interrupted.");
+            }
+        }
     }
     
     /**
@@ -67,40 +92,43 @@ public class ClassInspector {
         /**
          * Displays the found classes in a tree view.
          */
-        private classTree tree;
+        private ClassTree m_tree;
             
         /**
          * The information pane.
          */
-        private JTextPane info;
+        private JTextPane m_info;
         
+        /**
+         * Default constructor. Initialize the tree and its elements.
+         */
         public Inspector() {
-            tree = new classTree();
+            m_tree = new ClassTree();
             populateTree();
             
             setLayout(new BorderLayout());
-            info = new JTextPane();
-            info.setEditable(false);
-            info.setEditorKit(new HTMLEditorKit());
-            info.setText("<html><pre>\n\n\n\n");
-            JScrollPane infoPane = new JScrollPane(info);
+            m_info = new JTextPane();
+            m_info.setEditable(false);
+            m_info.setEditorKit(new HTMLEditorKit());
+            m_info.setText("<html><pre>\n\n\n\n");
+            JScrollPane infoPane = new JScrollPane(m_info);
             add(infoPane, BorderLayout.SOUTH);
             
-            JScrollPane pane = new JScrollPane(tree);
-            tree.addTreeSelectionListener( new TreeSelectionListener() {
+            JScrollPane pane = new JScrollPane(m_tree);
+            m_tree.addTreeSelectionListener(new TreeSelectionListener() {
                 
                 /**
                  * Update the info area.
                  * {@inheritDoc}
                  */
                 public void valueChanged(TreeSelectionEvent e) {
-                    Node node = (Node) tree.getLastSelectedPathComponent();
+                    Node node = (Node) m_tree.getLastSelectedPathComponent();
                     if (node == null) {
-                        info.setText("");
+                        m_info.setText("");
                         return;
                     }
                     String path = node.getFullPath();
-                    List<String> locations = node.locations;
+                    List<String> locations = node.m_locations;
                     
                     String text = "<html><pre>Name: " + path + "\n";
                     if (locations == null) {
@@ -117,7 +145,7 @@ public class ClassInspector {
                             }
                         }
                     }
-                    info.setText(text);
+                    m_info.setText(text);
                 }
             });
             add(pane, BorderLayout.CENTER);
@@ -141,13 +169,19 @@ public class ClassInspector {
                     pkg = currentClass.substring(0, split);
                     name = currentClass.substring(split + 1);
                 }
-                tree.addNode(pkg, name, m_finder.getLocations(currentClass));
+                m_tree.addNode(pkg, name, m_finder.getLocations(currentClass));
             }
         }
         
-        class classTree extends JTree {
+        /**
+         * The tree object that handles displaying the classes.
+         */
+        class ClassTree extends JTree {
             
-            public classTree() {
+            /**
+             * Default constructor.
+             */
+            public ClassTree() {
                 super(new Node("(root)", null));
             }
             
@@ -190,9 +224,19 @@ public class ClassInspector {
      * Tree node information.
      */
     class Node extends DefaultMutableTreeNode {
-        String name;
-        List <String> locations;
-        boolean isWarning = false;
+        /** The name of this class/package. */
+        String m_name;
+        
+        /** The locations this class is defined in; 
+         * <code>null</code> for packages.
+         */
+        List <String> m_locations;
+ 
+        /** 
+         * Whether this is a "warning" node -
+         * either a duplicated class or a parent of one.
+         */ 
+        boolean m_isWarning = false;
         
         /**
          * Creates a new node.
@@ -203,28 +247,37 @@ public class ClassInspector {
          */
         Node(String name, List<String> locations) {
             super(name);
-            this.name = name;
-            this.locations = locations;
+            this.m_name = name;
+            this.m_locations = locations;
         }
         
         /**
          * If a child of this name exists, return it. If not,
          * create one and return it.
          * @param name The name of the child.
-         * @returns A child of this name.
+         * @return A child of this name.
          */
+        @SuppressWarnings("unchecked")
         Node walkToChild(String name) {
+            /* Handled by case below.
             if (getChildCount() == 0) {
                 return createChild(name);
             }
+            */
             Enumeration<Node> children = children();
             while (children.hasMoreElements()) {
                 Node child = children.nextElement();
-                if (child.name.equals(name)) return child;
+                if (child.m_name.equals(name)) {
+                    return child;
+                }
             }
             return createChild(name);
         }
         
+        /**
+         * @param name The name.
+         * @return A new child node with this name.
+         */
         private Node createChild(String name) {
             Node child = new Node(name, null);
             add(child);
@@ -238,8 +291,8 @@ public class ClassInspector {
         void setWarning() {
             // If warning is already set, do notihng -
             // in particular don't recurse.
-            if (!isWarning) {
-                isWarning = true;
+            if (!m_isWarning) {
+                m_isWarning = true;
                 if (getParent() != null) {
                     Node parent = (Node) getParent();
                     parent.setWarning();
@@ -250,10 +303,10 @@ public class ClassInspector {
         
         /** {@inheritDoc} */
         public String toString() {
-            if (isWarning) {
-                return "<html><font color=\"#FF0000\">" + name;
+            if (m_isWarning) {
+                return "<html><font color=\"#FF0000\">" + m_name;
             } else {
-                return name;
+                return m_name;
             }
         }
         
@@ -261,12 +314,12 @@ public class ClassInspector {
          * @return The fully qualified name of this package/class.
          */
         public String getFullPath() {
-            String path = name;
+            String path = m_name;
             Node current = this;
             while (current.getParent() != null) {
                 current = (Node) current.getParent();
-                if (!current.name.equals("(root)")) {
-                    path = current.name + "." + path;
+                if (!current.m_name.equals("(root)")) {
+                    path = current.m_name + "." + path;
                 }
             }
             return path;

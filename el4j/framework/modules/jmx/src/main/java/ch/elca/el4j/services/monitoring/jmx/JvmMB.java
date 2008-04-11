@@ -17,6 +17,8 @@
 
 package ch.elca.el4j.services.monitoring.jmx;
 
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -27,6 +29,8 @@ import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
+import ch.elca.el4j.util.maven.ClassInspector;
+import ch.elca.el4j.util.maven.DuplicateClassFinder;
 
 /**
  * The proxy class for the JVM. Each MBean Server contains exactly one JVM
@@ -105,6 +109,47 @@ public class JvmMB implements JvmMBMBean {
 
     }
 
+    /** {@inheritDoc} */
+    public String[] getClassPath() {
+        String[] cp;
+        ClassLoader myLoader = JvmMB.class.getClassLoader();
+        if (myLoader instanceof URLClassLoader) {
+            // This is an URLClassLoader, so get the urls.
+            URL[] urls = ((URLClassLoader) myLoader).getURLs();
+            cp = new String[urls.length];
+            for (int i = 0; i < urls.length; i++) {
+                cp[i] = urls[i].toExternalForm();
+            }
+            return cp;
+        } else {
+            // Not an URLClassLoader. Try returning the System cp.
+            return System.getProperty("java.class.path")
+                .split(System.getProperty("path.separator"));
+        }
+    }
+    
+    /** {@inheritDoc} */
+    public String findDuplicateClasses() {
+        DuplicateClassFinder finder = new DuplicateClassFinder();
+        finder.addClass(JvmMB.class);
+        finder.search();
+        String report;
+        if (finder.duplicatesFound()) {
+            report = "Duplicate classes found: \n";
+            Set<String> duplicates = finder.getAllDuplicates();
+            for (String current : duplicates) {
+                report += "Class: " + current + "\n";
+                for (String loc : finder.getLocations(current)) {
+                    report += "  " + loc + "\n";
+                }
+                report += "\n";
+            }
+        } else {
+            report = "No duplicate classes were found.";
+        }
+        return report;
+    }
+    
     /**
      * {@inheritDoc}
      */
