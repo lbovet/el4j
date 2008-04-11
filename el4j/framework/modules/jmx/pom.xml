@@ -29,8 +29,8 @@
 		<!-- Maven tools -->
 		<dependency>
 			<groupId>ch.elca.el4j.maven</groupId>
-			<artifactId>el4j-maven-utils</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<artifactId>maven-utils</artifactId>
+			<version>${version.maven-utils}</version>
 		</dependency>
 		<!-- EL4J framework modules -->
 		<dependency>
