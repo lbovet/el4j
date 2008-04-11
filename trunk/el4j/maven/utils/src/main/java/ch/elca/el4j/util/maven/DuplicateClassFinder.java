@@ -150,8 +150,7 @@ public class DuplicateClassFinder {
      */
     public void addSystemClassPath() {
         String cp = System.getProperty("java.class.path");
-        String[] entries = cp.split(";");
-        // TODO : Is this always the separator?
+        String[] entries = cp.split(System.getProperty("path.separator"));
         for (String entry : entries) {
             try {
                 addUrl(new URL(entry));
@@ -261,7 +260,6 @@ public class DuplicateClassFinder {
         String pkg = rel;
         pkg = pkg.replaceAll("/", ".");
         pkg = pkg.replaceAll("\\\\", "."); 
-        // TODO: This is a bkslash in regex, right?
         if (pkg.startsWith(".")) {
             pkg = pkg.substring(1);
         }
@@ -365,5 +363,21 @@ public class DuplicateClassFinder {
             return null;
         }
         return m_classes.get(name);
+    }
+    
+    /**
+     * @return Whether any duplicates were found.
+     */
+    public boolean duplicatesFound() {
+        assertSearched(true);
+        return (m_duplicates != null && m_duplicates.size() > 0); 
+    }
+    
+    /**
+     * @return A set of strings describing duplicated classes.
+     */
+    public Set<String> getAllDuplicates() {
+        assertSearched(true);
+        return m_duplicates;
     }
 }

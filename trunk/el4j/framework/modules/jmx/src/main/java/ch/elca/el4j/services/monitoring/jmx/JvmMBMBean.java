@@ -49,6 +49,21 @@ public interface JvmMBMBean {
     ObjectName[] getApplicationContexts();
     
     /**
+     * Get the classpath of this jvm. If the Jvm MBean is URL-loaded,
+     * converts all urls to strings; otherwise returns the system classpath.
+     * 
+     * @return The classpath.
+     */
+    String[] getClassPath();
+    
+    /**
+     * Searches for duplicated classes on the classpath.
+     * 
+     * @return A report of any duplicated classes found.
+     */
+    String findDuplicateClasses();
+    
+    /**
      * An HTML table is created, which lists all Threads and
      * their property values.
      * @return A table with all threads
