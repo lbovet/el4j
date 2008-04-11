@@ -1,0 +1,25 @@
+Index: src/main/java/org/apache/maven/plugin/resources/ResourcesMojo.java
+===================================================================
+--- src/main/java/org/apache/maven/plugin/resources/ResourcesMojo.java	(revision 646804)
++++ src/main/java/org/apache/maven/plugin/resources/ResourcesMojo.java	(working copy)
+@@ -216,6 +216,20 @@
+                 throw new MojoExecutionException( "Error loading property file '" + filtersfile + "'", e );
+             }
+         }
++        
++        // Now, apply overridden system properties (on the command line).
++        final String prefix = "override.";
++        Properties overrides = System.getProperties();
++        for (Iterator i = overrides.keySet().iterator(); i.hasNext(); ) {
++            String currentKey = (String) i.next();
++            if (currentKey.startsWith(prefix)) {
++                String trueKey = currentKey.substring(prefix.length());
++                filterProperties.put(trueKey, overrides.get(currentKey));
++                getLog().info("Property " + trueKey + " overridden, is now: " +
++                    overrides.get(currentKey));
++            }
++            
++        }
+     }
+ 
+     private void copyFile( File from, File to, boolean filtering )
