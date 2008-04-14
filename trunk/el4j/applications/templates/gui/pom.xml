@@ -54,7 +54,7 @@
 		</profile>
 	</profiles>
 	<properties>
-		<jee-web.context>swing-demo-server</jee-web.context>
+		<jee-web.context>swing-demo</jee-web.context>
 	</properties>
 
 	<reporting>
