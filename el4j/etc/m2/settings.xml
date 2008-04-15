@@ -223,25 +223,11 @@
             <url>http://leaffy.elca.ch:8081/artifactory/releases</url>
         </mirror>
         
-       <mirror>
-            <id>artifactoryEl4ElcaServicesSnapshot</id>
-            <mirrorOf>el4jSnapshotRepositoryExternal</mirrorOf>
-            <name>Proxmity mirrored el4jSnapshotRepositoryExternal.</name>
-            <url>http://leaffy.elca.ch:8081/artifactory/snapshots</url>
-        </mirror>
-        
         <mirror>
             <id>artifactoryPluginEl4ElcaServices</id>
             <mirrorOf>el4jReleasePluginRepositoryExternal</mirrorOf>
             <name>Proxmity mirrored el4jReleasePluginRepositoryExternal.</name>
             <url>http://leaffy.elca.ch:8081/artifactory/releases</url>
-        </mirror>
-        
-        <mirror>
-            <id>artifactoryPluginEl4ElcaServicesSnapshot</id>
-            <mirrorOf>el4jSnapshotPluginRepositoryExternal</mirrorOf>
-            <name>Proxmity mirrored el4jSnapshotPluginRepositoryExternal.</name>
-            <url>http://leaffy.elca.ch:8081/artifactory/snapshots</url>
         </mirror-->
     </mirrors>
 

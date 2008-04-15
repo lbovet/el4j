@@ -518,7 +518,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-eclipse-plugin</artifactId>
-					<version>2.5</version>
+					<version>2.5.1</version>
 					<configuration>
 						<additionalProjectnatures>
 							<projectnature>de.mvmsoft.checkclipse.CheckclipseNature</projectnature>
@@ -1266,18 +1266,6 @@
 			<name>External release repository of the EL4J project</name>
 			<url>http://el4.elca-services.ch/el4j/maven2repository</url>
 		</repository>
-		<!--repository>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<id>el4jSnapshotRepositoryExternal</id>
-			<!- -id>apache.snapshots</id- ->
-			<name>External snapshot repository of the EL4J project</name>
-			<url>http://el4.elca-services.ch/el4j/maven2snapshots</url>
-		</repository-->
 		<repository>
 			<snapshots>
 				<enabled>false</enabled>
@@ -1306,23 +1294,6 @@
 			<name>Internal release repository of the EL4J project</name>
 			<url>http://leaffy.elca.ch/java/maven2repository</url>
 		</repository>
-
-
-		<!--
-			Internal snapshot repository commented because it is currently empty.
-			==> Faster build-process
-		-->
-		<!--repository>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<id>el4jSnapshotRepositoryInternal</id>
-			<name>Internal snapshot repository of the EL4J project</name>
-			<url>http://leaffy.elca.ch/java/maven2snapshots</url>
-		</repository-->
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
@@ -1335,18 +1306,6 @@
 			<id>el4jReleasePluginRepositoryExternal</id>
 			<name>External release repository of the EL4J project</name>
 			<url>http://el4.elca-services.ch/el4j/maven2repository</url>
-		</pluginRepository>
-		<pluginRepository>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<id>el4jSnapshotPluginRepositoryExternal</id>
-			<!--id>apache.snapshots</id-->
-			<name>External snapshot repository of the EL4J project</name>
-			<url>http://el4.elca-services.ch/el4j/maven2snapshots</url>
 		</pluginRepository>
 	</pluginRepositories>
 	<distributionManagement>
