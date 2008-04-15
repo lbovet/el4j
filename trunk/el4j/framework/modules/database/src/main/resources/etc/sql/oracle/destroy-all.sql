@@ -21,10 +21,10 @@ BEGIN
       ORDER BY table_name, constraint_name
     )
   LOOP
-      EXECUTE IMMEDIATE lv_cur.cmd###SEMICOLUMN###
-  END LOOP###SEMICOLUMN###
-END###SEMICOLUMN###
-;
+      EXECUTE IMMEDIATE lv_cur.cmd;
+  END LOOP;
+END;
+/
 
 BEGIN
   FOR lv_cur IN
@@ -39,11 +39,11 @@ BEGIN
       ORDER BY table_name
     )
   LOOP
-    EXECUTE IMMEDIATE lv_cur.cmd###SEMICOLUMN###
-    COMMIT###SEMICOLUMN###
-  END LOOP###SEMICOLUMN###
-END###SEMICOLUMN###
-;
+    EXECUTE IMMEDIATE lv_cur.cmd;
+    COMMIT;
+  END LOOP;
+END;
+/
 
 
 BEGIN
@@ -59,10 +59,10 @@ BEGIN
       ORDER BY sequence_name
     )
   LOOP
-    EXECUTE IMMEDIATE lv_cur.cmd###SEMICOLUMN###
-    COMMIT###SEMICOLUMN###
-  END LOOP###SEMICOLUMN###
-END###SEMICOLUMN###
-;
+    EXECUTE IMMEDIATE lv_cur.cmd;
+    COMMIT;
+  END LOOP;
+END;
+/
 
 PURGE RECYCLEBIN;
