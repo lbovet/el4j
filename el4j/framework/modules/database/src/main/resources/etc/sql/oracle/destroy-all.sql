@@ -44,3 +44,25 @@ BEGIN
   END LOOP###SEMICOLUMN###
 END###SEMICOLUMN###
 ;
+
+
+BEGIN
+  FOR lv_cur IN
+    (
+      SELECT 
+        'drop sequence '||sequence_name    AS cmd,
+        ROW_NUMBER() OVER (ORDER BY sequence_name)
+                                       AS sofar,
+        COUNT(*) OVER (PARTITION BY 1) AS totalwork,
+        sequence_name                     AS target
+      FROM user_sequences
+      ORDER BY sequence_name
+    )
+  LOOP
+    EXECUTE IMMEDIATE lv_cur.cmd###SEMICOLUMN###
+    COMMIT###SEMICOLUMN###
+  END LOOP###SEMICOLUMN###
+END###SEMICOLUMN###
+;
+
+PURGE RECYCLEBIN;
