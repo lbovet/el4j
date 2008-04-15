@@ -544,21 +544,36 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
     private List<String> extractStmtsFromFile(URL fileURL) {
         ArrayList<String> result = new ArrayList<String>();
         String part;
-        String stmt = "";
+        StringBuffer stmt = new StringBuffer();
         int index;
+        boolean insideSeqStmt = false;
 
         try {
             BufferedReader buffRead = new BufferedReader(new InputStreamReader(
                 fileURL.openStream()));
             while ((part = buffRead.readLine()) != null) {
+                part = StringUtils.trimWhitespace(part);
+                
                 // Filter out comments and blank lines
                 if (StringUtils.hasText(part) && !part.startsWith("--")) {
-                    // Sort statements by delimiter, by default ';'
-                    while ((index = part.indexOf(delimiter)) != -1) {
+                    // Detect begin/end of statement sequence
+                    if (part.equalsIgnoreCase("DECLARE")) {
+                        insideSeqStmt = true;
+                    } else if (part.equalsIgnoreCase("BEGIN")) {
+                        insideSeqStmt = true;
+                    } else if (part.equalsIgnoreCase("/")) {
+                        part = delimiter;
+                        insideSeqStmt = false;
+                    }
+                    
+                    // Split statements by delimiter, by default ';'
+                    while (!insideSeqStmt 
+                        && (index = part.indexOf(delimiter)) != -1) {
+                        
                         // add statement to result array
-                        result.add(stmt + part.substring(0, index));
+                        result.add(stmt.toString() + part.substring(0, index));
                         // reset statement string
-                        stmt = "";
+                        stmt.setLength(0);
                         // check if Part has input after the delimiter.
                         // If so, continue.
                         if (index < part.length()) {
@@ -567,7 +582,10 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
                             part = "";
                         }
                     }
-                    stmt = stmt + part;
+                    
+                    // append space so that "...ABC\nNAME..." is not reduced to
+                    // "...ABCNAME..." instead of "...ABC NAME..."
+                    stmt.append(part).append(" ");
                 }
             }
         } catch (IOException e) {
