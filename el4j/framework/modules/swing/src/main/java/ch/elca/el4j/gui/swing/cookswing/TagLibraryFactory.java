@@ -22,11 +22,16 @@ import ch.elca.el4j.gui.swing.cookswing.binding.ComboBoxBindingCreator;
 import ch.elca.el4j.gui.swing.cookswing.binding.ListBindingCreator;
 import ch.elca.el4j.gui.swing.cookswing.binding.NoAddVarSetter;
 import ch.elca.el4j.gui.swing.cookswing.binding.TableBindingCreator;
+import ch.elca.el4j.gui.swing.cookswing.designgridlayout.DesignGridLayoutCreator;
+import ch.elca.el4j.gui.swing.cookswing.designgridlayout.RowAdder;
+import ch.elca.el4j.gui.swing.cookswing.designgridlayout.RowAlignSetter;
+import ch.elca.el4j.gui.swing.cookswing.designgridlayout.RowCreator;
+import ch.elca.el4j.gui.swing.cookswing.designgridlayout.RowHeightSetter;
 
+import cookxml.common.CommonLib;
 import cookxml.cookswing.CookSwing;
 import cookxml.cookswing.CookSwingLib;
 import cookxml.cookxml.CookXmlLib;
-import cookxml.core.CookXml;
 import cookxml.core.adder.DefaultAdder;
 import cookxml.core.setter.DefaultSetter;
 import cookxml.core.setter.DoNothingSetter;
@@ -60,9 +65,18 @@ public final class TagLibraryFactory {
         CookXmlLib.getSingletonTagLibrary().setSetter(
             null, "var", new NoAddVarSetter());
         
+        // ignore colspan attribute (in common)
+        CommonLib.getSingletonTagLibrary().setSetter(
+            null, "colspan", DoNothingSetter.getInstance());
+        
         // install default action attribute setter for buttons
         CookSwing.getSwingTagLibrary().setSetter(
             "abstractbutton", "action", new ButtonActionSetter());
+        
+        // ignore colspan attribute (in swing)
+        CookSwing.getSwingTagLibrary().setSetter(
+            null, "colspan", DoNothingSetter.getInstance());
+        
         
         // install XML schemaLocation handler
         InheritableTagLibrary tagLibrary = new InheritableTagLibrary(
@@ -130,6 +144,20 @@ public final class TagLibraryFactory {
             "comboboxbinding", new ComboBoxBindingCreator());
         tagLibrary.setSetter(
             "comboboxbinding", null, DoNothingSetter.getInstance());
+        
+        // <designgridlayout>
+        tagLibrary.setCreator(
+            "designgridlayout", new DesignGridLayoutCreator());
+        tagLibrary.setSetter(
+            "designgridlayout", null, DoNothingSetter.getInstance());
+        
+        // <row>
+        tagLibrary.setCreator("row", new RowCreator());
+        tagLibrary.setAdder("row", new RowAdder());
+        tagLibrary.setSetter("row", null, DoNothingSetter.getInstance());
+        tagLibrary.setSetter("row", "align", new RowAlignSetter());
+        tagLibrary.setSetter("row", "height", new RowHeightSetter());
+        
         
         return tagLibrary;
     }
