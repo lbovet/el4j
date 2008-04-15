@@ -137,4 +137,40 @@
 	<element name="column" type="el4j:column" substitutionGroup="el4j:abstractbinding" />
 	<element name="comboboxbinding" type="el4j:comboboxbinding" substitutionGroup="el4j:abstractbinding" />
 	
+	
+	
+	<!-- designgridlayout -->
+	<complexType name="designgridlayout">
+		<complexContent>
+			<extension base="cookXmlCommon:object" />
+		</complexContent>
+	</complexType>
+	
+	<complexType name="row">
+		<complexContent>
+			<extension base="cookXmlCommon:object">
+				<attribute name="height" type="int" />
+				<attribute name="align" type="string" />
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	<complexType name="vgap">
+		<complexContent>
+			<extension base="cookXmlCommon:object" />
+		</complexContent>
+	</complexType>
+	
+	<complexType name="empty">
+		<complexContent>
+			<extension base="cookXmlCommon:object" />
+		</complexContent>
+	</complexType>
+	
+	<element name="designgridlayout" type="el4j:designgridlayout" substitutionGroup="cookXmlCommon:object" />
+	<element name="row" type="el4j:row" substitutionGroup="cookXmlCommon:object" />
+	<element name="vgap" type="el4j:row" substitutionGroup="cookXmlCommon:object" />
+	<element name="empty" type="el4j:row" substitutionGroup="cookXmlCommon:object" />
+	
+	<attribute name="span" type="string" />
 </schema>

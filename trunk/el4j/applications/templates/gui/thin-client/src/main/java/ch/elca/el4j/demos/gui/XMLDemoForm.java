@@ -19,6 +19,7 @@ package ch.elca.el4j.demos.gui;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -33,8 +34,6 @@ import ch.elca.el4j.gui.swing.cookswing.binding.Bindable;
 import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
 
 import cookxml.cookswing.CookSwing;
-
-import zappini.designgridlayout.DesignGridLayout;
 
 
 /**
@@ -59,6 +58,7 @@ import zappini.designgridlayout.DesignGridLayout;
 public class XMLDemoForm extends JPanel implements Bindable {
     private JTextField m_firstName;
     private JTextField m_lastName;
+    private JLabel m_statusLabel;
     private Person m_person;
     private List<Person> m_persons;
     private final Binder m_binder = BinderManager.getBinder(this);
@@ -88,30 +88,17 @@ public class XMLDemoForm extends JPanel implements Bindable {
         m_person.getChildren().add(person2);
     }
     
-    private void setGridPanelLayout(JPanel formPanel) {
-        // create the form layout
-        DesignGridLayout layout = new DesignGridLayout(formPanel);
-        formPanel.setLayout(layout);
-
-        // the first two rows contains a label and a text field each
-        
-        layout.row().add("First Name").add(m_firstName);
-        layout.row().add("Last Name").add(m_lastName);
-        //layout.row().add("Incomplete").add(m_incomplete);
-        //layout.row().add(m_createButton).add(m_deleteButton);
-        // Hint: spacers can be inserted using add(Row.EMPTY)
-
-        // Checkstyle: MagicNumber off
-        layout.row().height(10);
-        // Checkstyle: MagicNumber on
-    }
-    
+    /** {@inheritDoc} */
     public Binder getBinder() {
         return m_binder;
     }
     
+    /**
+     * An action that prints some information. See action attribute in XML.
+     */
     @Action
-    public void create() {
-        System.out.println("create");
+    public void info() {
+        m_statusLabel.setText("Person: " + m_firstName.getText()
+            + " " + m_lastName.getText());
     }
 }

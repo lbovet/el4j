@@ -13,14 +13,38 @@
 
 	<borderlayout>
 		<constraint location="North">
-			<el4j:create-component finish-method="setGridPanelLayout">
-				<textfield cx:var="m_firstName">
-					<el4j:binding src="m_person" property="firstName" updateStrategy="read write" validation="true" />
-				</textfield>
-				<textfield cx:var="m_lastName">
-					<el4j:binding src="m_person" property="lastName" updateStrategy="read write" validation="true" />
-				</textfield>
-			</el4j:create-component>
+			<panel>
+				<el4j:designgridlayout>
+					<el4j:row align="left" height="30">
+						<label text="A label in left aligned row that has a height of 30 pixels" />
+					</el4j:row>
+					<el4j:row>
+						<label name="lblFirstName" horizontalalignment="RIGHT" />
+						<textfield cx:var="m_firstName" colspan="2">
+							<el4j:binding src="m_person" property="firstName" updateStrategy="read write" validation="true" />
+						</textfield>
+						
+						<label name="lblLastName" horizontalalignment="RIGHT" />
+						<textfield cx:var="m_lastName" colspan="2">
+							<el4j:binding src="m_person" property="lastName" updateStrategy="read write" validation="true" />
+						</textfield>
+					</el4j:row>
+					<el4j:row>
+						<cc:null colspan="3"/>
+						
+						<label name="lblAge" horizontalalignment="RIGHT" />
+						<cc:object ctor="ch.elca.el4j.gui.swing.widgets.IntegerField" colspan="2">
+							<el4j:binding src="m_person" property="age" updateStrategy="read write" validation="true" />
+						</cc:object>
+					</el4j:row>
+					<el4j:row align="center">
+						<button action="info" />
+					</el4j:row>
+					<el4j:row >
+						<label cx:var="m_statusLabel" />
+					</el4j:row>
+				</el4j:designgridlayout>
+			</panel>
 		</constraint>
 		<constraint location="Center">
 			<scrollpane>
