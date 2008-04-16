@@ -174,15 +174,17 @@
 						<artifactId>cargo-maven2-plugin</artifactId>
 						<executions>
 							<execution>
-								<id>start-container</id>
+								<id>start-container-and-deploy</id>
 								<phase>pre-integration-test</phase>
 								<goals>
 									<goal>start</goal>
+									<goal>deploy</goal>
 								</goals>
 							</execution>
 						</executions>
 					</plugin>
 					
+					<!--
 					<plugin>
 						<groupId>org.codehaus.cargo</groupId>
 						<artifactId>cargo-maven2-plugin</artifactId>
@@ -196,7 +198,8 @@
 							</execution>
 						</executions>
 					</plugin>
-
+					-->
+					
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-surefire-plugin</artifactId>
@@ -304,20 +307,11 @@
 						</executions>
 					</plugin>
 					
-					<plugin>
-						<groupId>org.codehaus.cargo</groupId>
-						<artifactId>cargo-maven2-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>start-container</id>
-								<phase>pre-integration-test</phase>
-								<goals>
-									<goal>start</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
+					<!-- WARNING: If we want to execute (start, deploy)
+					     we must for Maven 2.0.9 put them in one definition.
+						 Otherwise, they are processed *backwards*. -->
 					
+					<!--
 					<plugin>
 						<groupId>org.codehaus.cargo</groupId>
 						<artifactId>cargo-maven2-plugin</artifactId>
@@ -331,7 +325,23 @@
 							</execution>
 						</executions>
 					</plugin>
-
+					-->
+					
+					<plugin>
+						<groupId>org.codehaus.cargo</groupId>
+						<artifactId>cargo-maven2-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>start-container-and-deploy</id>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>start</goal>
+									<goal>deploy</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-surefire-plugin</artifactId>
