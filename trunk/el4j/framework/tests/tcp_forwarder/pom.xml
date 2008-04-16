@@ -53,6 +53,7 @@
 				<artifactId>maven-database-plugin</artifactId>
 				<executions>
 					<execution>
+						<id>prepare</id>
 						<configuration>
 							<connectionPropertiesSource>
 								env-bean-property_spezially-for-tcp-forwarder.properties
@@ -93,6 +94,7 @@
 				<artifactId>maven-database-plugin</artifactId>
 				<executions>
 					<execution>
+						<id>cleanUp</id>
 						<configuration>
 							<connectionPropertiesSource>
 								env-bean-property_spezially-for-tcp-forwarder.properties
