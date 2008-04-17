@@ -17,7 +17,6 @@
         <init-param>
             <param-name>inclusiveLocations</param-name>
             <param-value>
-                <!--
                 classpath*:mandatory/*.xml,
                 classpath*:mandatory/refdb/*.xml,
                 classpath*:scenarios/db/raw/*.xml,
@@ -25,10 +24,6 @@
                 classpath*:scenarios/dataaccess/hibernate/refdb/*.xml,
                 classpath*:optional/interception/transactionJava5Annotations.xml,
                 classpath:scenarios/remoting/server/web/*.xml
-                -->
-                classpath*:mandatory/*.xml,
-                classpath*:BasicHibernateInfrastructureConfig.xml,
-                classpath:SpecificConfig.xml
             </param-value>
         </init-param>
         <init-param>
