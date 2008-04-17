@@ -17,7 +17,7 @@
 	
 	<artifactId>maven-abbot-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>${version.maven-abbot-plugin}</version>
 	<name>EL4J plugin for automated GUI testing with abbot.</name>
 	<build>
 		<plugins>
