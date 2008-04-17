@@ -181,6 +181,15 @@
 									<goal>deploy</goal>
 								</goals>
 							</execution>
+							
+							<execution>
+								<id>stop</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>undeploy</goal>
+									<goal>stop</goal>
+								</goals>
+							</execution>
 						</executions>
 					</plugin>
 					
@@ -220,33 +229,6 @@
 						</executions>
 					</plugin>
 
-					<plugin>
-						<groupId>org.codehaus.cargo</groupId>
-						<artifactId>cargo-maven2-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>undeploy-after-testing</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>undeploy</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-
-					<plugin>
-						<groupId>org.codehaus.cargo</groupId>
-						<artifactId>cargo-maven2-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>stop-container</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>stop</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
 				</plugins>
 			</build>
 		</profile>
@@ -339,6 +321,16 @@
 									<goal>deploy</goal>
 								</goals>
 							</execution>
+							
+							<execution>
+								<id>stop</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>undeploy</goal>
+									<goal>stop</goal>
+								</goals>
+							</execution>
+							
 						</executions>
 					</plugin>
 					
@@ -361,34 +353,7 @@
 							</execution>
 						</executions>
 					</plugin>
-
-					<plugin>
-						<groupId>org.codehaus.cargo</groupId>
-						<artifactId>cargo-maven2-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>undeploy-after-testing</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>undeploy</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-
-					<plugin>
-						<groupId>org.codehaus.cargo</groupId>
-						<artifactId>cargo-maven2-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>stop-container</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>stop</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
+					
 				</plugins>
 			</build>
 		</profile>

@@ -84,12 +84,30 @@
 						<artifactId>cargo-maven2-plugin</artifactId>
 						<executions>
 							<execution>
-								<id>start-container</id>
+								<id>start</id>
 								<phase>pre-integration-test</phase>
 								<goals>
 									<goal>start</goal>
 								</goals>
 							</execution>
+							
+							<execution>
+								<id>deploy</id>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>deploy</goal>
+								</goals>
+							</execution>
+							
+							<execution>
+								<id>stop</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>undeploy</goal>
+									<goal>stop</goal>
+								</goals>
+							</execution>
+							
 						</executions>
 					</plugin>
 
@@ -151,20 +169,6 @@
 						</executions>
 					</plugin>-->
 
-					<plugin>
-						<groupId>org.codehaus.cargo</groupId>
-						<artifactId>cargo-maven2-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>deploy</id>
-								<phase>integration-test</phase>
-								<goals>
-									<goal>deploy</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-
 					<!-- MDL 2006-11-23
 						Due to a Bug within the Cargo plugin, we need to sleep here.
 						Note that the time is crucial: 5 seconds are not enough. -->
@@ -206,35 +210,6 @@
 							</execution>
 						</executions>
 					</plugin>
-
-					<plugin>
-						<groupId>org.codehaus.cargo</groupId>
-						<artifactId>cargo-maven2-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>undeploy-after-testing</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>undeploy</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-
-					<plugin>
-						<groupId>org.codehaus.cargo</groupId>
-						<artifactId>cargo-maven2-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>stop-container</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>stop</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-
 				</plugins>
 			</build>
 		</profile>

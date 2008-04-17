@@ -64,6 +64,19 @@
 						</goals>
 						<phase>pre-integration-test</phase>
 					</execution>
+					
+					<execution>
+						<id>cleanUp</id>
+						<configuration>
+							<connectionPropertiesSource>
+								env-bean-property_spezially-for-tcp-forwarder.properties
+							</connectionPropertiesSource>
+						</configuration>
+						<goals>
+							<goal>cleanUp</goal>
+						</goals>
+						<phase>post-integration-test</phase>
+					</execution>
 				</executions>
 			</plugin>
 
@@ -88,25 +101,6 @@
 				</executions>
 			</plugin>
 			
-			<!-- Delete tables and stop Network Server -->
-			<plugin>
-				<groupId>ch.elca.el4j.maven.plugins</groupId>
-				<artifactId>maven-database-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>cleanUp</id>
-						<configuration>
-							<connectionPropertiesSource>
-								env-bean-property_spezially-for-tcp-forwarder.properties
-							</connectionPropertiesSource>
-						</configuration>
-						<goals>
-							<goal>cleanUp</goal>
-						</goals>
-						<phase>post-integration-test</phase>
-					</execution>
-				</executions>
-			</plugin>
 			<plugin>
 				<!-- Configuration to start db bridging via "mvn exec:java" -->
 				<groupId>org.codehaus.mojo</groupId>
