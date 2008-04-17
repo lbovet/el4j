@@ -1080,9 +1080,9 @@
 				
 				
 				<dependency>
-					<groupId>javax.xml</groupId>
+					<groupId>xml-apis</groupId>
 					<artifactId>xml-apis</artifactId>
-					<version>1.3.03</version>
+					<version>1.3.04</version>
 					<scope>runtime</scope>					
 				</dependency>
 				
@@ -1133,7 +1133,7 @@
 										
 										
 										<dependency>
-											<location>${localRepository}/javax/xml/xml-apis/1.3.03/xml-apis-1.3.03.jar</location>
+											<location>${localRepository}/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.jar</location>
 										</dependency>
 									
 										<dependency>
