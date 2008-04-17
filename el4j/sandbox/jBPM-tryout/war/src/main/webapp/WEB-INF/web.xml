@@ -22,7 +22,6 @@
         <param-name>inclusiveLocations</param-name>
         <param-value>
             classpath*:mandatory/*.xml,
-            classpath*:mandatory/generic/*.xml,
             classpath*:scenarios/db/raw/*.xml,
             classpath*:scenarios/dataaccess/hibernate/*.xml,
             classpath*:optional/interception/transactionJava5Annotations.xml

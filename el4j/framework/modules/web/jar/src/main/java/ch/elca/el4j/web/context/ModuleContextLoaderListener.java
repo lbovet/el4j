@@ -39,7 +39,6 @@ import org.springframework.web.context.ContextLoaderListener;
  *       &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
  *       &lt;param-value&gt;
  *           classpath*:mandatory/*.xml,
- *           classpath*:mandatory/generic/*.xml,
  *           classpath*:scenarios/db/raw/*.xml,
  *           classpath*:scenarios/dataaccess/hibernate/*.xml,
  *           classpath*:scenarios/dataaccess/hibernate/keyword/*.xml,
