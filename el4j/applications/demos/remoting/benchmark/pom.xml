@@ -113,19 +113,7 @@
 			</activation>
 			<build>
 				<plugins>
-					<plugin>
-						<groupId>org.codehaus.cargo</groupId>
-						<artifactId>cargo-maven2-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>start-container</id>
-								<phase>pre-integration-test</phase>
-								<goals>
-									<goal>start</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
+
 					<!--<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-antrun-plugin</artifactId>
@@ -169,11 +157,22 @@
 						<groupId>org.codehaus.cargo</groupId>
 						<artifactId>cargo-maven2-plugin</artifactId>
 						<executions>
+								
 							<execution>
-								<id>deploy</id>
+								<id>start</id>
 								<phase>pre-integration-test</phase>
 								<goals>
+									<goal>start</goal>
 									<goal>deploy</goal>
+								</goals>
+							</execution>
+							
+							<execution>
+								<id>stop</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>undeploy</goal>
+									<goal>stop</goal>
 								</goals>
 							</execution>
 						</executions>
@@ -203,19 +202,7 @@
 							</execution>
 						</executions>
 					</plugin>
-					<plugin>
-						<groupId>org.codehaus.cargo</groupId>
-						<artifactId>cargo-maven2-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>undeploy-after-testing</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>undeploy</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
+
 					<!--<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-antrun-plugin</artifactId>
@@ -229,19 +216,7 @@
 							</execution>
 						</executions>
 					</plugin>-->
-					<plugin>
-						<groupId>org.codehaus.cargo</groupId>
-						<artifactId>cargo-maven2-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>stop-container</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>stop</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
+					
 				</plugins>
 			</build>
 		</profile>
