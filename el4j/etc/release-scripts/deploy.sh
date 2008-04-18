@@ -54,6 +54,16 @@ if ! [ -e external ] ; then
 	exit
 fi
 
+if [ $# -eq 1 ] ; then
+	performInternal=$1
+	auto=true
+else
+	echo "Process internal? (y/n)"
+	read performInternal
+	auto=false
+fi
+
+
 cd external
 mvn deploy -N
 
@@ -89,10 +99,8 @@ cd ../..
 
 cd ..
 
-echo "Process internal? (y/n)"
-read performInternal
 
-if [ $performInternal != "y" ] ; then
+if [ ${performInternal:0:1} != "y" ] ; then
 	exit
 fi
 
