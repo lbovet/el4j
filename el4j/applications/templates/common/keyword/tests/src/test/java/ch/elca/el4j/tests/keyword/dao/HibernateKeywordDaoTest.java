@@ -232,7 +232,7 @@ public class HibernateKeywordDaoTest
         
         for (Keyword k : list) {
             if (!(k.equals(keyword3) || k.equals(keyword4))) {
-                System.out.println ("k.name="+k.getName());
+                //System.out.println("k.name=" + k.getName());
                 fail("Not expected keyword with paging test");
             }
         }
@@ -243,25 +243,26 @@ public class HibernateKeywordDaoTest
         query = new QueryObject();
       
         query.addCriteria(
-            or(and(not(new ComparisonCriteria("name","Ghost","!=","String")), 
+            or(and(not(new ComparisonCriteria("name", "Ghost", "!=", "String")),
                    (or(not(like("name", "%host%")),
                        like("name", "%host%"))))));
             
       
       
-      list = dao.findByQuery(query);
-      assertEquals("Search for name like 'host' results not in one keyword.",
-          1, list.size());
-      
-      for (Keyword k : list) {
-          if (!k.equals(keyword3)) {
-              fail("Not expected keyword on search for name like 'host'.");
-          }
-      }
-      
-      list = dao.findByQuery(new QueryObject());
-      assertEquals("Search for empty name and description does not result in "
-          + "five keywords.", 5, list.size());
+        list = dao.findByQuery(query);
+        assertEquals("Search for name like 'host' results not in one keyword.",
+            1, list.size());
+
+        for (Keyword k : list) {
+            if (!k.equals(keyword3)) {
+                fail("Not expected keyword on search for name like 'host'.");
+            }
+        }
+
+        list = dao.findByQuery(new QueryObject());
+        assertEquals(
+            "Search for empty name and description does not result in "
+                + "five keywords.", 5, list.size());
         
     }
     
