@@ -65,7 +65,7 @@ public interface GenericDao<T> {
     
     /** 
      * New: this callback is in general no longer required (the constructor
-     *  should figure the type out itself) 
+     *  should figure the type out itself).
      * 
      * @param c    Mandatory. The domain class this DAO is responsible for.
      */
@@ -87,13 +87,12 @@ public interface GenericDao<T> {
     /**
      * Count number of results of a search. 
      * 
-     * @param query
+     * @param query    The search query object
      * @return the number of results that this query could at most
      *   return.
      * @throws DataAccessException
      */
-    int findCountByQuery(final QueryObject query)
-       throws DataAccessException;
+    int findCountByQuery(final QueryObject query) throws DataAccessException;
      
     
     /**

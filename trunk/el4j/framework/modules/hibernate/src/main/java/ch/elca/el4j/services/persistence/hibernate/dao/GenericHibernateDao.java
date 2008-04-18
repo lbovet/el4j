@@ -67,14 +67,14 @@ public class GenericHibernateDao<T, ID extends Serializable>
      */
     @SuppressWarnings("unchecked")
     public GenericHibernateDao() {
-    	try {
-    		this.m_persistentClass = (Class<T>) ((ParameterizedType) getClass()
-    				.getGenericSuperclass()).getActualTypeArguments()[0];
-    	} catch (Exception e){
-    		// ignore issues (e.g. when the subclass is not a parametrized type)
-    		//  in that case, one needs to set the persistencClass otherwise.
-    	}
-     }
+        try {
+            this.m_persistentClass = (Class<T>) ((ParameterizedType) getClass()
+                    .getGenericSuperclass()).getActualTypeArguments()[0];
+        } catch (Exception e) {
+            // ignore issues (e.g. when the subclass is not a parametrized type)
+            // in that case, one needs to set the persistencClass otherwise.
+        }
+    }
     
     /**
      * The domain class this DAO is responsible for.
@@ -83,7 +83,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
     
     /** 
      * New: this callback is in general no longer required (the constructor
-     *  figures the type out itself) 
+     *  figures the type out itself).
      * 
      * @param c
      *           Mandatory. The domain class this DAO is responsible for.
@@ -151,6 +151,17 @@ public class GenericHibernateDao<T, ID extends Serializable>
         return (T) getConvenienceHibernateTemplate().getByIdStrong(
             getPersistentClass(), id, getPersistentClassName());
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressWarnings("unchecked")
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public T findByIdLazy(ID id) 
+        throws DataAccessException, DataRetrievalFailureException {
+        return (T) getConvenienceHibernateTemplate().getByIdStrongLazy(
+            getPersistentClass(), id, getPersistentClassName());
+    }
 
     /**
      * {@inheritDoc}
@@ -172,12 +183,14 @@ public class GenericHibernateDao<T, ID extends Serializable>
     @SuppressWarnings("unchecked")
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<T> findByQuery(QueryObject q) throws DataAccessException {
-        DetachedCriteria hibernateCriteria = CriteriaTransformer.transform(q,
-            getPersistentClass());
+        DetachedCriteria hibernateCriteria = CriteriaTransformer.transform(
+            q, getPersistentClass());
         
-        ConvenienceHibernateTemplate template = getConvenienceHibernateTemplate(); 
+        ConvenienceHibernateTemplate template
+            = getConvenienceHibernateTemplate();
         
-        return template.findByCriteria(hibernateCriteria,q.getFirstResult(),q.getMaxResults());
+        return template.findByCriteria(
+            hibernateCriteria, q.getFirstResult(), q.getMaxResults());
     }
 
     /**
@@ -191,10 +204,11 @@ public class GenericHibernateDao<T, ID extends Serializable>
     @SuppressWarnings("unchecked")
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public int findCountByQuery(QueryObject q) throws DataAccessException {
-        DetachedCriteria hibernateCriteria = CriteriaTransformer.transform(q,
-            getPersistentClass());
+        DetachedCriteria hibernateCriteria = CriteriaTransformer.transform(
+            q, getPersistentClass());
         
-        ConvenienceHibernateTemplate template = getConvenienceHibernateTemplate();                
+        ConvenienceHibernateTemplate template
+            = getConvenienceHibernateTemplate();
 
         return template.findCountByCriteria(hibernateCriteria);
     }    

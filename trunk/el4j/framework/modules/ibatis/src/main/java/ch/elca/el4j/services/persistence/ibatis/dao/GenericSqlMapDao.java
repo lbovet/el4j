@@ -115,6 +115,16 @@ public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,ID ext
         .queryForObjectStrong("get" + getPersistentClassName() + "ByKey",
                 id, getPersistentClassName());
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressWarnings("unchecked")
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public T findByIdLazy(ID id) 
+        throws DataAccessException, DataRetrievalFailureException {
+        return (T) findById(id);
+    }
 
     /**
      * {@inheritDoc}

@@ -64,6 +64,12 @@ public interface ConvenienceGenericDao<T, ID extends Serializable>
     T findById(ID id) throws DataRetrievalFailureException, DataAccessException;
     
     /**
+     * Retrieves a domain object by identifier lazily.
+     * @see findById
+     */
+    T findByIdLazy(ID id) throws DataRetrievalFailureException, DataAccessException;
+    
+    /**
      * Deletes the domain object with the given id, disregarding any 
      * concurrent modifications that may have occurred.
      * 

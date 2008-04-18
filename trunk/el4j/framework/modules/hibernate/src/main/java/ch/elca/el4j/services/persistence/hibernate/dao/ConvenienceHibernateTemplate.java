@@ -91,6 +91,28 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
     }
     
     /**
+     * Retrieves a persistent instance lazily.
+     * @see getByIdStrong
+     */
+    public Object getByIdStrongLazy(Class<?> entityClass, Serializable id,
+        final String objectName) throws DataAccessException,
+        DataRetrievalFailureException {
+        Reject.ifNull(id, "The identifier must not be null.");
+        Reject.ifEmpty(objectName, "The name of the persistent object type "
+            + "must not be empty.");
+        Object result = load(entityClass, id);
+        
+        if (result == null || !(entityClass.isInstance(result))) {
+            String message = "The desired " + objectName + " could not be"
+                + " retrieved.";
+            CoreNotificationHelper.notifyDataRetrievalFailure(message,
+                objectName);
+        }
+        return result;
+    }
+
+    
+    /**
      * Retrieves a persistent instance with the help of a parameterized query:
      * does the same as the
      * <code>findByNamedParam(String, String, Object)</code> method, but
@@ -234,7 +256,7 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
         if (getFirstResult() != QueryObject.NO_CONSTRAINT){
             criteria.setFirstResult(getFirstResult());
         }
-    	
+        
     }
 
     
@@ -250,7 +272,7 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
        throws DataAccessException {
 
         Assert.notNull(criteria, "DetachedCriteria must not be null");
-        Object result =  execute(new HibernateCallback() {
+        Object result =  executeWithNativeSession(new HibernateCallback() {
             public Object doInHibernate(Session session) throws HibernateException {
                 Criteria executableCriteria = criteria.getExecutableCriteria(session);
                 executableCriteria.setProjection( Projections.rowCount() );
@@ -259,7 +281,7 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
                 
                 return executableCriteria.uniqueResult();
             }
-        }, true);
+        });
         if (result == null){
         	result = 0;
         }
@@ -273,5 +295,5 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
 
     public void setFirstResult(int firstResult) {
         m_firstResult = firstResult;
-    }    
+    }
 }
