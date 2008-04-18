@@ -12,15 +12,22 @@ fi
 
 echo "Update framework (external and internal)"
 el4jCurrent=$(cat external/pom.xml | grep "<version.el4j-framework.current>" -A 1 | tail -n 1 | tr -d ' \t\r\n' | sed 's/-SNAPSHOT//')
-echo "Current version is $el4jCurrent-SNAPSHOT, OK?"
-read dummy
-echo "Enter next el4j version number"
-read el4jNext
+
+if [ $# -eq 1 ] ; then
+	el4jNext=$el4jCurrent-$1
+	auto=true
+else
+	echo "Current version is $el4jCurrent-SNAPSHOT, OK?"
+	read dummy
+	echo "Enter next el4j version number"
+	read el4jNext
+	
+	echo "Replacing '$el4jCurrent-SNAPSHOT' by '$el4jNext', OK?"
+	read dummy
+	auto=false
+fi
 
 el4jCurrent=$el4jCurrent-SNAPSHOT
-
-echo "Replacing '$el4jCurrent' by '$el4jNext', OK?"
-read dummy
 
 echo "Searching for pom.xml files..."
 
@@ -49,8 +56,14 @@ search="external/pom.xml"
 if [ -e internal ] ; then
 	search="$search internal/pom.xml"
 fi
+
+if [ $auto ] ; then
+	newSuffix="-$1"
+else
+	newSuffix=""
+fi
 for i in $search ; do
-	cat $i | sed "s/-SNAPSHOT$//" > $i.new
+	cat $i | sed "s/-SNAPSHOT$/$newSuffix/" > $i.new
 	mv $i.new $i
 done
 

@@ -102,7 +102,7 @@ echo "Press Enter to clean up (restore settings.xml, delete el4jFresh)"
 read dummy
 
 # restore settings
-mv ~/.m2/settings.xml.backup ~/.m2/settings.xml
+mv settings.xml.backup ~/.m2/settings.xml
 
 cd d:
 rm -R el4jFresh
