@@ -26,7 +26,7 @@
 	
 	<security:identity authenticate-method="#{authenticator.authenticate}"/>
     
-	<spring:spring-transaction platform-transaction-manager-name="transactionManager"/>
+	<spring:spring-transaction platform-transaction-manager="#{transactionManager}"/>
 	
 	
     
