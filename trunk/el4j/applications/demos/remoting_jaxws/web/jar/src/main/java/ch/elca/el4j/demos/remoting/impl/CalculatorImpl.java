@@ -16,6 +16,9 @@
  */
 package ch.elca.el4j.demos.remoting.impl;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
@@ -48,6 +51,15 @@ import ch.elca.el4j.demos.remoting.ComplexNumber;
     serviceName = "CalculatorWSService",
     targetNamespace = "http://gen.remoting.demos.el4j.elca.ch/")
 public class CalculatorImpl implements Calculator {
+    
+    /**
+     * Constructor added due to exception logging flood with jdk logging
+     * and JAX-WS.
+     */
+    public CalculatorImpl() {
+        String loggerName = "com.sun.xml.ws.server.sei.EndpointMethodHandler";
+        Logger.getLogger(loggerName).setLevel(Level.SEVERE);
+    }
 
     /** {@inheritDoc} */
     @WebMethod
