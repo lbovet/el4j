@@ -115,7 +115,7 @@ public class RemotingBenchmark {
      * Is the result of method "CountNumberOfUppercaseLetters".
      */
     public static final int RESULT_METHOD_COUNT_NUMBER_OF_UPPERCASE_LETTERS 
-        = 59;
+        = 718;
 
     /**
      * Private logger.

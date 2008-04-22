@@ -76,7 +76,7 @@ public class CalculatorImpl implements Calculator {
         int numberOfUppercaseLetters = 0;
         char[] c = text.toCharArray();
         for (int i = 0; i < c.length; i++) {
-            if (c[i] >= 'A' && c[i] <= 'B') {
+            if (c[i] >= 'A' && c[i] <= 'Z') {
                 numberOfUppercaseLetters++;
             }
         }
