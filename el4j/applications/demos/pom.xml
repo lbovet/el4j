@@ -35,6 +35,7 @@
 	</build>
 	<modules>
 		<module>remoting</module>
+		<module>remoting_jaxws</module>
 		<module>light_statistics</module>
 		<module>detailed_statistics</module>
 	</modules>
