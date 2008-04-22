@@ -1,0 +1,3 @@
+---+ Benchmark
+The Benchmark is per default not executed. To execute it run
+mvn -Pexecute,db2,tomcat6x integration-test
