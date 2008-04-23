@@ -6,6 +6,24 @@ echo please check the documentation under http://wiki.elca.ch/twiki/el4j/bin/vie
 echo and http://el4j.sourceforge.net/
 echo
 
+if [ ! -e ~/.bash_profile ] ; then
+	cat aliases.txt > ~/.bash_profile
+	echo "Aliases installed."
+else
+	if [ $(grep "EL4J aliases" ~/.bash_profile | wc -l) -eq 0 ] ; then
+		cat aliases.txt >> ~/.bash_profile
+		echo "Aliases installed."
+	else
+		echo "Skipping .bash_profile because it already contains marker comment 'EL4J aliases'"
+		echo "Aliases not installed."
+	fi
+fi
+
+echo
+echo "Have a look at http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/CygwinFaqAndTips"
+echo "for more useful aliases"
+echo
+
 case "`uname`" in
 CYGWIN*)
 	mkdir "$HOME/.m2"
