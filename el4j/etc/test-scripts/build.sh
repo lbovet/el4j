@@ -16,10 +16,10 @@ if [ $# -ge 3 ] && [ $3 == "Java6" ] ; then
 	cat settings.xml \
 		| sed 's#jrockit-R27.4.0-jdk1.5.0_12#jrockit-R27.5.0-jdk1.6.0_03#' \
 		> ~/.m2/settings.xml
-	OPTS="-Del4j.java.version=1.6 -Dplexus.logger.type=html"
+	OPTS="-Del4j.java.version=1.6"
 else
 	cp settings.xml ~/.m2/settings.xml
-	OPTS="-Dplexus.logger.type=html"
+	OPTS=""
 fi
 
 # perform the maven build and copy the result in case of errors
