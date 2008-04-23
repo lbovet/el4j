@@ -32,8 +32,8 @@
                     must not be final.
             -->
             <value>false</value>
-            <property name="order" value="100"/>
         </property>
+		<property name="order" value="100"/>
     </bean>
     
     <!--
