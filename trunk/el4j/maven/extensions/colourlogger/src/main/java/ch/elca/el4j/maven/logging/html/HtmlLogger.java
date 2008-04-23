@@ -14,9 +14,9 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package org.codehaus.plexus.logging.html;
+package ch.elca.el4j.maven.logging.html;
 
-import org.codehaus.plexus.logging.AbstractFormattingLogger;
+import ch.elca.el4j.maven.logging.AbstractFormattingLogger;
 
 /**
  * Logger that outputs html colours around warn/error messages.

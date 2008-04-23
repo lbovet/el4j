@@ -14,10 +14,9 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package org.codehaus.plexus.logging.console;
+package ch.elca.el4j.maven.logging.console;
 
-import org.codehaus.plexus.logging.AbstractFormattingLogger;
-import org.codehaus.plexus.logging.Logger;
+import ch.elca.el4j.maven.logging.AbstractFormattingLogger;
 
 /**
  * Logger that outputs ansi coloured text. <script
@@ -46,6 +45,14 @@ public class ColourLogger extends AbstractFormattingLogger {
      * Helper class to handle ansi colouring.
      */
     static abstract class Ansi {
+        
+        /**
+         * To keep checkstyle happy. This is never called.
+         */
+        protected Ansi() {
+            
+        }
+        
         // Constants for colours.
         static final int RESET = 0;
 

@@ -14,7 +14,10 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package org.codehaus.plexus.logging;
+package ch.elca.el4j.maven.logging;
+
+import org.codehaus.plexus.logging.AbstractLogger;
+import org.codehaus.plexus.logging.Logger;
 
 /**
  * Base class for various formatting loggers. 
@@ -60,16 +63,28 @@ public abstract class AbstractFormattingLogger extends AbstractLogger {
      * @return The text for this level.
      */
     protected String getText(int level) {
+        String levelPrefix;
         switch (level) {
-        case Logger.LEVEL_DEBUG: return "[DEBUG] ";
-        case Logger.LEVEL_INFO: return "[INFO] ";
-        case Logger.LEVEL_WARN: return "[WARNING] ";
-        case Logger.LEVEL_ERROR: return "[ERROR] ";
-        case Logger.LEVEL_FATAL: return "[FATAL] ";
-        default: 
-            // Can never happen.
-            throw new RuntimeException("Invalid level.");
+            case Logger.LEVEL_DEBUG:
+                levelPrefix = "[DEBUG] ";
+                break;
+            case Logger.LEVEL_INFO: 
+                levelPrefix = "[INFO] ";
+                break;
+            case Logger.LEVEL_WARN: 
+                levelPrefix = "[WARNING] ";
+                break;
+            case Logger.LEVEL_ERROR: 
+                levelPrefix = "[ERROR] ";
+                break;
+            case Logger.LEVEL_FATAL: 
+                levelPrefix = "[FATAL] ";
+                break;
+            default: 
+                // Can never happen.
+                throw new RuntimeException("Invalid level.");
         }
+        return levelPrefix;
     }
     
     /**
@@ -90,6 +105,8 @@ public abstract class AbstractFormattingLogger extends AbstractLogger {
         String suffix = getSuffix(level);
         String text = getText(level);
 
+        // Checkstyle: Using System.out is ok here
+        // because we are implementing a logger!
         System.out.println(prefix + text + message + suffix);
 
         if (throwable != null) {
