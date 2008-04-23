@@ -143,7 +143,13 @@ public class SpringBeanMB implements SpringBeanMBMBean {
         this.m_applicationContext = ac;
         this.m_mBeanServer = mBeanServer;
         this.m_beanFactory = beanFactory;
-        this.m_class = ac.getType(name);
+        try {
+            this.m_class = ac.getType(name);
+        } catch (NullPointerException e) {
+            // Spring throws a NPE here on some proxied beans.
+            // May be a spring bug - in any case, need to catch it.
+            this.m_class = null;
+        }
 
     }
 
