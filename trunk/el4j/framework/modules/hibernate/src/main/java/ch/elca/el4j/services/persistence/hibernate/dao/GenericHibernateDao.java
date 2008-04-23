@@ -260,6 +260,12 @@ public class GenericHibernateDao<T, ID extends Serializable>
         getConvenienceHibernateTemplate().deleteAll(entities);
     }
     
+    /** {@inheritDoc} */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void flush() {
+        getConvenienceHibernateTemplate().flush();
+    }
+    
     /**
      * Returns the simple name of the persistent class this DAO is responsible
      * for.

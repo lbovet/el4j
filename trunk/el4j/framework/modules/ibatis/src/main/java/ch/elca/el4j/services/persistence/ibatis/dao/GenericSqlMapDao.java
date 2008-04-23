@@ -241,6 +241,12 @@ public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,ID ext
                     getPersistentClassName());
         }
     }
+    
+    /** {@inheritDoc} */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void flush() {
+        getConvenienceSqlMapClientTemplate().getSqlMapClient().flushDataCache();
+    }
 
     /**
      * Returns the simple name of the persistent class this DAO is responsible

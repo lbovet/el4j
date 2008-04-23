@@ -109,4 +109,22 @@ public interface ConvenienceGenericDao<T, ID extends Serializable>
             OptimisticLockingFailureException.class })
     void delete(T entity)
         throws OptimisticLockingFailureException, DataAccessException;
+    
+    /**
+     * Sometimes, the way Hibernate handles all the actions in a session is
+     * very unbelievable. For example, we call
+     * <code>
+     *  delete(project);
+     *  project.setId(null) <= to insert new one
+     *  insert(project);
+     * </code>
+     * 
+     * It could cause java.sql.BatchUpdateException:
+     * ORA-00001: unique constraint BECAUSE Hibernate doesn't flush
+     * the previous action first.
+     * 
+     * This method provides a way to flush manually some action.
+     * Note that this method is only used in an extremely rare case.
+     */
+    void flush();
 }
