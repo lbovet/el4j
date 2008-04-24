@@ -19,7 +19,7 @@ package ch.elca.el4j.maven.logging.html;
 import ch.elca.el4j.maven.logging.AbstractFormattingLogger;
 
 /**
- * Logger that outputs html colours around warn/error messages.
+ * Logger that outputs html colors around warn/error messages.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/etc/eclipse/codeTemplates.xml $",

@@ -16,10 +16,10 @@
 	</parent>
 	
 	<groupId>ch.elca.el4j.maven.extensions</groupId>
-	<artifactId>colourlogger</artifactId>
+	<artifactId>colorlogger</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>EL4J maven colour logger</name>
+	<name>EL4J maven color logger</name>
 
 	<dependencies>
 		<dependency>

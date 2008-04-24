@@ -26,11 +26,11 @@ import org.codehaus.plexus.logging.LoggerManager;
 import org.codehaus.plexus.logging.console.ConsoleLogger;
 import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
 
-import ch.elca.el4j.maven.logging.console.ColourLogger;
+import ch.elca.el4j.maven.logging.console.ColorLogger;
 import ch.elca.el4j.maven.logging.html.HtmlLogger;
 
 /**
- * {@link LoggerManager} implementation that returns a ColourLogger or
+ * {@link LoggerManager} implementation that returns a ColorLogger or
  * HtmlLogger if a property is set, otherwise a ConsoleLogger. Based on
  * {@link ConsoleLoggerManager}. <script type="text/javascript">printFileStatus
  * ("$URL:
@@ -156,7 +156,7 @@ public class FormattedLoggerManager extends AbstractLoggerManager implements
         if (type == null) {
             logger = new ConsoleLogger(getThreshold(), name);
         } else if (type.equals("ansi")) {
-            logger = new ColourLogger(getThreshold(), name);
+            logger = new ColorLogger(getThreshold(), name);
         } else if (type.equals("html")) {
             logger = new HtmlLogger(getThreshold(), name);
         } else {
