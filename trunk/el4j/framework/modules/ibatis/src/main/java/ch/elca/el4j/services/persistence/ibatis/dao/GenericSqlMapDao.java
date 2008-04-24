@@ -242,6 +242,18 @@ public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,ID ext
         }
     }
     
+    /**
+     * {@inheritDoc}
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void deleteAll()
+        throws OptimisticLockingFailureException, DataAccessException {
+        List<T> list = getAll();
+        if (list.size() > 0) {
+            delete(list);
+        }
+    }
+    
     /** {@inheritDoc} */
     @Transactional(propagation = Propagation.REQUIRED)
     public void flush() {

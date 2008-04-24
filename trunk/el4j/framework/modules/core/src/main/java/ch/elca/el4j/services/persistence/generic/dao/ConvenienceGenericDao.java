@@ -111,6 +111,19 @@ public interface ConvenienceGenericDao<T, ID extends Serializable>
         throws OptimisticLockingFailureException, DataAccessException;
     
     /**
+     * Deletes all available <code>T</code>.
+     * 
+     * @throws OptimisticLockingFailureException
+     *             If domain object has been modified/deleted in the meantime
+     * @throws DataAccessException
+     *             If general data access problem occurred
+     */
+    @RollbackConstraint(rollbackFor = { DataAccessException.class,
+            OptimisticLockingFailureException.class })
+    public void deleteAll()
+        throws OptimisticLockingFailureException, DataAccessException;
+    
+    /**
      * Sometimes, the way Hibernate handles all the actions in a session is
      * very unbelievable. For example, we call
      * <code>
