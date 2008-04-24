@@ -19,7 +19,7 @@ package ch.elca.el4j.maven.logging.console;
 import ch.elca.el4j.maven.logging.AbstractFormattingLogger;
 
 /**
- * Logger that outputs ansi coloured text. <script
+ * Logger that outputs ansi colored text. <script
  * type="text/javascript">printFileStatus ("$URL:
  * https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/etc/eclipse/codeTemplates.xml
  * $", "$Revision: 2754 $", "$Date: 2008-03-04 09:04:15 +0100 (Tue, 04 Mar 2008)
@@ -27,7 +27,7 @@ import ch.elca.el4j.maven.logging.AbstractFormattingLogger;
  * 
  * @author your David Bernhard (DBD)
  */
-public class ColourLogger extends AbstractFormattingLogger {
+public class ColorLogger extends AbstractFormattingLogger {
 
     /**
      * Delegating constructor.
@@ -37,12 +37,12 @@ public class ColourLogger extends AbstractFormattingLogger {
      * @param name
      *            The logger name.
      */
-    public ColourLogger(int threshold, String name) {
+    public ColorLogger(int threshold, String name) {
         super(threshold, name);
     }
 
     /**
-     * Helper class to handle ansi colouring.
+     * Helper class to handle ansi coloring.
      */
     static abstract class Ansi {
         
@@ -53,7 +53,7 @@ public class ColourLogger extends AbstractFormattingLogger {
             
         }
         
-        // Constants for colours.
+        // Constants for colors.
         static final int RESET = 0;
 
         static final int FGBLACK = 30;
