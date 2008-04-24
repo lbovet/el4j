@@ -24,9 +24,16 @@
 		<module>server</module>
 		<module>thin-client</module>
 		<module>standalone-client</module>
-		<!-- <module>webstart</module> --> <!-- disabled to reduce build duration -->
 	</modules>
 	<profiles>
+		<profile>
+			<id>auto</id>
+			<!-- disabled by default to reduce build duration -->
+			<modules>
+				<module>webstart</module>
+			</modules>
+		</profile>
+		
 		<!-- DB -->
 		<profile>
 			<id>db2</id>
