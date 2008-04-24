@@ -24,7 +24,7 @@
 		<module>server</module>
 		<module>thin-client</module>
 		<module>standalone-client</module>
-		<module>webstart</module>
+		<!-- <module>webstart</module> --> <!-- disabled to reduce build duration -->
 	</modules>
 	<profiles>
 		<!-- DB -->
