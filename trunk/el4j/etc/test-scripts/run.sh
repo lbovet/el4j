@@ -1,5 +1,8 @@
 #!/bin/bash -e
 
+# Override username for oracle builds.
+ORACLE_SETTINGS="-Doverride.db.username=leaf2"
+
 if [ $# -lt 1 ] ; then
 	echo "No profile specified."
 	exit 0
@@ -9,7 +12,7 @@ case $1 in
 	"external_nightly")
 		cd external
 		svn up
-		mvn clean install -fae -B -Pauto,weblogic10x,oracle $2
+		mvn clean install -fae -B -Pauto,weblogic10x,oracle ${ORACLE_SETTINGS} $2
 		mvn -f site/pom.xml site-deploy $2
 		;;
 	"external_svn")
@@ -19,7 +22,7 @@ case $1 in
 	"internal_nightly")
 		cd internal
 		svn up
-		mvn clean install -fae -B -Pauto,weblogic10x,oracle $2
+		mvn clean install -fae -B -Pauto,weblogic10x,oracle ${ORACLE_SETTINGS} $2
 		mvn -f site/pom.xml site-deploy $2
 		cd ..
 		
@@ -36,8 +39,8 @@ case $1 in
 		mvn -f internal/pom.xml clean install -fae -B -Pauto,tomcat6x,db2 $2
 		;;
 	"release_weblogic")
-		mvn -f external/pom.xml clean install -fae -B -Pauto,weblogic10x,oracle $2
-		mvn -f internal/pom.xml clean install -fae -B -Pauto,weblogic10x,oracle $2
+		mvn -f external/pom.xml clean install -fae -B -Pauto,weblogic10x,oracle ${ORACLE_SETTINGS} $2
+		mvn -f internal/pom.xml clean install -fae -B -Pauto,weblogic10x,oracle ${ORACLE_SETTINGS} $2
 		;;
 	"release_website")
 		cd external/site
@@ -67,8 +70,8 @@ case $1 in
 		svn co -q $SVN_INTERNAL internal
 		;;
 	"weekly")
-		mvn -f external/pom.xml clean install -fae -B -Pauto,tomcat6x,oracle $2
-		mvn -f internal/pom.xml clean install -fae -B -Pauto,tomcat6x,oracle $2
+		mvn -f external/pom.xml clean install -fae -B -Pauto,tomcat6x,oracle ${ORACLE_SETTINGS} $2
+		mvn -f internal/pom.xml clean install -fae -B -Pauto,tomcat6x,oracle ${ORACLE_SETTINGS} $2
 		mvn -f external/pom.xml clean install -fae -B -Pauto,weblogic10x,db2 $2
 		mvn -f internal/pom.xml clean install -fae -B -Pauto,weblogic10x,db2 $2
 		;;
