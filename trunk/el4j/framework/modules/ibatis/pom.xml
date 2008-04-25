@@ -35,8 +35,18 @@
 		<!-- Third party tools -->
 		<dependency>
 			<groupId>org.apache.ibatis</groupId>
-			<artifactId>ibatis</artifactId>
-			<version>2.3.0</version>
+			<artifactId>ibatis-common</artifactId>
+			<version>el4j_20051223</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.ibatis</groupId>
+			<artifactId>ibatis-sqlmap</artifactId>
+			<version>el4j_20051223</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.ibatis</groupId>
+			<artifactId>ibatis-dao</artifactId>
+			<version>el4j_20051223</version>
 		</dependency>
 	</dependencies>
 </project>
