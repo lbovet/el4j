@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 # Override username for oracle builds.
-ORACLE_SETTINGS="-Doverride.db.username=leaf2"
+ORACLE_SETTINGS="-Doverride.db.username=leaf4"
 
 if [ $# -lt 1 ] ; then
 	echo "No profile specified."
