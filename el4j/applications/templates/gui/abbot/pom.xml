@@ -17,13 +17,10 @@
 	<description>Demo for testing with abbot.</description>
 
 	<dependencies>
-		
-		
 		<dependency>
 			<groupId>ch.elca.el4j.applications</groupId>
 			<artifactId>swing-demo-standalone-client</artifactId>
 		</dependency>
-		
 	</dependencies>
 
 	<build>
@@ -31,7 +28,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.4.2</version>
 				<configuration>
 					<skip>false</skip>
 				</configuration>
@@ -73,9 +69,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
-	</plugins>
-
+		</plugins>
 	</build>
-
 </project>
