@@ -1717,12 +1717,6 @@
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.applications</groupId>
-				<artifactId>keyword-dao</artifactId>
-				<version>${version.application-keyword}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>ch.elca.el4j.applications</groupId>
 				<artifactId>keyword-tests</artifactId>
 				<version>${version.application-keyword}</version>
 				<type>test-jar</type>
@@ -1733,12 +1727,6 @@
 			<dependency>
 				<groupId>ch.elca.el4j.applications</groupId>
 				<artifactId>refdb-service</artifactId>
-				<version>${version.application-refdb}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>ch.elca.el4j.applications</groupId>
-				<artifactId>refdb-dao</artifactId>
 				<version>${version.application-refdb}</version>
 				<type>jar</type>
 			</dependency>
