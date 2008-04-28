@@ -20,7 +20,6 @@
 	<name>EL4J application refdb</name>
 	<description>RefDb application of the EL4J framework.</description>
 	<modules>
-		<module>dao</module>
 		<module>service</module>
 		<module>tests</module>
 	</modules>

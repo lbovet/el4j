@@ -8,6 +8,10 @@
     <!-- $Date$ -->
     <!-- $Author$ -->
 
+	<!-- Allows to register DAOs. Automatically collects all GenericDaos from the application context -->		
+	<bean id="daoRegistry"
+		class="ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry" />
+	
     <bean id="keywordService"  
          class="ch.elca.el4j.apps.keyword.service.impl.DefaultKeywordService">
         <property name="daoRegistry">

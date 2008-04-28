@@ -21,12 +21,21 @@
 	<name>EL4J application keyword service</name>
 	<description>Service layer of the keyword application of the EL4J framework.</description>
 	<dependencies>
+		<!-- Dependency to hibernate due to hibernate annotations. -->
 		<dependency>
-			<groupId>ch.elca.el4j.applications</groupId>
-			<artifactId>keyword-dao</artifactId>
-			<version>${version.application-keyword}</version>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-hibernate</artifactId>
 			<type>jar</type>
 		</dependency>
-		
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-ibatis</artifactId>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-database</artifactId>
+			<type>jar</type>
+		</dependency>
 	</dependencies>
 </project>

@@ -23,11 +23,6 @@
 	<dependencies>
 		<dependency>
 			<groupId>ch.elca.el4j.applications</groupId>
-			<artifactId>refdb-dao</artifactId>
-			<type>jar</type>
-		</dependency>
-		<dependency>
-			<groupId>ch.elca.el4j.applications</groupId>
 			<artifactId>keyword-service</artifactId>
 			<type>jar</type>
 		</dependency>
