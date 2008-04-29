@@ -24,76 +24,75 @@
 	</description>
 	<build>
 		<plugins>
-			<!-- EL4J Database plugin to start and fill DB automatically -->
-			<plugin>
-				<groupId>ch.elca.el4j.maven.plugins</groupId>
-				<artifactId>maven-database-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>prepare</id>
-						<goals>
-							<goal>prepare</goal>
-						</goals>
-						<phase>pre-integration-test</phase>
-					</execution>
-					
-					<!-- Delete tables and stop Network Server -->
-					<execution>
-						<id>cleanUp</id>
-						<goals>
-							<goal>cleanUp</goal>
-						</goals>
-						<phase>post-integration-test</phase>
-					</execution>
-				</executions>
-			</plugin>
-
-			<!-- skip unit test run, tests to be executed during integration-test -->
+			<!-- This must be here so that when integration tests are off 
+			we still skip it. -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<skip>true</skip>
 				</configuration>
-				<executions>
-					<execution>
-						<id>surefire-it</id>
-						<phase>integration-test</phase>
-						<goals>
-							<goal>test</goal>
-						</goals>
-						<configuration>
-							<skip>false</skip>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
-	<dependencies>
-		<dependency>
-			<groupId>ch.elca.el4j.applications</groupId>
-			<artifactId>keyword-service</artifactId>
-			<type>jar</type>
-		</dependency>
-		<dependency>
-			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-env</artifactId>
-			<type>jar</type>
-		</dependency>
-		<dependency>
-			<groupId>com.p6spy</groupId>
-			<artifactId>p6spy</artifactId>
-			<type>jar</type>
-			<version>1.0</version>
-		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.oser</groupId>-->
-<!--			<artifactId>datadumper</artifactId>-->
-<!--			<version>0.9</version>-->
-<!--		</dependency>-->
-	</dependencies>
+	
+	<!-- Integration tests now in profile "integrationTests" so that we can
+		 deactivate them for faster builds. -->
 	<profiles>
+		<profile>
+			<id>integrationTests</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<!-- EL4J Database plugin to start and fill DB automatically -->
+					<plugin>
+						<groupId>ch.elca.el4j.maven.plugins</groupId>
+						<artifactId>maven-database-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>prepare</id>
+								<goals>
+									<goal>prepare</goal>
+								</goals>
+								<phase>pre-integration-test</phase>
+							</execution>
+							
+							<!-- Delete tables and stop Network Server -->
+							<execution>
+								<id>cleanUp</id>
+								<goals>
+									<goal>cleanUp</goal>
+								</goals>
+								<phase>post-integration-test</phase>
+							</execution>
+						</executions>
+					</plugin>
+
+					<!-- skip unit test run, tests to be executed during integration-test -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<skip>true</skip>
+						</configuration>
+						<executions>
+							<execution>
+								<id>surefire-it</id>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>test</goal>
+								</goals>
+								<configuration>
+									<skip>false</skip>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 		<!-- DB -->
 		<profile>
 			<id>db2</id>
@@ -120,4 +119,28 @@
 			</properties>
 		</profile>
 	</profiles>
+	
+	<dependencies>
+		<dependency>
+			<groupId>ch.elca.el4j.applications</groupId>
+			<artifactId>keyword-service</artifactId>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-env</artifactId>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>com.p6spy</groupId>
+			<artifactId>p6spy</artifactId>
+			<type>jar</type>
+			<version>1.0</version>
+		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.oser</groupId>-->
+<!--			<artifactId>datadumper</artifactId>-->
+<!--			<version>0.9</version>-->
+<!--		</dependency>-->
+	</dependencies>
 </project>
