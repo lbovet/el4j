@@ -53,7 +53,7 @@
 	<modules>
 		<module>modules</module>
 		<module>plugins</module>
-		<module>tests</module>
+		<!-- tests moved to profile integrationTests -->
 	</modules>
 	<dependencies>
 		<dependency>
@@ -126,6 +126,15 @@
 		</plugins>
 	</reporting>
 	<profiles>
+		<profile>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<id>integrationTests</id>
+			<modules>
+				<module>tests</module>
+			</modules>
+		</profile>
 		<profile>
 			<id>test.quiet</id>
 			<build>
