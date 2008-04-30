@@ -35,7 +35,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>ch.elca.el4j.applications</groupId>
-			<artifactId>refdb-service</artifactId>
+			<artifactId>refdb</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>ch.elca.el4j.applications</groupId>

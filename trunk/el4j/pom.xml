@@ -1711,31 +1711,17 @@
 			<!-- Keyword -->
 			<dependency>
 				<groupId>ch.elca.el4j.applications</groupId>
-				<artifactId>keyword-service</artifactId>
+				<artifactId>keyword</artifactId>
 				<version>${version.application-keyword}</version>
 				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>ch.elca.el4j.applications</groupId>
-				<artifactId>keyword-tests</artifactId>
-				<version>${version.application-keyword}</version>
-				<type>test-jar</type>
-				<scope>test</scope>
 			</dependency>
 
 			<!-- RefDb -->
 			<dependency>
 				<groupId>ch.elca.el4j.applications</groupId>
-				<artifactId>refdb-service</artifactId>
+				<artifactId>refdb</artifactId>
 				<version>${version.application-refdb}</version>
 				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>ch.elca.el4j.applications</groupId>
-				<artifactId>refdb-tests</artifactId>
-				<version>${version.application-refdb}</version>
-				<type>test-jar</type>
-				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.applications</groupId>
