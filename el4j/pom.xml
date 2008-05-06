@@ -1779,7 +1779,18 @@
 				<version>${version.application-refdb}</version>
 				<type>jar</type>
 			</dependency>
-
+			<dependency>
+				<groupId>ch.elca.el4j.applications</groupId>
+				<artifactId>swing-demo-secure-server-jar</artifactId>
+				<version>${version.application-refdb}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>ch.elca.el4j.applications</groupId>
+				<artifactId>swing-demo-secure-thin-client</artifactId>
+				<version>${version.application-refdb}</version>
+				<type>jar</type>
+			</dependency>
 
 
 			<!-- **************************** -->
