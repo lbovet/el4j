@@ -24,6 +24,8 @@
 		<module>server</module>
 		<module>thin-client</module>
 		<module>standalone-client</module>
+		<module>secure-server</module>
+		<module>secure-thin-client</module>
 	</modules>
 	<profiles>
 		<profile>

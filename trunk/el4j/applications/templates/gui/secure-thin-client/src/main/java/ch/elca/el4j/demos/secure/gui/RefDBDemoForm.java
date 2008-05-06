@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.demos.gui;
+package ch.elca.el4j.demos.secure.gui;
 
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
@@ -28,6 +28,9 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableModel;
 
+import org.acegisecurity.annotation.Secured;
+import org.acegisecurity.context.SecurityContextHolder;
+import org.acegisecurity.providers.UsernamePasswordAuthenticationToken;
 import org.bushe.swing.event.annotation.AnnotationProcessor;
 import org.bushe.swing.event.annotation.EventSubscriber;
 import org.jdesktop.application.Action;
@@ -36,43 +39,28 @@ import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.Binding;
 import org.jdesktop.swingbinding.validation.ValidatedProperty;
 
+import zappini.designgridlayout.DesignGridLayout;
+
 import com.silvermindsoftware.hitch.Binder;
 import com.silvermindsoftware.hitch.BinderManager;
+
+import cookxml.cookswing.CookSwing;
 
 import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.apps.refdb.service.ReferenceService;
+import ch.elca.el4j.demos.gui.ReferenceEditorForm;
 import ch.elca.el4j.demos.gui.events.ReferenceUpdateEvent;
 import ch.elca.el4j.demos.gui.events.SearchRefDBEvent;
 import ch.elca.el4j.demos.model.ServiceBroker;
 import ch.elca.el4j.gui.swing.GUIApplication;
-import ch.elca.el4j.gui.swing.cookswing.binding.Bindable;
-import ch.elca.el4j.gui.swing.events.OpenCloseEventHandler;
 import ch.elca.el4j.gui.swing.wrapper.AbstractWrapperFactory;
 import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.LikeCriteria;
 
-import cookxml.cookswing.CookSwing;
-
-import zappini.designgridlayout.DesignGridLayout;
-
-
 /**
- * This class demonstrates how to connect to the refDB.
- * 
- * A single click on a table entry highlight the whole row. A double click opens
- * a simple editor ({@link ReferenceEditorForm}) that allows editing the
- * selected entry.
- * 
- * Binding is done manually (see m_listBinding.getSpecialBinding).
- * This form listens to two events:
- * <ul>
- *   <li>ReferenceUpdateEvent: The editor commits the changes: we need to
- *       update the table.</li>
- *   <li>SearchRefDBEvent: A search on the refDB is requested: query the
- *       database and show the result</li>
- * </ul>
+ * This class demonstrates how to securely connect to the refDB.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -83,7 +71,17 @@ import zappini.designgridlayout.DesignGridLayout;
  *
  * @author Stefan Wismer (SWI)
  */
-public class RefDBDemoForm extends JPanel implements Bindable, OpenCloseEventHandler {
+public class RefDBDemoForm extends ch.elca.el4j.demos.gui.RefDBDemoForm {
+    
+    public RefDBDemoForm() {
+        // set security token
+        SecurityContextHolder.getContext().setAuthentication(
+            new UsernamePasswordAuthenticationToken("el4normal", "el4j"));
+        //SecurityContextHolder.getContext().setAuthentication(
+        //    new UsernamePasswordAuthenticationToken("el4super", "secret"));
+        init();
+    }
+    
     private JTextField m_name;
     private JTextField m_description;
     private JCheckBox m_incomplete;
@@ -119,7 +117,10 @@ public class RefDBDemoForm extends JPanel implements Bindable, OpenCloseEventHan
      */
     private final Binder m_binder = BinderManager.getBinder(this);
     
-    public RefDBDemoForm() {
+    /**
+     * Initialize the form.
+     */
+    protected void init() {
         loadModel();
         m_editor = new ReferenceEditorForm();
 
@@ -170,6 +171,8 @@ public class RefDBDemoForm extends JPanel implements Bindable, OpenCloseEventHan
                 m_refList.remove(selectedReference);
                 m_service.deleteReference(selectedReference.getKey());
             }
+            m_listBinding.unbind();
+            m_listBinding.bind();
         }
     }
 

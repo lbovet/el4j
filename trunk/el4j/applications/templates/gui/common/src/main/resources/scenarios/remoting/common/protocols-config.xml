@@ -25,6 +25,11 @@
         <property name="contextPath">
             <value>${jee-web.context}</value>
         </property>
-    </bean>    
+        <property name="implicitContextPassingRegistry">
+            <ref local="implicitContextPassingRegistry" />
+        </property>
+    </bean>
     
+    <bean id="implicitContextPassingRegistry"
+        class="ch.elca.el4j.core.contextpassing.DefaultImplicitContextPassingRegistry" />
 </beans>
