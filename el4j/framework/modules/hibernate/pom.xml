@@ -92,7 +92,8 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-commons-annotations</artifactId>
-			<version>3.3.0.ga</version>
+			<!-- version 3.3.0.ga is binary identical to 3.0.0.ga . This might be a deployment error, so we use 3.0.0.ga (to be sure) -->
+			<version>3.0.0.ga</version>
 		</dependency>
 		
 		<!-- Needed dependencies by hibernate core -->
