@@ -39,7 +39,7 @@
 		<dependency>
 			<groupId>org.acegisecurity</groupId>
 			<artifactId>acegi-security</artifactId>
-			<version>1.0.5</version>
+			<version>1.0.7</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.springframework</groupId>
@@ -62,7 +62,7 @@
 		<dependency>
 			<groupId>org.acegisecurity</groupId>
 			<artifactId>acegi-security-tiger</artifactId>
-			<version>1.0.5</version>
+			<version>1.0.7</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.springframework</groupId>
