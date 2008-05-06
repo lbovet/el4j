@@ -92,7 +92,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-commons-annotations</artifactId>
-			<version>3.0.0.ga</version>
+			<version>3.3.0.ga</version>
 		</dependency>
 		
 		<!-- Needed dependencies by hibernate core -->
