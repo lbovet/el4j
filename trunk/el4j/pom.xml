@@ -1243,6 +1243,16 @@
 			</properties>
 		</profile>
 		<profile>
+			<id>oracle10</id>
+			<properties>
+				<db.name>oracle</db.name>
+				<db.host>srv11645.elca.ch</db.host>
+				<db.port>1521</db.port>
+				<db.database-name>DL04</db.database-name>
+				<db.url>jdbc:oracle:thin:@${db.host}:${db.port}:${db.database-name}</db.url>
+			</properties>
+		</profile>
+		<profile>
 			<id>mysql</id>
 			<properties>
 				<db.name>mysql</db.name>
