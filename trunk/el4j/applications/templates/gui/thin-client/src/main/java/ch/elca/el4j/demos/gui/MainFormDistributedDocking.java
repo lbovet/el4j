@@ -47,11 +47,20 @@ public final class MainFormDistributedDocking {
 
             PlasticLookAndFeel.setPlasticTheme(new ExperienceBlue());
 
+            /*
             String[] applicationContextPaths = {
                 "classpath*:mandatory/*.xml",
                 "classpath*:mandatory/refdb/*.xml",
                 "classpath:scenarios/remoting/client/*.xml",
                 "classpath:scenarios/swing/demo/*.xml"};
+            */
+            
+            String[] applicationContextPaths = {
+                "classpath*:mandatory/*.xml",
+                "classpath*:BasicHibernateInfrastructureConfig.xml",
+                "classpath:thin-client.xml",
+                "classpath:SpecificConfig.xml"
+            };
             
             ModuleApplicationContextConfiguration contextConfig
                 = new ModuleApplicationContextConfiguration();

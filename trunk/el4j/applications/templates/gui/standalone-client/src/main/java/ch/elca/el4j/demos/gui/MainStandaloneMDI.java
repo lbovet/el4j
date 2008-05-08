@@ -26,8 +26,6 @@ import ch.elca.el4j.gui.swing.GUIApplication;
 import ch.elca.el4j.gui.swing.exceptions.Exceptions;
 import ch.elca.el4j.gui.swing.splash.ImageSplashScreen;
 
-
-
 // Checkstyle: UncommentedMain off
 
 /**
@@ -63,7 +61,8 @@ public final class MainStandaloneMDI {
             Exceptions.getInstance().addHandler(new ExampleExceptionHandler());
 
             PlasticLookAndFeel.setPlasticTheme(new ExperienceBlue());
-
+            
+            /* Simplified. (DBD) 
             String[] applicationContextPaths = {
                 "classpath*:mandatory/*.xml",
                 "classpath*:mandatory/refdb/*.xml",
@@ -72,12 +71,20 @@ public final class MainStandaloneMDI {
                 "classpath*:scenarios/dataaccess/hibernate/refdb/*.xml",
                 "classpath*:optional/interception/transactionJava5Annotations.xml",
                 "classpath:scenarios/swing/demo/*.xml"};
+            */
+
+            String[] applicationContextPaths = {
+                "classpath*:mandatory/*.xml",
+                "classpath*:BasicHibernateInfrastructureConfig.xml",
+                "classpath:thin-client.xml",
+                "classpath:SpecificConfig.xml"
+            }; 
             
             ModuleApplicationContextConfiguration contextConfig
                 = new ModuleApplicationContextConfiguration();
             
             contextConfig.setInclusiveConfigLocations(applicationContextPaths);
-
+            
             GUIApplication.launch(MainFormMDI.class, args, contextConfig);
 
         } finally {
