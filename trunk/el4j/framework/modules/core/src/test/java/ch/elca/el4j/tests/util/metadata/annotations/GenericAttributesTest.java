@@ -17,12 +17,14 @@
 
 package ch.elca.el4j.tests.util.metadata.annotations;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import org.junit.Test;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
-
-import junit.framework.TestCase;
 
 // Checkstyle: MagicNumber off
 
@@ -41,7 +43,7 @@ import junit.framework.TestCase;
  * 
  * @author Raphael Boog (RBO)
  */
-public class GenericAttributesTest extends TestCase {
+public class GenericAttributesTest {
     /**
      * Is the spring bean config location prefix for this test. 
      */
@@ -55,6 +57,7 @@ public class GenericAttributesTest extends TestCase {
      * calculates the result of a calculation which is only correct if the
      * interception worked correctly.
      */
+    @Test
     public void testInterceptorInjectedViaConstructor() {
 
         ApplicationContext ac = new ModuleApplicationContext(
@@ -78,6 +81,7 @@ public class GenericAttributesTest extends TestCase {
      * calculates the result of a calculation which is only correct if the
      * interception worked correctly.
      */
+    @Test
     public void testInterceptorInjectedViaSetter() {
 
         ApplicationContext ac = new ModuleApplicationContext(
@@ -100,6 +104,7 @@ public class GenericAttributesTest extends TestCase {
      * other tests. It calculates the result of a calculation which is only
      * correct if the interception worked correctly.
      */
+    @Test
     public void testConfiguredAttributeSource() {
 
         ApplicationContext ac = new ModuleApplicationContext(
@@ -124,6 +129,7 @@ public class GenericAttributesTest extends TestCase {
      * first. Therefore, in our case, "exampleInterceptorTwo" has to be the real
      * interceptor for the target method.
      */
+    @Test
     public void testTwoAdvisors() {
 
         ApplicationContext ac = new ModuleApplicationContext(
@@ -145,6 +151,7 @@ public class GenericAttributesTest extends TestCase {
      * GenericAttributeAdvisor, a class with declared attributes, but no
      * interceptor are defined. This test checks whether an exception is thrown.
      */
+    @Test
     public void testAdvisorWithNoInterceptor() {
         // Checkstyle: EmptyBlock off
         try {
@@ -163,6 +170,7 @@ public class GenericAttributesTest extends TestCase {
      * intercepting Attributes are defined. This test checks whether an
      * exception is thrown.
      */
+    @Test
     public void testAdvisorWithNoInterceptingAttributes() {
         // Checkstyle: EmptyBlock off
         try {
@@ -182,6 +190,7 @@ public class GenericAttributesTest extends TestCase {
      * method with an inner class parameter. This should test if methods which 
      * has inner classes as parameter as also intercepted.
      */
+    @Test
     public void testInterceptorInjectedViaConstructorInnerClassAsParameter() {
 
         ApplicationContext ac = new ModuleApplicationContext(

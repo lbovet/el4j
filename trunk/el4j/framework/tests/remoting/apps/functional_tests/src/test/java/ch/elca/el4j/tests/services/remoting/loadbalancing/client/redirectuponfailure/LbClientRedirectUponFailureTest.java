@@ -16,22 +16,16 @@
  */
 package ch.elca.el4j.tests.services.remoting.loadbalancing.client.redirectuponfailure;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Calendar;
-
-import javax.sql.DataSource;
-
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.remoting.RemoteAccessException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.UndeclaredThrowableException;
-
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailableRTException;
@@ -44,7 +38,7 @@ import ch.elca.el4j.tests.services.remoting.loadbalancing.common.BusinessObject;
  * 
  * @author Stefan Pleisch (SPL)
  */
-public class LbClientRedirectUponFailureTest extends TestCase {
+public class LbClientRedirectUponFailureTest {
     
     /** Define the server names and ports to connect to */
     private static final String ServerNameAndPort1 = "localhost:8091" ; 
@@ -64,6 +58,7 @@ public class LbClientRedirectUponFailureTest extends TestCase {
      * 
      * @see #THROW_IDEMPOTENTINVOCATION_EXCEPTION
      */
+    @Test
     public void testNextProtocol() {
         getLog().debug("Starting test 'testIdempotence'....");
         try {

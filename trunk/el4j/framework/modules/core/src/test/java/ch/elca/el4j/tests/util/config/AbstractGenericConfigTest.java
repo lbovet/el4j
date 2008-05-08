@@ -16,9 +16,11 @@
  */
 package ch.elca.el4j.tests.util.config;
 
-import ch.elca.el4j.util.config.GenericConfig;
+import static org.junit.Assert.assertTrue;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+
+import ch.elca.el4j.util.config.GenericConfig;
 
 //Checkstyle: MagicNumber off
 //Checkstyle: EmptyBlock off
@@ -35,8 +37,9 @@ import junit.framework.TestCase;
  *
  * @author Stefan Wismer (SWI)
  */
-public abstract class AbstractGenericConfigTest extends TestCase {
+public abstract class AbstractGenericConfigTest {
     /***/
+    @Test
     public void testGenericConfig() {
         GenericConfig config = getDefaultConfig();
         assertTrue(config.get("class").equals("DefaultConfig"));
@@ -45,6 +48,7 @@ public abstract class AbstractGenericConfigTest extends TestCase {
     }
     
     /***/
+    @Test
     public void testSpecificConfig() {
         GenericConfig config = getSpecificConfig();
         assertTrue(config.get("class").equals("SpecificConfig"));
@@ -54,6 +58,7 @@ public abstract class AbstractGenericConfigTest extends TestCase {
     }
     
     /***/
+    @Test
     public void testMoreSpecificConfig() {
         GenericConfig config = getMoreSpecificConfig();
         assertTrue(config.get("class").equals("MoreSpecificConfig"));

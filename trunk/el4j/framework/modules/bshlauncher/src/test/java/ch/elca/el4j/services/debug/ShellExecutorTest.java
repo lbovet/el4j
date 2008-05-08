@@ -1,15 +1,16 @@
 package ch.elca.el4j.services.debug;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Properties;
 
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-import junit.framework.TestCase;
+public class ShellExecutorTest {
 
-public class ShellExecutorTest extends TestCase {
-
-    
+    @Test
     public void testSimpleEval () {
         ShellExecutor se = new ShellExecutorImpl();
         
@@ -18,6 +19,7 @@ public class ShellExecutorTest extends TestCase {
         System.out.println("result:"+result);
     }
     
+    @Test
     public void testBshCommandLauncher() {
         Properties bkup = System.getProperties();
         
@@ -31,6 +33,7 @@ public class ShellExecutorTest extends TestCase {
         System.setProperties(bkup); // restore original system properties
     }
     
+    @Test
     public void testBshCommandLauncher2() {
         Properties bkup = System.getProperties();
         

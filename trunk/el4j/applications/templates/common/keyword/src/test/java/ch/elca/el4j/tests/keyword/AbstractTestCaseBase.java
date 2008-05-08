@@ -23,12 +23,12 @@ import javax.sql.DataSource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.After;
+import org.junit.Before;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
-
-import junit.framework.TestCase;
 
 /**
  * This class is a base class for tests in module <code>keyword-core</code>.
@@ -42,7 +42,7 @@ import junit.framework.TestCase;
  *
  * @author Martin Zeltner (MZE)
  */
-public abstract class AbstractTestCaseBase extends TestCase {
+public abstract class AbstractTestCaseBase {
     /**
      * Private logger.
      */
@@ -108,7 +108,8 @@ public abstract class AbstractTestCaseBase extends TestCase {
     /**
      * {@inheritDoc}
      */
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         Connection con = null;
         try {
             con = getDataSource().getConnection();
@@ -134,11 +135,14 @@ public abstract class AbstractTestCaseBase extends TestCase {
         }
     }
     
-    @Override
-    protected void tearDown() throws Exception {
+    /**
+     * Clean up after each test.
+     * @throws Exception
+     */
+    @After
+    public void tearDown() {
         if (m_applicationContext != null) {
             m_applicationContext.close();
         }
-        super.tearDown();
     }
 }

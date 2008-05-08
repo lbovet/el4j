@@ -17,18 +17,20 @@
 
 package ch.elca.el4j.tests.services.monitoring.jmx;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import javax.management.MBeanServer;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
-
-import junit.framework.TestCase;
 
 /**
  * JUnit Test Class for the JMX package.
@@ -55,7 +57,7 @@ import junit.framework.TestCase;
  * 
  * @author Raphael Boog (RBO)
  */
-public class JmxTest extends TestCase {
+public class JmxTest {
 
     /**
      * Private logger of this class.
@@ -96,6 +98,7 @@ public class JmxTest extends TestCase {
      *             The format of the String does not correspond to a valid
      *             ObjectName
      */
+    @Test
     public void testRegisteredMBeanWithTwoAppCxtsAndOneJmxInstance()
         throws MalformedObjectNameException {
 
@@ -150,6 +153,7 @@ public class JmxTest extends TestCase {
      *             The format of the string does not correspond to a valid
      *             ObjectName
      */
+    @Test
     public void testRegisteredMBeanWithTwoAppCxtsAndTwoMBeanServers()
         throws MalformedObjectNameException {
 

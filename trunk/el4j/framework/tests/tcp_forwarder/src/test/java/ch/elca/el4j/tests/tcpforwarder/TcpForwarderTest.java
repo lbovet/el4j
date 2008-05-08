@@ -16,10 +16,15 @@
  */
 package ch.elca.el4j.tests.tcpforwarder;
 
+import static org.junit.Assert.fail;
+
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -29,8 +34,6 @@ import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
 import ch.elca.el4j.services.tcpforwarder.TcpForwarder;
 import ch.elca.el4j.tests.tcpforwarder.dom.Name;
 import ch.elca.el4j.util.env.EnvPropertiesUtils;
-
-import junit.framework.TestCase;
 
 /**
  * 
@@ -50,7 +53,7 @@ import junit.framework.TestCase;
  *
  * @author David Stefan (DST)
  */
-public class TcpForwarderTest extends TestCase {
+public class TcpForwarderTest {
 
     /**
      * Delay between the single test steps (in milliseconds).
@@ -116,8 +119,8 @@ public class TcpForwarderTest extends TestCase {
     /**
      * {@inheritDoc}
      */
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() {
         String dbName 
             = EnvPropertiesUtils.getEnvProperties().getProperty("db.name");
         m_isDB2 = dbName.equals("db2");
@@ -137,14 +140,14 @@ public class TcpForwarderTest extends TestCase {
     /**
      * {@inheritDoc}
      */
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         if (m_forwarder != null) {
             m_forwarder.unplug();
         }
         if (m_appContext != null) {
             m_appContext.close();
         }
-        super.tearDown();
     }
     
     /**
@@ -156,6 +159,7 @@ public class TcpForwarderTest extends TestCase {
      * 
      * @throws Exception
      */
+    @Test
     public void testForwarder() throws Exception {
         if (!m_isDB2) {
             return;
@@ -180,6 +184,7 @@ public class TcpForwarderTest extends TestCase {
      * This test tries to start Spring when there is no connection to a
      * database.
      */
+    @Test
     public void testSpringWithoutDBConnection() throws Exception {
         if (!m_isDB2) {
             return;

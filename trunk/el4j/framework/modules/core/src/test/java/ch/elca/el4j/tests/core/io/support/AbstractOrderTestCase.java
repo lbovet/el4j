@@ -17,7 +17,9 @@
 
 package ch.elca.el4j.tests.core.io.support;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 /**
  * Abstract test case for order tests.
@@ -31,7 +33,7 @@ import junit.framework.TestCase;
  *
  * @author Andreas Bur (ABU)
  */
-public abstract class AbstractOrderTestCase extends TestCase {
+public abstract class AbstractOrderTestCase {
     /**
      * Hide default constructor to solve issue with the EL4Ant junit plugin.
      */

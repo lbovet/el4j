@@ -16,17 +16,22 @@
  */
 package ch.elca.el4j.tests.util.collections;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.AbstractList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.junit.Test;
+
 import ch.elca.el4j.util.codingsupport.CollectionUtils;
 import ch.elca.el4j.util.collections.FilteredList;
 import ch.elca.el4j.util.collections.helpers.Filter;
 import ch.elca.el4j.util.collections.impl.ExtendedArrayList;
-
-import junit.framework.TestCase;
 
 // Checkstyle: MagicNumber off
 // Checkstyle: EmptyBlock off
@@ -43,7 +48,7 @@ import junit.framework.TestCase;
  *
  * @author Adrian Moos (AMS)
  */
-public class FilteredListTest extends TestCase {
+public class FilteredListTest {
     /** The list of non-negative integers. */
     static List<Integer> s_integers = new AbstractList<Integer>() {
         @Override
@@ -72,6 +77,7 @@ public class FilteredListTest extends TestCase {
 
 
     /***/
+    @Test
     public void testAdd() {
         try {
             getPrimes(10).add(1);
@@ -82,6 +88,7 @@ public class FilteredListTest extends TestCase {
     }
     
     /***/
+    @Test
     public void testRemove() {
         try {
             getPrimes(10).remove(1);
@@ -92,6 +99,7 @@ public class FilteredListTest extends TestCase {
     }
     
     /***/
+    @Test
     public void testIterator() {
         Iterator<Integer> odd = CollectionUtils.filtered(
             s_integers, 
@@ -105,6 +113,7 @@ public class FilteredListTest extends TestCase {
     }
     
     /***/
+    @Test
     public void testIteratorLayered() {
         Iterator<Integer> iter = getPrimes(10).iterator();
         for (Integer ex : m_expectedPrimes) {
@@ -113,6 +122,7 @@ public class FilteredListTest extends TestCase {
     }
     
     /***/
+    @Test
     public void testListIterator() {
         ListIterator<Integer> it = getPrimes(10).listIterator();
         assertTrue(it.hasNext());
@@ -133,6 +143,7 @@ public class FilteredListTest extends TestCase {
     }
     
     /***/
+    @Test
     public void testListIteratorIndex() {
         ListIterator<Integer> it = s_integers.listIterator(10);
         ListIterator<Integer> odd = CollectionUtils.filtered(
@@ -144,6 +155,7 @@ public class FilteredListTest extends TestCase {
     }
     
     /***/
+    @Test
     public void testSize() {
         assertEquals(
             m_expectedPrimes.size() - 1,

@@ -16,10 +16,15 @@
  */
 package ch.elca.el4j.tests.keyword.dao;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.Test;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -30,7 +35,6 @@ import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.LikeCriteria;
 import ch.elca.el4j.tests.keyword.AbstractTestCaseBase;
-
 
 // Checkstyle: MagicNumber off
 
@@ -82,6 +86,7 @@ public abstract class AbstractKeywordDaoTest
     /**
      * This test inserts different keywords.
      */
+    @Test
     public void testInsertKeywords() {
         KeywordDao dao = getKeywordDao();
         Keyword keyword = new Keyword();
@@ -145,6 +150,7 @@ public abstract class AbstractKeywordDaoTest
     /**
      * This test inserts a keyword and looks up for it by keyword's primary key.
      */
+    @Test
     public void testGetKeywordById() {
         KeywordDao dao = getKeywordDao();
         Keyword keyword = new Keyword();
@@ -159,6 +165,7 @@ public abstract class AbstractKeywordDaoTest
     /**
      * This test inserts a keyword and looks up for it by its name.
      */
+    @Test
     public void testGetKeywordByName() {
         KeywordDao dao = getKeywordDao();
         Keyword keyword = new Keyword();
@@ -175,6 +182,7 @@ public abstract class AbstractKeywordDaoTest
      * database. We test the number of keywords, which should be two, and if
      * they really are the keywords which have been added.
      */
+    @Test
     public void testFindAllKeywords() {
         KeywordDao dao = getKeywordDao();
         Keyword keyword1 = new Keyword();
@@ -202,6 +210,7 @@ public abstract class AbstractKeywordDaoTest
      * This test inserts a keyword and removes it. Afterwards, the keyword
      * should not be reachable any more.
      */
+    @Test
     public void testDeleteKeyword() {
         KeywordDao dao = getKeywordDao();
         Keyword keyword = new Keyword();
@@ -228,6 +237,7 @@ public abstract class AbstractKeywordDaoTest
      * This test deletes a keyword which is given by its ID. Afterwards, the
      * keyword should not be reachable any more.
      */
+    @Test
     public void testDeleteKeywordById() {
         KeywordDao dao = getKeywordDao();
         Keyword keyword = new Keyword();
@@ -256,6 +266,7 @@ public abstract class AbstractKeywordDaoTest
      * <code>OptimisticLockingFailureException</code>. The same should
      * happen if she attempts to delete the keyword.
      */
+    @Test
     public void testInsertModifyDeleteKeywordByTwoPeople() {
         KeywordDao dao = getKeywordDao();
         Keyword keyword = new Keyword();
@@ -288,6 +299,7 @@ public abstract class AbstractKeywordDaoTest
     /**
      * This test inserts five keywords and performs different searchs on it.
      */
+    @Test
     public void testSearchKeywords() {
         KeywordDao dao = getKeywordDao();
         Keyword keyword = new Keyword();
@@ -364,6 +376,7 @@ public abstract class AbstractKeywordDaoTest
      * Afterwards, the keyword is refreshed in order to synchronize its state 
      * with the database.
      */
+    @Test
     public void testRefreshKeyword() {
         KeywordDao dao = getKeywordDao();
         Keyword keyword = new Keyword();

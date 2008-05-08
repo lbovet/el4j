@@ -17,12 +17,15 @@
 
 package ch.elca.el4j.tests.core.contextpassing;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import ch.elca.el4j.core.contextpassing.DefaultImplicitContextPassingRegistry;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+import ch.elca.el4j.core.contextpassing.DefaultImplicitContextPassingRegistry;
 
 /**
  * This class tests the context passing classes.
@@ -36,12 +39,13 @@ import junit.framework.TestCase;
  * 
  * @author Martin Zeltner (MZE)
  */
-public class ContextPassingTest extends TestCase {
+public class ContextPassingTest {
 
     /**
      * This test simulates implicit context passing with two registered passers
      * on server and client side.
      */
+    @Test
     public void testTwoRegisteredPassersOnBothSides() {
         ImplicitContextPasserA passerClientA = new ImplicitContextPasserA();
         ImplicitContextPasserB passerClientB = new ImplicitContextPasserB();
@@ -76,6 +80,7 @@ public class ContextPassingTest extends TestCase {
      * This test simulates implicit context passing with two registered passers
      * on client and only one on server side.
      */
+    @Test
     public void testTwoRegisteredPassersOnClientSideAndOneOnServerSide() {
         ImplicitContextPasserA passerClientA = new ImplicitContextPasserA();
         ImplicitContextPasserB passerClientB = new ImplicitContextPasserB();
@@ -110,6 +115,7 @@ public class ContextPassingTest extends TestCase {
      * This test simulates implicit context passing with one registered passer
      * on client and two on server side.
      */
+    @Test
     public void testOneRegisteredPasserOnClientSideAndTwoOnServerSide() {
         ImplicitContextPasserA passerClientA = new ImplicitContextPasserA();
         ImplicitContextPasserB passerClientB = new ImplicitContextPasserB();
@@ -144,6 +150,7 @@ public class ContextPassingTest extends TestCase {
      * This test uses the <code>DefaultImplicitContextPassingRegistry</code>
      * without any registered passers.
      */
+    @Test
     public void testDefaultImplicitContextPassingRegistryStandalone() {
         ImplicitContextPasserA passerClientA = new ImplicitContextPasserA();
         ImplicitContextPasserB passerClientB = new ImplicitContextPasserB();

@@ -17,13 +17,15 @@
 
 package ch.elca.el4j.tests.services.exceptionhandler;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.exceptionhandler.ContextExceptionHandlerInterceptor;
 import ch.elca.el4j.services.exceptionhandler.MissingContextException;
-
-import junit.framework.TestCase;
 
 /**
  * This class tests the context exception handler.
@@ -37,7 +39,7 @@ import junit.framework.TestCase;
  *
  * @author Andreas Bur (ABU)
  */
-public class ContextExceptionHandlerTest extends TestCase {
+public class ContextExceptionHandlerTest{
 
     /** The application context. */
     private ApplicationContext m_appContext;
@@ -60,6 +62,7 @@ public class ContextExceptionHandlerTest extends TestCase {
      * a dialogue, then a log entry with stack trace and finally, again a
      * dialogue is printed to the standard out.
      */
+    @Test
     public void testContextSemantics() {
         ContextExceptionHandlerInterceptor.setContext("gui");
         step(1, 1, 0);
@@ -71,6 +74,7 @@ public class ContextExceptionHandlerTest extends TestCase {
     /**
      * Tests whether the situation with a missing context is handled correclty.
      */
+    @Test
     public void testMissingContext() {
         ContextExceptionHandlerInterceptor.setContext(null);
         // Checkstyle: EmptyBlock off

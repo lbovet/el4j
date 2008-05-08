@@ -16,13 +16,16 @@
  */
 package ch.elca.el4j.tests.services.persistence.generic;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.HashSet;
 import java.util.Set;
 
+import org.junit.Test;
+
 import ch.elca.el4j.services.persistence.generic.primarykey.PrimaryKeyGenerator;
 import ch.elca.el4j.services.persistence.generic.primarykey.UuidPrimaryKeyGenerator;
-
-import junit.framework.TestCase;
 
 // Checkstyle: MagicNumber off
 
@@ -38,10 +41,11 @@ import junit.framework.TestCase;
  * 
  * @author Jacques-Olivier Haenni (JOH)
  */
-public class UuidPrimaryKeyGeneratorTest extends TestCase {
+public class UuidPrimaryKeyGeneratorTest {
     /**
      * Tests the key size.
      */
+    @Test
     public void testKeySize() {
         String key = getPrimaryKeyGenerator().getPrimaryKey();
         assertEquals("The size of the PK is not correct.", 32, key.length());
@@ -50,6 +54,7 @@ public class UuidPrimaryKeyGeneratorTest extends TestCase {
     /**
      * Tests whether generated keys are unique.
      */
+    @Test
     public void testKeyUnicity() {
         PrimaryKeyGenerator pkg = getPrimaryKeyGenerator();
         Set<String> set = new HashSet<String>();
@@ -64,6 +69,7 @@ public class UuidPrimaryKeyGeneratorTest extends TestCase {
      * Checks the keys' format.
      *
      */
+    @Test
     public void testKeyFormat() {
         PrimaryKeyGenerator pkg = getPrimaryKeyGenerator();
         int count = 2000;

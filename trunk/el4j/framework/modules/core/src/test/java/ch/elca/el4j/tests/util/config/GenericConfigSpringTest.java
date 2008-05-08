@@ -16,6 +16,8 @@
  */
 package ch.elca.el4j.tests.util.config;
 
+import static org.junit.Assert.assertTrue;
+
 import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;

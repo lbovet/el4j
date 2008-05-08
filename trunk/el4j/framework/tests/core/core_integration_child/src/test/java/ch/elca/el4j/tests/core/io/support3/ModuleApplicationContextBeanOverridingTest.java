@@ -16,12 +16,14 @@
  */
 package ch.elca.el4j.tests.core.io.support3;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.tests.core.io.support.helper.Employee;
-
-import junit.framework.TestCase;
 
 /**
  * Tests the bean definition overriding behavior of the module application
@@ -36,7 +38,7 @@ import junit.framework.TestCase;
  *
  * @author Martin Zeltner (MZE)
  */
-public class ModuleApplicationContextBeanOverridingTest extends TestCase {
+public class ModuleApplicationContextBeanOverridingTest {
     /**
      * Config location prefix.
      */
@@ -52,6 +54,7 @@ public class ModuleApplicationContextBeanOverridingTest extends TestCase {
      * Tests bean overriding by using a config location with a wildcard and
      * not including outer resources.
      */
+    @Test
     public void testConfigLocationWithWildcardWithoutOuterResources() {
         boolean mergeWithOuterResources = false;
         ApplicationContext appContext = new ModuleApplicationContext(
@@ -67,6 +70,7 @@ public class ModuleApplicationContextBeanOverridingTest extends TestCase {
      * Tests bean overriding by using a config location with a wildcard and
      * including outer resources. The outer resources are the most specific.
      */
+    @Test
     public void 
     testConfigLocationWithWildcardWithOuterResourcesAsMostSpecific() {
         boolean mergeWithOuterResources = true;
@@ -87,6 +91,7 @@ public class ModuleApplicationContextBeanOverridingTest extends TestCase {
      * without outer resources. The least specific resources are the most
      * important ones.
      */
+    @Test
     public void 
     testConfigLocationWithWildcardWithoutOuterResourcesAndLeastSpecifics() {
         boolean mergeWithOuterResources = false;
@@ -106,6 +111,7 @@ public class ModuleApplicationContextBeanOverridingTest extends TestCase {
      * Tests bean overriding by using a config location with a wildcard and
      * including outer resources. The outer resources are the least specific.
      */
+    @Test
     public void 
     testConfigLocationWithWildcardWithOuterResourcesAsLeastSpecific() {
         boolean mergeWithOuterResources = true;
@@ -125,6 +131,7 @@ public class ModuleApplicationContextBeanOverridingTest extends TestCase {
      * Tests bean overriding by using a config location with a wildcard and
      * including outer resources.
      */
+    @Test
     public void testStrictConfigLocationOrder() {
         boolean mergeWithOuterResources = true;
         ApplicationContext appContext = new ModuleApplicationContext(

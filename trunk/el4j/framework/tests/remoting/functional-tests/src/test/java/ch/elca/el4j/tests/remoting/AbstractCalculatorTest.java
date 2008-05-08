@@ -16,15 +16,18 @@
  */
 package ch.elca.el4j.tests.remoting;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.tests.remoting.service.Calculator;
 import ch.elca.el4j.tests.remoting.service.CalculatorException;
 import ch.elca.el4j.tests.remoting.service.CalculatorOperation;
-
-import junit.framework.TestCase;
 
 /**
  * This class is a test for the calculator.
@@ -39,7 +42,7 @@ import junit.framework.TestCase;
  * @author Waraich Rashid (RWA)
  */
 
-public abstract class AbstractCalculatorTest extends TestCase {
+public abstract class AbstractCalculatorTest {
     /**
      * Private logger.
      */
@@ -54,6 +57,7 @@ public abstract class AbstractCalculatorTest extends TestCase {
     /**
      * {@inheritDoc}
      */
+    @Before
     public void setUp() {
         ApplicationContext appContext = getContext();
         m_calc = (Calculator) appContext.getBean("calculator");
@@ -68,6 +72,7 @@ public abstract class AbstractCalculatorTest extends TestCase {
     /**
      * This test tests the area calculation method.
      */
+    @Test
     public void testAreaCalculation() {
         final double a = 2.3;
         final double b = 5.7;
@@ -81,6 +86,7 @@ public abstract class AbstractCalculatorTest extends TestCase {
      * This test tests the exception handling.
      * @throws Exception
      */
+    @Test
     public void testExceptionBehaviour() {
         try {
             m_calc.throwMeAnException();
@@ -93,14 +99,15 @@ public abstract class AbstractCalculatorTest extends TestCase {
     /**
      * Tests if the protocol is able to handle enumerations.
      */
+    @Test
     public void testAbilityToHandleEnumerations() {
         // Checkstyle: MagicNumber off
         double result
             = m_calc.calculate(1.2, 2.5, CalculatorOperation.ADDITION);
-        assertEquals(3.7, result);
+        assertEquals(3.7, result, 0.1);
         result
             = m_calc.calculate(1.2, 2.5, CalculatorOperation.SUBTRACTION);
-        assertEquals(-1.3, result);
+        assertEquals(-1.3, result, 0.1);
         //Checkstyle: MagicNumber on
     }
 }

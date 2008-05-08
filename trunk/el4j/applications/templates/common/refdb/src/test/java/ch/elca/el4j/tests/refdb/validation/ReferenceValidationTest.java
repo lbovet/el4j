@@ -16,16 +16,17 @@
  */
 package ch.elca.el4j.tests.refdb.validation;
 
+import static org.junit.Assert.assertEquals;
+
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
 import org.hibernate.validator.ClassValidator;
 import org.hibernate.validator.InvalidValue;
+import org.junit.Test;
 
 import ch.elca.el4j.apps.refdb.dom.Reference;
-
-import junit.framework.TestCase;
 
 //Checkstyle: MagicNumber off
 
@@ -43,7 +44,7 @@ import junit.framework.TestCase;
  *
  * @author Alex Mathey (AMA)
  */
-public class ReferenceValidationTest extends TestCase {
+public class ReferenceValidationTest {
 
     /**
      * This test creates a reference which has a document date which is a later
@@ -51,6 +52,7 @@ public class ReferenceValidationTest extends TestCase {
      * should return one invalid value, since the constraint about the dates has
      * been violated. 
      */
+    @Test
     public void testValidate() {
         Reference reference = new Reference();
         reference.setName("Java");

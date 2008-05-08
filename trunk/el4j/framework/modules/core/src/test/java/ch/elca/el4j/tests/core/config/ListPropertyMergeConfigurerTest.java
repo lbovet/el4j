@@ -17,13 +17,14 @@
 
 package ch.elca.el4j.tests.core.config;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import org.junit.Test;
 import org.springframework.beans.factory.BeanInitializationException;
-import org.springframework.beans.factory.config.TypedStringValue;
 import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
-
-import junit.framework.TestCase;
 
 /**
  * JUnit test class for the ListPropertyMergeConfigurer.
@@ -37,12 +38,13 @@ import junit.framework.TestCase;
  * 
  * @author Raphael Boog (RBO)
  */
-public class ListPropertyMergeConfigurerTest extends TestCase {
+public class ListPropertyMergeConfigurerTest {
 
     /**
      * This test adds a value from one location to a list property which is
      * empty and checks if the value is set correctly.
      */
+    @Test
     public void testAddValuesFromOneLocationToEmptyList() {
         ApplicationContext ac = new ModuleApplicationContext(
                 "classpath:scenarios/core/config/" 
@@ -63,6 +65,7 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
      * contains one value and checks if the values are set correctly.
      *  
      */
+    @Test
     public void testAddValuesFromOneLocationToNonEmptyList() {
         ApplicationContext ac = new ModuleApplicationContext(
                 "classpath:scenarios/core/config/"
@@ -87,6 +90,7 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
      * already contains a value and checks if the values are set correctly.
      *  
      */
+    @Test
     public void testAddValuesFromOneLocationWithTwoListValuesToNonEmptyList() {
         ApplicationContext ac = new ModuleApplicationContext(
                 "classpath:scenarios/core/config/"
@@ -117,6 +121,7 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
      * file.
      *  
      */
+    @Test
     public void testAddValuesFromTwoLocationsToNonEmptyList() {
         ApplicationContext ac = new ModuleApplicationContext(
                 "classpath:scenarios/core/config/"
@@ -148,6 +153,7 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
      * each list) and checks if the values are set correctly.
      *  
      */
+    @Test
     public void testAddValuesFromOneLocationToTwoLists() {
         ApplicationContext ac = new ModuleApplicationContext(
                 "classpath:scenarios/core/config/" 
@@ -181,6 +187,7 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
      * property. Lower values are processed first.
      *  
      */
+    @Test
     public void testAddValuesThenOverrideThenAddValue() {
         ApplicationContext ac = new ModuleApplicationContext(
                 "classpath:scenarios/core/config/" 
@@ -204,6 +211,7 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
      * are set correctly and no errors are thrown.
      *  
      */
+    @Test
     public void testAddValuesFromEmptyPropertyFile() {
         ApplicationContext ac = new ModuleApplicationContext(
                 "classpath:scenarios/core/config/" 
@@ -223,6 +231,7 @@ public class ListPropertyMergeConfigurerTest extends TestCase {
      * BeanInitializationException is thrown.
      *  
      */
+    @Test
     public void testAddValuesToUndefinedBean() {
         // Checkstyle: EmptyBlock off
         try {

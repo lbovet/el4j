@@ -17,6 +17,9 @@
  */
 package ch.elca.el4j.tests.keyword.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -24,6 +27,7 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.Test;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
@@ -97,6 +101,7 @@ public abstract class AbstractKeywordServiceTest extends AbstractTestCaseBase {
      * This test inserts two keywords and removes them using the removeKeywords
      * method. Afterwards, they should not be reachable any more.
      */
+    @Test
     public void testInsertRemoveKeywords() {
         KeywordService service = getKeywordService();
         KeywordDao dao = getKeywordDao();
@@ -135,6 +140,7 @@ public abstract class AbstractKeywordServiceTest extends AbstractTestCaseBase {
         }
     }
     
+    @Test
     public void testInsertRemoveKeywordsFailing() {
         KeywordService service = getKeywordService();
         KeywordDao dao = getKeywordDao();

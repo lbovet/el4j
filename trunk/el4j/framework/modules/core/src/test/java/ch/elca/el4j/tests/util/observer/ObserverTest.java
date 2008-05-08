@@ -16,12 +16,15 @@
  */
 package ch.elca.el4j.tests.util.observer;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
+import org.junit.Test;
+
 import ch.elca.el4j.util.observer.ValueObserver;
 import ch.elca.el4j.util.observer.impl.Computable;
 import ch.elca.el4j.util.observer.impl.LiveValue;
 import ch.elca.el4j.util.observer.impl.SettableObservableValue;
-
-import junit.framework.TestCase;
 
 /**
  * An observer test.
@@ -35,7 +38,7 @@ import junit.framework.TestCase;
  *
  * @author Adrian Moos (AMS)
  */
-public class ObserverTest extends TestCase implements ValueObserver<Boolean> {
+public class ObserverTest implements ValueObserver<Boolean> {
     /** the inputs. */
     SettableObservableValue<Boolean> m_a, m_b, m_c;
     
@@ -51,8 +54,8 @@ public class ObserverTest extends TestCase implements ValueObserver<Boolean> {
     /**
      * {@inheritDoc}
      */
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         m_a = new SettableObservableValue<Boolean>(false);
         m_b = new SettableObservableValue<Boolean>(false);
         m_c = new SettableObservableValue<Boolean>(false);
@@ -84,6 +87,7 @@ public class ObserverTest extends TestCase implements ValueObserver<Boolean> {
     }
     
     /** tests subscription. */
+    @Test
     public void testSubscribe() {
         assertEquals(0, m_notified);
         m_g.subscribe(this);
@@ -91,12 +95,14 @@ public class ObserverTest extends TestCase implements ValueObserver<Boolean> {
     }
     
     /** tests silent subscription. */
+    @Test
     public void testSilentSubscribe() {
         m_g.subscribeSilently(this);
         assertEquals(m_notified, 0);
     }
 
     /** tests propagation of changes. */
+    @Test
     public void testInputChange() {
         m_g.subscribe(this);
         check();

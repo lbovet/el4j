@@ -16,13 +16,17 @@
  */
 package ch.elca.el4j.tests.util.observer;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import org.junit.Before;
+import org.junit.Test;
+
 import ch.elca.el4j.util.observer.ObservableValue;
 import ch.elca.el4j.util.observer.ValueObserver;
 import ch.elca.el4j.util.observer.impl.Computable;
 import ch.elca.el4j.util.observer.impl.LiveValue;
 import ch.elca.el4j.util.observer.impl.SettableObservableValue;
-
-import junit.framework.TestCase;
 
 /**
  * Another test case for the observer package.
@@ -36,8 +40,7 @@ import junit.framework.TestCase;
  *
  * @author Adrian Moos (AMS)
  */
-public class AnotherObserverTest extends TestCase 
-                              implements ValueObserver<Integer> {
+public class AnotherObserverTest implements ValueObserver<Integer> {
     
     /** the size of this test. Must be in 1..32 */
     static final int SIZE = 30;
@@ -59,8 +62,8 @@ public class AnotherObserverTest extends TestCase
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         m_origin = new SettableObservableValue<Integer>(0);
 
         m_values = (ObservableValue<Integer>[]) new ObservableValue[SIZE];
@@ -102,6 +105,7 @@ public class AnotherObserverTest extends TestCase
     }
     
     /** tests update propagation. */
+    @Test
     public void testUpdate() {
         assertEquals("to do" , 0, m_notified);
 
@@ -118,6 +122,7 @@ public class AnotherObserverTest extends TestCase
     }
     
     /** tests unsubscription. */
+    @Test
     public void testUnsubscribe() {
         m_last.subscribe(new ValueObserver<Integer>() {
             public void changed(Integer newRef) {

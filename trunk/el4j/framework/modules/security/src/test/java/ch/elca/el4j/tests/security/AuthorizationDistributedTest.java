@@ -16,6 +16,9 @@
  */
 package ch.elca.el4j.tests.security;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import org.acegisecurity.AccessDeniedException;
 import org.acegisecurity.Authentication;
 import org.acegisecurity.AuthenticationCredentialsNotFoundException;
@@ -25,14 +28,15 @@ import org.acegisecurity.GrantedAuthorityImpl;
 import org.acegisecurity.providers.TestingAuthenticationToken;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.security.authentication.AuthenticationService;
 import ch.elca.el4j.tests.security.sample.SampleService;
 import ch.elca.el4j.tests.security.server.AuthorizationServer;
-
-import junit.framework.TestCase;
 
 // Checkstyle: EmptyBlock off
 // Checkstyle: MagicNumber off
@@ -53,7 +57,7 @@ import junit.framework.TestCase;
  * 
  * @author Raphael Boog (RBO)
  */
-public class AuthorizationDistributedTest extends TestCase {
+public class AuthorizationDistributedTest {
     /**
      * Private logger.
      */
@@ -95,23 +99,23 @@ public class AuthorizationDistributedTest extends TestCase {
    /**
      * {@inheritDoc}
      */
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         s_logger.debug("Starting server.");
         AuthorizationServer.main(m_configLocationsServer);
         s_logger.debug("Server started. Loading client context.");
 
         m_ac = new ModuleApplicationContext(m_configLocationsClient, false);
         s_logger.debug("Client context loaded.");
-        super.setUp();
     }
     
     /**
      * {@inheritDoc}
      */
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         AuthorizationServer.close();
         m_ac.close();
-        super.tearDown();
     }
     
     /**
@@ -120,6 +124,7 @@ public class AuthorizationDistributedTest extends TestCase {
      * @throws Exception
      *             If something.
      */
+    @Test
     public void testMethodCallWithoutLogin() throws Exception {
         try {
             getSampleService().addOne(1234);
@@ -136,6 +141,7 @@ public class AuthorizationDistributedTest extends TestCase {
      * 
      * @throws Exception If something.
      */
+    @Test
     public void testCorrectAuthorization() throws Exception {
         createSecureContext("server", "server", METHOD_ACCESS_ROLE);
         int result = getSampleService().addOne(1234);
@@ -149,6 +155,7 @@ public class AuthorizationDistributedTest extends TestCase {
      * 
      * @throws Exception If something.
      */
+    @Test
     public void testCorrectAuthorizationAfterLogoutNoAccess() throws Exception {
         createSecureContext("server", "server", METHOD_ACCESS_ROLE);
         int result = getSampleService().addOne(1234);
@@ -171,6 +178,7 @@ public class AuthorizationDistributedTest extends TestCase {
      * 
      * @throws Exception If something.
      */
+    @Test
     public void testFailedAuthorization() throws Exception {
         createSecureContext("test4", "test4", "ROLE_NO_PERMISSION");
 
@@ -188,6 +196,7 @@ public class AuthorizationDistributedTest extends TestCase {
      * 
      * @throws Exception If something.
      */
+    @Test
     public void testFailedAuthentication() throws Exception {
         try {
             createSecureContext("Different username", "than password", "");

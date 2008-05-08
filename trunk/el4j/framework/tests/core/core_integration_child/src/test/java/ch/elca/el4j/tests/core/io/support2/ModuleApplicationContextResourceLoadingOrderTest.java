@@ -16,12 +16,14 @@
  */
 package ch.elca.el4j.tests.core.io.support2;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.tests.core.io.support.helper.Employee;
-
-import junit.framework.TestCase;
 
 /**
  * Tests the order how resources are loaded by the module application context.
@@ -35,7 +37,7 @@ import junit.framework.TestCase;
  *
  * @author Martin Zeltner (MZE)
  */
-public class ModuleApplicationContextResourceLoadingOrderTest extends TestCase {
+public class ModuleApplicationContextResourceLoadingOrderTest {
     /**
      * @see #getApplicationContext()
      */
@@ -65,6 +67,7 @@ public class ModuleApplicationContextResourceLoadingOrderTest extends TestCase {
      * Tests the config overriding by application context when looked up
      * resources are in jar files. Outer resources will be included.
      */
+    @Test
     public void testEmployee1ConfigOverridingWithOuterResources() {
         ApplicationContext appContext = getApplicationContext(true, false);
         Employee e1 = (Employee) appContext.getBean("employee1");
@@ -77,6 +80,7 @@ public class ModuleApplicationContextResourceLoadingOrderTest extends TestCase {
      * Tests the config overriding by application context when looked up
      * resources are in jar files. Outer resources will be excluded.
      */
+    @Test
     public void testEmployee1ConfigOverridingWithoutOuterResources() {
         ApplicationContext appContext = getApplicationContext(false, false);
         Employee e1 = (Employee) appContext.getBean("employee1");
@@ -90,6 +94,7 @@ public class ModuleApplicationContextResourceLoadingOrderTest extends TestCase {
      * resources are in jar files and directly on classpath. Outer resources
      * will be included.
      */
+    @Test
     public void testEmployee2ConfigOverridingWithOuterResources() {
         ApplicationContext appContext = getApplicationContext(true, false);
         Employee e2 = (Employee) appContext.getBean("employee2");
@@ -103,6 +108,7 @@ public class ModuleApplicationContextResourceLoadingOrderTest extends TestCase {
      * resources are in jar files and directly on classpath. Outer resources
      * will be excluded.
      */
+    @Test
     public void testEmployee2ConfigOverridingWithoutOuterResources() {
         ApplicationContext appContext = getApplicationContext(false, false);
         Employee e2 = (Employee) appContext.getBean("employee2");
@@ -116,6 +122,7 @@ public class ModuleApplicationContextResourceLoadingOrderTest extends TestCase {
      * resources are in jar files and directly on classpath. Outer resources
      * will be included. The least specific resource will be most important.
      */
+    @Test
     public void 
     testEmployee2ConfigOverridingWithOuterResourcesReverseResourceOrder() {
         ApplicationContext appContext = getApplicationContext(true, true);
@@ -130,6 +137,7 @@ public class ModuleApplicationContextResourceLoadingOrderTest extends TestCase {
      * resources are in jar files and directly on classpath. Outer resources
      * will be excluded. The least specific resource will be most important.
      */
+    @Test
     public void 
     testEmployee2ConfigOverridingWithoutOuterResourcesReverseResourceOrder() {
         ApplicationContext appContext = getApplicationContext(false, true);

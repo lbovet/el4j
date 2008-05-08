@@ -17,11 +17,12 @@
 
 package ch.elca.el4j.tests.core.aop;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
-
-import junit.framework.TestCase;
 
 /**
  * This class tests the {@link ch.elca.el4j.core.aop.BeanTypeAutoProxyCreator}
@@ -37,7 +38,7 @@ import junit.framework.TestCase;
  *
  * @author Andreas Bur (ABU)
  */
-public class BeanTypeAutoProxyCreatorTest extends TestCase {
+public class BeanTypeAutoProxyCreatorTest {
 
     /** The application context. */
     private ApplicationContext m_appContext;
@@ -66,6 +67,7 @@ public class BeanTypeAutoProxyCreatorTest extends TestCase {
      * Tests whether classes that implement {@link MarkerA} interface are
      * intercepted correctly.
      */
+    @Test
     public void testMarkerA() {
         A a = (A) m_appContext.getBean("A");
         assertEquals("Interceptor was not invoked.",
@@ -78,6 +80,7 @@ public class BeanTypeAutoProxyCreatorTest extends TestCase {
      * Tests whether classes that implement {@link MarkerB} interface are
      * intercepted correctly.
      */
+    @Test
     public void testMarkerB() {
         B b = (B) m_appContext.getBean("B");
         assertEquals("A wrong interceptor was not invoked.",
@@ -90,6 +93,7 @@ public class BeanTypeAutoProxyCreatorTest extends TestCase {
      * Tests whether classes that implement {@link MarkerA} and {@link MarkerB}
      * interface are intercepted correctly.
      */
+    @Test
     public void testMarkerC() {
         C c = (C) m_appContext.getBean("C");
         assertEquals("Interceptor was not invoked (implementing 2 interfaces).",
@@ -102,6 +106,7 @@ public class BeanTypeAutoProxyCreatorTest extends TestCase {
      * Tests whether classes that implement {@link MarkerC} interface are
      * intercepted correctly.
      */
+    @Test
     public void testMarkerD() {
         D d = (D) m_appContext.getBean("D");
         assertEquals("Interceptor was not invoked (registered 2 interceptors).",

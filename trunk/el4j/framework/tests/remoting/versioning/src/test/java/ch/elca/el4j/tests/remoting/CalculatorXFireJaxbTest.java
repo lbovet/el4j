@@ -17,14 +17,18 @@
 
 package ch.elca.el4j.tests.remoting;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Arrays;
 
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.tests.remoting.service.Calculator;
 import ch.elca.el4j.tests.remoting.service.CalculatorValueObject;
-import junit.framework.TestCase;
 
 /**
  * This class is a test for the calculator.
@@ -39,7 +43,7 @@ import junit.framework.TestCase;
  *
  * @author Rashid Waraich (RWA)
  */
-public class CalculatorXFireJaxbTest extends TestCase {
+public class CalculatorXFireJaxbTest {
     /**
      * Is the delta to doubles can have to be equal.
      */
@@ -53,6 +57,7 @@ public class CalculatorXFireJaxbTest extends TestCase {
     /**
      * {@inheritDoc}
      */
+    @Before
     public void setUp() {
         ApplicationContext appContext = new ModuleApplicationContext(
             new String[] {"classpath*:mandatory/*.xml",
@@ -66,6 +71,7 @@ public class CalculatorXFireJaxbTest extends TestCase {
     /**
      * This test tests the area calulation method.
      */
+    @Test
     public void testAreaCalculation() {
         final double VALUE_A = 2.3;
         final double VALUE_B = 5.7;
@@ -95,6 +101,7 @@ public class CalculatorXFireJaxbTest extends TestCase {
     /**
      * This test tests the counting of uppercase letters.
      */
+    @Test
     public void testNumberOfUppercaseCharacters() {
         final int NUMBER_OF_UPPERCASE_LETTERS = 3;
         String message = "Hans Müller likes to pay with Euro.";
@@ -107,6 +114,7 @@ public class CalculatorXFireJaxbTest extends TestCase {
      * This test is used to test if a value object will be serialized and
      * deserialized correctly.
      */
+    @Test
     public void testEchoOfValueObject() {
  //       final int MY_INT = 449312154;
         final long MY_LONG = 3121846575454654L;

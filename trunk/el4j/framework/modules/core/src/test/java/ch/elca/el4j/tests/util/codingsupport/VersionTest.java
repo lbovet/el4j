@@ -16,9 +16,11 @@
  */
 package ch.elca.el4j.tests.util.codingsupport;
 
-import ch.elca.el4j.util.codingsupport.Version;
+import static org.junit.Assert.assertEquals;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+
+import ch.elca.el4j.util.codingsupport.Version;
 
 /** 
  * 
@@ -33,8 +35,9 @@ import junit.framework.TestCase;
  *
  * @author Philipp Oser (POS)
  */
-public class VersionTest extends TestCase {
+public class VersionTest {
 
+    @Test
     public void testForJdk15(){
         if (System.getProperty("java.specification.version").equals("1.5")){
             assertEquals(true,Version.isJdk15OrNewer());
@@ -42,6 +45,7 @@ public class VersionTest extends TestCase {
         }
     }
 
+    @Test
     public void testForJdk16(){
         if (System.getProperty("java.specification.version").equals("1.6")){
             assertEquals(true,Version.isJdk16OrNewer());            

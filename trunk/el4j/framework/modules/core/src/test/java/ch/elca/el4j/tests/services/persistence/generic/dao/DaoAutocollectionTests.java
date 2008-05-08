@@ -16,16 +16,18 @@
  */
 package ch.elca.el4j.tests.services.persistence.generic.dao;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertTrue;
 
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
 
-public class DaoAutocollectionTests extends TestCase {
+public class DaoAutocollectionTests {
 
+    @Test
     public void testDaoAutocollection() {
         ApplicationContext ac = 
             new ClassPathXmlApplicationContext(new String[] {"scenarios/core/dao/springConfig.xml"});
