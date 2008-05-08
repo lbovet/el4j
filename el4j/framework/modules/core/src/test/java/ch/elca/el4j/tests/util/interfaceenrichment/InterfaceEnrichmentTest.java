@@ -17,17 +17,19 @@
 
 package ch.elca.el4j.tests.util.interfaceenrichment;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.lang.reflect.Method;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+import org.junit.Test;
 import org.springframework.util.ClassUtils;
 
 import ch.elca.el4j.util.interfaceenrichment.EnrichmentDecorator;
 import ch.elca.el4j.util.interfaceenrichment.InterfaceEnricher;
 import ch.elca.el4j.util.interfaceenrichment.MethodDescriptor;
-
-import junit.framework.TestCase;
 
 /**
  * This is the test case for the interface enrichment.
@@ -41,7 +43,7 @@ import junit.framework.TestCase;
  *
  * @author Martin Zeltner (MZE)
  */
-public class InterfaceEnrichmentTest extends TestCase {
+public class InterfaceEnrichmentTest {
     /**
      * Test interface with methods which have an array as parameter.
      *
@@ -163,6 +165,7 @@ public class InterfaceEnrichmentTest extends TestCase {
      * Tests if enrichment of an interface with array parameter and array return
      * type works correctly. 
      */
+    @Test
     public void testInterfaceEnrichmentWithArrayParameter() {
         InterfaceEnricher ie = new InterfaceEnricher();
         Class oldInterface = MyArrayInterface.class;

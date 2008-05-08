@@ -17,11 +17,12 @@
 
 package ch.elca.el4j.tests.core.aop;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
-
-import junit.framework.TestCase;
 
 /**
  * This class tests the {@link
@@ -36,7 +37,7 @@ import junit.framework.TestCase;
  *
  * @author Andreas Bur (ABU)
  */
-public class ExclusiveBeanNameAutoProxyCreatorTest extends TestCase {
+public class ExclusiveBeanNameAutoProxyCreatorTest {
 
     /** String returned by proxied beans. */
     public static final String PROXIED = "proxied";
@@ -93,6 +94,7 @@ public class ExclusiveBeanNameAutoProxyCreatorTest extends TestCase {
     /**
      * Tests the configuration that doesn't exclude any beans.
      */
+    @Test
     public void testIncludesOnly() {
         ApplicationContext appCtx = createAppContext(EMPTY_EXCLUSIVE_CONFIG);
         
@@ -104,6 +106,7 @@ public class ExclusiveBeanNameAutoProxyCreatorTest extends TestCase {
     /**
      * Tehsts the configuration that excludes all beans.
      */
+    @Test
     public void testExcludeAll() {
         ApplicationContext appCtx = createAppContext(EXCLUDE_ALL_CONFIG);
         
@@ -116,6 +119,7 @@ public class ExclusiveBeanNameAutoProxyCreatorTest extends TestCase {
      * Tests the configuration that includes all beans but the one named
      * 'foobar'.
      */
+    @Test
     public void testIncludeAllButFoobar() {
         ApplicationContext appCtx = createAppContext(
                 INCLUDE_ALL_BUT_FOOBAR_CONFIG);
@@ -132,6 +136,7 @@ public class ExclusiveBeanNameAutoProxyCreatorTest extends TestCase {
      * 'foo'.
      *
      */
+    @Test
     public void testIncludeAllButFooPrefix() {
         ApplicationContext appCtx = createAppContext(
                 INCLUDE_ALL_BUT_FOO_PREFIX_CONFIG);
@@ -147,6 +152,7 @@ public class ExclusiveBeanNameAutoProxyCreatorTest extends TestCase {
      * Tests the configuration that includes all beans but those ending with
      * 'bar'.
      */
+    @Test
     public void testIncludeAllButBarSuffix() {
         ApplicationContext appCtx = createAppContext(
                 INCLUDE_ALL_BUT_BAR_SUFFIX_CONFIG);
@@ -162,6 +168,7 @@ public class ExclusiveBeanNameAutoProxyCreatorTest extends TestCase {
      * Tests the configuration that includes all beans which start with
      * 'bean' but don't end with 'a'.
      */
+    @Test
     public void testIncludeAllStartingWithBeanButSuffixA() {
         ApplicationContext appCtx = createAppContext(
                 INCLUDE_ALL_STARTING_WITH_BEAN_BUT_SUFFIX_A_CONFIG);

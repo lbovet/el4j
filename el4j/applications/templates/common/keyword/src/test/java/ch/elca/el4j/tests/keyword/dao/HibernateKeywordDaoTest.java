@@ -20,8 +20,12 @@ import static ch.elca.el4j.services.search.criterias.CriteriaHelper.and;
 import static ch.elca.el4j.services.search.criterias.CriteriaHelper.like;
 import static ch.elca.el4j.services.search.criterias.CriteriaHelper.not;
 import static ch.elca.el4j.services.search.criterias.CriteriaHelper.or;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.List;
+
+import org.junit.Test;
 
 import ch.elca.el4j.apps.keyword.dao.KeywordDao;
 import ch.elca.el4j.apps.keyword.dom.Keyword;
@@ -71,6 +75,7 @@ public class HibernateKeywordDaoTest
      *   
      *   This method is a bit long (it shares the created keywords).
      */
+    @Test
     public void testSearchKeywordsHibernateSpecificForNow() {
         KeywordDao dao = getKeywordDao();
         Keyword keyword = new Keyword();

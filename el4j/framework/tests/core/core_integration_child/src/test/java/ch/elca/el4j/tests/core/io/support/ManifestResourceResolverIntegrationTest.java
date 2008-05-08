@@ -17,10 +17,15 @@
 
 package ch.elca.el4j.tests.core.io.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.Test;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
@@ -137,6 +142,7 @@ public class ManifestResourceResolverIntegrationTest
      * Tests whether the configuration files are arranged in a correct order
      * (checks partial order only).
      */
+    @Test
     public void testOrder() {
         assertAllBefore(CONFIG_CORE, CONFIG_CORE_TESTS, m_locations);
         assertAllBefore(CONFIG_CORE, CONFIG_CORE_INTEGRATION_TESTS,
@@ -149,6 +155,7 @@ public class ManifestResourceResolverIntegrationTest
      * Tests whether a single resource is resolved correctly using
      * <code>getResource()</code>.
      */
+    @Test
     public void testGetSingleResource() throws IOException {
         String resourceLocation 
             = "optional/interception/transactionJava5Annotations.xml";
@@ -170,6 +177,7 @@ public class ManifestResourceResolverIntegrationTest
      * @throws IOException
      *      If an I/O error occurs.
      */
+    @Test
     public void testQuestionMarkPattern() throws IOException {
         Resource[] r = m_resolver.getResources(
                 "classpath:scenarios/core/io/support/a?.xml");
@@ -184,6 +192,7 @@ public class ManifestResourceResolverIntegrationTest
      * @throws IOException
      *      If an I/O error occurs.
      */
+    @Test
     public void testMandatory() throws IOException {
         Resource[] r = m_resolver.getResources("classpath*:mandatory/*.xml");
         assertEquals(0, r.length);
@@ -195,6 +204,7 @@ public class ManifestResourceResolverIntegrationTest
      * @throws IOException
      *      If an I/O error occurs.
      */
+    @Test
     public void testLocalResource() throws IOException {
         Resource[] r = m_resolver.getResources(
                 "classpath*:scenarios/core/io/integration/*.xml");
@@ -210,6 +220,7 @@ public class ManifestResourceResolverIntegrationTest
      * @throws IOException
      *      If an I/O error occurs.
      */
+    @Test
     public void testGetAllIntegrationResources() throws IOException {
         checkResources("classpath*:scenarios/core/io/integration/*.xml",
                 CONFIG_CORE_INTEGRATION_TESTS);
@@ -221,6 +232,7 @@ public class ManifestResourceResolverIntegrationTest
      * @throws IOException
      *      If an I/O error occurs.
      */
+    @Test
     public void testGetAllResourcesEndingWithA() throws IOException {
         checkResources("classpath*:scenarios/core/**/*a.xml",
                 new String[] {CONFIG_CORE_TESTS_3, CONFIG_CORE_TESTS_6,

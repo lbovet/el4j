@@ -1,6 +1,9 @@
 package ch.elca.el4j.tests.services.persistence.hibernate.entityfinder;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
 import ch.elca.el4j.services.persistence.hibernate.entityfinder.EntityDetectorAnnotationSessionFactoryBean;
 import ch.elca.el4j.tests.services.persistence.hibernate.entityfinder.entities.Entity1;
 import ch.elca.el4j.tests.services.persistence.hibernate.entityfinder.entities.Entity2;
@@ -10,10 +13,10 @@ import ch.elca.el4j.tests.services.persistence.hibernate.entityfinder.entities.E
  * @author pos
  *
  */
-public class EntityDetectorTest extends TestCase {
+public class EntityDetectorTest {
 
 	
-	
+    @Test
 	public void testEntityDetector() {
 		// test it only programmatically
 		

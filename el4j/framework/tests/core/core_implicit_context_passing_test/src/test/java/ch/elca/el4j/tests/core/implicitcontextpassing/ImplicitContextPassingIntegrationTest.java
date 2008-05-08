@@ -17,13 +17,18 @@
 
 package ch.elca.el4j.tests.core.implicitcontextpassing;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
+
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
 import ch.elca.el4j.tests.remoting.service.Calculator;
-
-import junit.framework.TestCase;
 
 // Checkstyle: MagicNumber off
 // Checkstyle: EmptyBlock off
@@ -41,7 +46,7 @@ import junit.framework.TestCase;
  * @author David Stefan (DST)
  */
 
-public class ImplicitContextPassingIntegrationTest extends TestCase {
+public class ImplicitContextPassingIntegrationTest {
 
     /**
      * Location where config files can be found.
@@ -87,6 +92,7 @@ public class ImplicitContextPassingIntegrationTest extends TestCase {
     /**
      * {@inheritDoc}
      */
+    @Before
     public void setUp() {
 
         m_appContext = new ModuleApplicationContext(CONFIG_LOCATION, true);
@@ -109,6 +115,7 @@ public class ImplicitContextPassingIntegrationTest extends TestCase {
      * This test simulates registration with contextPasser of client beeing
      * null.
      */
+    @Test
     public void testClientContextPasserIsNull() {
         try {
             m_clientRegistry.registerImplicitContextPasser(null);
@@ -122,6 +129,7 @@ public class ImplicitContextPassingIntegrationTest extends TestCase {
      * This test simulates registration with contextPasser of server beeing
      * null.
      */
+    @Test
     public void testServerContextPasserIsNull() {
         try {
             m_serverRegistry.registerImplicitContextPasser(null);
@@ -134,6 +142,7 @@ public class ImplicitContextPassingIntegrationTest extends TestCase {
     /**
      * This test simulates assignment to passer of a registry beeing null .
      */
+    @Test
     public void testRegistryIsNull() {
         ImplicitContextPasserImplA passerA = new ImplicitContextPasserImplA();
         try {
@@ -148,6 +157,7 @@ public class ImplicitContextPassingIntegrationTest extends TestCase {
      * This tests simulates context passing with one passer on each side, 
      * passing an integer.
      */ 
+    @Test
     public void testOnePasserIntegerData() {
         m_clientPasserA.setDataToUse(ImplicitContextPasserImplA.INT_TEST);
         m_calc.getArea(0.65, 0.78);
@@ -161,6 +171,7 @@ public class ImplicitContextPassingIntegrationTest extends TestCase {
      * This tests simulates context passing with one passer on each side, 
      * passing a float.
      */ 
+    @Test
     public void testOnePasserFloatData() {
         m_clientPasserA.setDataToUse(ImplicitContextPasserImplA.FLOAT_TEST);
         m_calc.getArea(0.65, 0.78);
@@ -174,7 +185,8 @@ public class ImplicitContextPassingIntegrationTest extends TestCase {
     /**
      * This tests simulates context passing with one passer on each side, 
      * passing an double.
-     */ 
+     */
+    @Test
     public void testOnePasserDoubleData() {
         m_clientPasserA.setDataToUse(ImplicitContextPasserImplA.DOUBLE_TEST);
         m_calc.getArea(0.65, 0.78);
@@ -188,7 +200,8 @@ public class ImplicitContextPassingIntegrationTest extends TestCase {
     /**
      * This tests simulates context passing with one passer on each side, 
      * passing a list.
-     */ 
+     */
+    @Test
     public void testOnePasserListData() {
         m_clientPasserA.setDataToUse(ImplicitContextPasserImplA.LIST_TEST);
         m_calc.getArea(0.65, 0.78);
@@ -202,6 +215,7 @@ public class ImplicitContextPassingIntegrationTest extends TestCase {
      * This tests simulates context passing with one passer on each side, 
      * passing an empty list.
      */ 
+    @Test
     public void testOnePasserEmptyListData() {
         m_clientPasserA.setDataToUse(ImplicitContextPasserImplA.NULL_LIST_TEST);
         m_calc.getArea(0.65, 0.78);
@@ -214,6 +228,7 @@ public class ImplicitContextPassingIntegrationTest extends TestCase {
    /**
     * This test checks if context is NOT passed if service method isn't called.
     */
+    @Test
     public void testServiceNotCalled() {
         m_clientPasserA.setDataToUse(ImplicitContextPasserImplA.RESET);
         m_clientPasserA.setDataToUse(ImplicitContextPasserImplA.DOUBLE_TEST);
@@ -226,6 +241,7 @@ public class ImplicitContextPassingIntegrationTest extends TestCase {
      * This tests simulates context passing with two passers on each side, 
      * passing a double and a list.
      */
+    @Test
     public void testTwoPasser() {
         
         ImplicitContextPasserImplB serverPasserB = (ImplicitContextPasserImplB) 
@@ -247,6 +263,7 @@ public class ImplicitContextPassingIntegrationTest extends TestCase {
      * This tests simulates context passing with two passers on client side 
      * and one on server side, passing a double and a list.
      */
+    @Test
     public void testTwoAndOnePasser() {
         
         ImplicitContextPasserImplB clientPasserB = (ImplicitContextPasserImplB) 

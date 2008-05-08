@@ -16,9 +16,11 @@
  */
 package ch.elca.el4j.tests.util.config;
 
-import ch.elca.el4j.util.config.HierarchicalGenericConfig;
+import static org.junit.Assert.assertTrue;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+
+import ch.elca.el4j.util.config.HierarchicalGenericConfig;
 
 //Checkstyle: MagicNumber off
 //Checkstyle: EmptyBlock off
@@ -35,8 +37,9 @@ import junit.framework.TestCase;
  *
  * @author Stefan Wismer (SWI)
  */
-public abstract class AbstractHierarchicalGenericConfigTest extends TestCase {
+public abstract class AbstractHierarchicalGenericConfigTest {
     /***/
+    @Test
     public void testGenericConfig() {
         HierarchicalGenericConfig config = getDefaultConfig();
         
@@ -64,6 +67,7 @@ public abstract class AbstractHierarchicalGenericConfigTest extends TestCase {
     }
     
     /***/
+    @Test
     public void testSpecificConfig() {
         HierarchicalGenericConfig config = getSpecificConfig();
         assertTrue(config.get("ch.elca.el4j").equals("EL4J"));

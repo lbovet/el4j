@@ -17,14 +17,16 @@
 
 package ch.elca.el4j.tests.core.beans;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Map;
 
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.beans.BeanLocator;
 import ch.elca.el4j.core.context.ModuleApplicationContext;
-
-import junit.framework.TestCase;
 
 /**
  * This test tests the <code>BeanLocator</code> class.
@@ -38,7 +40,7 @@ import junit.framework.TestCase;
  * 
  * @author Martin Zeltner (MZE)
  */
-public class BeanLocatorTest extends TestCase {
+public class BeanLocatorTest {
     
     /** The application context. */
     final ApplicationContext m_appContext;
@@ -54,6 +56,7 @@ public class BeanLocatorTest extends TestCase {
     /**
      * This test locates classes of specific types.
      */
+    @Test
     public void testLocateClassesOfSpecificTypes() {
         BeanLocator beanLocator = (BeanLocator) m_appContext
                 .getBean("locateClassesOfSpecificTypes");
@@ -67,6 +70,7 @@ public class BeanLocatorTest extends TestCase {
     /**
      * This test locates classes of specific types and excludes some beans.
      */
+    @Test
     public void testLocateClassesOfSpecificTypesPlusExcludeList() {
         BeanLocator beanLocator = (BeanLocator) m_appContext
                 .getBean("locateClassesOfSpecificTypesPlusExcludeList");
@@ -79,6 +83,7 @@ public class BeanLocatorTest extends TestCase {
     /**
      * This test locates classes of specific types and includes some beans.
      */
+    @Test
     public void testLocateClassesOfSpecificTypesPlusIncludeList() {
         BeanLocator beanLocator = (BeanLocator) m_appContext
                 .getBean("locateClassesOfSpecificTypesPlusIncludeList");
@@ -92,6 +97,7 @@ public class BeanLocatorTest extends TestCase {
      * This test locates classes of specific types and includes and excludes
      * some beans.
      */
+    @Test
     public void testLocateClassesOfSpecificTypesPlusIncludeAndExcludeList() {
         BeanLocator beanLocator = (BeanLocator) m_appContext.getBean(
                 "locateClassesOfSpecificTypesPlusIncludeAndExcludeList");

@@ -19,6 +19,8 @@
 
 package ch.elca.el4j.tests.xmlmerge;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,7 +34,7 @@ import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jdom.Element;
-import org.springframework.beans.factory.xml.BeansDtdResolver;
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -40,7 +42,6 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
-import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.xmlmerge.Configurer;
 import ch.elca.el4j.services.xmlmerge.Matcher;
 import ch.elca.el4j.services.xmlmerge.MergeAction;
@@ -53,8 +54,6 @@ import ch.elca.el4j.services.xmlmerge.config.ConfigurableXmlMerge;
 import ch.elca.el4j.services.xmlmerge.config.PropertyXPathConfigurer;
 import ch.elca.el4j.services.xmlmerge.factory.XPathOperationFactory;
 import ch.elca.el4j.services.xmlmerge.merge.DefaultXmlMerge;
-
-import junit.framework.TestCase;
 
 /**
  * 
@@ -71,7 +70,7 @@ import junit.framework.TestCase;
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
-public class DefaultMergeTest extends TestCase {
+public class DefaultMergeTest {
 
     private static Log logger 
         = LogFactory.getLog(DefaultMergeTest.class);    
@@ -85,6 +84,7 @@ public class DefaultMergeTest extends TestCase {
      * Tests a simple merge of two strings.
      * @throws Exception If an error occurs during the test
      */
+    @Test
     public void testSimpleMerge() throws Exception {
         
         String xml1 = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
@@ -156,6 +156,7 @@ public class DefaultMergeTest extends TestCase {
      * Tests a merge of three strings.
      * @throws Exception If an error occurs during the test
      */
+    @Test
     public void testThreeMerges() throws Exception {
         
         String[] sources = {
@@ -184,6 +185,7 @@ public class DefaultMergeTest extends TestCase {
      * @throws Exception
      *             If an error occurs during the test
      */
+    @Test
     public void testXPathOperationFactory() throws Exception {
         
         String[] sources = {
@@ -226,6 +228,7 @@ public class DefaultMergeTest extends TestCase {
      * @throws Exception
      *             If an error occurs during the test
      */
+    @Test
     public void testPropertyXPathConfigurer() throws Exception {
         
         String[] sources = {
@@ -258,6 +261,7 @@ public class DefaultMergeTest extends TestCase {
      * @throws Exception
      *             If an error occurs during the test
      */
+    @Test
     public void testInsertAction() throws Exception {
         
         String[] sources = {
@@ -298,6 +302,7 @@ public class DefaultMergeTest extends TestCase {
      * @throws Exception
      *             If an error occurs during the test
      */
+    @Test
     public void testSpringResource() throws Exception {
         
         ApplicationContext appContext = new ModuleApplicationContext(
@@ -337,6 +342,7 @@ public class DefaultMergeTest extends TestCase {
      * @throws Exception
      *             If an error occurs during the test
      */
+    @Test
     public void testDtdMerge() throws Exception {
         
         InputStream[] streams 
@@ -373,6 +379,7 @@ public class DefaultMergeTest extends TestCase {
      * @throws Exception
      *             If an error occurs during the test
      */
+    @Test
     public void testAttributes() throws Exception {
         
         String[] sources = {
@@ -403,6 +410,7 @@ public class DefaultMergeTest extends TestCase {
      * @throws Exception
      *             If an error occurs during the test
      */
+    @Test
     public void testIdMapper() throws Exception {
         
         String[] sources = {
@@ -449,6 +457,7 @@ public class DefaultMergeTest extends TestCase {
      * @throws Exception
      *             If an error occurs during the test
      */
+    @Test
     public void testAttributeMerge() throws Exception {
         
         String[] sources = {
@@ -542,6 +551,7 @@ public class DefaultMergeTest extends TestCase {
      * @throws Exception
      *             If an error occurs during the test
      */
+    @Test
     public void testCustomMatcher() throws Exception {
         
         String[] sources = new String[] {

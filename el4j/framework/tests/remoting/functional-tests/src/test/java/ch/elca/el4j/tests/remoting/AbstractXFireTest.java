@@ -19,8 +19,15 @@ package ch.elca.el4j.tests.remoting;
 //Checkstyle: EmptyBlock off
 //Checkstyle: MagicNumber off
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.Arrays;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -28,8 +35,6 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.tests.remoting.service.Calculator;
 import ch.elca.el4j.tests.remoting.service.CalculatorException;
 import ch.elca.el4j.tests.remoting.service.CalculatorValueObject;
-
-import junit.framework.TestCase;
 
 /**
  * 
@@ -44,7 +49,7 @@ import junit.framework.TestCase;
  *
  * @author Philippe Jacot (PJA)
  */
-public abstract class AbstractXFireTest extends TestCase {
+public abstract class AbstractXFireTest {
     /**
      * Is the delta to doubles can have to be equal.
      */
@@ -58,6 +63,7 @@ public abstract class AbstractXFireTest extends TestCase {
     /**
      * {@inheritDoc}
      */
+    @Before
     public void setUp() {
         m_appContext 
             = new ModuleApplicationContext(
@@ -70,14 +76,15 @@ public abstract class AbstractXFireTest extends TestCase {
      * 
      * {@inheritDoc}
      */
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         m_appContext.close();
-        super.tearDown();
     }
 
     /**
      * This test tests the area calulation method.
      */
+    @Test
     public void testAreaCalculation() {
         final double a = 2.3;
         final double b = 5.7;
@@ -90,6 +97,7 @@ public abstract class AbstractXFireTest extends TestCase {
     /**
      * This test tests the exception handling.
      */
+    @Test
     public void testExceptionBehaviour() {
         // Checkstyle: EmptyBlock off
         try {
@@ -103,6 +111,7 @@ public abstract class AbstractXFireTest extends TestCase {
     /**
      * This test tests the counting of uppercase letters.
      */
+    @Test
     public void testNumberOfUppercaseCharacters() {
         String message = "Hans Müller likes to pay with Euro.";
         int numberOfUppercaseLetters = 3;
@@ -115,6 +124,7 @@ public abstract class AbstractXFireTest extends TestCase {
      * This test is used to test if a value object will be serialized and
      * deserialized correctly.
      */
+    @Test
     public void testEchoOfValueObject() {
         final int myInt = 449312154;
         final long myLong = 3121846575454654L;

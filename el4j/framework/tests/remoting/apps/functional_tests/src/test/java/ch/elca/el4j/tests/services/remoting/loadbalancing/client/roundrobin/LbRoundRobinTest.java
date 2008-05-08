@@ -16,10 +16,12 @@
  */
 package ch.elca.el4j.tests.services.remoting.loadbalancing.client.roundrobin;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
 
@@ -33,7 +35,7 @@ import ch.elca.el4j.tests.services.remoting.loadbalancing.common.BusinessObject;
  * 
  * @author Stefan Pleisch (SPL)
  */
-public class LbRoundRobinTest extends TestCase {
+public class LbRoundRobinTest {
 
     /** Define the server names and ports to connect to */
     private static final String ServerNameAndPort1 = "localhost:8091" ; 
@@ -56,6 +58,7 @@ public class LbRoundRobinTest extends TestCase {
      * 
      * @see #THROW_IDEMPOTENTINVOCATION_EXCEPTION
      */
+    @Test
     public void testNextProtocol() {
         getLog().debug("Starting test 'testIdempotence'....");
         try {

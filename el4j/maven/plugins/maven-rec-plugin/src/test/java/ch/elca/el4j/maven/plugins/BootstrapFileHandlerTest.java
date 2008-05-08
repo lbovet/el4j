@@ -1,5 +1,10 @@
 package ch.elca.el4j.maven.plugins;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -10,22 +15,26 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.Namespace;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class BootstrapFileHandlerTest extends TestCase {
+public class BootstrapFileHandlerTest {
 
     private File testXml = new File(PlexusTestCase.getBasedir()
         + "/src/test/resources", "test_bootstrap.xml");;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() {
+        
     }
 
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() {
+        
     }
 
+    @Test
     public void testCreateBootstrapMapFromDom() throws JDOMException,
         IOException {
         Map<String, ProjectData> map = null;
@@ -58,6 +67,7 @@ public class BootstrapFileHandlerTest extends TestCase {
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testLoadDomFromXml() throws JDOMException, IOException {
         Document dom = BootstrapFileHandler.loadDomFromXml(testXml);
         Namespace ns = Namespace

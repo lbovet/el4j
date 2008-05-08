@@ -1,21 +1,24 @@
 package ch.elca.el4j.gui.model.mixin;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import org.jdesktop.observablecollections.ObservableList;
 import org.jdesktop.observablecollections.ObservableListListener;
-
-import com.silvermindsoftware.hitch.events.PropertyChangeListenerCapability;
+import org.junit.Test;
 
 import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
 import ch.elca.el4j.model.mixin.SaveRestoreCapability;
 
-import junit.framework.TestCase;
+import com.silvermindsoftware.hitch.events.PropertyChangeListenerCapability;
 
-public class PropertyChangeListenerMixinTest extends TestCase {
+public class PropertyChangeListenerMixinTest {
 
+    @Test
     public void testSaveRestore() throws Exception {
         ExampleModel model = new ExampleModelImpl();
 
@@ -77,6 +80,7 @@ public class PropertyChangeListenerMixinTest extends TestCase {
         }
     }
     
+    @Test
     public void testPropertyChangeListener() throws Exception {
         // create model
         ExampleModel model = new ExampleModelImpl();
@@ -126,6 +130,7 @@ public class PropertyChangeListenerMixinTest extends TestCase {
         ((PropertyChangeListenerCapability) model).removePropertyChangeListener("property99", testListener);
     }
     
+    @Test
     public void testBinding() throws Exception {
         // create model
         ExampleModel model = new ExampleModelImpl();

@@ -7,6 +7,7 @@ import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.plugin.Mojo;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 import org.codehaus.plexus.PlexusTestCase;
+import org.junit.Test;
 
 public class MavenRecursiveMojoTest extends AbstractMojoTestCase {
 
@@ -14,6 +15,7 @@ public class MavenRecursiveMojoTest extends AbstractMojoTestCase {
         + "/src/test/resource/testStructure1/level1/level1_1/level1_1_1",
         "pom.xml");
     
+    @Test
     public void testGetRootDir() throws Exception
     {
         assertTrue(true);

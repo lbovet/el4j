@@ -17,11 +17,13 @@
 
 package ch.elca.el4j.tests.services.exceptionhandler;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
-
-import junit.framework.TestCase;
 
 // Checkstyle: MagicNumber off
 // Checkstyle: EmptyBlock off
@@ -38,7 +40,7 @@ import junit.framework.TestCase;
  *
  * @author Andreas Bur (ABU)
  */
-public class SafetyFacadeTest extends TestCase {
+public class SafetyFacadeTest {
 
     /** The application context. */
     private ApplicationContext m_appContext;
@@ -64,6 +66,7 @@ public class SafetyFacadeTest extends TestCase {
      * Checks on the guarded bean that no exception is thrown and that the
      * result is converted correctly.
      */
+    @Test
     public void testA() {
         try {
             int result = m_a.div(1, 0);
@@ -76,6 +79,7 @@ public class SafetyFacadeTest extends TestCase {
     /**
      * Checks that the bare bean is still available.
      */
+    @Test
     public void testUnsafeA() {
         try {
             m_unsafeA.div(1, 0);
@@ -90,6 +94,7 @@ public class SafetyFacadeTest extends TestCase {
     /**
      * Checks that an runtime exception is consumed by the security facade.
      */
+    @Test
     public void testRTException() {
         try {
             m_a.throwRTException();
@@ -101,6 +106,7 @@ public class SafetyFacadeTest extends TestCase {
     /**
      * Tests whether the checked application exception is forwarded correctly.
      */
+    @Test
     public void testForwardInterfaceExceptions() {
         try {
             m_a.throwException();
@@ -122,6 +128,7 @@ public class SafetyFacadeTest extends TestCase {
      * A is configured to use C. A subsequent call does not touch B at all,
      * which is tested after the counters are reset.
      */
+    @Test
     public void testReconfigurationExceptionHandler() {
         int result = 0;
         try {
@@ -153,6 +160,7 @@ public class SafetyFacadeTest extends TestCase {
      * the round robin really cycles back to A and in the last round we just
      * make sure that A is again referenced by the proxy as its target.
      */
+    @Test
     public void testRoundRobinExceptonHandler() {
         String foo = "foo";
         String bar = "bar";
@@ -212,6 +220,7 @@ public class SafetyFacadeTest extends TestCase {
      * the number of retries is increased and the invocation is expected to
      * fail, as tested in the second part.
      */
+    @Test
     public void testRetry() {
         int result = 0;
         try {

@@ -17,11 +17,13 @@
 
 package ch.elca.el4j.tests.env;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
-
-import junit.framework.TestCase;
 
 /**
  * This class test the environment support.
@@ -35,7 +37,7 @@ import junit.framework.TestCase;
  *
  * @author Andreas Bur (ABU)
  */
-public class EnvTest extends TestCase {
+public class EnvTest {
     /** The highest transport protocol port number. */ 
     // Checkstyle: MagicNumber off
     private static final int MAX_PORT = 1 << 16 - 1;
@@ -64,6 +66,7 @@ public class EnvTest extends TestCase {
      * Checks whether the provided values are in the expected range.
      *
      */
+    @Test
     public void testConformance() {
         assertNotNull("Container name not set.", m_container.getContainer());
         assertTrue("Container's port out of range.",

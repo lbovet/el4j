@@ -16,12 +16,12 @@
  */
 package ch.elca.el4j.tests.services.remoting.loadbalancing.client;
 
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
 import ch.elca.el4j.tests.services.remoting.loadbalancing.client.random.LbRandomNoContextPassingTest;
-import ch.elca.el4j.tests.services.remoting.loadbalancing.client.roundrobin.LbRoundRobinTest;
 import ch.elca.el4j.tests.services.remoting.loadbalancing.client.redirectuponfailure.LbClientRedirectUponFailureTest;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import junit.framework.TestCase ;
+import ch.elca.el4j.tests.services.remoting.loadbalancing.client.roundrobin.LbRoundRobinTest;
 
 /**
  * 
@@ -37,19 +37,12 @@ import junit.framework.TestCase ;
  *
  * @author Stefan Pleisch (SPL)
  */
-public class LoadBalancingTestSuite extends TestCase {
-
-    /** {@inheritDoc} */
-    public static Test suite() {
-        TestSuite suite = new TestSuite(
-            "Test for ch.elca.el4j.tests.services.remoting.loadbalancing.client.random");
-        //$JUnit-BEGIN$
-        suite.addTestSuite(LbRandomNoContextPassingTest.class);
-        suite.addTestSuite(LbRoundRobinTest.class);
-        suite.addTestSuite(LbClientRedirectUponFailureTest.class);
-        //$JUnit-END$
-
-        return suite;
-    } // suite()
-
-} // CLASS LoadBalancingTestSuite
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+    LbRandomNoContextPassingTest.class,
+    LbRoundRobinTest.class,
+    LbClientRedirectUponFailureTest.class
+    })
+public class LoadBalancingTestSuite {
+    
+}

@@ -17,10 +17,17 @@
 
 package ch.elca.el4j.tests.remoting;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.Arrays;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
@@ -32,8 +39,6 @@ import ch.elca.el4j.tests.remoting.service.SpecialCalculatorException;
 import ch.elca.el4j.tests.remoting.service.soap.ExceptionThrower;
 import ch.elca.el4j.tests.remoting.service.soap.RemoteExceptionWithData;
 import ch.elca.el4j.tests.remoting.service.soap.impl.ExceptionThrowerImpl;
-
-import junit.framework.TestCase;
 
 /**
  * This class is a test for the calculator.
@@ -47,7 +52,7 @@ import junit.framework.TestCase;
  *
  * @author Martin Zeltner (MZE)
  */
-public class CalculatorSoapTest extends TestCase {
+public class CalculatorSoapTest {
     /**
      * Is the delta to doubles can have to be equal.
      */
@@ -72,6 +77,7 @@ public class CalculatorSoapTest extends TestCase {
     /**
      * {@inheritDoc}
      */
+    @Before
     public void setUp() {
         ApplicationContext appContext 
             = new ModuleApplicationContext(
@@ -87,6 +93,7 @@ public class CalculatorSoapTest extends TestCase {
     /**
      * This test tests the area calulation method.
      */
+    @Test
     public void testAreaCalculation() {
         final double a = 2.3;
         final double b = 5.7;
@@ -99,6 +106,7 @@ public class CalculatorSoapTest extends TestCase {
     /**
      * This test tests the exception handling.
      */
+    @Test
     public void testExceptionBehaviour() {
         try {
             m_calc.throwMeAnException();
@@ -114,6 +122,7 @@ public class CalculatorSoapTest extends TestCase {
     /**
      * This test tests a special exception behaviour.
      */
+    @Test
     public void testSpecialExceptionBehaviour() {
         String action = "Hans Müller likes to pay with ¤.";
         try {
@@ -136,6 +145,7 @@ public class CalculatorSoapTest extends TestCase {
     /**
      * This test tests the counting of uppercase letters.
      */
+    @Test
     public void testNumberOfUppercaseCharacters() {
         String message = "Hans Müller likes to pay with ¤.";
         int numberOfUppercaseLetters = 2;
@@ -148,6 +158,7 @@ public class CalculatorSoapTest extends TestCase {
      * This test is used to test if a value object will be serialized and
      * deserialized correctly.
      */
+    @Test
     public void testEchoOfValueObject() {
         final int myInt = 449312154;
         final long myLong = 3121846575454654L;
@@ -181,6 +192,7 @@ public class CalculatorSoapTest extends TestCase {
      * This test is used to check if a soap conform exception, which is not 
      * translated by a EL4J component, is received correctly on client side.
      */
+    @Test
     public void testExceptionThrower() {
         try {
             m_soapExceptionThrower.throwExceptionWithData();

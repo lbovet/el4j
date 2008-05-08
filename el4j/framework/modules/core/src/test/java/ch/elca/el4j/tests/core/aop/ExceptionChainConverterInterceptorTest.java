@@ -21,9 +21,13 @@ import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.aopalliance.intercept.MethodInvocation;
+import org.junit.Test;
 
 import ch.elca.el4j.core.aop.ExceptionChainConversionInterceptor;
 
@@ -31,11 +35,12 @@ import ch.elca.el4j.core.aop.ExceptionChainConversionInterceptor;
  * Test case for exception chain converter.
  * @author pos
  */
-public class ExceptionChainConverterInterceptorTest extends TestCase {
+public class ExceptionChainConverterInterceptorTest {
 
     /**
      * Test normal invocation usage
      */
+    @Test
     public void testBasicInterceptor() {
         MethodInvocation methodInvocation = (MethodInvocation) createMock(MethodInvocation.class);
 
@@ -64,6 +69,7 @@ public class ExceptionChainConverterInterceptorTest extends TestCase {
     /**
      * Test usage with exception
      */
+    @Test
     public void testInterceptorWithException() {
         MethodInvocation methodInvocation = (MethodInvocation) createMock(MethodInvocation.class);
 
@@ -92,6 +98,7 @@ public class ExceptionChainConverterInterceptorTest extends TestCase {
     /**
      * Test isolated cause conversion
      */
+    @Test
     public void testConvertCause() {
         ExceptionChainConversionInterceptorChild ecci = new ExceptionChainConversionInterceptorChild();
 

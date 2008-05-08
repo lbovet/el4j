@@ -16,21 +16,25 @@
  */
 package ch.elca.el4j.tests.refdb.idfixer;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.sql.rowset.serial.SerialClob;
+import org.junit.Before;
+import org.junit.Test;
 
 import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.services.persistence.generic.dao.AbstractIdentityFixer;
 import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
-import ch.elca.el4j.services.persistence.generic.dao.ConvenienceIdentityFixedDao;
 import ch.elca.el4j.services.persistence.generic.dao.DaoChangeListener;
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
-import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
 import ch.elca.el4j.services.persistence.generic.dao.IdentityFixedDao;
 import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.Change;
 import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.NewEntityState;
@@ -74,13 +78,15 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
 
     /** {@inheritDoc} */
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         super.setUp();
         m_keywordDao =  identityFixedDaoFor(Keyword.class);
         m_bookDao = identityFixedDaoFor(Book.class);
     }
     
     /***/
+    @Test
     public void testSaveFind() {
         Keyword kw = new Keyword();
         kw.setName("test");
@@ -104,6 +110,7 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
      * of subtyping relationships among entities and change notification for
      * attached entities.
      */
+    @Test
     public void testAssociationsAndDynamicTypeAndChangeNotifications() {
         Keyword kw = new Keyword();
         kw.setName("hibernate");

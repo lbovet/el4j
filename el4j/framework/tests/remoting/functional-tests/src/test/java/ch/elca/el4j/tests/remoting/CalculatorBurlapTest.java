@@ -18,6 +18,7 @@ package ch.elca.el4j.tests.remoting;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
@@ -52,6 +53,7 @@ public class CalculatorBurlapTest extends AbstractCalculatorTest {
      * handle enumerations. {@inheritDoc}
      */
     @Override
+    @Test
     public void testAbilityToHandleEnumerations() {
         s_logger.info("Test 'testAbilityToHandleEnumerations' disabled due"
             + "burlap is not able to handle enumerations.");

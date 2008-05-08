@@ -17,6 +17,13 @@
 
 package ch.elca.el4j.tests.core.io.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Before;
+import org.junit.Test;
+
 import ch.elca.el4j.core.io.support.DefaultModuleSorter;
 import ch.elca.el4j.core.io.support.Module;
 import ch.elca.el4j.core.io.support.ModuleSorter;
@@ -42,13 +49,15 @@ public class ModuleSorterTest extends AbstractOrderTestCase {
     /**
      * {@inheritDoc}
      */
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         m_sorter = new DefaultModuleSorter();
     }
     
     /**
      * Sorts a single module.
      */
+    @Test
     public void testSingleModule() {
         Module[] modules = new Module[] {new Module("a")};
         Module[] sorted = m_sorter.sortModules(modules);
@@ -59,6 +68,7 @@ public class ModuleSorterTest extends AbstractOrderTestCase {
     /**
      * Sorts a simple hierarchy.
      */
+    @Test
     public void testSimpleHierarchy() {
         Module a = new Module("a");
         Module b = new Module("b");
@@ -74,6 +84,7 @@ public class ModuleSorterTest extends AbstractOrderTestCase {
     /**
      * Sorts a hierarchy in which one node has multiple dependencies.
      */
+    @Test
     public void testBranchedHierarchy() {
         Module a = new Module("a");
         Module b = new Module("b");
@@ -92,6 +103,7 @@ public class ModuleSorterTest extends AbstractOrderTestCase {
     /**
      * Tests a hierarchy having a node with two children.
      */
+    @Test
     public void testTwoChildren() {
         Module a = new Module("a");
         Module b = new Module("b");
@@ -108,6 +120,7 @@ public class ModuleSorterTest extends AbstractOrderTestCase {
      * Sorts a hierarchy where the order in which the sorting happens has a
      * influence of the outcome.
      */
+    @Test
     public void testWiredHierarchy() {
         Module a = new Module("a");
         Module b = new Module("b");
@@ -127,6 +140,7 @@ public class ModuleSorterTest extends AbstractOrderTestCase {
      * Sorts a hierarchy where a module has an indirect as well a direct
      * dependency on another module.
      */
+    @Test
     public void testUnnomralizedHierarchy() {
         Module a = new Module("a");
         Module b = new Module("b");
@@ -143,6 +157,7 @@ public class ModuleSorterTest extends AbstractOrderTestCase {
     /**
      * Sorts a dependency graph that has a cycle.
      */
+    @Test
     public void testCycle() {
         Module a = new Module("a");
         Module b = new Module("b");
@@ -158,6 +173,7 @@ public class ModuleSorterTest extends AbstractOrderTestCase {
      * Sorts a graph that has a root object which itself has a dependency an
      * unknown module.
      */
+    @Test
     public void testUndeclaredRootModule() {
         Module a = new Module("a");
         Module b = new Module("b");

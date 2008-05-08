@@ -18,8 +18,9 @@ package ch.elca.el4j.tests.services.monitoring.jmx;
 
 import java.util.Random;
 
+import org.junit.Test;
+
 import ch.elca.el4j.services.monitoring.jmx.display.HtmlTabulator;
-import junit.framework.TestCase;
 
 /**
  * JUnit tests for HtmlTabulator.
@@ -33,8 +34,9 @@ import junit.framework.TestCase;
  *
  * @author David Bernhard (DBD)
  */
-public class HtmlTabulatorTest extends TestCase {
+public class HtmlTabulatorTest {
 
+    @Test
     public void testSimpleTableGeneration() {
         Random generator = new Random();
         

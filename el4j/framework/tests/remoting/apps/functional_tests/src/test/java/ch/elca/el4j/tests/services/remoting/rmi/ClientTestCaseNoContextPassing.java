@@ -16,16 +16,12 @@
  */
 package ch.elca.el4j.tests.services.remoting.rmi;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Calendar;
-
-import javax.sql.DataSource;
-
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
 
@@ -39,7 +35,7 @@ import ch.elca.el4j.tests.services.remoting.loadbalancing.common.BusinessObject;
  * 
  * @author Stefan Pleisch (SPL)
  */
-public class ClientTestCaseNoContextPassing extends TestCase {
+public class ClientTestCaseNoContextPassing {
 
     public ClientTestCaseNoContextPassing() {
         super();
@@ -56,6 +52,7 @@ public class ClientTestCaseNoContextPassing extends TestCase {
      * 
      * @see #THROW_IDEMPOTENTINVOCATION_EXCEPTION
      */
+    @Test
     public void testNextProtocol() {
         getLog().debug("Starting test 'testIdempotence'....");
         try {

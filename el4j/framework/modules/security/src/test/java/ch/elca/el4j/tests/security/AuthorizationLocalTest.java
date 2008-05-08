@@ -16,6 +16,9 @@
  */
 package ch.elca.el4j.tests.security;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import org.acegisecurity.AccessDeniedException;
 import org.acegisecurity.AuthenticationCredentialsNotFoundException;
 import org.acegisecurity.AuthenticationException;
@@ -27,12 +30,11 @@ import org.acegisecurity.context.SecurityContextImpl;
 import org.acegisecurity.providers.TestingAuthenticationToken;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.tests.security.sample.SampleService;
-
-import junit.framework.TestCase;
 
 // Checkstyle: EmptyBlock off
 // Checkstyle: MagicNumber off
@@ -49,7 +51,7 @@ import junit.framework.TestCase;
  * 
  * @author Raphael Boog (RBO)
  */
-public class AuthorizationLocalTest extends TestCase {
+public class AuthorizationLocalTest {
     
     /** The static logger. */
     private static Log s_logger = LogFactory
@@ -78,6 +80,7 @@ public class AuthorizationLocalTest extends TestCase {
      * 
      * @throws Exception If something.
      */
+    @Test
     public void testMethodCallWithoutLogin() throws Exception {
 
         s_logger.debug("Loading Application Context.");
@@ -102,6 +105,7 @@ public class AuthorizationLocalTest extends TestCase {
      * 
      * @throws Exception If something.
      */
+    @Test
     public void testCorrectAuthorization() throws Exception {
 
         s_logger.debug("Loading Application Context.");
@@ -121,6 +125,7 @@ public class AuthorizationLocalTest extends TestCase {
      * 
      * @throws Exception If something.
      */
+    @Test
     public void testCorrectAuthorizationAfterLogoutNoAccess() throws Exception {
 
         s_logger.debug("Loading Application Context.");
@@ -149,6 +154,7 @@ public class AuthorizationLocalTest extends TestCase {
      * 
      * @throws Exception If something.
      */
+    @Test
     public void testFailedAuthorization() throws Exception {
 
         s_logger.debug("Loading Application Context.");
@@ -171,6 +177,7 @@ public class AuthorizationLocalTest extends TestCase {
      * 
      * @throws Exception If something.
      */
+    @Test
     public void testFailedAuthentication() throws Exception {
 
         s_logger.debug("Loading Application Context.");

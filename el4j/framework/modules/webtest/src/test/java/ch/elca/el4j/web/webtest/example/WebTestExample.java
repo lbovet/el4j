@@ -19,6 +19,9 @@ package ch.elca.el4j.web.webtest.example;
 import net.sourceforge.jwebunit.TestingEngineRegistry;
 import net.sourceforge.jwebunit.WebTestCase;
 
+import org.junit.Before;
+import org.junit.Test;
+
 /**
  * This class is an example for implementing web tests.
  *
@@ -36,6 +39,7 @@ public class WebTestExample extends WebTestCase {
      * Sets up the test fixture.
      * (Called before every test case method.)
      */
+    @Before
     public void setUp() {
         setTestingEngineKey(TestingEngineRegistry.TESTING_ENGINE_HTMLUNIT);
         getTestContext().setBaseUrl("http://www.elca.ch");
@@ -46,6 +50,7 @@ public class WebTestExample extends WebTestCase {
      *
      * @throws Exception If general execption occured.
      */
+    @Test
     public void testElcaURL() throws Exception {
         beginAt("/");
         assertTitleEquals("ELCA: Technology-Consulting-Innovation: "

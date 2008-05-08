@@ -17,12 +17,15 @@
 
 package ch.elca.el4j.tests.util.codingsupport;
 
+import static org.junit.Assert.fail;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-import ch.elca.el4j.util.codingsupport.Reject;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+import ch.elca.el4j.util.codingsupport.Reject;
 
 // Checkstyle: EmptyBlock off
 
@@ -39,11 +42,12 @@ import junit.framework.TestCase;
  *
  * @author Andreas Bur (ABU)
  */
-public class RejectTest extends TestCase {
+public class RejectTest {
 
     /**
      * Checks {@link Reject#ifNull(Object)}.
      */
+    @Test
     public void testIfNull() {
         try {
             Reject.ifNull(null);
@@ -60,6 +64,7 @@ public class RejectTest extends TestCase {
      *  Check with a subclass of RuntimeException
      * Checks {@link Reject#ifNull(Object)}.
      */
+    @Test
     public void testIfNull2() {
         try {
             Reject.ifNull(null, IllegalArgumentException.class, "My String");
@@ -85,6 +90,7 @@ public class RejectTest extends TestCase {
     /**
      * Checks {@link Reject#ifEmpty(Collection)}.
      */
+    @Test
     @SuppressWarnings("unchecked")
     public void testIfEmptyCollection() {
         try {
@@ -107,6 +113,7 @@ public class RejectTest extends TestCase {
     /**
      * Checks {@link Reject#ifEmpty(String)}.
      */
+    @Test
     public void testIfEmptyString() {
         try {
             Reject.ifEmpty((String) null);

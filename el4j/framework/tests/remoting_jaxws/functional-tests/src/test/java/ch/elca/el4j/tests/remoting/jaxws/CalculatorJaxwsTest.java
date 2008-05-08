@@ -19,6 +19,9 @@ package ch.elca.el4j.tests.remoting.jaxws;
 //Checkstyle: EmptyBlock off
 //Checkstyle: MagicNumber off
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +29,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -34,8 +40,6 @@ import ch.elca.el4j.tests.remoting.jaxws.service.Calculator;
 import ch.elca.el4j.tests.remoting.jaxws.service.CalculatorException;
 import ch.elca.el4j.tests.remoting.jaxws.service.CalculatorValueObject;
 import ch.elca.el4j.tests.remoting.jaxws.service.SomeIntValue;
-
-import junit.framework.TestCase;
 
 /**
  * 
@@ -52,7 +56,7 @@ import junit.framework.TestCase;
  * @author Philippe Jacot (PJA)
  * @author Stefan Wismer (SWI)
  */
-public class CalculatorJaxwsTest extends TestCase {
+public class CalculatorJaxwsTest {
     /**
      * Is the delta to doubles can have to be equal.
      */
@@ -66,6 +70,7 @@ public class CalculatorJaxwsTest extends TestCase {
     /**
      * {@inheritDoc}
      */
+    @Before
     public void setUp() {
         m_appContext 
             = new ModuleApplicationContext(
@@ -78,14 +83,15 @@ public class CalculatorJaxwsTest extends TestCase {
      * 
      * {@inheritDoc}
      */
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         m_appContext.close();
-        super.tearDown();
     }
 
     /**
      * This test tests the area calulation method.
      */
+    @Test
     public void testAreaCalculation() {
         final double VALUE_A = 2.3;
         final double VALUE_B = 5.7;
@@ -98,6 +104,7 @@ public class CalculatorJaxwsTest extends TestCase {
     /**
      * This test tests the exception handling.
      */
+    @Test
     public void testExceptionBehaviour() {
         // Checkstyle: EmptyBlock off
         try {
@@ -111,6 +118,7 @@ public class CalculatorJaxwsTest extends TestCase {
     /**
      * This test tests the counting of uppercase letters.
      */
+    @Test
     public void testNumberOfUppercaseCharacters() {
         String message = "Hans Müller likes to pay with Euro.";
         int numberOfUppercaseLetters = 3;
@@ -123,6 +131,7 @@ public class CalculatorJaxwsTest extends TestCase {
      * This test is used to test if a value object will be serialized and
      * deserialized correctly.
      */
+    @Test
     public void testEchoOfValueObject() {
         final int MY_INT = 449312154;
         final long MY_LONG = 3121846575454654L;

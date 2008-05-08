@@ -19,13 +19,15 @@ package ch.elca.el4j.tests.tcpforwarder;
 import java.net.Inet4Address;
 import java.net.InetSocketAddress;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import ch.elca.el4j.services.tcpforwarder.TcpForwarder;
-
 import net.sourceforge.jwebunit.TestingEngineRegistry;
 import net.sourceforge.jwebunit.WebTestCase;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.junit.Before;
+import org.junit.Test;
+
+import ch.elca.el4j.services.tcpforwarder.TcpForwarder;
 
 /**
  * This class tests the tcp redirector to connect to a web page.
@@ -84,6 +86,7 @@ public class WebpageTest extends WebTestCase {
     /**
      * set up function for WebTests using JWebUnit.
      */
+    @Before
     public void setUp() {
         setTestingEngineKey(TestingEngineRegistry.TESTING_ENGINE_HTMLUNIT);
         getTestContext().setBaseUrl("http://localhost:" + INPUT_PORT);    
@@ -101,6 +104,7 @@ public class WebpageTest extends WebTestCase {
      * 
      * @throws Exception
      */
+    @Test
     public void testForwarder() throws Exception {
         TcpForwarder tf = null;
         try {

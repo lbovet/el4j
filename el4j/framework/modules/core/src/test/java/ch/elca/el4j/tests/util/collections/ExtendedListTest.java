@@ -16,14 +16,20 @@
  */
 package ch.elca.el4j.tests.util.collections;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.NoSuchElementException;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import ch.elca.el4j.util.collections.TransformedList;
 import ch.elca.el4j.util.collections.helpers.Filter;
 import ch.elca.el4j.util.collections.helpers.Function;
 import ch.elca.el4j.util.collections.impl.ExtendedArrayList;
-
-import junit.framework.TestCase;
 
 // Checkstyle: MagicNumber off
 // Checkstyle: EmptyBlock off
@@ -40,7 +46,7 @@ import junit.framework.TestCase;
  *
  * @author Adrian Moos (AMS)
  */
-public class ExtendedListTest extends TestCase {
+public class ExtendedListTest {
     /***/
     private ExtendedArrayList<Integer> m_z, m_a, m_b, m_c;
     /***/
@@ -49,8 +55,8 @@ public class ExtendedListTest extends TestCase {
     private TransformedList<Integer, String> m_s; 
     
     /** {@inheritDoc} */
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         m_z = new ExtendedArrayList<Integer>(1, 2, 3, 4, 5);
         m_a = new ExtendedArrayList<Integer>(1, 2, 3, 4, 6, 5);
         m_b = new ExtendedArrayList<Integer>(1, 2, 3, 4, 5, 6);
@@ -64,6 +70,7 @@ public class ExtendedListTest extends TestCase {
     }  
     
     /***/
+    @Test
     public void testEquals() {
         assertFalse(m_z.equals(m_a));
         assertFalse(m_z.equals(m_b));
@@ -71,6 +78,7 @@ public class ExtendedListTest extends TestCase {
     }
     
     /***/
+    @Test
     public void testRemove() {
         m_a.remove((Integer) 6);
         m_b.remove((Integer) 6);
@@ -78,12 +86,14 @@ public class ExtendedListTest extends TestCase {
     }
     
     /***/
+    @Test
     public void testAdd() {
         m_z.add(6);
         assertEquals(m_z, m_b);
     }
     
     /***/
+    @Test
     public void testOrderLike() {
         try {
             m_z.orderLike(m_c);
@@ -97,6 +107,7 @@ public class ExtendedListTest extends TestCase {
     }
     
     /** Test orderLike on a transformed list. */
+    @Test
     public void testTransformedOrderLike() {
         m_s.orderLike(m_n);
         assertEquals(
@@ -107,6 +118,7 @@ public class ExtendedListTest extends TestCase {
     }
     
     /***/
+    @Test
     public void testFiltered() {
         assertEquals(
             m_a.filtered(new Filter<Integer>() {

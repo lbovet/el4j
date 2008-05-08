@@ -16,6 +16,8 @@
  */
 package ch.elca.el4j.tests.refdb.idfixer;
 
+import org.junit.Before;
+
 import ch.elca.el4j.services.persistence.hibernate.HibernateProxyAwareIdentityFixer;
 
 /**
@@ -53,7 +55,8 @@ public class HibernateIdentityFixerTest extends AbstractIdentityFixerTest {
 
     /** {@inheritDoc} */
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         m_fixer = new HibernateProxyAwareIdentityFixer();
         super.setUp();
     }

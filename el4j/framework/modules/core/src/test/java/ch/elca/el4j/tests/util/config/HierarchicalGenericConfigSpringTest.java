@@ -16,6 +16,9 @@
  */
 package ch.elca.el4j.tests.util.config;
 
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
@@ -67,6 +70,7 @@ public class HierarchicalGenericConfigSpringTest
     }
     
     /***/
+    @Test
     public void testMultipleParents() {
         HierarchicalGenericConfig config = (HierarchicalGenericConfig)
             m_appContext.getBean("configABCD");

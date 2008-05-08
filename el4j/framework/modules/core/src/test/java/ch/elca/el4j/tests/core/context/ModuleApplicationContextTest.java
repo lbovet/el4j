@@ -17,14 +17,15 @@
 
 package ch.elca.el4j.tests.core.context;
 
+import static org.junit.Assert.fail;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.Test;
 import org.springframework.beans.factory.BeanDefinitionStoreException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
-
-import junit.framework.TestCase;
 
 
 /**
@@ -39,7 +40,7 @@ import junit.framework.TestCase;
  * 
  * @author Raphael Boog (RBO)
  */
-public class ModuleApplicationContextTest extends TestCase {
+public class ModuleApplicationContextTest {
 
     /** The static logger. */
     private static Log s_logger 
@@ -69,6 +70,7 @@ public class ModuleApplicationContextTest extends TestCase {
      * if a NullPointerException is thrown.
      *  
      */
+    @Test
     public void testInclusiveFileNameNull() {
         // Checkstyle: EmptyBlock off
         try {
@@ -84,6 +86,7 @@ public class ModuleApplicationContextTest extends TestCase {
      * loads it into one ApplicationContext with one bean and checks if the bean
      * was loaded.
      */
+    @Test
     public void testOneInclusiveFileName() {
         ModuleApplicationContext tac 
             = new ModuleApplicationContext(m_fileName1, false);
@@ -95,6 +98,7 @@ public class ModuleApplicationContextTest extends TestCase {
      * each, loads them into one ApplicationContext and checks if the two beans
      * were loaded.
      */
+    @Test
     public void testTwoInclusiveFileNames() {
         ModuleApplicationContext tac = new ModuleApplicationContext(
                 new String[] {m_fileName1, m_fileName2 }, false);
@@ -108,6 +112,7 @@ public class ModuleApplicationContextTest extends TestCase {
      * exclusive configuration file and checks if a NullPointerException is
      * thrown.
      */
+    @Test
     public void testOneInclusiveFileNameExclusiveFileNamesIsNull() {
         // Checkstyle: EmptyBlock off
         try {
@@ -123,6 +128,7 @@ public class ModuleApplicationContextTest extends TestCase {
      * exclusive configuration file, loads them into one ApplicationContext and
      * checks if the defined bean was loaded.
      */
+    @Test
     public void testOneInclusiveFileNameExclusiveFileNamesIsEmpty() {
         ModuleApplicationContext tac = new ModuleApplicationContext(m_fileName1,
                 "", false);
@@ -136,6 +142,7 @@ public class ModuleApplicationContextTest extends TestCase {
      * thrown since the exclusive configuration file defines a bean which is not
      * in an inclusive configuration file.
      */
+    @Test
     public void testOneInclusiveFileNamesAnotherExclusiveFileName() {
         ModuleApplicationContext tac 
             = new ModuleApplicationContext(m_fileName1, m_fileName2, false);
@@ -154,6 +161,7 @@ public class ModuleApplicationContextTest extends TestCase {
      * exclusive configuration file, loads them into one ApplicationContext and
      * checks if one bean was loaded and the other not.
      */
+    @Test
     public void testTwoInclusiveFileNamesOneExclusiveFileName() {
         ModuleApplicationContext tac = new ModuleApplicationContext(
                 new String[] {m_fileName1, m_fileName2 }, m_fileName2, false);
@@ -173,6 +181,7 @@ public class ModuleApplicationContextTest extends TestCase {
      * loads them into one ApplicationContext and checks if the correct bean was
      * loaded and the three other beans were not loaded.
      */
+    @Test
     public void testAllInClasspathFileNamesMinusTwoExclusiveFileNames() {
         ModuleApplicationContext tac = new ModuleApplicationContext(
             m_allFileNamesInClasspath, 
@@ -206,6 +215,7 @@ public class ModuleApplicationContextTest extends TestCase {
      * in the classpath as exclusive configuration files, loads them into one
      * ApplicationContext and checks if no bean was loaded.
      */
+    @Test
     public void testAllInClasspathFileNamesMinusAllInClasspathFileNames() {
         ModuleApplicationContext tac = new ModuleApplicationContext(
                 m_allFileNamesInClasspath, m_allFileNamesInClasspath, false);
@@ -242,6 +252,7 @@ public class ModuleApplicationContextTest extends TestCase {
      * in one of the filepaths as exclusive configuration files, loads them into
      * one ApplicationContext and checks if the correct bean was loaded.
      */
+    @Test
     public void testAllInBothClasspathsMinusAllInFilepath1() {
         ModuleApplicationContext tac = new ModuleApplicationContext(
             m_allFileNamesInBothClasspaths, m_allFileNamesInClasspath, false);
@@ -280,6 +291,7 @@ public class ModuleApplicationContextTest extends TestCase {
      * loaded and no exception was thrown. However, a logger warning should have
      * been displayed.
      */
+    @Test
     public void testOneExistingInclusiveFileNamePlusOneNonExistingFileName() {
         ModuleApplicationContext tac = new ModuleApplicationContext(
             new String[] {m_fileName1, "non existing file path"}, false);
@@ -291,6 +303,7 @@ public class ModuleApplicationContextTest extends TestCase {
      * allowBeanOverridingDefinition to false and checks if a
      * BeanDefinitionStoreException is thrown.
      */
+    @Test
     public void testBeanDefinitionOverridingIsFalse() {
         // Checkstyle: EmptyBlock off
         try {
@@ -307,6 +320,7 @@ public class ModuleApplicationContextTest extends TestCase {
      * outputs, no other warn logger should appear. Especially not the one
      * saying that 'classpath*:mandatory/*.xml' was not loaded.
      */
+    @Test
     public void testMandatoryWarning() {
         s_logger.warn("There should be no message with level at least 'WARN'"
                 + "between THIS");

@@ -17,6 +17,10 @@
 
 package ch.elca.el4j.tests.core.io.support;
 
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
 import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
 
 /**
@@ -49,6 +53,7 @@ public class ManifestOrderedConfigLocationProviderTest
     /**
      * Tests whether all of the above configuration files are found.
      */
+    @Test
     public void testFindConfigFiles() {
         ManifestOrderedConfigLocationProvider provider
             = new ManifestOrderedConfigLocationProvider();

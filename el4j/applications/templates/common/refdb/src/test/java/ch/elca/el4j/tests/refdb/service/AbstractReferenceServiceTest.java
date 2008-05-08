@@ -16,6 +16,10 @@
  */
 package ch.elca.el4j.tests.refdb.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -24,6 +28,7 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.Test;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -133,6 +138,7 @@ public abstract class AbstractReferenceServiceTest
     /**
      * This test inserts a link and three keywords.
      */
+    @Test
     public void testInsertLink() {
         ReferenceService service = getReferenceService();
         KeywordDao keywordDao = getKeywordDao();
@@ -172,6 +178,7 @@ public abstract class AbstractReferenceServiceTest
      * the link and some are not. After that the link will be get by primary key
      * and compared with the added one. At the end the link will be removed.
      */
+    @Test
     public void testInsertGetRemoveLink() {
         ReferenceService service = getReferenceService();
         KeywordDao keywordDao = getKeywordDao();
@@ -250,6 +257,7 @@ public abstract class AbstractReferenceServiceTest
      * will be replaced by another. Afterwards changes will be saved to
      * database.
      */
+    @Test
     public void testInsertChangeLink() {
         ReferenceService service = getReferenceService();
         KeywordDao keywordDao = getKeywordDao();
@@ -350,6 +358,7 @@ public abstract class AbstractReferenceServiceTest
     /**
      * This test adds two links and gets them.
      */
+    @Test
     public void testGetAllLinks() {
         ReferenceService service = getReferenceService();
         Link link = new Link();
@@ -408,6 +417,7 @@ public abstract class AbstractReferenceServiceTest
     /**
      * This test inserts a formal publication and three keywords.
      */
+    @Test
     public void testInsertFormalPublication() {
         ReferenceService service = getReferenceService();
         KeywordDao keywordDao = getKeywordDao();
@@ -450,6 +460,7 @@ public abstract class AbstractReferenceServiceTest
      * formal publication will be get by primary key and compared with the added
      * one. At the end the formal publication will be removed.
      */
+    @Test
     public void testInsertGetRemoveFormalPublication() {
         ReferenceService service = getReferenceService();
         KeywordDao keywordDao = getKeywordDao();
@@ -522,6 +533,7 @@ public abstract class AbstractReferenceServiceTest
      * This formal publication get a new name and one keyword will be replaced
      * by another. Afterwards changes will be saved to database.
      */
+    @Test
     public void testInsertChangeFormalPublication() {
         ReferenceService service = getReferenceService();
         KeywordDao keywordDao = getKeywordDao();
@@ -625,6 +637,7 @@ public abstract class AbstractReferenceServiceTest
     /**
      * This test adds two formal publications and gets them.
      */
+    @Test
     public void testGetAllFormalPublications() {
         ReferenceService service = getReferenceService();
         FormalPublication formalPublication = new FormalPublication();
@@ -692,6 +705,7 @@ public abstract class AbstractReferenceServiceTest
     /**
      * This test inserts a book and three keywords.
      */
+    @Test
     public void testInsertBook() {
         ReferenceService service = getReferenceService();
         KeywordDao keywordDao = getKeywordDao();
@@ -734,6 +748,7 @@ public abstract class AbstractReferenceServiceTest
      * the book some are not. After that the book will be get by primary key and
      * compared with the added one. At the end the book will be removed.
      */
+    @Test
     public void testInsertGetRemoveBook() {
         ReferenceService service = getReferenceService();
         KeywordDao keywordDao = getKeywordDao();
@@ -803,6 +818,7 @@ public abstract class AbstractReferenceServiceTest
      * will be replaced by another. Afterwards changes will be saved to
      * database.
      */
+    @Test
     public void testInsertChangeBook() {
         ReferenceService service = getReferenceService();
         KeywordDao keywordDao = getKeywordDao();
@@ -903,6 +919,7 @@ public abstract class AbstractReferenceServiceTest
     /**
      * This test adds two books and gets them.
      */
+    @Test
     public void testGetAllBooks() {
         ReferenceService service = getReferenceService();
         Book book = new Book();
@@ -966,6 +983,7 @@ public abstract class AbstractReferenceServiceTest
     /**
      * Test tries to add incomplete references.
      */
+    @Test
     public void testAddingIncompleteReferences() {
         ReferenceService service = getReferenceService();
         Link link = new Link();
@@ -1000,6 +1018,7 @@ public abstract class AbstractReferenceServiceTest
      * This test tries out many possible combinations of searching on
      * references.
      */
+    @Test
     public void testSearchReferences() {
         ReferenceService service = getReferenceService();
         KeywordDao dao = getKeywordDao();
@@ -1287,6 +1306,7 @@ public abstract class AbstractReferenceServiceTest
      * modified and saved. The file will be get as normal file and as
      * FileDescriptorView.
      */
+    @Test
     public void testInsertModifyFileWithFileDescriptorView() {
         int fakeReferenceKey = addDefaultFakeReference();
         
@@ -1323,6 +1343,7 @@ public abstract class AbstractReferenceServiceTest
      * Will try to add some incomplete file by using the special method 
      * {@link ReferenceService#saveFileAndReturnFileDescriptorView(File)}.
      */
+    @Test
     public void testAddingIncompleteFileByFileDescriptorViewMethod() {
         ReferenceService service = getReferenceService();
         
@@ -1350,6 +1371,7 @@ public abstract class AbstractReferenceServiceTest
      * This test will be executed on service layer level, because transaction
      * attributes are defined on service layer.
      */
+    @Test
     public void testIncompleteAnnotationInsertion() {
         int fakeReferenceKey = addDefaultFakeReference();
        

@@ -16,6 +16,10 @@
  */
 package ch.elca.el4j.tests.refdb.dao;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -26,6 +30,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -71,6 +76,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
     /**
      * This test inserts an annotation.
      */
+    @Test
     public void testInsertAnnotation() {
         int fakeReferenceKey = addDefaultFakeReference();
         
@@ -87,6 +93,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
      * This test inserts an annotation and looks up for it by annotation's
      * primary key.
      */
+    @Test
     public void testInsertGetAnnotationByKey() {
         int fakeReferenceKey = addDefaultFakeReference();
         
@@ -111,6 +118,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
     /**
      * This test inserts an annotation and looks up for it by annotator's name.
      */
+    @Test
     public void testInsertGetAnnotationByAnnotator() {
         int fakeReferenceKey = addDefaultFakeReference();
         
@@ -140,6 +148,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
      * the number of annotations, should be two, and if they really are these
      * which it has added.
      */
+    @Test
     public void testInsertGetAllAnnotations() {
         int fakeReferenceKey = addDefaultFakeReference();
         
@@ -177,6 +186,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
      * This test inserts an annotation and removes it. Afterwards that, the
      * annotation should not be reachable.
      */
+    @Test
     public void testInsertRemoveAnnotation() {
         int fakeReferenceKey = addDefaultFakeReference();
         
@@ -204,6 +214,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
      * be able to remove this annotation, because removing is not under
      * optimistic locking control.
      */
+    @Test
     public void testInsertModificateRemoveAnnotationByTwoPersons() {
         int fakeReferenceKey = addDefaultFakeReference();
         
@@ -239,6 +250,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
      * This test inserts, gets and removes an annotation with a content size of
      * maximal 1MB.
      */
+    @Test
     public void testInsertGetRemoveAnnotationWithMaxContentSize1MB() {
         final int MAX_CLOB_SIZE = 1024 * 1024;
         String filepath = "etc/testfiles/gulliverstravels.txt";
@@ -322,6 +334,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
     /**
      * This test inserts an file.
      */
+    @Test
     public void testInsertFile() {
         int fakeReferenceKey = addDefaultFakeReference();
         
@@ -338,6 +351,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
     /**
      * This test inserts a file and looks up for it by file's primary key.
      */
+    @Test
     public void testInsertGetFileByKey() {
         int fakeReferenceKey = addDefaultFakeReference();
         
@@ -357,6 +371,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
     /**
      * This test inserts a file and looks up for it by file's name.
      */
+    @Test
     public void testInsertGetFileByName() {
         int fakeReferenceKey = addDefaultFakeReference();
         
@@ -381,6 +396,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
      * number of annotations, should be two, and if they really are these which
      * it has added.
      */
+    @Test
     public void testInsertGetAllFiles() {
         int fakeReferenceKey = addDefaultFakeReference();
         
@@ -414,6 +430,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
      * This test inserts a file and removes it. Afterwards that, the file should
      * not be reachable.
      */
+    @Test
     public void testInsertRemoveFile() {
         int fakeReferenceKey = addDefaultFakeReference();
         
@@ -442,6 +459,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
      * to remove this file, because removing is not under optimistic locking
      * control.
      */
+    @Test
     public void testInsertModificateRemoveFileByTwoPersons() {
         int fakeReferenceKey = addDefaultFakeReference();
         
@@ -477,6 +495,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
     /**
      * This test inserts, gets and removes a file with max content size 1MB.
      */
+    @Test
     public void testInsertGetRemoveFileWithMaxContentSize1MB() {
         final int MAX_BLOB_SIZE = 1024 * 1024;
         String filepath = "etc/testfiles/iBATIS-SqlMaps-2.pdf";
@@ -492,6 +511,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
      * FormalPublicationDAO must only return the FormalPublication
      * object, not the Reference and not the Bool
      */
+    @Test
     public void testInsertGetFormalPublication() {
         this.addFakeReference("Testref");
         

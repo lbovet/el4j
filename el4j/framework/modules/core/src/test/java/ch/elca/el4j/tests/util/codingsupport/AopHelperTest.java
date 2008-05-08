@@ -1,12 +1,15 @@
 package ch.elca.el4j.tests.util.codingsupport;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
-
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+import org.junit.Test;
 import org.springframework.aop.support.DelegatingIntroductionInterceptor;
 
 import ch.elca.el4j.tests.util.codingsupport.testclasses.A;
@@ -17,9 +20,9 @@ import ch.elca.el4j.util.codingsupport.AopHelper;
 /**
  * This class shows some exceptions on stdout (for information purposes) 
  */
-public class AopHelperTest extends TestCase {
+public class AopHelperTest {
 
-	
+    @Test
 	public void testIsProxied() {
 		DefaultPerson p = new DefaultPerson();
 		
@@ -30,6 +33,7 @@ public class AopHelperTest extends TestCase {
 		assertTrue(AopHelper.isProxied(p));
 	}
 
+    @Test
 	public void testAdviceAddingOrder() {
 		// for ordering tests we use this global list
 		List<Integer> globalList = new ArrayList<Integer>();	
@@ -50,7 +54,7 @@ public class AopHelperTest extends TestCase {
 	
 	// TODO add test that tests the MixinMixer with a spring config file/ auto proxy creator	
 	
-	
+    @Test
 	public void testAopHelperAddAdvice() {
 			List<Integer> globalList = new ArrayList<Integer>();			
 		
@@ -95,7 +99,8 @@ public class AopHelperTest extends TestCase {
 //			System.out.println(DataDumper.dump(p.getClass().getInterfaces() ));		
 		}
 
-		public void testLightAopHelperUsage() {
+    @Test
+	public void testLightAopHelperUsage() {
 			DefaultPerson p = new DefaultPerson();
 			
 			p = AopHelper.addAdvice(p, new MethodInterceptor(){
