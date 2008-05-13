@@ -50,7 +50,6 @@ public final class MainStandalone {
             = "classpath:scenarios/springrcp/refdb/startup/*.xml";
         String[] applicationContextPaths = {
             "classpath*:mandatory/*.xml",
-            "classpath*:mandatory/refdb/*.xml",
             "classpath*:scenarios/db/raw/*.xml",
             "classpath*:scenarios/dataaccess/hibernate/*.xml",
             "classpath*:scenarios/dataaccess/hibernate/refdb/*.xml",

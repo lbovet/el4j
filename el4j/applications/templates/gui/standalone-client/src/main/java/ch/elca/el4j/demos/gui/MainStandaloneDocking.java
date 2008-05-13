@@ -48,17 +48,6 @@ public final class MainStandaloneDocking {
 
             PlasticLookAndFeel.setPlasticTheme(new ExperienceBlue());
 
-            /* Simplified. (DBD)
-            String[] applicationContextPaths = {
-                "classpath*:mandatory/*.xml",
-                "classpath*:mandatory/refdb/*.xml",
-                "classpath*:scenarios/db/raw/*.xml",
-                "classpath*:scenarios/dataaccess/hibernate/*.xml",
-                "classpath*:scenarios/dataaccess/hibernate/refdb/*.xml",
-                "classpath*:optional/interception/transactionJava5Annotations.xml",
-                "classpath:scenarios/swing/demo/*.xml"};
-            */
-            
             String[] applicationContextPaths = {
                 "classpath*:mandatory/*.xml",
                 "classpath*:BasicHibernateInfrastructureConfig.xml",

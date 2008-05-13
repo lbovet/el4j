@@ -44,14 +44,10 @@ public final class ApplicationStarter {
      * Spring config locations.
      */
     private static final String[] CONFIG_LOCATIONS = {
+        // Mandatory configuration of all modules
+        "classpath*:mandatory/*.xml",
         // Database access (connection properties, e.g)
         "classpath*:scenarios/db/raw/*.xml",
-        // Application context config
-        "classpath*:mandatory/context/*.xml",
-        // Keyword service and dao config
-        "classpath*:mandatory/keyword/*.xml",
-        // Reference service and dao config
-        "classpath*:mandatory/refdb/*.xml",
         // Module Hibernate config
         "classpath*:scenarios/dataaccess/hibernate/*.xml",
         // Keyword dao config (session factory)

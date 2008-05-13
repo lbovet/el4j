@@ -52,7 +52,7 @@ import org.springframework.web.context.ContextLoaderListener;
  *       &lt;/description&gt;
  *       &lt;param-name&gt;exclusiveLocations&lt;/param-name&gt;
  *       &lt;param-value&gt;
- *           mandatory/keyword/keyword-core-config.xml
+ *           mandatory/keyword-core-config.xml
  *       &lt;/param-value&gt;
  *   &lt;/context-param&gt;
  *   

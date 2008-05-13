@@ -3,10 +3,10 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
-    <!-- $Revision$ -->
-    <!-- $URL$ -->
-    <!-- $Date$ -->
-    <!-- $Author$ -->
+    <!-- $Revision: 2908 $ -->
+    <!-- $URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/applications/templates/common/refdb/src/main/resources/mandatory/refdb/refdb-core-service-config.xml $ -->
+    <!-- $Date: 2008-04-28 16:36:30 +0200 (Mon, 28 Apr 2008) $ -->
+    <!-- $Author: swismer $ -->
 	
 	<!-- Allows to register DAOs. Automatically collects all GenericDaos from the application context -->		
 	<bean id="daoRegistry"

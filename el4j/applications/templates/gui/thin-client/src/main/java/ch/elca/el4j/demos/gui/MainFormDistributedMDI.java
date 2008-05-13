@@ -62,14 +62,6 @@ public final class MainFormDistributedMDI {
 
             PlasticLookAndFeel.setPlasticTheme(new ExperienceBlue());
 
-            /*
-            String[] applicationContextPaths = {
-                "classpath*:mandatory/*.xml",
-                "classpath*:mandatory/refdb/*.xml",
-                "classpath:scenarios/remoting/client/*.xml",
-                "classpath:scenarios/swing/demo/*.xml"};
-            */
-            
             String[] applicationContextPaths = {
                 "classpath*:mandatory/*.xml",
                 "classpath*:BasicHibernateInfrastructureConfig.xml",
@@ -82,7 +74,7 @@ public final class MainFormDistributedMDI {
             
             contextConfig.setInclusiveConfigLocations(applicationContextPaths);
             contextConfig.setExclusiveConfigLocations(new String[] {
-                "classpath*:mandatory/refdb/refdb-core-service-config.xml"});
+                "classpath*:mandatory/refdb-core-service-config.xml"});
             contextConfig.setAllowBeanDefinitionOverriding(true);
 
 

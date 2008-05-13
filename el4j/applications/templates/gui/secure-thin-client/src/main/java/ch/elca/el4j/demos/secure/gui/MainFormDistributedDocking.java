@@ -50,7 +50,6 @@ public final class MainFormDistributedDocking {
 
             String[] applicationContextPaths = {
                 "classpath*:mandatory/*.xml",
-                "classpath*:mandatory/refdb/*.xml",
                 "classpath:scenarios/remoting/client/*.xml",
                 "classpath:scenarios/swing/demo/*.xml"};
             
@@ -59,7 +58,7 @@ public final class MainFormDistributedDocking {
             
             contextConfig.setInclusiveConfigLocations(applicationContextPaths);
             contextConfig.setExclusiveConfigLocations(new String[] {
-                "classpath*:mandatory/refdb/refdb-core-service-config.xml"});
+                "classpath*:mandatory/refdb-core-service-config.xml"});
             contextConfig.setAllowBeanDefinitionOverriding(true);
 
 
