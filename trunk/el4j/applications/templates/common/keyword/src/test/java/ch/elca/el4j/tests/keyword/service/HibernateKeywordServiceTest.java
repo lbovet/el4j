@@ -38,7 +38,6 @@ public class HibernateKeywordServiceTest
     protected String[] getIncludeConfigLocations() {
         return new String[] {
             "classpath*:mandatory/*.xml",
-            "classpath*:mandatory/keyword/*.xml",
             "classpath*:scenarios/db/raw/*.xml",
             "classpath*:scenarios/dataaccess/hibernate/*.xml",
             "classpath*:scenarios/dataaccess/hibernate/keyword/*.xml",

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision: 2908 $ -->
+    <!-- $URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/applications/templates/common/keyword/src/main/resources/mandatory/keyword/keyword-core-service-config.xml $ -->
+    <!-- $Date: 2008-04-28 16:36:30 +0200 (Mon, 28 Apr 2008) $ -->
+    <!-- $Author: swismer $ -->
+
+	<!-- Allows to register DAOs. Automatically collects all GenericDaos from the application context -->		
+	<bean id="daoRegistry"
+		class="ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry" />
+	
+    <bean id="keywordService"  
+         class="ch.elca.el4j.apps.keyword.service.impl.DefaultKeywordService">
+        <property name="daoRegistry">
+             <ref bean="daoRegistry"/>
+         </property>     
+    </bean>
+    
+</beans>    

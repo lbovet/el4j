@@ -37,7 +37,6 @@ public class SqlMapsKeywordServiceTest extends AbstractKeywordServiceTest {
     protected String[] getIncludeConfigLocations() {
         return new String[] {
             "classpath*:mandatory/*.xml",
-            "classpath*:mandatory/keyword/*.xml",
             "classpath*:scenarios/db/raw/*.xml",
             "classpath*:scenarios/dataaccess/ibatis/*.xml",
             "classpath*:scenarios/dataaccess/ibatis/keyword/*.xml",

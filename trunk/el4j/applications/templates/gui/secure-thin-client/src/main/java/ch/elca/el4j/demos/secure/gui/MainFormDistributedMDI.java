@@ -65,7 +65,6 @@ public final class MainFormDistributedMDI {
           
             String[] applicationContextPaths = {
                 "classpath*:mandatory/*.xml",
-                "classpath*:mandatory/refdb/*.xml",
                 "classpath*:optional/security-client.xml",
                 "classpath*:scenarios/securityscope/distributed-security"
                     + "-scope-client.xml",
@@ -81,7 +80,7 @@ public final class MainFormDistributedMDI {
 
             contextConfig.setInclusiveConfigLocations(applicationContextPaths);
             contextConfig.setExclusiveConfigLocations(new String[] {
-                "classpath*:mandatory/refdb/refdb-core-service-config.xml"});
+                "classpath*:mandatory/refdb-core-service-config.xml"});
             contextConfig.setAllowBeanDefinitionOverriding(true);
 
             GUIApplication.launch(MainFormMDI.class, args, contextConfig);
