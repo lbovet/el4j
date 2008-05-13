@@ -8,6 +8,10 @@ if [ $# -lt 1 ] ; then
 	exit 0
 fi
 
+# Delete the db2 database prior to building.
+echo Cleaning db2 ...
+rm -rf ~/el4j/hudson_build_workspaces/tools/derby/derby-databases/*
+
 case $1 in
 	"external_nightly")
 		cd external
