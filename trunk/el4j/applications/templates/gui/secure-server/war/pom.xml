@@ -44,12 +44,6 @@
 		<dependency>
 			<groupId>ch.elca.el4j.applications</groupId>
 			<artifactId>swing-demo-secure-server-jar</artifactId>
-						<exclusions>
-				<exclusion>
-					<groupId>ch.elca.el4j.modules</groupId>
-					<artifactId>module-jmx</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>ch.elca.el4j.applications</groupId>

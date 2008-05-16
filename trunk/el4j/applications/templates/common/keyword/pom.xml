@@ -76,16 +76,15 @@
 			<type>jar</type>
 		</dependency>
 		<!-- <dependency>
-			<groupId>com.p6spy</groupId>
+			<groupId>p6spy</groupId>
 			<artifactId>p6spy</artifactId>
-			<type>jar</type>
-			<version>1.0</version>
+			<version>1.3</version>
 		</dependency> -->
-<!--		<dependency>-->
-<!--			<groupId>org.oser</groupId>-->
-<!--			<artifactId>datadumper</artifactId>-->
-<!--			<version>0.9</version>-->
-<!--		</dependency>-->
+		<!--	<dependency>
+			<groupId>org.oser</groupId>
+			<artifactId>datadumper</artifactId>
+			<version>0.9</version>
+		</dependency> -->
 		<!-- Dependency to hibernate due to hibernate annotations. -->
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
