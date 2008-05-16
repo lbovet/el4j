@@ -211,7 +211,50 @@ public class GenericHibernateDao<T, ID extends Serializable>
             = getConvenienceHibernateTemplate();
 
         return template.findCountByCriteria(hibernateCriteria);
-    }    
+    }
+    
+    /**
+     * @see ConvenienceHibernateTemplate#findByCriteria(DetachedCriteria)
+     */
+    @SuppressWarnings("unchecked")
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public List<T> findByCriteria(DetachedCriteria hibernateCriteria)
+        throws DataAccessException {
+        
+        ConvenienceHibernateTemplate template
+            = getConvenienceHibernateTemplate();
+        
+        return template.findByCriteria(hibernateCriteria);
+    }
+    
+    /**
+     * @see ConvenienceHibernateTemplate#findByCriteria(DetachedCriteria, int, int)
+     */
+    @SuppressWarnings("unchecked")
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public List<T> findByCriteria(DetachedCriteria hibernateCriteria,
+        int firstResult, int maxResults) throws DataAccessException {
+        
+        ConvenienceHibernateTemplate template
+            = getConvenienceHibernateTemplate();
+        
+        return template.findByCriteria(hibernateCriteria,
+            firstResult, maxResults);
+    }
+    
+    /**
+     * @see ConvenienceHibernateTemplate#findCountByCriteria(DetachedCriteria)
+     */
+    @SuppressWarnings("unchecked")
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public int findCountByCriteria(DetachedCriteria hibernateCriteria)
+        throws DataAccessException {
+        
+        ConvenienceHibernateTemplate template
+            = getConvenienceHibernateTemplate();
+
+        return template.findCountByCriteria(hibernateCriteria);
+    }
     
     /**
      * {@inheritDoc}
@@ -224,6 +267,23 @@ public class GenericHibernateDao<T, ID extends Serializable>
         getConvenienceHibernateTemplate().saveOrUpdateStrong(entity, 
             getPersistentClassName());
         return entity;
+    }
+    
+    /**
+     * @param entity    The domain object to save or update
+     * @return          The saved or updated object
+     * @throws DataAccessException
+     * @throws DataIntegrityViolationException
+     * @throws OptimisticLockingFailureException
+     */
+    @ReturnsUnchangedParameter
+    @SuppressWarnings("unchecked")
+    @Transactional(propagation = Propagation.REQUIRED)
+    public T saveOrUpdateAndFlush(T entity) throws DataAccessException,
+        DataIntegrityViolationException, OptimisticLockingFailureException {
+        T tmp = saveOrUpdate(entity);
+        flush();
+        return tmp;
     }
 
     /**
