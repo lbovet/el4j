@@ -75,12 +75,12 @@
 			<artifactId>module-env</artifactId>
 			<type>jar</type>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.p6spy</groupId>
 			<artifactId>p6spy</artifactId>
 			<type>jar</type>
 			<version>1.0</version>
-		</dependency>
+		</dependency> -->
 <!--		<dependency>-->
 <!--			<groupId>org.oser</groupId>-->
 <!--			<artifactId>datadumper</artifactId>-->
