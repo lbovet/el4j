@@ -54,6 +54,7 @@ import ch.elca.el4j.demos.gui.events.ReferenceUpdateEvent;
 import ch.elca.el4j.demos.gui.events.SearchRefDBEvent;
 import ch.elca.el4j.demos.model.ServiceBroker;
 import ch.elca.el4j.gui.swing.GUIApplication;
+import ch.elca.el4j.gui.swing.cookswing.binding.Bindable;
 import ch.elca.el4j.gui.swing.wrapper.AbstractWrapperFactory;
 import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
 import ch.elca.el4j.services.search.QueryObject;
@@ -71,7 +72,7 @@ import ch.elca.el4j.services.search.criterias.LikeCriteria;
  *
  * @author Stefan Wismer (SWI)
  */
-public class RefDBDemoForm extends ch.elca.el4j.demos.gui.RefDBDemoForm {
+public class RefDBDemoForm extends JPanel implements Bindable {
     
     public RefDBDemoForm() {
         // set security token
