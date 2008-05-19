@@ -30,4 +30,20 @@
         </property>
     </bean>
     
+    <!-- Add a simple interceptor to all service methods -->
+    <bean id="traceInterceptor" class="org.springframework.aop.interceptor.SimpleTraceInterceptor"/>
+    <bean id="autoProxyCreator" class="ch.elca.el4j.core.aop.IntelligentExclusiveBeanNameAutoProxyCreator">
+        <property name="beanNames">
+            <value>*Service</value>
+        </property>        
+        <property name="interceptorNames">        
+           <list>
+                <value>traceInterceptor</value>
+           </list>
+        </property>
+        <!-- ensure that the order of this proxy creator is higher than
+           those of other proxy creators to avoid double proxying/ 
+           proxying errors -->
+        <property name="order" value="120"/>
+    </bean>
 </beans>

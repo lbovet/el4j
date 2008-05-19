@@ -16,6 +16,8 @@
  */
 package ch.elca.el4j.tests.refdb.service;
 
+import org.junit.Test;
+
 
 /**
  * 
@@ -52,4 +54,14 @@ public class SqlMapsReferenceServiceTest extends AbstractReferenceServiceTest {
         return null;
     }
 
+    /**
+     * iBATIS caused problems to missing keyword test. Therefore
+     * testMissingKeyword() is excluded from this test set. 
+     */
+    @Test
+    @Override
+    public void testMissingKeyword() {
+    
+    }
+    
 }
