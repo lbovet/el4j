@@ -16,8 +16,6 @@
  */
 package ch.elca.el4j.core.aop;
 
-import java.lang.reflect.Proxy;
-
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.adapter.AdvisorAdapterRegistry;
 import org.springframework.aop.framework.adapter.GlobalAdvisorAdapterRegistry;
@@ -77,17 +75,10 @@ public class IntelligentExclusiveBeanNameAutoProxyCreator
     protected Object createProxy(Class beanClass, String beanName, 
         Object[] specificInterceptors, TargetSource targetSource) {
         
-        try {
-        System.out.println("targetSource Proxy: " + 
-            Proxy.isProxyClass(targetSource.getTarget().getClass()));
-        } catch (Exception e) { }
-        
         Object proxy = ProxyEnricher.enrichProxy(beanClass, beanName, 
             specificInterceptors, targetSource, getInterceptorNames(), 
             getBeanFactory(), getAdvisorAdapterRegistry(),
             isApplyCommonInterceptorsFirst());
-        
-        System.out.println("Create Proxy: " + (proxy == null));
         
         // If no proxy could be enriched create a new one.
         if (proxy == null) {

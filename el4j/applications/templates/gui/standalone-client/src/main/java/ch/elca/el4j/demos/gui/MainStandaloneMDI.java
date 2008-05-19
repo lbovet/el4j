@@ -66,7 +66,8 @@ public final class MainStandaloneMDI {
                 "classpath*:mandatory/*.xml",
                 "classpath*:BasicHibernateInfrastructureConfig.xml",
                 "classpath:thin-client.xml",
-                "classpath:SpecificConfig.xml"
+                "classpath:SpecificConfig.xml",
+                "classpath*:Interceptors.xml"
             }; 
             
             ModuleApplicationContextConfiguration contextConfig
