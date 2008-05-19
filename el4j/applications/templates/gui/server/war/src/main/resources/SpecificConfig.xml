@@ -8,15 +8,6 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-2.5.xsd">
     
-    <!-- FILE refdb-service:mandatory/refdb/refdb-core-service-config.xml -->
- 
-     <bean id="referenceService"
-         class="ch.elca.el4j.apps.refdb.service.impl.DefaultReferenceService">
-         <property name="daoRegistry">
-             <ref bean="daoRegistry"/>
-         </property>
-     </bean>
-     
      <!-- FILE refdb-dao:scenarios/dataaccess/hibernate/refdb/refdb-core-hibernate-config.xml -->
  
   	 <!--  we show here one old-style dao configuration (the nicer way is to auto collect them, see the
