@@ -1395,5 +1395,67 @@ public abstract class AbstractReferenceServiceTest
         assertEquals("There is still an annotation "
             + "with annotator 'Mister Lazy' in database.", list.size(), 0);
     }
+    
+    @Test
+    /**
+     * This tests generates references and related keywords. In a second
+     * step, a service method deletes one reference and all its connected
+     * keywords. Because another reference still is related to some of
+     * now-deleted keywords, the service method should be rolled back.  
+     */
+    public void testMissingKeyword() {
+        
+        ReferenceService service = getReferenceService();
+        KeywordDao dao = getKeywordDao();
+        
+        Keyword kCls = createAndSaveKeyword(
+            "cls", "Classics.", dao);
+        Keyword kFut = createAndSaveKeyword(
+            "fut", "Future.", dao);
+        
+        Book bGolding = new Book();
+        bGolding.setName("Lord of the Flies");
+        Set<Keyword> keywordsGolding = new HashSet<Keyword>();
+        keywordsGolding.add(kFut);
+        bGolding.setKeywords(keywordsGolding);
+        bGolding = (Book) service.saveReference(bGolding);
+        
+        Book bHuxley = new Book();
+        bHuxley.setName("Brave New World");
+        Set<Keyword> keywordsHuxley = new HashSet<Keyword>();
+        keywordsHuxley.add(kCls);
+        keywordsHuxley.add(kFut);
+        bHuxley.setKeywords(keywordsHuxley);
+        bHuxley = (Book) service.saveReference(bHuxley);
+        
+        int delKey = bHuxley.getKey();
+        
+        try {
+            service.deleteReferenceAndKeywords(delKey);
+            fail("Foreign key constraint violated.");
+        } catch (DataIntegrityViolationException e) {
+            s_logger.debug("Caught data integrity violation.");
+        }
+        
+        List<Reference> referenceList = service.getAllReferences();
+        assertEquals("Reference removal was not rolled back.",
+            2, referenceList.size());
+        
+        List<Keyword> keywordList = dao.getAll();
+        assertEquals("Keyword removal was not rolled back.",
+            2, keywordList.size());
+    
+        service.deleteReference(bGolding.getKey());
+        service.deleteReference(bHuxley.getKey());
+        referenceList = service.getAllReferences();
+        assertEquals("References not properly removed.",
+            0, referenceList.size());
+        
+        service.deleteKeyword(kCls.getKey());
+        service.deleteKeyword(kFut.getKey());
+        keywordList = dao.getAll();
+        assertEquals("Keywords not properly removed.",
+            0, keywordList.size());
+    }
 }
 //Checkstyle: MagicNumber on

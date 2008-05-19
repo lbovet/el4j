@@ -16,8 +16,11 @@
  */
 package ch.elca.el4j.apps.refdb.service.impl;
 
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -26,6 +29,8 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import ch.elca.el4j.apps.keyword.dao.KeywordDao;
+import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.apps.keyword.service.impl.DefaultKeywordService;
 import ch.elca.el4j.apps.refdb.Constants;
 import ch.elca.el4j.apps.refdb.dao.BookDao;
@@ -265,5 +270,51 @@ public class DefaultReferenceService extends DefaultKeywordService
             CoreNotificationHelper.notifyOptimisticLockingFailure(
                 Constants.REFERENCE);
         }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void deleteKeyword(int key)
+        throws OptimisticLockingFailureException {
+        
+        KeywordDao dao = getKeywordDao();
+        dao.delete(key);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void deleteReferenceAndKeywords(int refKey)
+        throws DataIntegrityViolationException {
+        
+        Set<Keyword> keywordSet = new HashSet<Keyword>();
+        
+        if (getLinkDao().referenceExists(refKey)) {
+            keywordSet = getLinkDao().findById(refKey).getKeywords();
+            getLinkDao().delete(refKey);
+        } else if (getBookDao().referenceExists(refKey)) {
+            keywordSet = getBookDao().findById(refKey).getKeywords();
+            getBookDao().delete(refKey);
+        } else if (getFormalPublicationDao().referenceExists(refKey)) {
+            keywordSet = getFormalPublicationDao().findById(refKey).
+                getKeywords();
+            getFormalPublicationDao().delete(refKey);
+        } else {
+            CoreNotificationHelper.notifyOptimisticLockingFailure(
+                Constants.REFERENCE);
+        }
+        
+        KeywordDao keywordDao = (KeywordDao) getDaoRegistry()
+            .getFor(Keyword.class);
+        
+        Iterator<Keyword> it = keywordSet.iterator();
+        while (it.hasNext()) {
+            int delKey = it.next().getKey();
+            keywordDao.delete(delKey);
+        }
+        
     }
 }

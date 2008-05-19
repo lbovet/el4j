@@ -150,4 +150,31 @@ public interface ReferenceService extends KeywordService {
             OptimisticLockingFailureException.class })
     public void deleteReference(int key)
         throws DataAccessException, OptimisticLockingFailureException;
+    
+    /**
+     * Delete keyword. Primary key will be used.
+     * 
+     * @param key
+     *          Primary key of the keyword.
+     * @throws OptimisticLockingFailureException
+     *          Keyword could not be deleted.
+     */
+    @RollbackConstraint(rollbackFor = { DataAccessException.class,
+        OptimisticLockingFailureException.class })
+    public void deleteKeyword(int key)
+        throws OptimisticLockingFailureException;
+    
+    /**
+     * Deletes a reference and all its according keywords.
+     * @param refKey
+     *          Primary key of the reference.
+     * @throws DataIntegrityViolationException
+     *          If deleted keywords belong to other references.
+     */
+    @RollbackConstraint(rollbackFor = {
+        DataAccessException.class,
+        DataIntegrityViolationException.class,
+        OptimisticLockingFailureException.class })
+    public void deleteReferenceAndKeywords(int refKey)
+        throws DataIntegrityViolationException;
 }
