@@ -51,14 +51,6 @@
             <ref bean="dataSource"/>
         </property>
     </bean>
-       
-     <!-- FILE D:/Projects/EL4J/external/applications/templates/common/refdb/service/src/main/resources/mandatory/refdb/refdb-core-service-config.xml -->
-    
-    <bean id="referenceService"
-        class="ch.elca.el4j.apps.refdb.service.impl.DefaultReferenceService">
-        <property name="daoRegistry">
-            <ref bean="daoRegistry"/>
-        </property>
-    </bean>
+
     
 </beans>
