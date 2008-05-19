@@ -31,8 +31,8 @@ case $1 in
 		cd ..
 		
 		# test templates
-		./internal/etc/release-scripts/createTemplates.sh
 		./internal/etc/release-scripts/createTemplates.sh clean
+		./internal/etc/release-scripts/createTemplates.sh
 		;;
 	"internal_svn")
 		cd internal
