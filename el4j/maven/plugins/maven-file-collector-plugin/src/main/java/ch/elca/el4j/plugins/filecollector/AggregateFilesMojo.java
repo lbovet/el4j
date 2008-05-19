@@ -315,6 +315,12 @@ public class AggregateFilesMojo extends AbstractMojo {
                                 + m_rootSourceDirectoryString + "'!");
                         }
                         
+                        String relativeFilePath 
+                            = sourceFileString.substring(sourceDirectoryLength);
+                        while (relativeFilePath.startsWith("/")) {
+                            relativeFilePath = relativeFilePath.substring(1);
+                        }
+                        
                         // Check if file should be excluded.
                         boolean matchesExclude = false;
                         if (m_fileExcludePatterns != null) {
@@ -324,7 +330,7 @@ public class AggregateFilesMojo extends AbstractMojo {
                                     = m_fileExcludePatterns[i];
                                 if (pathMatcher.isPattern(excludePattern)) {
                                     matchesExclude = pathMatcher.match(
-                                        excludePattern, sourceFileString);
+                                        excludePattern, relativeFilePath);
                                 } else {
                                     File excludeFile = new File(
                                         sourceDirectory, excludePattern);
@@ -333,19 +339,13 @@ public class AggregateFilesMojo extends AbstractMojo {
                                             excludeFile.getCanonicalPath(), 
                                             File.separator, "/");
                                     matchesExclude = excludeFileString.equals(
-                                        sourceFileString);
+                                        relativeFilePath);
                                 }
                             }
                         }
                         if (matchesExclude) {
                             // Skip current resource.
                             continue;
-                        }
-
-                        String relativeFilePath 
-                            = sourceFileString.substring(sourceDirectoryLength);
-                        while (relativeFilePath.startsWith("/")) {
-                            relativeFilePath = relativeFilePath.substring(1);
                         }
 
                         copyFile(sourceFile, relativeFilePath);
@@ -380,7 +380,7 @@ public class AggregateFilesMojo extends AbstractMojo {
         
         // If only file copying is allowed skip copying of dirs.
         if (copyFilesOnly && sourceFile.isDirectory()) {
-            getLog().info("Given source '" + sourceFile.getPath() 
+            getLog().debug("Given source '" + sourceFile.getPath() 
                 + "' is a directory. Will skip copying it.");
             return null;
         }
