@@ -32,7 +32,6 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
 import ch.elca.el4j.services.persistence.generic.dao.annotations.ReturnsUnchangedParameter;
 import ch.elca.el4j.services.persistence.hibernate.criteria.CriteriaTransformer;
 import ch.elca.el4j.services.search.QueryObject;
@@ -60,7 +59,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  */
 public class GenericHibernateDao<T, ID extends Serializable>
     extends ConvenienceHibernateDaoSupport
-    implements ConvenienceGenericDao<T, ID>, InitializingBean {
+    implements ConvenienceGenericHibernateDao<T, ID>, InitializingBean {
     
     /**
      * Set up the Generic Dao. Auto-derive the parametrized type.
@@ -213,9 +212,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
         return template.findCountByCriteria(hibernateCriteria);
     }
     
-    /**
-     * @see ConvenienceHibernateTemplate#findByCriteria(DetachedCriteria)
-     */
+    /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<T> findByCriteria(DetachedCriteria hibernateCriteria)
@@ -227,9 +224,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
         return template.findByCriteria(hibernateCriteria);
     }
     
-    /**
-     * @see ConvenienceHibernateTemplate#findByCriteria(DetachedCriteria, int, int)
-     */
+    /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<T> findByCriteria(DetachedCriteria hibernateCriteria,
@@ -242,9 +237,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
             firstResult, maxResults);
     }
     
-    /**
-     * @see ConvenienceHibernateTemplate#findCountByCriteria(DetachedCriteria)
-     */
+    /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public int findCountByCriteria(DetachedCriteria hibernateCriteria)
@@ -256,9 +249,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
         return template.findCountByCriteria(hibernateCriteria);
     }
     
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @ReturnsUnchangedParameter
     @SuppressWarnings("unchecked")
     @Transactional(propagation = Propagation.REQUIRED)
@@ -286,17 +277,13 @@ public class GenericHibernateDao<T, ID extends Serializable>
         return tmp;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Transactional(propagation = Propagation.REQUIRED)
     public void delete(T entity) throws DataAccessException {
         getConvenienceHibernateTemplate().delete(entity);
     }
     
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public T refresh(T entity) throws DataAccessException, 
     DataRetrievalFailureException {
@@ -304,9 +291,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
         return entity;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Transactional(propagation = Propagation.REQUIRED)
     public void delete(ID id) throws DataAccessException {
         getConvenienceHibernateTemplate().deleteStrong(getPersistentClass(),
@@ -320,9 +305,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
         getConvenienceHibernateTemplate().deleteAll(entities);
     }
     
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteAll()
         throws OptimisticLockingFailureException, DataAccessException {
