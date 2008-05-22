@@ -64,7 +64,6 @@ public final class MainFormDistributedMDI {
 
             String[] applicationContextPaths = {
                 "classpath*:mandatory/*.xml",
-                "classpath*:BasicHibernateInfrastructureConfig.xml",
                 "classpath:thin-client.xml",
                 "classpath:SpecificConfig.xml"
             };
