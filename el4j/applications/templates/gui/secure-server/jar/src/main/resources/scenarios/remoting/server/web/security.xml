@@ -54,7 +54,7 @@
 		class="org.acegisecurity.intercept.method.aopalliance.MethodSecurityInterceptor">
 		<property name="objectDefinitionSource">
 			<value>
-				ch.elca.el4j.apps.refdb.service.ReferenceService.deleteReference=ROLE_SUPERUSER
+				ch.elca.el4j.apps.refdb.service.ReferenceService.deleteReference*=ROLE_SUPERUSER
 			</value>
 		</property>
 	</bean>

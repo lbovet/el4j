@@ -19,16 +19,18 @@ package ch.elca.el4j.demos.secure.gui;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableModel;
 
-import org.acegisecurity.annotation.Secured;
+import org.acegisecurity.AccessDeniedException;
 import org.acegisecurity.context.SecurityContextHolder;
 import org.acegisecurity.providers.UsernamePasswordAuthenticationToken;
 import org.bushe.swing.event.annotation.AnnotationProcessor;
@@ -39,12 +41,8 @@ import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.Binding;
 import org.jdesktop.swingbinding.validation.ValidatedProperty;
 
-import zappini.designgridlayout.DesignGridLayout;
-
 import com.silvermindsoftware.hitch.Binder;
 import com.silvermindsoftware.hitch.BinderManager;
-
-import cookxml.cookswing.CookSwing;
 
 import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.Reference;
@@ -55,10 +53,17 @@ import ch.elca.el4j.demos.gui.events.SearchRefDBEvent;
 import ch.elca.el4j.demos.model.ServiceBroker;
 import ch.elca.el4j.gui.swing.GUIApplication;
 import ch.elca.el4j.gui.swing.cookswing.binding.Bindable;
+import ch.elca.el4j.gui.swing.exceptions.Exceptions;
+import ch.elca.el4j.gui.swing.exceptions.Handler;
 import ch.elca.el4j.gui.swing.wrapper.AbstractWrapperFactory;
 import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.LikeCriteria;
+
+import cookxml.cookswing.CookSwing;
+
+import zappini.designgridlayout.DesignGridLayout;
+
 
 /**
  * This class demonstrates how to securely connect to the refDB.
@@ -80,6 +85,25 @@ public class RefDBDemoForm extends JPanel implements Bindable {
             new UsernamePasswordAuthenticationToken("el4normal", "el4j"));
         //SecurityContextHolder.getContext().setAuthentication(
         //    new UsernamePasswordAuthenticationToken("el4super", "secret"));
+        
+        Exceptions.getInstance().addHandler(new Handler() {
+            public boolean recognize(Exception e) {
+                if (e instanceof InvocationTargetException) {
+                    InvocationTargetException ite
+                        = (InvocationTargetException) e;
+                    if (ite.getTargetException()
+                        instanceof AccessDeniedException) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            public void handle(Exception e) {
+                JOptionPane.showMessageDialog(RefDBDemoForm.this,
+                    "Access denied.", "RefDBDemoForm",
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        });
         init();
     }
     
@@ -169,8 +193,9 @@ public class RefDBDemoForm extends JPanel implements Bindable {
             if (o != null) {
                 Reference selectedReference 
                     = (Reference) ((ValidatedProperty) o).getParent();
-                m_refList.remove(selectedReference);
+                
                 m_service.deleteReference(selectedReference.getKey());
+                m_refList.remove(selectedReference);
             }
             m_listBinding.unbind();
             m_listBinding.bind();
