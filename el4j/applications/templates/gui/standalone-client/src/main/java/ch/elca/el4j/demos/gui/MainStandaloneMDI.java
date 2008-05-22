@@ -68,8 +68,8 @@ public final class MainStandaloneMDI {
                 "classpath*:scenarios/dataaccess/hibernate/*.xml",
                 "classpath*:scenarios/dataaccess/hibernate/refdb/*.xml",
                 "classpath*:optional/interception/transactionJava5Annotations.xml",
-                "classpath:thin-client.xml",
-                "classpath*:Interceptors.xml"
+                "classpath*:Interceptors.xml",
+                "classpath:scenarios/swing/demo/applicationGeneral.xml"
             }; 
             
             ModuleApplicationContextConfiguration contextConfig
