@@ -560,6 +560,8 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
                     // Detect begin/end of statement sequence
                     if (part.equalsIgnoreCase("DECLARE")) {
                         insideSeqStmt = true;
+                    } else if (part.equalsIgnoreCase("IS")) {
+                        insideSeqStmt = true;
                     } else if (part.equalsIgnoreCase("BEGIN")) {
                         insideSeqStmt = true;
                     } else if (part.equalsIgnoreCase("/")) {
