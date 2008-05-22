@@ -142,6 +142,9 @@ public abstract class GUIApplication extends SingleFrameApplication {
 
         // install exception handler
         Thread.setDefaultUncaughtExceptionHandler(Exceptions.getInstance());
+        // little hack to make it work also in Swing/AWT
+        System.setProperty("sun.awt.exception.handler", 
+            Exceptions.class.getName());
         
         // configure CookSwing
         CookSwing.setDefaultExceptionHandler(

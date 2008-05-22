@@ -80,6 +80,18 @@ public final class Exceptions implements Thread.UncaughtExceptionHandler {
         e.printStackTrace(System.err);
     }
     
+    /**
+     * handler for AWT exceptions.
+     */
+    public void handle(Throwable t) {
+        if (t instanceof Exception) {
+            Exceptions.getInstance().handle((Exception) t);
+        } else if (t instanceof Error) {
+            // unwrap Error
+            handle(((Error) t).getCause());
+        }
+    }
+    
     /** {@inheritDoc} */
     public void uncaughtException(Thread t, Throwable e) {
         handle(new Exception(e));
