@@ -49,8 +49,8 @@ public final class MainFormDistributedDocking {
 
             String[] applicationContextPaths = {
                 "classpath*:mandatory/*.xml",
-                "classpath:thin-client.xml",
-                "classpath:SpecificConfig.xml"
+                "classpath:scenarios/swing/demo/applicationGeneral.xml",
+                "classpath:scenarios/remoting/client/httpInvoker-client-config.xml"
             };
             
             ModuleApplicationContextConfiguration contextConfig
