@@ -64,9 +64,11 @@ public final class MainStandaloneMDI {
             
             String[] applicationContextPaths = {
                 "classpath*:mandatory/*.xml",
-                "classpath*:BasicHibernateInfrastructureConfig.xml",
+                "classpath*:scenarios/db/raw/*.xml",
+                "classpath*:scenarios/dataaccess/hibernate/*.xml",
+                "classpath*:scenarios/dataaccess/hibernate/refdb/*.xml",
+                "classpath*:optional/interception/transactionJava5Annotations.xml",
                 "classpath:thin-client.xml",
-                "classpath:SpecificConfig.xml",
                 "classpath*:Interceptors.xml"
             }; 
             
