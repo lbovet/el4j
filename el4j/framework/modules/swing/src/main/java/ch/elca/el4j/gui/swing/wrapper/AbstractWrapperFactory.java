@@ -28,7 +28,12 @@ import org.jdesktop.application.ResourceMap;
 
 /**
  * This abstract class helps wrapping components into a container like
- * {@link JInternalFrame} or {@link JFrame}.
+ * {@link JInternalFrame} or {@link JFrame}. As the module Swing supports
+ * both MDI and docking, this has been introduced to use a single component
+ * in both approaches. Depending on the base class of the application
+ * ({@link MDIApplication} or {@link DockingApplication}), forms provided
+ * as {@link JComponent}s are automatically wrapped into the right "container"
+ * (see {@link GUIApplication#show(JComponent)}.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
