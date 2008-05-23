@@ -19,7 +19,7 @@ package ch.elca.el4j.gui.swing.wrapper;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
-import ch.elca.el4j.gui.swing.events.OpenCloseEventHandler;
+import org.bushe.swing.event.annotation.AnnotationProcessor;
 
 /**
  * A wrapper for panels to make them a {@link JFrame}.
@@ -57,10 +57,8 @@ public class JFrameWrapper extends JFrame implements FrameWrapper {
     /** {@inheritDoc} */
     @Override
     public void show() {
-        if (m_component instanceof OpenCloseEventHandler) {
-            OpenCloseEventHandler handler = (OpenCloseEventHandler) m_component;
-            handler.onOpen();
-        }
+        // register all event subscribers
+        AnnotationProcessor.process(m_component);
         
         super.setVisible(true);
     }
@@ -69,11 +67,8 @@ public class JFrameWrapper extends JFrame implements FrameWrapper {
     @Override
     public void dispose() {
         if (m_component != null) {
-            if (m_component instanceof OpenCloseEventHandler) {
-                OpenCloseEventHandler handler
-                    = (OpenCloseEventHandler) m_component;
-                handler.onClose();
-            }
+            // unregister all event subscribers
+            AnnotationProcessor.unsubscribe(m_component);
         }
         AbstractWrapperFactory.removeWrapper(m_component);
         super.dispose();
