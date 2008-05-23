@@ -27,7 +27,8 @@ import org.bushe.swing.event.annotation.EventSubscriber;
 
 import ch.elca.el4j.demos.gui.events.ExampleEvent;
 import ch.elca.el4j.demos.gui.events.SearchProgressEvent;
-import ch.elca.el4j.gui.swing.events.OpenCloseEventHandler;
+import ch.elca.el4j.gui.swing.wrapper.JFrameWrapper;
+import ch.elca.el4j.gui.swing.wrapper.JInteralFrameWrapper;
 
 /**
  * This class demonstates the basic use of EventBus.
@@ -42,9 +43,8 @@ import ch.elca.el4j.gui.swing.events.OpenCloseEventHandler;
  * <code>AnnotationProcessor.process(this)</code>, unsubscription is done by
  * <code>AnnotationProcessor.unsubscribe(this)</code>
  * 
- * In this example, the <code>OpenCloseEventHandler</code> is used to get the
- * methods <code>onOpen</code> and <code>onClose</code> called which do the
- * event (un)subscription task.
+ * This is done for us by using {@link JFrameWrapper} or
+ * {@link JInteralFrameWrapper}.
  * 
  *
  * <script type="text/javascript">printFileStatus
@@ -57,7 +57,7 @@ import ch.elca.el4j.gui.swing.events.OpenCloseEventHandler;
  * @author Stefan Wismer (SWI)
  */
 @SuppressWarnings("unchecked")
-public class EventBusDemoForm extends JPanel implements OpenCloseEventHandler {
+public class EventBusDemoForm extends JPanel {
 
     private JLabel m_lastEvent;
     
@@ -69,30 +69,24 @@ public class EventBusDemoForm extends JPanel implements OpenCloseEventHandler {
         setBounds(0, 0, 500, 50);
     }
     
-    @EventSubscriber(eventClass=ExampleEvent.class)
+    @EventSubscriber(eventClass = ExampleEvent.class)
     public void onEvent(ExampleEvent event) {
         m_lastEvent.setText("example event: [" + event.getMessage() + "]");
     }
     
-    @EventSubscriber(eventClass=SearchProgressEvent.class)
+    @EventSubscriber(eventClass = SearchProgressEvent.class)
     public void onEvent(SearchProgressEvent event) {
         m_lastEvent.setText("search event: [" + event.getMessage() + "]");
     }
     
-    @EventSubscriber(eventClass=InternalFrameEvent.class)
+    /**
+     * Remark: This event is registered an fired by
+     * {@link ch.elca.el4j.gui.swing.AbstractMDIApplication}.
+     * 
+     * @param event    internalFrame event
+     */
+    @EventSubscriber(eventClass = InternalFrameEvent.class)
     public void onEvent(InternalFrameEvent event) {
         m_lastEvent.setText("internal frame event: [" + event + "]");
-    }
-    
-    /** {@inheritDoc} */
-    public void onOpen() {
-        // register all event subscribers
-        AnnotationProcessor.process(this);
-    }
-    
-    /** {@inheritDoc} */
-    public void onClose() {
-        // unregister all event subscribers
-        AnnotationProcessor.unsubscribe(this);
     }
 }

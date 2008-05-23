@@ -47,7 +47,6 @@ import ch.elca.el4j.demos.gui.events.SearchRefDBEvent;
 import ch.elca.el4j.demos.model.ServiceBroker;
 import ch.elca.el4j.gui.swing.GUIApplication;
 import ch.elca.el4j.gui.swing.cookswing.binding.Bindable;
-import ch.elca.el4j.gui.swing.events.OpenCloseEventHandler;
 import ch.elca.el4j.gui.swing.wrapper.AbstractWrapperFactory;
 import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
 import ch.elca.el4j.services.search.QueryObject;
@@ -83,7 +82,7 @@ import zappini.designgridlayout.DesignGridLayout;
  *
  * @author Stefan Wismer (SWI)
  */
-public class RefDBDemoForm extends JPanel implements Bindable, OpenCloseEventHandler {
+public class RefDBDemoForm extends JPanel implements Bindable {
     private JTextField m_name;
     private JTextField m_description;
     private JCheckBox m_incomplete;
@@ -337,17 +336,5 @@ public class RefDBDemoForm extends JPanel implements Bindable, OpenCloseEventHan
             m_references.setColumnSelectionInterval(0,
                 m_references.getColumnCount() - 1);
         }
-    }
-    
-    /** {@inheritDoc} */
-    public void onOpen() {
-        // register all event subscribers
-        AnnotationProcessor.process(this);
-    }
-    
-    /** {@inheritDoc} */
-    public void onClose() {
-        // unregister all event subscribers
-        AnnotationProcessor.unsubscribe(this);
     }
 }
