@@ -37,6 +37,9 @@ import org.hibernate.id.TableHiLoGenerator;
  */
 // TODO: verify safety of identity and sequence generation strategy.
 // mail to hibernate mailing list currently pending.
+//
+// see http://opensource.atlassian.com/projects/hibernate/browse/HHH-1918
+// and http://opensource.atlassian.com/projects/hibernate/browse/HHH-2347
 public class PatchedDerbyDialect extends DerbyDialect {
 
     /** {@inheritDoc} */
