@@ -378,6 +378,10 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
             s_el4jLogger.debug("mostSpecificBeanDefinitionCounts:"
                 + mostSpecificBeanDefinitionCounts);
 
+            // Prevent a NPE here if nothing is resolved.
+            if (m_configLocations == null) {
+                return;
+            }
             for (String configLocation : m_configLocations) {
                 Resource res = getResource(configLocation);
                 BufferedReader reader;
