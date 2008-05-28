@@ -21,6 +21,9 @@
         <property name="contextPath">
             <value>module-remoting_and_interface_enrichment-tests-web</value>
         </property>
+        <property name="overloadEnabled">
+            <value>false</value>
+        </property>
         <property name="implicitContextPassingRegistry">
             <ref local="implicitContextPassingRegistry" />
         </property>
