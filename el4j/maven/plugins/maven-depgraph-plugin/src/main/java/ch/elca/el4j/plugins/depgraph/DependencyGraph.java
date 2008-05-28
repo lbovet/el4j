@@ -63,11 +63,13 @@ public class DependencyGraph {
      * @param version The version
      * @param scope The scope
      * @param type The type
+     * @param classifier The classifier
      * @return A DepgraphArtifact
      */
     public DepGraphArtifact getArtifact(String artifactId, String groupId,
-        String version, String scope, String type) {
-        return getArtifact(artifactId, groupId, version, scope, type, false);
+        String version, String scope, String type, String classifier) {
+        return getArtifact(artifactId, groupId, version, scope, type,
+            classifier, false);
     }
     
     /**
@@ -77,14 +79,16 @@ public class DependencyGraph {
      * @param version The version
      * @param scope The scope
      * @param type The type
+     * @param classifier The classifier
      * @param omitted Whether artifact is omitted
      * @return A DepgraphArtifact
      */
     public DepGraphArtifact getArtifact(
         String artifactId, String groupId, 
-        String version, String scope, String type, boolean omitted) {
+        String version, String scope, String type, String classifier, boolean omitted) {
         DepGraphArtifact newArtifact 
-            = new DepGraphArtifact(artifactId, groupId, version, scope, type, omitted);
+            = new DepGraphArtifact(artifactId, groupId, version, scope, type,
+                classifier, omitted);
         
         if (m_artifacts.containsKey(newArtifact.getQualifiedName())) {
             return m_artifacts.get(newArtifact.getQualifiedName());

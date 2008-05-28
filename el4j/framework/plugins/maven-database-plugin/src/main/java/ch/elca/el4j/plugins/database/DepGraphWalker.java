@@ -28,6 +28,7 @@ import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.resolver.AbstractArtifactResolutionException;
 import org.apache.maven.artifact.resolver.ArtifactCollector;
 import org.apache.maven.artifact.resolver.ArtifactResolver;
+import org.apache.maven.artifact.versioning.VersionRange;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.dag.CycleDetectedException;
 import org.codehaus.plexus.util.dag.DAG;
@@ -144,7 +145,8 @@ public class DepGraphWalker {
                 m_project.getGroupId(), 
                 m_project.getVersion(), 
                 m_project.getArtifact().getScope(), 
-                m_project.getArtifact().getType());
+                m_project.getArtifact().getType(),
+                m_project.getArtifact().getClassifier());
 
         // Create a DAG from the dependency m_graph and sort it.
         createDAG(rootArtifact);
@@ -173,7 +175,8 @@ public class DepGraphWalker {
                 m_project.getGroupId(), 
                 m_project.getVersion(), 
                 m_project.getArtifact().getScope(), 
-                m_project.getArtifact().getType());
+                m_project.getArtifact().getType(),
+                m_project.getArtifact().getClassifier());
 
         // Create a DAG from the dependency m_graph and sort it.
         createDAG(rootArtifact);
@@ -206,15 +209,16 @@ public class DepGraphWalker {
         List<URL> artifactURLs = new ArrayList<URL>();
         for (String item : sorted) {
             parts = item.split(":");
-            DepGraphArtifact art = graph.getArtifact(parts[2], parts[0],
-                parts[1], "", "");
+            DepGraphArtifact art = graph.getArtifact(parts[3], parts[0],
+                parts[1], "", "", parts[2]);
 
-            Artifact artifact = factory.createArtifact(
-                art.getGroupId(), 
-                art.getArtifactId(), 
-                art.getVersion(), 
-                art.getScope(), 
-                art.getType());
+            Artifact artifact = factory.createDependencyArtifact(
+                art.getGroupId(),
+                art.getArtifactId(),
+                VersionRange.createFromVersion(art.getVersion()),
+                art.getType(),
+                art.getClassifier(),
+                art.getScope());
 
 
             try {
@@ -253,16 +257,16 @@ public class DepGraphWalker {
         List<Artifact> artifacts = new ArrayList<Artifact>();
         for (String item : sorted) {
             parts = item.split(":");
-            DepGraphArtifact art = graph.getArtifact(parts[2], parts[0],
-                parts[1], "", "");
+            DepGraphArtifact art = graph.getArtifact(parts[3], parts[0],
+                parts[1], "", "", parts[2]);
 
-            Artifact artifact = factory.createArtifact(
-                art.getGroupId(), 
-                art.getArtifactId(), 
-                art.getVersion(), 
-                art.getScope(), 
-                art.getType());
-
+            Artifact artifact = factory.createDependencyArtifact(
+                art.getGroupId(),
+                art.getArtifactId(),
+                VersionRange.createFromVersion(art.getVersion()),
+                art.getType(),
+                art.getClassifier(),
+                art.getScope());
 
             try {
                 resolver.resolve(artifact, m_project

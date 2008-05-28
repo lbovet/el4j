@@ -462,7 +462,8 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
             return null;
         }
         DepGraphArtifact artifact = graph.getArtifact(a.getArtifactId(), a
-            .getGroupId(), a.getVersion(), a.getScope(), a.getType(), omitted);
+            .getGroupId(), a.getVersion(), a.getScope(), a.getType(),
+            a.getClassifier(), omitted);
         return artifact;
     }
     
