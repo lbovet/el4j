@@ -18,15 +18,16 @@ package ${groupId};
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.Test;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
 
 /**
  * Sample JUnit testcase for the Hello World project.
  *
  * @author Martin Zeltner (MZE)
  */
-public class CalculatorTest extends TestCase {
+public class CalculatorTest {
     /**
      * Private logger.
      */
@@ -36,6 +37,7 @@ public class CalculatorTest extends TestCase {
     /**
      * Tests the division method of calculator.
      */
+    @Test
     public void testCalculatorDivision() {
         Calculator c = new Calculator();
         // Checkstyle: MagicNumber off
