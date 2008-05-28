@@ -41,6 +41,11 @@ import ch.elca.el4j.services.remoting.RemotingServiceExporter;
 public class Hessian extends AbstractInetSocketAddressWebProtocol {
     
     /**
+     * Set whether overloaded methods should be enabled for remote invocations.
+     */
+    protected boolean m_overloadEnabled = false;
+    
+    /**
      * {@inheritDoc}
      */
     public Object createProxyBean(RemotingProxyFactoryBean proxyBean,
@@ -52,6 +57,7 @@ public class Hessian extends AbstractInetSocketAddressWebProtocol {
         proxyProps.addPropertyValue("serviceInterface",
                 serviceInterfaceWithContext);
         proxyProps.addPropertyValue("serviceUrl", generateUrl(proxyBean));
+        proxyProps.addPropertyValue("overloadEnabled", m_overloadEnabled);
         appContext.registerSingleton("hessianProxyBeanGen",
                 getProxyObjectType(), proxyProps);
         appContext.refresh();
@@ -103,5 +109,21 @@ public class Hessian extends AbstractInetSocketAddressWebProtocol {
         sb.append("/");
         sb.append(remoteBase.getServiceName());
         return sb.toString();
+    }
+
+    /**
+     * @return    whether overloaded methods should be enabled for remote
+     *            invocations
+     */
+    public boolean isOverloadEnabled() {
+        return m_overloadEnabled;
+    }
+
+    /**
+     * @param overloadEnabled    whether overloaded methods should be enabled
+     *                           for remote invocations
+     */
+    public void setOverloadEnabled(boolean overloadEnabled) {
+        m_overloadEnabled = overloadEnabled;
     }
 }
