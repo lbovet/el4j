@@ -29,7 +29,6 @@ import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
-import ch.elca.el4j.util.maven.ClassInspector;
 import ch.elca.el4j.util.maven.DuplicateClassFinder;
 
 /**

@@ -35,8 +35,13 @@ import java.net.URLClassLoader;
  *
  * @author David Bernhard (DBD)
  */
-public abstract class ClassloaderTools {
+public final class ClassloaderTools {
 
+    /**
+     * Cannot instantiate.
+     */
+    private ClassloaderTools() { }
+    
     /**
      * Checks whether a class is loaded via an URLClassLoader,
      * in which case a call to <code>getClassPath</code> will work.
