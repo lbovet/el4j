@@ -48,7 +48,7 @@ public class StartMojo extends AbstractDBMojo {
     /**
      * {@inheritDoc}
      */
-    public void execute() throws MojoExecutionException, MojoFailureException {
+    public void executeInternal() throws MojoExecutionException, MojoFailureException {
         try {
             if (needStartup()) {
                 getLog().info("Starting database (StartMojo)...");

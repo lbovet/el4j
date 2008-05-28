@@ -48,7 +48,7 @@ public class PrepareDatabaseMojo extends AbstractDBExecutionMojo {
     /**
      * {@inheritDoc}
      */
-    public void execute() throws MojoExecutionException, MojoFailureException {
+    public void executeInternal() throws MojoExecutionException, MojoFailureException {
         try {
             // Start Derby Network Server if necessary, but do not wait, because
             // we know that execution will continue

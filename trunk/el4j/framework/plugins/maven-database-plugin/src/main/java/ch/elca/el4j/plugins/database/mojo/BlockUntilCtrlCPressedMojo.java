@@ -44,7 +44,7 @@ public class BlockUntilCtrlCPressedMojo extends AbstractDBMojo {
     /**
      * {@inheritDoc}
      */
-    public void execute() throws MojoExecutionException, MojoFailureException {
+    public void executeInternal() throws MojoExecutionException, MojoFailureException {
         try {           
             Thread.sleep(DELAY);
             getLog().info("Press Ctrl-C to unblock");

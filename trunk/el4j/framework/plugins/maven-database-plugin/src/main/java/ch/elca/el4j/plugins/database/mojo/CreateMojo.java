@@ -47,7 +47,7 @@ public class CreateMojo extends AbstractDBExecutionMojo {
     /**
      * {@inheritDoc}
      */
-    public void execute() throws MojoExecutionException, MojoFailureException {
+    public void executeInternal() throws MojoExecutionException, MojoFailureException {
         try {
             executeAction(ACTION, false, false);
         } catch (Exception e) {
