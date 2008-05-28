@@ -59,6 +59,11 @@ public class DepGraphArtifact {
     private String m_type;
     
     /**
+     * The artifacts classifier.
+     */
+    private String m_classifier;
+    
+    /**
      * Whether this artifact has been omitted
      */
     private boolean m_omitted;
@@ -79,8 +84,8 @@ public class DepGraphArtifact {
      * @param type The type to set
      */
     public DepGraphArtifact(String artifactId, String groupId, String version,
-        String scope, String type) {
-        this(artifactId, groupId, version, scope, type, false);
+        String scope, String type, String classifier) {
+        this(artifactId, groupId, version, scope, type, classifier, false);
     }
     
     /**
@@ -94,7 +99,7 @@ public class DepGraphArtifact {
      * @param omitted Whether this artifact is omitted
      */
     public DepGraphArtifact(String artifactId, String groupId, String version,
-        String scope, String type, boolean omitted) {
+        String scope, String type, String classifier, boolean omitted) {
         if (artifactId == null) {
             throw new NullPointerException("ArtifactId null");
         }
@@ -112,6 +117,7 @@ public class DepGraphArtifact {
         m_version = version;
         m_scope = scope;
         m_type = type;
+        m_classifier = classifier != null ? classifier : "";
         m_omitted = omitted;
     }
     
@@ -156,11 +162,20 @@ public class DepGraphArtifact {
     }
     
     /**
+     * Get this artifacts classifier.
+     * @return The classifier.
+     */
+    public String getClassifier() {
+        return m_classifier;
+    }
+    
+    /**
      * Get a qualified name of this artifact.
-     * @return groupId:version:artifactId:omitted
+     * @return groupId:version:classifier:artifactId:omitted
      */
     public String getQualifiedName() {
-        return m_groupId + ":" + m_version + ":" + m_artifactId + ":" + m_omitted;
+        return m_groupId + ":" + m_version + ":" + m_classifier + ":"
+            + m_artifactId + ":" + m_omitted;
     }
     
     /**
@@ -197,6 +212,7 @@ public class DepGraphArtifact {
             DepGraphArtifact d = (DepGraphArtifact) obj;
             return m_artifactId.equals(d.getArtifactId())
                 && m_groupId.equals(d.getGroupId())
+                && m_classifier.equals(d.getClassifier())
                 && m_version.equals(d.getVersion());
         } else {
             return super.equals(obj);

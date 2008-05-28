@@ -104,8 +104,9 @@ public class DepGraphResolutionListener implements ResolutionListener {
         String version = artifact.getVersion();
         String scope = artifact.getScope();
         String type = artifact.getType();
+        String classifier = artifact.getClassifier();
 
-        return m_graph.getArtifact(aId, gId, version, scope, type);
+        return m_graph.getArtifact(aId, gId, version, scope, type, classifier);
     }
     
     /**
