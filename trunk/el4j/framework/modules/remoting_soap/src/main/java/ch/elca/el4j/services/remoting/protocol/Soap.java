@@ -84,6 +84,8 @@ import ch.elca.el4j.util.interfaceenrichment.MethodDescriptor;
  * );</script>
  *
  * @author Martin Zeltner (MZE)
+ * 
+ * @deprecated    use module remoting JAX-WS
  */
 public class Soap extends AbstractInetSocketAddressWebProtocol 
     implements ServletContextAware {

@@ -46,6 +46,8 @@ import ch.elca.el4j.services.remoting.RemotingServiceExporter;
  *
  * @author Rashid Waraich (RWA)
  * @author Philippe Jacot (PJA)
+ * 
+ * @deprecated    use module remoting JAX-WS
  */
 public class XFire extends AbstractInetSocketAddressWebProtocol {   
     /**
