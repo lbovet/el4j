@@ -55,7 +55,7 @@ public class RunMojo extends AbstractDBExecutionMojo {
     /**
      * {@inheritDoc}
      */
-    public void execute() throws MojoExecutionException, MojoFailureException {
+    public void executeInternal() throws MojoExecutionException, MojoFailureException {
         try {
             executeAction(filePrefix, reverse, false);
         } catch (Exception e) {

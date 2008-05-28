@@ -22,6 +22,8 @@ import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.resolver.ArtifactCollector;
 import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 
 import ch.elca.el4j.plugins.database.holder.DatabaseNameHolder;
@@ -88,6 +90,11 @@ public abstract class AbstractDBMojo extends AbstractMojo {
     private ArtifactRepository repository;
     
     /**
+     * @parameter expression="${skip}" default-value = "false"
+     */
+    private boolean skip;
+    
+    /**
      * @component
      */
     private ArtifactMetadataSource artifactMetadataSource;
@@ -121,9 +128,25 @@ public abstract class AbstractDBMojo extends AbstractMojo {
    
     
     
+    /** {@inheritDoc} */
+    public final void execute() throws MojoExecutionException,
+        MojoFailureException {
+        
+        if (skip) {
+            getLog().info("Skipping database plugin due to configuration");
+        } else {
+            executeInternal();
+        }
+    }
     
-    
-    
+    /**
+     * Execute mojo.
+     * 
+     * @throws MojoExecutionException
+     * @throws MojoFailureException
+     */
+    protected abstract void executeInternal() throws MojoExecutionException,
+        MojoFailureException;
     
     /**
      * Returns true if database needs to be started.

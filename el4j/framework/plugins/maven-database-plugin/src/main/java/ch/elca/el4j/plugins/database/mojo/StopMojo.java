@@ -40,7 +40,7 @@ public class StopMojo extends AbstractDBMojo {
     /**
      * {@inheritDoc}
      */
-    public void execute() throws MojoExecutionException, MojoFailureException {
+    public void executeInternal() throws MojoExecutionException, MojoFailureException {
         try {
             getLog().info("Stopping database... ");
             if (needStartup()) {

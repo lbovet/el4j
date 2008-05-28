@@ -47,7 +47,7 @@ public class SilentDropMojo extends AbstractDBExecutionMojo {
     /**
      * {@inheritDoc}
      */
-    public void execute() throws MojoExecutionException, MojoFailureException {
+    public void executeInternal() throws MojoExecutionException, MojoFailureException {
         try {
             executeAction(ACTION, true, true);
             // Checkstyle: EmptyBlock off
