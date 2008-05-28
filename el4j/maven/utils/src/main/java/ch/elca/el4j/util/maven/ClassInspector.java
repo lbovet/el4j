@@ -65,6 +65,8 @@ public class ClassInspector {
     public JPanel getInspector() {
         return new Inspector();
     }
+
+    // Checkstyle: MagicNumber off
     
     /**
      * Show the inspector in a new frame.
@@ -83,6 +85,8 @@ public class ClassInspector {
             }
         }
     }
+    
+    // Checkstyle: MagicNumber on
     
     /**
      * The inspector GUI.
@@ -115,39 +119,7 @@ public class ClassInspector {
             add(infoPane, BorderLayout.SOUTH);
             
             JScrollPane pane = new JScrollPane(m_tree);
-            m_tree.addTreeSelectionListener(new TreeSelectionListener() {
-                
-                /**
-                 * Update the info area.
-                 * {@inheritDoc}
-                 */
-                public void valueChanged(TreeSelectionEvent e) {
-                    Node node = (Node) m_tree.getLastSelectedPathComponent();
-                    if (node == null) {
-                        m_info.setText("");
-                        return;
-                    }
-                    String path = node.getFullPath();
-                    List<String> locations = node.m_locations;
-                    
-                    String text = "<html><pre>Name: " + path + "\n";
-                    if (locations == null) {
-                        text += "Type: package";
-                    } else {
-                        text += "Type: class\n";
-                        if (locations.size() == 1) {
-                            text += "Location: " + locations.get(0);
-                        } else {
-                            text += "<font color=\"#FF0000\">" 
-                                + "<b>Duplicated!</b> Locations:\n";
-                            for (String loc : locations) {
-                                text += loc + "\n";
-                            }
-                        }
-                    }
-                    m_info.setText(text);
-                }
-            });
+            m_tree.addTreeSelectionListener(new ClassTreeSelectionListener());
             add(pane, BorderLayout.CENTER);
         }
         
@@ -172,6 +144,41 @@ public class ClassInspector {
                 m_tree.addNode(pkg, name, m_finder.getLocations(currentClass));
             }
         }
+        
+        /**
+         * Handles clicking on a tree node (updates the detail view).
+         */
+        class ClassTreeSelectionListener implements TreeSelectionListener {
+            
+            /** {@inheritDoc} */
+            public void valueChanged(TreeSelectionEvent e) {
+                Node node = (Node) m_tree.getLastSelectedPathComponent();
+                if (node == null) {
+                    m_info.setText("");
+                    return;
+                }
+                String path = node.getFullPath();
+                List<String> locations = node.m_locations;
+                
+                String text = "<html><pre>Name: " + path + "\n";
+                if (locations == null) {
+                    text += "Type: package";
+                } else {
+                    text += "Type: class\n";
+                    if (locations.size() == 1) {
+                        text += "Location: " + locations.get(0);
+                    } else {
+                        text += "<font color=\"#FF0000\">" 
+                            + "<b>Duplicated!</b> Locations:\n";
+                        for (String loc : locations) {
+                            text += loc + "\n";
+                        }
+                    }
+                }
+                m_info.setText(text);
+            }
+        }
+        
         
         /**
          * The tree object that handles displaying the classes.
@@ -214,10 +221,8 @@ public class ClassInspector {
                 if (locations != null && locations.size() > 1) {
                     thisNode.setWarning();
                 }
-            }
-            
+            }            
         }
-
     }
     
     /**

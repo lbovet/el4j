@@ -39,10 +39,10 @@ public class HtmlDisplayManager implements DisplayManager {
     // Checkstyle: StaticVariableNameCheck off 
     
     /** Tag to wrap around title. */
-    private static String TITLE_TAG = "h2";
+    private static final String TITLE_TAG = "h2";
     
     /** Tag to wrap around section headings. */ 
-    private static String SECTION_TAG = "h3";
+    private static final String SECTION_TAG = "h3";
     
     // Checkstyle: StaticVariableNameCheck on 
     
