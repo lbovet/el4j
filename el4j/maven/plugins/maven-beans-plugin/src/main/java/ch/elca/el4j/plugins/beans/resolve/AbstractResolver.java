@@ -62,7 +62,7 @@ public abstract class AbstractResolver implements Resolver {
     protected String strip(String source) {
         String pre = getProtocol() + ":";
         if (source.startsWith(pre)) {
-            return source.replaceFirst(pre + "[/]{0,2}", "");
+            return source.replaceFirst(pre, "");
         } else {
             return source;
         }
