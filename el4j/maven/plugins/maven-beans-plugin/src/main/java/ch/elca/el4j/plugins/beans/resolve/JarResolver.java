@@ -77,7 +77,7 @@ public class JarResolver extends AbstractResolver {
          * @param file The string describing the file's absolute path.
          */
         JarEntryPath(String file) {
-            String regex = "/*(.*)/([^/]*\\.jar)!/?"
+            String regex = "(.*)/([^/]*\\.jar)!/?"
                 + "(.*)/([^/]*)";
             
             String s = strip(file).replace("\\", "/");
