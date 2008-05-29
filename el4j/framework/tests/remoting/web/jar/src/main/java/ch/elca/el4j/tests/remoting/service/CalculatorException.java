@@ -17,6 +17,8 @@
 
 package ch.elca.el4j.tests.remoting.service;
 
+import java.io.Serializable;
+
 import ch.elca.el4j.core.exceptions.BaseException;
 
 /**
@@ -31,7 +33,7 @@ import ch.elca.el4j.core.exceptions.BaseException;
  *
  * @author Martin Zeltner (MZE)
  */
-public class CalculatorException extends BaseException {
+public class CalculatorException extends BaseException implements Serializable {
     /**
      * Default constructor.
      */
