@@ -55,11 +55,15 @@ public abstract class AbstractDuplicateFinderMojo extends AbstractMojo {
      */
     protected DuplicateClassFinder m_finder;
     
+    // Checkstyle: MemberName off
+    
     /**
      * Whether to fail the build if duplicates are found.
      * @parameter default-value="false"
      */
     protected boolean duplicateIsFail;
+
+    // Checkstyle: MemberName on
     
     /**
      * Set up the finder.
