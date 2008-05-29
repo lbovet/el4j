@@ -2081,7 +2081,9 @@
 		<version.maven-duplicatefinder-plugin>
 			1.0-SNAPSHOT
 		</version.maven-duplicatefinder-plugin>
-
+		<version.maven-beans-plugin>
+			1.0-SNAPSHOT
+		</version.maven-beans-plugin>
 		<!-- EL4J framework module version numbers -->
 		<version.module-core>
 			1.10-SNAPSHOT
