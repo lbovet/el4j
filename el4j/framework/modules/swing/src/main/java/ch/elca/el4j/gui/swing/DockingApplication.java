@@ -55,11 +55,12 @@ public abstract class DockingApplication extends GUIApplication {
     /**
      * Creates the tool window manager if necessary.
      */
-    protected void createToolWindowManager() {
+    protected ToolWindowManager getToolWindowManager() {
         if (m_toolWindowManager == null) {
             // Create a new instance of MyDoggyToolWindowManager
-            m_toolWindowManager = new MyDoggyToolWindowManager(getMainFrame());
+            m_toolWindowManager = new MyDoggyToolWindowManager();
         }
+        return m_toolWindowManager;
     }
     
     /**

@@ -30,6 +30,8 @@
 			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-remoting_core</artifactId>
 		</dependency>
+		
+		<!-- xfire version 1.2.5 and 1.2.6 didn't work out-of-the-box (SWI, 27.05.08) -->
 		<dependency>
 			<groupId>org.codehaus.xfire</groupId>
 			<artifactId>xfire-core</artifactId>

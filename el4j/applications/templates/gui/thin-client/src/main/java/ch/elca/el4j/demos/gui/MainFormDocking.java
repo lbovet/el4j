@@ -73,8 +73,7 @@ public class MainFormDocking extends DockingApplication {
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(createToolBar(), BorderLayout.NORTH);
         
-        createToolWindowManager();
-        panel.add((Component) m_toolWindowManager, BorderLayout.CENTER);
+        panel.add((Component) getToolWindowManager(), BorderLayout.CENTER);
         
         return panel;
     }
