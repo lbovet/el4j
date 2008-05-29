@@ -26,14 +26,13 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.project.MavenProject;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import ch.elca.el4j.core.io.support.ListResourcePatternResolverDecorator;
 import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
+import ch.elca.el4j.core.io.support.OrderedPathMatchingResourcePatternResolver;
 import ch.elca.el4j.plugins.database.DepGraphWalker;
 
 /**
@@ -134,10 +133,10 @@ public abstract class AbstractDatabaseHolder {
         ArrayList<URL> urls = new ArrayList<URL>();
 
         try {
-            urls.add(new URL("file", "", "/" + 
-                project.getBuild().getOutputDirectory() + "/"));
-            urls.add(new URL("file", "", "/" + 
-                project.getBuild().getTestOutputDirectory() + "/"));
+            urls.add(new URL("file", "", "/" 
+                + project.getBuild().getOutputDirectory() + "/"));
+            urls.add(new URL("file", "", "/"
+                + project.getBuild().getTestOutputDirectory() + "/"));
 
             
         } catch (MalformedURLException e) {
@@ -162,11 +161,12 @@ public abstract class AbstractDatabaseHolder {
         projectURLs.addAll(urls);
         
         // Set thread's classloader as parent classloader
-        m_classloader = URLClassLoader.newInstance(projectURLs.toArray(new URL[0]));
+        m_classloader = URLClassLoader.newInstance(
+            projectURLs.toArray(new URL[0]));
         
         m_resolver = new ListResourcePatternResolverDecorator(
             new ManifestOrderedConfigLocationProvider(),
-            new PathMatchingResourcePatternResolver(m_classloader));
+            new OrderedPathMatchingResourcePatternResolver(m_classloader));
         m_resolver.setMostSpecificResourceLast(false);
         m_resolver.setMergeWithOuterResources(true);
         
