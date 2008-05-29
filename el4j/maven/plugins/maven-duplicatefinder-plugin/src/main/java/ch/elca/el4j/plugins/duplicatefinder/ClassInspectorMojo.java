@@ -50,17 +50,21 @@ public class ClassInspectorMojo extends AbstractDuplicateFinderMojo {
         JPanel inspectorPanel = inspector.getInspector();
         JFrame frame = new JFrame("Class inspector");
         frame.getContentPane().add(inspectorPanel);
+
+        // Checkstyle: MagicNumber off
+        
         frame.setSize(600, 400);
         frame.setVisible(true);
 
-        //TODO : Why is the frame stopped ?
         while (frame.isVisible()) {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
-            
+                e = null;
             }
         }
+        
+        // Checkstyle: MagicNumber on
         
         if (m_finder.duplicatesFound() && duplicateIsFail) {
             throw new MojoFailureException("Duplicate classes found.");
