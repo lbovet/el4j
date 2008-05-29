@@ -95,17 +95,17 @@
 		<dependency>
 			<groupId>org.noos.xing.mydoggy</groupId>
 			<artifactId>mydoggy-api</artifactId>
-			<version>1.4.1</version>
+			<version>1.4.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.noos.xing.mydoggy</groupId>
 			<artifactId>mydoggy-plaf</artifactId>
-			<version>1.4.1</version>
+			<version>1.4.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.noos.xing.mydoggy</groupId>
 			<artifactId>mydoggy-res</artifactId>
-			<version>1.4.1</version>
+			<version>1.4.2</version>
 		</dependency>
 		<dependency>
 			<groupId>info.clearthought.layout</groupId>
@@ -113,15 +113,16 @@
 			<version>20050920</version>
 		</dependency>
 		<dependency>
-			<groupId>org.jdesktop.swingx</groupId>
-			<artifactId>swingx</artifactId>
-			<version>0.9.1</version>
-		</dependency>
-		<dependency>
 			<groupId>org.jdesktop.layout</groupId>
 			<artifactId>swing-layout</artifactId>
 			<version>1.0.3</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jdesktop.swingx</groupId>
+			<artifactId>swingx</artifactId>
+			<version>0.9.2</version>
+		</dependency>
+
 		
 		<!-- Others -->
 
