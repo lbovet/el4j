@@ -1,0 +1,102 @@
+/*
+ * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
+ * the spring framework, http://el4j.sf.net
+ * Copyright (C) 2005 by ELCA Informatique SA, Av. de la Harpe 22-24,
+ * 1000 Lausanne, Switzerland, http://www.elca.ch
+ *
+ * EL4J is published under the GNU Lesser General Public License (LGPL)
+ * Version 2.1. See http://www.gnu.org/licenses/
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * For alternative licensing, please contact info@elca.ch
+ */
+package ch.elca.el4j.plugins.beandoc.test;
+
+import java.io.File;
+import java.lang.reflect.Field;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.maven.project.MavenProject;
+import org.junit.Test;
+import org.springframework.core.io.ClassPathResource;
+
+
+import static org.junit.Assert.assertTrue;
+
+import ch.elca.el4j.plugins.beans.BeansMojo;
+
+/**
+ * Test of the beans mojo.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/etc/eclipse/codeTemplates.xml $",
+ *    "$Revision: 2754 $",
+ *    "$Date: 2008-03-04 09:04:15 +0100 (Tue, 04 Mar 2008) $",
+ *    "$Author: swismer $"
+ * );</script>
+ *
+ * @author David Bernhard (DBD)
+ */
+public class BeansMojoTest {
+
+    /** The test output directory. */
+    private File m_testOutDir = new File("target/test-output");
+    
+    /**
+     * Test of the beans mojo.
+     * @throws Exception If anything goes wrong.
+     */
+    @Test public void testMojo() throws Exception {
+
+        m_testOutDir.mkdir();
+        
+        BeansMojo mojo = new BeansMojo();
+        
+        Field proj = BeansMojo.class.getDeclaredField("m_project");
+        proj.setAccessible(true);
+        proj.set(mojo, new MavenProjectStub());
+        
+        Field source = BeansMojo.class.getDeclaredField("sourceFile");
+        source.setAccessible(true);
+        source.set(mojo, 
+            new ClassPathResource("MojoTestFile.java")
+                .getFile().getAbsolutePath());
+        
+        mojo.execute();
+        
+        File file1 = new File(m_testOutDir, "beans/files/beansInAFile.xml");
+        assertTrue(file1.exists() && file1.isFile());
+        
+        File jarDir = new File(m_testOutDir, "beans/beanJar.jar");
+        assertTrue(jarDir.exists() && jarDir.isDirectory());
+
+        File file2 = new File(jarDir, "beansInAJar.xml");
+        assertTrue(file2.exists() && file2.isFile());
+        
+    }
+
+    /** Test class. */
+    class MavenProjectStub extends MavenProject {
+
+        /** @return The output directory. */
+        @Override public File getBasedir() {
+            return m_testOutDir;
+        }
+
+        /** @return A test classpath. */
+        public List<?> getRuntimeClasspathElements() {
+            List<String> l = new ArrayList<String>();
+            l.add("target/test-classes/file");
+            l.add("target/test-classes/jar/beanJar.jar");
+            return l;
+        }
+    }
+}
+
+
