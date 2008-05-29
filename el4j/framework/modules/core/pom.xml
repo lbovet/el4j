@@ -72,7 +72,7 @@
 		<dependency>
 			<groupId>saxpath</groupId>
 			<artifactId>saxpath</artifactId>
-			<version>1.0-fcs</version>
+			<version>1.0-FCS</version>
 		</dependency>
 		
 		<dependency>
