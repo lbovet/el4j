@@ -51,8 +51,8 @@ fi
 # process settings.xml
 mv ~/.m2/settings.xml settings.xml.backup
 cat external/etc/m2/settings.xml \
-	| sed "s#~/.m2/repository#D:/$freshDir/m2repository#" \
-	| sed "s#~/myproject#D:/$freshDir#" \
+	| sed "s#~/.m2/repository#D:/$workingDir/m2repository#" \
+	| sed "s#~/myproject#D:/$workingDir#" \
 	> ~/.m2/settings.xml
 
 echo "Open ~/.m2/settings.xml and fill in all passwords that will be needed for deployment."
