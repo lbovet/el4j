@@ -41,7 +41,9 @@
 		<module>maven-version-plugin</module>
 		<module>maven-jaxws-plugin</module>
 		<module>maven-rec-plugin</module>
+		<!-- Commented out until I find out why it doesn't work on leaffy. DBD
 		<module>maven-beans-plugin</module>
+		-->
 	</modules>
 	<dependencies>
 		<dependency>
