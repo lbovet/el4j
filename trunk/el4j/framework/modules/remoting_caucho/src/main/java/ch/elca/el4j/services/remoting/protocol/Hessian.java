@@ -17,6 +17,8 @@
 
 package ch.elca.el4j.services.remoting.protocol;
 
+import java.util.Map;
+
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.context.support.StaticApplicationContext;
 import org.springframework.remoting.caucho.HessianProxyFactoryBean;
@@ -41,9 +43,9 @@ import ch.elca.el4j.services.remoting.RemotingServiceExporter;
 public class Hessian extends AbstractInetSocketAddressWebProtocol {
     
     /**
-     * Set whether overloaded methods should be enabled for remote invocations.
+     * Additional properties to set.
      */
-    protected boolean m_overloadEnabled = false;
+    protected Map<String, Object> m_serviceProperties;
     
     /**
      * {@inheritDoc}
@@ -57,7 +59,12 @@ public class Hessian extends AbstractInetSocketAddressWebProtocol {
         proxyProps.addPropertyValue("serviceInterface",
                 serviceInterfaceWithContext);
         proxyProps.addPropertyValue("serviceUrl", generateUrl(proxyBean));
-        proxyProps.addPropertyValue("overloadEnabled", m_overloadEnabled);
+        if (m_serviceProperties != null) {
+            for (String property : m_serviceProperties.keySet()) {
+                proxyProps.addPropertyValue(property,
+                    m_serviceProperties.get(property));
+            }
+        }
         appContext.registerSingleton("hessianProxyBeanGen",
                 getProxyObjectType(), proxyProps);
         appContext.refresh();
@@ -112,18 +119,16 @@ public class Hessian extends AbstractInetSocketAddressWebProtocol {
     }
 
     /**
-     * @return    whether overloaded methods should be enabled for remote
-     *            invocations
+     * @return    the additional service properties
      */
-    public boolean isOverloadEnabled() {
-        return m_overloadEnabled;
+    public Map<String, Object> getServiceProperties() {
+        return m_serviceProperties;
     }
 
     /**
-     * @param overloadEnabled    whether overloaded methods should be enabled
-     *                           for remote invocations
+     * @param serviceProperties    the additional service properties to set
      */
-    public void setOverloadEnabled(boolean overloadEnabled) {
-        m_overloadEnabled = overloadEnabled;
+    public void setServiceProperties(Map<String, Object> serviceProperties) {
+        m_serviceProperties = serviceProperties;
     }
 }
