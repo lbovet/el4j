@@ -42,7 +42,7 @@ if [ ${performInternal:0:1} == "y" ] ; then
 	cp internal/etc/release-scripts/*.sh .
 fi
 
-if [ $auto ] ; then
+if [ $auto == true ] ; then
 	./update.sh alpha$2
 	./deploy.sh $performInternal
 	exit
