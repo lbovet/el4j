@@ -2084,6 +2084,10 @@
 		<version.maven-beans-plugin>
 			1.0-SNAPSHOT
 		</version.maven-beans-plugin>
+		<version.maven-extension-colorlogger>
+			1.0-SNAPSHOT
+		</version.maven-extension-colorlogger>
+		
 		<!-- EL4J framework module version numbers -->
 		<version.module-core>
 			1.10-SNAPSHOT

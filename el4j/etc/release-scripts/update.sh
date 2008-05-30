@@ -57,7 +57,7 @@ if [ -e internal ] ; then
 	search="$search internal/pom.xml"
 fi
 
-if [ $auto ] ; then
+if [ $auto == true ] ; then
 	newSuffix="-$1"
 else
 	newSuffix=""
