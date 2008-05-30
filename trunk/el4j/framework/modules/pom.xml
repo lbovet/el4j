@@ -40,7 +40,6 @@
 		<module>remoting_soap</module>
 		<!--module>remoting_ejb</module-->
 		<module>security</module>
-		<module>spring_rcp</module>
 		<module>swing</module>
 		<module>tcp_forwarder</module>
 		<module>web</module>

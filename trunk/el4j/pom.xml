@@ -1575,21 +1575,6 @@
 				<scope>test</scope>
 			</dependency>
 
-			<!-- module-spring_rcp -->
-			<dependency>
-				<groupId>ch.elca.el4j.modules</groupId>
-				<artifactId>module-spring_rcp</artifactId>
-				<version>${version.module-spring_rcp}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>ch.elca.el4j.modules</groupId>
-				<artifactId>module-spring_rcp</artifactId>
-				<version>${version.module-spring_rcp}</version>
-				<type>test-jar</type>
-				<scope>test</scope>
-			</dependency>
-
 			<!-- module-swing -->
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
@@ -1723,30 +1708,6 @@
 			<dependency>
 				<groupId>ch.elca.el4j.applications</groupId>
 				<artifactId>refdb</artifactId>
-				<version>${version.application-refdb}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>ch.elca.el4j.applications</groupId>
-				<artifactId>refdb-gui-common</artifactId>
-				<version>${version.application-refdb}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>ch.elca.el4j.applications</groupId>
-				<artifactId>refdb-gui-server-jar</artifactId>
-				<version>${version.application-refdb}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>ch.elca.el4j.applications</groupId>
-				<artifactId>refdb-gui-thin-client</artifactId>
-				<version>${version.application-refdb}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>ch.elca.el4j.applications</groupId>
-				<artifactId>refdb-gui-standalone-client</artifactId>
 				<version>${version.application-refdb}</version>
 				<type>jar</type>
 			</dependency>
@@ -2140,9 +2101,6 @@
 		<version.module-security>
 			1.7-SNAPSHOT
 		</version.module-security>
-		<version.module-spring_rcp>
-			1.8-SNAPSHOT
-		</version.module-spring_rcp>
 		<version.module-swing>
 			1.2-SNAPSHOT
 		</version.module-swing>
