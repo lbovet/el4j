@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+
+    <!-- On client side, interceptors are added with the AOP ProxyFactoryBean
+        on server side, with the ExclusiveBeanNameAutoProxyCreator -->
+    <bean id="printer"
+        class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces">
+            <value>
+                ch.elca.el4j.demos.statistics.detailed.internal.DemoA
+            </value>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>clientInterceptor</value>
+            </list>
+        </property>
+        <property name="target">
+            <ref bean="rmiWithContextPrinter" />
+        </property>
+    </bean>
+
+    <!-- Remote proxy -->
+    <bean id="rmiWithContextPrinter"
+        class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
+        <property name="remoteProtocol">
+            <ref bean="rmiProtocol" />
+        </property>
+        <property name="serviceInterface">
+            <value>
+                ch.elca.el4j.demos.statistics.detailed.internal.DemoA
+            </value>
+        </property>
+        <property name="serviceName">
+            <value>Printer.rmiWithContext.StatisticDemo</value>
+        </property>
+    </bean>
+
+    <!--  Set the host and port properties for the RMI protocol -->
+    <bean id="propertyOverrideConfigurer"
+        class="org.springframework.beans.factory.config.PropertyOverrideConfigurer"
+        scope="prototype">
+        <property name="locations">
+            <list>
+                <value>classpath:scenarios/client.properties</value>
+            </list>
+        </property>
+    </bean>
+</beans>

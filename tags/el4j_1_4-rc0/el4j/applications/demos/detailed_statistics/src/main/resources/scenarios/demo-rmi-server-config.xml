@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
+    <!--  Server side Service Exporter -->
+    <bean id="rmiWithContextPrinterExporter"
+        class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
+        <property name="remoteProtocol">
+            <ref bean="rmiProtocol" />
+        </property>
+        <property name="serviceInterface">
+            <value>
+                ch.elca.el4j.demos.statistics.detailed.internal.DemoA
+            </value>
+        </property>
+        <property name="serviceName">
+            <value>Printer.rmiWithContext.StatisticDemo</value>
+        </property>
+        <property name="service">
+            <idref bean="demoAImpl" />
+        </property>
+    </bean>
+
+    <!-- Demo Application beans -->
+    <bean id="demoAImpl"
+        class="ch.elca.el4j.demos.statistics.detailed.internal.DemoAImpl">
+        <property name="demoB">
+            <ref bean="demoB" />
+        </property>
+        <property name="demoC">
+            <ref bean="demoC" />
+        </property>
+    </bean>
+    <bean id="demoB"
+        class="ch.elca.el4j.demos.statistics.detailed.internal.DemoB">
+        <property name="demoC">
+            <ref bean="demoC" />
+        </property>
+    </bean>
+    <bean id="demoC"
+        class="ch.elca.el4j.demos.statistics.detailed.internal.DemoC" />
+</beans>

@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:seam="http://jboss.com/products/seam/spring-seam"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+	http://jboss.com/products/seam/spring-seam
+                        http://jboss.com/products/seam/spring-seam-2.0.xsd">
+
+	<!-- $Revision$ -->
+	<!-- $URL$ -->
+	<!-- $Date$ -->
+	<!-- $Author$ -->
+
+	<!-- NOTE: This is sort of an unusually "monolithic" EL4J configuration.
+		It is only used to simplify the configuration of this
+		demo application. In a real world application, the beans herein
+		will be scattered in several config files of different EL4J modules. -->
+
+
+
+	<!--
+		*********************************************************************************
+		Hibernate related beans:
+		*********************************************************************************
+	-->
+
+	<!-- Hibernate Session Factory Bean -->
+	<bean id="hibernateSessionFactory"
+		class="ch.elca.el4j.services.persistence.hibernate.entityfinder.EntityDetectorAnnotationSessionFactoryBean">
+
+       
+		<property name="autoDetectEntityPackage">
+			<list>
+				<value>ch.elca.el4j.apps.keyword.dom</value>
+				<value>ch.elca.el4j.seam.demo.entities</value>
+			</list>
+		</property>
+
+		<!-- The hibernate properties  -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${databaseDialect}</prop>
+				<prop key="hibernate.cache.provider_class">
+					org.hibernate.cache.HashtableCacheProvider
+				</prop>
+				<prop key="hibernate.max_fetch_depth">3</prop>
+
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<!-- set to create-drop to NOT maintain state -->
+
+				<prop key="hibernate.show_sql">true</prop>
+
+				<prop
+					key="hibernate.transaction.flush_before_completion">
+					true
+				</prop>
+				<prop key="hibernate.connection.release_mode">
+					after_transaction
+				</prop>
+
+			</props>
+		</property>
+
+		<property name="useTransactionAwareDataSource">
+			<value>false</value>
+		</property>
+
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+
+
+		<property name="mappingResources">
+			<list>
+
+				<!-- ############################################ -->
+				<!-- # mapping files with external dependencies # -->
+				<!-- ############################################ -->
+
+				<!-- following mapping file has a dependendy on   -->
+				<!-- 'bsh-{version}.jar'.                         -->
+				<!-- uncomment this if you don't have bsh on your -->
+				<!-- classpath.  you won't be able to use the     -->
+				<!-- script element in process definition files   -->
+				<value>org/jbpm/graph/action/Script.hbm.xml</value>
+
+				<!-- following mapping files have a dependendy on  -->
+				<!-- 'jbpm-identity.jar', mapping files            -->
+				<!-- of the pluggable jbpm identity component.     -->
+				<!-- Uncomment the following 3 lines if you        -->
+				<!-- want to use the jBPM identity mgmgt           -->
+				<!-- component.                                    -->
+				<!-- identity mappings (begin) -->
+				<!-- <value>org/jbpm/identity/User.hbm.xml</value>
+				<value>org/jbpm/identity/Group.hbm.xml</value>
+				<value>org/jbpm/identity/Membership.hbm.xml</value>-->
+				<!-- identity mappings (end) -->
+
+				<!-- following mapping files have a dependendy on  -->
+				<!-- the JCR API                                   -->
+				<!-- jcr mappings (begin) ===
+					<value>org/jbpm/context/exe/variableinstance/JcrNodeInstance.hbm.xml</value>
+					==== jcr mappings (end) -->
+
+
+				<!-- ###################### -->
+				<!-- # jbpm mapping files # -->
+				<!-- ###################### -->
+
+				<!-- hql queries and type defs -->
+				<value>org/jbpm/db/hibernate.queries.hbm.xml</value>
+
+				<!-- graph.action mapping files -->
+				<value>org/jbpm/graph/action/MailAction.hbm.xml</value>
+
+				<!-- graph.def mapping files -->
+				<value>
+					org/jbpm/graph/def/ProcessDefinition.hbm.xml
+				</value>
+				<value>org/jbpm/graph/def/Node.hbm.xml</value>
+				<value>org/jbpm/graph/def/Transition.hbm.xml</value>
+				<value>org/jbpm/graph/def/Event.hbm.xml</value>
+				<value>org/jbpm/graph/def/Action.hbm.xml</value>
+				<value>org/jbpm/graph/def/SuperState.hbm.xml</value>
+				<value>
+					org/jbpm/graph/def/ExceptionHandler.hbm.xml
+				</value>
+				<value>org/jbpm/instantiation/Delegation.hbm.xml</value>
+
+				<!-- graph.node mapping files -->
+				<value>org/jbpm/graph/node/StartState.hbm.xml</value>
+				<value>org/jbpm/graph/node/EndState.hbm.xml</value>
+				<value>org/jbpm/graph/node/ProcessState.hbm.xml</value>
+				<value>org/jbpm/graph/node/Decision.hbm.xml</value>
+				<value>org/jbpm/graph/node/Fork.hbm.xml</value>
+				<value>org/jbpm/graph/node/Join.hbm.xml</value>
+				<value>org/jbpm/graph/node/MailNode.hbm.xml</value>
+				<value>org/jbpm/graph/node/State.hbm.xml</value>
+				<value>org/jbpm/graph/node/TaskNode.hbm.xml</value>
+
+				<!-- context.def mapping files -->
+				<value>
+					org/jbpm/context/def/ContextDefinition.hbm.xml
+				</value>
+				<value>
+					org/jbpm/context/def/VariableAccess.hbm.xml
+				</value>
+
+				<!-- taskmgmt.def mapping files -->
+				<value>
+					org/jbpm/taskmgmt/def/TaskMgmtDefinition.hbm.xml
+				</value>
+				<value>org/jbpm/taskmgmt/def/Swimlane.hbm.xml</value>
+				<value>org/jbpm/taskmgmt/def/Task.hbm.xml</value>
+				<value>
+					org/jbpm/taskmgmt/def/TaskController.hbm.xml
+				</value>
+
+				<!-- module.def mapping files -->
+				<value>
+					org/jbpm/module/def/ModuleDefinition.hbm.xml
+				</value>
+
+				<!-- bytes mapping files -->
+				<value>org/jbpm/bytes/ByteArray.hbm.xml</value>
+
+				<!-- file.def mapping files -->
+				<value>org/jbpm/file/def/FileDefinition.hbm.xml</value>
+
+				<!-- scheduler.def mapping files -->
+				<value>
+					org/jbpm/scheduler/def/CreateTimerAction.hbm.xml
+				</value>
+				<value>
+					org/jbpm/scheduler/def/CancelTimerAction.hbm.xml
+				</value>
+
+				<!-- graph.exe mapping files -->
+				<value>org/jbpm/graph/exe/Comment.hbm.xml</value>
+				<value>
+					org/jbpm/graph/exe/ProcessInstance.hbm.xml
+				</value>
+				<value>org/jbpm/graph/exe/Token.hbm.xml</value>
+				<value>org/jbpm/graph/exe/RuntimeAction.hbm.xml</value>
+
+				<!-- module.exe mapping files -->
+				<value>
+					org/jbpm/module/exe/ModuleInstance.hbm.xml
+				</value>
+
+				<!-- context.exe mapping files -->
+				<value>
+					org/jbpm/context/exe/ContextInstance.hbm.xml
+				</value>
+				<value>
+					org/jbpm/context/exe/TokenVariableMap.hbm.xml
+				</value>
+				<value>
+					org/jbpm/context/exe/VariableInstance.hbm.xml
+				</value>
+				<value>
+					org/jbpm/context/exe/variableinstance/ByteArrayInstance.hbm.xml
+				</value>
+				<value>
+					org/jbpm/context/exe/variableinstance/DateInstance.hbm.xml
+				</value>
+				<value>
+					org/jbpm/context/exe/variableinstance/DoubleInstance.hbm.xml
+				</value>
+				<value>
+					org/jbpm/context/exe/variableinstance/HibernateLongInstance.hbm.xml
+				</value>
+				<value>
+					org/jbpm/context/exe/variableinstance/HibernateStringInstance.hbm.xml
+				</value>
+				<value>
+					org/jbpm/context/exe/variableinstance/LongInstance.hbm.xml
+				</value>
+				<value>
+					org/jbpm/context/exe/variableinstance/NullInstance.hbm.xml
+				</value>
+				<value>
+					org/jbpm/context/exe/variableinstance/StringInstance.hbm.xml
+				</value>
+
+				<!-- job mapping files -->
+				<value>org/jbpm/job/Job.hbm.xml</value>
+				<value>org/jbpm/job/Timer.hbm.xml</value>
+				<value>org/jbpm/job/ExecuteNodeJob.hbm.xml</value>
+				<value>org/jbpm/job/ExecuteActionJob.hbm.xml</value>
+
+				<!-- taskmgmt.exe mapping files -->
+				<value>
+					org/jbpm/taskmgmt/exe/TaskMgmtInstance.hbm.xml
+				</value>
+				<value>
+					org/jbpm/taskmgmt/exe/TaskInstance.hbm.xml
+				</value>
+				<value>org/jbpm/taskmgmt/exe/PooledActor.hbm.xml</value>
+				<value>
+					org/jbpm/taskmgmt/exe/SwimlaneInstance.hbm.xml
+				</value>
+
+				<!-- logging mapping files -->
+				<value>org/jbpm/logging/log/ProcessLog.hbm.xml</value>
+				<value>org/jbpm/logging/log/MessageLog.hbm.xml</value>
+				<value>org/jbpm/logging/log/CompositeLog.hbm.xml</value>
+				<value>org/jbpm/graph/log/ActionLog.hbm.xml</value>
+				<value>org/jbpm/graph/log/NodeLog.hbm.xml</value>
+				<value>
+					org/jbpm/graph/log/ProcessInstanceCreateLog.hbm.xml
+				</value>
+				<value>
+					org/jbpm/graph/log/ProcessInstanceEndLog.hbm.xml
+				</value>
+				<value>
+					org/jbpm/graph/log/ProcessStateLog.hbm.xml
+				</value>
+				<value>org/jbpm/graph/log/SignalLog.hbm.xml</value>
+				<value>org/jbpm/graph/log/TokenCreateLog.hbm.xml</value>
+				<value>org/jbpm/graph/log/TokenEndLog.hbm.xml</value>
+				<value>org/jbpm/graph/log/TransitionLog.hbm.xml</value>
+				<value>org/jbpm/context/log/VariableLog.hbm.xml</value>
+				<value>
+					org/jbpm/context/log/VariableCreateLog.hbm.xml
+				</value>
+				<value>
+					org/jbpm/context/log/VariableDeleteLog.hbm.xml
+				</value>
+				<value>
+					org/jbpm/context/log/VariableUpdateLog.hbm.xml
+				</value>
+				<value>
+					org/jbpm/context/log/variableinstance/ByteArrayUpdateLog.hbm.xml
+				</value>
+				<value>
+					org/jbpm/context/log/variableinstance/DateUpdateLog.hbm.xml
+				</value>
+				<value>
+					org/jbpm/context/log/variableinstance/DoubleUpdateLog.hbm.xml
+				</value>
+				<value>
+					org/jbpm/context/log/variableinstance/HibernateLongUpdateLog.hbm.xml
+				</value>
+				<value>
+					org/jbpm/context/log/variableinstance/HibernateStringUpdateLog.hbm.xml
+				</value>
+				<value>
+					org/jbpm/context/log/variableinstance/LongUpdateLog.hbm.xml
+				</value>
+				<value>
+					org/jbpm/context/log/variableinstance/StringUpdateLog.hbm.xml
+				</value>
+				<value>org/jbpm/taskmgmt/log/TaskLog.hbm.xml</value>
+				<value>
+					org/jbpm/taskmgmt/log/TaskCreateLog.hbm.xml
+				</value>
+				<value>
+					org/jbpm/taskmgmt/log/TaskAssignLog.hbm.xml
+				</value>
+				<value>org/jbpm/taskmgmt/log/TaskEndLog.hbm.xml</value>
+				<value>org/jbpm/taskmgmt/log/SwimlaneLog.hbm.xml</value>
+				<value>
+					org/jbpm/taskmgmt/log/SwimlaneCreateLog.hbm.xml
+				</value>
+				<value>
+					org/jbpm/taskmgmt/log/SwimlaneAssignLog.hbm.xml
+				</value>
+
+			</list>
+		</property>
+
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.jboss.seam.ioc.spring.SeamManagedSessionFactoryBean">
+		<property name="sessionName" value="hibernateSession" />
+	</bean>
+
+	<bean id="conflicts" class="ch.elca.el4j.seam.generic.Temporary" />
+
+<!-- 
+    <bean id="localTransactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="hibernateSessionFactory" />
+	</bean>-->
+
+	<!--
+		*********************************************************************************
+		DAO related beans:
+		*********************************************************************************
+	-->
+
+	<!-- the dao registry -->
+	<bean id="daoRegistry"
+		class="ch.elca.el4j.services.persistence.generic.dao.impl.FallbackDaoRegistry">
+
+		<property name="daoPrototypeBeanName">
+			<idref bean="daoPrototype" />
+		</property>
+
+		<!--  old-style config (to show how to mix old and new config ways, the other daos
+			are automatically loaded) -->
+		<property name="daos">
+			<map>
+				<entry key="ch.elca.el4j.seam.demo.entities.Employee">
+					<ref bean="employeeDao" />
+				</entry>
+			</map>
+		</property>
+
+	</bean>
+
+	<!-- DAO prototype to be used for DAO auto-creation  -->
+	<bean id="daoPrototype"
+		class="ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao"
+		parent="abstractDao" scope="prototype">
+		<property name="persistentClass" value="java.lang.Object" />
+	</bean>
+
+	<!-- Employee DAO for EmployeeManager  -->
+	<bean id="employeeDao"
+		class="ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao"
+		parent="abstractDao" scope="prototype">
+		<property name="persistentClass"
+			value="ch.elca.el4j.seam.demo.entities.Employee" />
+	</bean>
+
+	<!--
+		*********************************************************************************
+		Generic master/detail view beans:
+		*********************************************************************************
+	-->
+
+	<!-- Shortname mapping: bijective mapping between entity shortnames and class names -->
+	<bean id="shortNameMapping"
+		class="ch.elca.el4j.seam.generic.EntityShortNameMapping">
+		<property name="entityShortNames">
+			<map>
+				<entry key="ch.elca.el4j.apps.keyword.dom.Keyword">
+					<value>keyword</value>
+				</entry>
+			</map>
+		</property>
+		<!-- The package to use when guessing -->
+		<property name="defaultEntityPackage"
+			value="ch.elca.el4j.seam.demo.entities" />
+	</bean>
+
+	<!-- Entity info base: provides (mostly metadata related) info about entities -->
+	<bean id="entityInfoBase"
+		class="ch.elca.el4j.seam.generic.metadata.EntityInfoBase">
+		<property name="sessionFactory" ref="hibernateSessionFactory" />
+	</bean>
+
+	<!-- Field lists: computes field/column lists (metadata & given in/exclusion lists) -->
+	<bean id="fieldLists"
+		class="ch.elca.el4j.seam.generic.metadata.FieldLists">
+		<property name="sessionFactory" ref="hibernateSessionFactory" />
+		<property name="shortNameMapping" ref="shortNameMapping" />
+	</bean>
+
+	<!-- The essential utils bean: The heart of all generic master/detail views -->
+	<bean id="utils" class="ch.elca.el4j.seam.generic.ElUtils">
+		<property name="shortNameMapping" ref="shortNameMapping" />
+		<property name="entityInfoBase" ref="entityInfoBase" />
+		<property name="fieldLists" ref="fieldLists" />
+	</bean>
+
+</beans>

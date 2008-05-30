@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition name="holiday-request">
+	
+	<start-state name="enter request">
+		<transition to="evaluate request node" name="send request"></transition>
+	</start-state>
+
+
+	<task-node name="evaluate request node">
+		<task name="evaluate request" description="#{holidayRequest.name}">	
+		  <assignment pooled-actors="admin"></assignment>
+        </task>
+		<transition to="end" name="return decision"></transition>
+		<transition to="provide detail" name="request details"></transition>
+		<transition to="evaluate request node" name="cancel evaluation"></transition>
+		
+	</task-node>
+
+	<task-node name="provide detail">
+		<task name="enter more information" description="#{holidayRequest.name}">
+			<assignment pooled-actors="user"></assignment>
+			<!-- <assignment actor-id="#{actor.id}"/>    -->  
+		</task>
+		<transition to="evaluate request node" name="send details"></transition>
+	</task-node>
+
+
+	<end-state name="end"></end-state>
+
+
+</process-definition>

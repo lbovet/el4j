@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
+    <bean id="rmiTestObjImpl2" class="ch.elca.el4j.tests.services.remoting.loadbalancing.common.BusinessObjectImpl">
+    <property name="serverName">
+        <value>${rmi.host}:8095</value>
+        </property>
+    </bean>
+
+    <bean id="rmiTestObjExporter2" class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
+        <property name="serviceInterface">
+            <value>ch.elca.el4j.tests.services.remoting.loadbalancing.common.BusinessObject</value>
+        </property>
+        <property name="service">
+            <idref bean="rmiTestObjImpl2"/>
+        </property>
+        <property name="remoteProtocol">
+            <ref bean="rmiProtocol2" />
+        </property>
+    </bean>
+</beans>
