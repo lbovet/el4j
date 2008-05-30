@@ -79,26 +79,26 @@
 			<timezone>+1</timezone>
 		</developer>
 		<developer>
-			<id>poesch</id>
-			<name>Philipp Oesch</name>
-			<roles>
-				<role>Java Developer</role>
-			</roles>
-			<timezone>+1</timezone>
-		</developer>
-		<developer>
-			<id>franky_b</id>
-			<name>Frank Bitzer</name>
+			<id>dbdelca</id>
+			<name>David Bernhard</name>
 			<roles>
 				<role>Intern</role>
 			</roles>
 			<timezone>+1</timezone>
 		</developer>
 		<developer>
-			<id>chumard</id>
-			<name>Claude Humard</name>
+			<id>floke</id>
+			<name>Florian Keusch</name>
 			<roles>
-				<role>Java Developer</role>
+				<role>Intern</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<id>fabianr</id>
+			<name>Fabian Reichlin</name>
+			<roles>
+				<role>Intern</role>
 			</roles>
 			<timezone>+1</timezone>
 		</developer>		
@@ -141,7 +141,7 @@
 			<name>Christoph Baeni</name>
 			<roles>
 				<role>Ex-Intern</role>
-				<role>Java developer</role>				
+				<role>Java developer</role>
 			</roles>
 			<timezone>+1</timezone>
 		</contributor>	
@@ -167,7 +167,28 @@
 				<role>Java developer</role>
 			</roles>
 			<timezone>+1</timezone>
-		</contributor>		
+		</contributor>
+		<contributor>
+			<name>Philipp Oesch</name>
+			<roles>
+				<role>Java Developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</contributor>
+		<contributor>
+			<name>Frank Bitzer</name>
+			<roles>
+				<role>Ex-Intern</role>
+			</roles>
+			<timezone>+1</timezone>
+		</contributor>
+		<contributor>
+			<name>Claude Humard</name>
+			<roles>
+				<role>Java Developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</contributor>
 	</contributors>
 
 	<licenses>
