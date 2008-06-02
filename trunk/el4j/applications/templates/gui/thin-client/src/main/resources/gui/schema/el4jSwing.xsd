@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="http://www.elca.ch/el4j/cookSwing"
-	elementFormDefault="qualified"
 	xmlns:el4j="http://www.elca.ch/el4j/cookSwing"
 	xmlns:cookXmlCommon="http://cookxml.sf.net/common/"
 	xmlns:cookSwing="http://cookxml.sf.net/cookswing/">
 
-	<import namespace="http://cookxml.sf.net/common/" schemaLocation="cookXmlCommon.xsd" />
-	<import namespace="http://cookxml.sf.net/cookswing/" schemaLocation="cookSwing.xsd" />
+	<import namespace="http://cookxml.sf.net/common/" schemaLocation="http://el4.elca-services.ch/el4j/schema/swing/cookXmlCommon.xsd" />
+	<import namespace="http://cookxml.sf.net/cookswing/" schemaLocation="http://el4.elca-services.ch/el4j/schema/swing/cookSwing.xsd" />
 	
 	
 	<!-- components -->
@@ -171,6 +170,4 @@
 	<element name="row" type="el4j:row" substitutionGroup="cookXmlCommon:object" />
 	<element name="vgap" type="el4j:row" substitutionGroup="cookXmlCommon:object" />
 	<element name="empty" type="el4j:row" substitutionGroup="cookXmlCommon:object" />
-	
-	<attribute name="span" type="string" />
 </schema>

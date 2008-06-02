@@ -5,10 +5,10 @@
 	xmlns:el4j="http://www.elca.ch/el4j/cookSwing"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="
-		http://cookxml.sf.net/cookswing/ schema/cookSwing.xsd
-		http://www.elca.ch/el4j/cookSwing schema/el4jSwing.xsd
-		http://cookxml.sf.net/common/ schema/cookXmlCommon.xsd
-		http://cookxml.sf.net/ schema/cookXml.xsd"
+		http://cookxml.sf.net/cookswing/ http://el4.elca-services.ch/el4j/schema/swing/cookSwing.xsd
+		http://www.elca.ch/el4j/cookSwing http://el4.elca-services.ch/el4j/schema/swing/el4jSwing.xsd
+		http://cookxml.sf.net/common/ http://el4.elca-services.ch/el4j/schema/swing/cookXmlCommon.xsd
+		http://cookxml.sf.net/ http://el4.elca-services.ch/el4j/schema/swing/cookXml.xsd"
 	name="mainFrame" locationrelativeto="null">
 	
 	<menubar>
