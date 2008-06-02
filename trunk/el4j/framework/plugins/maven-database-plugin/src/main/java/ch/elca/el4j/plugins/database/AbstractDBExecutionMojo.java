@@ -29,6 +29,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 import org.apache.maven.artifact.Artifact;
@@ -131,6 +133,13 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
      * @parameter expression="${delimiter}" default-value=";"
      */
     private String delimiter;
+    
+    /**
+     * Separator for sql blocks (e.g. PL/SQL).
+     *
+     * @parameter expression="${blockDelimiter}" default-value="/"
+     */
+    private String blockDelimiter;
     
     /**
      * SQL Source Directories, i.e. directories where to find the .sql files.
@@ -418,7 +427,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
         List<SQLException> sqlExceptions = new ArrayList<SQLException>();
         List<String> failedSqlStatements = new ArrayList<String>();
         Connection connection = getConnection();
-        Statement stmt;
+        Statement stmt = null;
         try {
             // Process resources from back to beginning to beginn with
             // Resources of uppermost dependency first
@@ -433,10 +442,14 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
                         stmt = connection.createStatement();
                         sqlString = sqlString.replace("###SEMICOLUMN###", ";");
                         stmt.execute(sqlString);
-                        stmt.close();
                     } catch (SQLException e) {
                         sqlExceptions.add(e);
                         failedSqlStatements.add(sqlString);
+                    } finally {
+                        if (stmt != null) {
+                            stmt.close();
+                            stmt = null;
+                        }
                     }
                 }
             }
@@ -547,7 +560,10 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
         String part;
         StringBuffer stmt = new StringBuffer();
         int index;
-        boolean insideSeqStmt = false;
+        final Pattern beginStmtRegex = Pattern.compile("(declare|is|begin|as)", 
+            Pattern.CASE_INSENSITIVE);
+        Matcher beginStmtMatcher;
+        String expectedDelimiter = delimiter;
 
         try {
             BufferedReader buffRead = new BufferedReader(new InputStreamReader(
@@ -557,26 +573,23 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
                 
                 // Filter out comments and blank lines
                 if (StringUtils.hasText(part) && !part.startsWith("--")) {
+                    beginStmtMatcher = beginStmtRegex.matcher(part);
                     // Detect begin/end of statement sequence
-                    if (part.equalsIgnoreCase("DECLARE")) {
-                        insideSeqStmt = true;
-                    } else if (part.equalsIgnoreCase("IS")) {
-                        insideSeqStmt = true;
-                    } else if (part.equalsIgnoreCase("BEGIN")) {
-                        insideSeqStmt = true;
-                    } else if (part.equalsIgnoreCase("/")) {
-                        part = delimiter;
-                        insideSeqStmt = false;
+                    if (beginStmtMatcher.matches()) {
+                        expectedDelimiter = blockDelimiter;
                     }
                     
                     // Split statements by delimiter, by default ';'
-                    while (!insideSeqStmt 
-                        && (index = part.indexOf(delimiter)) != -1) {
+                    while ((index = part.indexOf(expectedDelimiter)) != -1) {
                         
                         // add statement to result array
                         result.add(stmt.toString() + part.substring(0, index));
+                        
+                        // reset expected delimiter
+                        expectedDelimiter = delimiter;
                         // reset statement string
                         stmt.setLength(0);
+                        
                         // check if Part has input after the delimiter.
                         // If so, continue.
                         if (index < part.length()) {
