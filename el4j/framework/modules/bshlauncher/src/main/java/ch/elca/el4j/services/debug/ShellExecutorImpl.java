@@ -31,7 +31,7 @@ import bsh.TargetError;
  * 
  * <script type="text/javascript">printFileStatus
  *   ("$Source: /cvsroot/leafproject/leaf/debug/src/dist/ch/elca/leaf/services/debug/AbstractEvaluator.java,v $",
- *   "$Revision: 1.6 $", "$Date: 2004/03/26 12:47:14 $", "$Author: csc $"
+ *   "$Revision$", "$Date$", "$Author$"
  * );</script>
  **/
 public class ShellExecutorImpl implements ShellExecutor {

@@ -35,10 +35,10 @@ import javax.swing.tree.DefaultMutableTreeNode;
  * A GUI to inspect all defined classes of a project.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/etc/eclipse/codeTemplates.xml $",
- *    "$Revision: 2754 $",
- *    "$Date: 2008-03-04 09:04:15 +0100 (Tue, 04 Mar 2008) $",
- *    "$Author: swismer $"
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
  * );</script>
  *
  * @author David Bernhard (DBD)

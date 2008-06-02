@@ -4,10 +4,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<!-- $Revision: 2820 $ -->
-	<!-- $URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/maven/helpers/packer/pom.xml $ -->
-	<!-- $Date: 2008-03-27 16:47:35 +0100 (Thu, 27 Mar 2008) $ -->
-	<!-- $Author: dbdelca $ -->
+	<!-- $Revision$ -->
+	<!-- $URL$ -->
+	<!-- $Date$ -->
+	<!-- $Author$ -->
 
 	<parent>
 		<groupId>ch.elca.el4j.maven</groupId>

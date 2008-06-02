@@ -1,7 +1,7 @@
--- Version: $Revision: 1860 $
--- URL: $URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/applications/templates/common/refdb/dao/src/main/resources/etc/sql/oracle/create-reference.sql $
--- Date: $Date: 2007-07-22 22:37:17 +0200 (Sun, 22 Jul 2007) $
--- Author: $Author: poser55 $
+-- Version: $Revision$
+-- URL: $URL$
+-- Date: $Date$
+-- Author: $Author$
 
 CREATE TABLE referencesTable (
   keyId                     INTEGER        NOT NULL 

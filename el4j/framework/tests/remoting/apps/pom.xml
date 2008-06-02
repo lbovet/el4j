@@ -4,10 +4,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<!-- Version: $Revision: 1140 $ -->
-	<!-- URL: $URL: https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/tests/remoting/functional-tests/pom.xml $ -->
-	<!-- Date: $Date: 2006-09-14 13:55:13 +0200 (Do, 14 Sep 2006) $ -->
-	<!-- Author: $Author: fsuess $ -->
+	<!-- Version: $Revision$ -->
+	<!-- URL: $URL$ -->
+	<!-- Date: $Date$ -->
+	<!-- Author: $Author$ -->
 
 	<parent>
 		<groupId>ch.elca.el4j.tests</groupId>

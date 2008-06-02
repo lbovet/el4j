@@ -29,10 +29,10 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
  * Defines the context that is implicitly passed to the server.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$URL: https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/demos/remoting/java/ch/elca/el4j/demos/remoting/TestImplicitContextPassingRegistry.java $",
- *    "$Revision: 245 $",
- *    "$Date: 2006-03-13 14:15:43 +0100 (Mon, 13 Mar 2006) $",
- *    "$Author: swisswheel $"
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
  * );</script>
  *
  * @author Stefan Pleisch (SPL)
