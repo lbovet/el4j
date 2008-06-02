@@ -1,0 +1,18 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+
+	<ui:remove><!-- component to choose a member of an enumeration --></ui:remove>
+	
+	<h:selectOneMenu id="#{fieldName}"
+				  value="#{entity[fieldName]}"
+			   required="#{utils.isRequired(entityClassName,fieldName)}">
+		<s:selectItems value="#{utils.getEnumList(entityClassName,fieldName)}"
+						 var="item"
+					   label="#{el4j:h10nFieldEnumName(entityShortName, fieldName, item)}"
+			noSelectionLabel="Select..."/>
+		<s:convertEnum/>
+	</h:selectOneMenu>
+
+</ui:composition>

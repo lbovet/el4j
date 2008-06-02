@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
+    <bean id="unsafeA" class="ch.elca.el4j.tests.services.exceptionhandler.AImpl"/>
+    
+    <bean id="A" class="ch.elca.el4j.services.exceptionhandler.ContextExceptionHandlerFactoryBean">
+        <property name="target"><ref local="unsafeA"/></property>
+        <property name="policies">
+            <map>
+                <entry key="gui">
+                    <list>
+                        <bean class="ch.elca.el4j.services.exceptionhandler.ClassExceptionConfiguration">
+                            <property name="exceptionTypes">
+                                <list>
+                                    <value>java.lang.ArithmeticException</value>
+                                </list>
+                            </property>
+                            <property name="exceptionHandler">
+                                <bean class="ch.elca.el4j.tests.services.exceptionhandler.MessageBoxExceptionHandler"/>
+                            </property>
+                        </bean>
+                    </list>
+                </entry>
+                
+                <entry key="batch">
+                    <list>
+                        <bean class="ch.elca.el4j.services.exceptionhandler.ClassExceptionConfiguration">
+                            <property name="exceptionTypes">
+                                <list>
+                                    <value>java.lang.ArithmeticException</value>
+                                </list>
+                            </property>
+                            <property name="exceptionHandler">
+                                <bean class="ch.elca.el4j.tests.services.exceptionhandler.LogExceptonHandler">
+                                    <property name="useDynamicLogger"><value>true</value></property>
+                                </bean>
+                            </property>
+                        </bean>
+                    </list>
+                </entry>
+            </map>
+        </property>
+    </bean>
+</beans>

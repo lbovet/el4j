@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="holiday-request" width="595" height="599">
+  <node name="enter request" x="71" y="33" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="evaluate request node" x="68" y="179" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="-37" y="-26"/>
+      <bendpoint w1="127" h1="-41" w2="-114" h2="-35"/>
+    </edge>
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-97" h1="41" w2="-97" h2="41"/>
+      <bendpoint w1="-119" h1="-36" w2="-119" h2="-36"/>
+      <bendpoint w1="-88" h1="-54" w2="-88" h2="-54"/>
+    </edge>
+  </node>
+  <node name="provide detail" x="309" y="173" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+      <bendpoint w1="-122" h1="49" w2="119" h2="43"/>
+    </edge>
+  </node>
+  <node name="end" x="72" y="323" width="132" height="36"/>
+</root-container>

@@ -1,0 +1,26 @@
+<pageflow-definition 
+        xmlns="http://jboss.com/products/seam/pageflow"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://jboss.com/products/seam/pageflow 
+                            http://jboss.com/products/seam/pageflow-2.0.xsd"
+        name="createRequest">
+
+
+    <start-state name="indexStart">
+       <transition to="enterRequest" name="createRequest">
+       </transition>
+    </start-state>
+    
+    
+    <page name="enterRequest" view-id="/enterRequest.xhtml">
+		<transition to="index" name="toIndex">
+		  <action expression="#{holidayAction.sendRequest}"></action>
+		</transition>
+		<transition name="toIndexCancel" to="index"></transition>
+	</page>
+	
+	<page name="index" view-id="/index_holiday.xhtml">
+	   <end-conversation/>  
+	</page>
+	
+</pageflow-definition>

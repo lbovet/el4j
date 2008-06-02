@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="1.2"
+              xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd">
+
+   <application>
+      <variable-resolver>
+            org.springframework.web.jsf.DelegatingVariableResolver
+      </variable-resolver>
+      <locale-config>
+    		<default-locale>en</default-locale>
+    		<supported-locale>en</supported-locale>
+    		<supported-locale>de</supported-locale>
+      </locale-config>
+      <!-- Disabled when using Ajax4JSF -->
+      <!--
+      <view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
+      -->
+   </application>
+   
+   
+   <!-- custom datatable used for support of paging -->
+   <component>
+      <component-type>
+        ch.elca.el4j.PagedRichHtmlDataTable
+      </component-type>
+  	<component-class>
+  	  ch.elca.el4j.jsf.component.html.PagedRichHtmlDataTable
+  	</component-class>
+  </component>
+  <component>
+      <component-type>
+        ch.elca.el4j.PagedRichHtmlDatascroller
+      </component-type>
+  	<component-class>
+  	  ch.elca.el4j.jsf.component.html.PagedRichHtmlDatascroller
+  	</component-class>
+  </component>
+   
+   
+</faces-config>

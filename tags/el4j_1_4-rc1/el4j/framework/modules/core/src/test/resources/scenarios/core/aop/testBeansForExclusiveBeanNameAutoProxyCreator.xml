@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
+    <bean id="shortcutInterceptor" 
+        class="ch.elca.el4j.tests.core.aop.ShortcutInterceptor">
+        <property name="methodName"><value>getBeanName</value></property>
+        <property name="result"><value>proxied</value></property>
+    </bean>
+    
+    <bean id="beanA" class="ch.elca.el4j.tests.core.aop.BeanImpl"/>
+    <bean id="beanB" class="ch.elca.el4j.tests.core.aop.BeanImpl"/>
+    <bean id="foo" class="ch.elca.el4j.tests.core.aop.BeanImpl"/>
+    <bean id="bar" class="ch.elca.el4j.tests.core.aop.BeanImpl"/>
+    <bean id="foobar" class="ch.elca.el4j.tests.core.aop.BeanImpl"/>   
+</beans>
