@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema targetNamespace="http://cookxml.sf.net/cookswing/"
-	elementFormDefault="qualified"
 	xmlns="http://www.w3.org/2001/XMLSchema"
 	xmlns:cookSwing="http://cookxml.sf.net/cookswing/"
 	xmlns:cookXmlCommon="http://cookxml.sf.net/common/">
 
-	<import namespace="http://cookxml.sf.net/common/" schemaLocation="cookXmlCommon.xsd" />
+	<import namespace="http://cookxml.sf.net/common/" schemaLocation="http://el4.elca-services.ch/el4j/schema/swing/cookXmlCommon.xsd" />
 	
 	<complexType name="listeners">
 		<complexContent>
