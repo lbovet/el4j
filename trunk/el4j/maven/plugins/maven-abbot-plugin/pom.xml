@@ -4,10 +4,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	
-	<!-- Version: $Revision: 2728 $ -->
-	<!-- URL: $URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/maven/plugins/maven-checkclipse-helper-plugin/pom.xml $ -->
-	<!-- Date: $Date: 2008-02-25 16:47:49 +0100 (Mon, 25 Feb 2008) $ -->
-	<!-- Author: $Author: swismer $ -->
+	<!-- Version: $Revision$ -->
+	<!-- URL: $URL$ -->
+	<!-- Date: $Date$ -->
+	<!-- Author: $Author$ -->
 	
 	<parent>
 		<groupId>ch.elca.el4j.maven.plugins</groupId>

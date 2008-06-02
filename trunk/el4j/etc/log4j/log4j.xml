@@ -4,10 +4,10 @@
     xmlns:log4j="http://jakarta.apache.org/log4j/" 
     debug="true">
     
-    <!-- Version: $Revision: 2026 $ -->
-    <!-- URL: $URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/core/src/main/resources/base-log4j.xml $ -->
-    <!-- Date: $Date: 2007-10-11 13:47:42 +0200 (Do, 11 Okt 2007) $ -->
-    <!-- Author: $Author: swisswheel $ -->
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
 
     <appender name="console" class="org.apache.log4j.ConsoleAppender">
         <layout class="org.apache.log4j.PatternLayout">

@@ -4,10 +4,10 @@
     "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
 
 <sqlMapConfig>
-    <!-- Version: $Revision: 1694 $ -->
-    <!-- URL: $URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/applications/templates/common/keyword/dao/src/main/resources/etc/ibatis/keyword-core-sqlmap-config-for-oracle.xml $ -->
-    <!-- Date: $Date: 2007-01-16 17:44:26 +0100 (Tue, 16 Jan 2007) $ -->
-    <!-- Author: $Author: enylaios $ -->
+    <!-- Version: $Revision$ -->
+    <!-- URL: $URL$ -->
+    <!-- Date: $Date$ -->
+    <!-- Author: $Author$ -->
 
     <sqlMap resource="etc/ibatis/common/table-keyword.xml" />
     <sqlMap resource="etc/ibatis/mysql/table-keyword.xml" />

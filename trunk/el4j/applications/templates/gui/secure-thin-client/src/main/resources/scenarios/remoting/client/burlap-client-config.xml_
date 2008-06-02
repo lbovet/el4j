@@ -6,10 +6,10 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
-    <!-- $Revision: 2243 $ -->
-    <!-- $URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/applications/templates/gui/thin-client/src/main/resources/scenarios/remoting/client/httpInvoker-client-config.xml $ -->
-    <!-- $Date: 2007-11-28 11:24:49 +0100 (Mi, 28 Nov 2007) $ -->
-    <!-- $Author: swismer $ -->
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
     
     <import resource="classpath:scenarios/remoting/common/*.xml"/>
     
