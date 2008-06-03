@@ -7,12 +7,15 @@
   = Jconsole can be connected out of the to an EL4J application launched with mvn. 
     Available information includes: all loaded Spring beans, all spring config,
 	class path, Spring intereceptors, ...
-  = More convenience in data access:
+  = More convenience in GenericDao data access:
     + findByIdLazy, flush, deleteAll added
     + Better support for Hibernate criteria: findByCriteria and findCountByCriteria added
   = New OpenSessionInServiceInterceptor: like open session in view for service requests.
   = New annotations for documenting thread-safety: @GuardedBy,@Immutable,(Not)@ThreadSafe
      More details: http://www.javaconcurrencyinpractice.com/
+  = Order of transaction auto proxy advisor set to 100. The one for transaction must be 
+    before others that would like to proxy a same bean, otherwise the transaction annotations 
+	will not be found. An additional demo interceptor is set up in the refdb demo.
   = Many library version updates: Spring 2.5.4
   
 * Databases
@@ -26,8 +29,8 @@
     tags, that greatly simplify binding, tags for designgridlayout, ...
 	This support is based on cookXML and includes XML schemas.
   = Abbot (automated GUI testing) added including a maven plugin and a demo
-  = Security demo added
-  = Exception handling improved, cleanup
+  = New security demo with Acegi: it blocks delete operations for refdb
+  = Exception handling improved (particularly with the EDT)
   = Several libraries updated
   = Spring RCP has been removed
   
