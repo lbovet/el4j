@@ -1,50 +1,58 @@
 --------------------------------------------------------------------------------
- Date :   29.5.08
+ Date :   04.06.08
                             EL4J version  1.4
 --------------------------------------------------------------------------------
-TODO
-2821 ClassloaderTools
-2838 JMX support
-reporting
-sample interceptor
-2797 GuardedBy,Immutable,(Not)ThreadSafe
 
 * Core
-  = Upgrade to Spring 2.5.4
-  = A lot of libraries updated to newer version
+  = Jconsole can be connected out of the to an EL4J application launched with mvn. 
+    Available information includes: all loaded Spring beans, all spring config,
+	class path, Spring intereceptors, ...
   = More convenience in data access:
     + findByIdLazy, flush, deleteAll added
     + Better support for Hibernate criteria: findByCriteria and findCountByCriteria added
-  = OpenSessionInServiceInterceptor added
-
+  = New OpenSessionInServiceInterceptor: like open session in view for service requests.
+  = New annotations for documenting thread-safety: @GuardedBy,@Immutable,(Not)@ThreadSafe
+     More details: http://www.javaconcurrencyinpractice.com/
+  = Many library version updates: Spring 2.5.4
+  
 * Databases
-  = Support for oracle 10 (via -Poracle10) - we have some performance issues with
+  = Added support for oracle 10 (via -Poracle10) - we have some performance issues with
     our development tools (such as Squirrel) when using oracle 10, so oracle 9
     is currently selected as standard
 
 * Module for GUI development
-  = Several libraries updated
-  = Support for describing Swing GUIs in XML added. This includes binding tags, which
-    make binding now much easier, tags for designgridlayout, ...
+  = New application template for GUI development: get quickly started with EL4J.
+  = New support to layout Swing GUIs in XML (similar to XAML). This includes binding 
+    tags, that greatly simplify binding, tags for designgridlayout, ...
+	This support is based on cookXML and includes XML schemas.
   = Abbot (automated GUI testing) added including a maven plugin and a demo
   = Security demo added
   = Exception handling improved, cleanup
   = Spring RCP has been removed
-
+  = Several libraries updated
+  
 * Remoting:
-  = Remoting benchmark for JAX-WS added
+  = New remoting benchmark for JAX-WS
   = Axis and XFire are now deprecated
   = Configuration of Hessian protocol extended (new property 'serviceProperties')
   
 * Build system
-  = Upgrade to new maven 2.0.9
+  = Upgrade to maven 2.0.9
   = We now use and recommend a new maven proxy: Artifactory instead of Proximity
     (see etc/settings.xml for how to configure)
-  = All java files got converted in unicode
+  = All java files got converted to unicode
   = Database plugin:
-    + run goal was added (run all SQL files having a specified prefix)
-    + SQL script processor enhanced: no more ###SEMICOLUMN### needed.
+    + 'run' goal was added (run all SQL files having a specified prefix)
+    + SQL script processor enhanced: no more ###SEMICOLON### needed.
     + new skip parameter, various bugfixes
+  = Out-of-the box maven reporting set up in application templates: get sensible code quality
+    reports in no time.
+  = ClassloaderTools to view the full "classpath" in applications started via the maven classloader
+     (instead of just listing "classworlds-1.1.jar")
+  = Override maven properties (those for env-support, for use in Maven and Spring) via the command line:
+     Use -Doverride.nameOfMy.Fancy.property=abc overrides the value of 'nameOfMy.Fancy.property'.
+  = Flag to skip the integration tests (for quick builds)
+  = Colored maven output (requires enabled ANSI coloring)
 
 * Varia
   = etc/eclipse contains code templates and formatting profiles for eclipse
