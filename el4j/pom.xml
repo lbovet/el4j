@@ -33,6 +33,7 @@
 		EL4J, the Extension Library for the J2EE, adds incremental improvements
 		to the Spring Java framework (http://www.springframework.org/).
 	</description>
+	<url>http://el4j.sourceforge.net/</url>
 	<prerequisites>
 		<maven>${el4j.maven.version}</maven>
 	</prerequisites>
