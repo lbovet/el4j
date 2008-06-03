@@ -28,8 +28,8 @@
   = Abbot (automated GUI testing) added including a maven plugin and a demo
   = Security demo added
   = Exception handling improved, cleanup
-  = Spring RCP has been removed
   = Several libraries updated
+  = Spring RCP has been removed
   
 * Remoting:
   = New remoting benchmark for JAX-WS
@@ -49,18 +49,18 @@
     reports in no time.
   = ClassloaderTools to view the full "classpath" in applications started via the maven classloader
      (instead of just listing "classworlds-1.1.jar")
+  = New module maven-utils providing some maven utilities for classpath inspection
+    and duplicate class detection	 
   = Override maven properties (those for env-support, for use in Maven and Spring) via the command line:
      Use -Doverride.nameOfMy.Fancy.property=abc overrides the value of 'nameOfMy.Fancy.property'.
   = Flag to skip the integration tests (for quick builds)
-  = Colored maven output (requires enabled ANSI coloring)
-
+  = Colored maven output (requires enabled ANSI coloring, not enabled by default)
+  
 * Varia
   = etc/eclipse contains code templates and formatting profiles for eclipse
   = New helper class to store/get hierarchical overridable configuration 
     (see http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/ModuleCoreGenericConfig
     for more information)
-  = New module maven-utils providing some maven utilities for classpath inspection
-    and duplicate class detection
   = All tests upgraded to JUnit 4.4
   = Keyword/RefDb templates: dao and service part merged into same module
 
