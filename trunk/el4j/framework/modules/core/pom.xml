@@ -60,7 +60,7 @@
 		
 		<!-- XML support libraries (not used by core itself, but by many modules)-->
 		<dependency>
-			<groupId>org.jdom</groupId>
+			<groupId>jdom</groupId>
 			<artifactId>jdom</artifactId>
 			<version>1.1</version>
 		</dependency>
