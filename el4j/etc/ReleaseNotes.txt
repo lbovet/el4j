@@ -2,11 +2,59 @@
  Date :   29.5.08
                             EL4J version  1.4
 --------------------------------------------------------------------------------
+TODO
+2821 ClassloaderTools
+2838 JMX support
+reporting
+sample interceptor
+2797 GuardedBy,Immutable,(Not)ThreadSafe
+
+* Core
+  = Upgrade to Spring 2.5.4
+  = A lot of libraries updated to newer version
+  = More convenience in data access:
+    + findByIdLazy, flush, deleteAll added
+    + Better support for Hibernate criteria: findByCriteria and findCountByCriteria added
+  = OpenSessionInServiceInterceptor added
 
 * Databases
-  = Support for oracle 10 (via -Poracle10) - we have some issues with
-    development tools (such as Squirrel) when using oracle 10
+  = Support for oracle 10 (via -Poracle10) - we have some performance issues with
+    our development tools (such as Squirrel) when using oracle 10, so oracle 9
+    is currently selected as standard
 
+* Module for GUI development
+  = Several libraries updated
+  = Support for describing Swing GUIs in XML added. This includes binding tags, which
+    make binding now much easier, tags for designgridlayout, ...
+  = Abbot (automated GUI testing) added including a maven plugin and a demo
+  = Security demo added
+  = Exception handling improved, cleanup
+  = Spring RCP has been removed
+
+* Remoting:
+  = Remoting benchmark for JAX-WS added
+  = Axis and XFire are now deprecated
+  = Configuration of Hessian protocol extended (new property 'serviceProperties')
+  
+* Build system
+  = Upgrade to new maven 2.0.9
+  = We now use and recommend a new maven proxy: Artifactory instead of Proximity
+    (see etc/settings.xml for how to configure)
+  = All java files got converted in unicode
+  = Database plugin:
+    + run goal was added (run all SQL files having a specified prefix)
+    + SQL script processor enhanced: no more ###SEMICOLUMN### needed.
+    + new skip parameter, various bugfixes
+
+* Varia
+  = etc/eclipse contains code templates and formatting profiles for eclipse
+  = New helper class to store/get hierarchical overridable configuration 
+    (see http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/ModuleCoreGenericConfig
+    for more information)
+  = New module maven-utils providing some maven utilities for classpath inspection
+    and duplicate class detection
+  = All tests upgraded to JUnit 4.4
+  = Keyword/RefDb templates: dao and service part merged into same module
 
 --------------------------------------------------------------------------------
  Date :   25.2.08
