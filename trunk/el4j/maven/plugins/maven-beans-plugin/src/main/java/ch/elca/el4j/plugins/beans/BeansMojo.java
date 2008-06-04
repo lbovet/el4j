@@ -80,9 +80,9 @@ public class BeansMojo extends AbstractMojo {
         
         String outputDir = m_project.getBasedir().getAbsolutePath();
         
-        File beanDirectory = new File(outputDir, "beans");
+        File beanDirectory = new File(outputDir, "target/beans");
         
-        beanDirectory.mkdir();
+        beanDirectory.mkdirs();
         if (!beanDirectory.exists() || !beanDirectory.isDirectory()) {
             throw new MojoFailureException("Failed to create beans directory.");
         }
