@@ -30,6 +30,12 @@ Plugins
 *----------------------------+-------------------+  
 | {{{maven-rec-plugin/index.html}mvn-rec}}               			   | Tool to run maven commands for a project and all its dependent projets.
 *----------------------------+-------------------+  
+| {{{maven-abbot-plugin/index.html}abbot}}               			   | Integrates abbot GUI tests into the maven build lifecycle.
+*----------------------------+-------------------+  
+| {{{maven-duplicatefinder-plugin/index.html}duplicatefinder}}               			   | Tool to find different versions of the same jar in the classpath.
+*----------------------------+-------------------+  
+| {{{maven-beans-plugin/index.html}beans}}               			   | Collects all beans files that are used in a ModuleApplicationContext.
+*----------------------------+-------------------+  
 
   Please refer also the plugin section of the {{{http://el4j.sourceforge.net/docs/pdf/ReferenceDoc.pdf}reference document}} and the maven cheat sheet for more information. 
 
