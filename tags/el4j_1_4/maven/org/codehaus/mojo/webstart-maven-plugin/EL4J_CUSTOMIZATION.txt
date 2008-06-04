@@ -1,0 +1,8 @@
+SVN URL: http://svn.codehaus.org/mojo/trunk/mojo/webstart-maven-plugin 
+REVISION: 5622
+APPLIED PATCHES:
+   * http://jira.codehaus.org/browse/MWEBSTART-1 "MWEBSTART-1-patch.diff"
+   * http://jira.codehaus.org/browse/MWEBSTART-59 "MWEBSTART-59-patch.diff"
+CURRENTLY USED VERSION: 1.0-alpha-2-el4j_20071219_1427
+DEPENDENT CUSTOMIZED ARTIFACTS:
+   * groupId=org.codehaus.mojo artifactId=keytool-maven-plugin

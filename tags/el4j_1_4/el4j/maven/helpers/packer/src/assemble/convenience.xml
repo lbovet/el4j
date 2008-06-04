@@ -1,0 +1,10 @@
+<assembly>
+    <id>convenience</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <componentDescriptors>
+        <componentDescriptor>target/env/components/convenience-parts.xml</componentDescriptor>
+    </componentDescriptors>
+</assembly>
