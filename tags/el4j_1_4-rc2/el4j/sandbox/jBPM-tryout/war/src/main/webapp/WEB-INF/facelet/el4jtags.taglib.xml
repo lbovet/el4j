@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<!DOCTYPE facelet-taglib PUBLIC
+  "-//Sun Microsystems, Inc.//DTD Facelet Taglib 1.0//EN"
+  "http://java.sun.com/dtd/facelet-taglib_1_0.dtd">
+<facelet-taglib>
+	<namespace>http://www.elca.ch/el4j/taglib</namespace>
+	
+	<tag>
+		<tag-name>pagedRichDataTable</tag-name>
+		<component>
+			<component-type>ch.elca.el4j.PagedRichHtmlDataTable</component-type>
+		</component>
+	</tag>
+	
+	<!-- declaratively defined facelets tags -->
+    <tag>
+        <tag-name>defaultViewMapping</tag-name>
+        <source>defaultViewMapping.xhtml</source>
+    </tag>
+    <tag>
+        <tag-name>defaultEditMapping</tag-name>
+        <source>defaultEditMapping.xhtml</source>
+    </tag>
+    
+	<tag>
+		<tag-name>field</tag-name>
+		<source>field.xhtml</source>
+	</tag>
+	<tag>
+		<tag-name>fieldSet</tag-name>
+		<source>fieldSet.xhtml</source>
+	</tag>
+	<tag>
+		<tag-name>fieldGroup</tag-name>
+		<source>fieldGroup.xhtml</source>
+	</tag>
+	<tag>
+		<tag-name>stringEdit</tag-name>
+		<source>stringEdit.xhtml</source>
+	</tag>
+	<tag>
+		<tag-name>integerEdit</tag-name>
+		<source>stringEdit.xhtml</source>
+	</tag>
+	<tag>
+		<tag-name>booleanEdit</tag-name>
+		<source>booleanEdit.xhtml</source>
+	</tag>
+	<tag>
+        <tag-name>dateEdit</tag-name>
+        <source>dateEdit.xhtml</source>
+    </tag>
+	<tag>
+		<tag-name>enumEdit</tag-name>
+		<source>enumEdit.xhtml</source>
+	</tag>
+	<tag>
+		<tag-name>entityEdit</tag-name>
+		<source>entityEdit.xhtml</source>
+	</tag>
+	<tag>
+		<tag-name>multiEntityEdit</tag-name>
+		<source>multiEntityEdit.xhtml</source>
+	</tag>
+	<tag>
+		<tag-name>column</tag-name>
+		<source>column.xhtml</source>
+	</tag>
+	<tag>
+		<tag-name>columnSet</tag-name>
+		<source>columnSet.xhtml</source>
+	</tag>
+	<tag>
+		<tag-name>multiEntityView</tag-name>
+		<source>multiEntityView.xhtml</source>
+	</tag>
+	<tag>
+		<tag-name>crudBar</tag-name>
+		<source>crudBar.xhtml</source>
+	</tag>
+	<tag>
+		<tag-name>menuItem</tag-name>
+		<source>menuItem.xhtml</source>
+	</tag>
+	<tag>
+		<tag-name>filters</tag-name>
+		<source>filters.xhtml</source>
+	</tag>
+	<tag>
+		<tag-name>filter</tag-name>
+		<source>filter.xhtml</source>
+	</tag>
+	<tag>
+		<tag-name>filterSet</tag-name>
+		<source>filterSet.xhtml</source>
+	</tag>
+	<tag>
+		<tag-name>enumFilter</tag-name>
+		<source>enumFilter.xhtml</source>
+	</tag>
+	<tag>
+		<tag-name>booleanFilter</tag-name>
+		<source>booleanFilter.xhtml</source>
+	</tag>
+	
+	
+	<!-- programmatically defined facelets tags -->
+	<tag>
+		<tag-name>set</tag-name>
+		<handler-class>ch.elca.el4j.seam.taghandler.SetTagHandler</handler-class>
+	</tag>
+	
+	<!-- general purpose helper function -->
+	<function>
+		<function-name>booleanValue</function-name>
+		<function-class>ch.elca.el4j.seam.generic.ElUtils</function-class>
+		<function-signature>boolean getBooleanValue(java.lang.String)</function-signature>
+	</function>
+	
+	<!-- humanization el functions -->
+	<function>
+		<function-name>h10nEntityName</function-name>
+		<function-class>ch.elca.el4j.seam.generic.humanization.Humanization</function-class>
+		<function-signature>java.lang.String getEntityName(java.lang.String)</function-signature>
+	</function>
+	
+	<function>
+		<function-name>h10nEntityNamePlural</function-name>
+		<function-class>ch.elca.el4j.seam.generic.humanization.Humanization</function-class>
+		<function-signature>java.lang.String getEntityNamePlural(java.lang.String)</function-signature>
+	</function>
+	
+	<function>
+        <function-name>h10nEntitySentence</function-name>
+        <function-class>ch.elca.el4j.seam.generic.humanization.Humanization</function-class>
+        <function-signature>java.lang.String getEntitySentence(java.lang.String, java.lang.String)</function-signature>
+    </function>
+	
+	<function>
+		<function-name>h10nFieldName</function-name>
+		<function-class>ch.elca.el4j.seam.generic.humanization.Humanization</function-class>
+		<function-signature>java.lang.String getFieldName(java.lang.String, java.lang.String)</function-signature>
+	</function>
+	
+	<function>
+		<function-name>h10nFieldHint</function-name>
+		<function-class>ch.elca.el4j.seam.generic.humanization.Humanization</function-class>
+		<function-signature>java.lang.String getFieldHint(java.lang.String, java.lang.String)</function-signature>
+	</function>
+	
+	<function>
+		<function-name>h10nFieldGroupName</function-name>
+		<function-class>ch.elca.el4j.seam.generic.humanization.Humanization</function-class>
+		<function-signature>java.lang.String getFieldGroupName(java.lang.String, java.lang.String)</function-signature>
+	</function>
+	
+	<function>
+		<function-name>h10nFieldEnumName</function-name>
+		<function-class>ch.elca.el4j.seam.generic.humanization.Humanization</function-class>
+		<function-signature>java.lang.String getFieldEnumName(java.lang.String, java.lang.String, java.lang.String)</function-signature>
+	</function>
+	
+	<function>
+		<function-name>h10nFieldBoolText</function-name>
+		<function-class>ch.elca.el4j.seam.generic.humanization.Humanization</function-class>
+		<function-signature>java.lang.String getFieldBoolText(java.lang.String, java.lang.String, boolean)</function-signature>
+	</function>
+</facelet-taglib>

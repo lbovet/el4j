@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<ant:project name="el4j" xmlns="antlib:ch.elca.el4ant" 
+    xmlns:ant="antlib:org.apache.tools.ant">
+    <module name="module-executable_distribution-demos">
+        <attribute name="distribution.name" value="gui"/>
+        <attribute name="runtime.runnable" value="true"/>
+        <attribute name="runtime.class" value="ch.elca.el4j.demos.distribution.DistributionDemo"/>
+        <attribute name="runtime.command.creator" value="runtime.command.creator.basic"/>
+
+        <attribute name="set" value="framework-demos"/>
+        <dependency module="module-core"/>
+    </module>
+</ant:project>

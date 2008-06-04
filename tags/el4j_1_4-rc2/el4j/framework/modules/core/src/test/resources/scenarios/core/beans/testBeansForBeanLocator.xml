@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <!-- $Revision$ -->
+    <!-- $URL$ -->
+    <!-- $Date$ -->
+    <!-- $Author$ -->
+    
+    <bean id="locateClassesOfSpecificTypes" 
+        class="ch.elca.el4j.core.beans.BeanLocator">
+        <property name="classes">
+            <value>ch.elca.el4j.tests.core.beans.B,ch.elca.el4j.tests.core.beans.W</value>
+        </property>
+    </bean>
+    <bean id="locateClassesOfSpecificTypesPlusExcludeList" 
+        class="ch.elca.el4j.core.beans.BeanLocator">
+        <property name="classes">
+            <value>ch.elca.el4j.tests.core.beans.B,ch.elca.el4j.tests.core.beans.W</value>
+        </property>
+        <property name="excludeBeanNames">
+            <value>class*</value>
+        </property>
+    </bean>
+    <bean id="locateClassesOfSpecificTypesPlusIncludeList" 
+        class="ch.elca.el4j.core.beans.BeanLocator">
+        <property name="classes">
+            <value>java.lang.Integer</value>
+        </property>
+        <property name="includeBeanNames">
+            <value>third*,*C</value>
+        </property>
+    </bean>
+    <bean id="locateClassesOfSpecificTypesPlusIncludeAndExcludeList" 
+        class="ch.elca.el4j.core.beans.BeanLocator">
+        <property name="classes">
+            <value>ch.elca.el4j.tests.core.beans.C</value>
+        </property>
+        <property name="excludeBeanNames">
+            <value>*B,*1</value>
+        </property>
+        <property name="includeBeanNames">
+            <value>class*,first*</value>
+        </property>
+    </bean>
+    
+    <bean id="classA1" class="ch.elca.el4j.tests.core.beans.A"/>
+    <bean id="secondA" class="ch.elca.el4j.tests.core.beans.A"/>
+
+    <bean id="classB1" class="ch.elca.el4j.tests.core.beans.B"/>
+    <bean id="classB2" class="ch.elca.el4j.tests.core.beans.B"/>
+    <bean id="classB3" class="ch.elca.el4j.tests.core.beans.B"/>
+    <bean id="fourthB" class="ch.elca.el4j.tests.core.beans.B"/>
+    
+    <bean id="classC" class="ch.elca.el4j.tests.core.beans.C"/>
+    <bean id="secondC" class="ch.elca.el4j.tests.core.beans.C"/>
+    <bean id="thirdC" class="ch.elca.el4j.tests.core.beans.C"/>
+
+    <bean id="firstV" class="ch.elca.el4j.tests.core.beans.V"/>
+
+    <bean id="classW1" class="ch.elca.el4j.tests.core.beans.W"/>
+    <bean id="classW2" class="ch.elca.el4j.tests.core.beans.W"/>
+    <bean id="thirdW" class="ch.elca.el4j.tests.core.beans.W"/>    
+</beans>
