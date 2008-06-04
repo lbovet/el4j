@@ -15,10 +15,10 @@
 		<version>1.3.1-SNAPSHOT</version>
 	</parent>
 
-    <groupId>ch.elca.el4j.maven</groupId>
+	<groupId>ch.elca.el4j.maven</groupId>
 	<artifactId>maven-utils</artifactId>
-    <version>${version.maven-utils}</version>
-    
+	<version>${version.maven-utils}</version>
+	
 	<packaging>jar</packaging>
 	<name>EL4J Maven utils</name>
 	<description>

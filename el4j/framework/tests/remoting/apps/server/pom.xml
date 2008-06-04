@@ -40,9 +40,9 @@
 		<dependency>
 			<groupId>ch.elca.el4j.tests</groupId>
 			<artifactId>module-remoting-tests-apps-common</artifactId>
-			 <version>${version.module-remoting-tests}</version>
+			<version>${version.module-remoting-tests}</version>
 			<type>test-jar</type>
-			 <scope>test</scope>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<build>

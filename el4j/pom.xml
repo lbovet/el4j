@@ -436,7 +436,7 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-assembly-plugin</artifactId>
 					<!--
-					Due to problems with  version 2.2-beta-1 we use 2.1.
+					Due to problems with version 2.2-beta-1 we use 2.1.
 					swing-demo-standalone-client assembly with 2.2-beta-1 don't run, 
 					because of changes in the META-INF directory.
 					-->
@@ -688,7 +688,7 @@
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>taglist-maven-plugin</artifactId>
-					 <!--
+					<!--
 						Version defined as property because dep mgt works not 
 						if the plugin is not directly invoked. When the
 						maven-site-plugin collects all reports of plugins defined
@@ -702,7 +702,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-pmd-plugin</artifactId>
-					 <!--
+					<!--
 						Version defined as property because dep mgt works not 
 						if the plugin is not directly invoked. When the
 						maven-site-plugin collects all reports of plugins defined
@@ -840,7 +840,7 @@
 		</profile>
 	
 		<!-- Web -->
-		 <profile>
+		<profile>
 			<id>tomcat5x</id>
 			<build>
 				<pluginManagement>
