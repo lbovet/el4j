@@ -89,8 +89,9 @@
 		<profile>
 			<id>auto</id>
 			<!-- auto profile deactives all test.
-				   This is a hack because the EL4J nightly builds run the weblogic tests with the profile 'auto'
-				   and Weblogic 9 and 10 are incompatible to the JAX-WS version used here -->
+				his is a hack because the EL4J nightly builds run the weblogic tests with the profile 'auto'
+				and Weblogic 9 and 10 are incompatible to the JAX-WS version used here
+			-->
 			<build>
 				<plugins>
 					<plugin>
@@ -290,8 +291,9 @@
 					</plugin>
 					
 					<!-- WARNING: If we want to execute (start, deploy)
-					     we must for Maven 2.0.9 put them in one definition.
-						 Otherwise, they are processed *backwards*. -->
+						we must for Maven 2.0.9 put them in one definition.
+						Otherwise, they are processed *backwards*.
+					-->
 					
 					<!--
 					<plugin>
