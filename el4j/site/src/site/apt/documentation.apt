@@ -13,10 +13,10 @@ Documentation
       EL4J Reference Documentation (PDF)}}
 
     * {{{docs/pdf/GettingStarted.pdf}
-      Getting Started Documentation (PDF)}}
+      Getting Started Documentation (PDF), see next PDF for how to setup}}
 
-    * {{{docs/pdf/GettingStartedDeveloper.pdf}
-      Additional Getting Started Documentation for developers (PDF)}}
+    * {{{docs/pdf/SetupEL4J.pdf}
+      Part of the Getting Started Documentation (PDF)}}
 
     * {{{docs/pdf/Maven2Course_v1_3.pdf}
       A presentation about our use of Maven (PDF)}}    
