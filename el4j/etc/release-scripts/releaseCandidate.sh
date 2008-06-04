@@ -33,6 +33,11 @@ read dummy
 function makeRelease() {
 	echo "Step 1: Make a release candidate for $1"
 	cd $1
+	
+	echo "Please revert previous changes manually!"
+	echo "This step sometimes makes problems, so it is not done automatically."
+	echo "Press Enter to continue..."
+	read dummy
 
 	echo "Executing svn update..."
 	svn update
@@ -48,13 +53,6 @@ function makeRelease() {
 	read rc
 	echo "Tag is $tagDot-rc$rc, OK?"
 	read dummy
-
-	echo "Command is:"
-	echo svn commit -m "Changes for release candidate $rc of EL4J $tagDot"
-	echo "Continue?"
-	read dummy
-
-	svn commit -m "Changes for release candidate $rc of EL4J $tagDot"
 
 	echo "Command is:"
 	echo svn copy $2/trunk $2/tags/el4j_$tagScore-rc$rc -r $revision -m "Tagging the release candidate $rc for EL4J $tagDot"

@@ -36,6 +36,9 @@ echo "Searching for pom.xml files..."
 find ./ -name "pom.xml" > pom.files.txt
 find ./ -name "site.xml" >> pom.files.txt
 
+# process archetype twice -> all SNAPSHOT string get replaced
+echo "./external/maven/archetypes/module-template/pom.xml" >> pom.files.txt
+
 ################################
 # el4j x.y-SNAPSHOT -> x.y #
 ################################

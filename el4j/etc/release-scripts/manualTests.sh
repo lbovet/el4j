@@ -15,8 +15,15 @@ if ! [ -e external ] ; then
 fi
 
 echo "Remoting Benchmark"
-cd external/applications/demos/remoting/benchmark
-mvn -Pexecute,db2,tomcat6x
+cd external/applications/demos/remoting
+mvn clean install
+cd benchmark
+mvn -Pauto,execute,db2,tomcat6x
+
+cd ../../remoting_jaxws
+mvn clean install
+cd benchmark
+mvn -Pauto,execute,db2,tomcat6x
 
 echo "Light Statistics"
 cd ../../light_statistics
@@ -59,7 +66,7 @@ if [ $performInternal != "y" ] ; then
 	exit
 fi
 
-cd ../../../../internal/framework/demos/daemon_manager
+cd ../../../../internal/applications/demos/daemon_manager
 echo "Daemon Manager"
 mvn install
 cd controller
@@ -67,6 +74,9 @@ echo "Enter 'mvn exec:java' in the window that will appear next. Press Enter to 
 read dummy
 cygstart bash -i
 cd ..
+
+echo "Press Enter when controller has started..."
+read dummy
 
 # get information about the running daemons via the console application (in console 2):
 cd console
