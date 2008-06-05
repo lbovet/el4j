@@ -159,17 +159,17 @@
 								<reports>
 									<report>report</report>
 								</reports>
-								<configuration>
-									<reportsDirectory>${el4j.external}/site/target/${surefire-report.name.tomcat6-derby10}</reportsDirectory>
-									<linkXRef>true</linkXRef>
-									<xrefLocation>${set.framework-tests.xref.location}</xrefLocation>
-									<outputName>${surefire-report.name.tomcat6-derby10}</outputName>
-									<windowTitle>${surefire-report.title.tomcat6-derby10}</windowTitle>
-									<docTitle>${surefire-report.title.tomcat6-derby10}</docTitle>
-									<docDescription>${surefire-report.description.tomcat6-derby10}</docDescription>
-								</configuration>
 							</reportSet>
 						</reportSets>
+						<configuration>
+							<reportsDirectory>${el4j.external}/site/target/${surefire-report.name.tomcat6-derby10}</reportsDirectory>
+							<linkXRef>true</linkXRef>
+							<xrefLocation>${set.framework-tests.xref.location}</xrefLocation>
+							<outputName>${surefire-report.name.tomcat6-derby10}</outputName>
+							<windowTitle>${surefire-report.title.tomcat6-derby10}</windowTitle>
+							<docTitle>${surefire-report.title.tomcat6-derby10}</docTitle>
+							<docDescription>${surefire-report.description.tomcat6-derby10}</docDescription>
+						</configuration>
 					</plugin>
 				</plugins>
 			</reporting>
@@ -235,17 +235,17 @@
 								<reports>
 									<report>report</report>
 								</reports>
-								<configuration>
-									<reportsDirectory>${el4j.external}/site/target/${surefire-report.name.weblogic10-oracle10}</reportsDirectory>
-									<linkXRef>true</linkXRef>
-									<xrefLocation>${set.framework-tests.xref.location}</xrefLocation>
-									<outputName>${surefire-report.name.weblogic10-oracle10}</outputName>
-									<windowTitle>${surefire-report.title.weblogic10-oracle10}</windowTitle>
-									<docTitle>${surefire-report.title.weblogic10-oracle10}</docTitle>
-									<docDescription>${surefire-report.description.weblogic10-oracle10}</docDescription>
-								</configuration>
 							</reportSet>
 						</reportSets>
+						<configuration>
+							<reportsDirectory>${el4j.external}/site/target/${surefire-report.name.weblogic10-oracle10}</reportsDirectory>
+							<linkXRef>true</linkXRef>
+							<xrefLocation>${set.framework-tests.xref.location}</xrefLocation>
+							<outputName>${surefire-report.name.weblogic10-oracle10}</outputName>
+							<windowTitle>${surefire-report.title.weblogic10-oracle10}</windowTitle>
+							<docTitle>${surefire-report.title.weblogic10-oracle10}</docTitle>
+							<docDescription>${surefire-report.description.weblogic10-oracle10}</docDescription>
+						</configuration>
 					</plugin>
 				</plugins>
 			</reporting>
@@ -284,7 +284,7 @@
 	</distributionManagement>
 
 	<properties>
-		<set.framework-tests.xref.location>${el4j.external}/site/target/site/xref-test</set.framework-tests.xref.location>
+		<set.framework-tests.xref.location>${el4j.external}/site/target/site/framework-tests/xref-test</set.framework-tests.xref.location>
 	
 		<surefire-report.name.tomcat6-derby10>surefire-report-tomcat6-derby10</surefire-report.name.tomcat6-derby10>
 		<surefire-report.title.tomcat6-derby10>Surefire Test Report - Tomcat 6 and Derby 10</surefire-report.title.tomcat6-derby10>
