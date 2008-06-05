@@ -17,41 +17,41 @@
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
    
    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
-      <errorHandler class="org.apache.log4j.helpers.OnlyOnceErrorHandler"/>
-      <param name="Target" value="System.out"/>
+	  <errorHandler class="org.apache.log4j.helpers.OnlyOnceErrorHandler"/>
+	  <param name="Target" value="System.out"/>
 
-      <layout class="org.apache.log4j.PatternLayout">
-         <param name="ConversionPattern" value="%d{HH:mm:ss,SSS} %-5p [%c{1}] %m%n"/>
-      </layout>
+	  <layout class="org.apache.log4j.PatternLayout">
+		 <param name="ConversionPattern" value="%d{HH:mm:ss,SSS} %-5p [%c{1}] %m%n"/>
+	  </layout>
    </appender>
 
 
    <category name="org.hibernate">
-      <priority value="WARN"/>
+	  <priority value="WARN"/>
    </category>
 
 
-   <!-- 
+   <!--
    <category name="org.jboss.seam">
-      <priority value="DEBUG"/>
+	  <priority value="DEBUG"/>
    </category>
    -->
    
-   <!-- 
+   <!--
    <category name="org.jboss.ejb3">
-      <priority value="DEBUG"/>
+	  <priority value="DEBUG"/>
    </category>
    -->
 
-   <!-- 
+   <!--
    <category name="org.jboss.kernel">
-      <priority value="DEBUG"/>
+	  <priority value="DEBUG"/>
    </category>
    -->
 
    <root>
-      <priority value="INFO"/>
-      <appender-ref ref="CONSOLE"/>
+	  <priority value="INFO"/>
+	  <appender-ref ref="CONSOLE"/>
    </root>
    
 </log4j:configuration>

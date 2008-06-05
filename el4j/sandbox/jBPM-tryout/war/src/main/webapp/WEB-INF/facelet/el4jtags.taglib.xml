@@ -13,15 +13,15 @@
 	</tag>
 	
 	<!-- declaratively defined facelets tags -->
-    <tag>
-        <tag-name>defaultViewMapping</tag-name>
-        <source>defaultViewMapping.xhtml</source>
-    </tag>
-    <tag>
-        <tag-name>defaultEditMapping</tag-name>
-        <source>defaultEditMapping.xhtml</source>
-    </tag>
-    
+	<tag>
+		<tag-name>defaultViewMapping</tag-name>
+		<source>defaultViewMapping.xhtml</source>
+	</tag>
+	<tag>
+		<tag-name>defaultEditMapping</tag-name>
+		<source>defaultEditMapping.xhtml</source>
+	</tag>
+	
 	<tag>
 		<tag-name>field</tag-name>
 		<source>field.xhtml</source>
@@ -47,9 +47,9 @@
 		<source>booleanEdit.xhtml</source>
 	</tag>
 	<tag>
-        <tag-name>dateEdit</tag-name>
-        <source>dateEdit.xhtml</source>
-    </tag>
+		<tag-name>dateEdit</tag-name>
+		<source>dateEdit.xhtml</source>
+	</tag>
 	<tag>
 		<tag-name>enumEdit</tag-name>
 		<source>enumEdit.xhtml</source>
@@ -131,10 +131,10 @@
 	</function>
 	
 	<function>
-        <function-name>h10nEntitySentence</function-name>
-        <function-class>ch.elca.el4j.seam.generic.humanization.Humanization</function-class>
-        <function-signature>java.lang.String getEntitySentence(java.lang.String, java.lang.String)</function-signature>
-    </function>
+		<function-name>h10nEntitySentence</function-name>
+		<function-class>ch.elca.el4j.seam.generic.humanization.Humanization</function-class>
+		<function-signature>java.lang.String getEntitySentence(java.lang.String, java.lang.String)</function-signature>
+	</function>
 	
 	<function>
 		<function-name>h10nFieldName</function-name>

@@ -32,29 +32,29 @@
 	<component class="javax.swing.JFrame" id="mainFrame"
 		name="mainFrame" root="true" title="AppFramework + MDI Example" />
 
-    
-    <!-- Don't need this anymore (classpath)
-    <launch args="[]" class="ch.elca.el4j.demos.gui.MainStandaloneMDI" classpath=".;../standalone-client/target/swing-demo-standalone-client-2.6-SNAPSHOT.jar" method="main" />
-    -->
-    <launch args="[]" class="ch.elca.el4j.demos.gui.MainStandaloneMDI" method="main" />
-  
-    <action args="Resource Injection Demo" method="actionSelectMenuItem" />
-    <wait args="ResourceInjectionDemoForm" class="abbot.tester.ComponentTester" method="assertComponentShowing" />   
-    <assert component="someLabel" method="getText" 
-      value="This text has been set using resource injection.*" />
-    <!-- Have a look at the properties file: 'ResourceInjectionDemoFrame.properties' -->
-    
-    <annotation userDismiss="true">
-      <![CDATA[<html>Performed the Resource Injection Demo test.
-      <ul>
-      <li>Verifying injected text.</li> 
-      </ul>
-      </html>]]>
-    </annotation>
-    
-    <action args="ResourceInjectionDemoForm" class="javax.swing.JInternalFrame" method="actionClose" />
-    <wait args="ResourceInjectionDemoForm" class="abbot.tester.ComponentTester" invert="true" method="assertComponentShowing" />
+	
+	<!-- Don't need this anymore (classpath)
+	<launch args="[]" class="ch.elca.el4j.demos.gui.MainStandaloneMDI" classpath=".;../standalone-client/target/swing-demo-standalone-client-2.6-SNAPSHOT.jar" method="main" />
+	-->
+	<launch args="[]" class="ch.elca.el4j.demos.gui.MainStandaloneMDI" method="main" />
 
-    <terminate />
+	<action args="Resource Injection Demo" method="actionSelectMenuItem" />
+	<wait args="ResourceInjectionDemoForm" class="abbot.tester.ComponentTester" method="assertComponentShowing" />
+	<assert component="someLabel" method="getText"
+		value="This text has been set using resource injection.*" />
+	<!-- Have a look at the properties file: 'ResourceInjectionDemoFrame.properties' -->
+	
+	<annotation userDismiss="true">
+		<![CDATA[<html>Performed the Resource Injection Demo test.
+		<ul>
+		<li>Verifying injected text.</li>
+		</ul>
+		</html>]]>
+	</annotation>
+	
+	<action args="ResourceInjectionDemoForm" class="javax.swing.JInternalFrame" method="actionClose" />
+	<wait args="ResourceInjectionDemoForm" class="abbot.tester.ComponentTester" invert="true" method="assertComponentShowing" />
+
+	<terminate />
 
 </AWTTestScript>
