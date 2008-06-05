@@ -24,15 +24,15 @@
 		<version>1.3.1-SNAPSHOT</version>
 	</skin>
 	<poweredBy>
-		<logo name="SourceForge.net" 
-			href="http://sourceforge.net/" 
+		<logo name="SourceForge.net"
+			href="http://sourceforge.net/"
 			img="http://sourceforge.net/sflogo.php?group_id=147215&amp;amp;type=2"/>
-		<logo name="Built by Maven 2" 
-			href="http://maven.apache.org/" 
+		<logo name="Built by Maven 2"
+			href="http://maven.apache.org/"
 			img="images/logos/maven-feather.png"/>
-		<!--logo 
-			name="Valid XHTML 1.0 Transitional" 
-			href="http://validator.w3.org/" 
+		<!--logo
+			name="Valid XHTML 1.0 Transitional"
+			href="http://validator.w3.org/"
 			img="images/logos/valid-xhtml10.png"/-->
 	</poweredBy>
 	
@@ -50,11 +50,11 @@
 			<item name="Overview" href="index.html" />
 			<item name="News" href="news.html" />
 			<item name="License" href="license.html" />
-			<item name="SF Project Page" 
+			<item name="SF Project Page"
 				href="http://sourceforge.net/projects/el4j/" />
 		</menu>
 		<menu name="Download">
-			<item name="Individual sources (svn)"  
+			<item name="Individual sources (svn)"
 			href="source-repository.html"/>
 			<item name="Binary packages"
 				href="http://sourceforge.net/project/showfiles.php?group_id=147215" />
@@ -88,8 +88,5 @@
 			<item name="ELCA"
 				href="http://www.elca.ch" />
 		</links>
-		<menu ref="parent" />
-		<menu ref="modules" />
-		<menu ref="reports" />
 	</body>
 </project>
