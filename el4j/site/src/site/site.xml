@@ -88,8 +88,5 @@
 			<item name="ELCA"
 				href="http://www.elca.ch" />
 		</links>
-		<menu ref="parent" />
-		<menu ref="modules" />
-		<menu ref="reports" />
 	</body>
 </project>
