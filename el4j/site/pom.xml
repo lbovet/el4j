@@ -157,7 +157,7 @@
 							<reportSet>
 								<id>surefire-report.tomcat6-derby10</id>
 								<reports>
-									<report>report</report>
+									<report>report-only</report>
 								</reports>
 							</reportSet>
 						</reportSets>
@@ -233,7 +233,7 @@
 							<reportSet>
 								<id>surefire-report.weblogic10-oracle10</id>
 								<reports>
-									<report>report</report>
+									<report>report-only</report>
 								</reports>
 							</reportSet>
 						</reportSets>
