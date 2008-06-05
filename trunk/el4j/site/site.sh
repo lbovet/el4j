@@ -69,9 +69,6 @@ for p in $frameworkPlugins ; do
 	mvn collector:aggregate-files -Pcollect-framework-plugin-doc -Dplugin=$p
 done
 
-# hack due to bug in surefire repor plugin
-#mv target/site/framework-tests/xref/ target/site/xref-test
-
 # make site
 mvn site -Psurefire-report.tomcat-derby
 mvn site -Psurefire-report.weblogic-oracle
