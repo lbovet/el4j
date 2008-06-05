@@ -92,4 +92,11 @@ read dummy
 mvn exec:java -Dexec.args=stop
 
 echo "Scheduler"
-echo "TODO not yet supported"
+echo "Not yet supported. Please execute test manually."
+read dummy
+
+echo "RefDb Web"
+cd ../../templates/refdb/web/war
+echo "After tomcat has started open http://localhost:8080/refdb-web in a browser."
+echo "To stop tomcat, press Ctrl-C."
+mvn db:prepareDB cargo:undeploy cargo:deploy cargo:start
