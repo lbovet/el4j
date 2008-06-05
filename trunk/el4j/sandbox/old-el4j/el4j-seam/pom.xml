@@ -105,11 +105,11 @@
 		<repository>
 			<id>el4j-repo</id>
 			<url>http://el4.elca-services.ch/el4j/maven2repository</url>
-		</repository>		
+		</repository>
 		<repository>
 			<id>el4j-repo-snapshots</id>
 			<url>http://el4.elca-services.ch/el4j/maven2snapshots/</url>
-		</repository>				
+		</repository>
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
@@ -123,7 +123,7 @@
 		<pluginRepository>
 			<id>el4j-repo</id>
 			<url>http://el4.elca-services.ch/el4j/maven2repository</url>
-		</pluginRepository>		
+		</pluginRepository>
 	</pluginRepositories>
 
 	<properties>

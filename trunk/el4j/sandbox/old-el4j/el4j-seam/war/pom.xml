@@ -57,7 +57,7 @@
 									<goal>silentDrop</goal>
 									<goal>create</goal>
 								</goals>
-								<phase>package</phase>							   
+								<phase>package</phase>
 								<configuration>
 									<connectionPropertiesSource>
 										scenarios/db/raw/keyword-web-override-{db.name}.properties

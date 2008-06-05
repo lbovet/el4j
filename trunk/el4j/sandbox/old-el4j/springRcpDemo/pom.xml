@@ -63,7 +63,7 @@
 				<artifactId>exec-maven-plugin</artifactId>
 				<configuration>
 					<mainClass>
-						ch.elca.el4j.demos.rcp.app.ApplicationStarter	
+						ch.elca.el4j.demos.rcp.app.ApplicationStarter
 					</mainClass>
 					<!--keepAlive>true</keepAlive-->
 				</configuration>

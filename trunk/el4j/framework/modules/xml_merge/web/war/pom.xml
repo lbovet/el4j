@@ -55,7 +55,7 @@
 		</dependency>
 	</dependencies>
 	<properties>
-		<!-- 
+		<!--
 			This property overrides the default jee-web.context property
 			defined in the pom.xml file of the external folder.
 		 -->

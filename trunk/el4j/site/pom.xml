@@ -127,8 +127,8 @@
 			<id>surefire-report.tomcat-derby</id>
 			<build>
 				<plugins>
-					<!-- 
-						Copied surefire report plugin from reporting section of tomcat profile, 
+					<!--
+						Copied surefire report plugin from reporting section of tomcat profile,
 						because otherwise the necessary html files for the test reports are not generated.
 						
 						This is not a satisfying solution and should be fixed when there is time to do so.
@@ -203,8 +203,8 @@
 			<id>surefire-report.weblogic-oracle</id>
 			<build>
 				<plugins>
-					<!-- 
-						Copied surefire report plugin from reporting section of tomcat profile, 
+					<!--
+						Copied surefire report plugin from reporting section of tomcat profile,
 						because otherwise the necessary html files for the test reports are not generated.
 						
 						This is not a satisfying solution and should be fixed when there is time to do so.
