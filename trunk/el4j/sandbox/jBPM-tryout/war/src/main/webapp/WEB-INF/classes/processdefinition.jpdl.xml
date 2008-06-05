@@ -8,9 +8,9 @@
 
 
 	<task-node name="evaluate request node">
-		<task name="evaluate request" description="#{holidayRequest.name}">	
+		<task name="evaluate request" description="#{holidayRequest.name}">
 		  <assignment pooled-actors="admin"></assignment>
-        </task>
+		</task>
 		<transition to="end" name="return decision"></transition>
 		<transition to="provide detail" name="request details"></transition>
 		<transition to="evaluate request node" name="cancel evaluation"></transition>
@@ -20,7 +20,7 @@
 	<task-node name="provide detail">
 		<task name="enter more information" description="#{holidayRequest.name}">
 			<assignment pooled-actors="user"></assignment>
-			<!-- <assignment actor-id="#{actor.id}"/>    -->  
+			<!-- <assignment actor-id="#{actor.id}"/>    -->
 		</task>
 		<transition to="evaluate request node" name="send details"></transition>
 	</task-node>

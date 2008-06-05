@@ -5,7 +5,7 @@
 	xmlns:seam="http://jboss.com/products/seam/spring-seam"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
 	http://jboss.com/products/seam/spring-seam
-                        http://jboss.com/products/seam/spring-seam-2.0.xsd">
+						http://jboss.com/products/seam/spring-seam-2.0.xsd">
 
 	<!-- $Revision$ -->
 	<!-- $URL$ -->
@@ -29,7 +29,7 @@
 	<bean id="hibernateSessionFactory"
 		class="ch.elca.el4j.services.persistence.hibernate.entityfinder.EntityDetectorAnnotationSessionFactoryBean">
 
-       
+	   
 		<property name="autoDetectEntityPackage">
 			<list>
 				<value>ch.elca.el4j.apps.keyword.dom</value>
@@ -320,8 +320,8 @@
 
 	<bean id="conflicts" class="ch.elca.el4j.seam.generic.Temporary" />
 
-<!-- 
-    <bean id="localTransactionManager"
+<!--
+	<bean id="localTransactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="hibernateSessionFactory" />
 	</bean>-->
