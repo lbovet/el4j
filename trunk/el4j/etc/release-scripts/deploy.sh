@@ -79,14 +79,23 @@ mvn deploy
 cd ..
 
 cd plugins
-mvn deploy
+# maven-metadata.xml is not updated in 2.0.9 if mvn deploy is not called for every plugin explicitly
+for i in $(ls) ; do
+	cd $i
+	mvn deploy
+	cd ..
+done
 cd ../..
 
 cd maven
 mvn deploy -N
 
+cd utils
+mvn deploy
+cd ..
+
 cd archetypes
-for i in $( ls ); do
+for i in $(ls) ; do
 	cd $i
 	mvn deploy
 	cd ..
@@ -94,7 +103,12 @@ done
 cd ..
 
 cd plugins
-mvn deploy
+# maven-metadata.xml is not updated in 2.0.9 if mvn deploy is not called for every plugin explicitly
+for i in $(ls) ; do
+	cd $i
+	mvn deploy
+	cd ..
+done
 cd ../..
 
 cd ..
@@ -111,5 +125,12 @@ cd framework
 mvn deploy -N
 
 cd modules
+mvn deploy
+cd ../..
+
+cd maven
+mvn deploy -N
+
+cd plugins
 mvn deploy
 cd ../..
