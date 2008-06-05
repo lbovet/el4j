@@ -71,7 +71,7 @@
 				<configuration>
 					<targetJdk>${el4j.java.version}</targetJdk>
 					<aggregate>true</aggregate>
-					<!-- rules with lower priority than this will not 
+					<!-- rules with lower priority than this will not
 					be evaluated. Default is 5. -->
 					<minimumPriority>5</minimumPriority>
 					<!-- http://pmd.sourceforge.net/rules/index.html -->
@@ -99,7 +99,7 @@
 						<!--ruleset>rulesets/basic-jsp.xml</ruleset-->
 						<!--ruleset>rulesets/basic-jsf.xml</ruleset-->
 					</rulesets>
-					<!-- CPD: The minimum number of tokens that need to be 
+					<!-- CPD: The minimum number of tokens that need to be
 					duplicated before it causes a violation. Default is 100. -->
 					<minimumTokens>30</minimumTokens>
 				</configuration>

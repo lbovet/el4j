@@ -42,9 +42,9 @@
 						</manifest>
 					</archive>
 				</configuration>
-			</plugin>	
+			</plugin>
 			
-		</plugins>		
+		</plugins>
 	</build>
 	<dependencies>
 		<dependency>
@@ -56,7 +56,7 @@
 			<artifactId>swing-demo-server-jar</artifactId>
 		</dependency>
 		
-		<!-- We shouldn't need this here. 
+		<!-- We shouldn't need this here.
 		A maven bug with transitive dependencies means we need it for the time being.
 		-->
 		<dependency>

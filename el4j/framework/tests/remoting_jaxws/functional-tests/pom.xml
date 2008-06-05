@@ -120,12 +120,12 @@
 			<id>tomcat5x</id>
 			<build>
 				<plugins>
-					<!-- 
+					<!--
 						Copy the needed files to the Tomcat Folder.
 						Otherwise a "fresh" installation of tomcat at least stops
 						the functional tests from working.
 						If possible it would suffice to copy the files ones as soon
-						as tomcat is downloaded, however cargo does not - as far 
+						as tomcat is downloaded, however cargo does not - as far
 						as I know - provide an option for configuring the installed
 						tomcat.
 					-->
@@ -240,12 +240,12 @@
 			</activation>
 			<build>
 				<plugins>
-					<!-- 
+					<!--
 						Copy the needed files to the Tomcat Folder.
 						Otherwise a "fresh" installation of tomcat at least stops
 						the functional tests from working.
 						If possible it would suffice to copy the files ones as soon
-						as tomcat is downloaded, however cargo does not - as far 
+						as tomcat is downloaded, however cargo does not - as far
 						as I know - provide an option for configuring the installed
 						tomcat.
 					-->

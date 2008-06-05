@@ -24,7 +24,7 @@
 	</description>
 	<modules>
 		<module>jar</module>
-		<module>war</module> 
+		<module>war</module>
 	</modules>
 	<properties>
 		<jee-web.context>module-remoting-demos-web</jee-web.context>

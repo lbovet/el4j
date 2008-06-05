@@ -77,7 +77,7 @@
 										<copy file="${sourceFile}" tofile="${targetFile}"/>
 										<replace file="${targetFile}">
 											<replacefilter token="~/.m2/repository" value="${installDir}/m2repository"/>
-											<replacefilter token="~/myproject" value="${installDir}/Projects/EL4J"/> 
+											<replacefilter token="~/myproject" value="${installDir}/Projects/EL4J"/>
 										</replace>
 									</tasks>
 								</configuration>
@@ -96,7 +96,7 @@
 										<copy file="${sourceFile}" tofile="${targetFile}"/>
 										<replace file="${targetFile}">
 											<replacefilter token="~/.m2/repository" value="${installDir}/m2repository"/>
-											<replacefilter token="~/myproject" value="${installDir}/Projects/EL4J"/> 
+											<replacefilter token="~/myproject" value="${installDir}/Projects/EL4J"/>
 										</replace>
 									</tasks>
 								</configuration>
