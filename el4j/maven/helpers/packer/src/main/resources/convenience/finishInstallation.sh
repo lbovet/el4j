@@ -7,11 +7,11 @@ echo and http://el4j.sourceforge.net/
 echo
 
 if [ ! -e ~/.bash_profile ] ; then
-	cat aliases.txt > ~/.bash_profile
+	cat aliases.sh > ~/.bash_profile
 	echo "Aliases installed."
 else
 	if [ $(grep "EL4J aliases" ~/.bash_profile | wc -l) -eq 0 ] ; then
-		cat aliases.txt >> ~/.bash_profile
+		cat aliases.sh >> ~/.bash_profile
 		echo "Aliases installed."
 	else
 		echo "Skipping .bash_profile because it already contains marker comment 'EL4J aliases'"
