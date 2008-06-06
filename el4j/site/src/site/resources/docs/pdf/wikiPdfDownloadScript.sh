@@ -10,4 +10,6 @@ wget -v -O  SetupEL4J.pdf http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/SetupEL4J
 wget -v -O  UniqueEL4JFeatures.pdf http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/FeaturesOfEl4j?skin=pdf
 # do this better by hand: 
 # wget -v -O  MavenCheatSheet_EL4J.pdf http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/MavenCheatSheet?skin=pdf
+
+echo "Create MavenCheatSheet_EL4J manually: Print it (printable version) in browser to PDF"
  
