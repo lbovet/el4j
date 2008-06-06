@@ -520,7 +520,7 @@
 								+ patch http://jira.codehaus.org/browse/MEXEC-11)
 					<version>1.0.3-20061204.110918-2</version>
 			-->
-					<version>1.1</version>
+					<version>1.1-beta-1</version>
 				</plugin>
 
 				<!-- IDE -->
@@ -2181,7 +2181,7 @@
 		<checkstyle.enable.rules.summary>false</checkstyle.enable.rules.summary>
 		
 		<!-- Dependency versions -->
-		<version.derby>10.3.2.1</version.derby>
+		<version.derby>10.4.1.3</version.derby>
 		
 		<!-- Maven plugin versions. Needed due to false dep mgt. -->
 		<version.maven-project-info-reports-plugin>2.0.1</version.maven-project-info-reports-plugin>
