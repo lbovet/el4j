@@ -5,8 +5,8 @@
 @echo and http://el4j.sourceforge.net/
 @echo
 
-mkdir "%HOME%\.m2"
-xcopy  "etc\m2\settings.xml" "%HOME%\.m2" /p
+mkdir "%HOMEPATH%\.m2"
+xcopy  "etc\m2\settings.xml" "%HOMEPATH%\.m2" /p
 
 @echo
 @echo
