@@ -50,11 +50,13 @@
 		</fileSet>
 
 		<fileSet>
-			<directory>${el4j.external}/maven/helpers/packer/target/env</directory>
+			<directory>${el4j.external}/maven/helpers/packer/target/classes</directory>
 			<outputDirectory></outputDirectory>
 			<excludes>
-				<exclude>components/*</exclude>
+				<exclude>components/**</exclude>
 				<exclude>components</exclude>
+				<exclude>convenience/**</exclude>
+				<exclude>convenience</exclude>
 			</excludes>
 		</fileSet>
 	</fileSets>
