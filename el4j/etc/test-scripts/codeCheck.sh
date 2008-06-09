@@ -1,10 +1,15 @@
 #!/bin/bash
 
-cd external
+types="xml xsd wsdl html xhtml css"
+# xsl not included
 
 # search for illegal whitespaces
-echo "Searching for all xml files..."
-find ./ -name "*.xml" | grep -v "/target/" | grep -v "/.settings/" | grep -v "/sandbox/" > files.tmp
+echo "Searching for all included files ($types)..."
+
+echo "" > files.tmp
+for i in $types ; do
+	find ./ -name "*.$i" | grep -v "/target/" | grep -v "/.settings/" | grep -v "/sandbox/" >> files.tmp
+done
 
 echo -n "Checking for illegal whitespaces..."
 result=0
