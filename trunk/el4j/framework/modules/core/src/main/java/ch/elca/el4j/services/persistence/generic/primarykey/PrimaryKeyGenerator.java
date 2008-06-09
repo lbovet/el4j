@@ -32,10 +32,10 @@ import java.io.Serializable;
  * @author Martin Zeltner (MZE)
  */
 public interface PrimaryKeyGenerator extends Serializable {
-    /**
-     * Method to get a generated primary key.
-     * 
-     * @return Returns generated primary key.
-     */
-    public String getPrimaryKey();
+	/**
+	 * Method to get a generated primary key.
+	 *
+	 * @return Returns generated primary key.
+	 */
+	public String getPrimaryKey();
 }

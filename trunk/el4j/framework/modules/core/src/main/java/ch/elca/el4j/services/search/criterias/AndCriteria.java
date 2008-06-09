@@ -23,7 +23,7 @@ import java.util.List;
 import org.springframework.util.StringUtils;
 
 /**
- * Criteria that combines n Criteria with AND (i.e. all 
+ * Criteria that combines n Criteria with AND (i.e. all
  *  Criterias must be true).
  *
  * <script type="text/javascript">printFileStatus
@@ -37,38 +37,38 @@ import org.springframework.util.StringUtils;
  */
 public class AndCriteria implements Criteria {
 
-    protected List<Criteria> m_criterias;
-    
-    public AndCriteria (Criteria left, Criteria right) {
-        this(new Criteria[] { left, right});    
-    }
-    
-    public AndCriteria (Criteria... criterias){
-        m_criterias  = new ArrayList<Criteria>(criterias.length);
-        m_criterias.addAll(Arrays.asList(criterias));
-    }
+	protected List<Criteria> m_criterias;
+	
+	public AndCriteria (Criteria left, Criteria right) {
+		this(new Criteria[] { left, right});
+	}
+	
+	public AndCriteria (Criteria... criterias){
+		m_criterias  = new ArrayList<Criteria>(criterias.length);
+		m_criterias.addAll(Arrays.asList(criterias));
+	}
 
-    public void add(Criteria c) {
-        m_criterias.add(c);
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public String getSqlWhereCondition() {
-        return "("+ StringUtils.arrayToDelimitedString(
-            CriteriaHelper.applyToSqlWhereCondition(m_criterias.toArray(new Criteria[0])), 
-            " AND ")+ ")";
-    }
+	public void add(Criteria c) {
+		m_criterias.add(c);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getSqlWhereCondition() {
+		return "("+ StringUtils.arrayToDelimitedString(
+			CriteriaHelper.applyToSqlWhereCondition(m_criterias.toArray(new Criteria[0])),
+			" AND ")+ ")";
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public String getType() {
-        return "";
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getType() {
+		return "";
+	}
 
-    public List<Criteria> getCriterias() {
-        return m_criterias;
-    }
+	public List<Criteria> getCriterias() {
+		return m_criterias;
+	}
 }

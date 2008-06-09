@@ -23,9 +23,9 @@ import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
 
 /**
- * 
+ *
  * This interface represents a DAO for the keyword domain object.
- * It defines the methods which are specific to the keyword domain object. 
+ * It defines the methods which are specific to the keyword domain object.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -37,19 +37,19 @@ import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
  * @author Alex Mathey (AMA)
  */
 public interface KeywordDao
-    extends ConvenienceGenericDao<Keyword, Integer> {
-    
-    /**
-     * Get keyword by name.
-     * 
-     * @param name
-     *            Is the name of a keyword.
-     * @return Returns the desired keyword.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     * @throws DataRetrievalFailureException
-     *             If keyword could not be retrieved.
-     */
-    public Keyword getKeywordByName(String name)
-        throws DataAccessException, DataRetrievalFailureException;
+	extends ConvenienceGenericDao<Keyword, Integer> {
+	
+	/**
+	 * Get keyword by name.
+	 *
+	 * @param name
+	 *            Is the name of a keyword.
+	 * @return Returns the desired keyword.
+	 * @throws DataAccessException
+	 *             If general data access problem occurred.
+	 * @throws DataRetrievalFailureException
+	 *             If keyword could not be retrieved.
+	 */
+	public Keyword getKeywordByName(String name)
+		throws DataAccessException, DataRetrievalFailureException;
 }

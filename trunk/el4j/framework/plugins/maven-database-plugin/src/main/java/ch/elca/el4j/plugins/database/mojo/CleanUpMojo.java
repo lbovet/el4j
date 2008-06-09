@@ -25,35 +25,35 @@ import ch.elca.el4j.plugins.database.util.derby.DerbyNetworkServerStarter;
 
 /**
  * This class is a convenience mojo that includes the 'drop' and 'stop' mojo.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @goal cleanUp
  * @author David Stefan (DST)
  */
 public class CleanUpMojo extends AbstractDBExecutionMojo {
 
-    /**
-     * {@inheritDoc}
-     */
-    public void executeInternal() throws MojoExecutionException, MojoFailureException {
-        try {
-            getLog().info("Executing drop");
-            //Execute drop
-            executeAction("drop", true, false);
-            getLog().info("Stopping database... ");
-            // Stop Derby Network Server if necessary
-            if (needStartup()) {
-                DerbyNetworkServerStarter.setHomeDir(getDerbyLocation());
-                DerbyNetworkServerStarter.stopNetworkServer();
-            }
-        } catch (Exception e) {
-            throw new MojoFailureException(e.getMessage());
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void executeInternal() throws MojoExecutionException, MojoFailureException {
+		try {
+			getLog().info("Executing drop");
+			//Execute drop
+			executeAction("drop", true, false);
+			getLog().info("Stopping database... ");
+			// Stop Derby Network Server if necessary
+			if (needStartup()) {
+				DerbyNetworkServerStarter.setHomeDir(getDerbyLocation());
+				DerbyNetworkServerStarter.stopNetworkServer();
+			}
+		} catch (Exception e) {
+			throw new MojoFailureException(e.getMessage());
+		}
+	}
 }

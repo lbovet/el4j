@@ -22,8 +22,8 @@ import org.junit.Test;
 
 import ch.elca.el4j.util.codingsupport.Version;
 
-/** 
- * 
+/**
+ *
  * For full tests, run this class in JDK 5 and 6
  *
  * <script type="text/javascript">printFileStatus
@@ -37,20 +37,20 @@ import ch.elca.el4j.util.codingsupport.Version;
  */
 public class VersionTest {
 
-    @Test
-    public void testForJdk15(){
-        if (System.getProperty("java.specification.version").equals("1.5")){
-            assertEquals(true,Version.isJdk15OrNewer());
-            assertEquals(false,Version.isJdk16OrNewer());
-        }
-    }
+	@Test
+	public void testForJdk15(){
+		if (System.getProperty("java.specification.version").equals("1.5")){
+			assertEquals(true,Version.isJdk15OrNewer());
+			assertEquals(false,Version.isJdk16OrNewer());
+		}
+	}
 
-    @Test
-    public void testForJdk16(){
-        if (System.getProperty("java.specification.version").equals("1.6")){
-            assertEquals(true,Version.isJdk16OrNewer());            
-            assertEquals(true,Version.isJdk15OrNewer());
-        }
-    }
-       
+	@Test
+	public void testForJdk16(){
+		if (System.getProperty("java.specification.version").equals("1.6")){
+			assertEquals(true,Version.isJdk16OrNewer());
+			assertEquals(true,Version.isJdk15OrNewer());
+		}
+	}
+	
 }

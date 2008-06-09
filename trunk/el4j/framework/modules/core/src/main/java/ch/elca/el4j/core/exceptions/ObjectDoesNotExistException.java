@@ -18,7 +18,7 @@ package ch.elca.el4j.core.exceptions;
 
 /**
  * This exception will be thrown when an object does not exist.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -31,51 +31,51 @@ package ch.elca.el4j.core.exceptions;
  * @see org.springframework.dao.DataRetrievalFailureException
  */
 public class ObjectDoesNotExistException extends BaseException {
-    /**
-     * Message, which has to be formated.
-     */
-    public static final String EXCEPTION_MESSAGE_OBJECTDOESNOTEXIST 
-        = "The desired {0} does not exist.";
+	/**
+	 * Message, which has to be formated.
+	 */
+	public static final String EXCEPTION_MESSAGE_OBJECTDOESNOTEXIST
+		= "The desired {0} does not exist.";
 
-    /**
-     * Name of the object, where the exception occured.
-     */
-    protected String m_objectName;
+	/**
+	 * Name of the object, where the exception occured.
+	 */
+	protected String m_objectName;
 
-    /**
-     * Constructor.
-     * 
-     * @param objectName
-     *            Is the name of the object, where the exception occured.
-     */
-    public ObjectDoesNotExistException(String objectName) {
-        this(objectName, (Throwable) null);
-    }
+	/**
+	 * Constructor.
+	 *
+	 * @param objectName
+	 *            Is the name of the object, where the exception occured.
+	 */
+	public ObjectDoesNotExistException(String objectName) {
+		this(objectName, (Throwable) null);
+	}
 
-    /**
-     * Constructor.
-     * 
-     * @param objectName
-     *            Is the name of the object, where the exception occured.
-     * @param cause
-     *            Is the cause for this exception.
-     */
-    public ObjectDoesNotExistException(String objectName, Throwable cause) {
-        super(EXCEPTION_MESSAGE_OBJECTDOESNOTEXIST, cause);
-        m_objectName = objectName;
-    }
+	/**
+	 * Constructor.
+	 *
+	 * @param objectName
+	 *            Is the name of the object, where the exception occured.
+	 * @param cause
+	 *            Is the cause for this exception.
+	 */
+	public ObjectDoesNotExistException(String objectName, Throwable cause) {
+		super(EXCEPTION_MESSAGE_OBJECTDOESNOTEXIST, cause);
+		m_objectName = objectName;
+	}
 
-    /**
-     * @return Returns the objectName.
-     */
-    public String getObjectName() {
-        return m_objectName;
-    }
+	/**
+	 * @return Returns the objectName.
+	 */
+	public String getObjectName() {
+		return m_objectName;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object[] getFormatParameters() {
-        return new Object[] {m_objectName};
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object[] getFormatParameters() {
+		return new Object[] {m_objectName};
+	}
 }

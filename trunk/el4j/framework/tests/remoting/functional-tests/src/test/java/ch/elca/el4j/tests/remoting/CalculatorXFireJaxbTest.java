@@ -36,21 +36,21 @@ import ch.elca.el4j.tests.remoting.service.Calculator;
  * @author Philippe Jacot (PJA)
  */
 public class CalculatorXFireJaxbTest extends AbstractXFireTest {
-   
-    /**
-     * A calculator.
-     */
-    private Calculator m_calc;
-    
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public Calculator getCalc() {
-        if (m_calc == null) {
-            m_calc = (Calculator) getApplicationContext().
-                getBean("calculatorJaxb");
-        }
-        return m_calc;
-    }
+	
+	/**
+	 * A calculator.
+	 */
+	private Calculator m_calc;
+	
+	/**
+	 *
+	 * {@inheritDoc}
+	 */
+	public Calculator getCalc() {
+		if (m_calc == null) {
+			m_calc = (Calculator) getApplicationContext().
+				getBean("calculatorJaxb");
+		}
+		return m_calc;
+	}
 }

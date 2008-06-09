@@ -29,7 +29,7 @@ import ch.elca.el4j.services.persistence.ibatis.dao.GenericSqlMapDao;
 import ch.elca.el4j.util.codingsupport.CollectionUtils;
 
 /**
- * 
+ *
  * Generic DAO for referenced objects which is using iBatis SQL Maps.
  *
  * <script type="text/javascript">printFileStatus
@@ -43,24 +43,24 @@ import ch.elca.el4j.util.codingsupport.CollectionUtils;
  *            The generic type of the domain class the DAO is responsible for
  * @param <ID>
  *            The generic type of the domain class' identifier
- *            
+ *
  * @author Alex Mathey (AMA)
  */
 public class GenericSqlMapReferencedObjectDao<T extends
-    PrimaryKeyOptimisticLockingObject, ID extends Serializable>
-    extends GenericSqlMapDao<T, ID>
-    implements GenericReferencedObjectDao<T, ID> {
-    
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<T> getByReference(ID id) throws DataAccessException {
-        
-        List<T> result = getConvenienceSqlMapClientTemplate().queryForList(
-            "get" + getPersistentClassName() + "sByReference", id);
-        return CollectionUtils.asList(result);
-    }
+	PrimaryKeyOptimisticLockingObject, ID extends Serializable>
+	extends GenericSqlMapDao<T, ID>
+	implements GenericReferencedObjectDao<T, ID> {
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<T> getByReference(ID id) throws DataAccessException {
+		
+		List<T> result = getConvenienceSqlMapClientTemplate().queryForList(
+			"get" + getPersistentClassName() + "sByReference", id);
+		return CollectionUtils.asList(result);
+	}
 
 }

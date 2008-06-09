@@ -30,28 +30,28 @@ package ch.elca.el4j.util.codingsupport;
  */
 public class Version {
 
-    /**
-     * @return Are we running in JDK 1.5 or later?
-     */    
-    public static boolean isJdk15OrNewer(){
-        return (System.getProperty("java.specification.version").equals("1.5") ||
-            isJdk16OrNewer());
-    }
-    
-    /**
-     * @return Are we running in JDK 1.6 or later?
-     */
-    public static boolean isJdk16OrNewer(){
-        String versionString = System.getProperty("java.specification.version");
-        
-        // are we using JDK Version 1.10 or newer?
-        boolean version110OrNewer =
-            versionString.startsWith("1.1")&&(!versionString.equals("1.1"));
-        
-        // ensure we get an error with JDK 1.10 and later JDKs
-        assert !version110OrNewer : " JDK is 1.10 or newer, update Version class";
-        
-        return (versionString.compareTo("1.6")>=0);
-    }
-    
+	/**
+	 * @return Are we running in JDK 1.5 or later?
+	 */
+	public static boolean isJdk15OrNewer(){
+		return (System.getProperty("java.specification.version").equals("1.5") ||
+			isJdk16OrNewer());
+	}
+	
+	/**
+	 * @return Are we running in JDK 1.6 or later?
+	 */
+	public static boolean isJdk16OrNewer(){
+		String versionString = System.getProperty("java.specification.version");
+		
+		// are we using JDK Version 1.10 or newer?
+		boolean version110OrNewer =
+			versionString.startsWith("1.1")&&(!versionString.equals("1.1"));
+		
+		// ensure we get an error with JDK 1.10 and later JDKs
+		assert !version110OrNewer : " JDK is 1.10 or newer, update Version class";
+		
+		return (versionString.compareTo("1.6")>=0);
+	}
+	
 }

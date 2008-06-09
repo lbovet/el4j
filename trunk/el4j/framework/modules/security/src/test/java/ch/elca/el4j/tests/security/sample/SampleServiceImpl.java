@@ -26,25 +26,25 @@ import org.apache.commons.logging.LogFactory;
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
- *    "$Revision$", 
- *    "$Date$", 
+ *    "$Revision$",
+ *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Andreas Pfenninger (APR)
  */
 public class SampleServiceImpl implements SampleService {
-    
-    /** The static logger. */
-    private static Log s_logger = LogFactory.getLog(SampleServiceImpl.class);
-    
-    /**
-     * {@inheritDoc}
-     */
-    public int addOne(int i) {
-        int result = i + 1;
-        s_logger.debug(i + " + 1 = " + result);
-        return result;
-    }
+	
+	/** The static logger. */
+	private static Log s_logger = LogFactory.getLog(SampleServiceImpl.class);
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public int addOne(int i) {
+		int result = i + 1;
+		s_logger.debug(i + " + 1 = " + result);
+		return result;
+	}
 
 }

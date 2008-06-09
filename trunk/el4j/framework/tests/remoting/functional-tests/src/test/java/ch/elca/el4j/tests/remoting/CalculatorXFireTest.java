@@ -34,20 +34,20 @@ import ch.elca.el4j.tests.remoting.service.Calculator;
  * @author Philippe Jacot (PJA)
  */
 public class CalculatorXFireTest extends AbstractXFireTest {
-    
-    /**
-     * Instance of the calculator proxy.
-     */
-    private Calculator m_calc;
-   
-    /**
-     * Get the calculator to use.
-     * @return Calculator to use
-     */
-    public Calculator getCalc() {
-        if (m_calc == null) {
-            m_calc = (Calculator) getApplicationContext().getBean("calculator");
-        }
-        return m_calc;
-    }
+	
+	/**
+	 * Instance of the calculator proxy.
+	 */
+	private Calculator m_calc;
+	
+	/**
+	 * Get the calculator to use.
+	 * @return Calculator to use
+	 */
+	public Calculator getCalc() {
+		if (m_calc == null) {
+			m_calc = (Calculator) getApplicationContext().getBean("calculator");
+		}
+		return m_calc;
+	}
 }

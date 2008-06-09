@@ -20,24 +20,24 @@ import org.acegisecurity.annotation.Secured;
 
 /**
  * Sample service for access tests.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
- *    "$Revision$", 
- *    "$Date$", 
+ *    "$Revision$",
+ *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Andreas Pfenninger (APR)
  */
 @Secured({"ROLE_TELLER"})
 public interface SampleService  {
 
-    /**
-     * @param i a numer.
-     * @return i + 1
-     */
+	/**
+	 * @param i a numer.
+	 * @return i + 1
+	 */
 	@Secured({"ROLE_PERMISSION_ADDONE"})
-    public int addOne(int i);
+	public int addOne(int i);
 
 }

@@ -23,34 +23,34 @@ import ch.elca.el4j.plugins.database.AbstractDBExecutionMojo;
 
 /**
  * This class is a database mojo for the 'update' statement.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @goal update
  * @author David Stefan (DST)
  */
 public class UpdateMojo extends AbstractDBExecutionMojo {
 
-    /**
-     * Action this mojo is implementing and identifier sql files have to start
-     * with.
-     */
-    private static final String ACTION = "update";
+	/**
+	 * Action this mojo is implementing and identifier sql files have to start
+	 * with.
+	 */
+	private static final String ACTION = "update";
 
-    /**
-     * {@inheritDoc}
-     */
-    public void executeInternal() throws MojoExecutionException, MojoFailureException {
-        try {
-            executeAction(ACTION, false, false);
-        } catch (Exception e) {
-            throw new MojoFailureException(e.getMessage());
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void executeInternal() throws MojoExecutionException, MojoFailureException {
+		try {
+			executeAction(ACTION, false, false);
+		} catch (Exception e) {
+			throw new MojoFailureException(e.getMessage());
+		}
+	}
 
 }

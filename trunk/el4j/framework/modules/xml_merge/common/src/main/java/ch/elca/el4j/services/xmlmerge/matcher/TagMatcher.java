@@ -29,18 +29,18 @@ import ch.elca.el4j.services.xmlmerge.Matcher;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public class TagMatcher implements Matcher {
 
-    /**
-     * {@inheritDoc}
-     */
-    public boolean matches(Element originalElement, Element patchElement) {
-        return originalElement.getQualifiedName().equals(
-            patchElement.getQualifiedName());
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean matches(Element originalElement, Element patchElement) {
+		return originalElement.getQualifiedName().equals(
+			patchElement.getQualifiedName());
+	}
 
 }

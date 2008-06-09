@@ -26,50 +26,50 @@ package ch.elca.el4j.services.xmlmerge.action;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public final class StandardActions {
 
-    /**
-     * {@link OrderedMergeAction}.
-     */
-    public static final OrderedMergeAction MERGE = new OrderedMergeAction();
-    
-    /**
-     * {@link ReplaceAction}
-     */
-    public static final ReplaceAction REPLACE = new ReplaceAction();
-    
-    /**
-     * {@link OverrideAction}
-     */
-    public static final OverrideAction OVERRIDE = new OverrideAction();
-    
-    /**
-     * {@link CompleteAction}
-     */
-    public static final CompleteAction COMPLETE = new CompleteAction();
-    
-    /**
-     * {@link DeleteAction}
-     */
-    public static final DeleteAction DELETE = new DeleteAction();
-    
-    /**
-     * {@link PreserveAction}
-     */
-    public static final PreserveAction PRESERVE = new PreserveAction();
-    
-    /**
-     * {@link InsertAction}
-     */
-    public static final InsertAction INSERT = new InsertAction();
-    
-    /**
-     * {@link DtdInsertAction}
-     */
-    public static final DtdInsertAction DTD = new DtdInsertAction();
-    
+	/**
+	 * {@link OrderedMergeAction}.
+	 */
+	public static final OrderedMergeAction MERGE = new OrderedMergeAction();
+	
+	/**
+	 * {@link ReplaceAction}
+	 */
+	public static final ReplaceAction REPLACE = new ReplaceAction();
+	
+	/**
+	 * {@link OverrideAction}
+	 */
+	public static final OverrideAction OVERRIDE = new OverrideAction();
+	
+	/**
+	 * {@link CompleteAction}
+	 */
+	public static final CompleteAction COMPLETE = new CompleteAction();
+	
+	/**
+	 * {@link DeleteAction}
+	 */
+	public static final DeleteAction DELETE = new DeleteAction();
+	
+	/**
+	 * {@link PreserveAction}
+	 */
+	public static final PreserveAction PRESERVE = new PreserveAction();
+	
+	/**
+	 * {@link InsertAction}
+	 */
+	public static final InsertAction INSERT = new InsertAction();
+	
+	/**
+	 * {@link DtdInsertAction}
+	 */
+	public static final DtdInsertAction DTD = new DtdInsertAction();
+	
 }

@@ -38,36 +38,36 @@ import cookxml.core.interfaces.Setter;
  * @author Stefan Wismer (SWI)
  */
 public class ButtonActionSetter implements Setter {
-    /**
-     * The class containing "@Action" annotated methods.
-     */
-    private Object m_actionHolder;
-    
-    /**
-     * The default constuctor: actionHolder is the associated class.
-     * @see CookSwing#CookSwing(Object)
-     */
-    public ButtonActionSetter() { }
-    
-    /**
-     * @param actionHolder    the class containing "@Action" annotated methods
-     */
-    public ButtonActionSetter(Object actionHolder) {
-        m_actionHolder = actionHolder;
-    }
-    
-    /** {@inheritDoc} */
-    public void setAttribute(String ns, String tag,
-        String attrNS, String attr, Object obj, Object value,
-        DecodeEngine decodeEngine) throws SetterException {
-        
-        Object actionHolder = m_actionHolder;
-        if (actionHolder == null) {
-            actionHolder = decodeEngine.getVariable("this");
-        }
-        GUIApplication app = GUIApplication.getInstance();
-        String attrValue = (String) value;
-        AbstractButton button = (AbstractButton) obj;
-        button.setAction(app.getAction(actionHolder, attrValue));
-    }
+	/**
+	 * The class containing "@Action" annotated methods.
+	 */
+	private Object m_actionHolder;
+	
+	/**
+	 * The default constuctor: actionHolder is the associated class.
+	 * @see CookSwing#CookSwing(Object)
+	 */
+	public ButtonActionSetter() { }
+	
+	/**
+	 * @param actionHolder    the class containing "@Action" annotated methods
+	 */
+	public ButtonActionSetter(Object actionHolder) {
+		m_actionHolder = actionHolder;
+	}
+	
+	/** {@inheritDoc} */
+	public void setAttribute(String ns, String tag,
+		String attrNS, String attr, Object obj, Object value,
+		DecodeEngine decodeEngine) throws SetterException {
+		
+		Object actionHolder = m_actionHolder;
+		if (actionHolder == null) {
+			actionHolder = decodeEngine.getVariable("this");
+		}
+		GUIApplication app = GUIApplication.getInstance();
+		String attrValue = (String) value;
+		AbstractButton button = (AbstractButton) obj;
+		button.setAction(app.getAction(actionHolder, attrValue));
+	}
 }

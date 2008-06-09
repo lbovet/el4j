@@ -33,46 +33,46 @@ import org.codehaus.plexus.util.cli.StreamConsumer;
  * @author Martin Zeltner (MZE)
  */
 public class BufferedLogConsumer implements StreamConsumer {
-    /**
-     * Get os specific line separator.
-     */
-    public static final String LINE_SEPARATOR 
-        = System.getProperty("line.separator"); 
-    
-    /**
-     * Buffers the output.
-     */
-    protected final StringBuffer m_stringBuffer = new StringBuffer();
-    
-    /**
-     * Is the consuming logger.
-     */
-    protected final Log m_log;
-    
-    /**
-     * Constructor.
-     * 
-     * @param log Is the logger used to consume lines.
-     */
-    public BufferedLogConsumer(Log log) {
-        if (log == null) {
-            throw new NullPointerException("Specified log must not be null.");
-        }
-        m_log = log;
-    }
+	/**
+	 * Get os specific line separator.
+	 */
+	public static final String LINE_SEPARATOR
+		= System.getProperty("line.separator");
+	
+	/**
+	 * Buffers the output.
+	 */
+	protected final StringBuffer m_stringBuffer = new StringBuffer();
+	
+	/**
+	 * Is the consuming logger.
+	 */
+	protected final Log m_log;
+	
+	/**
+	 * Constructor.
+	 *
+	 * @param log Is the logger used to consume lines.
+	 */
+	public BufferedLogConsumer(Log log) {
+		if (log == null) {
+			throw new NullPointerException("Specified log must not be null.");
+		}
+		m_log = log;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void consumeLine(String line) {
-        m_stringBuffer.append(line + LINE_SEPARATOR);
-        m_log.info(line);
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public String toString() {
-        return m_stringBuffer.toString();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void consumeLine(String line) {
+		m_stringBuffer.append(line + LINE_SEPARATOR);
+		m_log.info(line);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public String toString() {
+		return m_stringBuffer.toString();
+	}
 }

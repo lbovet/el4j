@@ -30,107 +30,107 @@ package ch.elca.el4j.util.interfaceenrichment;
  * @author Martin Zeltner (MZE)
  */
 public class MethodDescriptor {
-    /**
-     * Name of the method.
-     */
-    protected String m_methodName;
-    
-    /**
-     * Parameter names.
-     */
-    protected String[] m_parameterNames;
-    
-    /**
-     * Parameter types.
-     */
-    protected Class<?>[] m_parameterTypes;
-    
-    /**
-     * Exceptions which this method can throw.
-     */
-    protected Class<?>[] m_thrownExceptions;
-    
-    /**
-     * The return type of this method.
-     */
-    protected Class<?> m_returnType;
+	/**
+	 * Name of the method.
+	 */
+	protected String m_methodName;
+	
+	/**
+	 * Parameter names.
+	 */
+	protected String[] m_parameterNames;
+	
+	/**
+	 * Parameter types.
+	 */
+	protected Class<?>[] m_parameterTypes;
+	
+	/**
+	 * Exceptions which this method can throw.
+	 */
+	protected Class<?>[] m_thrownExceptions;
+	
+	/**
+	 * The return type of this method.
+	 */
+	protected Class<?> m_returnType;
 
-    /**
-     * @return Returns the m_methodName.
-     */
-    public String getMethodName() {
-        return m_methodName;
-    }
+	/**
+	 * @return Returns the m_methodName.
+	 */
+	public String getMethodName() {
+		return m_methodName;
+	}
 
-    /**
-     * @param name
-     *            The m_methodName to set.
-     */
-    public void setMethodName(String name) {
-        m_methodName = name;
-    }
+	/**
+	 * @param name
+	 *            The m_methodName to set.
+	 */
+	public void setMethodName(String name) {
+		m_methodName = name;
+	}
 
-    /**
-     * @return Returns the m_parameterTypes.
-     */
-    public Class<?>[] getParameterTypes() {
-        return m_parameterTypes;
-    }
+	/**
+	 * @return Returns the m_parameterTypes.
+	 */
+	public Class<?>[] getParameterTypes() {
+		return m_parameterTypes;
+	}
 
-    /**
-     * @param types
-     *            The m_parameterTypes to set.
-     */
-    public void setParameterTypes(Class<?>[] types) {
-        m_parameterTypes = types;
-    }
+	/**
+	 * @param types
+	 *            The m_parameterTypes to set.
+	 */
+	public void setParameterTypes(Class<?>[] types) {
+		m_parameterTypes = types;
+	}
 
-    /**
-     * @return Returns the m_returnType.
-     */
-    public Class<?> getReturnType() {
-        return m_returnType;
-    }
+	/**
+	 * @return Returns the m_returnType.
+	 */
+	public Class<?> getReturnType() {
+		return m_returnType;
+	}
 
-    /**
-     * @param type
-     *            The m_returnType to set.
-     */
-    public void setReturnType(Class<?> type) {
-        m_returnType = type;
-    }
+	/**
+	 * @param type
+	 *            The m_returnType to set.
+	 */
+	public void setReturnType(Class<?> type) {
+		m_returnType = type;
+	}
 
-    /**
-     * @return Returns the m_thrownExceptions.
-     */
-    public Class<?>[] getThrownExceptions() {
-        return m_thrownExceptions;
-    }
+	/**
+	 * @return Returns the m_thrownExceptions.
+	 */
+	public Class<?>[] getThrownExceptions() {
+		return m_thrownExceptions;
+	}
 
-    /**
-     * @param exceptions
-     *            The m_thrownExceptions to set.
-     */
-    public void setThrownExceptions(Class<?>[] exceptions) {
-        m_thrownExceptions = exceptions;
-    }
+	/**
+	 * @param exceptions
+	 *            The m_thrownExceptions to set.
+	 */
+	public void setThrownExceptions(Class<?>[] exceptions) {
+		m_thrownExceptions = exceptions;
+	}
 
-    /**
-     * This may not be the real names (e.g. when we use reflection)
-     * 
-     * @return Returns the m_parameterNames.
-     */
-    public String[] getParameterNames() {
-        return m_parameterNames;
-    }
+	/**
+	 * This may not be the real names (e.g. when we use reflection)
+	 *
+	 * @return Returns the m_parameterNames.
+	 */
+	public String[] getParameterNames() {
+		return m_parameterNames;
+	}
 
-    /**
-     * This may not be the real names (e.g. when we use reflection)
-     * 
-     * @param names
-     *            The m_parameterNames to set.
-     */
-    public void setParameterNames(String[] names) {
-        m_parameterNames = names;
-    }
+	/**
+	 * This may not be the real names (e.g. when we use reflection)
+	 *
+	 * @param names
+	 *            The m_parameterNames to set.
+	 */
+	public void setParameterNames(String[] names) {
+		m_parameterNames = names;
+	}
 }

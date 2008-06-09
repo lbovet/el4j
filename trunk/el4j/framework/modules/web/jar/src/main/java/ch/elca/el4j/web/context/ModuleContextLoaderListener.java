@@ -31,7 +31,7 @@ import org.springframework.web.context.ContextLoaderListener;
  * );</script>
  *
  * Sample Configuration in web.xml:
- * 
+ *
  *  &lt;context-param&gt;
  *       &lt;description&gt;
  *           Configuration for the EL4J Application Context
@@ -45,7 +45,7 @@ import org.springframework.web.context.ContextLoaderListener;
  *           classpath*:optional/interception/transactionJava5Annotations.xml
  *       &lt;/param-value&gt;
  *   &lt;/context-param&gt;
- *   
+ *
  *   &lt;context-param&gt;
  *       &lt;description&gt;
  *           Configuration locations to exclude from the application context.
@@ -55,7 +55,7 @@ import org.springframework.web.context.ContextLoaderListener;
  *           mandatory/keyword-core-config.xml
  *       &lt;/param-value&gt;
  *   &lt;/context-param&gt;
- *   
+ *
  *   &lt;context-param&gt;
  *       &lt;description&gt;
  *           Bean definition overriding allowed in the application context?
@@ -65,7 +65,7 @@ import org.springframework.web.context.ContextLoaderListener;
  *           true
  *       &lt;/param-value&gt;
  *   &lt;/context-param&gt;
- *   
+ *
  *   &lt;listener&gt;
  *       &lt;listener-class&gt;
  *           ch.elca.el4j.web.context.ModuleContextLoaderListener
@@ -78,12 +78,12 @@ import org.springframework.web.context.ContextLoaderListener;
  */
 public class ModuleContextLoaderListener extends ContextLoaderListener {
 
-    /**
-     * Create the ModuleContextLoader to use.
-     * @return the new ModuleContextLoader
-     */
-    protected ContextLoader createContextLoader() {
-        return new ModuleContextLoader();
-    }
-    
+	/**
+	 * Create the ModuleContextLoader to use.
+	 * @return the new ModuleContextLoader
+	 */
+	protected ContextLoader createContextLoader() {
+		return new ModuleContextLoader();
+	}
+	
 }

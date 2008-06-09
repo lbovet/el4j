@@ -18,7 +18,7 @@ package ch.elca.el4j.tests.refdb.dao;
 
 
 /**
- * 
+ *
  * Test case for <code>SqlMapReferenceDao</code>.
  *
  * <script type="text/javascript">printFileStatus
@@ -32,23 +32,23 @@ package ch.elca.el4j.tests.refdb.dao;
  */
 public class SqlMapsReferenceDaoTest extends AbstractReferenceDaoTest {
 
-    /**
-     * {@inheritDoc}
-     */
-    protected String[] getIncludeConfigLocations() {
-        return new String[] {
-            "classpath*:mandatory/*.xml",
-            "classpath*:scenarios/db/raw/*.xml",
-            "classpath*:scenarios/dataaccess/ibatis/*.xml",
-            "classpath*:scenarios/dataaccess/ibatis/refdb/*.xml",
-            "classpath*:optional/interception/transactionJava5Annotations.xml"};
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    protected String[] getExcludeConfigLocations() {
-        return null;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	protected String[] getIncludeConfigLocations() {
+		return new String[] {
+			"classpath*:mandatory/*.xml",
+			"classpath*:scenarios/db/raw/*.xml",
+			"classpath*:scenarios/dataaccess/ibatis/*.xml",
+			"classpath*:scenarios/dataaccess/ibatis/refdb/*.xml",
+			"classpath*:optional/interception/transactionJava5Annotations.xml"};
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	protected String[] getExcludeConfigLocations() {
+		return null;
+	}
 
 }

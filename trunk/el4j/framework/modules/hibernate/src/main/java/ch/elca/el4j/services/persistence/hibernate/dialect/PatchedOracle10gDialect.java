@@ -25,7 +25,7 @@ import org.hibernate.dialect.Oracle10gDialect;
  * accepts the type "double precision", but stores it as "float(126)". Whenever
  * hibernate validates such a column, oracle returns "float(126)" and hibernate
  * therefore reports a mismatch.
- * 
+ *
  * See http://opensource.atlassian.com/projects/hibernate/browse/HHH-1961
  * or http://opensource.atlassian.com/projects/hibernate/browse/HHH-2315
  *
@@ -39,8 +39,8 @@ import org.hibernate.dialect.Oracle10gDialect;
  * @author Stefan Wismer (SWI)
  */
 public class PatchedOracle10gDialect extends Oracle10gDialect {
-    public PatchedOracle10gDialect() {
-        super();
-        registerColumnType(Types.DOUBLE, "float(126)");
-    }
+	public PatchedOracle10gDialect() {
+		super();
+		registerColumnType(Types.DOUBLE, "float(126)");
+	}
 }

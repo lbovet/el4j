@@ -34,79 +34,79 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
 
 /**
  * This class is a XFire handler that takes care of appending the implicit
- * context to the Soap header. 
- * 
+ * context to the Soap header.
+ *
  * <script type="text/javascript">printFileStatus
  * ("$URL$",
  *  "$Revision$",
  *  "$Date$",
- *  "$Author$" 
+ *  "$Author$"
  * );</script>
- * 
+ *
  * @author Philippe Jacot (PJA)
  */
-public class XFireJaxbContextOutHandler 
-    extends AbstractXFireJaxbContextHandler {
-    
-    /**
-     * The logger.
-     */
-    private static Logger s_logger = Logger.getLogger(
-        XFireJaxbContextOutHandler.class);
+public class XFireJaxbContextOutHandler
+	extends AbstractXFireJaxbContextHandler {
+	
+	/**
+	 * The logger.
+	 */
+	private static Logger s_logger = Logger.getLogger(
+		XFireJaxbContextOutHandler.class);
 
-    /**
-     * The registry to get the context from.
-     */
-    private ImplicitContextPassingRegistry m_contextPassingRegistry;
-    
+	/**
+	 * The registry to get the context from.
+	 */
+	private ImplicitContextPassingRegistry m_contextPassingRegistry;
+	
 
-    /**
-     * Create a new XFire Handler to add the context to a soap message.
-     * 
-     * @param registry The registry to take the context from
-     * @param jaxbContext The context to serialize the implicit context with
-     */
-    public XFireJaxbContextOutHandler(ImplicitContextPassingRegistry registry, 
-        JAXBContext jaxbContext) {
-        super(jaxbContext);
-        this.m_contextPassingRegistry = registry;
-    }
+	/**
+	 * Create a new XFire Handler to add the context to a soap message.
+	 *
+	 * @param registry The registry to take the context from
+	 * @param jaxbContext The context to serialize the implicit context with
+	 */
+	public XFireJaxbContextOutHandler(ImplicitContextPassingRegistry registry,
+		JAXBContext jaxbContext) {
+		super(jaxbContext);
+		this.m_contextPassingRegistry = registry;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    public void invoke(MessageContext context) throws Exception {
-        Element implicitContext = new Element(CONTEXT_ELEMENT_NAME,
-            CONTEXT_NAMESPACE);
-        context.getCurrentMessage().getOrCreateHeader().addContent(
-            implicitContext);
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	public void invoke(MessageContext context) throws Exception {
+		Element implicitContext = new Element(CONTEXT_ELEMENT_NAME,
+			CONTEXT_NAMESPACE);
+		context.getCurrentMessage().getOrCreateHeader().addContent(
+			implicitContext);
 
-        Marshaller marshaller = getMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+		Marshaller marshaller = getMarshaller();
+		marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
 
-        Map assembledContext = m_contextPassingRegistry
-            .getAssembledImplicitContext();
-        Set<String> keys = (Set<String>) assembledContext.keySet();
-        for (String key : keys) {
-            JDOMStreamWriter writer = new JDOMStreamWriter(implicitContext);
-            try {
-                Object value = assembledContext.get(key);
-                marshaller.marshal(new JAXBElement(new QName("", key), 
-                    Object.class, value), writer);
-            } catch (JAXBException e) {
-                s_logger.error("Unable to marshal context for " + key);
-                throw e;
-            }
+		Map assembledContext = m_contextPassingRegistry
+			.getAssembledImplicitContext();
+		Set<String> keys = (Set<String>) assembledContext.keySet();
+		for (String key : keys) {
+			JDOMStreamWriter writer = new JDOMStreamWriter(implicitContext);
+			try {
+				Object value = assembledContext.get(key);
+				marshaller.marshal(new JAXBElement(new QName("", key),
+					Object.class, value), writer);
+			} catch (JAXBException e) {
+				s_logger.error("Unable to marshal context for " + key);
+				throw e;
+			}
 
-        }
-    }
+		}
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected Logger getLogger() {
-        return s_logger;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected Logger getLogger() {
+		return s_logger;
+	}
 }

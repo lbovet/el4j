@@ -20,7 +20,7 @@ package ch.elca.el4j.services.monitoring.jmx;
 import com.sun.jdmk.comm.HtmlParser;
 
 /**
- * This MBean marker interface is used for class 
+ * This MBean marker interface is used for class
  * {@link ch.elca.el4j.services.monitoring.jmx.CssHtmlParser}.
  *
  * <script type="text/javascript">printFileStatus

@@ -37,71 +37,71 @@ import ch.elca.el4j.tests.remoting.service.SpecialCalculatorException;
  * @author Martin Zeltner (MZE)
  */
 public class CalculatorImpl implements Calculator {
-    /**
-     * {@inheritDoc}
-     */
-    public double getArea(double a, double b) {
-        return a * b;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public double getArea(double a, double b) {
+		return a * b;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void throwMeAnException() throws CalculatorException {
-        throw new CalculatorException();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void throwMeAnException() throws CalculatorException {
+		throw new CalculatorException();
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void throwMeASpecialException(String action) 
-        throws SpecialCalculatorException {
-        throw new SpecialCalculatorException(action);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void throwMeASpecialException(String action)
+		throws SpecialCalculatorException {
+		throw new SpecialCalculatorException(action);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public int countNumberOfUppercaseLetters(String text) {
-        if (text == null) {
-            return 0;
-        }
+	/**
+	 * {@inheritDoc}
+	 */
+	public int countNumberOfUppercaseLetters(String text) {
+		if (text == null) {
+			return 0;
+		}
  
-        int numberOfUppercaseLetters = 0;
-        char[] c = text.toCharArray();
-        for (int i = 0; i < c.length; i++) {
-            if (c[i] >= 'A' && c[i] <= 'Z') {
-                numberOfUppercaseLetters++;
-            }
-        }
-        return numberOfUppercaseLetters;
-    }
+		int numberOfUppercaseLetters = 0;
+		char[] c = text.toCharArray();
+		for (int i = 0; i < c.length; i++) {
+			if (c[i] >= 'A' && c[i] <= 'Z') {
+				numberOfUppercaseLetters++;
+			}
+		}
+		return numberOfUppercaseLetters;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public CalculatorValueObject echoValueObject(
-        CalculatorValueObject valueObject) {
-        return valueObject;
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public double calculate(double a, double b, CalculatorOperation operation) {
-        double result;
-        if (operation == CalculatorOperation.ADDITION) {
-            result = a + b;
-        } else if (operation == CalculatorOperation.SUBTRACTION) {
-            result = a - b;
-        } else if (operation == CalculatorOperation.MULTIPLICATION) {
-            result = a * b;
-        } else if (operation == CalculatorOperation.DIVISION) {
-            result = a / b;
-        } else {
-            throw new IllegalArgumentException(
-                "Unknown calculator operation: " + operation);
-        }
-        return result;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public CalculatorValueObject echoValueObject(
+		CalculatorValueObject valueObject) {
+		return valueObject;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public double calculate(double a, double b, CalculatorOperation operation) {
+		double result;
+		if (operation == CalculatorOperation.ADDITION) {
+			result = a + b;
+		} else if (operation == CalculatorOperation.SUBTRACTION) {
+			result = a - b;
+		} else if (operation == CalculatorOperation.MULTIPLICATION) {
+			result = a * b;
+		} else if (operation == CalculatorOperation.DIVISION) {
+			result = a / b;
+		} else {
+			throw new IllegalArgumentException(
+				"Unknown calculator operation: " + operation);
+		}
+		return result;
+	}
 }

@@ -34,22 +34,22 @@ import org.apache.axis.AxisFault;
  * @author Martin Zeltner (MZE)
  */
 public interface SoapExceptionHandler {
-    /**
-     * Method to translate a given business exception into a soap fault
-     * exception.
-     * 
-     * @param businessException
-     *            Is the given business exception which must be translated.
-     * @return Returns the translated business exception.
-     */
-    public SOAPFaultException translateToSoapFaultException(
-        Exception businessException);
-    
-    /**
-     * Method to translate a given axis fault into its real business exception.
-     * 
-     * @param axisFault Is the given axis fault which must be translated.
-     * @return Returns the created business exception.
-     */
-    public Exception translateToBusinessException(AxisFault axisFault);
+	/**
+	 * Method to translate a given business exception into a soap fault
+	 * exception.
+	 *
+	 * @param businessException
+	 *            Is the given business exception which must be translated.
+	 * @return Returns the translated business exception.
+	 */
+	public SOAPFaultException translateToSoapFaultException(
+		Exception businessException);
+	
+	/**
+	 * Method to translate a given axis fault into its real business exception.
+	 *
+	 * @param axisFault Is the given axis fault which must be translated.
+	 * @return Returns the created business exception.
+	 */
+	public Exception translateToBusinessException(AxisFault axisFault);
 }

@@ -30,28 +30,28 @@ package ch.elca.el4j.services.search.criterias;
  */
 public class NotCriteria implements Criteria {
 
-    protected Criteria m_criteria;
-    
-    public NotCriteria (Criteria c) {
-        m_criteria = c;
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public String getType() {
-        return "";
-    }
+	protected Criteria m_criteria;
+	
+	public NotCriteria (Criteria c) {
+		m_criteria = c;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getType() {
+		return "";
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public String getSqlWhereCondition() {
-        return "( NOT "+ m_criteria.getSqlWhereCondition() + " ) ";
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getSqlWhereCondition() {
+		return "( NOT "+ m_criteria.getSqlWhereCondition() + " ) ";
+	}
 
-    public Criteria getCriteria() {
-        return m_criteria;
-    }    
-    
+	public Criteria getCriteria() {
+		return m_criteria;
+	}
+	
 }

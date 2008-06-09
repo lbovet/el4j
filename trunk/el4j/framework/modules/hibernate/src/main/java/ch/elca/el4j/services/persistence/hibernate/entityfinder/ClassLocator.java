@@ -28,7 +28,7 @@ public class ClassLocator {
 
 	/**
 	 * Locates all classes that are in one of the given packages (inclusive sub-packages).
-	 * 
+	 *
 	 * @param packageNames
 	 *            Are the package names the found classes' package must start with.
 	 * @throws ClassNotFoundException
@@ -40,7 +40,7 @@ public class ClassLocator {
 
 	/**
 	 * Locates all classes that are in one of the given packages (inclusive sub-packages).
-	 * 
+	 *
 	 * @param classLoader
 	 *            Is the used classloader to lookup classes.
 	 * @param packageNames
@@ -56,7 +56,7 @@ public class ClassLocator {
 	/**
 	 * Returns all located classes where the found classes' package starts with one of the given
 	 * package names.
-	 * 
+	 *
 	 * @return Returns the found class locations.
 	 * @throws ClassNotFoundException If no class could be found for one of the given packages.
 	 * @throws IOException If there was a general IO problem.
@@ -89,7 +89,7 @@ public class ClassLocator {
 	/**
 	 * Tries to fill the given class location list with classes from the given package that are
 	 * saved in a jar file.
-	 * 
+	 *
 	 * @param packageName Is the name of the package the class's package has to start with.
 	 * @param resource Is the real location of the given package name.
 	 * @param classLocations Are the already found class locations.
@@ -129,7 +129,7 @@ public class ClassLocator {
 	/**
 	 * Does the same as {@link #loadJar(String, URL, List)} but the class is directly saved on
 	 * the file system.
-	 * 
+	 *
 	 * @see #loadJar(String, URL, List)
 	 */
 	private void loadDirectory(String packageName, URL resource,
@@ -141,7 +141,7 @@ public class ClassLocator {
 	/**
 	 * The same as {@link #loadDirectory(String, URL, List)} but with the full "class" path instead
 	 * of the url.
-	 * 
+	 *
 	 * @see #loadDirectory(String, URL, List)
 	 */
 	private void loadDirectory(String packageName, String fullPath,
@@ -170,7 +170,7 @@ public class ClassLocator {
 	/**
 	 * Adds the given class location to the given class location list if this list does not
 	 * already contains it.
-	 * 
+	 *
 	 * @param classLocation Is the class location to add.
 	 * @param classLocations Are the already found class locations.
 	 * @throws IOException If the given class location is already in the given list.

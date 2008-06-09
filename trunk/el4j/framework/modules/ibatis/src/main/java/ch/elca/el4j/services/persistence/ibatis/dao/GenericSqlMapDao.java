@@ -39,10 +39,10 @@ import ch.elca.el4j.util.codingsupport.CollectionUtils;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
- * 
+ *
  * This class is an iBatis-specific implementation of the ConvenienceGenericDao
  * interface.
- * 
+ *
  * Note that when using this DAO, a special ibatis xml configuration file using
  * is necessary for every domain object.
  *
@@ -57,225 +57,225 @@ import ch.elca.el4j.util.codingsupport.Reject;
  *            The domain class the DAO is responsible for
  * @param <ID>
  *            The type of the domain class' identifier
- * 
+ *
  * @author Alex Mathey (AMA)
  */
-public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,ID extends Serializable> 
-        extends ConvenienceSqlMapClientDaoSupport implements ConvenienceGenericDao<T, ID>, InitializingBean {
+public class GenericSqlMapDao<T extends PrimaryKeyOptimisticLockingObject,ID extends Serializable>
+		extends ConvenienceSqlMapClientDaoSupport implements ConvenienceGenericDao<T, ID>, InitializingBean {
 
-    @SuppressWarnings("unchecked")
-       public GenericSqlMapDao() {
-        try {
-            this.m_persistentClass = (Class<T>) ((ParameterizedType) 
-                    getClass().getGenericSuperclass()).
-                    getActualTypeArguments()[0];
-        } catch (Exception e){ 
-            // ignore issues (e.g. when the subclass is not a parametrized type)
-            //  in that case, one needs to set the persistencClass otherwise.
-        }
-    }
+	@SuppressWarnings("unchecked")
+	public GenericSqlMapDao() {
+		try {
+			this.m_persistentClass = (Class<T>) ((ParameterizedType)
+					getClass().getGenericSuperclass()).
+					getActualTypeArguments()[0];
+		} catch (Exception e){
+			// ignore issues (e.g. when the subclass is not a parametrized type)
+			//  in that case, one needs to set the persistencClass otherwise.
+		}
+	}
 
-    /**
-     * The domain class this DAO is responsible for.
-     */
-    private Class<T> m_persistentClass;
+	/**
+	 * The domain class this DAO is responsible for.
+	 */
+	private Class<T> m_persistentClass;
 
-    /**
-     * This call is no longer required
-     * 
-     * @param c
-     *            Mandatory. The domain class this DAO is responsible for.
-     */
-    public void setPersistentClass(Class<T> c) {
-        Reject.ifNull(c);
-        m_persistentClass = c;
-    }
+	/**
+	 * This call is no longer required
+	 *
+	 * @param c
+	 *            Mandatory. The domain class this DAO is responsible for.
+	 */
+	public void setPersistentClass(Class<T> c) {
+		Reject.ifNull(c);
+		m_persistentClass = c;
+	}
 
-    /**
-     * @return Returns the domain class this DAO is responsible for.
-     */
-    public Class<T> getPersistentClass() {
-        assert m_persistentClass != null;
-        return m_persistentClass;
-    }
+	/**
+	 * @return Returns the domain class this DAO is responsible for.
+	 */
+	public Class<T> getPersistentClass() {
+		assert m_persistentClass != null;
+		return m_persistentClass;
+	}
 
-    /**
-     * {@inheritDoc}
-     * 
-     * If OBJECTNAME denotes the name of the domain class this DAO is
-     * responsible for, the statement in the ibatis xml config file
-     * which is associated with this operation must be called 
-     * getOBJECTNAMEByKey.
-     */
-    @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public T findById(ID id) 
-    	throws DataAccessException, DataRetrievalFailureException {
-        return (T) getConvenienceSqlMapClientTemplate()
-        .queryForObjectStrong("get" + getPersistentClassName() + "ByKey",
-                id, getPersistentClassName());
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public T findByIdLazy(ID id) 
-        throws DataAccessException, DataRetrievalFailureException {
-        return (T) findById(id);
-    }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * If OBJECTNAME denotes the name of the domain class this DAO is
+	 * responsible for, the statement in the ibatis xml config file
+	 * which is associated with this operation must be called
+	 * getOBJECTNAMEByKey.
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public T findById(ID id)
+		throws DataAccessException, DataRetrievalFailureException {
+		return (T) getConvenienceSqlMapClientTemplate()
+		.queryForObjectStrong("get" + getPersistentClassName() + "ByKey",
+				id, getPersistentClassName());
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public T findByIdLazy(ID id)
+		throws DataAccessException, DataRetrievalFailureException {
+		return (T) findById(id);
+	}
 
-    /**
-     * {@inheritDoc}
-     * 
-     * If OBJECTNAME denotes the name of the domain class this DAO is
-     * responsible for, the statement in the ibatis xml config file
-     * which is associated with this operation must be called 
-     * getAllOBJECTNAMEs.
-     */
-    @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<T> getAll() throws DataAccessException {
-        List<T> result = getConvenienceSqlMapClientTemplate().queryForList(
-                "getAll" + getPersistentClassName() + "s", null);
-        return CollectionUtils.asList(result);
-    }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * If OBJECTNAME denotes the name of the domain class this DAO is
+	 * responsible for, the statement in the ibatis xml config file
+	 * which is associated with this operation must be called
+	 * getAllOBJECTNAMEs.
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<T> getAll() throws DataAccessException {
+		List<T> result = getConvenienceSqlMapClientTemplate().queryForList(
+				"getAll" + getPersistentClassName() + "s", null);
+		return CollectionUtils.asList(result);
+	}
 
-    /**
-     * {@inheritDoc}
-     * 
-     * If OBJECTNAME denotes the name of the domain class this DAO is
-     * responsible for, the statement in the ibatis xml config file
-     * which is associated with this operation must be called 
-     * searchOBJECTNAMEs.
-     * 
-     * It is very complex to write the ibatis configuration for such
-     *  queries. We only implement it partially in EL4J.
-     *  
-     *  In addition, the paging support needs to be added by hand.
-     * 
-     */
-    @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<T> findByQuery(QueryObject q) throws DataAccessException {
-        Reject.ifNull(q);
-        List<T> result = getConvenienceSqlMapClientTemplate().queryForList(
-                "search" + getPersistentClassName() + "s", q.getCriteriaList());
-        return CollectionUtils.asList(result);
-    }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * If OBJECTNAME denotes the name of the domain class this DAO is
+	 * responsible for, the statement in the ibatis xml config file
+	 * which is associated with this operation must be called
+	 * searchOBJECTNAMEs.
+	 *
+	 * It is very complex to write the ibatis configuration for such
+	 *  queries. We only implement it partially in EL4J.
+	 *
+	 *  In addition, the paging support needs to be added by hand.
+	 *
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<T> findByQuery(QueryObject q) throws DataAccessException {
+		Reject.ifNull(q);
+		List<T> result = getConvenienceSqlMapClientTemplate().queryForList(
+				"search" + getPersistentClassName() + "s", q.getCriteriaList());
+		return CollectionUtils.asList(result);
+	}
 
-    /**
-     * {@inheritDoc}
-     * 
-     * If OBJECTNAME denotes the name of the domain class this DAO is
-     * responsible for, the statements in the ibatis xml config file
-     * which are associated with this operation must be called 
-     * insertOBJECTNAME and updateOBJECTNAME.
-     */
-    @ReturnsUnchangedParameter
-    @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.REQUIRED)
-    public T saveOrUpdate(T entity) throws DataAccessException, 
-    		DataIntegrityViolationException, OptimisticLockingFailureException {
-        Reject.ifNull(entity);
-        getConvenienceSqlMapClientTemplate().insertOrUpdate(entity,
-                getPersistentClassName());
-        return entity;
-    }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * If OBJECTNAME denotes the name of the domain class this DAO is
+	 * responsible for, the statements in the ibatis xml config file
+	 * which are associated with this operation must be called
+	 * insertOBJECTNAME and updateOBJECTNAME.
+	 */
+	@ReturnsUnchangedParameter
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.REQUIRED)
+	public T saveOrUpdate(T entity) throws DataAccessException,
+			DataIntegrityViolationException, OptimisticLockingFailureException {
+		Reject.ifNull(entity);
+		getConvenienceSqlMapClientTemplate().insertOrUpdate(entity,
+				getPersistentClassName());
+		return entity;
+	}
 
-    /**
-     * {@inheritDoc}
-     * 
-     * If OBJECTNAME denotes the name of the domain class this DAO is
-     * responsible for, the statement in the ibatis xml config file
-     * which is associated with this operation must be called 
-     * deleteOBJECTNAME.
-     */
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void delete(T entity) throws DataAccessException,
-    		DataIntegrityViolationException, OptimisticLockingFailureException {
-        getConvenienceSqlMapClientTemplate().deleteStrong(
-                "delete" + getPersistentClassName(), entity,
-                getPersistentClassName());
-    }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * If OBJECTNAME denotes the name of the domain class this DAO is
+	 * responsible for, the statement in the ibatis xml config file
+	 * which is associated with this operation must be called
+	 * deleteOBJECTNAME.
+	 */
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void delete(T entity) throws DataAccessException,
+			DataIntegrityViolationException, OptimisticLockingFailureException {
+		getConvenienceSqlMapClientTemplate().deleteStrong(
+				"delete" + getPersistentClassName(), entity,
+				getPersistentClassName());
+	}
 
-    /**
-     * {@inheritDoc}
-     * 
-     * If OBJECTNAME denotes the name of the domain class this DAO is
-     * responsible for, the statement in the ibatis xml config file
-     * which is associated with this operation must be called 
-     * refreshOBJECTNAME.
-     */
-    @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public T refresh(T entity) throws DataAccessException, DataRetrievalFailureException {
-        return (T) getConvenienceSqlMapClientTemplate()
-        .queryForObjectStrong("refresh" + getPersistentClassName(),
-                entity, getPersistentClassName());
-    }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * If OBJECTNAME denotes the name of the domain class this DAO is
+	 * responsible for, the statement in the ibatis xml config file
+	 * which is associated with this operation must be called
+	 * refreshOBJECTNAME.
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public T refresh(T entity) throws DataAccessException, DataRetrievalFailureException {
+		return (T) getConvenienceSqlMapClientTemplate()
+		.queryForObjectStrong("refresh" + getPersistentClassName(),
+				entity, getPersistentClassName());
+	}
 
-    /**
-     * {@inheritDoc}
-     * 
-     * If OBJECTNAME denotes the name of the domain class this DAO is
-     * responsible for, the statement in the ibatis xml config file
-     * which is associated with this operation must be called 
-     * deleteOBJECTNAMEById.
-     */
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void delete(ID id) throws OptimisticLockingFailureException, DataAccessException {
-        getConvenienceSqlMapClientTemplate().deleteStrong(
-                "delete" + getPersistentClassName() + "ById", id, 
-                getPersistentClassName());
-    }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * If OBJECTNAME denotes the name of the domain class this DAO is
+	 * responsible for, the statement in the ibatis xml config file
+	 * which is associated with this operation must be called
+	 * deleteOBJECTNAMEById.
+	 */
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void delete(ID id) throws OptimisticLockingFailureException, DataAccessException {
+		getConvenienceSqlMapClientTemplate().deleteStrong(
+				"delete" + getPersistentClassName() + "ById", id,
+				getPersistentClassName());
+	}
 
-    /** {@inheritDoc} */
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void delete(Collection<T> entities) 
-    	throws OptimisticLockingFailureException, DataAccessException {
-        for (T entity : entities) {
-            getConvenienceSqlMapClientTemplate().deleteStrong("delete" 
-                    + getPersistentClassName(), entity.getKeyAsObject(),
-                    getPersistentClassName());
-        }
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void deleteAll()
-        throws OptimisticLockingFailureException, DataAccessException {
-        List<T> list = getAll();
-        if (list.size() > 0) {
-            delete(list);
-        }
-    }
-    
-    /** {@inheritDoc} */
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void flush() {
-        getConvenienceSqlMapClientTemplate().getSqlMapClient().flushDataCache();
-    }
+	/** {@inheritDoc} */
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void delete(Collection<T> entities)
+		throws OptimisticLockingFailureException, DataAccessException {
+		for (T entity : entities) {
+			getConvenienceSqlMapClientTemplate().deleteStrong("delete"
+					+ getPersistentClassName(), entity.getKeyAsObject(),
+					getPersistentClassName());
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void deleteAll()
+		throws OptimisticLockingFailureException, DataAccessException {
+		List<T> list = getAll();
+		if (list.size() > 0) {
+			delete(list);
+		}
+	}
+	
+	/** {@inheritDoc} */
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void flush() {
+		getConvenienceSqlMapClientTemplate().getSqlMapClient().flushDataCache();
+	}
 
-    /**
-     * Returns the simple name of the persistent class this DAO is responsible
-     * for.
-     * 
-     * @return The simple name of the persistent class this DAO is responsible
-     *         for.
-     */
-    protected String getPersistentClassName() {
-        return getPersistentClass().getSimpleName();
-    }
+	/**
+	 * Returns the simple name of the persistent class this DAO is responsible
+	 * for.
+	 *
+	 * @return The simple name of the persistent class this DAO is responsible
+	 *         for.
+	 */
+	protected String getPersistentClassName() {
+		return getPersistentClass().getSimpleName();
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public int findCountByQuery(QueryObject query) throws DataAccessException {
-        throw new NotImplementedException("findCountByQuery is not implemented " 
-                +" by default");
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public int findCountByQuery(QueryObject query) throws DataAccessException {
+		throw new NotImplementedException("findCountByQuery is not implemented "
+				+" by default");
+	}
 }

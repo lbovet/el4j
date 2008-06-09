@@ -25,102 +25,102 @@ import org.apache.log4j.Level;
  * https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/module/jmx/java/ch/elca/el4j/services/monitoring/jmx/SpringBeanMBMBean.java
  * $", "$Revision$", "$Date: 2006-03-13 14:15:43 +0100 (Mo, 13 Mrz 2006)
  * $", "$Author$" );</script>
- * 
+ *
  * @author Rashid Waraich (RWA)
  */
 public interface Log4jConfigMBean {
 
-    /**
-     * Getter method for the name member variable.
-     * 
-     * @return Returns the name.
-     */
-    String getName();
+	/**
+	 * Getter method for the name member variable.
+	 *
+	 * @return Returns the name.
+	 */
+	String getName();
 
-    /**
-     * Changes the log level for a category or creates a new category if the
-     * supplied category name doesn't exist.
-     * 
-     * @param category
-     *            The category of the logger.
-     * @param level
-     *            The level of the logger to be set.
-     */
-    public void changeLogLevel(String category, String level);
+	/**
+	 * Changes the log level for a category or creates a new category if the
+	 * supplied category name doesn't exist.
+	 *
+	 * @param category
+	 *            The category of the logger.
+	 * @param level
+	 *            The level of the logger to be set.
+	 */
+	public void changeLogLevel(String category, String level);
 
-    /**
-     * Add appender to the specified logger category.
-     * 
-     * @param category
-     *            The category of the logger.
-     * @param appenderName
-     *            The name of the appender to be removed.
-     */
-    public void addAppender(String category, String appenderName);
+	/**
+	 * Add appender to the specified logger category.
+	 *
+	 * @param category
+	 *            The category of the logger.
+	 * @param appenderName
+	 *            The name of the appender to be removed.
+	 */
+	public void addAppender(String category, String appenderName);
 
-    /**
-     * Remove appender from the specified logger category.
-     * 
-     * @param category
-     *            The category of the logger.
-     * @param appenderName
-     *            The name of the appender to be removed.
-     */
-    public void removeAppender(String category, String appenderName);
+	/**
+	 * Remove appender from the specified logger category.
+	 *
+	 * @param category
+	 *            The category of the logger.
+	 * @param appenderName
+	 *            The name of the appender to be removed.
+	 */
+	public void removeAppender(String category, String appenderName);
 
-    /**
-     * For all loaded appenders, a String representaion of the appenderName and
-     * appenderObject is returned.
-     * 
-     * @return The available appenders.
-     */
-    public String[] getAvailableAppendersList();
+	/**
+	 * For all loaded appenders, a String representaion of the appenderName and
+	 * appenderObject is returned.
+	 *
+	 * @return The available appenders.
+	 */
+	public String[] getAvailableAppendersList();
 
-    /**
-     * Return the log level of the Logger category.
-     * 
-     * @param category
-     *            The category.
-     * @return The level.
-     */
-    public Level showLogLevel(String category);
+	/**
+	 * Return the log level of the Logger category.
+	 *
+	 * @param category
+	 *            The category.
+	 * @return The level.
+	 */
+	public Level showLogLevel(String category);
 
-    /**
-     * Return the appenders of the specified Logger category.
-     * 
-     * @param category
-     *            The category.
-     * @return The appenders.
-     */
-    public Appender[] showAppenders(String category);
+	/**
+	 * Return the appenders of the specified Logger category.
+	 *
+	 * @param category
+	 *            The category.
+	 * @return The appenders.
+	 */
+	public Appender[] showAppenders(String category);
 
-    /**
-     * Sets the level of the root logger.
-     * 
-     * @param level
-     *            The logging level.
-     */
-    public void setRootLoggerLevel(String level);
+	/**
+	 * Sets the level of the root logger.
+	 *
+	 * @param level
+	 *            The logging level.
+	 */
+	public void setRootLoggerLevel(String level);
 
-    /**
-     * Gives back the level of the root logger.
-     * 
-     * @return The logging level.
-     */
-    public String getRootLoggerLevel();
+	/**
+	 * Gives back the level of the root logger.
+	 *
+	 * @return The logging level.
+	 */
+	public String getRootLoggerLevel();
 
-    /**
-     * Shows the XML representation of all changes made to any logger level
-     * through the JMX interface.
-     * 
-     * @return HTML embeddable XML (suitable for pasting in log4j.xml)
-     */
-    public String showLogLevelCache();
-    
-    /**
-     * Get the path of the log4j configuration file, which was loaded
-     * initially (at application start).
-     * @return The path of the configuration file.
-     */
-    public String getInitialConfigurationPath();
+	/**
+	 * Shows the XML representation of all changes made to any logger level
+	 * through the JMX interface.
+	 *
+	 * @return HTML embeddable XML (suitable for pasting in log4j.xml)
+	 */
+	public String showLogLevelCache();
+	
+	/**
+	 * Get the path of the log4j configuration file, which was loaded
+	 * initially (at application start).
+	 * @return The path of the configuration file.
+	 */
+	public String getInitialConfigurationPath();
 }

@@ -12,9 +12,9 @@ import ch.elca.el4j.apps.refdb.dao.GenericReferencedObjectDao;
 import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
 
 /**
- * 
+ *
  * Generic DAO for referenced objects which is using Hibernate.
- * 
+ *
  * This DAO is not intended to be used directly. Only the concrete DAOs that are
  * subclasses of this generic DAO should be used directly.
  *
@@ -32,22 +32,22 @@ import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
  *
  * @author Alex Mathey (AMA)
  */
-public class GenericHibernateReferencedObjectDao<T, ID extends Serializable> 
-    extends GenericHibernateDao<T, ID>
-    implements GenericReferencedObjectDao<T, ID> {
-    
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<T> getByReference(ID id) throws DataAccessException {
-        String domainClassName = getPersistentClassName();
-        String queryString = "from " + domainClassName + " "
-            + domainClassName.toLowerCase() + " where keyToReference "
-            + " = :key";
-        return getConvenienceHibernateTemplate().findByNamedParam(
-            queryString, "key", id);
-    }
+public class GenericHibernateReferencedObjectDao<T, ID extends Serializable>
+	extends GenericHibernateDao<T, ID>
+	implements GenericReferencedObjectDao<T, ID> {
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<T> getByReference(ID id) throws DataAccessException {
+		String domainClassName = getPersistentClassName();
+		String queryString = "from " + domainClassName + " "
+			+ domainClassName.toLowerCase() + " where keyToReference "
+			+ " = :key";
+		return getConvenienceHibernateTemplate().findByNamedParam(
+			queryString, "key", id);
+	}
 
 }

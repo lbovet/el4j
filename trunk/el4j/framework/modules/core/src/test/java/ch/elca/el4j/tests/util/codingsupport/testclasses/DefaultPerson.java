@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DefaultPerson implements Person {
-    protected String firstName;
+	protected String firstName;
 	protected String lastName;
 	protected int age;
-    protected List<Person> children;
-    protected boolean smart;
-    
-    public DefaultPerson() {
+	protected List<Person> children;
+	protected boolean smart;
+	
+	public DefaultPerson() {
 
-        children = new ArrayList<Person>();
-    }
+		children = new ArrayList<Person>();
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -41,20 +41,20 @@ public class DefaultPerson implements Person {
 		this.age = age;
 	}
 
-    
-    public List<Person> getChildren() {
-        return children;
-    }
-    
-    public void setChildren(List<Person> children) {
-        this.children = children;
-    }
-    
-    public boolean getSmart() {
-        return smart;
-    }
-    
-    public void setSmart(boolean smart) {
-        this.smart = smart;   
-    }
+	
+	public List<Person> getChildren() {
+		return children;
+	}
+	
+	public void setChildren(List<Person> children) {
+		this.children = children;
+	}
+	
+	public boolean getSmart() {
+		return smart;
+	}
+	
+	public void setSmart(boolean smart) {
+		this.smart = smart;
+	}
 }

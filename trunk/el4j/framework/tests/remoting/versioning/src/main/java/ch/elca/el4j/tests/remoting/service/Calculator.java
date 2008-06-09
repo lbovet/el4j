@@ -34,31 +34,31 @@ import javax.jws.WebService;
  */
 @WebService
 public interface Calculator {
-    /**
-     * This method calculates the area of a rectangle.
-     * 
-     * @param a
-     *            Is the first side.
-     * @param b
-     *            Is the second side.
-     * @return Returns the area of the triangle.
-     */
-    public double getArea(double a, double b);
-    
-    /**
-     * This method counts all uppercase letters of a text. 
-     * 
-     * @param text Is the object to analyze.
-     * @return Returns the number of uppercase letters.
-     */
-    public int countNumberOfUppercaseLetters(String text);
-    
-    /**
-     * This method does an echo of the given object.
-     * 
-     * @param o Is the object to echo.
-     * @return Returns the received object.
-     */
-    public CalculatorValueObject echoValueObject(CalculatorValueObject o);
-    
+	/**
+	 * This method calculates the area of a rectangle.
+	 *
+	 * @param a
+	 *            Is the first side.
+	 * @param b
+	 *            Is the second side.
+	 * @return Returns the area of the triangle.
+	 */
+	public double getArea(double a, double b);
+	
+	/**
+	 * This method counts all uppercase letters of a text.
+	 *
+	 * @param text Is the object to analyze.
+	 * @return Returns the number of uppercase letters.
+	 */
+	public int countNumberOfUppercaseLetters(String text);
+	
+	/**
+	 * This method does an echo of the given object.
+	 *
+	 * @param o Is the object to echo.
+	 * @return Returns the received object.
+	 */
+	public CalculatorValueObject echoValueObject(CalculatorValueObject o);
+	
 }

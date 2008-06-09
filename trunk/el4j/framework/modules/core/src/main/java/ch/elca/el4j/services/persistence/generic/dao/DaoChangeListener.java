@@ -18,7 +18,7 @@ package ch.elca.el4j.services.persistence.generic.dao;
 
 /**
  * This object receives change notifications from DAO change notifiers.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -30,9 +30,9 @@ package ch.elca.el4j.services.persistence.generic.dao;
  * @see DaoChangeNotifier
  */
 public interface DaoChangeListener {
-    /** 
-     * Invoked if a DAO change was detected.
-     * @param change The change detected.
-     */
-    void changed(DaoChangeNotifier.Change change);
+	/**
+	 * Invoked if a DAO change was detected.
+	 * @param change The change detected.
+	 */
+	void changed(DaoChangeNotifier.Change change);
 }

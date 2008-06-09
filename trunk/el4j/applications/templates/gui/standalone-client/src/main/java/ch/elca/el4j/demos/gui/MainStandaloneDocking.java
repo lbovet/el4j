@@ -27,49 +27,49 @@ import ch.elca.el4j.gui.swing.splash.ImageSplashScreen;
  * @author Stefan Wismer (SWI)
  */
 public final class MainStandaloneDocking {
-    /**
-     * Hide default constructor.
-     */
-    private MainStandaloneDocking() { }
+	/**
+	 * Hide default constructor.
+	 */
+	private MainStandaloneDocking() { }
 
-    /**
-     * Sample main application for a GUI.
-     * @param args command line arguments
-     */
-    public static void main(String[] args) {
+	/**
+	 * Sample main application for a GUI.
+	 * @param args command line arguments
+	 */
+	public static void main(String[] args) {
 
-        ImageSplashScreen splashScreen = null;
-        try {
-            // uses default splash screen
-            splashScreen = new ImageSplashScreen();
+		ImageSplashScreen splashScreen = null;
+		try {
+			// uses default splash screen
+			splashScreen = new ImageSplashScreen();
 
-            // add special exception handler
-            Exceptions.getInstance().addHandler(new ExampleExceptionHandler());
+			// add special exception handler
+			Exceptions.getInstance().addHandler(new ExampleExceptionHandler());
 
-            PlasticLookAndFeel.setPlasticTheme(new ExperienceBlue());
+			PlasticLookAndFeel.setPlasticTheme(new ExperienceBlue());
 
-            String[] applicationContextPaths = {
-                "classpath*:mandatory/*.xml",
-                "classpath*:scenarios/db/raw/*.xml",
-                "classpath*:scenarios/dataaccess/hibernate/*.xml",
-                "classpath*:scenarios/dataaccess/hibernate/refdb/*.xml",
-                "classpath*:optional/interception/transactionJava5Annotations.xml",
-                "classpath*:Interceptors.xml",
-                "classpath:scenarios/swing/demo/applicationGeneral.xml"
-            };
-            
-            ModuleApplicationContextConfiguration contextConfig
-                = new ModuleApplicationContextConfiguration();
-            
-            contextConfig.setInclusiveConfigLocations(applicationContextPaths);
+			String[] applicationContextPaths = {
+				"classpath*:mandatory/*.xml",
+				"classpath*:scenarios/db/raw/*.xml",
+				"classpath*:scenarios/dataaccess/hibernate/*.xml",
+				"classpath*:scenarios/dataaccess/hibernate/refdb/*.xml",
+				"classpath*:optional/interception/transactionJava5Annotations.xml",
+				"classpath*:Interceptors.xml",
+				"classpath:scenarios/swing/demo/applicationGeneral.xml"
+			};
+			
+			ModuleApplicationContextConfiguration contextConfig
+				= new ModuleApplicationContextConfiguration();
+			
+			contextConfig.setInclusiveConfigLocations(applicationContextPaths);
 
-            GUIApplication.launch(MainFormDocking.class, args, contextConfig);
+			GUIApplication.launch(MainFormDocking.class, args, contextConfig);
 
-        } finally {
-            if (splashScreen != null) {
-                splashScreen.dispose();
-            }
-        }
-    }
+		} finally {
+			if (splashScreen != null) {
+				splashScreen.dispose();
+			}
+		}
+	}
 }
 //Checkstyle: UncommentedMain on

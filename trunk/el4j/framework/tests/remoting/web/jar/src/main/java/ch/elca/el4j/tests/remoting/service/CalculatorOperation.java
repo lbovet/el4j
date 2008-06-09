@@ -29,23 +29,23 @@ package ch.elca.el4j.tests.remoting.service;
  * @author Martin Zeltner (MZE)
  */
 public enum CalculatorOperation {
-    /**
-     * Operator for an addition.
-     */
-    ADDITION,
-    
-    /**
-     * Operator for a subtraction.
-     */
-    SUBTRACTION,
+	/**
+	 * Operator for an addition.
+	 */
+	ADDITION,
+	
+	/**
+	 * Operator for a subtraction.
+	 */
+	SUBTRACTION,
 
-    /**
-     * Operator for a multiplication.
-     */
-    MULTIPLICATION,
-    
-    /**
-     * Operator for a division.
-     */
-    DIVISION
+	/**
+	 * Operator for a multiplication.
+	 */
+	MULTIPLICATION,
+	
+	/**
+	 * Operator for a division.
+	 */
+	DIVISION
 }

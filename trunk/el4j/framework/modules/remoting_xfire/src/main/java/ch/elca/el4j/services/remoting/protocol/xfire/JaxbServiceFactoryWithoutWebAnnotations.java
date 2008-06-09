@@ -29,9 +29,9 @@ import org.codehaus.xfire.transport.TransportManager;
  * This class is a new implementation of the JaxbServiceFactory, which
  * can be found in the "org.codehaus.xfire.jaxb2" package. The reason
  * for reimplementing the JaxbServiceFactory class was, that it
- * inherits from the AnnotationServiceFactory. Because of this service classes 
+ * inherits from the AnnotationServiceFactory. Because of this service classes
  * (interfaces + implementation) are required to have WebAnnoations? on them.
- * 
+ *
  * The here implemented "JaxbServiceFactoryWithoutWebAnnotations" inherits
  * directly from the ObjectServiceFactory, by this it does not require serice
  * classes to have WebAnnoations on them.
@@ -49,41 +49,41 @@ import org.codehaus.xfire.transport.TransportManager;
 
 
 public class JaxbServiceFactoryWithoutWebAnnotations
-        extends ObjectServiceFactory {
-    
-    /**
-     * Default constructor.
-     */
-    public JaxbServiceFactoryWithoutWebAnnotations() {
-        this(XFireFactory.newInstance().getXFire().getTransportManager());
-    }
+		extends ObjectServiceFactory {
+	
+	/**
+	 * Default constructor.
+	 */
+	public JaxbServiceFactoryWithoutWebAnnotations() {
+		this(XFireFactory.newInstance().getXFire().getTransportManager());
+	}
 
-    /**
-     * This constructor can take a transportManager as parameter.
-     * @param transportManager The transportManger for the ServiceFactroy.
-     */
-    public JaxbServiceFactoryWithoutWebAnnotations
-    (TransportManager transportManager) {
-        super(transportManager, 
-              new AegisBindingProvider(new JaxbTypeRegistry()));
-   
-        setWsdlBuilderFactory(new JaxbWSDLBuilderFactory());
+	/**
+	 * This constructor can take a transportManager as parameter.
+	 * @param transportManager The transportManger for the ServiceFactroy.
+	 */
+	public JaxbServiceFactoryWithoutWebAnnotations
+	(TransportManager transportManager) {
+		super(transportManager,
+			new AegisBindingProvider(new JaxbTypeRegistry()));
+		
+		setWsdlBuilderFactory(new JaxbWSDLBuilderFactory());
 
-    }
-    
-    /**
-     * This constructor can take a transportManager as parameter and a 
-     * <code>JAXBContext</code>.
-     * @param transportManager The transportManger for the ServiceFactroy.
-     * @param context The JAXBContext to indicate JAXB annotated classes
-     */
-    public JaxbServiceFactoryWithoutWebAnnotations
-    (TransportManager transportManager, JAXBContext context) {
-        super(transportManager, 
-              new AegisBindingProvider(new JaxbTypeRegistry(context)));       
-        
-        setWsdlBuilderFactory(new JaxbWSDLBuilderFactory());
-    }
+	}
+	
+	/**
+	 * This constructor can take a transportManager as parameter and a
+	 * <code>JAXBContext</code>.
+	 * @param transportManager The transportManger for the ServiceFactroy.
+	 * @param context The JAXBContext to indicate JAXB annotated classes
+	 */
+	public JaxbServiceFactoryWithoutWebAnnotations
+	(TransportManager transportManager, JAXBContext context) {
+		super(transportManager,
+			new AegisBindingProvider(new JaxbTypeRegistry(context)));
+		
+		setWsdlBuilderFactory(new JaxbWSDLBuilderFactory());
+	}
 }
 
 

@@ -28,26 +28,26 @@ import org.jdom.Element;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public interface OperationFactory {
 
-    /**
-     * Creates operation (action, mapper and matcher) instances corresponding to
-     * a pair of elements from the original and patch DOMs.
-     * 
-     * @param originalElement
-     *            Original element
-     * @param modifiedElement
-     *            Modified element
-     * @return The operation (action, mapper or matcher) for the given element
-     *         pair
-     * @throws AbstractXmlMergeException
-     *             If an error occurs during operation creation
-     */
-    public Operation getOperation(Element originalElement,
-        Element modifiedElement) throws AbstractXmlMergeException;
+	/**
+	 * Creates operation (action, mapper and matcher) instances corresponding to
+	 * a pair of elements from the original and patch DOMs.
+	 *
+	 * @param originalElement
+	 *            Original element
+	 * @param modifiedElement
+	 *            Modified element
+	 * @return The operation (action, mapper or matcher) for the given element
+	 *         pair
+	 * @throws AbstractXmlMergeException
+	 *             If an error occurs during operation creation
+	 */
+	public Operation getOperation(Element originalElement,
+		Element modifiedElement) throws AbstractXmlMergeException;
 
 }

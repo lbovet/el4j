@@ -36,37 +36,37 @@ import ch.elca.el4j.tests.remoting.service.CalculatorValueObject;
  * @author Philippe Jacot (PJA)
  */
 public class CalculatorImpl implements Calculator {
-    /**
-     * {@inheritDoc}
-     */
-    public double getArea(double a, double b) {
-        return a * b;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public double getArea(double a, double b) {
+		return a * b;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public int countNumberOfUppercaseLetters(String text) {
-        if (text == null) {
-            return 0;
-        }
+	/**
+	 * {@inheritDoc}
+	 */
+	public int countNumberOfUppercaseLetters(String text) {
+		if (text == null) {
+			return 0;
+		}
  
-        int numberOfUppercaseLetters = 0;
-        char[] c = text.toCharArray();
-        for (int i = 0; i < c.length; i++) {
-            if (c[i] >= 'A' && c[i] <= 'Z') {
-                numberOfUppercaseLetters++;
-            }
-        }
-        return numberOfUppercaseLetters;
-    }
+		int numberOfUppercaseLetters = 0;
+		char[] c = text.toCharArray();
+		for (int i = 0; i < c.length; i++) {
+			if (c[i] >= 'A' && c[i] <= 'Z') {
+				numberOfUppercaseLetters++;
+			}
+		}
+		return numberOfUppercaseLetters;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public CalculatorValueObject echoValueObject(
-        CalculatorValueObject valueObject) {
-        return valueObject;
-    }
-    
+	/**
+	 * {@inheritDoc}
+	 */
+	public CalculatorValueObject echoValueObject(
+		CalculatorValueObject valueObject) {
+		return valueObject;
+	}
+	
 }

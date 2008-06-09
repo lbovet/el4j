@@ -31,49 +31,49 @@ import ch.elca.el4j.services.xmlmerge.matcher.TagMatcher;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public abstract class AbstractMergeAction implements MergeAction {
 
-    /**
-     * Action factory.
-     */
-    protected OperationFactory m_actionFactory = new StaticOperationFactory(
-        this);
-    
-    /**
-     * Mapper factory.
-     */
-    protected OperationFactory m_mapperFactory = new StaticOperationFactory(
-        new IdentityMapper());
-    /**
-     * Matcher factory.
-     */
-    protected OperationFactory m_matcherFactory = new StaticOperationFactory(
-        new TagMatcher());
+	/**
+	 * Action factory.
+	 */
+	protected OperationFactory m_actionFactory = new StaticOperationFactory(
+		this);
+	
+	/**
+	 * Mapper factory.
+	 */
+	protected OperationFactory m_mapperFactory = new StaticOperationFactory(
+		new IdentityMapper());
+	/**
+	 * Matcher factory.
+	 */
+	protected OperationFactory m_matcherFactory = new StaticOperationFactory(
+		new TagMatcher());
 
-    /**
-     * {@inheritDoc}
-     */
-    public void setMapperFactory(OperationFactory factory) {
-        m_mapperFactory = factory;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setMapperFactory(OperationFactory factory) {
+		m_mapperFactory = factory;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void setMatcherFactory(OperationFactory factory) {
-        m_matcherFactory = factory;
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setMatcherFactory(OperationFactory factory) {
+		m_matcherFactory = factory;
 
-    }
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void setActionFactory(OperationFactory factory) {
-        m_actionFactory = factory;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setActionFactory(OperationFactory factory) {
+		m_actionFactory = factory;
+	}
 
 }

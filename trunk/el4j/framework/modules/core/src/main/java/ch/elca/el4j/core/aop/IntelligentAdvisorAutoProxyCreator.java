@@ -38,107 +38,107 @@ import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreato
  * @author Martin Zeltner (MZE)
  */
 public class IntelligentAdvisorAutoProxyCreator
-    extends DefaultAdvisorAutoProxyCreator {
-    /**
-     * COPYIED FROM SUPERCLASS!
-     * 
-     * Names of common interceptors. We must use bean name rather than object
-     * references to handle prototype advisors/interceptors.
-     * Default is the empty array: no common interceptors.
-     */
-    private String[] m_interceptorNames = new String[0];
-    
-    /**
-     * COPYIED FROM SUPERCLASS!
-     * 
-     * Default is global AdvisorAdapterRegistry.
-     * */
-    private AdvisorAdapterRegistry m_advisorAdapterRegistry 
-        = GlobalAdvisorAdapterRegistry.getInstance();
+	extends DefaultAdvisorAutoProxyCreator {
+	/**
+	 * COPYIED FROM SUPERCLASS!
+	 *
+	 * Names of common interceptors. We must use bean name rather than object
+	 * references to handle prototype advisors/interceptors.
+	 * Default is the empty array: no common interceptors.
+	 */
+	private String[] m_interceptorNames = new String[0];
+	
+	/**
+	 * COPYIED FROM SUPERCLASS!
+	 *
+	 * Default is global AdvisorAdapterRegistry.
+	 * */
+	private AdvisorAdapterRegistry m_advisorAdapterRegistry
+		= GlobalAdvisorAdapterRegistry.getInstance();
 
-    /**
-     * @see #setApplyCommonInterceptorsFirst(boolean)
-     */
-    private boolean m_applyCommonInterceptorsFirst;
+	/**
+	 * @see #setApplyCommonInterceptorsFirst(boolean)
+	 */
+	private boolean m_applyCommonInterceptorsFirst;
 
-    /**
-     * Will not create a new proxy for a given bean if this bean is already
-     * a proxy bean.
-     * 
-     * {@inheritDoc}
-     */
-    @Override
-    protected Object createProxy(Class beanClass, String beanName, 
-        Object[] specificInterceptors, TargetSource targetSource) {
-        
-        Object proxy = ProxyEnricher.enrichProxy(beanClass, beanName, 
-            specificInterceptors, targetSource, getInterceptorNames(), 
-            getBeanFactory(), getAdvisorAdapterRegistry(),
-            isApplyCommonInterceptorsFirst());
-        
-        // If no proxy could be enriched create a new one.
-        if (proxy == null) {
-            proxy = super.createProxy(beanClass, beanName, 
-                specificInterceptors, targetSource);
-        }
-        return proxy;
-    }
+	/**
+	 * Will not create a new proxy for a given bean if this bean is already
+	 * a proxy bean.
+	 *
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected Object createProxy(Class beanClass, String beanName,
+		Object[] specificInterceptors, TargetSource targetSource) {
+		
+		Object proxy = ProxyEnricher.enrichProxy(beanClass, beanName,
+			specificInterceptors, targetSource, getInterceptorNames(),
+			getBeanFactory(), getAdvisorAdapterRegistry(),
+			isApplyCommonInterceptorsFirst());
+		
+		// If no proxy could be enriched create a new one.
+		if (proxy == null) {
+			proxy = super.createProxy(beanClass, beanName,
+				specificInterceptors, targetSource);
+		}
+		return proxy;
+	}
 
-    /**
-     * @return Returns the interceptorNames.
-     */
-    protected String[] getInterceptorNames() {
-        return m_interceptorNames;
-    }
+	/**
+	 * @return Returns the interceptorNames.
+	 */
+	protected String[] getInterceptorNames() {
+		return m_interceptorNames;
+	}
 
-    /**
-     * Added to have access to the interceptor names.
-     * 
-     * {@inheritDoc}
-     */
-    @Override
-    public void setInterceptorNames(String[] interceptorNames) {
-        m_interceptorNames = interceptorNames;
-        super.setInterceptorNames(interceptorNames);
-    }
+	/**
+	 * Added to have access to the interceptor names.
+	 *
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setInterceptorNames(String[] interceptorNames) {
+		m_interceptorNames = interceptorNames;
+		super.setInterceptorNames(interceptorNames);
+	}
 
-    /**
-     * @return Returns the advisorAdapterRegistry.
-     */
-    protected AdvisorAdapterRegistry getAdvisorAdapterRegistry() {
-        return m_advisorAdapterRegistry;
-    }
+	/**
+	 * @return Returns the advisorAdapterRegistry.
+	 */
+	protected AdvisorAdapterRegistry getAdvisorAdapterRegistry() {
+		return m_advisorAdapterRegistry;
+	}
 
-    /**
-     * Added to have access to the interceptor names.
-     * 
-     * {@inheritDoc}
-     */
-    @Override
-    public void setAdvisorAdapterRegistry(
-        AdvisorAdapterRegistry advisorAdapterRegistry) {
-        m_advisorAdapterRegistry = advisorAdapterRegistry;
-        super.setAdvisorAdapterRegistry(advisorAdapterRegistry);
-    }
-    
-    /**
-     * @return Returns the applyCommonInterceptorsFirst.
-     */
-    protected boolean isApplyCommonInterceptorsFirst() {
-        return m_applyCommonInterceptorsFirst;
-    }
+	/**
+	 * Added to have access to the interceptor names.
+	 *
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setAdvisorAdapterRegistry(
+		AdvisorAdapterRegistry advisorAdapterRegistry) {
+		m_advisorAdapterRegistry = advisorAdapterRegistry;
+		super.setAdvisorAdapterRegistry(advisorAdapterRegistry);
+	}
+	
+	/**
+	 * @return Returns the applyCommonInterceptorsFirst.
+	 */
+	protected boolean isApplyCommonInterceptorsFirst() {
+		return m_applyCommonInterceptorsFirst;
+	}
 
-    /**
-     * COPYIED FROM SUPERCLASS!
-     * 
-     * Set whether the common interceptors should be applied before
-     * bean-specific ones. Default is "true"; else, bean-specific interceptors
-     * will get applied first.
-     * 
-     * @param applyCommonInterceptorsFirst See method description.
-     */
-    public void setApplyCommonInterceptorsFirst(
-        boolean applyCommonInterceptorsFirst) {
-        m_applyCommonInterceptorsFirst = applyCommonInterceptorsFirst;
-    }
+	/**
+	 * COPYIED FROM SUPERCLASS!
+	 *
+	 * Set whether the common interceptors should be applied before
+	 * bean-specific ones. Default is "true"; else, bean-specific interceptors
+	 * will get applied first.
+	 *
+	 * @param applyCommonInterceptorsFirst See method description.
+	 */
+	public void setApplyCommonInterceptorsFirst(
+		boolean applyCommonInterceptorsFirst) {
+		m_applyCommonInterceptorsFirst = applyCommonInterceptorsFirst;
+	}
 }

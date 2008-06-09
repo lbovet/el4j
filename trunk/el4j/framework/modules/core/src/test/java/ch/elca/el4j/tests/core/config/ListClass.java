@@ -23,34 +23,34 @@ import java.util.List;
 /**
  * This class is used for testing the ListPropertyMergeConfigurer class. It has
  * a list member and provides a setter and a getter method for this member.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Raphael Boog (RBO)
  */
 public class ListClass {
 
-    /** The test list. */
-    private List<String> m_listTest = new ArrayList<String>();
+	/** The test list. */
+	private List<String> m_listTest = new ArrayList<String>();
 
-        /**
-     * @return Returns the listTest.
-     */
-    public List<String> getListTest() {
-        return m_listTest;
-    }
+		/**
+	 * @return Returns the listTest.
+	 */
+	public List<String> getListTest() {
+		return m_listTest;
+	}
 
-    /**
-     * @param listTest
-     *            The listTest to set.
-     */
-    public void setListTest(List<String> listTest) {
-        this.m_listTest = listTest;
-    }
+	/**
+	 * @param listTest
+	 *            The listTest to set.
+	 */
+	public void setListTest(List<String> listTest) {
+		this.m_listTest = listTest;
+	}
 
 }

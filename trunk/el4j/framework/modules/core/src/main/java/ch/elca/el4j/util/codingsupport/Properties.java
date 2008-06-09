@@ -46,34 +46,34 @@ import java.util.Map;
  */
 public class Properties extends java.util.Properties {
 
-    /**
-     * Crates a new Properties instance.
-     */
-    public Properties() {
-        super();
-    }
+	/**
+	 * Crates a new Properties instance.
+	 */
+	public Properties() {
+		super();
+	}
 
-    /**
-     * Creates a new Properties instance and sets the default properties.
-     * 
-     * @param defaults
-     *      The default properties to set.
-     */
-    public Properties(java.util.Properties defaults) {
-        super(defaults);
-    }
+	/**
+	 * Creates a new Properties instance and sets the default properties.
+	 *
+	 * @param defaults
+	 *      The default properties to set.
+	 */
+	public Properties(java.util.Properties defaults) {
+		super(defaults);
+	}
 
-    /**
-     * Copies all properties of the provided {@link java.util.Properties} object
-     * into this instance.
-     * 
-     * @param props
-     *      The properties to copy.
-     */
-    public void setProperties(java.util.Properties props) {
-        for (Iterator<Map.Entry<Object,Object>> iter = props.entrySet().iterator(); iter.hasNext();) {
-            Map.Entry<Object,Object> next = (Map.Entry<Object,Object>) iter.next();
-            put(next.getKey(), next.getValue());
-        }
-    }
+	/**
+	 * Copies all properties of the provided {@link java.util.Properties} object
+	 * into this instance.
+	 *
+	 * @param props
+	 *      The properties to copy.
+	 */
+	public void setProperties(java.util.Properties props) {
+		for (Iterator<Map.Entry<Object,Object>> iter = props.entrySet().iterator(); iter.hasNext();) {
+			Map.Entry<Object,Object> next = (Map.Entry<Object,Object>) iter.next();
+			put(next.getKey(), next.getValue());
+		}
+	}
 }

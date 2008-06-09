@@ -39,68 +39,68 @@ import ch.elca.el4j.services.remoting.RemotingServiceExporter;
  * @author Martin Zeltner (MZE)
  */
 public class Rmi extends AbstractInetSocketAddressProtocol {
-    /**
-     * {@inheritDoc}
-     */
-    public Object createProxyBean(RemotingProxyFactoryBean proxyBean,
-            Class serviceInterfaceWithContext) {
-        StaticApplicationContext appContext = new StaticApplicationContext(
-                m_parentApplicationContext);
-        registerChildApplicationContext(appContext);
-        MutablePropertyValues props = new MutablePropertyValues();
-        props.addPropertyValue("serviceInterface", serviceInterfaceWithContext);
-        props.addPropertyValue("serviceUrl", generateUrl(proxyBean));
-        appContext.registerSingleton("rmiProxyBeanGen", getProxyObjectType(),
-                props);
-        appContext.refresh();
-        return appContext.getBean("rmiProxyBeanGen");
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object createProxyBean(RemotingProxyFactoryBean proxyBean,
+			Class serviceInterfaceWithContext) {
+		StaticApplicationContext appContext = new StaticApplicationContext(
+				m_parentApplicationContext);
+		registerChildApplicationContext(appContext);
+		MutablePropertyValues props = new MutablePropertyValues();
+		props.addPropertyValue("serviceInterface", serviceInterfaceWithContext);
+		props.addPropertyValue("serviceUrl", generateUrl(proxyBean));
+		appContext.registerSingleton("rmiProxyBeanGen", getProxyObjectType(),
+				props);
+		appContext.refresh();
+		return appContext.getBean("rmiProxyBeanGen");
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object createExporterBean(RemotingServiceExporter exporterBean,
-            Class serviceInterfaceWithContext, Object serviceProxy) {
-        StaticApplicationContext appContext = new StaticApplicationContext(
-                m_parentApplicationContext);
-        registerChildApplicationContext(appContext);
-        MutablePropertyValues props = new MutablePropertyValues();
-        props.addPropertyValue("service", serviceProxy);
-        props.addPropertyValue("serviceInterface", serviceInterfaceWithContext);
-        props.addPropertyValue("serviceName", exporterBean.getServiceName());
-        props.addPropertyValue("registryPort", new Integer(getServicePort()));
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object createExporterBean(RemotingServiceExporter exporterBean,
+			Class serviceInterfaceWithContext, Object serviceProxy) {
+		StaticApplicationContext appContext = new StaticApplicationContext(
+				m_parentApplicationContext);
+		registerChildApplicationContext(appContext);
+		MutablePropertyValues props = new MutablePropertyValues();
+		props.addPropertyValue("service", serviceProxy);
+		props.addPropertyValue("serviceInterface", serviceInterfaceWithContext);
+		props.addPropertyValue("serviceName", exporterBean.getServiceName());
+		props.addPropertyValue("registryPort", new Integer(getServicePort()));
 
-        appContext.registerSingleton("rmiExporterBeanGen",
-                getExporterObjectType(), props);
-        appContext.refresh();
-        return appContext.getBean("rmiExporterBeanGen");
-    }
+		appContext.registerSingleton("rmiExporterBeanGen",
+				getExporterObjectType(), props);
+		appContext.refresh();
+		return appContext.getBean("rmiExporterBeanGen");
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Class getProxyObjectType() {
-        return RmiProxyFactoryBean.class;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Class getProxyObjectType() {
+		return RmiProxyFactoryBean.class;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Class getExporterObjectType() {
-        return RmiServiceExporter.class;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Class getExporterObjectType() {
+		return RmiServiceExporter.class;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public String generateUrl(AbstractRemotingBase remoteManager) {
-        StringBuffer sb = new StringBuffer();
-        sb.append("rmi://");
-        sb.append(getServiceHost());
-        sb.append(":");
-        sb.append(getServicePort());
-        sb.append("/");
-        sb.append(remoteManager.getServiceName());
-        return sb.toString();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public String generateUrl(AbstractRemotingBase remoteManager) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("rmi://");
+		sb.append(getServiceHost());
+		sb.append(":");
+		sb.append(getServicePort());
+		sb.append("/");
+		sb.append(remoteManager.getServiceName());
+		return sb.toString();
+	}
 }

@@ -25,33 +25,33 @@ import ch.elca.el4j.plugins.database.AbstractDBExecutionMojo;
 /**
  * This class is a database mojo for the 'create' statement.
  * It creates the table(s) in the database.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @goal create
  * @author David Stefan (DST)
  */
 public class CreateMojo extends AbstractDBExecutionMojo {
 
-    /**
-     * Action this mojo is implementing and identifier sql files have to start
-     * with.
-     */
-    private static final String ACTION = "create";
+	/**
+	 * Action this mojo is implementing and identifier sql files have to start
+	 * with.
+	 */
+	private static final String ACTION = "create";
 
-    /**
-     * {@inheritDoc}
-     */
-    public void executeInternal() throws MojoExecutionException, MojoFailureException {
-        try {
-            executeAction(ACTION, false, false);
-        } catch (Exception e) {
-            throw new MojoFailureException(e.getMessage());
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void executeInternal() throws MojoExecutionException, MojoFailureException {
+		try {
+			executeAction(ACTION, false, false);
+		} catch (Exception e) {
+			throw new MojoFailureException(e.getMessage());
+		}
+	}
 }

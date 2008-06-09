@@ -29,5 +29,5 @@ package ch.elca.el4j.services.persistence.generic.dto;
  *
  * @author Martin Zeltner (MZE)
  */
-public interface PrimaryKeyOptimisticLockingObject 
-    extends PrimaryKeyObject, OptimisticLockingObject { }
+public interface PrimaryKeyOptimisticLockingObject
+	extends PrimaryKeyObject, OptimisticLockingObject { }

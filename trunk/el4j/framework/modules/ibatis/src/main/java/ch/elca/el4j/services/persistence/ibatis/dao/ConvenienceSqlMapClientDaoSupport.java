@@ -20,7 +20,7 @@ package ch.elca.el4j.services.persistence.ibatis.dao;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 /**
- * Convenience sqlmap client dao support class to be able to return the 
+ * Convenience sqlmap client dao support class to be able to return the
  * convenience sqlmap client template without casting it.
  *
  * <script type="text/javascript">printFileStatus
@@ -33,21 +33,21 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
  * @author Martin Zeltner (MZE)
  */
 public class ConvenienceSqlMapClientDaoSupport extends SqlMapClientDaoSupport {
-    /**
-     * @return Returns the sqlmap client template casted to the convenience
-     *         model of it.
-     */
-    public ConvenienceSqlMapClientTemplate 
-    getConvenienceSqlMapClientTemplate() {
-        return (ConvenienceSqlMapClientTemplate) getSqlMapClientTemplate();
-    }
-    
-    /**
-     * @param template
-     *            Is the convenience sqlmap client template to set.
-     */
-    public void setConvenienceSqlMapClientTemplate(
-        ConvenienceSqlMapClientTemplate template) {
-        setSqlMapClientTemplate(template);
-    }
+	/**
+	 * @return Returns the sqlmap client template casted to the convenience
+	 *         model of it.
+	 */
+	public ConvenienceSqlMapClientTemplate
+	getConvenienceSqlMapClientTemplate() {
+		return (ConvenienceSqlMapClientTemplate) getSqlMapClientTemplate();
+	}
+	
+	/**
+	 * @param template
+	 *            Is the convenience sqlmap client template to set.
+	 */
+	public void setConvenienceSqlMapClientTemplate(
+		ConvenienceSqlMapClientTemplate template) {
+		setSqlMapClientTemplate(template);
+	}
 }

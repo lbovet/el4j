@@ -33,54 +33,54 @@ import org.springframework.aop.target.HotSwappableTargetSource;
  */
 public class RetryException extends Exception {
 
-    /** The number of retries. */
-    private int m_retries;
-    
-    /** 
-     * The hot swappable target source which target has to be used in the
-     * next invocation.
-     */
-    private HotSwappableTargetSource m_swapper;
-    
-    /**
-     * Creates a new retry exception.
-     * 
-     * @param retries
-     *      The number of expected retries. Catchers are free to use another
-     *      value.
-     */
-    public RetryException(int retries) {
-        this(retries, null);
-    }
+	/** The number of retries. */
+	private int m_retries;
+	
+	/**
+	 * The hot swappable target source which target has to be used in the
+	 * next invocation.
+	 */
+	private HotSwappableTargetSource m_swapper;
+	
+	/**
+	 * Creates a new retry exception.
+	 *
+	 * @param retries
+	 *      The number of expected retries. Catchers are free to use another
+	 *      value.
+	 */
+	public RetryException(int retries) {
+		this(retries, null);
+	}
 
-    /**
-     * Creates a new retry exception with the given number of retires and the
-     * target source, which target has to be used in the next invocation.
-     * 
-     * @param retries
-     *      The number of expected retries.
-     *      
-     * @param swapper
-     *      The target source that points to the target which has to be used in
-     *      the next invocation.
-     */
-    public RetryException(int retries, HotSwappableTargetSource swapper) {
-        m_retries = retries;
-        m_swapper = swapper;
-    }
-    
-    /**
-     * @return Returns the number of retries.
-     */
-    public int getRetries() {
-        return m_retries;
-    }
+	/**
+	 * Creates a new retry exception with the given number of retires and the
+	 * target source, which target has to be used in the next invocation.
+	 *
+	 * @param retries
+	 *      The number of expected retries.
+	 *
+	 * @param swapper
+	 *      The target source that points to the target which has to be used in
+	 *      the next invocation.
+	 */
+	public RetryException(int retries, HotSwappableTargetSource swapper) {
+		m_retries = retries;
+		m_swapper = swapper;
+	}
+	
+	/**
+	 * @return Returns the number of retries.
+	 */
+	public int getRetries() {
+		return m_retries;
+	}
 
-    /**
-     * @return Returns the target source which target has to be used in the 
-     *      next invocation.
-     */
-    public HotSwappableTargetSource getSwapper() {
-        return m_swapper;
-    }
+	/**
+	 * @return Returns the target source which target has to be used in the
+	 *      next invocation.
+	 */
+	public HotSwappableTargetSource getSwapper() {
+		return m_swapper;
+	}
 }

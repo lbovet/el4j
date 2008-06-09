@@ -23,38 +23,38 @@ import ch.elca.el4j.plugins.database.AbstractDBMojo;
 
 /**
  * Block until the user hits Ctrl-C.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @goal block
  * @author Philipp H. Oser (POS)
  */
 public class BlockUntilCtrlCPressedMojo extends AbstractDBMojo {
-    
-    /**
-     * Delay ensures that "Press ..." is last line on console.
-     */
-    private static final int DELAY = 500;
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void executeInternal() throws MojoExecutionException, MojoFailureException {
-        try {           
-            Thread.sleep(DELAY);
-            getLog().info("Press Ctrl-C to unblock");
-            try {
-                Thread.sleep(Long.MAX_VALUE);
-            } catch (InterruptedException e) {
-                getLog().error("Error during wait", e);
-            } 
-        } catch (Exception e) {
-            throw new MojoFailureException(e.getMessage());
-        }
-    }
+	
+	/**
+	 * Delay ensures that "Press ..." is last line on console.
+	 */
+	private static final int DELAY = 500;
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void executeInternal() throws MojoExecutionException, MojoFailureException {
+		try {
+			Thread.sleep(DELAY);
+			getLog().info("Press Ctrl-C to unblock");
+			try {
+				Thread.sleep(Long.MAX_VALUE);
+			} catch (InterruptedException e) {
+				getLog().error("Error during wait", e);
+			}
+		} catch (Exception e) {
+			throw new MojoFailureException(e.getMessage());
+		}
+	}
 }

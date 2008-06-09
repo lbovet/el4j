@@ -31,28 +31,28 @@ package ch.elca.el4j.services.remoting.protocol.soap;
  * @author Martin Zeltner (MZE)
  */
 public final class SoapHelper {
-    /**
-     * This field contains the last server side stack trace of the current 
-     * thread.
-     */
-    private static ThreadLocal s_lastServerSideStackTrace = new ThreadLocal();
-    
-    /**
-     * Hide default constructor.
-     */
-    private SoapHelper() { }
-    
-    /**
-     * @return Returns the last server side stack trace of the current thread.
-     */
-    public static String getLastServerSideStackTrace() {
-        return (String) s_lastServerSideStackTrace.get();
-    }
-    
-    /**
-     * @param stackTrace Is the stack trace to set.
-     */
-    public static void setLastServerSideStackTrace(String stackTrace) {
-        s_lastServerSideStackTrace.set(stackTrace);
-    }
+	/**
+	 * This field contains the last server side stack trace of the current
+	 * thread.
+	 */
+	private static ThreadLocal s_lastServerSideStackTrace = new ThreadLocal();
+	
+	/**
+	 * Hide default constructor.
+	 */
+	private SoapHelper() { }
+	
+	/**
+	 * @return Returns the last server side stack trace of the current thread.
+	 */
+	public static String getLastServerSideStackTrace() {
+		return (String) s_lastServerSideStackTrace.get();
+	}
+	
+	/**
+	 * @param stackTrace Is the stack trace to set.
+	 */
+	public static void setLastServerSideStackTrace(String stackTrace) {
+		s_lastServerSideStackTrace.set(stackTrace);
+	}
 }

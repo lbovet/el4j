@@ -18,7 +18,7 @@
 package ch.elca.el4j.core.exceptions;
 
 /**
- * General exception used if a misconfiguration occurred. 
+ * General exception used if a misconfiguration occurred.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -31,22 +31,22 @@ package ch.elca.el4j.core.exceptions;
  */
 public class MisconfigurationRTException extends BaseRTException {
 
-    /**
-     * Constructor.
-     * 
-     * @param message Is the message of this exception.
-     */
-    public MisconfigurationRTException(String message) {
-        super(message);
-    }
+	/**
+	 * Constructor.
+	 *
+	 * @param message Is the message of this exception.
+	 */
+	public MisconfigurationRTException(String message) {
+		super(message);
+	}
 
-    /**
-     * Constructor.
-     * 
-     * @param message Is the message of this exception.
-     * @param exception Is the cause of this exception.
-     */
-    public MisconfigurationRTException(String message, Throwable exception) {
-        super(message, exception);
-    }
+	/**
+	 * Constructor.
+	 *
+	 * @param message Is the message of this exception.
+	 * @param exception Is the cause of this exception.
+	 */
+	public MisconfigurationRTException(String message, Throwable exception) {
+		super(message, exception);
+	}
 }

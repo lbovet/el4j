@@ -25,7 +25,7 @@ import com.jamonapi.MonitorFactory;
 
 /**
  * Performance monitor interceptor that uses the JAMon library.
- * 
+ *
  * <p/>This one does not require logging to be set to <code>DEBUG</code> level,
  * in contrast to the one implemented by Spring.
  *
@@ -41,17 +41,17 @@ import com.jamonapi.MonitorFactory;
  */
 public class LightStatisticsMonitorInterceptor implements MethodInterceptor {
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object invoke(MethodInvocation invocation) throws Throwable {
-        String name = invocation.getMethod().getDeclaringClass().getName()
-            + "." + invocation.getMethod().getName();
-        Monitor monitor = MonitorFactory.start(name);
-        try {
-            return invocation.proceed();
-        } finally {
-            monitor.stop();
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object invoke(MethodInvocation invocation) throws Throwable {
+		String name = invocation.getMethod().getDeclaringClass().getName()
+			+ "." + invocation.getMethod().getName();
+		Monitor monitor = MonitorFactory.start(name);
+		try {
+			return invocation.proceed();
+		} finally {
+			monitor.stop();
+		}
+	}
 }

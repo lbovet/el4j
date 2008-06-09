@@ -26,7 +26,7 @@ import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
 
 /**
- * 
+ *
  * This interface represents a generic DAO for domain objects representing
  * sources of information.
  * It defines the methods which are specific to these domain objects.
@@ -42,30 +42,30 @@ import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
  *            The generic type of the domain class the DAO is responsible for
  * @param <ID>
  *            The generic type of the domain class' identifier
- *            
+ *
  * @author Alex Mathey (AMA)
  */
 public interface GenericReferenceDao<T extends Reference,
-    ID extends Serializable> extends ConvenienceGenericDao<T, ID> {
-    
-    /**
-     * Get all the references with the same name.
-     * 
-     * @param name
-     *            Is the name of a reference.
-     * @return Returns the desired reference.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     * @throws DataRetrievalFailureException
-     *             If reference could not be retrieved.
-     */
-    public List<T> getByName(String name)
-        throws DataAccessException, DataRetrievalFailureException;
-    
-    /**
-     * Checks whether a reference with the given id exists.
-     * @param id The id of a reference
-     * @return True if a reference with the given id exists
-     */
-    public boolean referenceExists(ID id);
+	ID extends Serializable> extends ConvenienceGenericDao<T, ID> {
+	
+	/**
+	 * Get all the references with the same name.
+	 *
+	 * @param name
+	 *            Is the name of a reference.
+	 * @return Returns the desired reference.
+	 * @throws DataAccessException
+	 *             If general data access problem occurred.
+	 * @throws DataRetrievalFailureException
+	 *             If reference could not be retrieved.
+	 */
+	public List<T> getByName(String name)
+		throws DataAccessException, DataRetrievalFailureException;
+	
+	/**
+	 * Checks whether a reference with the given id exists.
+	 * @param id The id of a reference
+	 * @return True if a reference with the given id exists
+	 */
+	public boolean referenceExists(ID id);
 }

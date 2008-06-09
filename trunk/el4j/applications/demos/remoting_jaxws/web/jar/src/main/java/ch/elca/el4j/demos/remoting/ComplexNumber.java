@@ -29,64 +29,64 @@ package ch.elca.el4j.demos.remoting;
  * @author Rashid Waraich (RWA)
  */
 public class ComplexNumber implements java.io.Serializable {
-    /**
-     * The real part of the complex number.
-     */
-    private int m_real;
-    /**
-     * The complex part of the complex number.
-     */
-    private int m_imag;
+	/**
+	 * The real part of the complex number.
+	 */
+	private int m_real;
+	/**
+	 * The complex part of the complex number.
+	 */
+	private int m_imag;
  
-    /**
-     * Default constructor.
-     */
-    public ComplexNumber() {
-        m_real = 0;
-        m_imag = 0;
-    }
-    
-    /**
-     * Construct a ComplexNumber by initializing its real and complex 
-     * components.
-     * @param real This is the real component.
-     * @param imag This is the complex component.
-     */
-    public ComplexNumber(int real, int imag) {
-        super();
-        this.m_real = real;
-        this.m_imag = imag;
-    }
-    
-    /**
-     * Get the imag component.
-     * @return Returns the imag component.
-     */
-    public int getImag() {
-        return m_imag;
-    }
-    
-    /**
-     * Set the imag component.
-     * @param imag Set the imag component.
-     */
-    public void setImag(int imag) {
-        this.m_imag = imag;
-    }
-    
-    /**
-     * Get the real component.
-     * @return Returns the real component.
-     */
-    public int getReal() {
-        return m_real;
-    }
-    
-    /**
-     * Set the real component.
-     * @param real Set the real component.
-     */
-    public void setReal(int real) {
-        this.m_real = real;
-    }
+	/**
+	 * Default constructor.
+	 */
+	public ComplexNumber() {
+		m_real = 0;
+		m_imag = 0;
+	}
+	
+	/**
+	 * Construct a ComplexNumber by initializing its real and complex
+	 * components.
+	 * @param real This is the real component.
+	 * @param imag This is the complex component.
+	 */
+	public ComplexNumber(int real, int imag) {
+		super();
+		this.m_real = real;
+		this.m_imag = imag;
+	}
+	
+	/**
+	 * Get the imag component.
+	 * @return Returns the imag component.
+	 */
+	public int getImag() {
+		return m_imag;
+	}
+	
+	/**
+	 * Set the imag component.
+	 * @param imag Set the imag component.
+	 */
+	public void setImag(int imag) {
+		this.m_imag = imag;
+	}
+	
+	/**
+	 * Get the real component.
+	 * @return Returns the real component.
+	 */
+	public int getReal() {
+		return m_real;
+	}
+	
+	/**
+	 * Set the real component.
+	 * @param real Set the real component.
+	 */
+	public void setReal(int real) {
+		this.m_real = real;
+	}
 }

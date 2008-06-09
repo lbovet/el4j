@@ -31,7 +31,7 @@ import cookxml.core.interfaces.Creator;
 
 /**
  * The cookSwing creator for general purpose &lt;create-component&gt;s.
- * The create-method is invoked when the XML tag is opened and 
+ * The create-method is invoked when the XML tag is opened and
  * the finish-method when the tag is closed.
  *
  * <script type="text/javascript">printFileStatus
@@ -44,77 +44,77 @@ import cookxml.core.interfaces.Creator;
  * @author Stefan Wismer (SWI)
  */
 public class CreateComponentCreator implements Creator {
-    // <create-component> specific attributes
-    /**
-     * The XML attribute name for the create method.
-     */
-    protected static final String CREATE_METHOD = "create-method";
-    
-    /**
-     * The XML attribute name for the finish method.
-     */
-    protected static final String FINISH_METHOD = "finish-method";
-    
-    /**
-     * The logger.
-     */
-    private static final Log s_logger = LogFactory
-        .getLog(CreateComponentCreator.class);
-    
-    /** {@inheritDoc} */
-    public Object create(String parentNS, String parentTag, Element elm,
-        Object parentObj, DecodeEngine decodeEngine) throws CreatorException {
-        
-        Object form = decodeEngine.getVariable("this");
-        String methodName = elm.getAttribute(CREATE_METHOD);
-        
-        if (!methodName.equals("")) {
-            return invokeMethod(form, methodName);
-        } else {
-            return new JPanel();
-        }
-    }
+	// <create-component> specific attributes
+	/**
+	 * The XML attribute name for the create method.
+	 */
+	protected static final String CREATE_METHOD = "create-method";
+	
+	/**
+	 * The XML attribute name for the finish method.
+	 */
+	protected static final String FINISH_METHOD = "finish-method";
+	
+	/**
+	 * The logger.
+	 */
+	private static final Log s_logger = LogFactory
+		.getLog(CreateComponentCreator.class);
+	
+	/** {@inheritDoc} */
+	public Object create(String parentNS, String parentTag, Element elm,
+		Object parentObj, DecodeEngine decodeEngine) throws CreatorException {
+		
+		Object form = decodeEngine.getVariable("this");
+		String methodName = elm.getAttribute(CREATE_METHOD);
+		
+		if (!methodName.equals("")) {
+			return invokeMethod(form, methodName);
+		} else {
+			return new JPanel();
+		}
+	}
 
-    /** {@inheritDoc} */
-    public Object editFinished(String parentNS, String parentTag, Element elm,
-        Object parentObj, Object obj, DecodeEngine decodeEngine)
-        throws CookXmlException {
-        
-        Object form = decodeEngine.getVariable("this");
-        String methodName = elm.getAttribute(FINISH_METHOD);
-        
-        if (!methodName.equals("")) {
-            invokeMethod(form, methodName, obj);
-        }
-        return obj;
-    }
-    
-    /**
-     * Invoke a potentially private method.
-     * 
-     * @param form          the form object
-     * @param methodName    the method name
-     * @param parameters    optional parameters
-     * @return              the return value of the invoked method
-     */
-    protected Object invokeMethod(Object form, String methodName,
-        Object... parameters) {
-        
-        // list all methods to access private methods as well 
-        final Method[] methods = form.getClass().getDeclaredMethods();
-        for (int i = 0; i < methods.length; ++i) {
-            if (methodName.equals(methods[i].getName())) {
-                try {
-                    methods[i].setAccessible(true);
-                    return methods[i].invoke(form, parameters);
-                } catch (Exception e) {
-                    // try next method
-                    continue;
-                }
-            }
-        }
-        s_logger.error("Error processing <create-component>. "
-            + "Could not find method '" + methodName + "'.");
-        return null;
-    }
+	/** {@inheritDoc} */
+	public Object editFinished(String parentNS, String parentTag, Element elm,
+		Object parentObj, Object obj, DecodeEngine decodeEngine)
+		throws CookXmlException {
+		
+		Object form = decodeEngine.getVariable("this");
+		String methodName = elm.getAttribute(FINISH_METHOD);
+		
+		if (!methodName.equals("")) {
+			invokeMethod(form, methodName, obj);
+		}
+		return obj;
+	}
+	
+	/**
+	 * Invoke a potentially private method.
+	 *
+	 * @param form          the form object
+	 * @param methodName    the method name
+	 * @param parameters    optional parameters
+	 * @return              the return value of the invoked method
+	 */
+	protected Object invokeMethod(Object form, String methodName,
+		Object... parameters) {
+		
+		// list all methods to access private methods as well
+		final Method[] methods = form.getClass().getDeclaredMethods();
+		for (int i = 0; i < methods.length; ++i) {
+			if (methodName.equals(methods[i].getName())) {
+				try {
+					methods[i].setAccessible(true);
+					return methods[i].invoke(form, parameters);
+				} catch (Exception e) {
+					// try next method
+					continue;
+				}
+			}
+		}
+		s_logger.error("Error processing <create-component>. "
+			+ "Could not find method '" + methodName + "'.");
+		return null;
+	}
 }

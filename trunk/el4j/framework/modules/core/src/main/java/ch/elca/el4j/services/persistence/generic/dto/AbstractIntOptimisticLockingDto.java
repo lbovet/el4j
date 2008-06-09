@@ -25,21 +25,21 @@ import javax.persistence.Version;
 
 /**
  * This is an abstract class for optimistic locking. The used version type is an
- * integer. Here an example, how this dto must be used in combination with 
+ * integer. Here an example, how this dto must be used in combination with
  * ibatis.<br>
  * <br>
  * <b>sql-map-file.xml:</b>
  * <pre><code>
  * ...
  *     <statement id="updateMyTable">
- *         update MYTABLE set COL1=#col1#, ..., 
+ *         update MYTABLE set COL1=#col1#, ...,
  *             OPTIMISTIC_LOCKING_VERSION=OPTIMISTIC_LOCKING_VERSION+1
- *             where ID=#id# 
+ *             where ID=#id#
  *                 and OPTIMISTIC_LOCKING_VERSION=#optimisticLockingVersion#
  *     </statement>
  * ...
  * </code></pre>
- * 
+ *
  * In java code the update count must be checked to know if the version number
  * on database has been increased. If yes, the version number of dto must be
  * increased too.<br>
@@ -55,7 +55,7 @@ import javax.persistence.Version;
  *     }
  * ...
  * </code></pre>
- * 
+ *
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -68,35 +68,35 @@ import javax.persistence.Version;
  */
 @MappedSuperclass
 public abstract class AbstractIntOptimisticLockingDto
-    implements Serializable, OptimisticLockingObject {
-    /**
-     * Is the optimistic locking version number. Initial optimistic locking 
-     * version number is zero.
-     */
-    private int m_optimisticLockingVersion = 0;
+	implements Serializable, OptimisticLockingObject {
+	/**
+	 * Is the optimistic locking version number. Initial optimistic locking
+	 * version number is zero.
+	 */
+	private int m_optimisticLockingVersion = 0;
 
-    /**
-     * @return Returns the optimistic locking version.
-     */
-    @Version
-    @Column(name = "OPTIMISTICLOCKINGVERSION")
-    public int getOptimisticLockingVersion() {
-        return m_optimisticLockingVersion;
-    }
+	/**
+	 * @return Returns the optimistic locking version.
+	 */
+	@Version
+	@Column(name = "OPTIMISTICLOCKINGVERSION")
+	public int getOptimisticLockingVersion() {
+		return m_optimisticLockingVersion;
+	}
 
-    /**
-     * @param optimisticLockingVersion
-     *            The optimistic locking version to set.
-     */
-    public void setOptimisticLockingVersion(
-        int optimisticLockingVersion) {
-        m_optimisticLockingVersion = optimisticLockingVersion;
-    }
-    
-    /**
-     * Method to increase the int optimistic locking version number.
-     */
-    public void increaseOptimisticLockingVersion() {
-        m_optimisticLockingVersion++;
-    }
+	/**
+	 * @param optimisticLockingVersion
+	 *            The optimistic locking version to set.
+	 */
+	public void setOptimisticLockingVersion(
+		int optimisticLockingVersion) {
+		m_optimisticLockingVersion = optimisticLockingVersion;
+	}
+	
+	/**
+	 * Method to increase the int optimistic locking version number.
+	 */
+	public void increaseOptimisticLockingVersion() {
+		m_optimisticLockingVersion++;
+	}
 }

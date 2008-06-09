@@ -21,12 +21,12 @@ import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailable
 
 
 /**
- * 
+ *
  * This class defines the following load-balancing property: The protocols are
  * returned in a round-robin way, but the currently used protocol only changes
- * if a failure has been notified about it. However, no protocol is removed 
+ * if a failure has been notified about it. However, no protocol is removed
  * from the list of protocols, and failed protocols will eventually be returned
- * again by {@link nextProtocol}. 
+ * again by {@link nextProtocol}.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -39,42 +39,42 @@ import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailable
  */
 public class RedirectUponFailurePolicy extends AbstractPolicy {
 
-    /** 
-     * Index of the currently used protocol. 
-     */
-    private int m_currentIndex = 0;
-    
-    /** {@inheritDoc} */
-    public AbstractRemotingProtocol getNextProtocol() 
-        throws NoProtocolAvailableRTException {
-        if ((m_protocols == null) || (m_protocols.length == 0)) {
-            throw new NoProtocolAvailableRTException("No protocol defined");
-        }
-        return m_protocols[m_currentIndex];
-    }
+	/**
+	 * Index of the currently used protocol.
+	 */
+	private int m_currentIndex = 0;
+	
+	/** {@inheritDoc} */
+	public AbstractRemotingProtocol getNextProtocol()
+		throws NoProtocolAvailableRTException {
+		if ((m_protocols == null) || (m_protocols.length == 0)) {
+			throw new NoProtocolAvailableRTException("No protocol defined");
+		}
+		return m_protocols[m_currentIndex];
+	}
 
-    /** {@inheritDoc} */
-    public void notifyFailure(AbstractRemotingProtocol protocol) {
-        if (m_protocols != null) {
-            int index = findIndex(protocol);
-            if (index == m_currentIndex) {
-                m_currentIndex = (m_currentIndex + 1) % m_protocols.length;
-            }
-        } 
-    }
+	/** {@inheritDoc} */
+	public void notifyFailure(AbstractRemotingProtocol protocol) {
+		if (m_protocols != null) {
+			int index = findIndex(protocol);
+			if (index == m_currentIndex) {
+				m_currentIndex = (m_currentIndex + 1) % m_protocols.length;
+			}
+		}
+	}
 
-    /**
-     * @param protocol
-     *            Protocol information to be found
-     * @return index, -1 otherwise
-     */
-    private int findIndex(AbstractRemotingProtocol protocol) {
-        int index = -1;
-        for (int i = 0; (index < 0) && (i < m_protocols.length); i += 1) {
-            if (protocol == m_protocols[i]) {
-                index = i;
-            }
-        }
-        return index;
-    }
+	/**
+	 * @param protocol
+	 *            Protocol information to be found
+	 * @return index, -1 otherwise
+	 */
+	private int findIndex(AbstractRemotingProtocol protocol) {
+		int index = -1;
+		for (int i = 0; (index < 0) && (i < m_protocols.length); i += 1) {
+			if (protocol == m_protocols[i]) {
+				index = i;
+			}
+		}
+		return index;
+	}
 }

@@ -38,65 +38,65 @@ import ch.elca.el4j.util.config.HierarchicalGenericConfig;
  * @author Stefan Wismer (SWI)
  */
 public abstract class AbstractHierarchicalGenericConfigTest {
-    /***/
-    @Test
-    public void testGenericConfig() {
-        HierarchicalGenericConfig config = getDefaultConfig();
-        
-        assertTrue(config.get("ch.elca.el4j").equals("EL4J"));
-        assertTrue(config.get("ch.elca.el4j.tests.core").equals("core"));
-        assertTrue(config.getMap().size() == 8);
-        
-        HierarchicalGenericConfig subConfig
-            = config.getSubConfig("ch.elca.el4j.default");
-        assertTrue(subConfig.getMap().size() == 4);
-        assertTrue(subConfig.getChildren().size() == 3);
-        assertTrue(subConfig.get("a").equals("defaultA"));
-        assertTrue(subConfig.get("b").equals("defaultB"));
-        
-        HierarchicalGenericConfig subsubConfig
-            = (HierarchicalGenericConfig) subConfig.getChildren().get("c");
-        assertTrue(subsubConfig.get("d").equals("defaultCD"));
-        
-        subConfig = config.getSubConfig("ch.elca.el4j.tests");
-        
-        assertTrue(subConfig.getMap().size() == 3);
-        assertTrue(subConfig.get("core").equals("core"));
-        assertTrue(subConfig.get("services").equals("services"));
-        assertTrue(subConfig.get("util").equals("util"));
-    }
-    
-    /***/
-    @Test
-    public void testSpecificConfig() {
-        HierarchicalGenericConfig config = getSpecificConfig();
-        assertTrue(config.get("ch.elca.el4j").equals("EL4J"));
-        assertTrue(config.get("ch.elca.el4j.tests.core").equals("core2"));
-        assertTrue(config.getMap().size() == 9);
-        
-        HierarchicalGenericConfig subConfig
-            = config.getSubConfig("ch.elca.el4j.default");
-        assertTrue(subConfig.getMap().size() == 4);
-        assertTrue(subConfig.get("a").equals("defaultA"));
-        assertTrue(subConfig.get("b").equals("defaultB"));
-        
-        subConfig = config.getSubConfig("ch.elca.el4j.tests");
-        
-        assertTrue(subConfig.getMap().size() == 3);
-        assertTrue(subConfig.get("core").equals("core2"));
-        assertTrue(subConfig.get("services").equals("services"));
-        assertTrue(subConfig.get("util").equals("util"));
-    }
-    
-    /**
-     * @return    the default configuration
-     */
-    protected abstract HierarchicalGenericConfig getDefaultConfig();
-    
-    /**
-     * @return    the specific configuration
-     */
-    protected abstract HierarchicalGenericConfig getSpecificConfig();
+	/***/
+	@Test
+	public void testGenericConfig() {
+		HierarchicalGenericConfig config = getDefaultConfig();
+		
+		assertTrue(config.get("ch.elca.el4j").equals("EL4J"));
+		assertTrue(config.get("ch.elca.el4j.tests.core").equals("core"));
+		assertTrue(config.getMap().size() == 8);
+		
+		HierarchicalGenericConfig subConfig
+			= config.getSubConfig("ch.elca.el4j.default");
+		assertTrue(subConfig.getMap().size() == 4);
+		assertTrue(subConfig.getChildren().size() == 3);
+		assertTrue(subConfig.get("a").equals("defaultA"));
+		assertTrue(subConfig.get("b").equals("defaultB"));
+		
+		HierarchicalGenericConfig subsubConfig
+			= (HierarchicalGenericConfig) subConfig.getChildren().get("c");
+		assertTrue(subsubConfig.get("d").equals("defaultCD"));
+		
+		subConfig = config.getSubConfig("ch.elca.el4j.tests");
+		
+		assertTrue(subConfig.getMap().size() == 3);
+		assertTrue(subConfig.get("core").equals("core"));
+		assertTrue(subConfig.get("services").equals("services"));
+		assertTrue(subConfig.get("util").equals("util"));
+	}
+	
+	/***/
+	@Test
+	public void testSpecificConfig() {
+		HierarchicalGenericConfig config = getSpecificConfig();
+		assertTrue(config.get("ch.elca.el4j").equals("EL4J"));
+		assertTrue(config.get("ch.elca.el4j.tests.core").equals("core2"));
+		assertTrue(config.getMap().size() == 9);
+		
+		HierarchicalGenericConfig subConfig
+			= config.getSubConfig("ch.elca.el4j.default");
+		assertTrue(subConfig.getMap().size() == 4);
+		assertTrue(subConfig.get("a").equals("defaultA"));
+		assertTrue(subConfig.get("b").equals("defaultB"));
+		
+		subConfig = config.getSubConfig("ch.elca.el4j.tests");
+		
+		assertTrue(subConfig.getMap().size() == 3);
+		assertTrue(subConfig.get("core").equals("core2"));
+		assertTrue(subConfig.get("services").equals("services"));
+		assertTrue(subConfig.get("util").equals("util"));
+	}
+	
+	/**
+	 * @return    the default configuration
+	 */
+	protected abstract HierarchicalGenericConfig getDefaultConfig();
+	
+	/**
+	 * @return    the specific configuration
+	 */
+	protected abstract HierarchicalGenericConfig getSpecificConfig();
 }
 
 //Checkstyle: EmptyBlock on

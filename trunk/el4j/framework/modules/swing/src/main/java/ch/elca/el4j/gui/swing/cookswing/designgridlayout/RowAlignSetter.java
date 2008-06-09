@@ -39,19 +39,19 @@ import zappini.designgridlayout.Row;
  */
 public class RowAlignSetter implements Setter {
 
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    public void setAttribute(String ns, String tag, String attrNS, String attr,
-        Object obj, Object value, DecodeEngine decodeEngine) throws Exception {
-        
-        if (obj != null && obj instanceof NoAddValueHolder) {
-            if (value.equals("left")) {
-                ((NoAddValueHolder<Row>) obj).getObject().left();
-            } else if (value.equals("center")) {
-                ((NoAddValueHolder<Row>) obj).getObject().center();
-            } else if (value.equals("right")) {
-                ((NoAddValueHolder<Row>) obj).getObject().right();
-            }
-        }
-    }
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	public void setAttribute(String ns, String tag, String attrNS, String attr,
+		Object obj, Object value, DecodeEngine decodeEngine) throws Exception {
+		
+		if (obj != null && obj instanceof NoAddValueHolder) {
+			if (value.equals("left")) {
+				((NoAddValueHolder<Row>) obj).getObject().left();
+			} else if (value.equals("center")) {
+				((NoAddValueHolder<Row>) obj).getObject().center();
+			} else if (value.equals("right")) {
+				((NoAddValueHolder<Row>) obj).getObject().right();
+			}
+		}
+	}
 }

@@ -41,55 +41,55 @@ import ch.elca.el4j.demos.remoting.ComplexNumber;
  */
 public class CalculatorImpl implements Calculator {
 
-    /**
-     * Constructor added due to exception logging flood with jdk logging
-     * and Hessian. Further, default constructor inserted for Aegis (xfire), as
-     * it requires always a no-argument constructor also.
-     */
-    public CalculatorImpl() {
-        String loggerName = HessianSkeleton.class.getName();
-        Logger.getLogger(loggerName).setLevel(Level.SEVERE);
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public double getArea(double a, double b) {
-        return a * b;
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void throwMeAnException() throws CalculatorException {
-        throw new CalculatorException();
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public int countNumberOfUppercaseLetters(String text) {
-        if (text == null) {
-            return 0;
-        }
+	/**
+	 * Constructor added due to exception logging flood with jdk logging
+	 * and Hessian. Further, default constructor inserted for Aegis (xfire), as
+	 * it requires always a no-argument constructor also.
+	 */
+	public CalculatorImpl() {
+		String loggerName = HessianSkeleton.class.getName();
+		Logger.getLogger(loggerName).setLevel(Level.SEVERE);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public double getArea(double a, double b) {
+		return a * b;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void throwMeAnException() throws CalculatorException {
+		throw new CalculatorException();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public int countNumberOfUppercaseLetters(String text) {
+		if (text == null) {
+			return 0;
+		}
  
-        int numberOfUppercaseLetters = 0;
-        char[] c = text.toCharArray();
-        for (int i = 0; i < c.length; i++) {
-            if (c[i] >= 'A' && c[i] <= 'Z') {
-                numberOfUppercaseLetters++;
-            }
-        }
-        return numberOfUppercaseLetters;
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public ComplexNumber add(ComplexNumber cn1, ComplexNumber cn2) {
-        ComplexNumber result = new ComplexNumber(0, 0);
-        result.setReal(cn1.getReal() + cn2.getReal());
-        result.setImag(cn1.getImag() + cn2.getImag());
-        return result;
-    }
+		int numberOfUppercaseLetters = 0;
+		char[] c = text.toCharArray();
+		for (int i = 0; i < c.length; i++) {
+			if (c[i] >= 'A' && c[i] <= 'Z') {
+				numberOfUppercaseLetters++;
+			}
+		}
+		return numberOfUppercaseLetters;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public ComplexNumber add(ComplexNumber cn1, ComplexNumber cn2) {
+		ComplexNumber result = new ComplexNumber(0, 0);
+		result.setReal(cn1.getReal() + cn2.getReal());
+		result.setImag(cn1.getImag() + cn2.getImag());
+		return result;
+	}
 }

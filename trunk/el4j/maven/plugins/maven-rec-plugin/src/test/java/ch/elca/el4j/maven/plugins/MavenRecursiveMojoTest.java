@@ -11,14 +11,14 @@ import org.junit.Test;
 
 public class MavenRecursiveMojoTest extends AbstractMojoTestCase {
 
-    File level1_1_1 = new File(PlexusTestCase.getBasedir()
-        + "/src/test/resource/testStructure1/level1/level1_1/level1_1_1",
-        "pom.xml");
-    
-    @Test
-    public void testGetRootDir() throws Exception
-    {
-        assertTrue(true);
-    }
-    
+	File level1_1_1 = new File(PlexusTestCase.getBasedir()
+		+ "/src/test/resource/testStructure1/level1/level1_1/level1_1_1",
+		"pom.xml");
+	
+	@Test
+	public void testGetRootDir() throws Exception
+	{
+		assertTrue(true);
+	}
+	
 }

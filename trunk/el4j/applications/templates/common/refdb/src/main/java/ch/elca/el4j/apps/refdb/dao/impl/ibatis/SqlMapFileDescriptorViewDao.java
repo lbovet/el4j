@@ -30,7 +30,7 @@ import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
- * 
+ *
  * DAO for file descriptors which is using iBatis SQL Maps.
  *
  * <script type="text/javascript">printFileStatus
@@ -43,33 +43,33 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * @author Alex Mathey (AMA)
  */
 @AutocollectedGenericDao("fileDescriptorViewDao")
-public class SqlMapFileDescriptorViewDao 
-    extends GenericSqlMapFileDao<FileDescriptorView, Integer>
-        implements FileDescriptorViewDao {
-    
-    /**
-     * Creates a new SqlMapFileDescriptorViewDao instance.
-     */
-    public SqlMapFileDescriptorViewDao() {
-        setPersistentClass(FileDescriptorView.class);
-    }
+public class SqlMapFileDescriptorViewDao
+	extends GenericSqlMapFileDao<FileDescriptorView, Integer>
+		implements FileDescriptorViewDao {
+	
+	/**
+	 * Creates a new SqlMapFileDescriptorViewDao instance.
+	 */
+	public SqlMapFileDescriptorViewDao() {
+		setPersistentClass(FileDescriptorView.class);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Transactional(propagation = Propagation.REQUIRED)
-    public FileDescriptorView modifyFileDescriptorView(
-        FileDescriptorView fileView) throws DataAccessException,
-        OptimisticLockingFailureException, DataRetrievalFailureException {
-        Reject.ifNull(fileView);
-        if (fileView.isKeyNew()) {
-            // File must not be new!
-            CoreNotificationHelper.notifyDataRetrievalFailure(
-                Constants.FILE_DESCRIPTOR_VIEW);
-        }
-        getConvenienceSqlMapClientTemplate().insertOrUpdate(
-            fileView, Constants.FILE_DESCRIPTOR_VIEW);
-        return fileView;
-    }
-    
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(propagation = Propagation.REQUIRED)
+	public FileDescriptorView modifyFileDescriptorView(
+		FileDescriptorView fileView) throws DataAccessException,
+		OptimisticLockingFailureException, DataRetrievalFailureException {
+		Reject.ifNull(fileView);
+		if (fileView.isKeyNew()) {
+			// File must not be new!
+			CoreNotificationHelper.notifyDataRetrievalFailure(
+				Constants.FILE_DESCRIPTOR_VIEW);
+		}
+		getConvenienceSqlMapClientTemplate().insertOrUpdate(
+			fileView, Constants.FILE_DESCRIPTOR_VIEW);
+		return fileView;
+	}
+	
 }

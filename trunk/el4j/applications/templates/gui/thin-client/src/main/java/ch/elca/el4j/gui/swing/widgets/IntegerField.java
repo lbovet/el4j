@@ -38,42 +38,42 @@ import ch.elca.el4j.gui.swing.GUIApplication;
  * @author Stefan Wismer (SWI)
  */
 public class IntegerField extends JTextField {
-    /**
-     * Color to mark value as valid.
-     */
-    protected final Color m_normalColor;
-    
-    /**
-     * Color to mark value as invalid.
-     */
-    protected final Color m_invalidColor;
+	/**
+	 * Color to mark value as valid.
+	 */
+	protected final Color m_normalColor;
+	
+	/**
+	 * Color to mark value as invalid.
+	 */
+	protected final Color m_invalidColor;
 
-    /**
-     * The default constructor.
-     */
-    public IntegerField() {
-        this((Color) GUIApplication.getInstance().getConfig()
-            .get("invalidColor"));
-    }
-    
-    /**
-     * @param invalidColor    the color to mark value as invalid
-     */
-    public IntegerField(Color invalidColor) {
-        m_normalColor = getBackground();
-        m_invalidColor = invalidColor;
-        
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
-                if (!((Character.isDigit(c) || (c == '-')
-                        || (c == KeyEvent.VK_BACK_SPACE)
-                        || (c == KeyEvent.VK_DELETE)))) {
-                    e.consume();
-                }
-                super.keyTyped(e);
-            }
-        });
-    }
+	/**
+	 * The default constructor.
+	 */
+	public IntegerField() {
+		this((Color) GUIApplication.getInstance().getConfig()
+			.get("invalidColor"));
+	}
+	
+	/**
+	 * @param invalidColor    the color to mark value as invalid
+	 */
+	public IntegerField(Color invalidColor) {
+		m_normalColor = getBackground();
+		m_invalidColor = invalidColor;
+		
+		addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if (!((Character.isDigit(c) || (c == '-')
+						|| (c == KeyEvent.VK_BACK_SPACE)
+						|| (c == KeyEvent.VK_DELETE)))) {
+					e.consume();
+				}
+				super.keyTyped(e);
+			}
+		});
+	}
 }

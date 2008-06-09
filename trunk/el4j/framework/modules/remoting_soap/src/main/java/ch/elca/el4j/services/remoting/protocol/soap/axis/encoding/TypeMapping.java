@@ -37,123 +37,123 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * @author Martin Zeltner (MZE)
  */
 public class TypeMapping implements InitializingBean {
-    
-    /**
-     * Are the types which must be mapped.
-     * Must contain minimum one type.
-     */
-    protected List m_types;
+	
+	/**
+	 * Are the types which must be mapped.
+	 * Must contain minimum one type.
+	 */
+	protected List m_types;
 
-    /**
-     * Is the serializer factory to create a serializer for the given type.
-     * Must be set.
-     */
-    protected Class m_serializerFactory;
+	/**
+	 * Is the serializer factory to create a serializer for the given type.
+	 * Must be set.
+	 */
+	protected Class m_serializerFactory;
 
-    /**
-     * Is the deserializer factory to create a deserializer for the given type.
-     * Must be set.
-     */
-    protected Class m_deserializerFactory;
+	/**
+	 * Is the deserializer factory to create a deserializer for the given type.
+	 * Must be set.
+	 */
+	protected Class m_deserializerFactory;
 
-    /**
-     * Is the encoding style. Used by de- and serializer. Default is "". 
-     */
-    protected String m_encodingStyle;
-    
-    /**
-     * Is the special namespace uri for this type mapping.
-     */
-    protected String m_namespaceUri;
-    
-    /**
-     * @return Returns the deserializerFactory.
-     */
-    public Class getDeserializerFactory() {
-        return m_deserializerFactory;
-    }
+	/**
+	 * Is the encoding style. Used by de- and serializer. Default is "".
+	 */
+	protected String m_encodingStyle;
+	
+	/**
+	 * Is the special namespace uri for this type mapping.
+	 */
+	protected String m_namespaceUri;
+	
+	/**
+	 * @return Returns the deserializerFactory.
+	 */
+	public Class getDeserializerFactory() {
+		return m_deserializerFactory;
+	}
 
-    /**
-     * @param deserializerFactory The deserializerFactory to set.
-     */
-    public void setDeserializerFactory(Class deserializerFactory) {
-        m_deserializerFactory = deserializerFactory;
-    }
+	/**
+	 * @param deserializerFactory The deserializerFactory to set.
+	 */
+	public void setDeserializerFactory(Class deserializerFactory) {
+		m_deserializerFactory = deserializerFactory;
+	}
 
-    /**
-     * @return Returns the serializerFactory.
-     */
-    public Class getSerializerFactory() {
-        return m_serializerFactory;
-    }
+	/**
+	 * @return Returns the serializerFactory.
+	 */
+	public Class getSerializerFactory() {
+		return m_serializerFactory;
+	}
 
-    /**
-     * @param serializerFactory The serializerFactory to set.
-     */
-    public void setSerializerFactory(Class serializerFactory) {
-        m_serializerFactory = serializerFactory;
-    }
+	/**
+	 * @param serializerFactory The serializerFactory to set.
+	 */
+	public void setSerializerFactory(Class serializerFactory) {
+		m_serializerFactory = serializerFactory;
+	}
 
-    /**
-     * @return Returns the types.
-     */
-    public List getTypes() {
-        return m_types;
-    }
+	/**
+	 * @return Returns the types.
+	 */
+	public List getTypes() {
+		return m_types;
+	}
 
-    /**
-     * @param types The types to set.
-     */
-    public void setTypes(List types) {
-        m_types = types;
-    }
+	/**
+	 * @param types The types to set.
+	 */
+	public void setTypes(List types) {
+		m_types = types;
+	}
 
-    /**
-     * @return Returns the encodingStyle.
-     */
-    public String getEncodingStyle() {
-        return m_encodingStyle;
-    }
+	/**
+	 * @return Returns the encodingStyle.
+	 */
+	public String getEncodingStyle() {
+		return m_encodingStyle;
+	}
 
-    /**
-     * @param encodingStyle
-     *            The encodingStyle to set.
-     */
-    public void setEncodingStyle(String encodingStyle) {
-        m_encodingStyle = encodingStyle;
-    }
-    
-    /**
-     * @return Returns the namespaceUri.
-     */
-    public String getNamespaceUri() {
-        return m_namespaceUri;
-    }
+	/**
+	 * @param encodingStyle
+	 *            The encodingStyle to set.
+	 */
+	public void setEncodingStyle(String encodingStyle) {
+		m_encodingStyle = encodingStyle;
+	}
+	
+	/**
+	 * @return Returns the namespaceUri.
+	 */
+	public String getNamespaceUri() {
+		return m_namespaceUri;
+	}
 
-    /**
-     * @param namespaceUri
-     *            The namespaceUri to set.
-     */
-    public void setNamespaceUri(String namespaceUri) {
-        m_namespaceUri = namespaceUri;
-    }
+	/**
+	 * @param namespaceUri
+	 *            The namespaceUri to set.
+	 */
+	public void setNamespaceUri(String namespaceUri) {
+		m_namespaceUri = namespaceUri;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void afterPropertiesSet() throws Exception {
-        if (m_types == null || m_types.size() == 0) {
-            CoreNotificationHelper.notifyLackingEssentialProperty("type", this);
-        } else if (m_serializerFactory == null) {
-            CoreNotificationHelper.notifyLackingEssentialProperty(
-                "serializerFactory", this);
-        } else if (m_deserializerFactory == null) {
-            CoreNotificationHelper.notifyLackingEssentialProperty(
-                "deserializerFactory", this);
-        }
-        
-        if (!StringUtils.hasLength(m_encodingStyle)) {
-            m_encodingStyle = "";
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void afterPropertiesSet() throws Exception {
+		if (m_types == null || m_types.size() == 0) {
+			CoreNotificationHelper.notifyLackingEssentialProperty("type", this);
+		} else if (m_serializerFactory == null) {
+			CoreNotificationHelper.notifyLackingEssentialProperty(
+				"serializerFactory", this);
+		} else if (m_deserializerFactory == null) {
+			CoreNotificationHelper.notifyLackingEssentialProperty(
+				"deserializerFactory", this);
+		}
+		
+		if (!StringUtils.hasLength(m_encodingStyle)) {
+			m_encodingStyle = "";
+		}
+	}
 }

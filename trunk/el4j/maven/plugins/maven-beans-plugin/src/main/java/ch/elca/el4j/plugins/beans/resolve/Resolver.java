@@ -33,23 +33,23 @@ import java.io.IOException;
  */
 public interface Resolver {
 
-    /**
-     * @return The protocol this resolver works on. "" for the manager.
-     */
-    String getProtocol();
-    
-    /**
-     * Check if a file is to be included in the resolved bean files.
-     * @param file The file name/path.
-     * @return Whether this file is included.
-     */
-    boolean accept(String file);
-    
-    /**
-     * Copy a file to its proper place in the target directory.
-     * @param file The file to copy.
-     * @param target The target directory. It must exist.
-     * @throws IOException If soemthing goes wrong with file operations.
-     */
-    void copy(String file, File target) throws IOException;
+	/**
+	 * @return The protocol this resolver works on. "" for the manager.
+	 */
+	String getProtocol();
+	
+	/**
+	 * Check if a file is to be included in the resolved bean files.
+	 * @param file The file name/path.
+	 * @return Whether this file is included.
+	 */
+	boolean accept(String file);
+	
+	/**
+	 * Copy a file to its proper place in the target directory.
+	 * @param file The file to copy.
+	 * @param target The target directory. It must exist.
+	 * @throws IOException If soemthing goes wrong with file operations.
+	 */
+	void copy(String file, File target) throws IOException;
 }

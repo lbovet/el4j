@@ -43,49 +43,49 @@ import ch.elca.el4j.util.maven.DuplicateClassFinder;
  */
 public abstract class AbstractDuplicateFinderMojo extends AbstractMojo {
 
-    /**
-     * The project we are dealing with.
-     * @parameter expression="${project}"
-     * @required
-     */
-    protected MavenProject m_project;
-    
-    /** 
-     * The duplicate finder element.
-     */
-    protected DuplicateClassFinder m_finder;
-    
-    // Checkstyle: MemberName off
-    
-    /**
-     * Whether to fail the build if duplicates are found.
-     * @parameter default-value="false"
-     */
-    protected boolean duplicateIsFail;
+	/**
+	 * The project we are dealing with.
+	 * @parameter expression="${project}"
+	 * @required
+	 */
+	protected MavenProject m_project;
+	
+	/**
+	 * The duplicate finder element.
+	 */
+	protected DuplicateClassFinder m_finder;
+	
+	// Checkstyle: MemberName off
+	
+	/**
+	 * Whether to fail the build if duplicates are found.
+	 * @parameter default-value="false"
+	 */
+	protected boolean duplicateIsFail;
 
-    // Checkstyle: MemberName on
-    
-    /**
-     * Set up the finder.
-     * @throws MojoExecutionException
-     * @throws MojoFailureException
-     */
-    @SuppressWarnings("unchecked")
-    protected void setUp() throws MojoExecutionException, MojoFailureException {
-        m_finder = new DuplicateClassFinder();
-        List<String> cp;
-        try {
-            cp = m_project.getRuntimeClasspathElements();
-        } catch (DependencyResolutionRequiredException e) {
-            throw new MojoExecutionException("Dependency resolution", e);
-        }
-        for (String element : cp) {
-            try {
-                m_finder.addUrl(new File(element).toURL());
-            } catch (MalformedURLException e) {
-                throw new MojoExecutionException(
-                    "Malformed URL: " + element, e);
-            }
-        }
-    }
+	// Checkstyle: MemberName on
+	
+	/**
+	 * Set up the finder.
+	 * @throws MojoExecutionException
+	 * @throws MojoFailureException
+	 */
+	@SuppressWarnings("unchecked")
+	protected void setUp() throws MojoExecutionException, MojoFailureException {
+		m_finder = new DuplicateClassFinder();
+		List<String> cp;
+		try {
+			cp = m_project.getRuntimeClasspathElements();
+		} catch (DependencyResolutionRequiredException e) {
+			throw new MojoExecutionException("Dependency resolution", e);
+		}
+		for (String element : cp) {
+			try {
+				m_finder.addUrl(new File(element).toURL());
+			} catch (MalformedURLException e) {
+				throw new MojoExecutionException(
+					"Malformed URL: " + element, e);
+			}
+		}
+	}
 }

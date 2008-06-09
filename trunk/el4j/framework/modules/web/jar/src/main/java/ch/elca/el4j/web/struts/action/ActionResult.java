@@ -32,39 +32,39 @@ import ch.elca.el4j.util.codingsupport.AbstractDefaultEnum;
  * @author Martin Zeltner (MZE)
  */
 public final class ActionResult extends AbstractDefaultEnum {
-    /**
-     * Result success.
-     */
-    public static final ActionResult SUCCESS 
-        = new ActionResult("success", 1);
+	/**
+	 * Result success.
+	 */
+	public static final ActionResult SUCCESS
+		= new ActionResult("success", 1);
 
-    /**
-     * Result failure.
-     */
-    public static final ActionResult FAILURE 
-        = new ActionResult("failure", 2);
+	/**
+	 * Result failure.
+	 */
+	public static final ActionResult FAILURE
+		= new ActionResult("failure", 2);
 
-    /**
-     * Result invalid.
-     */
-    public static final ActionResult INVALID 
-        = new ActionResult("invalid", 3);
+	/**
+	 * Result invalid.
+	 */
+	public static final ActionResult INVALID
+		= new ActionResult("invalid", 3);
 
-    /**
-     * Private constructor.
-     * 
-     * @param name Is the name of the result.
-     * @param code Is the result code.
-     */
-    private ActionResult(String name, int code) {
-        super(name, code);
-    }
+	/**
+	 * Private constructor.
+	 *
+	 * @param name Is the name of the result.
+	 * @param code Is the result code.
+	 */
+	private ActionResult(String name, int code) {
+		super(name, code);
+	}
 
-    /**
-     * @param name Is the name of the result.
-     * @return Returns the result with the given name.
-     */
-    public static ActionResult get(String name) {
-        return (ActionResult) AbstractDefaultEnum.get(ActionResult.class, name);
-    }
+	/**
+	 * @param name Is the name of the result.
+	 * @return Returns the result with the given name.
+	 */
+	public static ActionResult get(String name) {
+		return (ActionResult) AbstractDefaultEnum.get(ActionResult.class, name);
+	}
 }

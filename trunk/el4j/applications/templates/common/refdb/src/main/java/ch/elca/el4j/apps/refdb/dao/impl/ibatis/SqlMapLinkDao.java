@@ -20,7 +20,7 @@ import ch.elca.el4j.apps.refdb.dao.LinkDao;
 import ch.elca.el4j.apps.refdb.dom.Link;
 
 /**
- * 
+ *
  * DAO for links which is using iBatis SQL Maps.
  *
  * <script type="text/javascript">printFileStatus
@@ -33,13 +33,13 @@ import ch.elca.el4j.apps.refdb.dom.Link;
  * @author Alex Mathey (AMA)
  */
 public class SqlMapLinkDao
-    extends GenericSqlMapReferenceDao<Link> implements LinkDao {
-    
-    /**
-     * Creates a new SqlMapLinkDao class.
-     */
-    public SqlMapLinkDao() {
-        setPersistentClass(Link.class);
-    }
-    
+	extends GenericSqlMapReferenceDao<Link> implements LinkDao {
+	
+	/**
+	 * Creates a new SqlMapLinkDao class.
+	 */
+	public SqlMapLinkDao() {
+		setPersistentClass(Link.class);
+	}
+	
 }

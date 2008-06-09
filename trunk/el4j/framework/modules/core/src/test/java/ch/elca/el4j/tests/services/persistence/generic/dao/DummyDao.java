@@ -29,23 +29,23 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
 import ch.elca.el4j.services.search.QueryObject;
 
-/** 
- * Just has all empty methods of the generic dao interface 
+/**
+ * Just has all empty methods of the generic dao interface
  *  (for testing convenience)
  * @author pos
  */
 public class DummyDao<T> implements GenericDao<T>{
 
-	   private Class<T> m_persistentClass;
+	private Class<T> m_persistentClass;
 
 	@SuppressWarnings("unchecked")
-	    public DummyDao() {
-	        this.m_persistentClass = (Class<T>) ((ParameterizedType) getClass()
-	                                .getGenericSuperclass()).getActualTypeArguments()[0];
-	     }	
+		public DummyDao() {
+			this.m_persistentClass = (Class<T>) ((ParameterizedType) getClass()
+				.getGenericSuperclass()).getActualTypeArguments()[0];
+		}
 	
 	public void delete(Collection<T> entities)
-			throws OptimisticLockingFailureException, DataAccessException {	
+			throws OptimisticLockingFailureException, DataAccessException {
 	}
 
 	public List<T> findByQuery(QueryObject q) throws DataAccessException {
@@ -65,7 +65,7 @@ public class DummyDao<T> implements GenericDao<T>{
 	}
 	
 	public void setPersistentClass(Class<T> c) {
-	    m_persistentClass = c;
+		m_persistentClass = c;
 	}
 
 	public T refresh(T entity) throws DataAccessException,

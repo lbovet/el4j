@@ -44,64 +44,64 @@ import ch.elca.el4j.services.remoting.protocol.jaxws.JaxwsContextHandler;
  * @author Stefan Wismer (SWI)
  */
 public class JaxwsSoapHeaderContextPassing extends Jaxws {
-    /**
-     * The {@link JAXBContext} instance used to serialize the several
-     * Objects in the implicit context.
-     */
-    private JAXBContext m_contextPassingContext = null;
-    
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    @Override
-    protected void adaptExporterService(SpringService service) {
-        super.adaptExporterService(service);
-        
-        // If context passing is enabled, add a handler
-        if (getImplicitContextPassingRegistry() != null) {
-            // Enable implicit context passing
-            List<Handler> handlers = new ArrayList<Handler>();
-            handlers.add(new JaxwsContextHandler(
-                getImplicitContextPassingRegistry(),
-                m_contextPassingContext));
-            service.setHandlers(handlers);
-        }
-        
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    protected void adaptProxyService(Service service) {
-        super.adaptProxyService(service);
-        
-        // If context passing is enabled, add a handler
-        if (getImplicitContextPassingRegistry() != null) {
-            // Enable implicit context passing
-            service.setHandlerResolver(new HandlerResolver() {
-                @SuppressWarnings("unchecked")
-                public List<Handler> getHandlerChain(PortInfo portInfo) {
-                    List<Handler> list = new ArrayList<Handler>();
-                    list.add(new JaxwsContextHandler(
-                        getImplicitContextPassingRegistry(),
-                        m_contextPassingContext));
-                    return list;
-                }
-            });
-        }
-    }
-    
-    /**
-     * Get the {@link JAXBContext} used to serialize the implicit context.
-     * @return The used {@link JAXBContext} 
-     */
-    public JAXBContext getContextPassingContext() {
-        return m_contextPassingContext;
-    }
-    
-    /**
-     * Set the {@link JAXBContext} used to serialize the implicit context.
-     * @param context The {@link JAXBContext} to use
-     */
-    public void setContextPassingContext(JAXBContext context) {
-        m_contextPassingContext = context;
-    }
+	/**
+	 * The {@link JAXBContext} instance used to serialize the several
+	 * Objects in the implicit context.
+	 */
+	private JAXBContext m_contextPassingContext = null;
+	
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	@Override
+	protected void adaptExporterService(SpringService service) {
+		super.adaptExporterService(service);
+		
+		// If context passing is enabled, add a handler
+		if (getImplicitContextPassingRegistry() != null) {
+			// Enable implicit context passing
+			List<Handler> handlers = new ArrayList<Handler>();
+			handlers.add(new JaxwsContextHandler(
+				getImplicitContextPassingRegistry(),
+				m_contextPassingContext));
+			service.setHandlers(handlers);
+		}
+		
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	protected void adaptProxyService(Service service) {
+		super.adaptProxyService(service);
+		
+		// If context passing is enabled, add a handler
+		if (getImplicitContextPassingRegistry() != null) {
+			// Enable implicit context passing
+			service.setHandlerResolver(new HandlerResolver() {
+				@SuppressWarnings("unchecked")
+				public List<Handler> getHandlerChain(PortInfo portInfo) {
+					List<Handler> list = new ArrayList<Handler>();
+					list.add(new JaxwsContextHandler(
+						getImplicitContextPassingRegistry(),
+						m_contextPassingContext));
+					return list;
+				}
+			});
+		}
+	}
+	
+	/**
+	 * Get the {@link JAXBContext} used to serialize the implicit context.
+	 * @return The used {@link JAXBContext}
+	 */
+	public JAXBContext getContextPassingContext() {
+		return m_contextPassingContext;
+	}
+	
+	/**
+	 * Set the {@link JAXBContext} used to serialize the implicit context.
+	 * @param context The {@link JAXBContext} to use
+	 */
+	public void setContextPassingContext(JAXBContext context) {
+		m_contextPassingContext = context;
+	}
 }

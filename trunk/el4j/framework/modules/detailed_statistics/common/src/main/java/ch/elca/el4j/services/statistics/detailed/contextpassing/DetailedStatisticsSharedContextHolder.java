@@ -17,9 +17,9 @@
 package ch.elca.el4j.services.statistics.detailed.contextpassing;
 
 /**
- * 
- * This class is specific implementation of the generic shared context 
- * of Leaf 2 for the detailed statistics service. The shared context is 
+ *
+ * This class is specific implementation of the generic shared context
+ * of Leaf 2 for the detailed statistics service. The shared context is
  * held in a static ThreadLocal variable.
  *
  * <script type="text/javascript">printFileStatus
@@ -33,42 +33,42 @@ package ch.elca.el4j.services.statistics.detailed.contextpassing;
  * @author Philipp Oser (POS)
  */
 public class DetailedStatisticsSharedContextHolder {
-    
-    /**
-     * Internal holder of thread static variable.
-     */
-    private static final ThreadLocal<DetailedStatisticsContext> 
-    DETAILED_STATISTICS_CONTEXT 
-        = new ThreadLocal<DetailedStatisticsContext>() {
-                @Override
-                protected DetailedStatisticsContext initialValue() {
-                    return new DetailedStatisticsContext();
-                } 
-            }; 
-    
-    /**
-     * Hide default constructor as this is a Utility class.
-     *
-     */
-    protected DetailedStatisticsSharedContextHolder() { }
-    
-    
-    /**
-     * Get the passed object.
-     * 
-     * @return DetailedStatisticsContext.
-     */
-    public static final DetailedStatisticsContext getContext() {
-        return DETAILED_STATISTICS_CONTEXT.get();
-    }
-   
-    /**
-     * Set the passed object.
-     * @param passedObject The passed object.
-     */
-    public static final void setContext(
-        DetailedStatisticsContext passedObject) {
-        DETAILED_STATISTICS_CONTEXT.set(passedObject);
-    }
-    
+	
+	/**
+	 * Internal holder of thread static variable.
+	 */
+	private static final ThreadLocal<DetailedStatisticsContext>
+	DETAILED_STATISTICS_CONTEXT
+		= new ThreadLocal<DetailedStatisticsContext>() {
+				@Override
+				protected DetailedStatisticsContext initialValue() {
+					return new DetailedStatisticsContext();
+				}
+			};
+	
+	/**
+	 * Hide default constructor as this is a Utility class.
+	 *
+	 */
+	protected DetailedStatisticsSharedContextHolder() { }
+	
+	
+	/**
+	 * Get the passed object.
+	 *
+	 * @return DetailedStatisticsContext.
+	 */
+	public static final DetailedStatisticsContext getContext() {
+		return DETAILED_STATISTICS_CONTEXT.get();
+	}
+	
+	/**
+	 * Set the passed object.
+	 * @param passedObject The passed object.
+	 */
+	public static final void setContext(
+		DetailedStatisticsContext passedObject) {
+		DETAILED_STATISTICS_CONTEXT.set(passedObject);
+	}
+	
 }

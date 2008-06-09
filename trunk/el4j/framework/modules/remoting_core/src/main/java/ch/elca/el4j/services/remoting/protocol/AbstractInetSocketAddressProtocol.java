@@ -24,7 +24,7 @@ import ch.elca.el4j.services.remoting.AbstractRemotingProtocol;
 
 /**
  * This is an abstract <code>InetSocketAddress</code> protocol.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -34,66 +34,66 @@ import ch.elca.el4j.services.remoting.AbstractRemotingProtocol;
  *
  * @author Martin Zeltner (MZE)
  */
-public abstract class AbstractInetSocketAddressProtocol 
-    extends AbstractRemotingProtocol {
-    /**
-     * This is the host where the service is installed.
-     */
-    private String m_serviceHost;
+public abstract class AbstractInetSocketAddressProtocol
+	extends AbstractRemotingProtocol {
+	/**
+	 * This is the host where the service is installed.
+	 */
+	private String m_serviceHost;
 
-    /**
-     * This is the port where the service is installed.
-     */
-    private int m_servicePort;
+	/**
+	 * This is the port where the service is installed.
+	 */
+	private int m_servicePort;
 
-    /**
-     * @return Returns the serviceHost.
-     */
-    public String getServiceHost() {
-        return m_serviceHost;
-    }
+	/**
+	 * @return Returns the serviceHost.
+	 */
+	public String getServiceHost() {
+		return m_serviceHost;
+	}
 
-    /**
-     * @param serviceHost
-     *            The serviceHost to set.
-     */
-    public void setServiceHost(String serviceHost) {
-        m_serviceHost = serviceHost;
-    }
+	/**
+	 * @param serviceHost
+	 *            The serviceHost to set.
+	 */
+	public void setServiceHost(String serviceHost) {
+		m_serviceHost = serviceHost;
+	}
 
-    /**
-     * @return Returns the servicePort.
-     */
-    public int getServicePort() {
-        return m_servicePort;
-    }
+	/**
+	 * @return Returns the servicePort.
+	 */
+	public int getServicePort() {
+		return m_servicePort;
+	}
 
-    /**
-     * @param servicePort
-     *            The servicePort to set.
-     */
-    public void setServicePort(int servicePort) {
-        m_servicePort = servicePort;
-    }
+	/**
+	 * @param servicePort
+	 *            The servicePort to set.
+	 */
+	public void setServicePort(int servicePort) {
+		m_servicePort = servicePort;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void afterPropertiesSet() throws Exception {
-        CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-                getServiceHost(), "serviceHost", this);
-        if (getServicePort() <= 0) {
-            CoreNotificationHelper.notifyMisconfiguration(
-                    "The property 'servicePort' is required.");
-        }
-    }
-    
-    /**
-     * Method to generate the url to be able to access the service.
-     * 
-     * @param remotingBase
-     *            Is the reference to get information about the service.
-     * @return Returns the generated service url.
-     */
-    public abstract String generateUrl(AbstractRemotingBase remotingBase);
+	/**
+	 * {@inheritDoc}
+	 */
+	public void afterPropertiesSet() throws Exception {
+		CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+				getServiceHost(), "serviceHost", this);
+		if (getServicePort() <= 0) {
+			CoreNotificationHelper.notifyMisconfiguration(
+					"The property 'servicePort' is required.");
+		}
+	}
+	
+	/**
+	 * Method to generate the url to be able to access the service.
+	 *
+	 * @param remotingBase
+	 *            Is the reference to get information about the service.
+	 * @return Returns the generated service url.
+	 */
+	public abstract String generateUrl(AbstractRemotingBase remotingBase);
 }

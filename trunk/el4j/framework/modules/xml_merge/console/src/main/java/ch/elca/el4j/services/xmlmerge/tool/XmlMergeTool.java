@@ -40,103 +40,103 @@ import ch.elca.el4j.services.xmlmerge.merge.DefaultXmlMerge;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public class XmlMergeTool {
-    
-    /**
-     * Hide default constructor.
-     */
-    protected XmlMergeTool() { }
-    
-    /**
-     * Starts the XmlMerge Command-line tool.
-     * @param args The names of the files to merge
-     * @throws Exception If an error occurs during the execution of the tool
-     */
-    public static void main(String[] args) throws Exception {
+	
+	/**
+	 * Hide default constructor.
+	 */
+	protected XmlMergeTool() { }
+	
+	/**
+	 * Starts the XmlMerge Command-line tool.
+	 * @param args The names of the files to merge
+	 * @throws Exception If an error occurs during the execution of the tool
+	 */
+	public static void main(String[] args) throws Exception {
 
-        if (args.length < 2) {
-            usage();
-        }
+		if (args.length < 2) {
+			usage();
+		}
 
-        int argCursor = 0;
+		int argCursor = 0;
 
-        String configFilename = null;
+		String configFilename = null;
 
-        if ("-config".equals(args[0])) {
-            if (args[1] != null) {
-                configFilename = args[1];
-            }
+		if ("-config".equals(args[0])) {
+			if (args[1] != null) {
+				configFilename = args[1];
+			}
 
-            argCursor = 2;
+			argCursor = 2;
 
-            if (args.length < 4) {
-                usage();
-            }
-        }
+			if (args.length < 4) {
+				usage();
+			}
+		}
 
-        XmlMerge xmlMerge;
+		XmlMerge xmlMerge;
 
-        if (configFilename != null) {
-            Properties props = new Properties();
+		if (configFilename != null) {
+			Properties props = new Properties();
 
-            try {
-                props.load(new FileInputStream(configFilename));
-            } catch (FileNotFoundException ex) {
-                System.err.println("File not found: " + configFilename);
-                System.exit(1);
-            } catch (IOException ioe) {
-                System.err.println("Cannot read file: " + configFilename);
-                System.exit(1);
-            }
+			try {
+				props.load(new FileInputStream(configFilename));
+			} catch (FileNotFoundException ex) {
+				System.err.println("File not found: " + configFilename);
+				System.exit(1);
+			} catch (IOException ioe) {
+				System.err.println("Cannot read file: " + configFilename);
+				System.exit(1);
+			}
 
-            xmlMerge = new ConfigurableXmlMerge(new DefaultXmlMerge(),
-                new PropertyXPathConfigurer(props));
-        } else {
-            xmlMerge = new DefaultXmlMerge();
-        }
+			xmlMerge = new ConfigurableXmlMerge(new DefaultXmlMerge(),
+				new PropertyXPathConfigurer(props));
+		} else {
+			xmlMerge = new DefaultXmlMerge();
+		}
 
-        InputStream[] sources = new InputStream[args.length - argCursor];
+		InputStream[] sources = new InputStream[args.length - argCursor];
 
-        for (int i = argCursor; i < args.length; i++) {
+		for (int i = argCursor; i < args.length; i++) {
 
-            String filename = args[i];
+			String filename = args[i];
 
-            try {
-                sources[i - argCursor] = new FileInputStream(filename);
-            } catch (FileNotFoundException ex) {
-                System.err.println("File not found: " + filename);
-                System.exit(1);
-            }
-        }
+			try {
+				sources[i - argCursor] = new FileInputStream(filename);
+			} catch (FileNotFoundException ex) {
+				System.err.println("File not found: " + filename);
+				System.exit(1);
+			}
+		}
 
-        InputStream stream = xmlMerge.merge(sources);
+		InputStream stream = xmlMerge.merge(sources);
 
-        byte[] buffer = new byte[2048];
-        int len;
+		byte[] buffer = new byte[2048];
+		int len;
 
-        try {
-            while ((len = stream.read(buffer)) != -1) {
-                System.out.write(buffer, 0, len);
-            }
-        } catch (IOException ioex) {
-            // Should not happen...
-            ioex.printStackTrace(System.err);
-            System.exit(1);
-        }
-    }
+		try {
+			while ((len = stream.read(buffer)) != -1) {
+				System.out.write(buffer, 0, len);
+			}
+		} catch (IOException ioex) {
+			// Should not happen...
+			ioex.printStackTrace(System.err);
+			System.exit(1);
+		}
+	}
 
-    /**
-     * Desribes the usage of this tool. 
-     */
-    public static void usage() {
-        System.err
-           .println("xmlmerge [-config <config-file>] file1 file2 [file3 ...]");
-        System.exit(1);
-    }
+	/**
+	 * Desribes the usage of this tool.
+	 */
+	public static void usage() {
+		System.err
+			.println("xmlmerge [-config <config-file>] file1 file2 [file3 ...]");
+		System.exit(1);
+	}
 }
 
 //Checkstyle: UncommentedMain on

@@ -18,7 +18,7 @@ package ch.elca.el4j.services.monitoring.jmx;
 
 import java.util.HashMap;
 /**
- * 
+ *
  * This class is ...
  *
  * <script type="text/javascript">printFileStatus
@@ -32,27 +32,27 @@ import java.util.HashMap;
  */
 public class Log4jJmxLoader {
 
-    /**
-     * Here the appenders are stored.
-     */
-    private HashMap m_appenders;
+	/**
+	 * Here the appenders are stored.
+	 */
+	private HashMap m_appenders;
 
-    /**
-     * Getter Method for appenders List.
-     * 
-     * @return The appenders.
-     */
-    public HashMap getAppenders() {
-        return m_appenders;
-    }
+	/**
+	 * Getter Method for appenders List.
+	 *
+	 * @return The appenders.
+	 */
+	public HashMap getAppenders() {
+		return m_appenders;
+	}
 
-    /**
-     * Setter Method for appenders List.
-     * 
-     * @param appenders
-     *            The appenders.
-     */
-    public void setAppenders(HashMap appenders) {
-        this.m_appenders = appenders;
-    }
+	/**
+	 * Setter Method for appenders List.
+	 *
+	 * @param appenders
+	 *            The appenders.
+	 */
+	public void setAppenders(HashMap appenders) {
+		this.m_appenders = appenders;
+	}
 }

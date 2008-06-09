@@ -21,9 +21,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/** 
+/**
  * lists all members of this entity type, in order.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -36,6 +36,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface MemberOrder {
-    /** list of the names of all members, in their default order. */
-    String[] value();
+	/** list of the names of all members, in their default order. */
+	String[] value();
 }

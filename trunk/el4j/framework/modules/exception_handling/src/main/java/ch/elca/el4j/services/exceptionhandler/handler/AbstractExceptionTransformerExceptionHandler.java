@@ -36,34 +36,34 @@ import ch.elca.el4j.services.exceptionhandler.AbstractExceptionHandlerIntercepto
  * @author Andreas Bur (ABU)
  */
 public abstract class AbstractExceptionTransformerExceptionHandler extends
-        AbstractExceptionHandler {
+		AbstractExceptionHandler {
 
-    /**
-     * {@inheritDoc}
-     */
-    protected Object handleException(Throwable t,
-            AbstractExceptionHandlerInterceptor exceptionInvoker,
-            MethodInvocation invocation, Log logger) throws Throwable {
-        
-        Exception transformed = transform(t, logger);
-        if (transformed == null) {
-            return null;
-        } else {
-            throw transformed;
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	protected Object handleException(Throwable t,
+			AbstractExceptionHandlerInterceptor exceptionInvoker,
+			MethodInvocation invocation, Log logger) throws Throwable {
+		
+		Exception transformed = transform(t, logger);
+		if (transformed == null) {
+			return null;
+		} else {
+			throw transformed;
+		}
+	}
 
-    /**
-     * Transforms the given throwable into an appropriate exception.
-     * 
-     * @param t
-     *      The throwable to transform.
-     *      
-     * @param logger
-     *      The logger that is configured properly.
-     *      
-     * @return Returns the transformed exception or <code>null</code> if no
-     *      exceptions has to be thrown.
-     */
-    protected abstract Exception transform(Throwable t, Log logger);
+	/**
+	 * Transforms the given throwable into an appropriate exception.
+	 *
+	 * @param t
+	 *      The throwable to transform.
+	 *
+	 * @param logger
+	 *      The logger that is configured properly.
+	 *
+	 * @return Returns the transformed exception or <code>null</code> if no
+	 *      exceptions has to be thrown.
+	 */
+	protected abstract Exception transform(Throwable t, Log logger);
 }

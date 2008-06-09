@@ -25,45 +25,45 @@ package ch.elca.el4j.services.xmlmerge;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public abstract class AbstractXmlMergeException extends Exception {
 
-    /**
-     * Default constructor.
-     */
-    public AbstractXmlMergeException() {
-        super();
-    }
+	/**
+	 * Default constructor.
+	 */
+	public AbstractXmlMergeException() {
+		super();
+	}
 
-    /**
-     * Constructor with message.
-     * 
-     * @param message Exception message
-     */
-    public AbstractXmlMergeException(String message) {
-        super(message);
-    }
+	/**
+	 * Constructor with message.
+	 *
+	 * @param message Exception message
+	 */
+	public AbstractXmlMergeException(String message) {
+		super(message);
+	}
 
-    /**
-     * Constructor with message and cause.
-     * 
-     * @param message Exception message
-     * @param cause Exception cause
-     */
-    public AbstractXmlMergeException(String message, Throwable cause) {
-        super(message, cause);
-    }
+	/**
+	 * Constructor with message and cause.
+	 *
+	 * @param message Exception message
+	 * @param cause Exception cause
+	 */
+	public AbstractXmlMergeException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
-    /**
-     * Constructor with cause.
-     * 
-     * @param cause Exception cause
-     */
-    public AbstractXmlMergeException(Throwable cause) {
-        super(cause);
-    }
+	/**
+	 * Constructor with cause.
+	 *
+	 * @param cause Exception cause
+	 */
+	public AbstractXmlMergeException(Throwable cause) {
+		super(cause);
+	}
 
 }

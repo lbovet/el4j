@@ -43,106 +43,106 @@ import ch.elca.el4j.plugins.beans.resolve.ResolverManager;
  */
 public class BeanPathResolver {
 
-    /**
-     * Resolve the bean path.
-     * 
-     * @param inclusiveLocations The inclusive locations.
-     * @param exclusiveLocations The exclusive locations.
-     * @param classpath The classpath to search.
-     * @return The bean files found.
-     */
-    public String[] resolve(String[] inclusiveLocations,
-        String[] exclusiveLocations, URL[] classpath) {
-        
-        // Create a classloader for the target classpath and launch the 
-        // resolver with it.
-        
-        try {
-            ClassLoader loader = new URLClassLoader(classpath);
+	/**
+	 * Resolve the bean path.
+	 *
+	 * @param inclusiveLocations The inclusive locations.
+	 * @param exclusiveLocations The exclusive locations.
+	 * @param classpath The classpath to search.
+	 * @return The bean files found.
+	 */
+	public String[] resolve(String[] inclusiveLocations,
+		String[] exclusiveLocations, URL[] classpath) {
+		
+		// Create a classloader for the target classpath and launch the
+		// resolver with it.
+		
+		try {
+			ClassLoader loader = new URLClassLoader(classpath);
 
-            ResolverRunner r 
-                = new ResolverRunner(inclusiveLocations, exclusiveLocations);
-            r.setContextClassLoader(loader);
-            r.start();
-            r.join();
-            
-            String[] result = r.getResult();
-            
-            return filterResult(result, classpath);
-            
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+			ResolverRunner r
+				= new ResolverRunner(inclusiveLocations, exclusiveLocations);
+			r.setContextClassLoader(loader);
+			r.start();
+			r.join();
+			
+			String[] result = r.getResult();
+			
+			return filterResult(result, classpath);
+			
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-    /**
-     * When we use module-core to resolve the elements, we get module-core and
-     * all its dependencies on the classpath by default. Here, we filter out
-     * any results that didn't come from our classpath. 
-     * 
-     * @param data The data a search for beans files returned.
-     * @param classpath The classpath.
-     * @return The data stripped of all elements that are not from this 
-     * classpath.
-     */
-    private String[] filterResult(String[] data, URL[] classpath) {
-        Resolver r = new ResolverManager(classpath);
-        List<String> accepted = new ArrayList<String>();
-        for (String file : data) {
-            if (r.accept(file)) {
-                accepted.add(file);
-            }
-        }
-        return accepted.toArray(new String[0]);
-    }
-    
-    /**
-     * Run with a different contextClassLoader. 
-     */
-    class ResolverRunner extends Thread {
+	/**
+	 * When we use module-core to resolve the elements, we get module-core and
+	 * all its dependencies on the classpath by default. Here, we filter out
+	 * any results that didn't come from our classpath.
+	 *
+	 * @param data The data a search for beans files returned.
+	 * @param classpath The classpath.
+	 * @return The data stripped of all elements that are not from this
+	 * classpath.
+	 */
+	private String[] filterResult(String[] data, URL[] classpath) {
+		Resolver r = new ResolverManager(classpath);
+		List<String> accepted = new ArrayList<String>();
+		for (String file : data) {
+			if (r.accept(file)) {
+				accepted.add(file);
+			}
+		}
+		return accepted.toArray(new String[0]);
+	}
+	
+	/**
+	 * Run with a different contextClassLoader.
+	 */
+	class ResolverRunner extends Thread {
 
-        /** run() puts its results here. */
-        private String[] m_result;
-        
-        /** Inclusive locations. */
-        private String[] m_inclusive;
-        
-        /** Exclusive locations. */
-        private String[] m_exclusive;
-        
-        /**
-         * Set up the thread to run.
-         * @param inclusive Config locations.
-         * @param exclusive Config locations.
-         */
-        public ResolverRunner(String[] inclusive, String[] exclusive) {
-            m_inclusive = inclusive;
-            m_exclusive = exclusive;
-        }
-        
-        /**
-         * @return Returns the result.
-         */
-        public String[] getResult() {
-            return m_result;
-        }
+		/** run() puts its results here. */
+		private String[] m_result;
+		
+		/** Inclusive locations. */
+		private String[] m_inclusive;
+		
+		/** Exclusive locations. */
+		private String[] m_exclusive;
+		
+		/**
+		 * Set up the thread to run.
+		 * @param inclusive Config locations.
+		 * @param exclusive Config locations.
+		 */
+		public ResolverRunner(String[] inclusive, String[] exclusive) {
+			m_inclusive = inclusive;
+			m_exclusive = exclusive;
+		}
+		
+		/**
+		 * @return Returns the result.
+		 */
+		public String[] getResult() {
+			return m_result;
+		}
 
-        /** {@inheritDoc} */
-        @Override
-        public void run() {
-            ModuleApplicationContextConfiguration config 
-                = new ModuleApplicationContextConfiguration();
-            config.setInclusiveConfigLocations(new String[0]);
-            config.setExclusiveConfigLocations(new String[0]);
-            ModuleApplicationContext ctx = new ModuleApplicationContext(config);
-            
-            ModuleApplicationContextUtils utils 
-                = new ModuleApplicationContextUtils(ctx);
-            
-            // AllowBeanDefinitionOverriding is an unused parameter?
-            String[] result = utils.calculateInputFiles(
-                m_inclusive, m_exclusive, false);
-            m_result = result;
-        }
-    }
+		/** {@inheritDoc} */
+		@Override
+		public void run() {
+			ModuleApplicationContextConfiguration config
+				= new ModuleApplicationContextConfiguration();
+			config.setInclusiveConfigLocations(new String[0]);
+			config.setExclusiveConfigLocations(new String[0]);
+			ModuleApplicationContext ctx = new ModuleApplicationContext(config);
+			
+			ModuleApplicationContextUtils utils
+				= new ModuleApplicationContextUtils(ctx);
+			
+			// AllowBeanDefinitionOverriding is an unused parameter?
+			String[] result = utils.calculateInputFiles(
+				m_inclusive, m_exclusive, false);
+			m_result = result;
+		}
+	}
 }

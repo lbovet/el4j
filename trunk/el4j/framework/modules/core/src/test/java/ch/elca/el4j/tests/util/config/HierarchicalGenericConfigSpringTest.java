@@ -41,48 +41,48 @@ import ch.elca.el4j.util.config.HierarchicalGenericConfig;
  * @author Stefan Wismer (SWI)
  */
 public class HierarchicalGenericConfigSpringTest
-    extends AbstractHierarchicalGenericConfigTest {
-    
-    /** The application context. */
-    final ApplicationContext m_appContext;
+	extends AbstractHierarchicalGenericConfigTest {
+	
+	/** The application context. */
+	final ApplicationContext m_appContext;
 
-    /**
-     * Default constructor.
-     */
-    public HierarchicalGenericConfigSpringTest() {
-        m_appContext = new ModuleApplicationContext(
-            "classpath:scenarios/util/config/hierarchicalGenericConfig.xml",
-            false);
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    protected HierarchicalGenericConfig getDefaultConfig() {
-        return (HierarchicalGenericConfig)
-            m_appContext.getBean("DefaultConfig");
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    protected HierarchicalGenericConfig getSpecificConfig() {
-        return (HierarchicalGenericConfig)
-            m_appContext.getBean("SpecificConfig");
-    }
-    
-    /***/
-    @Test
-    public void testMultipleParents() {
-        HierarchicalGenericConfig config = (HierarchicalGenericConfig)
-            m_appContext.getBean("configABCD");
-        
-        HierarchicalGenericConfig subConfig
-            = config.getSubConfig("ch.elca.el4j.default");
-        assertTrue(subConfig.getMap().size() == 4);
-        assertTrue(subConfig.get("a").equals("defaultA"));
-        assertTrue(subConfig.get("b").equals("defaultB2"));
-        assertTrue(subConfig.get("c.d").equals("defaultCD"));
-        assertTrue(subConfig.get("c.e").equals("defaultCE2"));
-    }    
+	/**
+	 * Default constructor.
+	 */
+	public HierarchicalGenericConfigSpringTest() {
+		m_appContext = new ModuleApplicationContext(
+			"classpath:scenarios/util/config/hierarchicalGenericConfig.xml",
+			false);
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	protected HierarchicalGenericConfig getDefaultConfig() {
+		return (HierarchicalGenericConfig)
+			m_appContext.getBean("DefaultConfig");
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	protected HierarchicalGenericConfig getSpecificConfig() {
+		return (HierarchicalGenericConfig)
+			m_appContext.getBean("SpecificConfig");
+	}
+	
+	/***/
+	@Test
+	public void testMultipleParents() {
+		HierarchicalGenericConfig config = (HierarchicalGenericConfig)
+			m_appContext.getBean("configABCD");
+		
+		HierarchicalGenericConfig subConfig
+			= config.getSubConfig("ch.elca.el4j.default");
+		assertTrue(subConfig.getMap().size() == 4);
+		assertTrue(subConfig.get("a").equals("defaultA"));
+		assertTrue(subConfig.get("b").equals("defaultB2"));
+		assertTrue(subConfig.get("c.d").equals("defaultCD"));
+		assertTrue(subConfig.get("c.e").equals("defaultCE2"));
+	}
 }
 
 //Checkstyle: EmptyBlock on

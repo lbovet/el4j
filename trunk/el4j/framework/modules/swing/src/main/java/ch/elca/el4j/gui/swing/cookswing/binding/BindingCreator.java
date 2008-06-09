@@ -39,27 +39,27 @@ import cookxml.core.exception.CreatorException;
  * @author Stefan Wismer (SWI)
  */
 public class BindingCreator extends AbstractBindingCreator {
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    public Object create(String parentNS, String parentTag, Element elm,
-        Object parentObj, DecodeEngine decodeEngine) throws CreatorException {
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	public Object create(String parentNS, String parentTag, Element elm,
+		Object parentObj, DecodeEngine decodeEngine) throws CreatorException {
 
-        // read attributes
-        UpdateStrategy updateStrategy = getUpdateStrategy(elm);
-        Object src = getSource(decodeEngine, elm);
-        String prop = elm.getAttribute(PROPERTY);
-        JComponent component = (JComponent) parentObj;
-        boolean validate = getValidate(elm);
-        
-        // create binding
-        AutoBinding binding = null;
-        Object form = decodeEngine.getVariable("this");
-        if (Bindable.class.isAssignableFrom(form.getClass())) {
-            Bindable bindableForm = (Bindable) form;
-            
-            binding = bindableForm.getBinder().addManualBinding(
-                updateStrategy, src, prop, component, validate);
-        }
-        return new NoAddValueHolder<AutoBinding>(binding);
-    }
+		// read attributes
+		UpdateStrategy updateStrategy = getUpdateStrategy(elm);
+		Object src = getSource(decodeEngine, elm);
+		String prop = elm.getAttribute(PROPERTY);
+		JComponent component = (JComponent) parentObj;
+		boolean validate = getValidate(elm);
+		
+		// create binding
+		AutoBinding binding = null;
+		Object form = decodeEngine.getVariable("this");
+		if (Bindable.class.isAssignableFrom(form.getClass())) {
+			Bindable bindableForm = (Bindable) form;
+			
+			binding = bindableForm.getBinder().addManualBinding(
+				updateStrategy, src, prop, component, validate);
+		}
+		return new NoAddValueHolder<AutoBinding>(binding);
+	}
 }

@@ -23,38 +23,38 @@ import org.apache.commons.logging.LogFactory;
 /**
  * Class for replacing xml entity references in order to avoid xml parsing
  * errors.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Raphael Boog (RBO)
  */
 public class XmlTagTransformer {
 
-    /** The static logger. */
-    protected static Log s_logger = LogFactory.getLog(XmlTagTransformer.class);
-    
-    /**
-     * This method replaces xml entity references by the corresponding
-     * expression.
-     * 
-     * @param input the original string
-     * @return the string with the replacements
-     */
-    public String transform(String input) {
-        
-        if (input != null) {
-            input = input.replaceAll("&", "&amp;");
-            input = input.replaceAll("<", "&lt;");
-            input = input.replaceAll(">", "&gt;");
-            input = input.replaceAll("'", "&apos;");
-            input = input.replaceAll("\"", "&quot;");
-        }
-        
-        return input;
-    }
+	/** The static logger. */
+	protected static Log s_logger = LogFactory.getLog(XmlTagTransformer.class);
+	
+	/**
+	 * This method replaces xml entity references by the corresponding
+	 * expression.
+	 *
+	 * @param input the original string
+	 * @return the string with the replacements
+	 */
+	public String transform(String input) {
+		
+		if (input != null) {
+			input = input.replaceAll("&", "&amp;");
+			input = input.replaceAll("<", "&lt;");
+			input = input.replaceAll(">", "&gt;");
+			input = input.replaceAll("'", "&apos;");
+			input = input.replaceAll("\"", "&quot;");
+		}
+		
+		return input;
+	}
 }

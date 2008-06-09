@@ -22,38 +22,38 @@ import org.apache.maven.plugin.MojoFailureException;
 import ch.elca.el4j.plugins.database.AbstractDBExecutionMojo;
 
 /**
- * This class is a database mojo for the 'silentDrop' statement. 
- * It executes the same statement as the drop mojo, but ignores exceptions. 
+ * This class is a database mojo for the 'silentDrop' statement.
+ * It executes the same statement as the drop mojo, but ignores exceptions.
  * It's intended to be used as a "safe" drop before a the create mojo, e.g.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @goal silentDrop
  * @author David Stefan (DST)
  */
 public class SilentDropMojo extends AbstractDBExecutionMojo {
 
-    /**
-     * Action this mojo is implementing and identifier sql files have to start
-     * with.
-     */
-    private static final String ACTION = "drop";
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void executeInternal() throws MojoExecutionException, MojoFailureException {
-        try {
-            executeAction(ACTION, true, true);
-            // Checkstyle: EmptyBlock off
-        } catch (Exception e) {
-            // ignore exceptions
-        }
-        // Checkstyle: EmptyBlock on
-    }
+	/**
+	 * Action this mojo is implementing and identifier sql files have to start
+	 * with.
+	 */
+	private static final String ACTION = "drop";
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void executeInternal() throws MojoExecutionException, MojoFailureException {
+		try {
+			executeAction(ACTION, true, true);
+			// Checkstyle: EmptyBlock off
+		} catch (Exception e) {
+			// ignore exceptions
+		}
+		// Checkstyle: EmptyBlock on
+	}
 }

@@ -51,163 +51,163 @@ import ch.elca.el4j.tests.keyword.AbstractTestCaseBase;
  * @author Alex Mathey (AMA)
  */
 public abstract class AbstractKeywordServiceTest extends AbstractTestCaseBase {
-    /**
-     * Private logger.
-     */
-    private static Log s_logger 
-        = LogFactory.getLog(AbstractKeywordServiceTest.class);
+	/**
+	 * Private logger.
+	 */
+	private static Log s_logger
+		= LogFactory.getLog(AbstractKeywordServiceTest.class);
 
-    /**
-     * Keyword service. Created by application context.
-     */
-    private KeywordService m_keywordService;
+	/**
+	 * Keyword service. Created by application context.
+	 */
+	private KeywordService m_keywordService;
 
-    /**
-     * Keyword DAO. Created by application context.
-     */
-    private KeywordDao m_keywordDao;
-    
-    /**
-     * Hide default constructor.
-     */
-    protected AbstractKeywordServiceTest() { }
-    
-    /**
-     * @return Returns the keywordService.
-     */
-    protected KeywordService getKeywordService() {
-        if (m_keywordService == null) {
-            m_keywordService 
-                = (KeywordService) getApplicationContext()
-                    .getBean("keywordService");
-        }
-        return m_keywordService;
-    }
-    
-    /**
-     * @return Returns the keywordDao.
-     */
-    protected KeywordDao getKeywordDao() {
-        if (m_keywordDao == null) {
-            m_keywordDao 
-                = (KeywordDao) getApplicationContext()
-                    .getBean("keywordDao");
-        }
-        return m_keywordDao;
-    }
+	/**
+	 * Keyword DAO. Created by application context.
+	 */
+	private KeywordDao m_keywordDao;
+	
+	/**
+	 * Hide default constructor.
+	 */
+	protected AbstractKeywordServiceTest() { }
+	
+	/**
+	 * @return Returns the keywordService.
+	 */
+	protected KeywordService getKeywordService() {
+		if (m_keywordService == null) {
+			m_keywordService
+				= (KeywordService) getApplicationContext()
+					.getBean("keywordService");
+		}
+		return m_keywordService;
+	}
+	
+	/**
+	 * @return Returns the keywordDao.
+	 */
+	protected KeywordDao getKeywordDao() {
+		if (m_keywordDao == null) {
+			m_keywordDao
+				= (KeywordDao) getApplicationContext()
+					.getBean("keywordDao");
+		}
+		return m_keywordDao;
+	}
 
-    
-    /**
-     * This test inserts two keywords and removes them using the removeKeywords
-     * method. Afterwards, they should not be reachable any more.
-     */
-    @Test
-    public void testInsertRemoveKeywords() {
-        KeywordService service = getKeywordService();
-        KeywordDao dao = getKeywordDao();
-        
-        Keyword keywordJava = dao.saveOrUpdate(createNewJavaKeyword());
-        Keyword keywordC = dao.saveOrUpdate(createNewCKeyword());
-        
-        List<Keyword> keywordList = dao.getAll();
-        assertEquals(2, keywordList.size());
-        for (Keyword keyword : keywordList) {
-            if (!keywordJava.equals(keyword)
-                && !keywordC.equals(keyword)) {
-                fail("Contains unexpected keyword '" 
-                    + keyword.getName() + "'.");
-            }
-        }
-        
-        Set<Integer> keywordKeys = new HashSet<Integer>();
-        keywordKeys.add(keywordJava.getKey());
-        keywordKeys.add(keywordC.getKey());
-        
-        service.deleteKeywords(keywordKeys);
-        
-        try {
-            dao.findById(keywordJava.getKey());
-            fail("Keyword Java is still in database!");
-        } catch (DataRetrievalFailureException e) {
-            s_logger.debug("Expected exception catched.", e);
-        }
+	
+	/**
+	 * This test inserts two keywords and removes them using the removeKeywords
+	 * method. Afterwards, they should not be reachable any more.
+	 */
+	@Test
+	public void testInsertRemoveKeywords() {
+		KeywordService service = getKeywordService();
+		KeywordDao dao = getKeywordDao();
+		
+		Keyword keywordJava = dao.saveOrUpdate(createNewJavaKeyword());
+		Keyword keywordC = dao.saveOrUpdate(createNewCKeyword());
+		
+		List<Keyword> keywordList = dao.getAll();
+		assertEquals(2, keywordList.size());
+		for (Keyword keyword : keywordList) {
+			if (!keywordJava.equals(keyword)
+				&& !keywordC.equals(keyword)) {
+				fail("Contains unexpected keyword '"
+					+ keyword.getName() + "'.");
+			}
+		}
+		
+		Set<Integer> keywordKeys = new HashSet<Integer>();
+		keywordKeys.add(keywordJava.getKey());
+		keywordKeys.add(keywordC.getKey());
+		
+		service.deleteKeywords(keywordKeys);
+		
+		try {
+			dao.findById(keywordJava.getKey());
+			fail("Keyword Java is still in database!");
+		} catch (DataRetrievalFailureException e) {
+			s_logger.debug("Expected exception catched.", e);
+		}
 
-        try {
-            dao.findById(keywordC.getKey());
-            fail("Keyword C is still in database!");
-        } catch (DataRetrievalFailureException e) {
-            s_logger.debug("Expected exception catched.", e);
-        }
-    }
-    
-    @Test
-    public void testInsertRemoveKeywordsFailing() {
-        KeywordService service = getKeywordService();
-        KeywordDao dao = getKeywordDao();
-        
-        Keyword keywordJava = dao.saveOrUpdate(createNewJavaKeyword());
-        Keyword keywordC = dao.saveOrUpdate(createNewCKeyword());
-        
-        List<Keyword> keywordList = dao.getAll();
-        assertEquals(2, keywordList.size());
-        for (Keyword keyword : keywordList) {
-            if (!keywordJava.equals(keyword)
-                && !keywordC.equals(keyword)) {
-                fail("Contains unexpected keyword '" 
-                    + keyword.getName() + "'.");
-            }
-        }
-        
-        dao.delete(keywordC);
-        
-        try {
-            dao.findById(keywordC.getKey());
-            fail("Keyword C is still in database!");
-        } catch (DataRetrievalFailureException e) {
-            s_logger.debug("Expected exception catched.", e);
-        }
-        
-        Set<Integer> keywordKeys = new LinkedHashSet<Integer>();
-        keywordKeys.add(keywordJava.getKey());
-        keywordKeys.add(keywordC.getKey());
-        
-        try {
-            service.deleteKeywords(keywordKeys);
-            fail("Removing keywords should fail!");
-        } catch (OptimisticLockingFailureException e) {
-            s_logger.debug("Expected exception catched.", e);
-        }
-        
-        keywordList = dao.getAll();
-        assertEquals(1, keywordList.size());
-        for (Keyword keyword : keywordList) {
-            if (!keywordJava.equals(keyword)) {
-                fail("Contains unexpected keyword '" 
-                    + keyword.getName() + "'.");
-            }
-        }
-    }
+		try {
+			dao.findById(keywordC.getKey());
+			fail("Keyword C is still in database!");
+		} catch (DataRetrievalFailureException e) {
+			s_logger.debug("Expected exception catched.", e);
+		}
+	}
+	
+	@Test
+	public void testInsertRemoveKeywordsFailing() {
+		KeywordService service = getKeywordService();
+		KeywordDao dao = getKeywordDao();
+		
+		Keyword keywordJava = dao.saveOrUpdate(createNewJavaKeyword());
+		Keyword keywordC = dao.saveOrUpdate(createNewCKeyword());
+		
+		List<Keyword> keywordList = dao.getAll();
+		assertEquals(2, keywordList.size());
+		for (Keyword keyword : keywordList) {
+			if (!keywordJava.equals(keyword)
+				&& !keywordC.equals(keyword)) {
+				fail("Contains unexpected keyword '"
+					+ keyword.getName() + "'.");
+			}
+		}
+		
+		dao.delete(keywordC);
+		
+		try {
+			dao.findById(keywordC.getKey());
+			fail("Keyword C is still in database!");
+		} catch (DataRetrievalFailureException e) {
+			s_logger.debug("Expected exception catched.", e);
+		}
+		
+		Set<Integer> keywordKeys = new LinkedHashSet<Integer>();
+		keywordKeys.add(keywordJava.getKey());
+		keywordKeys.add(keywordC.getKey());
+		
+		try {
+			service.deleteKeywords(keywordKeys);
+			fail("Removing keywords should fail!");
+		} catch (OptimisticLockingFailureException e) {
+			s_logger.debug("Expected exception catched.", e);
+		}
+		
+		keywordList = dao.getAll();
+		assertEquals(1, keywordList.size());
+		for (Keyword keyword : keywordList) {
+			if (!keywordJava.equals(keyword)) {
+				fail("Contains unexpected keyword '"
+					+ keyword.getName() + "'.");
+			}
+		}
+	}
 
-    /**
-     * @return Returns a newly create keyword with java program language as 
-     *         content.
-     */
-    protected Keyword createNewJavaKeyword() {
-        Keyword keywordJava = new Keyword();
-        keywordJava.setName("Java");
-        keywordJava.setDescription("Java related documentation");
-        return keywordJava;
-    }
-    
-    /**
-     * @return Returns a newly create keyword with c program language as 
-     *         content.
-     */
-    protected Keyword createNewCKeyword() {
-        Keyword keywordC = new Keyword();
-        keywordC.setName("C");
-        keywordC.setDescription("C related documentation");
-        return keywordC;
-    }
+	/**
+	 * @return Returns a newly create keyword with java program language as
+	 *         content.
+	 */
+	protected Keyword createNewJavaKeyword() {
+		Keyword keywordJava = new Keyword();
+		keywordJava.setName("Java");
+		keywordJava.setDescription("Java related documentation");
+		return keywordJava;
+	}
+	
+	/**
+	 * @return Returns a newly create keyword with c program language as
+	 *         content.
+	 */
+	protected Keyword createNewCKeyword() {
+		Keyword keywordC = new Keyword();
+		keywordC.setName("C");
+		keywordC.setDescription("C related documentation");
+		return keywordC;
+	}
 }
 //Checkstyle: MagicNumber on

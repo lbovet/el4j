@@ -29,20 +29,20 @@ package ch.elca.el4j.util.codingsupport;
  * @author Martin Zeltner (MZE)
  */
 public class PreconditionRTException extends AbstractConditionRTException {
-    /**
-     * Default constructor.
-     */
-    public PreconditionRTException() {
-        super("precondition");
-    }
+	/**
+	 * Default constructor.
+	 */
+	public PreconditionRTException() {
+		super("precondition");
+	}
 
-    /**
-     * Constructor to explain the not fulfilled condition.
-     * 
-     * @param message
-     *            Is the message to explain what condition was no fulfilled.
-     */
-    public PreconditionRTException(String message) {
-        super("precondition", message);
-    }
+	/**
+	 * Constructor to explain the not fulfilled condition.
+	 *
+	 * @param message
+	 *            Is the message to explain what condition was no fulfilled.
+	 */
+	public PreconditionRTException(String message) {
+		super("precondition", message);
+	}
 }

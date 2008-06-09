@@ -32,41 +32,41 @@ import ch.elca.el4j.maven.logging.AbstractFormattingLogger;
  */
 public class HtmlLogger extends AbstractFormattingLogger {
 
-    /**
-     * Delegating constructor.
-     * @param threshold The logger level.
-     * @param name The logger name.
-     */
-    public HtmlLogger(int threshold, String name) {
-        super(threshold, name);
-    }
+	/**
+	 * Delegating constructor.
+	 * @param threshold The logger level.
+	 * @param name The logger name.
+	 */
+	public HtmlLogger(int threshold, String name) {
+		super(threshold, name);
+	}
 
-    /** {@inheritDoc} */
-    protected String getPrefix(int level) {
-        switch (level) {
-            case LEVEL_WARN: 
-                return "<font color=\"orange\">";
-            case LEVEL_ERROR: 
-                return "<font color=\"red\">";
-            case LEVEL_FATAL: 
-                return "<font color=\"red\"><b>";
-            default: 
-                return "";
-        }
-    }
+	/** {@inheritDoc} */
+	protected String getPrefix(int level) {
+		switch (level) {
+			case LEVEL_WARN:
+				return "<font color=\"orange\">";
+			case LEVEL_ERROR:
+				return "<font color=\"red\">";
+			case LEVEL_FATAL:
+				return "<font color=\"red\"><b>";
+			default:
+				return "";
+		}
+	}
 
-    /** {@inheritDoc} */
-    protected String getSuffix(int level) {
-        switch(level) {
-            // Fall through intended.
-            case LEVEL_WARN:
-            case LEVEL_ERROR:
-                return "</font>";
-            case LEVEL_FATAL:
-                return "</b></font>";
-            default:
-                return "";
-        }
-    }
-    
+	/** {@inheritDoc} */
+	protected String getSuffix(int level) {
+		switch(level) {
+			// Fall through intended.
+			case LEVEL_WARN:
+			case LEVEL_ERROR:
+				return "</font>";
+			case LEVEL_FATAL:
+				return "</b></font>";
+			default:
+				return "";
+		}
+	}
+	
 }

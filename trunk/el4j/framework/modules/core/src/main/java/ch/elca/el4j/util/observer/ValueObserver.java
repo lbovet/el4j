@@ -19,7 +19,7 @@ package ch.elca.el4j.util.observer;
 /**
  * An object observing (i.e. receiving change notifications about) a reference
  * of type T.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -33,9 +33,9 @@ package ch.elca.el4j.util.observer;
  * @author Adrian Moos (AMS)
  */
 public interface ValueObserver<T> {
-    /** Invoked if the observed reference has changed.
-     * Implementations may not assume that other value observers
-     * have already received their notifications.
-     * @param newRef the new reference */
-    void changed(T newRef);
+	/** Invoked if the observed reference has changed.
+	 * Implementations may not assume that other value observers
+	 * have already received their notifications.
+	 * @param newRef the new reference */
+	void changed(T newRef);
 }

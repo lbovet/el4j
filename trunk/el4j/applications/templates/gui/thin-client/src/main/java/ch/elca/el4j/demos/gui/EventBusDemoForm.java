@@ -32,20 +32,20 @@ import ch.elca.el4j.gui.swing.wrapper.JInteralFrameWrapper;
 
 /**
  * This class demonstates the basic use of EventBus.
- * 
+ *
  * Event handlers are all methods having the following form:
  * <code>
  * @EventSubscriber(eventClass=SomeEvent.class)
  * public void onEvent(SomeEvent event) { ... }
  * </code>
- * 
+ *
  * To subscribe to these events, it is necessary to call
  * <code>AnnotationProcessor.process(this)</code>, unsubscription is done by
  * <code>AnnotationProcessor.unsubscribe(this)</code>
- * 
+ *
  * This is done for us by using {@link JFrameWrapper} or
  * {@link JInteralFrameWrapper}.
- * 
+ *
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -59,34 +59,34 @@ import ch.elca.el4j.gui.swing.wrapper.JInteralFrameWrapper;
 @SuppressWarnings("unchecked")
 public class EventBusDemoForm extends JPanel {
 
-    private JLabel m_lastEvent;
-    
-    public EventBusDemoForm() {
-        m_lastEvent = new JLabel();
-        add(m_lastEvent);
-        
-        setPreferredSize(new Dimension(700, 50));
-        setBounds(0, 0, 500, 50);
-    }
-    
-    @EventSubscriber(eventClass = ExampleEvent.class)
-    public void onEvent(ExampleEvent event) {
-        m_lastEvent.setText("example event: [" + event.getMessage() + "]");
-    }
-    
-    @EventSubscriber(eventClass = SearchProgressEvent.class)
-    public void onEvent(SearchProgressEvent event) {
-        m_lastEvent.setText("search event: [" + event.getMessage() + "]");
-    }
-    
-    /**
-     * Remark: This event is registered an fired by
-     * {@link ch.elca.el4j.gui.swing.AbstractMDIApplication}.
-     * 
-     * @param event    internalFrame event
-     */
-    @EventSubscriber(eventClass = InternalFrameEvent.class)
-    public void onEvent(InternalFrameEvent event) {
-        m_lastEvent.setText("internal frame event: [" + event + "]");
-    }
+	private JLabel m_lastEvent;
+	
+	public EventBusDemoForm() {
+		m_lastEvent = new JLabel();
+		add(m_lastEvent);
+		
+		setPreferredSize(new Dimension(700, 50));
+		setBounds(0, 0, 500, 50);
+	}
+	
+	@EventSubscriber(eventClass = ExampleEvent.class)
+	public void onEvent(ExampleEvent event) {
+		m_lastEvent.setText("example event: [" + event.getMessage() + "]");
+	}
+	
+	@EventSubscriber(eventClass = SearchProgressEvent.class)
+	public void onEvent(SearchProgressEvent event) {
+		m_lastEvent.setText("search event: [" + event.getMessage() + "]");
+	}
+	
+	/**
+	 * Remark: This event is registered an fired by
+	 * {@link ch.elca.el4j.gui.swing.AbstractMDIApplication}.
+	 *
+	 * @param event    internalFrame event
+	 */
+	@EventSubscriber(eventClass = InternalFrameEvent.class)
+	public void onEvent(InternalFrameEvent event) {
+		m_lastEvent.setText("internal frame event: [" + event + "]");
+	}
 }

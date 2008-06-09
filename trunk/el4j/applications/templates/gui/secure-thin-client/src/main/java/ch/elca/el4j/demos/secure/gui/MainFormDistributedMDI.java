@@ -28,67 +28,67 @@ import ch.elca.el4j.gui.swing.splash.ImageSplashScreen;
 
 /**
  * Sample MDI application that demonstrates how to use the framework.
- * 
+ *
  * See also associated MainFormMDI.properties file that contains resources
- * 
+ *
  * <script type="text/javascript">printFileStatus ("$URL:
  * https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/applications/templates/gui/thin-client/src/main/java/ch/elca/el4j/demos/gui/MainFormDistributedMDI.java
  * $", "$Revision$", "$Date: 2007-11-28 11:24:49 +0100 (Mi, 28 Nov 2007)
  * $", "$Author$" );</script>
- * 
+ *
  * @author Stefan Wismer (SWI)
  */
 public final class MainFormDistributedMDI {
 
-    /**
-     * Hide default constructor.
-     */
-    private MainFormDistributedMDI() { }
+	/**
+	 * Hide default constructor.
+	 */
+	private MainFormDistributedMDI() { }
 
-    /**
-     * Sample main application for a GUI.
-     * 
-     * @param args    command line arguments
-     */
-    public static void main(String[] args) {
+	/**
+	 * Sample main application for a GUI.
+	 *
+	 * @param args    command line arguments
+	 */
+	public static void main(String[] args) {
 
-        ImageSplashScreen splashScreen = null;
-        try {
-            // uses default splash screen
-            splashScreen = new ImageSplashScreen();
+		ImageSplashScreen splashScreen = null;
+		try {
+			// uses default splash screen
+			splashScreen = new ImageSplashScreen();
 
-            // add special exception handler
-            Exceptions.getInstance().addHandler(new ExampleExceptionHandler());
+			// add special exception handler
+			Exceptions.getInstance().addHandler(new ExampleExceptionHandler());
 
-            PlasticLookAndFeel.setPlasticTheme(new ExperienceBlue());
+			PlasticLookAndFeel.setPlasticTheme(new ExperienceBlue());
 
-          
-            String[] applicationContextPaths = {
-                "classpath*:mandatory/*.xml",
-                "classpath*:optional/security-client.xml",
-                "classpath*:scenarios/securityscope/distributed-security"
-                    + "-scope-client.xml",
-                //"classpath*:scenarios/services/serviceExporter.xml",
+		
+			String[] applicationContextPaths = {
+				"classpath*:mandatory/*.xml",
+				"classpath*:optional/security-client.xml",
+				"classpath*:scenarios/securityscope/distributed-security"
+					+ "-scope-client.xml",
+				//"classpath*:scenarios/services/serviceExporter.xml",
 
-                "classpath:scenarios/remoting/client/*.xml",
-                "classpath:scenarios/swing/demo/*.xml"
+				"classpath:scenarios/remoting/client/*.xml",
+				"classpath:scenarios/swing/demo/*.xml"
 
-            };
+			};
 
-            ModuleApplicationContextConfiguration contextConfig
-                = new ModuleApplicationContextConfiguration();
+			ModuleApplicationContextConfiguration contextConfig
+				= new ModuleApplicationContextConfiguration();
 
-            contextConfig.setInclusiveConfigLocations(applicationContextPaths);
-            contextConfig.setExclusiveConfigLocations(new String[] {
-                "classpath*:mandatory/refdb-core-service-config.xml"});
-            contextConfig.setAllowBeanDefinitionOverriding(true);
+			contextConfig.setInclusiveConfigLocations(applicationContextPaths);
+			contextConfig.setExclusiveConfigLocations(new String[] {
+				"classpath*:mandatory/refdb-core-service-config.xml"});
+			contextConfig.setAllowBeanDefinitionOverriding(true);
 
-            GUIApplication.launch(MainFormMDI.class, args, contextConfig);
+			GUIApplication.launch(MainFormMDI.class, args, contextConfig);
 
-        } finally {
-            if (splashScreen != null) {
-                splashScreen.dispose();
-            }
-        }
-    }
+		} finally {
+			if (splashScreen != null) {
+				splashScreen.dispose();
+			}
+		}
+	}
 }

@@ -44,49 +44,49 @@ import ch.elca.el4j.tests.remoting.service.CalculatorValueObject;
  * @author Rashid Waraich (RWA)
  */
 public class CalculatorXFireJaxbTest {
-    /**
-     * Is the delta to doubles can have to be equal.
-     */
-    private static final double DOUBLE_TOLERANCE = 0.000000001;
-    
-    /**
-     * Instance of the calculator proxy.
-     */
-    private Calculator m_calc;
+	/**
+	 * Is the delta to doubles can have to be equal.
+	 */
+	private static final double DOUBLE_TOLERANCE = 0.000000001;
+	
+	/**
+	 * Instance of the calculator proxy.
+	 */
+	private Calculator m_calc;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Before
-    public void setUp() {
-        ApplicationContext appContext = new ModuleApplicationContext(
-            new String[] {"classpath*:mandatory/*.xml",
-                          "scenarios/client/remotingtests"
-                          + "-xfire_versioning-client-config.xml"}, 
-                false);
-        m_calc 
-            = (Calculator) appContext.getBean("calculatorJaxbVersioning");
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Before
+	public void setUp() {
+		ApplicationContext appContext = new ModuleApplicationContext(
+			new String[] {"classpath*:mandatory/*.xml",
+				"scenarios/client/remotingtests"
+				+ "-xfire_versioning-client-config.xml"},
+				false);
+		m_calc
+			= (Calculator) appContext.getBean("calculatorJaxbVersioning");
+	}
 
-    /**
-     * This test tests the area calulation method.
-     */
-    @Test
-    public void testAreaCalculation() {
-        final double VALUE_A = 2.3;
-        final double VALUE_B = 5.7;
-        final double FAULT_DELTA = 0.00000001;       
-        double result = m_calc.getArea(VALUE_A, VALUE_B);
-        assertEquals("The area is not correctly calculated.", result, 
-            VALUE_A * VALUE_B, FAULT_DELTA);
-    }
-    
-    /**
-     * This test tests the exception handling.
-     * 
-     * TODO: This test is commented out, because  throwing remote
-     * exceptions does not yet work for the XFire protocol.
-     */
+	/**
+	 * This test tests the area calulation method.
+	 */
+	@Test
+	public void testAreaCalculation() {
+		final double VALUE_A = 2.3;
+		final double VALUE_B = 5.7;
+		final double FAULT_DELTA = 0.00000001;
+		double result = m_calc.getArea(VALUE_A, VALUE_B);
+		assertEquals("The area is not correctly calculated.", result,
+			VALUE_A * VALUE_B, FAULT_DELTA);
+	}
+	
+	/**
+	 * This test tests the exception handling.
+	 *
+	 * TODO: This test is commented out, because  throwing remote
+	 * exceptions does not yet work for the XFire protocol.
+	 */
 //    public void testExceptionBehaviour() {
 //        try {
 //            m_calc.throwMeAnException();
@@ -97,49 +97,49 @@ public class CalculatorXFireJaxbTest {
 //            System.err.println(stackTrace);
 //        }
 //    }
-    
-    /**
-     * This test tests the counting of uppercase letters.
-     */
-    @Test
-    public void testNumberOfUppercaseCharacters() {
-        final int NUMBER_OF_UPPERCASE_LETTERS = 3;
-        String message = "Hans Müller likes to pay with Euro.";
-        int result = m_calc.countNumberOfUppercaseLetters(message);
-        assertEquals("The number of uppercase letter was not " 
-            + "counted correctly.", result, NUMBER_OF_UPPERCASE_LETTERS);
-    }
-        
-    /**
-     * This test is used to test if a value object will be serialized and
-     * deserialized correctly.
-     */
-    @Test
-    public void testEchoOfValueObject() {
- //       final int MY_INT = 449312154;
-        final long MY_LONG = 3121846575454654L;
-        final double MY_DOUBLE = 6994.641368469;
-        final String MY_STRING 
-            = "I can not find any ä, ö, ü, é, è or à character on my keyboard.";
-        final byte[] MY_BYTE_ARRAY = MY_STRING.getBytes();
-        
-        CalculatorValueObject o = new CalculatorValueObject();
-//        o.setMyInt(MY_INT);
-        o.setMyLong(MY_LONG);
-        o.setMyDouble(MY_DOUBLE);
-        o.setMyString(MY_STRING);
-        o.setMyByteArray(MY_BYTE_ARRAY);
-        
-        CalculatorValueObject echo = m_calc.echoValueObject(o);
-//        assertEquals("Int values are not equals.", 
-//            o.getMyInt(), echo.getMyInt());
-        assertEquals("Long values are not equals.", 
-            o.getMyLong(), echo.getMyLong());
-        assertEquals("Double values are not equals.", 
-            o.getMyDouble(), echo.getMyDouble(), DOUBLE_TOLERANCE);
-        assertEquals("Strings are not equals.",
-            o.getMyString(), echo.getMyString());
-        assertTrue("Byte arrays are not equals.",
-            Arrays.equals(o.getMyByteArray(), echo.getMyByteArray()));
-    }
+	
+	/**
+	 * This test tests the counting of uppercase letters.
+	 */
+	@Test
+	public void testNumberOfUppercaseCharacters() {
+		final int NUMBER_OF_UPPERCASE_LETTERS = 3;
+		String message = "Hans Müller likes to pay with Euro.";
+		int result = m_calc.countNumberOfUppercaseLetters(message);
+		assertEquals("The number of uppercase letter was not "
+			+ "counted correctly.", result, NUMBER_OF_UPPERCASE_LETTERS);
+	}
+		
+	/**
+	 * This test is used to test if a value object will be serialized and
+	 * deserialized correctly.
+	 */
+	@Test
+	public void testEchoOfValueObject() {
+		// final int MY_INT = 449312154;
+		final long MY_LONG = 3121846575454654L;
+		final double MY_DOUBLE = 6994.641368469;
+		final String MY_STRING
+			= "I can not find any ä, ö, ü, é, è or à character on my keyboard.";
+		final byte[] MY_BYTE_ARRAY = MY_STRING.getBytes();
+		
+		CalculatorValueObject o = new CalculatorValueObject();
+		// o.setMyInt(MY_INT);
+		o.setMyLong(MY_LONG);
+		o.setMyDouble(MY_DOUBLE);
+		o.setMyString(MY_STRING);
+		o.setMyByteArray(MY_BYTE_ARRAY);
+		
+		CalculatorValueObject echo = m_calc.echoValueObject(o);
+		// assertEquals("Int values are not equals.",
+		// 	o.getMyInt(), echo.getMyInt());
+		assertEquals("Long values are not equals.",
+			o.getMyLong(), echo.getMyLong());
+		assertEquals("Double values are not equals.",
+			o.getMyDouble(), echo.getMyDouble(), DOUBLE_TOLERANCE);
+		assertEquals("Strings are not equals.",
+			o.getMyString(), echo.getMyString());
+		assertTrue("Byte arrays are not equals.",
+			Arrays.equals(o.getMyByteArray(), echo.getMyByteArray()));
+	}
 }

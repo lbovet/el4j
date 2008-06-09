@@ -40,43 +40,43 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
  */
 public class LightStatisticsDemo {
 
-    /** Position of the mandatory configurations. */
-    private static String s_mandatoryFiles = "classpath*:mandatory/*.xml";
-    
-    /** The test bean's name. */
-    private static String s_bean = "bean";
+	/** Position of the mandatory configurations. */
+	private static String s_mandatoryFiles = "classpath*:mandatory/*.xml";
+	
+	/** The test bean's name. */
+	private static String s_bean = "bean";
 
-    /**
-     * Hide default constructor.
-     */
-    protected LightStatisticsDemo() {
-    }
-    
-    /**
-     * The demo main method. It computes three different fibonacci numbers and
-     * sleeps for a second.
-     * @param args Arguments provided by the command line.
-     */
-    public static void main(String[] args) {
-        ApplicationContext ac = new ModuleApplicationContext(s_mandatoryFiles, false);
+	/**
+	 * Hide default constructor.
+	 */
+	protected LightStatisticsDemo() {
+	}
+	
+	/**
+	 * The demo main method. It computes three different fibonacci numbers and
+	 * sleeps for a second.
+	 * @param args Arguments provided by the command line.
+	 */
+	public static void main(String[] args) {
+		ApplicationContext ac = new ModuleApplicationContext(s_mandatoryFiles, false);
 
-        Foo bean = (Foo) ac.getBean(s_bean);
-        
-        // execute some operations
-        // Checkstyle: MagicNumber off
-        bean.fibonacci(20);
-        bean.fibonacci(10);
-        bean.sleepOneSecond();
-        bean.fibonacci(15);
-        // Checkstyle: MagicNumber on
-        
-        System.out.println("Waiting forever...");
-        try {
-            Thread.sleep(Long.MAX_VALUE);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+		Foo bean = (Foo) ac.getBean(s_bean);
+		
+		// execute some operations
+		// Checkstyle: MagicNumber off
+		bean.fibonacci(20);
+		bean.fibonacci(10);
+		bean.sleepOneSecond();
+		bean.fibonacci(15);
+		// Checkstyle: MagicNumber on
+		
+		System.out.println("Waiting forever...");
+		try {
+			Thread.sleep(Long.MAX_VALUE);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 }
 // Checkstyle: UseLogger on
 // Checkstyle: UncommentedMain on

@@ -36,16 +36,16 @@ import ch.elca.el4j.services.exceptionhandler.AbstractExceptionHandlerIntercepto
  */
 public class SimpleLogExceptionHandler extends AbstractExceptionHandler {
 
-    /**
-     * {@inheritDoc}
-     */
-    protected Object handleException(Throwable t,
-            AbstractExceptionHandlerInterceptor exceptionInvoker,
-            MethodInvocation invocation, Log logger) throws Throwable {
-        
-        logger.trace("Exception thrown in "
-                + getInvocationDescription(invocation), t);
-        
-        return null;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	protected Object handleException(Throwable t,
+			AbstractExceptionHandlerInterceptor exceptionInvoker,
+			MethodInvocation invocation, Log logger) throws Throwable {
+		
+		logger.trace("Exception thrown in "
+				+ getInvocationDescription(invocation), t);
+		
+		return null;
+	}
 }

@@ -23,7 +23,7 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import ch.elca.el4j.apps.refdb.dom.FileDescriptorView;
 
 /**
- * 
+ *
  * This interface represents a DAO for the file descriptor view domain object.
  *
  * <script type="text/javascript">printFileStatus
@@ -35,24 +35,24 @@ import ch.elca.el4j.apps.refdb.dom.FileDescriptorView;
  *
  * @author Alex Mathey (AMA)
  */
-public interface FileDescriptorViewDao 
-    extends GenericFileDao<FileDescriptorView, Integer> {
-    
-    /**
-     * Modifies every field of a file, except the content.
-     * 
-     * @param fileView
-     *            Is the file to modify.
-     * @return Returns the modified file descriptor view.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     * @throws OptimisticLockingFailureException
-     *             If file has been modificated in the meantime.
-     * @throws DataRetrievalFailureException
-     *             If file could not be retrieved.
-     */
-    public FileDescriptorView modifyFileDescriptorView(
-        FileDescriptorView fileView)
-        throws DataAccessException, OptimisticLockingFailureException,
-            DataRetrievalFailureException;
+public interface FileDescriptorViewDao
+	extends GenericFileDao<FileDescriptorView, Integer> {
+	
+	/**
+	 * Modifies every field of a file, except the content.
+	 *
+	 * @param fileView
+	 *            Is the file to modify.
+	 * @return Returns the modified file descriptor view.
+	 * @throws DataAccessException
+	 *             If general data access problem occurred.
+	 * @throws OptimisticLockingFailureException
+	 *             If file has been modificated in the meantime.
+	 * @throws DataRetrievalFailureException
+	 *             If file could not be retrieved.
+	 */
+	public FileDescriptorView modifyFileDescriptorView(
+		FileDescriptorView fileView)
+		throws DataAccessException, OptimisticLockingFailureException,
+			DataRetrievalFailureException;
 }

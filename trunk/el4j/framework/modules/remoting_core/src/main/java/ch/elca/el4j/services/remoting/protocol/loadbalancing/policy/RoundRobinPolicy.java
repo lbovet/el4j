@@ -21,7 +21,7 @@ import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailable
 
 
 /**
- * 
+ *
  * Chooses protocols according to a round robin policy.
  *
  * <script type="text/javascript">printFileStatus
@@ -35,19 +35,19 @@ import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailable
  */
 public class RoundRobinPolicy extends AbstractPolicy {
 
-    /** Index of the protocol currently in use. */
-    private int m_currentIndex = -1;
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AbstractRemotingProtocol getNextProtocol() 
-        throws NoProtocolAvailableRTException {
-        if ((m_protocols == null) || (m_protocols.length == 0)) {
-            throw new NoProtocolAvailableRTException("No protocol defined");
-        }
-        m_currentIndex = (m_currentIndex + 1) % m_protocols.length;
-        return m_protocols[m_currentIndex];
-    }   
+	/** Index of the protocol currently in use. */
+	private int m_currentIndex = -1;
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public AbstractRemotingProtocol getNextProtocol()
+		throws NoProtocolAvailableRTException {
+		if ((m_protocols == null) || (m_protocols.length == 0)) {
+			throw new NoProtocolAvailableRTException("No protocol defined");
+		}
+		m_currentIndex = (m_currentIndex + 1) % m_protocols.length;
+		return m_protocols[m_currentIndex];
+	}
 }

@@ -36,32 +36,32 @@ import ch.elca.el4j.services.monitoring.jmx.display.HtmlTabulator;
  */
 public class HtmlTabulatorTest {
 
-    @Test
-    public void testSimpleTableGeneration() {
-        Random generator = new Random();
-        
-        // Cols in [2,10)
-        int numCols = generator.nextInt(8) + 2;
-        HtmlTabulator table;
-        
-        String[] titleRow = new String[numCols];
-        for (int i = 0; i < numCols; i++) {
-            titleRow[i] = "Column " + i;
-        }
-        table = new HtmlTabulator(titleRow);
-        
-        // Rows in [10, 210)
-        int numRows = generator.nextInt(100) + 10;
-        
-        for (int i = 0; i < numRows; i++) {
-            String[] row = new String[numCols];
-            for (int j = 0; j < numCols; j++) {
-                row[j] = "" + ((i+j) % 1000);
-            }
-            table.addRow(row);
-        }
-        
-        String theTable = table.tabulate();
-        // TODO: Parse generated table here?
-    }
+	@Test
+	public void testSimpleTableGeneration() {
+		Random generator = new Random();
+		
+		// Cols in [2,10)
+		int numCols = generator.nextInt(8) + 2;
+		HtmlTabulator table;
+		
+		String[] titleRow = new String[numCols];
+		for (int i = 0; i < numCols; i++) {
+			titleRow[i] = "Column " + i;
+		}
+		table = new HtmlTabulator(titleRow);
+		
+		// Rows in [10, 210)
+		int numRows = generator.nextInt(100) + 10;
+		
+		for (int i = 0; i < numRows; i++) {
+			String[] row = new String[numCols];
+			for (int j = 0; j < numCols; j++) {
+				row[j] = "" + ((i+j) % 1000);
+			}
+			table.addRow(row);
+		}
+		
+		String theTable = table.tabulate();
+		// TODO: Parse generated table here?
+	}
 }

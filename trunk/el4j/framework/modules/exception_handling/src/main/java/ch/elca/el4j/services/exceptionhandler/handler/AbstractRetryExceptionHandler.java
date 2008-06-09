@@ -42,70 +42,70 @@ import ch.elca.el4j.services.exceptionhandler.SafetyFacadeInterceptor;
  * @author Andreas Bur (ABU)
  */
 public abstract class AbstractRetryExceptionHandler
-    extends AbstractExceptionHandler {
+	extends AbstractExceptionHandler {
 
-    /** The default number of retries. */
-    private static final int DEFAULT_RETRIES = 5;
-    
-    /** Number of retires. Default is <code>5</code>. */
-    private int m_retries = DEFAULT_RETRIES;
-    
-    /**
-     * Sets the number of retires. Default is <code>5</code>.
-     * 
-     * @param retries
-     *      The number of retries to set.
-     */
-    public void setRetries(int retries) {
-        m_retries = retries;
-    }
-    
-    /**
-     * @return Returns the number of expected retires.
-     */
-    protected int getRetries() {
-        return m_retries;
-    }
+	/** The default number of retries. */
+	private static final int DEFAULT_RETRIES = 5;
+	
+	/** Number of retires. Default is <code>5</code>. */
+	private int m_retries = DEFAULT_RETRIES;
+	
+	/**
+	 * Sets the number of retires. Default is <code>5</code>.
+	 *
+	 * @param retries
+	 *      The number of retries to set.
+	 */
+	public void setRetries(int retries) {
+		m_retries = retries;
+	}
+	
+	/**
+	 * @return Returns the number of expected retires.
+	 */
+	protected int getRetries() {
+		return m_retries;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object handleException(Throwable t,
-            AbstractExceptionHandlerInterceptor exceptionInvoker,
-            MethodInvocation invocation, Log logger) throws Throwable {
-        
-        if (SafetyFacadeInterceptor.getRetries() == -1
-                || SafetyFacadeInterceptor.getRetries() > 0) {
-            return retry(t, exceptionInvoker, invocation, logger);
-            
-        } else {
-            throw t;
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object handleException(Throwable t,
+			AbstractExceptionHandlerInterceptor exceptionInvoker,
+			MethodInvocation invocation, Log logger) throws Throwable {
+		
+		if (SafetyFacadeInterceptor.getRetries() == -1
+				|| SafetyFacadeInterceptor.getRetries() > 0) {
+			return retry(t, exceptionInvoker, invocation, logger);
+			
+		} else {
+			throw t;
+		}
+	}
 
-    /**
-     * Creates a new retry exception. Subclasses may also do some other tasks
-     * (e.g. waiting). This method is called only if the number of retires is
-     * not already exceeded.
-     * 
-     * @param t
-     *      The exception thrown in the method invocation.
-     *      
-     * @param exceptionInvoker
-     *      The exception invoker that called this exception handler.
-     * 
-     * @param invocation
-     *      The original method invocation.
-     * @param logger
-     *      The logger to be used by subclasses.
-     *      
-     * @return Returns an object that is treated as the original invocation's
-     *      return value.
-     *      
-     * @throws Throwable
-     *      Whenever something goes wrong.
-     */
-    protected abstract Object retry(Throwable t,
-            AbstractExceptionHandlerInterceptor exceptionInvoker,
-            MethodInvocation invocation, Log logger) throws Throwable;
+	/**
+	 * Creates a new retry exception. Subclasses may also do some other tasks
+	 * (e.g. waiting). This method is called only if the number of retires is
+	 * not already exceeded.
+	 *
+	 * @param t
+	 *      The exception thrown in the method invocation.
+	 *
+	 * @param exceptionInvoker
+	 *      The exception invoker that called this exception handler.
+	 *
+	 * @param invocation
+	 *      The original method invocation.
+	 * @param logger
+	 *      The logger to be used by subclasses.
+	 *
+	 * @return Returns an object that is treated as the original invocation's
+	 *      return value.
+	 *
+	 * @throws Throwable
+	 *      Whenever something goes wrong.
+	 */
+	protected abstract Object retry(Throwable t,
+			AbstractExceptionHandlerInterceptor exceptionInvoker,
+			MethodInvocation invocation, Log logger) throws Throwable;
 }

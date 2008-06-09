@@ -23,36 +23,36 @@ import ch.elca.el4j.plugins.database.AbstractDBExecutionMojo;
 
 
 /**
- * This class is a database mojo for the 'destroy' statement. 
+ * This class is a database mojo for the 'destroy' statement.
  * It deletes all database tables.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @goal destroy
  * @author Stefan Wismer (SWI)
  */
 public class DestroyMojo extends AbstractDBExecutionMojo {
 
-    /**
-     * Action this mojo is implementing and identifier sql files have to start
-     * with.
-     */
-    private static final String ACTION = "destroy";
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void executeInternal() throws MojoExecutionException, MojoFailureException {
-        try {
-            executeAction(ACTION, true, false);
-        } catch (Exception e) {
-            throw new MojoFailureException(e.getMessage());
-        }
-    }
+	/**
+	 * Action this mojo is implementing and identifier sql files have to start
+	 * with.
+	 */
+	private static final String ACTION = "destroy";
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void executeInternal() throws MojoExecutionException, MojoFailureException {
+		try {
+			executeAction(ACTION, true, false);
+		} catch (Exception e) {
+			throw new MojoFailureException(e.getMessage());
+		}
+	}
 
 }

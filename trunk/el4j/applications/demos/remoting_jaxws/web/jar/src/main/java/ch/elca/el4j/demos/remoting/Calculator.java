@@ -34,40 +34,40 @@ package ch.elca.el4j.demos.remoting;
  */
 
 public interface Calculator {
-    /**
-     * This method calculates the area of a rectangle.
-     * 
-     * @param a
-     *            Is the first side.
-     * @param b
-     *            Is the second side.
-     * @return Returns the area of the triangle.
-     */
-    public double getArea(double a, double b);
-    
-    /**
-     * This method throws an exception for test reason.
-     * 
-     * @throws CalculatorException will be thrown every time.
-     */
-    public void throwMeAnException() throws CalculatorException;
-    
-    /**
-     * This method counts all uppercase letters of a text. 
-     * 
-     * @param text Is the object to analyze.
-     * @return Returns the number of uppercase letters.
-     */
-    public int countNumberOfUppercaseLetters(String text);
-    
-    /**
-     * This method adds two complex numbers.
-     * 
-     * @param cn1
-     *              The first ComplexNumber
-     * @param cn2
-     *              The second ComplexNumber
-     * @return Returns the sum of the ComplexNumbers
-     */
-    public ComplexNumber add(ComplexNumber cn1, ComplexNumber cn2);
+	/**
+	 * This method calculates the area of a rectangle.
+	 *
+	 * @param a
+	 *            Is the first side.
+	 * @param b
+	 *            Is the second side.
+	 * @return Returns the area of the triangle.
+	 */
+	public double getArea(double a, double b);
+	
+	/**
+	 * This method throws an exception for test reason.
+	 *
+	 * @throws CalculatorException will be thrown every time.
+	 */
+	public void throwMeAnException() throws CalculatorException;
+	
+	/**
+	 * This method counts all uppercase letters of a text.
+	 *
+	 * @param text Is the object to analyze.
+	 * @return Returns the number of uppercase letters.
+	 */
+	public int countNumberOfUppercaseLetters(String text);
+	
+	/**
+	 * This method adds two complex numbers.
+	 *
+	 * @param cn1
+	 *              The first ComplexNumber
+	 * @param cn2
+	 *              The second ComplexNumber
+	 * @return Returns the sum of the ComplexNumbers
+	 */
+	public ComplexNumber add(ComplexNumber cn1, ComplexNumber cn2);
 }

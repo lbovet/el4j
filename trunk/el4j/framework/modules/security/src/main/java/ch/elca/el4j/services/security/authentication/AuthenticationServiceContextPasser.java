@@ -29,7 +29,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 /**
  * The ImplicitContextPasser for the AuthenticationService. It handles the
  * passing of the AuthenticationData and stores it in a ThreadLocal.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -37,47 +37,47 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  *    "$Author$"
  * );</script>
  *
- * @author Raphael Boog (RBO) 
+ * @author Raphael Boog (RBO)
  * @author Andreas Pfenninger (APR)
  */
 public class AuthenticationServiceContextPasser extends
-    AbstractImplicitContextPasser {
+	AbstractImplicitContextPasser {
 
-    /**
-     * Private logger of this class.
-     */
-    private static Log s_logger = LogFactory
-        .getLog(AuthenticationServiceContextPasser.class);
+	/**
+	 * Private logger of this class.
+	 */
+	private static Log s_logger = LogFactory
+		.getLog(AuthenticationServiceContextPasser.class);
 
-    /**
-     * This method is called by the client that makes a remote invocation to
-     * collect the implicitly passed context and add it to the request. The
-     * authentication data is fetched from the SecurityContextHolder.
-     * 
-     * @return The authentication data for the currently logged in user
-     * @see ch.elca.el4j.core.contextpassing.AbstractImplicitContextPasser
-     */
-    public Object getImplicitlyPassedContext() {
-        return SecurityContextHolder.getContext().getAuthentication();
-    }
+	/**
+	 * This method is called by the client that makes a remote invocation to
+	 * collect the implicitly passed context and add it to the request. The
+	 * authentication data is fetched from the SecurityContextHolder.
+	 *
+	 * @return The authentication data for the currently logged in user
+	 * @see ch.elca.el4j.core.contextpassing.AbstractImplicitContextPasser
+	 */
+	public Object getImplicitlyPassedContext() {
+		return SecurityContextHolder.getContext().getAuthentication();
+	}
 
-    /**
-     * This method is called by the server that receives a remote invocation
-     * to push the context to the service. The authentication data is stored in
-     * the SecurityContextHolder.
-     * 
-     * @param context
-     *            The received implicit context for this passer.
-     * @throws ImplicitContextPassingRTException
-     * @see ch.elca.el4j.core.contextpassing.AbstractImplicitContextPasser
-     */
-    public void pushImplicitlyPassedContext(Object context) {
-        if (context == null) {
-            s_logger.warn("Authentication == null");
-            return;
-        }
-        Authentication ad = (Authentication) context;
-        SecurityContextHolder.getContext().setAuthentication(ad);
-    }
+	/**
+	 * This method is called by the server that receives a remote invocation
+	 * to push the context to the service. The authentication data is stored in
+	 * the SecurityContextHolder.
+	 *
+	 * @param context
+	 *            The received implicit context for this passer.
+	 * @throws ImplicitContextPassingRTException
+	 * @see ch.elca.el4j.core.contextpassing.AbstractImplicitContextPasser
+	 */
+	public void pushImplicitlyPassedContext(Object context) {
+		if (context == null) {
+			s_logger.warn("Authentication == null");
+			return;
+		}
+		Authentication ad = (Authentication) context;
+		SecurityContextHolder.getContext().setAuthentication(ad);
+	}
 
 }

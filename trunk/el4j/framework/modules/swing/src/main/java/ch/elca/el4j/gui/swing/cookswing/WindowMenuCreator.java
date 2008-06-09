@@ -45,77 +45,77 @@ import cookxml.core.interfaces.Creator;
  */
 public class WindowMenuCreator implements Creator {
 
-    /**
-     * This {@link MenuListener} lazily initialized the window menu. This
-     * is necessary because generally the desktop pane XML element is declared
-     * after the menu and therefore the cannot be resolved.
-     */
-    private class LazyWindowMenuCreator implements MenuListener {
-        /**
-         * The cookXML decoder engine.
-         */
-        private DecodeEngine m_decodeEngine;
-        
-        /**
-         * The window menu.
-         */
-        private WindowMenu m_menu;
-        
-        /**
-         * The id of the desktop pane XML element.
-         */
-        private String m_desktopPaneId;
-        
-        /**
-         * @param decodeEngine     the cookXML decoder engine
-         * @param menu             the window menu
-         * @param desktopPaneId    the id of the desktop pane XML element
-         */
-        public LazyWindowMenuCreator(DecodeEngine decodeEngine,
-            WindowMenu menu, String desktopPaneId) {
-            
-            m_decodeEngine = decodeEngine;
-            m_menu = menu;
-            m_desktopPaneId = desktopPaneId;
-        }
-        
-        /** {@inheritDoc} */
-        public void menuSelected(MenuEvent e) {
-            if (m_menu.getWindowManager() == null && m_decodeEngine != null) {
-                JDesktopPane desktopPane = (JDesktopPane) m_decodeEngine
-                .getCookXml().getId(m_desktopPaneId).object;
-                WindowManager windowManager = new WindowManager(
-                    desktopPane, m_menu);
-                m_menu.setWindowManager(windowManager);
-                
-                m_decodeEngine = null;
-                
-            }
-        }
-        
-        /** {@inheritDoc} */
-        public void menuDeselected(MenuEvent e) { }
-        
-        /** {@inheritDoc} */
-        public void menuCanceled(MenuEvent e) { }
-    }
-    
-    /** {@inheritDoc} */
-    public Object create(String parentNS, String parentTag, Element elm,
-        Object parentObj, DecodeEngine decodeEngine) throws CreatorException {
+	/**
+	 * This {@link MenuListener} lazily initialized the window menu. This
+	 * is necessary because generally the desktop pane XML element is declared
+	 * after the menu and therefore the cannot be resolved.
+	 */
+	private class LazyWindowMenuCreator implements MenuListener {
+		/**
+		 * The cookXML decoder engine.
+		 */
+		private DecodeEngine m_decodeEngine;
+		
+		/**
+		 * The window menu.
+		 */
+		private WindowMenu m_menu;
+		
+		/**
+		 * The id of the desktop pane XML element.
+		 */
+		private String m_desktopPaneId;
+		
+		/**
+		 * @param decodeEngine     the cookXML decoder engine
+		 * @param menu             the window menu
+		 * @param desktopPaneId    the id of the desktop pane XML element
+		 */
+		public LazyWindowMenuCreator(DecodeEngine decodeEngine,
+			WindowMenu menu, String desktopPaneId) {
+			
+			m_decodeEngine = decodeEngine;
+			m_menu = menu;
+			m_desktopPaneId = desktopPaneId;
+		}
+		
+		/** {@inheritDoc} */
+		public void menuSelected(MenuEvent e) {
+			if (m_menu.getWindowManager() == null && m_decodeEngine != null) {
+				JDesktopPane desktopPane = (JDesktopPane) m_decodeEngine
+				.getCookXml().getId(m_desktopPaneId).object;
+				WindowManager windowManager = new WindowManager(
+					desktopPane, m_menu);
+				m_menu.setWindowManager(windowManager);
+				
+				m_decodeEngine = null;
+				
+			}
+		}
+		
+		/** {@inheritDoc} */
+		public void menuDeselected(MenuEvent e) { }
+		
+		/** {@inheritDoc} */
+		public void menuCanceled(MenuEvent e) { }
+	}
+	
+	/** {@inheritDoc} */
+	public Object create(String parentNS, String parentTag, Element elm,
+		Object parentObj, DecodeEngine decodeEngine) throws CreatorException {
 
-        WindowMenu windowMenu = new WindowMenu();
-        windowMenu.addMenuListener(new LazyWindowMenuCreator(
-            decodeEngine, windowMenu, elm.getAttribute("desktopPaneId")));
-        
-        return windowMenu;
-    }
+		WindowMenu windowMenu = new WindowMenu();
+		windowMenu.addMenuListener(new LazyWindowMenuCreator(
+			decodeEngine, windowMenu, elm.getAttribute("desktopPaneId")));
+		
+		return windowMenu;
+	}
 
-    /** {@inheritDoc} */
-    public Object editFinished(String parentNS, String parentTag, Element elm,
-        Object parentObj, Object obj, DecodeEngine decodeEngine)
-        throws CookXmlException {
-        
-        return obj;
-    }
+	/** {@inheritDoc} */
+	public Object editFinished(String parentNS, String parentTag, Element elm,
+		Object parentObj, Object obj, DecodeEngine decodeEngine)
+		throws CookXmlException {
+		
+		return obj;
+	}
 }

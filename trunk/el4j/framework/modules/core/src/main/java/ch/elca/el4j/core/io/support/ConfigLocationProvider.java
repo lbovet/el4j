@@ -37,13 +37,13 @@ import org.springframework.core.io.Resource;
  */
 public interface ConfigLocationProvider {
 
-    /**
-     * @return Returns a list of configuration locations.
-     */
-    public String[] getConfigLocations();
-    
-    /**
-     * @return Returns a list of resolved configuration locations.
-     */
-    public Resource[] getConfigLocationResources();
+	/**
+	 * @return Returns a list of configuration locations.
+	 */
+	public String[] getConfigLocations();
+	
+	/**
+	 * @return Returns a list of resolved configuration locations.
+	 */
+	public Resource[] getConfigLocationResources();
 }

@@ -39,44 +39,44 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
  * @author Martin Zeltner (MZE)
  */
 public class TestImplicitContextPassingRegistry implements
-        ImplicitContextPassingRegistry {
-    /**
-     * Private logger.
-     */
-    private static Log s_logger = LogFactory
-            .getLog(TestImplicitContextPassingRegistry.class);
+		ImplicitContextPassingRegistry {
+	/**
+	 * Private logger.
+	 */
+	private static Log s_logger = LogFactory
+			.getLog(TestImplicitContextPassingRegistry.class);
 
-    /**
-     * {@inheritDoc}
-     */
-    public void registerImplicitContextPasser(
-        ImplicitContextPasser passer) {
-        // Do nothing.
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void registerImplicitContextPasser(
+		ImplicitContextPasser passer) {
+		// Do nothing.
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void unregisterImplicitContextPasser(
-        ImplicitContextPasser passer) {
-        // Do nothing.
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    public Map getAssembledImplicitContext() {
-        Map map = new HashMap();
-        map.put("testMessage", "Hello everybody, I am THE test message.");
-        return map;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void unregisterImplicitContextPasser(
+		ImplicitContextPasser passer) {
+		// Do nothing.
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	public Map getAssembledImplicitContext() {
+		Map map = new HashMap();
+		map.put("testMessage", "Hello everybody, I am THE test message.");
+		return map;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    public void pushAssembledImplicitContext(Map contexts) {
-        s_logger.info("Test message: " + contexts.get("testMessage"));
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	public void pushAssembledImplicitContext(Map contexts) {
+		s_logger.info("Test message: " + contexts.get("testMessage"));
+	}
 }

@@ -31,61 +31,61 @@ import ch.elca.el4j.services.persistence.generic.primarykey.UuidPrimaryKeyGenera
 
 /**
  * This is the unit test for <code>UuidPrimaryKeyGenerator</code>.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Jacques-Olivier Haenni (JOH)
  */
 public class UuidPrimaryKeyGeneratorTest {
-    /**
-     * Tests the key size.
-     */
-    @Test
-    public void testKeySize() {
-        String key = getPrimaryKeyGenerator().getPrimaryKey();
-        assertEquals("The size of the PK is not correct.", 32, key.length());
-    }
+	/**
+	 * Tests the key size.
+	 */
+	@Test
+	public void testKeySize() {
+		String key = getPrimaryKeyGenerator().getPrimaryKey();
+		assertEquals("The size of the PK is not correct.", 32, key.length());
+	}
 
-    /**
-     * Tests whether generated keys are unique.
-     */
-    @Test
-    public void testKeyUnicity() {
-        PrimaryKeyGenerator pkg = getPrimaryKeyGenerator();
-        Set<String> set = new HashSet<String>();
-        int count = 2000;
-        for (int i = 0; i < count; i++) {
-            set.add(pkg.getPrimaryKey());
-        }
-        assertEquals("Some generated keys were equals.", count, set.size());
-    }
+	/**
+	 * Tests whether generated keys are unique.
+	 */
+	@Test
+	public void testKeyUnicity() {
+		PrimaryKeyGenerator pkg = getPrimaryKeyGenerator();
+		Set<String> set = new HashSet<String>();
+		int count = 2000;
+		for (int i = 0; i < count; i++) {
+			set.add(pkg.getPrimaryKey());
+		}
+		assertEquals("Some generated keys were equals.", count, set.size());
+	}
 
-    /**
-     * Checks the keys' format.
-     *
-     */
-    @Test
-    public void testKeyFormat() {
-        PrimaryKeyGenerator pkg = getPrimaryKeyGenerator();
-        int count = 2000;
-        for (int i = 0; i < count; i++) {
-            String key = pkg.getPrimaryKey();
-            assertEquals("The size of the PK is not correct.",
-                    32, key.length());
-            assertTrue("The key contains spaces.", key.indexOf(' ') == -1);
-        }
-    }
+	/**
+	 * Checks the keys' format.
+	 *
+	 */
+	@Test
+	public void testKeyFormat() {
+		PrimaryKeyGenerator pkg = getPrimaryKeyGenerator();
+		int count = 2000;
+		for (int i = 0; i < count; i++) {
+			String key = pkg.getPrimaryKey();
+			assertEquals("The size of the PK is not correct.",
+					32, key.length());
+			assertTrue("The key contains spaces.", key.indexOf(' ') == -1);
+		}
+	}
 
-    /**
-     * @return Returns a new key generator instance.
-     */
-    private PrimaryKeyGenerator getPrimaryKeyGenerator() {
-        return new UuidPrimaryKeyGenerator();
-    }
+	/**
+	 * @return Returns a new key generator instance.
+	 */
+	private PrimaryKeyGenerator getPrimaryKeyGenerator() {
+		return new UuidPrimaryKeyGenerator();
+	}
 }
 //Checkstyle: MagicNumber on

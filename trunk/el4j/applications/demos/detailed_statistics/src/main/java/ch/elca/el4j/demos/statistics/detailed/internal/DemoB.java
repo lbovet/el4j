@@ -17,46 +17,46 @@
 package ch.elca.el4j.demos.statistics.detailed.internal;
 
 /**
- *  This class is a dummy class for presentation purposes for the 
+ *  This class is a dummy class for presentation purposes for the
  *  detailed statistics demo.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author David Stefan (DST)
  */
 public class DemoB {
 
-    /** Nonsense printer. */
-    private DemoC m_printer;
+	/** Nonsense printer. */
+	private DemoC m_printer;
 
-    /**
-     * {@inheritDoc}
-     */
-    public void computeB(int count) {
-        for (int i = 0; i < count; i++) {
-            // Checkstyle: MagicNumber off
-            try {
-                Thread.sleep(14);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            // Checkstyle: MagicNumber on
-            m_printer.print();
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void computeB(int count) {
+		for (int i = 0; i < count; i++) {
+			// Checkstyle: MagicNumber off
+			try {
+				Thread.sleep(14);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			// Checkstyle: MagicNumber on
+			m_printer.print();
+		}
+	}
 
-    /**
-     * Set printer.
-     * 
-     * @param demoC to set
-     */
-    public void setDemoC(DemoC demoC) {
-        this.m_printer = demoC;
-    }
+	/**
+	 * Set printer.
+	 *
+	 * @param demoC to set
+	 */
+	public void setDemoC(DemoC demoC) {
+		this.m_printer = demoC;
+	}
 
 }

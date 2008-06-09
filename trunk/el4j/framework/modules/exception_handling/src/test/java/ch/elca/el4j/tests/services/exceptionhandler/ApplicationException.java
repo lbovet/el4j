@@ -31,13 +31,13 @@ package ch.elca.el4j.tests.services.exceptionhandler;
  */
 public class ApplicationException extends Exception {
 
-    /**
-     * Constructor.
-     * 
-     * @param message
-     *      A message.
-     */
-    public ApplicationException(String message) {
-        super(message);
-    }
+	/**
+	 * Constructor.
+	 *
+	 * @param message
+	 *      A message.
+	 */
+	public ApplicationException(String message) {
+		super(message);
+	}
 }

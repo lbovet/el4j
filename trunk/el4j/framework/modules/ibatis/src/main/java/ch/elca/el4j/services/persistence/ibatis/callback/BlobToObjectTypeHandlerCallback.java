@@ -34,75 +34,75 @@ import com.ibatis.sqlmap.client.extensions.TypeHandlerCallback;
 /**
  * Type handler callback for iBatis SqlMaps 2.0 to store an object as a byte
  * array an vice versa.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Andreas Pfenninger (APR)
  */
 public class BlobToObjectTypeHandlerCallback implements TypeHandlerCallback {
-    /**
-     * Private logger of this class.
-     */
-    private static Log s_logger = LogFactory
-            .getLog(BlobToObjectTypeHandlerCallback.class);
+	/**
+	 * Private logger of this class.
+	 */
+	private static Log s_logger = LogFactory
+			.getLog(BlobToObjectTypeHandlerCallback.class);
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object getResult(ResultGetter getter) throws SQLException {
-        Object object = null;
-        try {
-            Blob blob = getter.getBlob();
-            if (blob != null) {
-                InputStream is = blob.getBinaryStream();
-                ObjectInputStream ois = new ObjectInputStream(is);
-                object = ois.readObject();
-                s_logger.debug("Object deserialized");
-            }
-        } catch (SQLException sqle) {
-            s_logger.debug("rethrow SQLException", sqle);
-            throw sqle;
-        } catch (IOException ioe) {
-            s_logger.debug("caught unexpected IOException", ioe);
-        } catch (ClassNotFoundException cnfe) {
-            s_logger.debug("caught unexpected ClassNotFoundException", cnfe);
-        }
-        return object;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object getResult(ResultGetter getter) throws SQLException {
+		Object object = null;
+		try {
+			Blob blob = getter.getBlob();
+			if (blob != null) {
+				InputStream is = blob.getBinaryStream();
+				ObjectInputStream ois = new ObjectInputStream(is);
+				object = ois.readObject();
+				s_logger.debug("Object deserialized");
+			}
+		} catch (SQLException sqle) {
+			s_logger.debug("rethrow SQLException", sqle);
+			throw sqle;
+		} catch (IOException ioe) {
+			s_logger.debug("caught unexpected IOException", ioe);
+		} catch (ClassNotFoundException cnfe) {
+			s_logger.debug("caught unexpected ClassNotFoundException", cnfe);
+		}
+		return object;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void setParameter(ParameterSetter setter, Object object)
-        throws SQLException {
-        try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(baos);
-            oos.writeObject(object);
-            oos.flush();
-            baos.flush();
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setParameter(ParameterSetter setter, Object object)
+		throws SQLException {
+		try {
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream(baos);
+			oos.writeObject(object);
+			oos.flush();
+			baos.flush();
 
-            byte[] bytes = baos.toByteArray();
-            s_logger.debug("Object serialized");
+			byte[] bytes = baos.toByteArray();
+			s_logger.debug("Object serialized");
 
-            oos.close();
-            baos.close();
+			oos.close();
+			baos.close();
 
-            setter.setBytes(bytes);
-        } catch (IOException ioe) {
-            s_logger.info("caught unexpected IOException", ioe);
-        }
-    }
+			setter.setBytes(bytes);
+		} catch (IOException ioe) {
+			s_logger.info("caught unexpected IOException", ioe);
+		}
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object valueOf(String s) {
-        return s;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object valueOf(String s) {
+		return s;
+	}
 }

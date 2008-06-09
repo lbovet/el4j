@@ -32,14 +32,14 @@ import ch.elca.el4j.core.exceptions.BaseException;
  * @author Martin Zeltner (MZE)
  */
 public class SpecialCalculatorException extends BaseException {
-    /**
-     * Constructor.
-     * 
-     * @param action
-     *            Is the dynamic part of this exception.
-     */
-    public SpecialCalculatorException(String action) {
-        super("This is a test exception with action {0}.", 
-            new Object[] {action});
-    }
+	/**
+	 * Constructor.
+	 *
+	 * @param action
+	 *            Is the dynamic part of this exception.
+	 */
+	public SpecialCalculatorException(String action) {
+		super("This is a test exception with action {0}.",
+			new Object[] {action});
+	}
 }

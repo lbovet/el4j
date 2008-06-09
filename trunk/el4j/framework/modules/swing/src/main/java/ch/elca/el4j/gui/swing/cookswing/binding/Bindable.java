@@ -32,9 +32,9 @@ import com.silvermindsoftware.hitch.Binder;
  * @author Stefan Wismer (SWI)
  */
 public interface Bindable {
-    /**
-     * @return    the binder that controls binding between GUI components and
-     *            the model behind
-     */
-    public Binder getBinder();
+	/**
+	 * @return    the binder that controls binding between GUI components and
+	 *            the model behind
+	 */
+	public Binder getBinder();
 }

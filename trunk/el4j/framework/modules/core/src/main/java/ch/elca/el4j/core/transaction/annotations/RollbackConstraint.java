@@ -24,7 +24,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation is a subsection of class 
+ * This annotation is a subsection of class
  * {@link org.springframework.transaction.annotation.Transactional}. It is
  * mostly used on interfaces to pre-define the rule-based behavior of
  * transactions. It is only useful in combination with annotation
@@ -46,64 +46,64 @@ import java.lang.annotation.Target;
 @Inherited
 @Documented
 public @interface RollbackConstraint {
-    /**
-     * Defines zero (0) or more exception {@link Class classes}, which must be
-     * a subclass of {@link Throwable}, indicating which exception types must
-     * cause a transaction rollback.
-     * <p>
-     * This is the preferred way to construct a rollback rule, matching the
-     * exception class and subclasses.
-     * <p>
-     * Similar to
-     * {@link org.springframework.transaction.interceptor.RollbackRuleAttribute#RollbackRuleAttribute(Class clazz)}
-     */
-    Class<? extends Throwable>[] rollbackFor() default { };
-    
-    /**
-     * Defines zero (0) or more exception names (for exceptions which must be a
-     * subclass of {@link Throwable}), indicating which exception types must
-     * cause a transaction rollback.
-     * <p>
-     * This can be a substring, with no wildcard support at present. A value of
-     * "ServletException" would match {@link javax.servlet.ServletException} and
-     * subclasses, for example.
-     * <p>
-     * <b>NB: </b>Consider carefully how specific the pattern is, and whether to
-     * include package information (which isn't mandatory). For example,
-     * "Exception" will match nearly anything, and will probably hide other
-     * rules. "java.lang.Exception" would be correct if "Exception" was meant to
-     * define a rule for all checked exceptions. With more unusual
-     * {@link Exception} names such as "BaseBusinessException" there is no need
-     * to use a FQN.
-     * <p>
-     * Similar to
-     * {@link org.springframework.transaction.interceptor.RollbackRuleAttribute#RollbackRuleAttribute(String exceptionName)}
-     */
-    String[] rollbackForClassName() default { };
-    
-    /**
-     * Defines zero (0) or more exception {@link Class Classes}, which must be
-     * a subclass of {@link Throwable}, indicating which exception types must
-     * <b>not</b> cause a transaction rollback.
-     * <p>
-     * This is the preferred way to construct a rollback rule, matching the
-     * exception class and subclasses.
-     * <p>
-     * Similar to
-     * {@link org.springframework.transaction.interceptor.NoRollbackRuleAttribute#NoRollbackRuleAttribute(Class clazz)}
-     */
-    Class<? extends Throwable>[] noRollbackFor() default { };
-    
-    /**
-     * Defines zero (0) or more exception names (for exceptions which must be a
-     * subclass of {@link Throwable}) indicating which exception types must
-     * <b>not</b> cause a transaction rollback.
-     * <p>
-     * See the description of {@link #rollbackForClassName()} for more info on
-     * how the specified names are treated.
-     * <p>
-     * Similar to
-     * {@link org.springframework.transaction.interceptor.NoRollbackRuleAttribute#NoRollbackRuleAttribute(String exceptionName)}
-     */
-    String[] noRollbackForClassName() default { };
+	/**
+	 * Defines zero (0) or more exception {@link Class classes}, which must be
+	 * a subclass of {@link Throwable}, indicating which exception types must
+	 * cause a transaction rollback.
+	 * <p>
+	 * This is the preferred way to construct a rollback rule, matching the
+	 * exception class and subclasses.
+	 * <p>
+	 * Similar to
+	 * {@link org.springframework.transaction.interceptor.RollbackRuleAttribute#RollbackRuleAttribute(Class clazz)}
+	 */
+	Class<? extends Throwable>[] rollbackFor() default { };
+	
+	/**
+	 * Defines zero (0) or more exception names (for exceptions which must be a
+	 * subclass of {@link Throwable}), indicating which exception types must
+	 * cause a transaction rollback.
+	 * <p>
+	 * This can be a substring, with no wildcard support at present. A value of
+	 * "ServletException" would match {@link javax.servlet.ServletException} and
+	 * subclasses, for example.
+	 * <p>
+	 * <b>NB: </b>Consider carefully how specific the pattern is, and whether to
+	 * include package information (which isn't mandatory). For example,
+	 * "Exception" will match nearly anything, and will probably hide other
+	 * rules. "java.lang.Exception" would be correct if "Exception" was meant to
+	 * define a rule for all checked exceptions. With more unusual
+	 * {@link Exception} names such as "BaseBusinessException" there is no need
+	 * to use a FQN.
+	 * <p>
+	 * Similar to
+	 * {@link org.springframework.transaction.interceptor.RollbackRuleAttribute#RollbackRuleAttribute(String exceptionName)}
+	 */
+	String[] rollbackForClassName() default { };
+	
+	/**
+	 * Defines zero (0) or more exception {@link Class Classes}, which must be
+	 * a subclass of {@link Throwable}, indicating which exception types must
+	 * <b>not</b> cause a transaction rollback.
+	 * <p>
+	 * This is the preferred way to construct a rollback rule, matching the
+	 * exception class and subclasses.
+	 * <p>
+	 * Similar to
+	 * {@link org.springframework.transaction.interceptor.NoRollbackRuleAttribute#NoRollbackRuleAttribute(Class clazz)}
+	 */
+	Class<? extends Throwable>[] noRollbackFor() default { };
+	
+	/**
+	 * Defines zero (0) or more exception names (for exceptions which must be a
+	 * subclass of {@link Throwable}) indicating which exception types must
+	 * <b>not</b> cause a transaction rollback.
+	 * <p>
+	 * See the description of {@link #rollbackForClassName()} for more info on
+	 * how the specified names are treated.
+	 * <p>
+	 * Similar to
+	 * {@link org.springframework.transaction.interceptor.NoRollbackRuleAttribute#NoRollbackRuleAttribute(String exceptionName)}
+	 */
+	String[] noRollbackForClassName() default { };
 }

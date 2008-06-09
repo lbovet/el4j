@@ -32,57 +32,57 @@ import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
  * @author Stefan Wismer (SWI)
  */
 public class FallbackDaoRegistry extends DefaultDaoRegistry {
-    /**
-     * The bean name of the fallback DAO prototype.
-     */
-    private String m_daoPrototypeBeanName;
-    
-    /** {@inheritDoc} */
-    @Override
-    public <T> GenericDao<T> getFor(Class<T> entityType) {
-        GenericDao<T> dao = super.getFor(entityType);
-        
-        /* if no dao was found, try to create one automatically! */
-        if (dao == null) {
-            dao = createFor(entityType);
-            m_daos.put(entityType, dao);
-        }
-        
-        return dao;
-    }
-    
-    /**
-     * @param <T>   The class of entityType
-     * @param entityType
-     *              The domain class for which a generic DAO should be returned.
-     * @return      A new generic DAO for this entityType
-     */
-    @SuppressWarnings("unchecked")
-    private <T> GenericDao<T> createFor(Class<T> entityType) {
-        GenericDao<T> dao = null;
-        if (m_daoPrototypeBeanName != null) {
-            dao = (GenericDao<T>) m_applicationContext.getBean(
-                m_daoPrototypeBeanName);
-            if (dao != null) {
-                dao.setPersistentClass(entityType);
-            }
-        }
-        
-        return dao; 
-    }
+	/**
+	 * The bean name of the fallback DAO prototype.
+	 */
+	private String m_daoPrototypeBeanName;
+	
+	/** {@inheritDoc} */
+	@Override
+	public <T> GenericDao<T> getFor(Class<T> entityType) {
+		GenericDao<T> dao = super.getFor(entityType);
+		
+		/* if no dao was found, try to create one automatically! */
+		if (dao == null) {
+			dao = createFor(entityType);
+			m_daos.put(entityType, dao);
+		}
+		
+		return dao;
+	}
+	
+	/**
+	 * @param <T>   The class of entityType
+	 * @param entityType
+	 *              The domain class for which a generic DAO should be returned.
+	 * @return      A new generic DAO for this entityType
+	 */
+	@SuppressWarnings("unchecked")
+	private <T> GenericDao<T> createFor(Class<T> entityType) {
+		GenericDao<T> dao = null;
+		if (m_daoPrototypeBeanName != null) {
+			dao = (GenericDao<T>) m_applicationContext.getBean(
+				m_daoPrototypeBeanName);
+			if (dao != null) {
+				dao.setPersistentClass(entityType);
+			}
+		}
+		
+		return dao;
+	}
 
-    /**
-     * @return    The bean name of the fallback DAO prototype.
-     */
-    public String getDaoPrototypeBeanName() {
-        return m_daoPrototypeBeanName;
-    }
+	/**
+	 * @return    The bean name of the fallback DAO prototype.
+	 */
+	public String getDaoPrototypeBeanName() {
+		return m_daoPrototypeBeanName;
+	}
 
-    /**
-     * @param daoPrototypeBeanName
-     *                             The bean name of the fallback DAO prototype.
-     */
-    public void setDaoPrototypeBeanName(String daoPrototypeBeanName) {
-        m_daoPrototypeBeanName = daoPrototypeBeanName;
-    }
+	/**
+	 * @param daoPrototypeBeanName
+	 *                             The bean name of the fallback DAO prototype.
+	 */
+	public void setDaoPrototypeBeanName(String daoPrototypeBeanName) {
+		m_daoPrototypeBeanName = daoPrototypeBeanName;
+	}
 }

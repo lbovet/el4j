@@ -40,28 +40,28 @@ import zappini.designgridlayout.Row;
  */
 public class RowAdder implements Adder {
 
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    public boolean add(String parentNS, String parentTag, Object parent,
-        Object child, DecodeEngine decodeEngine) throws Exception {
-        
-        if (parentTag.equals("row") && parent instanceof NoAddValueHolder) {
-            // read span attribute
-            String spanAttr = decodeEngine.getCurrentElement()
-                .getAttribute("colspan");
-            int span = 1;
-            try {
-                span = Integer.parseInt(spanAttr);
-            } catch (NumberFormatException e) {
-                span = 1;
-            }
-            
-            // create row
-            ((NoAddValueHolder<Row>) parent).getObject()
-                .add((JComponent) child, span);
-            return true;
-        }
-        return false;
-    }
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	public boolean add(String parentNS, String parentTag, Object parent,
+		Object child, DecodeEngine decodeEngine) throws Exception {
+		
+		if (parentTag.equals("row") && parent instanceof NoAddValueHolder) {
+			// read span attribute
+			String spanAttr = decodeEngine.getCurrentElement()
+				.getAttribute("colspan");
+			int span = 1;
+			try {
+				span = Integer.parseInt(spanAttr);
+			} catch (NumberFormatException e) {
+				span = 1;
+			}
+			
+			// create row
+			((NoAddValueHolder<Row>) parent).getObject()
+				.add((JComponent) child, span);
+			return true;
+		}
+		return false;
+	}
 
 }

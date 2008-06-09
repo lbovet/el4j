@@ -39,49 +39,49 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
  */
 public class TestImplicitContext implements ImplicitContextPassingRegistry {
 
-    /** Defines the value of the key if it has not yet been initialized. */
-    public static final String NOT_INITIALIZED_KEY = "NOT_INITIALIZED";
-          
-    /**
-     * {@inheritDoc}
-     */
-    public void registerImplicitContextPasser(
-        ImplicitContextPasser passer) {
-        // Do nothing.
-    }
+	/** Defines the value of the key if it has not yet been initialized. */
+	public static final String NOT_INITIALIZED_KEY = "NOT_INITIALIZED";
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void registerImplicitContextPasser(
+		ImplicitContextPasser passer) {
+		// Do nothing.
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void unregisterImplicitContextPasser(
-        ImplicitContextPasser passer) {
-        // Do nothing.
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public Map getAssembledImplicitContext() {
-        Map map = new HashMap();
-        map.put(UNIQUE_KEY, "testString");
-        return map;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void unregisterImplicitContextPasser(
+		ImplicitContextPasser passer) {
+		// Do nothing.
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public Map getAssembledImplicitContext() {
+		Map map = new HashMap();
+		map.put(UNIQUE_KEY, "testString");
+		return map;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void pushAssembledImplicitContext(Map contexts) {
-        s_logger.debug("Retrieving context: " + contexts.get(UNIQUE_KEY));
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void pushAssembledImplicitContext(Map contexts) {
+		s_logger.debug("Retrieving context: " + contexts.get(UNIQUE_KEY));
+	}
 
-    /** Name used for the unique key in the context map. */
-    private static final String UNIQUE_KEY = "UNIQUE_KEY";
-   
-    /**
-     * Private logger.
-     */
-    private static Log s_logger 
-        = LogFactory.getLog(TestImplicitContext.class);
+	/** Name used for the unique key in the context map. */
+	private static final String UNIQUE_KEY = "UNIQUE_KEY";
+	
+	/**
+	 * Private logger.
+	 */
+	private static Log s_logger
+		= LogFactory.getLog(TestImplicitContext.class);
  
 
 } // Class IdempotenceImplicitContext

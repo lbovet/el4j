@@ -37,31 +37,31 @@ import ch.elca.el4j.services.exceptionhandler.handler.AbstractReconfigureExcepti
  * @author Andreas Bur (ABU)
  */
 public class ReconfigureExceptionHandler extends
-        AbstractReconfigureExceptionHandler {
+		AbstractReconfigureExceptionHandler {
 
-    /** The replacement object. */
-    private C m_c;
-    
-    /**
-     * Sets the replacement object.
-     * 
-     * @param c
-     *      The instance of C that is used as the replacement.
-     */
-    public void setC(C c) {
-        m_c = c;
-    }
+	/** The replacement object. */
+	private C m_c;
+	
+	/**
+	 * Sets the replacement object.
+	 *
+	 * @param c
+	 *      The instance of C that is used as the replacement.
+	 */
+	public void setC(C c) {
+		m_c = c;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    protected void reconfigure(Throwable t, MethodInvocation invocation,
-            Log logger) {
-        
-        if (!"add".equals(invocation.getMethod().getName())) {
-            throw new InappropriateHandlerException();
-        }
-        
-        ((A) invocation.getThis()).setAdder(m_c);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	protected void reconfigure(Throwable t, MethodInvocation invocation,
+			Log logger) {
+		
+		if (!"add".equals(invocation.getMethod().getName())) {
+			throw new InappropriateHandlerException();
+		}
+		
+		((A) invocation.getThis()).setAdder(m_c);
+	}
 }

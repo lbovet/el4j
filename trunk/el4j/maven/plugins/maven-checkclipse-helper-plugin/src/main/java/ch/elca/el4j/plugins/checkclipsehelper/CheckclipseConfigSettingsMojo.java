@@ -40,99 +40,99 @@ import org.springframework.util.StringUtils;
  * );</script>
  *
  * @author Martin Zeltner (MZE)
- * 
+ *
  * @goal checkclipse-config-settings
  * @requiresProject true
  */
 public class CheckclipseConfigSettingsMojo extends AbstractMojo {
-    // Checkstyle: MemberName off
-    
-    /**
-     * Path to checkclipse config file.
-     * 
-     * @parameter expression="${checkclipsehelper.settingsConfigFilePath}"
-     *            default-value=".settings/de.mvmsoft.checkclipse.prefs"
-     * @required
-     */
-    protected File settingsConfigFilePath;
-    
-    /**
-     * Flag to enable checkclipse.
-     * 
-     * @parameter expression="${checkclipsehelper.enableCheckclipse}"
-     *            default-value="true"
-     * @required
-     */
-    protected boolean enableCheckclipse;
-    
-    /**
-     * Flag to use the project classloader to execute checkstyle checks.
-     * 
-     * @parameter expression="${checkclipsehelper.useProjectClassloader}"
-     *            default-value="true"
-     * @required
-     */
-    protected boolean useProjectClassloader;
-    
-    /**
-     * The maven project.
-     *
-     * @parameter expression="${project}"
-     * @required
-     * @readonly
-     */
-    protected MavenProject project;
-    
-    // Checkstyle: MemberName on
-    
-    /**
-     * Util to save property files.
-     */
-    protected final PropertiesPersister m_persister 
-        = new DefaultPropertiesPersister();
-    
-    /** 
-     * {@inheritDoc}
-     */
-    public void execute() throws MojoExecutionException, MojoFailureException {
-        String projectPackaging = project.getPackaging();
-        if (!StringUtils.hasText(projectPackaging) 
-            || projectPackaging.contains("pom")) {
-            getLog().info("No checkclipse settings config for pom project.");
-            return;
-        }
-        
-        if (settingsConfigFilePath.isDirectory()) {
-            throw new MojoExecutionException("Given file path " 
-                + settingsConfigFilePath.getAbsolutePath() 
-                + " is a directory!");
-        }
-        getLog().info(
-            "Writing file " + settingsConfigFilePath.getAbsolutePath());
-        
-        // Create dir of config file if it does not exist
-        String filePath = settingsConfigFilePath.getPath();
-        String dirPath = filePath.substring(0, 
-            filePath.lastIndexOf(java.io.File.separatorChar));
-        java.io.File dir = new java.io.File(dirPath);
-        if (!dir.isDirectory()) {
-            getLog().info("Directory " + dir.getAbsolutePath() + " does not "
-                + "exist. Will try to create it.");
-            dir.mkdirs();
-        }
-        
-        Properties props = new Properties();
-        props.setProperty("enabled", Boolean.toString(enableCheckclipse));
-        props.setProperty("projectclassloader", 
-            Boolean.toString(useProjectClassloader));
-        try {
-            m_persister.store(props, 
-                new FileOutputStream(settingsConfigFilePath),
-                "Checkclipse settings config file");
-        } catch (IOException e) {
-            throw new MojoExecutionException(
-                "Can not write file to given file path " 
-                + settingsConfigFilePath.getAbsolutePath(), e);
-        }
-    }
+	// Checkstyle: MemberName off
+	
+	/**
+	 * Path to checkclipse config file.
+	 *
+	 * @parameter expression="${checkclipsehelper.settingsConfigFilePath}"
+	 *            default-value=".settings/de.mvmsoft.checkclipse.prefs"
+	 * @required
+	 */
+	protected File settingsConfigFilePath;
+	
+	/**
+	 * Flag to enable checkclipse.
+	 *
+	 * @parameter expression="${checkclipsehelper.enableCheckclipse}"
+	 *            default-value="true"
+	 * @required
+	 */
+	protected boolean enableCheckclipse;
+	
+	/**
+	 * Flag to use the project classloader to execute checkstyle checks.
+	 *
+	 * @parameter expression="${checkclipsehelper.useProjectClassloader}"
+	 *            default-value="true"
+	 * @required
+	 */
+	protected boolean useProjectClassloader;
+	
+	/**
+	 * The maven project.
+	 *
+	 * @parameter expression="${project}"
+	 * @required
+	 * @readonly
+	 */
+	protected MavenProject project;
+	
+	// Checkstyle: MemberName on
+	
+	/**
+	 * Util to save property files.
+	 */
+	protected final PropertiesPersister m_persister
+		= new DefaultPropertiesPersister();
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void execute() throws MojoExecutionException, MojoFailureException {
+		String projectPackaging = project.getPackaging();
+		if (!StringUtils.hasText(projectPackaging)
+			|| projectPackaging.contains("pom")) {
+			getLog().info("No checkclipse settings config for pom project.");
+			return;
+		}
+		
+		if (settingsConfigFilePath.isDirectory()) {
+			throw new MojoExecutionException("Given file path "
+				+ settingsConfigFilePath.getAbsolutePath()
+				+ " is a directory!");
+		}
+		getLog().info(
+			"Writing file " + settingsConfigFilePath.getAbsolutePath());
+		
+		// Create dir of config file if it does not exist
+		String filePath = settingsConfigFilePath.getPath();
+		String dirPath = filePath.substring(0,
+			filePath.lastIndexOf(java.io.File.separatorChar));
+		java.io.File dir = new java.io.File(dirPath);
+		if (!dir.isDirectory()) {
+			getLog().info("Directory " + dir.getAbsolutePath() + " does not "
+				+ "exist. Will try to create it.");
+			dir.mkdirs();
+		}
+		
+		Properties props = new Properties();
+		props.setProperty("enabled", Boolean.toString(enableCheckclipse));
+		props.setProperty("projectclassloader",
+			Boolean.toString(useProjectClassloader));
+		try {
+			m_persister.store(props,
+				new FileOutputStream(settingsConfigFilePath),
+				"Checkclipse settings config file");
+		} catch (IOException e) {
+			throw new MojoExecutionException(
+				"Can not write file to given file path "
+				+ settingsConfigFilePath.getAbsolutePath(), e);
+		}
+	}
 }

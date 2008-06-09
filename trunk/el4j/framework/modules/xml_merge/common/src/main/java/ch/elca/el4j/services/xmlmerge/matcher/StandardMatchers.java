@@ -25,25 +25,25 @@ package ch.elca.el4j.services.xmlmerge.matcher;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public class StandardMatchers {
 
-    /**
-     * {@link TagMatcher}
-     */
-    public static final TagMatcher TAG = new TagMatcher();
-    
-    /**
-     * {@link IdMatcher}
-     */
-    public static final IdMatcher ID = new IdMatcher();
-    
-    /**
-     * {@link SkipMatcher}
-     */
-    public static final SkipMatcher SKIP = new SkipMatcher();
-    
+	/**
+	 * {@link TagMatcher}
+	 */
+	public static final TagMatcher TAG = new TagMatcher();
+	
+	/**
+	 * {@link IdMatcher}
+	 */
+	public static final IdMatcher ID = new IdMatcher();
+	
+	/**
+	 * {@link SkipMatcher}
+	 */
+	public static final SkipMatcher SKIP = new SkipMatcher();
+	
 }

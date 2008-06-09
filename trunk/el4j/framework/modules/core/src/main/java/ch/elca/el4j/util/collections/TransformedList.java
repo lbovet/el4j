@@ -19,19 +19,19 @@ package ch.elca.el4j.util.collections;
 import java.util.List;
 
 /**
- * A view for a list where every element appears transformed. That is, if 
+ * A view for a list where every element appears transformed. That is, if
  * {@code source} is the backing list and {@code function} the element
  * transformation function,
- * 
+ *
  * <p>{@code this.get(i)} returns the same value as
  * {@code function.apply(source.get(i))} for any {@code i < source.size()}.
- * 
+ *
  * <p>Element order is taken from the source list. By consequence, changing
  * this list's element order changes the source list's element order.
- * 
- * <p>This view is read-only, i.e. its modifying operations throw 
+ *
+ * <p>This view is read-only, i.e. its modifying operations throw
  * an UnsupportedOperationException.
- * 
+ *
  * @param <I> the backing list's element type
  * @param <O> this list's element type
  *
@@ -45,9 +45,9 @@ import java.util.List;
  * @author Adrian Moos (AMS)
  */
 public interface TransformedList<I, O> extends ExtendedReorderableList<O> {
-    /**
-     * returns the backing list.
-     * @return the backing list.
-     */
-    List<? extends I> getBacking();
+	/**
+	 * returns the backing list.
+	 * @return the backing list.
+	 */
+	List<? extends I> getBacking();
 }

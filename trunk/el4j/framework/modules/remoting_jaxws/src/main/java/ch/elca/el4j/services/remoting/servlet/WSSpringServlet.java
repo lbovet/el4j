@@ -40,7 +40,7 @@ import ch.elca.el4j.services.remoting.protocol.Jaxws;
  * This class represents a customized JAX-WS {@link HttpServlet}. Instead of
  * using the {@link SpringBinding}s specified in special Spring XML format,
  * this class searches for JAX-WS bindings in el4j-remoting-protocol form.
- * 
+ *
  * Remark: This class cannot extend ModuleContextLoaderServlet because
  * doPost, doGet, doPut and doDelete are final.
  *
@@ -55,69 +55,69 @@ import ch.elca.el4j.services.remoting.protocol.Jaxws;
  */
 public class WSSpringServlet extends HttpServlet {
 
-    /**
-     * The servlet delegate.
-     */
-    private WSServletDelegate m_delegate;
+	/**
+	 * The servlet delegate.
+	 */
+	private WSServletDelegate m_delegate;
 
-    
-    /** {@inheritDoc} */
-    public void init(ServletConfig servletConfig) throws ServletException {
-        super.init(servletConfig);
+	
+	/** {@inheritDoc} */
+	public void init(ServletConfig servletConfig) throws ServletException {
+		super.init(servletConfig);
 
-        // get the configured adapters from Spring
-        WebApplicationContext wac = WebApplicationContextUtils
-            .getRequiredWebApplicationContext(getServletContext());
+		// get the configured adapters from Spring
+		WebApplicationContext wac = WebApplicationContextUtils
+			.getRequiredWebApplicationContext(getServletContext());
 
-        Set<SpringBinding> bindings = new LinkedHashSet<SpringBinding>();
+		Set<SpringBinding> bindings = new LinkedHashSet<SpringBinding>();
 
-        // search for Jaxws RemotingServiceExporter objects
-        Map<?, ?> map = wac.getBeansOfType(RemotingServiceExporter.class);
-        for (Object instance : map.values()) {
-            RemotingServiceExporter exporter
-                = (RemotingServiceExporter) instance;
-            
-            if (exporter.getRemoteProtocol() instanceof Jaxws) {
-                Jaxws protocol = (Jaxws) exporter.getRemoteProtocol();
-                if (protocol.getJaxwsBinding() != null) {
-                    bindings.add(protocol.getJaxwsBinding());
-                }
-            }
-        }
-        
-        // bindings declared in the jaxws-spring manner
-        //bindings.addAll(wac.getBeansOfType(SpringBinding.class).values());
+		// search for Jaxws RemotingServiceExporter objects
+		Map<?, ?> map = wac.getBeansOfType(RemotingServiceExporter.class);
+		for (Object instance : map.values()) {
+			RemotingServiceExporter exporter
+				= (RemotingServiceExporter) instance;
+			
+			if (exporter.getRemoteProtocol() instanceof Jaxws) {
+				Jaxws protocol = (Jaxws) exporter.getRemoteProtocol();
+				if (protocol.getJaxwsBinding() != null) {
+					bindings.add(protocol.getJaxwsBinding());
+				}
+			}
+		}
+		
+		// bindings declared in the jaxws-spring manner
+		//bindings.addAll(wac.getBeansOfType(SpringBinding.class).values());
 
-        // create adapters
-        ServletAdapterList l = new ServletAdapterList();
-        for (SpringBinding binding : bindings) {
-            binding.create(l);
-        }
+		// create adapters
+		ServletAdapterList l = new ServletAdapterList();
+		for (SpringBinding binding : bindings) {
+			binding.create(l);
+		}
 
-        m_delegate = new WSServletDelegate(l, getServletContext());
-    }
+		m_delegate = new WSServletDelegate(l, getServletContext());
+	}
 
-    /** {@inheritDoc} */
-    protected void doPost(HttpServletRequest request,
-        HttpServletResponse response) throws ServletException {
-        m_delegate.doPost(request, response, getServletContext());
-    }
+	/** {@inheritDoc} */
+	protected void doPost(HttpServletRequest request,
+		HttpServletResponse response) throws ServletException {
+		m_delegate.doPost(request, response, getServletContext());
+	}
 
-    /** {@inheritDoc} */
-    protected void doGet(HttpServletRequest request,
-        HttpServletResponse response) throws ServletException {
-        m_delegate.doGet(request, response, getServletContext());
-    }
+	/** {@inheritDoc} */
+	protected void doGet(HttpServletRequest request,
+		HttpServletResponse response) throws ServletException {
+		m_delegate.doGet(request, response, getServletContext());
+	}
 
-    /** {@inheritDoc} */
-    protected void doPut(HttpServletRequest request,
-        HttpServletResponse response) throws ServletException {
-        m_delegate.doPut(request, response, getServletContext());
-    }
+	/** {@inheritDoc} */
+	protected void doPut(HttpServletRequest request,
+		HttpServletResponse response) throws ServletException {
+		m_delegate.doPut(request, response, getServletContext());
+	}
 
-    /** {@inheritDoc} */
-    protected void doDelete(HttpServletRequest request,
-        HttpServletResponse response) throws ServletException {
-        m_delegate.doDelete(request, response, getServletContext());
-    }
+	/** {@inheritDoc} */
+	protected void doDelete(HttpServletRequest request,
+		HttpServletResponse response) throws ServletException {
+		m_delegate.doDelete(request, response, getServletContext());
+	}
 }

@@ -39,113 +39,113 @@ import ch.elca.el4j.tests.core.io.support.helper.Employee;
  * @author Martin Zeltner (MZE)
  */
 public class ModuleApplicationContextBeanOverridingTest {
-    /**
-     * Config location prefix.
-     */
-    public static final String CONFIG_LOCATION_PREFIX 
-        = "classpath*:scenarios/core/io/support3/";
-    
-    /**
-     * Name of the tested bean.
-     */
-    public static final String BEAN_NAME = "employee";
-    
-    /**
-     * Tests bean overriding by using a config location with a wildcard and
-     * not including outer resources.
-     */
-    @Test
-    public void testConfigLocationWithWildcardWithoutOuterResources() {
-        boolean mergeWithOuterResources = false;
-        ApplicationContext appContext = new ModuleApplicationContext(
-            new String[] {CONFIG_LOCATION_PREFIX + "*.xml"}, 
-            null, true, null, mergeWithOuterResources);
-        Employee e = (Employee) appContext.getBean("employee");
-        assertNotNull(e);
-        assertEquals("Martin", e.getPrename());
-        assertEquals("Zeltner", e.getLastname());
-    }
-    
-    /**
-     * Tests bean overriding by using a config location with a wildcard and
-     * including outer resources. The outer resources are the most specific.
-     */
-    @Test
-    public void 
-    testConfigLocationWithWildcardWithOuterResourcesAsMostSpecific() {
-        boolean mergeWithOuterResources = true;
-        boolean mostSpecificResourceLast = true;
-        boolean mostSpecificBeanDefinitionCounts = true;
-        ApplicationContext appContext = new ModuleApplicationContext(
-            new String[] {CONFIG_LOCATION_PREFIX + "*.xml"}, 
-            null, true, null, mergeWithOuterResources, mostSpecificResourceLast,
-            mostSpecificBeanDefinitionCounts);
-        Employee e = (Employee) appContext.getBean("employee");
-        assertNotNull(e);
-        assertEquals("Philipp", e.getPrename());
-        assertEquals("Oser", e.getLastname());
-    }
+	/**
+	 * Config location prefix.
+	 */
+	public static final String CONFIG_LOCATION_PREFIX
+		= "classpath*:scenarios/core/io/support3/";
+	
+	/**
+	 * Name of the tested bean.
+	 */
+	public static final String BEAN_NAME = "employee";
+	
+	/**
+	 * Tests bean overriding by using a config location with a wildcard and
+	 * not including outer resources.
+	 */
+	@Test
+	public void testConfigLocationWithWildcardWithoutOuterResources() {
+		boolean mergeWithOuterResources = false;
+		ApplicationContext appContext = new ModuleApplicationContext(
+			new String[] {CONFIG_LOCATION_PREFIX + "*.xml"},
+			null, true, null, mergeWithOuterResources);
+		Employee e = (Employee) appContext.getBean("employee");
+		assertNotNull(e);
+		assertEquals("Martin", e.getPrename());
+		assertEquals("Zeltner", e.getLastname());
+	}
+	
+	/**
+	 * Tests bean overriding by using a config location with a wildcard and
+	 * including outer resources. The outer resources are the most specific.
+	 */
+	@Test
+	public void
+	testConfigLocationWithWildcardWithOuterResourcesAsMostSpecific() {
+		boolean mergeWithOuterResources = true;
+		boolean mostSpecificResourceLast = true;
+		boolean mostSpecificBeanDefinitionCounts = true;
+		ApplicationContext appContext = new ModuleApplicationContext(
+			new String[] {CONFIG_LOCATION_PREFIX + "*.xml"},
+			null, true, null, mergeWithOuterResources, mostSpecificResourceLast,
+			mostSpecificBeanDefinitionCounts);
+		Employee e = (Employee) appContext.getBean("employee");
+		assertNotNull(e);
+		assertEquals("Philipp", e.getPrename());
+		assertEquals("Oser", e.getLastname());
+	}
 
-    /**
-     * Tests bean overriding by using a config location with a wildcard but
-     * without outer resources. The least specific resources are the most
-     * important ones.
-     */
-    @Test
-    public void 
-    testConfigLocationWithWildcardWithoutOuterResourcesAndLeastSpecifics() {
-        boolean mergeWithOuterResources = false;
-        boolean mostSpecificResourceLast = true;
-        boolean mostSpecificBeanDefinitionCounts = false;
-        ApplicationContext appContext = new ModuleApplicationContext(
-            new String[] {CONFIG_LOCATION_PREFIX + "*.xml"}, 
-            null, true, null, mergeWithOuterResources, mostSpecificResourceLast,
-            mostSpecificBeanDefinitionCounts);
-        Employee e = (Employee) appContext.getBean("employee");
-        assertNotNull(e);
-        assertEquals("Alex", e.getPrename());
-        assertEquals("Mathey", e.getLastname());
-    }
+	/**
+	 * Tests bean overriding by using a config location with a wildcard but
+	 * without outer resources. The least specific resources are the most
+	 * important ones.
+	 */
+	@Test
+	public void
+	testConfigLocationWithWildcardWithoutOuterResourcesAndLeastSpecifics() {
+		boolean mergeWithOuterResources = false;
+		boolean mostSpecificResourceLast = true;
+		boolean mostSpecificBeanDefinitionCounts = false;
+		ApplicationContext appContext = new ModuleApplicationContext(
+			new String[] {CONFIG_LOCATION_PREFIX + "*.xml"},
+			null, true, null, mergeWithOuterResources, mostSpecificResourceLast,
+			mostSpecificBeanDefinitionCounts);
+		Employee e = (Employee) appContext.getBean("employee");
+		assertNotNull(e);
+		assertEquals("Alex", e.getPrename());
+		assertEquals("Mathey", e.getLastname());
+	}
 
-    /**
-     * Tests bean overriding by using a config location with a wildcard and
-     * including outer resources. The outer resources are the least specific.
-     */
-    @Test
-    public void 
-    testConfigLocationWithWildcardWithOuterResourcesAsLeastSpecific() {
-        boolean mergeWithOuterResources = true;
-        boolean mostSpecificResourceLast = true;
-        boolean mostSpecificBeanDefinitionCounts = false;
-        ApplicationContext appContext = new ModuleApplicationContext(
-            new String[] {CONFIG_LOCATION_PREFIX + "*.xml"}, 
-            null, true, null, mergeWithOuterResources, mostSpecificResourceLast,
-            mostSpecificBeanDefinitionCounts);
-        Employee e = (Employee) appContext.getBean("employee");
-        assertNotNull(e);
-        assertEquals("Alex", e.getPrename());
-        assertEquals("Mathey", e.getLastname());
-    }
+	/**
+	 * Tests bean overriding by using a config location with a wildcard and
+	 * including outer resources. The outer resources are the least specific.
+	 */
+	@Test
+	public void
+	testConfigLocationWithWildcardWithOuterResourcesAsLeastSpecific() {
+		boolean mergeWithOuterResources = true;
+		boolean mostSpecificResourceLast = true;
+		boolean mostSpecificBeanDefinitionCounts = false;
+		ApplicationContext appContext = new ModuleApplicationContext(
+			new String[] {CONFIG_LOCATION_PREFIX + "*.xml"},
+			null, true, null, mergeWithOuterResources, mostSpecificResourceLast,
+			mostSpecificBeanDefinitionCounts);
+		Employee e = (Employee) appContext.getBean("employee");
+		assertNotNull(e);
+		assertEquals("Alex", e.getPrename());
+		assertEquals("Mathey", e.getLastname());
+	}
 
-    /**
-     * Tests bean overriding by using a config location with a wildcard and
-     * including outer resources.
-     */
-    @Test
-    public void testStrictConfigLocationOrder() {
-        boolean mergeWithOuterResources = true;
-        ApplicationContext appContext = new ModuleApplicationContext(
-            new String[] {
-                CONFIG_LOCATION_PREFIX
-                    + "bean-definition-overriding-test-3.xml",
-                CONFIG_LOCATION_PREFIX
-                    + "bean-definition-overriding-test-2.xml",
-                CONFIG_LOCATION_PREFIX
-                    + "bean-definition-overriding-test-1.xml"
-            }, null, true, null, mergeWithOuterResources);
-        Employee e = (Employee) appContext.getBean("employee");
-        assertNotNull(e);
-        assertEquals("Alex", e.getPrename());
-        assertEquals("Mathey", e.getLastname());
-    }
+	/**
+	 * Tests bean overriding by using a config location with a wildcard and
+	 * including outer resources.
+	 */
+	@Test
+	public void testStrictConfigLocationOrder() {
+		boolean mergeWithOuterResources = true;
+		ApplicationContext appContext = new ModuleApplicationContext(
+			new String[] {
+				CONFIG_LOCATION_PREFIX
+					+ "bean-definition-overriding-test-3.xml",
+				CONFIG_LOCATION_PREFIX
+					+ "bean-definition-overriding-test-2.xml",
+				CONFIG_LOCATION_PREFIX
+					+ "bean-definition-overriding-test-1.xml"
+			}, null, true, null, mergeWithOuterResources);
+		Employee e = (Employee) appContext.getBean("employee");
+		assertNotNull(e);
+		assertEquals("Alex", e.getPrename());
+		assertEquals("Mathey", e.getLastname());
+	}
 }

@@ -39,7 +39,7 @@ import zappini.designgridlayout.DesignGridLayout;
 
 /**
  * This GUI can be used to edit a reference from the refDB.
- * 
+ *
  * This form is used by {@link RefDBDemoForm}. It extends the features shown in
  * {@link CancelableDemoForm}. It is shown how to close the window containing
  * this panel (<code>AbstractWrapperFactory.getWrapper(this).dispose()</code>).
@@ -55,104 +55,104 @@ import zappini.designgridlayout.DesignGridLayout;
  */
 @Form(autoBind = true)
 public class ReferenceEditorForm extends JPanel {
-    private JTextField m_name;
-    private JTextField m_description;
-    
-    private JButton m_okButton;
-    private JButton m_cancelButton;
-    
-    @ModelObject(isDefault = true)
-    private Reference m_reference = null;
-    
-    
-    /**
-     * The key of the current reference. This property cannot be stored by
-     * SaveRestoreCapability because Cglib2AopProxy is unable to proxy 
-     * final methods.
-     */
-    private int m_key;
-    
-    /**
-     * The binder instance variable.
-     */
-    private final Binder m_binder = BinderManager.getBinder(this);
-    
-    public ReferenceEditorForm() {
-        GUIApplication app = GUIApplication.getInstance();
-        createComponents();
-        createLayout();
-        
-        // assign actions
-        m_okButton.setAction(app.getAction(this, "applyChanges"));
-        m_cancelButton.setAction(app.getAction(this, "discardChanges"));
-    }
-    
-    /**
-     * @param reference    the refernce to be edited on the GUI
-     */
-    public void setReference(Reference reference) {
-        m_reference = PropertyChangeListenerMixin
-            .addPropertyChangeMixin(reference);
-        m_key = reference.getKey();
-        
-        // save properties
-        ((SaveRestoreCapability) m_reference).save();
-        
-        // bind the variable "m_reference" to "this"
-        // this interprets the @ModelObject annotation (see above)
-        m_binder.addAutoBinding(this);
-        m_binder.bindAll();
-    }
-    
-    
-    /**
-     * Apply changes to the model.
-     */
-    @Action
-    public void applyChanges() {
-        ((SaveRestoreCapability) m_reference).save();
-        m_reference.setKey(m_key);
-        m_binder.removeAll();
-        
-        EventBus.publish(new ReferenceUpdateEvent(m_reference.getKey()));
-        AbstractWrapperFactory.getWrapper(this).dispose();
-        m_reference = null;
-    }
-    
-    /**
-     * Discard changes.
-     */
-    @Action
-    public void discardChanges() {
-        ((SaveRestoreCapability) m_reference).restore();
-        m_reference.setKey(m_key);
-        m_binder.removeAll();
-        
-        AbstractWrapperFactory.getWrapper(this).dispose();
-        m_reference = null;
-    }
-    
-    /**
-     * Create the form components.
-     */
-    private void createComponents() {
-        m_name = new JTextField();
-        m_description = new JTextField();
-        m_okButton = new JButton();
-        m_cancelButton = new JButton();
-    }
-    
-    /**
-     * Layout the form components.
-     */
-    private void createLayout() {
-        // create the form layout
-        DesignGridLayout layout = new DesignGridLayout(this);
-        setLayout(layout);
+	private JTextField m_name;
+	private JTextField m_description;
+	
+	private JButton m_okButton;
+	private JButton m_cancelButton;
+	
+	@ModelObject(isDefault = true)
+	private Reference m_reference = null;
+	
+	
+	/**
+	 * The key of the current reference. This property cannot be stored by
+	 * SaveRestoreCapability because Cglib2AopProxy is unable to proxy
+	 * final methods.
+	 */
+	private int m_key;
+	
+	/**
+	 * The binder instance variable.
+	 */
+	private final Binder m_binder = BinderManager.getBinder(this);
+	
+	public ReferenceEditorForm() {
+		GUIApplication app = GUIApplication.getInstance();
+		createComponents();
+		createLayout();
+		
+		// assign actions
+		m_okButton.setAction(app.getAction(this, "applyChanges"));
+		m_cancelButton.setAction(app.getAction(this, "discardChanges"));
+	}
+	
+	/**
+	 * @param reference    the refernce to be edited on the GUI
+	 */
+	public void setReference(Reference reference) {
+		m_reference = PropertyChangeListenerMixin
+			.addPropertyChangeMixin(reference);
+		m_key = reference.getKey();
+		
+		// save properties
+		((SaveRestoreCapability) m_reference).save();
+		
+		// bind the variable "m_reference" to "this"
+		// this interprets the @ModelObject annotation (see above)
+		m_binder.addAutoBinding(this);
+		m_binder.bindAll();
+	}
+	
+	
+	/**
+	 * Apply changes to the model.
+	 */
+	@Action
+	public void applyChanges() {
+		((SaveRestoreCapability) m_reference).save();
+		m_reference.setKey(m_key);
+		m_binder.removeAll();
+		
+		EventBus.publish(new ReferenceUpdateEvent(m_reference.getKey()));
+		AbstractWrapperFactory.getWrapper(this).dispose();
+		m_reference = null;
+	}
+	
+	/**
+	 * Discard changes.
+	 */
+	@Action
+	public void discardChanges() {
+		((SaveRestoreCapability) m_reference).restore();
+		m_reference.setKey(m_key);
+		m_binder.removeAll();
+		
+		AbstractWrapperFactory.getWrapper(this).dispose();
+		m_reference = null;
+	}
+	
+	/**
+	 * Create the form components.
+	 */
+	private void createComponents() {
+		m_name = new JTextField();
+		m_description = new JTextField();
+		m_okButton = new JButton();
+		m_cancelButton = new JButton();
+	}
+	
+	/**
+	 * Layout the form components.
+	 */
+	private void createLayout() {
+		// create the form layout
+		DesignGridLayout layout = new DesignGridLayout(this);
+		setLayout(layout);
 
-        // the first two rows contains a label and a text field each
-        layout.row().label("Name").add(m_name);
-        layout.row().label("Description").add(m_description);
-        layout.row().add(m_okButton).add(m_cancelButton);
-    }
+		// the first two rows contains a label and a text field each
+		layout.row().label("Name").add(m_name);
+		layout.row().label("Description").add(m_description);
+		layout.row().add(m_okButton).add(m_cancelButton);
+	}
 }

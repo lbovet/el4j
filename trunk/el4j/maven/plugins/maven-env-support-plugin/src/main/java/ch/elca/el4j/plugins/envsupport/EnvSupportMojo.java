@@ -22,7 +22,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 
 /**
  * Environment support plugin. Filters the resources of given env dir and saves
- * the generate resources in a special dir. 
+ * the generate resources in a special dir.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -32,57 +32,57 @@ import org.apache.maven.plugin.MojoExecutionException;
  * );</script>
  *
  * @author Martin Zeltner (MZE)
- * 
+ *
  * @goal resources
  * @phase generate-resources
  * @requiresProject true
  */
 public class EnvSupportMojo extends AbstractEnvSupportMojo {
-    // Checkstyle: MemberName off
-    /**
-     * The output directory into which to copy the env resources.
-     * 
-     * @parameter expression="${envsupport.outputDirectory}" 
-     *            default-value="${project.build.directory}/env"
-     * @required
-     */
-    private File outputDirectory;
+	// Checkstyle: MemberName off
+	/**
+	 * The output directory into which to copy the env resources.
+	 *
+	 * @parameter expression="${envsupport.outputDirectory}"
+	 *            default-value="${project.build.directory}/env"
+	 * @required
+	 */
+	private File outputDirectory;
 
-    /**
-     * The resource directory where to transfer files.
-     * 
-     * @parameter expression="${envsupport.resourceDirectory}" 
-     *            default-value="src/main/env"
-     * @required
-     */
-    private File resourceDirectory;
-    
-    /**
-     * The global resource directory where to transfer files.
-     * 
-     * @parameter expression="${envsupport.globalResourceDirectory}"
-     */
-    private File globalResourceDirectory;
-    
-    /**
-     * Flag to indicate if the global resource dir should be used.
-     * 
-     * @parameter expression="${envsupport.useGlobalResourceDirectory}"
-     *            default-value="false"
-     */
-    private boolean useGlobalResourceDirectory;
-    // Checkstyle: MemberName on
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void execute() throws MojoExecutionException {
-        if (useGlobalResourceDirectory) {
-            copyResourcesFiltered(globalResourceDirectory, 
-                outputDirectory, "globalResources");
-        } else {
-            copyResourcesFiltered(resourceDirectory, outputDirectory, 
-                "resources");
-        }
-    }
+	/**
+	 * The resource directory where to transfer files.
+	 *
+	 * @parameter expression="${envsupport.resourceDirectory}"
+	 *            default-value="src/main/env"
+	 * @required
+	 */
+	private File resourceDirectory;
+	
+	/**
+	 * The global resource directory where to transfer files.
+	 *
+	 * @parameter expression="${envsupport.globalResourceDirectory}"
+	 */
+	private File globalResourceDirectory;
+	
+	/**
+	 * Flag to indicate if the global resource dir should be used.
+	 *
+	 * @parameter expression="${envsupport.useGlobalResourceDirectory}"
+	 *            default-value="false"
+	 */
+	private boolean useGlobalResourceDirectory;
+	// Checkstyle: MemberName on
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void execute() throws MojoExecutionException {
+		if (useGlobalResourceDirectory) {
+			copyResourcesFiltered(globalResourceDirectory,
+				outputDirectory, "globalResources");
+		} else {
+			copyResourcesFiltered(resourceDirectory, outputDirectory,
+				"resources");
+		}
+	}
 }

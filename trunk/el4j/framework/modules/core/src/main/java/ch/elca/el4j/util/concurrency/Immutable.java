@@ -26,7 +26,7 @@ import java.lang.annotation.*;
  * <p>
  * Immutable objects are inherently thread-safe; they may be passed between threads or
  * published without synchronization.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",

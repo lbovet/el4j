@@ -24,7 +24,7 @@ import org.hibernate.id.TableHiLoGenerator;
 /**
  * Temporary fix to re-enable flexible native key generation. Safety of this
  * fix is currently beeing determined.
- * 
+ *
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -42,16 +42,16 @@ import org.hibernate.id.TableHiLoGenerator;
 // and http://opensource.atlassian.com/projects/hibernate/browse/HHH-2347
 public class PatchedDerbyDialect extends DerbyDialect {
 
-    /** {@inheritDoc} */
-    @Override
-    public Class getNativeIdentifierGeneratorClass() {
-        if (supportsIdentityColumns()) {
-            return IdentityGenerator.class;
-        } else if (supportsSequences()) {
-            return SequenceGenerator.class;
-        } else {
-            return TableHiLoGenerator.class;
-        }
-    }
-    
+	/** {@inheritDoc} */
+	@Override
+	public Class getNativeIdentifierGeneratorClass() {
+		if (supportsIdentityColumns()) {
+			return IdentityGenerator.class;
+		} else if (supportsSequences()) {
+			return SequenceGenerator.class;
+		} else {
+			return TableHiLoGenerator.class;
+		}
+	}
+	
 }

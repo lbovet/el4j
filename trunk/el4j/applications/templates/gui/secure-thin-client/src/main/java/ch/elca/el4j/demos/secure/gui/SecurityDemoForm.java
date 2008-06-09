@@ -39,28 +39,28 @@ import ch.elca.el4j.gui.swing.GUIApplication;
  * @author Stefan Wismer (SWI)
  */
 public class SecurityDemoForm extends JPanel {
-    public SecurityDemoForm() {
-        JLabel someLabel = new JLabel();
-        
-        add(someLabel);
-        
-        setPreferredSize(new Dimension(200, 50));
-        setBounds(0, 0, 500, 50);
-        
-        // set security token
-        //SecurityContextHolder.getContext().setAuthentication(
-        //    new UsernamePasswordAuthenticationToken("el4normal", "el4j"));
-        SecurityContextHolder.getContext().setAuthentication(
-            new UsernamePasswordAuthenticationToken("el4super", "secret"));
-        
-        PrivateData data = (PrivateData) GUIApplication.getInstance()
-            .getSpringContext().getBean("PrivateData");
-        
-        try {
-            String result = data.getSecret();
-            someLabel.setText(result);
-        } catch (Exception e) {
-            someLabel.setText("Access denied");
-        }
-    }
+	public SecurityDemoForm() {
+		JLabel someLabel = new JLabel();
+		
+		add(someLabel);
+		
+		setPreferredSize(new Dimension(200, 50));
+		setBounds(0, 0, 500, 50);
+		
+		// set security token
+		//SecurityContextHolder.getContext().setAuthentication(
+		//    new UsernamePasswordAuthenticationToken("el4normal", "el4j"));
+		SecurityContextHolder.getContext().setAuthentication(
+			new UsernamePasswordAuthenticationToken("el4super", "secret"));
+		
+		PrivateData data = (PrivateData) GUIApplication.getInstance()
+			.getSpringContext().getBean("PrivateData");
+		
+		try {
+			String result = data.getSecret();
+			someLabel.setText(result);
+		} catch (Exception e) {
+			someLabel.setText("Access denied");
+		}
+	}
 }

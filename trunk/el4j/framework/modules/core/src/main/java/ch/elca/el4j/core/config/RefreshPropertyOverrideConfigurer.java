@@ -26,12 +26,12 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 
 /**
  * HACK!!!
- * 
- * This property override configurer is used to circumvent the problem with 
- * the abstract application context. The application context instantiates the 
+ *
+ * This property override configurer is used to circumvent the problem with
+ * the abstract application context. The application context instantiates the
  * ordered bean factory post processor at the same time, so further loaded
- * property override configurers don't have any influence on later loaded 
- * property override configurers. See 
+ * property override configurers don't have any influence on later loaded
+ * property override configurers. See
  * <a href="http://opensource2.atlassian.com/projects/spring/browse/SPR-1657">
  * Spring JIRA entry
  * </a> for more details. This bean must be used as prototype and must have
@@ -44,7 +44,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  *    "$Author$"
  * );</script>
  *
- * @deprecated This former hack is no longer required. It is solved in 
+ * @deprecated This former hack is no longer required. It is solved in
  *             <code>ModuleApplicationContext</code> and
  *             <code>ModuleWebApplicationContext</code>.
  *
@@ -52,74 +52,74 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  */
 @Deprecated
 public class RefreshPropertyOverrideConfigurer extends
-    PropertyOverrideConfigurer implements BeanNameAware {
+	PropertyOverrideConfigurer implements BeanNameAware {
 
-    /**
-     * Flag to mark that this instance has been created by this class or a 
-     * subclass of it.
-     */
-    private boolean m_selfInstantiated = false;
-    
-    /**
-     * Is the name of this bean.
-     */
-    private String m_beanName;
-    
-    /**
-     * {@inheritDoc}
-     * 
-     * Creates a fresh instance of this class and invokes this method of the
-     * new instance.
-     */
-    public void postProcessBeanFactory(
-        ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        if (isSelfInstantiated()) {
-            super.postProcessBeanFactory(beanFactory);
-        } else {
-            String beanName = getBeanName();
-            if (!beanFactory.containsBean(beanName)) {
-                CoreNotificationHelper.notifyMisconfiguration(
-                    "Refresh property override configurer with name '" 
-                        + beanName + "' not found!");
-            }
-            if (beanFactory.isSingleton(beanName)) {
-                CoreNotificationHelper.notifyMisconfiguration(
-                    "Refresh property override configurer with name '" 
-                        + beanName + "' must be prototype!");
-            }
-            RefreshPropertyOverrideConfigurer configurer 
-                = (RefreshPropertyOverrideConfigurer) beanFactory.getBean(
-                    beanName);
-            configurer.setSelfInstantiated(true);
-            configurer.postProcessBeanFactory(beanFactory);
-        }
-    }
+	/**
+	 * Flag to mark that this instance has been created by this class or a
+	 * subclass of it.
+	 */
+	private boolean m_selfInstantiated = false;
+	
+	/**
+	 * Is the name of this bean.
+	 */
+	private String m_beanName;
+	
+	/**
+	 * {@inheritDoc}
+	 *
+	 * Creates a fresh instance of this class and invokes this method of the
+	 * new instance.
+	 */
+	public void postProcessBeanFactory(
+		ConfigurableListableBeanFactory beanFactory) throws BeansException {
+		if (isSelfInstantiated()) {
+			super.postProcessBeanFactory(beanFactory);
+		} else {
+			String beanName = getBeanName();
+			if (!beanFactory.containsBean(beanName)) {
+				CoreNotificationHelper.notifyMisconfiguration(
+					"Refresh property override configurer with name '"
+						+ beanName + "' not found!");
+			}
+			if (beanFactory.isSingleton(beanName)) {
+				CoreNotificationHelper.notifyMisconfiguration(
+					"Refresh property override configurer with name '"
+						+ beanName + "' must be prototype!");
+			}
+			RefreshPropertyOverrideConfigurer configurer
+				= (RefreshPropertyOverrideConfigurer) beanFactory.getBean(
+					beanName);
+			configurer.setSelfInstantiated(true);
+			configurer.postProcessBeanFactory(beanFactory);
+		}
+	}
 
-    /**
-     * @return Returns the selfInstantiated.
-     */
-    protected final boolean isSelfInstantiated() {
-        return m_selfInstantiated;
-    }
+	/**
+	 * @return Returns the selfInstantiated.
+	 */
+	protected final boolean isSelfInstantiated() {
+		return m_selfInstantiated;
+	}
 
-    /**
-     * @param selfInstantiated The selfInstantiated to set.
-     */
-    protected final void setSelfInstantiated(boolean selfInstantiated) {
-        m_selfInstantiated = selfInstantiated;
-    }
+	/**
+	 * @param selfInstantiated The selfInstantiated to set.
+	 */
+	protected final void setSelfInstantiated(boolean selfInstantiated) {
+		m_selfInstantiated = selfInstantiated;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public final void setBeanName(String beanName) {
-        m_beanName = beanName;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public final void setBeanName(String beanName) {
+		m_beanName = beanName;
+	}
 
-    /**
-     * @return Returns the beanName.
-     */
-    public final String getBeanName() {
-        return m_beanName;
-    }
+	/**
+	 * @return Returns the beanName.
+	 */
+	public final String getBeanName() {
+		return m_beanName;
+	}
 }

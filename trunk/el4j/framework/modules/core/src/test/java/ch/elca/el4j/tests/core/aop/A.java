@@ -30,5 +30,5 @@ package ch.elca.el4j.tests.core.aop;
  * @author Andreas Bur (ABU)
  */
 public class A extends AbstractDoit implements MarkerA {
-    
+	
 }

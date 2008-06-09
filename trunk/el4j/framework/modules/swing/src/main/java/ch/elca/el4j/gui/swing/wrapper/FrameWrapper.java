@@ -31,23 +31,23 @@ import javax.swing.JComponent;
  * @author Stefan Wismer (SWI)
  */
 public interface FrameWrapper {
-    /**
-     * @param component    the wrapped content.
-     */
-    public void setContent(JComponent component);
-    
-    /**
-     * @return    the wrapped component
-     */
-    public JComponent getContent();
-    
-    /**
-     * Show the wrapper.
-     */
-    public void show();
-    
-    /**
-     * Dispose the Wrapper.
-     */
-    public void dispose();
+	/**
+	 * @param component    the wrapped content.
+	 */
+	public void setContent(JComponent component);
+	
+	/**
+	 * @return    the wrapped component
+	 */
+	public JComponent getContent();
+	
+	/**
+	 * Show the wrapper.
+	 */
+	public void show();
+	
+	/**
+	 * Dispose the Wrapper.
+	 */
+	public void dispose();
 }

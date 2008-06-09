@@ -38,39 +38,39 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
  * @author Andreas Bur (ABU)
  */
 public class EnvTest {
-    /** The highest transport protocol port number. */ 
-    // Checkstyle: MagicNumber off
-    private static final int MAX_PORT = 1 << 16 - 1;
-    // Checkstyle: MagicNumber on
-    
-    /** The application context. */
-    private final ApplicationContext m_appContext;
-    
-    /** The container instance. */
-    private final ServletContainer m_container;
-    
-    /**
-     * Default constructor.
-     */
-    public EnvTest() {
-        m_appContext = new ModuleApplicationContext(new String[] {
-            "classpath*:mandatory/*.xml", 
-            "classpath:scenarios/envtest/environment.xml"}, 
-            false);
-        
-        m_container 
-            = (ServletContainer) m_appContext.getBean("servletContainer");
-    }
+	/** The highest transport protocol port number. */
+	// Checkstyle: MagicNumber off
+	private static final int MAX_PORT = 1 << 16 - 1;
+	// Checkstyle: MagicNumber on
+	
+	/** The application context. */
+	private final ApplicationContext m_appContext;
+	
+	/** The container instance. */
+	private final ServletContainer m_container;
+	
+	/**
+	 * Default constructor.
+	 */
+	public EnvTest() {
+		m_appContext = new ModuleApplicationContext(new String[] {
+			"classpath*:mandatory/*.xml",
+			"classpath:scenarios/envtest/environment.xml"},
+			false);
+		
+		m_container
+			= (ServletContainer) m_appContext.getBean("servletContainer");
+	}
 
-    /**
-     * Checks whether the provided values are in the expected range.
-     *
-     */
-    @Test
-    public void testConformance() {
-        assertNotNull("Container name not set.", m_container.getContainer());
-        assertTrue("Container's port out of range.",
-                m_container.getPort() > 0 
-                && m_container.getPort() <= MAX_PORT);
-    }
+	/**
+	 * Checks whether the provided values are in the expected range.
+	 *
+	 */
+	@Test
+	public void testConformance() {
+		assertNotNull("Container name not set.", m_container.getContainer());
+		assertTrue("Container's port out of range.",
+				m_container.getPort() > 0
+				&& m_container.getPort() <= MAX_PORT);
+	}
 }

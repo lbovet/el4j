@@ -21,56 +21,56 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
 /**
  * This class adds to the <code>AbstractDto</code> a primary key as a string.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @deprecated Please use <code>AbstractStringKeyIntOptimisticLockingDto</code>
  *             instead.
  * @see AbstractStringKeyIntOptimisticLockingDto
  * @author Martin Zeltner (MZE)
  */
 public abstract class AbstractStringKeyDto extends AbstractDto {
-    /**
-     * Primary key.
-     */
-    private String m_key;
+	/**
+	 * Primary key.
+	 */
+	private String m_key;
 
-    /**
-     * @return Returns the key.
-     */
-    public String getKey() {
-        return m_key;
-    }
+	/**
+	 * @return Returns the key.
+	 */
+	public String getKey() {
+		return m_key;
+	}
 
-    /**
-     * @param key
-     *            The key to set.
-     */
-    public void setKey(String key) {
-        m_key = key;
-    }
+	/**
+	 * @param key
+	 *            The key to set.
+	 */
+	public void setKey(String key) {
+		m_key = key;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public int hashCode() {
-        return (m_key != null) ? m_key.hashCode() : 0;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public int hashCode() {
+		return (m_key != null) ? m_key.hashCode() : 0;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public boolean equals(Object obj) {
-        if (obj instanceof AbstractStringKeyDto) {
-            AbstractStringKeyDto other = (AbstractStringKeyDto) obj;
-            return ObjectUtils.nullSaveEquals(m_key, other.m_key);
-        } else {
-            return false;
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean equals(Object obj) {
+		if (obj instanceof AbstractStringKeyDto) {
+			AbstractStringKeyDto other = (AbstractStringKeyDto) obj;
+			return ObjectUtils.nullSaveEquals(m_key, other.m_key);
+		} else {
+			return false;
+		}
+	}
 }

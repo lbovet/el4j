@@ -40,39 +40,39 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * @author Andreas Bur (ABU)
  */
 public class RoundRobinSwappableTargetExceptionHandler
-    extends AbstractSwappableTargetExceptionHandler
-    implements InitializingBean {
+	extends AbstractSwappableTargetExceptionHandler
+	implements InitializingBean {
 
-    /** The list with alternative targets, used one after the other. */
-    private List m_targets;
-    
-    /**
-     * Sets the list of targets that are used one after the other if the current
-     * target doesn't work anymore.
-     * 
-     * @param targets
-     *      The list of targets to set.
-     */
-    public void setTargets(List targets) {
-        m_targets = targets;
-    }
+	/** The list with alternative targets, used one after the other. */
+	private List m_targets;
+	
+	/**
+	 * Sets the list of targets that are used one after the other if the current
+	 * target doesn't work anymore.
+	 *
+	 * @param targets
+	 *      The list of targets to set.
+	 */
+	public void setTargets(List targets) {
+		m_targets = targets;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void afterPropertiesSet() throws Exception {
-        CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-                m_targets, "targets", this);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void afterPropertiesSet() throws Exception {
+		CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+				m_targets, "targets", this);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    protected Object getNewTarget(Object current, Throwable t,
-            MethodInvocation invocation, Log logger) throws Throwable {
+	/**
+	 * {@inheritDoc}
+	 */
+	protected Object getNewTarget(Object current, Throwable t,
+			MethodInvocation invocation, Log logger) throws Throwable {
 
-        // even works if 'current' isn't contained in the 'targets'-list
-        int i = (m_targets.indexOf(current) + 1) % m_targets.size();      
-        return m_targets.get(i);
-    }
+		// even works if 'current' isn't contained in the 'targets'-list
+		int i = (m_targets.indexOf(current) + 1) % m_targets.size();
+		return m_targets.get(i);
+	}
 }

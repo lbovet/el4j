@@ -51,94 +51,94 @@ import ch.elca.el4j.util.config.GenericConfig;
  * @author Stefan Wismer (SWI)
  */
 public class ValidatingCellEditor extends AbstractCellEditor implements
-        TableCellEditor {
+		TableCellEditor {
 
-    /**
-     * The BeansBinding between model and cell editor.
-     */
-    @SuppressWarnings("unchecked")
-    Binding m_binding;
-    
-    /**
-     * The table sorter if any.
-     */
-    TableSorter m_tableSorter;
-    
-    /**
-     * The property currently being edited.
-     */
-    ValidatedProperty m_property;
+	/**
+	 * The BeansBinding between model and cell editor.
+	 */
+	@SuppressWarnings("unchecked")
+	Binding m_binding;
+	
+	/**
+	 * The table sorter if any.
+	 */
+	TableSorter m_tableSorter;
+	
+	/**
+	 * The property currently being edited.
+	 */
+	ValidatedProperty m_property;
 
-    /** {@inheritDoc} */
-    public Component getTableCellEditorComponent(JTable table, Object value,
-            boolean isSelected, int rowIndex, int vColIndex) {
-        Component component = null;
-        
-        m_property = (ValidatedProperty) value;
-        Object propValue = m_property.getValue();
-        Class<?> propValueClass
-            = (propValue != null) ? propValue.getClass() : String.class;
-        
-        component = table.getDefaultEditor(propValueClass)
-            .getTableCellEditorComponent(table, propValue, isSelected,
-                rowIndex, vColIndex);
+	/** {@inheritDoc} */
+	public Component getTableCellEditorComponent(JTable table, Object value,
+			boolean isSelected, int rowIndex, int vColIndex) {
+		Component component = null;
+		
+		m_property = (ValidatedProperty) value;
+		Object propValue = m_property.getValue();
+		Class<?> propValueClass
+			= (propValue != null) ? propValue.getClass() : String.class;
+		
+		component = table.getDefaultEditor(propValueClass)
+			.getTableCellEditorComponent(table, propValue, isSelected,
+				rowIndex, vColIndex);
 
-        if (m_binding != null && m_binding.isBound()) {
-            m_binding.unbind();
-        }
-        
-        if (table.getModel() instanceof TableSorter) {
-            m_tableSorter = (TableSorter) table.getModel();
-            m_tableSorter.setSuppressChangeEvents(true);
-        }
+		if (m_binding != null && m_binding.isBound()) {
+			m_binding.unbind();
+		}
+		
+		if (table.getModel() instanceof TableSorter) {
+			m_tableSorter = (TableSorter) table.getModel();
+			m_tableSorter.setSuppressChangeEvents(true);
+		}
 
-        BindingFactory factory = BindingFactory.getInstance();
-        m_binding = factory.createBinding(UpdateStrategy.READ_WRITE, 
-            m_property.getParent(), m_property.getProperty(),
-            (JComponent) component);
-        
-        GenericConfig config = GUIApplication.getInstance().getConfig();
-        m_binding.addBindingListener(new ValidatingBindingListener(
-            (ValidationResponder) config.get("validationResponder")));
-        m_binding.bind();
-        
-        component.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    stopCellEditing();
-                }
-            }
-        });
+		BindingFactory factory = BindingFactory.getInstance();
+		m_binding = factory.createBinding(UpdateStrategy.READ_WRITE,
+			m_property.getParent(), m_property.getProperty(),
+			(JComponent) component);
+		
+		GenericConfig config = GUIApplication.getInstance().getConfig();
+		m_binding.addBindingListener(new ValidatingBindingListener(
+			(ValidationResponder) config.get("validationResponder")));
+		m_binding.bind();
+		
+		component.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					stopCellEditing();
+				}
+			}
+		});
 
-        return component;
-    }
+		return component;
+	}
 
-    /** {@inheritDoc} */
-    public Object getCellEditorValue() {
-        // get new value from model
-        return BeanProperty.create(m_property.getProperty()).getValue(
-            m_property.getParent());
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void removeCellEditorListener(CellEditorListener l) {
-        // using removeCellEditorListener is a little bit a hack
-        // but only this method is called after getCellEditorValue and
-        // we cannot turn suppressChangeEvents off earlier
-        if (m_binding != null && m_binding.isBound()) {
-            m_binding.unbind();
-            m_binding = null;
-        }
-        
-        if (m_tableSorter != null) {
-            m_tableSorter.setSuppressChangeEvents(false);
-            m_tableSorter = null;
-        }
-        
-        super.removeCellEditorListener(l);
-    }
-    
-    
+	/** {@inheritDoc} */
+	public Object getCellEditorValue() {
+		// get new value from model
+		return BeanProperty.create(m_property.getProperty()).getValue(
+			m_property.getParent());
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public void removeCellEditorListener(CellEditorListener l) {
+		// using removeCellEditorListener is a little bit a hack
+		// but only this method is called after getCellEditorValue and
+		// we cannot turn suppressChangeEvents off earlier
+		if (m_binding != null && m_binding.isBound()) {
+			m_binding.unbind();
+			m_binding = null;
+		}
+		
+		if (m_tableSorter != null) {
+			m_tableSorter.setSuppressChangeEvents(false);
+			m_tableSorter = null;
+		}
+		
+		super.removeCellEditorListener(l);
+	}
+	
+	
 }

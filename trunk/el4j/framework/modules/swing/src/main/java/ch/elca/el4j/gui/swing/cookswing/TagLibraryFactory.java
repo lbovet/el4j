@@ -50,115 +50,115 @@ import cookxml.core.taglibrary.InheritableTagLibrary;
  * @author Stefan Wismer (SWI)
  */
 public final class TagLibraryFactory {
-    /**
-     * Hidden default construcor.
-     */
-    private TagLibraryFactory() { }
-    
-    /**
-     * @return    the enhanced tag library
-     */
-    public static InheritableTagLibrary getTagLibrary() {
-        final String swingNamespace = CookSwingLib.NAMESPACE;
-        
-        // enable setting of objects that should not be added to parent
-        CookXmlLib.getSingletonTagLibrary().setSetter(
-            null, "var", new NoAddVarSetter());
-        
-        // ignore colspan attribute (in common)
-        CommonLib.getSingletonTagLibrary().setSetter(
-            null, "colspan", DoNothingSetter.getInstance());
-        
-        // install default action attribute setter for buttons
-        CookSwing.getSwingTagLibrary().setSetter(
-            "abstractbutton", "action", new ButtonActionSetter());
-        
-        // ignore colspan attribute (in swing)
-        CookSwing.getSwingTagLibrary().setSetter(
-            null, "colspan", DoNothingSetter.getInstance());
-        
-        
-        // install XML schemaLocation handler
-        InheritableTagLibrary tagLibrary = new InheritableTagLibrary(
-            CookSwing.getSwingTagLibrary());
-        tagLibrary.setNameSpace("http://www.w3.org/2001/XMLSchema-instance");
-        tagLibrary.setSetter(
-            null, "schemaLocation", DoNothingSetter.getInstance());
-        
-        // install el4j taglibrary
-        tagLibrary = new InheritableTagLibrary(tagLibrary);
-        tagLibrary.setNameSpace("http://www.elca.ch/el4j/cookSwing");
-        
-        // default setters and adders
-        tagLibrary.setSetter(null, null, DefaultSetter.getInstance());
-        tagLibrary.addAdder(null, DefaultAdder.getInstance());
-        
-        // <create-component>
-        tagLibrary.setCreator(
-            "create-component", new CreateComponentCreator());
-        tagLibrary.setAdder(
-            "create-component", new CreateComponentAdder());
-        tagLibrary.setSetter(
-            "create-component", null, DoNothingSetter.getInstance());
-        
-        // <flattoolbar>
-        tagLibrary.setCreator(
-            "flattoolbar", new FlatToolBarCreator());
-        tagLibrary.inheritTag(swingNamespace, "toolbar", "flattoolbar");
-        tagLibrary.setAdder("flattoolbar", DefaultAdder.getInstance());
-        
-        // <windowmenu>
-        tagLibrary.setCreator(
-            "windowmenu", new WindowMenuCreator());
-        tagLibrary.inheritTag(swingNamespace, "menu", "windowmenu");
-        tagLibrary.setAdder("windowmenu", DefaultAdder.getInstance());
-        tagLibrary.setSetter(
-            "windowmenu", "desktopPaneId", DoNothingSetter.getInstance());
-        
-        // <binding>
-        tagLibrary.setCreator(
-            "binding", new BindingCreator());
-        tagLibrary.setSetter(
-            "binding", null, DoNothingSetter.getInstance());
-        
-        // <listbinding>
-        tagLibrary.setCreator(
-            "listbinding", new ListBindingCreator());
-        tagLibrary.setSetter(
-            "listbinding", null, DoNothingSetter.getInstance());
-        
-        // <tablebinding>
-        tagLibrary.setCreator(
-            "tablebinding", new TableBindingCreator());
-        tagLibrary.setSetter(
-            "tablebinding", null, DoNothingSetter.getInstance());
-        
-        // <column>
-        tagLibrary.setCreator(
-            "column", new ColumnBindingCreator());
-        tagLibrary.setSetter(
-            "column", null, DoNothingSetter.getInstance());
-        
-        // <comboboxbinding>
-        tagLibrary.setCreator(
-            "comboboxbinding", new ComboBoxBindingCreator());
-        tagLibrary.setSetter(
-            "comboboxbinding", null, DoNothingSetter.getInstance());
-        
-        // <designgridlayout>
-        tagLibrary.setCreator(
-            "designgridlayout", new DesignGridLayoutCreator());
-        tagLibrary.setSetter(
-            "designgridlayout", null, DoNothingSetter.getInstance());
-        
-        // <row>
-        tagLibrary.setCreator("row", new RowCreator());
-        tagLibrary.setAdder("row", new RowAdder());
-        tagLibrary.setSetter("row", null, DoNothingSetter.getInstance());
-        tagLibrary.setSetter("row", "align", new RowAlignSetter());
-        tagLibrary.setSetter("row", "height", new RowHeightSetter());
-        
-        
-        return tagLibrary;
-    }
+	/**
+	 * Hidden default construcor.
+	 */
+	private TagLibraryFactory() { }
+	
+	/**
+	 * @return    the enhanced tag library
+	 */
+	public static InheritableTagLibrary getTagLibrary() {
+		final String swingNamespace = CookSwingLib.NAMESPACE;
+		
+		// enable setting of objects that should not be added to parent
+		CookXmlLib.getSingletonTagLibrary().setSetter(
+			null, "var", new NoAddVarSetter());
+		
+		// ignore colspan attribute (in common)
+		CommonLib.getSingletonTagLibrary().setSetter(
+			null, "colspan", DoNothingSetter.getInstance());
+		
+		// install default action attribute setter for buttons
+		CookSwing.getSwingTagLibrary().setSetter(
+			"abstractbutton", "action", new ButtonActionSetter());
+		
+		// ignore colspan attribute (in swing)
+		CookSwing.getSwingTagLibrary().setSetter(
+			null, "colspan", DoNothingSetter.getInstance());
+		
+		
+		// install XML schemaLocation handler
+		InheritableTagLibrary tagLibrary = new InheritableTagLibrary(
+			CookSwing.getSwingTagLibrary());
+		tagLibrary.setNameSpace("http://www.w3.org/2001/XMLSchema-instance");
+		tagLibrary.setSetter(
+			null, "schemaLocation", DoNothingSetter.getInstance());
+		
+		// install el4j taglibrary
+		tagLibrary = new InheritableTagLibrary(tagLibrary);
+		tagLibrary.setNameSpace("http://www.elca.ch/el4j/cookSwing");
+		
+		// default setters and adders
+		tagLibrary.setSetter(null, null, DefaultSetter.getInstance());
+		tagLibrary.addAdder(null, DefaultAdder.getInstance());
+		
+		// <create-component>
+		tagLibrary.setCreator(
+			"create-component", new CreateComponentCreator());
+		tagLibrary.setAdder(
+			"create-component", new CreateComponentAdder());
+		tagLibrary.setSetter(
+			"create-component", null, DoNothingSetter.getInstance());
+		
+		// <flattoolbar>
+		tagLibrary.setCreator(
+			"flattoolbar", new FlatToolBarCreator());
+		tagLibrary.inheritTag(swingNamespace, "toolbar", "flattoolbar");
+		tagLibrary.setAdder("flattoolbar", DefaultAdder.getInstance());
+		
+		// <windowmenu>
+		tagLibrary.setCreator(
+			"windowmenu", new WindowMenuCreator());
+		tagLibrary.inheritTag(swingNamespace, "menu", "windowmenu");
+		tagLibrary.setAdder("windowmenu", DefaultAdder.getInstance());
+		tagLibrary.setSetter(
+			"windowmenu", "desktopPaneId", DoNothingSetter.getInstance());
+		
+		// <binding>
+		tagLibrary.setCreator(
+			"binding", new BindingCreator());
+		tagLibrary.setSetter(
+			"binding", null, DoNothingSetter.getInstance());
+		
+		// <listbinding>
+		tagLibrary.setCreator(
+			"listbinding", new ListBindingCreator());
+		tagLibrary.setSetter(
+			"listbinding", null, DoNothingSetter.getInstance());
+		
+		// <tablebinding>
+		tagLibrary.setCreator(
+			"tablebinding", new TableBindingCreator());
+		tagLibrary.setSetter(
+			"tablebinding", null, DoNothingSetter.getInstance());
+		
+		// <column>
+		tagLibrary.setCreator(
+			"column", new ColumnBindingCreator());
+		tagLibrary.setSetter(
+			"column", null, DoNothingSetter.getInstance());
+		
+		// <comboboxbinding>
+		tagLibrary.setCreator(
+			"comboboxbinding", new ComboBoxBindingCreator());
+		tagLibrary.setSetter(
+			"comboboxbinding", null, DoNothingSetter.getInstance());
+		
+		// <designgridlayout>
+		tagLibrary.setCreator(
+			"designgridlayout", new DesignGridLayoutCreator());
+		tagLibrary.setSetter(
+			"designgridlayout", null, DoNothingSetter.getInstance());
+		
+		// <row>
+		tagLibrary.setCreator("row", new RowCreator());
+		tagLibrary.setAdder("row", new RowAdder());
+		tagLibrary.setSetter("row", null, DoNothingSetter.getInstance());
+		tagLibrary.setSetter("row", "align", new RowAlignSetter());
+		tagLibrary.setSetter("row", "height", new RowHeightSetter());
+		
+		
+		return tagLibrary;
+	}
 }

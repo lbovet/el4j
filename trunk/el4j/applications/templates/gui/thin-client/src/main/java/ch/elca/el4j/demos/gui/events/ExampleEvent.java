@@ -29,28 +29,28 @@ package ch.elca.el4j.demos.gui.events;
  * @author Stefan Wismer (SWI)
  */
 public class ExampleEvent {
-    /**
-     * The message.
-     */
-    private String m_message;
-    
-    /**
-     * @param message    the example event message.
-     */
-    public ExampleEvent(String message) {
-        this.m_message = message;
-    }
-    
-    /**
-     * @return the meassage
-     */
-    public String getMessage() {
-        return m_message;
-    }
+	/**
+	 * The message.
+	 */
+	private String m_message;
+	
+	/**
+	 * @param message    the example event message.
+	 */
+	public ExampleEvent(String message) {
+		this.m_message = message;
+	}
+	
+	/**
+	 * @return the meassage
+	 */
+	public String getMessage() {
+		return m_message;
+	}
 
-    /** {@inheritDoc} */
-    @Override
-    public String toString() {
-        return "ExampleEvent: [" + m_message + "]";
-    }
+	/** {@inheritDoc} */
+	@Override
+	public String toString() {
+		return "ExampleEvent: [" + m_message + "]";
+	}
 }

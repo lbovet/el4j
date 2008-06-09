@@ -20,7 +20,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- *  This class is a dummy class for presentation purposes for the 
+ *  This class is a dummy class for presentation purposes for the
  *  detailed statistics demo.
  *
  * <script type="text/javascript">printFileStatus
@@ -34,25 +34,25 @@ import org.apache.commons.logging.LogFactory;
  */
 public class DemoC {
 
-    /**
-     * Logger.
-     */
-    private static Log s_logger 
-        = LogFactory.getLog(DemoC.class);
-    
-    /**
-     * Print "Hi" on console.
-     *
-     */
-    public void print() {
-        // Checkstyle: MagicNumber off
-        try {
-            Thread.sleep(27);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        // Checkstyle: MagicNumber on
-        s_logger.info("Hi");     
-    }
+	/**
+	 * Logger.
+	 */
+	private static Log s_logger
+		= LogFactory.getLog(DemoC.class);
+	
+	/**
+	 * Print "Hi" on console.
+	 *
+	 */
+	public void print() {
+		// Checkstyle: MagicNumber off
+		try {
+			Thread.sleep(27);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		// Checkstyle: MagicNumber on
+		s_logger.info("Hi");
+	}
 
 }

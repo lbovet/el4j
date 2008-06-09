@@ -17,7 +17,7 @@
 package ch.elca.el4j.tests.keyword.service;
 
 /**
- * 
+ *
  * Hibernate-specific test class for <code>KeywordService</code>.
  *
  * <script type="text/javascript">printFileStatus
@@ -30,26 +30,26 @@ package ch.elca.el4j.tests.keyword.service;
  * @author Alex Mathey (AMA)
  */
 public class HibernateKeywordServiceTest
-    extends AbstractKeywordServiceTest {
+	extends AbstractKeywordServiceTest {
 
-    /**
-     * {@inheritDoc}
-     */
-    protected String[] getIncludeConfigLocations() {
-        return new String[] {
-            "classpath*:mandatory/*.xml",
-            "classpath:keyword-core-service-config.xml",
-            "classpath*:scenarios/db/raw/*.xml",
-            "classpath*:scenarios/dataaccess/hibernate/*.xml",
-            "classpath*:scenarios/dataaccess/hibernate/keyword/*.xml",
-            "classpath*:optional/interception/transactionJava5Annotations.xml"};
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	protected String[] getIncludeConfigLocations() {
+		return new String[] {
+			"classpath*:mandatory/*.xml",
+			"classpath:keyword-core-service-config.xml",
+			"classpath*:scenarios/db/raw/*.xml",
+			"classpath*:scenarios/dataaccess/hibernate/*.xml",
+			"classpath*:scenarios/dataaccess/hibernate/keyword/*.xml",
+			"classpath*:optional/interception/transactionJava5Annotations.xml"};
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    protected String[] getExcludeConfigLocations() {
-        return null;
-    }
-    
+	/**
+	 * {@inheritDoc}
+	 */
+	protected String[] getExcludeConfigLocations() {
+		return null;
+	}
+	
 }

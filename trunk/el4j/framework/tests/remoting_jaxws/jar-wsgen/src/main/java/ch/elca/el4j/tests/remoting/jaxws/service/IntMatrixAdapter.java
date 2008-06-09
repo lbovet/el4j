@@ -32,34 +32,34 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  */
 public class IntMatrixAdapter extends XmlAdapter<String, int[][]> {
 
-    /** {@inheritDoc} */
-    @Override
-    public String marshal(int[][] v) throws Exception {
-        StringBuilder b = new StringBuilder();
-        for (int[] is : v) {
-            for (int i : is) {
-                b.append(i).append(",");
-            }
-            b.setLength(b.length() - 1);
-            b.append(";");
-        }
-        b.setLength(b.length() - 1);
-        return b.toString();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public int[][] unmarshal(String v) throws Exception {
-        String[] tmp = v.split(";");
-        int[][] list1 = new int[tmp.length][];
-        for (int i = 0; i < list1.length; i++) {
-            String[] tmp2 = tmp[i].split(",");
-            int[] list2 = new int[tmp2.length];
-            for (int j = 0; j < list2.length; j++) {
-                list2[j] = Integer.parseInt(tmp2[j]);
-            }
-            list1[i] = list2;
-        }
-        return list1;
-    }
+	/** {@inheritDoc} */
+	@Override
+	public String marshal(int[][] v) throws Exception {
+		StringBuilder b = new StringBuilder();
+		for (int[] is : v) {
+			for (int i : is) {
+				b.append(i).append(",");
+			}
+			b.setLength(b.length() - 1);
+			b.append(";");
+		}
+		b.setLength(b.length() - 1);
+		return b.toString();
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public int[][] unmarshal(String v) throws Exception {
+		String[] tmp = v.split(";");
+		int[][] list1 = new int[tmp.length][];
+		for (int i = 0; i < list1.length; i++) {
+			String[] tmp2 = tmp[i].split(",");
+			int[] list2 = new int[tmp2.length];
+			for (int j = 0; j < list2.length; j++) {
+				list2[j] = Integer.parseInt(tmp2[j]);
+			}
+			list1[i] = list2;
+		}
+		return list1;
+	}
 }

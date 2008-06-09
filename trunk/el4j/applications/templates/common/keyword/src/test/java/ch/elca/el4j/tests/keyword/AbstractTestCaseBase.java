@@ -43,106 +43,106 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
  * @author Martin Zeltner (MZE)
  */
 public abstract class AbstractTestCaseBase {
-    /**
-     * Private logger.
-     */
-    private static Log s_logger 
-        = LogFactory.getLog(AbstractTestCaseBase.class);
+	/**
+	 * Private logger.
+	 */
+	private static Log s_logger
+		= LogFactory.getLog(AbstractTestCaseBase.class);
 
-    /**
-     * Application context to load beans.
-     */
-    private ConfigurableApplicationContext m_applicationContext;
+	/**
+	 * Application context to load beans.
+	 */
+	private ConfigurableApplicationContext m_applicationContext;
 
-    /**
-     * Data source. Created by application context.
-     */
-    private DataSource m_dataSource;
+	/**
+	 * Data source. Created by application context.
+	 */
+	private DataSource m_dataSource;
 
-    /**
-     * Hide default constructor.
-     */
-    protected AbstractTestCaseBase() { }
+	/**
+	 * Hide default constructor.
+	 */
+	protected AbstractTestCaseBase() { }
 
-    /**
-     * @return Returns the applicationContext.
-     */
-    protected synchronized ApplicationContext getApplicationContext() {
-        if (m_applicationContext == null) {
-            m_applicationContext = new ModuleApplicationContext(
-                getIncludeConfigLocations(), getExcludeConfigLocations(), 
-                isBeanOverridingAllowed(), (ApplicationContext) null);
-        }
-        return m_applicationContext;
-    }
+	/**
+	 * @return Returns the applicationContext.
+	 */
+	protected synchronized ApplicationContext getApplicationContext() {
+		if (m_applicationContext == null) {
+			m_applicationContext = new ModuleApplicationContext(
+				getIncludeConfigLocations(), getExcludeConfigLocations(),
+				isBeanOverridingAllowed(), (ApplicationContext) null);
+		}
+		return m_applicationContext;
+	}
 
-    /**
-     * @return Returns <code>true</code> if bean definition overriding should
-     *         be allowed.
-     */
-    protected boolean isBeanOverridingAllowed() {
-        return true;
-    }
+	/**
+	 * @return Returns <code>true</code> if bean definition overriding should
+	 *         be allowed.
+	 */
+	protected boolean isBeanOverridingAllowed() {
+		return true;
+	}
 
-    /**
-     * @return Returns the string array with exclude locations.
-     */
-    protected abstract String[] getExcludeConfigLocations();
+	/**
+	 * @return Returns the string array with exclude locations.
+	 */
+	protected abstract String[] getExcludeConfigLocations();
 
-    /**
-     * @return Returns the string array with include locations.
-     */
-    protected abstract String[] getIncludeConfigLocations();
+	/**
+	 * @return Returns the string array with include locations.
+	 */
+	protected abstract String[] getIncludeConfigLocations();
 
-    /**
-     * @return Returns the dataSource.
-     */
-    protected DataSource getDataSource() {
-        if (m_dataSource == null) {
-            m_dataSource 
-                = (DataSource) getApplicationContext().getBean("dataSource");
-        }
-        return m_dataSource;
-    }
+	/**
+	 * @return Returns the dataSource.
+	 */
+	protected DataSource getDataSource() {
+		if (m_dataSource == null) {
+			m_dataSource
+				= (DataSource) getApplicationContext().getBean("dataSource");
+		}
+		return m_dataSource;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Before
-    public void setUp() throws Exception {
-        Connection con = null;
-        try {
-            con = getDataSource().getConnection();
-            
-            try {
-                con.createStatement().execute(
-                    "DELETE FROM REFERENCEKEYWORDRELATIONSHIPS");
-            } catch (SQLException e) {
-                s_logger.info("There was a problem while deleting rows of "
-                    + "table 'REFERENCEKEYWORDRELATIONSHIPS'. Maybe the table "
-                    + "does not exist.");
-            }
-            con.createStatement().execute("DELETE FROM KEYWORDS");
-            con.commit();
-        } finally {
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (SQLException e) {
-                    s_logger.info("Connection could not be closed.");
-                }
-            }
-        }
-    }
-    
-    /**
-     * Clean up after each test.
-     * @throws Exception
-     */
-    @After
-    public void tearDown() {
-        if (m_applicationContext != null) {
-            m_applicationContext.close();
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Before
+	public void setUp() throws Exception {
+		Connection con = null;
+		try {
+			con = getDataSource().getConnection();
+			
+			try {
+				con.createStatement().execute(
+					"DELETE FROM REFERENCEKEYWORDRELATIONSHIPS");
+			} catch (SQLException e) {
+				s_logger.info("There was a problem while deleting rows of "
+					+ "table 'REFERENCEKEYWORDRELATIONSHIPS'. Maybe the table "
+					+ "does not exist.");
+			}
+			con.createStatement().execute("DELETE FROM KEYWORDS");
+			con.commit();
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					s_logger.info("Connection could not be closed.");
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Clean up after each test.
+	 * @throws Exception
+	 */
+	@After
+	public void tearDown() {
+		if (m_applicationContext != null) {
+			m_applicationContext.close();
+		}
+	}
 }

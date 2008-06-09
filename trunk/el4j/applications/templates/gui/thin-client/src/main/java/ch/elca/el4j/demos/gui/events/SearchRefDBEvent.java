@@ -29,49 +29,49 @@ package ch.elca.el4j.demos.gui.events;
  * @author Stefan Wismer (SWI)
  */
 public class SearchRefDBEvent {
-    /**
-     * The field where to search.
-     */
-    private String m_field;
-    /**
-     * The value that the {@link #m_field} should match.
-     */
-    private String m_value;
-    
-    /**
-     * @param field    the field where to search
-     * @param value    the value that the field should match
-     */
-    public SearchRefDBEvent(String field, String value) {
-        m_field = field;
-        m_value = value;
-    }
-    /**
-     * @return    the field where to search
-     */
-    public String getField() {
-        return m_field;
-    }
-    
-    /**
-     * @param field    the field where to search
-     */
-    public void setField(String field) {
-        this.m_field = field;
-    }
-    
-    /**
-     * @return    the value that the {@link #m_field} should match
-     */
-    public String getValue() {
-        return m_value;
-    }
-    
-    /**
-     * @param value    the value that the {@link #m_field} should match
-     */
-    public void setValue(String value) {
-        this.m_value = value;
-    }
+	/**
+	 * The field where to search.
+	 */
+	private String m_field;
+	/**
+	 * The value that the {@link #m_field} should match.
+	 */
+	private String m_value;
+	
+	/**
+	 * @param field    the field where to search
+	 * @param value    the value that the field should match
+	 */
+	public SearchRefDBEvent(String field, String value) {
+		m_field = field;
+		m_value = value;
+	}
+	/**
+	 * @return    the field where to search
+	 */
+	public String getField() {
+		return m_field;
+	}
+	
+	/**
+	 * @param field    the field where to search
+	 */
+	public void setField(String field) {
+		this.m_field = field;
+	}
+	
+	/**
+	 * @return    the value that the {@link #m_field} should match
+	 */
+	public String getValue() {
+		return m_value;
+	}
+	
+	/**
+	 * @param value    the value that the {@link #m_field} should match
+	 */
+	public void setValue(String value) {
+		this.m_value = value;
+	}
 
 }

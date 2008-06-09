@@ -26,7 +26,7 @@ import ch.elca.el4j.services.remoting.AbstractRemotingProtocol;
 import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailableRTException;
 
 /**
- * 
+ *
  * Chooses the protocol according to a random policy. Protocols for whom a
  * failure has been notified, are removed.
  *
@@ -41,38 +41,38 @@ import ch.elca.el4j.services.remoting.protocol.loadbalancing.NoProtocolAvailable
  */
 public class RandomPolicy extends AbstractPolicy {
 
-    /**
-     * Private logger.
-     */
-    private static Log s_logger = LogFactory
-            .getLog(RandomPolicy.class);
+	/**
+	 * Private logger.
+	 */
+	private static Log s_logger = LogFactory
+			.getLog(RandomPolicy.class);
 
-    /**
-     * Random number generator.
-     */
-    private Random m_random 
-        = new Random(Calendar.getInstance().getTimeInMillis());
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public AbstractRemotingProtocol getNextProtocol() 
-        throws NoProtocolAvailableRTException {
-        if ((m_protocols == null) || (m_protocols.length == 0)) {
-            throw new NoProtocolAvailableRTException("No protocol defined");
-        }
-        AbstractRemotingProtocol protocol 
-            = m_protocols[m_random.nextInt(m_protocols.length)];
-        s_logger.debug("Returning next protocol: " + protocol);
-        return protocol;
-    }
+	/**
+	 * Random number generator.
+	 */
+	private Random m_random
+		= new Random(Calendar.getInstance().getTimeInMillis());
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public AbstractRemotingProtocol getNextProtocol()
+		throws NoProtocolAvailableRTException {
+		if ((m_protocols == null) || (m_protocols.length == 0)) {
+			throw new NoProtocolAvailableRTException("No protocol defined");
+		}
+		AbstractRemotingProtocol protocol
+			= m_protocols[m_random.nextInt(m_protocols.length)];
+		s_logger.debug("Returning next protocol: " + protocol);
+		return protocol;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void notifyFailure(AbstractRemotingProtocol protocol) {
-        s_logger.debug("Removing protocol: " + protocol);
-        removeProtocol(protocol);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void notifyFailure(AbstractRemotingProtocol protocol) {
+		s_logger.debug("Removing protocol: " + protocol);
+		removeProtocol(protocol);
+	}
 }

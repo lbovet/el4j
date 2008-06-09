@@ -42,86 +42,86 @@ import ch.elca.el4j.plugins.beans.resolve.ResolverManager;
  * );</script>
  *
  * @author David Bernhard (DBD)
- * 
+ *
  * @goal beans
  * @requiresDependencyResolution runtime
  */
 public class BeansMojo extends AbstractMojo {
 
-    /**
-     * The maven project - used for runtime classpath resolution.
-     * @parameter expression="${project}"
-     */
-    private MavenProject m_project;
+	/**
+	 * The maven project - used for runtime classpath resolution.
+	 * @parameter expression="${project}"
+	 */
+	private MavenProject m_project;
 
-    // Checkstyle: MemberName off
-    
-    /**
-     * The file to read configuration information from.
-     * @parameter
-     * @required
-     */
-    private String sourceFile;
-    
-    // Checkstyle: MemberName on
-    
-    /** {@inheritDoc} */
-    public void execute() throws MojoExecutionException, MojoFailureException {
-        
-        URL[] classpath = constructClasspath();
-        
-        ConfigurationExtractor ex = new ConfigurationExtractor(sourceFile);
-        
-        BeanPathResolver resolver = new BeanPathResolver();
-        String[] files = resolver.resolve(
-            ex.getInclusive(), ex.getExclusive(), classpath);
+	// Checkstyle: MemberName off
+	
+	/**
+	 * The file to read configuration information from.
+	 * @parameter
+	 * @required
+	 */
+	private String sourceFile;
+	
+	// Checkstyle: MemberName on
+	
+	/** {@inheritDoc} */
+	public void execute() throws MojoExecutionException, MojoFailureException {
+		
+		URL[] classpath = constructClasspath();
+		
+		ConfigurationExtractor ex = new ConfigurationExtractor(sourceFile);
+		
+		BeanPathResolver resolver = new BeanPathResolver();
+		String[] files = resolver.resolve(
+			ex.getInclusive(), ex.getExclusive(), classpath);
 
-        ResolverManager mgr = new ResolverManager(classpath);
-        
-        String outputDir = m_project.getBasedir().getAbsolutePath();
-        
-        File beanDirectory = new File(outputDir, "target/beans");
-        
-        beanDirectory.mkdirs();
-        if (!beanDirectory.exists() || !beanDirectory.isDirectory()) {
-            throw new MojoFailureException("Failed to create beans directory.");
-        }
-        
-        for (String file : files) {
-            try {
-                mgr.copy(file, beanDirectory);
-            } catch (IOException e) {
-                
-                throw new MojoFailureException("IO exception copying files. "
-                    + e.toString());
-            }
-        }
-    }
-    
+		ResolverManager mgr = new ResolverManager(classpath);
+		
+		String outputDir = m_project.getBasedir().getAbsolutePath();
+		
+		File beanDirectory = new File(outputDir, "target/beans");
+		
+		beanDirectory.mkdirs();
+		if (!beanDirectory.exists() || !beanDirectory.isDirectory()) {
+			throw new MojoFailureException("Failed to create beans directory.");
+		}
+		
+		for (String file : files) {
+			try {
+				mgr.copy(file, beanDirectory);
+			} catch (IOException e) {
+				
+				throw new MojoFailureException("IO exception copying files. "
+					+ e.toString());
+			}
+		}
+	}
+	
 
-    
-    /**
-     * Constructs an URL[] representing the runtime classpath.
-     * @return The urls.
-     */
-    private URL[] constructClasspath() {
-        List<?> list;
-        List<URL> classpath = new LinkedList<URL>();
-        try {
-            list = m_project.getRuntimeClasspathElements();
-        } catch (DependencyResolutionRequiredException e) {
-            // Can't happen - dependency resolution required.
-            throw new Error(e);
-        }
-        for (Object o : list) {
-            String s = o.toString();
-            try {
-                classpath.add(new File(s).toURL());
-            } catch (MalformedURLException e) {
-                // Shouldn't really happen.
-                throw new RuntimeException(e);
-            }
-        }
-        return classpath.toArray(new URL[0]);
-    }
+	
+	/**
+	 * Constructs an URL[] representing the runtime classpath.
+	 * @return The urls.
+	 */
+	private URL[] constructClasspath() {
+		List<?> list;
+		List<URL> classpath = new LinkedList<URL>();
+		try {
+			list = m_project.getRuntimeClasspathElements();
+		} catch (DependencyResolutionRequiredException e) {
+			// Can't happen - dependency resolution required.
+			throw new Error(e);
+		}
+		for (Object o : list) {
+			String s = o.toString();
+			try {
+				classpath.add(new File(s).toURL());
+			} catch (MalformedURLException e) {
+				// Shouldn't really happen.
+				throw new RuntimeException(e);
+			}
+		}
+		return classpath.toArray(new URL[0]);
+	}
 }

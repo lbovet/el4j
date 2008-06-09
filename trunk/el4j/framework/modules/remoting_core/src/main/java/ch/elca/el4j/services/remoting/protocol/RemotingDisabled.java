@@ -28,7 +28,7 @@ import ch.elca.el4j.services.remoting.RemotingProxyFactoryBean;
 import ch.elca.el4j.services.remoting.RemotingServiceExporter;
 
 /**
- * Empty protocol to simulate protocols. Just the implicit context passing will 
+ * Empty protocol to simulate protocols. Just the implicit context passing will
  * be enabled. Client and server must be in same JVM.
  *
  * <script type="text/javascript">printFileStatus
@@ -42,71 +42,71 @@ import ch.elca.el4j.services.remoting.RemotingServiceExporter;
  */
 public class RemotingDisabled extends AbstractRemotingProtocol {
 
-    /**
-     * Map to cache service objects.
-     */
-    private Map m_serviceObjects = new HashMap();
+	/**
+	 * Map to cache service objects.
+	 */
+	private Map m_serviceObjects = new HashMap();
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object createProxyBean(RemotingProxyFactoryBean proxyBean,
-            Class serviceInterfaceWithContext) {
-        
-        Object result = null;
-        
-        String serviceName = proxyBean.getServiceName();
-        if (StringUtils.hasText(serviceName)) {
-            Object serviceObject = m_serviceObjects.get(serviceName);
-            if (serviceObject == null) {
-                CoreNotificationHelper.notifyMisconfiguration(
-                        "There is no service for service name '" + serviceName
-                                + "'. Be sure that server side is started "
-                                + "before client side.");
-            } else {
-                result = serviceObject;
-            }
-        } else {
-            CoreNotificationHelper.notifyMisconfiguration(
-                    "Service name can not be null or empty!");
-        }
-        
-        return result;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object createProxyBean(RemotingProxyFactoryBean proxyBean,
+			Class serviceInterfaceWithContext) {
+		
+		Object result = null;
+		
+		String serviceName = proxyBean.getServiceName();
+		if (StringUtils.hasText(serviceName)) {
+			Object serviceObject = m_serviceObjects.get(serviceName);
+			if (serviceObject == null) {
+				CoreNotificationHelper.notifyMisconfiguration(
+						"There is no service for service name '" + serviceName
+								+ "'. Be sure that server side is started "
+								+ "before client side.");
+			} else {
+				result = serviceObject;
+			}
+		} else {
+			CoreNotificationHelper.notifyMisconfiguration(
+					"Service name can not be null or empty!");
+		}
+		
+		return result;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object createExporterBean(RemotingServiceExporter exporterBean,
-            Class serviceInterfaceWithContext, Object serviceProxy) {
-        String serviceName = exporterBean.getServiceName();
-        if (StringUtils.hasText(serviceName)) {
-            m_serviceObjects.put(serviceName, serviceProxy);
-        } else {
-            CoreNotificationHelper.notifyMisconfiguration(
-                    "Service name can not be null or empty!");
-        }
-        return serviceProxy;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object createExporterBean(RemotingServiceExporter exporterBean,
+			Class serviceInterfaceWithContext, Object serviceProxy) {
+		String serviceName = exporterBean.getServiceName();
+		if (StringUtils.hasText(serviceName)) {
+			m_serviceObjects.put(serviceName, serviceProxy);
+		} else {
+			CoreNotificationHelper.notifyMisconfiguration(
+					"Service name can not be null or empty!");
+		}
+		return serviceProxy;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Class getProxyObjectType() {
-        return Object.class;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Class getProxyObjectType() {
+		return Object.class;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Class getExporterObjectType() {
-        return Object.class;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Class getExporterObjectType() {
+		return Object.class;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void afterPropertiesSet() throws Exception {
-        // No properties exits for this protocol.
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void afterPropertiesSet() throws Exception {
+		// No properties exits for this protocol.
+	}
 }

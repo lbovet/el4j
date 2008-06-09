@@ -23,9 +23,9 @@ import java.util.List;
 import org.springframework.util.StringUtils;
 
 /**
- * Criteria that combines n Criteria with OR (i.e. one 
+ * Criteria that combines n Criteria with OR (i.e. one
  *  of the Criterias must be true).
- *  
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -37,33 +37,33 @@ import org.springframework.util.StringUtils;
  */
 public class OrCriteria implements Criteria {
 
-    protected List<Criteria> m_criterias;
-    
-    public OrCriteria (Criteria left, Criteria right) {
-        this(new Criteria[] { left, right});    
-    }
-    
-    public OrCriteria (Criteria... criterias){
-        m_criterias  = new ArrayList<Criteria>(criterias.length);
-        m_criterias.addAll(Arrays.asList(criterias));
-    }    
-    
-    public String getType() {
-        return "";
-    }
+	protected List<Criteria> m_criterias;
+	
+	public OrCriteria (Criteria left, Criteria right) {
+		this(new Criteria[] { left, right});
+	}
+	
+	public OrCriteria (Criteria... criterias){
+		m_criterias  = new ArrayList<Criteria>(criterias.length);
+		m_criterias.addAll(Arrays.asList(criterias));
+	}
+	
+	public String getType() {
+		return "";
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public String getSqlWhereCondition() {
-        return "("+StringUtils.arrayToDelimitedString(
-            CriteriaHelper.applyToSqlWhereCondition(m_criterias.toArray(new Criteria[0])), 
-            " OR ")+ 
-           ")";
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getSqlWhereCondition() {
+		return "("+StringUtils.arrayToDelimitedString(
+			CriteriaHelper.applyToSqlWhereCondition(m_criterias.toArray(new Criteria[0])),
+			" OR ")+
+			")";
+	}
 
-    public List<Criteria> getCriterias() {
-        return m_criterias;
-    }
+	public List<Criteria> getCriterias() {
+		return m_criterias;
+	}
 
 }

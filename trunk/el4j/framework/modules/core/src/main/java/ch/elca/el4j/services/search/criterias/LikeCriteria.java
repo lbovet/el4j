@@ -29,67 +29,67 @@ package ch.elca.el4j.services.search.criterias;
  * @author Martin Zeltner (MZE)
  */
 public class LikeCriteria extends AbstractCriteria {
-    /**
-     * Marks whether the pattern is case sensitive.
-     */
-    private Boolean m_caseSensitive;
-    
-    /**
-     * Default constructor for remoting protocols like hessian and burlap added.
-     */
-    protected LikeCriteria() { }
-    
-    /**
-     * Hidden constructor.
-     * 
-     * @param field Is the field the criteria is made for.
-     * @param value Is the value of this criteria.
-     * @param caseSensitive Marks if the pattern is case sensitive.
-     */
-    protected LikeCriteria(String field, String value, 
-        boolean caseSensitive) {
-        super(field, value);
-        m_caseSensitive = Boolean.valueOf(caseSensitive);
-    }
+	/**
+	 * Marks whether the pattern is case sensitive.
+	 */
+	private Boolean m_caseSensitive;
+	
+	/**
+	 * Default constructor for remoting protocols like hessian and burlap added.
+	 */
+	protected LikeCriteria() { }
+	
+	/**
+	 * Hidden constructor.
+	 *
+	 * @param field Is the field the criteria is made for.
+	 * @param value Is the value of this criteria.
+	 * @param caseSensitive Marks if the pattern is case sensitive.
+	 */
+	protected LikeCriteria(String field, String value,
+		boolean caseSensitive) {
+		super(field, value);
+		m_caseSensitive = Boolean.valueOf(caseSensitive);
+	}
 
-    /**
-     * @param field Is the field the criteria is made for.
-     * @param value Is the value of this criteria.
-     * @return Returns a case insensitive pattern criteria.
-     */
-    public static LikeCriteria caseInsensitive(String field, String value) {
-        return new LikeCriteria(field, value, false);
-    }
+	/**
+	 * @param field Is the field the criteria is made for.
+	 * @param value Is the value of this criteria.
+	 * @return Returns a case insensitive pattern criteria.
+	 */
+	public static LikeCriteria caseInsensitive(String field, String value) {
+		return new LikeCriteria(field, value, false);
+	}
 
-    /**
-     * @param field Is the field the criteria is made for.
-     * @param value Is the value of this criteria.
-     * @return Returns a case sensitive pattern criteria.
-     */
-    public static LikeCriteria caseSensitive(String field, String value) {
-        return new LikeCriteria(field, value, true);
-    }
+	/**
+	 * @param field Is the field the criteria is made for.
+	 * @param value Is the value of this criteria.
+	 * @return Returns a case sensitive pattern criteria.
+	 */
+	public static LikeCriteria caseSensitive(String field, String value) {
+		return new LikeCriteria(field, value, true);
+	}
 
-    /**
-     * @return Returns <code>true</code> if it is case sensitive.
-     */
-    public final Boolean isCaseSensitive() {
-        return m_caseSensitive;
-    }
+	/**
+	 * @return Returns <code>true</code> if it is case sensitive.
+	 */
+	public final Boolean isCaseSensitive() {
+		return m_caseSensitive;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public String getType() {
-        return "like";
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getType() {
+		return "like";
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public String getSqlWhereCondition() {
-        // TODO: consider also case sensitivity
-        return " ( "+getField()+" LIKE "+getValue()+ " ) ";
-    }    
-    
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getSqlWhereCondition() {
+		// TODO: consider also case sensitivity
+		return " ( "+getField()+" LIKE "+getValue()+ " ) ";
+	}
+	
 }

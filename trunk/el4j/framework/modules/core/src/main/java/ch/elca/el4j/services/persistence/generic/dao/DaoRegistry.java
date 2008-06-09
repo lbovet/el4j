@@ -30,17 +30,17 @@ package ch.elca.el4j.services.persistence.generic.dao;
  * @author Alex Mathey (AMA)
  */
 public interface DaoRegistry {
-    
-    /**
-     * Returns the generic DAO for entities of type {@code entityType}.
-     * 
-     * @param entityType
-     *            The domain class for which a generic DAO should be returned.
-     *            The class does some basic handling to tolerate (i.e. unwrap) 
-     *            Spring proxies.
-     * @return A fully generic or partially specific DAO for the given type, 
-     *            or null if none was found.
-     */
-    public <T> GenericDao<T> getFor(Class<T> entityType);
-    
+	
+	/**
+	 * Returns the generic DAO for entities of type {@code entityType}.
+	 *
+	 * @param entityType
+	 *            The domain class for which a generic DAO should be returned.
+	 *            The class does some basic handling to tolerate (i.e. unwrap)
+	 *            Spring proxies.
+	 * @return A fully generic or partially specific DAO for the given type,
+	 *            or null if none was found.
+	 */
+	public <T> GenericDao<T> getFor(Class<T> entityType);
+	
 }

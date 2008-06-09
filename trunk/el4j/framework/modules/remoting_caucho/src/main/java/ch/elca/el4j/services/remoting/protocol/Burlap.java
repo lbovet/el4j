@@ -37,74 +37,74 @@ import ch.elca.el4j.services.remoting.RemotingServiceExporter;
  * );</script>
  *
  * @author Martin Zeltner (MZE)
- * 
+ *
  * @deprecated Due it is no more supported by caucho.com.
  *             Use protocol Hessian or HttpInvoker instead.
  */
 @Deprecated
 public class Burlap extends AbstractInetSocketAddressWebProtocol {
-    /**
-     * {@inheritDoc}
-     */
-    public Object createProxyBean(RemotingProxyFactoryBean proxyBean,
-            Class serviceInterfaceWithContext) {
-        StaticApplicationContext appContext = new StaticApplicationContext(
-                m_parentApplicationContext);
-        registerChildApplicationContext(appContext);
-        MutablePropertyValues proxyProps = new MutablePropertyValues();
-        proxyProps.addPropertyValue("serviceInterface",
-                serviceInterfaceWithContext);
-        proxyProps.addPropertyValue("serviceUrl", generateUrl(proxyBean));
-        appContext.registerSingleton("burlapProxyBeanGen",
-                getProxyObjectType(), proxyProps);
-        appContext.refresh();
-        return appContext.getBean("burlapProxyBeanGen");
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object createProxyBean(RemotingProxyFactoryBean proxyBean,
+			Class serviceInterfaceWithContext) {
+		StaticApplicationContext appContext = new StaticApplicationContext(
+				m_parentApplicationContext);
+		registerChildApplicationContext(appContext);
+		MutablePropertyValues proxyProps = new MutablePropertyValues();
+		proxyProps.addPropertyValue("serviceInterface",
+				serviceInterfaceWithContext);
+		proxyProps.addPropertyValue("serviceUrl", generateUrl(proxyBean));
+		appContext.registerSingleton("burlapProxyBeanGen",
+				getProxyObjectType(), proxyProps);
+		appContext.refresh();
+		return appContext.getBean("burlapProxyBeanGen");
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object createExporterBean(RemotingServiceExporter exporterBean,
-            Class serviceInterfaceWithContext, Object serviceProxy) {
-        StaticApplicationContext appContext = new StaticApplicationContext(
-                m_parentApplicationContext);
-        registerChildApplicationContext(appContext);
-        MutablePropertyValues props = new MutablePropertyValues();
-        props.addPropertyValue("service", serviceProxy);
-        props.addPropertyValue("serviceInterface", serviceInterfaceWithContext);
-        appContext.registerSingleton("burlapExporterBeanGen",
-                getExporterObjectType(), props);
-        appContext.refresh();
-        return appContext.getBean("burlapExporterBeanGen");
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object createExporterBean(RemotingServiceExporter exporterBean,
+			Class serviceInterfaceWithContext, Object serviceProxy) {
+		StaticApplicationContext appContext = new StaticApplicationContext(
+				m_parentApplicationContext);
+		registerChildApplicationContext(appContext);
+		MutablePropertyValues props = new MutablePropertyValues();
+		props.addPropertyValue("service", serviceProxy);
+		props.addPropertyValue("serviceInterface", serviceInterfaceWithContext);
+		appContext.registerSingleton("burlapExporterBeanGen",
+				getExporterObjectType(), props);
+		appContext.refresh();
+		return appContext.getBean("burlapExporterBeanGen");
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Class getProxyObjectType() {
-        return BurlapProxyFactoryBean.class;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Class getProxyObjectType() {
+		return BurlapProxyFactoryBean.class;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Class getExporterObjectType() {
-        return BurlapServiceExporter.class;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Class getExporterObjectType() {
+		return BurlapServiceExporter.class;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public String generateUrl(AbstractRemotingBase remoteBase) {
-        StringBuffer sb = new StringBuffer();
-        sb.append("http://");
-        sb.append(getServiceHost());
-        sb.append(":");
-        sb.append(getServicePort());
-        sb.append("/");
-        sb.append(getContextPath());
-        sb.append("/");
-        sb.append(remoteBase.getServiceName());
-        return sb.toString();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public String generateUrl(AbstractRemotingBase remoteBase) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("http://");
+		sb.append(getServiceHost());
+		sb.append(":");
+		sb.append(getServicePort());
+		sb.append("/");
+		sb.append(getContextPath());
+		sb.append("/");
+		sb.append(remoteBase.getServiceName());
+		return sb.toString();
+	}
 }

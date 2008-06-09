@@ -48,53 +48,53 @@ import ch.elca.el4j.util.config.GenericConfig;
  * @author Stefan Wismer (SWI)
  */
 public class ListBinding extends AbstractBindingCreator<JList> {
-    /**
-     * The logger.
-     */
-    private static Log s_logger = LogFactory.getLog(ListBinding.class);
-    
-    /**
-     * Which property to show in the list.
-     */
-    private Property<?, ?> m_property;
-    
-    /**
-     * @param property    which property to show in the list
-     */
-    public ListBinding(String property) {
-        this(BeanProperty.create(property));
-    }
-    
-    /**
-     * @param property    which property to show in the list
-     */
-    public ListBinding(Property<?, ?> property) {
-        m_property = property;
-    }
+	/**
+	 * The logger.
+	 */
+	private static Log s_logger = LogFactory.getLog(ListBinding.class);
+	
+	/**
+	 * Which property to show in the list.
+	 */
+	private Property<?, ?> m_property;
+	
+	/**
+	 * @param property    which property to show in the list
+	 */
+	public ListBinding(String property) {
+		this(BeanProperty.create(property));
+	}
+	
+	/**
+	 * @param property    which property to show in the list
+	 */
+	public ListBinding(Property<?, ?> property) {
+		m_property = property;
+	}
 
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    public AutoBinding createBinding(Object object, JList formComponent) {
-        if (!List.class.isAssignableFrom(object.getClass())) {
-            s_logger.error("Cannot bind object " + object.toString()
-                + " to list component, because it is not a list.");
-            return null;
-        }
-        List list = (List) object;
-        JListBinding lb = SwingBindings.createJListBinding(
-            m_updateStrategy, list, formComponent);
-        
-        // show property
-        lb.setDetailBinding(m_property);
-        
-        return lb;
-    }
-    
-    /** {@inheritDoc} */
-    public void addValidation(JList formComponent) {
-        GenericConfig config = GUIApplication.getInstance().getConfig();
-        formComponent.setCellRenderer(
-            (ListCellRenderer) config.get("cellRenderer"));
-    }
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	public AutoBinding createBinding(Object object, JList formComponent) {
+		if (!List.class.isAssignableFrom(object.getClass())) {
+			s_logger.error("Cannot bind object " + object.toString()
+				+ " to list component, because it is not a list.");
+			return null;
+		}
+		List list = (List) object;
+		JListBinding lb = SwingBindings.createJListBinding(
+			m_updateStrategy, list, formComponent);
+		
+		// show property
+		lb.setDetailBinding(m_property);
+		
+		return lb;
+	}
+	
+	/** {@inheritDoc} */
+	public void addValidation(JList formComponent) {
+		GenericConfig config = GUIApplication.getInstance().getConfig();
+		formComponent.setCellRenderer(
+			(ListCellRenderer) config.get("cellRenderer"));
+	}
 
 }

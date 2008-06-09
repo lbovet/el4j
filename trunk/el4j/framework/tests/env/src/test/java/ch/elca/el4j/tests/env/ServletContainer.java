@@ -31,43 +31,43 @@ package ch.elca.el4j.tests.env;
  */
 public class ServletContainer {
 
-    /** The container's name. */
-    private String m_container;
-    
-    /** The container's port. */
-    private int m_port;
+	/** The container's name. */
+	private String m_container;
+	
+	/** The container's port. */
+	private int m_port;
 
-    /**
-     * @return Returns the container's name.
-     */
-    public String getContainer() {
-        return m_container;
-    }
+	/**
+	 * @return Returns the container's name.
+	 */
+	public String getContainer() {
+		return m_container;
+	}
 
-    /**
-     * Sets the container's name.
-     * 
-     * @param container
-     *      The name.
-     */
-    public void setContainer(String container) {
-        m_container = container;
-    }
+	/**
+	 * Sets the container's name.
+	 *
+	 * @param container
+	 *      The name.
+	 */
+	public void setContainer(String container) {
+		m_container = container;
+	}
 
-    /**
-     * @return Returns the container's port.
-     */
-    public int getPort() {
-        return m_port;
-    }
+	/**
+	 * @return Returns the container's port.
+	 */
+	public int getPort() {
+		return m_port;
+	}
 
-    /**
-     * Sets the container's port.
-     * 
-     * @param port
-     *      The container's port.
-     */
-    public void setPort(int port) {
-        m_port = port;
-    }
+	/**
+	 * Sets the container's port.
+	 *
+	 * @param port
+	 *      The container's port.
+	 */
+	public void setPort(int port) {
+		m_port = port;
+	}
 }

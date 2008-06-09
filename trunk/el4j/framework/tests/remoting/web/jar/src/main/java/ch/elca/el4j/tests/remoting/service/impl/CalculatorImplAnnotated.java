@@ -25,7 +25,7 @@ import ch.elca.el4j.tests.remoting.service.CalculatorValueObject;
 import ch.elca.el4j.tests.remoting.service.SpecialCalculatorException;
 
 /**
- * 
+ *
  * This class is a annotated version of {@link CalculatorImpl}.
  *
  * <script type="text/javascript">printFileStatus
@@ -38,55 +38,55 @@ import ch.elca.el4j.tests.remoting.service.SpecialCalculatorException;
  * @author Philippe Jacot (PJA)
  */
 @WebService(
-    endpointInterface = "ch.elca.el4j.tests.remoting.service.Calculator",
-    serviceName = "Calculator")
+	endpointInterface = "ch.elca.el4j.tests.remoting.service.Calculator",
+	serviceName = "Calculator")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 public class CalculatorImplAnnotated extends CalculatorImpl {
 
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    @WebMethod
-    public int countNumberOfUppercaseLetters(String text) {
-        return super.countNumberOfUppercaseLetters(text);
-    }
+	/**
+	 *
+	 * {@inheritDoc}
+	 */
+	@WebMethod
+	public int countNumberOfUppercaseLetters(String text) {
+		return super.countNumberOfUppercaseLetters(text);
+	}
 
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    @WebMethod
-    public CalculatorValueObject echoValueObject(CalculatorValueObject o) {
-        return super.echoValueObject(o);
-    }
+	/**
+	 *
+	 * {@inheritDoc}
+	 */
+	@WebMethod
+	public CalculatorValueObject echoValueObject(CalculatorValueObject o) {
+		return super.echoValueObject(o);
+	}
 
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    @WebMethod
-    public double getArea(double a, double b) {
-        return super.getArea(a, b);
-    }
+	/**
+	 *
+	 * {@inheritDoc}
+	 */
+	@WebMethod
+	public double getArea(double a, double b) {
+		return super.getArea(a, b);
+	}
 
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    @WebMethod
-    public void throwMeASpecialException(
-        String action) throws SpecialCalculatorException {
-        super.throwMeASpecialException(action);
-    }
+	/**
+	 *
+	 * {@inheritDoc}
+	 */
+	@WebMethod
+	public void throwMeASpecialException(
+		String action) throws SpecialCalculatorException {
+		super.throwMeASpecialException(action);
+	}
 
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    @WebMethod
-    public void throwMeAnException() throws CalculatorException {
-        super.throwMeAnException();
-    }
+	/**
+	 *
+	 * {@inheritDoc}
+	 */
+	@WebMethod
+	public void throwMeAnException() throws CalculatorException {
+		super.throwMeAnException();
+	}
 
 }

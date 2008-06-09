@@ -25,95 +25,95 @@ import javax.management.ObjectName;
  * https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/module/jmx/java/ch/elca/el4j/services/monitoring/jmx/SpringBeanMBMBean.java
  * $", "$Revision$", "$Date: 2006-03-13 14:15:43 +0100 (Mo, 13 Mrz 2006)
  * $", "$Author$" );</script>
- * 
+ *
  * @author Raphael Boog (RBO)
  * @author Rashid Waraich (RWA)
  */
 public interface SpringBeanMBMBean {
 
-    /**
-     * Getter method for the name member variable.
-     * 
-     * @return Returns the name.
-     */
-    String getName();
-    
-    /**
-     * @return The location this bean was defined at.
-     */
-    String getResourceDescription();
+	/**
+	 * Getter method for the name member variable.
+	 *
+	 * @return Returns the name.
+	 */
+	String getName();
+	
+	/**
+	 * @return The location this bean was defined at.
+	 */
+	String getResourceDescription();
 
-    /**
-     * Returns the configuration parameter as they have been set in the
-     * configuration files loaded by the Application Context.
-     * 
-     * @return Returns the Configuration
-     */
-    String[] getConfiguration();
+	/**
+	 * Returns the configuration parameter as they have been set in the
+	 * configuration files loaded by the Application Context.
+	 *
+	 * @return Returns the Configuration
+	 */
+	String[] getConfiguration();
 
-    /**
-     * Returns the object name of the Application Context proxy.
-     * 
-     * @return Returns the applicationContextMB.
-     */
-    ObjectName getApplicationContextMB();
+	/**
+	 * Returns the object name of the Application Context proxy.
+	 *
+	 * @return Returns the applicationContextMB.
+	 */
+	ObjectName getApplicationContextMB();
 
-    /**
-     * Returns the corresponding MBeans which are registered at the MBean Server
-     * via MBeanExporter.
-     * 
-     * @return Returns the registered MBeans
-     */
-    ObjectName[] getRegisteredMBean();
+	/**
+	 * Returns the corresponding MBeans which are registered at the MBean Server
+	 * via MBeanExporter.
+	 *
+	 * @return Returns the registered MBeans
+	 */
+	ObjectName[] getRegisteredMBean();
 
-    /**
-     * Returns the class name of the referenced bean.
-     * 
-     * @return Returns the className.
-     */
-    String getClassName();
+	/**
+	 * Returns the class name of the referenced bean.
+	 *
+	 * @return Returns the className.
+	 */
+	String getClassName();
 
-    /**
-     * Returns whether the referenced bean is a Singleton or a Prototype.
-     * 
-     * @return Returns if the referenced bean is a singleton
-     */
-    boolean getIsSingleton();
+	/**
+	 * Returns whether the referenced bean is a Singleton or a Prototype.
+	 *
+	 * @return Returns if the referenced bean is a singleton
+	 */
+	boolean getIsSingleton();
 
-    /**
-     * Returns the interceptor class names of the referenced bean.
-     * 
-     * @return Returns the interceptor class names of the referenced bean.
-     */
-    String[] getInterceptors();
+	/**
+	 * Returns the interceptor class names of the referenced bean.
+	 *
+	 * @return Returns the interceptor class names of the referenced bean.
+	 */
+	String[] getInterceptors();
 
-    /**
-     * Returns whether the referenced bean is proxied or not.
-     * 
-     * @return Returns whether the referenced bean is proxied or not.
-     */
-    boolean getIsProxied();
-    
-    /**
-     * @return Reflection listing of all methods in this class.
-     */
-    String[] getMethods();
-    
-    /**
-     * @return The properties of this bean. If proxied, the target's properties.
-     */
-    String[] getProperties();
-    
-    /**
-     * @return Result of spring bean introspection on this bean.
-     */
-    String introspect();
-    
-    /**
-     * Try and read a property from this bean.
-     * @param property The property to read.
-     * @return If successful, the value of the property,
-     * otherwise an error message.
-     */
-    public String readProperty(String property);
+	/**
+	 * Returns whether the referenced bean is proxied or not.
+	 *
+	 * @return Returns whether the referenced bean is proxied or not.
+	 */
+	boolean getIsProxied();
+	
+	/**
+	 * @return Reflection listing of all methods in this class.
+	 */
+	String[] getMethods();
+	
+	/**
+	 * @return The properties of this bean. If proxied, the target's properties.
+	 */
+	String[] getProperties();
+	
+	/**
+	 * @return Result of spring bean introspection on this bean.
+	 */
+	String introspect();
+	
+	/**
+	 * Try and read a property from this bean.
+	 * @param property The property to read.
+	 * @return If successful, the value of the property,
+	 * otherwise an error message.
+	 */
+	public String readProperty(String property);
 }

@@ -44,90 +44,90 @@ import ch.elca.el4j.util.codingsupport.Reject;
  */
 public class RejectTest {
 
-    /**
-     * Checks {@link Reject#ifNull(Object)}.
-     */
-    @Test
-    public void testIfNull() {
-        try {
-            Reject.ifNull(null);
-            fail("Bad implementatino of Reject.isNull(null)");
-        } catch (Exception e) { }
-        try {
-            Reject.ifNull(new Object());
-        } catch (Exception e) {
-            fail("Bad implementatino of Reject.isNull(new Object())");
-        }
-    }
-    
-    /**
-     *  Check with a subclass of RuntimeException
-     * Checks {@link Reject#ifNull(Object)}.
-     */
-    @Test
-    public void testIfNull2() {
-        try {
-            Reject.ifNull(null, IllegalArgumentException.class, "My String");
-            fail("Bad implementation of Reject.isNull()");
-        } catch (IllegalArgumentException e) { }
-        try {
-            Reject.ifEmpty("", IllegalArgumentException.class, "My String");
-            fail("Bad implementation of Reject.isEmpty()");
-        } catch (IllegalArgumentException e) { }
-        try {
-            Reject.ifCondition(true, IllegalArgumentException.class,
-                "My String");
-            fail("Bad implementation of Reject.ifCondition()");
-        } catch (IllegalArgumentException e) { }
-        
-        try {
-            Reject.ifNull(new Object(), IllegalArgumentException.class, "");
-        } catch (IllegalArgumentException e) {
-            fail("Bad implementation of Reject.isNull(new Object())");
-        }
-    }
-    
-    /**
-     * Checks {@link Reject#ifEmpty(Collection)}.
-     */
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testIfEmptyCollection() {
-        try {
-            Reject.ifEmpty((List) null);
-            fail("Bad implementatino of Reject.isEmpty((List) null)");
-        } catch (Exception e) { }
-        ArrayList list = new ArrayList();
-        try {
-            Reject.ifEmpty(list);
-            fail("Bad implementatino of Reject.isEmpty(new ArrayList())");
-        } catch (Exception e) { }
-        try {
-            list.add(new Object());
-            Reject.ifEmpty(list);
-        } catch (Exception e) {
-            fail("Bad implementatino of Reject.isEmpty('nonempty list')");
-        }
-    }
-    
-    /**
-     * Checks {@link Reject#ifEmpty(String)}.
-     */
-    @Test
-    public void testIfEmptyString() {
-        try {
-            Reject.ifEmpty((String) null);
-            fail("Bad implementatino of Reject.isEmpty((String) null)");
-        } catch (Exception e) { }
-        try {
-            Reject.ifEmpty(" ");
-            fail("Bad implementatino of Reject.isEmpty(\" \")");
-        } catch (Exception e) { }
-        try {
-            Reject.ifEmpty(" test");
-        } catch (Exception e) {
-            fail("Bad implementatino of Reject.isEmpty(\" test\")");
-        }
-    }
+	/**
+	 * Checks {@link Reject#ifNull(Object)}.
+	 */
+	@Test
+	public void testIfNull() {
+		try {
+			Reject.ifNull(null);
+			fail("Bad implementatino of Reject.isNull(null)");
+		} catch (Exception e) { }
+		try {
+			Reject.ifNull(new Object());
+		} catch (Exception e) {
+			fail("Bad implementatino of Reject.isNull(new Object())");
+		}
+	}
+	
+	/**
+	 *  Check with a subclass of RuntimeException
+	 * Checks {@link Reject#ifNull(Object)}.
+	 */
+	@Test
+	public void testIfNull2() {
+		try {
+			Reject.ifNull(null, IllegalArgumentException.class, "My String");
+			fail("Bad implementation of Reject.isNull()");
+		} catch (IllegalArgumentException e) { }
+		try {
+			Reject.ifEmpty("", IllegalArgumentException.class, "My String");
+			fail("Bad implementation of Reject.isEmpty()");
+		} catch (IllegalArgumentException e) { }
+		try {
+			Reject.ifCondition(true, IllegalArgumentException.class,
+				"My String");
+			fail("Bad implementation of Reject.ifCondition()");
+		} catch (IllegalArgumentException e) { }
+		
+		try {
+			Reject.ifNull(new Object(), IllegalArgumentException.class, "");
+		} catch (IllegalArgumentException e) {
+			fail("Bad implementation of Reject.isNull(new Object())");
+		}
+	}
+	
+	/**
+	 * Checks {@link Reject#ifEmpty(Collection)}.
+	 */
+	@Test
+	@SuppressWarnings("unchecked")
+	public void testIfEmptyCollection() {
+		try {
+			Reject.ifEmpty((List) null);
+			fail("Bad implementatino of Reject.isEmpty((List) null)");
+		} catch (Exception e) { }
+		ArrayList list = new ArrayList();
+		try {
+			Reject.ifEmpty(list);
+			fail("Bad implementatino of Reject.isEmpty(new ArrayList())");
+		} catch (Exception e) { }
+		try {
+			list.add(new Object());
+			Reject.ifEmpty(list);
+		} catch (Exception e) {
+			fail("Bad implementatino of Reject.isEmpty('nonempty list')");
+		}
+	}
+	
+	/**
+	 * Checks {@link Reject#ifEmpty(String)}.
+	 */
+	@Test
+	public void testIfEmptyString() {
+		try {
+			Reject.ifEmpty((String) null);
+			fail("Bad implementatino of Reject.isEmpty((String) null)");
+		} catch (Exception e) { }
+		try {
+			Reject.ifEmpty(" ");
+			fail("Bad implementatino of Reject.isEmpty(\" \")");
+		} catch (Exception e) { }
+		try {
+			Reject.ifEmpty(" test");
+		} catch (Exception e) {
+			fail("Bad implementatino of Reject.isEmpty(\" test\")");
+		}
+	}
 }
 //Checkstyle: EmptyBlock on

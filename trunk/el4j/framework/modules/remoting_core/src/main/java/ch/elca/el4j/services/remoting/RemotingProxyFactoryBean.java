@@ -39,135 +39,135 @@ import ch.elca.el4j.util.interfaceenrichment.InterfaceEnricher;
  * @author Martin Zeltner (MZE)
  */
 public class RemotingProxyFactoryBean extends AbstractRemotingBase implements
-        FactoryBean {
-    /**
-     * Private logger.
-     */
-    private static Log s_logger = LogFactory
-            .getLog(RemotingProxyFactoryBean.class);
+		FactoryBean {
+	/**
+	 * Private logger.
+	 */
+	private static Log s_logger = LogFactory
+			.getLog(RemotingProxyFactoryBean.class);
 
-    /**
-     * This is the service proxy to work with.
-     */
-    private Object m_serviceProxy;
+	/**
+	 * This is the service proxy to work with.
+	 */
+	private Object m_serviceProxy;
 
-    /** Whether the factory creates singleton beans or not. */
-    private boolean m_singleton = true;
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void afterPropertiesSet() throws Exception {
-        super.afterPropertiesSet();
-        getRemoteProtocol().checkRemotingProxy(this);
-    }
-    
-    /**
-     * @return Returns a freshly created service proxy.
-     */
-    protected Object getFreshServiceProxy() {
-        
-        Object serviceProxy;
-        
-        boolean useImplicitContextPassing = getRemoteProtocol().
-            getImplicitContextPassingRegistry() != null;
-        
-        if (useImplicitContextPassing 
-            && !getRemoteProtocol().getProtocolSpecificContextPassing()) {
-            s_logger.info("Implicit context passing enabled.");
-            
-            /**
-             * Get the context class loader from current thread.
-             */
-            ClassLoader cl = Thread.currentThread().getContextClassLoader();
-            
-            /**
-             * Create the service interface to be able to send context
-             * information.
-             */
-            InterfaceEnricher interfaceIndirector = new InterfaceEnricher();
-            EnrichmentDecorator interfaceDecorator 
-                = new ContextEnrichmentDecorator();
-            Class serviceInterfaceWithContext = interfaceIndirector
-                .createShadowInterfaceAndLoadItDirectly(
-                    getServiceInterface(), interfaceDecorator, cl);
-            
-            /**
-             * Create the inner proxy bean.
-             */
-            Object innerProxyBean = getRemoteProtocol().createProxyBean(this,
-                    serviceInterfaceWithContext);
-            
-            /**
-             * Generate the proxy.
-             */
-            ClientContextInvocationHandler invocationHandler
-                = getRemoteProtocol().getClientContextInvocationHandler(
-                    innerProxyBean, serviceInterfaceWithContext);
-            
-            Class[] proxyInterface = getRemoteProtocol().
-                    getProxyInterface(getServiceInterface());
-            
-            serviceProxy = Proxy.newProxyInstance(cl,
-                    proxyInterface, invocationHandler);
-            
-        } else {
-            if (!getRemoteProtocol().getProtocolSpecificContextPassing()) {
-                s_logger.warn("Implicit context passing disabled.");
-            } else {
-                s_logger.info(
-                    "Protocol specific implicit context passing enabled.");
-            }
+	/** Whether the factory creates singleton beans or not. */
+	private boolean m_singleton = true;
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void afterPropertiesSet() throws Exception {
+		super.afterPropertiesSet();
+		getRemoteProtocol().checkRemotingProxy(this);
+	}
+	
+	/**
+	 * @return Returns a freshly created service proxy.
+	 */
+	protected Object getFreshServiceProxy() {
+		
+		Object serviceProxy;
+		
+		boolean useImplicitContextPassing = getRemoteProtocol().
+			getImplicitContextPassingRegistry() != null;
+		
+		if (useImplicitContextPassing
+			&& !getRemoteProtocol().getProtocolSpecificContextPassing()) {
+			s_logger.info("Implicit context passing enabled.");
+			
+			/**
+			 * Get the context class loader from current thread.
+			 */
+			ClassLoader cl = Thread.currentThread().getContextClassLoader();
+			
+			/**
+			 * Create the service interface to be able to send context
+			 * information.
+			 */
+			InterfaceEnricher interfaceIndirector = new InterfaceEnricher();
+			EnrichmentDecorator interfaceDecorator
+				= new ContextEnrichmentDecorator();
+			Class serviceInterfaceWithContext = interfaceIndirector
+				.createShadowInterfaceAndLoadItDirectly(
+					getServiceInterface(), interfaceDecorator, cl);
+			
+			/**
+			 * Create the inner proxy bean.
+			 */
+			Object innerProxyBean = getRemoteProtocol().createProxyBean(this,
+					serviceInterfaceWithContext);
+			
+			/**
+			 * Generate the proxy.
+			 */
+			ClientContextInvocationHandler invocationHandler
+				= getRemoteProtocol().getClientContextInvocationHandler(
+					innerProxyBean, serviceInterfaceWithContext);
+			
+			Class[] proxyInterface = getRemoteProtocol().
+					getProxyInterface(getServiceInterface());
+			
+			serviceProxy = Proxy.newProxyInstance(cl,
+					proxyInterface, invocationHandler);
+			
+		} else {
+			if (!getRemoteProtocol().getProtocolSpecificContextPassing()) {
+				s_logger.warn("Implicit context passing disabled.");
+			} else {
+				s_logger.info(
+					"Protocol specific implicit context passing enabled.");
+			}
 
-            serviceProxy = getRemoteProtocol().createProxyBean(this,
-                    getServiceInterface());
-        }
-        
-        return serviceProxy;
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public Object getObject() {
-        Object serviceProxy;
-        
-        if (isSingleton()) {
-            if (m_serviceProxy == null) {
-                m_serviceProxy = getFreshServiceProxy();
-            }
-            serviceProxy = m_serviceProxy;
-            
-        } else {
-            serviceProxy = getFreshServiceProxy();
-        }
-        return serviceProxy;
-    }
+			serviceProxy = getRemoteProtocol().createProxyBean(this,
+					getServiceInterface());
+		}
+		
+		return serviceProxy;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object getObject() {
+		Object serviceProxy;
+		
+		if (isSingleton()) {
+			if (m_serviceProxy == null) {
+				m_serviceProxy = getFreshServiceProxy();
+			}
+			serviceProxy = m_serviceProxy;
+			
+		} else {
+			serviceProxy = getFreshServiceProxy();
+		}
+		return serviceProxy;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Class getObjectType() {
-        return (this.m_serviceProxy != null) ? this.m_serviceProxy.getClass()
-                : getServiceInterface();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Class getObjectType() {
+		return (this.m_serviceProxy != null) ? this.m_serviceProxy.getClass()
+				: getServiceInterface();
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public boolean isSingleton() {
-        return m_singleton;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean isSingleton() {
+		return m_singleton;
+	}
 
-    /**
-     * Defines whether the factory creates singleton bean instances or
-     * prototypes.
-     * 
-     * @param singleton
-     *      <code>true</code> to crate singletons, <code>false</code> for
-     *      prototypes.
-     */
-    public void setSingleton(boolean singleton) {
-        m_singleton = singleton;
-    }
+	/**
+	 * Defines whether the factory creates singleton bean instances or
+	 * prototypes.
+	 *
+	 * @param singleton
+	 *      <code>true</code> to crate singletons, <code>false</code> for
+	 *      prototypes.
+	 */
+	public void setSingleton(boolean singleton) {
+		m_singleton = singleton;
+	}
 }

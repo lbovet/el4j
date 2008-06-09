@@ -29,28 +29,28 @@ package ch.elca.el4j.demos.gui.events;
  * @author Stefan Wismer (SWI)
  */
 public class SearchProgressEvent {
-    /**
-     * The status.
-     */
-    private String m_status;
-    
-    /**
-     * @param status    the search progess status
-     */
-    public SearchProgressEvent(String status) {
-        this.m_status = status;
-    }
-    
-    /**
-     * @return the status
-     */
-    public String getMessage() {
-        return m_status;
-    }
+	/**
+	 * The status.
+	 */
+	private String m_status;
+	
+	/**
+	 * @param status    the search progess status
+	 */
+	public SearchProgressEvent(String status) {
+		this.m_status = status;
+	}
+	
+	/**
+	 * @return the status
+	 */
+	public String getMessage() {
+		return m_status;
+	}
 
-    /** {@inheritDoc} */
-    @Override
-    public String toString() {
-        return "Search progress: [" + m_status + "]";
-    }
+	/** {@inheritDoc} */
+	@Override
+	public String toString() {
+		return "Search progress: [" + m_status + "]";
+	}
 }

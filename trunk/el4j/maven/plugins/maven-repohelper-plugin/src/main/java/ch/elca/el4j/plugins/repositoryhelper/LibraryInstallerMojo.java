@@ -32,35 +32,35 @@ import org.springframework.util.StringUtils;
  * );</script>
  *
  * @author Martin Zeltner (MZE)
- * 
+ *
  * @goal install-libraries
  * @requiresProject false
  */
 public class LibraryInstallerMojo extends AbstractLibraryAdderMojo {
-    /**
-     * {@inheritDoc}
-     */
-    protected void modifyCommandLine(MavenDependency dependency, 
-        Commandline cmd) {
-        cmd.createArgument().setValue("install:install-file");
-        cmd.createArgument().setValue("-DgroupId=" + dependency.getGroupId());
-        cmd.createArgument().setValue("-DartifactId=" 
-            + dependency.getArtifactId());
-        cmd.createArgument().setValue("-Dversion=" + dependency.getVersion());
-        cmd.createArgument().setValue("-Dpackaging=jar");
-        cmd.createArgument().setValue("-Dfile=" + dependency.getLibraryPath());
-        
-        String classifier = dependency.getClassifier();
-        if (StringUtils.hasText(classifier)) {
-            cmd.createArgument().setValue("-Dclassifier=" + classifier);
-        }
-        cmd.createArgument().setValue("-DgeneratePom=true");
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    protected String getActionVerb() {
-        return "install";
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	protected void modifyCommandLine(MavenDependency dependency,
+		Commandline cmd) {
+		cmd.createArgument().setValue("install:install-file");
+		cmd.createArgument().setValue("-DgroupId=" + dependency.getGroupId());
+		cmd.createArgument().setValue("-DartifactId="
+			+ dependency.getArtifactId());
+		cmd.createArgument().setValue("-Dversion=" + dependency.getVersion());
+		cmd.createArgument().setValue("-Dpackaging=jar");
+		cmd.createArgument().setValue("-Dfile=" + dependency.getLibraryPath());
+		
+		String classifier = dependency.getClassifier();
+		if (StringUtils.hasText(classifier)) {
+			cmd.createArgument().setValue("-Dclassifier=" + classifier);
+		}
+		cmd.createArgument().setValue("-DgeneratePom=true");
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	protected String getActionVerb() {
+		return "install";
+	}
 }

@@ -34,44 +34,44 @@ import org.bushe.swing.event.annotation.AnnotationProcessor;
  * @author Stefan Wismer (SWI)
  */
 public class JFrameWrapper extends JFrame implements FrameWrapper {
-    /**
-     * The wrapped component.
-     */
-    private JComponent m_component;
-    
-    /** {@inheritDoc} */
-    public void setContent(JComponent component) {
-        m_component = component;
-        
-        setContentPane(component);
-        
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        pack();
-    }
-    
-    /** {@inheritDoc} */
-    public JComponent getContent() {
-        return m_component;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void show() {
-        // register all event subscribers
-        AnnotationProcessor.process(m_component);
-        
-        super.setVisible(true);
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void dispose() {
-        if (m_component != null) {
-            // unregister all event subscribers
-            AnnotationProcessor.unsubscribe(m_component);
-        }
-        AbstractWrapperFactory.removeWrapper(m_component);
-        super.dispose();
-        m_component = null;
-    }
+	/**
+	 * The wrapped component.
+	 */
+	private JComponent m_component;
+	
+	/** {@inheritDoc} */
+	public void setContent(JComponent component) {
+		m_component = component;
+		
+		setContentPane(component);
+		
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		pack();
+	}
+	
+	/** {@inheritDoc} */
+	public JComponent getContent() {
+		return m_component;
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public void show() {
+		// register all event subscribers
+		AnnotationProcessor.process(m_component);
+		
+		super.setVisible(true);
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public void dispose() {
+		if (m_component != null) {
+			// unregister all event subscribers
+			AnnotationProcessor.unsubscribe(m_component);
+		}
+		AbstractWrapperFactory.removeWrapper(m_component);
+		super.dispose();
+		m_component = null;
+	}
 }

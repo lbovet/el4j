@@ -36,29 +36,29 @@ import ch.elca.el4j.services.exceptionhandler.RetryException;
  */
 public interface ExceptionHandler {
 
-    /**
-     * Handles the given exception that occurred in the invocation of the
-     * given {@link MethodInvocation}.
-     * 
-     * @param t
-     *      The throwable to handle.
-     *      
-     * @param exceptionInvoker
-     *      The exception invoker that called this exception handler.
-     * 
-     * @param invocation
-     *      The invocation which has resulted in the given throwable.
-     *      
-     * @return Returns an object that is treated as the original invocation's
-     *      return value.
-     * 
-     * @throws RetryException
-     *      Signals that the complete invocation has to be rerun.
-     *      
-     * @throws Throwable
-     *      Any exception thrown by the handler.
-     */
-    public Object handleException(Throwable t,
-        AbstractExceptionHandlerInterceptor exceptionInvoker,
-        MethodInvocation invocation) throws RetryException, Throwable;
+	/**
+	 * Handles the given exception that occurred in the invocation of the
+	 * given {@link MethodInvocation}.
+	 *
+	 * @param t
+	 *      The throwable to handle.
+	 *
+	 * @param exceptionInvoker
+	 *      The exception invoker that called this exception handler.
+	 *
+	 * @param invocation
+	 *      The invocation which has resulted in the given throwable.
+	 *
+	 * @return Returns an object that is treated as the original invocation's
+	 *      return value.
+	 *
+	 * @throws RetryException
+	 *      Signals that the complete invocation has to be rerun.
+	 *
+	 * @throws Throwable
+	 *      Any exception thrown by the handler.
+	 */
+	public Object handleException(Throwable t,
+		AbstractExceptionHandlerInterceptor exceptionInvoker,
+		MethodInvocation invocation) throws RetryException, Throwable;
 }

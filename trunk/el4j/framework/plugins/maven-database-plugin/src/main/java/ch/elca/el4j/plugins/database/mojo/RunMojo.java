@@ -23,43 +23,43 @@ import ch.elca.el4j.plugins.database.AbstractDBExecutionMojo;
 
 /**
  * This class is a database mojo for the generic 'run' statement which executes
- * all sql files matching the given prefix. 
- * 
+ * all sql files matching the given prefix.
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @goal run
  * @author Stefan Wismer (SWI)
  */
 public class RunMojo extends AbstractDBExecutionMojo {
-    /**
-     * File prefix of all sql files that should be executed.
-     * 
-     * @parameter expression="${filePrefix}"
-     */
-    protected String filePrefix;
-    
-    /**
-     * Order in which sql files should be executed. <code>true</code> means 
-     * top-down, <code>false</code> buttom-up.
-     * 
-     * @parameter expression="${reverse}"
-     *            default-value="false"
-     */
-    protected Boolean reverse;
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void executeInternal() throws MojoExecutionException, MojoFailureException {
-        try {
-            executeAction(filePrefix, reverse, false);
-        } catch (Exception e) {
-            throw new MojoExecutionException(e.getMessage());
-        }
-    }
+	/**
+	 * File prefix of all sql files that should be executed.
+	 *
+	 * @parameter expression="${filePrefix}"
+	 */
+	protected String filePrefix;
+	
+	/**
+	 * Order in which sql files should be executed. <code>true</code> means
+	 * top-down, <code>false</code> buttom-up.
+	 *
+	 * @parameter expression="${reverse}"
+	 *            default-value="false"
+	 */
+	protected Boolean reverse;
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void executeInternal() throws MojoExecutionException, MojoFailureException {
+		try {
+			executeAction(filePrefix, reverse, false);
+		} catch (Exception e) {
+			throw new MojoExecutionException(e.getMessage());
+		}
+	}
 }

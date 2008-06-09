@@ -19,9 +19,9 @@ package ch.elca.el4j.util.dom.reflect;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-/**  
- * represents a property. 
- * 
+/**
+ * represents a property.
+ *
  * In code, a property is declared using a public field or a setter/getter pair.
  * Properties declared using fields are writable, properties declared using
  * accessors are writable if and only if setters are declared.
@@ -37,36 +37,36 @@ import java.lang.reflect.Method;
  */
 
 public class Property extends Member {
-    /** this property's type. */
-    public final Class<?> type;
-    
-    /** can this property not be written? */
-    public final boolean readonly;
-    
-    /** creates the property information object declared by field {@code f} 
-     * in {@code declaring.clazz}. */
-    Property(EntityType declaring, Field f) {
-        super(
-            declaring,
-            f.getName()
-        );        
-        type = f.getType();
-        readonly = false;
-    }
+	/** this property's type. */
+	public final Class<?> type;
+	
+	/** can this property not be written? */
+	public final boolean readonly;
+	
+	/** creates the property information object declared by field {@code f}
+	 * in {@code declaring.clazz}. */
+	Property(EntityType declaring, Field f) {
+		super(
+			declaring,
+			f.getName()
+		);
+		type = f.getType();
+		readonly = false;
+	}
 
-    /** creates the property information object describing a property
-     * declared in a getter/setter pair.
-     * @param declaring the declaring entity type
-     * @param getter the getter
-     * @param name the property's name as defined by the Java Beans standard
-     * @param setter the setter
-     */
-    Property(EntityType declaring, Method getter, String name, Method setter) {
-        super(
-            declaring,
-            name
-        );
-        type = getter.getReturnType();
-        readonly = setter == null;
-    }
+	/** creates the property information object describing a property
+	 * declared in a getter/setter pair.
+	 * @param declaring the declaring entity type
+	 * @param getter the getter
+	 * @param name the property's name as defined by the Java Beans standard
+	 * @param setter the setter
+	 */
+	Property(EntityType declaring, Method getter, String name, Method setter) {
+		super(
+			declaring,
+			name
+		);
+		type = getter.getReturnType();
+		readonly = setter == null;
+	}
 }

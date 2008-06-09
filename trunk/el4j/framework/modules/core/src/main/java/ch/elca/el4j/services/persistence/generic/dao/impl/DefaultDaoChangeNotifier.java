@@ -34,37 +34,37 @@ import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier;
  *
  * @author Adrian Moos (AMS)
  */
-public class DefaultDaoChangeNotifier 
-           implements DaoChangeNotifier {
+public class DefaultDaoChangeNotifier
+	implements DaoChangeNotifier {
 
-    /**
-     * The presently subscribed listeners.
-     */
-    protected List<DaoChangeListener> m_listeners
-        = new ArrayList<DaoChangeListener>();
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void subscribe(DaoChangeListener cl) {
-        m_listeners.add(cl);
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void unsubscribe(DaoChangeListener cl) {
-        m_listeners.remove(cl);
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void announce(Change change) {
-        List<DaoChangeListener> snapshot
-            = new ArrayList<DaoChangeListener>(m_listeners);
-        for (DaoChangeListener cl : snapshot) {
-            cl.changed(change);
-        }
-    }
+	/**
+	 * The presently subscribed listeners.
+	 */
+	protected List<DaoChangeListener> m_listeners
+		= new ArrayList<DaoChangeListener>();
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void subscribe(DaoChangeListener cl) {
+		m_listeners.add(cl);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void unsubscribe(DaoChangeListener cl) {
+		m_listeners.remove(cl);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void announce(Change change) {
+		List<DaoChangeListener> snapshot
+			= new ArrayList<DaoChangeListener>(m_listeners);
+		for (DaoChangeListener cl : snapshot) {
+			cl.changed(change);
+		}
+	}
 }

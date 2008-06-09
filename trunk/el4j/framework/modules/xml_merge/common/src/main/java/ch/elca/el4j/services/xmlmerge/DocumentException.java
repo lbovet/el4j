@@ -27,60 +27,60 @@ import org.jdom.Document;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public class DocumentException extends AbstractXmlMergeException {
 
-    /**
-     * A document instance.
-     */
-    Document m_document;
-    
-    /**
-     * Constructor with message.
-     * 
-     * @param document Document which caused the exception
-     * @param message Exception message
-     */
-    public DocumentException(Document document, String message) {
-        super(message);
-        m_document = document;
-    }
+	/**
+	 * A document instance.
+	 */
+	Document m_document;
+	
+	/**
+	 * Constructor with message.
+	 *
+	 * @param document Document which caused the exception
+	 * @param message Exception message
+	 */
+	public DocumentException(Document document, String message) {
+		super(message);
+		m_document = document;
+	}
 
-    /**
-     * Constructor with cause.
-     * 
-     * @param document Document which caused the exception
-     * @param cause Exception cause
-     */
-    public DocumentException(Document document, Throwable cause) {
-        super(makeMessage(document), cause);
-        m_document = document;
-    }
+	/**
+	 * Constructor with cause.
+	 *
+	 * @param document Document which caused the exception
+	 * @param cause Exception cause
+	 */
+	public DocumentException(Document document, Throwable cause) {
+		super(makeMessage(document), cause);
+		m_document = document;
+	}
 
-    /**
-     * Announces that there is a problem with the given document.
-     * @param document A given document
-     * @return String announcing that there is a problem with the given document
-     */
-    private static String makeMessage(Document document) {
-        return "Problem with document " + document;
-    }
+	/**
+	 * Announces that there is a problem with the given document.
+	 * @param document A given document
+	 * @return String announcing that there is a problem with the given document
+	 */
+	private static String makeMessage(Document document) {
+		return "Problem with document " + document;
+	}
 
-    /**
-     * @return Returns the document.
-     */
-    public Document getDocument() {
-        return m_document;
-    }
+	/**
+	 * @return Returns the document.
+	 */
+	public Document getDocument() {
+		return m_document;
+	}
 
-    /**
-     * @param document Is the document to set.
-     */
-    public void setDocument(Document document) {
-        m_document = document;
-    }
-    
+	/**
+	 * @param document Is the document to set.
+	 */
+	public void setDocument(Document document) {
+		m_document = document;
+	}
+	
 }

@@ -31,60 +31,60 @@ package ch.elca.el4j.services.statistics.light;
  */
 public interface LightStatisticsReporterMBean {
 
-    /**
-     * Retrieves the performance measurements and returns a string
-     * representation. It's format can be changed through the
-     * {@link LightStatisticsReporterMBean#setFormatString(String)} method.
-     * 
-     * @return Returns the performance measurements.
-     */
-    public String[] getData();
-    
-    /**
-     * Clears all the measured data.
-     */
-    public void resetMonitor();
+	/**
+	 * Retrieves the performance measurements and returns a string
+	 * representation. It's format can be changed through the
+	 * {@link LightStatisticsReporterMBean#setFormatString(String)} method.
+	 *
+	 * @return Returns the performance measurements.
+	 */
+	public String[] getData();
+	
+	/**
+	 * Clears all the measured data.
+	 */
+	public void resetMonitor();
 
-    /**
-     * Enables the monitor to gather measurements.
-     */
-    public void enableMonitor();
+	/**
+	 * Enables the monitor to gather measurements.
+	 */
+	public void enableMonitor();
 
-    /**
-     * Disables the monitor preventing gathering measurements.
-     */
-    public void disableMonitor();
-    
-    /**
-     * @return Returns the format string used to layout measurements.  
-     */
-    public String getFormatString();
-    
-    /**
-     * Sets the format string used to layout measurements. The formatter is a
-     * {@link java.text.MessageFormat} instance.
-     * @param formatString The format string.
-     * @see java.text.MessageFormat
-     */
-    public void setFormatString(String formatString);
-    
-    /**
-     * @return Returns <code>true</code> if class names are shown fully
-     * qualified.
-     */
-    public boolean isFullyQualified();
-    
-    /**
-     * Sets whether the class names should be shown in fully qualified
-     * representation.
-     * @param fullyQualified <code>true</code> to show fully qualified class
-     * names.
-     */
-    public void setFullyQualified(boolean fullyQualified);
-    
-    /**
-     * Shows a Html report of the current data.
-     * @return Data formatted as html. 
-     */
-    public String report();
+	/**
+	 * Disables the monitor preventing gathering measurements.
+	 */
+	public void disableMonitor();
+	
+	/**
+	 * @return Returns the format string used to layout measurements.
+	 */
+	public String getFormatString();
+	
+	/**
+	 * Sets the format string used to layout measurements. The formatter is a
+	 * {@link java.text.MessageFormat} instance.
+	 * @param formatString The format string.
+	 * @see java.text.MessageFormat
+	 */
+	public void setFormatString(String formatString);
+	
+	/**
+	 * @return Returns <code>true</code> if class names are shown fully
+	 * qualified.
+	 */
+	public boolean isFullyQualified();
+	
+	/**
+	 * Sets whether the class names should be shown in fully qualified
+	 * representation.
+	 * @param fullyQualified <code>true</code> to show fully qualified class
+	 * names.
+	 */
+	public void setFullyQualified(boolean fullyQualified);
+	
+	/**
+	 * Shows a Html report of the current data.
+	 * @return Data formatted as html.
+	 */
+	public String report();
 }

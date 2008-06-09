@@ -31,51 +31,51 @@ package ch.elca.el4j.core.exceptions;
  * @see ch.elca.el4j.services.persistence.generic.exceptions.InsertionFailureException
  */
 public class ObjectInsertionException extends BaseException {
-    /**
-     * Message, which has to be formated.
-     */
-    public static final String EXCEPTION_MESSAGE_OBJECTINSERTION 
-        = "Insertion of {0} failed.";
+	/**
+	 * Message, which has to be formated.
+	 */
+	public static final String EXCEPTION_MESSAGE_OBJECTINSERTION
+		= "Insertion of {0} failed.";
 
-    /**
-     * Name of the object, where the exception occured.
-     */
-    protected String m_objectName;
+	/**
+	 * Name of the object, where the exception occured.
+	 */
+	protected String m_objectName;
 
-    /**
-     * Constructor.
-     * 
-     * @param objectName
-     *            Is the name of the object, where the exception occured.
-     */
-    public ObjectInsertionException(String objectName) {
-        this(objectName, (Throwable) null);
-    }
+	/**
+	 * Constructor.
+	 *
+	 * @param objectName
+	 *            Is the name of the object, where the exception occured.
+	 */
+	public ObjectInsertionException(String objectName) {
+		this(objectName, (Throwable) null);
+	}
 
-    /**
-     * Constructor.
-     * 
-     * @param objectName
-     *            Is the name of the object, where the exception occured.
-     * @param cause
-     *            Is the cause for this exception.
-     */
-    public ObjectInsertionException(String objectName, Throwable cause) {
-        super(EXCEPTION_MESSAGE_OBJECTINSERTION, cause);
-        m_objectName = objectName;
-    }
+	/**
+	 * Constructor.
+	 *
+	 * @param objectName
+	 *            Is the name of the object, where the exception occured.
+	 * @param cause
+	 *            Is the cause for this exception.
+	 */
+	public ObjectInsertionException(String objectName, Throwable cause) {
+		super(EXCEPTION_MESSAGE_OBJECTINSERTION, cause);
+		m_objectName = objectName;
+	}
 
-    /**
-     * @return Returns the objectName.
-     */
-    public String getObjectName() {
-        return m_objectName;
-    }
+	/**
+	 * @return Returns the objectName.
+	 */
+	public String getObjectName() {
+		return m_objectName;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object[] getFormatParameters() {
-        return new Object[] {m_objectName};
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object[] getFormatParameters() {
+		return new Object[] {m_objectName};
+	}
 }

@@ -19,14 +19,14 @@ package ch.elca.el4j.util.collections;
 import java.util.ListIterator;
 
 /**
- * A view on a backing List showing only the elements accepted by a 
+ * A view on a backing List showing only the elements accepted by a
  * filter.
  * It may be iterated over (for instance using the extended for-statement).
  * Alternatively, you may copy its contents to an array or an ExtendedArrayList
- * (see 
+ * (see
  *{@link ch.elca.el4j.util.collections.impl.ExtendedArrayList#ExtendedArrayList(
  *Iterable) ExtendedArrayList(Iterable)}
- * 
+ *
  * @param <T> the element type
  *
  * <script type="text/javascript">printFileStatus
@@ -39,14 +39,14 @@ import java.util.ListIterator;
  * @author Adrian Moos (AMS)
  */
 public interface FilteredList<T> extends ExtendedList<T> {
-    /** 
-     * Returns a BiDiIterator for this collection pointing at the place
-     * corresponding to {@code location}.
-     * 
-     * @param location An iterator for the backing collection. This reference
-     *                 may be captured, i.e. it
-     *                 shouldn't be be used in client code afterwards.
-     * @return The iterator
-     */
-    public ListIterator<T> listIterator(ListIterator<? extends T> location);
+	/**
+	 * Returns a BiDiIterator for this collection pointing at the place
+	 * corresponding to {@code location}.
+	 *
+	 * @param location An iterator for the backing collection. This reference
+	 *                 may be captured, i.e. it
+	 *                 shouldn't be be used in client code afterwards.
+	 * @return The iterator
+	 */
+	public ListIterator<T> listIterator(ListIterator<? extends T> location);
 }

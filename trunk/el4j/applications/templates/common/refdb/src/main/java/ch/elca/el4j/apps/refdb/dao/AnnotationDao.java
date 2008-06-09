@@ -23,7 +23,7 @@ import org.springframework.dao.DataAccessException;
 import ch.elca.el4j.apps.refdb.dom.Annotation;
 
 /**
- * 
+ *
  * This interface represents a DAO for the annotation domain object.
  *
  * <script type="text/javascript">printFileStatus
@@ -36,17 +36,17 @@ import ch.elca.el4j.apps.refdb.dom.Annotation;
  * @author Alex Mathey (AMA)
  */
 public interface AnnotationDao
-    extends GenericReferencedObjectDao<Annotation, Integer> {
-  
-    /**
-     * Get all annotations from one annotator.
-     * 
-     * @param annotator
-     *            Is the name of the annotator.
-     * @return Returns a list with annotations. Returns never <code>null</code>.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     */
-    public List<Annotation> getAnnotationsByAnnotator(String annotator)
-        throws DataAccessException;
+	extends GenericReferencedObjectDao<Annotation, Integer> {
+	
+	/**
+	 * Get all annotations from one annotator.
+	 *
+	 * @param annotator
+	 *            Is the name of the annotator.
+	 * @return Returns a list with annotations. Returns never <code>null</code>.
+	 * @throws DataAccessException
+	 *             If general data access problem occurred.
+	 */
+	public List<Annotation> getAnnotationsByAnnotator(String annotator)
+		throws DataAccessException;
 }

@@ -34,74 +34,74 @@ import ch.elca.el4j.services.xmlmerge.Mapper;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
-public class NamespaceFilterMapper implements Mapper {        
-    
-    /**
-     * The namespace defining the elements and attributes to be filtered out.
-     */
-    Namespace m_namespace;
-    
-    /**
-     * Creates a new NamespaceFilterMapper.
-     * 
-     * @param filteredNamespace
-     *            String representing the namespace defining the elements and
-     *            attributes to be filtered out
-     */
-    public NamespaceFilterMapper(String filteredNamespace) {
-        this.m_namespace = Namespace.getNamespace(filteredNamespace);
-    }
+public class NamespaceFilterMapper implements Mapper {
+	
+	/**
+	 * The namespace defining the elements and attributes to be filtered out.
+	 */
+	Namespace m_namespace;
+	
+	/**
+	 * Creates a new NamespaceFilterMapper.
+	 *
+	 * @param filteredNamespace
+	 *            String representing the namespace defining the elements and
+	 *            attributes to be filtered out
+	 */
+	public NamespaceFilterMapper(String filteredNamespace) {
+		this.m_namespace = Namespace.getNamespace(filteredNamespace);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Element map(Element patchElement) {
-        if (patchElement == null) {
-            return null;
-        }
-        if (patchElement.getNamespace().equals(m_namespace)) {
-            return null;
-        } else {
-            return filterAttributes(patchElement);
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Element map(Element patchElement) {
+		if (patchElement == null) {
+			return null;
+		}
+		if (patchElement.getNamespace().equals(m_namespace)) {
+			return null;
+		} else {
+			return filterAttributes(patchElement);
+		}
+	}
 
-    /**
-     * Filters an element's attributes.
-     * @param element An element whose attributes will be filtered
-     * @return The input element whose attributes have been filtered 
-     */
-    private Element filterAttributes(Element element) {
-        Element result = (Element) element.clone();
+	/**
+	 * Filters an element's attributes.
+	 * @param element An element whose attributes will be filtered
+	 * @return The input element whose attributes have been filtered
+	 */
+	private Element filterAttributes(Element element) {
+		Element result = (Element) element.clone();
 
-        List attributes = result.getAttributes();
-        Iterator it = attributes.iterator();
+		List attributes = result.getAttributes();
+		Iterator it = attributes.iterator();
 
-        while (it.hasNext()) {
-            Attribute attr = (Attribute) it.next();
+		while (it.hasNext()) {
+			Attribute attr = (Attribute) it.next();
 
-            if (attr.getNamespace().equals(m_namespace)) {
-                it.remove();
-            }
-        }
+			if (attr.getNamespace().equals(m_namespace)) {
+				it.remove();
+			}
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    /**
-     * Sets the namespace defining the elements and attributes to be filtered
-     * out.
-     * 
-     * @param namespace
-     *            The namespace defining the elements and attributes to be
-     *            filtered out.
-     */
-    public void setFilteredNamespace(Namespace namespace) {
-        this.m_namespace = namespace;
-    }
-    
+	/**
+	 * Sets the namespace defining the elements and attributes to be filtered
+	 * out.
+	 *
+	 * @param namespace
+	 *            The namespace defining the elements and attributes to be
+	 *            filtered out.
+	 */
+	public void setFilteredNamespace(Namespace namespace) {
+		this.m_namespace = namespace;
+	}
+	
 }

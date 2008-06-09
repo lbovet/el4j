@@ -26,7 +26,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 /**
  * Simple test interceptor that shortcuts all method invocations on methods
  * with a given name and returns the given result.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -36,66 +36,66 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  *
  * @author Andreas Bur (ABU)
  */
-public class ShortcutInterceptor 
-    implements MethodInterceptor, InitializingBean {
+public class ShortcutInterceptor
+	implements MethodInterceptor, InitializingBean {
 
-    /** The result to return on matching methods. */
-    private Object m_result;
-    
-    /** Method name of methods to intercept. */
-    private String m_methodName;
-    
-    /**
-     * Sets the object to return if the method name matches.
-     * 
-     * @param result
-     *      The object to set.
-     */
-    public void setResult(Object result) {
-        m_result = result;
-    }
+	/** The result to return on matching methods. */
+	private Object m_result;
+	
+	/** Method name of methods to intercept. */
+	private String m_methodName;
+	
+	/**
+	 * Sets the object to return if the method name matches.
+	 *
+	 * @param result
+	 *      The object to set.
+	 */
+	public void setResult(Object result) {
+		m_result = result;
+	}
 
-    /**
-     * @return Returns the object used as return whenever the intercepted
-     *      method's name matches the configured one.
-     */
-    public Object getResult() {
-        return m_result;
-    }
+	/**
+	 * @return Returns the object used as return whenever the intercepted
+	 *      method's name matches the configured one.
+	 */
+	public Object getResult() {
+		return m_result;
+	}
 
-    /**
-     * @return Returns the method name this interceptor is configured for.
-     */
-    public String getMethodName() {
-        return m_methodName;
-    }
+	/**
+	 * @return Returns the method name this interceptor is configured for.
+	 */
+	public String getMethodName() {
+		return m_methodName;
+	}
 
-    /**
-     * Sets the method name this interceptor has to be configured for.
-     * 
-     * @param methodName
-     *      The name of methods to intercept.
-     */
-    public void setMethodName(String methodName) {
-        m_methodName = methodName;
-    }
+	/**
+	 * Sets the method name this interceptor has to be configured for.
+	 *
+	 * @param methodName
+	 *      The name of methods to intercept.
+	 */
+	public void setMethodName(String methodName) {
+		m_methodName = methodName;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object invoke(MethodInvocation invocation) throws Throwable {
-        if (m_methodName.equals(invocation.getMethod().getName())) {
-            return m_result;
-        } else {
-            return invocation.proceed();
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object invoke(MethodInvocation invocation) throws Throwable {
+		if (m_methodName.equals(invocation.getMethod().getName())) {
+			return m_result;
+		} else {
+			return invocation.proceed();
+		}
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void afterPropertiesSet() throws Exception {
-        CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-                m_methodName, "methodName", this);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void afterPropertiesSet() throws Exception {
+		CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+				m_methodName, "methodName", this);
+	}
 }

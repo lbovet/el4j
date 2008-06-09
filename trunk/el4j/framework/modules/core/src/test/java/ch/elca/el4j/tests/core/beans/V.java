@@ -33,23 +33,23 @@ import org.springframework.beans.factory.BeanNameAware;
  */
 public class V implements X, BeanNameAware {
 
-    /**
-     * Name of the bean.
-     */
-    private String m_beanName;
+	/**
+	 * Name of the bean.
+	 */
+	private String m_beanName;
 
-    /**
-     * {@inheritDoc}
-     */
-    public void setBeanName(String beanName) {
-        m_beanName = beanName;
-        
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setBeanName(String beanName) {
+		m_beanName = beanName;
+		
+	}
 
-    /**
-     * @return Returns the beanName.
-     */
-    public String getBeanName() {
-        return m_beanName;
-    }
+	/**
+	 * @return Returns the beanName.
+	 */
+	public String getBeanName() {
+		return m_beanName;
+	}
 }

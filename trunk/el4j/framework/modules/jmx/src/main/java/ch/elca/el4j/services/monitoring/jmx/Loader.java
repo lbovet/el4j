@@ -55,341 +55,341 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/module/jmx/java/ch/elca/el4j/services/monitoring/jmx/Loader.java
  * $", "$Revision$", "$Date: 2006-08-14 11:10:54 +0200 (Mo, 14 Aug 2006)
  * $", "$Author$" );</script>
- * 
+ *
  * @author Raphael Boog (RBO)
  * @author Rashid Waraich (RWA)
  */
-public class Loader implements ApplicationContextAware, InitializingBean, 
-    ApplicationListener {
+public class Loader implements ApplicationContextAware, InitializingBean,
+	ApplicationListener {
 
-    /**
-     * A map containing the MBean Server as key and the JvmMB as value.
-     */
-    protected static Map<MBeanServer, JvmMBMBean> s_jvmMBs 
-        = new HashMap<MBeanServer, JvmMBMBean>();
+	/**
+	 * A map containing the MBean Server as key and the JvmMB as value.
+	 */
+	protected static Map<MBeanServer, JvmMBMBean> s_jvmMBs
+		= new HashMap<MBeanServer, JvmMBMBean>();
 
-    /**
-     * Private logger of this class.
-     */
-    private static Log s_logger = LogFactory.getLog(Loader.class);
+	/**
+	 * Private logger of this class.
+	 */
+	private static Log s_logger = LogFactory.getLog(Loader.class);
 
-    /**
-     * The Application Context proxy for the Application Context containing this
-     * loader.
-     */
-    protected ApplicationContextMB m_acMB;
+	/**
+	 * The Application Context proxy for the Application Context containing this
+	 * loader.
+	 */
+	protected ApplicationContextMB m_acMB;
 
-    /**
-     * The JVM proxy containing this Application Context.
-     */
-    protected JvmMB m_jvmmb;
+	/**
+	 * The JVM proxy containing this Application Context.
+	 */
+	protected JvmMB m_jvmmb;
 
-    /**
-     * The MBean Server.
-     */
-    private MBeanServer m_server;
+	/**
+	 * The MBean Server.
+	 */
+	private MBeanServer m_server;
 
-    /**
-     * The Application Context having instantiated this loader.
-     */
-    private ConfigurableApplicationContext m_applicationContext;
-    
-    /**
-     * Flag to tell if in method <code>afterPropertiesSet</code> this bean 
-     * should be initialized. Default is set to <code>false</code>.
-     */
-    private boolean m_initAfterPropertiesSet = false;
+	/**
+	 * The Application Context having instantiated this loader.
+	 */
+	private ConfigurableApplicationContext m_applicationContext;
+	
+	/**
+	 * Flag to tell if in method <code>afterPropertiesSet</code> this bean
+	 * should be initialized. Default is set to <code>false</code>.
+	 */
+	private boolean m_initAfterPropertiesSet = false;
 
-    /**
-     * Returns the MBean Server of this ApplicationContext.
-     * 
-     * @return Returns the MBean Server.
-     */
-    public MBeanServer getServer() {
-        return m_server;
-    }
+	/**
+	 * Returns the MBean Server of this ApplicationContext.
+	 *
+	 * @return Returns the MBean Server.
+	 */
+	public MBeanServer getServer() {
+		return m_server;
+	}
 
-    /**
-     * Sets the MBean Server of this ApplicationContext.
-     * 
-     * @param server
-     *            The MBean Server to set.
-     */
-    public void setServer(MBeanServer server) {
-        this.m_server = server;
-    }
+	/**
+	 * Sets the MBean Server of this ApplicationContext.
+	 *
+	 * @param server
+	 *            The MBean Server to set.
+	 */
+	public void setServer(MBeanServer server) {
+		this.m_server = server;
+	}
 
-    /**
-     * Takes the JvmMB Bean from the MBean Server or creates a new JvmMB if no
-     * such bean is registered at the MBean Server. The JvmMBs have to be stored
-     * in a static map for later Application Contexts referring to the same
-     * MBeanServer.
-     * 
-     * @throws BaseException
-     *             in case the registration at the MBean Server failed
-     */
-    protected void setJvmMB() throws BaseException {
-        String jreVersion = System.getProperty("java.version");
+	/**
+	 * Takes the JvmMB Bean from the MBean Server or creates a new JvmMB if no
+	 * such bean is registered at the MBean Server. The JvmMBs have to be stored
+	 * in a static map for later Application Contexts referring to the same
+	 * MBeanServer.
+	 *
+	 * @throws BaseException
+	 *             in case the registration at the MBean Server failed
+	 */
+	protected void setJvmMB() throws BaseException {
+		String jreVersion = System.getProperty("java.version");
 
-        // Since we access the static member s_jvmMBs, this block is
-        // synchronized.
-        synchronized (getClass()) {
+		// Since we access the static member s_jvmMBs, this block is
+		// synchronized.
+		synchronized (getClass()) {
 
-            // Get all the object names of this MBean Server in the JVM_DOMAIN.
-            ObjectName[] jvms = getObjectNames(this.m_server, JvmMB.JVM_DOMAIN,
-                null, null);
+			// Get all the object names of this MBean Server in the JVM_DOMAIN.
+			ObjectName[] jvms = getObjectNames(this.m_server, JvmMB.JVM_DOMAIN,
+				null, null);
 
-            // Remove names of Log4jConfig beans from the jvms-array.
-            // Because the JVM_DOMAIN was made under the assumption, that
-            // the JVM_DOMAIN will only contain JVM's. But this assuption
-            // is not true anymore, therefor the following tests would fail
-            // if non-JVM beans are not removed from the jvms-array.
+			// Remove names of Log4jConfig beans from the jvms-array.
+			// Because the JVM_DOMAIN was made under the assumption, that
+			// the JVM_DOMAIN will only contain JVM's. But this assuption
+			// is not true anymore, therefor the following tests would fail
+			// if non-JVM beans are not removed from the jvms-array.
 
-            int numberOfMBeans = 0;
+			int numberOfMBeans = 0;
 
-            for (int i = 0; i < jvms.length; i++) {
-                if (!jvms[i].getCanonicalName().contains("log4jConfig")) {
-                    numberOfMBeans++;
-                }
-            }
+			for (int i = 0; i < jvms.length; i++) {
+				if (!jvms[i].getCanonicalName().contains("log4jConfig")) {
+					numberOfMBeans++;
+				}
+			}
 
-            // In case there is no MBean in the JVM_DOMAIN, we create one and
-            // register it at the MBean Server.
-            if (numberOfMBeans == 0) {
+			// In case there is no MBean in the JVM_DOMAIN, we create one and
+			// register it at the MBean Server.
+			if (numberOfMBeans == 0) {
 
-                // execute the following code only on a
-                // JRE, with version >= 1.5
-                if (jreVersion.startsWith("1.5") || jreVersion.startsWith("1.6")
-                    || jreVersion.startsWith("1.7")) {
-                    s_logger.info("Registering Jdk 1.5 Mbean");
-                    registerJdk15Mbean(m_server);
-                }
+				// execute the following code only on a
+				// JRE, with version >= 1.5
+				if (jreVersion.startsWith("1.5") || jreVersion.startsWith("1.6")
+					|| jreVersion.startsWith("1.7")) {
+					s_logger.info("Registering Jdk 1.5 Mbean");
+					registerJdk15Mbean(m_server);
+				}
 
-                m_jvmmb = new JvmMB();
-                s_jvmMBs.put(m_server, m_jvmmb);
-                try {
-                    m_server.registerMBean(m_jvmmb, m_jvmmb.getObjectName());
-                } catch (InstanceAlreadyExistsException e) {
-                    String message = "The MBean is already under the "
-                        + "control of the MBean server.";
-                    s_logger.error(message);
-                    throw new BaseException(message, e);
-                } catch (MBeanRegistrationException e) {
-                    String message = "The MBean will not be registered.";
-                    s_logger.error(message);
-                    throw new BaseException(message, e);
-                } catch (NotCompliantMBeanException e) {
-                    String message = "This object is not a JMX compliant"
-                        + " MBean.";
-                    s_logger.error(message);
-                    throw new BaseException(message, e);
-                }
-            } else if (numberOfMBeans == 1) {
-                // In case there is one MBean in the JVM_DOMAIN, we make
-                // reference to it in this loader.
-                m_jvmmb = (JvmMB) s_jvmMBs.get(m_server);
-                if (m_jvmmb == null) {
-                    CoreNotificationHelper
-                        .notifyMisconfiguration("Error in Mapping: "
-                               + "No JVM defined on this MBean Server.");
-                }
-            } else {
-                // In case there is more than one JVM proxy registered at this
-                // MBean Server, we throw a BaseRTException.
-                String message = "There is more than 1 JVM defined on this"
-                    + " MBean Server.";
-                s_logger.error(message);
-                throw new BaseRTException(message, (Object[]) null);
-            }
-        }
-    }
+				m_jvmmb = new JvmMB();
+				s_jvmMBs.put(m_server, m_jvmmb);
+				try {
+					m_server.registerMBean(m_jvmmb, m_jvmmb.getObjectName());
+				} catch (InstanceAlreadyExistsException e) {
+					String message = "The MBean is already under the "
+						+ "control of the MBean server.";
+					s_logger.error(message);
+					throw new BaseException(message, e);
+				} catch (MBeanRegistrationException e) {
+					String message = "The MBean will not be registered.";
+					s_logger.error(message);
+					throw new BaseException(message, e);
+				} catch (NotCompliantMBeanException e) {
+					String message = "This object is not a JMX compliant"
+						+ " MBean.";
+					s_logger.error(message);
+					throw new BaseException(message, e);
+				}
+			} else if (numberOfMBeans == 1) {
+				// In case there is one MBean in the JVM_DOMAIN, we make
+				// reference to it in this loader.
+				m_jvmmb = (JvmMB) s_jvmMBs.get(m_server);
+				if (m_jvmmb == null) {
+					CoreNotificationHelper
+						.notifyMisconfiguration("Error in Mapping: "
+							+ "No JVM defined on this MBean Server.");
+				}
+			} else {
+				// In case there is more than one JVM proxy registered at this
+				// MBean Server, we throw a BaseRTException.
+				String message = "There is more than 1 JVM defined on this"
+					+ " MBean Server.";
+				s_logger.error(message);
+				throw new BaseRTException(message, (Object[]) null);
+			}
+		}
+	}
 
-    /**
-     * Returns all object names of the beans in the domain "domain" and where
-     * "keyProperty"="name" which are registered on the MBeanServer server.
-     * 
-     * @param server
-     *            the MBean Server
-     * @param domain
-     *            the domain of the wanted beans
-     * @param keyProperty
-     *            the key property (e.g. name) as registered on the MBean Server
-     * @param value
-     *            the value of the key property
-     * @return an array of object names satisfying the constraints
-     */
-    public ObjectName[] getObjectNames(MBeanServer server, String domain,
-        String keyProperty, String value) {
+	/**
+	 * Returns all object names of the beans in the domain "domain" and where
+	 * "keyProperty"="name" which are registered on the MBeanServer server.
+	 *
+	 * @param server
+	 *            the MBean Server
+	 * @param domain
+	 *            the domain of the wanted beans
+	 * @param keyProperty
+	 *            the key property (e.g. name) as registered on the MBean Server
+	 * @param value
+	 *            the value of the key property
+	 * @return an array of object names satisfying the constraints
+	 */
+	public ObjectName[] getObjectNames(MBeanServer server, String domain,
+		String keyProperty, String value) {
 
-        // Get all MBeans at this MBean Server.
-        Set mBeansSet = server.queryMBeans(null, null);
+		// Get all MBeans at this MBean Server.
+		Set mBeansSet = server.queryMBeans(null, null);
 
-        Reject.ifNull(mBeansSet, "The 'queryMBeans(ObjectName, QueryExp)' "
-            + "method on the MBeanServer returned null.");
+		Reject.ifNull(mBeansSet, "The 'queryMBeans(ObjectName, QueryExp)' "
+			+ "method on the MBeanServer returned null.");
 
-        List<ObjectName> relatedBeans = new ArrayList<ObjectName>();
+		List<ObjectName> relatedBeans = new ArrayList<ObjectName>();
 
-        for (Object oi : mBeansSet) {
-            ObjectInstance objectInstance = (ObjectInstance) oi;
-            ObjectName objectName = objectInstance.getObjectName();
+		for (Object oi : mBeansSet) {
+			ObjectInstance objectInstance = (ObjectInstance) oi;
+			ObjectName objectName = objectInstance.getObjectName();
 
-            // Check whether this object name contains the requested domain and
-            // the requested value of the requested key property.
-            if (objectName.getDomain().equals(domain)) {
-                if (keyProperty != null) {
-                    if (objectName.getKeyProperty(keyProperty).equals(value)) {
-                        relatedBeans.add(objectName);
-                    }
-                } else {
-                    relatedBeans.add(objectName);
-                }
-            }
-        }
-            
-        return relatedBeans.toArray(new ObjectName[relatedBeans.size()]);
-    }
+			// Check whether this object name contains the requested domain and
+			// the requested value of the requested key property.
+			if (objectName.getDomain().equals(domain)) {
+				if (keyProperty != null) {
+					if (objectName.getKeyProperty(keyProperty).equals(value)) {
+						relatedBeans.add(objectName);
+					}
+				} else {
+					relatedBeans.add(objectName);
+				}
+			}
+		}
+			
+		return relatedBeans.toArray(new ObjectName[relatedBeans.size()]);
+	}
 
-    /**
-     * The ApplicationContext is set via ApplicationContextAware.
-     * 
-     * @param applicationContext
-     *            The Application Context delivered by the
-     *            ApplicationContextAware
-     */
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        Reject.ifNotAssignableTo(applicationContext, 
-            ConfigurableApplicationContext.class);
-        m_applicationContext 
-            = (ConfigurableApplicationContext) applicationContext;
+	/**
+	 * The ApplicationContext is set via ApplicationContextAware.
+	 *
+	 * @param applicationContext
+	 *            The Application Context delivered by the
+	 *            ApplicationContextAware
+	 */
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		Reject.ifNotAssignableTo(applicationContext,
+			ConfigurableApplicationContext.class);
+		m_applicationContext
+			= (ConfigurableApplicationContext) applicationContext;
 
-    }
+	}
 
-    /**
-     * Getter method for the Application Context.
-     * 
-     * @return The Application Context containing this loader object
-     */
-    public ConfigurableApplicationContext getApplicationContext() {
-        return m_applicationContext;
-    }
+	/**
+	 * Getter method for the Application Context.
+	 *
+	 * @return The Application Context containing this loader object
+	 */
+	public ConfigurableApplicationContext getApplicationContext() {
+		return m_applicationContext;
+	}
 
-    /**
-     * @return Returns the initAfterPropertiesSet.
-     */
-    public final boolean isInitAfterPropertiesSet() {
-        return m_initAfterPropertiesSet;
-    }
+	/**
+	 * @return Returns the initAfterPropertiesSet.
+	 */
+	public final boolean isInitAfterPropertiesSet() {
+		return m_initAfterPropertiesSet;
+	}
 
-    /**
-     * @param initAfterPropertiesSet Is the initAfterPropertiesSet to set.
-     */
-    public final void setInitAfterPropertiesSet(
-        boolean initAfterPropertiesSet) {
-        m_initAfterPropertiesSet = initAfterPropertiesSet;
-    }
+	/**
+	 * @param initAfterPropertiesSet Is the initAfterPropertiesSet to set.
+	 */
+	public final void setInitAfterPropertiesSet(
+		boolean initAfterPropertiesSet) {
+		m_initAfterPropertiesSet = initAfterPropertiesSet;
+	}
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @see #init()
-     */
-    public void afterPropertiesSet() throws BaseException {
-        if (isInitAfterPropertiesSet()) {
-            init();
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see #init()
+	 */
+	public void afterPropertiesSet() throws BaseException {
+		if (isInitAfterPropertiesSet()) {
+			init();
+		}
+	}
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @see #init()
-     */
-    public void onApplicationEvent(ApplicationEvent event) {
-        if (event instanceof ContextRefreshedEvent 
-            && ((ContextRefreshedEvent) event).getSource() 
-                == getApplicationContext()) {
-            try {
-                init();
-            } catch (BaseException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see #init()
+	 */
+	public void onApplicationEvent(ApplicationEvent event) {
+		if (event instanceof ContextRefreshedEvent
+			&& ((ContextRefreshedEvent) event).getSource()
+				== getApplicationContext()) {
+			try {
+				init();
+			} catch (BaseException e) {
+				throw new RuntimeException(e);
+			}
+		}
+	}
 
-    /**
-     * Creates the "Real World" image of the given Application Context by
-     * setting up the corresponding JMX objects.
-     * 
-     * @throws BaseException On failure.
-     */
-    protected void init() throws BaseException {
-        // Set the JVM MBean to this Application Context.
-        setJvmMB();
+	/**
+	 * Creates the "Real World" image of the given Application Context by
+	 * setting up the corresponding JMX objects.
+	 *
+	 * @throws BaseException On failure.
+	 */
+	protected void init() throws BaseException {
+		// Set the JVM MBean to this Application Context.
+		setJvmMB();
 
-        // Create the Application Context proxy.
-        m_acMB = new ApplicationContextMB(m_applicationContext,
-            m_applicationContext.getBeanFactory(), 
-            m_server, m_jvmmb);
-        
-        // Initialize the Application Context proxy.
-        m_acMB.init();
-    }
-    /**
-     * Registers JDK 1.5 MBeans.
-     * @param ms The MBeanServer.
-     */
-    protected static void registerJdk15Mbean(MBeanServer ms) {
-        try {
-            ms.registerMBean(ManagementFactory.getClassLoadingMXBean(),
-                new ObjectName(ManagementFactory.CLASS_LOADING_MXBEAN_NAME));
+		// Create the Application Context proxy.
+		m_acMB = new ApplicationContextMB(m_applicationContext,
+			m_applicationContext.getBeanFactory(),
+			m_server, m_jvmmb);
+		
+		// Initialize the Application Context proxy.
+		m_acMB.init();
+	}
+	/**
+	 * Registers JDK 1.5 MBeans.
+	 * @param ms The MBeanServer.
+	 */
+	protected static void registerJdk15Mbean(MBeanServer ms) {
+		try {
+			ms.registerMBean(ManagementFactory.getClassLoadingMXBean(),
+				new ObjectName(ManagementFactory.CLASS_LOADING_MXBEAN_NAME));
 
-            ms.registerMBean(ManagementFactory.getThreadMXBean(),
-                new ObjectName(ManagementFactory.THREAD_MXBEAN_NAME));
+			ms.registerMBean(ManagementFactory.getThreadMXBean(),
+				new ObjectName(ManagementFactory.THREAD_MXBEAN_NAME));
 
-            ms.registerMBean(ManagementFactory.getRuntimeMXBean(),
-                new ObjectName(ManagementFactory.RUNTIME_MXBEAN_NAME));
-            ms.registerMBean(ManagementFactory.getOperatingSystemMXBean(),
-                new ObjectName(ManagementFactory.OPERATING_SYSTEM_MXBEAN_NAME));
-            ms.registerMBean(ManagementFactory.getMemoryMXBean(),
-                new ObjectName(ManagementFactory.MEMORY_MXBEAN_NAME));
-            ms.registerMBean(ManagementFactory.getCompilationMXBean(),
-                new ObjectName(ManagementFactory.COMPILATION_MXBEAN_NAME));
+			ms.registerMBean(ManagementFactory.getRuntimeMXBean(),
+				new ObjectName(ManagementFactory.RUNTIME_MXBEAN_NAME));
+			ms.registerMBean(ManagementFactory.getOperatingSystemMXBean(),
+				new ObjectName(ManagementFactory.OPERATING_SYSTEM_MXBEAN_NAME));
+			ms.registerMBean(ManagementFactory.getMemoryMXBean(),
+				new ObjectName(ManagementFactory.MEMORY_MXBEAN_NAME));
+			ms.registerMBean(ManagementFactory.getCompilationMXBean(),
+				new ObjectName(ManagementFactory.COMPILATION_MXBEAN_NAME));
 
-            int i = 0;
-            for (Object o : ManagementFactory.getGarbageCollectorMXBeans()) {
-                ms.registerMBean(o, new ObjectName(
-                    ManagementFactory.GARBAGE_COLLECTOR_MXBEAN_DOMAIN_TYPE
-                        + ",num=" + (i++)));
-            }
+			int i = 0;
+			for (Object o : ManagementFactory.getGarbageCollectorMXBeans()) {
+				ms.registerMBean(o, new ObjectName(
+					ManagementFactory.GARBAGE_COLLECTOR_MXBEAN_DOMAIN_TYPE
+						+ ",num=" + (i++)));
+			}
 
-            i = 0;
-            for (Object o : ManagementFactory.getMemoryManagerMXBeans()) {
-                ms.registerMBean(o, new ObjectName(
-                    ManagementFactory.MEMORY_MANAGER_MXBEAN_DOMAIN_TYPE
-                        + ",num=" + (i++)));
-            }
+			i = 0;
+			for (Object o : ManagementFactory.getMemoryManagerMXBeans()) {
+				ms.registerMBean(o, new ObjectName(
+					ManagementFactory.MEMORY_MANAGER_MXBEAN_DOMAIN_TYPE
+						+ ",num=" + (i++)));
+			}
 
-            i = 0;
-            for (Object o : ManagementFactory.getMemoryPoolMXBeans()) {
-                ms.registerMBean(o, new ObjectName(
-                    ManagementFactory.MEMORY_POOL_MXBEAN_DOMAIN_TYPE + ",num="
-                        + (i++)));
-            }
+			i = 0;
+			for (Object o : ManagementFactory.getMemoryPoolMXBeans()) {
+				ms.registerMBean(o, new ObjectName(
+					ManagementFactory.MEMORY_POOL_MXBEAN_DOMAIN_TYPE + ",num="
+						+ (i++)));
+			}
 
-        } catch (InstanceAlreadyExistsException e1) {
-            // If we have the system's jmx already running,
-            // we can expect some system beans already to exist.
-            // Therefore, we can ignore these.
-            s_logger.debug("Bean " + e1.getMessage() + "already exists.");
-            // e1.printStackTrace();
-        } catch (MBeanRegistrationException e1) {
-            e1.printStackTrace();
-        } catch (NotCompliantMBeanException e1) {
-            e1.printStackTrace();
-        } catch (MalformedObjectNameException e1) {
-            e1.printStackTrace();
-        } catch (NullPointerException e1) {
-            e1.printStackTrace();
-        }
-    }
+		} catch (InstanceAlreadyExistsException e1) {
+			// If we have the system's jmx already running,
+			// we can expect some system beans already to exist.
+			// Therefore, we can ignore these.
+			s_logger.debug("Bean " + e1.getMessage() + "already exists.");
+			// e1.printStackTrace();
+		} catch (MBeanRegistrationException e1) {
+			e1.printStackTrace();
+		} catch (NotCompliantMBeanException e1) {
+			e1.printStackTrace();
+		} catch (MalformedObjectNameException e1) {
+			e1.printStackTrace();
+		} catch (NullPointerException e1) {
+			e1.printStackTrace();
+		}
+	}
 }

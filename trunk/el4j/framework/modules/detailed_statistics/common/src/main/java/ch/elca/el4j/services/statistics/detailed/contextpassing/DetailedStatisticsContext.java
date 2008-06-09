@@ -19,8 +19,8 @@ package ch.elca.el4j.services.statistics.detailed.contextpassing;
 import ch.elca.el4j.services.statistics.detailed.MeasureId;
 
 /**
- * 
- *  This class contains all fields, which are part of the passed 
+ *
+ *  This class contains all fields, which are part of the passed
  *   context for the detailed statistics. One instance exists per
  *   thread.
  *
@@ -36,108 +36,108 @@ import ch.elca.el4j.services.statistics.detailed.MeasureId;
  */
 public class DetailedStatisticsContext implements java.io.Serializable {
 
-    /** Std serial version ID. */
-    private static final long serialVersionUID = 5979980636453006516L;
+	/** Std serial version ID. */
+	private static final long serialVersionUID = 5979980636453006516L;
 
-    /**
-     * The measuredId.
-     */
-    private MeasureId m_measureId = null;
-    
-    /** 
-     * The depth of the call stack. Starts at 0.
-     * It's incremented when a call arrives inbound, it's decremented 
-     * when the variable arrives outbound.
-     */
-    private int m_depth = 0;
-    
-    /**
-     * The Sequence number.
-     */
-    private int m_sequenceNumber = 0;
-    
-    /**
-     * The hierarchy of the method call.
-     * 
-     * This variables are used if a service is called more than once in the 
-     * same transaction. In such a case, the hierarchy is built more wide.
-     * (e.g. [1-1] to [1-2])
-     * further calls make the hierarchy more deep (e.g. [1-1] to [1-1-1])
-     */
-    private int[] m_hierarchy = new int[]{0};
-    
-    /**
-     * The startTime of the (sub) measurement.
-     */
-    private long m_startTime = 0;
+	/**
+	 * The measuredId.
+	 */
+	private MeasureId m_measureId = null;
+	
+	/**
+	 * The depth of the call stack. Starts at 0.
+	 * It's incremented when a call arrives inbound, it's decremented
+	 * when the variable arrives outbound.
+	 */
+	private int m_depth = 0;
+	
+	/**
+	 * The Sequence number.
+	 */
+	private int m_sequenceNumber = 0;
+	
+	/**
+	 * The hierarchy of the method call.
+	 *
+	 * This variables are used if a service is called more than once in the
+	 * same transaction. In such a case, the hierarchy is built more wide.
+	 * (e.g. [1-1] to [1-2])
+	 * further calls make the hierarchy more deep (e.g. [1-1] to [1-1-1])
+	 */
+	private int[] m_hierarchy = new int[]{0};
+	
+	/**
+	 * The startTime of the (sub) measurement.
+	 */
+	private long m_startTime = 0;
 
-    /**
-     * @return Returns the hierarchy.
-     */
-    public int[] getHierarchy() {
-        return m_hierarchy;
-    }
-    
-    /**
-     * @param hierarchy Is the hierarchy to set.
-     */
-    public void setHierarchy(int[] hierarchy) {
-        m_hierarchy = hierarchy;
-    }
-    
-    /**
-     * @return Returns the measureId.
-     */
-    public MeasureId getMeasureId() {
-        return m_measureId;
-    }
-    
-    /**
-     * @param measureId Is the measureId to set.
-     */
-    public void setMeasureId(MeasureId measureId) {
-        m_measureId = measureId;
-    }
-    
-    /**
-     * @return Returns the sequence.
-     */
-    public int getSequenceNumber() {
-        return m_sequenceNumber;
-    }
-        
-    /**
-     * @param sequence Is the sequence to set.
-     */
-    public void setSequenceNumber(int sequence) {
-        m_sequenceNumber = sequence;
-    }
-    
-    /**
-     * @return Returns the startTime.
-     */
-    public long getStartTime() {
-        return m_startTime;
-    }
-    
-    /**
-     * @param startTime Is the startTime to set.
-     */
-    public void setStartTime(long startTime) {
-        m_startTime = startTime;
-    }
+	/**
+	 * @return Returns the hierarchy.
+	 */
+	public int[] getHierarchy() {
+		return m_hierarchy;
+	}
+	
+	/**
+	 * @param hierarchy Is the hierarchy to set.
+	 */
+	public void setHierarchy(int[] hierarchy) {
+		m_hierarchy = hierarchy;
+	}
+	
+	/**
+	 * @return Returns the measureId.
+	 */
+	public MeasureId getMeasureId() {
+		return m_measureId;
+	}
+	
+	/**
+	 * @param measureId Is the measureId to set.
+	 */
+	public void setMeasureId(MeasureId measureId) {
+		m_measureId = measureId;
+	}
+	
+	/**
+	 * @return Returns the sequence.
+	 */
+	public int getSequenceNumber() {
+		return m_sequenceNumber;
+	}
+		
+	/**
+	 * @param sequence Is the sequence to set.
+	 */
+	public void setSequenceNumber(int sequence) {
+		m_sequenceNumber = sequence;
+	}
+	
+	/**
+	 * @return Returns the startTime.
+	 */
+	public long getStartTime() {
+		return m_startTime;
+	}
+	
+	/**
+	 * @param startTime Is the startTime to set.
+	 */
+	public void setStartTime(long startTime) {
+		m_startTime = startTime;
+	}
 
-    /**
-     * @return The depth of the call stack.
-     */
-    public int getDepth() {
-        return m_depth;
-    }
+	/**
+	 * @return The depth of the call stack.
+	 */
+	public int getDepth() {
+		return m_depth;
+	}
 
-    /**
-     * @param depth Set the depth of the call stack.
-     */
-    public void setDepth(int depth) {
-        this.m_depth = depth;
-    }
+	/**
+	 * @param depth Set the depth of the call stack.
+	 */
+	public void setDepth(int depth) {
+		this.m_depth = depth;
+	}
 }

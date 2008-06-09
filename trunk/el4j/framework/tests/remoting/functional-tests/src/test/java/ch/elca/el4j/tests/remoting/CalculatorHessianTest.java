@@ -35,13 +35,13 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
  */
 
 public class CalculatorHessianTest extends AbstractCalculatorTest {
-    /**
-     * {@inheritDoc}
-     */
-    ApplicationContext getContext() {
-        return  new ModuleApplicationContext(
-            new String[] {"classpath*:mandatory/*.xml",
-                "scenarios/client/remotingtests-hessian-client-config.xml"}, 
-                false);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	ApplicationContext getContext() {
+		return  new ModuleApplicationContext(
+			new String[] {"classpath*:mandatory/*.xml",
+				"scenarios/client/remotingtests-hessian-client-config.xml"},
+				false);
+	}
 }

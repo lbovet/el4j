@@ -39,52 +39,52 @@ import ch.elca.el4j.services.exceptionhandler.handler.AbstractExceptionHandler;
  */
 public class MessageBoxExceptionHandler extends AbstractExceptionHandler {
 
-    /**
-     * Logger.
-     */
-    private static Log s_logger 
-        = LogFactory.getLog(MessageBoxExceptionHandler.class);
-    
-    /** Number of handle calls. */
-    public static int s_numberOfHandleCalls = 0;
-    
-    /**
-     * {@inheritDoc}
-     */
-    protected Object handleException(Throwable t,
-            AbstractExceptionHandlerInterceptor exceptionInvoker,
-            MethodInvocation invocation, Log logger) throws Throwable {
-        
-        s_numberOfHandleCalls++;
-        
-        String s = t.getMessage();
-        StringBuffer buffer = new StringBuffer('\n');
-        drawLine(s.length(), buffer);
-        buffer.append("| ");
-        buffer.append(s);
-        buffer.append(" |\n");
-        drawLine(s.length(), buffer);
-        
-        s_logger.info(buffer.toString());
-        
-        return null;
-    }
+	/**
+	 * Logger.
+	 */
+	private static Log s_logger
+		= LogFactory.getLog(MessageBoxExceptionHandler.class);
+	
+	/** Number of handle calls. */
+	public static int s_numberOfHandleCalls = 0;
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	protected Object handleException(Throwable t,
+			AbstractExceptionHandlerInterceptor exceptionInvoker,
+			MethodInvocation invocation, Log logger) throws Throwable {
+		
+		s_numberOfHandleCalls++;
+		
+		String s = t.getMessage();
+		StringBuffer buffer = new StringBuffer('\n');
+		drawLine(s.length(), buffer);
+		buffer.append("| ");
+		buffer.append(s);
+		buffer.append(" |\n");
+		drawLine(s.length(), buffer);
+		
+		s_logger.info(buffer.toString());
+		
+		return null;
+	}
 
-    /**
-     * Draws a line consisting of hyphens.
-     * 
-     * @param length
-     *      The number of hyphens to print.
-     *      
-     * @param buffer
-     *      The buffer to write the hyphens to.
-     */
-    private void drawLine(int length, StringBuffer buffer) {
-        // Checkstyle: MagicNumber off
-        for (int i = 0; i < length + 4; i++) {
-            buffer.append("-");
-        }
-        buffer.append('\n');
-        // Checkstyle: MagicNumber on
-    }
+	/**
+	 * Draws a line consisting of hyphens.
+	 *
+	 * @param length
+	 *      The number of hyphens to print.
+	 *
+	 * @param buffer
+	 *      The buffer to write the hyphens to.
+	 */
+	private void drawLine(int length, StringBuffer buffer) {
+		// Checkstyle: MagicNumber off
+		for (int i = 0; i < length + 4; i++) {
+			buffer.append("-");
+		}
+		buffer.append('\n');
+		// Checkstyle: MagicNumber on
+	}
 }

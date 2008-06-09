@@ -41,94 +41,94 @@ import ch.elca.el4j.services.remoting.RemotingServiceExporter;
  * @author Martin Zeltner (MZE)
  */
 public class Hessian extends AbstractInetSocketAddressWebProtocol {
-    
-    /**
-     * Additional properties to set.
-     */
-    protected Map<String, Object> m_serviceProperties;
-    
-    /**
-     * {@inheritDoc}
-     */
-    public Object createProxyBean(RemotingProxyFactoryBean proxyBean,
-            Class serviceInterfaceWithContext) {
-        StaticApplicationContext appContext = new StaticApplicationContext(
-                m_parentApplicationContext);
-        registerChildApplicationContext(appContext);
-        MutablePropertyValues proxyProps = new MutablePropertyValues();
-        proxyProps.addPropertyValue("serviceInterface",
-                serviceInterfaceWithContext);
-        proxyProps.addPropertyValue("serviceUrl", generateUrl(proxyBean));
-        if (m_serviceProperties != null) {
-            for (String property : m_serviceProperties.keySet()) {
-                proxyProps.addPropertyValue(property,
-                    m_serviceProperties.get(property));
-            }
-        }
-        appContext.registerSingleton("hessianProxyBeanGen",
-                getProxyObjectType(), proxyProps);
-        appContext.refresh();
-        return appContext.getBean("hessianProxyBeanGen");
-    }
+	
+	/**
+	 * Additional properties to set.
+	 */
+	protected Map<String, Object> m_serviceProperties;
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object createProxyBean(RemotingProxyFactoryBean proxyBean,
+			Class serviceInterfaceWithContext) {
+		StaticApplicationContext appContext = new StaticApplicationContext(
+				m_parentApplicationContext);
+		registerChildApplicationContext(appContext);
+		MutablePropertyValues proxyProps = new MutablePropertyValues();
+		proxyProps.addPropertyValue("serviceInterface",
+				serviceInterfaceWithContext);
+		proxyProps.addPropertyValue("serviceUrl", generateUrl(proxyBean));
+		if (m_serviceProperties != null) {
+			for (String property : m_serviceProperties.keySet()) {
+				proxyProps.addPropertyValue(property,
+					m_serviceProperties.get(property));
+			}
+		}
+		appContext.registerSingleton("hessianProxyBeanGen",
+				getProxyObjectType(), proxyProps);
+		appContext.refresh();
+		return appContext.getBean("hessianProxyBeanGen");
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object createExporterBean(RemotingServiceExporter exporterBean,
-            Class serviceInterfaceWithContext, Object serviceProxy) {
-        StaticApplicationContext appContext = new StaticApplicationContext(
-                m_parentApplicationContext);
-        registerChildApplicationContext(appContext);
-        MutablePropertyValues props = new MutablePropertyValues();
-        props.addPropertyValue("service", serviceProxy);
-        props.addPropertyValue("serviceInterface", serviceInterfaceWithContext);
-        appContext.registerSingleton("hessianExporterBeanGen",
-                getExporterObjectType(), props);
-        appContext.refresh();
-        return appContext.getBean("hessianExporterBeanGen");
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object createExporterBean(RemotingServiceExporter exporterBean,
+			Class serviceInterfaceWithContext, Object serviceProxy) {
+		StaticApplicationContext appContext = new StaticApplicationContext(
+				m_parentApplicationContext);
+		registerChildApplicationContext(appContext);
+		MutablePropertyValues props = new MutablePropertyValues();
+		props.addPropertyValue("service", serviceProxy);
+		props.addPropertyValue("serviceInterface", serviceInterfaceWithContext);
+		appContext.registerSingleton("hessianExporterBeanGen",
+				getExporterObjectType(), props);
+		appContext.refresh();
+		return appContext.getBean("hessianExporterBeanGen");
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Class getProxyObjectType() {
-        return HessianProxyFactoryBean.class;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Class getProxyObjectType() {
+		return HessianProxyFactoryBean.class;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Class getExporterObjectType() {
-        return HessianServiceExporter.class;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Class getExporterObjectType() {
+		return HessianServiceExporter.class;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public String generateUrl(AbstractRemotingBase remoteBase) {
-        StringBuffer sb = new StringBuffer();
-        sb.append("http://");
-        sb.append(getServiceHost());
-        sb.append(":");
-        sb.append(getServicePort());
-        sb.append("/");
-        sb.append(getContextPath());
-        sb.append("/");
-        sb.append(remoteBase.getServiceName());
-        return sb.toString();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public String generateUrl(AbstractRemotingBase remoteBase) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("http://");
+		sb.append(getServiceHost());
+		sb.append(":");
+		sb.append(getServicePort());
+		sb.append("/");
+		sb.append(getContextPath());
+		sb.append("/");
+		sb.append(remoteBase.getServiceName());
+		return sb.toString();
+	}
 
-    /**
-     * @return    the additional service properties
-     */
-    public Map<String, Object> getServiceProperties() {
-        return m_serviceProperties;
-    }
+	/**
+	 * @return    the additional service properties
+	 */
+	public Map<String, Object> getServiceProperties() {
+		return m_serviceProperties;
+	}
 
-    /**
-     * @param serviceProperties    the additional service properties to set
-     */
-    public void setServiceProperties(Map<String, Object> serviceProperties) {
-        m_serviceProperties = serviceProperties;
-    }
+	/**
+	 * @param serviceProperties    the additional service properties to set
+	 */
+	public void setServiceProperties(Map<String, Object> serviceProperties) {
+		m_serviceProperties = serviceProperties;
+	}
 }

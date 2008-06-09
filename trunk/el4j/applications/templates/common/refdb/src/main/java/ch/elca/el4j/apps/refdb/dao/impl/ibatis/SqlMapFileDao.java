@@ -21,7 +21,7 @@ import ch.elca.el4j.apps.refdb.dom.File;
 import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
 
 /**
- * 
+ *
  * DAO for files which is using iBatis SQL Maps.
  *
  * <script type="text/javascript">printFileStatus
@@ -35,13 +35,13 @@ import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
  */
 @AutocollectedGenericDao("fileDao")
 public class SqlMapFileDao extends GenericSqlMapFileDao<File, Integer>
-    implements FileDao {
-    
-    /**
-     * Creates a new SqlMapFileDao instance.
-     */
-    public SqlMapFileDao() {
-        setPersistentClass(File.class);
-    }
-    
+	implements FileDao {
+	
+	/**
+	 * Creates a new SqlMapFileDao instance.
+	 */
+	public SqlMapFileDao() {
+		setPersistentClass(File.class);
+	}
+	
 }

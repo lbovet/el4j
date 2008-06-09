@@ -30,25 +30,25 @@ package ch.elca.el4j.services.persistence.generic.dto;
  * @author Martin Zeltner (MZE)
  */
 public interface PrimaryKeyObject {
-    /**
-     * @return Returns <code>true</code> if the primary key is new.
-     */
-    public boolean isKeyNew();
-    
-    /**
-     * @param keyObject Is the key to set.
-     */
-    public void setKey(Object keyObject);
-    
-    /**
-     * @return Returns the key as an object or <code>null</code> if it does not
-     *         exist.
-     */
-    public Object getKeyAsObject();
-    
-    /**
-     * This method will be called when the primary key object is requested to
-     * generate a key object for himself.
-     */
-    public void useGeneratedKey();
+	/**
+	 * @return Returns <code>true</code> if the primary key is new.
+	 */
+	public boolean isKeyNew();
+	
+	/**
+	 * @param keyObject Is the key to set.
+	 */
+	public void setKey(Object keyObject);
+	
+	/**
+	 * @return Returns the key as an object or <code>null</code> if it does not
+	 *         exist.
+	 */
+	public Object getKeyAsObject();
+	
+	/**
+	 * This method will be called when the primary key object is requested to
+	 * generate a key object for himself.
+	 */
+	public void useGeneratedKey();
 }

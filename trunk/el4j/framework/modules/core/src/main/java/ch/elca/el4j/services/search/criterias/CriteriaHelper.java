@@ -19,9 +19,9 @@ package ch.elca.el4j.services.search.criterias;
 import ch.elca.el4j.services.search.QueryObject;
 
 /**
- * Convenience support for using Criterias. 
+ * Convenience support for using Criterias.
  *
- *  For sample usage please refer to {@link QueryObject}  
+ *  For sample usage please refer to {@link QueryObject}
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -33,67 +33,67 @@ import ch.elca.el4j.services.search.QueryObject;
  * @author Philipp Oser (POS)
  */
 public class CriteriaHelper {
-    
-    /**
-     * Convenience method for {@link AndCriteria}
-     * @param criteria
-     * @return
-     */
-    public static Criteria and(Criteria... criteria){
-        return new AndCriteria(criteria);
-    }
-    
-    /**
-     * Convenience method for {@link OrCriteria}
-     * @param criteria
-     * @return
-     */
-    public static Criteria or(Criteria... criteria){
-        return new OrCriteria(criteria);
-    }
-    
-    /**
-     * Convenience method for {@link NotCriteria}
-     * @param criteria
-     * @return
-     */    
-    public static Criteria not(Criteria criteria){
-        return new NotCriteria(criteria);
-    }
-    
-    /**
-     * Convenience method for string comparison
-     * @param field
-     * @param value
-     * @return
-     */
-    public static Criteria eq(String field, String value){
-        return new ComparisonCriteria(field, value, "=", value.getClass().getName());
-    }
-    
-    /**
-     * Convenience method for like criteria (is case insensitive)
-     * @param field
-     * @param value
-     * @return
-     */
-    public static Criteria like(String field, String value){
-        return LikeCriteria.caseInsensitive(field,value);
-    }
-    
-    /** 
-     * Apply operator (from functional programming)
-     *  (used internally) 
-     * @param criterias must not be null
-     * @return
-     */
-    static String[] applyToSqlWhereCondition( Criteria criterias[] ){
-        String[] result = new String[criterias.length];
-        
-        for (int i = 0; i < criterias.length; i++) {
-            result[i] = criterias[i].getSqlWhereCondition();
-        }
-        return result;
-    }
-    
+	
+	/**
+	 * Convenience method for {@link AndCriteria}
+	 * @param criteria
+	 * @return
+	 */
+	public static Criteria and(Criteria... criteria){
+		return new AndCriteria(criteria);
+	}
+	
+	/**
+	 * Convenience method for {@link OrCriteria}
+	 * @param criteria
+	 * @return
+	 */
+	public static Criteria or(Criteria... criteria){
+		return new OrCriteria(criteria);
+	}
+	
+	/**
+	 * Convenience method for {@link NotCriteria}
+	 * @param criteria
+	 * @return
+	 */
+	public static Criteria not(Criteria criteria){
+		return new NotCriteria(criteria);
+	}
+	
+	/**
+	 * Convenience method for string comparison
+	 * @param field
+	 * @param value
+	 * @return
+	 */
+	public static Criteria eq(String field, String value){
+		return new ComparisonCriteria(field, value, "=", value.getClass().getName());
+	}
+	
+	/**
+	 * Convenience method for like criteria (is case insensitive)
+	 * @param field
+	 * @param value
+	 * @return
+	 */
+	public static Criteria like(String field, String value){
+		return LikeCriteria.caseInsensitive(field,value);
+	}
+	
+	/**
+	 * Apply operator (from functional programming)
+	 *  (used internally)
+	 * @param criterias must not be null
+	 * @return
+	 */
+	static String[] applyToSqlWhereCondition( Criteria criterias[] ){
+		String[] result = new String[criterias.length];
+		
+		for (int i = 0; i < criterias.length; i++) {
+			result[i] = criterias[i].getSqlWhereCondition();
+		}
+		return result;
+	}
+	
 }

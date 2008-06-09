@@ -43,82 +43,82 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * for the login.
  * </ul>
  * <br>
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Raphael Boog (RBO)
  * @author Andreas Pfenninger (APR)
  * @author Christoph Schwitter (CSC)
  */
-public class DefaultAuthenticationService implements AuthenticationService, 
-    InitializingBean {
-       
+public class DefaultAuthenticationService implements AuthenticationService,
+	InitializingBean {
+	
 
-    /** The LoginService to be used for the login. */
-    private AuthenticationManager m_authenticationManager;
+	/** The LoginService to be used for the login. */
+	private AuthenticationManager m_authenticationManager;
 
-    /**
-     * Return the authentication data that is stored for this thread. Used by
-     * the AuthenticationServiceContextPasser.
-     * 
-     * @return The authentication data, may be null.
-     */
-    public Authentication getAuthenticationData() {
+	/**
+	 * Return the authentication data that is stored for this thread. Used by
+	 * the AuthenticationServiceContextPasser.
+	 *
+	 * @return The authentication data, may be null.
+	 */
+	public Authentication getAuthenticationData() {
 
-        return SecurityContextHolder.getContext().getAuthentication();
-    }
+		return SecurityContextHolder.getContext().getAuthentication();
+	}
 
-    /**
-     * Convenience method to set the authentication data.
-     * 
-     * @param authenticationData
-     *            The authentication data to be stored in the ThreadLocal.
-     */
-    private void setAuthenticationData(Authentication authenticationData) {
-        SecurityContextHolder.getContext().setAuthentication(authenticationData);
-    }
+	/**
+	 * Convenience method to set the authentication data.
+	 *
+	 * @param authenticationData
+	 *            The authentication data to be stored in the ThreadLocal.
+	 */
+	private void setAuthenticationData(Authentication authenticationData) {
+		SecurityContextHolder.getContext().setAuthentication(authenticationData);
+	}
 
-    /**
-     * Sets the authenticationManager to be used for the authentication.
-     * 
-     * @param am
-     *            The AuthenticationManager to be used for the authentication.
-     */
-    public void setAuthenticationManager(AuthenticationManager am) {
-        m_authenticationManager = am;
-    }
+	/**
+	 * Sets the authenticationManager to be used for the authentication.
+	 *
+	 * @param am
+	 *            The AuthenticationManager to be used for the authentication.
+	 */
+	public void setAuthenticationManager(AuthenticationManager am) {
+		m_authenticationManager = am;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void afterPropertiesSet() throws Exception {
-        CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-                m_authenticationManager, "authenticationManager", this);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void afterPropertiesSet() throws Exception {
+		CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+				m_authenticationManager, "authenticationManager", this);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void authenticate(Authentication auth) {
-        Authentication authResult = m_authenticationManager.authenticate(auth);
-        setAuthenticationData(authResult);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void authenticate(Authentication auth) {
+		Authentication authResult = m_authenticationManager.authenticate(auth);
+		setAuthenticationData(authResult);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public String getUserName() {
-        if (getAuthenticationData() != null) {
-            Object obj = getAuthenticationData().getPrincipal();
-            if (obj instanceof String) {
-                return (String) obj;
-            }
-        }
-        return null;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getUserName() {
+		if (getAuthenticationData() != null) {
+			Object obj = getAuthenticationData().getPrincipal();
+			if (obj instanceof String) {
+				return (String) obj;
+			}
+		}
+		return null;
+	}
 }

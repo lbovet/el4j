@@ -16,11 +16,11 @@ import ch.elca.el4j.tests.services.persistence.hibernate.entityfinder.entities.E
 public class EntityDetectorTest {
 
 	
-    @Test
+	@Test
 	public void testEntityDetector() {
 		// test it only programmatically
 		
-		EntityDetectorAnnotationSessionFactoryBean 
+		EntityDetectorAnnotationSessionFactoryBean
 			testee = new EntityDetectorAnnotationSessionFactoryBean();
 		
 		testee.setAutoDetectEntityPackage("ch.elca.el4j.tests.services.persistence.hibernate.entityfinder.entities");

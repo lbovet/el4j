@@ -49,161 +49,161 @@ import ch.elca.el4j.util.collections.impl.ExtendedArrayList;
  * @author Adrian Moos (AMS)
  */
 public class FilteredListTest {
-    /** The list of non-negative integers. */
-    static List<Integer> s_integers = new AbstractList<Integer>() {
-        @Override
-        public Integer get(int index) {
-            return index;
-        }
+	/** The list of non-negative integers. */
+	static List<Integer> s_integers = new AbstractList<Integer>() {
+		@Override
+		public Integer get(int index) {
+			return index;
+		}
 
-        @Override
-        public int size() {
-            return Integer.MAX_VALUE;
-        }
-    };
-    
-    /***/
-    static final String UNSUPPORTED
-        = "filtered views should throw UnsupportedOperationExceptions"
-        + "on modification attempts";        
+		@Override
+		public int size() {
+			return Integer.MAX_VALUE;
+		}
+	};
+	
+	/***/
+	static final String UNSUPPORTED
+		= "filtered views should throw UnsupportedOperationExceptions"
+		+ "on modification attempts";
 
-    
-    /** The primes < 100. */
-    List<Integer> m_expectedPrimes
-        = new ExtendedArrayList<Integer>(
-            2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47,
-            53, 59, 61, 67, 71, 73, 79, 83, 89, 97
-        );
+	
+	/** The primes < 100. */
+	List<Integer> m_expectedPrimes
+		= new ExtendedArrayList<Integer>(
+			2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47,
+			53, 59, 61, 67, 71, 73, 79, 83, 89, 97
+		);
 
 
-    /***/
-    @Test
-    public void testAdd() {
-        try {
-            getPrimes(10).add(1);
-            fail(UNSUPPORTED);
-        } catch (UnsupportedOperationException e) {
-            
-        }
-    }
-    
-    /***/
-    @Test
-    public void testRemove() {
-        try {
-            getPrimes(10).remove(1);
-            fail(UNSUPPORTED);
-        } catch (UnsupportedOperationException e) {
-            
-        }
-    }
-    
-    /***/
-    @Test
-    public void testIterator() {
-        Iterator<Integer> odd = CollectionUtils.filtered(
-            s_integers, 
-            new DiscardMultiples(-2)
-        ).iterator();
-        
-        assertEquals(1, (int) odd.next());
-        assertEquals(3, (int) odd.next());
-        assertEquals(5, (int) odd.next());
-        
-    }
-    
-    /***/
-    @Test
-    public void testIteratorLayered() {
-        Iterator<Integer> iter = getPrimes(10).iterator();
-        for (Integer ex : m_expectedPrimes) {
-            assertEquals(ex, iter.next());
-        }
-    }
-    
-    /***/
-    @Test
-    public void testListIterator() {
-        ListIterator<Integer> it = getPrimes(10).listIterator();
-        assertTrue(it.hasNext());
-        assertTrue(it.hasNext());
-        assertFalse(it.hasPrevious());
-        assertEquals(2, (int) it.next());
-        assertTrue(it.hasPrevious());
-        assertEquals(3, (int) it.next());
-        assertEquals(5, (int) it.next());
-        assertTrue(it.hasPrevious());
-        assertEquals(5, (int) it.previous());
-        assertEquals(1, it.previousIndex());
-        assertEquals(2, it.nextIndex());
-        assertEquals(5, (int) it.next());
-        assertEquals(2, it.previousIndex());
-        assertTrue(it.hasNext());
-        assertEquals(7, (int) it.next());
-    }
-    
-    /***/
-    @Test
-    public void testListIteratorIndex() {
-        ListIterator<Integer> it = s_integers.listIterator(10);
-        ListIterator<Integer> odd = CollectionUtils.filtered(
-            s_integers,
-            new DiscardMultiples(-2)
-        ).listIterator(it);
-        assertEquals(9, (int) odd.previous());
-        assertEquals(4, (int) odd.nextIndex());
-    }
-    
-    /***/
-    @Test
-    public void testSize() {
-        assertEquals(
-            m_expectedPrimes.size() - 1,
-            CollectionUtils.filtered(
-                m_expectedPrimes,
-                new DiscardMultiples(-2)
-            ).size()
-        );
-    }
-    
-    /** Returns a list of all primes less than {@code limit * limit}. */
-    List<Integer> getPrimes(int limit) {
-        FilteredList<Integer> candidates = CollectionUtils.filtered(
-            s_integers,
-            new Filter<Integer>() {
-                public boolean accepts(Integer t) {
-                    return t > 1;
-                }
-            }
-        );
-        
-        ListIterator<Integer> candidateIterator = candidates.listIterator();
-        while (true) {
-            int prime = candidateIterator.next();
-            if (prime > limit) { break; }
-            
-            candidates = candidates.filtered(new DiscardMultiples(prime));
-            candidateIterator = candidates.listIterator(candidateIterator);
-        }
-        return candidates;
-    }
+	/***/
+	@Test
+	public void testAdd() {
+		try {
+			getPrimes(10).add(1);
+			fail(UNSUPPORTED);
+		} catch (UnsupportedOperationException e) {
+			
+		}
+	}
+	
+	/***/
+	@Test
+	public void testRemove() {
+		try {
+			getPrimes(10).remove(1);
+			fail(UNSUPPORTED);
+		} catch (UnsupportedOperationException e) {
+			
+		}
+	}
+	
+	/***/
+	@Test
+	public void testIterator() {
+		Iterator<Integer> odd = CollectionUtils.filtered(
+			s_integers,
+			new DiscardMultiples(-2)
+		).iterator();
+		
+		assertEquals(1, (int) odd.next());
+		assertEquals(3, (int) odd.next());
+		assertEquals(5, (int) odd.next());
+		
+	}
+	
+	/***/
+	@Test
+	public void testIteratorLayered() {
+		Iterator<Integer> iter = getPrimes(10).iterator();
+		for (Integer ex : m_expectedPrimes) {
+			assertEquals(ex, iter.next());
+		}
+	}
+	
+	/***/
+	@Test
+	public void testListIterator() {
+		ListIterator<Integer> it = getPrimes(10).listIterator();
+		assertTrue(it.hasNext());
+		assertTrue(it.hasNext());
+		assertFalse(it.hasPrevious());
+		assertEquals(2, (int) it.next());
+		assertTrue(it.hasPrevious());
+		assertEquals(3, (int) it.next());
+		assertEquals(5, (int) it.next());
+		assertTrue(it.hasPrevious());
+		assertEquals(5, (int) it.previous());
+		assertEquals(1, it.previousIndex());
+		assertEquals(2, it.nextIndex());
+		assertEquals(5, (int) it.next());
+		assertEquals(2, it.previousIndex());
+		assertTrue(it.hasNext());
+		assertEquals(7, (int) it.next());
+	}
+	
+	/***/
+	@Test
+	public void testListIteratorIndex() {
+		ListIterator<Integer> it = s_integers.listIterator(10);
+		ListIterator<Integer> odd = CollectionUtils.filtered(
+			s_integers,
+			new DiscardMultiples(-2)
+		).listIterator(it);
+		assertEquals(9, (int) odd.previous());
+		assertEquals(4, (int) odd.nextIndex());
+	}
+	
+	/***/
+	@Test
+	public void testSize() {
+		assertEquals(
+			m_expectedPrimes.size() - 1,
+			CollectionUtils.filtered(
+				m_expectedPrimes,
+				new DiscardMultiples(-2)
+			).size()
+		);
+	}
+	
+	/** Returns a list of all primes less than {@code limit * limit}. */
+	List<Integer> getPrimes(int limit) {
+		FilteredList<Integer> candidates = CollectionUtils.filtered(
+			s_integers,
+			new Filter<Integer>() {
+				public boolean accepts(Integer t) {
+					return t > 1;
+				}
+			}
+		);
+		
+		ListIterator<Integer> candidateIterator = candidates.listIterator();
+		while (true) {
+			int prime = candidateIterator.next();
+			if (prime > limit) { break; }
+			
+			candidates = candidates.filtered(new DiscardMultiples(prime));
+			candidateIterator = candidates.listIterator(candidateIterator);
+		}
+		return candidates;
+	}
 
-    /** for given {@code n}, this filter accepts {@code n} and any number that
-     * is not a multiple of n.*/
-    private static class DiscardMultiples implements Filter<Integer> {
-        /***/
-        private int m_n;
-        
-        /***/
-        DiscardMultiples(int n) {
-            m_n = n;
-        }
+	/** for given {@code n}, this filter accepts {@code n} and any number that
+	 * is not a multiple of n.*/
+	private static class DiscardMultiples implements Filter<Integer> {
+		/***/
+		private int m_n;
+		
+		/***/
+		DiscardMultiples(int n) {
+			m_n = n;
+		}
 
-        /** {@inheritDoc} */
-        public boolean accepts(Integer t) {
-            return t == m_n || t % m_n != 0;
-        }
-    }
+		/** {@inheritDoc} */
+		public boolean accepts(Integer t) {
+			return t == m_n || t % m_n != 0;
+		}
+	}
 }
 // Checkstyle: EmptyBlock on
 // Checkstyle: MagicNumber on

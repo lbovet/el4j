@@ -31,31 +31,31 @@ import ch.elca.el4j.services.xmlmerge.OperationFactory;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public class StaticOperationFactory implements OperationFactory {
 
-    /**
-     * The operation operation returned by this factory.
-     */
-    Operation m_operation;
-    
-    /**
-     * Creates a StaticOperationFactory returning the given operation.
-     * @param operation The operation operation returned by this factory.
-     */
-    public StaticOperationFactory(Operation operation) {
-        this.m_operation = operation;
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public Operation getOperation(Element originalElement,
-        Element modifiedElement) {
-        return m_operation;
-    }
+	/**
+	 * The operation operation returned by this factory.
+	 */
+	Operation m_operation;
+	
+	/**
+	 * Creates a StaticOperationFactory returning the given operation.
+	 * @param operation The operation operation returned by this factory.
+	 */
+	public StaticOperationFactory(Operation operation) {
+		this.m_operation = operation;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public Operation getOperation(Element originalElement,
+		Element modifiedElement) {
+		return m_operation;
+	}
 
 }

@@ -19,11 +19,11 @@ package ch.elca.el4j.util.interfaceenrichment;
 
 /**
  * This interface is used to describe how an interface should be
- * decorated. With <em>decoration</em> we mean that we create a 
- * shadow interface that is slightly different than the original 
- * interface. The shadow interface can additionally implement a new interfaces 
+ * decorated. With <em>decoration</em> we mean that we create a
+ * shadow interface that is slightly different than the original
+ * interface. The shadow interface can additionally implement a new interfaces
  * and/or one can change any signatures of its methods.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -35,30 +35,30 @@ package ch.elca.el4j.util.interfaceenrichment;
  */
 public interface EnrichmentDecorator {
 
-    /**
-     * Method to change the name of the interface.
-     * 
-     * @param originalInterfaceName
-     *            Is the name of the original interface.
-     * @return Returns the newly created interface name.
-     */
-    public String changedInterfaceName(String originalInterfaceName);
+	/**
+	 * Method to change the name of the interface.
+	 *
+	 * @param originalInterfaceName
+	 *            Is the name of the original interface.
+	 * @return Returns the newly created interface name.
+	 */
+	public String changedInterfaceName(String originalInterfaceName);
 
-    /**
-     * Method to change classes, which are extended by the interface.
-     * 
-     * @param extendedInterfaces
-     *            Are the extended interfaces of the original interface.
-     * @return Returns the extended interfaces for the new interface.
-     */
-    public Class<?>[] changedExtendedInterface(Class<?>[] extendedInterfaces);
+	/**
+	 * Method to change classes, which are extended by the interface.
+	 *
+	 * @param extendedInterfaces
+	 *            Are the extended interfaces of the original interface.
+	 * @return Returns the extended interfaces for the new interface.
+	 */
+	public Class<?>[] changedExtendedInterface(Class<?>[] extendedInterfaces);
 
-    /**
-     * Method to change the signature of given method.
-     * 
-     * @param method
-     *            Is the method from the original interface.
-     * @return Returns the method signature for the new interface.
-     */
-    public MethodDescriptor changedMethodSignature(MethodDescriptor method);
+	/**
+	 * Method to change the signature of given method.
+	 *
+	 * @param method
+	 *            Is the method from the original interface.
+	 * @return Returns the method signature for the new interface.
+	 */
+	public MethodDescriptor changedMethodSignature(MethodDescriptor method);
 }

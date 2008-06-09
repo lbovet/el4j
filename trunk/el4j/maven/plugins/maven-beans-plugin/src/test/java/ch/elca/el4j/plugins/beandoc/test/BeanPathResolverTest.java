@@ -41,61 +41,61 @@ import junit.framework.TestCase;
  */
 public class BeanPathResolverTest extends TestCase {
 
-    /** Classpath. */
-    private List<URL> m_classpath; 
-    
-    /** Inclusive locations. */
-    private String[] m_inclusive;
-    
-    /** Exclusive locations. */
-    private String[] m_exclusive;
-    
-    /** {@inheritDoc} */
-    public void setUp() throws Exception {
-        m_inclusive = new String[] {
-            "classpath:beansInAFile.xml",
-            "classpath*:beansInAJar.xml"
-        };
-        m_exclusive = new String[] {};
-        m_classpath = new ArrayList<URL>();
+	/** Classpath. */
+	private List<URL> m_classpath;
+	
+	/** Inclusive locations. */
+	private String[] m_inclusive;
+	
+	/** Exclusive locations. */
+	private String[] m_exclusive;
+	
+	/** {@inheritDoc} */
+	public void setUp() throws Exception {
+		m_inclusive = new String[] {
+			"classpath:beansInAFile.xml",
+			"classpath*:beansInAJar.xml"
+		};
+		m_exclusive = new String[] {};
+		m_classpath = new ArrayList<URL>();
 
-        m_classpath.add(new File("target/test-classes/jar/beanJar.jar")
-            .getAbsoluteFile().toURL());
-        m_classpath.add(new File("target/test-classes/file")
-            .getAbsoluteFile().toURL());
+		m_classpath.add(new File("target/test-classes/jar/beanJar.jar")
+			.getAbsoluteFile().toURL());
+		m_classpath.add(new File("target/test-classes/file")
+			.getAbsoluteFile().toURL());
 
-    }
-    
-    
-    /**
-     * Resolve a sample bean path.
-     * @throws MalformedURLException 
-     */
-    public void testBeanPath() throws MalformedURLException {
-                
-        BeanPathResolver r = new BeanPathResolver();
-        String[] result = r.resolve(m_inclusive, m_exclusive, 
-            m_classpath.toArray(new URL[0]));
+	}
+	
+	
+	/**
+	 * Resolve a sample bean path.
+	 * @throws MalformedURLException
+	 */
+	public void testBeanPath() throws MalformedURLException {
+				
+		BeanPathResolver r = new BeanPathResolver();
+		String[] result = r.resolve(m_inclusive, m_exclusive,
+			m_classpath.toArray(new URL[0]));
 
-        /*
-         * Test files:
-         * test-classes/
-         * -- beansInAJar.xml
-         * -- file/
-         *    -- beansInAFile.xml
-         * -- jar/
-         *    -- beanJar.jar
-         *       -- beansInAJar.xml
-         *       
-         * The first file (in test-classes/ directly) is in the classpath of the
-         * test runner but is not added because it is not in the classpath we 
-         * pass to the resolver. Spring finds it when searching "classpath*:"
-         * but it is filtered out again.
-         */
-        assertEquals(2, result.length);
-        assertTrue(result[0].startsWith("file:/"));
-        assertTrue(result[0].endsWith("beansInAFile.xml"));
-        assertTrue(result[1].startsWith("jar:"));
-        assertTrue(result[1].endsWith("beansInAJar.xml"));
-    }
+		/*
+		 * Test files:
+		 * test-classes/
+		 * -- beansInAJar.xml
+		 * -- file/
+		 *    -- beansInAFile.xml
+		 * -- jar/
+		 *    -- beanJar.jar
+		 *       -- beansInAJar.xml
+		 *
+		 * The first file (in test-classes/ directly) is in the classpath of the
+		 * test runner but is not added because it is not in the classpath we
+		 * pass to the resolver. Spring finds it when searching "classpath*:"
+		 * but it is filtered out again.
+		 */
+		assertEquals(2, result.length);
+		assertTrue(result[0].startsWith("file:/"));
+		assertTrue(result[0].endsWith("beansInAFile.xml"));
+		assertTrue(result[1].startsWith("jar:"));
+		assertTrue(result[1].endsWith("beansInAJar.xml"));
+	}
 }

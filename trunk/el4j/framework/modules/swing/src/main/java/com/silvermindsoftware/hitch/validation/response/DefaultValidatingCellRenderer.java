@@ -39,50 +39,50 @@ import ch.elca.el4j.gui.swing.GUIApplication;
  * @author Stefan Wismer (SWI)
  */
 public class DefaultValidatingCellRenderer extends DefaultListCellRenderer {
-    /**
-     * Color to mark value as invalid.
-     */
-    protected final Color m_invalidColor;
-    
-    /**
-     * The default contructor reading the invalidColor from Spring config.
-     */
-    public DefaultValidatingCellRenderer() {
-        m_invalidColor = null;
-    }
-    
-    /**
-     * @param color    the color to mark value as invalid
-     */
-    public DefaultValidatingCellRenderer(Color color) {
-        m_invalidColor = color;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Component getListCellRendererComponent(JList list, 
-        Object value, int index, boolean isSelected, boolean cellHasFocus) {
-        
-        Component renderer = super.getListCellRendererComponent(list,
-                ((ValidatedProperty) value).getValue(), index, isSelected,
-                cellHasFocus);
-        
-        if (!((ValidatedProperty) value).isValid()) {
-            renderer.setBackground(getInvalidColor());
-        }
-        
-        return renderer;
-    }
-    
-    /**
-     * @return    the color to mark a value as invalid.
-     */
-    private Color getInvalidColor() {
-        if (m_invalidColor != null) {
-            return m_invalidColor;
-        } else {
-            return (Color) GUIApplication.getInstance().getConfig()
-            .get("invalidColor");
-        }
-    }
+	/**
+	 * Color to mark value as invalid.
+	 */
+	protected final Color m_invalidColor;
+	
+	/**
+	 * The default contructor reading the invalidColor from Spring config.
+	 */
+	public DefaultValidatingCellRenderer() {
+		m_invalidColor = null;
+	}
+	
+	/**
+	 * @param color    the color to mark value as invalid
+	 */
+	public DefaultValidatingCellRenderer(Color color) {
+		m_invalidColor = color;
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public Component getListCellRendererComponent(JList list,
+		Object value, int index, boolean isSelected, boolean cellHasFocus) {
+		
+		Component renderer = super.getListCellRendererComponent(list,
+				((ValidatedProperty) value).getValue(), index, isSelected,
+				cellHasFocus);
+		
+		if (!((ValidatedProperty) value).isValid()) {
+			renderer.setBackground(getInvalidColor());
+		}
+		
+		return renderer;
+	}
+	
+	/**
+	 * @return    the color to mark a value as invalid.
+	 */
+	private Color getInvalidColor() {
+		if (m_invalidColor != null) {
+			return m_invalidColor;
+		} else {
+			return (Color) GUIApplication.getInstance().getConfig()
+			.get("invalidColor");
+		}
+	}
 }

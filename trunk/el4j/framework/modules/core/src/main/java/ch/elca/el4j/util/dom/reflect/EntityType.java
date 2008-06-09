@@ -35,7 +35,7 @@ import ch.elca.el4j.util.dom.annotations.MemberOrder;
 /**
  * Represents an entity type. Instances are obtained using {@link #get(Class)}.
  * Example:
- * 
+ *
  * <pre>EntityType.get(Person.class)</pre>
  *
  * <script type="text/javascript">printFileStatus
@@ -53,118 +53,118 @@ import ch.elca.el4j.util.dom.annotations.MemberOrder;
 // Style: Require "m" prefix even for public fields?
 
 public class EntityType {
-    /** the already reflected types. */
-    static Map<Class< ? >, EntityType> s_types 
-        = new HashMap<Class< ? >, EntityType>();
-    
-    /** the domain object class. */
-    public final Class<?> clazz;
-    
-    /** this type's name. */
-    @ImplementationAssumption("unqualified entity type name is unique within DOM")
-    public final String name;
-    
-    /** the type's properties.*/
-    public final List<Property> props;
-    
-    /** the type's operations.*/
-    public final List<Operation> ops;
+	/** the already reflected types. */
+	static Map<Class< ? >, EntityType> s_types
+		= new HashMap<Class< ? >, EntityType>();
+	
+	/** the domain object class. */
+	public final Class<?> clazz;
+	
+	/** this type's name. */
+	@ImplementationAssumption("unqualified entity type name is unique within DOM")
+	public final String name;
+	
+	/** the type's properties.*/
+	public final List<Property> props;
+	
+	/** the type's operations.*/
+	public final List<Operation> ops;
 
-    /** 
-     * reflects about the domain model class <code>c</code> and creates its
-     * EntityType.
-     */
-    protected EntityType(Class<?> c) {
-        this.clazz = c;
-        name = c.getSimpleName();
-        ExtendedWritableList<Property> mprops 
-            = new ExtendedArrayList<Property>();
-        List<Operation> mops = new ArrayList<Operation>();
+	/**
+	 * reflects about the domain model class <code>c</code> and creates its
+	 * EntityType.
+	 */
+	protected EntityType(Class<?> c) {
+		this.clazz = c;
+		name = c.getSimpleName();
+		ExtendedWritableList<Property> mprops
+			= new ExtendedArrayList<Property>();
+		List<Operation> mops = new ArrayList<Operation>();
 
-        for (Field f : c.getFields()) {
-            mprops.add(new Property(this, f));
-        }
+		for (Field f : c.getFields()) {
+			mprops.add(new Property(this, f));
+		}
 
-        for (Method m : c.getMethods()) {
-            String n = m.getName();
-            boolean getter;
-            // Checkstyle: MagicNumber off
-            if (n.startsWith("get")) {
-                if (n.equals("getClass")) {
-                    continue;
-                }
-                n = n.substring(3);
-                getter = true;
-            } else if (n.startsWith("is")) {
-                n = n.substring(2);
-                getter = true;
-            } else {
-                getter = false;
-                continue;
-            }
-            // Checkstyle: MagicNumber on
+		for (Method m : c.getMethods()) {
+			String n = m.getName();
+			boolean getter;
+			// Checkstyle: MagicNumber off
+			if (n.startsWith("get")) {
+				if (n.equals("getClass")) {
+					continue;
+				}
+				n = n.substring(3);
+				getter = true;
+			} else if (n.startsWith("is")) {
+				n = n.substring(2);
+				getter = true;
+			} else {
+				getter = false;
+				continue;
+			}
+			// Checkstyle: MagicNumber on
 
-            if (getter) {
-                String s = "set" + n;
-                Method setter;
-                try {
-                    setter = c.getMethod(s, new Class[] {m.getReturnType()});
-                } catch (NoSuchMethodException e) {
-                    setter = null;
-                }
-                n = n.substring(0, 1).toLowerCase() + n.substring(1);
-                mprops.add(new Property(this, m, n, setter));
-            } else {
-                mops.add(new Operation(this, m));
-            }
-        }
-        
-        MemberOrder mo = c.getAnnotation(MemberOrder.class);
-        if (mo != null) {
-            mprops.mapped(
-                new Function<Property, String>() {
-                    public String apply(Property d) {
-                        return d.name;
-                    }                    
-                }                
-            ).orderLike(
-                Arrays.asList(mo.value())
-            );
-        }
-        
-        props = Collections.unmodifiableList(
-            // restrict to entries present in member order if member order is
-            // present. TODO: find a semantically cleaner way to ignore members.
-            mo != null ? mprops.subList(0, mo.value().length) : mprops
-        );
-        ops   = Collections.unmodifiableList(mops);
-    }
-    
-    /** 
-     * Returns the property named {@code name} or throws a 
-     * {@code NoSuchElementException} if no such propery exists.  
-     * @param name see above
-     * @return see above
-     */
-    public Property find(String name) {
-        return props.get(
-            CollectionUtils.find(
-                CollectionUtils.mapped(props, Member.toName),
-                name,
-                0
-            )
-        );
-    }
+			if (getter) {
+				String s = "set" + n;
+				Method setter;
+				try {
+					setter = c.getMethod(s, new Class[] {m.getReturnType()});
+				} catch (NoSuchMethodException e) {
+					setter = null;
+				}
+				n = n.substring(0, 1).toLowerCase() + n.substring(1);
+				mprops.add(new Property(this, m, n, setter));
+			} else {
+				mops.add(new Operation(this, m));
+			}
+		}
+		
+		MemberOrder mo = c.getAnnotation(MemberOrder.class);
+		if (mo != null) {
+			mprops.mapped(
+				new Function<Property, String>() {
+					public String apply(Property d) {
+						return d.name;
+					}
+				}
+			).orderLike(
+				Arrays.asList(mo.value())
+			);
+		}
+		
+		props = Collections.unmodifiableList(
+			// restrict to entries present in member order if member order is
+			// present. TODO: find a semantically cleaner way to ignore members.
+			mo != null ? mprops.subList(0, mo.value().length) : mprops
+		);
+		ops   = Collections.unmodifiableList(mops);
+	}
+	
+	/**
+	 * Returns the property named {@code name} or throws a
+	 * {@code NoSuchElementException} if no such propery exists.
+	 * @param name see above
+	 * @return see above
+	 */
+	public Property find(String name) {
+		return props.get(
+			CollectionUtils.find(
+				CollectionUtils.mapped(props, Member.toName),
+				name,
+				0
+			)
+		);
+	}
 
-    /** @return the entityType describing the domain class c. */
-    public static EntityType get(Class<?> c) {
-        EntityType t = s_types.get(c);
-        if (t == null) {
-            t = new EntityType(c);
-            s_types.put(c, t);
-        }
+	/** @return the entityType describing the domain class c. */
+	public static EntityType get(Class<?> c) {
+		EntityType t = s_types.get(c);
+		if (t == null) {
+			t = new EntityType(c);
+			s_types.put(c, t);
+		}
 
-        assert t.clazz.equals(c);
-        return t;
-    }    
+		assert t.clazz.equals(c);
+		return t;
+	}
 }

@@ -38,8 +38,8 @@ import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
- * 
- * This class is a Hibernate-specific implementation of the 
+ *
+ * This class is a Hibernate-specific implementation of the
  * ConvenienceGenericDao interface.
  *
  * <script type="text/javascript">printFileStatus
@@ -53,282 +53,282 @@ import ch.elca.el4j.util.codingsupport.Reject;
  *            The domain class the DAO is responsible for
  * @param <ID>
  *            The type of the domain class' identifier
- * 
+ *
  * @author Philipp Oser (POS)
  * @author Alex Mathey (AMA)
  */
 public class GenericHibernateDao<T, ID extends Serializable>
-    extends ConvenienceHibernateDaoSupport
-    implements ConvenienceGenericHibernateDao<T, ID>, InitializingBean {
-    
-    /**
-     * Set up the Generic Dao. Auto-derive the parametrized type.
-     */
-    @SuppressWarnings("unchecked")
-    public GenericHibernateDao() {
-        try {
-            this.m_persistentClass = (Class<T>) ((ParameterizedType) getClass()
-                    .getGenericSuperclass()).getActualTypeArguments()[0];
-        } catch (Exception e) {
-            // ignore issues (e.g. when the subclass is not a parametrized type)
-            // in that case, one needs to set the persistencClass otherwise.
-        }
-    }
-    
-    /**
-     * The domain class this DAO is responsible for.
-     */
-    private Class<T> m_persistentClass;
-    
-    /** 
-     * New: this callback is in general no longer required (the constructor
-     *  figures the type out itself).
-     * 
-     * @param c
-     *           Mandatory. The domain class this DAO is responsible for.
-     */
-    public void setPersistentClass(Class<T> c) {
-        Reject.ifNull(c);
-        m_persistentClass = c;
-    }
+	extends ConvenienceHibernateDaoSupport
+	implements ConvenienceGenericHibernateDao<T, ID>, InitializingBean {
+	
+	/**
+	 * Set up the Generic Dao. Auto-derive the parametrized type.
+	 */
+	@SuppressWarnings("unchecked")
+	public GenericHibernateDao() {
+		try {
+			this.m_persistentClass = (Class<T>) ((ParameterizedType) getClass()
+					.getGenericSuperclass()).getActualTypeArguments()[0];
+		} catch (Exception e) {
+			// ignore issues (e.g. when the subclass is not a parametrized type)
+			// in that case, one needs to set the persistencClass otherwise.
+		}
+	}
+	
+	/**
+	 * The domain class this DAO is responsible for.
+	 */
+	private Class<T> m_persistentClass;
+	
+	/**
+	 * New: this callback is in general no longer required (the constructor
+	 *  figures the type out itself).
+	 *
+	 * @param c
+	 *           Mandatory. The domain class this DAO is responsible for.
+	 */
+	public void setPersistentClass(Class<T> c) {
+		Reject.ifNull(c);
+		m_persistentClass = c;
+	}
 
-    /**
-     * @return Returns the domain class this DAO is responsible for.
-     */
-    public Class<T> getPersistentClass() {
-        assert m_persistentClass != null;
-        return m_persistentClass;
-    }
+	/**
+	 * @return Returns the domain class this DAO is responsible for.
+	 */
+	public Class<T> getPersistentClass() {
+		assert m_persistentClass != null;
+		return m_persistentClass;
+	}
 
-    /**
-     * Retrieves a domain object by identifier, optionally obtaining a database
-     * lock for this operation.  <br>
-     * 
-     * (For hibernate specialists: we do a "get()"
-     * in this method. In case you require only a "load()" (e.g. for lazy 
-     * loading to work) we recommend that you write your own find method in the
-     * interface's subclass.)
-     * 
-     * @param id
-     *            The id of a domain object
-     * @param lock
-     *            Indicates whether a database lock should be obtained for this
-     *            operation        
-     * @throws DataAccessException
-     *             If general data access problem occurred
-     * @throws DataRetrievalFailureException
-     *             If domain object could not be retrieved           
-     * @return The desired domain object
-     */  
-    @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    T findById(ID id, boolean lock)
-        throws DataAccessException, DataRetrievalFailureException {
-        
-        T entity;
-        if (lock) {
-            entity = (T) getConvenienceHibernateTemplate()
-                .get(getPersistentClass(), id, LockMode.UPGRADE);
-        } else {
-            entity = (T) getConvenienceHibernateTemplate()
-                .get(getPersistentClass(), id);
-        }
-        if (entity == null) {
-            throw new DataRetrievalFailureException("The desired domain object"
-                   + " could not be retrieved.");
-        }
-        return entity;
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public T findById(ID id) 
-        throws DataAccessException, DataRetrievalFailureException {
-        return (T) getConvenienceHibernateTemplate().getByIdStrong(
-            getPersistentClass(), id, getPersistentClassName());
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public T findByIdLazy(ID id) 
-        throws DataAccessException, DataRetrievalFailureException {
-        return (T) getConvenienceHibernateTemplate().getByIdStrongLazy(
-            getPersistentClass(), id, getPersistentClassName());
-    }
+	/**
+	 * Retrieves a domain object by identifier, optionally obtaining a database
+	 * lock for this operation.  <br>
+	 *
+	 * (For hibernate specialists: we do a "get()"
+	 * in this method. In case you require only a "load()" (e.g. for lazy
+	 * loading to work) we recommend that you write your own find method in the
+	 * interface's subclass.)
+	 *
+	 * @param id
+	 *            The id of a domain object
+	 * @param lock
+	 *            Indicates whether a database lock should be obtained for this
+	 *            operation
+	 * @throws DataAccessException
+	 *             If general data access problem occurred
+	 * @throws DataRetrievalFailureException
+	 *             If domain object could not be retrieved
+	 * @return The desired domain object
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	T findById(ID id, boolean lock)
+		throws DataAccessException, DataRetrievalFailureException {
+		
+		T entity;
+		if (lock) {
+			entity = (T) getConvenienceHibernateTemplate()
+				.get(getPersistentClass(), id, LockMode.UPGRADE);
+		} else {
+			entity = (T) getConvenienceHibernateTemplate()
+				.get(getPersistentClass(), id);
+		}
+		if (entity == null) {
+			throw new DataRetrievalFailureException("The desired domain object"
+				+ " could not be retrieved.");
+		}
+		return entity;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public T findById(ID id)
+		throws DataAccessException, DataRetrievalFailureException {
+		return (T) getConvenienceHibernateTemplate().getByIdStrong(
+			getPersistentClass(), id, getPersistentClassName());
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public T findByIdLazy(ID id)
+		throws DataAccessException, DataRetrievalFailureException {
+		return (T) getConvenienceHibernateTemplate().getByIdStrongLazy(
+			getPersistentClass(), id, getPersistentClassName());
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<T> getAll() throws DataAccessException {
-        return getConvenienceHibernateTemplate().loadAll(getPersistentClass());
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<T> getAll() throws DataAccessException {
+		return getConvenienceHibernateTemplate().loadAll(getPersistentClass());
+	}
 
-    
-    /**
-     * {@inheritDoc}
-     * 
-     * This method supports paging (see QueryObject for info on 
-     *  how to use this).
-     * 
-     */
-    @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<T> findByQuery(QueryObject q) throws DataAccessException {
-        DetachedCriteria hibernateCriteria = CriteriaTransformer.transform(
-            q, getPersistentClass());
-        
-        ConvenienceHibernateTemplate template
-            = getConvenienceHibernateTemplate();
-        
-        return template.findByCriteria(
-            hibernateCriteria, q.getFirstResult(), q.getMaxResults());
-    }
+	
+	/**
+	 * {@inheritDoc}
+	 *
+	 * This method supports paging (see QueryObject for info on
+	 *  how to use this).
+	 *
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<T> findByQuery(QueryObject q) throws DataAccessException {
+		DetachedCriteria hibernateCriteria = CriteriaTransformer.transform(
+			q, getPersistentClass());
+		
+		ConvenienceHibernateTemplate template
+			= getConvenienceHibernateTemplate();
+		
+		return template.findByCriteria(
+			hibernateCriteria, q.getFirstResult(), q.getMaxResults());
+	}
 
-    /**
-     * {@inheritDoc}
-     * 
-     * This method supports paging (see QueryObject for info on 
-     *  how to use this).
-     * 
-     * @return how many elements do we find with the given query 
-     */
-    @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public int findCountByQuery(QueryObject q) throws DataAccessException {
-        DetachedCriteria hibernateCriteria = CriteriaTransformer.transform(
-            q, getPersistentClass());
-        
-        ConvenienceHibernateTemplate template
-            = getConvenienceHibernateTemplate();
+	/**
+	 * {@inheritDoc}
+	 *
+	 * This method supports paging (see QueryObject for info on
+	 *  how to use this).
+	 *
+	 * @return how many elements do we find with the given query
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int findCountByQuery(QueryObject q) throws DataAccessException {
+		DetachedCriteria hibernateCriteria = CriteriaTransformer.transform(
+			q, getPersistentClass());
+		
+		ConvenienceHibernateTemplate template
+			= getConvenienceHibernateTemplate();
 
-        return template.findCountByCriteria(hibernateCriteria);
-    }
-    
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<T> findByCriteria(DetachedCriteria hibernateCriteria)
-        throws DataAccessException {
-        
-        ConvenienceHibernateTemplate template
-            = getConvenienceHibernateTemplate();
-        
-        return template.findByCriteria(hibernateCriteria);
-    }
-    
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<T> findByCriteria(DetachedCriteria hibernateCriteria,
-        int firstResult, int maxResults) throws DataAccessException {
-        
-        ConvenienceHibernateTemplate template
-            = getConvenienceHibernateTemplate();
-        
-        return template.findByCriteria(hibernateCriteria,
-            firstResult, maxResults);
-    }
-    
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public int findCountByCriteria(DetachedCriteria hibernateCriteria)
-        throws DataAccessException {
-        
-        ConvenienceHibernateTemplate template
-            = getConvenienceHibernateTemplate();
+		return template.findCountByCriteria(hibernateCriteria);
+	}
+	
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<T> findByCriteria(DetachedCriteria hibernateCriteria)
+		throws DataAccessException {
+		
+		ConvenienceHibernateTemplate template
+			= getConvenienceHibernateTemplate();
+		
+		return template.findByCriteria(hibernateCriteria);
+	}
+	
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<T> findByCriteria(DetachedCriteria hibernateCriteria,
+		int firstResult, int maxResults) throws DataAccessException {
+		
+		ConvenienceHibernateTemplate template
+			= getConvenienceHibernateTemplate();
+		
+		return template.findByCriteria(hibernateCriteria,
+			firstResult, maxResults);
+	}
+	
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int findCountByCriteria(DetachedCriteria hibernateCriteria)
+		throws DataAccessException {
+		
+		ConvenienceHibernateTemplate template
+			= getConvenienceHibernateTemplate();
 
-        return template.findCountByCriteria(hibernateCriteria);
-    }
-    
-    /** {@inheritDoc} */
-    @ReturnsUnchangedParameter
-    @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.REQUIRED)
-    public T saveOrUpdate(T entity) throws DataAccessException,
-        DataIntegrityViolationException, OptimisticLockingFailureException {
-        getConvenienceHibernateTemplate().saveOrUpdateStrong(entity, 
-            getPersistentClassName());
-        return entity;
-    }
-    
-    /**
-     * @param entity    The domain object to save or update
-     * @return          The saved or updated object
-     * @throws DataAccessException
-     * @throws DataIntegrityViolationException
-     * @throws OptimisticLockingFailureException
-     */
-    @ReturnsUnchangedParameter
-    @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.REQUIRED)
-    public T saveOrUpdateAndFlush(T entity) throws DataAccessException,
-        DataIntegrityViolationException, OptimisticLockingFailureException {
-        T tmp = saveOrUpdate(entity);
-        flush();
-        return tmp;
-    }
+		return template.findCountByCriteria(hibernateCriteria);
+	}
+	
+	/** {@inheritDoc} */
+	@ReturnsUnchangedParameter
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.REQUIRED)
+	public T saveOrUpdate(T entity) throws DataAccessException,
+		DataIntegrityViolationException, OptimisticLockingFailureException {
+		getConvenienceHibernateTemplate().saveOrUpdateStrong(entity,
+			getPersistentClassName());
+		return entity;
+	}
+	
+	/**
+	 * @param entity    The domain object to save or update
+	 * @return          The saved or updated object
+	 * @throws DataAccessException
+	 * @throws DataIntegrityViolationException
+	 * @throws OptimisticLockingFailureException
+	 */
+	@ReturnsUnchangedParameter
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.REQUIRED)
+	public T saveOrUpdateAndFlush(T entity) throws DataAccessException,
+		DataIntegrityViolationException, OptimisticLockingFailureException {
+		T tmp = saveOrUpdate(entity);
+		flush();
+		return tmp;
+	}
 
-    /** {@inheritDoc} */
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void delete(T entity) throws DataAccessException {
-        getConvenienceHibernateTemplate().delete(entity);
-    }
-    
-    /** {@inheritDoc} */
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public T refresh(T entity) throws DataAccessException, 
-    DataRetrievalFailureException {
-        getConvenienceHibernateTemplate().refresh(entity);
-        return entity;
-    }
+	/** {@inheritDoc} */
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void delete(T entity) throws DataAccessException {
+		getConvenienceHibernateTemplate().delete(entity);
+	}
+	
+	/** {@inheritDoc} */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public T refresh(T entity) throws DataAccessException,
+	DataRetrievalFailureException {
+		getConvenienceHibernateTemplate().refresh(entity);
+		return entity;
+	}
 
-    /** {@inheritDoc} */
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void delete(ID id) throws DataAccessException {
-        getConvenienceHibernateTemplate().deleteStrong(getPersistentClass(),
-            id, getPersistentClassName());
-    }
+	/** {@inheritDoc} */
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void delete(ID id) throws DataAccessException {
+		getConvenienceHibernateTemplate().deleteStrong(getPersistentClass(),
+			id, getPersistentClassName());
+	}
 
-    /** {@inheritDoc} */
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void delete(Collection<T> entities) throws DataAccessException,
-            DataIntegrityViolationException, OptimisticLockingFailureException {
-        getConvenienceHibernateTemplate().deleteAll(entities);
-    }
-    
-    /** {@inheritDoc} */
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void deleteAll()
-        throws OptimisticLockingFailureException, DataAccessException {
-        List<T> list = getAll();
-        if (list.size() > 0) {
-            delete(list);
-        }
-    }
-    
-    /** {@inheritDoc} */
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void flush() {
-        getConvenienceHibernateTemplate().flush();
-    }
-    
-    /**
-     * Returns the simple name of the persistent class this DAO is responsible
-     * for.
-     * 
-     * @return The simple name of the persistent class this DAO is responsible
-     *         for.
-     */
-    protected String getPersistentClassName() {
-        return getPersistentClass().getSimpleName();
-    }
+	/** {@inheritDoc} */
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void delete(Collection<T> entities) throws DataAccessException,
+			DataIntegrityViolationException, OptimisticLockingFailureException {
+		getConvenienceHibernateTemplate().deleteAll(entities);
+	}
+	
+	/** {@inheritDoc} */
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void deleteAll()
+		throws OptimisticLockingFailureException, DataAccessException {
+		List<T> list = getAll();
+		if (list.size() > 0) {
+			delete(list);
+		}
+	}
+	
+	/** {@inheritDoc} */
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void flush() {
+		getConvenienceHibernateTemplate().flush();
+	}
+	
+	/**
+	 * Returns the simple name of the persistent class this DAO is responsible
+	 * for.
+	 *
+	 * @return The simple name of the persistent class this DAO is responsible
+	 *         for.
+	 */
+	protected String getPersistentClassName() {
+		return getPersistentClass().getSimpleName();
+	}
 }

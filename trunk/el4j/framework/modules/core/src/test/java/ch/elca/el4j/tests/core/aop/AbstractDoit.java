@@ -31,20 +31,20 @@ package ch.elca.el4j.tests.core.aop;
  */
 public abstract class AbstractDoit {
 
-    /** The default reusult. */
-    public static final String DONE = "done";
-    
-    /**
-     * @return Returns the default result if not intercepted.
-     */
-    public Object doitA() {
-        return DONE; 
-    }
-    
-    /**
-     * @return Returns the default result if not intercepted.
-     */
-    public Object doitB() {
-        return DONE;
-    }
+	/** The default reusult. */
+	public static final String DONE = "done";
+	
+	/**
+	 * @return Returns the default result if not intercepted.
+	 */
+	public Object doitA() {
+		return DONE;
+	}
+	
+	/**
+	 * @return Returns the default result if not intercepted.
+	 */
+	public Object doitB() {
+		return DONE;
+	}
 }

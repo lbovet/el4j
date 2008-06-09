@@ -21,55 +21,55 @@ import ch.elca.el4j.core.contextpassing.AbstractImplicitContextPasser;
 
 /**
  * This is the test implicit context passer A on client side.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Martin Zeltner (MZE)
  */
 public class ImplicitContextPasserA extends AbstractImplicitContextPasser {
-    /**
-     * Test data.
-     */
-    private String m_testData 
-        = "This is my testdata for implicit context passer A.";
+	/**
+	 * Test data.
+	 */
+	private String m_testData
+		= "This is my testdata for implicit context passer A.";
 
-    /**
-     * Received data.
-     */
-    private String m_receivedData = null;
+	/**
+	 * Received data.
+	 */
+	private String m_receivedData = null;
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object getImplicitlyPassedContext() {
-        return m_testData;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object getImplicitlyPassedContext() {
+		return m_testData;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void pushImplicitlyPassedContext(Object context) {
-        if (context != null) {
-            m_receivedData = (String) context;
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void pushImplicitlyPassedContext(Object context) {
+		if (context != null) {
+			m_receivedData = (String) context;
+		}
+	}
 
-    /**
-     * @return Returns the receivedData.
-     */
-    public String getReceivedData() {
-        return m_receivedData;
-    }
+	/**
+	 * @return Returns the receivedData.
+	 */
+	public String getReceivedData() {
+		return m_receivedData;
+	}
 
-    /**
-     * @return Returns the testData.
-     */
-    public String getTestData() {
-        return m_testData;
-    }
+	/**
+	 * @return Returns the testData.
+	 */
+	public String getTestData() {
+		return m_testData;
+	}
 }

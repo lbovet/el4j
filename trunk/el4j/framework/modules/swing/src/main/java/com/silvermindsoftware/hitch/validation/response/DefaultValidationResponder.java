@@ -36,71 +36,71 @@ import ch.elca.el4j.gui.swing.GUIApplication;
  * @author Stefan Wismer (SWI)
  */
 public class DefaultValidationResponder implements ValidationResponder {
-    /**
-     * Identifier for valid color in component's client property.
-     */
-    protected static final String VALID_COLOR = "Valid Color";
-    
-    /**
-     * Color to mark value as invalid.
-     */
-    protected final Color m_invalidColor;
+	/**
+	 * Identifier for valid color in component's client property.
+	 */
+	protected static final String VALID_COLOR = "Valid Color";
+	
+	/**
+	 * Color to mark value as invalid.
+	 */
+	protected final Color m_invalidColor;
 
-    /**
-     * The default contructor reading the invalidColor from Spring config.
-     */
-    public DefaultValidationResponder() {
-        m_invalidColor = null;
-    }
-    
-    /**
-     * @param color    the background color if value is invalid
-     */
-    public DefaultValidationResponder(Color color) {
-        m_invalidColor = color;
-    }
-    
-    /** {@inheritDoc} */
-    public void setValid(Object object, JComponent component, boolean valid) {
-        if (valid) {
-            setValid(object, component);
-        } else {
-            setInvalid(object, component, null);
-        }
-    }
-    
-    /** {@inheritDoc} */
-    public void setValid(Object object, JComponent component) {
-        if (component != null) {
-            if (component.getBackground().equals(getInvalidColor())) {
-                component.setBackground(
-                    (Color) component.getClientProperty(VALID_COLOR));
-            }
-        }
-    }
-    
-    /** {@inheritDoc} */
-    public void setInvalid(Object object, JComponent component,
-        String message) {
-        
-        if (component != null) {
-            if (!component.getBackground().equals(getInvalidColor())) {
-                component.putClientProperty(
-                    VALID_COLOR, component.getBackground());
-                component.setBackground(getInvalidColor());
-            }
-        }
-    }
-    
-    /**
-     * @return    the color to mark a value as invalid.
-     */
-    private Color getInvalidColor() {
-        if (m_invalidColor != null) {
-            return m_invalidColor;
-        } else {
-            return (Color) GUIApplication.getInstance().getConfig()
-            .get("invalidColor");
-        }
-    }
+	/**
+	 * The default contructor reading the invalidColor from Spring config.
+	 */
+	public DefaultValidationResponder() {
+		m_invalidColor = null;
+	}
+	
+	/**
+	 * @param color    the background color if value is invalid
+	 */
+	public DefaultValidationResponder(Color color) {
+		m_invalidColor = color;
+	}
+	
+	/** {@inheritDoc} */
+	public void setValid(Object object, JComponent component, boolean valid) {
+		if (valid) {
+			setValid(object, component);
+		} else {
+			setInvalid(object, component, null);
+		}
+	}
+	
+	/** {@inheritDoc} */
+	public void setValid(Object object, JComponent component) {
+		if (component != null) {
+			if (component.getBackground().equals(getInvalidColor())) {
+				component.setBackground(
+					(Color) component.getClientProperty(VALID_COLOR));
+			}
+		}
+	}
+	
+	/** {@inheritDoc} */
+	public void setInvalid(Object object, JComponent component,
+		String message) {
+		
+		if (component != null) {
+			if (!component.getBackground().equals(getInvalidColor())) {
+				component.putClientProperty(
+					VALID_COLOR, component.getBackground());
+				component.setBackground(getInvalidColor());
+			}
+		}
+	}
+	
+	/**
+	 * @return    the color to mark a value as invalid.
+	 */
+	private Color getInvalidColor() {
+		if (m_invalidColor != null) {
+			return m_invalidColor;
+		} else {
+			return (Color) GUIApplication.getInstance().getConfig()
+			.get("invalidColor");
+		}
+	}
 }

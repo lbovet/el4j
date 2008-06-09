@@ -34,46 +34,46 @@ import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @param <T>     the domain object type
  * @param <ID>    the id of the domain object to find
  *
  * @author Stefan Wismer (SWI)
  */
 public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
-    extends ConvenienceGenericDao<T, ID> {
+	extends ConvenienceGenericDao<T, ID> {
 
-    /**
-     * @param hibernateCriteria    the criteria that the result has to fulfill
-     * @return                     all object that fulfill the criteria
-     * @throws DataAccessException
-     * 
-     * @see ConvenienceHibernateTemplate#findByCriteria(DetachedCriteria)
-     */
-    public List<T> findByCriteria(DetachedCriteria hibernateCriteria)
-        throws DataAccessException;
-    
-    /**
-     * @param hibernateCriteria    the criteria that the result has to fulfill
-     * @param firstResult          the index of the first result to return
-     * @param maxResults           the maximum number of results to return
-     * @return                     the specified subset of object that fulfill
-     *                             the criteria
-     * @throws DataAccessException
-     * 
-     * @see ConvenienceHibernateTemplate#findByCriteria(DetachedCriteria, int, int)
-     */
-    public List<T> findByCriteria(DetachedCriteria hibernateCriteria,
-        int firstResult, int maxResults) throws DataAccessException;
-    
-    /**
-     * @param hibernateCriteria    the criteria that the result has to fulfill
-     * @return                     the number of objects that fulfill
-     *                             the criteria
-     * @throws DataAccessException
-     * 
-     * @see ConvenienceHibernateTemplate#findCountByCriteria(DetachedCriteria)
-     */
-    public int findCountByCriteria(DetachedCriteria hibernateCriteria)
-        throws DataAccessException;
+	/**
+	 * @param hibernateCriteria    the criteria that the result has to fulfill
+	 * @return                     all object that fulfill the criteria
+	 * @throws DataAccessException
+	 *
+	 * @see ConvenienceHibernateTemplate#findByCriteria(DetachedCriteria)
+	 */
+	public List<T> findByCriteria(DetachedCriteria hibernateCriteria)
+		throws DataAccessException;
+	
+	/**
+	 * @param hibernateCriteria    the criteria that the result has to fulfill
+	 * @param firstResult          the index of the first result to return
+	 * @param maxResults           the maximum number of results to return
+	 * @return                     the specified subset of object that fulfill
+	 *                             the criteria
+	 * @throws DataAccessException
+	 *
+	 * @see ConvenienceHibernateTemplate#findByCriteria(DetachedCriteria, int, int)
+	 */
+	public List<T> findByCriteria(DetachedCriteria hibernateCriteria,
+		int firstResult, int maxResults) throws DataAccessException;
+	
+	/**
+	 * @param hibernateCriteria    the criteria that the result has to fulfill
+	 * @return                     the number of objects that fulfill
+	 *                             the criteria
+	 * @throws DataAccessException
+	 *
+	 * @see ConvenienceHibernateTemplate#findCountByCriteria(DetachedCriteria)
+	 */
+	public int findCountByCriteria(DetachedCriteria hibernateCriteria)
+		throws DataAccessException;
 }

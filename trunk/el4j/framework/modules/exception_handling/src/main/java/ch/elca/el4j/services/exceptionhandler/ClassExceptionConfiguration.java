@@ -36,71 +36,71 @@ import ch.elca.el4j.services.exceptionhandler.handler.ExceptionHandler;
  * @author Andreas Bur (ABU)
  */
 public class ClassExceptionConfiguration
-    implements ExceptionConfiguration, InitializingBean {
+	implements ExceptionConfiguration, InitializingBean {
 
-    /** The exception types which the handler is responsible for. */
-    private Class[] m_exceptionTypes;
-    
-    /** The exception handler. */
-    private ExceptionHandler m_exceptionHandler;
-    
-    /**
-     * @return Returns the exception types which the handler is responsible for.
-     */
-    public Class[] getExceptionTypes() {
-        return m_exceptionTypes;
-    }
+	/** The exception types which the handler is responsible for. */
+	private Class[] m_exceptionTypes;
+	
+	/** The exception handler. */
+	private ExceptionHandler m_exceptionHandler;
+	
+	/**
+	 * @return Returns the exception types which the handler is responsible for.
+	 */
+	public Class[] getExceptionTypes() {
+		return m_exceptionTypes;
+	}
 
-    /**
-     * Sets the exception types which the hander is responsible for.
-     * 
-     * @param exceptionTypes
-     *      The exception types to set.
-     */
-    public void setExceptionTypes(Class[] exceptionTypes) {
-        m_exceptionTypes = exceptionTypes;
-    }
+	/**
+	 * Sets the exception types which the hander is responsible for.
+	 *
+	 * @param exceptionTypes
+	 *      The exception types to set.
+	 */
+	public void setExceptionTypes(Class[] exceptionTypes) {
+		m_exceptionTypes = exceptionTypes;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public ExceptionHandler getExceptionHandler() {
-        return m_exceptionHandler;
-    }
-    
-    /**
-     * Sets the exception handler.
-     * 
-     * @param exceptionHandler
-     *      The exception handler to set.
-     */
-    public void setExceptionHandler(ExceptionHandler exceptionHandler) {
-        m_exceptionHandler = exceptionHandler;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public ExceptionHandler getExceptionHandler() {
+		return m_exceptionHandler;
+	}
+	
+	/**
+	 * Sets the exception handler.
+	 *
+	 * @param exceptionHandler
+	 *      The exception handler to set.
+	 */
+	public void setExceptionHandler(ExceptionHandler exceptionHandler) {
+		m_exceptionHandler = exceptionHandler;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public boolean handlesExceptions(Throwable t, MethodInvocation invocation) {
-        for (int i = 0; i < m_exceptionTypes.length; i++) {
-            if (m_exceptionTypes[i].isInstance(t)) {
-                return true;
-            }
-        }
-        return false;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean handlesExceptions(Throwable t, MethodInvocation invocation) {
+		for (int i = 0; i < m_exceptionTypes.length; i++) {
+			if (m_exceptionTypes[i].isInstance(t)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void afterPropertiesSet() throws Exception {
-        if (m_exceptionTypes == null || m_exceptionTypes.length == 0) {
-            throw new IllegalAccessException(
-                    "The property 'exceptionTypes' is required.");
-        }
-        if (m_exceptionHandler == null) {
-            throw new IllegalAccessException(
-                    "The property 'exceptionHandler' is required.");
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void afterPropertiesSet() throws Exception {
+		if (m_exceptionTypes == null || m_exceptionTypes.length == 0) {
+			throw new IllegalAccessException(
+					"The property 'exceptionTypes' is required.");
+		}
+		if (m_exceptionHandler == null) {
+			throw new IllegalAccessException(
+					"The property 'exceptionHandler' is required.");
+		}
+	}
 }

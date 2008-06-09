@@ -34,13 +34,13 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
  * @author Waraich Rashid (RWA)
  */
 public class CalculatorHttpInvokerTest extends AbstractCalculatorTest {
-    /**
-     * {@inheritDoc}
-     */
-    ApplicationContext getContext() {
-        return  new ModuleApplicationContext(
-            new String[] {"classpath*:mandatory/*.xml",
-                "scenarios/client/remotingtests-httpinvoker-client-config.xml"},
-                false);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	ApplicationContext getContext() {
+		return  new ModuleApplicationContext(
+			new String[] {"classpath*:mandatory/*.xml",
+				"scenarios/client/remotingtests-httpinvoker-client-config.xml"},
+				false);
+	}
 }

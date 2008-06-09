@@ -31,29 +31,29 @@ package ch.elca.el4j.tests.util.metadata.annotations;
  * @author Martin Zeltner (MZE)
  */
 public interface Foo {
-    /**
-     * This method will be intercepted by the defined annotations.
-     * 
-     * @param number
-     *            The number to multiply with the base variable.
-     * @return The product of base and number.
-     * 
-     */
-    @ExampleAnnotationOne(factor = 16)
-    @ExampleAnnotationTwo(factor = 478)
-    public int test(int number);
+	/**
+	 * This method will be intercepted by the defined annotations.
+	 *
+	 * @param number
+	 *            The number to multiply with the base variable.
+	 * @return The product of base and number.
+	 *
+	 */
+	@ExampleAnnotationOne(factor = 16)
+	@ExampleAnnotationTwo(factor = 478)
+	public int test(int number);
 
-    /**
-     * This method will be intercepted by the defined annotations.
-     * 
-     * @param number
-     *            The number to multiply with the base variable.
-     * @param innerClass
-     *            The inner class.
-     * @return The product of base and number.
-     */
-    @ExampleAnnotationOne(factor = 25)
-    @ExampleAnnotationTwo(factor = 998)
-    public int test(int number, FooImpl.Bar innerClass);
+	/**
+	 * This method will be intercepted by the defined annotations.
+	 *
+	 * @param number
+	 *            The number to multiply with the base variable.
+	 * @param innerClass
+	 *            The inner class.
+	 * @return The product of base and number.
+	 */
+	@ExampleAnnotationOne(factor = 25)
+	@ExampleAnnotationTwo(factor = 998)
+	public int test(int number, FooImpl.Bar innerClass);
 }
 //Checkstyle: MagicNumber on

@@ -33,8 +33,8 @@ import org.springframework.beans.factory.BeanNameAware;
  */
 public interface Bean extends BeanNameAware {
 
-    /**
-     * @return Returns the bean's name.
-     */
-    public String getBeanName();
+	/**
+	 * @return Returns the bean's name.
+	 */
+	public String getBeanName();
 }

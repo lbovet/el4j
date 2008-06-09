@@ -25,38 +25,38 @@ import org.acegisecurity.providers.TestingAuthenticationProvider;
 /**
  * Provider for testing reasons. This class throws a BadCredentialsException in
  * case the username is not equal to the password.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Raphael Boog (RBO)
  */
 public class ExtendedTestingAuthenticationProvider extends
-    TestingAuthenticationProvider {
+	TestingAuthenticationProvider {
 
-    /**
-     * {@inheritDoc}
-     */
-    public Authentication authenticate(Authentication authentication)
-        throws AuthenticationException {
+	/**
+	 * {@inheritDoc}
+	 */
+	public Authentication authenticate(Authentication authentication)
+		throws AuthenticationException {
 
-        if (authentication == null) {
-            return null;
-        }
-        
-        if (authentication.getPrincipal().toString().equals(
-            authentication.getCredentials().toString())) {
-            return authentication;
-        } else {
-            throw new BadCredentialsException(
-                "Authentication Failed with Principal "
-                    + authentication.getPrincipal().toString()
-                    + " and Credential "
-                    + authentication.getCredentials().toString() + ".");
-        }
-    }
+		if (authentication == null) {
+			return null;
+		}
+		
+		if (authentication.getPrincipal().toString().equals(
+			authentication.getCredentials().toString())) {
+			return authentication;
+		} else {
+			throw new BadCredentialsException(
+				"Authentication Failed with Principal "
+					+ authentication.getPrincipal().toString()
+					+ " and Credential "
+					+ authentication.getCredentials().toString() + ".");
+		}
+	}
 }

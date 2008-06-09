@@ -30,21 +30,21 @@ import ch.elca.el4j.services.xmlmerge.Mapper;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public class IdentityMapper implements Mapper {
 
-    /**
-     * {@inheritDoc}
-     */
-    public Element map(Element patchElement) {
-        if (patchElement == null) {
-            return null;
-        }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Element map(Element patchElement) {
+		if (patchElement == null) {
+			return null;
+		}
 
-        return (Element) patchElement.clone();
-    }
+		return (Element) patchElement.clone();
+	}
 
 }

@@ -32,66 +32,66 @@ import ch.elca.el4j.util.metadata.MetaDataSourceAware;
 
 /**
  * The interceptor to be invoked if an ExampleAnnotation is set.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Martin Zeltner (MZE)
  */
 public class ExampleInterceptor
-    implements MethodInterceptor, MetaDataSourceAware {
+	implements MethodInterceptor, MetaDataSourceAware {
 
-    /**
-     * The annotation source.
-     */
-    private GenericMetaDataSource m_metaDataSource;
+	/**
+	 * The annotation source.
+	 */
+	private GenericMetaDataSource m_metaDataSource;
 
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    public Object invoke(MethodInvocation methodInvocation) throws Throwable {
-        Method invokedMethod = methodInvocation.getMethod();
-        Class targetClass = null;
-        if (!AopUtils.isAopProxy(methodInvocation.getThis())) {
-            targetClass = methodInvocation.getThis().getClass();
-        }
-        
-        Collection<Annotation> c = m_metaDataSource.getMetaData(
-            invokedMethod, targetClass);
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
+		Method invokedMethod = methodInvocation.getMethod();
+		Class targetClass = null;
+		if (!AopUtils.isAopProxy(methodInvocation.getThis())) {
+			targetClass = methodInvocation.getThis().getClass();
+		}
+		
+		Collection<Annotation> c = m_metaDataSource.getMetaData(
+			invokedMethod, targetClass);
 
-        Assert.isTrue(c != null && !c.isEmpty());
-        Annotation annotation = c.iterator().next();
-        int factor = -1;
-        if (annotation instanceof ExampleAnnotationOne) {
-            factor = ((ExampleAnnotationOne) annotation).factor();
-        } else if (annotation instanceof ExampleAnnotationTwo) {
-            ExampleAnnotationTwo eat = (ExampleAnnotationTwo) annotation;
-            factor = eat.factor() * ExampleAnnotationTwo.CONSTANT_FACTOR;
-        } else {
-            CoreNotificationHelper.notifyMisconfiguration(
-                "There is no annotated annotation of type "
-                + "ExampleAnnotation declared at method "
-                + methodInvocation.getMethod());
-        }
+		Assert.isTrue(c != null && !c.isEmpty());
+		Annotation annotation = c.iterator().next();
+		int factor = -1;
+		if (annotation instanceof ExampleAnnotationOne) {
+			factor = ((ExampleAnnotationOne) annotation).factor();
+		} else if (annotation instanceof ExampleAnnotationTwo) {
+			ExampleAnnotationTwo eat = (ExampleAnnotationTwo) annotation;
+			factor = eat.factor() * ExampleAnnotationTwo.CONSTANT_FACTOR;
+		} else {
+			CoreNotificationHelper.notifyMisconfiguration(
+				"There is no annotated annotation of type "
+				+ "ExampleAnnotation declared at method "
+				+ methodInvocation.getMethod());
+		}
 
-        Object[] param = methodInvocation.getArguments();
-        param[0] = new Integer(factor);
+		Object[] param = methodInvocation.getArguments();
+		param[0] = new Integer(factor);
 
-        // This is an around advice.
-        // Invoke the next interceptor in the chain.
-        // This will normally result in a target object being invoked.
-        return methodInvocation.proceed();
-    }
+		// This is an around advice.
+		// Invoke the next interceptor in the chain.
+		// This will normally result in a target object being invoked.
+		return methodInvocation.proceed();
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void setMetaDataSource(GenericMetaDataSource metaDataSource) {
-        m_metaDataSource = metaDataSource;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setMetaDataSource(GenericMetaDataSource metaDataSource) {
+		m_metaDataSource = metaDataSource;
+	}
 }

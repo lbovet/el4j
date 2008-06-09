@@ -19,8 +19,8 @@ package ch.elca.el4j.util.dom.reflect;
 import java.lang.reflect.Method;
 
 /** represents an operation. Operations are declared using public methods (
- * that are neither getters nor setters). 
- * 
+ * that are neither getters nor setters).
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -31,15 +31,15 @@ import java.lang.reflect.Method;
  * @author Adrian Moos (AMS)
  */
 public class Operation extends Member {
-    /**
-     * Constructor.
-     * @param declaring the declaring type.
-     * @param m the implementing method.
-     */
-    Operation(EntityType declaring, Method m) {
-        super(
-            declaring,
-            m.getName()
-        );
-    }
+	/**
+	 * Constructor.
+	 * @param declaring the declaring type.
+	 * @param m the implementing method.
+	 */
+	Operation(EntityType declaring, Method m) {
+		super(
+			declaring,
+			m.getName()
+		);
+	}
 }

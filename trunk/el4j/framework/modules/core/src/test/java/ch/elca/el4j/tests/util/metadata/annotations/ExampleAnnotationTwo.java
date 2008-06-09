@@ -38,13 +38,13 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD, ElementType.TYPE })
 public @interface ExampleAnnotationTwo {
-    /**
-     * Is the constant factor.
-     */
-    public static final int CONSTANT_FACTOR = 10;
-    
-    /**
-     * Factor used for calculations.
-     */
-    int factor();
+	/**
+	 * Is the constant factor.
+	 */
+	public static final int CONSTANT_FACTOR = 10;
+	
+	/**
+	 * Factor used for calculations.
+	 */
+	int factor();
 }

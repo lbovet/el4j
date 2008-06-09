@@ -12,7 +12,7 @@ import ch.elca.el4j.gui.swing.splash.ImageSplashScreen;
 
 /**
  * Sample MDI application that demonstrates how to use the framework.
- * 
+ *
  * See also associated MainFormMDI.properties file that contains resources
  *
  * <script type="text/javascript">printFileStatus
@@ -25,49 +25,49 @@ import ch.elca.el4j.gui.swing.splash.ImageSplashScreen;
  * @author Stefan Wismer (SWI)
  */
 public final class MainFormDistributedDocking {
-    
-    /**
-     * Hide default constructor.
-     */
-    private MainFormDistributedDocking() { }
-    
-    /**
-     * Sample main application for a GUI.
-     * @param args command line arguments
-     */
-    public static void main(String[] args) {
+	
+	/**
+	 * Hide default constructor.
+	 */
+	private MainFormDistributedDocking() { }
+	
+	/**
+	 * Sample main application for a GUI.
+	 * @param args command line arguments
+	 */
+	public static void main(String[] args) {
 
-        ImageSplashScreen splashScreen = null;
-        try {
-            // uses default splash screen
-            splashScreen = new ImageSplashScreen();
+		ImageSplashScreen splashScreen = null;
+		try {
+			// uses default splash screen
+			splashScreen = new ImageSplashScreen();
 
-            // add special exception handler
-            Exceptions.getInstance().addHandler(new ExampleExceptionHandler());
+			// add special exception handler
+			Exceptions.getInstance().addHandler(new ExampleExceptionHandler());
 
-            PlasticLookAndFeel.setPlasticTheme(new ExperienceBlue());
+			PlasticLookAndFeel.setPlasticTheme(new ExperienceBlue());
 
-            String[] applicationContextPaths = {
-                "classpath*:mandatory/*.xml",
-                "classpath:scenarios/swing/demo/applicationGeneral.xml",
-                "classpath:scenarios/remoting/client/httpInvoker-client-config.xml"
-            };
-            
-            ModuleApplicationContextConfiguration contextConfig
-                = new ModuleApplicationContextConfiguration();
-            
-            contextConfig.setInclusiveConfigLocations(applicationContextPaths);
-            contextConfig.setExclusiveConfigLocations(new String[] {
-                "classpath*:mandatory/refdb-core-service-config.xml"});
-            contextConfig.setAllowBeanDefinitionOverriding(true);
+			String[] applicationContextPaths = {
+				"classpath*:mandatory/*.xml",
+				"classpath:scenarios/swing/demo/applicationGeneral.xml",
+				"classpath:scenarios/remoting/client/httpInvoker-client-config.xml"
+			};
+			
+			ModuleApplicationContextConfiguration contextConfig
+				= new ModuleApplicationContextConfiguration();
+			
+			contextConfig.setInclusiveConfigLocations(applicationContextPaths);
+			contextConfig.setExclusiveConfigLocations(new String[] {
+				"classpath*:mandatory/refdb-core-service-config.xml"});
+			contextConfig.setAllowBeanDefinitionOverriding(true);
 
 
-            GUIApplication.launch(MainFormDocking.class, args, contextConfig);
+			GUIApplication.launch(MainFormDocking.class, args, contextConfig);
 
-        } finally {
-            if (splashScreen != null) {
-                splashScreen.dispose();
-            }
-        }
-    }
+		} finally {
+			if (splashScreen != null) {
+				splashScreen.dispose();
+			}
+		}
+	}
 }

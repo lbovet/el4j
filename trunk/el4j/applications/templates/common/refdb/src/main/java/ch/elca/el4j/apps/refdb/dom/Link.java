@@ -25,16 +25,16 @@ import javax.persistence.Table;
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
 /**
- * Link domain object. This class is a reference and describes an internet link 
+ * Link domain object. This class is a reference and describes an internet link
  * (URL).
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Martin Zeltner (MZE)
  */
 @Entity
@@ -42,43 +42,43 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
 @DiscriminatorValue("LINK")
 @PrimaryKeyJoinColumn(name = "KEYTOREFERENCE")
 public class Link extends Reference {
-    /**
-     * Contains the url of a web page.
-     */
-    private String m_url;
+	/**
+	 * Contains the url of a web page.
+	 */
+	private String m_url;
 
-    /**
-     * @return Returns the url.
-     */
-    public String getUrl() {
-        return m_url;
-    }
+	/**
+	 * @return Returns the url.
+	 */
+	public String getUrl() {
+		return m_url;
+	}
 
-    /**
-     * @param url
-     *            The url to set.
-     */
-    public void setUrl(String url) {
-        this.m_url = url;
-    }
+	/**
+	 * @param url
+	 *            The url to set.
+	 */
+	public void setUrl(String url) {
+		this.m_url = url;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public int hashCode() {
-        return super.hashCode();
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public boolean equals(Object object) {
-        if (super.equals(object)
-            && object instanceof Link) {
-            Link other = (Link) object;
-            return ObjectUtils.nullSaveEquals(m_url, other.m_url);
-        } else {
-            return false;
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public int hashCode() {
+		return super.hashCode();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean equals(Object object) {
+		if (super.equals(object)
+			&& object instanceof Link) {
+			Link other = (Link) object;
+			return ObjectUtils.nullSaveEquals(m_url, other.m_url);
+		} else {
+			return false;
+		}
+	}
 }

@@ -18,21 +18,21 @@ package com.silvermindsoftware.hitch.config;
 
 public class FormConfig {
 
-    private boolean autoBind = false;
+	private boolean autoBind = false;
 
-    public FormConfig() {
-    }
+	public FormConfig() {
+	}
 
-    public FormConfig(boolean autoBind) {
-        this.autoBind = autoBind;
-    }
+	public FormConfig(boolean autoBind) {
+		this.autoBind = autoBind;
+	}
 
-    public boolean isAutoBind() {
-        return autoBind;
-    }
+	public boolean isAutoBind() {
+		return autoBind;
+	}
 
-    public void setAutoBind(boolean autoBind) {
-        this.autoBind = autoBind;
-    }
+	public void setAutoBind(boolean autoBind) {
+		this.autoBind = autoBind;
+	}
 
 }

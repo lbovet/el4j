@@ -18,7 +18,7 @@ package ch.elca.el4j.tests.refdb.service;
 
 
 /**
- * 
+ *
  * Test case for <code>DefaultReferenceService</code> using Hibernate
  * as ORM framework.
  *
@@ -32,25 +32,25 @@ package ch.elca.el4j.tests.refdb.service;
  * @author Alex Mathey (AMA)
  */
 public class HibernateReferenceServiceTest extends
-    AbstractReferenceServiceTest {
+	AbstractReferenceServiceTest {
 
-    /**
-     * {@inheritDoc}
-     */
-    protected String[] getIncludeConfigLocations() {
-        return new String[] {
-            "classpath*:mandatory/*.xml",
-            "classpath*:scenarios/db/raw/*.xml",
-            "classpath*:scenarios/dataaccess/hibernate/*.xml",
-            "classpath*:scenarios/dataaccess/hibernate/refdb/*.xml",
-            "classpath*:optional/interception/transactionJava5Annotations.xml"};
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    protected String[] getExcludeConfigLocations() {
-        return null;
-    }
-     
+	/**
+	 * {@inheritDoc}
+	 */
+	protected String[] getIncludeConfigLocations() {
+		return new String[] {
+			"classpath*:mandatory/*.xml",
+			"classpath*:scenarios/db/raw/*.xml",
+			"classpath*:scenarios/dataaccess/hibernate/*.xml",
+			"classpath*:scenarios/dataaccess/hibernate/refdb/*.xml",
+			"classpath*:optional/interception/transactionJava5Annotations.xml"};
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	protected String[] getExcludeConfigLocations() {
+		return null;
+	}
+	 
 }

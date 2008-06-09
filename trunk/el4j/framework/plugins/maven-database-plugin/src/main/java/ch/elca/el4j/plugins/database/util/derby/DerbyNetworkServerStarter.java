@@ -22,8 +22,8 @@ import java.net.InetAddress;
 import org.apache.derby.drda.NetworkServerControl;
 
 /**
- * This class starts the Derby NetworkServer. 
- * 
+ * This class starts the Derby NetworkServer.
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -34,80 +34,80 @@ import org.apache.derby.drda.NetworkServerControl;
  */
 public final class DerbyNetworkServerStarter {
 
-    /**
-     * Network server Control object.
-     */
-    private static NetworkServerControl s_server;
+	/**
+	 * Network server Control object.
+	 */
+	private static NetworkServerControl s_server;
 
-    /**
-     * Derby Database directory.
-     */
-    private static String s_derbyDir;
+	/**
+	 * Derby Database directory.
+	 */
+	private static String s_derbyDir;
 
-    
-    /** to hide constructor. */
-    private DerbyNetworkServerStarter() { }    
-    
-    /**
-     * Set the property "derby.system.home" so that database and log file will
-     * be placed in the right directory.
-     */
-    private static void setWorkingDir() {
-        System.setProperty("derby.system.home", s_derbyDir);
-    }
+	
+	/** to hide constructor. */
+	private DerbyNetworkServerStarter() { }
+	
+	/**
+	 * Set the property "derby.system.home" so that database and log file will
+	 * be placed in the right directory.
+	 */
+	private static void setWorkingDir() {
+		System.setProperty("derby.system.home", s_derbyDir);
+	}
 
-    /**
-     * Create the network server control.
-     * 
-     * @throws Exception
-     */
-    private static void createNetworkServer() throws Exception {
-        // check if homeDir was set.
-        assert (s_derbyDir != null);
-        setWorkingDir();
-        s_server = new NetworkServerControl(InetAddress.getByName("0.0.0.0"),
-            NetworkServerControl.DEFAULT_PORTNUMBER);
-    }
-    
-    /**
-     * Set the directory where databases and log files will be placed in.
-     * 
-     * @param dir
-     *            directory
-     */
-    public static void setHomeDir(String dir) {
-        s_derbyDir = dir;
-    }
+	/**
+	 * Create the network server control.
+	 *
+	 * @throws Exception
+	 */
+	private static void createNetworkServer() throws Exception {
+		// check if homeDir was set.
+		assert (s_derbyDir != null);
+		setWorkingDir();
+		s_server = new NetworkServerControl(InetAddress.getByName("0.0.0.0"),
+			NetworkServerControl.DEFAULT_PORTNUMBER);
+	}
+	
+	/**
+	 * Set the directory where databases and log files will be placed in.
+	 *
+	 * @param dir
+	 *            directory
+	 */
+	public static void setHomeDir(String dir) {
+		s_derbyDir = dir;
+	}
 
-    /**
-     * Starts the (static) network server.
-     * 
-     * @throws Exception
-     */
-    public static void startNetworkServer() throws Exception {
-        if (s_server == null) {
-            createNetworkServer();
-        }
-        // Test if there's already a Network Server running on this port. 
-        // If so, do nothing, else start server.
-        try {
-            s_server.ping();
-        } catch (Exception e) {
-            s_server.start(new PrintWriter(System.out));
-        }   
-    }
+	/**
+	 * Starts the (static) network server.
+	 *
+	 * @throws Exception
+	 */
+	public static void startNetworkServer() throws Exception {
+		if (s_server == null) {
+			createNetworkServer();
+		}
+		// Test if there's already a Network Server running on this port.
+		// If so, do nothing, else start server.
+		try {
+			s_server.ping();
+		} catch (Exception e) {
+			s_server.start(new PrintWriter(System.out));
+		}
+	}
 
-    /**
-     * Terminates the (static) network server.
-     * 
-     * @throws Exception
-     */
-    public static void stopNetworkServer() throws Exception {
-        if (s_server == null) {
-            createNetworkServer();
-        }
-        s_server.ping();
-        s_server.shutdown();
-    }
-    
+	/**
+	 * Terminates the (static) network server.
+	 *
+	 * @throws Exception
+	 */
+	public static void stopNetworkServer() throws Exception {
+		if (s_server == null) {
+			createNetworkServer();
+		}
+		s_server.ping();
+		s_server.shutdown();
+	}
+	
 }

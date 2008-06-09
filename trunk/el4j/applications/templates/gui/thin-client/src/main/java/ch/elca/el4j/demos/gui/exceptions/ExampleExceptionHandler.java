@@ -31,14 +31,14 @@ import ch.elca.el4j.gui.swing.exceptions.Handler;
  * @author Stefan Wismer (SWI)
  */
 public class ExampleExceptionHandler implements Handler {
-    /** {@inheritDoc} */
-    public boolean recognize(Exception e) {
-        return (e instanceof RuntimeException);
-    }
-    
-    /** {@inheritDoc} */
-    public void handle(Exception e) {
-        System.err.println("Runtime Exception!");
-        e.printStackTrace(System.err);
-    }
+	/** {@inheritDoc} */
+	public boolean recognize(Exception e) {
+		return (e instanceof RuntimeException);
+	}
+	
+	/** {@inheritDoc} */
+	public void handle(Exception e) {
+		System.err.println("Runtime Exception!");
+		e.printStackTrace(System.err);
+	}
 }

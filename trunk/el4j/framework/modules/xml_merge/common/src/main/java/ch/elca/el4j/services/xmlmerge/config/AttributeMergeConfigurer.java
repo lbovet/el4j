@@ -40,59 +40,59 @@ import ch.elca.el4j.services.xmlmerge.matcher.TagMatcher;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public class AttributeMergeConfigurer implements Configurer {
 
-    /**
-     * Attribute namespace.
-     */
-    public static final String ATTRIBUTE_NAMESPACE 
-        = "http://xmlmerge.el4j.elca.ch"; 
-    
-    /**
-     * Action attribute.
-     */
-    public static final String ACTION_ATTRIBUTE = "action";
+	/**
+	 * Attribute namespace.
+	 */
+	public static final String ATTRIBUTE_NAMESPACE
+		= "http://xmlmerge.el4j.elca.ch";
+	
+	/**
+	 * Action attribute.
+	 */
+	public static final String ACTION_ATTRIBUTE = "action";
 
-    /**
-     * Matcher attribute.
-     */
-    public static final String MATCHER_ATTRIBUTE = "matcher";
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void configure(XmlMerge xmlMerge) throws ConfigurationException {
+	/**
+	 * Matcher attribute.
+	 */
+	public static final String MATCHER_ATTRIBUTE = "matcher";
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void configure(XmlMerge xmlMerge) throws ConfigurationException {
 
-        MergeAction defaultMergeAction = new OrderedMergeAction();
+		MergeAction defaultMergeAction = new OrderedMergeAction();
 
-        Mapper mapper = new NamespaceFilterMapper(ATTRIBUTE_NAMESPACE);
+		Mapper mapper = new NamespaceFilterMapper(ATTRIBUTE_NAMESPACE);
 
-        defaultMergeAction.setMapperFactory(new StaticOperationFactory(mapper));
+		defaultMergeAction.setMapperFactory(new StaticOperationFactory(mapper));
 
-        // Configure the action factory
-        OperationResolver actionResolver = new OperationResolver(
-            StandardActions.class);
+		// Configure the action factory
+		OperationResolver actionResolver = new OperationResolver(
+			StandardActions.class);
 
-        defaultMergeAction.setActionFactory(new AttributeOperationFactory(
-            defaultMergeAction, actionResolver, ACTION_ATTRIBUTE,
-            ATTRIBUTE_NAMESPACE));
+		defaultMergeAction.setActionFactory(new AttributeOperationFactory(
+			defaultMergeAction, actionResolver, ACTION_ATTRIBUTE,
+			ATTRIBUTE_NAMESPACE));
 
-        // Configure the matcher factory
-        Matcher defaultMatcher = new TagMatcher();
+		// Configure the matcher factory
+		Matcher defaultMatcher = new TagMatcher();
 
-        OperationResolver matcherResolver = new OperationResolver(
-            StandardMatchers.class);
+		OperationResolver matcherResolver = new OperationResolver(
+			StandardMatchers.class);
 
-        defaultMergeAction.setMatcherFactory(new AttributeOperationFactory(
-            defaultMatcher, matcherResolver, MATCHER_ATTRIBUTE,
-            ATTRIBUTE_NAMESPACE));
+		defaultMergeAction.setMatcherFactory(new AttributeOperationFactory(
+			defaultMatcher, matcherResolver, MATCHER_ATTRIBUTE,
+			ATTRIBUTE_NAMESPACE));
 
-        xmlMerge.setRootMapper(mapper);
-        xmlMerge.setRootMergeAction(defaultMergeAction);
-    }
+		xmlMerge.setRootMapper(mapper);
+		xmlMerge.setRootMergeAction(defaultMergeAction);
+	}
 
 }

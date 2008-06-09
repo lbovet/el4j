@@ -22,7 +22,7 @@ import ch.elca.el4j.apps.keyword.dao.impl.ibatis.SqlMapKeywordDao;
 import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
 
 /**
- * 
+ *
  * This class is an extended version of the SqlMapsKeywordDao for the
  * refdb application.
  *
@@ -37,30 +37,30 @@ import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
  */
 @AutocollectedGenericDao("keywordDao")
 public class ExtendedSqlMapKeywordDao extends SqlMapKeywordDao {
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void delete(Integer id) throws DataAccessException {
-        deleteAllReferenceKeywordRelationshipsByKeyword(id);
-        super.delete(id);
-    }
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void delete(Integer id) throws DataAccessException {
+		deleteAllReferenceKeywordRelationshipsByKeyword(id);
+		super.delete(id);
+	}
  
-    /**
-     * This method deletes all relationships between a reference and the given
-     * keyword.
-     * 
-     * @param keywordKey
-     *            Is the keyword key where reference relations must be removed.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     */
-    private void deleteAllReferenceKeywordRelationshipsByKeyword(int keywordKey)
-        throws DataAccessException {
-        getConvenienceSqlMapClientTemplate().delete(
-            "deleteAllReferenceKeywordRelationshipsByKeyword",
-            new Integer(keywordKey));
-    }
-    
+	/**
+	 * This method deletes all relationships between a reference and the given
+	 * keyword.
+	 *
+	 * @param keywordKey
+	 *            Is the keyword key where reference relations must be removed.
+	 * @throws DataAccessException
+	 *             If general data access problem occurred.
+	 */
+	private void deleteAllReferenceKeywordRelationshipsByKeyword(int keywordKey)
+		throws DataAccessException {
+		getConvenienceSqlMapClientTemplate().delete(
+			"deleteAllReferenceKeywordRelationshipsByKeyword",
+			new Integer(keywordKey));
+	}
+	
 }

@@ -30,28 +30,28 @@ import ch.elca.el4j.util.codingsupport.Reject;
  *            The generic type of the domain class' identifier
  * @author Alex Mathey (AMA)
  */
-public class GenericHibernateFileDao<T, ID extends Serializable> 
-    extends GenericHibernateReferencedObjectDao<T, ID>
-    implements GenericFileDao<T, ID> {
+public class GenericHibernateFileDao<T, ID extends Serializable>
+	extends GenericHibernateReferencedObjectDao<T, ID>
+	implements GenericFileDao<T, ID> {
 
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<T> getByName(String name) throws DataAccessException,
-        DataRetrievalFailureException {
-        Reject.ifEmpty(name);
-        String domainClassName = getPersistentClassName();
-        String queryString = "from " + domainClassName + " " 
-            + domainClassName.toLowerCase() + " where name = :name"; 
-        List<T> result = getConvenienceHibernateTemplate()
-            .findByNamedParam(queryString, "name", name);
-        return result;
-    }
-    
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<T> getByName(String name) throws DataAccessException,
+		DataRetrievalFailureException {
+		Reject.ifEmpty(name);
+		String domainClassName = getPersistentClassName();
+		String queryString = "from " + domainClassName + " "
+			+ domainClassName.toLowerCase() + " where name = :name";
+		List<T> result = getConvenienceHibernateTemplate()
+			.findByNamedParam(queryString, "name", name);
+		return result;
+	}
+	
 }
 
-        
-    
+		
+	
 

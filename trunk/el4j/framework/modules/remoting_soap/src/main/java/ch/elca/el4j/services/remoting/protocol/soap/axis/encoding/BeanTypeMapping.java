@@ -33,11 +33,11 @@ import org.apache.axis.encoding.ser.BeanSerializerFactory;
  * @author Martin Zeltner (MZE)
  */
 public class BeanTypeMapping extends TypeMapping {
-    /**
-     * Default constructor.
-     */
-    public BeanTypeMapping() {
-        m_serializerFactory = BeanSerializerFactory.class;
-        m_deserializerFactory = BeanDeserializerFactory.class;
-    }
+	/**
+	 * Default constructor.
+	 */
+	public BeanTypeMapping() {
+		m_serializerFactory = BeanSerializerFactory.class;
+		m_deserializerFactory = BeanDeserializerFactory.class;
+	}
 }

@@ -24,53 +24,53 @@ import ch.elca.el4j.plugins.database.util.derby.DerbyNetworkServerStarter;
 
 
 /**
- * This class is a convenience mojo that includes the 'start', 
+ * This class is a convenience mojo that includes the 'start',
  * 'silentDrop' and 'create' mojo.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @goal prepare
  * @author David Stefan (DST)
  */
 public class PrepareMojo extends AbstractDBExecutionMojo {
 
-    /**
-     * Delay to wait for Derby Network Server.
-     */
-    private static final int DELAY = 500;
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void executeInternal() throws MojoExecutionException, MojoFailureException {
-        try {
-            // Start Derby Network Server if necessary, but do not wait, because
-            // we know that execution will continue
-            if (needStartup()) {
-                getLog().info("Starting database (PrepareMojo)...");
-                DerbyNetworkServerStarter.setHomeDir(getDerbyLocation());
-                DerbyNetworkServerStarter.startNetworkServer();
-            }
-            Thread.sleep(DELAY);
-            getLog().info("Executing silent drop");
-            // Execute a silent drop
-            try {
-                executeAction("drop", true, true);
-                // Checkstyle: EmptyBlock off
-            } catch (Exception e) {
-                // Skip Exception
-            }
-            // Checkstyle: EmptyBlock on
-            getLog().info("Executing create");
-            // Create tables
-            executeAction("create", false, false);
-        } catch (Exception e) {
-            throw new MojoFailureException(e.getMessage());
-        }
-    }
+	/**
+	 * Delay to wait for Derby Network Server.
+	 */
+	private static final int DELAY = 500;
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void executeInternal() throws MojoExecutionException, MojoFailureException {
+		try {
+			// Start Derby Network Server if necessary, but do not wait, because
+			// we know that execution will continue
+			if (needStartup()) {
+				getLog().info("Starting database (PrepareMojo)...");
+				DerbyNetworkServerStarter.setHomeDir(getDerbyLocation());
+				DerbyNetworkServerStarter.startNetworkServer();
+			}
+			Thread.sleep(DELAY);
+			getLog().info("Executing silent drop");
+			// Execute a silent drop
+			try {
+				executeAction("drop", true, true);
+				// Checkstyle: EmptyBlock off
+			} catch (Exception e) {
+				// Skip Exception
+			}
+			// Checkstyle: EmptyBlock on
+			getLog().info("Executing create");
+			// Create tables
+			executeAction("create", false, false);
+		} catch (Exception e) {
+			throw new MojoFailureException(e.getMessage());
+		}
+	}
 }

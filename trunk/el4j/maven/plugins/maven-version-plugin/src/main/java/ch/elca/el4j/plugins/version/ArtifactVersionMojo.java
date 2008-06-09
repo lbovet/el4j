@@ -40,77 +40,77 @@ import org.apache.maven.project.MavenProject;
  * @goal version
  */
 public class ArtifactVersionMojo extends AbstractVersionMojo {
-    //  Checkstyle: MemberName off
-    /**
-     * Artifact to find.
-     * @parameter expression="${version.artifactid}"
-     * @required
-     */
-    private String artifactId = "";
-    
-    /**
-     * Group of the Artifact to find.
-     * @parameter expression="${version.groupid}
-     * @required
-     */
-    private String groupId = "";
-    
-    /**
-     * Type of the Artifact to find.
-     * @parameter expression="${version.type}
-     */
-    private String type = "jar";
+	//  Checkstyle: MemberName off
+	/**
+	 * Artifact to find.
+	 * @parameter expression="${version.artifactid}"
+	 * @required
+	 */
+	private String artifactId = "";
+	
+	/**
+	 * Group of the Artifact to find.
+	 * @parameter expression="${version.groupid}
+	 * @required
+	 */
+	private String groupId = "";
+	
+	/**
+	 * Type of the Artifact to find.
+	 * @parameter expression="${version.type}
+	 */
+	private String type = "jar";
 
-    /**
-     * Scope of the Artifact to find. 
-     *
-     * @parameter expression="${version.type}
-     */
-    private String scope = Artifact.SCOPE_RUNTIME;
-    //  Checkstyle: MemberName on
-    
-    /**
-     * The maven project.
-     *
-     * @parameter expression="${project}"
-     * @readonly
-     */
-    private MavenProject m_project;
+	/**
+	 * Scope of the Artifact to find.
+	 *
+	 * @parameter expression="${version.type}
+	 */
+	private String scope = Artifact.SCOPE_RUNTIME;
+	//  Checkstyle: MemberName on
+	
+	/**
+	 * The maven project.
+	 *
+	 * @parameter expression="${project}"
+	 * @readonly
+	 */
+	private MavenProject m_project;
 
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    public void execute() throws MojoExecutionException, MojoFailureException {
-        Artifact artifact = getArtifact(
-            artifactId, groupId, Artifact.LATEST_VERSION, scope, type);
-        
-        List<ArtifactRepository> remoteRepositories;
-        if (m_project == null) {
-            // Use default remote repositories.
-            getLog().info("Using default repositories");
-            remoteRepositories = new LinkedList<ArtifactRepository>();
-        } else {
-            // Use remote repositories of the current project
-            getLog().info("Using the current project's \"" 
-                + m_project.getName() + "\" repositories.");
-            remoteRepositories = m_project.getRemoteArtifactRepositories();
-        }
-        getLog().info("Used repositories:");
-        for (ArtifactRepository repository : remoteRepositories) {
-            getLog().info("\t" + repository.getId() + repository.getUrl());
-        }
-        
-        VersionResult result 
-            = getAvailableVersions(artifact, remoteRepositories);
-        
-        // List all found versions
-        getLog().info("Artifact ID: " + artifactId);
-        getLog().info("Group ID: " + groupId);
-        getLog().info("Scope: " + scope);
-        getLog().info("Type: " + type);
-        for (ArtifactVersion version : result.getVersions()) {
-            getLog().info("\t" + version);
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	public void execute() throws MojoExecutionException, MojoFailureException {
+		Artifact artifact = getArtifact(
+			artifactId, groupId, Artifact.LATEST_VERSION, scope, type);
+		
+		List<ArtifactRepository> remoteRepositories;
+		if (m_project == null) {
+			// Use default remote repositories.
+			getLog().info("Using default repositories");
+			remoteRepositories = new LinkedList<ArtifactRepository>();
+		} else {
+			// Use remote repositories of the current project
+			getLog().info("Using the current project's \""
+				+ m_project.getName() + "\" repositories.");
+			remoteRepositories = m_project.getRemoteArtifactRepositories();
+		}
+		getLog().info("Used repositories:");
+		for (ArtifactRepository repository : remoteRepositories) {
+			getLog().info("\t" + repository.getId() + repository.getUrl());
+		}
+		
+		VersionResult result
+			= getAvailableVersions(artifact, remoteRepositories);
+		
+		// List all found versions
+		getLog().info("Artifact ID: " + artifactId);
+		getLog().info("Group ID: " + groupId);
+		getLog().info("Scope: " + scope);
+		getLog().info("Type: " + type);
+		for (ArtifactVersion version : result.getVersions()) {
+			getLog().info("\t" + version);
+		}
+	}
 }

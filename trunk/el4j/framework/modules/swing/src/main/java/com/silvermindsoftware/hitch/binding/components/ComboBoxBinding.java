@@ -45,21 +45,21 @@ import ch.elca.el4j.util.config.GenericConfig;
  * @author Stefan Wismer (SWI)
  */
 public class ComboBoxBinding extends AbstractBindingCreator<JComboBox> {
-    
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    public AutoBinding createBinding(Object object, JComboBox formComponent) {
-        List list = (List) object;
-        JComboBoxBinding cb = SwingBindings.createJComboBoxBinding(
-            m_updateStrategy, list, formComponent);
-        // TODO test combo box
-        return cb;
-    }
-    
-    /** {@inheritDoc} */
-    public void addValidation(JComboBox formComponent) {
-        GenericConfig config = GUIApplication.getInstance().getConfig();
-        formComponent.setRenderer(
-            (ListCellRenderer) config.get("cellRenderer"));
-    }
+	
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	public AutoBinding createBinding(Object object, JComboBox formComponent) {
+		List list = (List) object;
+		JComboBoxBinding cb = SwingBindings.createJComboBoxBinding(
+			m_updateStrategy, list, formComponent);
+		// TODO test combo box
+		return cb;
+	}
+	
+	/** {@inheritDoc} */
+	public void addValidation(JComboBox formComponent) {
+		GenericConfig config = GUIApplication.getInstance().getConfig();
+		formComponent.setRenderer(
+			(ListCellRenderer) config.get("cellRenderer"));
+	}
 }

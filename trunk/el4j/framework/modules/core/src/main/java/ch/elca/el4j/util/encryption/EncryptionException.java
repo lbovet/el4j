@@ -21,53 +21,53 @@ import ch.elca.el4j.core.exceptions.BaseException;
 
 /**
  * Exception that is thrown when an encryption or decryption exception occured.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Andreas Pfenninger (APR)
  */
 public class EncryptionException extends BaseException {
 
-    /**
-     * Default message if no reason for the exception is provided. Should only
-     * be used with a wrapped exception, and only if the wrapped exception
-     * contains sufficient information to explain what happened.
-     */
-    private static final String EXCEPTION_MESSAGE_ENCRYPTION_FAILED 
-        = "The password could not be encrypted due " 
-            + "to a low level exception.{0}";
+	/**
+	 * Default message if no reason for the exception is provided. Should only
+	 * be used with a wrapped exception, and only if the wrapped exception
+	 * contains sufficient information to explain what happened.
+	 */
+	private static final String EXCEPTION_MESSAGE_ENCRYPTION_FAILED
+		= "The password could not be encrypted due "
+			+ "to a low level exception.{0}";
 
-    /**
-     * @see BaseException for comment of constructor.
-     */
-    protected EncryptionException(String message, Object[] parameters,
-            Throwable wrappedException) {
-        super(message, parameters, wrappedException);
-    }
+	/**
+	 * @see BaseException for comment of constructor.
+	 */
+	protected EncryptionException(String message, Object[] parameters,
+			Throwable wrappedException) {
+		super(message, parameters, wrappedException);
+	}
 
-    /**
-     * Constructor with wrapped exception.
-     * 
-     * @param wrappedException
-     *            The exception that occured during encryption.
-     */
-    public EncryptionException(Throwable wrappedException) {
-        this(EXCEPTION_MESSAGE_ENCRYPTION_FAILED, new Object[] {""},
-                wrappedException);
-    }
+	/**
+	 * Constructor with wrapped exception.
+	 *
+	 * @param wrappedException
+	 *            The exception that occured during encryption.
+	 */
+	public EncryptionException(Throwable wrappedException) {
+		this(EXCEPTION_MESSAGE_ENCRYPTION_FAILED, new Object[] {""},
+				wrappedException);
+	}
 
-    /**
-     * Constructor with message.
-     * 
-     * @param cause
-     *            The reason for this exception.
-     */
-    public EncryptionException(String cause) {
-        this(EXCEPTION_MESSAGE_ENCRYPTION_FAILED, new Object[] {cause}, null);
-    }
+	/**
+	 * Constructor with message.
+	 *
+	 * @param cause
+	 *            The reason for this exception.
+	 */
+	public EncryptionException(String cause) {
+		this(EXCEPTION_MESSAGE_ENCRYPTION_FAILED, new Object[] {cause}, null);
+	}
 }

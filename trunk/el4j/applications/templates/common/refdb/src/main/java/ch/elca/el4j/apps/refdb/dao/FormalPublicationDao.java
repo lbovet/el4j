@@ -19,7 +19,7 @@ package ch.elca.el4j.apps.refdb.dao;
 import ch.elca.el4j.apps.refdb.dom.FormalPublication;
 
 /**
- * 
+ *
  * This interface represents a DAO for the formal publication domain object.
  * Specific data access operations for this entity can be introduced here.
  *
@@ -33,6 +33,6 @@ import ch.elca.el4j.apps.refdb.dom.FormalPublication;
  * @author Alex Mathey (AMA)
  */
 public interface FormalPublicationDao extends
-    GenericReferenceDao<FormalPublication, Integer> {
+	GenericReferenceDao<FormalPublication, Integer> {
 
 }

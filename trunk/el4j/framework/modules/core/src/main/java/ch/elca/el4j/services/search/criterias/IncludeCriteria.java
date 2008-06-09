@@ -18,7 +18,7 @@ package ch.elca.el4j.services.search.criterias;
 
 
 /**
- * 
+ *
  * Criteria for the include pattern.
  *
  * <script type="text/javascript">printFileStatus
@@ -33,32 +33,32 @@ package ch.elca.el4j.services.search.criterias;
  */
 public class IncludeCriteria extends AbstractCriteria {
 
-    /**
-     * Default constructor for remoting protocols like hessian and burlap added.
-     */
-    protected IncludeCriteria() { }
-    
-    /**
-     * Constructor.
-     * 
-     * @param field
-     *            Is the field the criteria is made for.
-     * @param value
-     *            Is the value of this criteria.
-     */
-    public IncludeCriteria(String field, Object value) {
-        super(field, value);
-    }
-        
-    /**
-     * {@inheritDoc}
-     */
-    public String getType() {
-        return "include";
-    }
+	/**
+	 * Default constructor for remoting protocols like hessian and burlap added.
+	 */
+	protected IncludeCriteria() { }
+	
+	/**
+	 * Constructor.
+	 *
+	 * @param field
+	 *            Is the field the criteria is made for.
+	 * @param value
+	 *            Is the value of this criteria.
+	 */
+	public IncludeCriteria(String field, Object value) {
+		super(field, value);
+	}
+		
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getType() {
+		return "include";
+	}
 
-    public String getSqlWhereCondition() {
-        return "";
-    }
+	public String getSqlWhereCondition() {
+		return "";
+	}
 
 }

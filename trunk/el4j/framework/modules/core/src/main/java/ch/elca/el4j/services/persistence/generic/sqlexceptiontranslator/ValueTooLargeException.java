@@ -22,7 +22,7 @@ import org.springframework.dao.DataAccessException;
 
 /**
  * This exception will be thrown when a value is to large.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -36,13 +36,13 @@ import org.springframework.dao.DataAccessException;
  */
 public class ValueTooLargeException extends DataAccessException {
 
-    /**
-     * Default constructor.
-     * 
-     * @param message Is the exception message.
-     * @param e Is the received target exception.
-     */
-    public ValueTooLargeException(String message, SQLException e) {
-        super(message, e);
-    }
+	/**
+	 * Default constructor.
+	 *
+	 * @param message Is the exception message.
+	 * @param e Is the received target exception.
+	 */
+	public ValueTooLargeException(String message, SQLException e) {
+		super(message, e);
+	}
 }

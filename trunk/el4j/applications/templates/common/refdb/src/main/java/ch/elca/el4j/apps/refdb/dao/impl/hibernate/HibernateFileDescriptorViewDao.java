@@ -27,25 +27,25 @@ import ch.elca.el4j.util.codingsupport.Reject;
  */
 @AutocollectedGenericDao("fileDescriptorViewDao")
 public class HibernateFileDescriptorViewDao
-    extends GenericHibernateFileDao<FileDescriptorView, Integer>
-        implements FileDescriptorViewDao {
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Transactional(propagation = Propagation.REQUIRED)
-    public FileDescriptorView modifyFileDescriptorView(
-        FileDescriptorView fileView) throws DataAccessException,
-        OptimisticLockingFailureException, DataRetrievalFailureException {
-        Reject.ifNull(fileView);
-        if (fileView.isKeyNew()) {
-            // File must not be new!
-            CoreNotificationHelper.notifyDataRetrievalFailure(
-                getPersistentClassName());
-        }
-        getConvenienceHibernateTemplate().saveOrUpdateStrong(
-            fileView, getPersistentClassName());
-        return fileView;
-    }
-    
+	extends GenericHibernateFileDao<FileDescriptorView, Integer>
+		implements FileDescriptorViewDao {
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(propagation = Propagation.REQUIRED)
+	public FileDescriptorView modifyFileDescriptorView(
+		FileDescriptorView fileView) throws DataAccessException,
+		OptimisticLockingFailureException, DataRetrievalFailureException {
+		Reject.ifNull(fileView);
+		if (fileView.isKeyNew()) {
+			// File must not be new!
+			CoreNotificationHelper.notifyDataRetrievalFailure(
+				getPersistentClassName());
+		}
+		getConvenienceHibernateTemplate().saveOrUpdateStrong(
+			fileView, getPersistentClassName());
+		return fileView;
+	}
+	
 }

@@ -35,26 +35,26 @@ import cookxml.core.exception.SetterException;
  */
 public class NoAddVarSetter extends VarSetter {
 
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    @Override
-    public void setAttribute(String ns, String tag, String attrNS, String attr,
-        Object obj, Object value, DecodeEngine decodeEngine)
-        throws SetterException {
-        
-        if (obj instanceof NoAddValueHolder) {
-            if (value == null || !(value instanceof String)) {
-                return;
-            }
-            String str = (String) value;
-            if (str.length() == 0) {
-                return;
-            }
-            decodeEngine.getVarLookup().setVariable(
-                str, ((NoAddValueHolder) obj).getObject(), decodeEngine);
-        } else {
-            super.setAttribute(ns, tag, attrNS, attr, obj, value, decodeEngine);
-        }
-        
-    }
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	@Override
+	public void setAttribute(String ns, String tag, String attrNS, String attr,
+		Object obj, Object value, DecodeEngine decodeEngine)
+		throws SetterException {
+		
+		if (obj instanceof NoAddValueHolder) {
+			if (value == null || !(value instanceof String)) {
+				return;
+			}
+			String str = (String) value;
+			if (str.length() == 0) {
+				return;
+			}
+			decodeEngine.getVarLookup().setVariable(
+				str, ((NoAddValueHolder) obj).getObject(), decodeEngine);
+		} else {
+			super.setAttribute(ns, tag, attrNS, attr, obj, value, decodeEngine);
+		}
+		
+	}
 }

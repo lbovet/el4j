@@ -31,25 +31,25 @@ package ch.elca.el4j.web.struts.form;
  * @author Martin Zeltner (MZE)
  */
 public abstract class AbstractIntKeyIntOptimisticLockingForm
-    extends AbstractIntOptimisticLockingForm {
-    
-    /**
-     * Is the primary key.
-     */
-    private Integer m_key;
+	extends AbstractIntOptimisticLockingForm {
+	
+	/**
+	 * Is the primary key.
+	 */
+	private Integer m_key;
 
-    /**
-     * @return Returns the key.
-     */
-    public final Integer getKey() {
-        return m_key;
-    }
+	/**
+	 * @return Returns the key.
+	 */
+	public final Integer getKey() {
+		return m_key;
+	}
 
-    /**
-     * @param key
-     *            The key to set.
-     */
-    public final void setKey(Integer key) {
-        m_key = key;
-    }
+	/**
+	 * @param key
+	 *            The key to set.
+	 */
+	public final void setKey(Integer key) {
+		m_key = key;
+	}
 }

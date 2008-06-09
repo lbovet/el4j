@@ -33,15 +33,15 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
  * @author Martin Zeltner (MZE)
  */
 public class CalculatorRmiTest extends AbstractCalculatorTest {
-    /**
-     * {@inheritDoc}
-     */
-    ApplicationContext getContext() {
-        String[] inclusiveLocations = {"classpath*:mandatory/*.xml",
-            "classpath*:scenarios/common/remotingtests-rmi-protocol-config.xml",
-            "classpath*:scenarios/server/app/"
-                + "remotingtests-rmi-server-config.xml",
-            "classpath*:scenarios/client/remotingtests-rmi-client-config.xml"};
-        return  new ModuleApplicationContext(inclusiveLocations, false);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	ApplicationContext getContext() {
+		String[] inclusiveLocations = {"classpath*:mandatory/*.xml",
+			"classpath*:scenarios/common/remotingtests-rmi-protocol-config.xml",
+			"classpath*:scenarios/server/app/"
+				+ "remotingtests-rmi-server-config.xml",
+			"classpath*:scenarios/client/remotingtests-rmi-client-config.xml"};
+		return  new ModuleApplicationContext(inclusiveLocations, false);
+	}
 }

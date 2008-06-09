@@ -24,105 +24,105 @@ import ch.elca.el4j.maven.logging.AbstractFormattingLogger;
  * https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/etc/eclipse/codeTemplates.xml
  * $", "$Revision$", "$Date: 2008-03-04 09:04:15 +0100 (Tue, 04 Mar 2008)
  * $", "$Author$" );</script>
- * 
+ *
  * @author your David Bernhard (DBD)
  */
 public class ColorLogger extends AbstractFormattingLogger {
 
-    /**
-     * Delegating constructor.
-     * 
-     * @param threshold
-     *            Logger threshold (debug, info, warn, error, fatal).
-     * @param name
-     *            The logger name.
-     */
-    public ColorLogger(int threshold, String name) {
-        super(threshold, name);
-    }
+	/**
+	 * Delegating constructor.
+	 *
+	 * @param threshold
+	 *            Logger threshold (debug, info, warn, error, fatal).
+	 * @param name
+	 *            The logger name.
+	 */
+	public ColorLogger(int threshold, String name) {
+		super(threshold, name);
+	}
 
-    /**
-     * Helper class to handle ansi coloring.
-     */
-    static abstract class Ansi {
-        
-        /**
-         * To keep checkstyle happy. This is never called.
-         */
-        protected Ansi() {
-            
-        }
-        
-        // Constants for colors.
-        static final int RESET = 0;
+	/**
+	 * Helper class to handle ansi coloring.
+	 */
+	static abstract class Ansi {
+		
+		/**
+		 * To keep checkstyle happy. This is never called.
+		 */
+		protected Ansi() {
+			
+		}
+		
+		// Constants for colors.
+		static final int RESET = 0;
 
-        static final int FGBLACK = 30;
-        static final int FGRED = 31;
-        static final int FGGREEN = 32;
-        static final int FGYELLOW = 33;
-        static final int FGBLUE = 34;
-        static final int FGMAGENTA = 35;
-        static final int FGCYAN = 36;
-        static final int FGWHITE = 37;
+		static final int FGBLACK = 30;
+		static final int FGRED = 31;
+		static final int FGGREEN = 32;
+		static final int FGYELLOW = 33;
+		static final int FGBLUE = 34;
+		static final int FGMAGENTA = 35;
+		static final int FGCYAN = 36;
+		static final int FGWHITE = 37;
 
-        static final int BGBLACK = 40;
-        static final int BGRED = 41;
-        static final int BGGREEN = 42;
-        static final int BGYELLOW = 43;
-        static final int BGBLUE = 44;
-        static final int BGMAGENTA = 45;
-        static final int BGCYAN = 46;
-        static final int BGWHITE = 47;
+		static final int BGBLACK = 40;
+		static final int BGRED = 41;
+		static final int BGGREEN = 42;
+		static final int BGYELLOW = 43;
+		static final int BGBLUE = 44;
+		static final int BGMAGENTA = 45;
+		static final int BGCYAN = 46;
+		static final int BGWHITE = 47;
 
-        static final int INTENSE = 1;
+		static final int INTENSE = 1;
 
-        /**
-         * Create an ansi code from the given values.
-         * 
-         * @param values
-         *            A varargs list of values.
-         * @return The ansi code for these values.
-         */
-        static String ansi(int... values) {
-            if (values.length == 0) {
-                return "";
-            }
-            String code = "\033[";
-            for (int current : values) {
-                code += Integer.toString(current) + ";";
-            }
-            // Strip last ; again
-            code = code.substring(0, code.length() - 1);
-            code += "m";
-            return code;
+		/**
+		 * Create an ansi code from the given values.
+		 *
+		 * @param values
+		 *            A varargs list of values.
+		 * @return The ansi code for these values.
+		 */
+		static String ansi(int... values) {
+			if (values.length == 0) {
+				return "";
+			}
+			String code = "\033[";
+			for (int current : values) {
+				code += Integer.toString(current) + ";";
+			}
+			// Strip last ; again
+			code = code.substring(0, code.length() - 1);
+			code += "m";
+			return code;
 
-        }
-    }
+		}
+	}
 
-    /** {@inheritDoc} */
-    protected String getPrefix(int level) {
-        switch(level) {
-            case LEVEL_DEBUG: 
-                return Ansi.ansi(Ansi.FGCYAN);
-            case LEVEL_INFO: 
-                return Ansi.ansi(Ansi.FGBLUE);
-            case LEVEL_WARN: 
-                return Ansi.ansi(Ansi.FGMAGENTA);
-            case LEVEL_ERROR: 
-                return Ansi.ansi(Ansi.FGRED);
-            case LEVEL_FATAL: 
-                return Ansi.ansi(Ansi.BGBLACK, Ansi.FGYELLOW);
-            default:
-                throw new RuntimeException("Invalid level.");
-        }
-        
-    }
+	/** {@inheritDoc} */
+	protected String getPrefix(int level) {
+		switch(level) {
+			case LEVEL_DEBUG:
+				return Ansi.ansi(Ansi.FGCYAN);
+			case LEVEL_INFO:
+				return Ansi.ansi(Ansi.FGBLUE);
+			case LEVEL_WARN:
+				return Ansi.ansi(Ansi.FGMAGENTA);
+			case LEVEL_ERROR:
+				return Ansi.ansi(Ansi.FGRED);
+			case LEVEL_FATAL:
+				return Ansi.ansi(Ansi.BGBLACK, Ansi.FGYELLOW);
+			default:
+				throw new RuntimeException("Invalid level.");
+		}
+		
+	}
 
-    /** {@inheritDoc} */
-    protected String getSuffix(int level) {
-        return Ansi.ansi(Ansi.RESET);
-    }
+	/** {@inheritDoc} */
+	protected String getSuffix(int level) {
+		return Ansi.ansi(Ansi.RESET);
+	}
 
-    
-    
+	
+	
 }

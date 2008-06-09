@@ -23,9 +23,9 @@ import ch.elca.el4j.util.collections.helpers.Function;
 
 /**
  * A slightly extended Iterable.
- * 
+ *
  * @param <T> the member type.
- * 
+ *
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -37,25 +37,25 @@ import ch.elca.el4j.util.collections.helpers.Function;
  * @author Adrian Moos (AMS)
  */
 public interface ExtendedList<T> extends List<T> {
-    /**
-     * @param c the element type for the new array
-     * @return an new array containing this list's contents
-     */
-    T[] toArray(Class<T> c);
-    
-    /**
-     * Convenience method returning a filtered view on this collection.
-     * @param filter the filter deciding which elements are included
-     */
-    FilteredList<T> filtered(Filter<? super T> filter);
-    
-    
-    /**
-     * Convenience method returning a {@link TransformedList} view to this
-     * list.
-     * @param function the transformation function to apply to each element 
-     * @return see above
-     */
-    public <O> TransformedList<T, O> mapped(
-        Function<? super T, O> function); 
+	/**
+	 * @param c the element type for the new array
+	 * @return an new array containing this list's contents
+	 */
+	T[] toArray(Class<T> c);
+	
+	/**
+	 * Convenience method returning a filtered view on this collection.
+	 * @param filter the filter deciding which elements are included
+	 */
+	FilteredList<T> filtered(Filter<? super T> filter);
+	
+	
+	/**
+	 * Convenience method returning a {@link TransformedList} view to this
+	 * list.
+	 * @param function the transformation function to apply to each element
+	 * @return see above
+	 */
+	public <O> TransformedList<T, O> mapped(
+		Function<? super T, O> function);
 }

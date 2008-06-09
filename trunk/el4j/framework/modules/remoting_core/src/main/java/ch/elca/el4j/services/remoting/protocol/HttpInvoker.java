@@ -40,67 +40,67 @@ import ch.elca.el4j.services.remoting.RemotingServiceExporter;
  */
 public class HttpInvoker  extends AbstractInetSocketAddressWebProtocol {
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object createProxyBean(RemotingProxyFactoryBean proxyBean,
-            Class serviceInterfaceWithContext) {
-        StaticApplicationContext appContext = new StaticApplicationContext(
-                m_parentApplicationContext);
-        registerChildApplicationContext(appContext);
-        MutablePropertyValues props = new MutablePropertyValues();
-        props.addPropertyValue("serviceInterface", serviceInterfaceWithContext);
-        props.addPropertyValue("serviceUrl", generateUrl(proxyBean));
-        appContext.registerSingleton("httpInvokerProxyBeanGen", 
-            getProxyObjectType(), props);
-        appContext.refresh();
-        return appContext.getBean("httpInvokerProxyBeanGen");
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object createProxyBean(RemotingProxyFactoryBean proxyBean,
+			Class serviceInterfaceWithContext) {
+		StaticApplicationContext appContext = new StaticApplicationContext(
+				m_parentApplicationContext);
+		registerChildApplicationContext(appContext);
+		MutablePropertyValues props = new MutablePropertyValues();
+		props.addPropertyValue("serviceInterface", serviceInterfaceWithContext);
+		props.addPropertyValue("serviceUrl", generateUrl(proxyBean));
+		appContext.registerSingleton("httpInvokerProxyBeanGen",
+			getProxyObjectType(), props);
+		appContext.refresh();
+		return appContext.getBean("httpInvokerProxyBeanGen");
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object createExporterBean(RemotingServiceExporter exporterBean,
-            Class serviceInterfaceWithContext, Object serviceProxy) {
-        StaticApplicationContext appContext = new StaticApplicationContext(
-                m_parentApplicationContext);
-        registerChildApplicationContext(appContext);
-        MutablePropertyValues props = new MutablePropertyValues();
-        props.addPropertyValue("service", serviceProxy);
-        props.addPropertyValue("serviceInterface", serviceInterfaceWithContext);
-        appContext.registerSingleton("httpInvokerExporterBeanGen",
-                getExporterObjectType(), props);
-        appContext.refresh();
-        return appContext.getBean("httpInvokerExporterBeanGen");
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object createExporterBean(RemotingServiceExporter exporterBean,
+			Class serviceInterfaceWithContext, Object serviceProxy) {
+		StaticApplicationContext appContext = new StaticApplicationContext(
+				m_parentApplicationContext);
+		registerChildApplicationContext(appContext);
+		MutablePropertyValues props = new MutablePropertyValues();
+		props.addPropertyValue("service", serviceProxy);
+		props.addPropertyValue("serviceInterface", serviceInterfaceWithContext);
+		appContext.registerSingleton("httpInvokerExporterBeanGen",
+				getExporterObjectType(), props);
+		appContext.refresh();
+		return appContext.getBean("httpInvokerExporterBeanGen");
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Class getProxyObjectType() {
-        return HttpInvokerProxyFactoryBean.class;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Class getProxyObjectType() {
+		return HttpInvokerProxyFactoryBean.class;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Class getExporterObjectType() {
-        return HttpInvokerServiceExporter.class;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Class getExporterObjectType() {
+		return HttpInvokerServiceExporter.class;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public String generateUrl(AbstractRemotingBase remoteBase) {
-        StringBuffer sb = new StringBuffer();
-        sb.append("http://");
-        sb.append(getServiceHost());
-        sb.append(":");
-        sb.append(getServicePort());
-        sb.append("/");
-        sb.append(getContextPath());
-        sb.append("/");
-        sb.append(remoteBase.getServiceName());
-        return sb.toString();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public String generateUrl(AbstractRemotingBase remoteBase) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("http://");
+		sb.append(getServiceHost());
+		sb.append(":");
+		sb.append(getServicePort());
+		sb.append("/");
+		sb.append(getContextPath());
+		sb.append("/");
+		sb.append(remoteBase.getServiceName());
+		return sb.toString();
+	}
 }

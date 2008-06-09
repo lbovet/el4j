@@ -17,7 +17,7 @@
 package ch.elca.el4j.tests.services.remoting.loadbalancing.server;
 
 /**
- * 
+ *
  * Contains the constants used for the testing servers. The values should not
  * be modified unless the client needs more time to contact the server.
  *
@@ -32,14 +32,14 @@ package ch.elca.el4j.tests.services.remoting.loadbalancing.server;
  */
 public class LbServerConstants {
 
-    /** 
-     * Number of times the server iterates through the loop. 
-     * NBR_ITERATIONS * SLEEPING_TIME defines lifetime of the server. 
-     */
-    public static final int NBR_ITERATIONS = 3 ;
-    /** 
-     * Time in milliseconds per iteration 
-     */
-    public static final int SLEEPING_TIME = 100000 ;
-    
+	/**
+	 * Number of times the server iterates through the loop.
+	 * NBR_ITERATIONS * SLEEPING_TIME defines lifetime of the server.
+	 */
+	public static final int NBR_ITERATIONS = 3 ;
+	/**
+	 * Time in milliseconds per iteration
+	 */
+	public static final int SLEEPING_TIME = 100000 ;
+	
 }

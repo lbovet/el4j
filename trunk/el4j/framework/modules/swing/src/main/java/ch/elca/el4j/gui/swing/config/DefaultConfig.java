@@ -39,19 +39,19 @@ import ch.elca.el4j.util.config.GenericConfig;
  * @author Stefan Wismer (SWI)
  */
 public class DefaultConfig extends GenericConfig {
-    /**
-     * The default constructor setting the default config.
-     */
-    public DefaultConfig() {
-        // Checkstyle: MagicNumber off
-        add("invalidColor", new Color(255, 128, 128));
-        add("selectedColor", new Color(184, 207, 229));
-        // Checkstyle: MagicNumber on
-        
-        add("validationResponder", new DefaultValidationResponder());
-        add("cellRenderer", new DefaultValidatingCellRenderer());
-        add("comboBoxRenderer", new DefaultValidatingComboBoxRenderer());
-        add("tableCellRenderer", new DefaultValidatingTableCellRenderer());
-        add("tableCellEditor", new ValidatingCellEditor());
-    }
+	/**
+	 * The default constructor setting the default config.
+	 */
+	public DefaultConfig() {
+		// Checkstyle: MagicNumber off
+		add("invalidColor", new Color(255, 128, 128));
+		add("selectedColor", new Color(184, 207, 229));
+		// Checkstyle: MagicNumber on
+		
+		add("validationResponder", new DefaultValidationResponder());
+		add("cellRenderer", new DefaultValidatingCellRenderer());
+		add("comboBoxRenderer", new DefaultValidatingComboBoxRenderer());
+		add("tableCellRenderer", new DefaultValidatingTableCellRenderer());
+		add("tableCellEditor", new ValidatingCellEditor());
+	}
 }

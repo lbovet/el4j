@@ -29,16 +29,16 @@ import org.acegisecurity.SecurityConfig;
 import org.springframework.metadata.Attributes;
 
 /**
- * 
- * This class is a Java 5 Annotation <code>Attributes</code> metadata 
+ *
+ * This class is a Java 5 Annotation <code>Attributes</code> metadata
  * implementation used for secure method interception.
- * <p>This <code>Attributes</code> implementation will return security 
+ * <p>This <code>Attributes</code> implementation will return security
  * configuration for classes described using the <code>RolesAllowed</code>
  * Java 5 annotation.</p>
  *
- * This class is the equivalent of Acegi Security's 
- * <code>SecurityAnnotationAttributes</code> class for the 
- * <code>RolesAllowed</code> annotation. 
+ * This class is the equivalent of Acegi Security's
+ * <code>SecurityAnnotationAttributes</code> class for the
+ * <code>RolesAllowed</code> annotation.
  *
  * @see org.acegisecurity.annotation.SecurityAnnotationAttributes
  *
@@ -52,75 +52,75 @@ import org.springframework.metadata.Attributes;
  * @author Alex Mathey (AMA)
  */
 public class RolesAllowedAnnotationAttributes implements Attributes {
-    /**
-     * Get the <code>RolesAllowed</code> attributes for a given target class.
-     *
-     * @param target The target method
-     *
-     * @return Collection of <code>SecurityConfig</code>
-     *
-     * @see Attributes#getAttributes
-     */
-    public Collection getAttributes(Class target) {
-        Set<SecurityConfig> attributes = new HashSet<SecurityConfig>();
+	/**
+	 * Get the <code>RolesAllowed</code> attributes for a given target class.
+	 *
+	 * @param target The target method
+	 *
+	 * @return Collection of <code>SecurityConfig</code>
+	 *
+	 * @see Attributes#getAttributes
+	 */
+	public Collection getAttributes(Class target) {
+		Set<SecurityConfig> attributes = new HashSet<SecurityConfig>();
 
-        for (Annotation annotation : target.getAnnotations()) {
-            // check for RolesAllowed annotations
-            if (annotation instanceof RolesAllowed) {
-                RolesAllowed attr = (RolesAllowed) annotation;
+		for (Annotation annotation : target.getAnnotations()) {
+			// check for RolesAllowed annotations
+			if (annotation instanceof RolesAllowed) {
+				RolesAllowed attr = (RolesAllowed) annotation;
 
-                for (String auth : attr.value()) {
-                    attributes.add(new SecurityConfig(auth));
-                }
+				for (String auth : attr.value()) {
+					attributes.add(new SecurityConfig(auth));
+				}
 
-                break;
-            }
-        }
+				break;
+			}
+		}
 
-        return attributes;
-    }
+		return attributes;
+	}
 
-    public Collection getAttributes(Class clazz, Class filter) {
-        throw new UnsupportedOperationException("Unsupported operation");
-    }
+	public Collection getAttributes(Class clazz, Class filter) {
+		throw new UnsupportedOperationException("Unsupported operation");
+	}
 
-    /**
-     * Get the <code>RolesAllowed</code> attributes for a given target method.
-     *
-     * @param method The target method
-     *
-     * @return Collection of <code>SecurityConfig</code>
-     *
-     * @see Attributes#getAttributes
-     */
-    public Collection getAttributes(Method method) {
-        Set<SecurityConfig> attributes = new HashSet<SecurityConfig>();
+	/**
+	 * Get the <code>RolesAllowed</code> attributes for a given target method.
+	 *
+	 * @param method The target method
+	 *
+	 * @return Collection of <code>SecurityConfig</code>
+	 *
+	 * @see Attributes#getAttributes
+	 */
+	public Collection getAttributes(Method method) {
+		Set<SecurityConfig> attributes = new HashSet<SecurityConfig>();
 
-        for (Annotation annotation : method.getAnnotations()) {
-            // check for RolesAllowed annotations
-            if (annotation instanceof RolesAllowed) {
-                RolesAllowed attr = (RolesAllowed) annotation;
+		for (Annotation annotation : method.getAnnotations()) {
+			// check for RolesAllowed annotations
+			if (annotation instanceof RolesAllowed) {
+				RolesAllowed attr = (RolesAllowed) annotation;
 
-                for (String auth : attr.value()) {
-                    attributes.add(new SecurityConfig(auth));
-                }
+				for (String auth : attr.value()) {
+					attributes.add(new SecurityConfig(auth));
+				}
 
-                break;
-            }
-        }
+				break;
+			}
+		}
 
-        return attributes;
-    }
+		return attributes;
+	}
 
-    public Collection getAttributes(Method method, Class clazz) {
-        throw new UnsupportedOperationException("Unsupported operation");
-    }
+	public Collection getAttributes(Method method, Class clazz) {
+		throw new UnsupportedOperationException("Unsupported operation");
+	}
 
-    public Collection getAttributes(Field field) {
-        throw new UnsupportedOperationException("Unsupported operation");
-    }
+	public Collection getAttributes(Field field) {
+		throw new UnsupportedOperationException("Unsupported operation");
+	}
 
-    public Collection getAttributes(Field field, Class clazz) {
-        throw new UnsupportedOperationException("Unsupported operation");
-    }
+	public Collection getAttributes(Field field, Class clazz) {
+		throw new UnsupportedOperationException("Unsupported operation");
+	}
 }

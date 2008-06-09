@@ -17,7 +17,7 @@
 
 /**
  * THIS IS NOT A JAVA SOURCE FILE.
- * 
+ *
  * It is used only for testing the extractor.
  *
  * <script type="text/javascript">printFileStatus
@@ -31,19 +31,19 @@
  */
 public class SampleJavaFile {
 
-    public static void main(String[] args) {
-        
-        // $$ BEANS INCLUDE $$
-        String[] included = {
-            "classpath*:mandatory/*.xml",
-            "classpath:demo/demo*.xml"
-        };
-        
-        // $$ BEANS EXCLUDE $$
-        String[] excluded = {
-            "classpath*:exclude-*.xml"
-        };
-        
-        // $$ BEANS END $$
-    }
+	public static void main(String[] args) {
+		
+		// $$ BEANS INCLUDE $$
+		String[] included = {
+			"classpath*:mandatory/*.xml",
+			"classpath:demo/demo*.xml"
+		};
+		
+		// $$ BEANS EXCLUDE $$
+		String[] excluded = {
+			"classpath*:exclude-*.xml"
+		};
+		
+		// $$ BEANS END $$
+	}
 }

@@ -17,7 +17,7 @@
 package ch.elca.el4j.plugins.filecollector;
 
 /**
- * 
+ *
  * This exception will be thrown when an abnormal situation is detected during
  * file access or modification.
  *
@@ -31,51 +31,51 @@ package ch.elca.el4j.plugins.filecollector;
  * @author Alex Mathey (AMA)
  */
 public class FileException extends BaseException {
-    
-    /**
-     * Default message if no reason for the exception is provided. Should only
-     * be used with a wrapped exception, and only if the wrapped exception
-     * contains sufficient information to explain what happened.
-     */
-    private static final String EXCEPTION_MESSAGE_FILE_SUPPORT
-        = "An exception occurred during file access or modification."; 
-    
-    /**
-     * @see BaseException for comment of constructor.
-     */
-    public FileException(String message) {
-        super(message);
-    }
-    
-    /**
-     * @see BaseException for comment of constructor.
-     */
-    public FileException(String message, Object[] parameters) {
-        super(message, parameters);
-    }
-    
-    /**
-     * @see BaseException for comment of constructor.
-     */
-    public FileException(String message, Object[] parameters,
-            Throwable wrappedException) {
-        super(message, parameters, wrappedException);
-    }
-    
-    /**
-     * @see BaseException for comment of constructor.
-     */
-    public FileException(String message, Throwable wrappedException) {
-        super(message, wrappedException);
-    }
-    
-    /**
-     * Constructor with wrapped exception.
-     * 
-     * @param wrappedException
-     *            The exception that occured during file access or modification.
-     */
-    public FileException(Throwable wrappedException) {
-        this(EXCEPTION_MESSAGE_FILE_SUPPORT, wrappedException);
-    }
+	
+	/**
+	 * Default message if no reason for the exception is provided. Should only
+	 * be used with a wrapped exception, and only if the wrapped exception
+	 * contains sufficient information to explain what happened.
+	 */
+	private static final String EXCEPTION_MESSAGE_FILE_SUPPORT
+		= "An exception occurred during file access or modification.";
+	
+	/**
+	 * @see BaseException for comment of constructor.
+	 */
+	public FileException(String message) {
+		super(message);
+	}
+	
+	/**
+	 * @see BaseException for comment of constructor.
+	 */
+	public FileException(String message, Object[] parameters) {
+		super(message, parameters);
+	}
+	
+	/**
+	 * @see BaseException for comment of constructor.
+	 */
+	public FileException(String message, Object[] parameters,
+			Throwable wrappedException) {
+		super(message, parameters, wrappedException);
+	}
+	
+	/**
+	 * @see BaseException for comment of constructor.
+	 */
+	public FileException(String message, Throwable wrappedException) {
+		super(message, wrappedException);
+	}
+	
+	/**
+	 * Constructor with wrapped exception.
+	 *
+	 * @param wrappedException
+	 *            The exception that occured during file access or modification.
+	 */
+	public FileException(Throwable wrappedException) {
+		this(EXCEPTION_MESSAGE_FILE_SUPPORT, wrappedException);
+	}
 }

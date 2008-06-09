@@ -30,19 +30,19 @@ import org.apache.maven.plugin.MojoFailureException;
  * );</script>
  *
  * @author David Bernhard (DBD)
- * 
+ *
  * @goal find
  */
 public class DuplicateFinderMojo extends AbstractDuplicateFinderMojo {
 
-    /** {@inheritDoc} */
-    public void execute() throws MojoExecutionException, MojoFailureException {
-        setUp();
-        m_finder.search();
-        
-        if (m_finder.duplicatesFound() && duplicateIsFail) {
-            throw new MojoFailureException("Duplicate classes found.");
-        }
-    }
+	/** {@inheritDoc} */
+	public void execute() throws MojoExecutionException, MojoFailureException {
+		setUp();
+		m_finder.search();
+		
+		if (m_finder.duplicatesFound() && duplicateIsFail) {
+			throw new MojoFailureException("Duplicate classes found.");
+		}
+	}
 
 }

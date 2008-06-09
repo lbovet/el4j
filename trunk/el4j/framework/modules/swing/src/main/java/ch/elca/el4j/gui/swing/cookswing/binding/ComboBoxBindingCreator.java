@@ -48,47 +48,47 @@ import cookxml.core.exception.CreatorException;
  * @author Stefan Wismer (SWI)
  */
 public class ComboBoxBindingCreator extends AbstractBindingCreator {
-    // <comboboxbinding> specific attributes
-    protected static final String RENDERER = "rendererBean";
+	// <comboboxbinding> specific attributes
+	protected static final String RENDERER = "rendererBean";
 
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    public Object create(String parentNS, String parentTag, Element elm,
-        Object parentObj, DecodeEngine decodeEngine) throws CreatorException {
-        
-        // read attributes
-        UpdateStrategy updateStrategy = getUpdateStrategy(elm);
-        List listSource = (List) getSource(decodeEngine, elm);
-        if (listSource == null) {
-            return null;
-        }
-        JComboBox comboBox = (JComboBox) parentObj;
-        
-        // renderer and validation
-        String renderer = elm.getAttribute(RENDERER);
-        ComboBoxRenderer cr = null;
-        if (renderer.equals("")) {
-            GenericConfig config = GUIApplication.getInstance().getConfig();
-            DefaultValidatingComboBoxRenderer validatingRenderer
-                = (DefaultValidatingComboBoxRenderer)
-                config.get("comboBoxRenderer");
-            validatingRenderer.setValidate(getValidate(elm));
-            cr = validatingRenderer;
-        } else {
-            ApplicationContext ctx
-                = GUIApplication.getInstance().getSpringContext();
-            cr = (ComboBoxRenderer) ctx.getBean(renderer);
-        }
-        
-        cr.setProperty(elm.getAttribute(PROPERTY));
-        comboBox.setRenderer(cr);
-        
-        // create binding
-        JComboBoxBinding cb = SwingBindings.createJComboBoxBinding(
-            updateStrategy, listSource, comboBox);
-        
-        addBinding(decodeEngine, cb);
-        
-        return new NoAddValueHolder<JComboBoxBinding>(cb);
-    }
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	public Object create(String parentNS, String parentTag, Element elm,
+		Object parentObj, DecodeEngine decodeEngine) throws CreatorException {
+		
+		// read attributes
+		UpdateStrategy updateStrategy = getUpdateStrategy(elm);
+		List listSource = (List) getSource(decodeEngine, elm);
+		if (listSource == null) {
+			return null;
+		}
+		JComboBox comboBox = (JComboBox) parentObj;
+		
+		// renderer and validation
+		String renderer = elm.getAttribute(RENDERER);
+		ComboBoxRenderer cr = null;
+		if (renderer.equals("")) {
+			GenericConfig config = GUIApplication.getInstance().getConfig();
+			DefaultValidatingComboBoxRenderer validatingRenderer
+				= (DefaultValidatingComboBoxRenderer)
+				config.get("comboBoxRenderer");
+			validatingRenderer.setValidate(getValidate(elm));
+			cr = validatingRenderer;
+		} else {
+			ApplicationContext ctx
+				= GUIApplication.getInstance().getSpringContext();
+			cr = (ComboBoxRenderer) ctx.getBean(renderer);
+		}
+		
+		cr.setProperty(elm.getAttribute(PROPERTY));
+		comboBox.setRenderer(cr);
+		
+		// create binding
+		JComboBoxBinding cb = SwingBindings.createJComboBoxBinding(
+			updateStrategy, listSource, comboBox);
+		
+		addBinding(decodeEngine, cb);
+		
+		return new NoAddValueHolder<JComboBoxBinding>(cb);
+	}
 }

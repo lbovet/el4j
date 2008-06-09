@@ -19,7 +19,7 @@ package ch.elca.el4j.tests.services.exceptionhandler;
 
 /**
  * This class is used to show the substitution and the reconfigure exception
- * handling strategies. 
+ * handling strategies.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -32,43 +32,43 @@ package ch.elca.el4j.tests.services.exceptionhandler;
  */
 public class B extends AImpl implements Adder {
 
-    /** Number of add calls. */
-    public static int s_numberOfAddCalls = 0;
-    
-    /** Number of concatenate calls. */
-    public static int s_numberOfConcatCalls = 0;
-    
-    /** Whether concatenate calls should fail. */
-    public static boolean s_concatFails = false;
+	/** Number of add calls. */
+	public static int s_numberOfAddCalls = 0;
+	
+	/** Number of concatenate calls. */
+	public static int s_numberOfConcatCalls = 0;
+	
+	/** Whether concatenate calls should fail. */
+	public static boolean s_concatFails = false;
 
-    /** Resets the call counters. */
-    public static void reset() {
-        s_numberOfAddCalls = 0;
-        s_numberOfConcatCalls = 0;
-        s_concatFails = false;
-    }
-    
-    /**
-     * Concatenates the given three strings.
-     *  
-     * @param a The first string.
-     * @param b The second string.
-     * @return Returns the concatenation of the given three strings.
-     */
-    public String concat(String a, String b) {
-        s_numberOfConcatCalls++;
-        if (s_concatFails) {
-            throw new UnsupportedOperationException();
-        } else {
-            return a.concat(b);
-        }
-    }
+	/** Resets the call counters. */
+	public static void reset() {
+		s_numberOfAddCalls = 0;
+		s_numberOfConcatCalls = 0;
+		s_concatFails = false;
+	}
+	
+	/**
+	 * Concatenates the given three strings.
+	 *
+	 * @param a The first string.
+	 * @param b The second string.
+	 * @return Returns the concatenation of the given three strings.
+	 */
+	public String concat(String a, String b) {
+		s_numberOfConcatCalls++;
+		if (s_concatFails) {
+			throw new UnsupportedOperationException();
+		} else {
+			return a.concat(b);
+		}
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public int add(int a, int b) {
-        s_numberOfAddCalls++;
-        throw new UnsupportedOperationException(); 
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public int add(int a, int b) {
+		s_numberOfAddCalls++;
+		throw new UnsupportedOperationException();
+	}
 }

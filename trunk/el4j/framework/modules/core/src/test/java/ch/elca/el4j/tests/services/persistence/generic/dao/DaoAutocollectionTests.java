@@ -27,27 +27,27 @@ import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
 
 public class DaoAutocollectionTests {
 
-    @Test
-    public void testDaoAutocollection() {
-        ApplicationContext ac = 
-            new ClassPathXmlApplicationContext(new String[] {"scenarios/core/dao/springConfig.xml"});
-        
-        //System.out.println("beans: "+StringUtils.arrayToCommaDelimitedString(ac.getBeanDefinitionNames()));
-        
-        DaoRegistry registry = (DaoRegistry)ac.getBean("registry");
-        
-        GenericDao<?> dao = registry.getFor(String.class);
-        //System.out.println("registry: "+DataDumper.dump(((DefaultDaoRegistry)registry).getDaos()));
-        
-        dao = registry.getFor(String.class);
-        assertTrue(dao != null);
-        assertTrue(dao instanceof Dao1);
-        
-        dao = registry.getFor(Long.class);
-        assertTrue(dao != null);
-        assertTrue(dao instanceof Dao2);        
-        
-        assertTrue(ac.getBeanNamesForType(GenericDao.class).length == 2);
-    }
-    
+	@Test
+	public void testDaoAutocollection() {
+		ApplicationContext ac =
+			new ClassPathXmlApplicationContext(new String[] {"scenarios/core/dao/springConfig.xml"});
+		
+		//System.out.println("beans: "+StringUtils.arrayToCommaDelimitedString(ac.getBeanDefinitionNames()));
+		
+		DaoRegistry registry = (DaoRegistry)ac.getBean("registry");
+		
+		GenericDao<?> dao = registry.getFor(String.class);
+		//System.out.println("registry: "+DataDumper.dump(((DefaultDaoRegistry)registry).getDaos()));
+		
+		dao = registry.getFor(String.class);
+		assertTrue(dao != null);
+		assertTrue(dao instanceof Dao1);
+		
+		dao = registry.getFor(Long.class);
+		assertTrue(dao != null);
+		assertTrue(dao instanceof Dao2);
+		
+		assertTrue(ac.getBeanNamesForType(GenericDao.class).length == 2);
+	}
+	
 }

@@ -20,23 +20,23 @@ package ch.elca.el4j.util.metadata;
 /**
  * Interface to be implemented by an interceptor object that wishes to be
  * notified of the MetaDataSource.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Raphael Boog (RBO)
  */
 public interface MetaDataSourceAware {
-    /**
-     * Set the MetaDataSource that this interceptor takes the attributes from.
-     * 
-     * @param metaDataSource
-     *            The metaDataSource to be set
-     */
-    public void setMetaDataSource(GenericMetaDataSource metaDataSource);
+	/**
+	 * Set the MetaDataSource that this interceptor takes the attributes from.
+	 *
+	 * @param metaDataSource
+	 *            The metaDataSource to be set
+	 */
+	public void setMetaDataSource(GenericMetaDataSource metaDataSource);
 
 }

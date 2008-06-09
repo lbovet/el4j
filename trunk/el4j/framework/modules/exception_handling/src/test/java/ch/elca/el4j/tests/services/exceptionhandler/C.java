@@ -31,19 +31,19 @@ package ch.elca.el4j.tests.services.exceptionhandler;
  */
 public class C implements Adder {
 
-    /** Number of calls. */
-    public static int s_numberOfAddCalls = 0;
-    
-    /** Resets the counters. */
-    public static void reset() {
-        s_numberOfAddCalls = 0;
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public int add(int a, int b) {
-        s_numberOfAddCalls++;
-        return a + b;
-    }
+	/** Number of calls. */
+	public static int s_numberOfAddCalls = 0;
+	
+	/** Resets the counters. */
+	public static void reset() {
+		s_numberOfAddCalls = 0;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public int add(int a, int b) {
+		s_numberOfAddCalls++;
+		return a + b;
+	}
 }

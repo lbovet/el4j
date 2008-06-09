@@ -39,7 +39,7 @@ import ch.elca.el4j.services.search.criterias.OrCriteria;
 import ch.elca.el4j.services.search.criterias.Order;
 
 /**
- * 
+ *
  * This class transforms the EL4J Criteria of a given <code>QueryObject</code>
  * into the corresponding Hibernate DetachedCriteria.
  *
@@ -55,160 +55,160 @@ import ch.elca.el4j.services.search.criterias.Order;
  */
 public class CriteriaTransformer {
 
-    private static Log s_logger = LogFactory.getLog(CriteriaTransformer.class);    
-    
-    /**
-     * Hide default constructor.
-     */
-    protected CriteriaTransformer() { };
-    
-    /**
-     * Transforms EL4J Criteria of the given <code>QueryObject</code> into the
-     * corresponding Hibernate DetachedCriteria.
-     * 
-     * @param query
-     *            the query object whose criteria will be transformed
-     * @param domainObjectClass
-     *            the class of the domain object for which the Hibernate
-     *            criteria will be generated
-     * @return the Hibernate criteria corresponding to the
-     *         <code>QueryObject</code>'s EL4J criteria.
-     */
-    public static DetachedCriteria transform(QueryObject query,
-        Class<?> domainObjectClass) {
-        
-        // Hibernate criteria for the domain object.
-        DetachedCriteria hibernateCriteria
-            = DetachedCriteria.forClass(domainObjectClass);
-        
-        // List of EL4J criteria.
-        List<Criteria> el4jCriteriaList = query.getCriteriaList();
-        
-        // Conversion from EL4J criteria to Hibernate criteria.
-        Iterator<Criteria> it = el4jCriteriaList.iterator();
-                      
-        while (it.hasNext()) {
-            Criteria currentEl4jCriteria = (Criteria) it.next();
-            
-            Criterion hibernateCriterion = 
-                el4jCriteria2HibernateCriterion(currentEl4jCriteria);
-            if (hibernateCriterion != null) {
-                hibernateCriteria.add(hibernateCriterion);
-            }
-        }
-        
-        addOrderConstraints(hibernateCriteria, query);
-        
-        return hibernateCriteria;
-    }
+	private static Log s_logger = LogFactory.getLog(CriteriaTransformer.class);
+	
+	/**
+	 * Hide default constructor.
+	 */
+	protected CriteriaTransformer() { };
+	
+	/**
+	 * Transforms EL4J Criteria of the given <code>QueryObject</code> into the
+	 * corresponding Hibernate DetachedCriteria.
+	 *
+	 * @param query
+	 *            the query object whose criteria will be transformed
+	 * @param domainObjectClass
+	 *            the class of the domain object for which the Hibernate
+	 *            criteria will be generated
+	 * @return the Hibernate criteria corresponding to the
+	 *         <code>QueryObject</code>'s EL4J criteria.
+	 */
+	public static DetachedCriteria transform(QueryObject query,
+		Class<?> domainObjectClass) {
+		
+		// Hibernate criteria for the domain object.
+		DetachedCriteria hibernateCriteria
+			= DetachedCriteria.forClass(domainObjectClass);
+		
+		// List of EL4J criteria.
+		List<Criteria> el4jCriteriaList = query.getCriteriaList();
+		
+		// Conversion from EL4J criteria to Hibernate criteria.
+		Iterator<Criteria> it = el4jCriteriaList.iterator();
+		
+		while (it.hasNext()) {
+			Criteria currentEl4jCriteria = (Criteria) it.next();
+			
+			Criterion hibernateCriterion =
+				el4jCriteria2HibernateCriterion(currentEl4jCriteria);
+			if (hibernateCriterion != null) {
+				hibernateCriteria.add(hibernateCriterion);
+			}
+		}
+		
+		addOrderConstraints(hibernateCriteria, query);
+		
+		return hibernateCriteria;
+	}
 
-    protected static void addOrderConstraints (DetachedCriteria hibernateCriteria,
-        QueryObject query) {
-        
-        List<Order> orderConstraints = query.getOrderConstraints();
-        for (Order o : orderConstraints){
-            if (o.isAscending()) {
-                hibernateCriteria.addOrder(org.hibernate.criterion.Order.asc(o.getPropertyName()));
-            } else {
-                hibernateCriteria.addOrder(org.hibernate.criterion.Order.desc(o.getPropertyName()));                
-            }
-        }
-        
-    }
-    
-    
-    /**
-     * Converts EL4J Criteria to Hibernate Criterion
-     * @param criteria
-     * @return the converted Criterion
-     */
-    protected static Criterion el4jCriteria2HibernateCriterion(Criteria criteria) {
-        Criterion criterion = null;
-        
-        if (criteria instanceof OrCriteria) {
-            Junction combination = Restrictions.disjunction();
-            
-            addCriteriaListToJunction(((OrCriteria)criteria).getCriterias(), combination);
-            criterion = combination;
-        } else if (criteria instanceof AndCriteria) {
-            Junction combination = Restrictions.conjunction();
-            
-            addCriteriaListToJunction(((AndCriteria)criteria).getCriterias(), combination);
-            criterion = combination;
-        } else if (criteria instanceof NotCriteria) {
-            Criteria innerCriteria = ((NotCriteria)criteria).getCriteria();
-            criterion = Restrictions.not(el4jCriteria2HibernateCriterion(innerCriteria));
-        } else if (criteria instanceof AbstractCriteria) {
-            AbstractCriteria abstractCrit = (AbstractCriteria) criteria;
-            
-            String currentCriteriaField = abstractCrit.getField();
-            Object currentCriteriaValue = abstractCrit.getValue();
+	protected static void addOrderConstraints (DetachedCriteria hibernateCriteria,
+		QueryObject query) {
+		
+		List<Order> orderConstraints = query.getOrderConstraints();
+		for (Order o : orderConstraints){
+			if (o.isAscending()) {
+				hibernateCriteria.addOrder(org.hibernate.criterion.Order.asc(o.getPropertyName()));
+			} else {
+				hibernateCriteria.addOrder(org.hibernate.criterion.Order.desc(o.getPropertyName()));
+			}
+		}
+		
+	}
+	
+	
+	/**
+	 * Converts EL4J Criteria to Hibernate Criterion
+	 * @param criteria
+	 * @return the converted Criterion
+	 */
+	protected static Criterion el4jCriteria2HibernateCriterion(Criteria criteria) {
+		Criterion criterion = null;
+		
+		if (criteria instanceof OrCriteria) {
+			Junction combination = Restrictions.disjunction();
+			
+			addCriteriaListToJunction(((OrCriteria)criteria).getCriterias(), combination);
+			criterion = combination;
+		} else if (criteria instanceof AndCriteria) {
+			Junction combination = Restrictions.conjunction();
+			
+			addCriteriaListToJunction(((AndCriteria)criteria).getCriterias(), combination);
+			criterion = combination;
+		} else if (criteria instanceof NotCriteria) {
+			Criteria innerCriteria = ((NotCriteria)criteria).getCriteria();
+			criterion = Restrictions.not(el4jCriteria2HibernateCriterion(innerCriteria));
+		} else if (criteria instanceof AbstractCriteria) {
+			AbstractCriteria abstractCrit = (AbstractCriteria) criteria;
+			
+			String currentCriteriaField = abstractCrit.getField();
+			Object currentCriteriaValue = abstractCrit.getValue();
 
-            if (criteria instanceof LikeCriteria) {
-                LikeCriteria currentEl4jLikeCriteria = (LikeCriteria) criteria;
-                if (currentEl4jLikeCriteria.isCaseSensitive().booleanValue()) {
-                    criterion = Expression.like(currentCriteriaField,
-                        currentCriteriaValue);
-                } else {
-                    criterion = Expression.like(currentCriteriaField,
-                        currentCriteriaValue).ignoreCase();
-                }
-            } else if (criteria instanceof ComparisonCriteria) {
-                String operator = ((ComparisonCriteria)criteria).getOperator();
-                if (operator.equals("=")){
-                    criterion = Expression.eq(currentCriteriaField,
-                                        currentCriteriaValue);
-                } else if (operator.equals("<")){
-                    criterion = Expression.lt(currentCriteriaField,
-                        currentCriteriaValue);
-                } else if (operator.equals("<=")){
-                    criterion = Expression.le(currentCriteriaField,
-                        currentCriteriaValue);
-                } else if (operator.equals(">")){
-                    criterion = Expression.gt(currentCriteriaField,
-                        currentCriteriaValue);
-                } else if (operator.equals(">=")){
-                    criterion = Expression.ge(currentCriteriaField,
-                        currentCriteriaValue);
-                } else if (operator.equals("!=")){
-                    criterion = Expression.ne(currentCriteriaField,
-                        currentCriteriaValue);
-                }else {
-                    s_logger.info(" Operator not handled "+operator);                    
-                }
-                
-            } else {
-                s_logger.info(" Criteria not handled "+criteria);
-            }
-        } else {
-            s_logger.info(" Criteria not handled "+criteria);
-        }
-        return criterion;
-    }
+			if (criteria instanceof LikeCriteria) {
+				LikeCriteria currentEl4jLikeCriteria = (LikeCriteria) criteria;
+				if (currentEl4jLikeCriteria.isCaseSensitive().booleanValue()) {
+					criterion = Expression.like(currentCriteriaField,
+						currentCriteriaValue);
+				} else {
+					criterion = Expression.like(currentCriteriaField,
+						currentCriteriaValue).ignoreCase();
+				}
+			} else if (criteria instanceof ComparisonCriteria) {
+				String operator = ((ComparisonCriteria)criteria).getOperator();
+				if (operator.equals("=")){
+					criterion = Expression.eq(currentCriteriaField,
+										currentCriteriaValue);
+				} else if (operator.equals("<")){
+					criterion = Expression.lt(currentCriteriaField,
+						currentCriteriaValue);
+				} else if (operator.equals("<=")){
+					criterion = Expression.le(currentCriteriaField,
+						currentCriteriaValue);
+				} else if (operator.equals(">")){
+					criterion = Expression.gt(currentCriteriaField,
+						currentCriteriaValue);
+				} else if (operator.equals(">=")){
+					criterion = Expression.ge(currentCriteriaField,
+						currentCriteriaValue);
+				} else if (operator.equals("!=")){
+					criterion = Expression.ne(currentCriteriaField,
+						currentCriteriaValue);
+				}else {
+					s_logger.info(" Operator not handled "+operator);
+				}
+				
+			} else {
+				s_logger.info(" Criteria not handled "+criteria);
+			}
+		} else {
+			s_logger.info(" Criteria not handled "+criteria);
+		}
+		return criterion;
+	}
 
-    /**
-     * @param currentEl4jCriteria
-     * @param combination
-     */
-    protected static void addCriteriaListToJunction(
-        List<Criteria> criterias, Junction combination) {
-        for (Criterion c : apply2HibernateCriterion(criterias)) {
-            combination.add(c);
-        }
-    }
-    
-    /** 
-     * Apply operator (from functional programming) 
-     * @param criterias must not be null
-     * @return
-     */
-    protected static Criterion[] apply2HibernateCriterion(List<Criteria> criterias ){
-        Criterion[] result = new Criterion[criterias.size()];
-        
-        for (int i = 0; i < criterias.size(); i++) {
-            result[i] = el4jCriteria2HibernateCriterion(criterias.get(i));
-        }
-        return result;
-    }    
-    
+	/**
+	 * @param currentEl4jCriteria
+	 * @param combination
+	 */
+	protected static void addCriteriaListToJunction(
+		List<Criteria> criterias, Junction combination) {
+		for (Criterion c : apply2HibernateCriterion(criterias)) {
+			combination.add(c);
+		}
+	}
+	
+	/**
+	 * Apply operator (from functional programming)
+	 * @param criterias must not be null
+	 * @return
+	 */
+	protected static Criterion[] apply2HibernateCriterion(List<Criteria> criterias ){
+		Criterion[] result = new Criterion[criterias.size()];
+		
+		for (int i = 0; i < criterias.size(); i++) {
+			result[i] = el4jCriteria2HibernateCriterion(criterias.get(i));
+		}
+		return result;
+	}
+	
 }

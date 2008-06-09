@@ -32,91 +32,91 @@ import ch.elca.el4j.services.xmlmerge.OperationFactory;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public class DiffOperationFactory implements OperationFactory {
 
-    /**
-     * OperationFactory this factory delegates to if only the original element
-     * exists.
-     */
-    OperationFactory m_onlyInOriginalOperationFactory;
+	/**
+	 * OperationFactory this factory delegates to if only the original element
+	 * exists.
+	 */
+	OperationFactory m_onlyInOriginalOperationFactory;
 
-    /**
-     * OperationFactory this factory delegates to if only the patch element
-     * exists.
-     */
-    OperationFactory m_onlyInPatchOperationFactory;
+	/**
+	 * OperationFactory this factory delegates to if only the patch element
+	 * exists.
+	 */
+	OperationFactory m_onlyInPatchOperationFactory;
 
-    /**
-     * OperationFactory this factory delegates to if the original and patch
-     * elements exist.
-     */
-    OperationFactory m_inBothOperationFactory;
+	/**
+	 * OperationFactory this factory delegates to if the original and patch
+	 * elements exist.
+	 */
+	OperationFactory m_inBothOperationFactory;
 
-    /**
-     * Sets the operation factory this factory delegates to if the original and
-     * patch elements exist.
-     * 
-     * @param inBothOperationFactory
-     *            the operation factory this factory delegates to if the
-     *            original and patch elements exist.
-     */
-    public void setInBothOperationFactory(
-        OperationFactory inBothOperationFactory) {
-        this.m_inBothOperationFactory = inBothOperationFactory;
-    }
+	/**
+	 * Sets the operation factory this factory delegates to if the original and
+	 * patch elements exist.
+	 *
+	 * @param inBothOperationFactory
+	 *            the operation factory this factory delegates to if the
+	 *            original and patch elements exist.
+	 */
+	public void setInBothOperationFactory(
+		OperationFactory inBothOperationFactory) {
+		this.m_inBothOperationFactory = inBothOperationFactory;
+	}
 
-    /**
-     * Sets the operation factory this factory delegates to if only the original
-     * element exists.
-     * 
-     * @param onlyInOriginalOperationFactory
-     *            factory this factory delegates to if only the original element
-     *            exists
-     */
-    public void setOnlyInOriginalOperationFactory(
-        OperationFactory onlyInOriginalOperationFactory) {
-        this.m_onlyInOriginalOperationFactory = onlyInOriginalOperationFactory;
-    }
+	/**
+	 * Sets the operation factory this factory delegates to if only the original
+	 * element exists.
+	 *
+	 * @param onlyInOriginalOperationFactory
+	 *            factory this factory delegates to if only the original element
+	 *            exists
+	 */
+	public void setOnlyInOriginalOperationFactory(
+		OperationFactory onlyInOriginalOperationFactory) {
+		this.m_onlyInOriginalOperationFactory = onlyInOriginalOperationFactory;
+	}
 
-    /**
-     * Sets the operation factory this factory delegates to if only the patch
-     * element exists.
-     * 
-     * @param onlyInPatchOperationFactory
-     *            factory this factory delegates to if only the patch element
-     *            exists
-     */
-    public void setOnlyInPatchOperationFactory(
-        OperationFactory onlyInPatchOperationFactory) {
-        this.m_onlyInPatchOperationFactory = onlyInPatchOperationFactory;
-    }
+	/**
+	 * Sets the operation factory this factory delegates to if only the patch
+	 * element exists.
+	 *
+	 * @param onlyInPatchOperationFactory
+	 *            factory this factory delegates to if only the patch element
+	 *            exists
+	 */
+	public void setOnlyInPatchOperationFactory(
+		OperationFactory onlyInPatchOperationFactory) {
+		this.m_onlyInPatchOperationFactory = onlyInPatchOperationFactory;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Operation getOperation(Element originalElement, Element patchElement)
-        throws AbstractXmlMergeException {
+	/**
+	 * {@inheritDoc}
+	 */
+	public Operation getOperation(Element originalElement, Element patchElement)
+		throws AbstractXmlMergeException {
 
-        if (originalElement != null && patchElement == null) {
-            return m_onlyInOriginalOperationFactory.getOperation(
-                originalElement, patchElement);
-        }
+		if (originalElement != null && patchElement == null) {
+			return m_onlyInOriginalOperationFactory.getOperation(
+				originalElement, patchElement);
+		}
 
-        if (originalElement == null && patchElement != null) {
-            return m_onlyInPatchOperationFactory.getOperation(originalElement,
-                patchElement);
-        }
+		if (originalElement == null && patchElement != null) {
+			return m_onlyInPatchOperationFactory.getOperation(originalElement,
+				patchElement);
+		}
 
-        if (originalElement != null && patchElement != null) {
-            return m_inBothOperationFactory.getOperation(originalElement,
-                patchElement);
-        }
+		if (originalElement != null && patchElement != null) {
+			return m_inBothOperationFactory.getOperation(originalElement,
+				patchElement);
+		}
 
-        throw new IllegalArgumentException();
-    }
+		throw new IllegalArgumentException();
+	}
 
 }

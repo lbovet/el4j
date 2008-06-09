@@ -43,75 +43,75 @@ import ch.elca.el4j.util.metadata.DefaultGenericMetaDataSource;
  *
  * @author Martin Zeltner (MZE)
  */
-public class TransactionMetaDataSource 
-    extends DefaultGenericMetaDataSource 
-    implements TransactionAttributeSource, InitializingBean {
+public class TransactionMetaDataSource
+	extends DefaultGenericMetaDataSource
+	implements TransactionAttributeSource, InitializingBean {
 
-    /**
-     * {@inheritDoc}
-     */
-    public TransactionAttribute getTransactionAttribute(
-        Method method, Class targetClass) {
-        Collection c = getMetaData(method, targetClass);
-        if (CollectionUtils.isEmpty(c)) {
-            return null;
-        } else {
-            return (TransactionAttribute) c.iterator().next();
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public TransactionAttribute getTransactionAttribute(
+		Method method, Class targetClass) {
+		Collection c = getMetaData(method, targetClass);
+		if (CollectionUtils.isEmpty(c)) {
+			return null;
+		} else {
+			return (TransactionAttribute) c.iterator().next();
+		}
+	}
 
-    /**
-     * Checks the given rule based rollback attribute and corrects the 
-     * rollback rule if necessary. 
-     * 
-     * @param rbta Is the rule based rollback attribute to finalize.
-     */
-    @SuppressWarnings("unchecked")
-    protected void finalizeRollbackBehavior(
-        RuleBasedTransactionAttribute rbta) {
-        /**
-         * If no no-rollback-rule for error/runtime-exception is defined
-         * add the rollback-rule for error/runtime-exception.
-         */
-        RollbackRuleAttribute rollbackRuleRuntimeException
-            = new RollbackRuleAttribute(RuntimeException.class);
-        String rollbackRuleRuntimeExceptionName 
-            = rollbackRuleRuntimeException.getExceptionName();
-        boolean useRollbackRuleRuntimeException = true;
-        
-        RollbackRuleAttribute rollbackRuleError
-            = new RollbackRuleAttribute(Error.class);
-        String rollbackRuleErrorName 
-            = rollbackRuleError.getExceptionName();
-        boolean useRollbackRuleError = true;
-        
-        List<RollbackRuleAttribute> allRules = rbta.getRollbackRules();
-        for (RollbackRuleAttribute rule : allRules) {
-            if (rule instanceof NoRollbackRuleAttribute) {
-                String name = rule.getExceptionName();
-                if (rollbackRuleRuntimeExceptionName.equals(name)) {
-                    useRollbackRuleRuntimeException = false;
-                } else if (rollbackRuleErrorName.equals(name)) {
-                    useRollbackRuleError = false;
-                }
-            }
-        }
-        
-        if (useRollbackRuleRuntimeException) {
-            allRules.add(
-                new RollbackRuleAttribute(RuntimeException.class));
-        }
-        if (useRollbackRuleError) {
-            allRules.add(
-                new RollbackRuleAttribute(Error.class));
-        }
-    }
+	/**
+	 * Checks the given rule based rollback attribute and corrects the
+	 * rollback rule if necessary.
+	 *
+	 * @param rbta Is the rule based rollback attribute to finalize.
+	 */
+	@SuppressWarnings("unchecked")
+	protected void finalizeRollbackBehavior(
+		RuleBasedTransactionAttribute rbta) {
+		/**
+		 * If no no-rollback-rule for error/runtime-exception is defined
+		 * add the rollback-rule for error/runtime-exception.
+		 */
+		RollbackRuleAttribute rollbackRuleRuntimeException
+			= new RollbackRuleAttribute(RuntimeException.class);
+		String rollbackRuleRuntimeExceptionName
+			= rollbackRuleRuntimeException.getExceptionName();
+		boolean useRollbackRuleRuntimeException = true;
+		
+		RollbackRuleAttribute rollbackRuleError
+			= new RollbackRuleAttribute(Error.class);
+		String rollbackRuleErrorName
+			= rollbackRuleError.getExceptionName();
+		boolean useRollbackRuleError = true;
+		
+		List<RollbackRuleAttribute> allRules = rbta.getRollbackRules();
+		for (RollbackRuleAttribute rule : allRules) {
+			if (rule instanceof NoRollbackRuleAttribute) {
+				String name = rule.getExceptionName();
+				if (rollbackRuleRuntimeExceptionName.equals(name)) {
+					useRollbackRuleRuntimeException = false;
+				} else if (rollbackRuleErrorName.equals(name)) {
+					useRollbackRuleError = false;
+				}
+			}
+		}
+		
+		if (useRollbackRuleRuntimeException) {
+			allRules.add(
+				new RollbackRuleAttribute(RuntimeException.class));
+		}
+		if (useRollbackRuleError) {
+			allRules.add(
+				new RollbackRuleAttribute(Error.class));
+		}
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void afterPropertiesSet() throws Exception {
-        CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-            getMetaDataDelegator(), "metaDataDelegator", this);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void afterPropertiesSet() throws Exception {
+		CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+			getMetaDataDelegator(), "metaDataDelegator", this);
+	}
 }

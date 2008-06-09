@@ -32,51 +32,51 @@ package ch.elca.el4j.core.exceptions;
  * @see org.springframework.dao.OptimisticLockingFailureException
  */
 public class ObjectModificationException extends BaseException {
-    /**
-     * Message, which has to be formated.
-     */
-    public static final String EXCEPTION_MESSAGE_OBJECTMODIFICATION 
-        = "{0} was modificated or deleted since meantime.";
+	/**
+	 * Message, which has to be formated.
+	 */
+	public static final String EXCEPTION_MESSAGE_OBJECTMODIFICATION
+		= "{0} was modificated or deleted since meantime.";
 
-    /**
-     * Name of the object, where the exception occured.
-     */
-    protected String m_objectName;
+	/**
+	 * Name of the object, where the exception occured.
+	 */
+	protected String m_objectName;
 
-    /**
-     * Constructor.
-     * 
-     * @param objectName
-     *            Is the name of the object, where the exception occured.
-     */
-    public ObjectModificationException(String objectName) {
-        this(objectName, (Throwable) null);
-    }
+	/**
+	 * Constructor.
+	 *
+	 * @param objectName
+	 *            Is the name of the object, where the exception occured.
+	 */
+	public ObjectModificationException(String objectName) {
+		this(objectName, (Throwable) null);
+	}
 
-    /**
-     * Constructor.
-     * 
-     * @param objectName
-     *            Is the name of the object, where the exception occured.
-     * @param cause
-     *            Is the cause for this exception.
-     */
-    public ObjectModificationException(String objectName, Throwable cause) {
-        super(EXCEPTION_MESSAGE_OBJECTMODIFICATION, cause);
-        m_objectName = objectName;
-    }
+	/**
+	 * Constructor.
+	 *
+	 * @param objectName
+	 *            Is the name of the object, where the exception occured.
+	 * @param cause
+	 *            Is the cause for this exception.
+	 */
+	public ObjectModificationException(String objectName, Throwable cause) {
+		super(EXCEPTION_MESSAGE_OBJECTMODIFICATION, cause);
+		m_objectName = objectName;
+	}
 
-    /**
-     * @return Returns the objectName.
-     */
-    public String getObjectName() {
-        return m_objectName;
-    }
+	/**
+	 * @return Returns the objectName.
+	 */
+	public String getObjectName() {
+		return m_objectName;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object[] getFormatParameters() {
-        return new Object[] {m_objectName};
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object[] getFormatParameters() {
+		return new Object[] {m_objectName};
+	}
 }

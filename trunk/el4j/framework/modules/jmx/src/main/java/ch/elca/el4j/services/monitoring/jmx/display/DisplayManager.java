@@ -29,22 +29,22 @@ package ch.elca.el4j.services.monitoring.jmx.display;
  * @author David Bernhard (DBD)
  */
 public interface DisplayManager {
-    
-    /**
-     * Sets the tile of the page to display.
-     * @param title The title.
-     */
-    public void setTitle(String title);
-    
-    /**
-     * Adds a section.
-     * @param section The section to add.
-     */
-    public void addSection(Section section);
-    
-    /**
-     * @return The page generated from the added content.
-     */
-    public String getPage();
+	
+	/**
+	 * Sets the tile of the page to display.
+	 * @param title The title.
+	 */
+	public void setTitle(String title);
+	
+	/**
+	 * Adds a section.
+	 * @param section The section to add.
+	 */
+	public void addSection(Section section);
+	
+	/**
+	 * @return The page generated from the added content.
+	 */
+	public String getPage();
 
 }

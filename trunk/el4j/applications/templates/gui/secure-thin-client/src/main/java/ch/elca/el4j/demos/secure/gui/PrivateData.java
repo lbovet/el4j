@@ -19,7 +19,7 @@ package ch.elca.el4j.demos.secure.gui;
 import org.acegisecurity.annotation.Secured;
 
 /**
- * This class is used to test access restricion unsing 
+ * This class is used to test access restricion unsing
  * acegis '@Secured' annotation.
  *
  * <script type="text/javascript">printFileStatus
@@ -32,16 +32,16 @@ import org.acegisecurity.annotation.Secured;
  * @author Stefan Wismer (SWI)
  */
 public class PrivateData {
-    
-    // @RolesAllowed will work only in acegi 2.0
-    
-    
-    /**
-     * @return    "Access granted" if successful
-     */
-    //@RolesAllowed({ "ROLE_SUPERUSER" })
-    @Secured({ "ROLE_SUPERUSER" })
-    public String getSecret() {
-        return "Access granted";
-    }
+	
+	// @RolesAllowed will work only in acegi 2.0
+	
+	
+	/**
+	 * @return    "Access granted" if successful
+	 */
+	//@RolesAllowed({ "ROLE_SUPERUSER" })
+	@Secured({ "ROLE_SUPERUSER" })
+	public String getSecret() {
+		return "Access granted";
+	}
 }

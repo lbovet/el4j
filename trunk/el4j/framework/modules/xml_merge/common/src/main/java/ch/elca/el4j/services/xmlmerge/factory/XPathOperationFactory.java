@@ -40,85 +40,85 @@ import ch.elca.el4j.services.xmlmerge.OperationFactory;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public class XPathOperationFactory implements OperationFactory {
 
-    /**
-     * A map containing configuration properties.
-     */
-    Map m_map = new HashMap();
+	/**
+	 * A map containing configuration properties.
+	 */
+	Map m_map = new HashMap();
 
-    /**
-     * The default operation returned by this factory.
-     */
-    Operation m_defaultOperation;
+	/**
+	 * The default operation returned by this factory.
+	 */
+	Operation m_defaultOperation;
 
-    /**
-     * Sets the factory's map containing configuration properties.
-     * 
-     * @param map
-     *            A map containing configuration properties.
-     */
-    public void setOperationMap(Map map) {
-        this.m_map = map;
-    }
+	/**
+	 * Sets the factory's map containing configuration properties.
+	 *
+	 * @param map
+	 *            A map containing configuration properties.
+	 */
+	public void setOperationMap(Map map) {
+		this.m_map = map;
+	}
 
-    /**
-     * Sets the default operation returned by this factory.
-     * @param operation The default operation returned by this factory.
-     */
-    public void setDefaultOperation(Operation operation) {
-        this.m_defaultOperation = operation;
-    }
+	/**
+	 * Sets the default operation returned by this factory.
+	 * @param operation The default operation returned by this factory.
+	 */
+	public void setDefaultOperation(Operation operation) {
+		this.m_defaultOperation = operation;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Operation getOperation(Element originalElement, Element patchElement)
-        throws AbstractXmlMergeException {
-        Iterator it = m_map.keySet().iterator();
-        while (it.hasNext()) {
-            String xPath = (String) it.next();
-            if (matches(originalElement, xPath) || matches(patchElement,
-                xPath)) {
-                return (Operation) m_map.get(xPath);
-            }
-        }
-        return m_defaultOperation;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Operation getOperation(Element originalElement, Element patchElement)
+		throws AbstractXmlMergeException {
+		Iterator it = m_map.keySet().iterator();
+		while (it.hasNext()) {
+			String xPath = (String) it.next();
+			if (matches(originalElement, xPath) || matches(patchElement,
+				xPath)) {
+				return (Operation) m_map.get(xPath);
+			}
+		}
+		return m_defaultOperation;
+	}
 
-    /**
-     * Detects whether the given element matches the given XPath string.
-     * 
-     * @param element
-     *            The element which will be checked
-     * @param xPathString
-     *            The XPath expression the element will be checked against
-     * @return True if the given element matches the given XPath string
-     * @throws AbstractXmlMergeException
-     *             If an error occurred during the matching process
-     */
-    private boolean matches(Element element, String xPathString)
-        throws AbstractXmlMergeException {
+	/**
+	 * Detects whether the given element matches the given XPath string.
+	 *
+	 * @param element
+	 *            The element which will be checked
+	 * @param xPathString
+	 *            The XPath expression the element will be checked against
+	 * @return True if the given element matches the given XPath string
+	 * @throws AbstractXmlMergeException
+	 *             If an error occurred during the matching process
+	 */
+	private boolean matches(Element element, String xPathString)
+		throws AbstractXmlMergeException {
 
-        if (element == null) {
-            return false;
-        }
+		if (element == null) {
+			return false;
+		}
 
-        try {
-            JDOMXPath xPath = new JDOMXPath(xPathString);
+		try {
+			JDOMXPath xPath = new JDOMXPath(xPathString);
 
-            boolean result = xPath.selectNodes(element.getParent()).contains(
-                element);
+			boolean result = xPath.selectNodes(element.getParent()).contains(
+				element);
 
-            return result;
+			return result;
 
-        } catch (JaxenException e) {
-            throw new MatchException(element, e);
-        }
-    }
+		} catch (JaxenException e) {
+			throw new MatchException(element, e);
+		}
+	}
 
 }

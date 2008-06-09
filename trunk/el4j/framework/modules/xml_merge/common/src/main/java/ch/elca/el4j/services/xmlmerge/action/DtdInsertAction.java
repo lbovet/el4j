@@ -59,204 +59,204 @@ import ch.elca.el4j.services.xmlmerge.XmlMergeContext;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public class DtdInsertAction implements Action {
 
-    /**
-     * Map containing (ID, DTD) pairs, where ID represents the system ID of a 
-     * DTD, and DTD represents the corresponding DTD.
-     */
-    static Map s_dtdMap = new Hashtable();
-    
-    /**
-     * Private logger.
-     */
-    private static Log s_logger 
-        = LogFactory.getLog(DtdInsertAction.class);
-        
-    /**
-     * {@inheritDoc}
-     */
-    public void perform(Element originalElement, Element patchElement,
-        Element outputParentElement) throws AbstractXmlMergeException {
+	/**
+	 * Map containing (ID, DTD) pairs, where ID represents the system ID of a
+	 * DTD, and DTD represents the corresponding DTD.
+	 */
+	static Map s_dtdMap = new Hashtable();
+	
+	/**
+	 * Private logger.
+	 */
+	private static Log s_logger
+		= LogFactory.getLog(DtdInsertAction.class);
+		
+	/**
+	 * {@inheritDoc}
+	 */
+	public void perform(Element originalElement, Element patchElement,
+		Element outputParentElement) throws AbstractXmlMergeException {
 
-        Element element;
+		Element element;
 
-        if (originalElement != null) {
-            element = (Element) originalElement.clone();
-        } else {
-            element = (Element) patchElement.clone();
-        }
+		if (originalElement != null) {
+			element = (Element) originalElement.clone();
+		} else {
+			element = (Element) patchElement.clone();
+		}
 
-        DTD dtd = getDTD(outputParentElement);
+		DTD dtd = getDTD(outputParentElement);
 
-        List dtdElements = dtd.getItemsByType(DTDElement.class);
+		List dtdElements = dtd.getItemsByType(DTDElement.class);
 
-        // Find the corresponding element
-        DTDElement parentDtdElement = null;
-        for (Iterator it = dtdElements.iterator(); it.hasNext();) {
-            DTDElement dtdElement = (DTDElement) it.next();
+		// Find the corresponding element
+		DTDElement parentDtdElement = null;
+		for (Iterator it = dtdElements.iterator(); it.hasNext();) {
+			DTDElement dtdElement = (DTDElement) it.next();
 
-            if (dtdElement.getName().equals(outputParentElement.getName())) {
-                parentDtdElement = dtdElement;
-            }
-        }
+			if (dtdElement.getName().equals(outputParentElement.getName())) {
+				parentDtdElement = dtdElement;
+			}
+		}
 
-        if (parentDtdElement == null) {
-            throw new ElementException(element, "Element "
-                + outputParentElement.getName() + " not defined in DTD");
-        } else {
+		if (parentDtdElement == null) {
+			throw new ElementException(element, "Element "
+				+ outputParentElement.getName() + " not defined in DTD");
+		} else {
 
-            DTDItem item = parentDtdElement.getContent();
+			DTDItem item = parentDtdElement.getContent();
 
-            if (item instanceof DTDAny) {
-                // the parent element accepts anything in any order
-                outputParentElement.addContent(element);
-            } else if (item instanceof DTDContainer) {
+			if (item instanceof DTDAny) {
+				// the parent element accepts anything in any order
+				outputParentElement.addContent(element);
+			} else if (item instanceof DTDContainer) {
 
-                // List existing elements in output parent element
-                List existingChildren = outputParentElement.getChildren();
+				// List existing elements in output parent element
+				List existingChildren = outputParentElement.getChildren();
 
-                if (existingChildren.size() == 0) {
-                    // This is the first child
-                    outputParentElement.addContent(element);
-                } else {
+				if (existingChildren.size() == 0) {
+					// This is the first child
+					outputParentElement.addContent(element);
+				} else {
 
-                    List orderedDtdElements = getOrderedDtdElements(
-                        (DTDContainer) item);
+					List orderedDtdElements = getOrderedDtdElements(
+						(DTDContainer) item);
 
-                    int indexOfNewElementInDtd = orderedDtdElements
-                        .indexOf(element.getName());
-                    s_logger.debug("index of element " + element.getName() 
-                        + ": " + indexOfNewElementInDtd);
+					int indexOfNewElementInDtd = orderedDtdElements
+						.indexOf(element.getName());
+					s_logger.debug("index of element " + element.getName()
+						+ ": " + indexOfNewElementInDtd);
 
-                    int pos = existingChildren.size();
+					int pos = existingChildren.size();
 
-                    // Calculate the position in the parent where we insert the
-                    // element
-                    for (int i = 0; i < existingChildren.size(); i++) {
-                        String elementName = ((Element) existingChildren.get(i))
-                            .getName();
-                        s_logger.debug("index of child " + elementName + ": "
-                            + orderedDtdElements.indexOf(elementName));
-                        if (orderedDtdElements.indexOf(elementName) 
-                            > indexOfNewElementInDtd) {
-                            pos = i;
-                            break;
-                        }
-                    }
+					// Calculate the position in the parent where we insert the
+					// element
+					for (int i = 0; i < existingChildren.size(); i++) {
+						String elementName = ((Element) existingChildren.get(i))
+							.getName();
+						s_logger.debug("index of child " + elementName + ": "
+							+ orderedDtdElements.indexOf(elementName));
+						if (orderedDtdElements.indexOf(elementName)
+							> indexOfNewElementInDtd) {
+							pos = i;
+							break;
+						}
+					}
 
-                    s_logger.debug("adding element " + element.getName() 
-                        + " add in pos " + pos);
-                    outputParentElement.addContent(pos, element);
+					s_logger.debug("adding element " + element.getName()
+						+ " add in pos " + pos);
+					outputParentElement.addContent(pos, element);
 
-                }
+				}
 
-            }
+			}
 
-        }
+		}
 
-    }
+	}
 
-    /**
-     * Gets the DTD declared in the doctype of the element's owning document.
-     * 
-     * @param element
-     *            The element for which the DTD will be retrieved
-     * @return The DTD declared in the doctype of the element's owning document
-     * @throws DocumentException
-     *             If an error occurred during DTD retrieval
-     */
-    public DTD getDTD(Element element) throws DocumentException {
+	/**
+	 * Gets the DTD declared in the doctype of the element's owning document.
+	 *
+	 * @param element
+	 *            The element for which the DTD will be retrieved
+	 * @return The DTD declared in the doctype of the element's owning document
+	 * @throws DocumentException
+	 *             If an error occurred during DTD retrieval
+	 */
+	public DTD getDTD(Element element) throws DocumentException {
 
-        if (element.getDocument().getDocType() != null) {
+		if (element.getDocument().getDocType() != null) {
 
-            String systemId = element.getDocument().getDocType().getSystemID();
+			String systemId = element.getDocument().getDocType().getSystemID();
 
-            DTD dtd = (DTD) s_dtdMap.get(systemId);
+			DTD dtd = (DTD) s_dtdMap.get(systemId);
 
-            // if not in cache, create the DTD and put it in cache
-            if (dtd == null) {
-                Reader reader =null;
-                
-                // first try the configured EntityResolver
-                EntityResolver er= XmlMergeContext.getEntityResolver();
-                if (er != null) {
-                    InputSource is = null;
-                    try {
-                        is = er.resolveEntity("", systemId);
-                    } catch (SAXException e) {
-                        // ignore deliberately
-                    } catch (IOException e) {
-                        // ignore deliberately
-                    }
-                    if (is != null) {
-                        // there can be either a Reader or an Input stream in is
-                       
-                        reader = is.getCharacterStream();
-                        if (reader == null) {
-                            InputStream inputstream = is.getByteStream();
-                            if (inputstream != null) {
-                                reader = new InputStreamReader(inputstream);
-                            }
-                        }
-                    }
-                }
-                
-                if (reader == null) {  
-                     // lookup URL of DTD
-                    URL url;
-                    try {
-                        url = new URL(systemId);
-                        reader = new InputStreamReader(url.openStream());
-                    } catch (MalformedURLException e) {
-                        throw new DocumentException(element.getDocument(), e);
-                    } catch (IOException ioe) {
-                        throw new DocumentException(element.getDocument(), ioe);
-                    }                  
-                }
-                
-                try {
-                    dtd = new DTDParser(reader).parse();
-                } catch (IOException ioe) {
-                    throw new DocumentException(element.getDocument(), ioe);
-                }
+			// if not in cache, create the DTD and put it in cache
+			if (dtd == null) {
+				Reader reader =null;
+				
+				// first try the configured EntityResolver
+				EntityResolver er= XmlMergeContext.getEntityResolver();
+				if (er != null) {
+					InputSource is = null;
+					try {
+						is = er.resolveEntity("", systemId);
+					} catch (SAXException e) {
+						// ignore deliberately
+					} catch (IOException e) {
+						// ignore deliberately
+					}
+					if (is != null) {
+						// there can be either a Reader or an Input stream in is
+						
+						reader = is.getCharacterStream();
+						if (reader == null) {
+							InputStream inputstream = is.getByteStream();
+							if (inputstream != null) {
+								reader = new InputStreamReader(inputstream);
+							}
+						}
+					}
+				}
+				
+				if (reader == null) {
+					// lookup URL of DTD
+					URL url;
+					try {
+						url = new URL(systemId);
+						reader = new InputStreamReader(url.openStream());
+					} catch (MalformedURLException e) {
+						throw new DocumentException(element.getDocument(), e);
+					} catch (IOException ioe) {
+						throw new DocumentException(element.getDocument(), ioe);
+					}
+				}
+				
+				try {
+					dtd = new DTDParser(reader).parse();
+				} catch (IOException ioe) {
+					throw new DocumentException(element.getDocument(), ioe);
+				}
 
-                s_dtdMap.put(systemId, dtd);
-            }
+				s_dtdMap.put(systemId, dtd);
+			}
 
-            return dtd;
+			return dtd;
 
-        } else {
-            throw new DocumentException(element.getDocument(),
-                "No DTD specified in document " + element.getDocument());
-        }
-    }
+		} else {
+			throw new DocumentException(element.getDocument(),
+				"No DTD specified in document " + element.getDocument());
+		}
+	}
 
-    /**
-     * Retieves a list containing the DTD elements of a given DTD container. 
-     * @param container A DTD container.
-     * @return A list containing the DTD elements of a given DTD container
-     */
-    public List getOrderedDtdElements(DTDContainer container) {
-        List result = new ArrayList();
+	/**
+	 * Retieves a list containing the DTD elements of a given DTD container.
+	 * @param container A DTD container.
+	 * @return A list containing the DTD elements of a given DTD container
+	 */
+	public List getOrderedDtdElements(DTDContainer container) {
+		List result = new ArrayList();
 
-        DTDItem[] items = container.getItems();
+		DTDItem[] items = container.getItems();
 
-        for (int i = 0; i < items.length; i++) {
-            if (items[i] instanceof DTDContainer) {
-                // recursively add container children
-                result.addAll(getOrderedDtdElements((DTDContainer) items[i]));
-            } else if (items[i] instanceof DTDName) {
-                result.add(((DTDName) items[i]).getValue());
-            }
-        }
+		for (int i = 0; i < items.length; i++) {
+			if (items[i] instanceof DTDContainer) {
+				// recursively add container children
+				result.addAll(getOrderedDtdElements((DTDContainer) items[i]));
+			} else if (items[i] instanceof DTDName) {
+				result.add(((DTDName) items[i]).getValue());
+			}
+		}
 
-        return result;
+		return result;
 
-    }
+	}
 
 }
