@@ -27,27 +27,27 @@ package ch.elca.el4j.services.xmlmerge;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public interface MergeAction extends Action {
 
-    /**
-     * Sets the action's mapper factory.
-     * @param factory The action's mapper factory
-     */
-    public void setMapperFactory(OperationFactory factory);
+	/**
+	 * Sets the action's mapper factory.
+	 * @param factory The action's mapper factory
+	 */
+	public void setMapperFactory(OperationFactory factory);
 
-    /**
-     * Sets the action's matcher factory.
-     * @param factory The action's matcher factory
-     */
-    public void setMatcherFactory(OperationFactory factory);
+	/**
+	 * Sets the action's matcher factory.
+	 * @param factory The action's matcher factory
+	 */
+	public void setMatcherFactory(OperationFactory factory);
 
-    /**
-     * Sets the action's action factory.
-     * @param factory The action's action factory
-     */
-    public void setActionFactory(OperationFactory factory);
+	/**
+	 * Sets the action's action factory.
+	 * @param factory The action's action factory
+	 */
+	public void setActionFactory(OperationFactory factory);
 }

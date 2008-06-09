@@ -42,55 +42,55 @@ import org.springframework.util.StringUtils;
  * @author Stefan Wismer (SWI)
  */
 public class OrderedPathMatchingResourcePatternResolver extends
-    PathMatchingResourcePatternResolver {
-    
-    private static final Log s_logger = LogFactory.getLog(
-        OrderedPathMatchingResourcePatternResolver.class);
-    
-    public OrderedPathMatchingResourcePatternResolver() {
-        super();
-    }
-    
-    public OrderedPathMatchingResourcePatternResolver(ClassLoader classLoader) {
-        super(classLoader);
-    }
-    
-    public OrderedPathMatchingResourcePatternResolver(ResourceLoader resourceLoader) {
-        super(resourceLoader);
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    protected void doRetrieveMatchingFiles(String fullPattern, File dir,
-        Set result) throws IOException {
-        
-        if (s_logger.isDebugEnabled()) {
-            s_logger.debug("Searching directory [" + dir.getAbsolutePath() +
-                    "] for files matching pattern [" + fullPattern + "]");
-        }
-        File[] dirContents = dir.listFiles();
-        
-        // this is new {
-        Arrays.sort(dirContents, new Comparator<File>() {
-            public int compare(File f1, File f2) {
-                return f1.getName().compareTo(f2.getName());
-            }
-        });
-        // } this is new
-        
-        if (dirContents == null) {
-            throw new IOException("Could not retrieve contents of directory [" + dir.getAbsolutePath() + "]");
-        }
-        for (int i = 0; i < dirContents.length; i++) {
-            File content = dirContents[i];
-            String currPath = StringUtils.replace(content.getAbsolutePath(), File.separator, "/");
-            if (content.isDirectory() && getPathMatcher().matchStart(fullPattern, currPath + "/")) {
-                doRetrieveMatchingFiles(fullPattern, content, result);
-            }
-            if (getPathMatcher().match(fullPattern, currPath)) {
-                result.add(content);
-            }
-        }
-    }
+	PathMatchingResourcePatternResolver {
+	
+	private static final Log s_logger = LogFactory.getLog(
+		OrderedPathMatchingResourcePatternResolver.class);
+	
+	public OrderedPathMatchingResourcePatternResolver() {
+		super();
+	}
+	
+	public OrderedPathMatchingResourcePatternResolver(ClassLoader classLoader) {
+		super(classLoader);
+	}
+	
+	public OrderedPathMatchingResourcePatternResolver(ResourceLoader resourceLoader) {
+		super(resourceLoader);
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	protected void doRetrieveMatchingFiles(String fullPattern, File dir,
+		Set result) throws IOException {
+		
+		if (s_logger.isDebugEnabled()) {
+			s_logger.debug("Searching directory [" + dir.getAbsolutePath() +
+					"] for files matching pattern [" + fullPattern + "]");
+		}
+		File[] dirContents = dir.listFiles();
+		
+		// this is new {
+		Arrays.sort(dirContents, new Comparator<File>() {
+			public int compare(File f1, File f2) {
+				return f1.getName().compareTo(f2.getName());
+			}
+		});
+		// } this is new
+		
+		if (dirContents == null) {
+			throw new IOException("Could not retrieve contents of directory [" + dir.getAbsolutePath() + "]");
+		}
+		for (int i = 0; i < dirContents.length; i++) {
+			File content = dirContents[i];
+			String currPath = StringUtils.replace(content.getAbsolutePath(), File.separator, "/");
+			if (content.isDirectory() && getPathMatcher().matchStart(fullPattern, currPath + "/")) {
+				doRetrieveMatchingFiles(fullPattern, content, result);
+			}
+			if (getPathMatcher().match(fullPattern, currPath)) {
+				result.add(content);
+			}
+		}
+	}
 
 }

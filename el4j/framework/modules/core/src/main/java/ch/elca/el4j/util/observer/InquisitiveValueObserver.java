@@ -19,9 +19,9 @@ package ch.elca.el4j.util.observer;
 /**
  * An InquisitiveValueObserver is a ValueObserver that inquires about the state
  * of other ObservableValue objects. Such an observer needs to make sure not to
- * access these objects in a potentially outdated state (that may be 
- * inconsistent with newer knowledge this observer may have). Therefore, 
- * InquisisitiveObservers receive a signal when the other observers have had a 
+ * access these objects in a potentially outdated state (that may be
+ * inconsistent with newer knowledge this observer may have). Therefore,
+ * InquisisitiveObservers receive a signal when the other observers have had a
  * chance to update their state, i.e. once all observers have been notified.
  *
  * @param <T> {@inheritDoc}
@@ -36,6 +36,6 @@ package ch.elca.el4j.util.observer;
  * @author Adrian Moos (AMS)
  */
 public interface InquisitiveValueObserver<T> extends ValueObserver<T> {
-    /** invoked once all observers have received their change notifications. */
-    void notified();
+	/** invoked once all observers have received their change notifications. */
+	void notified();
 }

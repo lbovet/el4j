@@ -40,32 +40,32 @@ import ch.elca.el4j.services.exceptionhandler.RetryException;
  * @see ch.elca.el4j.services.exceptionhandler.handler.AbstractSwappableTargetExceptionHandler
  */
 public abstract class AbstractReconfigureExceptionHandler extends
-        AbstractRetryExceptionHandler {
+		AbstractRetryExceptionHandler {
 
-    /**
-     * {@inheritDoc}
-     */
-    protected Object retry(Throwable t,
-            AbstractExceptionHandlerInterceptor exceptionInvoker,
-            MethodInvocation invocation, Log logger) throws Throwable {
+	/**
+	 * {@inheritDoc}
+	 */
+	protected Object retry(Throwable t,
+			AbstractExceptionHandlerInterceptor exceptionInvoker,
+			MethodInvocation invocation, Log logger) throws Throwable {
 
-        reconfigure(t, invocation, logger);
-        throw new RetryException(getRetries());
-    }
+		reconfigure(t, invocation, logger);
+		throw new RetryException(getRetries());
+	}
 
-    /**
-     * Subclasses have to reconfigure the advised target.
-     * 
-     * @param t
-     *      The exception that caused this strategy. Subclasses may distinguish
-     *      between different exception types.
-     *      
-     * @param invocation
-     *      The original invocation that failed.
-     *      
-     * @param logger
-     *      The logger.
-     */
-    protected abstract void reconfigure(Throwable t,
-            MethodInvocation invocation, Log logger);
+	/**
+	 * Subclasses have to reconfigure the advised target.
+	 *
+	 * @param t
+	 *      The exception that caused this strategy. Subclasses may distinguish
+	 *      between different exception types.
+	 *
+	 * @param invocation
+	 *      The original invocation that failed.
+	 *
+	 * @param logger
+	 *      The logger.
+	 */
+	protected abstract void reconfigure(Throwable t,
+			MethodInvocation invocation, Log logger);
 }

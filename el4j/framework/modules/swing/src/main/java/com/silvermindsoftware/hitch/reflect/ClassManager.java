@@ -22,16 +22,16 @@ import java.util.Collections;
 
 public class ClassManager {
 
-    private static final Map<Class, ClassInfo> classInfoCache = Collections.synchronizedMap(new HashMap<Class, ClassInfo>());
+	private static final Map<Class, ClassInfo> classInfoCache = Collections.synchronizedMap(new HashMap<Class, ClassInfo>());
 
-    public static ClassInfo getClassInfo(Class clazz) {
-        if(classInfoCache.containsKey(clazz)) {
-            return classInfoCache.get(clazz);
-        } else {
-            ClassInfo classInfo = new ClassInfo(clazz);
-            classInfoCache.put(clazz, classInfo);
-            return classInfo;
-        }
-    }
+	public static ClassInfo getClassInfo(Class clazz) {
+		if(classInfoCache.containsKey(clazz)) {
+			return classInfoCache.get(clazz);
+		} else {
+			ClassInfo classInfo = new ClassInfo(clazz);
+			classInfoCache.put(clazz, classInfo);
+			return classInfo;
+		}
+	}
 
 }

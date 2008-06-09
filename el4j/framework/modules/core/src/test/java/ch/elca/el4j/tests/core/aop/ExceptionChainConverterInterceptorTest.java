@@ -37,99 +37,99 @@ import ch.elca.el4j.core.aop.ExceptionChainConversionInterceptor;
  */
 public class ExceptionChainConverterInterceptorTest {
 
-    /**
-     * Test normal invocation usage
-     */
-    @Test
-    public void testBasicInterceptor() {
-        MethodInvocation methodInvocation = (MethodInvocation) createMock(MethodInvocation.class);
+	/**
+	 * Test normal invocation usage
+	 */
+	@Test
+	public void testBasicInterceptor() {
+		MethodInvocation methodInvocation = (MethodInvocation) createMock(MethodInvocation.class);
 
-        String myFancyObject = "alsdkjfasljfaslödjfasdo034023740";
+		String myFancyObject = "alsdkjfasljfaslödjfasdo034023740";
 
-        try {
-            expect(methodInvocation.proceed()).andReturn(myFancyObject);
-        } catch (Throwable e1) {
-            fail();
-        }
+		try {
+			expect(methodInvocation.proceed()).andReturn(myFancyObject);
+		} catch (Throwable e1) {
+			fail();
+		}
 
-        replay(methodInvocation);
+		replay(methodInvocation);
 
-        ExceptionChainConversionInterceptor ecci = new ExceptionChainConversionInterceptor();
+		ExceptionChainConversionInterceptor ecci = new ExceptionChainConversionInterceptor();
 
-        Object result = null;
-        try {
-            result = ecci.invoke(methodInvocation);
-        } catch (Throwable e) {
-            fail();
-        }
-        assertEquals(result, myFancyObject);
-        verify(methodInvocation);
-    }
+		Object result = null;
+		try {
+			result = ecci.invoke(methodInvocation);
+		} catch (Throwable e) {
+			fail();
+		}
+		assertEquals(result, myFancyObject);
+		verify(methodInvocation);
+	}
 
-    /**
-     * Test usage with exception
-     */
-    @Test
-    public void testInterceptorWithException() {
-        MethodInvocation methodInvocation = (MethodInvocation) createMock(MethodInvocation.class);
+	/**
+	 * Test usage with exception
+	 */
+	@Test
+	public void testInterceptorWithException() {
+		MethodInvocation methodInvocation = (MethodInvocation) createMock(MethodInvocation.class);
 
-        try {
-            expect(methodInvocation.proceed()).andThrow(
-                    new IllegalArgumentException("ttt", m_testThrowable));
-        } catch (Throwable e1) {
-        }
+		try {
+			expect(methodInvocation.proceed()).andThrow(
+					new IllegalArgumentException("ttt", m_testThrowable));
+		} catch (Throwable e1) {
+		}
 
-        replay(methodInvocation);
+		replay(methodInvocation);
 
-        ExceptionChainConversionInterceptor ecci = new ExceptionChainConversionInterceptor();
+		ExceptionChainConversionInterceptor ecci = new ExceptionChainConversionInterceptor();
 
-        try {
-            ecci.invoke(methodInvocation);
-        } catch (Throwable t) {
-            checkThrowableIsCorrectlyHandled(t.getCause());
-            assertTrue(t instanceof IllegalArgumentException);
-            assertTrue(t.getMessage().equals("ttt"));
-            verify(methodInvocation);
-            return;
-        }
-        fail();
-    }
+		try {
+			ecci.invoke(methodInvocation);
+		} catch (Throwable t) {
+			checkThrowableIsCorrectlyHandled(t.getCause());
+			assertTrue(t instanceof IllegalArgumentException);
+			assertTrue(t.getMessage().equals("ttt"));
+			verify(methodInvocation);
+			return;
+		}
+		fail();
+	}
 
-    /**
-     * Test isolated cause conversion
-     */
-    @Test
-    public void testConvertCause() {
-        ExceptionChainConversionInterceptorChild ecci = new ExceptionChainConversionInterceptorChild();
+	/**
+	 * Test isolated cause conversion
+	 */
+	@Test
+	public void testConvertCause() {
+		ExceptionChainConversionInterceptorChild ecci = new ExceptionChainConversionInterceptorChild();
 
-        ecci.callConvertCause(null);
+		ecci.callConvertCause(null);
 
-        Throwable result = ecci.callConvertCause(m_testThrowable);
+		Throwable result = ecci.callConvertCause(m_testThrowable);
 
-        checkThrowableIsCorrectlyHandled(result);
-    }
+		checkThrowableIsCorrectlyHandled(result);
+	}
 
-    Throwable m_testThrowable = new Throwable("t", new Exception("t2",
-            new Exception("t3", new RuntimeException("t4", null))));
+	Throwable m_testThrowable = new Throwable("t", new Exception("t2",
+			new Exception("t3", new RuntimeException("t4", null))));
 
-    private void checkThrowableIsCorrectlyHandled(Throwable result) {
-        assertTrue(result instanceof Throwable);
-        assertFalse(result.getCause() instanceof Exception);
-        assertTrue(result.getCause() instanceof Throwable);
-        assertFalse(result.getCause().getCause() instanceof Exception);
-        assertTrue(result.getCause().getCause() instanceof Throwable);
-        assertFalse(result.getCause().getCause().getCause() instanceof RuntimeException);
-        assertTrue(result.getCause().getCause().getCause() instanceof Throwable);
-    }
+	private void checkThrowableIsCorrectlyHandled(Throwable result) {
+		assertTrue(result instanceof Throwable);
+		assertFalse(result.getCause() instanceof Exception);
+		assertTrue(result.getCause() instanceof Throwable);
+		assertFalse(result.getCause().getCause() instanceof Exception);
+		assertTrue(result.getCause().getCause() instanceof Throwable);
+		assertFalse(result.getCause().getCause().getCause() instanceof RuntimeException);
+		assertTrue(result.getCause().getCause().getCause() instanceof Throwable);
+	}
 
-    // to be able to call the protected method of class to test
-    static class ExceptionChainConversionInterceptorChild extends
-            ExceptionChainConversionInterceptor {
+	// to be able to call the protected method of class to test
+	static class ExceptionChainConversionInterceptorChild extends
+			ExceptionChainConversionInterceptor {
 
-        public Throwable callConvertCause(Throwable original) {
-            return super.convertCause(original);
-        }
+		public Throwable callConvertCause(Throwable original) {
+			return super.convertCause(original);
+		}
 
-    }
+	}
 
 }

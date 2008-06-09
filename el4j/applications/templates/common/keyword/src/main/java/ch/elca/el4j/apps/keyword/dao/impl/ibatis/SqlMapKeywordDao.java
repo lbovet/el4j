@@ -39,27 +39,27 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * @author Martin Zeltner (MZE)
  * @author alex Mathey (AMA)
  */
-public class SqlMapKeywordDao extends GenericSqlMapDao<Keyword, Integer> 
-    implements KeywordDao {
+public class SqlMapKeywordDao extends GenericSqlMapDao<Keyword, Integer>
+	implements KeywordDao {
 
-    /**
-     * Creates a new SqlMapKeywordDao instance.
-     */
-    public SqlMapKeywordDao() {
-        setPersistentClass(Keyword.class);
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public Keyword getKeywordByName(String name)
-        throws DataAccessException, DataRetrievalFailureException {
-        Reject.ifEmpty(name);
-        return (Keyword) getConvenienceSqlMapClientTemplate()
-            .queryForObjectStrong("getKeywordByName", name,
-                getPersistentClassName());
-    }
-    
-    
+	/**
+	 * Creates a new SqlMapKeywordDao instance.
+	 */
+	public SqlMapKeywordDao() {
+		setPersistentClass(Keyword.class);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Keyword getKeywordByName(String name)
+		throws DataAccessException, DataRetrievalFailureException {
+		Reject.ifEmpty(name);
+		return (Keyword) getConvenienceSqlMapClientTemplate()
+			.queryForObjectStrong("getKeywordByName", name,
+				getPersistentClassName());
+	}
+	
+	
 }

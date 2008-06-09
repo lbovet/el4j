@@ -55,160 +55,160 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
  * @author Stefan Wismer (SWI)
  */
 public class JaxwsContextHandler extends AbstractJaxwsJaxbContextHandler {
-    
-    /**
-     * The logger.
-     */
-    private static Logger s_logger 
-        = Logger.getLogger(JaxwsContextHandler.class);
-    
-    /**
-     * The registry to get the context from.
-     */
-    private ImplicitContextPassingRegistry m_contextPassingRegistry;
-    
-    
-    /**
-     * Create a new JAX-WS Handler to modify a soap message.
-     * 
-     * @param registry The registry to take the context from
-     * @param jaxbContext The context to serialize the implicit context with
-     */
-    public JaxwsContextHandler(ImplicitContextPassingRegistry registry,
-        JAXBContext jaxbContext) {
-        super(jaxbContext);
-        m_contextPassingRegistry = registry;
-    }
+	
+	/**
+	 * The logger.
+	 */
+	private static Logger s_logger
+		= Logger.getLogger(JaxwsContextHandler.class);
+	
+	/**
+	 * The registry to get the context from.
+	 */
+	private ImplicitContextPassingRegistry m_contextPassingRegistry;
+	
+	
+	/**
+	 * Create a new JAX-WS Handler to modify a soap message.
+	 *
+	 * @param registry The registry to take the context from
+	 * @param jaxbContext The context to serialize the implicit context with
+	 */
+	public JaxwsContextHandler(ImplicitContextPassingRegistry registry,
+		JAXBContext jaxbContext) {
+		super(jaxbContext);
+		m_contextPassingRegistry = registry;
+	}
 
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    public boolean handleMessage(SOAPMessageContext context) {
-        Boolean outboundProperty = (Boolean) context
-            .get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	public boolean handleMessage(SOAPMessageContext context) {
+		Boolean outboundProperty = (Boolean) context
+			.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 
-        if (m_contextPassingRegistry != null) {
-            SOAPMessage msg = context.getMessage();
-            if (outboundProperty.booleanValue()) {
-                handleOutgoingMessage(msg);
-            } else {
-                handleIncomingMessage(msg);
-            }
-        }
-        return true;
-    }
+		if (m_contextPassingRegistry != null) {
+			SOAPMessage msg = context.getMessage();
+			if (outboundProperty.booleanValue()) {
+				handleOutgoingMessage(msg);
+			} else {
+				handleIncomingMessage(msg);
+			}
+		}
+		return true;
+	}
 
-    /**
-     * Handles an incoming SOAP message.
-     * Adds the implicit context to the SOAP header.
-     * 
-     * @param msg    the SOAP message
-     */
-    @SuppressWarnings("unchecked")
-    protected void handleIncomingMessage(SOAPMessage msg) {
-        Node contextElement = null;
-        try {
-            if (msg.getSOAPHeader() != null) {
-                NodeList list = msg.getSOAPHeader()
-                    .getElementsByTagNameNS(CONTEXT_NAMESPACE.getURI(),
-                        CONTEXT_ELEMENT_NAME);
-                if (list.getLength() > 0) {
-                    contextElement = (Node) list.item(0);
-                }
-            }
-        } catch (Exception e) {
-            s_logger.error("Error getting SOAP header.");
-            return;
-        }
+	/**
+	 * Handles an incoming SOAP message.
+	 * Adds the implicit context to the SOAP header.
+	 *
+	 * @param msg    the SOAP message
+	 */
+	@SuppressWarnings("unchecked")
+	protected void handleIncomingMessage(SOAPMessage msg) {
+		Node contextElement = null;
+		try {
+			if (msg.getSOAPHeader() != null) {
+				NodeList list = msg.getSOAPHeader()
+					.getElementsByTagNameNS(CONTEXT_NAMESPACE.getURI(),
+						CONTEXT_ELEMENT_NAME);
+				if (list.getLength() > 0) {
+					contextElement = (Node) list.item(0);
+				}
+			}
+		} catch (Exception e) {
+			s_logger.error("Error getting SOAP header.");
+			return;
+		}
 
-        if (contextElement != null) {
-            Unmarshaller unmarshaller = getUnmarshaller();
+		if (contextElement != null) {
+			Unmarshaller unmarshaller = getUnmarshaller();
 
-            Map<String, Object> map = new HashMap<String, Object>();
-            NodeList nodeList = contextElement.getChildNodes();
-            NodeListIterator it = new NodeListIterator(nodeList);
+			Map<String, Object> map = new HashMap<String, Object>();
+			NodeList nodeList = contextElement.getChildNodes();
+			NodeListIterator it = new NodeListIterator(nodeList);
 
-            while (it.hasNext()) {
-                Node soapNode = (Node) it.next();
+			while (it.hasNext()) {
+				Node soapNode = (Node) it.next();
 
-                try {
-                    // Try to get the passed Object out of the xml
-                    JAXBElement element = (JAXBElement) unmarshaller
-                        .unmarshal(soapNode);
+				try {
+					// Try to get the passed Object out of the xml
+					JAXBElement element = (JAXBElement) unmarshaller
+						.unmarshal(soapNode);
 
-                    map.put(soapNode.getNodeName(), element.getValue());
-                } catch (JAXBException e) {
-                    s_logger.error("Unable to unmarshall context element "
-                        + soapNode.getNodeName());
-                }
-            }
-            m_contextPassingRegistry.pushAssembledImplicitContext(map);
-        }
-    }
+					map.put(soapNode.getNodeName(), element.getValue());
+				} catch (JAXBException e) {
+					s_logger.error("Unable to unmarshall context element "
+						+ soapNode.getNodeName());
+				}
+			}
+			m_contextPassingRegistry.pushAssembledImplicitContext(map);
+		}
+	}
 
-    /**
-     * Handles an outgoing SOAP message.
-     * Extracts the implicit context from the SOAP header.
-     * 
-     * @param msg    the SOAP message
-     */
-    @SuppressWarnings("unchecked")
-    protected void handleOutgoingMessage(SOAPMessage msg) {
-        SOAPHeaderElement newElement = null;
+	/**
+	 * Handles an outgoing SOAP message.
+	 * Extracts the implicit context from the SOAP header.
+	 *
+	 * @param msg    the SOAP message
+	 */
+	@SuppressWarnings("unchecked")
+	protected void handleOutgoingMessage(SOAPMessage msg) {
+		SOAPHeaderElement newElement = null;
 
-        try {
-            if (msg.getSOAPHeader() == null) {
-                // create header
-                msg.getSOAPPart().getEnvelope().addHeader();
-            }
-            newElement = msg.getSOAPHeader().addHeaderElement(
-                new QName(CONTEXT_NAMESPACE.getURI(),
-                    CONTEXT_ELEMENT_NAME));
-        } catch (Exception e) {
-            s_logger.error("Error creating SOAP header.");
-            return;
-        }
+		try {
+			if (msg.getSOAPHeader() == null) {
+				// create header
+				msg.getSOAPPart().getEnvelope().addHeader();
+			}
+			newElement = msg.getSOAPHeader().addHeaderElement(
+				new QName(CONTEXT_NAMESPACE.getURI(),
+					CONTEXT_ELEMENT_NAME));
+		} catch (Exception e) {
+			s_logger.error("Error creating SOAP header.");
+			return;
+		}
 
-        Marshaller marshaller = getMarshaller();
-        try {
-            marshaller.setProperty(Marshaller.JAXB_FRAGMENT,
-                Boolean.TRUE);
-        } catch (PropertyException e) {
-            s_logger.error("Error setting marshaller properties.");
-            return;
-        }
+		Marshaller marshaller = getMarshaller();
+		try {
+			marshaller.setProperty(Marshaller.JAXB_FRAGMENT,
+				Boolean.TRUE);
+		} catch (PropertyException e) {
+			s_logger.error("Error setting marshaller properties.");
+			return;
+		}
 
-        Map assembledContext = m_contextPassingRegistry
-            .getAssembledImplicitContext();
-        Set<String> keys = (Set<String>) assembledContext.keySet();
-        for (String key : keys) {
-            try {
-                Object value = assembledContext.get(key);
-                marshaller.marshal(new JAXBElement(new QName("", key),
-                    Object.class, value), newElement);
-            } catch (JAXBException e) {
-                s_logger.error("Unable to marshal context for " + key);
-            }
-        }
-    }
+		Map assembledContext = m_contextPassingRegistry
+			.getAssembledImplicitContext();
+		Set<String> keys = (Set<String>) assembledContext.keySet();
+		for (String key : keys) {
+			try {
+				Object value = assembledContext.get(key);
+				marshaller.marshal(new JAXBElement(new QName("", key),
+					Object.class, value), newElement);
+			} catch (JAXBException e) {
+				s_logger.error("Unable to marshal context for " + key);
+			}
+		}
+	}
 
-    /** {@inheritDoc} */
-    public boolean handleFault(SOAPMessageContext context) {
-        return true;
-    }
+	/** {@inheritDoc} */
+	public boolean handleFault(SOAPMessageContext context) {
+		return true;
+	}
 
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    public Set getHeaders() {
-        return new TreeSet();
-    }
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	public Set getHeaders() {
+		return new TreeSet();
+	}
 
-    /** {@inheritDoc} */
-    public void close(MessageContext context) { }
+	/** {@inheritDoc} */
+	public void close(MessageContext context) { }
 
 
-    /** {@inheritDoc} */
-    @Override
-    protected Logger getLogger() {
-        return s_logger;
-    }
+	/** {@inheritDoc} */
+	@Override
+	protected Logger getLogger() {
+		return s_logger;
+	}
 }

@@ -21,74 +21,74 @@ import javax.management.ObjectName;
 
 /**
  * The interface of the proxy class for an ApplicationContext.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Raphael Boog (RBO)
  */
 public interface ApplicationContextMBMBean {
 
-    /**
-     * Returns the display name of the ApplicationContext.
-     * 
-     * @return display name
-     */
-    String getName();
+	/**
+	 * Returns the display name of the ApplicationContext.
+	 *
+	 * @return display name
+	 */
+	String getName();
 
-    /**
-     * Returns the resolved config locations of this ApplicationContext, i.e.
-     * the inclusive config locations minus the ones defined as exclusive config
-     * locations. These resolved config locations are the ones that were loaded
-     * by the ApplicationContext.
-     * 
-     * @return Resolved config locations
-     */
-    String[] getResolvedConfigLocations();
+	/**
+	 * Returns the resolved config locations of this ApplicationContext, i.e.
+	 * the inclusive config locations minus the ones defined as exclusive config
+	 * locations. These resolved config locations are the ones that were loaded
+	 * by the ApplicationContext.
+	 *
+	 * @return Resolved config locations
+	 */
+	String[] getResolvedConfigLocations();
 
-    /**
-     * Returns the inclusive config locations of this ApplicationContext. The
-     * inclusive config locations are the xml configuration files which are
-     * loaded into the ApplicationContext.
-     * 
-     * @return Inclusive config locations
-     */
-    String[] getInclusiveConfigLocations();
+	/**
+	 * Returns the inclusive config locations of this ApplicationContext. The
+	 * inclusive config locations are the xml configuration files which are
+	 * loaded into the ApplicationContext.
+	 *
+	 * @return Inclusive config locations
+	 */
+	String[] getInclusiveConfigLocations();
 
-    /**
-     * Returns the exclusive config locations of this ApplicationContext. The
-     * exclusive config locations are the xml configuration files which are
-     * explicitly excluded from loading, even if they appear in inclusive config
-     * locations.
-     * 
-     * @return Exclusive config locations
-     */
-    String[] getExclusiveConfigLocations();
-    
-    /**
-     * If loaded via maven, the application's classpath will only contain
-     * classworlds, but the modules loaded will be abailable as URLs from
-     * maven's URLClassLoader that loads the application.
-     * @return If loaded via an URLClassLoader (maven), the URLs in the 
-     * current "classpath". 
-     */
-    String[] getURLClassPath();
+	/**
+	 * Returns the exclusive config locations of this ApplicationContext. The
+	 * exclusive config locations are the xml configuration files which are
+	 * explicitly excluded from loading, even if they appear in inclusive config
+	 * locations.
+	 *
+	 * @return Exclusive config locations
+	 */
+	String[] getExclusiveConfigLocations();
+	
+	/**
+	 * If loaded via maven, the application's classpath will only contain
+	 * classworlds, but the modules loaded will be abailable as URLs from
+	 * maven's URLClassLoader that loads the application.
+	 * @return If loaded via an URLClassLoader (maven), the URLs in the
+	 * current "classpath".
+	 */
+	String[] getURLClassPath();
 
-    /**
-     * Returns the JvmMB of this ApplicationContext.
-     * 
-     * @return JvmMB
-     */
-    ObjectName getJvmMB();
+	/**
+	 * Returns the JvmMB of this ApplicationContext.
+	 *
+	 * @return JvmMB
+	 */
+	ObjectName getJvmMB();
 
-    /**
-     * Returns the SpringBeans created by this ApplicationContext.
-     * 
-     * @return links to all SpringBeans created by this ApplicationContext
-     */
-    ObjectName[] getSpringBeansMB();
+	/**
+	 * Returns the SpringBeans created by this ApplicationContext.
+	 *
+	 * @return links to all SpringBeans created by this ApplicationContext
+	 */
+	ObjectName[] getSpringBeansMB();
 }

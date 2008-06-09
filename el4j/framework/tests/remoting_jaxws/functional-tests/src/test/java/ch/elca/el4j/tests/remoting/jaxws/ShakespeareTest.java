@@ -41,55 +41,55 @@ import com.xmlme.webservices.ShakespeareSoap;
  * @author Stefan Wismer (SWI)
  */
 public class ShakespeareTest {
-    /**
-     * ApplicationContext.
-     */
-    private ConfigurableApplicationContext m_appContext;
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Before
-    public void setUp() {
-        m_appContext = new ModuleApplicationContext(
-            new String[] {"classpath*:mandatory/*.xml",
-                "scenarios/client/remotingtests-jaxws-shakespeare-config.xml"}, 
-                false);
-    }
-    
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    @After
-    public void tearDown() {
-        m_appContext.close();
-    }
-    
-    /**
-     * Test ShakeSpeareService.
-     */
-    @Test
-    public void testShakeSpeareService() {
-        ShakespeareSoap s = getShakespeare();
-        String speech = s.getSpeech("To be, or not to be");
-        assertTrue(speech.startsWith("<SPEECH><PLAY>HAMLET</PLAY><SPEAKER>HAMLET</SPEAKER>To be, or not to be: that is the question: Whether 'tis nobler"));
-        assertTrue(speech.endsWith("in thy orisons Be all my sins remember'd.</SPEECH>"));
-    }
-    
-    /**
-     * Get the shakespeare to use.
-     * @return Shakespeare to use
-     */
-    public ShakespeareSoap getShakespeare() {
-        return (ShakespeareSoap) getApplicationContext().getBean("shakespeare");
-    }
-    
-    /**
-     * Get the Applicationcontext.
-     * @return The ApplicationContext
-     */
-    protected ApplicationContext getApplicationContext() {
-        return m_appContext;
-    }
+	/**
+	 * ApplicationContext.
+	 */
+	private ConfigurableApplicationContext m_appContext;
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Before
+	public void setUp() {
+		m_appContext = new ModuleApplicationContext(
+			new String[] {"classpath*:mandatory/*.xml",
+				"scenarios/client/remotingtests-jaxws-shakespeare-config.xml"},
+				false);
+	}
+	
+	/**
+	 *
+	 * {@inheritDoc}
+	 */
+	@After
+	public void tearDown() {
+		m_appContext.close();
+	}
+	
+	/**
+	 * Test ShakeSpeareService.
+	 */
+	@Test
+	public void testShakeSpeareService() {
+		ShakespeareSoap s = getShakespeare();
+		String speech = s.getSpeech("To be, or not to be");
+		assertTrue(speech.startsWith("<SPEECH><PLAY>HAMLET</PLAY><SPEAKER>HAMLET</SPEAKER>To be, or not to be: that is the question: Whether 'tis nobler"));
+		assertTrue(speech.endsWith("in thy orisons Be all my sins remember'd.</SPEECH>"));
+	}
+	
+	/**
+	 * Get the shakespeare to use.
+	 * @return Shakespeare to use
+	 */
+	public ShakespeareSoap getShakespeare() {
+		return (ShakespeareSoap) getApplicationContext().getBean("shakespeare");
+	}
+	
+	/**
+	 * Get the Applicationcontext.
+	 * @return The ApplicationContext
+	 */
+	protected ApplicationContext getApplicationContext() {
+		return m_appContext;
+	}
 }

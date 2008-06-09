@@ -29,22 +29,22 @@ import ch.elca.el4j.services.xmlmerge.Matcher;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public class IdMatcher implements Matcher {
 
-    /**
-     * {@inheritDoc}
-     */
-    public boolean matches(Element originalElement, Element patchElement) {
-        return originalElement.getQualifiedName().equals(
-            patchElement.getQualifiedName())
-            && originalElement.getAttribute("id") != null
-            && patchElement.getAttribute("id") != null
-            && originalElement.getAttributeValue("id").equals(
-                patchElement.getAttributeValue("id"));
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean matches(Element originalElement, Element patchElement) {
+		return originalElement.getQualifiedName().equals(
+			patchElement.getQualifiedName())
+			&& originalElement.getAttribute("id") != null
+			&& patchElement.getAttribute("id") != null
+			&& originalElement.getAttributeValue("id").equals(
+				patchElement.getAttributeValue("id"));
+	}
 
 }

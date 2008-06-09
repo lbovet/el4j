@@ -30,36 +30,36 @@ package ch.elca.el4j.demos.statistics.detailed.jmx;
  * @author David Stefan (DST)
  */
 public interface DetailedStatisticsReporterMBean {
-    
-    /**
-     * 
-     * @return Table of ids of all measurement.
-     */
-    public  String showMeasureIDTable();
-    
-    
-    /**
-     * Creates a CSV file with the measurment results.
-     * @param filename Name of file for output
-     * @param measureId Id of measurments to output
-     */
-    public void createCSVFile(String filename, String measureId);
-    
-    
-    /**
-     * Creates a png file with the measurment results.
-     * @param filename Name of file for output
-     * @param measureId Id of measurments to output 
-     */
-    public void createDiagramFile(String filename, String measureId);
-    
-    /**
-     * Creates a png file with the measurment results.
-     * @param filename Name of file for output
-     * @param measureId Id of measurments to output
-     * @param width Width of the diagram
-     * @param height Height of the diagram 
-     */
-    public void createDiagramFile(String filename, String measureId, 
-        int width, int height);
+	
+	/**
+	 *
+	 * @return Table of ids of all measurement.
+	 */
+	public  String showMeasureIDTable();
+	
+	
+	/**
+	 * Creates a CSV file with the measurment results.
+	 * @param filename Name of file for output
+	 * @param measureId Id of measurments to output
+	 */
+	public void createCSVFile(String filename, String measureId);
+	
+	
+	/**
+	 * Creates a png file with the measurment results.
+	 * @param filename Name of file for output
+	 * @param measureId Id of measurments to output
+	 */
+	public void createDiagramFile(String filename, String measureId);
+	
+	/**
+	 * Creates a png file with the measurment results.
+	 * @param filename Name of file for output
+	 * @param measureId Id of measurments to output
+	 * @param width Width of the diagram
+	 * @param height Height of the diagram
+	 */
+	public void createDiagramFile(String filename, String measureId,
+		int width, int height);
 }

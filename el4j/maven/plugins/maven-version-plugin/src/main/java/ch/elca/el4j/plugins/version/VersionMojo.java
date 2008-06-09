@@ -38,53 +38,53 @@ import org.apache.maven.project.MavenProject;
  * );</script>
  *
  * @author Philippe Jacot (PJA)
- * 
+ *
  * @goal list
  * @requiresDependencyResolution compile|test
  */
 public class VersionMojo extends AbstractProjectVersionMojo {
 
-    /**
-     * The maven project.
-     *
-     * @parameter expression="${project}"
-     * @required
-     * @readonly
-     */
-    private MavenProject m_project;
-                             
-    /** 
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    public void execute() throws MojoExecutionException, MojoFailureException {
-            
-        for (Artifact artifact : (Collection<Artifact>) 
-            m_project.getDependencyArtifacts()) {
-            createOverview(artifact).addOccurence(
-                new ArtifactOccurence(m_project, ReferenceType.DEPENDENCY));
-        }
-        
-        for (Dependency dependency : (Collection<Dependency>)
-            m_project.getDependencyManagement().getDependencies()) {
-            createOverview(toArtifact(dependency))
-                .addOccurence(new ArtifactOccurence(
-                    m_project, ReferenceType.DEPENDENCY_MANAGEMENT));
-        }
+	/**
+	 * The maven project.
+	 *
+	 * @parameter expression="${project}"
+	 * @required
+	 * @readonly
+	 */
+	private MavenProject m_project;
+							 
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	public void execute() throws MojoExecutionException, MojoFailureException {
+			
+		for (Artifact artifact : (Collection<Artifact>)
+			m_project.getDependencyArtifacts()) {
+			createOverview(artifact).addOccurence(
+				new ArtifactOccurence(m_project, ReferenceType.DEPENDENCY));
+		}
+		
+		for (Dependency dependency : (Collection<Dependency>)
+			m_project.getDependencyManagement().getDependencies()) {
+			createOverview(toArtifact(dependency))
+				.addOccurence(new ArtifactOccurence(
+					m_project, ReferenceType.DEPENDENCY_MANAGEMENT));
+		}
 
-        for (Artifact artifact : (Collection<Artifact>)
-            m_project.getPluginArtifacts()) {
-            createOverview(artifact).addOccurence(
-                new ArtifactOccurence(m_project, ReferenceType.PLUGIN));  
-        }
+		for (Artifact artifact : (Collection<Artifact>)
+			m_project.getPluginArtifacts()) {
+			createOverview(artifact).addOccurence(
+				new ArtifactOccurence(m_project, ReferenceType.PLUGIN));
+		}
 
-        for (Plugin plugin : (Collection<Plugin>) 
-            m_project.getPluginManagement().getPlugins()) {
-            createOverview(toArtifact(plugin))
-                .addOccurence(new ArtifactOccurence(
-                    m_project, ReferenceType.PLUGIN_MANAGEMENT));
-        } 
-        
-        printArtifactOverviews();
-    }
+		for (Plugin plugin : (Collection<Plugin>)
+			m_project.getPluginManagement().getPlugins()) {
+			createOverview(toArtifact(plugin))
+				.addOccurence(new ArtifactOccurence(
+					m_project, ReferenceType.PLUGIN_MANAGEMENT));
+		}
+		
+		printArtifactOverviews();
+	}
 }

@@ -27,18 +27,18 @@ import org.jdom.Element;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
-public interface Matcher extends Operation {        
-    
-    /**
-     * Compares two elements to know if they correspond for merging.
-     * 
-     * @param originalElement Original element
-     * @param patchElement Patch element
-     * @return True if the two elements correspond for merging
-     */
-    boolean matches(Element originalElement, Element patchElement);
+public interface Matcher extends Operation {
+	
+	/**
+	 * Compares two elements to know if they correspond for merging.
+	 *
+	 * @param originalElement Original element
+	 * @param patchElement Patch element
+	 * @return True if the two elements correspond for merging
+	 */
+	boolean matches(Element originalElement, Element patchElement);
 }

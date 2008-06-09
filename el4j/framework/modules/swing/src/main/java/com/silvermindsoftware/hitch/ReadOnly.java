@@ -18,6 +18,6 @@ package com.silvermindsoftware.hitch;
 
 public enum ReadOnly {
 
-    TRUE, FALSE, DEFAULT;
+	TRUE, FALSE, DEFAULT;
 
 }

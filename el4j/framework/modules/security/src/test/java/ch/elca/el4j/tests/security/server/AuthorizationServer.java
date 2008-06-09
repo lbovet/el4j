@@ -26,55 +26,55 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
 
 /**
  * The server part for <code>AuthorizationTestDistributed</code>.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Andreas Pfenninger (APR)
  */
 public class AuthorizationServer {
 
-    /**
-     * Logger.
-     */
-    private static Log s_logger = LogFactory.getLog(AuthorizationServer.class);
+	/**
+	 * Logger.
+	 */
+	private static Log s_logger = LogFactory.getLog(AuthorizationServer.class);
 
-    /** The application context. */
-    private static ConfigurableApplicationContext s_appContext;
+	/** The application context. */
+	private static ConfigurableApplicationContext s_appContext;
 
-    /**
-         * Hide constructor.
-         * 
-         */
-    protected AuthorizationServer() {
-    }
+	/**
+		 * Hide constructor.
+		 *
+		 */
+	protected AuthorizationServer() {
+	}
 
-    /**
-     * The main method.
-     * 
-     * @param args
-     *            Command line parameters.
-     */
-    public static void main(String[] args) {
-        s_appContext = new ModuleApplicationContext(args, false);
-        String[] str = s_appContext.getBeanDefinitionNames();
-        for (int i = 0; i < str.length; i++) {
-            s_logger.info(str[i]);
-        }
-    }
-    
-    /**
-     * Close the application context after the AuthorizationServer has been
-     * used.
-     */
-    public static void close() {
-        if (s_appContext != null) {
-            s_appContext.close();
-        }
-    }
+	/**
+	 * The main method.
+	 *
+	 * @param args
+	 *            Command line parameters.
+	 */
+	public static void main(String[] args) {
+		s_appContext = new ModuleApplicationContext(args, false);
+		String[] str = s_appContext.getBeanDefinitionNames();
+		for (int i = 0; i < str.length; i++) {
+			s_logger.info(str[i]);
+		}
+	}
+	
+	/**
+	 * Close the application context after the AuthorizationServer has been
+	 * used.
+	 */
+	public static void close() {
+		if (s_appContext != null) {
+			s_appContext.close();
+		}
+	}
 }
 // Checkstyle: UncommentedMain on

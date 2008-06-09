@@ -31,107 +31,107 @@ package ch.elca.el4j.demos.remoting.benchmark;
  * @author Rashid Waraich (RWA)
  */
 public class RemotingBenchmarkResult {
-    /**
-     * Average time in seconds for method "getArea".
-     */
-    private double m_averageGetArea;
+	/**
+	 * Average time in seconds for method "getArea".
+	 */
+	private double m_averageGetArea;
 
-    /**
-     * Average time in seconds for method "throwMeAnException".
-     */
-    private double m_averageThrowMeAnException;
-    
-    /**
-     * Average time in seconds for method "countNumberOfUppercaseLetters".
-     */
-    private double m_averageCountNumberOfUppercaseLetters;
-    
-    /**
-     * Average time in seconds for method "addComplexNumbers".
-     */
-    private double m_averageAddComplexNumbers;    
-    
-    /**
-     * This is the name of the bean.
-     */
-    private final String m_beanName;
+	/**
+	 * Average time in seconds for method "throwMeAnException".
+	 */
+	private double m_averageThrowMeAnException;
+	
+	/**
+	 * Average time in seconds for method "countNumberOfUppercaseLetters".
+	 */
+	private double m_averageCountNumberOfUppercaseLetters;
+	
+	/**
+	 * Average time in seconds for method "addComplexNumbers".
+	 */
+	private double m_averageAddComplexNumbers;
+	
+	/**
+	 * This is the name of the bean.
+	 */
+	private final String m_beanName;
 
-    /**
-     * Constructor.
-     * 
-     * @param beanName
-     *            Is the name of the bean where the average times belongs to.
-     */
-    public RemotingBenchmarkResult(String beanName) {
-        m_beanName = beanName;
-    }
+	/**
+	 * Constructor.
+	 *
+	 * @param beanName
+	 *            Is the name of the bean where the average times belongs to.
+	 */
+	public RemotingBenchmarkResult(String beanName) {
+		m_beanName = beanName;
+	}
 
-    /**
-     * @return Returns the beanName.
-     */
-    public String getBeanName() {
-        return m_beanName;
-    }
+	/**
+	 * @return Returns the beanName.
+	 */
+	public String getBeanName() {
+		return m_beanName;
+	}
 
-    /**
-     * @return Returns the averageCountNumberOfUppercaseLetters.
-     */
-    public double getAverageCountNumberOfUppercaseLetters() {
-        return m_averageCountNumberOfUppercaseLetters;
-    }
+	/**
+	 * @return Returns the averageCountNumberOfUppercaseLetters.
+	 */
+	public double getAverageCountNumberOfUppercaseLetters() {
+		return m_averageCountNumberOfUppercaseLetters;
+	}
 
-    /**
-     * @param averageCountNumberOfUppercaseLetters
-     *            The averageCountNumberOfUppercaseLetters to set.
-     */
-    public void setAverageCountNumberOfUppercaseLetters(
-            double averageCountNumberOfUppercaseLetters) {
-        this.m_averageCountNumberOfUppercaseLetters 
-            = averageCountNumberOfUppercaseLetters;
-    }
+	/**
+	 * @param averageCountNumberOfUppercaseLetters
+	 *            The averageCountNumberOfUppercaseLetters to set.
+	 */
+	public void setAverageCountNumberOfUppercaseLetters(
+			double averageCountNumberOfUppercaseLetters) {
+		this.m_averageCountNumberOfUppercaseLetters
+			= averageCountNumberOfUppercaseLetters;
+	}
 
-    /**
-     * @return Returns the averageGetArea.
-     */
-    public double getAverageGetArea() {
-        return m_averageGetArea;
-    }
+	/**
+	 * @return Returns the averageGetArea.
+	 */
+	public double getAverageGetArea() {
+		return m_averageGetArea;
+	}
 
-    /**
-     * @param averageGetArea
-     *            The averageGetArea to set.
-     */
-    public void setAverageGetArea(double averageGetArea) {
-        m_averageGetArea = averageGetArea;
-    }
+	/**
+	 * @param averageGetArea
+	 *            The averageGetArea to set.
+	 */
+	public void setAverageGetArea(double averageGetArea) {
+		m_averageGetArea = averageGetArea;
+	}
 
-    /**
-     * @return Returns the averageThrowMeAnException.
-     */
-    public double getAverageThrowMeAnException() {
-        return m_averageThrowMeAnException;
-    }
+	/**
+	 * @return Returns the averageThrowMeAnException.
+	 */
+	public double getAverageThrowMeAnException() {
+		return m_averageThrowMeAnException;
+	}
 
-    /**
-     * @param averageThrowMeAnException
-     *            The averageThrowMeAnException to set.
-     */
-    public void setAverageThrowMeAnException(double averageThrowMeAnException) {
-        m_averageThrowMeAnException = averageThrowMeAnException;
-    }
+	/**
+	 * @param averageThrowMeAnException
+	 *            The averageThrowMeAnException to set.
+	 */
+	public void setAverageThrowMeAnException(double averageThrowMeAnException) {
+		m_averageThrowMeAnException = averageThrowMeAnException;
+	}
 
-    /**
-     * @return Returns the averageAddComplexNumbers.
-     */
-    public double getAverageAddComplexNumbers() {
-        return m_averageAddComplexNumbers;
-    }
+	/**
+	 * @return Returns the averageAddComplexNumbers.
+	 */
+	public double getAverageAddComplexNumbers() {
+		return m_averageAddComplexNumbers;
+	}
 
-    /**
-     * @param averageAddComplexNumbers
-     *            The averageAddComplexNumbers to set.
-     */
-    public void setAverageAddComplexNumbers(double averageAddComplexNumbers) {
-        m_averageAddComplexNumbers = averageAddComplexNumbers;
-    }
+	/**
+	 * @param averageAddComplexNumbers
+	 *            The averageAddComplexNumbers to set.
+	 */
+	public void setAverageAddComplexNumbers(double averageAddComplexNumbers) {
+		m_averageAddComplexNumbers = averageAddComplexNumbers;
+	}
 }

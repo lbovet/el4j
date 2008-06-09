@@ -17,9 +17,9 @@
 package ch.elca.el4j.plugins.database.holder;
 
 /**
- * 
+ *
  * This class is thrown wherever an exception is encountered during execution.
- * We need this to be able to catch some of the exceptions we have thrown 
+ * We need this to be able to catch some of the exceptions we have thrown
  * earlier.
  *
  * <script type="text/javascript">printFileStatus
@@ -32,26 +32,26 @@ package ch.elca.el4j.plugins.database.holder;
  * @author David Stefan (DST)
  */
 public class DatabaseHolderException extends RuntimeException {
-    
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -2477553692644057146L;
+	
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -2477553692644057146L;
 
-    /**
-     * Constructor.
-     * @param cause Cause of exception
-     */
-    public DatabaseHolderException(Throwable cause) {
-        super(cause);
-    }
-    
-    /**
-     * Constructor.
-     * @param msg The exception message
-     * @param cause The cause of the exception
-     */
-    public DatabaseHolderException(String msg, Throwable cause) {
-        super(msg, cause);
-    }
+	/**
+	 * Constructor.
+	 * @param cause Cause of exception
+	 */
+	public DatabaseHolderException(Throwable cause) {
+		super(cause);
+	}
+	
+	/**
+	 * Constructor.
+	 * @param msg The exception message
+	 * @param cause The cause of the exception
+	 */
+	public DatabaseHolderException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
 }

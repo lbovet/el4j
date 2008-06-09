@@ -34,11 +34,11 @@ package ch.elca.el4j.util.collections;
  */
 
 public interface ExtendedWritableList<T> extends ExtendedReorderableList<T> {
-    /** equivalent to calling <code>add</code> for each argument, in order.
-     * @param ts the objects to be added */ 
-    public void add(T... ts);    
-    
-    /** equivalent to calling <code>remove</code> for each argument, in order.
-     * @param ts the objects to be added */
-    public void remove(T... ts);
+	/** equivalent to calling <code>add</code> for each argument, in order.
+	 * @param ts the objects to be added */
+	public void add(T... ts);
+	
+	/** equivalent to calling <code>remove</code> for each argument, in order.
+	 * @param ts the objects to be added */
+	public void remove(T... ts);
 }

@@ -30,7 +30,7 @@ import ch.elca.el4j.util.codingsupport.CollectionUtils;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
- * 
+ *
  * Generic DAO for files or file descriptors which is using
  * iBatis SQL Maps.
  *
@@ -49,20 +49,20 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * @author Alex Mathey (AMA)
  */
 public class GenericSqlMapFileDao<T extends PrimaryKeyOptimisticLockingObject,
-    ID extends Serializable> extends GenericSqlMapReferencedObjectDao<T, ID>
-    implements GenericFileDao<T, ID> {
+	ID extends Serializable> extends GenericSqlMapReferencedObjectDao<T, ID>
+	implements GenericFileDao<T, ID> {
 
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<T> getByName(String name) throws DataAccessException,
-    DataRetrievalFailureException {
-        Reject.ifEmpty(name);
-        List<T> result = getConvenienceSqlMapClientTemplate().queryForList(
-            "get" + getPersistentClassName() + "sByName", name);
-        return CollectionUtils.asList(result);
-    }
-    
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<T> getByName(String name) throws DataAccessException,
+	DataRetrievalFailureException {
+		Reject.ifEmpty(name);
+		List<T> result = getConvenienceSqlMapClientTemplate().queryForList(
+			"get" + getPersistentClassName() + "sByName", name);
+		return CollectionUtils.asList(result);
+	}
+	
 }

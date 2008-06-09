@@ -23,93 +23,93 @@ import org.apache.commons.logging.LogFactory;
 //Checkstyle: MagicNumber off
 /**
  * This class contains a method called test(int) with annotation declarations.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Raphael Boog (RBO)
  * @author Martin Zeltner (MZE)
  */
 public class FooImpl implements Foo {
-    
-    /**
-     * Inner class for testing interception.
-     */
-    public static class Bar {
-        /**
-         * Private logger of this inner class.
-         */
-        private static Log s_innerLogger = LogFactory.getLog(Bar.class);
+	
+	/**
+	 * Inner class for testing interception.
+	 */
+	public static class Bar {
+		/**
+		 * Private logger of this inner class.
+		 */
+		private static Log s_innerLogger = LogFactory.getLog(Bar.class);
 
-        /**
-         * This method does a log.
-         */
-        public void doLog() {
-            s_innerLogger.info("Hello, I do log something.");
-        }
-    }
+		/**
+		 * This method does a log.
+		 */
+		public void doLog() {
+			s_innerLogger.info("Hello, I do log something.");
+		}
+	}
 
-    /**
-     * The BASE constant.
-     */
-    public static final int BASE = 3;
+	/**
+	 * The BASE constant.
+	 */
+	public static final int BASE = 3;
 
-    /**
-     * Private logger of this class.
-     */
-    private static Log s_logger = LogFactory.getLog(FooImpl.class);
+	/**
+	 * Private logger of this class.
+	 */
+	private static Log s_logger = LogFactory.getLog(FooImpl.class);
 
-    /**
-     * The base member variable.
-     */
-    private int m_base = BASE;
+	/**
+	 * The base member variable.
+	 */
+	private int m_base = BASE;
 
-    /**
-     * {@inheritDoc}
-     */
-    @ExampleAnnotationOne(factor = 5)
-    @ExampleAnnotationTwo(factor = 9)
-    public int test(int number) {
-        s_logger.info("Multiplication of base (=" + m_base + ") and number (="
-            + number + ").");
-        m_base = m_base * number;
-        return m_base;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@ExampleAnnotationOne(factor = 5)
+	@ExampleAnnotationTwo(factor = 9)
+	public int test(int number) {
+		s_logger.info("Multiplication of base (=" + m_base + ") and number (="
+			+ number + ").");
+		m_base = m_base * number;
+		return m_base;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @ExampleAnnotationOne(factor = 5)
-    @ExampleAnnotationTwo(factor = 9)
-    public int test(int number, FooImpl.Bar innerClass) {
-        innerClass.doLog();
-        s_logger.info("Multiplication of base (=" + m_base + ") and number (="
-            + number + ") in method with inner class as parameter.");
-        m_base = m_base * number;
-        return m_base;
-    }
-    
-    /**
-     * The getter method for the base member.
-     * 
-     * @return the base
-     */
-    public int getBase() {
-        return m_base;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@ExampleAnnotationOne(factor = 5)
+	@ExampleAnnotationTwo(factor = 9)
+	public int test(int number, FooImpl.Bar innerClass) {
+		innerClass.doLog();
+		s_logger.info("Multiplication of base (=" + m_base + ") and number (="
+			+ number + ") in method with inner class as parameter.");
+		m_base = m_base * number;
+		return m_base;
+	}
+	
+	/**
+	 * The getter method for the base member.
+	 *
+	 * @return the base
+	 */
+	public int getBase() {
+		return m_base;
+	}
 
-    /**
-     * The setter method for the base member.
-     * 
-     * @param base
-     *            the base to set
-     */
-    public void setBase(int base) {
-        m_base = base;
-    }
+	/**
+	 * The setter method for the base member.
+	 *
+	 * @param base
+	 *            the base to set
+	 */
+	public void setBase(int base) {
+		m_base = base;
+	}
 }
 //Checkstyle: MagicNumber on

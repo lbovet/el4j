@@ -38,34 +38,34 @@ import ch.elca.el4j.services.exceptionhandler.RetryException;
  */
 public class RetryExceptionHandler extends AbstractRetryExceptionHandler {
 
-    /**
-     * Time to wait between two successive invocations in milli seconds. Default
-     * is <code>0</code>.
-     */
-    private int m_sleepMillis = 0;
-    
-    /**
-     * Sets the amount of time in milli seconds between two successive
-     * invocations.
-     * 
-     * @param sleepMillis
-     *      The time in milli seconds to wait.
-     */
-    public void setSleepMillis(int sleepMillis) {
-        m_sleepMillis = sleepMillis;
-    }
+	/**
+	 * Time to wait between two successive invocations in milli seconds. Default
+	 * is <code>0</code>.
+	 */
+	private int m_sleepMillis = 0;
+	
+	/**
+	 * Sets the amount of time in milli seconds between two successive
+	 * invocations.
+	 *
+	 * @param sleepMillis
+	 *      The time in milli seconds to wait.
+	 */
+	public void setSleepMillis(int sleepMillis) {
+		m_sleepMillis = sleepMillis;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    protected Object retry(Throwable t,
-            AbstractExceptionHandlerInterceptor exceptionInvoker,
-            MethodInvocation invocation, Log logger) throws Throwable {
-        
-        if (m_sleepMillis > 0) {
-            Thread.sleep(m_sleepMillis);
-        }
-        
-        throw new RetryException(getRetries());
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	protected Object retry(Throwable t,
+			AbstractExceptionHandlerInterceptor exceptionInvoker,
+			MethodInvocation invocation, Log logger) throws Throwable {
+		
+		if (m_sleepMillis > 0) {
+			Thread.sleep(m_sleepMillis);
+		}
+		
+		throw new RetryException(getRetries());
+	}
 }

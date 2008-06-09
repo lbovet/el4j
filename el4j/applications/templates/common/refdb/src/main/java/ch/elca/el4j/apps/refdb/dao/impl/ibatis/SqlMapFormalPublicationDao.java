@@ -21,7 +21,7 @@ import ch.elca.el4j.apps.refdb.dom.FormalPublication;
 import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
 
 /**
- * 
+ *
  * DAO for formal publications which is using iBatis SQL Maps.
  *
  * <script type="text/javascript">printFileStatus
@@ -35,14 +35,14 @@ import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
  */
 @AutocollectedGenericDao("formalPublicationDao")
 public class SqlMapFormalPublicationDao
-    extends GenericSqlMapReferenceDao<FormalPublication> 
-    implements FormalPublicationDao {
-    
-    /**
-     * Creates a new SqlMapFormalPublicationDao instance.
-     */
-    public SqlMapFormalPublicationDao() {
-        setPersistentClass(FormalPublication.class);
-    }
+	extends GenericSqlMapReferenceDao<FormalPublication>
+	implements FormalPublicationDao {
+	
+	/**
+	 * Creates a new SqlMapFormalPublicationDao instance.
+	 */
+	public SqlMapFormalPublicationDao() {
+		setPersistentClass(FormalPublication.class);
+	}
 
 }

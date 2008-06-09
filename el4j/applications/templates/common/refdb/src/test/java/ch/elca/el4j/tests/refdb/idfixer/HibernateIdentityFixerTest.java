@@ -35,28 +35,28 @@ import ch.elca.el4j.services.persistence.hibernate.HibernateProxyAwareIdentityFi
  * @author Alex Mathey (AMA)
  */
 public class HibernateIdentityFixerTest extends AbstractIdentityFixerTest {
-    /** {@inheritDoc} */
-    @Override
-    protected String[] getIncludeConfigLocations() {
-        return new String[] {
-            "classpath*:mandatory/*.xml",
-            "classpath*:scenarios/db/raw/*.xml",
-            "classpath*:scenarios/dataaccess/hibernate/*.xml",
-            "classpath*:scenarios/dataaccess/hibernate/refdb/*.xml",
-            "classpath*:optional/interception/transactionJava5Annotations.xml"};
-    }
+	/** {@inheritDoc} */
+	@Override
+	protected String[] getIncludeConfigLocations() {
+		return new String[] {
+			"classpath*:mandatory/*.xml",
+			"classpath*:scenarios/db/raw/*.xml",
+			"classpath*:scenarios/dataaccess/hibernate/*.xml",
+			"classpath*:scenarios/dataaccess/hibernate/refdb/*.xml",
+			"classpath*:optional/interception/transactionJava5Annotations.xml"};
+	}
 
-    /** {@inheritDoc} */
-    @Override
-    protected String[] getExcludeConfigLocations() {
-        return null;
-    }
+	/** {@inheritDoc} */
+	@Override
+	protected String[] getExcludeConfigLocations() {
+		return null;
+	}
 
-    /** {@inheritDoc} */
-    @Override
-    @Before
-    public void setUp() throws Exception {
-        m_fixer = new HibernateProxyAwareIdentityFixer();
-        super.setUp();
-    }
+	/** {@inheritDoc} */
+	@Override
+	@Before
+	public void setUp() throws Exception {
+		m_fixer = new HibernateProxyAwareIdentityFixer();
+		super.setUp();
+	}
 }

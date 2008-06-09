@@ -26,15 +26,15 @@ package ch.elca.el4j.services.xmlmerge.mapper;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public class StandardMappers {
-    
-    /**
-     * {@link IdentityMapper}
-     */
-    public static final IdentityMapper IDENTITY = new IdentityMapper();  
-    
+	
+	/**
+	 * {@link IdentityMapper}
+	 */
+	public static final IdentityMapper IDENTITY = new IdentityMapper();
+	
 }

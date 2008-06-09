@@ -23,20 +23,20 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ModelObject {
 
-    /**
-     * Defines the annotated object as the default model object
-     * @return
-     */
-    boolean isDefault() default false;
+	/**
+	 * Defines the annotated object as the default model object
+	 * @return
+	 */
+	boolean isDefault() default false;
 
-    /**
-     * Defines whether to autoBind this ModelObject when autoBind is
-     * enabled on the form. This allows you to opt out certain certain
-     * model objects from being auto bound. This is convenient when you
-     * have two model objects on a form that share a large amount of
-     * identical property names.
-     * @return
-     */
-    boolean autoBind() default true;
+	/**
+	 * Defines whether to autoBind this ModelObject when autoBind is
+	 * enabled on the form. This allows you to opt out certain certain
+	 * model objects from being auto bound. This is convenient when you
+	 * have two model objects on a form that share a large amount of
+	 * identical property names.
+	 * @return
+	 */
+	boolean autoBind() default true;
 
 }

@@ -31,73 +31,73 @@ package ch.elca.el4j.tests.services.exceptionhandler;
  */
 public interface A extends Adder {
 
-    /**
-     * Sets the number of retries.
-     * 
-     * @param retries
-     *      Number of retries.
-     */
-    public abstract void setRetries(int retries);
+	/**
+	 * Sets the number of retries.
+	 *
+	 * @param retries
+	 *      Number of retries.
+	 */
+	public abstract void setRetries(int retries);
 
-    /**
-     * Sets the adder to delegate calls to.
-     * 
-     * @param adder
-     *      The adder to set.
-     */
-    public abstract void setAdder(Adder adder);
+	/**
+	 * Sets the adder to delegate calls to.
+	 *
+	 * @param adder
+	 *      The adder to set.
+	 */
+	public abstract void setAdder(Adder adder);
 
-    /**
-     * Divides the two integers.
-     * 
-     * @param a
-     *      Dividend.
-     *      
-     * @param b
-     *      Divisor.
-     *      
-     * @return Returns a / b.
-     */
-    public abstract int div(int a, int b);
+	/**
+	 * Divides the two integers.
+	 *
+	 * @param a
+	 *      Dividend.
+	 *
+	 * @param b
+	 *      Divisor.
+	 *
+	 * @return Returns a / b.
+	 */
+	public abstract int div(int a, int b);
 
-    /**
-     * Throws an application level exception.
-     * 
-     * @throws ApplicationException
-     *      The sample exception.
-     */
-    public abstract void throwException() throws ApplicationException;
+	/**
+	 * Throws an application level exception.
+	 *
+	 * @throws ApplicationException
+	 *      The sample exception.
+	 */
+	public abstract void throwException() throws ApplicationException;
 
-    /**
-     * Throws a runtime exception.
-     */
-    public abstract void throwRTException();
+	/**
+	 * Throws a runtime exception.
+	 */
+	public abstract void throwRTException();
 
-    /**
-     * Concatenates the two Strings.
-     * 
-     * @param a the first string.
-     * @param b the second string.
-     * @return Returns the concatenation of the two strings.
-     */
-    public abstract String concat(String a, String b);
+	/**
+	 * Concatenates the two Strings.
+	 *
+	 * @param a the first string.
+	 * @param b the second string.
+	 * @return Returns the concatenation of the two strings.
+	 */
+	public abstract String concat(String a, String b);
 
-    /**
-     * {@inheritDoc}
-     */
-    public abstract int add(int a, int b);
+	/**
+	 * {@inheritDoc}
+	 */
+	public abstract int add(int a, int b);
 
-    /**
-     * Subtracts the given two numbers.
-     * 
-     * @param a
-     *      The first number.
-     *      
-     * @param b
-     *      The second number.
-     *      
-     * @return Returns a - b.
-     */
-    public abstract int sub(int a, int b);
+	/**
+	 * Subtracts the given two numbers.
+	 *
+	 * @param a
+	 *      The first number.
+	 *
+	 * @param b
+	 *      The second number.
+	 *
+	 * @return Returns a - b.
+	 */
+	public abstract int sub(int a, int b);
 
 }

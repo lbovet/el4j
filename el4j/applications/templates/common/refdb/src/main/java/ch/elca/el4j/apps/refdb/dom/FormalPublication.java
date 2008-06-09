@@ -29,14 +29,14 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
 /**
  * FormalPublication domain object. This class is a reference and describes a
  * formal publication.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Martin Zeltner (MZE)
  */
 @Entity
@@ -44,93 +44,93 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
 @Table(name = "FORMALPUBLICATIONS")
 @PrimaryKeyJoinColumn(name = "KEYTOREFERENCE")
 public class FormalPublication extends Reference {
-    /**
-     * Name of the author.
-     */
-    private String m_authorName;
+	/**
+	 * Name of the author.
+	 */
+	private String m_authorName;
 
-    /**
-     * Name of the publisher.
-     */
-    private String m_publisher;
+	/**
+	 * Name of the publisher.
+	 */
+	private String m_publisher;
 
-    /**
-     * Number pages of the publication.
-     */
-    private int m_pageNum;
+	/**
+	 * Number pages of the publication.
+	 */
+	private int m_pageNum;
 
-    // Checkstyle: MagicNumber off
-    
-    /**
-     * @return Returns the authorName.
-     */
-    //@NotNull
-    //@Length(min = 3)
-    public String getAuthorName() {
-        return m_authorName;
-    }
-    
-    // Checkstyle: MagicNumber on
-    
-    /**
-     * @param authorName
-     *            The authorName to set.
-     */
-    public void setAuthorName(String authorName) {
-        m_authorName = authorName;
-    }
+	// Checkstyle: MagicNumber off
+	
+	/**
+	 * @return Returns the authorName.
+	 */
+	//@NotNull
+	//@Length(min = 3)
+	public String getAuthorName() {
+		return m_authorName;
+	}
+	
+	// Checkstyle: MagicNumber on
+	
+	/**
+	 * @param authorName
+	 *            The authorName to set.
+	 */
+	public void setAuthorName(String authorName) {
+		m_authorName = authorName;
+	}
 
-    /**
-     * @return Returns the pageNum.
-     */
-    //@Pattern(regex = "[0-9]*")
-    public int getPageNum() {
-        return m_pageNum;
-    }
+	/**
+	 * @return Returns the pageNum.
+	 */
+	//@Pattern(regex = "[0-9]*")
+	public int getPageNum() {
+		return m_pageNum;
+	}
 
-    /**
-     * @param pageNum
-     *            The pageNum to set.
-     */
-    public void setPageNum(int pageNum) {
-        m_pageNum = pageNum;
-    }
+	/**
+	 * @param pageNum
+	 *            The pageNum to set.
+	 */
+	public void setPageNum(int pageNum) {
+		m_pageNum = pageNum;
+	}
 
-    /**
-     * @return Returns the publisher.
-     */
-    public String getPublisher() {
-        return m_publisher;
-    }
+	/**
+	 * @return Returns the publisher.
+	 */
+	public String getPublisher() {
+		return m_publisher;
+	}
 
-    /**
-     * @param publisher
-     *            The publisher to set.
-     */
-    public void setPublisher(String publisher) {
-        m_publisher = publisher;
-    }
+	/**
+	 * @param publisher
+	 *            The publisher to set.
+	 */
+	public void setPublisher(String publisher) {
+		m_publisher = publisher;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public int hashCode() {
-        return super.hashCode();
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public boolean equals(Object object) {
-        if (super.equals(object)
-            && object instanceof FormalPublication) {
-            FormalPublication other = (FormalPublication) object;
+	/**
+	 * {@inheritDoc}
+	 */
+	public int hashCode() {
+		return super.hashCode();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean equals(Object object) {
+		if (super.equals(object)
+			&& object instanceof FormalPublication) {
+			FormalPublication other = (FormalPublication) object;
 
-            return ObjectUtils.nullSaveEquals(m_authorName, other.m_authorName)
-                && ObjectUtils.nullSaveEquals(m_publisher,  other.m_publisher)
-                && m_pageNum == other.m_pageNum;
-        } else {
-            return false;
-        }
-    }
+			return ObjectUtils.nullSaveEquals(m_authorName, other.m_authorName)
+				&& ObjectUtils.nullSaveEquals(m_publisher,  other.m_publisher)
+				&& m_pageNum == other.m_pageNum;
+		} else {
+			return false;
+		}
+	}
 }

@@ -37,84 +37,84 @@ import zappini.designgridlayout.DesignGridLayout;
  * @author Stefan Wismer (SWI)
  */
 public abstract class AbstractSearchDialog extends JPanel {
-    /**
-     * The label stating something like 'Search for:'.
-     */
-    protected JLabel m_searchFor;
-    
-    /**
-     * The text field containing the search string.
-     */
-    protected JTextField m_searchField;
-    
-    /**
-     * The button to start the search.
-     */
-    protected JButton m_searchButton;
-    
-    /**
-     * Optional components to set search options.
-     */
-    protected JComponent[] m_options = null;
-    
-    /**
-     * The constructor.
-     */
-    protected AbstractSearchDialog() {
-        createBasicComponents();
-        createOptionalComponents();
-        createLayout();
-    }
-    
-    /**
-     * @return Returns the option components.
-     */
-    public JComponent[] getOptions() {
-        return m_options;
-    }
+	/**
+	 * The label stating something like 'Search for:'.
+	 */
+	protected JLabel m_searchFor;
+	
+	/**
+	 * The text field containing the search string.
+	 */
+	protected JTextField m_searchField;
+	
+	/**
+	 * The button to start the search.
+	 */
+	protected JButton m_searchButton;
+	
+	/**
+	 * Optional components to set search options.
+	 */
+	protected JComponent[] m_options = null;
+	
+	/**
+	 * The constructor.
+	 */
+	protected AbstractSearchDialog() {
+		createBasicComponents();
+		createOptionalComponents();
+		createLayout();
+	}
+	
+	/**
+	 * @return Returns the option components.
+	 */
+	public JComponent[] getOptions() {
+		return m_options;
+	}
 
-    /**
-     * @param options Sets the option components.
-     */
-    public void setOptions(JComponent[] options) {
-        m_options = options;
-    }
-    
-    
-    /**
-     * Create the basic form components.
-     */
-    private void createBasicComponents() {
-        m_searchFor = new JLabel();
-        m_searchFor.setName("searchFor");
-        
-        m_searchField = new JTextField();
-        m_searchField.setName("searchField");
-        
-        m_searchButton = new JButton();
-        m_searchButton.setName("searchButton");
-    }
-    
-    /**
-     * Create the optional form components. Hook for subclasses.
-     */
-    protected void createOptionalComponents() { }
-    
-    /**
-     * Layout the form components.
-     */
-    private void createLayout() {
-        // create the form layout
-        DesignGridLayout layout = new DesignGridLayout(this);
-        setLayout(layout);
+	/**
+	 * @param options Sets the option components.
+	 */
+	public void setOptions(JComponent[] options) {
+		m_options = options;
+	}
+	
+	
+	/**
+	 * Create the basic form components.
+	 */
+	private void createBasicComponents() {
+		m_searchFor = new JLabel();
+		m_searchFor.setName("searchFor");
+		
+		m_searchField = new JTextField();
+		m_searchField.setName("searchField");
+		
+		m_searchButton = new JButton();
+		m_searchButton.setName("searchButton");
+	}
+	
+	/**
+	 * Create the optional form components. Hook for subclasses.
+	 */
+	protected void createOptionalComponents() { }
+	
+	/**
+	 * Layout the form components.
+	 */
+	private void createLayout() {
+		// create the form layout
+		DesignGridLayout layout = new DesignGridLayout(this);
+		setLayout(layout);
 
-        layout.row().left().add(m_searchFor, 2);
-        layout.row().add(m_searchField, 2);
-        layout.row().right().add(m_searchButton);
-        if (m_options != null) {
-            for (JComponent component : m_options) {
-                layout.row().left().add(component, 2);
-            }
-        }
-    }
+		layout.row().left().add(m_searchFor, 2);
+		layout.row().add(m_searchField, 2);
+		layout.row().right().add(m_searchButton);
+		if (m_options != null) {
+			for (JComponent component : m_options) {
+				layout.row().left().add(component, 2);
+			}
+		}
+	}
 }

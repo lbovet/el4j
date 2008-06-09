@@ -29,7 +29,7 @@ import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
 import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
 
 /**
- * 
+ *
  * Implementation of the keyword DAO which is using Hibernate.
  *
  * <script type="text/javascript">printFileStatus
@@ -43,25 +43,25 @@ import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
  */
 @AutocollectedGenericDao("keywordDao")
 public class HibernateKeywordDao
-    extends GenericHibernateDao<Keyword, Integer>
-    implements KeywordDao {
-       
-    /**
-     * {@inheritDoc}
-     */
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public Keyword getKeywordByName(String name)
-        throws DataAccessException, DataRetrievalFailureException {
-        
-        String queryString = "from Keyword keyword where name = :name";
-                
-        List keywordList = getHibernateTemplate()
-            .findByNamedParam(queryString, "name", name);
-        if (keywordList.isEmpty()) {
-            throw new DataRetrievalFailureException("The desired keyword could"
-                + " not be retrieved.");
-        } else {
-            return (Keyword) keywordList.get(0);
-        }
-    }
+	extends GenericHibernateDao<Keyword, Integer>
+	implements KeywordDao {
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Keyword getKeywordByName(String name)
+		throws DataAccessException, DataRetrievalFailureException {
+		
+		String queryString = "from Keyword keyword where name = :name";
+				
+		List keywordList = getHibernateTemplate()
+			.findByNamedParam(queryString, "name", name);
+		if (keywordList.isEmpty()) {
+			throw new DataRetrievalFailureException("The desired keyword could"
+				+ " not be retrieved.");
+		} else {
+			return (Keyword) keywordList.get(0);
+		}
+	}
 }

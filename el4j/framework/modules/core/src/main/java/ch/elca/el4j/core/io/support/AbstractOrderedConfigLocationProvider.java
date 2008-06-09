@@ -35,105 +35,105 @@ import org.springframework.core.io.Resource;
  *
  * @author Andreas Bur (ABU)
  */
-public abstract class AbstractOrderedConfigLocationProvider 
-    implements ConfigLocationProvider {
+public abstract class AbstractOrderedConfigLocationProvider
+	implements ConfigLocationProvider {
 
-    /** 
-     * The module sorter that computes the list of modules preserving their
-     * hierarchical constraints.
-     */
-    private ModuleSorter m_moduleSorter = new DefaultModuleSorter();
+	/**
+	 * The module sorter that computes the list of modules preserving their
+	 * hierarchical constraints.
+	 */
+	private ModuleSorter m_moduleSorter = new DefaultModuleSorter();
 
-    /**
-     * The sorted list of modules.
-     */
-    private Module[] m_sortedModules;
+	/**
+	 * The sorted list of modules.
+	 */
+	private Module[] m_sortedModules;
 
-    /**
-     * Sets the module sorter used to compute the list of modules while
-     * preserving their hierarchical constraints. Default sorter is a
-     * {@link DefaultModuleSorter}.
-     * 
-     * @param moduleSorter 
-     *      The module sorter to use.
-     * 
-     * @see ModuleSorter
-     */
-    public void setModuleSorter(ModuleSorter moduleSorter) {
-        m_moduleSorter = moduleSorter;
-    }
+	/**
+	 * Sets the module sorter used to compute the list of modules while
+	 * preserving their hierarchical constraints. Default sorter is a
+	 * {@link DefaultModuleSorter}.
+	 *
+	 * @param moduleSorter
+	 *      The module sorter to use.
+	 *
+	 * @see ModuleSorter
+	 */
+	public void setModuleSorter(ModuleSorter moduleSorter) {
+		m_moduleSorter = moduleSorter;
+	}
 
-    /**
-     * @return Returns the sorted list of modules.
-     * @throws IOException On any io problem while working with modules.
-     */
-    protected Module[] getSortedModules() throws IOException {
-        if (m_sortedModules == null) {
-            Module[] modules = createModules();
-            m_sortedModules = sortModules(modules);
-        }
-        return m_sortedModules; 
-    }
-    
-    /**
-     * @return Returns the created list of modules.
-     * @throws IOException On any io problem while module creation.
-     */
-    protected abstract Module[] createModules() throws IOException;
-    
-    /**
-     * Sorts an unordered list of modules using the hierarchical constraints
-     * defined across the modules.
-     * 
-     * @param modules
-     *      The list of modules to sort.
-     *      
-     * @return Returns an ordered list of modules that fulfill the partial
-     *      order defined by the module's hierarchical constraints.
-     */
-    protected Module[] sortModules(Module[] modules) {
-        return m_moduleSorter.sortModules(modules);
-    }
-    
-    /**
-     * Merges the configuration locations of the provided list of modules,
-     * preserving the module's order.
-     * 
-     * @param modules
-     *      The ordered list of modules which configuration locations has to be
-     *      merged.
-     *       
-     * @return Returns the ordered list of configuration locations declared
-     *      by the modules.
-     */
-    protected String[] mergeConfigLocations(Module[] modules) {
-        List<String> configLocations = new ArrayList<String>();
-        for (int i = 0; i < modules.length; i++) {
-            configLocations.addAll(modules[i].getConfigFilesAsList());
-        }
-        
-        return (String[]) configLocations.toArray(
-                new String[configLocations.size()]);
-    }
-    
-    /**
-     * Merges the configuration location resources of the provided list of
-     * modules, preserving the module's order.
-     * 
-     * @param modules
-     *      The ordered list of modules which configuration location resources
-     *      has to be merged.
-     *       
-     * @return Returns the ordered list of configuration location resources
-     *      declared by the modules.
-     */
-    protected Resource[] mergeConfigLocationResources(Module[] modules) {
-        List<Resource> configLocationResources = new ArrayList<Resource>();
-        for (Module module : modules) {
-            configLocationResources.addAll(
-                module.getConfigFileResourcesAsList());
-        }
-        return (Resource[]) configLocationResources.toArray(
-                new Resource[configLocationResources.size()]);
-    }
+	/**
+	 * @return Returns the sorted list of modules.
+	 * @throws IOException On any io problem while working with modules.
+	 */
+	protected Module[] getSortedModules() throws IOException {
+		if (m_sortedModules == null) {
+			Module[] modules = createModules();
+			m_sortedModules = sortModules(modules);
+		}
+		return m_sortedModules;
+	}
+	
+	/**
+	 * @return Returns the created list of modules.
+	 * @throws IOException On any io problem while module creation.
+	 */
+	protected abstract Module[] createModules() throws IOException;
+	
+	/**
+	 * Sorts an unordered list of modules using the hierarchical constraints
+	 * defined across the modules.
+	 *
+	 * @param modules
+	 *      The list of modules to sort.
+	 *
+	 * @return Returns an ordered list of modules that fulfill the partial
+	 *      order defined by the module's hierarchical constraints.
+	 */
+	protected Module[] sortModules(Module[] modules) {
+		return m_moduleSorter.sortModules(modules);
+	}
+	
+	/**
+	 * Merges the configuration locations of the provided list of modules,
+	 * preserving the module's order.
+	 *
+	 * @param modules
+	 *      The ordered list of modules which configuration locations has to be
+	 *      merged.
+	 *
+	 * @return Returns the ordered list of configuration locations declared
+	 *      by the modules.
+	 */
+	protected String[] mergeConfigLocations(Module[] modules) {
+		List<String> configLocations = new ArrayList<String>();
+		for (int i = 0; i < modules.length; i++) {
+			configLocations.addAll(modules[i].getConfigFilesAsList());
+		}
+		
+		return (String[]) configLocations.toArray(
+				new String[configLocations.size()]);
+	}
+	
+	/**
+	 * Merges the configuration location resources of the provided list of
+	 * modules, preserving the module's order.
+	 *
+	 * @param modules
+	 *      The ordered list of modules which configuration location resources
+	 *      has to be merged.
+	 *
+	 * @return Returns the ordered list of configuration location resources
+	 *      declared by the modules.
+	 */
+	protected Resource[] mergeConfigLocationResources(Module[] modules) {
+		List<Resource> configLocationResources = new ArrayList<Resource>();
+		for (Module module : modules) {
+			configLocationResources.addAll(
+				module.getConfigFileResourcesAsList());
+		}
+		return (Resource[]) configLocationResources.toArray(
+				new Resource[configLocationResources.size()]);
+	}
 }

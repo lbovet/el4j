@@ -23,7 +23,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 
 /**
- * 
+ *
  * This interface represents a generic DAO for domain objects representing
  * files or file descriptors.
  * It defines the methods which are specific to these domain objects.
@@ -43,20 +43,20 @@ import org.springframework.dao.DataRetrievalFailureException;
  * @author Alex Mathey (AMA)
  */
 public interface GenericFileDao<T, ID extends Serializable>
-    extends GenericReferencedObjectDao<T, ID> {
-    
-    /**
-     * Get all the files or file descriptors with the same name.
-     * 
-     * @param name
-     *            Is the name of a file or file descriptor.
-     * @return Returns the desired file or file descriptor.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     * @throws DataRetrievalFailureException
-     *             If file or file descriptor could not be retrieved.
-     */
-    public List<T> getByName(String name)
-        throws DataAccessException, DataRetrievalFailureException;
-    
+	extends GenericReferencedObjectDao<T, ID> {
+	
+	/**
+	 * Get all the files or file descriptors with the same name.
+	 *
+	 * @param name
+	 *            Is the name of a file or file descriptor.
+	 * @return Returns the desired file or file descriptor.
+	 * @throws DataAccessException
+	 *             If general data access problem occurred.
+	 * @throws DataRetrievalFailureException
+	 *             If file or file descriptor could not be retrieved.
+	 */
+	public List<T> getByName(String name)
+		throws DataAccessException, DataRetrievalFailureException;
+	
 }

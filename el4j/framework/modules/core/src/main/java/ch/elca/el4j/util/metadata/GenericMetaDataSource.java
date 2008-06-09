@@ -25,56 +25,56 @@ import org.springframework.metadata.Attributes;
 
 /**
  * Interface for the metadata source.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Raphael Boog (RBO)
  * @author Martin Zeltner (MZE)
  */
 public interface GenericMetaDataSource {
 
-    /**
-     * Setter method to set the metadata implementation.
-     * 
-     * @param attributes
-     *            The attributes to set
-     */
-    public void setMetaDataDelegator(Attributes attributes);
+	/**
+	 * Setter method to set the metadata implementation.
+	 *
+	 * @param attributes
+	 *            The attributes to set
+	 */
+	public void setMetaDataDelegator(Attributes attributes);
 
-    /**
-     * Getter method to get the metadata implementation.
-     * 
-     * @return Attributes
-     */
-    public Attributes getMetaDataDelegator();
+	/**
+	 * Getter method to get the metadata implementation.
+	 *
+	 * @return Attributes
+	 */
+	public Attributes getMetaDataDelegator();
 
-    /**
-     * Setter method for the list of metadata types where to apply the 
-     * interceptor.
-     * 
-     * @param interceptingAttributes
-     *            Is the metadata type list.
-     */
-    public void setInterceptingMetaData(List<Class> interceptingAttributes);
+	/**
+	 * Setter method for the list of metadata types where to apply the
+	 * interceptor.
+	 *
+	 * @param interceptingAttributes
+	 *            Is the metadata type list.
+	 */
+	public void setInterceptingMetaData(List<Class> interceptingAttributes);
 
-    /**
-     * @return Returns the metadata type list.
-     */
-    public List<Class> getInterceptingMetaData();
+	/**
+	 * @return Returns the metadata type list.
+	 */
+	public List<Class> getInterceptingMetaData();
 
-    /**
-     * @param method
-     *            Is the method for the current invocation. Must not be null.
-     * @param targetClass
-     *            target class for this invocation. May be null.
-     * @return Returns a collection of the matching meta data for the given
-     *         method and targetClass.
-     */
-    public Collection getMetaData(Method method, Class targetClass);
+	/**
+	 * @param method
+	 *            Is the method for the current invocation. Must not be null.
+	 * @param targetClass
+	 *            target class for this invocation. May be null.
+	 * @return Returns a collection of the matching meta data for the given
+	 *         method and targetClass.
+	 */
+	public Collection getMetaData(Method method, Class targetClass);
 
 }

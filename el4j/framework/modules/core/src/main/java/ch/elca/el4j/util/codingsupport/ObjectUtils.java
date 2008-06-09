@@ -19,9 +19,9 @@ package ch.elca.el4j.util.codingsupport;
 
 
 /**
- * This class supports methods to handle with objects. It covers only caps of 
+ * This class supports methods to handle with objects. It covers only caps of
  * class <code>org.springframework.util.ObjectUtils</code>.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -32,39 +32,39 @@ package ch.elca.el4j.util.codingsupport;
  * @author Martin Zeltner (MZE)
  */
 public final class ObjectUtils {
-    
-    /**
-     * Default constructor.
-     */
-    private ObjectUtils() {
-    }
-    
-    /**
-     * This method is used to compare two strings.
-     * 
-     * @param s1 Is the first string.
-     * @param s2 Is the second string.
-     * @return Returns true if s1 and s2 are null or empty and naturally if they
-     *         are equals.
-     */
-    public static boolean nullSaveEquals(String s1, String s2) {
-        if ((s1 == null || s1.length() == 0)
-                && (s2 == null || s2.length() == 0)) {
-            return true;
-        } else {
-            return s1 != null && s1.equals(s2);
-        }
-    }
-    
-    /**
-     * Method which always returns a string object.
-     * 
-     * @param s
-     *            Is the string to check.
-     * @return Returns an empty string if given string object is null, otherwise
-     *         the given string.
-     */
-    public static String asString(String s) {
-        return s == null ? "" : s;
-    }
+	
+	/**
+	 * Default constructor.
+	 */
+	private ObjectUtils() {
+	}
+	
+	/**
+	 * This method is used to compare two strings.
+	 *
+	 * @param s1 Is the first string.
+	 * @param s2 Is the second string.
+	 * @return Returns true if s1 and s2 are null or empty and naturally if they
+	 *         are equals.
+	 */
+	public static boolean nullSaveEquals(String s1, String s2) {
+		if ((s1 == null || s1.length() == 0)
+				&& (s2 == null || s2.length() == 0)) {
+			return true;
+		} else {
+			return s1 != null && s1.equals(s2);
+		}
+	}
+	
+	/**
+	 * Method which always returns a string object.
+	 *
+	 * @param s
+	 *            Is the string to check.
+	 * @return Returns an empty string if given string object is null, otherwise
+	 *         the given string.
+	 */
+	public static String asString(String s) {
+		return s == null ? "" : s;
+	}
 }

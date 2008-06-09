@@ -31,38 +31,38 @@ import org.springframework.core.Ordered;
  * @author Philipp Oser (POS)
  */
 public class OrderedBeanNameHolder implements Ordered {
-    /**
-     * Is the order of the bean.
-     */
-    protected final int m_order;
-    
-    /**
-     * Is the name of the bean.
-     */
-    protected final String m_beanName;
-    
-    /**
-     * Initializes the bean holder with the given name and order.
-     * 
-     * @param order Is the bean order.
-     * @param beanName Is the name of the bean.
-     */
-    public OrderedBeanNameHolder(int order, String beanName) {
-        m_order = order;
-        m_beanName = beanName;
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public int getOrder() {
-        return m_order;
-    }
+	/**
+	 * Is the order of the bean.
+	 */
+	protected final int m_order;
+	
+	/**
+	 * Is the name of the bean.
+	 */
+	protected final String m_beanName;
+	
+	/**
+	 * Initializes the bean holder with the given name and order.
+	 *
+	 * @param order Is the bean order.
+	 * @param beanName Is the name of the bean.
+	 */
+	public OrderedBeanNameHolder(int order, String beanName) {
+		m_order = order;
+		m_beanName = beanName;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public int getOrder() {
+		return m_order;
+	}
 
-    /**
-     * @return Returns the name of the bean.
-     */
-    public String getBeanName() {
-        return m_beanName;
-    }
+	/**
+	 * @return Returns the name of the bean.
+	 */
+	public String getBeanName() {
+		return m_beanName;
+	}
 }

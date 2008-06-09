@@ -33,42 +33,42 @@ import ch.elca.el4j.web.struts.form.SynchronizerForm;
 /**
  * This action is used to save a synchronizer token. The synchronizer token
  * pattern is mainly used to prevent double submission of a form.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Raphael Boog (RBO)
  */
 public class AddingSynchronizerTokenAction extends Action {
 
-    /** The logger. */
-    protected final Log s_logger = LogFactory.getLog(getClass());
-    
-    /**
-     * {@inheritDoc}
-     */
-    public ActionForward execute(ActionMapping actionMapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) {
-        
-        SynchronizerForm synchronizerForm = (SynchronizerForm) form;
-        
-        // save the token in order to avoid double submission
-        saveToken(request);
-        
-        // set the token in the jsp page manually since Struts does not write
-        // in xml pages. The jsp page to which "success" is leading must contain
-        // a hidden field with name="org.apache.struts.taglib.html.TOKEN" whose
-        // value is refering to synchronizerForm.token
-        String token = (String) request.getSession().getAttribute(
-                Globals.TRANSACTION_TOKEN_KEY);
-        synchronizerForm.setToken(token);
-        
-        return actionMapping.findForward("success");
-        
-    }
+	/** The logger. */
+	protected final Log s_logger = LogFactory.getLog(getClass());
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public ActionForward execute(ActionMapping actionMapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) {
+		
+		SynchronizerForm synchronizerForm = (SynchronizerForm) form;
+		
+		// save the token in order to avoid double submission
+		saveToken(request);
+		
+		// set the token in the jsp page manually since Struts does not write
+		// in xml pages. The jsp page to which "success" is leading must contain
+		// a hidden field with name="org.apache.struts.taglib.html.TOKEN" whose
+		// value is refering to synchronizerForm.token
+		String token = (String) request.getSession().getAttribute(
+				Globals.TRANSACTION_TOKEN_KEY);
+		synchronizerForm.setToken(token);
+		
+		return actionMapping.findForward("success");
+		
+	}
 
 }

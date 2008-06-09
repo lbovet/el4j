@@ -34,69 +34,69 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  *
  * @author Martin Zeltner (MZE)
  */
-public abstract class AbstractStringKeyIntOptimisticLockingDto 
-    extends AbstractIntOptimisticLockingDto
-    implements PrimaryKeyOptimisticLockingObject {
-    
-    /**
-     * Primary key.
-     */
-    @Id
-    private String m_key;
+public abstract class AbstractStringKeyIntOptimisticLockingDto
+	extends AbstractIntOptimisticLockingDto
+	implements PrimaryKeyOptimisticLockingObject {
+	
+	/**
+	 * Primary key.
+	 */
+	@Id
+	private String m_key;
 
-    /**
-     * {@inheritDoc}
-     */
-    public boolean isKeyNew() {
-        return m_key == null;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean isKeyNew() {
+		return m_key == null;
+	}
 
-    /**
-     * @return Returns the key.
-     */
-    public final String getKey() {
-        return m_key;
-    }
+	/**
+	 * @return Returns the key.
+	 */
+	public final String getKey() {
+		return m_key;
+	}
 
-    /**
-     * @param key The key to set.
-     */
-    public final void setKey(String key) {
-        m_key = key;
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public final Object getKeyAsObject() {
-        return isKeyNew() ? null : getKey();
-    }
+	/**
+	 * @param key The key to set.
+	 */
+	public final void setKey(String key) {
+		m_key = key;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public final Object getKeyAsObject() {
+		return isKeyNew() ? null : getKey();
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void setKey(Object keyObject) {
-        String key = (keyObject == null) ? null : keyObject.toString();
-        setKey(key);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setKey(Object keyObject) {
+		String key = (keyObject == null) ? null : keyObject.toString();
+		setKey(key);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public int hashCode() {
-        return (m_key != null) ? m_key.hashCode() : 0;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public int hashCode() {
+		return (m_key != null) ? m_key.hashCode() : 0;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public boolean equals(Object obj) {
-        if (obj instanceof AbstractStringKeyIntOptimisticLockingDto) {
-            AbstractStringKeyIntOptimisticLockingDto other 
-                = (AbstractStringKeyIntOptimisticLockingDto) obj;
-            return ObjectUtils.nullSaveEquals(m_key, other.m_key);
-        } else {
-            return false;
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean equals(Object obj) {
+		if (obj instanceof AbstractStringKeyIntOptimisticLockingDto) {
+			AbstractStringKeyIntOptimisticLockingDto other
+				= (AbstractStringKeyIntOptimisticLockingDto) obj;
+			return ObjectUtils.nullSaveEquals(m_key, other.m_key);
+		} else {
+			return false;
+		}
+	}
 }

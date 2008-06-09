@@ -24,7 +24,7 @@ import org.springframework.dao.DataAccessException;
 import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
 
 /**
- * 
+ *
  * This interface represents a generic DAO for domain objects representing
  * referenced objects.
  * It defines the methods which are specific to these domain objects.
@@ -40,21 +40,21 @@ import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
  *            The generic type of the domain class the DAO is responsible for
  * @param <ID>
  *            The generic type of the domain class' identifier
- *            
+ *
  * @author Alex Mathey (AMA)
  */
 public interface GenericReferencedObjectDao<T, ID extends Serializable> extends
-    ConvenienceGenericDao<T, ID> {
-    
-    /**
-     * Get all domain objects which are referenced by a given reference.
-     * 
-     * @param id
-     *            Is the identifier of the reference.
-     * @return Returns a list containing all the domain objects which are
-     *         referenced by the given reference
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     */
-    public List<T> getByReference(ID id) throws DataAccessException;
+	ConvenienceGenericDao<T, ID> {
+	
+	/**
+	 * Get all domain objects which are referenced by a given reference.
+	 *
+	 * @param id
+	 *            Is the identifier of the reference.
+	 * @return Returns a list containing all the domain objects which are
+	 *         referenced by the given reference
+	 * @throws DataAccessException
+	 *             If general data access problem occurred.
+	 */
+	public List<T> getByReference(ID id) throws DataAccessException;
 }

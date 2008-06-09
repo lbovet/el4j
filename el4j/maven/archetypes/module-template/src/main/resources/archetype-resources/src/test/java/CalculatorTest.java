@@ -28,32 +28,32 @@ import static org.junit.Assert.*;
  * @author Martin Zeltner (MZE)
  */
 public class CalculatorTest {
-    /**
-     * Private logger.
-     */
-    private static Log s_logger 
-        = LogFactory.getLog(CalculatorTest.class);
+	/**
+	 * Private logger.
+	 */
+	private static Log s_logger
+		= LogFactory.getLog(CalculatorTest.class);
 
-    /**
-     * Tests the division method of calculator.
-     */
-    @Test
-    public void testCalculatorDivision() {
-        Calculator c = new Calculator();
-        // Checkstyle: MagicNumber off
-        double dividend = 3;
-        double divisor = 7;
-        double delta = 0.000001;
-        // Checkstyle: MagicNumber on
-        double result = c.div(dividend, divisor);
-        assertEquals(dividend / divisor, result, delta);
-        
-        divisor = 0;
-        try {
-            c.div(dividend, divisor);
-            fail("No exception on division by zero!");
-        } catch (RuntimeException e) {
-            s_logger.debug("Expected exception caught.", e);
-        }
-    }
+	/**
+	 * Tests the division method of calculator.
+	 */
+	@Test
+	public void testCalculatorDivision() {
+		Calculator c = new Calculator();
+		// Checkstyle: MagicNumber off
+		double dividend = 3;
+		double divisor = 7;
+		double delta = 0.000001;
+		// Checkstyle: MagicNumber on
+		double result = c.div(dividend, divisor);
+		assertEquals(dividend / divisor, result, delta);
+		
+		divisor = 0;
+		try {
+			c.div(dividend, divisor);
+			fail("No exception on division by zero!");
+		} catch (RuntimeException e) {
+			s_logger.debug("Expected exception caught.", e);
+		}
+	}
 }

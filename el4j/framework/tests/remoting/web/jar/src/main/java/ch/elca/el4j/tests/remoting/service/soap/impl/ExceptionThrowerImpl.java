@@ -37,55 +37,55 @@ import ch.elca.el4j.tests.remoting.service.soap.RemoteExceptionWithData;
  * @author Martin Zeltner (MZE)
  */
 public class ExceptionThrowerImpl implements ExceptionThrower {
-    /**
-     * Any index used in exception.
-     */
-    public static final int EXCEPTION_INDEX = 4892;
-    
-    /**
-     * Any message used in exception.
-     */
-    public static final String EXCEPTION_MESSAGE 
-        = "Something went wrong. Always problems with special characters "
-            + "like ?, %, ç, ä, è and so on.";
-    
-    /**
-     * Any byte data used in exception.
-     */
-    public static final byte[] EXCEPTION_DATA = EXCEPTION_MESSAGE.getBytes();
-    
-    /**
-     * Any calendar object used in exception.
-     */
-    public static final Calendar EXCEPTION_CALENDAR 
-        = new GregorianCalendar(1979, Calendar.DECEMBER, 27, 14, 10);
-    
-    /**
-     * Double value used in first calculator value object. 
-     */
-    public static final double EXCEPTION_C1_MYDOUBLE = 2.3;
+	/**
+	 * Any index used in exception.
+	 */
+	public static final int EXCEPTION_INDEX = 4892;
+	
+	/**
+	 * Any message used in exception.
+	 */
+	public static final String EXCEPTION_MESSAGE
+		= "Something went wrong. Always problems with special characters "
+			+ "like ?, %, ç, ä, è and so on.";
+	
+	/**
+	 * Any byte data used in exception.
+	 */
+	public static final byte[] EXCEPTION_DATA = EXCEPTION_MESSAGE.getBytes();
+	
+	/**
+	 * Any calendar object used in exception.
+	 */
+	public static final Calendar EXCEPTION_CALENDAR
+		= new GregorianCalendar(1979, Calendar.DECEMBER, 27, 14, 10);
+	
+	/**
+	 * Double value used in first calculator value object.
+	 */
+	public static final double EXCEPTION_C1_MYDOUBLE = 2.3;
 
-    /**
-     * String used in second calculator value object.
-     */
-    public static final String EXCEPTION_C2_MYSTRING = "This is my string.";
+	/**
+	 * String used in second calculator value object.
+	 */
+	public static final String EXCEPTION_C2_MYSTRING = "This is my string.";
 
-    /**
-     * {@inheritDoc}
-     */
-    public void throwExceptionWithData() throws RemoteExceptionWithData {
-        RemoteExceptionWithData e = new RemoteExceptionWithData();
-        e.setIndex(EXCEPTION_INDEX);
-        e.setMessage(EXCEPTION_MESSAGE);
-        e.setData(EXCEPTION_DATA);
-        e.setCalendar(EXCEPTION_CALENDAR);
-        
-        CalculatorValueObject c1 = new CalculatorValueObject();
-        c1.setMyDouble(EXCEPTION_C1_MYDOUBLE);
-        CalculatorValueObject c2 = new CalculatorValueObject();
-        c2.setMyString(EXCEPTION_C2_MYSTRING);
-        e.setCalculatorValueObjects(new CalculatorValueObject[] {c1, c2});
-        
-        throw e;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void throwExceptionWithData() throws RemoteExceptionWithData {
+		RemoteExceptionWithData e = new RemoteExceptionWithData();
+		e.setIndex(EXCEPTION_INDEX);
+		e.setMessage(EXCEPTION_MESSAGE);
+		e.setData(EXCEPTION_DATA);
+		e.setCalendar(EXCEPTION_CALENDAR);
+		
+		CalculatorValueObject c1 = new CalculatorValueObject();
+		c1.setMyDouble(EXCEPTION_C1_MYDOUBLE);
+		CalculatorValueObject c2 = new CalculatorValueObject();
+		c2.setMyString(EXCEPTION_C2_MYSTRING);
+		e.setCalculatorValueObjects(new CalculatorValueObject[] {c1, c2});
+		
+		throw e;
+	}
 }

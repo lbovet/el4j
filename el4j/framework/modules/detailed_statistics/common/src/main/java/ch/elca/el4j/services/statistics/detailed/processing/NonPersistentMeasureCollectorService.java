@@ -32,120 +32,120 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * cacheSize determines the maximum number of MeasureIDs, which are stored. If
  * the no of MeasureIDs, exceeds the cacheSize all MeasureItems belonging to one
  * MeasureId will be removed. This MeasureId for removal is chosen by a
- * least-recently-used strategy. 
- * 
- * 
+ * least-recently-used strategy.
+ *
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Rashid Waraich (RWA)
  * @author David Stefan (DST)
  */
 
 public class NonPersistentMeasureCollectorService implements
-    MeasureCollectorService {
+	MeasureCollectorService {
 
-    /**
-     * Cache for Measurements.
-     */
-    private LRUCache<String, List<MeasureItem>> m_cache;
+	/**
+	 * Cache for Measurements.
+	 */
+	private LRUCache<String, List<MeasureItem>> m_cache;
 
-    /**
-     * Construtor.
-     * 
-     * @param maxCacheSize
-     *            The maximum number of Measurements in the cache.
-     */
-    public NonPersistentMeasureCollectorService(int maxCacheSize) {
-        Reject.ifCondition(maxCacheSize < 0);
-        m_cache = new LRUCache<String, List<MeasureItem>>(maxCacheSize);
-    }
+	/**
+	 * Construtor.
+	 *
+	 * @param maxCacheSize
+	 *            The maximum number of Measurements in the cache.
+	 */
+	public NonPersistentMeasureCollectorService(int maxCacheSize) {
+		Reject.ifCondition(maxCacheSize < 0);
+		m_cache = new LRUCache<String, List<MeasureItem>>(maxCacheSize);
+	}
 
-    /**
-     * Won't do anything, as this is a non-persistant MeasureCollectorService.
-     */
-    public void writeMeasures() {
+	/**
+	 * Won't do anything, as this is a non-persistant MeasureCollectorService.
+	 */
+	public void writeMeasures() {
 
-    }
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void add(MeasureItem item) {
-        List<MeasureItem> list = m_cache.get(item.getID().getFormattedString());
+	/**
+	 * {@inheritDoc}
+	 */
+	public void add(MeasureItem item) {
+		List<MeasureItem> list = m_cache.get(item.getID().getFormattedString());
 
-        if (list == null) {
-            list = new LinkedList<MeasureItem>();
-        }
-        synchronized (this) {
-            list.add(item);
-            m_cache.put(item.getID().getFormattedString(), list);
-        }
-    }
+		if (list == null) {
+			list = new LinkedList<MeasureItem>();
+		}
+		synchronized (this) {
+			list.add(item);
+			m_cache.put(item.getID().getFormattedString(), list);
+		}
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void delete(int amount) {
-        m_cache.clear();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void delete(int amount) {
+		m_cache.clear();
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public List<MeasureItem> getAllMeasureItems() {
-        List<MeasureItem> result = new ArrayList<MeasureItem>();
-        synchronized (this) {
-            Iterator<List<MeasureItem>> iter = m_cache.getAll().iterator();
-            while (iter.hasNext()) {
-                result = mergeLists(result, iter.next());
-            }
-        }
-        return result;
-    }
-    
-    
-    /**
-     * {@inheritDoc}
-     */
-    public List<MeasureItem> getFirstMeasureItems() {
-        List<MeasureItem> list = new ArrayList<MeasureItem>();
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<MeasureItem> getAllMeasureItems() {
+		List<MeasureItem> result = new ArrayList<MeasureItem>();
+		synchronized (this) {
+			Iterator<List<MeasureItem>> iter = m_cache.getAll().iterator();
+			while (iter.hasNext()) {
+				result = mergeLists(result, iter.next());
+			}
+		}
+		return result;
+	}
+	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<MeasureItem> getFirstMeasureItems() {
+		List<MeasureItem> list = new ArrayList<MeasureItem>();
 
-        synchronized (this) {
-            Iterator<String> iter = m_cache.getKeys().iterator();
-            while (iter.hasNext()) {
-                list.add((m_cache.get(iter.next())).get(0));
-            }
-        }
-        return list;
-    }
+		synchronized (this) {
+			Iterator<String> iter = m_cache.getKeys().iterator();
+			while (iter.hasNext()) {
+				list.add((m_cache.get(iter.next())).get(0));
+			}
+		}
+		return list;
+	}
 
-    
-    /**
-     * Merge two lists.
-     * 
-     * @param list1
-     *            First list.
-     * @param list2
-     *            Second list.
-     * @return The resulting list.
-     */
-    private List<MeasureItem> mergeLists(List<MeasureItem> list1,
-        List<MeasureItem> list2) {
+	
+	/**
+	 * Merge two lists.
+	 *
+	 * @param list1
+	 *            First list.
+	 * @param list2
+	 *            Second list.
+	 * @return The resulting list.
+	 */
+	private List<MeasureItem> mergeLists(List<MeasureItem> list1,
+		List<MeasureItem> list2) {
 
-        List<MeasureItem> result = new ArrayList<MeasureItem>();
-        Iterator iter = list1.iterator();
-        while (iter.hasNext()) {
-            result.add((MeasureItem) iter.next());
-        }
-        iter = list2.iterator();
-        while (iter.hasNext()) {
-            result.add((MeasureItem) iter.next());
-        }
-        return result;
-    }
+		List<MeasureItem> result = new ArrayList<MeasureItem>();
+		Iterator iter = list1.iterator();
+		while (iter.hasNext()) {
+			result.add((MeasureItem) iter.next());
+		}
+		iter = list2.iterator();
+		while (iter.hasNext()) {
+			result.add((MeasureItem) iter.next());
+		}
+		return result;
+	}
 }

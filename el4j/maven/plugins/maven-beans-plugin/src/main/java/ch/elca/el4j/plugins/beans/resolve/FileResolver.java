@@ -34,35 +34,35 @@ import java.net.URL;
  */
 public class FileResolver extends AbstractResolver {
 
-    /**
-     * Set up a file resolver.
-     * @param classpath The classpath to check valid files against.
-     */
-    public FileResolver(URL[] classpath) {
-        super(classpath);
-    }
+	/**
+	 * Set up a file resolver.
+	 * @param classpath The classpath to check valid files against.
+	 */
+	public FileResolver(URL[] classpath) {
+		super(classpath);
+	}
 
-    /** {@inheritDoc} */
-    public String getProtocol() {
-        return "file";
-    }
+	/** {@inheritDoc} */
+	public String getProtocol() {
+		return "file";
+	}
 
-    /** {@inheritDoc} */
-    public boolean accept(String file) {
-        String f = strip(file);
-        for (String entry : m_classpath) {
-            if (f.startsWith(entry)) {
-                return true;
-            }
-        }
-        return false;
-    }
+	/** {@inheritDoc} */
+	public boolean accept(String file) {
+		String f = strip(file);
+		for (String entry : m_classpath) {
+			if (f.startsWith(entry)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-    /** {@inheritDoc} */
-    public void copy(String file, File target) throws IOException {
-        File destDir = createDir("files", target);
-        File source = new File(strip(file));
-        File dest = new File(destDir, source.getName());
-        copyFile(source, dest);
-    }
+	/** {@inheritDoc} */
+	public void copy(String file, File target) throws IOException {
+		File destDir = createDir("files", target);
+		File source = new File(strip(file));
+		File dest = new File(destDir, source.getName());
+		copyFile(source, dest);
+	}
 }

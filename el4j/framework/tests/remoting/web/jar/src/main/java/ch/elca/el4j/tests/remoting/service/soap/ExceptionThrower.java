@@ -18,7 +18,7 @@
 package ch.elca.el4j.tests.remoting.service.soap;
 
 /**
- * Interface which throws only exceptions, which fulfills the Jax-Rpc 1.1 wsdl 
+ * Interface which throws only exceptions, which fulfills the Jax-Rpc 1.1 wsdl
  * fault specification.
  *
  * <script type="text/javascript">printFileStatus
@@ -31,11 +31,11 @@ package ch.elca.el4j.tests.remoting.service.soap;
  * @author Martin Zeltner (MZE)
  */
 public interface ExceptionThrower {
-    /**
-     * This method throws an exception which contains data. This data must be 
-     * available on client side too.
-     * 
-     * @throws RemoteExceptionWithData Is the thrown exception.
-     */
-    public void throwExceptionWithData() throws RemoteExceptionWithData;
+	/**
+	 * This method throws an exception which contains data. This data must be
+	 * available on client side too.
+	 *
+	 * @throws RemoteExceptionWithData Is the thrown exception.
+	 */
+	public void throwExceptionWithData() throws RemoteExceptionWithData;
 }

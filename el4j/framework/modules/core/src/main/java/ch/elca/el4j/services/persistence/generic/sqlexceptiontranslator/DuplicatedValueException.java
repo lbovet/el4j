@@ -37,13 +37,13 @@ import org.springframework.dao.DataAccessException;
  */
 public class DuplicatedValueException extends DataAccessException {
 
-    /**
-     * Default constructor.
-     * 
-     * @param message Is the exception message.
-     * @param e Is the received target exception.
-     */
-    public DuplicatedValueException(String message, SQLException e) {
-        super(message, e);
-    }
+	/**
+	 * Default constructor.
+	 *
+	 * @param message Is the exception message.
+	 * @param e Is the received target exception.
+	 */
+	public DuplicatedValueException(String message, SQLException e) {
+		super(message, e);
+	}
 }

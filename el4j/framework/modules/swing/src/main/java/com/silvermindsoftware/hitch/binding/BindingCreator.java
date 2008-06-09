@@ -29,26 +29,26 @@ import org.jdesktop.beansbinding.AutoBinding;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @param <T> the type of widget to bind
  *
  * @author Stefan Wismer (SWI)
  */
 public interface BindingCreator<T extends JComponent> {
-    /**
-     * Create the concrete binding.
-     * 
-     * @param object            the object to bind
-     * @param formComponent     the widget to bound to
-     * @return                  the corresponding binding
-     */
-    @SuppressWarnings("unchecked")
-    public AutoBinding createBinding(Object object, T formComponent);
-    
-    /**
-     * Add validation capability.
-     * 
-     * @param formComponent     the widget showing the values
-     */
-    public void addValidation(T formComponent);
+	/**
+	 * Create the concrete binding.
+	 *
+	 * @param object            the object to bind
+	 * @param formComponent     the widget to bound to
+	 * @return                  the corresponding binding
+	 */
+	@SuppressWarnings("unchecked")
+	public AutoBinding createBinding(Object object, T formComponent);
+	
+	/**
+	 * Add validation capability.
+	 *
+	 * @param formComponent     the widget showing the values
+	 */
+	public void addValidation(T formComponent);
 }

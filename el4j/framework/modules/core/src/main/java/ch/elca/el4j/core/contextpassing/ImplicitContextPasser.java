@@ -19,7 +19,7 @@ package ch.elca.el4j.core.contextpassing;
 
 /**
  * Implicit context passer interface.
- * Please refer to the documentation of the 
+ * Please refer to the documentation of the
  * remoting_and_interface_enrichment module more information on this.
  *
  * <script type="text/javascript">printFileStatus
@@ -32,21 +32,21 @@ package ch.elca.el4j.core.contextpassing;
  * @author Martin Zeltner (MZE)
  */
 public interface ImplicitContextPasser {
-    /**
-     * This method is called by the stub (e.g. ProxyBean) that makes a remote
-     * invocation to collect the implicitly passed context and add it to the
-     * invocation.
-     * 
-     * @return The context that should be added to a method call.
-     */
-    public Object getImplicitlyPassedContext();
+	/**
+	 * This method is called by the stub (e.g. ProxyBean) that makes a remote
+	 * invocation to collect the implicitly passed context and add it to the
+	 * invocation.
+	 *
+	 * @return The context that should be added to a method call.
+	 */
+	public Object getImplicitlyPassedContext();
 
-    /**
-     * This method is called by the skeleton (e.g. ExporterBean) that receives a
-     * remote invocation to push the context to the bean.
-     * 
-     * @param context
-     *            The received context that should be pushed to the service.
-     */
-    public void pushImplicitlyPassedContext(Object context);
+	/**
+	 * This method is called by the skeleton (e.g. ExporterBean) that receives a
+	 * remote invocation to push the context to the bean.
+	 *
+	 * @param context
+	 *            The received context that should be pushed to the service.
+	 */
+	public void pushImplicitlyPassedContext(Object context);
 }

@@ -40,146 +40,146 @@ import com.silvermindsoftware.hitch.validation.response.ValidationResponder;
  * @author Stefan Wismer (SWI)
  */
 public interface Binder {
-    /**
-     * Add all bindings that can be derived from the binding annotaions.
-     * 
-     * @param container    the GUI component container to bind to
-     * @param modelId      the optional model identifiers
-     *                     (to select models to bind)
-     * @return             the added binding group
-     */
-    public BindingGroup addAutoBinding(Container container, String... modelId);
-    
-    /**
-     * @param container    the GUI component container to bind to
-     * @param performValidate    validate user input
-     * @param modelId      the optional model identifiers
-     *                     (to select models to bind)
-     * @return             the added binding group
-     */
-    public BindingGroup addAutoBinding(Container container,
-        boolean performValidate, String... modelId);
-    
-    /**
-     * Bind a component to a model using a specific binding creator.
-     * 
-     * @param container          the GUI component container to bind to
-     * @param component          the form component to bind to
-     * @param creator            the specific binding creator
-     * @param performValidate    determines if a validation should be performed
-     * @return                   the created binding
-     */
-    @SuppressWarnings("unchecked")
-    public AutoBinding addAutoBinding(Container container,  
-        JComponent component, BindingCreator creator, boolean performValidate);
-    
-    /**
-     * Bind a component to a model using the standard binding creator.
-     * 
-     * @param model              the model to bind
-     * @param property           the property of the model to bind
-     * @param component          the form component to bind
-     * @param performValidate    determines if a validation should be performed
-     * @return                   the created binding
-     */
-    @SuppressWarnings("unchecked")
-    public AutoBinding addManualBinding(UpdateStrategy strategy, Object model,
-        String property, JComponent component, boolean performValidate);
-    
-    /**
-     * Bind a component to a model using a specific binding creator.
-     * 
-     * @param model              the model to bind
-     * @param property           the property of the model to bind
-     * @param component          the form component to bind to
-     * @param creator            the specific binding creator
-     * @param performValidate    determines if a validation should be performed
-     * @return                   the created binding
-     */
-    @SuppressWarnings("unchecked")
-    public AutoBinding addManualBinding(Object model,  String property, 
-        JComponent component, BindingCreator creator, boolean performValidate);
-    
-    /**
-     * Bind a component to a model completely manually.
-     * 
-     * @param binding    the binding to add
-     * @return           the added binding
-     */
-    @SuppressWarnings("unchecked")
-    public AutoBinding addManualBinding(AutoBinding binding);
-    
-    /**
-     * Bind a component to a model completely manually.
-     * 
-     * @param binding            the binding to add
-     * @param performValidate    determines if a validation should be performed
-     * @return                   the added binding
-     */
-    @SuppressWarnings("unchecked")
-    public AutoBinding addManualBinding(AutoBinding binding,
-        boolean performValidate);
-    
-    /**
-     * Remove a binding group.
-     * 
-     * @param group    the binding group to remove
-     */
-    public void remove(BindingGroup group);
-    
-    /**
-     * Remove a binding.
-     * 
-     * @param binding    the binding to remove
-     */
-    @SuppressWarnings("unchecked")
-    public void remove(AutoBinding binding);
-    
-    
-    /**
-     * Remove all bindings.
-     */
-    public void removeAll();
+	/**
+	 * Add all bindings that can be derived from the binding annotaions.
+	 *
+	 * @param container    the GUI component container to bind to
+	 * @param modelId      the optional model identifiers
+	 *                     (to select models to bind)
+	 * @return             the added binding group
+	 */
+	public BindingGroup addAutoBinding(Container container, String... modelId);
+	
+	/**
+	 * @param container    the GUI component container to bind to
+	 * @param performValidate    validate user input
+	 * @param modelId      the optional model identifiers
+	 *                     (to select models to bind)
+	 * @return             the added binding group
+	 */
+	public BindingGroup addAutoBinding(Container container,
+		boolean performValidate, String... modelId);
+	
+	/**
+	 * Bind a component to a model using a specific binding creator.
+	 *
+	 * @param container          the GUI component container to bind to
+	 * @param component          the form component to bind to
+	 * @param creator            the specific binding creator
+	 * @param performValidate    determines if a validation should be performed
+	 * @return                   the created binding
+	 */
+	@SuppressWarnings("unchecked")
+	public AutoBinding addAutoBinding(Container container,
+		JComponent component, BindingCreator creator, boolean performValidate);
+	
+	/**
+	 * Bind a component to a model using the standard binding creator.
+	 *
+	 * @param model              the model to bind
+	 * @param property           the property of the model to bind
+	 * @param component          the form component to bind
+	 * @param performValidate    determines if a validation should be performed
+	 * @return                   the created binding
+	 */
+	@SuppressWarnings("unchecked")
+	public AutoBinding addManualBinding(UpdateStrategy strategy, Object model,
+		String property, JComponent component, boolean performValidate);
+	
+	/**
+	 * Bind a component to a model using a specific binding creator.
+	 *
+	 * @param model              the model to bind
+	 * @param property           the property of the model to bind
+	 * @param component          the form component to bind to
+	 * @param creator            the specific binding creator
+	 * @param performValidate    determines if a validation should be performed
+	 * @return                   the created binding
+	 */
+	@SuppressWarnings("unchecked")
+	public AutoBinding addManualBinding(Object model,  String property,
+		JComponent component, BindingCreator creator, boolean performValidate);
+	
+	/**
+	 * Bind a component to a model completely manually.
+	 *
+	 * @param binding    the binding to add
+	 * @return           the added binding
+	 */
+	@SuppressWarnings("unchecked")
+	public AutoBinding addManualBinding(AutoBinding binding);
+	
+	/**
+	 * Bind a component to a model completely manually.
+	 *
+	 * @param binding            the binding to add
+	 * @param performValidate    determines if a validation should be performed
+	 * @return                   the added binding
+	 */
+	@SuppressWarnings("unchecked")
+	public AutoBinding addManualBinding(AutoBinding binding,
+		boolean performValidate);
+	
+	/**
+	 * Remove a binding group.
+	 *
+	 * @param group    the binding group to remove
+	 */
+	public void remove(BindingGroup group);
+	
+	/**
+	 * Remove a binding.
+	 *
+	 * @param binding    the binding to remove
+	 */
+	@SuppressWarnings("unchecked")
+	public void remove(AutoBinding binding);
+	
+	
+	/**
+	 * Remove all bindings.
+	 */
+	public void removeAll();
 
-    /**
-     * Find a specific binding. Parameters being <code>null</code>
-     * mean "don't care".
-     * 
-     * @param model        the model to bind
-     * @param property     the property of the model to bind to
-     * @param component    the form component to bind to
-     * @return             the found bindings or <code>null</code> if none
-     */
-    public BindingGroup find(Object model, String property,
-        JComponent component);
+	/**
+	 * Find a specific binding. Parameters being <code>null</code>
+	 * mean "don't care".
+	 *
+	 * @param model        the model to bind
+	 * @param property     the property of the model to bind to
+	 * @param component    the form component to bind to
+	 * @return             the found bindings or <code>null</code> if none
+	 */
+	public BindingGroup find(Object model, String property,
+		JComponent component);
 
-    /**
-     * Add a custom validation responder to a binding.
-     * 
-     * @param binding      the binding
-     * @param responder    the validation responder
-     */
-    @SuppressWarnings("unchecked")
-    public void addValidationResponder(AutoBinding binding,
-        ValidationResponder responder);
-    
-    /**
-     * Add a custom validation responder to a binding group.
-     * 
-     * @param group        the binding group
-     * @param responder    the validation responder
-     */
-    public void addValidationResponder(BindingGroup group,
-        ValidationResponder responder);
-    
-    
-    /**
-     * Bind all managed bindings.
-     */
-    public void bindAll();
-    
-    /**
-     * Unbind all managed bindings.
-     */
-    public void unbindAll();
+	/**
+	 * Add a custom validation responder to a binding.
+	 *
+	 * @param binding      the binding
+	 * @param responder    the validation responder
+	 */
+	@SuppressWarnings("unchecked")
+	public void addValidationResponder(AutoBinding binding,
+		ValidationResponder responder);
+	
+	/**
+	 * Add a custom validation responder to a binding group.
+	 *
+	 * @param group        the binding group
+	 * @param responder    the validation responder
+	 */
+	public void addValidationResponder(BindingGroup group,
+		ValidationResponder responder);
+	
+	
+	/**
+	 * Bind all managed bindings.
+	 */
+	public void bindAll();
+	
+	/**
+	 * Unbind all managed bindings.
+	 */
+	public void unbindAll();
 }

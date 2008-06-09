@@ -37,23 +37,23 @@ import ch.elca.el4j.services.exceptionhandler.handler.ExceptionHandler;
  */
 public interface ExceptionConfiguration {
 
-    /**
-     * Requests whether this exception configuration is able to handle the
-     * given exception that was thrown in the given method invocation.
-     * 
-     * @param t
-     *      The exception to handle.
-     *      
-     * @param invocation
-     *      The invocation in which the exception was thrown.
-     *      
-     * @return Returns <code>true</code> if this exception configuratin is able
-     *      to handle the exception, <code>false</code> otherwise.
-     */
-    public boolean handlesExceptions(Throwable t, MethodInvocation invocation);
-    
-    /**
-     * @return Returns the exception handler.
-     */
-    public ExceptionHandler getExceptionHandler();
+	/**
+	 * Requests whether this exception configuration is able to handle the
+	 * given exception that was thrown in the given method invocation.
+	 *
+	 * @param t
+	 *      The exception to handle.
+	 *
+	 * @param invocation
+	 *      The invocation in which the exception was thrown.
+	 *
+	 * @return Returns <code>true</code> if this exception configuratin is able
+	 *      to handle the exception, <code>false</code> otherwise.
+	 */
+	public boolean handlesExceptions(Throwable t, MethodInvocation invocation);
+	
+	/**
+	 * @return Returns the exception handler.
+	 */
+	public ExceptionHandler getExceptionHandler();
 }

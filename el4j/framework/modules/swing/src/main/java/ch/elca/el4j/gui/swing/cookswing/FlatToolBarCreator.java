@@ -45,35 +45,35 @@ import cookxml.core.interfaces.Creator;
  */
 public class FlatToolBarCreator implements Creator {
 
-    /** {@inheritDoc} */
-    public Object create(String parentNS, String parentTag, Element elm,
-        Object parentObj, DecodeEngine decodeEngine) throws CreatorException {
-        
-        return new JToolBar();
-    }
+	/** {@inheritDoc} */
+	public Object create(String parentNS, String parentTag, Element elm,
+		Object parentObj, DecodeEngine decodeEngine) throws CreatorException {
+		
+		return new JToolBar();
+	}
 
-    /** {@inheritDoc} */
-    public Object editFinished(String parentNS, String parentTag, Element elm,
-        Object parentObj, Object obj, DecodeEngine decodeEngine)
-        throws CookXmlException {
-        
-        JToolBar toolbar = (JToolBar) obj;
-        
-        // Checkstyle: MagicNumber off
-        Border border = new EmptyBorder(2, 6, 2, 6);
-        // Checkstyle: MagicNumber on
-        
-        for (Component child : toolbar.getComponents()) {   
-            if (child instanceof JButton) {
-                JButton button = (JButton) child;
-                button.setBorder(border);
-                button.setVerticalTextPosition(JButton.BOTTOM);
-                button.setHorizontalTextPosition(JButton.CENTER);
-                button.setFocusable(false);
-                button.setText("");
-            }
-        }
-        
-        return toolbar;
-    }
+	/** {@inheritDoc} */
+	public Object editFinished(String parentNS, String parentTag, Element elm,
+		Object parentObj, Object obj, DecodeEngine decodeEngine)
+		throws CookXmlException {
+		
+		JToolBar toolbar = (JToolBar) obj;
+		
+		// Checkstyle: MagicNumber off
+		Border border = new EmptyBorder(2, 6, 2, 6);
+		// Checkstyle: MagicNumber on
+		
+		for (Component child : toolbar.getComponents()) {
+			if (child instanceof JButton) {
+				JButton button = (JButton) child;
+				button.setBorder(border);
+				button.setVerticalTextPosition(JButton.BOTTOM);
+				button.setHorizontalTextPosition(JButton.CENTER);
+				button.setFocusable(false);
+				button.setText("");
+			}
+		}
+		
+		return toolbar;
+	}
 }

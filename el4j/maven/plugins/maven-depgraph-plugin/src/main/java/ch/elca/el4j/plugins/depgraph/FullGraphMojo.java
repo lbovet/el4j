@@ -22,7 +22,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 
 /**
- * Can be used to draw a dependency graph from the project, the mojo is executed 
+ * Can be used to draw a dependency graph from the project, the mojo is executed
  * in. It traverses all dependencies and creates a graph using Graphviz. It draws
  * a graph for all the modules as they are interconnected. Same as depgraph for a simple POM, but for a POM with
  * submodules, generates a combined dependency graph incorporating all modules.
@@ -33,36 +33,36 @@ import org.apache.maven.project.MavenProject;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Philippe Jacot (PJA)
  * @goal fullgraph
- * @aggregator 
+ * @aggregator
  * @requiresDependencyResolution compile|test
  */
 public class FullGraphMojo extends AbstractDependencyGraphMojo {
-        
-    /**
-     * @parameter default-value="${reactorProjects}"
-     * @required
-     * @readonly
-     */
-    private List<MavenProject> m_reactorProjects; 
+		
+	/**
+	 * @parameter default-value="${reactorProjects}"
+	 * @required
+	 * @readonly
+	 */
+	private List<MavenProject> m_reactorProjects;
 
 
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void execute() throws MojoExecutionException {
-        super.execute();
-        
-        DependencyGraph resultGraph = new DependencyGraph();
-        resultGraph.setName(m_project.getName());
-        
-        for (MavenProject prj : m_reactorProjects) {
-            processProject(prj, resultGraph);
-        }
-        
-        project(resultGraph);  
-    }
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void execute() throws MojoExecutionException {
+		super.execute();
+		
+		DependencyGraph resultGraph = new DependencyGraph();
+		resultGraph.setName(m_project.getName());
+		
+		for (MavenProject prj : m_reactorProjects) {
+			processProject(prj, resultGraph);
+		}
+		
+		project(resultGraph);
+	}
 }

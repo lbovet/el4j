@@ -25,102 +25,102 @@ import ch.elca.el4j.core.contextpassing.AbstractImplicitContextPasser;
 //Checkstyle: MagicNumber off
 
 /**
- * This is the test implicit context passer B with data different to those in 
- *  ImplicitContextPasserImplA. 
- * 
+ * This is the test implicit context passer B with data different to those in
+ *  ImplicitContextPasserImplA.
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author David Stefan (DST)
  */
 
-public class ImplicitContextPasserImplB extends AbstractImplicitContextPasser 
-    implements ImplicitContextPassTester {
+public class ImplicitContextPasserImplB extends AbstractImplicitContextPasser
+	implements ImplicitContextPassTester {
 
-    /**
-     * Test data.
-     */
-    private Object m_testData = null;
+	/**
+	 * Test data.
+	 */
+	private Object m_testData = null;
 
-    /**
-     * Received data.
-     */
-    private Object m_receivedData = null;
+	/**
+	 * Received data.
+	 */
+	private Object m_receivedData = null;
 
-    /**
-     * {@inheritDoc}
-     */
-    public void setDataToUse(int option) {
-        List<Object> temp;
-        switch (option) {
-            case RESET:
-                m_testData = null;
-                m_receivedData = null;
-                break;
-            case NULL_TEST:
-                m_testData = null;
-                break;
-            case STRING_TEST:
-                m_testData 
-                    = "This is another test data string, that is different";
-                break;
-            case INT_TEST:
-                m_testData = Integer.MAX_VALUE;
-                break;
-            case FLOAT_TEST:
-                m_testData = Float.MIN_VALUE;
-                break;
-            case DOUBLE_TEST:
-                m_testData = Double.POSITIVE_INFINITY;
-                break;
-            case LIST_TEST:
-                temp = new ArrayList<Object>();
-                temp.add(new ArrayList<String>().add("bar"));
-                temp.add(13);
-                temp.add("ralca");
-                m_testData = temp;
-                break;
-            case NULL_LIST_TEST:
-                temp = new ArrayList<Object>();
-                m_testData = temp;
-                break;
-            default:
-                throw new RuntimeException("Type of test not supported");
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setDataToUse(int option) {
+		List<Object> temp;
+		switch (option) {
+			case RESET:
+				m_testData = null;
+				m_receivedData = null;
+				break;
+			case NULL_TEST:
+				m_testData = null;
+				break;
+			case STRING_TEST:
+				m_testData
+					= "This is another test data string, that is different";
+				break;
+			case INT_TEST:
+				m_testData = Integer.MAX_VALUE;
+				break;
+			case FLOAT_TEST:
+				m_testData = Float.MIN_VALUE;
+				break;
+			case DOUBLE_TEST:
+				m_testData = Double.POSITIVE_INFINITY;
+				break;
+			case LIST_TEST:
+				temp = new ArrayList<Object>();
+				temp.add(new ArrayList<String>().add("bar"));
+				temp.add(13);
+				temp.add("ralca");
+				m_testData = temp;
+				break;
+			case NULL_LIST_TEST:
+				temp = new ArrayList<Object>();
+				m_testData = temp;
+				break;
+			default:
+				throw new RuntimeException("Type of test not supported");
+		}
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object getImplicitlyPassedContext() {
-        return m_testData;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object getImplicitlyPassedContext() {
+		return m_testData;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void pushImplicitlyPassedContext(Object context) {
-        if (context != null) {
-            m_receivedData = context;
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void pushImplicitlyPassedContext(Object context) {
+		if (context != null) {
+			m_receivedData = context;
+		}
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object getReceivedData() {
-        return m_receivedData;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object getReceivedData() {
+		return m_receivedData;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object getTestData() {
-        return m_testData;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object getTestData() {
+		return m_testData;
+	}
 }
 //Checkstyle: MagicNumber on

@@ -33,27 +33,27 @@ import org.springframework.dao.InvalidDataAccessResourceUsageException;
  * @author Martin Zeltner (MZE)
  */
 public class InsertionFailureException
-    extends InvalidDataAccessResourceUsageException {
+	extends InvalidDataAccessResourceUsageException {
 
-    /**
-     * Constructor.
-     * 
-     * @param msg
-     *            Is the exception message.
-     */
-    public InsertionFailureException(String msg) {
-        super(msg);
-    }
+	/**
+	 * Constructor.
+	 *
+	 * @param msg
+	 *            Is the exception message.
+	 */
+	public InsertionFailureException(String msg) {
+		super(msg);
+	}
 
-    /**
-     * Constructor.
-     * 
-     * @param msg
-     *            Is the exception message.
-     * @param ex
-     *            Is the cause for this exception.
-     */
-    public InsertionFailureException(String msg, Throwable ex) {
-        super(msg, ex);
-    }
+	/**
+	 * Constructor.
+	 *
+	 * @param msg
+	 *            Is the exception message.
+	 * @param ex
+	 *            Is the cause for this exception.
+	 */
+	public InsertionFailureException(String msg, Throwable ex) {
+		super(msg, ex);
+	}
 }

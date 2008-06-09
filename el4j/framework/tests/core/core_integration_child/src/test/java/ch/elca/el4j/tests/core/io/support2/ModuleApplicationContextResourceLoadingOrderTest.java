@@ -38,112 +38,112 @@ import ch.elca.el4j.tests.core.io.support.helper.Employee;
  * @author Martin Zeltner (MZE)
  */
 public class ModuleApplicationContextResourceLoadingOrderTest {
-    /**
-     * @see #getApplicationContext()
-     */
-    private ApplicationContext m_applicationContext = null;
-    
-    /**
-     * @param mergeWithOuterSources
-     *            If <code>true</code> unordered resources will be used too.
-     * @param mostSpecificResourceLast
-     *            If <code>false</code> most specific resources will be found
-     *            as first.
-     * @return Returns the application context used for testing.
-     */
-    protected ApplicationContext getApplicationContext(
-        boolean mergeWithOuterSources,
-        boolean mostSpecificResourceLast) {
-        if (m_applicationContext == null) {
-            m_applicationContext = new ModuleApplicationContext(new String[] {
-                "classpath*:scenarios/core/io/support2/*.xml"
-            }, null, false, null, mergeWithOuterSources, 
-                mostSpecificResourceLast, true);
-        }
-        return m_applicationContext;
-    }
+	/**
+	 * @see #getApplicationContext()
+	 */
+	private ApplicationContext m_applicationContext = null;
+	
+	/**
+	 * @param mergeWithOuterSources
+	 *            If <code>true</code> unordered resources will be used too.
+	 * @param mostSpecificResourceLast
+	 *            If <code>false</code> most specific resources will be found
+	 *            as first.
+	 * @return Returns the application context used for testing.
+	 */
+	protected ApplicationContext getApplicationContext(
+		boolean mergeWithOuterSources,
+		boolean mostSpecificResourceLast) {
+		if (m_applicationContext == null) {
+			m_applicationContext = new ModuleApplicationContext(new String[] {
+				"classpath*:scenarios/core/io/support2/*.xml"
+			}, null, false, null, mergeWithOuterSources,
+				mostSpecificResourceLast, true);
+		}
+		return m_applicationContext;
+	}
 
-    /**
-     * Tests the config overriding by application context when looked up
-     * resources are in jar files. Outer resources will be included.
-     */
-    @Test
-    public void testEmployee1ConfigOverridingWithOuterResources() {
-        ApplicationContext appContext = getApplicationContext(true, false);
-        Employee e1 = (Employee) appContext.getBean("employee1");
-        assertNotNull(e1);
-        assertEquals("Martin", e1.getPrename());
-        assertEquals("Zeltner", e1.getLastname());
-    }
-    
-    /**
-     * Tests the config overriding by application context when looked up
-     * resources are in jar files. Outer resources will be excluded.
-     */
-    @Test
-    public void testEmployee1ConfigOverridingWithoutOuterResources() {
-        ApplicationContext appContext = getApplicationContext(false, false);
-        Employee e1 = (Employee) appContext.getBean("employee1");
-        assertNotNull(e1);
-        assertEquals("Martin", e1.getPrename());
-        assertEquals("Zeltner", e1.getLastname());
-    }
+	/**
+	 * Tests the config overriding by application context when looked up
+	 * resources are in jar files. Outer resources will be included.
+	 */
+	@Test
+	public void testEmployee1ConfigOverridingWithOuterResources() {
+		ApplicationContext appContext = getApplicationContext(true, false);
+		Employee e1 = (Employee) appContext.getBean("employee1");
+		assertNotNull(e1);
+		assertEquals("Martin", e1.getPrename());
+		assertEquals("Zeltner", e1.getLastname());
+	}
+	
+	/**
+	 * Tests the config overriding by application context when looked up
+	 * resources are in jar files. Outer resources will be excluded.
+	 */
+	@Test
+	public void testEmployee1ConfigOverridingWithoutOuterResources() {
+		ApplicationContext appContext = getApplicationContext(false, false);
+		Employee e1 = (Employee) appContext.getBean("employee1");
+		assertNotNull(e1);
+		assertEquals("Martin", e1.getPrename());
+		assertEquals("Zeltner", e1.getLastname());
+	}
 
-    /**
-     * Tests the config overriding by application context when looked up
-     * resources are in jar files and directly on classpath. Outer resources
-     * will be included.
-     */
-    @Test
-    public void testEmployee2ConfigOverridingWithOuterResources() {
-        ApplicationContext appContext = getApplicationContext(true, false);
-        Employee e2 = (Employee) appContext.getBean("employee2");
-        assertNotNull(e2);
-        assertEquals("Dominic", e2.getPrename());
-        assertEquals("Ullmann", e2.getLastname());
-    }
-    
-    /**
-     * Tests the config overriding by application context when looked up
-     * resources are in jar files and directly on classpath. Outer resources
-     * will be excluded.
-     */
-    @Test
-    public void testEmployee2ConfigOverridingWithoutOuterResources() {
-        ApplicationContext appContext = getApplicationContext(false, false);
-        Employee e2 = (Employee) appContext.getBean("employee2");
-        assertNotNull(e2);
-        assertEquals("Philipp", e2.getPrename());
-        assertEquals("Oser", e2.getLastname());
-    }
+	/**
+	 * Tests the config overriding by application context when looked up
+	 * resources are in jar files and directly on classpath. Outer resources
+	 * will be included.
+	 */
+	@Test
+	public void testEmployee2ConfigOverridingWithOuterResources() {
+		ApplicationContext appContext = getApplicationContext(true, false);
+		Employee e2 = (Employee) appContext.getBean("employee2");
+		assertNotNull(e2);
+		assertEquals("Dominic", e2.getPrename());
+		assertEquals("Ullmann", e2.getLastname());
+	}
+	
+	/**
+	 * Tests the config overriding by application context when looked up
+	 * resources are in jar files and directly on classpath. Outer resources
+	 * will be excluded.
+	 */
+	@Test
+	public void testEmployee2ConfigOverridingWithoutOuterResources() {
+		ApplicationContext appContext = getApplicationContext(false, false);
+		Employee e2 = (Employee) appContext.getBean("employee2");
+		assertNotNull(e2);
+		assertEquals("Philipp", e2.getPrename());
+		assertEquals("Oser", e2.getLastname());
+	}
 
-    /**
-     * Tests the config overriding by application context when looked up
-     * resources are in jar files and directly on classpath. Outer resources
-     * will be included. The least specific resource will be most important.
-     */
-    @Test
-    public void 
-    testEmployee2ConfigOverridingWithOuterResourcesReverseResourceOrder() {
-        ApplicationContext appContext = getApplicationContext(true, true);
-        Employee e2 = (Employee) appContext.getBean("employee2");
-        assertNotNull(e2);
-        assertEquals("Marc", e2.getPrename());
-        assertEquals("Lehmann", e2.getLastname());
-    }
-    
-    /**
-     * Tests the config overriding by application context when looked up
-     * resources are in jar files and directly on classpath. Outer resources
-     * will be excluded. The least specific resource will be most important.
-     */
-    @Test
-    public void 
-    testEmployee2ConfigOverridingWithoutOuterResourcesReverseResourceOrder() {
-        ApplicationContext appContext = getApplicationContext(false, true);
-        Employee e2 = (Employee) appContext.getBean("employee2");
-        assertNotNull(e2);
-        assertEquals("Marc", e2.getPrename());
-        assertEquals("Lehmann", e2.getLastname());
-    }
+	/**
+	 * Tests the config overriding by application context when looked up
+	 * resources are in jar files and directly on classpath. Outer resources
+	 * will be included. The least specific resource will be most important.
+	 */
+	@Test
+	public void
+	testEmployee2ConfigOverridingWithOuterResourcesReverseResourceOrder() {
+		ApplicationContext appContext = getApplicationContext(true, true);
+		Employee e2 = (Employee) appContext.getBean("employee2");
+		assertNotNull(e2);
+		assertEquals("Marc", e2.getPrename());
+		assertEquals("Lehmann", e2.getLastname());
+	}
+	
+	/**
+	 * Tests the config overriding by application context when looked up
+	 * resources are in jar files and directly on classpath. Outer resources
+	 * will be excluded. The least specific resource will be most important.
+	 */
+	@Test
+	public void
+	testEmployee2ConfigOverridingWithoutOuterResourcesReverseResourceOrder() {
+		ApplicationContext appContext = getApplicationContext(false, true);
+		Employee e2 = (Employee) appContext.getBean("employee2");
+		assertNotNull(e2);
+		assertEquals("Marc", e2.getPrename());
+		assertEquals("Lehmann", e2.getLastname());
+	}
 }

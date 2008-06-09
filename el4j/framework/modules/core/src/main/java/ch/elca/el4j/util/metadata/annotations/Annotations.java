@@ -39,65 +39,65 @@ import org.springframework.metadata.Attributes;
  * @author Martin Zeltner (MZE)
  */
 public class Annotations implements Attributes {
-    /**
-     * {@inheritDoc}
-     */
-    public Collection getAttributes(Class targetClass) {
-        return Arrays.asList(targetClass.getAnnotations());
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Collection getAttributes(Class targetClass) {
+		return Arrays.asList(targetClass.getAnnotations());
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Collection getAttributes(Method targetMethod) {
-        return Arrays.asList(AnnotationUtils.getAnnotations(targetMethod));
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Collection getAttributes(Method targetMethod) {
+		return Arrays.asList(AnnotationUtils.getAnnotations(targetMethod));
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Collection getAttributes(Field targetField) {
-        return Arrays.asList(targetField.getAnnotations());
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Collection getAttributes(Field targetField) {
+		return Arrays.asList(targetField.getAnnotations());
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Collection getAttributes(Class targetClass, Class filter) {
-        return filter(getAttributes(targetClass), filter);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Collection getAttributes(Class targetClass, Class filter) {
+		return filter(getAttributes(targetClass), filter);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Collection getAttributes(Method targetMethod, Class filter) {
-        return filter(getAttributes(targetMethod), filter);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Collection getAttributes(Method targetMethod, Class filter) {
+		return filter(getAttributes(targetMethod), filter);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Collection getAttributes(Field targetField, Class filter) {
-        return filter(getAttributes(targetField), filter);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Collection getAttributes(Field targetField, Class filter) {
+		return filter(getAttributes(targetField), filter);
+	}
 
-    /**
-     * Filters the given collection. Only items assignable to the given filter
-     * class will stay in collection.
-     * 
-     * @param c Is the collection to filter.
-     * @param filter Is the class used for filtering.
-     * @return Returns the filtered collection.
-     */
-    @SuppressWarnings("unchecked")
-    protected Collection filter(Collection c, Class filter) {
-        Iterator it = c.iterator();
-        while (it.hasNext()) {
-            Object a = it.next();
-            if (!filter.isAssignableFrom(a.getClass())) {
-                it.remove();
-            }
-        }
-        return c;
-    }
+	/**
+	 * Filters the given collection. Only items assignable to the given filter
+	 * class will stay in collection.
+	 *
+	 * @param c Is the collection to filter.
+	 * @param filter Is the class used for filtering.
+	 * @return Returns the filtered collection.
+	 */
+	@SuppressWarnings("unchecked")
+	protected Collection filter(Collection c, Class filter) {
+		Iterator it = c.iterator();
+		while (it.hasNext()) {
+			Object a = it.next();
+			if (!filter.isAssignableFrom(a.getClass())) {
+				it.remove();
+			}
+		}
+		return c;
+	}
 }

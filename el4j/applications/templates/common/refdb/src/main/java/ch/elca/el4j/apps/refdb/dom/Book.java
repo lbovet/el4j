@@ -27,14 +27,14 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
 /**
  * Book domain object. This class is a formal publication and describes a book.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Martin Zeltner (MZE)
  */
 @Entity
@@ -42,46 +42,46 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
 @DiscriminatorValue("BOOK")
 @PrimaryKeyJoinColumn(name = "KEYTOREFERENCE")
 public class Book extends FormalPublication {
-    /**
-     * ISBN number of a book.
-     */
-    private String m_isbnNumber;
+	/**
+	 * ISBN number of a book.
+	 */
+	private String m_isbnNumber;
 
-    /**
-     * @return Returns the isbnNumber.
-     */
-    @Pattern(regex = "[0-9-]{10,17}")
-    public String getIsbnNumber() {
-        return m_isbnNumber;
-    }
+	/**
+	 * @return Returns the isbnNumber.
+	 */
+	@Pattern(regex = "[0-9-]{10,17}")
+	public String getIsbnNumber() {
+		return m_isbnNumber;
+	}
 
-    /**
-     * @param isbnNumber
-     *            The isbnNumber to set.
-     */
-    public void setIsbnNumber(String isbnNumber) {
-        this.m_isbnNumber = isbnNumber;
-    }
+	/**
+	 * @param isbnNumber
+	 *            The isbnNumber to set.
+	 */
+	public void setIsbnNumber(String isbnNumber) {
+		this.m_isbnNumber = isbnNumber;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public int hashCode() {
-        return super.hashCode();
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public boolean equals(Object object) {
-        if (super.equals(object)
-            && object instanceof Book) {
-            Book other = (Book) object;
+	/**
+	 * {@inheritDoc}
+	 */
+	public int hashCode() {
+		return super.hashCode();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean equals(Object object) {
+		if (super.equals(object)
+			&& object instanceof Book) {
+			Book other = (Book) object;
 
-            return ObjectUtils.nullSaveEquals(
-                m_isbnNumber, other.m_isbnNumber);
-        } else {
-            return false;
-        }
-    }
+			return ObjectUtils.nullSaveEquals(
+				m_isbnNumber, other.m_isbnNumber);
+		} else {
+			return false;
+		}
+	}
 }

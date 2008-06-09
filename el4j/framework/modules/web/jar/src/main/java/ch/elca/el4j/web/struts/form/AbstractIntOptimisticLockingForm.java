@@ -32,24 +32,24 @@ import org.apache.struts.action.ActionForm;
  * @author Martin Zeltner (MZE)
  */
 public abstract class AbstractIntOptimisticLockingForm extends ActionForm {
-    /**
-     * Version of optimistic locking.
-     */
-    private Integer m_optimisticLockingVersion;
+	/**
+	 * Version of optimistic locking.
+	 */
+	private Integer m_optimisticLockingVersion;
 
-    /**
-     * @return Returns the optimisticLockingVersion.
-     */
-    public final Integer getOptimisticLockingVersion() {
-        return m_optimisticLockingVersion;
-    }
+	/**
+	 * @return Returns the optimisticLockingVersion.
+	 */
+	public final Integer getOptimisticLockingVersion() {
+		return m_optimisticLockingVersion;
+	}
 
-    /**
-     * @param optimisticLockingVersion
-     *            The optimisticLockingVersion to set.
-     */
-    public final void setOptimisticLockingVersion(
-        Integer optimisticLockingVersion) {
-        m_optimisticLockingVersion = optimisticLockingVersion;
-    }
+	/**
+	 * @param optimisticLockingVersion
+	 *            The optimisticLockingVersion to set.
+	 */
+	public final void setOptimisticLockingVersion(
+		Integer optimisticLockingVersion) {
+		m_optimisticLockingVersion = optimisticLockingVersion;
+	}
 }

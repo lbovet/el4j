@@ -43,97 +43,97 @@ import com.silvermindsoftware.hitch.validation.response.ValidationResponder;
  */
 @SuppressWarnings("unchecked")
 public class ValidatingBindingListener implements BindingListener {
-    /**
-     * The logger.
-     */
-    private static Log s_logger = LogFactory.getLog(
-        ValidatingBindingListener.class);
-        
-    /**
-     * The validataion responder.
-     */
-    private ValidationResponder m_listener;
-    
-    /**
-     * Create a new validating binding listener.
-     * @param listener     the validataion responder
-     */
-    public ValidatingBindingListener(ValidationResponder listener) {
-        m_listener = listener;
-    }
-    
-    /** {@inheritDoc} */
-    public void bindingBecameBound(Binding binding) {
-        //s_logger.debug("bound");
-    }
-    
-    /** {@inheritDoc} */
-    public void bindingBecameUnbound(Binding binding) {
-        //s_logger.debug("unbound");
-        m_listener.setValid(binding.getSourceObject(),
-            (JComponent) binding.getTargetObject());
-    }
-    
-    /** {@inheritDoc} */
-    public void sourceChanged(Binding binding, PropertyStateEvent event) {
-        //s_logger.debug("source changed");
-    }
-    
-    /** {@inheritDoc} */
-    public void targetChanged(Binding binding, PropertyStateEvent event) {
-        //s_logger.debug("target changed");
-    }
+	/**
+	 * The logger.
+	 */
+	private static Log s_logger = LogFactory.getLog(
+		ValidatingBindingListener.class);
+		
+	/**
+	 * The validataion responder.
+	 */
+	private ValidationResponder m_listener;
+	
+	/**
+	 * Create a new validating binding listener.
+	 * @param listener     the validataion responder
+	 */
+	public ValidatingBindingListener(ValidationResponder listener) {
+		m_listener = listener;
+	}
+	
+	/** {@inheritDoc} */
+	public void bindingBecameBound(Binding binding) {
+		//s_logger.debug("bound");
+	}
+	
+	/** {@inheritDoc} */
+	public void bindingBecameUnbound(Binding binding) {
+		//s_logger.debug("unbound");
+		m_listener.setValid(binding.getSourceObject(),
+			(JComponent) binding.getTargetObject());
+	}
+	
+	/** {@inheritDoc} */
+	public void sourceChanged(Binding binding, PropertyStateEvent event) {
+		//s_logger.debug("source changed");
+	}
+	
+	/** {@inheritDoc} */
+	public void targetChanged(Binding binding, PropertyStateEvent event) {
+		//s_logger.debug("target changed");
+	}
 
-    /** {@inheritDoc} */
-    public void syncFailed(Binding binding, SyncFailure failure) {
-        s_logger.debug("Validate on binding sync failed: "
-            + failure.toString());
-        
-        if (binding.getTargetObject() instanceof JComponent) {
-            m_listener.setInvalid(binding.getSourceObject(),
-                (JComponent) binding.getTargetObject(),
-                failure.toString());
-        }
-        /*if (binding.getSourceObject() instanceof JComponent) {
-            m_listener.setInvalid(binding.getTargetObject(),
-                (JComponent) binding.getSourceObject(),
-                failure.toString());
-        }*/
-    }
+	/** {@inheritDoc} */
+	public void syncFailed(Binding binding, SyncFailure failure) {
+		s_logger.debug("Validate on binding sync failed: "
+			+ failure.toString());
+		
+		if (binding.getTargetObject() instanceof JComponent) {
+			m_listener.setInvalid(binding.getSourceObject(),
+				(JComponent) binding.getTargetObject(),
+				failure.toString());
+		}
+		/*if (binding.getSourceObject() instanceof JComponent) {
+			m_listener.setInvalid(binding.getTargetObject(),
+				(JComponent) binding.getSourceObject(),
+				failure.toString());
+		}*/
+	}
 
-    /** {@inheritDoc} */
-    public void synced(Binding binding) {
-        ValidationCapability source = null;
-        BeanProperty beanProperty  = null;
-        JComponent target = null;
-        
-        if (binding.getSourceObject() instanceof ValidationCapability) {
-            source = (ValidationCapability) binding.getSourceObject();
-            target = (JComponent) binding.getTargetObject();
-            if (binding.getSourceProperty() instanceof BeanProperty) {
-                beanProperty = (BeanProperty) binding.getSourceProperty();
-            }
-        } else if (binding.getTargetObject() instanceof ValidationCapability) {
-            source = (ValidationCapability) binding.getTargetObject();
-            target = (JComponent) binding.getSourceObject();
-            if (binding.getTargetProperty() instanceof BeanProperty) {
-                beanProperty = (BeanProperty) binding.getTargetProperty();
-            }
-        }
-        if (source != null) {
-            s_logger.debug(
-                "Validate on binding sync: " + source + " <-> " + target);
-            if (beanProperty != null) {
-                m_listener.setValid(source, target,
-                    source.isValid(beanProperty.getPropertyName()));
-            } else {
-                m_listener.setValid(source, target, source.isValid());
-            }
-        } else {
-            s_logger.debug(
-                "Could not validate on binding sync: Neither " + source
-                + " nor " + target + " implements ValidationCapability");
-            //m_listener.setValid(null, (JComponent) binding.getTargetObject());
-        }
-    }
+	/** {@inheritDoc} */
+	public void synced(Binding binding) {
+		ValidationCapability source = null;
+		BeanProperty beanProperty  = null;
+		JComponent target = null;
+		
+		if (binding.getSourceObject() instanceof ValidationCapability) {
+			source = (ValidationCapability) binding.getSourceObject();
+			target = (JComponent) binding.getTargetObject();
+			if (binding.getSourceProperty() instanceof BeanProperty) {
+				beanProperty = (BeanProperty) binding.getSourceProperty();
+			}
+		} else if (binding.getTargetObject() instanceof ValidationCapability) {
+			source = (ValidationCapability) binding.getTargetObject();
+			target = (JComponent) binding.getSourceObject();
+			if (binding.getTargetProperty() instanceof BeanProperty) {
+				beanProperty = (BeanProperty) binding.getTargetProperty();
+			}
+		}
+		if (source != null) {
+			s_logger.debug(
+				"Validate on binding sync: " + source + " <-> " + target);
+			if (beanProperty != null) {
+				m_listener.setValid(source, target,
+					source.isValid(beanProperty.getPropertyName()));
+			} else {
+				m_listener.setValid(source, target, source.isValid());
+			}
+		} else {
+			s_logger.debug(
+				"Could not validate on binding sync: Neither " + source
+				+ " nor " + target + " implements ValidationCapability");
+			//m_listener.setValid(null, (JComponent) binding.getTargetObject());
+		}
+	}
 }

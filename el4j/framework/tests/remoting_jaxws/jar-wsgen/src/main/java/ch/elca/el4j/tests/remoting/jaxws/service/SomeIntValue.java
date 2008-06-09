@@ -29,35 +29,35 @@ package ch.elca.el4j.tests.remoting.jaxws.service;
  * @author Stefan Wismer (SWI)
  */
 public class SomeIntValue {
-    /**
-     * An integer value.
-     */
-    private int m_someValue;
-    
-    /**
-     * Default constructor for JAX-WS.
-     */
-    public SomeIntValue() { }
-    
-    /**
-     * @param value    the new value
-     */
-    public SomeIntValue(int value) {
-        m_someValue = value;
-    }
+	/**
+	 * An integer value.
+	 */
+	private int m_someValue;
+	
+	/**
+	 * Default constructor for JAX-WS.
+	 */
+	public SomeIntValue() { }
+	
+	/**
+	 * @param value    the new value
+	 */
+	public SomeIntValue(int value) {
+		m_someValue = value;
+	}
 
-    /**
-     * @return Returns the someValue.
-     */
-    public int getSomeValue() {
-        return m_someValue;
-    }
+	/**
+	 * @return Returns the someValue.
+	 */
+	public int getSomeValue() {
+		return m_someValue;
+	}
 
-    /**
-     * @param someValue Is the someValue to set.
-     */
-    public void setSomeValue(int someValue) {
-        this.m_someValue = someValue;
-    }
-    
+	/**
+	 * @param someValue Is the someValue to set.
+	 */
+	public void setSomeValue(int someValue) {
+		this.m_someValue = someValue;
+	}
+	
 }

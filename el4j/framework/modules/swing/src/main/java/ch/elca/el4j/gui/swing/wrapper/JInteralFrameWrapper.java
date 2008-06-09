@@ -34,49 +34,49 @@ import org.bushe.swing.event.annotation.AnnotationProcessor;
  * @author Stefan Wismer (SWI)
  */
 public class JInteralFrameWrapper extends JInternalFrame
-    implements FrameWrapper {
-    
-    /**
-     * The wrapped component.
-     */
-    private JComponent m_component;
-    
-    /** {@inheritDoc} */
-    public void setContent(JComponent component) {
-        m_component = component;
+	implements FrameWrapper {
+	
+	/**
+	 * The wrapped component.
+	 */
+	private JComponent m_component;
+	
+	/** {@inheritDoc} */
+	public void setContent(JComponent component) {
+		m_component = component;
 
-        add(component);
-        
-        setClosable(true);
-        setResizable(true);
-        setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
-        pack();
-    }
-    
-    /** {@inheritDoc} */
-    public JComponent getContent() {
-        return m_component;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void show() {
-        // register all event subscribers
-        AnnotationProcessor.process(m_component);
-        
-        super.show();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void dispose() {
-        if (m_component != null) {
-            // unregister all event subscribers
-            AnnotationProcessor.unsubscribe(m_component);
-        }
-        
-        AbstractWrapperFactory.removeWrapper(m_component);
-        super.dispose();
-        m_component = null;
-    }
+		add(component);
+		
+		setClosable(true);
+		setResizable(true);
+		setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
+		pack();
+	}
+	
+	/** {@inheritDoc} */
+	public JComponent getContent() {
+		return m_component;
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public void show() {
+		// register all event subscribers
+		AnnotationProcessor.process(m_component);
+		
+		super.show();
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public void dispose() {
+		if (m_component != null) {
+			// unregister all event subscribers
+			AnnotationProcessor.unsubscribe(m_component);
+		}
+		
+		AbstractWrapperFactory.removeWrapper(m_component);
+		super.dispose();
+		m_component = null;
+	}
 }

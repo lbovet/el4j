@@ -28,48 +28,48 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
  * business object whose unique purpose is to illustrate the behavior of the
  * module. <script type="text/javascript">printFileStatus ("$URL$",
  * "$Revision$", "$Date$", "$Author$" );</script>
- * 
+ *
  * @author Stefan Pleisch (SPL)
  */
 public class LbTestServer {
 
-    /**
-     * Private logger.
-     */
-    private static Log s_logger = LogFactory.getLog(LbTestServer.class);
+	/**
+	 * Private logger.
+	 */
+	private static Log s_logger = LogFactory.getLog(LbTestServer.class);
 
-    /** {@inheritDoc} */
-    public static void main(String args[]) {
+	/** {@inheritDoc} */
+	public static void main(String args[]) {
 
-        ApplicationContext applicationContext = new ModuleApplicationContext(
-            new String[] {"classpath*:mandatory/*.xml",
-                "classpath:loadbalancing/server/startup.xml",
-            "classpath:loadbalancing/remoting/multiplermi-protocol-config.xml"},
-            (String[]) null, 
-            false, 
-            (ApplicationContext) null);
+		ApplicationContext applicationContext = new ModuleApplicationContext(
+			new String[] {"classpath*:mandatory/*.xml",
+				"classpath:loadbalancing/server/startup.xml",
+			"classpath:loadbalancing/remoting/multiplermi-protocol-config.xml"},
+			(String[]) null,
+			false,
+			(ApplicationContext) null);
 
-        s_logger.debug("Starting up ....");
+		s_logger.debug("Starting up ....");
 
-        BusinessObject obj = (BusinessObject)applicationContext.getBean("rmiTestObjImpl");
+		BusinessObject obj = (BusinessObject)applicationContext.getBean("rmiTestObjImpl");
 
-        int iterations = 1;
-        while (iterations < LbServerConstants.NBR_ITERATIONS) {
+		int iterations = 1;
+		while (iterations < LbServerConstants.NBR_ITERATIONS) {
 
-            try {
-                Thread.sleep(LbServerConstants.SLEEPING_TIME);
-            } catch (Exception e) {
-                System.err.println("Problem:");
-                e.printStackTrace();
-                System.exit(-1);
-            } // catch
+			try {
+				Thread.sleep(LbServerConstants.SLEEPING_TIME);
+			} catch (Exception e) {
+				System.err.println("Problem:");
+				e.printStackTrace();
+				System.exit(-1);
+			} // catch
 
-            iterations += 1;
-            s_logger.debug("Looping around, iteration: " + iterations);
+			iterations += 1;
+			s_logger.debug("Looping around, iteration: " + iterations);
 
-        } // while
+		} // while
 
-        s_logger.debug("Done.");
-        System.exit(0);
-    } // main()
+		s_logger.debug("Done.");
+		System.exit(0);
+	} // main()
 }

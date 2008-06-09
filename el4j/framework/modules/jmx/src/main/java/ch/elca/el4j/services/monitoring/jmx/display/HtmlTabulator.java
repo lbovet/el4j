@@ -32,95 +32,95 @@ import java.util.List;
  * @author David Bernhard (DBD)
  */
 public class HtmlTabulator {
-    
-    /**
-     * The number of columns this table has.
-     */
-    int m_numColumns;
-    
-    /**
-     * The title row.
-     */
-    String[] m_title;
-    
-    /**
-     * The table data. 
-     */
-    List<String[]> m_table;
-    
-    /**
-     * The colour to use for the title background. 
-     */
-    String m_titleColor = "#FFFF80";
-    
-    /**
-     * The colour to use for marked rows. 
-     * Every (m_markColor)'th row is marked.  
-     */
-    String m_markColor = "#FFFFC0";
-    
-    //Checkstyle: MagicNumber off
-    
-    /**
-     * The interval to mark rows at.
-     */
-    int m_markInterval = 3;
-    
-  //Checkstyle: MagicNumber on
-    
-    /**
-     * @param titles The titles of the columns.
-     */
-    public HtmlTabulator(String... titles) {
-        m_numColumns = titles.length;
-        m_table = new LinkedList<String[]>();
-        m_title = titles;
-    }
-    
-    /**
-     * @param args A row of data.
-     * @throws RuntimeException If the number of arguments does not match
-     * the number of columns.
-     */
-    public void addRow(String ... args) throws RuntimeException {
-        if (args.length != m_numColumns) {
-            throw new RuntimeException("Got " + args.length 
-                + " arguments but expected " + m_numColumns + ".");
-        }
-        m_table.add(args);
-    }
-    
-    /**
-     * @return The table.
-     */
-    public String tabulate() {
-        String table = "<table>\n";
-        
-        // Title
-        table += "<tr bgcolor=\"" + m_titleColor + "\"> ";
-        for (String element : m_title) {
-            table += "<td><b>" + element + "</b></td> ";
-        }
-        table += "</tr>\n";
-        
-        // Rows
-        int rowCounter = 0;
-        for (String[] currentRow : m_table) {
-            rowCounter++;
-            if (rowCounter == m_markInterval) {
-                table += "<tr bgcolor=\"" + m_markColor + "\"> ";
-                rowCounter = 0;
-            } else {
-                table += "<tr> ";
-            }
-            
-            for (String element : currentRow) {
-                table += "<td>" + element + "</td> ";
-            }
-            table += "</tr>\n";
-        }
-        table += "</table>\n";
-        return table;
-    }
-    
+	
+	/**
+	 * The number of columns this table has.
+	 */
+	int m_numColumns;
+	
+	/**
+	 * The title row.
+	 */
+	String[] m_title;
+	
+	/**
+	 * The table data.
+	 */
+	List<String[]> m_table;
+	
+	/**
+	 * The colour to use for the title background.
+	 */
+	String m_titleColor = "#FFFF80";
+	
+	/**
+	 * The colour to use for marked rows.
+	 * Every (m_markColor)'th row is marked.
+	 */
+	String m_markColor = "#FFFFC0";
+	
+	//Checkstyle: MagicNumber off
+	
+	/**
+	 * The interval to mark rows at.
+	 */
+	int m_markInterval = 3;
+	
+	//Checkstyle: MagicNumber on
+	
+	/**
+	 * @param titles The titles of the columns.
+	 */
+	public HtmlTabulator(String... titles) {
+		m_numColumns = titles.length;
+		m_table = new LinkedList<String[]>();
+		m_title = titles;
+	}
+	
+	/**
+	 * @param args A row of data.
+	 * @throws RuntimeException If the number of arguments does not match
+	 * the number of columns.
+	 */
+	public void addRow(String ... args) throws RuntimeException {
+		if (args.length != m_numColumns) {
+			throw new RuntimeException("Got " + args.length
+				+ " arguments but expected " + m_numColumns + ".");
+		}
+		m_table.add(args);
+	}
+	
+	/**
+	 * @return The table.
+	 */
+	public String tabulate() {
+		String table = "<table>\n";
+		
+		// Title
+		table += "<tr bgcolor=\"" + m_titleColor + "\"> ";
+		for (String element : m_title) {
+			table += "<td><b>" + element + "</b></td> ";
+		}
+		table += "</tr>\n";
+		
+		// Rows
+		int rowCounter = 0;
+		for (String[] currentRow : m_table) {
+			rowCounter++;
+			if (rowCounter == m_markInterval) {
+				table += "<tr bgcolor=\"" + m_markColor + "\"> ";
+				rowCounter = 0;
+			} else {
+				table += "<tr> ";
+			}
+			
+			for (String element : currentRow) {
+				table += "<td>" + element + "</td> ";
+			}
+			table += "</tr>\n";
+		}
+		table += "</table>\n";
+		return table;
+	}
+	
 }

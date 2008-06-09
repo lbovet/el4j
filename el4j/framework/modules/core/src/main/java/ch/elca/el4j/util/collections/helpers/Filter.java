@@ -17,10 +17,10 @@
 package ch.elca.el4j.util.collections.helpers;
 
 /**
- * A filter for objects of type T. 
- * 
- * A generified version of Commons Collection's Predicate. 
- * 
+ * A filter for objects of type T.
+ *
+ * A generified version of Commons Collection's Predicate.
+ *
  *  <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -33,8 +33,8 @@ package ch.elca.el4j.util.collections.helpers;
  */
 
 public interface Filter<T> {
-    /** returns true iff this filter accepts {@code t}.
-     * @param t the object to judge
-     * @return see above */
-    boolean accepts(T t);
+	/** returns true iff this filter accepts {@code t}.
+	 * @param t the object to judge
+	 * @return see above */
+	boolean accepts(T t);
 }

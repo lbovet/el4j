@@ -51,98 +51,98 @@ import ch.elca.el4j.util.config.GenericConfig;
  * @author Stefan Wismer (SWI)
  */
 public class TableBinding extends AbstractBindingCreator<JTable> {
-    /**
-     * Which property to show in the table.
-     */
-    protected String[] m_propertyNames;
-    
-    /**
-     * The column labels.
-     */
-    protected String[] m_columnLabels;
-    
-    /**
-     * The value classes for each column.
-     */
-    protected Class<?>[] m_columnClasses;
-    
-    /**
-     * Is column editable?
-     */
-    protected boolean[] m_columnEditable;
-    
-    /**
-     * @param propertyNames    which property to show in the table
-     * @param columnLabels     the column labels
-     */
-    public TableBinding(String[] propertyNames, String[] columnLabels) {
-        this(propertyNames, columnLabels, null, null);
-    }
-    
-    /**
-     * @param propertyNames    which property to show in the table
-     * @param columnLabels     the column labels
-     * @param columnClasses    the value classes for each column
-     */
-    public TableBinding(String[] propertyNames, String[] columnLabels,
-        Class<?>[] columnClasses) {
-        
-        this(propertyNames, columnLabels, columnClasses, null);
-    }
-    
-    /**
-     * @param propertyNames    which property to show in the table
-     * @param columnLabels     the column labels
-     * @param columnClasses    the value classes for each column
-     * @param columnEditable   which properties are editable
-     */
-    public TableBinding(String[] propertyNames, String[] columnLabels,
-        Class<?>[] columnClasses, boolean[] columnEditable) {
-        
-        m_propertyNames = propertyNames;
-        m_columnLabels = columnLabels;
-        m_columnClasses = columnClasses;
-        m_columnEditable = columnEditable;
-    }
+	/**
+	 * Which property to show in the table.
+	 */
+	protected String[] m_propertyNames;
+	
+	/**
+	 * The column labels.
+	 */
+	protected String[] m_columnLabels;
+	
+	/**
+	 * The value classes for each column.
+	 */
+	protected Class<?>[] m_columnClasses;
+	
+	/**
+	 * Is column editable?
+	 */
+	protected boolean[] m_columnEditable;
+	
+	/**
+	 * @param propertyNames    which property to show in the table
+	 * @param columnLabels     the column labels
+	 */
+	public TableBinding(String[] propertyNames, String[] columnLabels) {
+		this(propertyNames, columnLabels, null, null);
+	}
+	
+	/**
+	 * @param propertyNames    which property to show in the table
+	 * @param columnLabels     the column labels
+	 * @param columnClasses    the value classes for each column
+	 */
+	public TableBinding(String[] propertyNames, String[] columnLabels,
+		Class<?>[] columnClasses) {
+		
+		this(propertyNames, columnLabels, columnClasses, null);
+	}
+	
+	/**
+	 * @param propertyNames    which property to show in the table
+	 * @param columnLabels     the column labels
+	 * @param columnClasses    the value classes for each column
+	 * @param columnEditable   which properties are editable
+	 */
+	public TableBinding(String[] propertyNames, String[] columnLabels,
+		Class<?>[] columnClasses, boolean[] columnEditable) {
+		
+		m_propertyNames = propertyNames;
+		m_columnLabels = columnLabels;
+		m_columnClasses = columnClasses;
+		m_columnEditable = columnEditable;
+	}
 
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    public AutoBinding createBinding(Object object, JTable formComponent) {
-        List list = (List) object;
-        
-        JTableBinding tb = SwingBindings.createJTableBinding(
-            m_updateStrategy, list, formComponent);
-        
-        for (int i = 0; i < m_propertyNames.length; i++) {
-            Property prop = BeanProperty.create(m_propertyNames[i]);
-            ColumnBinding cb = tb.addColumnBinding(prop);
-            
-            cb.setColumnName(m_columnLabels[i]);
-            if (m_updateStrategy == UpdateStrategy.READ_WRITE) {
-                if (m_columnEditable != null) {
-                    cb.setEditable(m_columnEditable[i]);
-                } else {
-                    cb.setEditable(true);
-                }
-            } else {
-                cb.setEditable(false);
-            }
-            if (m_columnClasses != null) {
-                cb.setColumnClass(m_columnClasses[i]);
-            }
-        }
-        
-        return tb;
-    }
-    
-    /** {@inheritDoc} */
-    public void addValidation(JTable formComponent) {
-        GenericConfig config = GUIApplication.getInstance().getConfig();
-        
-        formComponent.setDefaultRenderer(ValidatedProperty.class,
-            (TableCellRenderer) config.get("tableCellRenderer"));
-        formComponent.setDefaultEditor(ValidatedProperty.class,
-            (TableCellEditor) config.get("tableCellEditor"));
-    }
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	public AutoBinding createBinding(Object object, JTable formComponent) {
+		List list = (List) object;
+		
+		JTableBinding tb = SwingBindings.createJTableBinding(
+			m_updateStrategy, list, formComponent);
+		
+		for (int i = 0; i < m_propertyNames.length; i++) {
+			Property prop = BeanProperty.create(m_propertyNames[i]);
+			ColumnBinding cb = tb.addColumnBinding(prop);
+			
+			cb.setColumnName(m_columnLabels[i]);
+			if (m_updateStrategy == UpdateStrategy.READ_WRITE) {
+				if (m_columnEditable != null) {
+					cb.setEditable(m_columnEditable[i]);
+				} else {
+					cb.setEditable(true);
+				}
+			} else {
+				cb.setEditable(false);
+			}
+			if (m_columnClasses != null) {
+				cb.setColumnClass(m_columnClasses[i]);
+			}
+		}
+		
+		return tb;
+	}
+	
+	/** {@inheritDoc} */
+	public void addValidation(JTable formComponent) {
+		GenericConfig config = GUIApplication.getInstance().getConfig();
+		
+		formComponent.setDefaultRenderer(ValidatedProperty.class,
+			(TableCellRenderer) config.get("tableCellRenderer"));
+		formComponent.setDefaultEditor(ValidatedProperty.class,
+			(TableCellEditor) config.get("tableCellEditor"));
+	}
 
 }

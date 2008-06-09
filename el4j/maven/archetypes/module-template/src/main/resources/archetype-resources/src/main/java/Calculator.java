@@ -20,32 +20,32 @@ import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
  * Sample class for the Hello World project.
- * 
+ *
  * @author Martin Zeltner (MZE)
  */
 public class Calculator {
-    /**
-     * Division of two numbers.
-     * 
-     * @param n1 Is the dividend number.
-     * @param n2 Is the divisor number.
-     * @return Returns the addition result.
-     */
-    public double div(double n1, double n2) {
-        Reject.ifCondition(n2 == 0d, "Divisor must not be zero!");
-        return n1 / n2;
-    }
-    
-    // Checkstyle: UncommentedMain off
-    /**
-     * Dummy main method.
-     * 
-     * @param args Unused arguments.
-     */
-    public static void main(String[] args) {
-        System.out.println("Calculating 5 divided by 3");
-        System.out.println("The result is "
-            + (new Calculator()).div(5d, 3d));
-    }
-    // Checkstyle: UncommentedMain on
+	/**
+	 * Division of two numbers.
+	 *
+	 * @param n1 Is the dividend number.
+	 * @param n2 Is the divisor number.
+	 * @return Returns the addition result.
+	 */
+	public double div(double n1, double n2) {
+		Reject.ifCondition(n2 == 0d, "Divisor must not be zero!");
+		return n1 / n2;
+	}
+	
+	// Checkstyle: UncommentedMain off
+	/**
+	 * Dummy main method.
+	 *
+	 * @param args Unused arguments.
+	 */
+	public static void main(String[] args) {
+		System.out.println("Calculating 5 divided by 3");
+		System.out.println("The result is "
+			+ (new Calculator()).div(5d, 3d));
+	}
+	// Checkstyle: UncommentedMain on
 }

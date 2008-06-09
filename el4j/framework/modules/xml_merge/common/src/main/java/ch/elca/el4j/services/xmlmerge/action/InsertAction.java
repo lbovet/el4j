@@ -36,46 +36,46 @@ import ch.elca.el4j.services.xmlmerge.Action;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public class InsertAction implements Action {
 
-    /**
-     * {@inheritDoc}
-     */
-    public void perform(Element originalElement, Element patchElement,
-        Element outputParentElement) {
+	/**
+	 * {@inheritDoc}
+	 */
+	public void perform(Element originalElement, Element patchElement,
+		Element outputParentElement) {
 
-        if (patchElement == null && originalElement != null) {
-            outputParentElement.addContent((Element) originalElement.clone());
+		if (patchElement == null && originalElement != null) {
+			outputParentElement.addContent((Element) originalElement.clone());
 
-        } else {
-            List outputContent = outputParentElement.getContent();
+		} else {
+			List outputContent = outputParentElement.getContent();
 
-            Iterator it = outputContent.iterator();
+			Iterator it = outputContent.iterator();
 
-            int lastIndex = outputContent.size();
+			int lastIndex = outputContent.size();
 
-            while (it.hasNext()) {
-                Content content = (Content) it.next();
+			while (it.hasNext()) {
+				Content content = (Content) it.next();
 
-                if (content instanceof Element) {
-                    Element element = (Element) content;
+				if (content instanceof Element) {
+					Element element = (Element) content;
 
-                    if (element.getQualifiedName().equals(
-                        patchElement.getQualifiedName())) {
-                        lastIndex = outputParentElement.indexOf(element);
-                    }
-                }
-            }
+					if (element.getQualifiedName().equals(
+						patchElement.getQualifiedName())) {
+						lastIndex = outputParentElement.indexOf(element);
+					}
+				}
+			}
 
-            List toAdd = new ArrayList();
-            toAdd.add(patchElement);
-            outputContent.addAll(Math.min(lastIndex + 1, outputContent.size()),
-                toAdd);
-        }
-    }
+			List toAdd = new ArrayList();
+			toAdd.add(patchElement);
+			outputContent.addAll(Math.min(lastIndex + 1, outputContent.size()),
+				toAdd);
+		}
+	}
 
 }

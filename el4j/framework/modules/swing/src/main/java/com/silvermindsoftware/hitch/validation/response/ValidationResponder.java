@@ -31,29 +31,29 @@ import javax.swing.JComponent;
  * @author Stefan Wismer (SWI)
  */
 public interface ValidationResponder {
-    /**
-     * The value in the component is valid.
-     * 
-     * @param object       the validated object
-     * @param component    the component holding the validated value
-     */
-    public void setValid(Object object, JComponent component);
-    
-    /**
-     * The value in the component is valid.
-     * 
-     * @param object       the validated object
-     * @param component    the component holding the validated value
-     * @param valid        <code>true</code> if values is valid
-     */
-    public void setValid(Object object, JComponent component, boolean valid);
-    
-    /**
-     * The value in the component is invalid.
-     * 
-     * @param object       the validated object
-     * @param component    the component holding the invalidated value
-     * @param message      the message explaining why the value is invalid
-     */
-    public void setInvalid(Object object, JComponent component, String message);
+	/**
+	 * The value in the component is valid.
+	 *
+	 * @param object       the validated object
+	 * @param component    the component holding the validated value
+	 */
+	public void setValid(Object object, JComponent component);
+	
+	/**
+	 * The value in the component is valid.
+	 *
+	 * @param object       the validated object
+	 * @param component    the component holding the validated value
+	 * @param valid        <code>true</code> if values is valid
+	 */
+	public void setValid(Object object, JComponent component, boolean valid);
+	
+	/**
+	 * The value in the component is invalid.
+	 *
+	 * @param object       the validated object
+	 * @param component    the component holding the invalidated value
+	 * @param message      the message explaining why the value is invalid
+	 */
+	public void setInvalid(Object object, JComponent component, String message);
 }

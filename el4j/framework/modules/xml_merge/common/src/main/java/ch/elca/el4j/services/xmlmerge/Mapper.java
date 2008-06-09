@@ -28,18 +28,18 @@ import org.jdom.Element;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public interface Mapper extends Operation {
 
-    /**
-     * Transforms the given element to another element by changing some nested
-     * content or attributes.
-     * 
-     * @param patchElement the element to transform
-     * @return the transformed element
-     */
-    public Element map(Element patchElement);
+	/**
+	 * Transforms the given element to another element by changing some nested
+	 * content or attributes.
+	 *
+	 * @param patchElement the element to transform
+	 * @return the transformed element
+	 */
+	public Element map(Element patchElement);
 }

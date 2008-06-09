@@ -38,8 +38,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD, ElementType.TYPE })
 public @interface ExampleAnnotationOne {
-    /**
-     * Factor used for calculations.
-     */
-    int factor();
+	/**
+	 * Factor used for calculations.
+	 */
+	int factor();
 }

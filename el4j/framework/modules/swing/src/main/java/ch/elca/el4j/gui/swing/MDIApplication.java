@@ -22,52 +22,52 @@ import ch.elca.el4j.gui.swing.mdi.WindowManager;
 import ch.elca.el4j.gui.swing.mdi.WindowMenu;
 
 
-/** 
+/**
  * Parent class for new MDI applications not using an XML GUI description.
  * MDI Applications using XML GUIs should use {@link AbstractMDIApplication}.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Stefan Wismer (SWI)
  */
 public abstract class MDIApplication extends AbstractMDIApplication {
-   
-    /** 
-     * The desktop pane of this MDIApplication.
-     *  @see #createDefaultDesktopPane() 
-     */
-    protected JDesktopPane m_desktopPane;
+	
+	/**
+	 * The desktop pane of this MDIApplication.
+	 *  @see #createDefaultDesktopPane()
+	 */
+	protected JDesktopPane m_desktopPane;
 
-    /**
-     * Helps to manage the mdi menu and pane.
-     */
-    protected WindowManager m_windowManager;    
-    
-    
-    /** {@inheritDoc} */
-    @Override
-    protected JDesktopPane getDesktopPane() {
-        return m_desktopPane;
-    }
+	/**
+	 * Helps to manage the mdi menu and pane.
+	 */
+	protected WindowManager m_windowManager;
+	
+	
+	/** {@inheritDoc} */
+	@Override
+	protected JDesktopPane getDesktopPane() {
+		return m_desktopPane;
+	}
 
-    /**
-     * Creates a default desktop pane with a default Menu This method could be
-     * overridden in case you would like another desktop pane. <br>
-     * Stores the created desktop pane in the {@link #m_desktopPane}
-     */
-    protected void createDefaultDesktopPane() {
-        m_desktopPane = new JDesktopPane();
+	/**
+	 * Creates a default desktop pane with a default Menu This method could be
+	 * overridden in case you would like another desktop pane. <br>
+	 * Stores the created desktop pane in the {@link #m_desktopPane}
+	 */
+	protected void createDefaultDesktopPane() {
+		m_desktopPane = new JDesktopPane();
 
-        // create window manager and add window menu
-        WindowMenu windowMenu = new WindowMenu();
-        m_windowManager = new WindowManager(m_desktopPane, windowMenu);
-        windowMenu.setWindowManager(m_windowManager);
-        getMainFrame().getJMenuBar().add(windowMenu,
-            getMainFrame().getJMenuBar().getMenuCount() - 1);
-    }
+		// create window manager and add window menu
+		WindowMenu windowMenu = new WindowMenu();
+		m_windowManager = new WindowManager(m_desktopPane, windowMenu);
+		windowMenu.setWindowManager(m_windowManager);
+		getMainFrame().getJMenuBar().add(windowMenu,
+			getMainFrame().getJMenuBar().getMenuCount() - 1);
+	}
 }

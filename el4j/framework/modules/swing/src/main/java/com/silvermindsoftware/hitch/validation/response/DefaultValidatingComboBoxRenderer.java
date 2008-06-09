@@ -40,101 +40,101 @@ import ch.elca.el4j.gui.swing.GUIApplication;
  * @author Stefan Wismer (SWI)
  */
 public class DefaultValidatingComboBoxRenderer
-    extends DefaultListCellRenderer implements ComboBoxRenderer {
-    
-    /**
-     * Color to mark value as invalid.
-     */
-    protected final Color m_invalidColor;
-    
-    /**
-     * The property to render.
-     */
-    protected String m_property;
-    
-    /**
-     * Should invalid property values marked with different color?
-     */
-    protected boolean m_validate;
-    
-    
-    /**
-     * The default contructor reading the invalidColor from Spring config.
-     */
-    public DefaultValidatingComboBoxRenderer() {
-        this(null, null, false);
-    }
-    
-    /**
-     * @param property    the property to render
-     * @param validate    validate property value?
-     */
-    public DefaultValidatingComboBoxRenderer(String property,
-        boolean validate) {
-        this(null, property, validate);
-    }
-    
-    /**
-     * @param color       the color to mark value as invalid
-     * @param property    the property to render
-     * @param validate    validate property value?
-     */
-    public DefaultValidatingComboBoxRenderer(Color color, String property,
-        boolean validate) {
-        m_invalidColor = color;
-        m_property = property;
-        m_validate = validate;
-    }
-    
-    /** {@inheritDoc} */
-    public void setProperty(String property) {
-        m_property = property;
-    }
-    
-    /**
-     * @param validate   validate property value?
-     */
-    public void setValidate(boolean validate) {
-        m_validate = validate;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Component getListCellRendererComponent(JList list, 
-        Object value, int index, boolean isSelected, boolean cellHasFocus) {
-        
-        Component renderer;
-        if (m_property != null) {
-            Object propValue = BeanProperty.create(m_property).getValue(value);
-            renderer = super.getListCellRendererComponent(list,
-                    propValue, index, isSelected, cellHasFocus);
-            
-            if (m_validate) {
-                if (value instanceof ValidationCapability) {
-                    ValidationCapability v = (ValidationCapability) value;
-                    if (!v.isValid(m_property)) {
-                        renderer.setBackground(getInvalidColor());
-                    }
-                }
-            }
-        } else {
-            renderer = super.getListCellRendererComponent(list,
-                value, index, isSelected,
-                cellHasFocus);
-        }
-        
-        return renderer;
-    }
-    
-    /**
-     * @return    the color to mark a value as invalid.
-     */
-    private Color getInvalidColor() {
-        if (m_invalidColor != null) {
-            return m_invalidColor;
-        } else {
-            return (Color) GUIApplication.getInstance().getConfig()
-            .get("invalidColor");
-        }
-    }
+	extends DefaultListCellRenderer implements ComboBoxRenderer {
+	
+	/**
+	 * Color to mark value as invalid.
+	 */
+	protected final Color m_invalidColor;
+	
+	/**
+	 * The property to render.
+	 */
+	protected String m_property;
+	
+	/**
+	 * Should invalid property values marked with different color?
+	 */
+	protected boolean m_validate;
+	
+	
+	/**
+	 * The default contructor reading the invalidColor from Spring config.
+	 */
+	public DefaultValidatingComboBoxRenderer() {
+		this(null, null, false);
+	}
+	
+	/**
+	 * @param property    the property to render
+	 * @param validate    validate property value?
+	 */
+	public DefaultValidatingComboBoxRenderer(String property,
+		boolean validate) {
+		this(null, property, validate);
+	}
+	
+	/**
+	 * @param color       the color to mark value as invalid
+	 * @param property    the property to render
+	 * @param validate    validate property value?
+	 */
+	public DefaultValidatingComboBoxRenderer(Color color, String property,
+		boolean validate) {
+		m_invalidColor = color;
+		m_property = property;
+		m_validate = validate;
+	}
+	
+	/** {@inheritDoc} */
+	public void setProperty(String property) {
+		m_property = property;
+	}
+	
+	/**
+	 * @param validate   validate property value?
+	 */
+	public void setValidate(boolean validate) {
+		m_validate = validate;
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public Component getListCellRendererComponent(JList list,
+		Object value, int index, boolean isSelected, boolean cellHasFocus) {
+		
+		Component renderer;
+		if (m_property != null) {
+			Object propValue = BeanProperty.create(m_property).getValue(value);
+			renderer = super.getListCellRendererComponent(list,
+					propValue, index, isSelected, cellHasFocus);
+			
+			if (m_validate) {
+				if (value instanceof ValidationCapability) {
+					ValidationCapability v = (ValidationCapability) value;
+					if (!v.isValid(m_property)) {
+						renderer.setBackground(getInvalidColor());
+					}
+				}
+			}
+		} else {
+			renderer = super.getListCellRendererComponent(list,
+				value, index, isSelected,
+				cellHasFocus);
+		}
+		
+		return renderer;
+	}
+	
+	/**
+	 * @return    the color to mark a value as invalid.
+	 */
+	private Color getInvalidColor() {
+		if (m_invalidColor != null) {
+			return m_invalidColor;
+		} else {
+			return (Color) GUIApplication.getInstance().getConfig()
+			.get("invalidColor");
+		}
+	}
 }

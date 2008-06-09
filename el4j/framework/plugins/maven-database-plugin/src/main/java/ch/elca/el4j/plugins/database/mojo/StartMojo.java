@@ -24,51 +24,50 @@ import ch.elca.el4j.plugins.database.util.derby.DerbyNetworkServerStarter;
 
 /**
  * This class is a database mojo for the 'start' statement.
- * In case of using derby it starts the DerbyNetworkServer. 
- * In case of using oracle, is doesn nothing (as we require 
+ * In case of using derby it starts the DerbyNetworkServer.
+ * In case of using oracle, is doesn nothing (as we require
  * the oracle database to run when using this plugin).
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @goal start
  * @author David Stefan (DST)
  */
 public class StartMojo extends AbstractDBMojo {
-    
-    /**
-     * Delay ensures that "Press ..." is last line on console.
-     */
-    private static final int DELAY = 500;
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void executeInternal() throws MojoExecutionException, MojoFailureException {
-        try {
-            if (needStartup()) {
-                getLog().info("Starting database (StartMojo)...");
-                
-              
-                
-                DerbyNetworkServerStarter.setHomeDir(getDerbyLocation());
-                DerbyNetworkServerStarter.startNetworkServer();
-                if (hasToWait()) {
-                    Thread.sleep(DELAY);
-                    getLog().info("Press Ctrl-C to stop Server");
-                    try {
-                        Thread.sleep(Long.MAX_VALUE);
-                    } catch (InterruptedException e) {
-                        getLog().error("Error during wait", e);
-                    } 
-                }
-            }
-        } catch (Exception e) {
-            throw new MojoFailureException(e.getMessage());
-        }
-    }
+	
+	/**
+	 * Delay ensures that "Press ..." is last line on console.
+	 */
+	private static final int DELAY = 500;
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void executeInternal() throws MojoExecutionException, MojoFailureException {
+		try {
+			if (needStartup()) {
+				getLog().info("Starting database (StartMojo)...");
+				
+				
+				DerbyNetworkServerStarter.setHomeDir(getDerbyLocation());
+				DerbyNetworkServerStarter.startNetworkServer();
+				if (hasToWait()) {
+					Thread.sleep(DELAY);
+					getLog().info("Press Ctrl-C to stop Server");
+					try {
+						Thread.sleep(Long.MAX_VALUE);
+					} catch (InterruptedException e) {
+						getLog().error("Error during wait", e);
+					}
+				}
+			}
+		} catch (Exception e) {
+			throw new MojoFailureException(e.getMessage());
+		}
+	}
 }

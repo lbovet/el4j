@@ -33,6 +33,6 @@ package ch.elca.el4j.services.persistence.generic.dao;
  * @author Adrian Moos (AMS)
  */
 public interface IdentityFixedDao<T>
-    extends GenericDao<T> {
+	extends GenericDao<T> {
 
 }

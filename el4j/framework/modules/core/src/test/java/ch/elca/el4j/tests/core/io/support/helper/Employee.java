@@ -29,41 +29,41 @@ package ch.elca.el4j.tests.core.io.support.helper;
  * @author Martin Zeltner (MZE)
  */
 public class Employee {
-    /**
-     * Prename of the employee.
-     */
-    private String m_prename;
-    
-    /**
-     * Lastname of the employee.
-     */
-    private String m_lastname;
+	/**
+	 * Prename of the employee.
+	 */
+	private String m_prename;
+	
+	/**
+	 * Lastname of the employee.
+	 */
+	private String m_lastname;
 
-    /**
-     * @return Returns the lastname.
-     */
-    public final String getLastname() {
-        return m_lastname;
-    }
+	/**
+	 * @return Returns the lastname.
+	 */
+	public final String getLastname() {
+		return m_lastname;
+	}
 
-    /**
-     * @param lastname Is the lastname to set.
-     */
-    public final void setLastname(String lastname) {
-        m_lastname = lastname;
-    }
+	/**
+	 * @param lastname Is the lastname to set.
+	 */
+	public final void setLastname(String lastname) {
+		m_lastname = lastname;
+	}
 
-    /**
-     * @return Returns the prename.
-     */
-    public final String getPrename() {
-        return m_prename;
-    }
+	/**
+	 * @return Returns the prename.
+	 */
+	public final String getPrename() {
+		return m_prename;
+	}
 
-    /**
-     * @param prename Is the prename to set.
-     */
-    public final void setPrename(String prename) {
-        m_prename = prename;
-    }
+	/**
+	 * @param prename Is the prename to set.
+	 */
+	public final void setPrename(String prename) {
+		m_prename = prename;
+	}
 }

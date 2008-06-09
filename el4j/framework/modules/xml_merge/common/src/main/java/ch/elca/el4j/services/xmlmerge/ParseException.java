@@ -25,38 +25,38 @@ package ch.elca.el4j.services.xmlmerge;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public class ParseException extends AbstractXmlMergeException {
 
-    /**
-     * Constructor with message.
-     * 
-     * @param message Exception message
-     */
-    public ParseException(String message) {
-        super(message);
-    }
+	/**
+	 * Constructor with message.
+	 *
+	 * @param message Exception message
+	 */
+	public ParseException(String message) {
+		super(message);
+	}
 
-    /**
-     * Constructor with message and cause.
-     * 
-     * @param message Exception message
-     * @param cause Exception cause
-     */
-    public ParseException(String message, Throwable cause) {
-        super(message, cause);
-    }
+	/**
+	 * Constructor with message and cause.
+	 *
+	 * @param message Exception message
+	 * @param cause Exception cause
+	 */
+	public ParseException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
-    /**
-     * Constructor with cause.
-     * 
-     * @param cause Exception cause
-     */
-    public ParseException(Throwable cause) {
-        super(cause);
-    }
+	/**
+	 * Constructor with cause.
+	 *
+	 * @param cause Exception cause
+	 */
+	public ParseException(Throwable cause) {
+		super(cause);
+	}
 
 }

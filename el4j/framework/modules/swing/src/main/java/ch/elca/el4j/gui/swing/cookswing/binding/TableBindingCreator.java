@@ -48,57 +48,57 @@ import cookxml.core.exception.CreatorException;
  * @author Stefan Wismer (SWI)
  */
 public class TableBindingCreator extends AbstractBindingCreator {
-    // <tablebinding> specific attributes
-    protected static final String RENDERER = "rendererBean";
-    protected static final String EDITOR = "editorBean";
-    
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    public Object create(String parentNS, String parentTag, Element elm,
-        Object parentObj, DecodeEngine decodeEngine) throws CreatorException {
+	// <tablebinding> specific attributes
+	protected static final String RENDERER = "rendererBean";
+	protected static final String EDITOR = "editorBean";
+	
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	public Object create(String parentNS, String parentTag, Element elm,
+		Object parentObj, DecodeEngine decodeEngine) throws CreatorException {
 
-        // read properties
-        UpdateStrategy updateStrategy = getUpdateStrategy(elm);
-        List listSource = (List) getSource(decodeEngine, elm);
-        if (listSource == null) {
-            return null;
-        }
-        JTable table = (JTable) parentObj;
+		// read properties
+		UpdateStrategy updateStrategy = getUpdateStrategy(elm);
+		List listSource = (List) getSource(decodeEngine, elm);
+		if (listSource == null) {
+			return null;
+		}
+		JTable table = (JTable) parentObj;
 
-        // renderer and validation
-        String renderer = elm.getAttribute(RENDERER);
-        if (renderer.equals("")) {
-            if (getValidate(elm)) {
-                GenericConfig config = GUIApplication.getInstance().getConfig();
-                table.setDefaultRenderer(ValidatedProperty.class,
-                    (TableCellRenderer) config.get("tableCellRenderer"));
-            }
-        } else {
-            ApplicationContext ctx
-                = GUIApplication.getInstance().getSpringContext();
-            table.setDefaultRenderer(ValidatedProperty.class,
-                (TableCellRenderer) ctx.getBean(renderer));
-        }
-        
-        String editor = elm.getAttribute(EDITOR);
-        if (editor.equals("")) {
-            if (getValidate(elm)) {
-                GenericConfig config = GUIApplication.getInstance().getConfig();
-                table.setDefaultEditor(ValidatedProperty.class,
-                    (TableCellEditor) config.get("tableCellEditor"));
-            }
-        } else {
-            ApplicationContext ctx
-                = GUIApplication.getInstance().getSpringContext();
-            table.setDefaultEditor(ValidatedProperty.class,
-                (TableCellEditor) ctx.getBean(editor));
-        }
+		// renderer and validation
+		String renderer = elm.getAttribute(RENDERER);
+		if (renderer.equals("")) {
+			if (getValidate(elm)) {
+				GenericConfig config = GUIApplication.getInstance().getConfig();
+				table.setDefaultRenderer(ValidatedProperty.class,
+					(TableCellRenderer) config.get("tableCellRenderer"));
+			}
+		} else {
+			ApplicationContext ctx
+				= GUIApplication.getInstance().getSpringContext();
+			table.setDefaultRenderer(ValidatedProperty.class,
+				(TableCellRenderer) ctx.getBean(renderer));
+		}
+		
+		String editor = elm.getAttribute(EDITOR);
+		if (editor.equals("")) {
+			if (getValidate(elm)) {
+				GenericConfig config = GUIApplication.getInstance().getConfig();
+				table.setDefaultEditor(ValidatedProperty.class,
+					(TableCellEditor) config.get("tableCellEditor"));
+			}
+		} else {
+			ApplicationContext ctx
+				= GUIApplication.getInstance().getSpringContext();
+			table.setDefaultEditor(ValidatedProperty.class,
+				(TableCellEditor) ctx.getBean(editor));
+		}
 
-        // create binding
-        JTableBinding tb = SwingBindings.createJTableBinding(
-            updateStrategy, listSource, table);
-        addBinding(decodeEngine, tb);
+		// create binding
+		JTableBinding tb = SwingBindings.createJTableBinding(
+			updateStrategy, listSource, table);
+		addBinding(decodeEngine, tb);
 
-        return new NoAddValueHolder<JTableBinding>(tb);
-    }
+		return new NoAddValueHolder<JTableBinding>(tb);
+	}
 }

@@ -22,7 +22,7 @@ import ch.elca.el4j.util.interfaceenrichment.MethodDescriptor;
 
 /**
  * This class is a strong version of the rmi enrichment decorator, which removes
- * all by method thrown business exceptions. Business exceptions must not be 
+ * all by method thrown business exceptions. Business exceptions must not be
  * showed in wsdl file, because they will be handled specially.
  *
  * <script type="text/javascript">printFileStatus
@@ -35,12 +35,12 @@ import ch.elca.el4j.util.interfaceenrichment.MethodDescriptor;
  * @author Martin Zeltner (MZE)
  */
 public class SoapRmiEnrichmentDecorator extends RmiEnrichmentDecorator {
-    
-    /**
-     * {@inheritDoc}
-     */
-    public MethodDescriptor changedMethodSignature(MethodDescriptor method) {
-        method.setThrownExceptions(null);
-        return super.changedMethodSignature(method);
-    }
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public MethodDescriptor changedMethodSignature(MethodDescriptor method) {
+		method.setThrownExceptions(null);
+		return super.changedMethodSignature(method);
+	}
 }

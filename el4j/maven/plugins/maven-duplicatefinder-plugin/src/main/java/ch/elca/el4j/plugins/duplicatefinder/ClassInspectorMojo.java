@@ -35,40 +35,40 @@ import ch.elca.el4j.util.maven.ClassInspector;
  * );</script>
  *
  * @author David Bernhard (DBD)
- * 
+ *
  * @goal inspect
  */
 public class ClassInspectorMojo extends AbstractDuplicateFinderMojo {
 
-    /** {@inheritDoc} */
-    public void execute() throws MojoExecutionException, MojoFailureException {
-        setUp();
-        m_finder.search();
+	/** {@inheritDoc} */
+	public void execute() throws MojoExecutionException, MojoFailureException {
+		setUp();
+		m_finder.search();
 
-        ClassInspector inspector = new ClassInspector(m_finder);
-        
-        JPanel inspectorPanel = inspector.getInspector();
-        JFrame frame = new JFrame("Class inspector");
-        frame.getContentPane().add(inspectorPanel);
+		ClassInspector inspector = new ClassInspector(m_finder);
+		
+		JPanel inspectorPanel = inspector.getInspector();
+		JFrame frame = new JFrame("Class inspector");
+		frame.getContentPane().add(inspectorPanel);
 
-        // Checkstyle: MagicNumber off
-        
-        frame.setSize(600, 400);
-        frame.setVisible(true);
+		// Checkstyle: MagicNumber off
+		
+		frame.setSize(600, 400);
+		frame.setVisible(true);
 
-        while (frame.isVisible()) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e = null;
-            }
-        }
-        
-        // Checkstyle: MagicNumber on
-        
-        if (m_finder.duplicatesFound() && duplicateIsFail) {
-            throw new MojoFailureException("Duplicate classes found.");
-        }
-    }
+		while (frame.isVisible()) {
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e = null;
+			}
+		}
+		
+		// Checkstyle: MagicNumber on
+		
+		if (m_finder.duplicatesFound() && duplicateIsFail) {
+			throw new MojoFailureException("Duplicate classes found.");
+		}
+	}
 
 }

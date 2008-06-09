@@ -22,34 +22,34 @@ import org.apache.maven.plugin.MojoFailureException;
 import ch.elca.el4j.plugins.database.AbstractDBExecutionMojo;
 
 /**
- * This class is a database mojo for the 'drop' statement. 
- * 
+ * This class is a database mojo for the 'drop' statement.
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @goal drop
  * @author David Stefan (DST)
  */
 public class DropMojo extends AbstractDBExecutionMojo {
 
-    /**
-     * Action this mojo is implementing and identifier sql files have to start
-     * with.
-     */
-    private static final String ACTION = "drop";
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void executeInternal() throws MojoExecutionException, MojoFailureException {
-        try {
-            executeAction(ACTION, true, false);
-        } catch (Exception e) {
-            throw new MojoExecutionException(e.getMessage());
-        }
-    }
+	/**
+	 * Action this mojo is implementing and identifier sql files have to start
+	 * with.
+	 */
+	private static final String ACTION = "drop";
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void executeInternal() throws MojoExecutionException, MojoFailureException {
+		try {
+			executeAction(ACTION, true, false);
+		} catch (Exception e) {
+			throw new MojoExecutionException(e.getMessage());
+		}
+	}
 }

@@ -29,7 +29,7 @@ import org.springframework.beans.factory.InitializingBean;
  * Additionally, it allows you to specify a list of names that must not be
  * proxied. Both list, <code>beanNames</code> and
  * <code>exclusiveBeanNames</code> check for direct, "xxx*", and "*xxx" matches.
- * 
+ *
  * <p><b>Note</b> if you don't specify an include pattern (i.e. not setting the
  * <code>beanNames</code> property) and you have specified some beans to
  * exclude, then all beans except the excluding ones will be auto-proxied.
@@ -47,70 +47,70 @@ import org.springframework.beans.factory.InitializingBean;
  * @see org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator
  */
 public class ExclusiveBeanNameAutoProxyCreator
-    extends BeanNameAutoProxyCreator implements InitializingBean {
+	extends BeanNameAutoProxyCreator implements InitializingBean {
 
-    /** Bean names to autoproxy all beans. */
-    public static final String[] AUTOPROXY_ALL_BEANS = {"*"};
-    
-    /** List of bean names that don't have to be advised. */
-    private List<String> m_exclusiveBeanNames;
-    
-    /** Whether there have been inclusive patterns set. */
-    private boolean m_hasBeanNames = false;
-    
-    /**
-     * Set the names of the beans that must not automatically get wrapped with
-     * proxies. A name can specify a prefix to match by ending with "*",
-     * e.g. "myBean,tx*" will match the bean named "myBean" and all beans whose
-     * name start with "tx".
-     * 
-     * @param exclusiveBeanNames
-     *      The bean names to exclude.
-     */
-    public void setExclusiveBeanNames(String[] exclusiveBeanNames) {
-        m_exclusiveBeanNames = Arrays.asList(exclusiveBeanNames);
-    }
+	/** Bean names to autoproxy all beans. */
+	public static final String[] AUTOPROXY_ALL_BEANS = {"*"};
+	
+	/** List of bean names that don't have to be advised. */
+	private List<String> m_exclusiveBeanNames;
+	
+	/** Whether there have been inclusive patterns set. */
+	private boolean m_hasBeanNames = false;
+	
+	/**
+	 * Set the names of the beans that must not automatically get wrapped with
+	 * proxies. A name can specify a prefix to match by ending with "*",
+	 * e.g. "myBean,tx*" will match the bean named "myBean" and all beans whose
+	 * name start with "tx".
+	 *
+	 * @param exclusiveBeanNames
+	 *      The bean names to exclude.
+	 */
+	public void setExclusiveBeanNames(String[] exclusiveBeanNames) {
+		m_exclusiveBeanNames = Arrays.asList(exclusiveBeanNames);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void setBeanNames(String[] beanNames) {
-        if (beanNames.length > 0) {
-            m_hasBeanNames = true;
-        }
-        super.setBeanNames(beanNames);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setBeanNames(String[] beanNames) {
+		if (beanNames.length > 0) {
+			m_hasBeanNames = true;
+		}
+		super.setBeanNames(beanNames);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void afterPropertiesSet() throws Exception {
-        if (!m_hasBeanNames) {
-            super.setBeanNames(AUTOPROXY_ALL_BEANS);
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void afterPropertiesSet() throws Exception {
+		if (!m_hasBeanNames) {
+			super.setBeanNames(AUTOPROXY_ALL_BEANS);
+		}
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    protected Object[] getAdvicesAndAdvisorsForBean(
-            Class beanClass, String beanName, TargetSource targetSource) {
-        boolean doNotProxy = false;
-        if (m_exclusiveBeanNames != null) {
-            if (m_exclusiveBeanNames.contains(beanName)) {
-                doNotProxy = true;
-            } else {
-                for (String mappedName : m_exclusiveBeanNames) {
-                    if (isMatch(beanName, mappedName)) {
-                        doNotProxy = true;
-                        break;
-                    }
-                }
-            }
-        }
-        
-        return doNotProxy ?  DO_NOT_PROXY 
-            : super.getAdvicesAndAdvisorsForBean(
-                beanClass, beanName, targetSource);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	protected Object[] getAdvicesAndAdvisorsForBean(
+			Class beanClass, String beanName, TargetSource targetSource) {
+		boolean doNotProxy = false;
+		if (m_exclusiveBeanNames != null) {
+			if (m_exclusiveBeanNames.contains(beanName)) {
+				doNotProxy = true;
+			} else {
+				for (String mappedName : m_exclusiveBeanNames) {
+					if (isMatch(beanName, mappedName)) {
+						doNotProxy = true;
+						break;
+					}
+				}
+			}
+		}
+		
+		return doNotProxy ?  DO_NOT_PROXY
+			: super.getAdvicesAndAdvisorsForBean(
+				beanClass, beanName, targetSource);
+	}
 }

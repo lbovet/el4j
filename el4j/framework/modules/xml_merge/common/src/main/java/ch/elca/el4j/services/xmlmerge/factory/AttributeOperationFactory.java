@@ -33,70 +33,70 @@ import ch.elca.el4j.services.xmlmerge.OperationFactory;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public class AttributeOperationFactory implements OperationFactory {
-    
-    /**
-     * Default operation.
-     */
-    private Operation m_defaultOperation;
+	
+	/**
+	 * Default operation.
+	 */
+	private Operation m_defaultOperation;
 
-    /**
-     * Namespace describing the operations to apply.
-     */
-    private Namespace m_namespace;
+	/**
+	 * Namespace describing the operations to apply.
+	 */
+	private Namespace m_namespace;
 
-    /**
-     * Keyword.
-     */
-    private String m_keyword;
+	/**
+	 * Keyword.
+	 */
+	private String m_keyword;
 
-    /**
-     * Operation resolver.
-     */
-    private OperationResolver m_resolver;
+	/**
+	 * Operation resolver.
+	 */
+	private OperationResolver m_resolver;
 
-    /**
-     * Creates a new AttributeOperationFactory.
-     * 
-     * @param defaultOperation
-     *            The factory's default operation
-     * @param resolver
-     *            The factory's operation resolver
-     * @param keyword
-     *            The name of the attribute representing the factory's operation
-     * @param namespace
-     *            The namespace describing the operations to apply
-     */
-    public AttributeOperationFactory(Operation defaultOperation,
-        OperationResolver resolver, String keyword, String namespace) {
-        this.m_defaultOperation = defaultOperation;
-        this.m_keyword = keyword;
-        this.m_resolver = resolver;
-        this.m_namespace = Namespace.getNamespace(namespace);
-    }
+	/**
+	 * Creates a new AttributeOperationFactory.
+	 *
+	 * @param defaultOperation
+	 *            The factory's default operation
+	 * @param resolver
+	 *            The factory's operation resolver
+	 * @param keyword
+	 *            The name of the attribute representing the factory's operation
+	 * @param namespace
+	 *            The namespace describing the operations to apply
+	 */
+	public AttributeOperationFactory(Operation defaultOperation,
+		OperationResolver resolver, String keyword, String namespace) {
+		this.m_defaultOperation = defaultOperation;
+		this.m_keyword = keyword;
+		this.m_resolver = resolver;
+		this.m_namespace = Namespace.getNamespace(namespace);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Operation getOperation(Element originalElement,
-        Element modifiedElement) throws AbstractXmlMergeException {
+	/**
+	 * {@inheritDoc}
+	 */
+	public Operation getOperation(Element originalElement,
+		Element modifiedElement) throws AbstractXmlMergeException {
 
-        if (modifiedElement == null) {
-            return m_defaultOperation;
-        }
+		if (modifiedElement == null) {
+			return m_defaultOperation;
+		}
 
-        String operationString = modifiedElement.getAttributeValue(m_keyword,
-            m_namespace);
+		String operationString = modifiedElement.getAttributeValue(m_keyword,
+			m_namespace);
 
-        if (operationString != null) {
-            return m_resolver.resolve(operationString);
-        } else {
-            return m_defaultOperation;
-        }
+		if (operationString != null) {
+			return m_resolver.resolve(operationString);
+		} else {
+			return m_defaultOperation;
+		}
 
-    }
+	}
 }

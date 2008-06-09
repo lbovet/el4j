@@ -28,72 +28,72 @@ import java.util.List;
  */
 public final class Exceptions implements Thread.UncaughtExceptionHandler {
 
-    /** The one instance of the Exceptions class that is allowed. */
-    private static final Exceptions singleton = new Exceptions();
+	/** The one instance of the Exceptions class that is allowed. */
+	private static final Exceptions singleton = new Exceptions();
 
-    /**
-     * Returns a handle to the single instance of the Exceptions class which is
-     * allowed to exist.
-     */
-    public static Exceptions getInstance() {
-        return singleton;
-    }
+	/**
+	 * Returns a handle to the single instance of the Exceptions class which is
+	 * allowed to exist.
+	 */
+	public static Exceptions getInstance() {
+		return singleton;
+	}
 
-    /**
-     * A list of handlers which handle Exceptions of a global nature.
-     */
-    private final List<Handler> handlers = new ArrayList<Handler>();
+	/**
+	 * A list of handlers which handle Exceptions of a global nature.
+	 */
+	private final List<Handler> handlers = new ArrayList<Handler>();
 
-    /**
-     * Add <code>h</code> to the collection of {@link Handler}s consulted when
-     * an Exception is raised from within the application.
-     */
-    public void addHandler(Handler h) {
-        handlers.add(h);
-    }
+	/**
+	 * Add <code>h</code> to the collection of {@link Handler}s consulted when
+	 * an Exception is raised from within the application.
+	 */
+	public void addHandler(Handler h) {
+		handlers.add(h);
+	}
 
-    /**
-     * Remove <code>h</code> from the collection of {@link Handler}s consulted when
-     * an Exception is raised from within the application.
-     */
-    public void removeHandler(Handler h) {
-        handlers.remove(h);
-    }
+	/**
+	 * Remove <code>h</code> from the collection of {@link Handler}s consulted when
+	 * an Exception is raised from within the application.
+	 */
+	public void removeHandler(Handler h) {
+		handlers.remove(h);
+	}
 
-    /**
-     * Attempt to locate a {@link Handler} which
-     * {@link Handler#recognize recognizes} the given Exception and give it a
-     * chance to {@link Handler#handle handle} it. If no appropriate
-     * {@link Handler} can be found, the Exception is printed to
-     * {@link System#err}.
-     */
-    public void handle(Exception e) {
-        for (Iterator<Handler> i = handlers.iterator(); i.hasNext();) {
-            Handler handler = i.next();
-            if (handler.recognize(e)) {
-                handler.handle(e);
-                return;
-            }
-        }
+	/**
+	 * Attempt to locate a {@link Handler} which
+	 * {@link Handler#recognize recognizes} the given Exception and give it a
+	 * chance to {@link Handler#handle handle} it. If no appropriate
+	 * {@link Handler} can be found, the Exception is printed to
+	 * {@link System#err}.
+	 */
+	public void handle(Exception e) {
+		for (Iterator<Handler> i = handlers.iterator(); i.hasNext();) {
+			Handler handler = i.next();
+			if (handler.recognize(e)) {
+				handler.handle(e);
+				return;
+			}
+		}
 
-        System.err.println("Exception was not recognized by any Exception Handler: " + e);
-        e.printStackTrace(System.err);
-    }
-    
-    /**
-     * handler for AWT exceptions.
-     */
-    public void handle(Throwable t) {
-        if (t instanceof Exception) {
-            Exceptions.getInstance().handle((Exception) t);
-        } else if (t instanceof Error) {
-            // unwrap Error
-            handle(((Error) t).getCause());
-        }
-    }
-    
-    /** {@inheritDoc} */
-    public void uncaughtException(Thread t, Throwable e) {
-        handle(new Exception(e));
-    }
+		System.err.println("Exception was not recognized by any Exception Handler: " + e);
+		e.printStackTrace(System.err);
+	}
+	
+	/**
+	 * handler for AWT exceptions.
+	 */
+	public void handle(Throwable t) {
+		if (t instanceof Exception) {
+			Exceptions.getInstance().handle((Exception) t);
+		} else if (t instanceof Error) {
+			// unwrap Error
+			handle(((Error) t).getCause());
+		}
+	}
+	
+	/** {@inheritDoc} */
+	public void uncaughtException(Thread t, Throwable e) {
+		handle(new Exception(e));
+	}
 }

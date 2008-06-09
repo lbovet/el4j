@@ -27,51 +27,51 @@ import org.jdom.Element;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public class MatchException extends AbstractXmlMergeException {
 
-    /**
-     * Element which caused the exception.
-     */
-    Element m_element;
-    
-    /**
-     * Constructor with message.
-     * 
-     * @param element Element which caused the exception
-     * @param message Exception message
-     */
-    public MatchException(Element element, String message) {
-        super(message);
-        this.m_element = element;
-    }
+	/**
+	 * Element which caused the exception.
+	 */
+	Element m_element;
+	
+	/**
+	 * Constructor with message.
+	 *
+	 * @param element Element which caused the exception
+	 * @param message Exception message
+	 */
+	public MatchException(Element element, String message) {
+		super(message);
+		this.m_element = element;
+	}
 
-    /**
-     * Constructor with cause.
-     * 
-     * @param element Element which caused the exception
-     * @param cause Exception cause
-     */
-    public MatchException(Element element, Throwable cause) {
-        super(cause);
-        this.m_element = element;
-    }
+	/**
+	 * Constructor with cause.
+	 *
+	 * @param element Element which caused the exception
+	 * @param cause Exception cause
+	 */
+	public MatchException(Element element, Throwable cause) {
+		super(cause);
+		this.m_element = element;
+	}
 
-    /**
-     * @return Returns the element.
-     */
-    public Element getElement() {
-        return m_element;
-    }
+	/**
+	 * @return Returns the element.
+	 */
+	public Element getElement() {
+		return m_element;
+	}
 
-    /**
-     * @param element Is the element to set.
-     */
-    public void setElement(Element element) {
-        m_element = element;
-    }
+	/**
+	 * @param element Is the element to set.
+	 */
+	public void setElement(Element element) {
+		m_element = element;
+	}
  
 }

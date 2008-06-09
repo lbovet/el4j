@@ -31,26 +31,26 @@ import ch.elca.el4j.core.exceptions.BaseRTException;
  * @author Martin Zeltner (MZE)
  */
 public abstract class AbstractConditionRTException extends BaseRTException {
-    /**
-     * Constructor with only the type of condition.
-     * 
-     * @param conditionType
-     *            Is the type of condition.
-     */
-    public AbstractConditionRTException(String conditionType) {
-        super("A {0} was not fulfilled.", new String[] {conditionType});
-    }
+	/**
+	 * Constructor with only the type of condition.
+	 *
+	 * @param conditionType
+	 *            Is the type of condition.
+	 */
+	public AbstractConditionRTException(String conditionType) {
+		super("A {0} was not fulfilled.", new String[] {conditionType});
+	}
 
-    /**
-     * Constructor with type of condition and a message.
-     * 
-     * @param conditionType
-     *            Is the type of condition.
-     * @param message
-     *            Is the message to explain what condition was no fulfilled.
-     */
-    public AbstractConditionRTException(String conditionType, String message) {
-        super("The {0} {1} was not fulfilled.", new String[] {conditionType,
-            message});
-    }
+	/**
+	 * Constructor with type of condition and a message.
+	 *
+	 * @param conditionType
+	 *            Is the type of condition.
+	 * @param message
+	 *            Is the message to explain what condition was no fulfilled.
+	 */
+	public AbstractConditionRTException(String conditionType, String message) {
+		super("The {0} {1} was not fulfilled.", new String[] {conditionType,
+			message});
+	}
 }

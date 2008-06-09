@@ -33,17 +33,17 @@ package ch.elca.el4j.services.exceptionhandler;
  */
 public class MissingContextException extends RuntimeException {
 
-    /**
-     * Creates a new instance.
-     * 
-     * @param message
-     *      The exception's message.
-     *      
-     * @param cause
-     *      The exception should have been handled by the exception handling
-     *      framework.
-     */
-    public MissingContextException(String message, Throwable cause) {
-        super(message, cause);
-    }
+	/**
+	 * Creates a new instance.
+	 *
+	 * @param message
+	 *      The exception's message.
+	 *
+	 * @param cause
+	 *      The exception should have been handled by the exception handling
+	 *      framework.
+	 */
+	public MissingContextException(String message, Throwable cause) {
+		super(message, cause);
+	}
 }

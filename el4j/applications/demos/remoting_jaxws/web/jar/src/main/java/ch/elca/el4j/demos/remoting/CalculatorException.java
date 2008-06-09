@@ -32,20 +32,20 @@ import ch.elca.el4j.core.exceptions.BaseException;
  * @author Martin Zeltner (MZE)
  */
 public class CalculatorException extends BaseException {
-    /**
-     * Default constructor.
-     */
-    public CalculatorException() {
-        super("This is a test exception.", (Object[]) null);
-    }
-    
-    /**
-     * A setter for the message property is needed as XFire cannot initialize
-     * the exception otherwise.
-     * @param message The message of this Exception
-     */
-    public void setMessage(String message) {
-        m_message = message;
-    }
+	/**
+	 * Default constructor.
+	 */
+	public CalculatorException() {
+		super("This is a test exception.", (Object[]) null);
+	}
+	
+	/**
+	 * A setter for the message property is needed as XFire cannot initialize
+	 * the exception otherwise.
+	 * @param message The message of this Exception
+	 */
+	public void setMessage(String message) {
+		m_message = message;
+	}
 
 }

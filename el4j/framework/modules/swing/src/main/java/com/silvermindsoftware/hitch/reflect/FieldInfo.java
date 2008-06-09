@@ -20,42 +20,42 @@ import java.lang.reflect.Field;
 
 public class FieldInfo {
 
-    private Field field;
+	private Field field;
 
-    private Class type;
-    private String name;
+	private Class type;
+	private String name;
 
 
-    public FieldInfo(Field field) {
-        this.field = field;
-        this.name = field.getName();
-        this.type = field.getType();
-    }
+	public FieldInfo(Field field) {
+		this.field = field;
+		this.name = field.getName();
+		this.type = field.getType();
+	}
 
-    public Field getField() {
-        return field;
-    }
+	public Field getField() {
+		return field;
+	}
 
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
-        FieldInfo fieldInfo = (FieldInfo) o;
+		FieldInfo fieldInfo = (FieldInfo) o;
 
-        if (!name.equals(fieldInfo.name)) return false;
-        if (!type.equals(fieldInfo.type)) return false;
+		if (!name.equals(fieldInfo.name)) return false;
+		if (!type.equals(fieldInfo.type)) return false;
 
-        return true;
-    }
+		return true;
+	}
 
-    public int hashCode() {
-        int result;
-        result = type.hashCode();
-        result = 31 * result + name.hashCode();
-        return result;
-    }
+	public int hashCode() {
+		int result;
+		result = type.hashCode();
+		result = 31 * result + name.hashCode();
+		return result;
+	}
 
-    public String toString() {
-        return new StringBuilder().append(type.getName()).append(" ").append(name).toString();
-    }
+	public String toString() {
+		return new StringBuilder().append(type.getName()).append(" ").append(name).toString();
+	}
 }

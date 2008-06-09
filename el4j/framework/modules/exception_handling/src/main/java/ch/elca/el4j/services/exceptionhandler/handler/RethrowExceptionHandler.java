@@ -35,14 +35,14 @@ import ch.elca.el4j.services.exceptionhandler.AbstractExceptionHandlerIntercepto
  */
 public class RethrowExceptionHandler implements ExceptionHandler {
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object handleException(Throwable t,
-            AbstractExceptionHandlerInterceptor exceptionInvoker,
-            MethodInvocation invocation) throws Throwable {
-        
-        throw t;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object handleException(Throwable t,
+			AbstractExceptionHandlerInterceptor exceptionInvoker,
+			MethodInvocation invocation) throws Throwable {
+		
+		throw t;
+	}
 
 }

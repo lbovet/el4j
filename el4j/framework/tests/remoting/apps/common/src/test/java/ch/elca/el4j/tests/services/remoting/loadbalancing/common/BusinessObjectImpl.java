@@ -27,45 +27,45 @@ import org.springframework.context.ApplicationContextAware;
  * idempotent invocation functionality. <script
  * type="text/javascript">printFileStatus ("$URL$", "$Revision$", "$Date$",
  * "$Author$" );</script>
- * 
+ *
  * @author Stefan Pleisch (SPL)
  */
 public class BusinessObjectImpl implements BusinessObject, ApplicationContextAware {
 
-    /**
-     * {@inheritDoc}
-    */
-    public String call(String toto) {
-        s_logger.debug("Method call called with arg=" + toto);
-        if (toto.equals(BusinessObject.COMMIT_SUICIDE+m_serverName)) {
-            s_logger.debug(m_serverName + " is committing suicide.") ;
-            System.exit(0);
-        } // if
-       return m_serverName ;
-    } // call()
+	/**
+	 * {@inheritDoc}
+	*/
+	public String call(String toto) {
+		s_logger.debug("Method call called with arg=" + toto);
+		if (toto.equals(BusinessObject.COMMIT_SUICIDE+m_serverName)) {
+			s_logger.debug(m_serverName + " is committing suicide.") ;
+			System.exit(0);
+		} // if
+		return m_serverName ;
+	} // call()
 
  
-    public void setServerName(String serverName) {
-        m_serverName = serverName ;
-    } // setServerName()
-    
-    // ////////////////// From ApplicationContextAware //////////////////
-    /**
-     * {@inheritDoc}
-     */
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        m_applicationContext = applicationContext;
-    } // setApplicationContext()
+	public void setServerName(String serverName) {
+		m_serverName = serverName ;
+	} // setServerName()
+	
+	// ////////////////// From ApplicationContextAware //////////////////
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		m_applicationContext = applicationContext;
+	} // setApplicationContext()
 
-    
-    private String m_serverName ;
-    private ApplicationContext m_applicationContext ;
+	
+	private String m_serverName ;
+	private ApplicationContext m_applicationContext ;
 
-    /**
-     * Private logger.
-     */
-    private static Log s_logger = LogFactory
-        .getLog(BusinessObjectImpl.class);
+	/**
+	 * Private logger.
+	 */
+	private static Log s_logger = LogFactory
+		.getLog(BusinessObjectImpl.class);
 
-    
+	
 }

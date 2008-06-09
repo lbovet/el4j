@@ -40,51 +40,51 @@ import ch.elca.el4j.services.exceptionhandler.RetryException;
  */
 public class SequenceExceptionHandler extends AbstractExceptionHandler {
 
-    /** The exception handlers. */
-    private ExceptionHandler[] m_exceptionHandlers;
-    
-    /**
-     * Sets the exception handlers.
-     * 
-     * @param exceptionHandlers
-     *      The exception handlers to set.
-     */
-    public void setExceptionHandlers(
-            ExceptionHandler[] exceptionHandlers) {
-        m_exceptionHandlers = exceptionHandlers;
-    }
+	/** The exception handlers. */
+	private ExceptionHandler[] m_exceptionHandlers;
+	
+	/**
+	 * Sets the exception handlers.
+	 *
+	 * @param exceptionHandlers
+	 *      The exception handlers to set.
+	 */
+	public void setExceptionHandlers(
+			ExceptionHandler[] exceptionHandlers) {
+		m_exceptionHandlers = exceptionHandlers;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    protected Object handleException(Throwable t,
-            AbstractExceptionHandlerInterceptor exceptionInvoker,
-            MethodInvocation invocation, Log logger) throws Throwable {
-        
-        Throwable lastThrowable = t;
-        
-        for (int i = 0; i < m_exceptionHandlers.length; i++) {
-            try {
-                return m_exceptionHandlers[i].handleException(
-                        lastThrowable, exceptionInvoker, invocation);
-                
-            } catch (RetryException re) {
-                throw re;
-            } catch (Throwable lt) {
-                lastThrowable = lt;
-                
-                if (logger.isDebugEnabled()) {
-                    StringBuffer buffer = new StringBuffer("Handler [");
-                    buffer.append(m_exceptionHandlers[i].getClass().getName());
-                    buffer.append("] failed.");
-                    if (i < m_exceptionHandlers.length) {
-                        buffer.append(" Trying next one.");
-                    }
-                    logger.debug(buffer.toString(), lt);
-                }
-            }
-        }
+	/**
+	 * {@inheritDoc}
+	 */
+	protected Object handleException(Throwable t,
+			AbstractExceptionHandlerInterceptor exceptionInvoker,
+			MethodInvocation invocation, Log logger) throws Throwable {
+		
+		Throwable lastThrowable = t;
+		
+		for (int i = 0; i < m_exceptionHandlers.length; i++) {
+			try {
+				return m_exceptionHandlers[i].handleException(
+						lastThrowable, exceptionInvoker, invocation);
+				
+			} catch (RetryException re) {
+				throw re;
+			} catch (Throwable lt) {
+				lastThrowable = lt;
+				
+				if (logger.isDebugEnabled()) {
+					StringBuffer buffer = new StringBuffer("Handler [");
+					buffer.append(m_exceptionHandlers[i].getClass().getName());
+					buffer.append("] failed.");
+					if (i < m_exceptionHandlers.length) {
+						buffer.append(" Trying next one.");
+					}
+					logger.debug(buffer.toString(), lt);
+				}
+			}
+		}
 
-        throw lastThrowable;
-    }
+		throw lastThrowable;
+	}
 }

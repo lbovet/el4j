@@ -24,32 +24,32 @@ import ch.elca.el4j.plugins.database.util.derby.DerbyNetworkServerStarter;
 
 /**
  * This class is a database mojo for the 'stop' statement.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @goal stop
  * @author David Stefan (DST)
  */
 public class StopMojo extends AbstractDBMojo {
 
-    /**
-     * {@inheritDoc}
-     */
-    public void executeInternal() throws MojoExecutionException, MojoFailureException {
-        try {
-            getLog().info("Stopping database... ");
-            if (needStartup()) {
-                DerbyNetworkServerStarter.setHomeDir(getDerbyLocation());
-                DerbyNetworkServerStarter.stopNetworkServer();
-            }
-        } catch (Exception e) {
-            throw new MojoFailureException(e.getMessage());
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void executeInternal() throws MojoExecutionException, MojoFailureException {
+		try {
+			getLog().info("Stopping database... ");
+			if (needStartup()) {
+				DerbyNetworkServerStarter.setHomeDir(getDerbyLocation());
+				DerbyNetworkServerStarter.stopNetworkServer();
+			}
+		} catch (Exception e) {
+			throw new MojoFailureException(e.getMessage());
+		}
+	}
 
 }

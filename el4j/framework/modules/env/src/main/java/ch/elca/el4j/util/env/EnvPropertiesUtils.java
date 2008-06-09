@@ -38,45 +38,45 @@ import ch.elca.el4j.util.codingsupport.PropertiesHelper;
  * @author Martin Zeltner (MZE)
  */
 public class EnvPropertiesUtils {
-    /**
-     * Private logger of this class.
-     */
-    private static Log s_logger 
-        = LogFactory.getLog(CollectionUtils.class);
-    
-    /**
-     * Hide default constructor.
-     */
-    protected EnvPropertiesUtils() { }
-    
-    /**
-     * Retrieves the currently used environment properties.
-     * @return The currently used environment properties. 
-     * 
-     * @deprecated Use method {@link #getEnvPlaceholderProperties()} instead.
-     */
-    @Deprecated
-    public static Properties getEnvProperties() {
-        s_logger.debug(
-            "DEPRECATED: Use method 'getEnvPlaceholderProperties' instead.");
-        return getEnvPlaceholderProperties();
-    }
-    
-    /**
-     * Retrieves the currently used placeholder environment properties.
-     * @return The currently used placeholder environment properties. 
-     */
-    public static Properties getEnvPlaceholderProperties() {
-        return new PropertiesHelper()
-            .loadProperties("classpath:env-placeholder.properties");
-    }
-    
-    /**
-     * Retrieves the currently used bean property environment properties.
-     * @return The currently used bean property environment properties. 
-     */
-    public static Properties getEnvBeanPropertyProperties() {
-        return new PropertiesHelper()
-            .loadProperties("classpath:env-bean-property.properties");
-    }
+	/**
+	 * Private logger of this class.
+	 */
+	private static Log s_logger
+		= LogFactory.getLog(CollectionUtils.class);
+	
+	/**
+	 * Hide default constructor.
+	 */
+	protected EnvPropertiesUtils() { }
+	
+	/**
+	 * Retrieves the currently used environment properties.
+	 * @return The currently used environment properties.
+	 *
+	 * @deprecated Use method {@link #getEnvPlaceholderProperties()} instead.
+	 */
+	@Deprecated
+	public static Properties getEnvProperties() {
+		s_logger.debug(
+			"DEPRECATED: Use method 'getEnvPlaceholderProperties' instead.");
+		return getEnvPlaceholderProperties();
+	}
+	
+	/**
+	 * Retrieves the currently used placeholder environment properties.
+	 * @return The currently used placeholder environment properties.
+	 */
+	public static Properties getEnvPlaceholderProperties() {
+		return new PropertiesHelper()
+			.loadProperties("classpath:env-placeholder.properties");
+	}
+	
+	/**
+	 * Retrieves the currently used bean property environment properties.
+	 * @return The currently used bean property environment properties.
+	 */
+	public static Properties getEnvBeanPropertyProperties() {
+		return new PropertiesHelper()
+			.loadProperties("classpath:env-bean-property.properties");
+	}
 }

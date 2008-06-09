@@ -39,78 +39,78 @@ import org.apache.commons.logging.LogFactory;
  */
 public class ResolverManager implements Resolver {
 
-    /** The logger. */
-    private static final Log s_log = LogFactory.getLog(ResolverManager.class);
-    
-    /** Stores active resolvers. */
-    private List<Resolver> m_resolvers;
-    
-    /**
-     * Set up a ResolverManager.
-     * @param classpath The classpath.
-     */
-    public ResolverManager(URL[] classpath) {
-        m_resolvers = new LinkedList<Resolver>();
-        
-        /*
-         * Put all resolvers here.
-         */
-        
-        m_resolvers.add(new FileResolver(classpath));
-        m_resolvers.add(new JarResolver(classpath));
-    }
-    
-    /**
-     * Check a single entry. 
-     * @param file The file to check.
-     * @return Whether this file should be included.
-     */
-    public boolean accept(String file) {
-        Resolver r = getResolver(file);
-        if (r != null) {
-            return r.accept(file);
-        } else {
-            // No match.
-            s_log.error("Couldn't resolve file " + file);
-            return false;
-        }
-    }
+	/** The logger. */
+	private static final Log s_log = LogFactory.getLog(ResolverManager.class);
+	
+	/** Stores active resolvers. */
+	private List<Resolver> m_resolvers;
+	
+	/**
+	 * Set up a ResolverManager.
+	 * @param classpath The classpath.
+	 */
+	public ResolverManager(URL[] classpath) {
+		m_resolvers = new LinkedList<Resolver>();
+		
+		/*
+		 * Put all resolvers here.
+		 */
+		
+		m_resolvers.add(new FileResolver(classpath));
+		m_resolvers.add(new JarResolver(classpath));
+	}
+	
+	/**
+	 * Check a single entry.
+	 * @param file The file to check.
+	 * @return Whether this file should be included.
+	 */
+	public boolean accept(String file) {
+		Resolver r = getResolver(file);
+		if (r != null) {
+			return r.accept(file);
+		} else {
+			// No match.
+			s_log.error("Couldn't resolve file " + file);
+			return false;
+		}
+	}
 
-    /**
-     * Find the resolver that can handle this file.
-     * @param file The file.
-     * @return A resolver that can handle this file, or <code>null</code> if 
-     * none exists.
-     */
-    private Resolver getResolver(String file) {
-        int pos = file.indexOf(":");
-        if (pos == -1) {
-            return null;
-        }
-        String protocol = file.substring(0, pos);
-        Resolver resolver = null;
-        for (Resolver r : m_resolvers) {
-            // Chain of command.
-            if (protocol.equals(r.getProtocol())) {
-                resolver = r;
-                break;
-            }
-        }
-        return resolver;
-    }
+	/**
+	 * Find the resolver that can handle this file.
+	 * @param file The file.
+	 * @return A resolver that can handle this file, or <code>null</code> if
+	 * none exists.
+	 */
+	private Resolver getResolver(String file) {
+		int pos = file.indexOf(":");
+		if (pos == -1) {
+			return null;
+		}
+		String protocol = file.substring(0, pos);
+		Resolver resolver = null;
+		for (Resolver r : m_resolvers) {
+			// Chain of command.
+			if (protocol.equals(r.getProtocol())) {
+				resolver = r;
+				break;
+			}
+		}
+		return resolver;
+	}
 
-    /** {@inheritDoc} */
-    public String getProtocol() {
-        return "";
-    }
+	/** {@inheritDoc} */
+	public String getProtocol() {
+		return "";
+	}
 
-    /** {@inheritDoc} */
-    public void copy(String file, File target) throws IOException {
-        Resolver r = getResolver(file);
-        if (r == null) {
-            s_log.error("Couldn't resolve file " + file);
-            return;
-        }
-        r.copy(file, target);
-    }
+	/** {@inheritDoc} */
+	public void copy(String file, File target) throws IOException {
+		Resolver r = getResolver(file);
+		if (r == null) {
+			s_log.error("Couldn't resolve file " + file);
+			return;
+		}
+		r.copy(file, target);
+	}
 }

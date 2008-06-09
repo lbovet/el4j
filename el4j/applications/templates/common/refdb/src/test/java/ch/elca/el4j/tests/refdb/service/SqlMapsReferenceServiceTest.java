@@ -20,7 +20,7 @@ import org.junit.Test;
 
 
 /**
- * 
+ *
  * Test case for <code>DefaultReferenceService</code> using iBatis
  * as ORM framework.
  *
@@ -35,33 +35,33 @@ import org.junit.Test;
  */
 public class SqlMapsReferenceServiceTest extends AbstractReferenceServiceTest {
 
-    /**
-     * {@inheritDoc}
-     */
-    protected String[] getIncludeConfigLocations() {
-        return new String[] {
-            "classpath*:mandatory/*.xml",
-            "classpath*:scenarios/db/raw/*.xml",
-            "classpath*:scenarios/dataaccess/ibatis/*.xml",
-            "classpath*:scenarios/dataaccess/ibatis/refdb/*.xml",
-            "classpath*:optional/interception/transactionJava5Annotations.xml"};
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    protected String[] getExcludeConfigLocations() {
-        return null;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	protected String[] getIncludeConfigLocations() {
+		return new String[] {
+			"classpath*:mandatory/*.xml",
+			"classpath*:scenarios/db/raw/*.xml",
+			"classpath*:scenarios/dataaccess/ibatis/*.xml",
+			"classpath*:scenarios/dataaccess/ibatis/refdb/*.xml",
+			"classpath*:optional/interception/transactionJava5Annotations.xml"};
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	protected String[] getExcludeConfigLocations() {
+		return null;
+	}
 
-    /**
-     * iBATIS caused problems to missing keyword test. Therefore
-     * testMissingKeyword() is excluded from this test set. 
-     */
-    @Test
-    @Override
-    public void testMissingKeyword() {
-    
-    }
-    
+	/**
+	 * iBATIS caused problems to missing keyword test. Therefore
+	 * testMissingKeyword() is excluded from this test set.
+	 */
+	@Test
+	@Override
+	public void testMissingKeyword() {
+	
+	}
+	
 }

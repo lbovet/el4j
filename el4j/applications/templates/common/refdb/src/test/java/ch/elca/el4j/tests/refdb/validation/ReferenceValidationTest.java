@@ -31,7 +31,7 @@ import ch.elca.el4j.apps.refdb.dom.Reference;
 //Checkstyle: MagicNumber off
 
 /**
- * 
+ *
  * This test class tests custom validation of a reference domain
  * object.
  *
@@ -46,31 +46,31 @@ import ch.elca.el4j.apps.refdb.dom.Reference;
  */
 public class ReferenceValidationTest {
 
-    /**
-     * This test creates a reference which has a document date which is a later
-     * date than its whenInserted date, and then validates it. The validator
-     * should return one invalid value, since the constraint about the dates has
-     * been violated. 
-     */
-    @Test
-    public void testValidate() {
-        Reference reference = new Reference();
-        reference.setName("Java");
-        reference.setDescription("Java related reference");
-        Calendar c = Calendar.getInstance();
-        c.set(2006, Calendar.JANUARY, 03);
-        reference.setWhenInserted(new Timestamp(c.getTimeInMillis()));
-        c.set(2006, Calendar.JULY, 11);        
-        reference.setDate(new Date(c.getTimeInMillis()));
-        
-        ClassValidator<Reference> referenceValidator 
-            = new ClassValidator<Reference>(Reference.class);
-        InvalidValue[] validationMessages = referenceValidator
-            .getInvalidValues(reference);
-        assertEquals("The number of invalid values returned by the validator"
-            + " must me equal to 1.", 1, validationMessages.length);
-    }
-    
+	/**
+	 * This test creates a reference which has a document date which is a later
+	 * date than its whenInserted date, and then validates it. The validator
+	 * should return one invalid value, since the constraint about the dates has
+	 * been violated.
+	 */
+	@Test
+	public void testValidate() {
+		Reference reference = new Reference();
+		reference.setName("Java");
+		reference.setDescription("Java related reference");
+		Calendar c = Calendar.getInstance();
+		c.set(2006, Calendar.JANUARY, 03);
+		reference.setWhenInserted(new Timestamp(c.getTimeInMillis()));
+		c.set(2006, Calendar.JULY, 11);
+		reference.setDate(new Date(c.getTimeInMillis()));
+		
+		ClassValidator<Reference> referenceValidator
+			= new ClassValidator<Reference>(Reference.class);
+		InvalidValue[] validationMessages = referenceValidator
+			.getInvalidValues(reference);
+		assertEquals("The number of invalid values returned by the validator"
+			+ " must me equal to 1.", 1, validationMessages.length);
+	}
+	
 }
 
 //Checkstyle: MagicNumber on

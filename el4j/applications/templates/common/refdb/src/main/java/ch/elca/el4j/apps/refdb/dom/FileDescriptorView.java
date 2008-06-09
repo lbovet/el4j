@@ -24,16 +24,16 @@ import javax.persistence.Table;
 
 
 /**
- * Class for FileDescriptorView domain object. Domain object for a file without the 
+ * Class for FileDescriptorView domain object. Domain object for a file without the
  * content (only a descriptor).
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Frank Bitzer (FBI)
  */
 

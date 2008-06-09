@@ -38,20 +38,20 @@ import ch.elca.el4j.core.transaction.annotations.RollbackConstraint;
  * @author Alex Mathey (AMA)
  */
 public interface KeywordService {
-       
-    /**
-     * Delete keywords. Primary key of each keyword will be used.
-     * 
-     * @param keys
-     *            Are the primary keys of the keywords that should be deleted.
-     * @throws DataAccessException
-     *             If general data access problem occurred.
-     * @throws OptimisticLockingFailureException
-     *             If a keyword could not be deleted.
-     */
-    @RollbackConstraint(rollbackFor = {
-            OptimisticLockingFailureException.class, 
-            DataAccessException.class })
-    public void deleteKeywords(Collection<?> keys) 
-        throws OptimisticLockingFailureException, DataAccessException;
+	
+	/**
+	 * Delete keywords. Primary key of each keyword will be used.
+	 *
+	 * @param keys
+	 *            Are the primary keys of the keywords that should be deleted.
+	 * @throws DataAccessException
+	 *             If general data access problem occurred.
+	 * @throws OptimisticLockingFailureException
+	 *             If a keyword could not be deleted.
+	 */
+	@RollbackConstraint(rollbackFor = {
+			OptimisticLockingFailureException.class,
+			DataAccessException.class })
+	public void deleteKeywords(Collection<?> keys)
+		throws OptimisticLockingFailureException, DataAccessException;
 }

@@ -34,49 +34,49 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * @author Andreas Bur (ABU)
  */
 public class ContextExceptionHandlerFactoryBean extends
-        AbstractExceptionHandlerFactoryBean {
+		AbstractExceptionHandlerFactoryBean {
 
-    /** The policies. */
-    private Map m_policies;
-    
-    /**
-     * Default Constructor. Configures the proxy to handle only those exceptions
-     * that are <b>not</b> defined in the signature (excluding unchecked
-     * exceptions, which are handled always).
-     */
-    public ContextExceptionHandlerFactoryBean() {
-        super();
-        // change this behaviour in the ContextExceptionHandlerInterceptor too
-        // (to be done manually since Java doesn't support multi inheritance).
-        setForwardSignatureExceptions(true);
-        setHandleRTSignatureExceptions(true);
-    }
+	/** The policies. */
+	private Map m_policies;
+	
+	/**
+	 * Default Constructor. Configures the proxy to handle only those exceptions
+	 * that are <b>not</b> defined in the signature (excluding unchecked
+	 * exceptions, which are handled always).
+	 */
+	public ContextExceptionHandlerFactoryBean() {
+		super();
+		// change this behaviour in the ContextExceptionHandlerInterceptor too
+		// (to be done manually since Java doesn't support multi inheritance).
+		setForwardSignatureExceptions(true);
+		setHandleRTSignatureExceptions(true);
+	}
 
-    /**
-     * @see ContextExceptionHandlerInterceptor#setPolicies(Map)
-     */
-    public void setPolicies(Map policies) {
-        m_policies = policies;
-    }
+	/**
+	 * @see ContextExceptionHandlerInterceptor#setPolicies(Map)
+	 */
+	public void setPolicies(Map policies) {
+		m_policies = policies;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void afterPropertiesSet() throws Exception {
-        super.afterPropertiesSet();
-        CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-                m_policies, "policies", this);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void afterPropertiesSet() throws Exception {
+		super.afterPropertiesSet();
+		CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+				m_policies, "policies", this);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    protected AbstractExceptionHandlerInterceptor
-    createExceptionHandlerInterceptor() {
-        
-        ContextExceptionHandlerInterceptor interceptor
-            = new ContextExceptionHandlerInterceptor();
-        interceptor.setPolicies(m_policies);
-        return interceptor;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	protected AbstractExceptionHandlerInterceptor
+	createExceptionHandlerInterceptor() {
+		
+		ContextExceptionHandlerInterceptor interceptor
+			= new ContextExceptionHandlerInterceptor();
+		interceptor.setPolicies(m_policies);
+		return interceptor;
+	}
 }

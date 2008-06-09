@@ -35,102 +35,102 @@ import java.util.Properties;
  * @author Stefan Wismer (SWI)
  */
 public class GenericConfig {
-    
-    /**
-     * The configuration entries that are added or override configurations
-     * declared in m_parentConfig.
-     */
-    protected Map<String, Object> m_map;
-    
-    /**
-     * The default constructor, which creates an empty configuration.
-     */
-    public GenericConfig() {
-        m_map = new HashMap<String, Object>();
-    }
-    
-    /**
-     * @param parent    the parent {@link GenericConfig} which configuration
-     *                  is inherited
-     */
-    public void setParent(GenericConfig parent) {
-        Map<String, Object> parentMap = parent.getMap();
-        for (String key : parentMap.keySet()) {
-            if (!m_map.containsKey(key)) {
-                add(key, parentMap.get(key));
-            }
-        }
-    }
-    
-    /**
-     * @param parents    the parent {@link GenericConfig}s which configuration
-     *                   is inherited
-     */
-    public void setParents(List<GenericConfig> parents) {
-        for (GenericConfig genericConfig : parents) {
-            setParent(genericConfig);
-        }
-    }
-    
-    /**
-     * @return    a copy of all configuration entries declared in this config
-     */
-    public Map<String, Object> getMap() {
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.putAll(m_map);
-        return map;
-    }
-    
-    /**
-     * @param map    the configuration entries to set
-     */
-    public void setMap(Map<String, Object> map) {
-        m_map = map;
-    }
-    
-    /**
-     * @param properties    the configuration entries to set
-     */
-    public void setMap(Properties properties) {
-        m_map.clear();
-        setOverrideMap(properties);
-    }
-    
-    /**
-     * @param map    the configuration entries to add to the current entries
-     */
-    public void setOverrideMap(Map<String, Object> map) {
-        if (m_map != null) {
-            m_map.putAll(map);
-        } else {
-            m_map = map;
-        }
-    }
-    
-    /**
-     * @param properties    the configuration entries to add
-     */
-    public void setOverrideMap(Properties properties) {
-        for (Object key : properties.keySet()) {
-            m_map.put((String) key, properties.get(key));
-        }
-    }
-    
-    /**
-     * @param key      the key of the configuration entry to add
-     * @param value    the value of the configuration entry to add
-     */
-    public void add(String key, Object value) {
-        m_map.put(key, value);
-    }
-    
-    /**
-     * @param key    the key of the configuration entry that should be returned
-     * @return       the corresponding value or <code>null</code> if not found
-     */
-    public Object get(String key) {
-        return m_map.get(key);
-    }
+	
+	/**
+	 * The configuration entries that are added or override configurations
+	 * declared in m_parentConfig.
+	 */
+	protected Map<String, Object> m_map;
+	
+	/**
+	 * The default constructor, which creates an empty configuration.
+	 */
+	public GenericConfig() {
+		m_map = new HashMap<String, Object>();
+	}
+	
+	/**
+	 * @param parent    the parent {@link GenericConfig} which configuration
+	 *                  is inherited
+	 */
+	public void setParent(GenericConfig parent) {
+		Map<String, Object> parentMap = parent.getMap();
+		for (String key : parentMap.keySet()) {
+			if (!m_map.containsKey(key)) {
+				add(key, parentMap.get(key));
+			}
+		}
+	}
+	
+	/**
+	 * @param parents    the parent {@link GenericConfig}s which configuration
+	 *                   is inherited
+	 */
+	public void setParents(List<GenericConfig> parents) {
+		for (GenericConfig genericConfig : parents) {
+			setParent(genericConfig);
+		}
+	}
+	
+	/**
+	 * @return    a copy of all configuration entries declared in this config
+	 */
+	public Map<String, Object> getMap() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.putAll(m_map);
+		return map;
+	}
+	
+	/**
+	 * @param map    the configuration entries to set
+	 */
+	public void setMap(Map<String, Object> map) {
+		m_map = map;
+	}
+	
+	/**
+	 * @param properties    the configuration entries to set
+	 */
+	public void setMap(Properties properties) {
+		m_map.clear();
+		setOverrideMap(properties);
+	}
+	
+	/**
+	 * @param map    the configuration entries to add to the current entries
+	 */
+	public void setOverrideMap(Map<String, Object> map) {
+		if (m_map != null) {
+			m_map.putAll(map);
+		} else {
+			m_map = map;
+		}
+	}
+	
+	/**
+	 * @param properties    the configuration entries to add
+	 */
+	public void setOverrideMap(Properties properties) {
+		for (Object key : properties.keySet()) {
+			m_map.put((String) key, properties.get(key));
+		}
+	}
+	
+	/**
+	 * @param key      the key of the configuration entry to add
+	 * @param value    the value of the configuration entry to add
+	 */
+	public void add(String key, Object value) {
+		m_map.put(key, value);
+	}
+	
+	/**
+	 * @param key    the key of the configuration entry that should be returned
+	 * @return       the corresponding value or <code>null</code> if not found
+	 */
+	public Object get(String key) {
+		return m_map.get(key);
+	}
 
 
 }

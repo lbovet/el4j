@@ -32,152 +32,152 @@ import java.util.Map;
 
 public class BinderConfig {
 
-    private static final Log log = LogFactory.getLog(BinderConfig.class);
-    private FormMeta formMeta;
-    private FormConfig formConfig;
+	private static final Log log = LogFactory.getLog(BinderConfig.class);
+	private FormMeta formMeta;
+	private FormConfig formConfig;
 
-    public BinderConfig(Class componentClass, Binder binder) {
-        this(componentClass, binder, new FormConfig());
-    }
+	public BinderConfig(Class componentClass, Binder binder) {
+		this(componentClass, binder, new FormConfig());
+	}
 
-    public BinderConfig(Class componentClass, Binder binder, FormConfig formConfig) {
-        this.formMeta = BinderManager.getFormMetaData(componentClass);
-        this.formConfig = formConfig;
-    }
+	public BinderConfig(Class componentClass, Binder binder, FormConfig formConfig) {
+		this.formMeta = BinderManager.getFormMetaData(componentClass);
+		this.formConfig = formConfig;
+	}
 
-    public BinderConfig bindModel(ModelObjectConfig modelObjectConfig) {
+	public BinderConfig bindModel(ModelObjectConfig modelObjectConfig) {
 
-        bindCompleteModel(
-                modelObjectConfig.getModelField(),
-                modelObjectConfig.getModelField(),
-                modelObjectConfig.isDefault(),
-                modelObjectConfig.isAutoBind(),
-                modelObjectConfig.getIgnoreFields());
+		bindCompleteModel(
+				modelObjectConfig.getModelField(),
+				modelObjectConfig.getModelField(),
+				modelObjectConfig.isDefault(),
+				modelObjectConfig.isAutoBind(),
+				modelObjectConfig.getIgnoreFields());
 
-        return this;
-    }
+		return this;
+	}
 
-    /**
-     * @param modelField
-     * @param ignoreFields
-     */
-    public BinderConfig bindDefaultModel(String modelField, String... ignoreFields) {
-        return bindCompleteModel("[default]", modelField, true, true, ignoreFields);
-    }
-
-
-    /**
-     * @param modelField
-     * @param ignoreFields
-     */
-    public BinderConfig bindModel(String modelField, String... ignoreFields) {
-        return bindCompleteModel(modelField, modelField, false, true, ignoreFields);
-    }
-
-    /**
-     * @param modelField
-     */
-    public BinderConfig bindDefaultModel(String modelField) {
-        return bindCompleteModel("[default]", modelField, true, true);
-    }
+	/**
+	 * @param modelField
+	 * @param ignoreFields
+	 */
+	public BinderConfig bindDefaultModel(String modelField, String... ignoreFields) {
+		return bindCompleteModel("[default]", modelField, true, true, ignoreFields);
+	}
 
 
-    /**
-     * @param modelField
-     */
-    public BinderConfig bindModel(String modelField) {
-        return bindCompleteModel(modelField, modelField, false, true);
-    }
+	/**
+	 * @param modelField
+	 * @param ignoreFields
+	 */
+	public BinderConfig bindModel(String modelField, String... ignoreFields) {
+		return bindCompleteModel(modelField, modelField, false, true, ignoreFields);
+	}
 
-    private BinderConfig bindCompleteModel(String modelFieldName, String modelField, boolean defaultModel, boolean autoBindModelObject, String... ignoreFields) {
-        formMeta.putModelMeta(modelFieldName, modelField);
-        autoBind(modelField, defaultModel, autoBindModelObject, ignoreFields);
-        return this;
-    }
+	/**
+	 * @param modelField
+	 */
+	public BinderConfig bindDefaultModel(String modelField) {
+		return bindCompleteModel("[default]", modelField, true, true);
+	}
 
 
-    private void autoBind(String modelField, boolean defaultModel, boolean autoBindModelObject, String... ignoreFields) {
+	/**
+	 * @param modelField
+	 */
+	public BinderConfig bindModel(String modelField) {
+		return bindCompleteModel(modelField, modelField, false, true);
+	}
 
-        List ignoreFieldsList = Arrays.asList(ignoreFields);
+	private BinderConfig bindCompleteModel(String modelFieldName, String modelField, boolean defaultModel, boolean autoBindModelObject, String... ignoreFields) {
+		formMeta.putModelMeta(modelFieldName, modelField);
+		autoBind(modelField, defaultModel, autoBindModelObject, ignoreFields);
+		return this;
+	}
 
-        if (formConfig.isAutoBind() && autoBindModelObject) {
 
-            Class formClass = formMeta.getComponentClass();
+	private void autoBind(String modelField, boolean defaultModel, boolean autoBindModelObject, String... ignoreFields) {
 
-            Field field = null;
-            try {
-                field = ClassManager.getClassInfo(formClass).getField(modelField);
-            } catch (NoSuchFieldException e) {
-                //ignored
-            }
+		List ignoreFieldsList = Arrays.asList(ignoreFields);
 
-            // iterate modelObject fields
-            Class modelObjectType = field.getType();
+		if (formConfig.isAutoBind() && autoBindModelObject) {
 
-            if (!Map.class.isAssignableFrom(modelObjectType)) { // can't autobind maps
-                for (Method moMethod : ClassManager.getClassInfo(modelObjectType).getSetters()) {
-                    String componentFieldName =
-                            moMethod.getName().substring(3, 4).toLowerCase() +
-                                    moMethod.getName().substring(4);
+			Class formClass = formMeta.getComponentClass();
 
-                    Field formClassField = null;
+			Field field = null;
+			try {
+				field = ClassManager.getClassInfo(formClass).getField(modelField);
+			} catch (NoSuchFieldException e) {
+				//ignored
+			}
 
-                    try {
-                        formClassField = ClassManager.getClassInfo(formClass).getField(componentFieldName);
+			// iterate modelObject fields
+			Class modelObjectType = field.getType();
 
-                        if (!ignoreFieldsList.contains(formClassField.getName())) {
+			if (!Map.class.isAssignableFrom(modelObjectType)) { // can't autobind maps
+				for (Method moMethod : ClassManager.getClassInfo(modelObjectType).getSetters()) {
+					String componentFieldName =
+							moMethod.getName().substring(3, 4).toLowerCase() +
+									moMethod.getName().substring(4);
 
-                            formMeta.addComponentMeta(
-                                    defaultModel ? "[default]" : field.getName(),
-                                    componentFieldName, formClassField, void.class,
-                                    new String[]{}, true, ReadOnly.DEFAULT, moMethod.getParameterTypes()[0]);
+					Field formClassField = null;
 
-                        }
+					try {
+						formClassField = ClassManager.getClassInfo(formClass).getField(componentFieldName);
 
-                    } catch (NoSuchFieldException e) {
-                        // ignored
-                    }
-                }
-            }
-        }
-    }
+						if (!ignoreFieldsList.contains(formClassField.getName())) {
 
-    /**
-     * @param boundComponentConfig
-     */
-    public BinderConfig bindComponentToDefault(BoundComponentConfig boundComponentConfig) {
-        formMeta.addComponentMeta("[default]", boundComponentConfig, false);
-        return this;
-    }
+							formMeta.addComponentMeta(
+									defaultModel ? "[default]" : field.getName(),
+									componentFieldName, formClassField, void.class,
+									new String[]{}, true, ReadOnly.DEFAULT, moMethod.getParameterTypes()[0]);
 
-    /**
-     * @param boundComponentConfigs
-     */
-    public BinderConfig bindComponentToDefault(BoundComponentConfig... boundComponentConfigs) {
-        for (BoundComponentConfig boundComponentConfig : boundComponentConfigs) {
-            formMeta.addComponentMeta("[default]", boundComponentConfig, false);
-        }
-        return this;
-    }
+						}
 
-    /**
-     * @param modelId
-     * @param boundComponentConfig
-     */
-    public BinderConfig bindComponent(String modelId, BoundComponentConfig boundComponentConfig) {
-        formMeta.addComponentMeta(modelId, boundComponentConfig, false);
-        return this;
-    }
+					} catch (NoSuchFieldException e) {
+						// ignored
+					}
+				}
+			}
+		}
+	}
 
-    /**
-     * @param modelId
-     * @param boundComponentConfigs
-     */
-    public BinderConfig bindComponent(String modelId, BoundComponentConfig... boundComponentConfigs) {
-        for (BoundComponentConfig boundComponentConfig : boundComponentConfigs) {
-            formMeta.addComponentMeta(modelId, boundComponentConfig, false);
-        }
-        return this;
-    }
+	/**
+	 * @param boundComponentConfig
+	 */
+	public BinderConfig bindComponentToDefault(BoundComponentConfig boundComponentConfig) {
+		formMeta.addComponentMeta("[default]", boundComponentConfig, false);
+		return this;
+	}
+
+	/**
+	 * @param boundComponentConfigs
+	 */
+	public BinderConfig bindComponentToDefault(BoundComponentConfig... boundComponentConfigs) {
+		for (BoundComponentConfig boundComponentConfig : boundComponentConfigs) {
+			formMeta.addComponentMeta("[default]", boundComponentConfig, false);
+		}
+		return this;
+	}
+
+	/**
+	 * @param modelId
+	 * @param boundComponentConfig
+	 */
+	public BinderConfig bindComponent(String modelId, BoundComponentConfig boundComponentConfig) {
+		formMeta.addComponentMeta(modelId, boundComponentConfig, false);
+		return this;
+	}
+
+	/**
+	 * @param modelId
+	 * @param boundComponentConfigs
+	 */
+	public BinderConfig bindComponent(String modelId, BoundComponentConfig... boundComponentConfigs) {
+		for (BoundComponentConfig boundComponentConfig : boundComponentConfigs) {
+			formMeta.addComponentMeta(modelId, boundComponentConfig, false);
+		}
+		return this;
+	}
 
 }

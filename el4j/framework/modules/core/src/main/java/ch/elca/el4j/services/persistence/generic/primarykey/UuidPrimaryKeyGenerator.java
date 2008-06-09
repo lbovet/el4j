@@ -29,8 +29,8 @@ import org.apache.commons.logging.LogFactory;
  * presented in
  * http://www1.ics.uci.edu/~ejw/authoring/uuid-guid/draft-leach-uuids-guids-01.txt
  *
- * The returned UUID is a hex-encoded 32-digit number. 
- * 
+ * The returned UUID is a hex-encoded 32-digit number.
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -41,94 +41,94 @@ import org.apache.commons.logging.LogFactory;
  * @author Martin Zeltner (MZE)
  */
 public class UuidPrimaryKeyGenerator implements PrimaryKeyGenerator {
-    /**
-     * Private logger of this class.
-     */
-    private static Log s_logger 
-        = LogFactory.getLog(UuidPrimaryKeyGenerator.class);
+	/**
+	 * Private logger of this class.
+	 */
+	private static Log s_logger
+		= LogFactory.getLog(UuidPrimaryKeyGenerator.class);
 
-    /**
-     * Middle value.
-     */
-    private String m_midValue;
-    
-    /**
-     * Seeder.
-     */
-    private SecureRandom m_seeder;
-    
-    /**
-     * String aaray with zeros.
-     */
-    private String[] m_zeros;
+	/**
+	 * Middle value.
+	 */
+	private String m_midValue;
+	
+	/**
+	 * Seeder.
+	 */
+	private SecureRandom m_seeder;
+	
+	/**
+	 * String aaray with zeros.
+	 */
+	private String[] m_zeros;
 
-    /**
-     * Default constructor.
-     */
-    public UuidPrimaryKeyGenerator() {
-        init();
-    }
+	/**
+	 * Default constructor.
+	 */
+	public UuidPrimaryKeyGenerator() {
+		init();
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public String getPrimaryKey() {
-        long time = System.currentTimeMillis();
-        int timeLow = (int) time & 0xFFFFFFFF;
-        int value = m_seeder.nextInt();
-        String keyString = toHexString(timeLow) + m_midValue
-            + toHexString(value);
-        return keyString;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getPrimaryKey() {
+		long time = System.currentTimeMillis();
+		int timeLow = (int) time & 0xFFFFFFFF;
+		int value = m_seeder.nextInt();
+		String keyString = toHexString(timeLow) + m_midValue
+			+ toHexString(value);
+		return keyString;
+	}
 
-    // Checkstyle: MagicNumber off
-    /**
-     * Initalize the primary key generator.
-     */
-    private void init() {
-        // Fill the m_zeros table
-        final int ZERO_ARRAY_LENGTH = 8;
-        m_zeros = new String[ZERO_ARRAY_LENGTH];
-        m_zeros[0] = "";
-        for (int i = 1; i < ZERO_ARRAY_LENGTH; i++) {
-            m_zeros[i] = m_zeros[i - 1] + "0";
-        }
+	// Checkstyle: MagicNumber off
+	/**
+	 * Initalize the primary key generator.
+	 */
+	private void init() {
+		// Fill the m_zeros table
+		final int ZERO_ARRAY_LENGTH = 8;
+		m_zeros = new String[ZERO_ARRAY_LENGTH];
+		m_zeros[0] = "";
+		for (int i = 1; i < ZERO_ARRAY_LENGTH; i++) {
+			m_zeros[i] = m_zeros[i - 1] + "0";
+		}
 
-        // Get the IP address as an hex string
-        byte[] bytes = null;
-        try {
-            InetAddress inetAddress = InetAddress.getLocalHost();
-            bytes = inetAddress.getAddress();
-        } catch (UnknownHostException npe) {
-            s_logger.debug("Host ip could not be found. Following " 
-                + "will be used: 127.0.0.1");
-            bytes = new byte[] {1, 0, 0, 127};
-        }
-        int intAddress = 0;
-        for (int i = 0; i < bytes.length; i++) {
-            int unsignedByte = bytes[i] & 0xFF;
-            intAddress = (intAddress + unsignedByte) << 8;
-        }
-        String hexInetAddress = toHexString(intAddress);
+		// Get the IP address as an hex string
+		byte[] bytes = null;
+		try {
+			InetAddress inetAddress = InetAddress.getLocalHost();
+			bytes = inetAddress.getAddress();
+		} catch (UnknownHostException npe) {
+			s_logger.debug("Host ip could not be found. Following "
+				+ "will be used: 127.0.0.1");
+			bytes = new byte[] {1, 0, 0, 127};
+		}
+		int intAddress = 0;
+		for (int i = 0; i < bytes.length; i++) {
+			int unsignedByte = bytes[i] & 0xFF;
+			intAddress = (intAddress + unsignedByte) << 8;
+		}
+		String hexInetAddress = toHexString(intAddress);
 
-        String thisHashCode = toHexString(System.identityHashCode(this));
+		String thisHashCode = toHexString(System.identityHashCode(this));
 
-        m_midValue = hexInetAddress + thisHashCode;
+		m_midValue = hexInetAddress + thisHashCode;
 
-        m_seeder = new SecureRandom();
-    }
+		m_seeder = new SecureRandom();
+	}
 
-    /**
-     * Method to convert from decimal to hexadecimal.
-     * 
-     * @param i Is the given decimal number.
-     * @return Returns the hexadecimal value of given decimal number.
-     */
-    private String toHexString(int i) {
-        String hex = Integer.toHexString(i);
-        int hexLength = hex.length();
-        return m_zeros[8 - hexLength] + hex;
-    }
-    // Checkstyle: MagicNumber on
+	/**
+	 * Method to convert from decimal to hexadecimal.
+	 *
+	 * @param i Is the given decimal number.
+	 * @return Returns the hexadecimal value of given decimal number.
+	 */
+	private String toHexString(int i) {
+		String hex = Integer.toHexString(i);
+		int hexLength = hex.length();
+		return m_zeros[8 - hexLength] + hex;
+	}
+	// Checkstyle: MagicNumber on
 }
 

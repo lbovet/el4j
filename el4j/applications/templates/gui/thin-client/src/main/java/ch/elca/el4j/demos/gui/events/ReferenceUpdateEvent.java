@@ -29,32 +29,30 @@ package ch.elca.el4j.demos.gui.events;
  * @author Stefan Wismer (SWI)
  */
 public class ReferenceUpdateEvent {
-    /**
-     * The key of the reference.
-     */
-    private int m_key;
-    
-    /**
-     * @param key    set the key of the reference
-     */
-    public ReferenceUpdateEvent(int key) {
-        m_key = key;
-    }
+	/**
+	 * The key of the reference.
+	 */
+	private int m_key;
+	
+	/**
+	 * @param key    set the key of the reference
+	 */
+	public ReferenceUpdateEvent(int key) {
+		m_key = key;
+	}
 
-    /**
-     * @return    the key of the reference
-     */
-    public int getKey() {
-        return m_key;
-    }
+	/**
+	 * @return    the key of the reference
+	 */
+	public int getKey() {
+		return m_key;
+	}
 
-    /**
-     * @param key    set the key of the reference
-     */
-    public void setKey(int key) {
-        m_key = key;
-    }
-
-   
+	/**
+	 * @param key    set the key of the reference
+	 */
+	public void setKey(int key) {
+		m_key = key;
+	}
 
 }

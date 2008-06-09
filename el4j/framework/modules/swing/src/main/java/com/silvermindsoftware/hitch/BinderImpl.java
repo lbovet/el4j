@@ -57,278 +57,278 @@ import ch.elca.el4j.util.config.GenericConfig;
  * @author Stefan Wismer (SWI), based on Hitch by Brandon Goodin
  */
 public class BinderImpl implements Binder {
-    
-    /**
-     * The managed bindings.
-     */
-    protected Set<BindingGroup> m_bindings = new HashSet<BindingGroup>();
+	
+	/**
+	 * The managed bindings.
+	 */
+	protected Set<BindingGroup> m_bindings = new HashSet<BindingGroup>();
 
-    /**
-     * Use {@link BinderManager}.
-     */
-    BinderImpl() { }
-    
-    /** {@inheritDoc} */
-    public BindingGroup addAutoBinding(Container container, String... modelId) {
-        return addAutoBinding(container, true, modelId);
-    }
+	/**
+	 * Use {@link BinderManager}.
+	 */
+	BinderImpl() { }
+	
+	/** {@inheritDoc} */
+	public BindingGroup addAutoBinding(Container container, String... modelId) {
+		return addAutoBinding(container, true, modelId);
+	}
 
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    public BindingGroup addAutoBinding(Container container,
-        boolean performValidate, String... modelId) {
-        
-        FormMeta formMeta = BinderManager.getFormMetaData(container.getClass());
-        
-        BindingGroup bindings = new BindingGroup();
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	public BindingGroup addAutoBinding(Container container,
+		boolean performValidate, String... modelId) {
+		
+		FormMeta formMeta = BinderManager.getFormMetaData(container.getClass());
+		
+		BindingGroup bindings = new BindingGroup();
 
-        for (Iterator<ComponentMeta> it = formMeta.getComponentMetaIterator();
-            it.hasNext();) {
-            
-            ComponentMeta componentMeta = it.next();
+		for (Iterator<ComponentMeta> it = formMeta.getComponentMetaIterator();
+			it.hasNext();) {
+			
+			ComponentMeta componentMeta = it.next();
 
-            // check to see if update should occur for particular model objects
-            if (skipModel(componentMeta.getModelId(), modelId)) {
-                break;
-            }
+			// check to see if update should occur for particular model objects
+			if (skipModel(componentMeta.getModelId(), modelId)) {
+				break;
+			}
 
-            // get container field
-            Field componentField = componentMeta.getComponentField();
+			// get container field
+			Field componentField = componentMeta.getComponentField();
 
-            // get model values
-            ModelMeta modelMeta = formMeta.getModelMeta(componentMeta
-                    .getModelId());
-            Field modelField = modelMeta.getModelField();
-            Object modelObject = null;
-            try {
-                modelObject = modelField.get(container);
-            } catch (IllegalAccessException e) {
-                throw new RuntimeException(e.getMessage(), e);
-            }
+			// get model values
+			ModelMeta modelMeta = formMeta.getModelMeta(componentMeta
+					.getModelId());
+			Field modelField = modelMeta.getModelField();
+			Object modelObject = null;
+			try {
+				modelObject = modelField.get(container);
+			} catch (IllegalAccessException e) {
+				throw new RuntimeException(e.getMessage(), e);
+			}
 
-            JComponent formComponent = null;
+			JComponent formComponent = null;
 
-            try {
-                // check if formComponent will be of type JComponent
-                Object tmpComponent = componentField.get(container);
-                if (!JComponent.class.isAssignableFrom(
-                    tmpComponent.getClass())) {
-                    break;
-                }
-                formComponent = (JComponent) tmpComponent;
-            } catch (IllegalAccessException e) {
-                throw new IllegalStateException(e.getMessage(), e);
-            }
+			try {
+				// check if formComponent will be of type JComponent
+				Object tmpComponent = componentField.get(container);
+				if (!JComponent.class.isAssignableFrom(
+					tmpComponent.getClass())) {
+					break;
+				}
+				formComponent = (JComponent) tmpComponent;
+			} catch (IllegalAccessException e) {
+				throw new IllegalStateException(e.getMessage(), e);
+			}
 
-            if (formComponent == null) {
-                throw new IllegalStateException("Form container named "
-                        + componentField.getName() + " was not found");
-            }
-            
-            AutoBinding binding = addManualBinding(UpdateStrategy.READ_WRITE,
-                modelObject, componentMeta.getModelPropertyName(),
-                formComponent, performValidate);
-            
-            // collect inserted bindings
-            if (binding != null) {
-                bindings.addBinding(binding);
-            }
-        }
-        return bindings;
-    }
-    
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    public AutoBinding addAutoBinding(Container container,
-        JComponent component, BindingCreator creator, boolean performValidate) {
-        
-        FormMeta formMeta = BinderManager.getFormMetaData(container.getClass());
+			if (formComponent == null) {
+				throw new IllegalStateException("Form container named "
+						+ componentField.getName() + " was not found");
+			}
+			
+			AutoBinding binding = addManualBinding(UpdateStrategy.READ_WRITE,
+				modelObject, componentMeta.getModelPropertyName(),
+				formComponent, performValidate);
+			
+			// collect inserted bindings
+			if (binding != null) {
+				bindings.addBinding(binding);
+			}
+		}
+		return bindings;
+	}
+	
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	public AutoBinding addAutoBinding(Container container,
+		JComponent component, BindingCreator creator, boolean performValidate) {
+		
+		FormMeta formMeta = BinderManager.getFormMetaData(container.getClass());
 
-        for (Iterator<ComponentMeta> it = formMeta.getComponentMetaIterator();
-            it.hasNext();) {
-            
-            ComponentMeta componentMeta = it.next();
-            try {
-                if (componentMeta.getComponentField().get(container)
-                    .equals(component)) {
-                    
-                    // get model values
-                    ModelMeta modelMeta = formMeta.getModelMeta(componentMeta
-                            .getModelId());
-                    Field modelField = modelMeta.getModelField();
-                    Object modelObject = null;
-                    try {
-                        modelObject = modelField.get(container);
-                    } catch (IllegalAccessException e) {
-                        throw new RuntimeException(e.getMessage(), e);
-                    }
-                    
-                    return addManualBinding(modelObject, 
-                        componentMeta.getModelPropertyName(),
-                        component, creator, performValidate);
-                }
-            } catch (Exception e) {
-                return null;
-            }
-        }
+		for (Iterator<ComponentMeta> it = formMeta.getComponentMetaIterator();
+			it.hasNext();) {
+			
+			ComponentMeta componentMeta = it.next();
+			try {
+				if (componentMeta.getComponentField().get(container)
+					.equals(component)) {
+					
+					// get model values
+					ModelMeta modelMeta = formMeta.getModelMeta(componentMeta
+							.getModelId());
+					Field modelField = modelMeta.getModelField();
+					Object modelObject = null;
+					try {
+						modelObject = modelField.get(container);
+					} catch (IllegalAccessException e) {
+						throw new RuntimeException(e.getMessage(), e);
+					}
+					
+					return addManualBinding(modelObject,
+						componentMeta.getModelPropertyName(),
+						component, creator, performValidate);
+				}
+			} catch (Exception e) {
+				return null;
+			}
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    public AutoBinding addManualBinding(UpdateStrategy strategy, Object model,
-        String property, JComponent component, boolean performValidate) {
-        
-        // create a default binding
-        AutoBinding b = BindingFactory.getInstance()
-            .createBinding(strategy, model, property, component);
-        
-        if (b != null) {
-            return addManualBinding(b, performValidate);
-        } else {
-            return null;
-        } 
-    }
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	public AutoBinding addManualBinding(UpdateStrategy strategy, Object model,
+		String property, JComponent component, boolean performValidate) {
+		
+		// create a default binding
+		AutoBinding b = BindingFactory.getInstance()
+			.createBinding(strategy, model, property, component);
+		
+		if (b != null) {
+			return addManualBinding(b, performValidate);
+		} else {
+			return null;
+		}
+	}
 
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    public AutoBinding addManualBinding(Object model, String property,
-        JComponent component, BindingCreator creator, boolean performValidate) {
-        
-        Property modelPropertyName = BeanProperty.create(property);
-        
-        AutoBinding b = creator.createBinding(
-            modelPropertyName.getValue(model), component);
-        addManualBinding(b);
-        
-        if (performValidate) {
-            creator.addValidation(component);
-        }
-        
-        return b;
-    }
-    
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    public AutoBinding addManualBinding(AutoBinding binding,
-        boolean performValidate) {
-        
-        addManualBinding(binding);
-        
-        if (performValidate) {
-            GenericConfig config = GUIApplication.getInstance().getConfig();
-            addValidationResponder(binding, (ValidationResponder) 
-                config.get("validationResponder"));
-        }
-        return binding;
-    }
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	public AutoBinding addManualBinding(Object model, String property,
+		JComponent component, BindingCreator creator, boolean performValidate) {
+		
+		Property modelPropertyName = BeanProperty.create(property);
+		
+		AutoBinding b = creator.createBinding(
+			modelPropertyName.getValue(model), component);
+		addManualBinding(b);
+		
+		if (performValidate) {
+			creator.addValidation(component);
+		}
+		
+		return b;
+	}
+	
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	public AutoBinding addManualBinding(AutoBinding binding,
+		boolean performValidate) {
+		
+		addManualBinding(binding);
+		
+		if (performValidate) {
+			GenericConfig config = GUIApplication.getInstance().getConfig();
+			addValidationResponder(binding, (ValidationResponder)
+				config.get("validationResponder"));
+		}
+		return binding;
+	}
 
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    public AutoBinding addManualBinding(AutoBinding binding) {
-        BindingGroup g = new BindingGroup();
-        g.addBinding(binding);
-        m_bindings.add(g);
-        
-        return binding;
-    }
-    
-    /** {@inheritDoc} */
-    public void addValidationResponder(BindingGroup group,
-        ValidationResponder responder) {
-        
-        group.addBindingListener(new ValidatingBindingListener(responder));
-    }
-    
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    public void addValidationResponder(AutoBinding binding,
-        ValidationResponder responder) {
-        
-        binding.addBindingListener(new ValidatingBindingListener(responder));
-    }
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	public AutoBinding addManualBinding(AutoBinding binding) {
+		BindingGroup g = new BindingGroup();
+		g.addBinding(binding);
+		m_bindings.add(g);
+		
+		return binding;
+	}
+	
+	/** {@inheritDoc} */
+	public void addValidationResponder(BindingGroup group,
+		ValidationResponder responder) {
+		
+		group.addBindingListener(new ValidatingBindingListener(responder));
+	}
+	
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	public void addValidationResponder(AutoBinding binding,
+		ValidationResponder responder) {
+		
+		binding.addBindingListener(new ValidatingBindingListener(responder));
+	}
 
-    /** {@inheritDoc} */
-    public void bindAll() {
-        for (BindingGroup group : m_bindings) {
-            group.bind();
-        }
-    }
-    
-    /** {@inheritDoc} */
-    public void unbindAll() {
-        for (BindingGroup group : m_bindings) {
-            group.unbind();
-        }
-    }
+	/** {@inheritDoc} */
+	public void bindAll() {
+		for (BindingGroup group : m_bindings) {
+			group.bind();
+		}
+	}
+	
+	/** {@inheritDoc} */
+	public void unbindAll() {
+		for (BindingGroup group : m_bindings) {
+			group.unbind();
+		}
+	}
 
-    /** {@inheritDoc} */
-    public void removeAll() {
-        unbindAll();
-        m_bindings.clear();
-    }
+	/** {@inheritDoc} */
+	public void removeAll() {
+		unbindAll();
+		m_bindings.clear();
+	}
 
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    public BindingGroup find(Object model, String property,
-        JComponent component) {
-        
-        BindingGroup result = new BindingGroup();
-        
-        Property modelPropertyName = null;
-        if (property != null) {
-            modelPropertyName = BeanProperty.create(property);
-        }
-        for (BindingGroup group : m_bindings) {
-            for (Binding binding : group.getBindings()) {
-                if ((model != null && model == binding.getSourceObject())
-                    || (modelPropertyName != null
-                        && binding.getSourceProperty().equals(modelPropertyName))
-                    || (component != null
-                        && binding.getTargetObject() == component)) {
-                    result.addBinding(binding);
-                }
-            }
-        }
-        return result;
-    }
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	public BindingGroup find(Object model, String property,
+		JComponent component) {
+		
+		BindingGroup result = new BindingGroup();
+		
+		Property modelPropertyName = null;
+		if (property != null) {
+			modelPropertyName = BeanProperty.create(property);
+		}
+		for (BindingGroup group : m_bindings) {
+			for (Binding binding : group.getBindings()) {
+				if ((model != null && model == binding.getSourceObject())
+					|| (modelPropertyName != null
+						&& binding.getSourceProperty().equals(modelPropertyName))
+					|| (component != null
+						&& binding.getTargetObject() == component)) {
+					result.addBinding(binding);
+				}
+			}
+		}
+		return result;
+	}
 
-    /** {@inheritDoc} */
-    public void remove(BindingGroup binding) {
-        m_bindings.remove(binding);
-    }
+	/** {@inheritDoc} */
+	public void remove(BindingGroup binding) {
+		m_bindings.remove(binding);
+	}
 
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    public void remove(AutoBinding binding) {
-        for (BindingGroup group : m_bindings) {
-            for (Binding bindingInGroup : group.getBindings()) {
-                if (bindingInGroup == binding) {
-                    group.removeBinding(binding);
-                    return;
-                }
-            }
-        }
-    }
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	public void remove(AutoBinding binding) {
+		for (BindingGroup group : m_bindings) {
+			for (Binding bindingInGroup : group.getBindings()) {
+				if (bindingInGroup == binding) {
+					group.removeBinding(binding);
+					return;
+				}
+			}
+		}
+	}
 
-    
-    /**
-     * Check if update should occur for particular model objects.
-     * 
-     * @param modelId        the model id given by the annotation
-     * @param modelIdList    list of available models
-     * @return               true if model should be skipped
-     */
-    protected boolean skipModel(String modelId, String[] modelIdList) {
-        if (modelIdList != null && modelIdList.length > 0) {
-            Arrays.sort(modelIdList);
+	
+	/**
+	 * Check if update should occur for particular model objects.
+	 *
+	 * @param modelId        the model id given by the annotation
+	 * @param modelIdList    list of available models
+	 * @return               true if model should be skipped
+	 */
+	protected boolean skipModel(String modelId, String[] modelIdList) {
+		if (modelIdList != null && modelIdList.length > 0) {
+			Arrays.sort(modelIdList);
 
-            if (Arrays.binarySearch(modelIdList, modelId) < 0) {
-                return true;
-            }
-        }
-        return false;
-    }
+			if (Arrays.binarySearch(modelIdList, modelId) < 0) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

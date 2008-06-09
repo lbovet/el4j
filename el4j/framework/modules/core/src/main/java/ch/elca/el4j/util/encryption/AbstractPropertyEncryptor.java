@@ -19,7 +19,7 @@ package ch.elca.el4j.util.encryption;
 
 
 /**
- * This interface is implemented in internal for property decryption. 
+ * This interface is implemented in internal for property decryption.
  * The interface itself is visible in external as it is used by env-plugin.
 
  *
@@ -34,11 +34,11 @@ package ch.elca.el4j.util.encryption;
  */
 public interface AbstractPropertyEncryptor {
 
-    public String processString(String str) throws EncryptionException;
+	public String processString(String str) throws EncryptionException;
 
-    public void deriveKey(String source) throws EncryptionException;
+	public void deriveKey(String source) throws EncryptionException;
 
-    public String encrypt(String plain) throws EncryptionException;
+	public String encrypt(String plain) throws EncryptionException;
 
-    public String decrypt(String enc) throws EncryptionException;
+	public String decrypt(String enc) throws EncryptionException;
 }

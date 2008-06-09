@@ -17,7 +17,7 @@
 package ch.elca.el4j.tests.keyword.service;
 
 /**
- * 
+ *
  * iBatis-specific test class for <code>KeywordService</code>.
  *
  * <script type="text/javascript">printFileStatus
@@ -31,24 +31,24 @@ package ch.elca.el4j.tests.keyword.service;
  */
 public class SqlMapsKeywordServiceTest extends AbstractKeywordServiceTest {
 
-    /**
-     * {@inheritDoc}
-     */
-    protected String[] getIncludeConfigLocations() {
-        return new String[] {
-            "classpath*:mandatory/*.xml",
-            "classpath:keyword-core-service-config.xml",
-            "classpath*:scenarios/db/raw/*.xml",
-            "classpath*:scenarios/dataaccess/ibatis/*.xml",
-            "classpath*:scenarios/dataaccess/ibatis/keyword/*.xml",
-            "classpath*:optional/interception/transactionJava5Annotations.xml"};
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	protected String[] getIncludeConfigLocations() {
+		return new String[] {
+			"classpath*:mandatory/*.xml",
+			"classpath:keyword-core-service-config.xml",
+			"classpath*:scenarios/db/raw/*.xml",
+			"classpath*:scenarios/dataaccess/ibatis/*.xml",
+			"classpath*:scenarios/dataaccess/ibatis/keyword/*.xml",
+			"classpath*:optional/interception/transactionJava5Annotations.xml"};
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    protected String[] getExcludeConfigLocations() {
-        return null;
-    }
-    
+	/**
+	 * {@inheritDoc}
+	 */
+	protected String[] getExcludeConfigLocations() {
+		return null;
+	}
+	
 }

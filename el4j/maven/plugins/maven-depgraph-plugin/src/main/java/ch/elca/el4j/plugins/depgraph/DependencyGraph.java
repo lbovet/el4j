@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
+ *
  * This class is a set of artifacts that make up a dependency graph.
  *
  * <script type="text/javascript">printFileStatus
@@ -36,114 +36,114 @@ import java.util.Map;
  * @author Philippe Jacot (PJA)
  */
 public class DependencyGraph {
-    /**
-     * All known artifacts
-     * Non-Generic hasmap cause of a bug in a tool used for maven plugins.
-     */
-    // There is a qdox problem when using a HashMap
-    // (Most likely all generics of the form <a,b>)
-    // .. http://jira.codehaus.org/browse/QDOX-89
-    private Map<String, DepGraphArtifact> m_artifacts 
-        = new HashMap();
-    
-    /**
-     * The name of the graph.
-     */
-    private String m_name;
-    
-    /**
-     * Whether to draw artifact scope.
-     */
-    private boolean drawScope = true;
-    
-    /**
-     * Get the Artifact for the given attributes.
-     * @param artifactId The artifact ID
-     * @param groupId The group ID
-     * @param version The version
-     * @param scope The scope
-     * @param type The type
-     * @param classifier The classifier
-     * @return A DepgraphArtifact
-     */
-    public DepGraphArtifact getArtifact(String artifactId, String groupId,
-        String version, String scope, String type, String classifier) {
-        return getArtifact(artifactId, groupId, version, scope, type,
-            classifier, false);
-    }
-    
-    /**
-     * Get the Artifact for the given attributes.
-     * @param artifactId The artifact ID
-     * @param groupId The group ID
-     * @param version The version
-     * @param scope The scope
-     * @param type The type
-     * @param classifier The classifier
-     * @param omitted Whether artifact is omitted
-     * @return A DepgraphArtifact
-     */
-    public DepGraphArtifact getArtifact(
-        String artifactId, String groupId, 
-        String version, String scope, String type, String classifier, boolean omitted) {
-        DepGraphArtifact newArtifact 
-            = new DepGraphArtifact(artifactId, groupId, version, scope, type,
-                classifier, omitted);
-        
-        if (m_artifacts.containsKey(newArtifact.getQualifiedName())) {
-            return m_artifacts.get(newArtifact.getQualifiedName());
-        } else {
-            m_artifacts.put(newArtifact.getQualifiedName(), newArtifact);
-            return newArtifact;
-        }
-    }
-    
-    /**
-     * Get a list of all registered artifacts.
-     * @return A list of all artifacts
-     */
-    public List<DepGraphArtifact> getArtifacts() {
-        return new LinkedList<DepGraphArtifact>(m_artifacts.values());
-    }
-    
-    /**
-     * Remove an artifact from the collection if it exists.
-     * @param artifact The artifact to remove.
-     */
-    public void removeArtifact(DepGraphArtifact artifact) {
-        if (m_artifacts.containsKey(artifact.getQualifiedName())) {
-            m_artifacts.remove(artifact.getQualifiedName());
-        }
-        
-    }
-    
-    /**
-     * Get this graphs name.
-     * @return The name
-     */
-    public String getName() {
-        return m_name;
-    }
-    
-    /**
-     * Set this graphs name.
-     * @param name The name
-     */
-    public void setName(String name) {
-        m_name = name;
-    }
+	/**
+	 * All known artifacts
+	 * Non-Generic hasmap cause of a bug in a tool used for maven plugins.
+	 */
+	// There is a qdox problem when using a HashMap
+	// (Most likely all generics of the form <a,b>)
+	// .. http://jira.codehaus.org/browse/QDOX-89
+	private Map<String, DepGraphArtifact> m_artifacts
+		= new HashMap();
+	
+	/**
+	 * The name of the graph.
+	 */
+	private String m_name;
+	
+	/**
+	 * Whether to draw artifact scope.
+	 */
+	private boolean drawScope = true;
+	
+	/**
+	 * Get the Artifact for the given attributes.
+	 * @param artifactId The artifact ID
+	 * @param groupId The group ID
+	 * @param version The version
+	 * @param scope The scope
+	 * @param type The type
+	 * @param classifier The classifier
+	 * @return A DepgraphArtifact
+	 */
+	public DepGraphArtifact getArtifact(String artifactId, String groupId,
+		String version, String scope, String type, String classifier) {
+		return getArtifact(artifactId, groupId, version, scope, type,
+			classifier, false);
+	}
+	
+	/**
+	 * Get the Artifact for the given attributes.
+	 * @param artifactId The artifact ID
+	 * @param groupId The group ID
+	 * @param version The version
+	 * @param scope The scope
+	 * @param type The type
+	 * @param classifier The classifier
+	 * @param omitted Whether artifact is omitted
+	 * @return A DepgraphArtifact
+	 */
+	public DepGraphArtifact getArtifact(
+		String artifactId, String groupId,
+		String version, String scope, String type, String classifier, boolean omitted) {
+		DepGraphArtifact newArtifact
+			= new DepGraphArtifact(artifactId, groupId, version, scope, type,
+				classifier, omitted);
+		
+		if (m_artifacts.containsKey(newArtifact.getQualifiedName())) {
+			return m_artifacts.get(newArtifact.getQualifiedName());
+		} else {
+			m_artifacts.put(newArtifact.getQualifiedName(), newArtifact);
+			return newArtifact;
+		}
+	}
+	
+	/**
+	 * Get a list of all registered artifacts.
+	 * @return A list of all artifacts
+	 */
+	public List<DepGraphArtifact> getArtifacts() {
+		return new LinkedList<DepGraphArtifact>(m_artifacts.values());
+	}
+	
+	/**
+	 * Remove an artifact from the collection if it exists.
+	 * @param artifact The artifact to remove.
+	 */
+	public void removeArtifact(DepGraphArtifact artifact) {
+		if (m_artifacts.containsKey(artifact.getQualifiedName())) {
+			m_artifacts.remove(artifact.getQualifiedName());
+		}
+		
+	}
+	
+	/**
+	 * Get this graphs name.
+	 * @return The name
+	 */
+	public String getName() {
+		return m_name;
+	}
+	
+	/**
+	 * Set this graphs name.
+	 * @param name The name
+	 */
+	public void setName(String name) {
+		m_name = name;
+	}
 
-    /**
-     * @return whether to draw the artifact scope.
-     */
-    public boolean drawScope() {
-        return drawScope;
-    }
+	/**
+	 * @return whether to draw the artifact scope.
+	 */
+	public boolean drawScope() {
+		return drawScope;
+	}
 
-    /**
-     * @param enable set to true to enable drawing of artifact scope.
-     */
-    public void setDrawScope(boolean enable) {
-        drawScope = enable;
-    }
+	/**
+	 * @param enable set to true to enable drawing of artifact scope.
+	 */
+	public void setDrawScope(boolean enable) {
+		drawScope = enable;
+	}
 }

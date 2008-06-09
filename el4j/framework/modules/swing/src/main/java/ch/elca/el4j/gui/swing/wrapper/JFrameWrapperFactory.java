@@ -31,41 +31,41 @@ import javax.swing.JComponent;
  * @author Stefan Wismer (SWI)
  */
 public class JFrameWrapperFactory
-    extends AbstractWrapperFactory<JFrameWrapper> {
-    
-    /**
-     * The abstract factory.
-     */
-    private static AbstractWrapperFactory<JFrameWrapper> s_factory = null;
-    
-    /**
-     * Wraps a GUI component into a {@link JFrame}.
-     * 
-     * @param component    the component to wrap
-     * @return             the wrapper
-     */
-    public static JFrameWrapper wrap(JComponent component) {
-        if (s_factory == null) {
-            s_factory = new JFrameWrapperFactory();
-        }
-        return s_factory.wrapComponent(component);
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    protected JFrameWrapper createWrapper() {
-        return new JFrameWrapper();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    protected void setName(JFrameWrapper wrapper, String name) {
-        wrapper.setName(name);
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    protected void setTitle(JFrameWrapper wrapper, String title) {
-        wrapper.setTitle(title);
-    }
+	extends AbstractWrapperFactory<JFrameWrapper> {
+	
+	/**
+	 * The abstract factory.
+	 */
+	private static AbstractWrapperFactory<JFrameWrapper> s_factory = null;
+	
+	/**
+	 * Wraps a GUI component into a {@link JFrame}.
+	 *
+	 * @param component    the component to wrap
+	 * @return             the wrapper
+	 */
+	public static JFrameWrapper wrap(JComponent component) {
+		if (s_factory == null) {
+			s_factory = new JFrameWrapperFactory();
+		}
+		return s_factory.wrapComponent(component);
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	protected JFrameWrapper createWrapper() {
+		return new JFrameWrapper();
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	protected void setName(JFrameWrapper wrapper, String name) {
+		wrapper.setName(name);
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	protected void setTitle(JFrameWrapper wrapper, String title) {
+		wrapper.setTitle(title);
+	}
 }

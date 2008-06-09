@@ -31,111 +31,111 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 
 /**
- * 
+ *
  * @author dantran <dantran@apache.org>
  * @version $Id$ *
  */
 abstract class AbstractJaxwsMojo extends AbstractMojo {
 
-    /**
-     * @parameter expression="${project}"
-     * @readonly
-     */
-    protected MavenProject project;
+	/**
+	 * @parameter expression="${project}"
+	 * @readonly
+	 */
+	protected MavenProject project;
 
-    /**
-     * Output messages about what the tool is doing
-     * 
-     * @parameter default-value="false"
-     */
-    protected boolean verbose;
+	/**
+	 * Output messages about what the tool is doing
+	 *
+	 * @parameter default-value="false"
+	 */
+	protected boolean verbose;
 
-    /**
-     * Keep generated files.
-     * 
-     * @parameter default-value="false"
-     */
-    protected boolean keep;
+	/**
+	 * Keep generated files.
+	 *
+	 * @parameter default-value="false"
+	 */
+	protected boolean keep;
 
-    /**
-     * Allow to use the JAXWS Vendor Extensions.
-     * 
-     * @parameter default-value="false"
-     */
-    protected boolean extension;
+	/**
+	 * Allow to use the JAXWS Vendor Extensions.
+	 *
+	 * @parameter default-value="false"
+	 */
+	protected boolean extension;
 
 
-    /**
-     * Map of of plugin artifacts.
-     *
-     * @parameter expression="${plugin.artifactMap}"
-     * @readonly
-     */
-    private Map pluginArtifactMap;
+	/**
+	 * Map of of plugin artifacts.
+	 *
+	 * @parameter expression="${plugin.artifactMap}"
+	 * @readonly
+	 */
+	private Map pluginArtifactMap;
 
-    /**
-     * Either ${build.outputDirectory} or ${build.testOutputDirectory}.
-     */
-    protected abstract File getDestDir();
+	/**
+	 * Either ${build.outputDirectory} or ${build.testOutputDirectory}.
+	 */
+	protected abstract File getDestDir();
 
-    /**
-     * Need to build a URLClassloader since Maven removed it form the chain
-     * @param parent
-     * @return
-     */
-    protected String initClassLoader( ClassLoader parent )
-        throws MojoExecutionException
-    {
+	/**
+	 * Need to build a URLClassloader since Maven removed it form the chain
+	 * @param parent
+	 * @return
+	 */
+	protected String initClassLoader( ClassLoader parent )
+		throws MojoExecutionException
+	{
 
-        try
-        {
-            List classpathFiles = project.getCompileClasspathElements();
-            
-            URL[] urls = new URL[classpathFiles.size() + 3];
-            
-            StringBuffer classPath = new StringBuffer();
-            
-            for ( int i = 0; i < classpathFiles.size(); ++i )
-            {
-                getLog().debug( (String) classpathFiles.get( i ) );
-                urls[i] = new File( (String) classpathFiles.get( i ) ).toURL();
-                classPath.append( (String) classpathFiles.get( i ) );
-                classPath.append( File.pathSeparatorChar );
-            }
+		try
+		{
+			List classpathFiles = project.getCompileClasspathElements();
+			
+			URL[] urls = new URL[classpathFiles.size() + 3];
+			
+			StringBuffer classPath = new StringBuffer();
+			
+			for ( int i = 0; i < classpathFiles.size(); ++i )
+			{
+				getLog().debug( (String) classpathFiles.get( i ) );
+				urls[i] = new File( (String) classpathFiles.get( i ) ).toURL();
+				classPath.append( (String) classpathFiles.get( i ) );
+				classPath.append( File.pathSeparatorChar );
+			}
 
-            
-            urls[classpathFiles.size()] = new File( project.getBuild().getOutputDirectory() ).toURL();
+			
+			urls[classpathFiles.size()] = new File( project.getBuild().getOutputDirectory() ).toURL();
 
-            Artifact jaxwsToolsArtifact = (Artifact) pluginArtifactMap.get( "com.sun.xml.ws:jaxws-tools" );
-            urls[classpathFiles.size() + 1] = jaxwsToolsArtifact.getFile().toURL();
-            
-            File toolsJar = new File( System.getProperty( "java.home"), "../lib/tools.jar" );
-            if ( ! toolsJar.exists() ) 
-            {
-            	//
-            	toolsJar = new File( System.getProperty( "java.home"), "lib/tools.jar" );
-            }
-            urls[classpathFiles.size() + 2] = toolsJar.toURL();
-            
-            URLClassLoader cl = new URLClassLoader( urls, parent );
+			Artifact jaxwsToolsArtifact = (Artifact) pluginArtifactMap.get( "com.sun.xml.ws:jaxws-tools" );
+			urls[classpathFiles.size() + 1] = jaxwsToolsArtifact.getFile().toURL();
+			
+			File toolsJar = new File( System.getProperty( "java.home"), "../lib/tools.jar" );
+			if ( ! toolsJar.exists() )
+			{
+				//
+				toolsJar = new File( System.getProperty( "java.home"), "lib/tools.jar" );
+			}
+			urls[classpathFiles.size() + 2] = toolsJar.toURL();
+			
+			URLClassLoader cl = new URLClassLoader( urls, parent );
 
-            // Set the new classloader
-            Thread.currentThread().setContextClassLoader( cl );
+			// Set the new classloader
+			Thread.currentThread().setContextClassLoader( cl );
 
-            System.setProperty( "java.class.path", classPath.toString() );
+			System.setProperty( "java.class.path", classPath.toString() );
 
-            String sysCp = System.getProperty( "java.class.path" );
+			String sysCp = System.getProperty( "java.class.path" );
 
-            return sysCp;            
-        }
-        catch ( MalformedURLException e )
-        {
-            throw new MojoExecutionException( e.getMessage(), e );
-        }
-        catch ( DependencyResolutionRequiredException e )
-        {
-            throw new MojoExecutionException( e.getMessage(), e );
-        }
+			return sysCp;
+		}
+		catch ( MalformedURLException e )
+		{
+			throw new MojoExecutionException( e.getMessage(), e );
+		}
+		catch ( DependencyResolutionRequiredException e )
+		{
+			throw new MojoExecutionException( e.getMessage(), e );
+		}
 
-    }
+	}
 }

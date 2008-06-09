@@ -33,7 +33,7 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 /**
  * A helper class which handles the loading and storing of Properties to/from
  * files including Spring path resolving.
- * 
+ *
  * <p>
  * The files can be indicated absolutely or via classpath, i.e. either by
  * "file:C:/folder/..." or by "classpath:folder/...".
@@ -49,79 +49,79 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  */
 public class PropertiesHelper {
 
-    /**
-     * Resolves the given file name to an absolute file name and then loads the
-     * properties from this file to a Properties Object.
-     * 
-     * @param inputFileName
-     *            The file which will be loaded
-     * @return the Properties Object
-     */
-    public Properties loadProperties(String inputFileName) {
+	/**
+	 * Resolves the given file name to an absolute file name and then loads the
+	 * properties from this file to a Properties Object.
+	 *
+	 * @param inputFileName
+	 *            The file which will be loaded
+	 * @return the Properties Object
+	 */
+	public Properties loadProperties(String inputFileName) {
 
-        Properties props = new Properties();
+		Properties props = new Properties();
 
-        PathMatchingResourcePatternResolver pmrpr 
-            = new PathMatchingResourcePatternResolver();
+		PathMatchingResourcePatternResolver pmrpr
+			= new PathMatchingResourcePatternResolver();
 
-        Resource res = pmrpr.getResource(inputFileName);
-        InputStream in = null;
+		Resource res = pmrpr.getResource(inputFileName);
+		InputStream in = null;
 
-        try {
-            // Load the properties into the Properties object
-            try {
-                in = res.getInputStream();
-            } catch (IOException e) {
-                File file = new File(inputFileName);
-                in = new FileInputStream(file);
-            }
-            props.load(in);
-        } catch (IOException e) {
-            CoreNotificationHelper.notifyMisconfiguration(
-                    "An IOException was thrown. The responsible file is '"
-                    + inputFileName + "'.", e);
-        }
+		try {
+			// Load the properties into the Properties object
+			try {
+				in = res.getInputStream();
+			} catch (IOException e) {
+				File file = new File(inputFileName);
+				in = new FileInputStream(file);
+			}
+			props.load(in);
+		} catch (IOException e) {
+			CoreNotificationHelper.notifyMisconfiguration(
+					"An IOException was thrown. The responsible file is '"
+					+ inputFileName + "'.", e);
+		}
 
-        return props;
-    }
+		return props;
+	}
 
-    /**
-     * Resolves the given file name to an absolute file name and then stores the
-     * properties from the Properties Object to this file.
-     * 
-     * @param props
-     *            The Properties Object
-     * @param outputFileName
-     *            The file where the data is stored
-     */
-    public void storeProperties(Properties props, String outputFileName) {
+	/**
+	 * Resolves the given file name to an absolute file name and then stores the
+	 * properties from the Properties Object to this file.
+	 *
+	 * @param props
+	 *            The Properties Object
+	 * @param outputFileName
+	 *            The file where the data is stored
+	 */
+	public void storeProperties(Properties props, String outputFileName) {
 
-        PathMatchingResourcePatternResolver pmrpr 
-            = new PathMatchingResourcePatternResolver();
+		PathMatchingResourcePatternResolver pmrpr
+			= new PathMatchingResourcePatternResolver();
 
-        String fileName = null;
+		String fileName = null;
 
-        Resource res = pmrpr.getResource(outputFileName);
+		Resource res = pmrpr.getResource(outputFileName);
 
-        try {
-            try {
-                // Resolve the resource into an absolute file path
-                fileName = res.getURL().getFile();
-            } catch (FileNotFoundException e) {
-                // The file is new
-                File file = new File(outputFileName);
-                fileName = file.getAbsolutePath();
-            }
-            props.store(new FileOutputStream(fileName), "Title");
-        } catch (FileNotFoundException e) {
-            CoreNotificationHelper.notifyMisconfiguration(
-                    "The file '" + outputFileName + "' could not be found.", e);
-        } catch (IOException e) {
-            CoreNotificationHelper.notifyMisconfiguration(
-                    "An IOException was thrown. The responsible file is '"
-                    + outputFileName + "'.", e);
-        }
+		try {
+			try {
+				// Resolve the resource into an absolute file path
+				fileName = res.getURL().getFile();
+			} catch (FileNotFoundException e) {
+				// The file is new
+				File file = new File(outputFileName);
+				fileName = file.getAbsolutePath();
+			}
+			props.store(new FileOutputStream(fileName), "Title");
+		} catch (FileNotFoundException e) {
+			CoreNotificationHelper.notifyMisconfiguration(
+					"The file '" + outputFileName + "' could not be found.", e);
+		} catch (IOException e) {
+			CoreNotificationHelper.notifyMisconfiguration(
+					"An IOException was thrown. The responsible file is '"
+					+ outputFileName + "'.", e);
+		}
 
-    }
+	}
 
 }

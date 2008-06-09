@@ -17,13 +17,13 @@
 package ch.elca.el4j.tests.services.remoting.loadbalancing.common;
 
 /**
- * 
+ *
  * This interface specifies the methods that can be called on a
  * business object used exclusively for testing purposes. By deliberate
  * choice, this object does not represent a meaningful application.
  * Rather, its methods highlight the properties of the tested module.
  *
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -34,13 +34,13 @@ package ch.elca.el4j.tests.services.remoting.loadbalancing.common;
  * @author Stefan Pleisch (SPL)
  */
 public interface BusinessObject {
-    
-    /** Triggers server suicide. */
-    public static final String COMMIT_SUICIDE = "commit_suicide";
-    
-    /**
-     * Stores the name-value pair toto-toto in the DB and returns toto.
-     */
-    public String call(String toto);
-  
+	
+	/** Triggers server suicide. */
+	public static final String COMMIT_SUICIDE = "commit_suicide";
+	
+	/**
+	 * Stores the name-value pair toto-toto in the DB and returns toto.
+	 */
+	public String call(String toto);
+	
 } // Interface BusinessObject

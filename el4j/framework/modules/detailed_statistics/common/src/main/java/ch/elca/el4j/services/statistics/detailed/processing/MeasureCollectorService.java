@@ -33,76 +33,76 @@ import ch.elca.el4j.services.statistics.detailed.MeasureItem;
  * the order of the diverse sub-measures (starting at 1 for the global measure).
  * <p>
  * The id and sequence of the current measure (or sub-measures) are stored in
- * the LEAF DetailedStatisticsSharedContextHolder object (keys defined by 
+ * the LEAF DetailedStatisticsSharedContextHolder object (keys defined by
  * <code>CONTEXT_NAME_ID</code>
  * and <code>CONTEXT_NAME_SEQ</code>).
  * <p>
  * So the <code>MeasureInvoker</code> (wherever it is) starts a measure if
  * there is no defined <code>CONTEXT_NAME_ID</code> or it increases the
- * sequence number to create a sub-measure. 
- * 
+ * sequence number to create a sub-measure.
+ *
  * This class was ported from Leaf 2.
- * Original authors: YMA,DBA. 
- * Leaf2 package name: ch.elca.leaf.services.measuring 
- * 
+ * Original authors: YMA,DBA.
+ * Leaf2 package name: ch.elca.leaf.services.measuring
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Rashid Waraich (RWA)
- * 
+ *
  * @see MeasureItem
  * @see MeasureInterceptor
  */
 public interface MeasureCollectorService {
 
-    /** 
-     * DetailedStatisticsSharedContextHolder key for saving the measure 
-     * MeasureID object. 
-     */
-    public static final String CONTEXT_NAME_ID = "MEASURE_ID";
+	/**
+	 * DetailedStatisticsSharedContextHolder key for saving the measure
+	 * MeasureID object.
+	 */
+	public static final String CONTEXT_NAME_ID = "MEASURE_ID";
 
-    /** 
-     * DetailedStatisticsSharedContextHolder key for saving the 
-     * measure sequence. 
-     */
-    public static final String CONTEXT_NAME_SEQ = "MEASURE_SEQ";
+	/**
+	 * DetailedStatisticsSharedContextHolder key for saving the
+	 * measure sequence.
+	 */
+	public static final String CONTEXT_NAME_SEQ = "MEASURE_SEQ";
 
-    /**
-     * Adds a new measure.
-     * 
-     * @param item
-     *            the measure to add
-     */
-    public void add(MeasureItem item);
+	/**
+	 * Adds a new measure.
+	 *
+	 * @param item
+	 *            the measure to add
+	 */
+	public void add(MeasureItem item);
 
-    /**
-     * Deletes all measures.
-     * 
-     * @param amount
-     *            Dummy paramater, not used for non persistant collector (will
-     *            simply be ignored). Perhaps required later if other
-     *            CollectorServices are also ported.
-     */
-    public void delete(int amount);
+	/**
+	 * Deletes all measures.
+	 *
+	 * @param amount
+	 *            Dummy paramater, not used for non persistant collector (will
+	 *            simply be ignored). Perhaps required later if other
+	 *            CollectorServices are also ported.
+	 */
+	public void delete(int amount);
 
-    /**
-     * Returns a List of all the measures.
-     * 
-     * @return the list of measures
-     */
-    public List<MeasureItem> getAllMeasureItems();
+	/**
+	 * Returns a List of all the measures.
+	 *
+	 * @return the list of measures
+	 */
+	public List<MeasureItem> getAllMeasureItems();
 
-    /**
-     * Inserts the locally stored measures in permanent storage.
-     */
-    public void writeMeasures();
-    
-    /**
-     * @return The MeasureIds of the collected MeasureItems.
-     */
-    public List<MeasureItem> getFirstMeasureItems();
+	/**
+	 * Inserts the locally stored measures in permanent storage.
+	 */
+	public void writeMeasures();
+	
+	/**
+	 * @return The MeasureIds of the collected MeasureItems.
+	 */
+	public List<MeasureItem> getFirstMeasureItems();
 }

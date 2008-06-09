@@ -35,101 +35,101 @@ import ch.elca.el4j.tests.remoting.service.CalculatorValueObject;
  * @author Martin Zeltner (MZE)
  */
 public class RemoteExceptionWithData extends RemoteException {
-    /**
-     * Is an index of this exception.
-     */
-    private int m_index;
+	/**
+	 * Is an index of this exception.
+	 */
+	private int m_index;
 
-    /**
-     * Is the message of this exception.
-     */
-    private String m_message;
+	/**
+	 * Is the message of this exception.
+	 */
+	private String m_message;
 
-    /**
-     * Is the data of this exception.
-     */
-    private byte[] m_data;
+	/**
+	 * Is the data of this exception.
+	 */
+	private byte[] m_data;
 
-    /**
-     * Is the calendar of this exception.
-     */
-    private Calendar m_calendar;
-    
-    /**
-     * Are the calculator value objects.
-     */
-    private CalculatorValueObject[] m_calculatorValueObjects;
+	/**
+	 * Is the calendar of this exception.
+	 */
+	private Calendar m_calendar;
+	
+	/**
+	 * Are the calculator value objects.
+	 */
+	private CalculatorValueObject[] m_calculatorValueObjects;
 
-    /**
-     * @return Returns the index.
-     */
-    public int getIndex() {
-        return m_index;
-    }
+	/**
+	 * @return Returns the index.
+	 */
+	public int getIndex() {
+		return m_index;
+	}
 
-    /**
-     * @param index The index to set.
-     */
-    public void setIndex(int index) {
-        m_index = index;
-    }
+	/**
+	 * @param index The index to set.
+	 */
+	public void setIndex(int index) {
+		m_index = index;
+	}
 
-    /**
-     * @return Returns the message.
-     */
-    public String getMessage() {
-        return m_message;
-    }
+	/**
+	 * @return Returns the message.
+	 */
+	public String getMessage() {
+		return m_message;
+	}
 
-    /**
-     * @param message The message to set.
-     */
-    public void setMessage(String message) {
-        m_message = message;
-    }
+	/**
+	 * @param message The message to set.
+	 */
+	public void setMessage(String message) {
+		m_message = message;
+	}
 
-    /**
-     * @return Returns the calendar.
-     */
-    public Calendar getCalendar() {
-        return m_calendar;
-    }
+	/**
+	 * @return Returns the calendar.
+	 */
+	public Calendar getCalendar() {
+		return m_calendar;
+	}
 
-    /**
-     * @param calendar
-     *            The calendar to set.
-     */
-    public void setCalendar(Calendar calendar) {
-        m_calendar = calendar;
-    }
+	/**
+	 * @param calendar
+	 *            The calendar to set.
+	 */
+	public void setCalendar(Calendar calendar) {
+		m_calendar = calendar;
+	}
 
-    /**
-     * @return Returns the data.
-     */
-    public byte[] getData() {
-        return m_data;
-    }
+	/**
+	 * @return Returns the data.
+	 */
+	public byte[] getData() {
+		return m_data;
+	}
 
-    /**
-     * @param data
-     *            The data to set.
-     */
-    public void setData(byte[] data) {
-        m_data = data;
-    }
+	/**
+	 * @param data
+	 *            The data to set.
+	 */
+	public void setData(byte[] data) {
+		m_data = data;
+	}
 
-    /**
-     * @return Returns the calculatorValueObjects.
-     */
-    public CalculatorValueObject[] getCalculatorValueObjects() {
-        return m_calculatorValueObjects;
-    }
+	/**
+	 * @return Returns the calculatorValueObjects.
+	 */
+	public CalculatorValueObject[] getCalculatorValueObjects() {
+		return m_calculatorValueObjects;
+	}
 
-    /**
-     * @param calculatorValueObjects The calculatorValueObjects to set.
-     */
-    public void setCalculatorValueObjects(
-        CalculatorValueObject[] calculatorValueObjects) {
-        m_calculatorValueObjects = calculatorValueObjects;
-    }
+	/**
+	 * @param calculatorValueObjects The calculatorValueObjects to set.
+	 */
+	public void setCalculatorValueObjects(
+		CalculatorValueObject[] calculatorValueObjects) {
+		m_calculatorValueObjects = calculatorValueObjects;
+	}
 }

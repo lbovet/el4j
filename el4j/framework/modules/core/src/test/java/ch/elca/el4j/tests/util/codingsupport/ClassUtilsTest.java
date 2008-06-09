@@ -38,134 +38,134 @@ import ch.elca.el4j.util.codingsupport.ClassUtils;
  * @author Andreas Bur (ABU)
  */
 public class ClassUtilsTest {
-    
-    /**
-     * Tests that a boolean array is properly converted into a string.
-     */
-    @Test
-    public void testBooleanArray() {
-        assertEquals("boolean[]",
-                ClassUtils.getCanonicalClassName((new boolean[2]).getClass()));
-    }
-    
-    /**
-     * Tests that a byte array is properly converted into a string.
-     */
-    @Test
-    public void testByteArray() {
-        assertEquals("byte[]",
-                ClassUtils.getCanonicalClassName((new byte[2]).getClass()));
-    }
-    
-    /**
-     * Tests that a char array is properly converted into a string.
-     */
-    @Test
-    public void testCharArray() {
-        assertEquals("char[]",
-                ClassUtils.getCanonicalClassName((new char[2]).getClass()));
-    }
-    
-    /**
-     * Tests that a double array is properly converted into a string.
-     */
-    @Test
-    public void testDoubleArray() {
-        assertEquals("double[]",
-                ClassUtils.getCanonicalClassName((new double[2]).getClass()));
-    }
-    
-    /**
-     * Tests that a float array is properly converted into a string.
-     */
-    @Test
-    public void testFloatArray() {
-        assertEquals("float[]",
-                ClassUtils.getCanonicalClassName((new float[2]).getClass()));
-    }
-    
-    /**
-     * Tests that a int array is properly converted into a string.
-     */
-    @Test
-    public void testIntArray() {
-        assertEquals("int[]",
-                ClassUtils.getCanonicalClassName((new int[2]).getClass()));
-    }
-    
-    /**
-     * Tests that a long array is properly converted into a string.
-     */
-    @Test
-    public void testLongArray() {
-        assertEquals("long[]",
-                ClassUtils.getCanonicalClassName((new long[2]).getClass()));
-    }
-    
-    /**
-     * Tests that a short array is properly converted into a string.
-     */
-    @Test
-    public void testShortArray() {
-        assertEquals("short[]",
-                ClassUtils.getCanonicalClassName((new short[2]).getClass()));
-    }
-    
-    /**
-     * Tests that a multi dimensional int array is properly converted into a
-     * string.
-     */
-    @Test
-    public void testIntMultiDimArray() {
-        assertEquals("int[][][][]",
-                ClassUtils.getCanonicalClassName(
-                        (new int[2][2][2][2]).getClass()));
-    }
-    
-    /**
-     * Tests that an object array is properly converted into a string.
-     */
-    @Test
-    public void testObjArray() {
-        assertEquals("java.lang.Object[]",
-                ClassUtils.getCanonicalClassName((new Object[2]).getClass()));
-    }
-    
-    /**
-     * Tests that an array of ArrayLists is properly converted into a string.
-     */
-    @Test
-    public void testArrayListArray() {
-        assertEquals("java.util.ArrayList[]",
-                ClassUtils.getCanonicalClassName(
-                        (new ArrayList[2]).getClass()));
-    }
-    
-    /**
-     * Tests that a multi dimensional object array is properly converted into a
-     * string.
-     */
-    @Test
-    public void testMultyDimObjArray() {
-        assertEquals("java.lang.Object[][][][][]",
-                ClassUtils.getCanonicalClassName(
-                        (new Object[2][2][2][2][2]).getClass()));
-    }
-    
-    /**
-     * Tests that an int is properly converted into a string.
-     */
-    @Test
-    public void testInt() {
-        assertEquals("int", ClassUtils.getCanonicalClassName(int.class));
-    }
-    
-    /**
-     * Tests that an object is properly converted into a string.
-     */
-    @Test
-    public void testObject() {
-        assertEquals("java.lang.Object",
-                ClassUtils.getCanonicalClassName(Object.class));
-    }
+	
+	/**
+	 * Tests that a boolean array is properly converted into a string.
+	 */
+	@Test
+	public void testBooleanArray() {
+		assertEquals("boolean[]",
+				ClassUtils.getCanonicalClassName((new boolean[2]).getClass()));
+	}
+	
+	/**
+	 * Tests that a byte array is properly converted into a string.
+	 */
+	@Test
+	public void testByteArray() {
+		assertEquals("byte[]",
+				ClassUtils.getCanonicalClassName((new byte[2]).getClass()));
+	}
+	
+	/**
+	 * Tests that a char array is properly converted into a string.
+	 */
+	@Test
+	public void testCharArray() {
+		assertEquals("char[]",
+				ClassUtils.getCanonicalClassName((new char[2]).getClass()));
+	}
+	
+	/**
+	 * Tests that a double array is properly converted into a string.
+	 */
+	@Test
+	public void testDoubleArray() {
+		assertEquals("double[]",
+				ClassUtils.getCanonicalClassName((new double[2]).getClass()));
+	}
+	
+	/**
+	 * Tests that a float array is properly converted into a string.
+	 */
+	@Test
+	public void testFloatArray() {
+		assertEquals("float[]",
+				ClassUtils.getCanonicalClassName((new float[2]).getClass()));
+	}
+	
+	/**
+	 * Tests that a int array is properly converted into a string.
+	 */
+	@Test
+	public void testIntArray() {
+		assertEquals("int[]",
+				ClassUtils.getCanonicalClassName((new int[2]).getClass()));
+	}
+	
+	/**
+	 * Tests that a long array is properly converted into a string.
+	 */
+	@Test
+	public void testLongArray() {
+		assertEquals("long[]",
+				ClassUtils.getCanonicalClassName((new long[2]).getClass()));
+	}
+	
+	/**
+	 * Tests that a short array is properly converted into a string.
+	 */
+	@Test
+	public void testShortArray() {
+		assertEquals("short[]",
+				ClassUtils.getCanonicalClassName((new short[2]).getClass()));
+	}
+	
+	/**
+	 * Tests that a multi dimensional int array is properly converted into a
+	 * string.
+	 */
+	@Test
+	public void testIntMultiDimArray() {
+		assertEquals("int[][][][]",
+				ClassUtils.getCanonicalClassName(
+						(new int[2][2][2][2]).getClass()));
+	}
+	
+	/**
+	 * Tests that an object array is properly converted into a string.
+	 */
+	@Test
+	public void testObjArray() {
+		assertEquals("java.lang.Object[]",
+				ClassUtils.getCanonicalClassName((new Object[2]).getClass()));
+	}
+	
+	/**
+	 * Tests that an array of ArrayLists is properly converted into a string.
+	 */
+	@Test
+	public void testArrayListArray() {
+		assertEquals("java.util.ArrayList[]",
+				ClassUtils.getCanonicalClassName(
+						(new ArrayList[2]).getClass()));
+	}
+	
+	/**
+	 * Tests that a multi dimensional object array is properly converted into a
+	 * string.
+	 */
+	@Test
+	public void testMultyDimObjArray() {
+		assertEquals("java.lang.Object[][][][][]",
+				ClassUtils.getCanonicalClassName(
+						(new Object[2][2][2][2][2]).getClass()));
+	}
+	
+	/**
+	 * Tests that an int is properly converted into a string.
+	 */
+	@Test
+	public void testInt() {
+		assertEquals("int", ClassUtils.getCanonicalClassName(int.class));
+	}
+	
+	/**
+	 * Tests that an object is properly converted into a string.
+	 */
+	@Test
+	public void testObject() {
+		assertEquals("java.lang.Object",
+				ClassUtils.getCanonicalClassName(Object.class));
+	}
 }

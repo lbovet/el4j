@@ -22,41 +22,41 @@ import org.acegisecurity.Authentication;
 /**
  * AuthenticationService interface. Provides methods to log in and out. If you
  * are already logged in, you have to log out first and then log in again.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Raphael Boog (RBO)
  * @author Andreas Pfenninger (APR)
  * @author Christoph Schwitter (CSC)
  */
 public interface AuthenticationService {
 
-    /**
-     * Authenticate using the given Authentication object.
-     * @param auth The Authentication object.
-     */
-    public void authenticate(Authentication auth);
+	/**
+	 * Authenticate using the given Authentication object.
+	 * @param auth The Authentication object.
+	 */
+	public void authenticate(Authentication auth);
 
-    /**
-     * After a login method has been called, or the user is authenticated in any
-     * other way, the authentication data object as constructed during the
-     * authentication process can be accessed using this method.
-     * 
-     * @return The authentication data object representing the user.
-     */
-    public Authentication getAuthenticationData();
+	/**
+	 * After a login method has been called, or the user is authenticated in any
+	 * other way, the authentication data object as constructed during the
+	 * authentication process can be accessed using this method.
+	 *
+	 * @return The authentication data object representing the user.
+	 */
+	public Authentication getAuthenticationData();
 
-    /**
-     * After the user has logged in, the user's name can be accessed using this
-     * method.
-     * 
-     * @return The name of the logged in user.
-     */
-    public String getUserName();
+	/**
+	 * After the user has logged in, the user's name can be accessed using this
+	 * method.
+	 *
+	 * @return The name of the logged in user.
+	 */
+	public String getUserName();
 
 }

@@ -43,114 +43,114 @@ import org.apache.commons.lang.ArrayUtils;
  */
 public class PBEncryptor {
 
-    private Cipher m_cipher;
-    private SecretKey m_key;
+	private Cipher m_cipher;
+	private SecretKey m_key;
 
-    private String ENCODING = "UTF-8";
-    private String ALGORITHM = "PBEWithMD5AndDES";
+	private String ENCODING = "UTF-8";
+	private String ALGORITHM = "PBEWithMD5AndDES";
 
-    private int SALTSIZE = 8;
-    private int ENCITERATIONS = 10;
+	private int SALTSIZE = 8;
+	private int ENCITERATIONS = 10;
 
-    /**
-     * Constructor. As this lives in external we don't initialize with the
-     * internal password here.
-     * @throws EncryptionException
-     */
-    public PBEncryptor() throws EncryptionException {
-        try {
-            deriveKey("This is a fairly long phrase used to encrypt.");
-            m_cipher = Cipher.getInstance(ALGORITHM);
-        } catch (Exception e) {
-            throw new EncryptionException(e);
-        }
+	/**
+	 * Constructor. As this lives in external we don't initialize with the
+	 * internal password here.
+	 * @throws EncryptionException
+	 */
+	public PBEncryptor() throws EncryptionException {
+		try {
+			deriveKey("This is a fairly long phrase used to encrypt.");
+			m_cipher = Cipher.getInstance(ALGORITHM);
+		} catch (Exception e) {
+			throw new EncryptionException(e);
+		}
 
-    }
+	}
 
-    /**
-     * Hashes the password and converts it to a suitable format for the cipher.
-     * 
-     * @param password
-     *            The password to generate a key from.
-     * Sets a valid key derived from the password.
-     * @throws EncryptionException
-     */
-    public void deriveKey(String password) throws EncryptionException {
+	/**
+	 * Hashes the password and converts it to a suitable format for the cipher.
+	 *
+	 * @param password
+	 *            The password to generate a key from.
+	 * Sets a valid key derived from the password.
+	 * @throws EncryptionException
+	 */
+	public void deriveKey(String password) throws EncryptionException {
 
-        String salt = "ELCAEL4J";
-        int itCount = 100;
+		String salt = "ELCAEL4J";
+		int itCount = 100;
 
-        try {
-            SecretKeyFactory factory = SecretKeyFactory.getInstance(ALGORITHM);
-            PBEKeySpec spec = new PBEKeySpec(password.toCharArray(), salt
-                .getBytes(), itCount);
-            m_key = factory.generateSecret(spec);
-        } catch (Exception e) {
-            throw new EncryptionException(e);
-        }
-    }
+		try {
+			SecretKeyFactory factory = SecretKeyFactory.getInstance(ALGORITHM);
+			PBEKeySpec spec = new PBEKeySpec(password.toCharArray(), salt
+				.getBytes(), itCount);
+			m_key = factory.generateSecret(spec);
+		} catch (Exception e) {
+			throw new EncryptionException(e);
+		}
+	}
 
-    private byte[] generateSalt() throws EncryptionException {
-        SecureRandom random;
-        try {
-            random = SecureRandom.getInstance("SHA1PRNG");
-        } catch (Exception e) {
-            throw new EncryptionException(e);
-        }
-        byte[] salt = new byte[SALTSIZE];
-        random.nextBytes(salt);
-        return salt;
-    }
+	private byte[] generateSalt() throws EncryptionException {
+		SecureRandom random;
+		try {
+			random = SecureRandom.getInstance("SHA1PRNG");
+		} catch (Exception e) {
+			throw new EncryptionException(e);
+		}
+		byte[] salt = new byte[SALTSIZE];
+		random.nextBytes(salt);
+		return salt;
+	}
 
-    /**
-     * Encrypts a string with the currently set password.
-     * 
-     * @param plain String.
-     * @return The encrypted string.
-     * @throws EncryptionException
-     */
-    public String encrypt(String plain) throws EncryptionException {
-        byte[] salt = generateSalt();
-        PBEParameterSpec spec = new PBEParameterSpec(salt, ENCITERATIONS);
+	/**
+	 * Encrypts a string with the currently set password.
+	 *
+	 * @param plain String.
+	 * @return The encrypted string.
+	 * @throws EncryptionException
+	 */
+	public String encrypt(String plain) throws EncryptionException {
+		byte[] salt = generateSalt();
+		PBEParameterSpec spec = new PBEParameterSpec(salt, ENCITERATIONS);
 
-        try {
-            m_cipher.init(Cipher.ENCRYPT_MODE, m_key, spec);
-            byte[] plainBytes = plain.getBytes(ENCODING);
-            byte[] encBytes = m_cipher.doFinal(plainBytes);
-            return new String(Base64.encodeBase64(ArrayUtils.addAll(salt,
-                encBytes)));
-        } catch (Exception e) {
-            throw new EncryptionException(e);
-        }
-    }
+		try {
+			m_cipher.init(Cipher.ENCRYPT_MODE, m_key, spec);
+			byte[] plainBytes = plain.getBytes(ENCODING);
+			byte[] encBytes = m_cipher.doFinal(plainBytes);
+			return new String(Base64.encodeBase64(ArrayUtils.addAll(salt,
+				encBytes)));
+		} catch (Exception e) {
+			throw new EncryptionException(e);
+		}
+	}
 
-    /**
-     * Decrypts a string with the currently set password.
-     * 
-     * @param enc String.
-     * @return The decrypted string.
-     * @throws EncryptionException
-     */
-    public String decrypt(String enc) throws EncryptionException {
-        byte[] plainBytes;
-        byte[] encBytes = Base64.decodeBase64(enc.getBytes());
-        byte[] salt = ArrayUtils.subarray(encBytes, 0, SALTSIZE);
-        encBytes = ArrayUtils.subarray(encBytes, SALTSIZE, encBytes.length);
+	/**
+	 * Decrypts a string with the currently set password.
+	 *
+	 * @param enc String.
+	 * @return The decrypted string.
+	 * @throws EncryptionException
+	 */
+	public String decrypt(String enc) throws EncryptionException {
+		byte[] plainBytes;
+		byte[] encBytes = Base64.decodeBase64(enc.getBytes());
+		byte[] salt = ArrayUtils.subarray(encBytes, 0, SALTSIZE);
+		encBytes = ArrayUtils.subarray(encBytes, SALTSIZE, encBytes.length);
 
-        PBEParameterSpec spec = new PBEParameterSpec(salt, ENCITERATIONS);
+		PBEParameterSpec spec = new PBEParameterSpec(salt, ENCITERATIONS);
 
-        try {
-            m_cipher.init(Cipher.DECRYPT_MODE, m_key, spec);
-            plainBytes = m_cipher.doFinal(encBytes);
-        } catch (Exception e) {
-            throw new EncryptionException(e);
-        }
+		try {
+			m_cipher.init(Cipher.DECRYPT_MODE, m_key, spec);
+			plainBytes = m_cipher.doFinal(encBytes);
+		} catch (Exception e) {
+			throw new EncryptionException(e);
+		}
 
-        StringBuffer stringBuffer = new StringBuffer();
-        for (int i = 0; i < plainBytes.length; i++) {
-            stringBuffer.append((char) plainBytes[i]);
-        }
-        return stringBuffer.toString();
-    }
+		StringBuffer stringBuffer = new StringBuffer();
+		for (int i = 0; i < plainBytes.length; i++) {
+			stringBuffer.append((char) plainBytes[i]);
+		}
+		return stringBuffer.toString();
+	}
 
 }

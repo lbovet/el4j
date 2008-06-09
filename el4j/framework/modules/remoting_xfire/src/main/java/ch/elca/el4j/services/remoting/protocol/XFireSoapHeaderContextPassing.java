@@ -28,7 +28,7 @@ import ch.elca.el4j.services.remoting.protocol.xfire.XFireJaxbContextInHandler;
 import ch.elca.el4j.services.remoting.protocol.xfire.XFireJaxbContextOutHandler;
 
 /**
- * 
+ *
  * This class is an extension to the default XFire protocol and provides the
  * ability to transfer the implicit context inside the SOAP header using Jaxb
  * to serialize the parameters and context.
@@ -45,67 +45,67 @@ import ch.elca.el4j.services.remoting.protocol.xfire.XFireJaxbContextOutHandler;
  * @author Philippe Jacot (PJA)
  */
 public class XFireSoapHeaderContextPassing extends XFire {
-    /**
-     * The {@link JAXBContext} instance used to serialize the several
-     * Objects in the implicit context.
-     */
-    private JAXBContext m_contextPassingContext = null;
-    
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    @Override
-    protected void adaptExporterProperties(MutablePropertyValues properties) {
-        super.adaptExporterProperties(properties);
-        
-        // If context passing is enabled, add a handler
-        if (getImplicitContextPassingRegistry() != null 
-            && getProtocolSpecificContextPassing()) {
-            // Enable implicit context passing
-            List<Handler> inHandlers = new LinkedList<Handler>();
-            inHandlers.add(new XFireJaxbContextInHandler(
-                getImplicitContextPassingRegistry(), 
-                getContextPassingContext()));
-            properties.addPropertyValue("inHandlers", inHandlers);
-        }
-        
-    }
-    
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    @Override
-    protected void adaptProxyProperties(MutablePropertyValues properties) {
-        super.adaptProxyProperties(properties);
-        
-        if (getImplicitContextPassingRegistry() != null 
-            && getProtocolSpecificContextPassing()) {
-            // Enable implicit context passing
-            List<Handler> outHandlers = new LinkedList<Handler>();
-            outHandlers.add(new XFireJaxbContextOutHandler(
-                getImplicitContextPassingRegistry(), 
-                getContextPassingContext()));
-            
-            // Add the Handler to add
-            properties.addPropertyValue("outHandlers", outHandlers);
-        }
-    }
-    
-    /**
-     * Get the {@link JAXBContext} used to serialize the implicit context.
-     * @return The used {@link JAXBContext} 
-     */
-    public JAXBContext getContextPassingContext() {
-        return m_contextPassingContext;
-    }
-    
-    /**
-     * Set the {@link JAXBContext} used to serialize the implicit context.
-     * @param context The {@link JAXBContext} to use
-     */
-    public void setContextPassingContext(JAXBContext context) {
-        m_contextPassingContext = context;
-    }
+	/**
+	 * The {@link JAXBContext} instance used to serialize the several
+	 * Objects in the implicit context.
+	 */
+	private JAXBContext m_contextPassingContext = null;
+	
+	/**
+	 *
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void adaptExporterProperties(MutablePropertyValues properties) {
+		super.adaptExporterProperties(properties);
+		
+		// If context passing is enabled, add a handler
+		if (getImplicitContextPassingRegistry() != null
+			&& getProtocolSpecificContextPassing()) {
+			// Enable implicit context passing
+			List<Handler> inHandlers = new LinkedList<Handler>();
+			inHandlers.add(new XFireJaxbContextInHandler(
+				getImplicitContextPassingRegistry(),
+				getContextPassingContext()));
+			properties.addPropertyValue("inHandlers", inHandlers);
+		}
+		
+	}
+	
+	/**
+	 *
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void adaptProxyProperties(MutablePropertyValues properties) {
+		super.adaptProxyProperties(properties);
+		
+		if (getImplicitContextPassingRegistry() != null
+			&& getProtocolSpecificContextPassing()) {
+			// Enable implicit context passing
+			List<Handler> outHandlers = new LinkedList<Handler>();
+			outHandlers.add(new XFireJaxbContextOutHandler(
+				getImplicitContextPassingRegistry(),
+				getContextPassingContext()));
+			
+			// Add the Handler to add
+			properties.addPropertyValue("outHandlers", outHandlers);
+		}
+	}
+	
+	/**
+	 * Get the {@link JAXBContext} used to serialize the implicit context.
+	 * @return The used {@link JAXBContext}
+	 */
+	public JAXBContext getContextPassingContext() {
+		return m_contextPassingContext;
+	}
+	
+	/**
+	 * Set the {@link JAXBContext} used to serialize the implicit context.
+	 * @param context The {@link JAXBContext} to use
+	 */
+	public void setContextPassingContext(JAXBContext context) {
+		m_contextPassingContext = context;
+	}
 }

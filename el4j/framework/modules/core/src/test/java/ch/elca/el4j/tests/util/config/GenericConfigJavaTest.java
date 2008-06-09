@@ -32,60 +32,60 @@ import ch.elca.el4j.util.config.GenericConfig;
  */
 public class GenericConfigJavaTest extends AbstractGenericConfigTest {
 
-    /** {@inheritDoc} */
-    @Override
-    protected GenericConfig getDefaultConfig() {
-        return new DefaultConfig();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    protected GenericConfig getSpecificConfig() {
-        return new SpecificConfig();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    protected GenericConfig getMoreSpecificConfig() {
-        return new MoreSpecificConfig();
-    }
-    
-    /**
-     * A default configuration class.
-     */
-    private class DefaultConfig extends GenericConfig {
-        /**
-         * Default constructor to insert default configuration.
-         */
-        public DefaultConfig() {
-            add("class", "DefaultConfig");
-            add("DefaultConfig", "DefaultConfig");
-        }
-    }
-    
-    /**
-     * A specific configuration class.
-     */
-    private class SpecificConfig extends DefaultConfig {
-        /**
-         * Default constructor to insert specific configuration.
-         */
-        public SpecificConfig() {
-            add("class", "SpecificConfig");
-            add("SpecificConfig", "SpecificConfig");
-        }
-    }
-    
-    /**
-     * A even more specific configuration class.
-     */
-    private class MoreSpecificConfig extends SpecificConfig {
-        /**
-         * Default constructor to insert even more specific configuration.
-         */
-        public MoreSpecificConfig() {
-            add("class", "MoreSpecificConfig");
-            add("MoreSpecificConfig", "MoreSpecificConfig");
-        }
-    }
+	/** {@inheritDoc} */
+	@Override
+	protected GenericConfig getDefaultConfig() {
+		return new DefaultConfig();
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	protected GenericConfig getSpecificConfig() {
+		return new SpecificConfig();
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	protected GenericConfig getMoreSpecificConfig() {
+		return new MoreSpecificConfig();
+	}
+	
+	/**
+	 * A default configuration class.
+	 */
+	private class DefaultConfig extends GenericConfig {
+		/**
+		 * Default constructor to insert default configuration.
+		 */
+		public DefaultConfig() {
+			add("class", "DefaultConfig");
+			add("DefaultConfig", "DefaultConfig");
+		}
+	}
+	
+	/**
+	 * A specific configuration class.
+	 */
+	private class SpecificConfig extends DefaultConfig {
+		/**
+		 * Default constructor to insert specific configuration.
+		 */
+		public SpecificConfig() {
+			add("class", "SpecificConfig");
+			add("SpecificConfig", "SpecificConfig");
+		}
+	}
+	
+	/**
+	 * A even more specific configuration class.
+	 */
+	private class MoreSpecificConfig extends SpecificConfig {
+		/**
+		 * Default constructor to insert even more specific configuration.
+		 */
+		public MoreSpecificConfig() {
+			add("class", "MoreSpecificConfig");
+			add("MoreSpecificConfig", "MoreSpecificConfig");
+		}
+	}
 }

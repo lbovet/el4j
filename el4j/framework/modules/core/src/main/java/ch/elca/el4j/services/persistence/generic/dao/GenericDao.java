@@ -30,15 +30,15 @@ import ch.elca.el4j.services.search.QueryObject;
 
 /**
  *
- * Interface for generic DAOs. It is the interface that implements 
- * the DDD-Book's (http://www.domaindrivendesign.org/) Repository pattern. 
- * This interface is implemented generically and it can be extended in case 
+ * Interface for generic DAOs. It is the interface that implements
+ * the DDD-Book's (http://www.domaindrivendesign.org/) Repository pattern.
+ * This interface is implemented generically and it can be extended in case
  * you need more specific methods. Based on an idea from the Hibernate website.
  *
  * This is the canonical form of this interface. We recommend it when a generic
- * DAO is used in tools (to make the contract minimal). 
+ * DAO is used in tools (to make the contract minimal).
  * For direct programmer-usage we recommend to use the convenience subclasses
- *  (@link ConvenienceGenericDao). 
+ *  (@link ConvenienceGenericDao).
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -56,94 +56,94 @@ import ch.elca.el4j.services.search.QueryObject;
  * @author Martin Zeltner (MZE)
  */
 public interface GenericDao<T> {
-    /**
-     *  Needed because the Java generics throw away this type
-     *  information.
-     * @return Returns the domain class this DAO is responsible for.
-     */
-    public Class<T> getPersistentClass();
-    
-    /** 
-     * New: this callback is in general no longer required (the constructor
-     *  should figure the type out itself).
-     * 
-     * @param c    Mandatory. The domain class this DAO is responsible for.
-     */
-    public void setPersistentClass(Class<T> c);
-    
-    /**
-     * Executes a query based on a given query object.
-     *  This method may also support paging (see javadoc
-     *   of implementing class).
-     * 
-     * @param q The search query object
-     * @throws  DataAccessException
-     *             If general data access problem occurred
-     * @return A list containing 0 or more domain objects
-     */
-    List<T> findByQuery(QueryObject q) throws DataAccessException;
+	/**
+	 *  Needed because the Java generics throw away this type
+	 *  information.
+	 * @return Returns the domain class this DAO is responsible for.
+	 */
+	public Class<T> getPersistentClass();
+	
+	/**
+	 * New: this callback is in general no longer required (the constructor
+	 *  should figure the type out itself).
+	 *
+	 * @param c    Mandatory. The domain class this DAO is responsible for.
+	 */
+	public void setPersistentClass(Class<T> c);
+	
+	/**
+	 * Executes a query based on a given query object.
+	 *  This method may also support paging (see javadoc
+	 *   of implementing class).
+	 *
+	 * @param q The search query object
+	 * @throws  DataAccessException
+	 *             If general data access problem occurred
+	 * @return A list containing 0 or more domain objects
+	 */
+	List<T> findByQuery(QueryObject q) throws DataAccessException;
 
-    
-    /**
-     * Count number of results of a search. 
-     * 
-     * @param query    The search query object
-     * @return the number of results that this query could at most
-     *   return.
-     * @throws DataAccessException
-     */
-    int findCountByQuery(final QueryObject query) throws DataAccessException;
-     
-    
-    /**
-     * Re-reads the state of the given domain object from the underlying
-     * store.
-     * 
-     * @param entity
-     *            The domain object to re-read the state of
-     * @throws DataAccessException
-     *             If general data access problem occurred
-     * @throws DataRetrievalFailureException
-     *             If domain object could not be re-read
-     * @return The refreshed entity
-     */
-    T refresh(T entity) throws DataAccessException, 
-        DataRetrievalFailureException;
+	
+	/**
+	 * Count number of results of a search.
+	 *
+	 * @param query    The search query object
+	 * @return the number of results that this query could at most
+	 *   return.
+	 * @throws DataAccessException
+	 */
+	int findCountByQuery(final QueryObject query) throws DataAccessException;
+	 
+	
+	/**
+	 * Re-reads the state of the given domain object from the underlying
+	 * store.
+	 *
+	 * @param entity
+	 *            The domain object to re-read the state of
+	 * @throws DataAccessException
+	 *             If general data access problem occurred
+	 * @throws DataRetrievalFailureException
+	 *             If domain object could not be re-read
+	 * @return The refreshed entity
+	 */
+	T refresh(T entity) throws DataAccessException,
+		DataRetrievalFailureException;
 
-    /**
-     * Saves or updates the given domain object.
-     * 
-     * @param entity
-     *            The domain object to save or update
-     * @throws DataAccessException
-     *             If general data access problem occurred           
-     * @throws DataIntegrityViolationException
-     *             If domain object could not be inserted due to a data
-     *             integrity violation        
-     * @throws OptimisticLockingFailureException
-     *             If domain object has been modified/deleted in the meantime   
-     * @return The saved or updated domain object
-     */
-    @ReturnsUnchangedParameter
-    @RollbackConstraint(rollbackFor = { DataAccessException.class,
-            DataIntegrityViolationException.class,
-            OptimisticLockingFailureException.class })
-    T saveOrUpdate(T entity) throws DataAccessException,
-        DataIntegrityViolationException, OptimisticLockingFailureException;
+	/**
+	 * Saves or updates the given domain object.
+	 *
+	 * @param entity
+	 *            The domain object to save or update
+	 * @throws DataAccessException
+	 *             If general data access problem occurred
+	 * @throws DataIntegrityViolationException
+	 *             If domain object could not be inserted due to a data
+	 *             integrity violation
+	 * @throws OptimisticLockingFailureException
+	 *             If domain object has been modified/deleted in the meantime
+	 * @return The saved or updated domain object
+	 */
+	@ReturnsUnchangedParameter
+	@RollbackConstraint(rollbackFor = { DataAccessException.class,
+			DataIntegrityViolationException.class,
+			OptimisticLockingFailureException.class })
+	T saveOrUpdate(T entity) throws DataAccessException,
+		DataIntegrityViolationException, OptimisticLockingFailureException;
 
-    /**
-     * Deletes the given domain objects. This method executed in a single
-     * transaction (by default with the Required semantics).
-     * 
-     * @param entities
-     *             The domain objects to delete.
-     * @throws DataAccessException
-     *             If general data access problem occurred
-     * @throws OptimisticLockingFailureException
-     *             If domain object has been modified/deleted in the meantime   
-     */
-    @RollbackConstraint(rollbackFor = { DataAccessException.class,
-            OptimisticLockingFailureException.class })
-    void delete(Collection<T> entities)
-        throws OptimisticLockingFailureException, DataAccessException;
+	/**
+	 * Deletes the given domain objects. This method executed in a single
+	 * transaction (by default with the Required semantics).
+	 *
+	 * @param entities
+	 *             The domain objects to delete.
+	 * @throws DataAccessException
+	 *             If general data access problem occurred
+	 * @throws OptimisticLockingFailureException
+	 *             If domain object has been modified/deleted in the meantime
+	 */
+	@RollbackConstraint(rollbackFor = { DataAccessException.class,
+			OptimisticLockingFailureException.class })
+	void delete(Collection<T> entities)
+		throws OptimisticLockingFailureException, DataAccessException;
 }

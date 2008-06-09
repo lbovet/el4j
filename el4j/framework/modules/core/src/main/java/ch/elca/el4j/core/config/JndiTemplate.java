@@ -39,56 +39,56 @@ import org.springframework.jndi.JndiCallback;
  */
 public class JndiTemplate extends org.springframework.jndi.JndiTemplate {
 
-    /**
-     * Enumerates the names bound in the named context, along with the class
-     * names of objects bound to them.
-     * 
-     * @param name
-     *      The name of the context to list.
-     *      
-     * @return Returns an enumeration of the names and class names of the
-     *      bindings in this context. Each element of the enumeration is of type
-     *      {@link javax.naming.NameClassPair}.
-     * 
-     * @throws NamingException
-     *      If a naming exception is encountered.
-     */
-    @SuppressWarnings("unchecked")
-    public NamingEnumeration<NameClassPair> list(final String name) throws NamingException {
-        if (logger.isInfoEnabled()) {
-            logger.debug("Listing JNDI objects with name [" + name + "]");
-        }
-        return (NamingEnumeration<NameClassPair>) execute(new JndiCallback() {
-            public Object doInContext(Context ctx) throws NamingException {
-                return ctx.list(name);
-            } 
-        });
-    }
-    
-    /**
-     * Enumerates the names bound in the named context, along with the objects
-     * bound to them.
-     * 
-     * @param name
-     *      The name of the context to list.
-     *      
-     * @return Returns an enumeration of the bindings in this context. Each
-     *      element of the enumeration is of type {@link javax.naming.Binding}.
-     *      
-     * @throws NamingException
-     *      If a naming exception is encountered.
-     */
-    @SuppressWarnings("unchecked")
-    public NamingEnumeration<NameClassPair> listBindings(final String name)
-        throws NamingException {
-        
-        if (logger.isInfoEnabled()) {
-            logger.debug("Listing JNDI bindings with name [" + name + "]");
-        }
-        return (NamingEnumeration<NameClassPair>) execute(new JndiCallback() {
-            public Object doInContext(Context ctx) throws NamingException {
-                return ctx.listBindings(name);
-            }
-        });
-    }
+	/**
+	 * Enumerates the names bound in the named context, along with the class
+	 * names of objects bound to them.
+	 *
+	 * @param name
+	 *      The name of the context to list.
+	 *
+	 * @return Returns an enumeration of the names and class names of the
+	 *      bindings in this context. Each element of the enumeration is of type
+	 *      {@link javax.naming.NameClassPair}.
+	 *
+	 * @throws NamingException
+	 *      If a naming exception is encountered.
+	 */
+	@SuppressWarnings("unchecked")
+	public NamingEnumeration<NameClassPair> list(final String name) throws NamingException {
+		if (logger.isInfoEnabled()) {
+			logger.debug("Listing JNDI objects with name [" + name + "]");
+		}
+		return (NamingEnumeration<NameClassPair>) execute(new JndiCallback() {
+			public Object doInContext(Context ctx) throws NamingException {
+				return ctx.list(name);
+			}
+		});
+	}
+	
+	/**
+	 * Enumerates the names bound in the named context, along with the objects
+	 * bound to them.
+	 *
+	 * @param name
+	 *      The name of the context to list.
+	 *
+	 * @return Returns an enumeration of the bindings in this context. Each
+	 *      element of the enumeration is of type {@link javax.naming.Binding}.
+	 *
+	 * @throws NamingException
+	 *      If a naming exception is encountered.
+	 */
+	@SuppressWarnings("unchecked")
+	public NamingEnumeration<NameClassPair> listBindings(final String name)
+		throws NamingException {
+		
+		if (logger.isInfoEnabled()) {
+			logger.debug("Listing JNDI bindings with name [" + name + "]");
+		}
+		return (NamingEnumeration<NameClassPair>) execute(new JndiCallback() {
+			public Object doInContext(Context ctx) throws NamingException {
+				return ctx.listBindings(name);
+			}
+		});
+	}
 }

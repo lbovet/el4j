@@ -36,19 +36,19 @@ import org.apache.axis.deployment.wsdd.WSDDService;
  */
 public class WsddProxyBeanProvider extends WSDDProvider {
 
-    /**
-     * {@inheritDoc}
-     */
-    public Handler newProviderInstance(WSDDService service,
-        EngineConfiguration registry) throws Exception {
-        return new ProxyBeanProvider();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Handler newProviderInstance(WSDDService service,
+		EngineConfiguration registry) throws Exception {
+		return new ProxyBeanProvider();
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public String getName() {
-        return ProxyBeanProvider.PROVIDER_PROXY_BEAN;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getName() {
+		return ProxyBeanProvider.PROVIDER_PROXY_BEAN;
+	}
 
 }

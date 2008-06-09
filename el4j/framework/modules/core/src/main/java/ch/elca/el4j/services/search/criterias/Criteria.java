@@ -22,9 +22,9 @@ import java.io.Serializable;
 /**
  * A Criteria represents some restrictions for a Query (e.g. used to
  *   get values from a database).
- *   
+ *
  * @see QueryObject
- * 
+ *
  * Refer to tests of keyword/test module for example usages
  *
  * <script type="text/javascript">printFileStatus
@@ -37,21 +37,21 @@ import java.io.Serializable;
  *  @author Martin Zeltner (MZE)
  */
 public interface Criteria extends Serializable {
-    
-    /**
-     * @deprecated No longer use this method as it was used in an older
-     *   implementation only.
-     * @return Returns the criteria type.
-     */
-    public String getType();
-    
-    /**
-     * The full Criteria as SQL representation. This does not
-     *  mean that we want to break encapsulation (Criteria should
-     *  be independent of the database) but SQL is a representation
-     *  that is easy to understand. 
-     * @return an SQL string as it could occur in a SQL WHERE clause
-     */
-    public String getSqlWhereCondition();
-    
+	
+	/**
+	 * @deprecated No longer use this method as it was used in an older
+	 *   implementation only.
+	 * @return Returns the criteria type.
+	 */
+	public String getType();
+	
+	/**
+	 * The full Criteria as SQL representation. This does not
+	 *  mean that we want to break encapsulation (Criteria should
+	 *  be independent of the database) but SQL is a representation
+	 *  that is easy to understand.
+	 * @return an SQL string as it could occur in a SQL WHERE clause
+	 */
+	public String getSqlWhereCondition();
+	
 }

@@ -36,16 +36,16 @@ import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
 /**
  * A DaoRegistry where DAOs can be registered either explicitly (via its map configuration)
  *  or implicitly (by collecting all beans that have the GenericDao interface). <a>
- *  
- *  This can be used together with 
+ *
+ *  This can be used together with
  *   <ul>
- *	  <li> context:component-scan configuration setting and the @AutocollectedGenericDao annotation 
- *         to load all DAOs with this annotation into the spring application context.  
- *    <li> {@link HibernateSessionFactoryInjectorPostProcessor} or 
+ *	  <li> context:component-scan configuration setting and the @AutocollectedGenericDao annotation
+ *         to load all DAOs with this annotation into the spring application context.
+ *    <li> {@link HibernateSessionFactoryInjectorPostProcessor} or
  *      {@link IbatisSqlMapClientTemplateInjectorBeanPostProcessor} to automatically set the session factory/
  *        sql map client template.
  *   </ul>
- *   
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -58,122 +58,122 @@ import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
  */
 public class DefaultDaoRegistry implements DaoRegistry, ApplicationContextAware {
 
-    /**
-     * Private logger of this class.
-     */
-    private static Log s_logger 
-        = LogFactory.getLog(DefaultDaoRegistry.class);    
-    
-    /** 
-     * The map containing the registered DAOs.
-     */
-    protected Map<Class<?>, GenericDao<?>> m_daos = 
-        new HashMap<Class<?>, GenericDao<?>>();
+	/**
+	 * Private logger of this class.
+	 */
+	private static Log s_logger
+		= LogFactory.getLog(DefaultDaoRegistry.class);
+	
+	/**
+	 * The map containing the registered DAOs.
+	 */
+	protected Map<Class<?>, GenericDao<?>> m_daos =
+		new HashMap<Class<?>, GenericDao<?>>();
 
-    protected ApplicationContext m_applicationContext;
-    
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    public <T> GenericDao<T> getFor(Class<T> entityType) {
-        
-        if ((!initialized) && m_collectDaos){
-            initialized = true;
-            initDaosFromSpringBeans();
-        }
-        
-        // ensure this works when the entityType is proxied by an cglib proxy:
-        //  Thanks Ky (QKP) for the hint!
-        if (Enhancer.isEnhanced(entityType)) {
-            // "undo" cglib proxying:
-            entityType = (Class<T>) entityType.getSuperclass(); 
-        } 
-       
-        GenericDao<T> candidateReturn = (GenericDao<T>) m_daos.get(entityType);
-        
-        if (candidateReturn != null){
-            return candidateReturn;            
-        } else if (Proxy.isProxyClass(entityType)) {
-            // if a jdk proxy and candidateReturn is null, try improving
-            Class[] otherPossibilities = 
-                AopProxyUtils.proxiedUserInterfaces(entityType);
-            if (otherPossibilities != null){
-                s_logger.info("Trying to unwrap JDK proxy to get DAO for type");                
-                for (Class c :otherPossibilities){
-                    candidateReturn = (GenericDao<T>) m_daos.get(c);
-                    if (candidateReturn != null){
-                        return candidateReturn;
-                    }
-                }
-            }
-        }
-        // we give up
-        return null;
+	protected ApplicationContext m_applicationContext;
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	public <T> GenericDao<T> getFor(Class<T> entityType) {
+		
+		if ((!initialized) && m_collectDaos){
+			initialized = true;
+			initDaosFromSpringBeans();
+		}
+		
+		// ensure this works when the entityType is proxied by an cglib proxy:
+		//  Thanks Ky (QKP) for the hint!
+		if (Enhancer.isEnhanced(entityType)) {
+			// "undo" cglib proxying:
+			entityType = (Class<T>) entityType.getSuperclass();
+		}
+		
+		GenericDao<T> candidateReturn = (GenericDao<T>) m_daos.get(entityType);
+		
+		if (candidateReturn != null){
+			return candidateReturn;
+		} else if (Proxy.isProxyClass(entityType)) {
+			// if a jdk proxy and candidateReturn is null, try improving
+			Class[] otherPossibilities =
+				AopProxyUtils.proxiedUserInterfaces(entityType);
+			if (otherPossibilities != null){
+				s_logger.info("Trying to unwrap JDK proxy to get DAO for type");
+				for (Class c :otherPossibilities){
+					candidateReturn = (GenericDao<T>) m_daos.get(c);
+					if (candidateReturn != null){
+						return candidateReturn;
+					}
+				}
+			}
+		}
+		// we give up
+		return null;
 
-    }
+	}
 
-    /** was {@link initDaosFromSpringBeans} already called? */
-    protected boolean initialized = false;
-    
-    /**
-     * Load all GenericDaos from this spring bean's bean factory
-     */
-    protected void initDaosFromSpringBeans() {
-        String[] beanNamesToLoad = 
-            m_applicationContext.getBeanNamesForType(GenericDao.class);
-        for (String name : beanNamesToLoad){
-            GenericDao<?> dao = (GenericDao<?>) m_applicationContext.getBean(name);
-            
-            // avoid adding a DAO again
-            if (!m_daos.values().contains(dao)) {
-            	initDao(dao);
-            	m_daos.put(dao.getPersistentClass(),dao);
-            }
-        }
-    }
-    
-    /**
-     * This method can be overridden by child classes to initialize
-     *  all DAOs even further
-     */
-    protected void initDao(GenericDao<?> dao) {
-    }
-    
-    /**
-     * @return Returns the registered DAOs.
-     */
-    public Map<Class<?>, ? extends GenericDao<?>> getDaos() {
-        return m_daos;
-    }
+	/** was {@link initDaosFromSpringBeans} already called? */
+	protected boolean initialized = false;
+	
+	/**
+	 * Load all GenericDaos from this spring bean's bean factory
+	 */
+	protected void initDaosFromSpringBeans() {
+		String[] beanNamesToLoad =
+			m_applicationContext.getBeanNamesForType(GenericDao.class);
+		for (String name : beanNamesToLoad){
+			GenericDao<?> dao = (GenericDao<?>) m_applicationContext.getBean(name);
+			
+			// avoid adding a DAO again
+			if (!m_daos.values().contains(dao)) {
+				initDao(dao);
+				m_daos.put(dao.getPersistentClass(),dao);
+			}
+		}
+	}
+	
+	/**
+	 * This method can be overridden by child classes to initialize
+	 *  all DAOs even further
+	 */
+	protected void initDao(GenericDao<?> dao) {
+	}
+	
+	/**
+	 * @return Returns the registered DAOs.
+	 */
+	public Map<Class<?>, ? extends GenericDao<?>> getDaos() {
+		return m_daos;
+	}
 
-    /**
-     * @param daos Registers the DAOs.
-     */
-    public void setDaos(Map<Class<?>, GenericDao<?>> daos) {
-        m_daos = daos;
-        for (GenericDao<?> dao : daos.values()){
-        	initDao(dao);
-        }
-    }
+	/**
+	 * @param daos Registers the DAOs.
+	 */
+	public void setDaos(Map<Class<?>, GenericDao<?>> daos) {
+		m_daos = daos;
+		for (GenericDao<?> dao : daos.values()){
+			initDao(dao);
+		}
+	}
 
-    public void setApplicationContext(ApplicationContext applicationContext)
-        throws BeansException {
-        m_applicationContext = applicationContext;
-    }
-  
-    protected boolean m_collectDaos = true;
+	public void setApplicationContext(ApplicationContext applicationContext)
+		throws BeansException {
+		m_applicationContext = applicationContext;
+	}
+	
+	protected boolean m_collectDaos = true;
 
-    /**
-     * See {@link setCollectDaos}
-     * @return
-     */
+	/**
+	 * See {@link setCollectDaos}
+	 * @return
+	 */
 	public boolean isCollectDaos() {
 		return m_collectDaos;
 	}
 	
 	/**
-	 * By default we automatically collect here all generic DAOs from the spring 
+	 * By default we automatically collect here all generic DAOs from the spring
 	 *  application context (all DAOs that implement the GenericDao interface).
 	 *  This setter method allows to change this default.
 	 * @param collectDaos

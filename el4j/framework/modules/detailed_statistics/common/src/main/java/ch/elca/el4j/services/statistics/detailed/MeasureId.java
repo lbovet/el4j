@@ -34,13 +34,13 @@ import java.net.UnknownHostException;
  * part of the measure ID.
  *
  * The ID of the measure is reused during the whole lifetime of an
- * end-to-end measure (global measure with all its sub-measures). The 
+ * end-to-end measure (global measure with all its sub-measures). The
  * sequential number will be increased for each sub-measure.
  *
- * 
+ *
  * This class was ported from Leaf 2.
- * Original authors: YMA, DBA. 
- * Leaf2 package name: ch.elca.leaf.services.measuring 
+ * Original authors: YMA, DBA.
+ * Leaf2 package name: ch.elca.leaf.services.measuring
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -48,119 +48,119 @@ import java.net.UnknownHostException;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Rashid Waraich (RWA)
  */
 public class MeasureId implements Serializable {
 
-    /** 
-     * The separator used for the string represention. 
-     */
-    private static final String FORMATTED_SEP = "::";
-    
-    
-    /**
-     * The prefixCounter is a module MAXSHORT counter. It is required, 
-     * in order to ensure that no two requests have the same id. 
-     * This was not ensured till now, because measureId generated within 
-     * the same milli-second on the same host are not distinguishable!
-     * 
-     * It is assumed, that the host, where this program is running can not
-     * perform more than MAXINT-1 operations and interceptions in one single 
-     * milli-second (which seems reasonable at the moment).
-     * 
-     */
-    private static short s_prefixCounter = 0;
-    
-    
-    /** The host name of the ID. */
-    private String m_host;
-    
-    
-    /** The invocation time of the ID. */
-    private long m_invocationTime;
-    
-    
-    /**
-     * The prefix of this MeasureId.
-     */
-    private short m_prefix;
+	/**
+	 * The separator used for the string represention.
+	 */
+	private static final String FORMATTED_SEP = "::";
+	
+	
+	/**
+	 * The prefixCounter is a module MAXSHORT counter. It is required,
+	 * in order to ensure that no two requests have the same id.
+	 * This was not ensured till now, because measureId generated within
+	 * the same milli-second on the same host are not distinguishable!
+	 *
+	 * It is assumed, that the host, where this program is running can not
+	 * perform more than MAXINT-1 operations and interceptions in one single
+	 * milli-second (which seems reasonable at the moment).
+	 *
+	 */
+	private static short s_prefixCounter = 0;
+	
+	
+	/** The host name of the ID. */
+	private String m_host;
+	
+	
+	/** The invocation time of the ID. */
+	private long m_invocationTime;
+	
+	
+	/**
+	 * The prefix of this MeasureId.
+	 */
+	private short m_prefix;
 
-    /**
-     * Creates a MeasureID object for the localhost machine and with the current
-     * time.
-     */
-    public MeasureId() {
-        try {
-            m_host = InetAddress.getLocalHost().getHostName();
-        } catch (UnknownHostException e) {
-            // nothing
-            m_host = null;
-        }
-        s_prefixCounter = (short) ((s_prefixCounter + 1) % Short.MAX_VALUE);
-        m_prefix = s_prefixCounter;
-        m_invocationTime = System.currentTimeMillis();
-    }
+	/**
+	 * Creates a MeasureID object for the localhost machine and with the current
+	 * time.
+	 */
+	public MeasureId() {
+		try {
+			m_host = InetAddress.getLocalHost().getHostName();
+		} catch (UnknownHostException e) {
+			// nothing
+			m_host = null;
+		}
+		s_prefixCounter = (short) ((s_prefixCounter + 1) % Short.MAX_VALUE);
+		m_prefix = s_prefixCounter;
+		m_invocationTime = System.currentTimeMillis();
+	}
 
-    /**
-     * Creates a MeasureID object for a given host and a given invocation time.
-     * 
-     * @param host
-     *            the host name of the ID
-     * @param invocationTime
-     *            the invocation time of the ID
-     */
-    public MeasureId(String host, long invocationTime) {
-        m_host = host;
-        m_invocationTime = invocationTime;
-    }
+	/**
+	 * Creates a MeasureID object for a given host and a given invocation time.
+	 *
+	 * @param host
+	 *            the host name of the ID
+	 * @param invocationTime
+	 *            the invocation time of the ID
+	 */
+	public MeasureId(String host, long invocationTime) {
+		m_host = host;
+		m_invocationTime = invocationTime;
+	}
 
-    /**
-     * Creates a new MeasureID object for the localhost machine and with the
-     * current time.
-     * <p>
-     * Remark : This method should be called only by the client.
-     * 
-     * @return new MeasureID object
-     */
-    public static MeasureId createID() {
-        return new MeasureId();
-    }
+	/**
+	 * Creates a new MeasureID object for the localhost machine and with the
+	 * current time.
+	 * <p>
+	 * Remark : This method should be called only by the client.
+	 *
+	 * @return new MeasureID object
+	 */
+	public static MeasureId createID() {
+		return new MeasureId();
+	}
 
 
-    /**
-     * Returns the host name of the measure ID.
-     * 
-     * @return host name
-     */
-    public String getHost() {
-        return m_host;
-    }
+	/**
+	 * Returns the host name of the measure ID.
+	 *
+	 * @return host name
+	 */
+	public String getHost() {
+		return m_host;
+	}
 
-    /**
-     * Returns the invocation time of the measure ID.
-     * 
-     * @return invocation time
-     */
-    public long getInvocationTime() {
-        return m_invocationTime;
-    }
+	/**
+	 * Returns the invocation time of the measure ID.
+	 *
+	 * @return invocation time
+	 */
+	public long getInvocationTime() {
+		return m_invocationTime;
+	}
 
-    /**
-     * Returns a human-readable representation of the measure ID.
-     * 
-     * @return measure representation
-     */
-    public String getFormattedString() {
-        return m_host + FORMATTED_SEP + m_prefix + ":" + m_invocationTime;
-    }
+	/**
+	 * Returns a human-readable representation of the measure ID.
+	 *
+	 * @return measure representation
+	 */
+	public String getFormattedString() {
+		return m_host + FORMATTED_SEP + m_prefix + ":" + m_invocationTime;
+	}
 
-    /**
-     * Returns a human-readable representation of the object.
-     * 
-     * @return human-readable representation
-     */
-    public String toString() {
-        return getFormattedString();
-    }
+	/**
+	 * Returns a human-readable representation of the object.
+	 *
+	 * @return human-readable representation
+	 */
+	public String toString() {
+		return getFormattedString();
+	}
 }

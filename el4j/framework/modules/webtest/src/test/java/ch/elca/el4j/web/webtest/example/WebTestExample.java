@@ -35,29 +35,29 @@ import org.junit.Test;
  * @author Florian Suess (FLS)
  */
 public class WebTestExample extends WebTestCase {
-    /**
-     * Sets up the test fixture.
-     * (Called before every test case method.)
-     */
-    @Before
-    public void setUp() {
-        setTestingEngineKey(TestingEngineRegistry.TESTING_ENGINE_HTMLUNIT);
-        getTestContext().setBaseUrl("http://www.elca.ch");
-    }
+	/**
+	 * Sets up the test fixture.
+	 * (Called before every test case method.)
+	 */
+	@Before
+	public void setUp() {
+		setTestingEngineKey(TestingEngineRegistry.TESTING_ENGINE_HTMLUNIT);
+		getTestContext().setBaseUrl("http://www.elca.ch");
+	}
 
-    /**
-     * Tests ELCA homepage.
-     *
-     * @throws Exception If general execption occured.
-     */
-    @Test
-    public void testElcaURL() throws Exception {
-        beginAt("/");
-        assertTitleEquals("ELCA: Technology-Consulting-Innovation: "
-            + "job opportunities: careers: Informatiker: software engineer: "
-            + "Programmierer: jobs: software design: business strategy: crm: "
-            + "web design: data warehouse: edm");
-        assertTextPresent("ELCA is a leading Swiss IT solutions provider");
-        assertLinkPresentWithText("Newsletter");
-    }
+	/**
+	 * Tests ELCA homepage.
+	 *
+	 * @throws Exception If general execption occured.
+	 */
+	@Test
+	public void testElcaURL() throws Exception {
+		beginAt("/");
+		assertTitleEquals("ELCA: Technology-Consulting-Innovation: "
+			+ "job opportunities: careers: Informatiker: software engineer: "
+			+ "Programmierer: jobs: software design: business strategy: crm: "
+			+ "web design: data warehouse: edm");
+		assertTextPresent("ELCA is a leading Swiss IT solutions provider");
+		assertLinkPresentWithText("Newsletter");
+	}
 }

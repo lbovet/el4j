@@ -40,78 +40,78 @@ import ch.elca.el4j.core.exceptions.BaseRTException;
  * @author Martin Zeltner (MZE)
  */
 public class SoapHeaderImplicitContextPasser
-    extends AbstractImplicitContextPasser {
+	extends AbstractImplicitContextPasser {
 
-    /** 
-     * The test namespace.
-     */
-    public static final String MY_NAMESPACE
-        = "http://soap.header.test.el4j.elca.ch";
-    
-    /**
-     * General document to build xml nodes.
-     */
-    private final Document m_doc;
+	/**
+	 * The test namespace.
+	 */
+	public static final String MY_NAMESPACE
+		= "http://soap.header.test.el4j.elca.ch";
+	
+	/**
+	 * General document to build xml nodes.
+	 */
+	private final Document m_doc;
 
-    /**
-     * Default constructor. 
-     */
-    public SoapHeaderImplicitContextPasser() {
-        try {
-            m_doc = XMLUtils.newDocument();
-        } catch (ParserConfigurationException e) {
-            throw new BaseRTException(
-                "No new xml document could be created.", e);
-        }
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public Object getImplicitlyPassedContext() {
-        Element username = m_doc.createElementNS(MY_NAMESPACE, "username");
-        username.setAttributeNS(MY_NAMESPACE, "contextLevel", "0");
-        username.setAttributeNS(Constants.URI_DEFAULT_SCHEMA_XSI, "type", 
-            "xsd:string");
-        username.appendChild(m_doc.createTextNode("abc"));
-        
-        Element password = m_doc.createElementNS(MY_NAMESPACE, "password");
-        password.setAttributeNS(MY_NAMESPACE, "contextLevel", "1");
-        password.setAttributeNS(Constants.URI_DEFAULT_SCHEMA_XSI, "type", 
-            "xsd:string");
-        password.appendChild(m_doc.createTextNode("WELLnEss"));
-        
-        
-        Element street = m_doc.createElementNS(MY_NAMESPACE, "street");
-        street.setAttributeNS(MY_NAMESPACE, "contextLevel", "3");
-        street.setAttributeNS(Constants.URI_DEFAULT_SCHEMA_XSI, "type", 
-            "xsd:string");
-        street.appendChild(m_doc.createTextNode("Steinstrasse 21"));
-        
-        Element city = m_doc.createElementNS(MY_NAMESPACE, "city");
-        city.setAttributeNS(MY_NAMESPACE, "contextLevel", "4");
-        city.setAttributeNS(Constants.URI_DEFAULT_SCHEMA_XSI, "type", 
-            "xsd:string");
-        city.appendChild(m_doc.createTextNode("Zürich"));
+	/**
+	 * Default constructor.
+	 */
+	public SoapHeaderImplicitContextPasser() {
+		try {
+			m_doc = XMLUtils.newDocument();
+		} catch (ParserConfigurationException e) {
+			throw new BaseRTException(
+				"No new xml document could be created.", e);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object getImplicitlyPassedContext() {
+		Element username = m_doc.createElementNS(MY_NAMESPACE, "username");
+		username.setAttributeNS(MY_NAMESPACE, "contextLevel", "0");
+		username.setAttributeNS(Constants.URI_DEFAULT_SCHEMA_XSI, "type",
+			"xsd:string");
+		username.appendChild(m_doc.createTextNode("abc"));
+		
+		Element password = m_doc.createElementNS(MY_NAMESPACE, "password");
+		password.setAttributeNS(MY_NAMESPACE, "contextLevel", "1");
+		password.setAttributeNS(Constants.URI_DEFAULT_SCHEMA_XSI, "type",
+			"xsd:string");
+		password.appendChild(m_doc.createTextNode("WELLnEss"));
+		
+		
+		Element street = m_doc.createElementNS(MY_NAMESPACE, "street");
+		street.setAttributeNS(MY_NAMESPACE, "contextLevel", "3");
+		street.setAttributeNS(Constants.URI_DEFAULT_SCHEMA_XSI, "type",
+			"xsd:string");
+		street.appendChild(m_doc.createTextNode("Steinstrasse 21"));
+		
+		Element city = m_doc.createElementNS(MY_NAMESPACE, "city");
+		city.setAttributeNS(MY_NAMESPACE, "contextLevel", "4");
+		city.setAttributeNS(Constants.URI_DEFAULT_SCHEMA_XSI, "type",
+			"xsd:string");
+		city.appendChild(m_doc.createTextNode("Zürich"));
 
-        Element address = m_doc.createElementNS(MY_NAMESPACE, "address");
-        address.setAttributeNS(MY_NAMESPACE, "contextLevel", "2");
-        address.appendChild(street);
-        address.appendChild(city);
-        
-        Element myContext = m_doc.createElementNS(MY_NAMESPACE, "myContext");
-        myContext.appendChild(username);
-        myContext.appendChild(password);
-        myContext.appendChild(address);
-        
-        return myContext;
-    }
+		Element address = m_doc.createElementNS(MY_NAMESPACE, "address");
+		address.setAttributeNS(MY_NAMESPACE, "contextLevel", "2");
+		address.appendChild(street);
+		address.appendChild(city);
+		
+		Element myContext = m_doc.createElementNS(MY_NAMESPACE, "myContext");
+		myContext.appendChild(username);
+		myContext.appendChild(password);
+		myContext.appendChild(address);
+		
+		return myContext;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void pushImplicitlyPassedContext(Object context) {
-        // TODO Add test for server side soap header.
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void pushImplicitlyPassedContext(Object context) {
+		// TODO Add test for server side soap header.
+	}
 
 }

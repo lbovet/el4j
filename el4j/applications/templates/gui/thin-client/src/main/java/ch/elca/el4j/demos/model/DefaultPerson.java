@@ -23,78 +23,78 @@ import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 
 public class DefaultPerson implements Person {
-    protected String m_firstName;
-    protected String m_lastName;
-    protected int m_age;
-    protected List<MyNumber> m_numbers;
-    protected List<Person> m_children;
-    protected boolean m_smart;
+	protected String m_firstName;
+	protected String m_lastName;
+	protected int m_age;
+	protected List<MyNumber> m_numbers;
+	protected List<Person> m_children;
+	protected boolean m_smart;
 
-    public DefaultPerson() {
-        m_numbers = new ArrayList<MyNumber>();
-        m_children = new ArrayList<Person>();
-    }
-    
-    public DefaultPerson(String firstName, String lastName, int age) {
-        this();
-        m_firstName = firstName;
-        m_lastName = lastName;
-        m_age = age;
-    }
+	public DefaultPerson() {
+		m_numbers = new ArrayList<MyNumber>();
+		m_children = new ArrayList<Person>();
+	}
+	
+	public DefaultPerson(String firstName, String lastName, int age) {
+		this();
+		m_firstName = firstName;
+		m_lastName = lastName;
+		m_age = age;
+	}
 
-    @Length(min = 3)
-    public String getFirstName() {
-        return m_firstName;
-    }
+	@Length(min = 3)
+	public String getFirstName() {
+		return m_firstName;
+	}
 
-    public void setFirstName(String firstName) {
-        m_firstName = firstName;
-    }
+	public void setFirstName(String firstName) {
+		m_firstName = firstName;
+	}
 
-    @NotNull
-    public String getLastName() {
-        return m_lastName;
-    }
+	@NotNull
+	public String getLastName() {
+		return m_lastName;
+	}
 
-    public void setLastName(String lastName) {
-        m_lastName = lastName;
-    }
+	public void setLastName(String lastName) {
+		m_lastName = lastName;
+	}
 
-    public int getAge() {
-        return m_age;
-    }
+	public int getAge() {
+		return m_age;
+	}
 
-    public void setAge(int age) {
-        m_age = age;
-    }
+	public void setAge(int age) {
+		m_age = age;
+	}
 
-    public List<MyNumber> getNumbers() {
-        return m_numbers;
-    }
+	public List<MyNumber> getNumbers() {
+		return m_numbers;
+	}
 
-    public void setNumbers(List<MyNumber> numbers) {
-        m_numbers = numbers;
-    }
+	public void setNumbers(List<MyNumber> numbers) {
+		m_numbers = numbers;
+	}
 
-    public List<Person> getChildren() {
-        return m_children;
-    }
+	public List<Person> getChildren() {
+		return m_children;
+	}
 
-    public void setChildren(List<Person> children) {
-        m_children = children;
-    }
+	public void setChildren(List<Person> children) {
+		m_children = children;
+	}
 
-    public boolean getSmart() {
-        return m_smart;
-    }
+	public boolean getSmart() {
+		return m_smart;
+	}
 
-    public void setSmart(boolean smart) {
-        m_smart = smart;
-    }
-    
-    @Override
-    public String toString() {
-        // TODO Auto-generated method stub
-        return m_firstName + " " + m_lastName + " (" + m_age + ")";
-    }
+	public void setSmart(boolean smart) {
+		m_smart = smart;
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return m_firstName + " " + m_lastName + " (" + m_age + ")";
+	}
 }

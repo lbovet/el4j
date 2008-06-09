@@ -21,41 +21,41 @@ import java.util.List;
 
 public class ErrorContext {
 
-    private static class ThreadLocalList extends ThreadLocal {
-      public Object initialValue() {
-        return new ArrayList<String>();
-      }
+	private static class ThreadLocalList extends ThreadLocal {
+		public Object initialValue() {
+			return new ArrayList<String>();
+		}
 
-      public List<String> getList() {
-        return (List<String>) super.get();
-      }
-    }
+		public List<String> getList() {
+			return (List<String>) super.get();
+		}
+	}
 
-    private static ThreadLocalList list = new ThreadLocalList();
-    private static String[] stringArray = new String[0];
+	private static ThreadLocalList list = new ThreadLocalList();
+	private static String[] stringArray = new String[0];
 
-    public static void clear() {
-      list.getList().clear();
-    }
+	public static void clear() {
+		list.getList().clear();
+	}
 
-    public static void put(String text) {
-      list.getList().add(text);
-    }
+	public static void put(String text) {
+		list.getList().add(text);
+	}
 
-    public static void removeLast() {
-        list.getList().remove(list.getList().size()-1);
-    }
+	public static void removeLast() {
+		list.getList().remove(list.getList().size()-1);
+	}
 
-    public static String[] get() {
-      return (String[])list.getList().toArray(stringArray);
-    }
+	public static String[] get() {
+		return (String[])list.getList().toArray(stringArray);
+	}
 
-    public static String getAsString() {
-        StringBuilder sb = new StringBuilder();
-        for(String error : list.getList()) {
-            sb.append(error).append('\n');
-        }
-        return sb.toString();
-    }
+	public static String getAsString() {
+		StringBuilder sb = new StringBuilder();
+		for(String error : list.getList()) {
+			sb.append(error).append('\n');
+		}
+		return sb.toString();
+	}
 
 }

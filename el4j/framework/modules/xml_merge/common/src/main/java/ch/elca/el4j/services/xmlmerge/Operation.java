@@ -26,7 +26,7 @@ package ch.elca.el4j.services.xmlmerge;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */

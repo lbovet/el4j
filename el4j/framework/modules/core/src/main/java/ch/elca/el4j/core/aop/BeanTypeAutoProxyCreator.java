@@ -34,34 +34,34 @@ import org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator;
  */
 public class BeanTypeAutoProxyCreator extends AbstractAutoProxyCreator {
 
-    /** The classes which subtypes have to be proxied. */
-    private Class<?>[] m_interfaces;
-    
-    /**
-     * Sets the classes to be proxied.
-     * 
-     * @param interfaceNames
-     *      Classes to proxy.
-     */
-    public void setInterfaceNames(Class<?>[] interfaceNames) {
-        m_interfaces = interfaceNames;
-    }
+	/** The classes which subtypes have to be proxied. */
+	private Class<?>[] m_interfaces;
+	
+	/**
+	 * Sets the classes to be proxied.
+	 *
+	 * @param interfaceNames
+	 *      Classes to proxy.
+	 */
+	public void setInterfaceNames(Class<?>[] interfaceNames) {
+		m_interfaces = interfaceNames;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    protected Object[] getAdvicesAndAdvisorsForBean(Class beanClass,
-            String beanName, TargetSource customTargetSource) {
-        
-        if (this.m_interfaces != null) {
-            for (int i = 0; i < m_interfaces.length; i++) {
-                if (m_interfaces[i].isAssignableFrom(beanClass)) {
-                    return PROXY_WITHOUT_ADDITIONAL_INTERCEPTORS;
-                }
-            }
-        }
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	protected Object[] getAdvicesAndAdvisorsForBean(Class beanClass,
+			String beanName, TargetSource customTargetSource) {
+		
+		if (this.m_interfaces != null) {
+			for (int i = 0; i < m_interfaces.length; i++) {
+				if (m_interfaces[i].isAssignableFrom(beanClass)) {
+					return PROXY_WITHOUT_ADDITIONAL_INTERCEPTORS;
+				}
+			}
+		}
 
-        return DO_NOT_PROXY;
-    }
+		return DO_NOT_PROXY;
+	}
 }

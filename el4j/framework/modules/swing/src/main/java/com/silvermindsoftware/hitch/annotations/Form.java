@@ -22,5 +22,5 @@ import java.lang.annotation.*;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Form {
-    boolean autoBind() default false;
+	boolean autoBind() default false;
 }

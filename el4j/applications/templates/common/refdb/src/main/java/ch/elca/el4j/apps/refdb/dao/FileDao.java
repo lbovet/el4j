@@ -19,7 +19,7 @@ package ch.elca.el4j.apps.refdb.dao;
 import ch.elca.el4j.apps.refdb.dom.File;
 
 /**
- * 
+ *
  * This interface represents a DAO for the file domain object.
  * Specific data access operations for this entity can be introduced here.
  * <script type="text/javascript">printFileStatus

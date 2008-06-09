@@ -47,112 +47,112 @@ import ch.elca.el4j.gui.swing.wrapper.JFrameWrapperFactory;
  * @author Stefan Wismer (SWI)
  */
 public abstract class DockingApplication extends GUIApplication {
-    /**
-     * The tool window manager.
-     */
-    protected ToolWindowManager m_toolWindowManager = null;
-    
-    /**
-     * Creates the tool window manager if necessary.
-     */
-    protected ToolWindowManager getToolWindowManager() {
-        if (m_toolWindowManager == null) {
-            // Create a new instance of MyDoggyToolWindowManager
-            m_toolWindowManager = new MyDoggyToolWindowManager();
-        }
-        return m_toolWindowManager;
-    }
-    
-    /**
-     * @param beanName    the Spring bean name
-     * @param anchor      the anchor of the docked window
-     */
-    @SuppressWarnings("unchecked")
-    public void show(String beanName, ToolWindowAnchor anchor)
-        throws NoSuchBeanDefinitionException {
-        
-        if (!m_springContext.containsBean(beanName)) {
-            throw new NoSuchBeanDefinitionException(beanName);
-        }
-        show((JPanel) m_springContext.getBean(beanName), anchor);
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void show(JComponent component) {
-        if (JPanel.class.isAssignableFrom(component.getClass())) {
-            JPanel panel = (JPanel) component;
-            JFrameWrapper wrapper = JFrameWrapperFactory.wrap(panel);
-            addContent(wrapper);
-        } else {
-            super.show(component);
-        }
-    }
-    
-    /**
-     * @param component   the component to show
-     * @param anchor      the anchor of the docked window
-     */
-    @SuppressWarnings("unchecked")
-    public void show(JComponent component, ToolWindowAnchor anchor) {
-        if (JPanel.class.isAssignableFrom(component.getClass())) {
-            JPanel panel = (JPanel) component;
-            JFrameWrapper wrapper = JFrameWrapperFactory.wrap(panel);
-            createToolWindow(wrapper, anchor);
-        } else {
-            super.show(component);
-        }
-    }
-    
-    /**
-     * @param content    the content of the tool window to be created
-     * @param anchor     the anchor of the docked window
-     * @return           the created tool window
-     */
-    protected ToolWindow createToolWindow(JFrame content,
-        ToolWindowAnchor anchor) {
-        
-        if (m_toolWindowManager.getToolWindow(content.getName()) != null) {
-            m_toolWindowManager.unregisterToolWindow(
-                m_toolWindowManager.getToolWindow(content.getName()).getId());
-        }
-        // Register the tool.
-        ToolWindow tool = m_toolWindowManager.registerToolWindow(
-            content.getName(), content.getTitle(), null,
-            content.getContentPane(), anchor);
+	/**
+	 * The tool window manager.
+	 */
+	protected ToolWindowManager m_toolWindowManager = null;
+	
+	/**
+	 * Creates the tool window manager if necessary.
+	 */
+	protected ToolWindowManager getToolWindowManager() {
+		if (m_toolWindowManager == null) {
+			// Create a new instance of MyDoggyToolWindowManager
+			m_toolWindowManager = new MyDoggyToolWindowManager();
+		}
+		return m_toolWindowManager;
+	}
+	
+	/**
+	 * @param beanName    the Spring bean name
+	 * @param anchor      the anchor of the docked window
+	 */
+	@SuppressWarnings("unchecked")
+	public void show(String beanName, ToolWindowAnchor anchor)
+		throws NoSuchBeanDefinitionException {
+		
+		if (!m_springContext.containsBean(beanName)) {
+			throw new NoSuchBeanDefinitionException(beanName);
+		}
+		show((JPanel) m_springContext.getBean(beanName), anchor);
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public void show(JComponent component) {
+		if (JPanel.class.isAssignableFrom(component.getClass())) {
+			JPanel panel = (JPanel) component;
+			JFrameWrapper wrapper = JFrameWrapperFactory.wrap(panel);
+			addContent(wrapper);
+		} else {
+			super.show(component);
+		}
+	}
+	
+	/**
+	 * @param component   the component to show
+	 * @param anchor      the anchor of the docked window
+	 */
+	@SuppressWarnings("unchecked")
+	public void show(JComponent component, ToolWindowAnchor anchor) {
+		if (JPanel.class.isAssignableFrom(component.getClass())) {
+			JPanel panel = (JPanel) component;
+			JFrameWrapper wrapper = JFrameWrapperFactory.wrap(panel);
+			createToolWindow(wrapper, anchor);
+		} else {
+			super.show(component);
+		}
+	}
+	
+	/**
+	 * @param content    the content of the tool window to be created
+	 * @param anchor     the anchor of the docked window
+	 * @return           the created tool window
+	 */
+	protected ToolWindow createToolWindow(JFrame content,
+		ToolWindowAnchor anchor) {
+		
+		if (m_toolWindowManager.getToolWindow(content.getName()) != null) {
+			m_toolWindowManager.unregisterToolWindow(
+				m_toolWindowManager.getToolWindow(content.getName()).getId());
+		}
+		// Register the tool.
+		ToolWindow tool = m_toolWindowManager.registerToolWindow(
+			content.getName(), content.getTitle(), null,
+			content.getContentPane(), anchor);
 
-        tool.setAvailable(true);
-        
-        DockedTypeDescriptor dockedTypeDescriptor
-            = (DockedTypeDescriptor) tool.getTypeDescriptor(
-                ToolWindowType.DOCKED);
-        
-        // default behavior: close tool window when clicking on X
-        dockedTypeDescriptor
-            .setToolWindowActionHandler(new ToolWindowActionHandler() {
+		tool.setAvailable(true);
+		
+		DockedTypeDescriptor dockedTypeDescriptor
+			= (DockedTypeDescriptor) tool.getTypeDescriptor(
+				ToolWindowType.DOCKED);
+		
+		// default behavior: close tool window when clicking on X
+		dockedTypeDescriptor
+			.setToolWindowActionHandler(new ToolWindowActionHandler() {
 
-                public void onHideButtonClick(ToolWindow toolWindow) {
-                    m_toolWindowManager
-                        .unregisterToolWindow(toolWindow.getId());
-                }
-            });
+				public void onHideButtonClick(ToolWindow toolWindow) {
+					m_toolWindowManager
+						.unregisterToolWindow(toolWindow.getId());
+				}
+			});
 
-        return tool;
-    }
-    
-    /**
-     * @param content    the content of the content window to be created
-     * @return           the created content window
-     */
-    protected Content addContent(JFrame content) {
-        ContentManager contentManager = m_toolWindowManager.getContentManager();
-        
-        // remove if content already exists
-        if (contentManager.getContent(content) != null) {
-            contentManager.removeContent(
-                contentManager.getContent(content));
-        }
-        return contentManager.addContent(content.toString(), content.getTitle(),
-            null, content.getContentPane());
-    }
+		return tool;
+	}
+	
+	/**
+	 * @param content    the content of the content window to be created
+	 * @return           the created content window
+	 */
+	protected Content addContent(JFrame content) {
+		ContentManager contentManager = m_toolWindowManager.getContentManager();
+		
+		// remove if content already exists
+		if (contentManager.getContent(content) != null) {
+			contentManager.removeContent(
+				contentManager.getContent(content));
+		}
+		return contentManager.addContent(content.toString(), content.getTitle(),
+			null, content.getContentPane());
+	}
 }

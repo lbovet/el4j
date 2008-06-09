@@ -33,20 +33,20 @@ package ch.elca.el4j.tests.core.aop;
  */
 public class BeanImpl implements Bean {
 
-    /** The bean name. */
-    private String m_name;
+	/** The bean name. */
+	private String m_name;
 
-    /**
-     * {@inheritDoc}
-     */
-    public String getBeanName() {
-        return m_name;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getBeanName() {
+		return m_name;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void setBeanName(String name) {
-        m_name = name;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setBeanName(String name) {
+		m_name = name;
+	}
 }

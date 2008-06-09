@@ -31,43 +31,43 @@ import javax.swing.JComponent;
  * @author Stefan Wismer (SWI)
  */
 public class JInteralFrameWrapperFactory
-    extends AbstractWrapperFactory<JInteralFrameWrapper> {
-    
-    /**
-     * The abstract factory.
-     */
-    private static AbstractWrapperFactory<JInteralFrameWrapper> s_factory
-        = null;
-    
-    /**
-     * Wraps a GUI component into a {@link JInternalFrame}.
-     * 
-     * @param component    the component to wrap
-     * @return             the wrapper
-     */
-    public static JInteralFrameWrapper wrap(JComponent component) {
-        if (s_factory == null) {
-            s_factory = new JInteralFrameWrapperFactory();
-        }
-        return s_factory.wrapComponent(component);
-    }
+	extends AbstractWrapperFactory<JInteralFrameWrapper> {
+	
+	/**
+	 * The abstract factory.
+	 */
+	private static AbstractWrapperFactory<JInteralFrameWrapper> s_factory
+		= null;
+	
+	/**
+	 * Wraps a GUI component into a {@link JInternalFrame}.
+	 *
+	 * @param component    the component to wrap
+	 * @return             the wrapper
+	 */
+	public static JInteralFrameWrapper wrap(JComponent component) {
+		if (s_factory == null) {
+			s_factory = new JInteralFrameWrapperFactory();
+		}
+		return s_factory.wrapComponent(component);
+	}
 
-    /** {@inheritDoc} */
-    @Override
-    protected JInteralFrameWrapper createWrapper() {
-        return new JInteralFrameWrapper();
-    }
+	/** {@inheritDoc} */
+	@Override
+	protected JInteralFrameWrapper createWrapper() {
+		return new JInteralFrameWrapper();
+	}
 
-    /** {@inheritDoc} */
-    @Override
-    protected void setName(JInteralFrameWrapper wrapper, String name) {
-        wrapper.setName(name);
-    }
+	/** {@inheritDoc} */
+	@Override
+	protected void setName(JInteralFrameWrapper wrapper, String name) {
+		wrapper.setName(name);
+	}
 
-    /** {@inheritDoc} */
-    @Override
-    protected void setTitle(JInteralFrameWrapper wrapper, String title) {
-        wrapper.setTitle(title);
-    }
+	/** {@inheritDoc} */
+	@Override
+	protected void setTitle(JInteralFrameWrapper wrapper, String title) {
+		wrapper.setTitle(title);
+	}
 
 }

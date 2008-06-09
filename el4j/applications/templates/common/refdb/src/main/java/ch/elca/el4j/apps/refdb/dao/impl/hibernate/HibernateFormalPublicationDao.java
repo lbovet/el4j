@@ -26,7 +26,7 @@ import ch.elca.el4j.services.search.criterias.AbstractCriteria;
 import ch.elca.el4j.services.search.criterias.IncludeCriteria;
 
 /**
- * 
+ *
  * DAO for formal publications which is using Hibernate.
  *
  * <script type="text/javascript">printFileStatus
@@ -40,106 +40,106 @@ import ch.elca.el4j.services.search.criterias.IncludeCriteria;
  */
 @AutocollectedGenericDao("formalPublicationDao")
 public class HibernateFormalPublicationDao
-    extends GenericHibernateReferenceDao<FormalPublication, Integer>
-    implements FormalPublicationDao {
+	extends GenericHibernateReferenceDao<FormalPublication, Integer>
+	implements FormalPublicationDao {
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<FormalPublication> findByQuery(QueryObject query)
-        throws DataAccessException {
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FormalPublication> findByQuery(QueryObject query)
+		throws DataAccessException {
 
-        DetachedCriteria hibernateCriteria = CriteriaTransformer.transform(
-            query, FormalPublication.class);
+		DetachedCriteria hibernateCriteria = CriteriaTransformer.transform(
+			query, FormalPublication.class);
 
-        // HACK! IncludeCriteria are handled in the search method. In a future
-        // version, this will be replaced by an easier solution, where the
-        // IncludeCriteria will be treated by the CriteriaTransformer class.
+		// HACK! IncludeCriteria are handled in the search method. In a future
+		// version, this will be replaced by an easier solution, where the
+		// IncludeCriteria will be treated by the CriteriaTransformer class.
 
-        List criteriaList = query.getCriteriaList();
-        List currentList = new ArrayList();
+		List criteriaList = query.getCriteriaList();
+		List currentList = new ArrayList();
 
-        if (containsIncludeCriteria(criteriaList)) {
+		if (containsIncludeCriteria(criteriaList)) {
 
-            Iterator it = criteriaList.iterator();
-            AbstractCriteria currentCriterion;
-            List resultList = new ArrayList();
+			Iterator it = criteriaList.iterator();
+			AbstractCriteria currentCriterion;
+			List resultList = new ArrayList();
 
-            while (it.hasNext()) {
-                currentCriterion = (AbstractCriteria) it.next();
-                if (currentCriterion instanceof IncludeCriteria) {
-                    hibernateCriteria.createCriteria(
-                        ((IncludeCriteria) currentCriterion).getField()).add(
-                            Expression.eq("key",
-                                ((IncludeCriteria) currentCriterion)
-                                .getIntegerValue()));
-                    currentList = getConvenienceHibernateTemplate()
-                        .findByCriteria(hibernateCriteria);
-                    resultList.add(currentList);
-                    hibernateCriteria = CriteriaTransformer.transform(query,
-                        FormalPublication.class);
-                }
-            }
-            Iterator it2 = resultList.iterator();
-            currentList = (List) it2.next();
-            List nextList = new ArrayList();
-            while (it2.hasNext()) {
-                nextList = (List) it2.next();
-                currentList.retainAll(nextList);
-            }
+			while (it.hasNext()) {
+				currentCriterion = (AbstractCriteria) it.next();
+				if (currentCriterion instanceof IncludeCriteria) {
+					hibernateCriteria.createCriteria(
+						((IncludeCriteria) currentCriterion).getField()).add(
+							Expression.eq("key",
+								((IncludeCriteria) currentCriterion)
+								.getIntegerValue()));
+					currentList = getConvenienceHibernateTemplate()
+						.findByCriteria(hibernateCriteria);
+					resultList.add(currentList);
+					hibernateCriteria = CriteriaTransformer.transform(query,
+						FormalPublication.class);
+				}
+			}
+			Iterator it2 = resultList.iterator();
+			currentList = (List) it2.next();
+			List nextList = new ArrayList();
+			while (it2.hasNext()) {
+				nextList = (List) it2.next();
+				currentList.retainAll(nextList);
+			}
 
-            // Executed if the query does not include any IncludeCriteria
-        } else {
-            currentList = getConvenienceHibernateTemplate().findByCriteria(
-                hibernateCriteria);
-        }
+			// Executed if the query does not include any IncludeCriteria
+		} else {
+			currentList = getConvenienceHibernateTemplate().findByCriteria(
+				hibernateCriteria);
+		}
 
-        Iterator it3 = currentList.iterator();
-        FormalPublication currentPublication;
-        List finalResult = new ArrayList();
-        while (it3.hasNext()) {
-            currentPublication = (FormalPublication) it3.next();
-            if (!(currentPublication instanceof Book)) {
-                finalResult.add(currentPublication);
-            }
-        }
-        return finalResult;
-    }
-    
-    /**
-     * The result set just contains "real" formal publications.
-     * 
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<FormalPublication> getAll() throws DataAccessException {
-        //TODO MZE: Find a better solution. Perhaps rewrite the hibernate file.
-        List<FormalPublication> mixedFps = super.getAll();
-        List<FormalPublication> fps = new ArrayList<FormalPublication>();
-        for (FormalPublication fp : mixedFps) {
-            if (fp.getClass() == FormalPublication.class) {
-                fps.add(fp);
-            }
-        }
-        return fps;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public List<FormalPublication> getByName(String name)
-        throws DataAccessException, DataRetrievalFailureException {
-        //TODO MZE: Find a better solution. Perhaps rewrite the hibernate file.
-        List<FormalPublication> mixedFps = super.getByName(name);
-        List<FormalPublication> fps = new ArrayList<FormalPublication>();
-        for (FormalPublication fp : mixedFps) {
-            if (fp.getClass() == FormalPublication.class) {
-                fps.add(fp);
-            }
-        }
-        return fps;
-    }
+		Iterator it3 = currentList.iterator();
+		FormalPublication currentPublication;
+		List finalResult = new ArrayList();
+		while (it3.hasNext()) {
+			currentPublication = (FormalPublication) it3.next();
+			if (!(currentPublication instanceof Book)) {
+				finalResult.add(currentPublication);
+			}
+		}
+		return finalResult;
+	}
+	
+	/**
+	 * The result set just contains "real" formal publications.
+	 *
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FormalPublication> getAll() throws DataAccessException {
+		//TODO MZE: Find a better solution. Perhaps rewrite the hibernate file.
+		List<FormalPublication> mixedFps = super.getAll();
+		List<FormalPublication> fps = new ArrayList<FormalPublication>();
+		for (FormalPublication fp : mixedFps) {
+			if (fp.getClass() == FormalPublication.class) {
+				fps.add(fp);
+			}
+		}
+		return fps;
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public List<FormalPublication> getByName(String name)
+		throws DataAccessException, DataRetrievalFailureException {
+		//TODO MZE: Find a better solution. Perhaps rewrite the hibernate file.
+		List<FormalPublication> mixedFps = super.getByName(name);
+		List<FormalPublication> fps = new ArrayList<FormalPublication>();
+		for (FormalPublication fp : mixedFps) {
+			if (fp.getClass() == FormalPublication.class) {
+				fps.add(fp);
+			}
+		}
+		return fps;
+	}
 }

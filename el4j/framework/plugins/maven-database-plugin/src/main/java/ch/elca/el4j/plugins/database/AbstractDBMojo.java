@@ -32,9 +32,9 @@ import ch.elca.el4j.plugins.database.holder.DatabaseNameHolder;
  * This class holds all fields and methods commmon to all database mojos, namely
  * the properties from the pom file, the Maven project and repository as well as
  * the DataHolder, which encapsulates all Database specific properties.
- * 
+ *
  * It provides methods to its sublcasses to start the derby NetworkServer and to
- * execute an action, i.e. extract and execute SQL statements from a given 
+ * execute an action, i.e. extract and execute SQL statements from a given
  * source path.
  *
  * <script type="text/javascript">printFileStatus
@@ -50,194 +50,193 @@ import ch.elca.el4j.plugins.database.holder.DatabaseNameHolder;
  * @requiresDependencyResolution test
  */
 public abstract class AbstractDBMojo extends AbstractMojo {
-    
-    // Checkstyle: MemberName off
-    
-    /**
-     * Decides whether to wait after the container is started or to return 
-     * the execution flow to the user.
-     * 
-     * @parameter expression="${db.wait}" default-value = "true"
-     */
-    private boolean wait;
-    
+	
+	// Checkstyle: MemberName off
+	
+	/**
+	 * Decides whether to wait after the container is started or to return
+	 * the execution flow to the user.
+	 *
+	 * @parameter expression="${db.wait}" default-value = "true"
+	 */
+	private boolean wait;
+	
 
-    /**
-     * Directory of tools (such as application servers or local 
-     * dbs) in the project.
-     * 
-     * @parameter expression="${el4j.project.tools}"
-     * @required
-     */
-    private String toolsPath;
+	/**
+	 * Directory of tools (such as application servers or local
+	 * dbs) in the project.
+	 *
+	 * @parameter expression="${el4j.project.tools}"
+	 * @required
+	 */
+	private String toolsPath;
 
-    /**
-     * The maven project from where this plugin is called.
-     * 
-     * @parameter expression="${project}"
-     * @required
-     * @readonly
-     */
-    private MavenProject project;
-   
-    /**
-     * Local maven repository.
-     * 
-     * @parameter expression="${localRepository}"
-     * @required
-     * @readonly
-     */
-    private ArtifactRepository repository;
-    
-    /**
-     * @parameter expression="${skip}" default-value = "false"
-     */
-    private boolean skip;
-    
-    /**
-     * @component
-     */
-    private ArtifactMetadataSource artifactMetadataSource;
-    
-    /** 
-     * @component
-     */
-    private ArtifactCollector collector;
-    
-    /**
-     * @component
-     */
-    private ArtifactFactory factory;
-    
-    /**
-     * @component
-     */
-    private ArtifactResolver artifactResolver;
-    
-    /**
-     * The Dependency Graph Walker.
-     */
-    private DepGraphWalker graphWalker;
+	/**
+	 * The maven project from where this plugin is called.
+	 *
+	 * @parameter expression="${project}"
+	 * @required
+	 * @readonly
+	 */
+	private MavenProject project;
+	
+	/**
+	 * Local maven repository.
+	 *
+	 * @parameter expression="${localRepository}"
+	 * @required
+	 * @readonly
+	 */
+	private ArtifactRepository repository;
+	
+	/**
+	 * @parameter expression="${skip}" default-value = "false"
+	 */
+	private boolean skip;
+	
+	/**
+	 * @component
+	 */
+	private ArtifactMetadataSource artifactMetadataSource;
+	
+	/**
+	 * @component
+	 */
+	private ArtifactCollector collector;
+	
+	/**
+	 * @component
+	 */
+	private ArtifactFactory factory;
+	
+	/**
+	 * @component
+	 */
+	private ArtifactResolver artifactResolver;
+	
+	/**
+	 * The Dependency Graph Walker.
+	 */
+	private DepGraphWalker graphWalker;
 
-    /**
-     * The Data Holder.
-     */
-    private DatabaseNameHolder m_holder;
-    
-    // Checkstyle: MemberName on
-   
-    
-    
-    /** {@inheritDoc} */
-    public final void execute() throws MojoExecutionException,
-        MojoFailureException {
-        
-        if (skip) {
-            getLog().info("Skipping database plugin due to configuration");
-        } else {
-            executeInternal();
-        }
-    }
-    
-    /**
-     * Execute mojo.
-     * 
-     * @throws MojoExecutionException
-     * @throws MojoFailureException
-     */
-    protected abstract void executeInternal() throws MojoExecutionException,
-        MojoFailureException;
-    
-    /**
-     * Returns true if database needs to be started.
-     * That is, check database name.
-     * Currently, only db2 databases can be started.
-     * 
-     * @return Return whether database need to be started.
-     */
-    protected boolean needStartup() {
-       
-        try {
-            
-            String db = getDbNameHolder().getDbName();
-            
-            boolean result;
-            if (db.equalsIgnoreCase("db2")) {
-                
-                result = true;
-                
-            } else {
-                
-                getLog().warn("Database " + db + " can not be started "
-                    + "by this plugin.");
-                
-                result = false;
-            }
-            
-            return result;
-           
-           
-        } catch (Exception e) {
-            
-            getLog().error("Error getting DbName: " + e.getMessage());
-            
-            return false;
-        }
-    }
-    
-    /**
-     * Returns directory, where NetworkServer should be started. 
-     * This will be the location, where the NetworkServer looks for databases.
-     * 
-     * @return Home Directory of NetworkServer
-     */
-    protected String getDerbyLocation() {
-        return toolsPath + "/derby/derby-databases";
-    }
+	/**
+	 * The Data Holder.
+	 */
+	private DatabaseNameHolder m_holder;
+	
+	// Checkstyle: MemberName on
+	
+	
+	
+	/** {@inheritDoc} */
+	public final void execute() throws MojoExecutionException,
+		MojoFailureException {
+		
+		if (skip) {
+			getLog().info("Skipping database plugin due to configuration");
+		} else {
+			executeInternal();
+		}
+	}
+	
+	/**
+	 * Execute mojo.
+	 *
+	 * @throws MojoExecutionException
+	 * @throws MojoFailureException
+	 */
+	protected abstract void executeInternal() throws MojoExecutionException,
+		MojoFailureException;
+	
+	/**
+	 * Returns true if database needs to be started.
+	 * That is, check database name.
+	 * Currently, only db2 databases can be started.
+	 *
+	 * @return Return whether database need to be started.
+	 */
+	protected boolean needStartup() {
+		
+		try {
+			
+			String db = getDbNameHolder().getDbName();
+			
+			boolean result;
+			if (db.equalsIgnoreCase("db2")) {
+				
+				result = true;
+				
+			} else {
+				
+				getLog().warn("Database " + db + " can not be started "
+					+ "by this plugin.");
+				
+				result = false;
+			}
+			
+			return result;
+			
+		} catch (Exception e) {
+			
+			getLog().error("Error getting DbName: " + e.getMessage());
+			
+			return false;
+		}
+	}
+	
+	/**
+	 * Returns directory, where NetworkServer should be started.
+	 * This will be the location, where the NetworkServer looks for databases.
+	 *
+	 * @return Home Directory of NetworkServer
+	 */
+	protected String getDerbyLocation() {
+		return toolsPath + "/derby/derby-databases";
+	}
 
-    /**
-     * @return If NetwerkServer is blocking or not
-     */
-    protected boolean hasToWait() {
-        return wait;
-    }
+	/**
+	 * @return If NetwerkServer is blocking or not
+	 */
+	protected boolean hasToWait() {
+		return wait;
+	}
 
-    /**
-     * @return The Maven artifact repository
-     */
-    protected ArtifactRepository getRepository() {
-        return repository;
-    }
+	/**
+	 * @return The Maven artifact repository
+	 */
+	protected ArtifactRepository getRepository() {
+		return repository;
+	}
 
-    /**
-     * @return The maven project
-     */
-    protected MavenProject getProject() {
-        return project;
-    }
+	/**
+	 * @return The maven project
+	 */
+	protected MavenProject getProject() {
+		return project;
+	}
 
 
-    /**
-     * @return The Dependency GraphWalker
-     */
-    protected DepGraphWalker getGraphWalker() {
-        if (graphWalker == null) {
-            graphWalker = new DepGraphWalker(repository, project, 
-                artifactResolver, collector, artifactMetadataSource, factory);
-        }
-        return graphWalker;
-    } 
-   
-    /**
-     * @return The holder
-     */
-    protected DatabaseNameHolder getDbNameHolder() {
-        if (m_holder == null) {
-            m_holder = new DatabaseNameHolder(
-                repository, 
-                project, 
-                getGraphWalker());
-        }
-        return m_holder;
-    }
+	/**
+	 * @return The Dependency GraphWalker
+	 */
+	protected DepGraphWalker getGraphWalker() {
+		if (graphWalker == null) {
+			graphWalker = new DepGraphWalker(repository, project,
+				artifactResolver, collector, artifactMetadataSource, factory);
+		}
+		return graphWalker;
+	}
+	
+	/**
+	 * @return The holder
+	 */
+	protected DatabaseNameHolder getDbNameHolder() {
+		if (m_holder == null) {
+			m_holder = new DatabaseNameHolder(
+				repository,
+				project,
+				getGraphWalker());
+		}
+		return m_holder;
+	}
 }

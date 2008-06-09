@@ -38,11 +38,11 @@ import cookxml.cookswing.CookSwing;
 
 /**
  * Demonstrates how to use cookSwing.
- * 
+ *
  * The most important command is <code>cookSwing.render("test.xml");</code>. It
  * processes the whole XML file and initializes bound local variables (e.g.
  * <code>m_firstName</code>).
- * 
+ *
  * As this class implements {@link Bindable}, cookSwing is able to set up all
  * bindings declared in the XML file.
  *
@@ -56,49 +56,49 @@ import cookxml.cookswing.CookSwing;
  * @author Stefan Wismer (SWI)
  */
 public class XMLDemoForm extends JPanel implements Bindable {
-    private JTextField m_firstName;
-    private JTextField m_lastName;
-    private JLabel m_statusLabel;
-    private Person m_person;
-    private List<Person> m_persons;
-    private final Binder m_binder = BinderManager.getBinder(this);
-    
-    public XMLDemoForm() {
-        createData();
-        
-        CookSwing cookSwing = new CookSwing(this);
-        cookSwing.render("gui/xmlDemoForm.xml");
-        
-        m_binder.bindAll();
-    }
+	private JTextField m_firstName;
+	private JTextField m_lastName;
+	private JLabel m_statusLabel;
+	private Person m_person;
+	private List<Person> m_persons;
+	private final Binder m_binder = BinderManager.getBinder(this);
+	
+	public XMLDemoForm() {
+		createData();
+		
+		CookSwing cookSwing = new CookSwing(this);
+		cookSwing.render("gui/xmlDemoForm.xml");
+		
+		m_binder.bindAll();
+	}
 
-    private void createData() {
-        m_persons = new ArrayList<Person>();
-        
-        Person person1 = new DefaultPerson("Test", "Last", 4);
-        person1 = PropertyChangeListenerMixin.addPropertyChangeMixin(person1);
-        
-        Person person2 = new DefaultPerson("Test2", "Last2", 88);
-        person2 = PropertyChangeListenerMixin.addPropertyChangeMixin(person2);
-        
-        m_persons.add(person1);
-        m_persons.add(person2);
-        
-        m_person = person1;
-        m_person.getChildren().add(person2);
-    }
-    
-    /** {@inheritDoc} */
-    public Binder getBinder() {
-        return m_binder;
-    }
-    
-    /**
-     * An action that prints some information. See action attribute in XML.
-     */
-    @Action
-    public void info() {
-        m_statusLabel.setText("Person: " + m_firstName.getText()
-            + " " + m_lastName.getText());
-    }
+	private void createData() {
+		m_persons = new ArrayList<Person>();
+		
+		Person person1 = new DefaultPerson("Test", "Last", 4);
+		person1 = PropertyChangeListenerMixin.addPropertyChangeMixin(person1);
+		
+		Person person2 = new DefaultPerson("Test2", "Last2", 88);
+		person2 = PropertyChangeListenerMixin.addPropertyChangeMixin(person2);
+		
+		m_persons.add(person1);
+		m_persons.add(person2);
+		
+		m_person = person1;
+		m_person.getChildren().add(person2);
+	}
+	
+	/** {@inheritDoc} */
+	public Binder getBinder() {
+		return m_binder;
+	}
+	
+	/**
+	 * An action that prints some information. See action attribute in XML.
+	 */
+	@Action
+	public void info() {
+		m_statusLabel.setText("Person: " + m_firstName.getText()
+			+ " " + m_lastName.getText());
+	}
 }

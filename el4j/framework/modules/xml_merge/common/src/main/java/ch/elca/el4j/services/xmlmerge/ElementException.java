@@ -27,69 +27,69 @@ import org.jdom.Element;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public class ElementException extends AbstractXmlMergeException {
 
-    /**
-     * An element instance.
-     */
-    Element m_element;
+	/**
+	 * An element instance.
+	 */
+	Element m_element;
 
-    /**
-     * Constructor.
-     * 
-     * @param element Element which caused the exception
-     */
-    public ElementException(Element element) {
-        super(makeMessage(element));
-        this.m_element = element;
-    }
+	/**
+	 * Constructor.
+	 *
+	 * @param element Element which caused the exception
+	 */
+	public ElementException(Element element) {
+		super(makeMessage(element));
+		this.m_element = element;
+	}
 
-    /**
-     * Constructor with message.
-     * 
-     * @param element Element which caused the exception
-     * @param message Exception message
-     */
-    public ElementException(Element element, String message) {
-        super(message);
-        this.m_element = element;
-    }
-    
-    /**
-     * Constructor with cause.
-     * 
-     * @param element Element which caused the exception
-     * @param cause Exception cause
-     */
-    public ElementException(Element element, Throwable cause) {
-        super(makeMessage(element), cause);
-    }
+	/**
+	 * Constructor with message.
+	 *
+	 * @param element Element which caused the exception
+	 * @param message Exception message
+	 */
+	public ElementException(Element element, String message) {
+		super(message);
+		this.m_element = element;
+	}
+	
+	/**
+	 * Constructor with cause.
+	 *
+	 * @param element Element which caused the exception
+	 * @param cause Exception cause
+	 */
+	public ElementException(Element element, Throwable cause) {
+		super(makeMessage(element), cause);
+	}
 
-    /**
-     * @return Returns the element.
-     */
-    public Element getElement() {
-        return m_element;
-    }
+	/**
+	 * @return Returns the element.
+	 */
+	public Element getElement() {
+		return m_element;
+	}
 
-    /**
-     * @param element Is the element to set.
-     */
-    public void setElement(Element element) {
-        m_element = element;
-    }
+	/**
+	 * @param element Is the element to set.
+	 */
+	public void setElement(Element element) {
+		m_element = element;
+	}
  
-    /**
-     * Announces that there is a problem with the given element.
-     * @param element A given element
-     * @return String announcing that there is a problem with the given element
-     */
-    private static String makeMessage(Element element) {
-        return "Problem with element " + element;
-    }
-    
+	/**
+	 * Announces that there is a problem with the given element.
+	 * @param element A given element
+	 * @return String announcing that there is a problem with the given element
+	 */
+	private static String makeMessage(Element element) {
+		return "Problem with element " + element;
+	}
+	
 }

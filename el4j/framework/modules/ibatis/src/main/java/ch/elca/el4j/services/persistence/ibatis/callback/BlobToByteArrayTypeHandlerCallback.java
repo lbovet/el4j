@@ -25,7 +25,7 @@ import com.ibatis.sqlmap.client.extensions.TypeHandlerCallback;
 
 /**
  * This class is used to make blobs work with ibatis sqlmaps.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -38,32 +38,32 @@ import com.ibatis.sqlmap.client.extensions.TypeHandlerCallback;
  * @see com.ibatis.sqlmap.engine.type.BlobTypeHandlerCallback
  */
 public class BlobToByteArrayTypeHandlerCallback implements TypeHandlerCallback {
-    /**
-     * {@inheritDoc}
-     */
-    public void setParameter(ParameterSetter setter, Object parameter)
-        throws SQLException {
-        byte[] bytes = (byte[]) parameter;
-        setter.setBytes(bytes);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setParameter(ParameterSetter setter, Object parameter)
+		throws SQLException {
+		byte[] bytes = (byte[]) parameter;
+		setter.setBytes(bytes);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object getResult(ResultGetter getter) throws SQLException {
-        Blob blob = getter.getBlob();
-        if (blob != null) {
-            int size = (int) blob.length();
-            return blob.getBytes(1, size);
-        } else {
-            return null;
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object getResult(ResultGetter getter) throws SQLException {
+		Blob blob = getter.getBlob();
+		if (blob != null) {
+			int size = (int) blob.length();
+			return blob.getBytes(1, size);
+		} else {
+			return null;
+		}
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object valueOf(String s) {
-        return s;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object valueOf(String s) {
+		return s;
+	}
 }

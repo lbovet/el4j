@@ -44,12 +44,12 @@ public class Order implements Serializable {
 		return new Order(propertyName, false);
 	}
 
-    public boolean isAscending() {
-        return ascending;
-    }
+	public boolean isAscending() {
+		return ascending;
+	}
 
-    public String getPropertyName() {
-        return propertyName;
-    }
+	public String getPropertyName() {
+		return propertyName;
+	}
 
 }

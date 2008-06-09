@@ -18,7 +18,7 @@ package ch.elca.el4j.util.observer.impl;
 
 /**
  * An ObservableValue whose value can be {@link #set(Object)}.
- * 
+ *
  * @param <T> see supertype.
  *
  * <script type="text/javascript">printFileStatus
@@ -32,15 +32,15 @@ package ch.elca.el4j.util.observer.impl;
  * @author Adrian Moos (AMS)
  */
 public class SettableObservableValue<T> extends AbstractObservableValue<T> {
-    /** creates a new SettableObservableValue.
-     * @param initialReference the initial reference */
-    public SettableObservableValue(T initialReference) {
-        super(initialReference);
-    }
+	/** creates a new SettableObservableValue.
+	 * @param initialReference the initial reference */
+	public SettableObservableValue(T initialReference) {
+		super(initialReference);
+	}
 
-    // publish setter
-    /** sets the reference held to {@code newRef}. */
-    public void set(T newRef) {
-        super.set(newRef);
-    }
+	// publish setter
+	/** sets the reference held to {@code newRef}. */
+	public void set(T newRef) {
+		super.set(newRef);
+	}
 }

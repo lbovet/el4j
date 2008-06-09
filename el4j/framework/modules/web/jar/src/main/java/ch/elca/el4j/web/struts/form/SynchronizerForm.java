@@ -24,36 +24,36 @@ import org.apache.struts.action.ActionForm;
 /**
  * Action form bean for the synchronizer token action. Used for storing the
  * token.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Raphael Boog (RBO)
  */
 public class SynchronizerForm extends ActionForm {
 
-    /** The static logger. */
-    protected static Log s_logger = LogFactory.getLog(SynchronizerForm.class);
+	/** The static logger. */
+	protected static Log s_logger = LogFactory.getLog(SynchronizerForm.class);
 
-    /** The token. */
-    private String m_token;
-    
-    /**
-     * @return Returns the token.
-     */
-    public String getToken() {
-        return m_token;
-    }
+	/** The token. */
+	private String m_token;
+	
+	/**
+	 * @return Returns the token.
+	 */
+	public String getToken() {
+		return m_token;
+	}
 
-    /**
-     * @param token
-     *            The token to set.
-     */
-    public void setToken(String token) {
-        m_token = token;
-    }
+	/**
+	 * @param token
+	 *            The token to set.
+	 */
+	public void setToken(String token) {
+		m_token = token;
+	}
 }

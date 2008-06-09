@@ -31,10 +31,10 @@ import javax.swing.ListCellRenderer;
  * @author Stefan Wismer (SWI)
  */
 public interface ComboBoxRenderer extends ListCellRenderer {
-    /**
-     * @param property    the property to render
-     */
-    public void setProperty(String property);
-    
-    
+	/**
+	 * @param property    the property to render
+	 */
+	public void setProperty(String property);
+	
+	
 }

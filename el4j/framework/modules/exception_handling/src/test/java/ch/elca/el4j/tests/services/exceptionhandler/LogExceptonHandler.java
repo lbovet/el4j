@@ -37,17 +37,17 @@ import ch.elca.el4j.services.exceptionhandler.handler.SimpleLogExceptionHandler;
  */
 public class LogExceptonHandler extends SimpleLogExceptionHandler {
 
-    /** Number of handle calls. */
-    public static int s_numberOfHandleCalls = 0;
+	/** Number of handle calls. */
+	public static int s_numberOfHandleCalls = 0;
 
-    /**
-     * {@inheritDoc}
-     */
-    protected Object handleException(Throwable t,
-            AbstractExceptionHandlerInterceptor exceptionInvoker,
-            MethodInvocation invocation, Log logger) throws Throwable {
-        
-        s_numberOfHandleCalls++;
-        return super.handleException(t, exceptionInvoker, invocation, logger);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	protected Object handleException(Throwable t,
+			AbstractExceptionHandlerInterceptor exceptionInvoker,
+			MethodInvocation invocation, Log logger) throws Throwable {
+		
+		s_numberOfHandleCalls++;
+		return super.handleException(t, exceptionInvoker, invocation, logger);
+	}
 }

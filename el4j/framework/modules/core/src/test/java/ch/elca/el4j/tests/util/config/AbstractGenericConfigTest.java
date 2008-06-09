@@ -38,51 +38,51 @@ import ch.elca.el4j.util.config.GenericConfig;
  * @author Stefan Wismer (SWI)
  */
 public abstract class AbstractGenericConfigTest {
-    /***/
-    @Test
-    public void testGenericConfig() {
-        GenericConfig config = getDefaultConfig();
-        assertTrue(config.get("class").equals("DefaultConfig"));
-        assertTrue(config.get("DefaultConfig").equals("DefaultConfig"));
-        assertTrue(config.getMap().size() == 2);
-    }
-    
-    /***/
-    @Test
-    public void testSpecificConfig() {
-        GenericConfig config = getSpecificConfig();
-        assertTrue(config.get("class").equals("SpecificConfig"));
-        assertTrue(config.get("DefaultConfig").equals("DefaultConfig"));
-        assertTrue(config.get("SpecificConfig").equals("SpecificConfig"));
-        assertTrue(config.getMap().size() == 3);
-    }
-    
-    /***/
-    @Test
-    public void testMoreSpecificConfig() {
-        GenericConfig config = getMoreSpecificConfig();
-        assertTrue(config.get("class").equals("MoreSpecificConfig"));
-        assertTrue(config.get("MoreSpecificConfig")
-            .equals("MoreSpecificConfig"));
-        assertTrue(config.get("SpecificConfig").equals("SpecificConfig"));
-        assertTrue(config.get("DefaultConfig").equals("DefaultConfig"));
-        assertTrue(config.getMap().size() == 4);
-    }
-    
-    /**
-     * @return    the default configuration
-     */
-    protected abstract GenericConfig getDefaultConfig();
-    
-    /**
-     * @return    the specific configuration
-     */
-    protected abstract GenericConfig getSpecificConfig();
-    
-    /**
-     * @return    the more specific configuration
-     */
-    protected abstract GenericConfig getMoreSpecificConfig();
+	/***/
+	@Test
+	public void testGenericConfig() {
+		GenericConfig config = getDefaultConfig();
+		assertTrue(config.get("class").equals("DefaultConfig"));
+		assertTrue(config.get("DefaultConfig").equals("DefaultConfig"));
+		assertTrue(config.getMap().size() == 2);
+	}
+	
+	/***/
+	@Test
+	public void testSpecificConfig() {
+		GenericConfig config = getSpecificConfig();
+		assertTrue(config.get("class").equals("SpecificConfig"));
+		assertTrue(config.get("DefaultConfig").equals("DefaultConfig"));
+		assertTrue(config.get("SpecificConfig").equals("SpecificConfig"));
+		assertTrue(config.getMap().size() == 3);
+	}
+	
+	/***/
+	@Test
+	public void testMoreSpecificConfig() {
+		GenericConfig config = getMoreSpecificConfig();
+		assertTrue(config.get("class").equals("MoreSpecificConfig"));
+		assertTrue(config.get("MoreSpecificConfig")
+			.equals("MoreSpecificConfig"));
+		assertTrue(config.get("SpecificConfig").equals("SpecificConfig"));
+		assertTrue(config.get("DefaultConfig").equals("DefaultConfig"));
+		assertTrue(config.getMap().size() == 4);
+	}
+	
+	/**
+	 * @return    the default configuration
+	 */
+	protected abstract GenericConfig getDefaultConfig();
+	
+	/**
+	 * @return    the specific configuration
+	 */
+	protected abstract GenericConfig getSpecificConfig();
+	
+	/**
+	 * @return    the more specific configuration
+	 */
+	protected abstract GenericConfig getMoreSpecificConfig();
 }
 
 //Checkstyle: EmptyBlock on

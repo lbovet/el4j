@@ -29,44 +29,44 @@ package ch.elca.el4j.apps.refdb;
  * @author Martin Zeltner (MZE)
  */
 public final class Constants {
-    /**
-     * Is the string representation of an annotation.
-     */
-    public static final String ANNOTATION = "Annotation";
+	/**
+	 * Is the string representation of an annotation.
+	 */
+	public static final String ANNOTATION = "Annotation";
 
-    /**
-     * Is the string representation of a file.
-     */
-    public static final String FILE = "File";
+	/**
+	 * Is the string representation of a file.
+	 */
+	public static final String FILE = "File";
 
-    /**
-     * Is the string representation of a file descriptor view.
-     */
-    public static final String FILE_DESCRIPTOR_VIEW = "FileDescriptorView";
+	/**
+	 * Is the string representation of a file descriptor view.
+	 */
+	public static final String FILE_DESCRIPTOR_VIEW = "FileDescriptorView";
 
-    /**
-     * Is the string representation of a reference.
-     */
-    public static final String REFERENCE = "Reference";
+	/**
+	 * Is the string representation of a reference.
+	 */
+	public static final String REFERENCE = "Reference";
 
-    /**
-     * Is the string representation of a link.
-     */
-    public static final String LINK = "Link";
-    
-    /**
-     * Is the string representation of a formal publication.
-     */
-    public static final String FORMAL_PUBLICATION = "FormalPublication";
+	/**
+	 * Is the string representation of a link.
+	 */
+	public static final String LINK = "Link";
+	
+	/**
+	 * Is the string representation of a formal publication.
+	 */
+	public static final String FORMAL_PUBLICATION = "FormalPublication";
 
-    /**
-     * Is the string representation of a book.
-     */
-    public static final String BOOK = "Book";
-    
-    /**
-     * Is the string representation of a reference keyword relationship.
-     */
-    public static final String REFERENCE_KEYWORD_RELATIONSHIP 
-        = "ReferenceKeywordRelationship";
+	/**
+	 * Is the string representation of a book.
+	 */
+	public static final String BOOK = "Book";
+	
+	/**
+	 * Is the string representation of a reference keyword relationship.
+	 */
+	public static final String REFERENCE_KEYWORD_RELATIONSHIP
+		= "ReferenceKeywordRelationship";
 }

@@ -29,7 +29,7 @@ import ch.elca.el4j.util.collections.helpers.Function;
 
 /**
  * A default implementation of the ExtendedWritableList interface.
- * 
+ *
  * @param <T> the member type
  *
  * <script type="text/javascript">printFileStatus
@@ -41,80 +41,80 @@ import ch.elca.el4j.util.collections.helpers.Function;
  *
  * @author Adrian Moos (AMS)
  */
-public class ExtendedArrayList<T> extends ArrayList<T> 
-    implements ExtendedWritableList<T> {
-    
-    /** creates an empty list. */
-    public ExtendedArrayList() { }
-    
-    /** creates a list containing the arguments.
-     * @param ts .
-     */
-    public ExtendedArrayList(T... ts) {
-        add(ts);
-    }
-    
-    /** Creates a list by shallow-copying {@code iter}.
-     * @param iter the iterable to copy.
-     */
-    public ExtendedArrayList(Iterable<T> iter) {
-        for (T t : iter) {
-            add(t);
-        }
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void add(T... ts) {
-        for (T t : ts) {
-            add(t);
-        }
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void remove(T... ts) {
-        for (T t : ts) {
-            remove(t);
-        }        
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void swap(int i, int j) {
-        T t = get(i);
-        set(i, get(j));
-        set(j, t);
-    }
+public class ExtendedArrayList<T> extends ArrayList<T>
+	implements ExtendedWritableList<T> {
+	
+	/** creates an empty list. */
+	public ExtendedArrayList() { }
+	
+	/** creates a list containing the arguments.
+	 * @param ts .
+	 */
+	public ExtendedArrayList(T... ts) {
+		add(ts);
+	}
+	
+	/** Creates a list by shallow-copying {@code iter}.
+	 * @param iter the iterable to copy.
+	 */
+	public ExtendedArrayList(Iterable<T> iter) {
+		for (T t : iter) {
+			add(t);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void add(T... ts) {
+		for (T t : ts) {
+			add(t);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void remove(T... ts) {
+		for (T t : ts) {
+			remove(t);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void swap(int i, int j) {
+		T t = get(i);
+		set(i, get(j));
+		set(j, t);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void orderLike(List<? extends T> example) 
-        throws NoSuchElementException {
-        
-        CollectionUtils.orderLike(this, example);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void orderLike(List<? extends T> example)
+		throws NoSuchElementException {
+		
+		CollectionUtils.orderLike(this, example);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public T[] toArray(Class<T> c) {
-        return CollectionUtils.toArray(this, c);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public T[] toArray(Class<T> c) {
+		return CollectionUtils.toArray(this, c);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public <O> TransformedList<T, O> mapped(Function<? super T, O> function) {
-        return new DefaultTransformedList<T, O>(this, function);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public <O> TransformedList<T, O> mapped(Function<? super T, O> function) {
+		return new DefaultTransformedList<T, O>(this, function);
+	}
 
-    /** {@inheritDoc} */
-    public FilteredList<T> filtered(Filter<? super T> filter) {
-        return new DefaultFilteredList<T>(this, filter);
-    }
+	/** {@inheritDoc} */
+	public FilteredList<T> filtered(Filter<? super T> filter) {
+		return new DefaultFilteredList<T>(this, filter);
+	}
 }

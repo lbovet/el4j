@@ -43,137 +43,137 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
  * @author Philippe Jacot (PJA)
  */
 public class TestImplicitXFireContextPassingRegistry implements
-        ImplicitContextPassingRegistry {
-    /**
-     * 
-     */   
-    private static final int CALCULATOR_INT = 42;
-    
-    /**
-     * 
-     */
-    private static final double CALCULATOR_DOUBLE = 1.23456;
-    
-    /**
-     * 
-     */
-    private static final long CALCULATOR_LONG = Long.MAX_VALUE - CALCULATOR_INT;
-    
-    /**
-     * 
-     */
-    private static final String CALCULATOR_STRING = "Hey, you're invited to a "
-        + "Schadenfreude party";
-    
-    /**
-     * 
-     */
-    private static final String[] CALCULATOR_STRING_ARRAY = new String[]{
-        "Hm, I don't know what 'Schadenfreude' means, but OK'", 
-        "Too bad, you're not invited"};
-    
-    /**
-     * 
-     */
-    private static final int[] CALCULATOR_INT_ARRAY 
-        = new int[]{0, -1, 2, -3, 4, -5, 6, -7};
-    
-    /**
-     * 
-     */
-    private static final  byte[] CALCULATOR_BYTE_ARRAY 
-        = new byte[]{1, 2, 3, 4, 5, 6, 7, 8};
-    
-    /**
-     * 
-     */
-    private static final String CALCULATOR_CONTEXT = "calculatorValueObject";
-    
-    /**
-     * Private logger.
-     */
-    private static Log s_logger = LogFactory
-            .getLog(TestImplicitXFireContextPassingRegistry.class);
+		ImplicitContextPassingRegistry {
+	/**
+	 *
+	 */
+	private static final int CALCULATOR_INT = 42;
+	
+	/**
+	 *
+	 */
+	private static final double CALCULATOR_DOUBLE = 1.23456;
+	
+	/**
+	 *
+	 */
+	private static final long CALCULATOR_LONG = Long.MAX_VALUE - CALCULATOR_INT;
+	
+	/**
+	 *
+	 */
+	private static final String CALCULATOR_STRING = "Hey, you're invited to a "
+		+ "Schadenfreude party";
+	
+	/**
+	 *
+	 */
+	private static final String[] CALCULATOR_STRING_ARRAY = new String[]{
+		"Hm, I don't know what 'Schadenfreude' means, but OK'",
+		"Too bad, you're not invited"};
+	
+	/**
+	 *
+	 */
+	private static final int[] CALCULATOR_INT_ARRAY
+		= new int[]{0, -1, 2, -3, 4, -5, 6, -7};
+	
+	/**
+	 *
+	 */
+	private static final  byte[] CALCULATOR_BYTE_ARRAY
+		= new byte[]{1, 2, 3, 4, 5, 6, 7, 8};
+	
+	/**
+	 *
+	 */
+	private static final String CALCULATOR_CONTEXT = "calculatorValueObject";
+	
+	/**
+	 * Private logger.
+	 */
+	private static Log s_logger = LogFactory
+			.getLog(TestImplicitXFireContextPassingRegistry.class);
 
-    /**
-     * {@inheritDoc}
-     */
-    public void registerImplicitContextPasser(
-        ImplicitContextPasser passer) {
-        // Do nothing.
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void registerImplicitContextPasser(
+		ImplicitContextPasser passer) {
+		// Do nothing.
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void unregisterImplicitContextPasser(
-        ImplicitContextPasser passer) {
-        // Do nothing.
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public Map getAssembledImplicitContext() {
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("testMessage", "Hello everybody, I am THE test message.");
-        
-        TestXFireContextPassingValue valueObject 
-            = new TestXFireContextPassingValue();
-        valueObject.setMyInt(CALCULATOR_INT);
-        valueObject.setMyByteArray(CALCULATOR_BYTE_ARRAY);
-        valueObject.setMyDouble(CALCULATOR_DOUBLE);
-        valueObject.setMyIntArray(CALCULATOR_INT_ARRAY);
-        valueObject.setMyLong(CALCULATOR_LONG);
-        valueObject.setMyString(CALCULATOR_STRING);
-        valueObject.setMyStringArray(CALCULATOR_STRING_ARRAY);
-        map.put(CALCULATOR_CONTEXT, valueObject);
-        
-        return map;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void unregisterImplicitContextPasser(
+		ImplicitContextPasser passer) {
+		// Do nothing.
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public Map getAssembledImplicitContext() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("testMessage", "Hello everybody, I am THE test message.");
+		
+		TestXFireContextPassingValue valueObject
+			= new TestXFireContextPassingValue();
+		valueObject.setMyInt(CALCULATOR_INT);
+		valueObject.setMyByteArray(CALCULATOR_BYTE_ARRAY);
+		valueObject.setMyDouble(CALCULATOR_DOUBLE);
+		valueObject.setMyIntArray(CALCULATOR_INT_ARRAY);
+		valueObject.setMyLong(CALCULATOR_LONG);
+		valueObject.setMyString(CALCULATOR_STRING);
+		valueObject.setMyStringArray(CALCULATOR_STRING_ARRAY);
+		map.put(CALCULATOR_CONTEXT, valueObject);
+		
+		return map;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void pushAssembledImplicitContext(Map contexts) {
-        s_logger.info("Test message: " + contexts.get("testMessage"));
-        
-        // Test if the passed map contains the expected value object
-//        TestXFireContextPassingValue o 
+	/**
+	 * {@inheritDoc}
+	 */
+	public void pushAssembledImplicitContext(Map contexts) {
+		s_logger.info("Test message: " + contexts.get("testMessage"));
+		
+		// Test if the passed map contains the expected value object
+//        TestXFireContextPassingValue o
 //            = (TestXFireContextPassingValue) contexts.get(CALCULATOR_CONTEXT);
-//        
-//        // For some reason 
+//
+//        // For some reason
 //        // junit.framework.Assert.assertEquals
 //        // Does not work (Java 5 keyword assert problem?)
 //        // Therefore it's handmade here ;)
-//        
+//
 //        if (o.getMyInt() != CALCULATOR_INT) {
 //            throw new IllegalStateException("MyInt changed");
 //        }
-//        
+//
 //        if (o.getMyDouble() != CALCULATOR_DOUBLE) {
 //            throw new IllegalStateException("MyDouble changed");
 //        }
-//        
+//
 //        if (o.getMyLong() != CALCULATOR_LONG) {
 //            throw new IllegalStateException("MyLong changed");
 //        }
-//        
+//
 //        if (!o.getMyString().equals(CALCULATOR_STRING)) {
 //            throw new IllegalStateException("MyString changed");
 //        }
-//        
+//
 //        if (!Arrays.equals(o.getMyByteArray(), CALCULATOR_BYTE_ARRAY)) {
 //            throw new IllegalStateException("MyByteArray changed");
 //        }
-//        
+//
 //        if (!Arrays.equals(o.getMyIntArray(), CALCULATOR_INT_ARRAY)) {
 //            throw new IllegalStateException("MyIntArray changed");
 //        }
-//        
+//
 //        if (!Arrays.equals(o.getMyStringArray(), CALCULATOR_STRING_ARRAY)) {
 //            throw new IllegalStateException("MyStringArray changed");
-//        }        
-    }
-   
+//        }
+	}
+
 }

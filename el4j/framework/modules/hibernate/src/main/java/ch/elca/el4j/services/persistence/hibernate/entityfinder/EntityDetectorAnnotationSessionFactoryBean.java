@@ -17,17 +17,17 @@ import org.springframework.util.StringUtils;
  * Extends <a
  * href="http://www.springframework.org/docs/api/org/springframework/orm/hibernate3/annotation/AnnotationSessionFactoryBean.html"
  * target="_new">AnnotationSessionFactoryBean</a>. <br>
- * 
- * Detects all classes that have a \@Entity annotation under a given parent package 
+ *
+ * Detects all classes that have a \@Entity annotation under a given parent package
  * (indicated with the property <code>autoDetectEntityPackage</code>). <a>
- * 
- * 
+ *
+ *
  * Source of the idea: secutix project
  */
-public class EntityDetectorAnnotationSessionFactoryBean extends AnnotationSessionFactoryBean 
+public class EntityDetectorAnnotationSessionFactoryBean extends AnnotationSessionFactoryBean
 	implements InitializingBean {
 
-	private static final Log s_logger = 
+	private static final Log s_logger =
 		LogFactory.getLog(EntityDetectorAnnotationSessionFactoryBean.class);
 
 	/**
@@ -44,7 +44,7 @@ public class EntityDetectorAnnotationSessionFactoryBean extends AnnotationSessio
 	/**
 	 * Sets the 1 or n packages in which the entities are defined
 	 *  Sample package: "org.hibernate.tests.entities"
-	 * 
+	 *
 	 * @param pack
 	 *            The parent package name that contains the target entities
 	 *            	(as strings)
@@ -84,13 +84,13 @@ public class EntityDetectorAnnotationSessionFactoryBean extends AnnotationSessio
 		return localAnnotatedClasses;
 	}
 
-	/** 
+	/**
 	 * really do the searching
 	 */
 	public void afterPropertiesSet() throws Exception {
 		if (getAutoDetectEntityPackage() != null) {
 			ArrayList<Class<?>> classes = new ArrayList<Class<?>>();;
-			try {	
+			try {
 				ClassLocator cl = new ClassLocator(getAutoDetectEntityPackage());
 				for (ClassLocation loc : cl.getAllClassLocations()) {
 					Class<?> clazz = Class.forName(loc.getClassName());
@@ -112,8 +112,8 @@ public class EntityDetectorAnnotationSessionFactoryBean extends AnnotationSessio
 				}
 
 				localAnnotatedClasses = (Class[]) classes.toArray(new Class[classes.size()]);
-				s_logger.debug("number of classes detected:"+localAnnotatedClasses.length);		
-				super.setAnnotatedClasses(localAnnotatedClasses);				
+				s_logger.debug("number of classes detected:"+localAnnotatedClasses.length);
+				super.setAnnotatedClasses(localAnnotatedClasses);
 
 			} catch (Exception e) {
 				s_logger.fatal(e);

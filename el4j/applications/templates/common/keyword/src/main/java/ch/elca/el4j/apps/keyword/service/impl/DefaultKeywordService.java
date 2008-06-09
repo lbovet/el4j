@@ -32,9 +32,9 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 
 /**
- * 
+ *
  * This is the default implementation of the keyword service.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -46,75 +46,75 @@ import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
  * @author Adrian Moos (AMS)
  */
 public class DefaultKeywordService
-    implements KeywordService, InitializingBean {
-    
-    /**
-     * Hibernate DAO registry.
-     */
-    protected DaoRegistry m_daoRegistry;
+	implements KeywordService, InitializingBean {
+	
+	/**
+	 * Hibernate DAO registry.
+	 */
+	protected DaoRegistry m_daoRegistry;
 
-    /** 
-     * Constructor.
-     */
-    public DefaultKeywordService() { }
-    
-    /**
-     * @return The DAO registry
-     */
-    public DaoRegistry getDaoRegistry() {
-        return m_daoRegistry;
-    }
-    
-    /**
-     * @param reg
-     *            The DaoRegistry to set
-     */
-    public void setDaoRegistry(DaoRegistry reg) {
-        m_daoRegistry = reg;
-    }
-    
-    /**
-     * Returns the DAO for keywords.
-     * 
-     * @return The DAO for keywords
-     */
-    protected KeywordDao getKeywordDao() {
-        return (KeywordDao) getDaoRegistry().getFor(Keyword.class);
-    }
-    /**
-     * {@inheritDoc}
-     */
-    public void afterPropertiesSet() throws Exception {
-    	    	
-        CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-            getKeywordDao(), "keywordDao",
-            this);
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void deleteKeywords(Collection<?> keys)
-        throws OptimisticLockingFailureException, DataAccessException {
-        if (keys != null) {
-            Iterator<?> it = keys.iterator();
-            while (it.hasNext()) {
-                Object element = it.next();
-                if (element instanceof Number) {
-                    int key = ((Number) element).intValue();
-                    getKeywordDao().delete(key);
-                } else if (element instanceof String) {
-                    int key = Integer.parseInt((String) element);
-                    getKeywordDao().delete(key);
-                } else {
-                    CoreNotificationHelper.notifyMisconfiguration(
-                        "Given keys must be of type number or string. "
-                        + "Given key element is of type " 
-                        + element.getClass() + ".");
-                }
-            }
-        }    
-    }
+	/**
+	 * Constructor.
+	 */
+	public DefaultKeywordService() { }
+	
+	/**
+	 * @return The DAO registry
+	 */
+	public DaoRegistry getDaoRegistry() {
+		return m_daoRegistry;
+	}
+	
+	/**
+	 * @param reg
+	 *            The DaoRegistry to set
+	 */
+	public void setDaoRegistry(DaoRegistry reg) {
+		m_daoRegistry = reg;
+	}
+	
+	/**
+	 * Returns the DAO for keywords.
+	 *
+	 * @return The DAO for keywords
+	 */
+	protected KeywordDao getKeywordDao() {
+		return (KeywordDao) getDaoRegistry().getFor(Keyword.class);
+	}
+	/**
+	 * {@inheritDoc}
+	 */
+	public void afterPropertiesSet() throws Exception {
+				
+		CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+			getKeywordDao(), "keywordDao",
+			this);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void deleteKeywords(Collection<?> keys)
+		throws OptimisticLockingFailureException, DataAccessException {
+		if (keys != null) {
+			Iterator<?> it = keys.iterator();
+			while (it.hasNext()) {
+				Object element = it.next();
+				if (element instanceof Number) {
+					int key = ((Number) element).intValue();
+					getKeywordDao().delete(key);
+				} else if (element instanceof String) {
+					int key = Integer.parseInt((String) element);
+					getKeywordDao().delete(key);
+				} else {
+					CoreNotificationHelper.notifyMisconfiguration(
+						"Given keys must be of type number or string. "
+						+ "Given key element is of type "
+						+ element.getClass() + ".");
+				}
+			}
+		}
+	}
 
 }

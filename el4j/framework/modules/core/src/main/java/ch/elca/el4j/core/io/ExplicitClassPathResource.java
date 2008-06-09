@@ -38,42 +38,42 @@ import org.springframework.util.Assert;
  * @author Martin Zeltner (MZE)
  */
 public class ExplicitClassPathResource extends ClassPathResource {
-    /**
-     * See {@link #getURL()}.
-     */
-    private URL m_url;
+	/**
+	 * See {@link #getURL()}.
+	 */
+	private URL m_url;
 
-    /**
-     * Constructor with an explicit url for the given class path resource.
-     * 
-     * @param url
-     *            The explicit url for this class path resource.
-     * @param path
-     *            The path to get this resource from class loader. This path can
-     *            return a different resource than the given url points to.
-     * @param classLoader
-     *            The class loader used to load the given url. 
-     */
-    public ExplicitClassPathResource(URL url, String path, 
-        ClassLoader classLoader) {
-        super(path, classLoader);
-        Assert.notNull(url);
-        m_url = url;
-    }
-    
-    /**
-     * @return Returns the explicit url for this class path resource.
-     */
-    @Override
-    public URL getURL() throws IOException {
-        return m_url;
-    }
-    
-    /**
-     * @return Returns the input stream of the given url.
-     */
-    @Override
-    public InputStream getInputStream() throws IOException {
-        return m_url.openStream();
-    }
+	/**
+	 * Constructor with an explicit url for the given class path resource.
+	 *
+	 * @param url
+	 *            The explicit url for this class path resource.
+	 * @param path
+	 *            The path to get this resource from class loader. This path can
+	 *            return a different resource than the given url points to.
+	 * @param classLoader
+	 *            The class loader used to load the given url.
+	 */
+	public ExplicitClassPathResource(URL url, String path,
+		ClassLoader classLoader) {
+		super(path, classLoader);
+		Assert.notNull(url);
+		m_url = url;
+	}
+	
+	/**
+	 * @return Returns the explicit url for this class path resource.
+	 */
+	@Override
+	public URL getURL() throws IOException {
+		return m_url;
+	}
+	
+	/**
+	 * @return Returns the input stream of the given url.
+	 */
+	@Override
+	public InputStream getInputStream() throws IOException {
+		return m_url.openStream();
+	}
 }

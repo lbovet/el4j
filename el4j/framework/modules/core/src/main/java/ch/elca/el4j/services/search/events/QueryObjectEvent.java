@@ -41,71 +41,71 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * @author Martin Zeltner (MZE)
  */
 public class QueryObjectEvent extends ApplicationEvent {
-    /**
-     * Are the query objecs of this event.
-     */
-    private final List<QueryObject> m_queryObjects;
+	/**
+	 * Are the query objecs of this event.
+	 */
+	private final List<QueryObject> m_queryObjects;
 
-    /**
-     * Constructor for one query object.
-     * 
-     * @param source Is the place this event has been created.
-     * @param queryObject Is the query object of this event.
-     */
-    public QueryObjectEvent(Object source, QueryObject queryObject) {
-        super(source);
-        Reject.ifNull(queryObject);
-        List<QueryObject> queryObjects = new ArrayList<QueryObject>();
-        queryObjects.add(queryObject);
-        m_queryObjects = Collections.unmodifiableList(queryObjects);
-    }
-    
-    /**
-     * Constructor for multiple query objects.
-     * 
-     * @param source Is the place this event has been created.
-     * @param queryObjects Are the query objects of this event.
-     */
-    public QueryObjectEvent(Object source, Collection<QueryObject> queryObjects) {
-        super(source);
-        Reject.ifEmpty(queryObjects, "Minimum one query object required.");
-        CollectionUtils.containsOnlyObjectsOfType(
-            queryObjects, QueryObject.class);
-        m_queryObjects 
-            = Collections.unmodifiableList(new ArrayList<QueryObject>(queryObjects));
-    }
+	/**
+	 * Constructor for one query object.
+	 *
+	 * @param source Is the place this event has been created.
+	 * @param queryObject Is the query object of this event.
+	 */
+	public QueryObjectEvent(Object source, QueryObject queryObject) {
+		super(source);
+		Reject.ifNull(queryObject);
+		List<QueryObject> queryObjects = new ArrayList<QueryObject>();
+		queryObjects.add(queryObject);
+		m_queryObjects = Collections.unmodifiableList(queryObjects);
+	}
+	
+	/**
+	 * Constructor for multiple query objects.
+	 *
+	 * @param source Is the place this event has been created.
+	 * @param queryObjects Are the query objects of this event.
+	 */
+	public QueryObjectEvent(Object source, Collection<QueryObject> queryObjects) {
+		super(source);
+		Reject.ifEmpty(queryObjects, "Minimum one query object required.");
+		CollectionUtils.containsOnlyObjectsOfType(
+			queryObjects, QueryObject.class);
+		m_queryObjects
+			= Collections.unmodifiableList(new ArrayList<QueryObject>(queryObjects));
+	}
 
-    
-    /**
-     * @return Returns the first unspecific query object of this event. This has
-     *         the same effect as method invocation
-     *         {@link #getQueryObject(Class)} with <code>null</code>.
-     */
-    public QueryObject getQueryObject() {
-        return getQueryObject(null);
-    }
-    
-    /**
-     * @param beanClass
-     *            Is the bean class the requested query object must be made for.
-     * @return Returns the query object that is made for the given bean class.
-     */
-    public QueryObject getQueryObject(Class<?> beanClass) {
-        QueryObject queryObject = null;
-        Iterator<QueryObject> it = m_queryObjects.iterator();
-        while (queryObject == null && it.hasNext()) {
-            QueryObject element = (QueryObject) it.next();
-            if (element.getBeanClass() == beanClass) {
-                queryObject = element;
-            }
-        }
-        return queryObject;
-    }
-    
-    /**
-     * @return Returns the list of query objects of this event.
-     */
-    public List<QueryObject> getQueryObjects() {
-        return m_queryObjects;
-    }
+	
+	/**
+	 * @return Returns the first unspecific query object of this event. This has
+	 *         the same effect as method invocation
+	 *         {@link #getQueryObject(Class)} with <code>null</code>.
+	 */
+	public QueryObject getQueryObject() {
+		return getQueryObject(null);
+	}
+	
+	/**
+	 * @param beanClass
+	 *            Is the bean class the requested query object must be made for.
+	 * @return Returns the query object that is made for the given bean class.
+	 */
+	public QueryObject getQueryObject(Class<?> beanClass) {
+		QueryObject queryObject = null;
+		Iterator<QueryObject> it = m_queryObjects.iterator();
+		while (queryObject == null && it.hasNext()) {
+			QueryObject element = (QueryObject) it.next();
+			if (element.getBeanClass() == beanClass) {
+				queryObject = element;
+			}
+		}
+		return queryObject;
+	}
+	
+	/**
+	 * @return Returns the list of query objects of this event.
+	 */
+	public List<QueryObject> getQueryObjects() {
+		return m_queryObjects;
+	}
 }

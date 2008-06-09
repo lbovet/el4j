@@ -17,7 +17,7 @@
 package ch.elca.el4j.demos.statistics.detailed.internal;
 
 /**
- * This class is a dummy interface for presentation purposes for the 
+ * This class is a dummy interface for presentation purposes for the
  * detailed statistics demo.
  *
  * <script type="text/javascript">printFileStatus
@@ -30,11 +30,11 @@ package ch.elca.el4j.demos.statistics.detailed.internal;
  * @author David Stefan (DST)
  */
 public interface DemoA {
-    
-    /**
-     * Dummy computation for demo statistics.
-     * @param number Simple counter
-     */
-    public void computeA(int number);
+	
+	/**
+	 * Dummy computation for demo statistics.
+	 * @param number Simple counter
+	 */
+	public void computeA(int number);
 
 }

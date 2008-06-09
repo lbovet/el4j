@@ -19,7 +19,7 @@ package ch.elca.el4j.apps.refdb.dao;
 import ch.elca.el4j.apps.refdb.dom.Book;
 
 /**
- * 
+ *
  * This interface represents a DAO for the book domain object.
  * Specific data access operations for this entity can be introduced here.
  *

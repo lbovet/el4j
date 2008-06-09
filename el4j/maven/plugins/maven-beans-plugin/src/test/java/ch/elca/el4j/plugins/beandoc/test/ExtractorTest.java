@@ -37,32 +37,32 @@ import junit.framework.TestCase;
  */
 public class ExtractorTest extends TestCase {
 
-    /** Reading from java file. */
-    public void testJava() throws Exception {
-        Resource res = new ClassPathResource("SampleJavaFile.java");
-        
-        ConfigurationExtractor ex 
-            = new ConfigurationExtractor(res.getFile()
-                .getAbsoluteFile().toString());
-        
-        String[] expectedIncludes = {
-            "classpath*:mandatory/*.xml",
-            "classpath:demo/demo*.xml"
-        };
-        
-        String[] expectedExcludes = {
-            "classpath*:exclude-*.xml"
-        };
-        
-        assertEquals(expectedIncludes.length, ex.getInclusive().length);
-        assertEquals(expectedExcludes.length, ex.getExclusive().length);
-        
-        for (int i = 0; i < expectedIncludes.length; i++) {
-            assertEquals(expectedIncludes[i], ex.getInclusive()[i]);
-        }
-        
-        for (int i = 0; i < expectedExcludes.length; i++) {
-            assertEquals(expectedExcludes[i], ex.getExclusive()[i]);
-        }
-    }
+	/** Reading from java file. */
+	public void testJava() throws Exception {
+		Resource res = new ClassPathResource("SampleJavaFile.java");
+		
+		ConfigurationExtractor ex
+			= new ConfigurationExtractor(res.getFile()
+				.getAbsoluteFile().toString());
+		
+		String[] expectedIncludes = {
+			"classpath*:mandatory/*.xml",
+			"classpath:demo/demo*.xml"
+		};
+		
+		String[] expectedExcludes = {
+			"classpath*:exclude-*.xml"
+		};
+		
+		assertEquals(expectedIncludes.length, ex.getInclusive().length);
+		assertEquals(expectedExcludes.length, ex.getExclusive().length);
+		
+		for (int i = 0; i < expectedIncludes.length; i++) {
+			assertEquals(expectedIncludes[i], ex.getInclusive()[i]);
+		}
+		
+		for (int i = 0; i < expectedExcludes.length; i++) {
+			assertEquals(expectedExcludes[i], ex.getExclusive()[i]);
+		}
+	}
 }

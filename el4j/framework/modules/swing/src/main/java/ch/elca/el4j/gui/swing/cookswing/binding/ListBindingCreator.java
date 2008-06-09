@@ -49,46 +49,46 @@ import cookxml.core.exception.CreatorException;
  * @author Stefan Wismer (SWI)
  */
 public class ListBindingCreator extends AbstractBindingCreator {
-    // <listbinding> specific attributes
-    protected static final String RENDERER = "rendererBean";
-    
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    public Object create(String parentNS, String parentTag, Element elm,
-        Object parentObj, DecodeEngine decodeEngine) throws CreatorException {
-        
-        UpdateStrategy updateStrategy = getUpdateStrategy(elm);
-        Property prop = BeanProperty.create(elm.getAttribute(PROPERTY));
-        
-        List listSource = (List) getSource(decodeEngine, elm);
-        if (listSource == null) {
-            return null;
-        }
-        JList list = (JList) parentObj;
-        
-        // renderer and validation
-        String renderer = elm.getAttribute(RENDERER);
-        if (renderer.equals("")) {
-            if (getValidate(elm)) {
-                GenericConfig config = GUIApplication.getInstance().getConfig();
-                list.setCellRenderer((ListCellRenderer) config
-                    .get("cellRenderer"));
-            }
-        } else {
-            ApplicationContext ctx
-                = GUIApplication.getInstance().getSpringContext();
-            list.setCellRenderer((ListCellRenderer) ctx.getBean(renderer));
-        }
-        
-        // create binding
-        JListBinding lb = SwingBindings.createJListBinding(
-            updateStrategy, listSource, list);
-        
-        // show specified property
-        lb.setDetailBinding(prop);
+	// <listbinding> specific attributes
+	protected static final String RENDERER = "rendererBean";
+	
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	public Object create(String parentNS, String parentTag, Element elm,
+		Object parentObj, DecodeEngine decodeEngine) throws CreatorException {
+		
+		UpdateStrategy updateStrategy = getUpdateStrategy(elm);
+		Property prop = BeanProperty.create(elm.getAttribute(PROPERTY));
+		
+		List listSource = (List) getSource(decodeEngine, elm);
+		if (listSource == null) {
+			return null;
+		}
+		JList list = (JList) parentObj;
+		
+		// renderer and validation
+		String renderer = elm.getAttribute(RENDERER);
+		if (renderer.equals("")) {
+			if (getValidate(elm)) {
+				GenericConfig config = GUIApplication.getInstance().getConfig();
+				list.setCellRenderer((ListCellRenderer) config
+					.get("cellRenderer"));
+			}
+		} else {
+			ApplicationContext ctx
+				= GUIApplication.getInstance().getSpringContext();
+			list.setCellRenderer((ListCellRenderer) ctx.getBean(renderer));
+		}
+		
+		// create binding
+		JListBinding lb = SwingBindings.createJListBinding(
+			updateStrategy, listSource, list);
+		
+		// show specified property
+		lb.setDetailBinding(prop);
 
-        addBinding(decodeEngine, lb);
-        
-        return new NoAddValueHolder<JListBinding>(lb);
-    }
+		addBinding(decodeEngine, lb);
+		
+		return new NoAddValueHolder<JListBinding>(lb);
+	}
 }

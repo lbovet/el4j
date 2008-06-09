@@ -22,7 +22,7 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
 
 
 /**
- * This ImplicitContextPasser passes the DetailedStatisticsSharedContextHolder 
+ * This ImplicitContextPasser passes the DetailedStatisticsSharedContextHolder
  * as implicit context.
  *
  * <script type="text/javascript">printFileStatus
@@ -35,34 +35,34 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
  * @author Rashid Waraich (RWA)
  * @author Philipp Oser (POS)
  */
-public class DetailedStatisticsImplicitContextPasser 
-    extends AbstractImplicitContextPasser {
-    
-    /**
-     * The key to the shared context.
-     */
-    public static final String SHARED_CONTEXT_ID = "detailedStatistics";
+public class DetailedStatisticsImplicitContextPasser
+	extends AbstractImplicitContextPasser {
+	
+	/**
+	 * The key to the shared context.
+	 */
+	public static final String SHARED_CONTEXT_ID = "detailedStatistics";
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object getImplicitlyPassedContext() {
-        return DetailedStatisticsSharedContextHolder.getContext();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object getImplicitlyPassedContext() {
+		return DetailedStatisticsSharedContextHolder.getContext();
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void pushImplicitlyPassedContext(Object context) {
-        DetailedStatisticsSharedContextHolder.setContext(
-            ((DetailedStatisticsContext) context));
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void pushImplicitlyPassedContext(Object context) {
+		DetailedStatisticsSharedContextHolder.setContext(
+			((DetailedStatisticsContext) context));
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void setImplicitContextPassingRegistry(
-        ImplicitContextPassingRegistry registry) {
-        super.setImplicitContextPassingRegistry(registry);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setImplicitContextPassingRegistry(
+		ImplicitContextPassingRegistry registry) {
+		super.setImplicitContextPassingRegistry(registry);
+	}
 }

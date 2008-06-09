@@ -18,7 +18,7 @@ package ch.elca.el4j.util.observer.impl;
 
 /**
  * A computable value.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -30,8 +30,8 @@ package ch.elca.el4j.util.observer.impl;
  * @author Adrian Moos (AMS)
  */
 public interface Computable<T> {
-    /**
-     * @return Returns this computation's result.
-     */
-    T is();
+	/**
+	 * @return Returns this computation's result.
+	 */
+	T is();
 }

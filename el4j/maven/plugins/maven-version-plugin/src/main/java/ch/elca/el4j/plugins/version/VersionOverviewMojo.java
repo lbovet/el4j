@@ -27,55 +27,55 @@ import org.apache.maven.project.MavenProject;
 /**
  * Mojo to create an overview over all subfolder to get an idea of the used
  * artifacts and their versions.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Philippe Jacot (PJA)
  * @goal overview
  * @aggregator
  * @requiresDependencyResolution compile|test
  */
 public class VersionOverviewMojo extends AbstractProjectVersionMojo {
-    /**
-     * All projects in the reactor.
-     * 
-     * @parameter default-value="${reactorProjects}"
-     * @required
-     * @readonly
-     */
-    private List<MavenProject> m_reactorProjects;
-        
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    public void execute() throws MojoExecutionException, MojoFailureException {
-        for (MavenProject project : m_reactorProjects) {
-            // Dependencies
-            for (Artifact dependency : (Set<Artifact>) project
-                .getDependencyArtifacts()) {
-                createOverview(dependency).addOccurence(
-                    new ArtifactOccurence(project, ReferenceType.DEPENDENCY));
-            }
+	/**
+	 * All projects in the reactor.
+	 *
+	 * @parameter default-value="${reactorProjects}"
+	 * @required
+	 * @readonly
+	 */
+	private List<MavenProject> m_reactorProjects;
+		
+	/**
+	 *
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	public void execute() throws MojoExecutionException, MojoFailureException {
+		for (MavenProject project : m_reactorProjects) {
+			// Dependencies
+			for (Artifact dependency : (Set<Artifact>) project
+				.getDependencyArtifacts()) {
+				createOverview(dependency).addOccurence(
+					new ArtifactOccurence(project, ReferenceType.DEPENDENCY));
+			}
 
-            // Plugins
-            for (Artifact plugin 
-                : (Set<Artifact>) project.getPluginArtifacts()) {
-                createOverview(plugin).addOccurence(
-                    new ArtifactOccurence(project, ReferenceType.PLUGIN));
-            }
-        }
+			// Plugins
+			for (Artifact plugin
+				: (Set<Artifact>) project.getPluginArtifacts()) {
+				createOverview(plugin).addOccurence(
+					new ArtifactOccurence(project, ReferenceType.PLUGIN));
+			}
+		}
 
-        
-        // All projects have bee processed, print findings
-        printArtifactOverviews();
-    }
+		
+		// All projects have bee processed, print findings
+		printArtifactOverviews();
+	}
 
 
 

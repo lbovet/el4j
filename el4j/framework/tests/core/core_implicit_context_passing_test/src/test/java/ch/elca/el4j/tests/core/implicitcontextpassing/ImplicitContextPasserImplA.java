@@ -22,102 +22,102 @@ import java.util.List;
 import ch.elca.el4j.core.contextpassing.AbstractImplicitContextPasser;
 
 /**
- * This is the test implicit context passer A with different kinds of data. 
- * 
+ * This is the test implicit context passer A with different kinds of data.
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author David Stefan (DST)
  */
 
-public class ImplicitContextPasserImplA extends AbstractImplicitContextPasser 
-    implements ImplicitContextPassTester {
-    
-    /**
-     * Test data.
-     */
-    private Object m_testData = null;
+public class ImplicitContextPasserImplA extends AbstractImplicitContextPasser
+	implements ImplicitContextPassTester {
+	
+	/**
+	 * Test data.
+	 */
+	private Object m_testData = null;
 
-    /**
-     * Received data.
-     */
-    private Object m_receivedData = null;
+	/**
+	 * Received data.
+	 */
+	private Object m_receivedData = null;
 
-    /**
-     * Set which data to use.
-     * 
-     * @param option
-     *            Kind of data to use
-     */
-    public void setDataToUse(int option) {
-        List<Object> temp;
-        switch (option) {
-            case RESET:
-                m_testData = null;
-                m_receivedData = null;
-                break;
-            case NULL_TEST:
-                m_testData = null;
-                break;
-            case STRING_TEST:
-                m_testData = "This is my test data string";
-                break;
-            case INT_TEST:
-                m_testData = Integer.MIN_VALUE;
-                break;
-            case FLOAT_TEST:
-                m_testData = Float.MAX_VALUE;
-                break;
-            case DOUBLE_TEST:
-                m_testData = Double.NEGATIVE_INFINITY;
-                break;
-            case LIST_TEST:
-                temp = new ArrayList<Object>();
-                temp.add("");
-                temp.add("bar");
-                temp.add(Double.NaN);
-                m_testData = temp;
-                break;
-            case NULL_LIST_TEST:
-                temp = new ArrayList<Object>();
-                m_testData = temp;
-                break;
-            default:
-                throw new RuntimeException("Type of test not supported");
-        }
-    }
+	/**
+	 * Set which data to use.
+	 *
+	 * @param option
+	 *            Kind of data to use
+	 */
+	public void setDataToUse(int option) {
+		List<Object> temp;
+		switch (option) {
+			case RESET:
+				m_testData = null;
+				m_receivedData = null;
+				break;
+			case NULL_TEST:
+				m_testData = null;
+				break;
+			case STRING_TEST:
+				m_testData = "This is my test data string";
+				break;
+			case INT_TEST:
+				m_testData = Integer.MIN_VALUE;
+				break;
+			case FLOAT_TEST:
+				m_testData = Float.MAX_VALUE;
+				break;
+			case DOUBLE_TEST:
+				m_testData = Double.NEGATIVE_INFINITY;
+				break;
+			case LIST_TEST:
+				temp = new ArrayList<Object>();
+				temp.add("");
+				temp.add("bar");
+				temp.add(Double.NaN);
+				m_testData = temp;
+				break;
+			case NULL_LIST_TEST:
+				temp = new ArrayList<Object>();
+				m_testData = temp;
+				break;
+			default:
+				throw new RuntimeException("Type of test not supported");
+		}
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object getImplicitlyPassedContext() {
-        return m_testData;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object getImplicitlyPassedContext() {
+		return m_testData;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void pushImplicitlyPassedContext(Object context) {
-        if (context != null) {
-            m_receivedData = context;
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void pushImplicitlyPassedContext(Object context) {
+		if (context != null) {
+			m_receivedData = context;
+		}
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object getReceivedData() {
-        return m_receivedData;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object getReceivedData() {
+		return m_receivedData;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object getTestData() {
-        return m_testData;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object getTestData() {
+		return m_testData;
+	}
 }

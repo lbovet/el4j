@@ -23,14 +23,14 @@ import java.lang.annotation.RetentionPolicy;
 
 /**
  * The annotated API element is preliminary and subject to major change. The
- * idea for this type was shamelessly stolen from 
- * 
+ * idea for this type was shamelessly stolen from
+ *
  * <p>
  *<a href="http://java.sun.com/j2se/1.5.0/docs/guide/language/annotations.html">
  * http://java.sun.com/j2se/1.5.0/docs/guide/language/annotations.html</a>
- * 
- * 
- * <p> The String argument should detail why the annotated element is 
+ *
+ *
+ * <p> The String argument should detail why the annotated element is
  * preliminary. This annotation itself is preliminary (prototype stage).
  *
  * <script type="text/javascript">printFileStatus
@@ -45,8 +45,8 @@ import java.lang.annotation.RetentionPolicy;
 @Documented
 @Retention(RetentionPolicy.SOURCE)
 @Inherited
-public @interface Preliminary { 
-    /** why this is preliminary. */
-    @Preliminary("lack of known use cases")
-    String value() default "";
+public @interface Preliminary {
+	/** why this is preliminary. */
+	@Preliminary("lack of known use cases")
+	String value() default "";
 }

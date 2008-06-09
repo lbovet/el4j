@@ -29,29 +29,29 @@ package ch.elca.el4j.util.metadata;
  * @author Martin Zeltner (MZE)
  */
 public enum MetaDataType {
-    /**
-     * Java 5 Anntations.
-     */
-    JAVA_5_ANNOTATIONS {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String toString() {
-            return "Java 5 Anntations";
-        }
-    },
-    
-    /**
-     * Apache Commons Attributes.
-     */
-    COMMONS_ATTRIBUTES {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String toString() {
-            return "Apache Commons Attributes";
-        }
-    }
+	/**
+	 * Java 5 Anntations.
+	 */
+	JAVA_5_ANNOTATIONS {
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public String toString() {
+			return "Java 5 Anntations";
+		}
+	},
+	
+	/**
+	 * Apache Commons Attributes.
+	 */
+	COMMONS_ATTRIBUTES {
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public String toString() {
+			return "Apache Commons Attributes";
+		}
+	}
 }

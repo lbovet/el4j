@@ -35,42 +35,42 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * @author Andreas Bur (ABU)
  */
 public class MethodNameExceptionConfiguration extends
-        ClassExceptionConfiguration {
+		ClassExceptionConfiguration {
 
-    /** The method names which this configuration is responsible for. */
-    private String[] m_methodNames;
+	/** The method names which this configuration is responsible for. */
+	private String[] m_methodNames;
 
-    /**
-     * Sets the method names which this exception configuration is responsible
-     * for.
-     * 
-     * @param methodNames
-     *      The method names to set.
-     */
-    public void setMethodNames(String[] methodNames) {
-        m_methodNames = methodNames;
-    }
+	/**
+	 * Sets the method names which this exception configuration is responsible
+	 * for.
+	 *
+	 * @param methodNames
+	 *      The method names to set.
+	 */
+	public void setMethodNames(String[] methodNames) {
+		m_methodNames = methodNames;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public boolean handlesExceptions(Throwable t, MethodInvocation invocation) {
-        if (super.handlesExceptions(t, invocation)) {
-            for (int i = 0; i < m_methodNames.length; i++) {
-                if (m_methodNames[i].equals(invocation.getMethod().getName())) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean handlesExceptions(Throwable t, MethodInvocation invocation) {
+		if (super.handlesExceptions(t, invocation)) {
+			for (int i = 0; i < m_methodNames.length; i++) {
+				if (m_methodNames[i].equals(invocation.getMethod().getName())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void afterPropertiesSet() throws Exception {
-        super.afterPropertiesSet();
-        CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-                m_methodNames, "methodNames", this);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void afterPropertiesSet() throws Exception {
+		super.afterPropertiesSet();
+		CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+				m_methodNames, "methodNames", this);
+	}
 }

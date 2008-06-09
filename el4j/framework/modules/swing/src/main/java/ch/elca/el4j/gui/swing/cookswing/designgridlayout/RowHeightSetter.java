@@ -38,14 +38,14 @@ import zappini.designgridlayout.Row;
  */
 public class RowHeightSetter implements Setter {
 
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    public void setAttribute(String ns, String tag, String attrNS, String attr,
-        Object obj, Object value, DecodeEngine decodeEngine) throws Exception {
-        
-        if (tag.equals("row")) {
-            ((NoAddValueHolder<Row>) obj).getObject()
-                .height(Integer.parseInt((String) value));
-        }
-    }
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	public void setAttribute(String ns, String tag, String attrNS, String attr,
+		Object obj, Object value, DecodeEngine decodeEngine) throws Exception {
+		
+		if (tag.equals("row")) {
+			((NoAddValueHolder<Row>) obj).getObject()
+				.height(Integer.parseInt((String) value));
+		}
+	}
 }

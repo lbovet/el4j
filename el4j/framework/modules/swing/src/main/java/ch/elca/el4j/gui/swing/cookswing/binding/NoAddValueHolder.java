@@ -28,39 +28,39 @@ import cookxml.core.interfaces.NoAdd;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @param <T>    the type of object to hold
  *
  * @author Stefan Wismer (SWI)
  */
 public class NoAddValueHolder<T> implements NoAdd {
-    /**
-     * The hold object.
-     */
-    @SuppressWarnings("unchecked")
-    private T m_object;
-    
-    /**
-     * @param object    the object
-     */
-    @SuppressWarnings("unchecked")
-    public NoAddValueHolder(T object) {
-        m_object = object;
-    }
+	/**
+	 * The hold object.
+	 */
+	@SuppressWarnings("unchecked")
+	private T m_object;
+	
+	/**
+	 * @param object    the object
+	 */
+	@SuppressWarnings("unchecked")
+	public NoAddValueHolder(T object) {
+		m_object = object;
+	}
 
-    /**
-     * @return Returns the object.
-     */
-    @SuppressWarnings("unchecked")
-    public T getObject() {
-        return m_object;
-    }
+	/**
+	 * @return Returns the object.
+	 */
+	@SuppressWarnings("unchecked")
+	public T getObject() {
+		return m_object;
+	}
 
-    /**
-     * @param object Is the object to set.
-     */
-    @SuppressWarnings("unchecked")
-    public void setObject(T object) {
-        m_object = object;
-    }
+	/**
+	 * @param object Is the object to set.
+	 */
+	@SuppressWarnings("unchecked")
+	public void setObject(T object) {
+		m_object = object;
+	}
 }

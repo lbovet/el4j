@@ -31,9 +31,9 @@ import org.hibernate.validator.ClassValidator;
  * @author Stefan Wismer (SWI)
  */
 public interface HibernateValidationCapability {
-    /**
-     * @return      the hibernate classValidator
-     */
-    @SuppressWarnings("unchecked")
-    public ClassValidator getClassValidator();
+	/**
+	 * @return      the hibernate classValidator
+	 */
+	@SuppressWarnings("unchecked")
+	public ClassValidator getClassValidator();
 }

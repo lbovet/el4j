@@ -29,7 +29,7 @@ import ch.elca.el4j.util.codingsupport.CollectionUtils;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
- * 
+ *
  * DAO for annotations which is using iBatis SQL Maps.
  *
  * <script type="text/javascript">printFileStatus
@@ -43,27 +43,27 @@ import ch.elca.el4j.util.codingsupport.Reject;
  */
 @AutocollectedGenericDao("annotationDao")
 public class SqlMapAnnotationDao
-    extends GenericSqlMapReferencedObjectDao<Annotation, Integer>
-    implements AnnotationDao {
-    
-    /**
-     * Creates a new SqlMapAnnotationDao instance.
-     */
-    public SqlMapAnnotationDao() {
-        setPersistentClass(Annotation.class);
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<Annotation> getAnnotationsByAnnotator(String annotator)
-        throws DataAccessException {
-        Reject.ifEmpty(annotator);
-        List<Annotation> result = getConvenienceSqlMapClientTemplate()
-            .queryForList("getAnnotationsByAnnotator", annotator);
-        return CollectionUtils.asList(result);
-    }
-    
+	extends GenericSqlMapReferencedObjectDao<Annotation, Integer>
+	implements AnnotationDao {
+	
+	/**
+	 * Creates a new SqlMapAnnotationDao instance.
+	 */
+	public SqlMapAnnotationDao() {
+		setPersistentClass(Annotation.class);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Annotation> getAnnotationsByAnnotator(String annotator)
+		throws DataAccessException {
+		Reject.ifEmpty(annotator);
+		List<Annotation> result = getConvenienceSqlMapClientTemplate()
+			.queryForList("getAnnotationsByAnnotator", annotator);
+		return CollectionUtils.asList(result);
+	}
+	
 }

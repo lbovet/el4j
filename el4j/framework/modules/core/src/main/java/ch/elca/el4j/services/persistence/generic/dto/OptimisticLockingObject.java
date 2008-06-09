@@ -30,8 +30,8 @@ package ch.elca.el4j.services.persistence.generic.dto;
  * @author Martin Zeltner (MZE)
  */
 public interface OptimisticLockingObject {
-    /**
-     * Method to increase the optimistic locking version.
-     */
-    public void increaseOptimisticLockingVersion();
+	/**
+	 * Method to increase the optimistic locking version.
+	 */
+	public void increaseOptimisticLockingVersion();
 }

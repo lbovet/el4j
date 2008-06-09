@@ -20,110 +20,110 @@ import com.silvermindsoftware.hitch.ReadOnly;
 
 public class BoundComponentConfig {
 
-    private Class type = void.class;
-    private String componentFieldName;
-    private String modelPropertyName;
-    private Class handlerClass = void.class;
-    private String[] handlerParameters = new String[]{};
-    private ReadOnly readOnly = ReadOnly.DEFAULT;
+	private Class type = void.class;
+	private String componentFieldName;
+	private String modelPropertyName;
+	private Class handlerClass = void.class;
+	private String[] handlerParameters = new String[]{};
+	private ReadOnly readOnly = ReadOnly.DEFAULT;
 
-    public BoundComponentConfig(String sharedPropertyName) {
+	public BoundComponentConfig(String sharedPropertyName) {
 
-        this.componentFieldName = sharedPropertyName;
-        this.modelPropertyName = sharedPropertyName;
+		this.componentFieldName = sharedPropertyName;
+		this.modelPropertyName = sharedPropertyName;
 
-    }
+	}
 
-    public BoundComponentConfig(String sharedPropertyName, Class handlerClass) {
+	public BoundComponentConfig(String sharedPropertyName, Class handlerClass) {
 
-        this.componentFieldName = sharedPropertyName;
-        this.modelPropertyName = sharedPropertyName;
-        this.handlerClass = handlerClass;
+		this.componentFieldName = sharedPropertyName;
+		this.modelPropertyName = sharedPropertyName;
+		this.handlerClass = handlerClass;
 
-    }
+	}
 
-    public BoundComponentConfig(String sharedPropertyName, String[] handlerParameters) {
+	public BoundComponentConfig(String sharedPropertyName, String[] handlerParameters) {
 
-        this.componentFieldName = sharedPropertyName;
-        this.modelPropertyName = sharedPropertyName;
-        this.handlerParameters = handlerParameters;
+		this.componentFieldName = sharedPropertyName;
+		this.modelPropertyName = sharedPropertyName;
+		this.handlerParameters = handlerParameters;
 
-    }
+	}
 
-    public BoundComponentConfig(String sharedPropertyName, Class handlerClass, String[] handlerParameters) {
+	public BoundComponentConfig(String sharedPropertyName, Class handlerClass, String[] handlerParameters) {
 
-        this.componentFieldName = sharedPropertyName;
-        this.modelPropertyName = sharedPropertyName;
-        this.handlerClass = handlerClass;
-        this.handlerParameters = handlerParameters;
+		this.componentFieldName = sharedPropertyName;
+		this.modelPropertyName = sharedPropertyName;
+		this.handlerClass = handlerClass;
+		this.handlerParameters = handlerParameters;
 
-    }
+	}
 
-    public BoundComponentConfig(String componentFieldName, String modelPropertyName) {
+	public BoundComponentConfig(String componentFieldName, String modelPropertyName) {
 
-        this.componentFieldName = componentFieldName;
-        this.modelPropertyName = modelPropertyName;
+		this.componentFieldName = componentFieldName;
+		this.modelPropertyName = modelPropertyName;
 
-    }
+	}
 
-    public BoundComponentConfig(String componentFieldName, String modelPropertyName, Class handlerClass) {
+	public BoundComponentConfig(String componentFieldName, String modelPropertyName, Class handlerClass) {
 
-        this.componentFieldName = componentFieldName;
-        this.modelPropertyName = modelPropertyName;
-        this.handlerClass = handlerClass;
+		this.componentFieldName = componentFieldName;
+		this.modelPropertyName = modelPropertyName;
+		this.handlerClass = handlerClass;
 
-    }
+	}
 
-    public BoundComponentConfig(String componentFieldName, String modelPropertyName, String[] handlerParameters) {
+	public BoundComponentConfig(String componentFieldName, String modelPropertyName, String[] handlerParameters) {
 
-        this.componentFieldName = componentFieldName;
-        this.modelPropertyName = modelPropertyName;
-        this.handlerParameters = handlerParameters;
+		this.componentFieldName = componentFieldName;
+		this.modelPropertyName = modelPropertyName;
+		this.handlerParameters = handlerParameters;
 
-    }
+	}
 
-    public BoundComponentConfig(String componentFieldName, String modelPropertyName, Class handlerClass, String[] handlerParameters) {
+	public BoundComponentConfig(String componentFieldName, String modelPropertyName, Class handlerClass, String[] handlerParameters) {
 
-        this.componentFieldName = componentFieldName;
-        this.modelPropertyName = modelPropertyName;
-        this.handlerClass = handlerClass;
-        this.handlerParameters = handlerParameters;
+		this.componentFieldName = componentFieldName;
+		this.modelPropertyName = modelPropertyName;
+		this.handlerClass = handlerClass;
+		this.handlerParameters = handlerParameters;
 
-    }
+	}
 
-    public BoundComponentConfig(String componentFieldName, String modelPropertyName, Class handlerClass, String[] handlerParameters, ReadOnly readOnly, Class type) {
+	public BoundComponentConfig(String componentFieldName, String modelPropertyName, Class handlerClass, String[] handlerParameters, ReadOnly readOnly, Class type) {
 
-        this.componentFieldName = componentFieldName;
-        this.modelPropertyName = modelPropertyName;
-        this.handlerClass = handlerClass;
-        this.handlerParameters = handlerParameters;
-        this.readOnly = readOnly;
-        this.type = type;
+		this.componentFieldName = componentFieldName;
+		this.modelPropertyName = modelPropertyName;
+		this.handlerClass = handlerClass;
+		this.handlerParameters = handlerParameters;
+		this.readOnly = readOnly;
+		this.type = type;
 
-    }
+	}
 
-    public String getComponentFieldName() {
-        return componentFieldName;
-    }
+	public String getComponentFieldName() {
+		return componentFieldName;
+	}
 
-    public String getModelPropertyName() {
-        return modelPropertyName;
-    }
+	public String getModelPropertyName() {
+		return modelPropertyName;
+	}
 
-    public Class getHandlerClass() {
-        return handlerClass;
-    }
+	public Class getHandlerClass() {
+		return handlerClass;
+	}
 
-    public String[] getHandlerParameters() {
-        return handlerParameters;
-    }
+	public String[] getHandlerParameters() {
+		return handlerParameters;
+	}
 
-    public ReadOnly getReadOnly() {
-        return readOnly;
-    }
+	public ReadOnly getReadOnly() {
+		return readOnly;
+	}
 
-    public Class getType() {
-        return type;
-    }
+	public Class getType() {
+		return type;
+	}
 
 }

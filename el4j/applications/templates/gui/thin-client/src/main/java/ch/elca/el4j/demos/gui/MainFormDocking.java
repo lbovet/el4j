@@ -38,7 +38,7 @@ import ch.elca.el4j.gui.swing.DockingApplication;
 
 /**
  * Sample Docking application that demonstrates how to use the framework.
- * 
+ *
  * See also associated MainFormDocking.properties file that contains resources
  *
  * <script type="text/javascript">printFileStatus
@@ -51,194 +51,194 @@ import ch.elca.el4j.gui.swing.DockingApplication;
  * @author Stefan Wismer (SWI)
  */
 public class MainFormDocking extends DockingApplication {
-    /**
-     * Determines if user is admin (for activation demo).
-     */
-    private boolean m_admin = false;
-    
-    /**
-     * Main definition of the GUI.
-     *  This method is called back by the GUI framework
-     */
-    @Override
-    protected void startup() {
-        getMainFrame().setJMenuBar(createMenuBar());
-        showMain(createMainPanel());
-    }
-    
-    /**
-     * @return    the created main panel
-     */
-    private JComponent createMainPanel() {
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.add(createToolBar(), BorderLayout.NORTH);
-        
-        panel.add((Component) getToolWindowManager(), BorderLayout.CENTER);
-        
-        return panel;
-    }
+	/**
+	 * Determines if user is admin (for activation demo).
+	 */
+	private boolean m_admin = false;
+	
+	/**
+	 * Main definition of the GUI.
+	 *  This method is called back by the GUI framework
+	 */
+	@Override
+	protected void startup() {
+		getMainFrame().setJMenuBar(createMenuBar());
+		showMain(createMainPanel());
+	}
+	
+	/**
+	 * @return    the created main panel
+	 */
+	private JComponent createMainPanel() {
+		JPanel panel = new JPanel(new BorderLayout());
+		panel.add(createToolBar(), BorderLayout.NORTH);
+		
+		panel.add((Component) getToolWindowManager(), BorderLayout.CENTER);
+		
+		return panel;
+	}
 
-    @Action
-    public void showDemo1() {
-        show("ResourceInjectionDemoForm");
-    }
-    
-    @Action
-    public void showDemo2() {
-        show("CancelableDemoForm");
-    }
+	@Action
+	public void showDemo1() {
+		show("ResourceInjectionDemoForm");
+	}
+	
+	@Action
+	public void showDemo2() {
+		show("CancelableDemoForm");
+	}
 
-    @Action
-    public void showDemo3() {
-        show("MasterDetailDemoForm");
-    }
-    
-    @Action
-    public void showDemo4() {
-        show("BindingDemoForm");
-    }
-    
-    @Action
-    public void showDemo5() {
-        show("EventBusDemoForm");
-    }
-    
-    @Action
-    public void showSearch() {
-        show("SearchDialog", ToolWindowAnchor.LEFT);
-    }
-    
-    @Action
-    public void showRefDB() {
-        show("RefDBDemoForm");
-    }
-    
-    @Action
-    public void sendExampleEvent() {
-        EventBus.publish(new ExampleEvent("I'm an Example Event!"));
-    }
-    
+	@Action
+	public void showDemo3() {
+		show("MasterDetailDemoForm");
+	}
+	
+	@Action
+	public void showDemo4() {
+		show("BindingDemoForm");
+	}
+	
+	@Action
+	public void showDemo5() {
+		show("EventBusDemoForm");
+	}
+	
+	@Action
+	public void showSearch() {
+		show("SearchDialog", ToolWindowAnchor.LEFT);
+	}
+	
+	@Action
+	public void showRefDB() {
+		show("RefDBDemoForm");
+	}
+	
+	@Action
+	public void sendExampleEvent() {
+		EventBus.publish(new ExampleEvent("I'm an Example Event!"));
+	}
+	
 
-    /**
-     * A "special" help only for admins (for demo purpose only).
-     */
-    @Action(enabledProperty = "admin")
-    public void help() {
-        try {
-            show("SecurityDemoForm");
-        } catch (NoSuchBeanDefinitionException e) {
-            JOptionPane.showMessageDialog(null,
-                "This demo doesn't support security. "
-                + "Use swing-demo-secure-... instead.");
-        }
-        /*
-        JHelp helpViewer = null;
-        try {
-            // Get the classloader of this class.
-            ClassLoader cl = MainForm.class.getClassLoader();
-            // Use the findHelpSet method of HelpSet to create a URL referencing
-            // the helpset file.
-            // Note that in this example the location of the helpset is implied
-            // as being in the same
-            // directory as the program by specifying "jhelpset.hs" without any
-            // directory prefix,
-            // this should be adjusted to suit the implementation.
-            URL url = HelpSet.findHelpSet(cl, "jhelpset.hs");
-            // Create a new JHelp object with a new HelpSet.
-            helpViewer = new JHelp(new HelpSet(cl, url));
-            // Set the initial entry point in the table of contents.
-            helpViewer.setCurrentID("Simple.Introduction");
-        } catch (Exception e) {
-            System.err.println("API Help Set not found");
-        }
-        */
-    }
-    
-    /**
-     * Toggle admin flag (for visibility of menu entry).
-     */
-    @Action
-    public void toggleAdmin() {
-        // enable help menuItem
-        boolean oldAdmin = m_admin;
-        m_admin = !m_admin;
-        firePropertyChange("admin", oldAdmin, m_admin);
-    }
-    
-    /**
-     * Show the about dialog.
-     */
-    @Action
-    public void about() {
-        show("AboutDialog");
-    }
-    
-    /**
-     * Indicates whether permission "admin" is set
-     *  (used via enabledProperty field of \@Action).
-     *  @return    <code>true</code> if user has admin rights
-     */
-    public boolean isAdmin() {
-        return hasRole("ROLE_SUPERVISOR");
-    }
-    
-    /**
-     * @param requestedRole    the role to check
-     * @return                 <code>true</code> if user has specified role.
-     */
-    public boolean hasRole(String requestedRole) {
-        /*  commented out for now (until acegi security is set up):
-         *   
-          GrantedAuthority[] authorities = SecurityContextHolder.getContext()
-                .getAuthentication().getAuthorities();
+	/**
+	 * A "special" help only for admins (for demo purpose only).
+	 */
+	@Action(enabledProperty = "admin")
+	public void help() {
+		try {
+			show("SecurityDemoForm");
+		} catch (NoSuchBeanDefinitionException e) {
+			JOptionPane.showMessageDialog(null,
+				"This demo doesn't support security. "
+				+ "Use swing-demo-secure-... instead.");
+		}
+		/*
+		JHelp helpViewer = null;
+		try {
+			// Get the classloader of this class.
+			ClassLoader cl = MainForm.class.getClassLoader();
+			// Use the findHelpSet method of HelpSet to create a URL referencing
+			// the helpset file.
+			// Note that in this example the location of the helpset is implied
+			// as being in the same
+			// directory as the program by specifying "jhelpset.hs" without any
+			// directory prefix,
+			// this should be adjusted to suit the implementation.
+			URL url = HelpSet.findHelpSet(cl, "jhelpset.hs");
+			// Create a new JHelp object with a new HelpSet.
+			helpViewer = new JHelp(new HelpSet(cl, url));
+			// Set the initial entry point in the table of contents.
+			helpViewer.setCurrentID("Simple.Introduction");
+		} catch (Exception e) {
+			System.err.println("API Help Set not found");
+		}
+		*/
+	}
+	
+	/**
+	 * Toggle admin flag (for visibility of menu entry).
+	 */
+	@Action
+	public void toggleAdmin() {
+		// enable help menuItem
+		boolean oldAdmin = m_admin;
+		m_admin = !m_admin;
+		firePropertyChange("admin", oldAdmin, m_admin);
+	}
+	
+	/**
+	 * Show the about dialog.
+	 */
+	@Action
+	public void about() {
+		show("AboutDialog");
+	}
+	
+	/**
+	 * Indicates whether permission "admin" is set
+	 *  (used via enabledProperty field of \@Action).
+	 *  @return    <code>true</code> if user has admin rights
+	 */
+	public boolean isAdmin() {
+		return hasRole("ROLE_SUPERVISOR");
+	}
+	
+	/**
+	 * @param requestedRole    the role to check
+	 * @return                 <code>true</code> if user has specified role.
+	 */
+	public boolean hasRole(String requestedRole) {
+		/*  commented out for now (until acegi security is set up):
+		 *
+		GrantedAuthority[] authorities = SecurityContextHolder.getContext()
+			.getAuthentication().getAuthorities();
 
-        for (GrantedAuthority grantedAuthority : authorities) {
-            if (grantedAuthority.getAuthority().equals(requestedRole)) {
-                return true;
-            }
-        }*/
-        return m_admin;
-    }  
+		for (GrantedAuthority grantedAuthority : authorities) {
+			if (grantedAuthority.getAuthority().equals(requestedRole)) {
+				return true;
+			}
+		}*/
+		return m_admin;
+	}
  
 
-    /**
-     * @return    the created menu bar
-     */
-    private JMenuBar createMenuBar() {
-        JMenuBar menuBar = new JMenuBar();
-        String[] fileMenuActionNames = {"quit"};
-        String[] editMenuActionNames = {"cut", "copy", "paste", "delete"};
-        String[] demoMenuActionNames
-            = {"showDemo1", "showDemo2", "showDemo3", "showDemo4", "---",
-                "showSearch", "showRefDB", "---",
-                "showDemo5", "sendExampleEvent"};
-        String[] helpMenuActionNames = {"help", "toggleAdmin", "about"};
-        menuBar.add(createMenu("fileMenu", fileMenuActionNames));
-        menuBar.add(createMenu("editMenu", editMenuActionNames));
-        menuBar.add(createMenu("demoMenu", demoMenuActionNames));
-        menuBar.add(createMenu("helpMenu", helpMenuActionNames));
-        return menuBar;
-    }
-    
+	/**
+	 * @return    the created menu bar
+	 */
+	private JMenuBar createMenuBar() {
+		JMenuBar menuBar = new JMenuBar();
+		String[] fileMenuActionNames = {"quit"};
+		String[] editMenuActionNames = {"cut", "copy", "paste", "delete"};
+		String[] demoMenuActionNames
+			= {"showDemo1", "showDemo2", "showDemo3", "showDemo4", "---",
+				"showSearch", "showRefDB", "---",
+				"showDemo5", "sendExampleEvent"};
+		String[] helpMenuActionNames = {"help", "toggleAdmin", "about"};
+		menuBar.add(createMenu("fileMenu", fileMenuActionNames));
+		menuBar.add(createMenu("editMenu", editMenuActionNames));
+		menuBar.add(createMenu("demoMenu", demoMenuActionNames));
+		menuBar.add(createMenu("helpMenu", helpMenuActionNames));
+		return menuBar;
+	}
+	
 
-    /**
-     * @return    the created tool bar
-     */
-    private JToolBar createToolBar() {
-        String[] toolbarActionNames = {"quit"};
-        JToolBar toolBar = new JToolBar();
-        toolBar.setFloatable(false);
-        Border border = new EmptyBorder(2, 9, 2, 9);
-        for (String actionName : toolbarActionNames) {
-            JButton button = new JButton();
-            button.setBorder(border);
-            button.setVerticalTextPosition(JButton.BOTTOM);
-            button.setHorizontalTextPosition(JButton.CENTER);
-            button.setAction(getAction(actionName));
-            button.setFocusable(false);
-            button.setText("");
-            toolBar.add(button);
-        }
-        return toolBar;
-    }
+	/**
+	 * @return    the created tool bar
+	 */
+	private JToolBar createToolBar() {
+		String[] toolbarActionNames = {"quit"};
+		JToolBar toolBar = new JToolBar();
+		toolBar.setFloatable(false);
+		Border border = new EmptyBorder(2, 9, 2, 9);
+		for (String actionName : toolbarActionNames) {
+			JButton button = new JButton();
+			button.setBorder(border);
+			button.setVerticalTextPosition(JButton.BOTTOM);
+			button.setHorizontalTextPosition(JButton.CENTER);
+			button.setAction(getAction(actionName));
+			button.setFocusable(false);
+			button.setText("");
+			toolBar.add(button);
+		}
+		return toolBar;
+	}
 }

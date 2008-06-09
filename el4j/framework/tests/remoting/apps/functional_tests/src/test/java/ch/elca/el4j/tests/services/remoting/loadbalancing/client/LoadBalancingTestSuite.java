@@ -24,7 +24,7 @@ import ch.elca.el4j.tests.services.remoting.loadbalancing.client.redirectuponfai
 import ch.elca.el4j.tests.services.remoting.loadbalancing.client.roundrobin.LbRoundRobinTest;
 
 /**
- * 
+ *
  * Groups the test cases in this artifact into a test suite in order to ensure
  * that they are executed in a certain order.
  *
@@ -39,10 +39,10 @@ import ch.elca.el4j.tests.services.remoting.loadbalancing.client.roundrobin.LbRo
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    LbRandomNoContextPassingTest.class,
-    LbRoundRobinTest.class,
-    LbClientRedirectUponFailureTest.class
-    })
+	LbRandomNoContextPassingTest.class,
+	LbRoundRobinTest.class,
+	LbClientRedirectUponFailureTest.class
+	})
 public class LoadBalancingTestSuite {
-    
+	
 }

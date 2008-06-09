@@ -21,57 +21,57 @@ import java.util.Arrays;
 
 public class MethodInfo {
 
-    private Method method;
-    private String name;
-    private Class[] parameterTypes;
-    private Class returnType;
+	private Method method;
+	private String name;
+	private Class[] parameterTypes;
+	private Class returnType;
 
-    public MethodInfo(Method method) {
+	public MethodInfo(Method method) {
 
-        this.method = method;
-        this.returnType = method.getReturnType();
-        this.name = method.getName();
-        this.parameterTypes = method.getParameterTypes();
+		this.method = method;
+		this.returnType = method.getReturnType();
+		this.name = method.getName();
+		this.parameterTypes = method.getParameterTypes();
 
-    }
+	}
 
-    public Method getMethod() {
-        return method;
-    }
+	public Method getMethod() {
+		return method;
+	}
 
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
-        MethodInfo that = (MethodInfo) o;
+		MethodInfo that = (MethodInfo) o;
 
-        if (!name.equals(that.name)) return false;
-        if (!Arrays.equals(parameterTypes, that.parameterTypes)) return false;
-        if (!returnType.equals(that.returnType)) return false;
+		if (!name.equals(that.name)) return false;
+		if (!Arrays.equals(parameterTypes, that.parameterTypes)) return false;
+		if (!returnType.equals(that.returnType)) return false;
 
-        return true;
-    }
+		return true;
+	}
 
-    public int hashCode() {
-        int result;
-        result = name.hashCode();
-        result = 31 * result + Arrays.hashCode(parameterTypes);
-        result = 31 * result + returnType.hashCode();
-        return result;
-    }
+	public int hashCode() {
+		int result;
+		result = name.hashCode();
+		result = 31 * result + Arrays.hashCode(parameterTypes);
+		result = 31 * result + returnType.hashCode();
+		return result;
+	}
 
 
-    public String toString() {
-        StringBuilder params = new StringBuilder("");
-        boolean start = true;
-        for(Class clazz : parameterTypes ) {
-            if(!start) params.append(",");
-            params.append(clazz.getName());
-            start = false;
-        }
+	public String toString() {
+		StringBuilder params = new StringBuilder("");
+		boolean start = true;
+		for(Class clazz : parameterTypes ) {
+			if(!start) params.append(",");
+			params.append(clazz.getName());
+			start = false;
+		}
 
-        return new StringBuilder(returnType.getName())
-                .append(" ").append(name)
-                .append("(").append(params.toString()).append(")").toString();
-    }
+		return new StringBuilder(returnType.getName())
+				.append(" ").append(name)
+				.append("(").append(params.toString()).append(")").toString();
+	}
 }

@@ -29,22 +29,22 @@ import ch.elca.el4j.services.xmlmerge.Action;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public class ReplaceAction implements Action {
 
-    /**
-     * {@inheritDoc}
-     */
-    public void perform(Element originalElement, Element patchElement,
-        Element outputParentElement) {
-        if (patchElement != null) {
-            outputParentElement.addContent((Element) patchElement.clone());
-        } else {
-            outputParentElement.addContent((Element) originalElement.clone());
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void perform(Element originalElement, Element patchElement,
+		Element outputParentElement) {
+		if (patchElement != null) {
+			outputParentElement.addContent((Element) patchElement.clone());
+		} else {
+			outputParentElement.addContent((Element) originalElement.clone());
+		}
+	}
 
 }

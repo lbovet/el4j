@@ -41,98 +41,98 @@ import ch.elca.el4j.services.remoting.RemotingServiceExporter;
  *
  * @author Martin Zeltner (MZE)
  */
-public abstract class AbstractInetSocketAddressWebProtocol 
-    extends AbstractInetSocketAddressProtocol {
+public abstract class AbstractInetSocketAddressWebProtocol
+	extends AbstractInetSocketAddressProtocol {
 
-    /**
-     * Is the context path of the webserver where the service is running.
-     */
-    private String m_contextPath;
+	/**
+	 * Is the context path of the webserver where the service is running.
+	 */
+	private String m_contextPath;
 
-    /**
-     * This map contains all url mappings for this protocol.
-     */
-    private Map m_urlMappings = new HashMap();
+	/**
+	 * This map contains all url mappings for this protocol.
+	 */
+	private Map m_urlMappings = new HashMap();
 
-    /**
-     * This map contains all flags, which indicates if an url map is already
-     * initialized.
-     */
-    private Map m_urlMappingsInitialized = new HashMap();
+	/**
+	 * This map contains all flags, which indicates if an url map is already
+	 * initialized.
+	 */
+	private Map m_urlMappingsInitialized = new HashMap();
 
-    /**
-     * @return Returns the contextPath.
-     */
-    public String getContextPath() {
-        return m_contextPath;
-    }
+	/**
+	 * @return Returns the contextPath.
+	 */
+	public String getContextPath() {
+		return m_contextPath;
+	}
 
-    /**
-     * @param contextPath
-     *            The contextPath to set.
-     */
-    public void setContextPath(String contextPath) {
-        m_contextPath = contextPath;
-    }
+	/**
+	 * @param contextPath
+	 *            The contextPath to set.
+	 */
+	public void setContextPath(String contextPath) {
+		m_contextPath = contextPath;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void afterPropertiesSet() throws Exception {
-        super.afterPropertiesSet();
-        CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-                getContextPath(), "contextPath", this);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void afterPropertiesSet() throws Exception {
+		super.afterPropertiesSet();
+		CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+				getContextPath(), "contextPath", this);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void prepareExporterDependentBeans(
-            RemotingServiceExporter exporterBean) {
-        /**
-         * If the this bean runs in a web server, it has to be a servlet and so
-         * it needs to be mapped on the current context. In this phase we only
-         * prepare the mapping. It will be done in a second phase to prohibit a
-         * circular dependency.
-         */
-        if (exporterBean.getApplicationContext() 
-            instanceof AbstractRefreshableWebApplicationContext) {
-            AbstractRefreshableWebApplicationContext parentAppContext 
-                = (AbstractRefreshableWebApplicationContext) exporterBean
-                    .getApplicationContext();
-            Properties mappings = new Properties();
-            mappings.put("/" + exporterBean.getServiceName(), exporterBean
-                    .getBeanName());
-            SimpleUrlHandlerMapping urlMapping = new SimpleUrlHandlerMapping();
-            urlMapping.setMappings(mappings);
+	/**
+	 * {@inheritDoc}
+	 */
+	public void prepareExporterDependentBeans(
+			RemotingServiceExporter exporterBean) {
+		/**
+		 * If the this bean runs in a web server, it has to be a servlet and so
+		 * it needs to be mapped on the current context. In this phase we only
+		 * prepare the mapping. It will be done in a second phase to prohibit a
+		 * circular dependency.
+		 */
+		if (exporterBean.getApplicationContext()
+			instanceof AbstractRefreshableWebApplicationContext) {
+			AbstractRefreshableWebApplicationContext parentAppContext
+				= (AbstractRefreshableWebApplicationContext) exporterBean
+					.getApplicationContext();
+			Properties mappings = new Properties();
+			mappings.put("/" + exporterBean.getServiceName(), exporterBean
+					.getBeanName());
+			SimpleUrlHandlerMapping urlMapping = new SimpleUrlHandlerMapping();
+			urlMapping.setMappings(mappings);
 
-            m_urlMappings.put(exporterBean.getBeanName(), urlMapping);
+			m_urlMappings.put(exporterBean.getBeanName(), urlMapping);
 
-            ConfigurableListableBeanFactory configurableBeanFactory 
-                = parentAppContext.getBeanFactory();
-            configurableBeanFactory.registerSingleton("handlerMappingForBean"
-                    + exporterBean.getBeanName(), urlMapping);
-        }
-    }
+			ConfigurableListableBeanFactory configurableBeanFactory
+				= parentAppContext.getBeanFactory();
+			configurableBeanFactory.registerSingleton("handlerMappingForBean"
+					+ exporterBean.getBeanName(), urlMapping);
+		}
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void finalizeExporterDependentBeans(
-            RemotingServiceExporter exporterBean) {
-        /**
-         * If the url mapping is not already allocated to the application, this
-         * will be done here. This allocation will be done only once.
-         */
-        String beanName = exporterBean.getBeanName();
-        if (!m_urlMappingsInitialized.containsKey(beanName)
-                && m_urlMappings.containsKey(beanName)) {
-            SimpleUrlHandlerMapping urlMapping 
-                = (SimpleUrlHandlerMapping) m_urlMappings
-                    .get(beanName);
-            m_urlMappingsInitialized.put(beanName, urlMapping);
-            urlMapping.setApplicationContext(exporterBean
-                    .getApplicationContext());
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void finalizeExporterDependentBeans(
+			RemotingServiceExporter exporterBean) {
+		/**
+		 * If the url mapping is not already allocated to the application, this
+		 * will be done here. This allocation will be done only once.
+		 */
+		String beanName = exporterBean.getBeanName();
+		if (!m_urlMappingsInitialized.containsKey(beanName)
+				&& m_urlMappings.containsKey(beanName)) {
+			SimpleUrlHandlerMapping urlMapping
+				= (SimpleUrlHandlerMapping) m_urlMappings
+					.get(beanName);
+			m_urlMappingsInitialized.put(beanName, urlMapping);
+			urlMapping.setApplicationContext(exporterBean
+					.getApplicationContext());
+		}
+	}
 }

@@ -21,7 +21,7 @@ import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
 
 /**
- * 
+ *
  * DAO for books which is using iBatis SQL Maps.
  *
  * <script type="text/javascript">printFileStatus
@@ -34,14 +34,14 @@ import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
  * @author Alex Mathey (AMA)
  */
 @AutocollectedGenericDao("bookDao")
-public class SqlMapBookDao extends GenericSqlMapReferenceDao<Book> 
-    implements BookDao {
-    
-    /**
-     * Creates a new SqlMapBookDao instance.
-     */
-    public SqlMapBookDao() {
-        setPersistentClass(Book.class);
-    }
-    
+public class SqlMapBookDao extends GenericSqlMapReferenceDao<Book>
+	implements BookDao {
+	
+	/**
+	 * Creates a new SqlMapBookDao instance.
+	 */
+	public SqlMapBookDao() {
+		setPersistentClass(Book.class);
+	}
+	
 }

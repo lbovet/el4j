@@ -29,13 +29,13 @@ package ch.elca.el4j.model.mixin;
  * @author Stefan Wismer (SWI)
  */
 public interface SaveRestoreCapability {
-    /**
-     * Save all the writable java bean properties.
-     */
-    public void save();
-    
-    /**
-     * Restore all the writable java bean properties.
-     */
-    public void restore();
+	/**
+	 * Save all the writable java bean properties.
+	 */
+	public void save();
+	
+	/**
+	 * Restore all the writable java bean properties.
+	 */
+	public void restore();
 }

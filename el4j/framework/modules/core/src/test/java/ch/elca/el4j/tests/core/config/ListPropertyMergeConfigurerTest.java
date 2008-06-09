@@ -28,219 +28,219 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
 
 /**
  * JUnit test class for the ListPropertyMergeConfigurer.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Raphael Boog (RBO)
  */
 public class ListPropertyMergeConfigurerTest {
 
-    /**
-     * This test adds a value from one location to a list property which is
-     * empty and checks if the value is set correctly.
-     */
-    @Test
-    public void testAddValuesFromOneLocationToEmptyList() {
-        ApplicationContext ac = new ModuleApplicationContext(
-                "classpath:scenarios/core/config/" 
-                + "beansWithOneLocationAndEmptyList.xml", false);
+	/**
+	 * This test adds a value from one location to a list property which is
+	 * empty and checks if the value is set correctly.
+	 */
+	@Test
+	public void testAddValuesFromOneLocationToEmptyList() {
+		ApplicationContext ac = new ModuleApplicationContext(
+				"classpath:scenarios/core/config/"
+				+ "beansWithOneLocationAndEmptyList.xml", false);
 
-        ListClass listTest = (ListClass) ac.getBean("ListTest");
+		ListClass listTest = (ListClass) ac.getBean("ListTest");
 
-        assertEquals("The list in 'ListTest' does not contain 1 entry.", 1,
-                listTest.getListTest().size());
+		assertEquals("The list in 'ListTest' does not contain 1 entry.", 1,
+				listTest.getListTest().size());
 
-        assertEquals("The first entry in the list is not 'item 1'.", "item 1",
-                listTest.getListTest().get(0));
+		assertEquals("The first entry in the list is not 'item 1'.", "item 1",
+				listTest.getListTest().get(0));
 
-    }
+	}
 
-    /**
-     * This test adds a value from one location to a list property which already
-     * contains one value and checks if the values are set correctly.
-     *  
-     */
-    @Test
-    public void testAddValuesFromOneLocationToNonEmptyList() {
-        ApplicationContext ac = new ModuleApplicationContext(
-                "classpath:scenarios/core/config/"
-                + "beansWithOneLocationAndNonEmptyList.xml", false);
+	/**
+	 * This test adds a value from one location to a list property which already
+	 * contains one value and checks if the values are set correctly.
+	 *
+	 */
+	@Test
+	public void testAddValuesFromOneLocationToNonEmptyList() {
+		ApplicationContext ac = new ModuleApplicationContext(
+				"classpath:scenarios/core/config/"
+				+ "beansWithOneLocationAndNonEmptyList.xml", false);
 
-        ListClass listTest = (ListClass) ac.getBean("ListTest");
+		ListClass listTest = (ListClass) ac.getBean("ListTest");
 
-        assertEquals("The list in 'ListTest' does not contain 2 entries.", 2,
-                listTest.getListTest().size());
+		assertEquals("The list in 'ListTest' does not contain 2 entries.", 2,
+				listTest.getListTest().size());
 
-        // HACKY: change in spring 2.0.3, probably a mistake?
-        assertEquals("The first entry in the list is not 'item 0'.", "item 0",
-                listTest.getListTest().get(0));
+		// HACKY: change in spring 2.0.3, probably a mistake?
+		assertEquals("The first entry in the list is not 'item 0'.", "item 0",
+				listTest.getListTest().get(0));
 
-        assertEquals("The second entry in the list is not 'item 1'.", "item 1",
-                listTest.getListTest().get(1));
+		assertEquals("The second entry in the list is not 'item 1'.", "item 1",
+				listTest.getListTest().get(1));
 
-    }
+	}
 
-    /**
-     * This test adds two values from one location to a list property which
-     * already contains a value and checks if the values are set correctly.
-     *  
-     */
-    @Test
-    public void testAddValuesFromOneLocationWithTwoListValuesToNonEmptyList() {
-        ApplicationContext ac = new ModuleApplicationContext(
-                "classpath:scenarios/core/config/"
-                + "beansWithOneLocationWithTwoValuesList.xml", false);
+	/**
+	 * This test adds two values from one location to a list property which
+	 * already contains a value and checks if the values are set correctly.
+	 *
+	 */
+	@Test
+	public void testAddValuesFromOneLocationWithTwoListValuesToNonEmptyList() {
+		ApplicationContext ac = new ModuleApplicationContext(
+				"classpath:scenarios/core/config/"
+				+ "beansWithOneLocationWithTwoValuesList.xml", false);
 
-        ListClass listTest = (ListClass) ac.getBean("ListTest");
+		ListClass listTest = (ListClass) ac.getBean("ListTest");
 
-        // Checkstyle: MagicNumber off
-        assertEquals("The list in 'ListTest' does not contain 3 entries.", 3,
-                listTest.getListTest().size());
+		// Checkstyle: MagicNumber off
+		assertEquals("The list in 'ListTest' does not contain 3 entries.", 3,
+				listTest.getListTest().size());
 
-        // HACKY: change in spring 2.0.3, probably a mistake?
-        assertEquals("The first entry in the list is not 'item 0'.", "item 0",
-                listTest.getListTest().get(0));
-        
-        assertEquals("The second entry in the list is not 'item 2'.", "item 2",
-                listTest.getListTest().get(1));
+		// HACKY: change in spring 2.0.3, probably a mistake?
+		assertEquals("The first entry in the list is not 'item 0'.", "item 0",
+				listTest.getListTest().get(0));
+		
+		assertEquals("The second entry in the list is not 'item 2'.", "item 2",
+				listTest.getListTest().get(1));
 
-        assertEquals("The third entry in the list is not 'item 3'.", "item 3",
-                listTest.getListTest().get(2));
-        // Checkstyle: MagicNumber on
-    }
+		assertEquals("The third entry in the list is not 'item 3'.", "item 3",
+				listTest.getListTest().get(2));
+		// Checkstyle: MagicNumber on
+	}
 
-    /**
-     * This test adds three values from two locations to a list property which
-     * already contains a value and checks if the values are set correctly and
-     * the order of processing the locations is the same as defined in the xml
-     * file.
-     *  
-     */
-    @Test
-    public void testAddValuesFromTwoLocationsToNonEmptyList() {
-        ApplicationContext ac = new ModuleApplicationContext(
-                "classpath:scenarios/core/config/"
-                + "beansWithTwoLocationsAndNonEmptyList.xml", false);
+	/**
+	 * This test adds three values from two locations to a list property which
+	 * already contains a value and checks if the values are set correctly and
+	 * the order of processing the locations is the same as defined in the xml
+	 * file.
+	 *
+	 */
+	@Test
+	public void testAddValuesFromTwoLocationsToNonEmptyList() {
+		ApplicationContext ac = new ModuleApplicationContext(
+				"classpath:scenarios/core/config/"
+				+ "beansWithTwoLocationsAndNonEmptyList.xml", false);
 
-        ListClass listTest = (ListClass) ac.getBean("ListTest");
+		ListClass listTest = (ListClass) ac.getBean("ListTest");
 
-        // Checkstyle: MagicNumber off
-        assertEquals("The list in 'ListTest' does not contain 4 entries.", 4,
-                listTest.getListTest().size());
+		// Checkstyle: MagicNumber off
+		assertEquals("The list in 'ListTest' does not contain 4 entries.", 4,
+				listTest.getListTest().size());
 
-        // HACKY: change in spring 2.0.3, probably a mistake?
-        assertEquals("The first entry in the list is not 'item 0'.", "item 0",
-                listTest.getListTest().get(0));
+		// HACKY: change in spring 2.0.3, probably a mistake?
+		assertEquals("The first entry in the list is not 'item 0'.", "item 0",
+				listTest.getListTest().get(0));
 
-        assertEquals("The second entry in the list is not 'item 1'.", "item 1",
-                listTest.getListTest().get(1));
+		assertEquals("The second entry in the list is not 'item 1'.", "item 1",
+				listTest.getListTest().get(1));
 
-        assertEquals("The third entry in the list is not 'item 2'.", "item 2",
-                listTest.getListTest().get(2));
+		assertEquals("The third entry in the list is not 'item 2'.", "item 2",
+				listTest.getListTest().get(2));
 
-        assertEquals("The four entry in the list is not 'item 3'.", "item 3",
-                listTest.getListTest().get(3));
-        // Checkstyle: MagicNumber on
-    }
+		assertEquals("The four entry in the list is not 'item 3'.", "item 3",
+				listTest.getListTest().get(3));
+		// Checkstyle: MagicNumber on
+	}
 
-    /**
-     * This test adds two values from one location to two lists (one value to
-     * each list) and checks if the values are set correctly.
-     *  
-     */
-    @Test
-    public void testAddValuesFromOneLocationToTwoLists() {
-        ApplicationContext ac = new ModuleApplicationContext(
-                "classpath:scenarios/core/config/" 
-                + "beansTwoListsWithOneLocation.xml", false);
+	/**
+	 * This test adds two values from one location to two lists (one value to
+	 * each list) and checks if the values are set correctly.
+	 *
+	 */
+	@Test
+	public void testAddValuesFromOneLocationToTwoLists() {
+		ApplicationContext ac = new ModuleApplicationContext(
+				"classpath:scenarios/core/config/"
+				+ "beansTwoListsWithOneLocation.xml", false);
 
-        ListClass listTest = (ListClass) ac.getBean("ListTest");
-        ListClass listTest2 = (ListClass) ac.getBean("ListTest2");
+		ListClass listTest = (ListClass) ac.getBean("ListTest");
+		ListClass listTest2 = (ListClass) ac.getBean("ListTest2");
 
-        assertEquals("The list in 'ListTest' does not contain 1 entry.", 1,
-                listTest.getListTest().size());
-      
-        assertEquals("The first entry in the list is not 'item 4'.", "item 4",
-                listTest.getListTest().get(0));
+		assertEquals("The list in 'ListTest' does not contain 1 entry.", 1,
+				listTest.getListTest().size());
+	
+		assertEquals("The first entry in the list is not 'item 4'.", "item 4",
+				listTest.getListTest().get(0));
 
-        assertEquals("The list in 'ListTest2' does not contain 2 entries.", 2,
-                listTest2.getListTest().size());
+		assertEquals("The list in 'ListTest2' does not contain 2 entries.", 2,
+				listTest2.getListTest().size());
 
-        // HACKY: change in spring 2.0.3, probably a mistake?
-        assertEquals("The first entry in the list is not 'item 0'.", "item 0",
-                listTest2.getListTest().get(0));
+		// HACKY: change in spring 2.0.3, probably a mistake?
+		assertEquals("The first entry in the list is not 'item 0'.", "item 0",
+				listTest2.getListTest().get(0));
 
-        assertEquals("The second entry in the list is not 'item 5'.", "item 5",
-                listTest2.getListTest().get(1));
-    }
+		assertEquals("The second entry in the list is not 'item 5'.", "item 5",
+				listTest2.getListTest().get(1));
+	}
 
-    /**
-     * This test adds a value to a list property, then overrides this list
-     * property, then adds a value to this list property and finally checks if
-     * the values are set correctly. Note that the order of processing the
-     * postProcessBeanFactory implementations can be set via the 'order'
-     * property. Lower values are processed first.
-     *  
-     */
-    @Test
-    public void testAddValuesThenOverrideThenAddValue() {
-        ApplicationContext ac = new ModuleApplicationContext(
-                "classpath:scenarios/core/config/" 
-                + "beansWithOverriding.xml", false);
+	/**
+	 * This test adds a value to a list property, then overrides this list
+	 * property, then adds a value to this list property and finally checks if
+	 * the values are set correctly. Note that the order of processing the
+	 * postProcessBeanFactory implementations can be set via the 'order'
+	 * property. Lower values are processed first.
+	 *
+	 */
+	@Test
+	public void testAddValuesThenOverrideThenAddValue() {
+		ApplicationContext ac = new ModuleApplicationContext(
+				"classpath:scenarios/core/config/"
+				+ "beansWithOverriding.xml", false);
 
-        ListClass listTest = (ListClass) ac.getBean("ListTest");
+		ListClass listTest = (ListClass) ac.getBean("ListTest");
 
-        assertEquals("The list in 'ListTest' does not contain 2 entries.", 2,
-                listTest.getListTest().size());
+		assertEquals("The list in 'ListTest' does not contain 2 entries.", 2,
+				listTest.getListTest().size());
 
-        assertEquals("The first entry in the list is not 'override item'.",
-                "override item", listTest.getListTest().get(0));
+		assertEquals("The first entry in the list is not 'override item'.",
+				"override item", listTest.getListTest().get(0));
 
-        assertEquals("The second entry in the list is not 'item 1'.", "item 1",
-                listTest.getListTest().get(1));
+		assertEquals("The second entry in the list is not 'item 1'.", "item 1",
+				listTest.getListTest().get(1));
 
-    }
+	}
 
-    /**
-     * This test takes an empty list.properties file and checks if the values
-     * are set correctly and no errors are thrown.
-     *  
-     */
-    @Test
-    public void testAddValuesFromEmptyPropertyFile() {
-        ApplicationContext ac = new ModuleApplicationContext(
-                "classpath:scenarios/core/config/" 
-                + "beansWithEmptyLocation.xml", false);
+	/**
+	 * This test takes an empty list.properties file and checks if the values
+	 * are set correctly and no errors are thrown.
+	 *
+	 */
+	@Test
+	public void testAddValuesFromEmptyPropertyFile() {
+		ApplicationContext ac = new ModuleApplicationContext(
+				"classpath:scenarios/core/config/"
+				+ "beansWithEmptyLocation.xml", false);
 
-        ListClass listTest = (ListClass) ac.getBean("ListTest");
+		ListClass listTest = (ListClass) ac.getBean("ListTest");
 
-        assertEquals("The list in 'ListTest' does not contain 1 entry.", 1,
-                listTest.getListTest().size());
+		assertEquals("The list in 'ListTest' does not contain 1 entry.", 1,
+				listTest.getListTest().size());
 
-        assertEquals("The first entry in the list is not 'item 0'.", "item 0",
-                listTest.getListTest().get(0));
-    }
+		assertEquals("The first entry in the list is not 'item 0'.", "item 0",
+				listTest.getListTest().get(0));
+	}
 
-    /**
-     * This test adds values to an undefined bean and checks if a
-     * BeanInitializationException is thrown.
-     *  
-     */
-    @Test
-    public void testAddValuesToUndefinedBean() {
-        // Checkstyle: EmptyBlock off
-        try {
-            new ModuleApplicationContext(
-                    "classpath:scenarios/core/config/" 
-                    + "beansAddUndefinedBean.xml", false);
-            fail("Should raise an exception.");
-        } catch (BeanInitializationException e) { }
-        // Checkstyle: EmptyBlock on
-    }
+	/**
+	 * This test adds values to an undefined bean and checks if a
+	 * BeanInitializationException is thrown.
+	 *
+	 */
+	@Test
+	public void testAddValuesToUndefinedBean() {
+		// Checkstyle: EmptyBlock off
+		try {
+			new ModuleApplicationContext(
+					"classpath:scenarios/core/config/"
+					+ "beansAddUndefinedBean.xml", false);
+			fail("Should raise an exception.");
+		} catch (BeanInitializationException e) { }
+		// Checkstyle: EmptyBlock on
+	}
 
 }

@@ -18,7 +18,7 @@
 package ch.elca.el4j.util.encryption;
 
 /**
- *  For providing your own password, you can pass one of these as 
+ *  For providing your own password, you can pass one of these as
  *  constructor argument.
  *
  * <script type="text/javascript">printFileStatus
@@ -31,8 +31,8 @@ package ch.elca.el4j.util.encryption;
  * @author David Bernhard (DBD)
  */
 public interface PasswordSource {
-    /**
-     * @return The password to use.
-     */
-    String getPassword();
+	/**
+	 * @return The password to use.
+	 */
+	String getPassword();
 }

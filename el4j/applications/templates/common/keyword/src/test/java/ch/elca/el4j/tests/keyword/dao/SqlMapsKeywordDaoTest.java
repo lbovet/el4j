@@ -30,23 +30,23 @@ package ch.elca.el4j.tests.keyword.dao;
  * @author Martin Zeltner (MZE)
  */
 public class SqlMapsKeywordDaoTest extends AbstractKeywordDaoTest {
-    /**
-     * {@inheritDoc}
-     */
-    protected String[] getIncludeConfigLocations() {
-        return new String[] {
-            "classpath*:mandatory/*.xml",
-            "classpath:keyword-core-service-config.xml",
-            "classpath*:scenarios/db/raw/*.xml",
-            "classpath*:scenarios/dataaccess/ibatis/*.xml",
-            "classpath*:scenarios/dataaccess/ibatis/keyword/*.xml",
-            "classpath*:optional/interception/transactionJava5Annotations.xml"};
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	protected String[] getIncludeConfigLocations() {
+		return new String[] {
+			"classpath*:mandatory/*.xml",
+			"classpath:keyword-core-service-config.xml",
+			"classpath*:scenarios/db/raw/*.xml",
+			"classpath*:scenarios/dataaccess/ibatis/*.xml",
+			"classpath*:scenarios/dataaccess/ibatis/keyword/*.xml",
+			"classpath*:optional/interception/transactionJava5Annotations.xml"};
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    protected String[] getExcludeConfigLocations() {
-        return null;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	protected String[] getExcludeConfigLocations() {
+		return null;
+	}
 }

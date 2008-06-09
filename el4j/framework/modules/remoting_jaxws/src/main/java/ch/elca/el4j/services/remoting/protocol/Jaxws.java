@@ -46,152 +46,152 @@ import ch.elca.el4j.services.remoting.protocol.jaxws.JaxwsInvoker;
  */
 public class Jaxws extends AbstractInetSocketAddressWebProtocol {
 
-    /**
-     * The JAX-WS Binding.
-     */
-    private SpringBinding m_jaxwsBinding;
+	/**
+	 * The JAX-WS Binding.
+	 */
+	private SpringBinding m_jaxwsBinding;
 
-    
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    @Override
-    public Object createExporterBean(RemotingServiceExporter exporterBean,
-            Class serviceInterfaceWithContext, Object serviceProxy) {
-        
-        Object bean = exporterBean.getApplicationContext().getBean(
-            exporterBean.getService());
-        
-        SpringService service = new SpringService();
-        service.setBean(bean);
-        
-        // give potential subclasses the chance to adapt the service
-        adaptExporterService(service);
-        
-        SpringBinding binding = new SpringBinding();
-        binding.setUrl(generateUrl(exporterBean));
-        try {
-            binding.setService(service.getObject());
-            m_jaxwsBinding = binding;
-        } catch (Exception e) {
-            CoreNotificationHelper.notifyMisconfiguration(
-                "Could not create JAX-WS binding for " + bean, e);
-        }
-        
-        // just return something that can be instantiated.
-        // WSSpringServlet will search and register all bindings 
-        return new String();
-    }
+	
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Object createExporterBean(RemotingServiceExporter exporterBean,
+			Class serviceInterfaceWithContext, Object serviceProxy) {
+		
+		Object bean = exporterBean.getApplicationContext().getBean(
+			exporterBean.getService());
+		
+		SpringService service = new SpringService();
+		service.setBean(bean);
+		
+		// give potential subclasses the chance to adapt the service
+		adaptExporterService(service);
+		
+		SpringBinding binding = new SpringBinding();
+		binding.setUrl(generateUrl(exporterBean));
+		try {
+			binding.setService(service.getObject());
+			m_jaxwsBinding = binding;
+		} catch (Exception e) {
+			CoreNotificationHelper.notifyMisconfiguration(
+				"Could not create JAX-WS binding for " + bean, e);
+		}
+		
+		// just return something that can be instantiated.
+		// WSSpringServlet will search and register all bindings
+		return new String();
+	}
 
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    @Override
-    public Object createProxyBean(RemotingProxyFactoryBean proxyBean,
-            Class serviceInterfaceWithContext) {
-        Object createdProxy = null;
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Object createProxyBean(RemotingProxyFactoryBean proxyBean,
+			Class serviceInterfaceWithContext) {
+		Object createdProxy = null;
 
-        Class serviceInterface = proxyBean.getServiceInterface();
-        String serviceName = serviceInterface.getName();
-        
-        try {
-            Class wsServiceClass;
-            String methodName;
-            
-            ProtocolSpecificConfiguration cfg
-                = proxyBean.getProtocolSpecificConfiguration();
-            if (cfg != null && cfg instanceof JaxwsProtocolConfiguration) {
-                JaxwsProtocolConfiguration jaxWsConfig
-                    = (JaxwsProtocolConfiguration) cfg;
-               
-                // use wsimport-generated classes directly (no dynamic proxies)
-                wsServiceClass = jaxWsConfig.getServiceImplementation();
-                methodName = "get" + serviceInterface.getSimpleName();
-            } else if (serviceName.endsWith("WS")
-                && serviceName.contains(".gen.")) {
-                
-                // use generated classes directly (no dynamic proxies)
-                wsServiceClass = Class.forName(serviceName + "Service");
-                methodName = "get" + serviceInterface.getSimpleName() + "Port";
-            } else {
-                // create dynamic proxies
-                // therefore the client stubs implement the service interface
-                wsServiceClass = Class.forName(
-                    serviceInterface.getPackage().getName() + ".gen."
-                    + serviceInterface.getSimpleName() + "WSService");
-                methodName = "get" + serviceInterface.getSimpleName()
-                    + "WSPort";
-            }
-            
-            Service clientService = (Service) wsServiceClass.newInstance();
-            
-            // give potential subclasses the chance to adapt the service
-            adaptProxyService(clientService);
-            
-            Method getter = wsServiceClass.getMethod(methodName);
+		Class serviceInterface = proxyBean.getServiceInterface();
+		String serviceName = serviceInterface.getName();
+		
+		try {
+			Class wsServiceClass;
+			String methodName;
+			
+			ProtocolSpecificConfiguration cfg
+				= proxyBean.getProtocolSpecificConfiguration();
+			if (cfg != null && cfg instanceof JaxwsProtocolConfiguration) {
+				JaxwsProtocolConfiguration jaxWsConfig
+					= (JaxwsProtocolConfiguration) cfg;
+				
+				// use wsimport-generated classes directly (no dynamic proxies)
+				wsServiceClass = jaxWsConfig.getServiceImplementation();
+				methodName = "get" + serviceInterface.getSimpleName();
+			} else if (serviceName.endsWith("WS")
+				&& serviceName.contains(".gen.")) {
+				
+				// use generated classes directly (no dynamic proxies)
+				wsServiceClass = Class.forName(serviceName + "Service");
+				methodName = "get" + serviceInterface.getSimpleName() + "Port";
+			} else {
+				// create dynamic proxies
+				// therefore the client stubs implement the service interface
+				wsServiceClass = Class.forName(
+					serviceInterface.getPackage().getName() + ".gen."
+					+ serviceInterface.getSimpleName() + "WSService");
+				methodName = "get" + serviceInterface.getSimpleName()
+					+ "WSPort";
+			}
+			
+			Service clientService = (Service) wsServiceClass.newInstance();
+			
+			// give potential subclasses the chance to adapt the service
+			adaptProxyService(clientService);
+			
+			Method getter = wsServiceClass.getMethod(methodName);
 
-            Object bean = getter.invoke(clientService);
-            if (serviceInterface.isInstance(bean)) {
-                createdProxy = bean;
-            } else {
-                // create dynamic proxy
-                createdProxy = JaxwsInvoker.newInstance(bean, serviceInterface,
-                    serviceInterface.getPackage().getName() + ".gen");
-            }
-        } catch (Exception e) {
-            CoreNotificationHelper.notifyMisconfiguration(
-                "Could not create JAX-WS binding for "
-                + serviceInterface, e);
-        }
-        return createdProxy;
-    }
-    
-    /**
-     * Does this protocol handle context passing on its own? Yes.
-     * @return Whether this protocol handles the context (<code>true</code>)
-     */
-    public boolean getProtocolSpecificContextPassing() {
-        return true;
-    }
+			Object bean = getter.invoke(clientService);
+			if (serviceInterface.isInstance(bean)) {
+				createdProxy = bean;
+			} else {
+				// create dynamic proxy
+				createdProxy = JaxwsInvoker.newInstance(bean, serviceInterface,
+					serviceInterface.getPackage().getName() + ".gen");
+			}
+		} catch (Exception e) {
+			CoreNotificationHelper.notifyMisconfiguration(
+				"Could not create JAX-WS binding for "
+				+ serviceInterface, e);
+		}
+		return createdProxy;
+	}
+	
+	/**
+	 * Does this protocol handle context passing on its own? Yes.
+	 * @return Whether this protocol handles the context (<code>true</code>)
+	 */
+	public boolean getProtocolSpecificContextPassing() {
+		return true;
+	}
 
-    /** {@inheritDoc} */
-    @Override
-    public String generateUrl(AbstractRemotingBase remoteBase) {
-        // ATTENTION: The complete url is defined manually in the wsdl
-        return "/" + remoteBase.getServiceName();
-    }
+	/** {@inheritDoc} */
+	@Override
+	public String generateUrl(AbstractRemotingBase remoteBase) {
+		// ATTENTION: The complete url is defined manually in the wsdl
+		return "/" + remoteBase.getServiceName();
+	}
 
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    @Override
-    public Class getExporterObjectType() {
-        return String.class;
-    }
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Class getExporterObjectType() {
+		return String.class;
+	}
 
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    @Override
-    public Class getProxyObjectType() {
-        return SEIStub.class;
-    }
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Class getProxyObjectType() {
+		return SEIStub.class;
+	}
 
-    /**
-     * Method providing an extension point do adapt the proxy service.
-     * @param service The service
-     */
-    protected void adaptProxyService(Service service) {
-    }
+	/**
+	 * Method providing an extension point do adapt the proxy service.
+	 * @param service The service
+	 */
+	protected void adaptProxyService(Service service) {
+	}
 
-    /**
-     * Method providing an extension point do adapt the exporter service.
-     * @param service The service
-     */
-    protected void adaptExporterService(SpringService service) {
-    }
+	/**
+	 * Method providing an extension point do adapt the exporter service.
+	 * @param service The service
+	 */
+	protected void adaptExporterService(SpringService service) {
+	}
 
-    /**
-     * @return Returns the JAX-WS Binding.
-     * Used in @see WSSpringServlet
-     */
-    public SpringBinding getJaxwsBinding() {
-        return m_jaxwsBinding;
-    }
+	/**
+	 * @return Returns the JAX-WS Binding.
+	 * Used in @see WSSpringServlet
+	 */
+	public SpringBinding getJaxwsBinding() {
+		return m_jaxwsBinding;
+	}
 }

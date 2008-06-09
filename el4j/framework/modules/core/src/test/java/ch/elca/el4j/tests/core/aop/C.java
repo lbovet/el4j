@@ -19,7 +19,7 @@ package ch.elca.el4j.tests.core.aop;
 
 /**
  * This class is used in the tests.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",

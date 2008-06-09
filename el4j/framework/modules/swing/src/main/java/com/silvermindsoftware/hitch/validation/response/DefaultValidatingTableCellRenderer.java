@@ -39,82 +39,82 @@ import ch.elca.el4j.gui.swing.GUIApplication;
  * @author Stefan Wismer (SWI)
  */
 public class DefaultValidatingTableCellRenderer
-    extends DefaultTableCellRenderer {
-    /**
-     * Color to mark value as invalid.
-     */
-    protected final Color m_invalidColor;
-    
-    /**
-     * Color to mark row as selected.
-     */
-    protected final Color m_selectedColor;
-    
-    /**
-     * The default contructor reading the invalidColor from Spring config.
-     */
-    public DefaultValidatingTableCellRenderer() {
-        m_invalidColor = null;
-        m_selectedColor = null;
-    }
-    
-    /**
-     * @param invalid    the color to mark value as invalid
-     * @param selected   the color to mark row as selected
-     */
-    public DefaultValidatingTableCellRenderer(Color invalid, Color selected) {
-        m_invalidColor = invalid;
-        m_selectedColor = selected;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value,
-            boolean isSelected, boolean hasFocus, int row, int column) {
-        
-        Object v = ((ValidatedProperty) value).getValue();
-        Class<?> vClass = (v != null) ? v.getClass() : String.class;
-        
-        Component renderer = table.getDefaultRenderer(vClass)
-                .getTableCellRendererComponent(table, v, isSelected, hasFocus,
-                        row, column);
+	extends DefaultTableCellRenderer {
+	/**
+	 * Color to mark value as invalid.
+	 */
+	protected final Color m_invalidColor;
+	
+	/**
+	 * Color to mark row as selected.
+	 */
+	protected final Color m_selectedColor;
+	
+	/**
+	 * The default contructor reading the invalidColor from Spring config.
+	 */
+	public DefaultValidatingTableCellRenderer() {
+		m_invalidColor = null;
+		m_selectedColor = null;
+	}
+	
+	/**
+	 * @param invalid    the color to mark value as invalid
+	 * @param selected   the color to mark row as selected
+	 */
+	public DefaultValidatingTableCellRenderer(Color invalid, Color selected) {
+		m_invalidColor = invalid;
+		m_selectedColor = selected;
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public Component getTableCellRendererComponent(JTable table, Object value,
+			boolean isSelected, boolean hasFocus, int row, int column) {
+		
+		Object v = ((ValidatedProperty) value).getValue();
+		Class<?> vClass = (v != null) ? v.getClass() : String.class;
+		
+		Component renderer = table.getDefaultRenderer(vClass)
+				.getTableCellRendererComponent(table, v, isSelected, hasFocus,
+						row, column);
 
-        renderer.setForeground(Color.BLACK);
-        
-        if (!((ValidatedProperty) value).isValid()) {
-            renderer.setBackground(getInvalidColor());
-        } else {
-            if (isSelected) {
-                renderer.setBackground(getSelectedColor());
-            } else {
-                renderer.setBackground(Color.WHITE);
-            }
-        }
-        
-        return renderer;
-    }
-    
-    /**
-     * @return    the color to mark a value as invalid.
-     */
-    private Color getInvalidColor() {
-        if (m_invalidColor != null) {
-            return m_invalidColor;
-        } else {
-            return (Color) GUIApplication.getInstance().getConfig()
-            .get("invalidColor");
-        }
-    }
-    
-    /**
-     * @return    the color to mark row as selected.
-     */
-    private Color getSelectedColor() {
-        if (m_selectedColor != null) {
-            return m_selectedColor;
-        } else {
-            return (Color) GUIApplication.getInstance().getConfig()
-            .get("selectedColor");
-        }
-    }
+		renderer.setForeground(Color.BLACK);
+		
+		if (!((ValidatedProperty) value).isValid()) {
+			renderer.setBackground(getInvalidColor());
+		} else {
+			if (isSelected) {
+				renderer.setBackground(getSelectedColor());
+			} else {
+				renderer.setBackground(Color.WHITE);
+			}
+		}
+		
+		return renderer;
+	}
+	
+	/**
+	 * @return    the color to mark a value as invalid.
+	 */
+	private Color getInvalidColor() {
+		if (m_invalidColor != null) {
+			return m_invalidColor;
+		} else {
+			return (Color) GUIApplication.getInstance().getConfig()
+			.get("invalidColor");
+		}
+	}
+	
+	/**
+	 * @return    the color to mark row as selected.
+	 */
+	private Color getSelectedColor() {
+		if (m_selectedColor != null) {
+			return m_selectedColor;
+		} else {
+			return (Color) GUIApplication.getInstance().getConfig()
+			.get("selectedColor");
+		}
+	}
 }

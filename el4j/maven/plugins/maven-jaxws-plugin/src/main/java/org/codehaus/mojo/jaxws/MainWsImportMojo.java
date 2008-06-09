@@ -13,17 +13,17 @@ import java.io.File;
  * @author Kohsuke Kawaguchi
  */
 public class MainWsImportMojo extends WsImportMojo {
-    /**
-     * Specify where to place output generated classes
-     * Set to "" to turn it off
-     * @parameter default-value="${project.build.outputDirectory}"
-     */
-    protected File destDir;
+	/**
+	 * Specify where to place output generated classes
+	 * Set to "" to turn it off
+	 * @parameter default-value="${project.build.outputDirectory}"
+	 */
+	protected File destDir;
 
-    /**
-     * Either ${build.outputDirectory} or ${build.testOutputDirectory}.
-     */
-    protected File getDestDir() {
-        return destDir;
-    }
+	/**
+	 * Either ${build.outputDirectory} or ${build.testOutputDirectory}.
+	 */
+	protected File getDestDir() {
+		return destDir;
+	}
 }

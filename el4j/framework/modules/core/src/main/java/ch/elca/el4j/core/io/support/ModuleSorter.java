@@ -20,7 +20,7 @@ package ch.elca.el4j.core.io.support;
 /**
  * This interface is used to transform the order of modules given as
  * dependencies into a list of modules that respects the partial order.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -32,15 +32,15 @@ package ch.elca.el4j.core.io.support;
  */
 public interface ModuleSorter {
 
-    /**
-     * Sorts a list of unordered modules using their dependency information into
-     * a list that respects the partial order.
-     * 
-     * @param modules
-     *      The modules to sort.
-     *      
-     * @return Returns a list of modules that preserves the partial order
-     *      defined by dependency information.
-     */
-    public Module[] sortModules(Module[] modules);
+	/**
+	 * Sorts a list of unordered modules using their dependency information into
+	 * a list that respects the partial order.
+	 *
+	 * @param modules
+	 *      The modules to sort.
+	 *
+	 * @return Returns a list of modules that preserves the partial order
+	 *      defined by dependency information.
+	 */
+	public Module[] sortModules(Module[] modules);
 }

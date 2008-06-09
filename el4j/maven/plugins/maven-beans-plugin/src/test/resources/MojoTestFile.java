@@ -17,7 +17,7 @@
 
 /**
  * THIS IS NOT A JAVA SOURCE FILE.
- * 
+ *
  * It is used only for testing the beans mojo.
  *
  * <script type="text/javascript">printFileStatus
@@ -31,17 +31,17 @@
  */
 public class MojoTestFile {
 
-    public static void main(String[] args) {
-        
-        // $$ BEANS INCLUDE $$
-        String[] included = {
-            "classpath:beansInAFile.xml",
-            "classpath*:beansInAJar.xml"
-        };
-        
-        // $$ BEANS EXCLUDE $$
-        String[] excluded = {};
-        
-        // $$ BEANS END $$
-    }
+	public static void main(String[] args) {
+		
+		// $$ BEANS INCLUDE $$
+		String[] included = {
+			"classpath:beansInAFile.xml",
+			"classpath*:beansInAJar.xml"
+		};
+		
+		// $$ BEANS EXCLUDE $$
+		String[] excluded = {};
+		
+		// $$ BEANS END $$
+	}
 }

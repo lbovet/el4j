@@ -35,13 +35,13 @@ import org.apache.log4j.DailyRollingFileAppender;
  */
 public class SmartDailyRollingFileAppender extends DailyRollingFileAppender {
 
-    /**
-     * {@inheritDoc}
-     */
-    public synchronized void setFile(String fileName, boolean append, 
-        boolean bufferedIO, int bufferSize) throws IOException {
-        
-        super.setFile(SmartFileLibrary.createSmartLogPath(fileName), 
-            append, bufferedIO, bufferSize);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public synchronized void setFile(String fileName, boolean append,
+		boolean bufferedIO, int bufferSize) throws IOException {
+		
+		super.setFile(SmartFileLibrary.createSmartLogPath(fileName),
+			append, bufferedIO, bufferSize);
+	}
 }

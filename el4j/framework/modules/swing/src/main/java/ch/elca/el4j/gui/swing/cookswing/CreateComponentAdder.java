@@ -23,7 +23,7 @@ import cookxml.core.interfaces.Adder;
 /**
  * This cookXML adder handles &lt;create-component&gt;: Child elements are
  * not added to parent.
- * 
+ *
  * To add child elements, write a method doing this and register
  * it in the finish-method attribute of the &lt;create-component&gt; tag.
  *
@@ -38,14 +38,14 @@ import cookxml.core.interfaces.Adder;
  */
 public class CreateComponentAdder implements Adder {
 
-    /** {@inheritDoc} */
-    public boolean add(String parentNS, String parentTag, Object parent,
-        Object child, DecodeEngine decodeEngine) throws AdderException {
-        
-        if (parentTag.equals("create-component")) {
-            // do not add this component
-            return true;
-        }
-        return false;
-    }
+	/** {@inheritDoc} */
+	public boolean add(String parentNS, String parentTag, Object parent,
+		Object child, DecodeEngine decodeEngine) throws AdderException {
+		
+		if (parentTag.equals("create-component")) {
+			// do not add this component
+			return true;
+		}
+		return false;
+	}
 }

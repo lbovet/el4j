@@ -27,21 +27,21 @@ import java.lang.annotation.*;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BoundComponent {
-    /**
+	/**
 	 * <p>
 	 * If specified. This is the type the component value
 	 * will be converted to before being set on the model
-     * object.
+	 * object.
 	 * <p/>
 	 * If not specified an attempt will be made to determine
-     * the type to be set based on the model objects getter
-     * return type or field type.
+	 * the type to be set based on the model objects getter
+	 * return type or field type.
 	 *
 	 * @return
 	 */
 	Class type() default void.class;
 
-    /**
+	/**
 	 * <p>
 	 * If specified. This is the property the component
 	 * will be bound to on the model class.
@@ -89,16 +89,16 @@ public @interface BoundComponent {
 	 */
 	String[] handlerValues() default "";
 
-    /**
-     * This attribute specifies whether a component is read only.
-     * If read only is true the component will be updated during
-     * the updateForm but will not be accessed when performing
-     * an updateModel. If default is specified then the default behavior
-     * is used. This could be different for the type of component being
-     * bound. Currently JLabels are defaulted to be read-only.
-     * @return
-     */
-    ReadOnly readOnly() default ReadOnly.DEFAULT;
-    
+	/**
+	 * This attribute specifies whether a component is read only.
+	 * If read only is true the component will be updated during
+	 * the updateForm but will not be accessed when performing
+	 * an updateModel. If default is specified then the default behavior
+	 * is used. This could be different for the type of component being
+	 * bound. Currently JLabels are defaulted to be read-only.
+	 * @return
+	 */
+	ReadOnly readOnly() default ReadOnly.DEFAULT;
+	
 
 }

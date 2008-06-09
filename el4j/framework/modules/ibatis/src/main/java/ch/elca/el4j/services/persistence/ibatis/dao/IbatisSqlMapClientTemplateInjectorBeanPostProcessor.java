@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ch.elca.el4j.services.persistence.ibatis.dao; 
+package ch.elca.el4j.services.persistence.ibatis.dao;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -33,34 +33,34 @@ import ch.elca.el4j.util.codingsupport.Reject;
 /**
  * Inject the sqlMapClientTemplate in DAOs if needed and possible
  *  (it requires the {@link SqlMapClientDaoSupport} interface). <a>
- *  
- *  It gets the sqlMapClientTemplate from the spring context 
- *   by using the default name {@link SQL_MAP_CLIENT_TEMPLATE_NAME} or 
+ *
+ *  It gets the sqlMapClientTemplate from the spring context
+ *   by using the default name {@link SQL_MAP_CLIENT_TEMPLATE_NAME} or
  *   via its setter method.
- *    
+ *
  * @author pos
  *
  */
-public class IbatisSqlMapClientTemplateInjectorBeanPostProcessor 
+public class IbatisSqlMapClientTemplateInjectorBeanPostProcessor
 		implements BeanPostProcessor, PriorityOrdered, ApplicationContextAware {
 
-	protected static Log s_logger= LogFactory.getLog(IbatisSqlMapClientTemplateInjectorBeanPostProcessor.class);	
+	protected static Log s_logger= LogFactory.getLog(IbatisSqlMapClientTemplateInjectorBeanPostProcessor.class);
 	
-	/** 
+	/**
 	 * The default name under which we look for the sql map client template
 	 */
-	public static final String SQL_MAP_CLIENT_TEMPLATE_NAME = "convenienceSqlMapClientTemplate";	
+	public static final String SQL_MAP_CLIENT_TEMPLATE_NAME = "convenienceSqlMapClientTemplate";
 	
-	private int order = Ordered.LOWEST_PRECEDENCE; 
+	private int order = Ordered.LOWEST_PRECEDENCE;
 	
 
-	/** 
+	/**
 	 * Initiates the real work
 	 */
 	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
 		s_logger.debug("Treating bean with name:"+beanName);
 		if (GenericDao.class.isAssignableFrom(bean.getClass())) {
-			s_logger.debug("init dao with name:"+beanName);			
+			s_logger.debug("init dao with name:"+beanName);
 			initDao((GenericDao<?>)bean);
 		}
 		return bean;
@@ -71,7 +71,7 @@ public class IbatisSqlMapClientTemplateInjectorBeanPostProcessor
 	}
 
 
-	/** 
+	/**
 	 * Try to init the sessionFactory of the bean
 	 * @param dao
 	 */
@@ -79,36 +79,36 @@ public class IbatisSqlMapClientTemplateInjectorBeanPostProcessor
 		if (getSqlMapClientTemplate() != null) {
 			try {
 				if (dao instanceof SqlMapClientDaoSupport) {
-					SqlMapClientTemplate template = ((SqlMapClientDaoSupport)dao).getSqlMapClientTemplate(); 
+					SqlMapClientTemplate template = ((SqlMapClientDaoSupport)dao).getSqlMapClientTemplate();
 					if ((template != null) && (template.getSqlMapClient() == null)){
 						((SqlMapClientDaoSupport)dao).setSqlMapClientTemplate(m_sqlmapClientTemplate);
 					}
 				}
-				s_logger.debug("2value set in dao set"); 
+				s_logger.debug("2value set in dao set");
 			} catch (Exception e) {
-				// ignore problems			
+				// ignore problems
 				s_logger.warn("problem when auto-setting sessionFactory ",e);
 
 			}
 		}
-	} 
+	}
 
 	
 	public SqlMapClientTemplate getSqlMapClientTemplate() {
 		if ((m_sqlmapClientTemplate == null) && (m_applicationContext != null)){
-			// try to locate the session factory 
+			// try to locate the session factory
 			if (m_applicationContext.containsBean(SQL_MAP_CLIENT_TEMPLATE_NAME)) {
-				m_sqlmapClientTemplate = (SqlMapClientTemplate) 
-				  m_applicationContext.getBean(SQL_MAP_CLIENT_TEMPLATE_NAME);
-				 Reject.ifNull(m_sqlmapClientTemplate, "sql map template must not be null!");
-				 Reject.ifNull(m_sqlmapClientTemplate.getSqlMapClient(), "sql map client must not be null!");
+				m_sqlmapClientTemplate = (SqlMapClientTemplate)
+					m_applicationContext.getBean(SQL_MAP_CLIENT_TEMPLATE_NAME);
+				Reject.ifNull(m_sqlmapClientTemplate, "sql map template must not be null!");
+				Reject.ifNull(m_sqlmapClientTemplate.getSqlMapClient(), "sql map client must not be null!");
 			}
 		}
 		return m_sqlmapClientTemplate;
 	}
 
 	/**
-	 * You can either set the session factory explicitly or 
+	 * You can either set the session factory explicitly or
 	 *  have the factory load the session factory implicitly (by name).
 	 * @param factory
 	 */
@@ -119,20 +119,20 @@ public class IbatisSqlMapClientTemplateInjectorBeanPostProcessor
 	protected SqlMapClientTemplate m_sqlmapClientTemplate;
 
 	private ApplicationContext m_applicationContext;
-							   
+	
 
 	public void setOrder(int order) {
-	  this.order = order;
+		this.order = order;
 	}
 
 	public int getOrder() {
-	  return this.order;
+		return this.order;
 	}
 
 
-    public void setApplicationContext(ApplicationContext applicationContext)
-    	throws BeansException {
-    	m_applicationContext = applicationContext;
-    }
+	public void setApplicationContext(ApplicationContext applicationContext)
+		throws BeansException {
+		m_applicationContext = applicationContext;
+	}
 	
 }

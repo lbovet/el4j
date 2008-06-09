@@ -29,30 +29,30 @@ import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @param <T>    the type of form component it belongs to
  *
  * @author Stefan Wismer (SWI)
  */
 public abstract class AbstractBindingCreator<T extends JComponent>
-    implements BindingCreator<T> {
-    
-    /**
-     * The update strategy (r/r once, rw).
-     */
-    protected UpdateStrategy m_updateStrategy = UpdateStrategy.READ_WRITE;
+	implements BindingCreator<T> {
+	
+	/**
+	 * The update strategy (r/r once, rw).
+	 */
+	protected UpdateStrategy m_updateStrategy = UpdateStrategy.READ_WRITE;
 
-    /**
-     * @return    the update strategy
-     */
-    public UpdateStrategy getUpdateStrategy() {
-        return m_updateStrategy;
-    }
+	/**
+	 * @return    the update strategy
+	 */
+	public UpdateStrategy getUpdateStrategy() {
+		return m_updateStrategy;
+	}
 
-    /**
-     * @param updateStrategy    the update strategy to set
-     */
-    public void setUpdateStrategy(UpdateStrategy updateStrategy) {
-        m_updateStrategy = updateStrategy;
-    }
+	/**
+	 * @param updateStrategy    the update strategy to set
+	 */
+	public void setUpdateStrategy(UpdateStrategy updateStrategy) {
+		m_updateStrategy = updateStrategy;
+	}
 }

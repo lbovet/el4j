@@ -41,52 +41,52 @@ import ch.elca.el4j.util.dom.annotations.MemberOrder;
  * @author David Stefan (DST)
  */
 @MemberOrder({
-    "name"
+	"name"
 })
 @Entity
 @Table(name = "NAMES")
 @AttributeOverride(name = "key", column = @Column(name = "NAMEID"))
 @SequenceGenerator(name = "keyid_generator", sequenceName = "name_sequence")
 public class Name extends AbstractIntKeyIntOptimisticLockingDto {
-    
-    /**
-     * The Name and only field.
-     */
-    private String m_name;
+	
+	/**
+	 * The Name and only field.
+	 */
+	private String m_name;
 
-    /**
-     * @return Returns the name.
-     */
-    @NotNull
-    public String getName() {
-        return m_name;
-    }
+	/**
+	 * @return Returns the name.
+	 */
+	@NotNull
+	public String getName() {
+		return m_name;
+	}
 
-    /**
-     * @param name
-     *            The name to set.
-     */
-    public void setName(String name) {
-        m_name = name;
-    }
+	/**
+	 * @param name
+	 *            The name to set.
+	 */
+	public void setName(String name) {
+		m_name = name;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public int hashCode() {
-        return super.hashCode();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public int hashCode() {
+		return super.hashCode();
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public boolean equals(Object object) {
-        if (super.equals(object) 
-            && object instanceof Name) {
-            Name other = (Name) object;
-            return ObjectUtils.nullSaveEquals(m_name, other.m_name);
-        } else {
-            return false;
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean equals(Object object) {
+		if (super.equals(object)
+			&& object instanceof Name) {
+			Name other = (Name) object;
+			return ObjectUtils.nullSaveEquals(m_name, other.m_name);
+		} else {
+			return false;
+		}
+	}
 }

@@ -39,47 +39,47 @@ import ch.elca.el4j.util.config.GenericConfig;
  * @author Stefan Wismer (SWI)
  */
 public class GenericConfigSpringTest extends AbstractGenericConfigTest {
-    
-    /** The application context. */
-    final ApplicationContext m_appContext;
+	
+	/** The application context. */
+	final ApplicationContext m_appContext;
 
-    /**
-     * Default constructor.
-     */
-    public GenericConfigSpringTest() {
-        m_appContext = new ModuleApplicationContext(
-            "classpath:scenarios/util/config/genericConfig.xml", false);
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    protected GenericConfig getDefaultConfig() {
-        return (GenericConfig) m_appContext.getBean("DefaultConfig");
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    protected GenericConfig getSpecificConfig() {
-        return (GenericConfig) m_appContext.getBean("SpecificConfig");
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    protected GenericConfig getMoreSpecificConfig() {
-        return (GenericConfig) m_appContext.getBean("MoreSpecificConfig");
-    }
-    
-    /***/
-    public void testMoreSpecificConfigUsingProperties() {
-        GenericConfig config = (GenericConfig)
-             m_appContext.getBean("MoreSpecificConfigUsingProperties");
-        assertTrue(config.get("class").equals(
-            "MoreSpecificConfigUsingProperties"));
-        assertTrue(config.get("MoreSpecificConfigUsingProperties")
-            .equals("MoreSpecificConfigUsingProperties"));
-        assertTrue(config.get("SpecificConfig").equals("SpecificConfig"));
-        assertTrue(config.getMap().size() == 4);
-    }
+	/**
+	 * Default constructor.
+	 */
+	public GenericConfigSpringTest() {
+		m_appContext = new ModuleApplicationContext(
+			"classpath:scenarios/util/config/genericConfig.xml", false);
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	protected GenericConfig getDefaultConfig() {
+		return (GenericConfig) m_appContext.getBean("DefaultConfig");
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	protected GenericConfig getSpecificConfig() {
+		return (GenericConfig) m_appContext.getBean("SpecificConfig");
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	protected GenericConfig getMoreSpecificConfig() {
+		return (GenericConfig) m_appContext.getBean("MoreSpecificConfig");
+	}
+	
+	/***/
+	public void testMoreSpecificConfigUsingProperties() {
+		GenericConfig config = (GenericConfig)
+			m_appContext.getBean("MoreSpecificConfigUsingProperties");
+		assertTrue(config.get("class").equals(
+			"MoreSpecificConfigUsingProperties"));
+		assertTrue(config.get("MoreSpecificConfigUsingProperties")
+			.equals("MoreSpecificConfigUsingProperties"));
+		assertTrue(config.get("SpecificConfig").equals("SpecificConfig"));
+		assertTrue(config.getMap().size() == 4);
+	}
 }
 // Checkstyle: EmptyBlock on
 // Checkstyle: MagicNumber on

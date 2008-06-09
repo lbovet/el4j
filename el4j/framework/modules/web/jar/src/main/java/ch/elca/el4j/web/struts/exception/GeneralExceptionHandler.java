@@ -35,59 +35,59 @@ import org.apache.struts.config.ExceptionConfig;
 /**
  * General exception handler for Struts actions. Prints an exception message
  * and the stack trace on the page to which this action is forwarded.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Jacques-Olivier Haenni (JOH)
  */
 public class GeneralExceptionHandler extends ExceptionHandler {
-    
-    /** The static logger. */
-    protected static Log s_logger = LogFactory.
-        getLog(GeneralExceptionHandler.class);
-    
-    /**
-     * {@inheritDoc}
-     */
-    public ActionForward execute(Exception exception, ExceptionConfig config,
-            ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) {
-        
-        // Construct the exception message to be printed on the error page
-        String message = exception.getMessage();
-        List messages = new ArrayList();
-        if (message != null) {
-            StringTokenizer tokenizer = new StringTokenizer(message, "\n\r");
-            while (tokenizer.hasMoreTokens()) {
-                messages.add(tokenizer.nextToken());
-            }
-        }
+	
+	/** The static logger. */
+	protected static Log s_logger = LogFactory.
+		getLog(GeneralExceptionHandler.class);
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public ActionForward execute(Exception exception, ExceptionConfig config,
+			ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		// Construct the exception message to be printed on the error page
+		String message = exception.getMessage();
+		List messages = new ArrayList();
+		if (message != null) {
+			StringTokenizer tokenizer = new StringTokenizer(message, "\n\r");
+			while (tokenizer.hasMoreTokens()) {
+				messages.add(tokenizer.nextToken());
+			}
+		}
 
-        // Get and save the stack trace in a printable form 
-        Throwable t = exception;
-        StringBuffer sb = new StringBuffer();
-        while (t != null) {
-            sb.append(t.toString() + "\n");
-            StackTraceElement[] stacktrace = t.getStackTrace();
-            for (int i = 0; i < stacktrace.length; i++) {
-                sb.append(stacktrace[i].toString() + "\n");
-            }
-            t = t.getCause();
-            if (t != null) {
-                sb.append("Caused by:\n");
-            }
-        }
+		// Get and save the stack trace in a printable form
+		Throwable t = exception;
+		StringBuffer sb = new StringBuffer();
+		while (t != null) {
+			sb.append(t.toString() + "\n");
+			StackTraceElement[] stacktrace = t.getStackTrace();
+			for (int i = 0; i < stacktrace.length; i++) {
+				sb.append(stacktrace[i].toString() + "\n");
+			}
+			t = t.getCause();
+			if (t != null) {
+				sb.append("Caused by:\n");
+			}
+		}
 
-        // Add the exception message and the stack trace to the request
-        // to have them available on the error page
-        request.setAttribute("exceptionMessage", messages);
-        request.setAttribute("exceptionText", sb.toString());
+		// Add the exception message and the stack trace to the request
+		// to have them available on the error page
+		request.setAttribute("exceptionMessage", messages);
+		request.setAttribute("exceptionText", sb.toString());
 
-        return mapping.findForward("error");
-    }
+		return mapping.findForward("error");
+	}
 }

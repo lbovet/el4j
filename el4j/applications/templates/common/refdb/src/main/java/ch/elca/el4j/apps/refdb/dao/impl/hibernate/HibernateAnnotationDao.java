@@ -26,21 +26,21 @@ import ch.elca.el4j.util.codingsupport.Reject;
  */
 @AutocollectedGenericDao("annotationDao")
 public class HibernateAnnotationDao
-    extends GenericHibernateReferencedObjectDao<Annotation, Integer>
-    implements AnnotationDao {
-    
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<Annotation> getAnnotationsByAnnotator(String annotator)
-        throws DataAccessException {
-        Reject.ifEmpty(annotator);
-        String queryString = "from Annotation annotation where annotator "
-            + "= :annotator";
-        return getConvenienceHibernateTemplate().findByNamedParam(queryString,
-            "annotator", annotator);
-    }
-    
+	extends GenericHibernateReferencedObjectDao<Annotation, Integer>
+	implements AnnotationDao {
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Annotation> getAnnotationsByAnnotator(String annotator)
+		throws DataAccessException {
+		Reject.ifEmpty(annotator);
+		String queryString = "from Annotation annotation where annotator "
+			+ "= :annotator";
+		return getConvenienceHibernateTemplate().findByNamedParam(queryString,
+			"annotator", annotator);
+	}
+	
 }

@@ -27,8 +27,8 @@ import org.apache.log4j.Logger;
 import org.jdom.Namespace;
 
 /**
- * 
- * Baseclass for the JAXB context handlers, implementing some 
+ *
+ * Baseclass for the JAXB context handlers, implementing some
  * common functionalities.
  *
  * <script type="text/javascript">printFileStatus
@@ -42,81 +42,81 @@ import org.jdom.Namespace;
  * @author Stefan Wismer (SWI)
  */
 public abstract class AbstractJaxwsJaxbContextHandler
-    implements SOAPHandler<SOAPMessageContext> {
-    
-    /**
-     * Name of the element in the header containing the context.
-     */
-    protected static final String CONTEXT_ELEMENT_NAME = "context";
-    
-    /**
-     * Name of the namespace of the element containing the context.
-     */
-    protected static final Namespace CONTEXT_NAMESPACE = Namespace.getNamespace(
-        "ch.elca.el4j.services.remoting.protocol.jaxws");
-    
-    /**
-     * The context used to serialize the implicit context.
-     */
-    private JAXBContext m_jaxbContext;
-    
-    /**
-     * Creates a new hander with a context.
-     * @param jaxbContext The <code>JAXBContext</code> to serialize the context
-     */
-    public AbstractJaxwsJaxbContextHandler(JAXBContext jaxbContext) {
-        if (jaxbContext == null) {
-            try {
-                m_jaxbContext = JAXBContext.newInstance(new Class[]{});
-            } catch (JAXBException e) {
-                throw new NullPointerException("No JAXBContext passed and " 
-                    + "unable to create an empty one: " + e.getMessage());
-            }
-        } else {
-            m_jaxbContext = jaxbContext;
-        }
-    }
-    
-    /**
-     * Get a JaxbContext.
-     * @return A JaxbContext
-     */
-    protected JAXBContext getJaxbContext() {
-        return m_jaxbContext;
-    }
-    
-    /**
-     * Convenience method to get a marshaller.
-     * @return A marshaller
-     */
-    protected Marshaller getMarshaller() {
-        try {
-            return m_jaxbContext.createMarshaller();
-        } catch (JAXBException e) {
-            getLogger().error(
-                "Unable to create marshaller for context passing", e);
-            return null;   
-        }
-    }
-    
-    /**
-     * Convenience method to get an unmarshaller.
-     * @return A marshaller
-     */
-    protected Unmarshaller getUnmarshaller() {
-        try {
-            return m_jaxbContext.createUnmarshaller();
-        } catch (JAXBException e) {
-            getLogger().error(
-                "Unable to create unmarshaller for context passing", e);
-            return null;   
-        }
-    }
-    
-    /**
-     * Get the logger for this class.
-     * @return The Logger
-     */
-    protected abstract Logger getLogger();
-   
+	implements SOAPHandler<SOAPMessageContext> {
+	
+	/**
+	 * Name of the element in the header containing the context.
+	 */
+	protected static final String CONTEXT_ELEMENT_NAME = "context";
+	
+	/**
+	 * Name of the namespace of the element containing the context.
+	 */
+	protected static final Namespace CONTEXT_NAMESPACE = Namespace.getNamespace(
+		"ch.elca.el4j.services.remoting.protocol.jaxws");
+	
+	/**
+	 * The context used to serialize the implicit context.
+	 */
+	private JAXBContext m_jaxbContext;
+	
+	/**
+	 * Creates a new hander with a context.
+	 * @param jaxbContext The <code>JAXBContext</code> to serialize the context
+	 */
+	public AbstractJaxwsJaxbContextHandler(JAXBContext jaxbContext) {
+		if (jaxbContext == null) {
+			try {
+				m_jaxbContext = JAXBContext.newInstance(new Class[]{});
+			} catch (JAXBException e) {
+				throw new NullPointerException("No JAXBContext passed and "
+					+ "unable to create an empty one: " + e.getMessage());
+			}
+		} else {
+			m_jaxbContext = jaxbContext;
+		}
+	}
+	
+	/**
+	 * Get a JaxbContext.
+	 * @return A JaxbContext
+	 */
+	protected JAXBContext getJaxbContext() {
+		return m_jaxbContext;
+	}
+	
+	/**
+	 * Convenience method to get a marshaller.
+	 * @return A marshaller
+	 */
+	protected Marshaller getMarshaller() {
+		try {
+			return m_jaxbContext.createMarshaller();
+		} catch (JAXBException e) {
+			getLogger().error(
+				"Unable to create marshaller for context passing", e);
+			return null;
+		}
+	}
+	
+	/**
+	 * Convenience method to get an unmarshaller.
+	 * @return A marshaller
+	 */
+	protected Unmarshaller getUnmarshaller() {
+		try {
+			return m_jaxbContext.createUnmarshaller();
+		} catch (JAXBException e) {
+			getLogger().error(
+				"Unable to create unmarshaller for context passing", e);
+			return null;
+		}
+	}
+	
+	/**
+	 * Get the logger for this class.
+	 * @return The Logger
+	 */
+	protected abstract Logger getLogger();
+	
 }

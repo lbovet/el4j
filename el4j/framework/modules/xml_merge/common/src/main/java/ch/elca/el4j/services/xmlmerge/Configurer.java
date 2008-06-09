@@ -25,17 +25,17 @@ package ch.elca.el4j.services.xmlmerge;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public interface Configurer {
 
-    /**
-     * Configures the specified XmlMerge instance.
-     * 
-     * @param xmlMerge An XmlMerge instance
-     */
-    public void configure(XmlMerge xmlMerge) throws ConfigurationException;
+	/**
+	 * Configures the specified XmlMerge instance.
+	 *
+	 * @param xmlMerge An XmlMerge instance
+	 */
+	public void configure(XmlMerge xmlMerge) throws ConfigurationException;
 
 }

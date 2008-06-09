@@ -31,33 +31,33 @@ package ch.elca.el4j.demos.statistics.light;
  */
 public class Foo {
 
-    /**
-     * Computes the ith fibonacci number.
-     * @param i The fibonacci number index.
-     * @return Returns the ith fibonacci number.
-     */
-    public int fibonacci(int i) {
-        int fib;
-        if (i <= 0) {
-            fib = 0;
-        } else if (i <= 2) {
-            fib = 1;
-        } else {
-            fib = fibonacci(i - 1) + fibonacci(i - 2);
-        }
-        return fib;
-    }
-    
-    // Checkstyle: EmptyBlock off
-    // Checkstyle: MagicNumber off
-   /**
-     * This methods sleeps one second.
-     */
-    public void sleepOneSecond() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) { }
-    }
-    // Checkstyle: MagicNumber on
-    // Checkstyle: EmptyBlock on
+	/**
+	 * Computes the ith fibonacci number.
+	 * @param i The fibonacci number index.
+	 * @return Returns the ith fibonacci number.
+	 */
+	public int fibonacci(int i) {
+		int fib;
+		if (i <= 0) {
+			fib = 0;
+		} else if (i <= 2) {
+			fib = 1;
+		} else {
+			fib = fibonacci(i - 1) + fibonacci(i - 2);
+		}
+		return fib;
+	}
+	
+	// Checkstyle: EmptyBlock off
+	// Checkstyle: MagicNumber off
+	/**
+	 * This methods sleeps one second.
+	 */
+	public void sleepOneSecond() {
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) { }
+	}
+	// Checkstyle: MagicNumber on
+	// Checkstyle: EmptyBlock on
 }

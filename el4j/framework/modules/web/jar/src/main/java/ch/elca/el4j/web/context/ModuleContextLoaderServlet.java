@@ -22,7 +22,7 @@ import org.springframework.web.context.ContextLoaderServlet;
 /**
  * Bootstrap servlet to start up the WebApplicationContext.
  * Simply delegates to ModuleContextLoader.
- * 
+ *
  * Note that this class has been deprecated for containers implementing
  * Servlet API 2.4 or higher in favour of ModuleContextLoaderListener.
  *
@@ -36,9 +36,9 @@ import org.springframework.web.context.ContextLoaderServlet;
  * @author Stefan Wismer (SWI)
  */
 public class ModuleContextLoaderServlet extends ContextLoaderServlet {
-    /** {@inheritDoc} */
-    @Override
-    protected ContextLoader createContextLoader() {
-        return new ModuleContextLoader();
-    }
+	/** {@inheritDoc} */
+	@Override
+	protected ContextLoader createContextLoader() {
+		return new ModuleContextLoader();
+	}
 }

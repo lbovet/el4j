@@ -23,67 +23,67 @@ import java.util.Map;
 /**
  * Default implementation of <code>ImplicitContextPassingRegistry</code>. To
  * register the implicit context passers, their classname is used as id.
- * 
- * <script type="text/javascript">printFileStatus 
+ *
+ * <script type="text/javascript">printFileStatus
  * ("$URL$",
  *  "$Revision$",
- *  "$Date$", 
+ *  "$Date$",
  *  "$Author$" ); </script>
- * 
+ *
  * @author Andreas Pfenninger (APR)
  */
 public class DefaultImplicitContextPassingRegistry implements
-        ImplicitContextPassingRegistry {
+		ImplicitContextPassingRegistry {
 
-    /** All registered passers. */
-    private Map<String,ImplicitContextPasser> m_registeredPassers = 
-        new HashMap<String,ImplicitContextPasser>();
+	/** All registered passers. */
+	private Map<String,ImplicitContextPasser> m_registeredPassers =
+		new HashMap<String,ImplicitContextPasser>();
 
-    /**
-     * {@inheritDoc}
-     */
-    public void registerImplicitContextPasser(
-            ImplicitContextPasser passer) {
-        String id = passer.getClass().getName();
-        m_registeredPassers.put(id, passer);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void registerImplicitContextPasser(
+			ImplicitContextPasser passer) {
+		String id = passer.getClass().getName();
+		m_registeredPassers.put(id, passer);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void unregisterImplicitContextPasser(
-            ImplicitContextPasser passer) {
-        String id = passer.getClass().getName();
-        m_registeredPassers.remove(id);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void unregisterImplicitContextPasser(
+			ImplicitContextPasser passer) {
+		String id = passer.getClass().getName();
+		m_registeredPassers.remove(id);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Map<String,Object> getAssembledImplicitContext() {
-        Map<String,Object> context = new HashMap<String,Object>();
-        Iterator<String> it = m_registeredPassers.keySet().iterator();
-        while (it.hasNext()) {
-            String id = (String) it.next();
-            ImplicitContextPasser passer 
-                = (ImplicitContextPasser) m_registeredPassers.get(id);
-            Object ctx = passer.getImplicitlyPassedContext();
-            context.put(id, ctx);
-        }
-        return context;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Map<String,Object> getAssembledImplicitContext() {
+		Map<String,Object> context = new HashMap<String,Object>();
+		Iterator<String> it = m_registeredPassers.keySet().iterator();
+		while (it.hasNext()) {
+			String id = (String) it.next();
+			ImplicitContextPasser passer
+				= (ImplicitContextPasser) m_registeredPassers.get(id);
+			Object ctx = passer.getImplicitlyPassedContext();
+			context.put(id, ctx);
+		}
+		return context;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void pushAssembledImplicitContext(Map<String,Object> contexts) {
-        Iterator<String> it = m_registeredPassers.keySet().iterator();
-        while (it.hasNext()) {
-            String id = (String) it.next();
-            ImplicitContextPasser passer 
-                = (ImplicitContextPasser) m_registeredPassers.get(id);
-            Object ctx = contexts.get(id);
-            passer.pushImplicitlyPassedContext(ctx);
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void pushAssembledImplicitContext(Map<String,Object> contexts) {
+		Iterator<String> it = m_registeredPassers.keySet().iterator();
+		while (it.hasNext()) {
+			String id = (String) it.next();
+			ImplicitContextPasser passer
+				= (ImplicitContextPasser) m_registeredPassers.get(id);
+			Object ctx = contexts.get(id);
+			passer.pushImplicitlyPassedContext(ctx);
+		}
+	}
 }

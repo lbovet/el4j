@@ -33,16 +33,16 @@ import org.apache.log4j.varia.ExternallyRolledFileAppender;
  *
  * @author Rashid Waraich (RWA)
  */
-public class SmartExternallyRolledFileAppender 
-    extends ExternallyRolledFileAppender {
+public class SmartExternallyRolledFileAppender
+	extends ExternallyRolledFileAppender {
 
-    /**
-     * {@inheritDoc}
-     */
-    public synchronized void setFile(String fileName, boolean append, 
-        boolean bufferedIO, int bufferSize) throws IOException {
-        
-        super.setFile(SmartFileLibrary.createSmartLogPath(fileName), 
-            append, bufferedIO, bufferSize);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public synchronized void setFile(String fileName, boolean append,
+		boolean bufferedIO, int bufferSize) throws IOException {
+		
+		super.setFile(SmartFileLibrary.createSmartLogPath(fileName),
+			append, bufferedIO, bufferSize);
+	}
 }

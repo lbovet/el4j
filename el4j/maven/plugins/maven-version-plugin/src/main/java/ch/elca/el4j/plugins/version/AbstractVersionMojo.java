@@ -34,7 +34,7 @@ import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 import org.apache.maven.plugin.AbstractMojo;
 
 /**
- * This class is the starting point for analyzing the versions of artifacts 
+ * This class is the starting point for analyzing the versions of artifacts
  * and provides some general tools.
  *
  * <script type="text/javascript">printFileStatus
@@ -47,101 +47,101 @@ import org.apache.maven.plugin.AbstractMojo;
  * @author Philippe Jacot (PJA)
  */
 public abstract class AbstractVersionMojo extends AbstractMojo {
-    /**
-     * The local Repository.
-     * 
-     * @parameter expression="${localRepository}
-     * @required
-     * @readonly
-     */
-    private ArtifactRepository m_localRepository;
+	/**
+	 * The local Repository.
+	 *
+	 * @parameter expression="${localRepository}
+	 * @required
+	 * @readonly
+	 */
+	private ArtifactRepository m_localRepository;
 
-    /**
-     * The artifact factory.
-     * 
-     * @component
-     * @required
-     */
-    private ArtifactFactory m_factory;
+	/**
+	 * The artifact factory.
+	 *
+	 * @component
+	 * @required
+	 */
+	private ArtifactFactory m_factory;
 
-    /**
-     * Metadata Manager.
-     * 
-     * @component
-     */
-    private RepositoryMetadataManager m_metadataManager;
+	/**
+	 * Metadata Manager.
+	 *
+	 * @component
+	 */
+	private RepositoryMetadataManager m_metadataManager;
 
-    /**
-     * Metadata Source.
-     * 
-     * @component
-     */
-    private ArtifactMetadataSource m_metadataSource;
-    
-    /**
-     * Get all available versions for an artifact.
-     * @param artifact Artifact to get versions of
-     * @param remoteRepositories Remote Repositories to look in
-     * @return A list of versions
-     */
-    @SuppressWarnings("unchecked")
-    protected VersionResult getAvailableVersions(Artifact artifact,
-        List<ArtifactRepository> remoteRepositories) {
-        List<ArtifactVersion> result = null;
+	/**
+	 * Metadata Source.
+	 *
+	 * @component
+	 */
+	private ArtifactMetadataSource m_metadataSource;
+	
+	/**
+	 * Get all available versions for an artifact.
+	 * @param artifact Artifact to get versions of
+	 * @param remoteRepositories Remote Repositories to look in
+	 * @return A list of versions
+	 */
+	@SuppressWarnings("unchecked")
+	protected VersionResult getAvailableVersions(Artifact artifact,
+		List<ArtifactRepository> remoteRepositories) {
+		List<ArtifactVersion> result = null;
 
-        try {
-//            RepositoryMetadata snapshotMetadata 
+		try {
+//            RepositoryMetadata snapshotMetadata
 //                = new SnapshotArtifactRepositoryMetadata(artifact);
 //            m_metadataManager.resolve(snapshotMetadata, remoteRepositories,
 //                m_localRepository);
 
-            result = (List<ArtifactVersion>) m_metadataSource
-                .retrieveAvailableVersions(artifact, m_localRepository,
-                    remoteRepositories);
-            
-            // To surely not get an Abstract list 
-            // that does not support insertion
-            result = new LinkedList<ArtifactVersion>(result);
+			result = (List<ArtifactVersion>) m_metadataSource
+				.retrieveAvailableVersions(artifact, m_localRepository,
+					remoteRepositories);
+			
+			// To surely not get an Abstract list
+			// that does not support insertion
+			result = new LinkedList<ArtifactVersion>(result);
 
-            // For snapshots add the used snapshot as well
+			// For snapshots add the used snapshot as well
 //            if (snapshotMetadata.isSnapshot()) {
 //                result.add(new DefaultArtifactVersion(snapshotMetadata
 //                    .getMetadata().getVersion()));
 //            }
 
-        } catch (ArtifactMetadataRetrievalException e) {
-            getLog().warn("Unable to retrieve Artifact Metadata for " 
-                + artifact.toString());
-            result = Collections.emptyList();
+		} catch (ArtifactMetadataRetrievalException e) {
+			getLog().warn("Unable to retrieve Artifact Metadata for "
+				+ artifact.toString());
+			result = Collections.emptyList();
 //        } catch (RepositoryMetadataResolutionException e) {
 //            getLog().warn("Unable to resolve Repository Data");
 //            result = Collections.emptyList();
-        }
+		}
 
-        if (result == null) {
-            result = new LinkedList<ArtifactVersion>();
-        }
+		if (result == null) {
+			result = new LinkedList<ArtifactVersion>();
+		}
 
-        return new VersionResult(artifact, result);
-    }   
+		return new VersionResult(artifact, result);
+	}
 
-    /**
-     * Create an artifact for the given data.
-     * 
-     * @param artifactId The artifact ID
-     * @param groupId The group ID
-     * @param version The version
-     * @param scope The scope
-     * @param type The type
-     * @return An artifact
-     */
-    protected Artifact getArtifact(
-        String artifactId, 
-        String groupId, 
-        String version, 
-        String scope, 
-        String type) {
-        return m_factory.createArtifact(
-            groupId, artifactId, version, scope, type);
-    }
+	/**
+	 * Create an artifact for the given data.
+	 *
+	 * @param artifactId The artifact ID
+	 * @param groupId The group ID
+	 * @param version The version
+	 * @param scope The scope
+	 * @param type The type
+	 * @return An artifact
+	 */
+	protected Artifact getArtifact(
+		String artifactId,
+		String groupId,
+		String version,
+		String scope,
+		String type) {
+		return m_factory.createArtifact(
+			groupId, artifactId, version, scope, type);
+	}
 }

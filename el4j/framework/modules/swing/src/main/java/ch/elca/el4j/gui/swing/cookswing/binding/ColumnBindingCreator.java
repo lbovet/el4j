@@ -32,7 +32,7 @@ import cookxml.core.DecodeEngine;
 import cookxml.core.exception.CreatorException;
 
 /**
- * The cookSwing creator for general purpose &lt;columnbinding&gt;s inside 
+ * The cookSwing creator for general purpose &lt;columnbinding&gt;s inside
  * &lt;tablebinding&gt;s.
  *
  * <script type="text/javascript">printFileStatus
@@ -45,57 +45,57 @@ import cookxml.core.exception.CreatorException;
  * @author Stefan Wismer (SWI)
  */
 public class ColumnBindingCreator extends AbstractBindingCreator {
-    /**
-     * The logger.
-     */
-    private static Log s_logger = LogFactory.getLog(ColumnBindingCreator.class);
-    
-    // <column> specific attributes
-    protected static final String LABEL = "label";
-    protected static final String EDITABLE = "editable";
-    protected static final String CLASS = "class";
-    
-    /** {@inheritDoc} */
-    @SuppressWarnings("unchecked")
-    public Object create(String parentNS, String parentTag, Element elm,
-        Object parentObj, DecodeEngine decodeEngine) throws CreatorException {
-        
-        // read attributes
-        JTableBinding tb = ((NoAddValueHolder<JTableBinding>)
-            parentObj).getObject();
-        Property prop = BeanProperty.create(elm.getAttribute(PROPERTY));
-        
-        // create binding
-        ColumnBinding cb = tb.addColumnBinding(prop);
-        
-        // get localized string
-        String columnName = elm.getAttribute(LABEL);
-        if (columnName.startsWith("@")) {
-            GUIApplication app = GUIApplication.getInstance();
-            ApplicationContext appContext = app.getContext();
-            columnName = appContext.getResourceMap(
-                decodeEngine.getVariable("this").getClass())
-                .getString(columnName.substring(1));
-            if (columnName == null) {
-                // no string found -> restore
-                columnName = elm.getAttribute(LABEL).substring(1);
-            }
-        }
-        cb.setColumnName(columnName);
-        
-        // is editable?
-        cb.setEditable(elm.getAttribute(EDITABLE).equalsIgnoreCase("true"));
-        
-        // set class
-        try {
-            if (!elm.getAttribute(CLASS).equals("")) {
-                cb.setColumnClass(Class.forName(elm.getAttribute(CLASS)));
-            }
-        } catch (ClassNotFoundException e) {
-            s_logger.warn("Attribute '" + CLASS + "' of tag '"
-                + elm.getNodeName() + "' contains invalid class.");
-        }
-        
-        return new NoAddValueHolder<ColumnBinding>(cb);
-    }
+	/**
+	 * The logger.
+	 */
+	private static Log s_logger = LogFactory.getLog(ColumnBindingCreator.class);
+	
+	// <column> specific attributes
+	protected static final String LABEL = "label";
+	protected static final String EDITABLE = "editable";
+	protected static final String CLASS = "class";
+	
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	public Object create(String parentNS, String parentTag, Element elm,
+		Object parentObj, DecodeEngine decodeEngine) throws CreatorException {
+		
+		// read attributes
+		JTableBinding tb = ((NoAddValueHolder<JTableBinding>)
+			parentObj).getObject();
+		Property prop = BeanProperty.create(elm.getAttribute(PROPERTY));
+		
+		// create binding
+		ColumnBinding cb = tb.addColumnBinding(prop);
+		
+		// get localized string
+		String columnName = elm.getAttribute(LABEL);
+		if (columnName.startsWith("@")) {
+			GUIApplication app = GUIApplication.getInstance();
+			ApplicationContext appContext = app.getContext();
+			columnName = appContext.getResourceMap(
+				decodeEngine.getVariable("this").getClass())
+				.getString(columnName.substring(1));
+			if (columnName == null) {
+				// no string found -> restore
+				columnName = elm.getAttribute(LABEL).substring(1);
+			}
+		}
+		cb.setColumnName(columnName);
+		
+		// is editable?
+		cb.setEditable(elm.getAttribute(EDITABLE).equalsIgnoreCase("true"));
+		
+		// set class
+		try {
+			if (!elm.getAttribute(CLASS).equals("")) {
+				cb.setColumnClass(Class.forName(elm.getAttribute(CLASS)));
+			}
+		} catch (ClassNotFoundException e) {
+			s_logger.warn("Attribute '" + CLASS + "' of tag '"
+				+ elm.getNodeName() + "' contains invalid class.");
+		}
+		
+		return new NoAddValueHolder<ColumnBinding>(cb);
+	}
 }

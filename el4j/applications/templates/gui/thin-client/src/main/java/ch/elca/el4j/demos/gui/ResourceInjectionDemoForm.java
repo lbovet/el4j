@@ -36,12 +36,12 @@ import javax.swing.JPanel;
  */
 @SuppressWarnings("unchecked")
 public class ResourceInjectionDemoForm extends JPanel {
-    public ResourceInjectionDemoForm() {
-        JLabel someLabel = new JLabel();
-        someLabel.setName("someLabel");
-        add(someLabel);
-        
-        setPreferredSize(new Dimension(700, 50));
-        setBounds(0, 0, 500, 50);
-    }
+	public ResourceInjectionDemoForm() {
+		JLabel someLabel = new JLabel();
+		someLabel.setName("someLabel");
+		add(someLabel);
+		
+		setPreferredSize(new Dimension(700, 50));
+		setBounds(0, 0, 500, 50);
+	}
 }

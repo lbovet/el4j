@@ -19,36 +19,36 @@ package ch.elca.el4j.plugins.depgraph;
 import org.apache.maven.plugin.MojoExecutionException;
 
 /**
- * Can be used to draw a dependency graph from the project, the mojo is executed 
- * in. It traverses all dependencies and creates a graph using Graphviz. It 
+ * Can be used to draw a dependency graph from the project, the mojo is executed
+ * in. It traverses all dependencies and creates a graph using Graphviz. It
  * draws a dependency graph just for your project. For a simple POM with no submodules, it draws a graph of all
  * dependencies (including transitive ones) below it. For a POM with
  * submodules, goes into each leaf POM and generates a separate graph for it.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Philippe Jacot (PJA)
  * @goal depgraph
  * @requiresDependencyResolution compile|test
  */
-public class DependencyGraphMojo extends AbstractDependencyGraphMojo {    
-    /**
-     * {@inheritDoc}
-     */
-    public void execute() throws MojoExecutionException {
-        initOutput();
-        
-        DependencyGraph resultGraph = new DependencyGraph();
-        resultGraph.setName(m_project.getName());
-        
-        processProject(m_project, resultGraph);
-        
-        project(resultGraph);
-   
-    }
+public class DependencyGraphMojo extends AbstractDependencyGraphMojo {
+	/**
+	 * {@inheritDoc}
+	 */
+	public void execute() throws MojoExecutionException {
+		initOutput();
+		
+		DependencyGraph resultGraph = new DependencyGraph();
+		resultGraph.setName(m_project.getName());
+		
+		processProject(m_project, resultGraph);
+		
+		project(resultGraph);
+		
+	}
 }

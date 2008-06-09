@@ -40,95 +40,95 @@ import ch.elca.el4j.services.xmlmerge.merge.DefaultXmlMerge;
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @author Laurent Bovet (LBO)
  * @author Alex Mathey (AMA)
  */
 public class XmlMergeResource extends AbstractResource {
 
-    /**
-     * An InputStream containing the data of this merged resource. 
-     */
-    InputStream m_result;
-    
-    /**
-     * The list of resources to merge.
-     */
-    List m_resources;
-    
-    /**
-     * An XmlMerge instance used to merge the resources.
-     */
-    XmlMerge m_xmlMerge;
-    
-    /**
-     * Configuration properties.
-     */
-    Map m_properties;
-        
-    /**
-     * {@inheritDoc}
-     */
-    public String getDescription() {
-        return "Resource merging other XML resources using XmlMerge";
-    }
-    
-    /**
-     * Returns an InputStream containing the data of this merged resource.
-     * 
-     * @return The InputStream containing the data of this merged resource.
-     * @see org.springframework.core.io.AbstractResource
-     */
-    public InputStream getInputStream() throws IOException {
+	/**
+	 * An InputStream containing the data of this merged resource.
+	 */
+	InputStream m_result;
+	
+	/**
+	 * The list of resources to merge.
+	 */
+	List m_resources;
+	
+	/**
+	 * An XmlMerge instance used to merge the resources.
+	 */
+	XmlMerge m_xmlMerge;
+	
+	/**
+	 * Configuration properties.
+	 */
+	Map m_properties;
+		
+	/**
+	 * {@inheritDoc}
+	 */
+	public String getDescription() {
+		return "Resource merging other XML resources using XmlMerge";
+	}
+	
+	/**
+	 * Returns an InputStream containing the data of this merged resource.
+	 *
+	 * @return The InputStream containing the data of this merged resource.
+	 * @see org.springframework.core.io.AbstractResource
+	 */
+	public InputStream getInputStream() throws IOException {
 
-        if (m_properties == null) {
-            // Default configuration
-            m_xmlMerge = new DefaultXmlMerge();
-        } else {
-            try {
-                m_xmlMerge = new ConfigurableXmlMerge(
-                    new PropertyXPathConfigurer(m_properties));
-            } catch (ConfigurationException e) {
-                throw new RuntimeException(e);
-            }
-        }
+		if (m_properties == null) {
+			// Default configuration
+			m_xmlMerge = new DefaultXmlMerge();
+		} else {
+			try {
+				m_xmlMerge = new ConfigurableXmlMerge(
+					new PropertyXPathConfigurer(m_properties));
+			} catch (ConfigurationException e) {
+				throw new RuntimeException(e);
+			}
+		}
 
-        if (m_resources == null) {
-            throw new RuntimeException("Resources not set");
-        }
+		if (m_resources == null) {
+			throw new RuntimeException("Resources not set");
+		}
 
-        InputStream[] sources = new InputStream[m_resources.size()];
+		InputStream[] sources = new InputStream[m_resources.size()];
 
-        for (int i = 0; i < sources.length; i++) {
-            sources[i] = ((Resource) m_resources.get(i)).getInputStream();
-        }
+		for (int i = 0; i < sources.length; i++) {
+			sources[i] = ((Resource) m_resources.get(i)).getInputStream();
+		}
 
-        try {
-            return m_xmlMerge.merge(sources);
-        } catch (AbstractXmlMergeException e) {
-            throw new RuntimeException(e);
-        }
-    }
-     
-    /**
-      * Sets the list of resources to merge.
-      * 
-      * @param resources
-      *            The list of resources to merge
-      */
-    public void setResources(List resources) {
-        this.m_resources = resources;
+		try {
+			return m_xmlMerge.merge(sources);
+		} catch (AbstractXmlMergeException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	 
+	/**
+	 * Sets the list of resources to merge.
+	 *
+	 * @param resources
+	 *            The list of resources to merge
+	 */
+	public void setResources(List resources) {
+		this.m_resources = resources;
 
-    }
-     
-    /**
-     * Sets the configuration properties.
-     * 
-     * @param map
-     *            A map containing the configuration properties
-     */
-    public void setProperties(Map map) {
-        m_properties = map;
-    }
+	}
+	 
+	/**
+	 * Sets the configuration properties.
+	 *
+	 * @param map
+	 *            A map containing the configuration properties
+	 */
+	public void setProperties(Map map) {
+		m_properties = map;
+	}
 
 }

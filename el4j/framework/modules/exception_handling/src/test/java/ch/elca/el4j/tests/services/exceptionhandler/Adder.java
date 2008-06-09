@@ -31,12 +31,12 @@ package ch.elca.el4j.tests.services.exceptionhandler;
  */
 public interface Adder {
 
-    /**
-     * Adds the two numbers.
-     * 
-     * @param a The first number.
-     * @param b The second number.
-     * @return Returns the sum of a and b.
-     */
-    public int add(int a, int b);
+	/**
+	 * Adds the two numbers.
+	 *
+	 * @param a The first number.
+	 * @param b The second number.
+	 * @return Returns the sum of a and b.
+	 */
+	public int add(int a, int b);
 }

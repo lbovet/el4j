@@ -40,92 +40,92 @@ import ch.elca.el4j.services.persistence.generic.primarykey.PrimaryKeyGenerator;
  *    "$Author$"
  * );</script>
  *
- * @deprecated This class in no more used if using 
+ * @deprecated This class in no more used if using
  *             <code>AbstractIntOptimisticLockingDto</code>.
  * @see AbstractIntOptimisticLockingDto
  * @author Martin Zeltner (MZE)
  */
 public class DtoFactory implements InitializingBean {
-    /**
-     * Primary key generator to generate modification keys for dtos.
-     */
-    private PrimaryKeyGenerator m_modificationKeyGenerator;
+	/**
+	 * Primary key generator to generate modification keys for dtos.
+	 */
+	private PrimaryKeyGenerator m_modificationKeyGenerator;
 
-    /**
-     * @return Returns the modificationKeyGenerator.
-     */
-    public PrimaryKeyGenerator getModificationKeyGenerator() {
-        return m_modificationKeyGenerator;
-    }
+	/**
+	 * @return Returns the modificationKeyGenerator.
+	 */
+	public PrimaryKeyGenerator getModificationKeyGenerator() {
+		return m_modificationKeyGenerator;
+	}
 
-    /**
-     * @param modificationKeyGenerator
-     *            Is the modificationKeyGenerator to set.
-     */
-    public void setModificationKeyGenerator(
-            PrimaryKeyGenerator modificationKeyGenerator) {
-        m_modificationKeyGenerator = modificationKeyGenerator;
-    }
+	/**
+	 * @param modificationKeyGenerator
+	 *            Is the modificationKeyGenerator to set.
+	 */
+	public void setModificationKeyGenerator(
+			PrimaryKeyGenerator modificationKeyGenerator) {
+		m_modificationKeyGenerator = modificationKeyGenerator;
+	}
 
-    /**
-     * This method creates a new dto of the given class and fills it with a
-     * modification key generator.
-     * 
-     * @param clazz
-     *            Is the dto class.
-     * @return Returns the created dto.
-     */
-    public AbstractDto createDto(Class<?> clazz) {
-        Object o;
-        try {
-            o = clazz.newInstance();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return initializeDto(o);
-    }
+	/**
+	 * This method creates a new dto of the given class and fills it with a
+	 * modification key generator.
+	 *
+	 * @param clazz
+	 *            Is the dto class.
+	 * @return Returns the created dto.
+	 */
+	public AbstractDto createDto(Class<?> clazz) {
+		Object o;
+		try {
+			o = clazz.newInstance();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		return initializeDto(o);
+	}
 
-    /**
-     * This method sets the modification key generator of a dto.
-     * 
-     * @param dto
-     *            Where the modification key generator has to be set.
-     * @return Returns the modificated dto.
-     */
-    public AbstractDto initializeDto(Object dto) {
-        AbstractDto abstractDto = (AbstractDto) dto;
-        abstractDto.setModificationKeyGenerator(getModificationKeyGenerator());
-        return abstractDto;
-    }
+	/**
+	 * This method sets the modification key generator of a dto.
+	 *
+	 * @param dto
+	 *            Where the modification key generator has to be set.
+	 * @return Returns the modificated dto.
+	 */
+	public AbstractDto initializeDto(Object dto) {
+		AbstractDto abstractDto = (AbstractDto) dto;
+		abstractDto.setModificationKeyGenerator(getModificationKeyGenerator());
+		return abstractDto;
+	}
 
-    /**
-     * This metod sets the modification key generator of given
-     * <code>AbstractDto</code>s. If the given list of dtos is
-     * <code>null</code> an empty List will be returned.
-     * 
-     * @param dtos
-     *            Where the modification key generator has to be set.
-     * @return Returns the dto list.
-     */
-    public List<Object> initializeDtos(List<Object> dtos) {
-        if (dtos == null) {
-            return new ArrayList<Object>();
-        }
+	/**
+	 * This metod sets the modification key generator of given
+	 * <code>AbstractDto</code>s. If the given list of dtos is
+	 * <code>null</code> an empty List will be returned.
+	 *
+	 * @param dtos
+	 *            Where the modification key generator has to be set.
+	 * @return Returns the dto list.
+	 */
+	public List<Object> initializeDtos(List<Object> dtos) {
+		if (dtos == null) {
+			return new ArrayList<Object>();
+		}
 
-        Iterator<Object> it = dtos.iterator();
-        while (it.hasNext()) {
-            initializeDto(it.next());
-        }
-        return dtos;
-    }
+		Iterator<Object> it = dtos.iterator();
+		while (it.hasNext()) {
+			initializeDto(it.next());
+		}
+		return dtos;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void afterPropertiesSet() throws Exception {
-        if (getModificationKeyGenerator() == null) {
-            CoreNotificationHelper.notifyLackingEssentialProperty(
-                    "modificationKeyGenerator", this);
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void afterPropertiesSet() throws Exception {
+		if (getModificationKeyGenerator() == null) {
+			CoreNotificationHelper.notifyLackingEssentialProperty(
+					"modificationKeyGenerator", this);
+		}
+	}
 }

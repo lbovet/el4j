@@ -19,8 +19,8 @@ package ch.elca.el4j.core.exceptions;
 /**
  * This exception will be thrown when a field, which has to be unique, has
  * already the same value as the given.
- * 
- * <script type="text/javascript">printFileStatus 
+ *
+ * <script type="text/javascript">printFileStatus
  * ("$URL$",
  *  "$Revision$",
  *  "$Date$",
@@ -32,69 +32,69 @@ package ch.elca.el4j.core.exceptions;
  * @see org.springframework.dao.DataIntegrityViolationException
  */
 public class DuplicatedFieldException extends BaseException {
-    /**
-     * Message, which has to be formated.
-     */
-    public static final String EXCEPTION_MESSAGE_FIELDDUPLICATED 
-        = "A {0} with the same {1} already exists in database.";
+	/**
+	 * Message, which has to be formated.
+	 */
+	public static final String EXCEPTION_MESSAGE_FIELDDUPLICATED
+		= "A {0} with the same {1} already exists in database.";
 
-    /**
-     * Name of the object, where the exception occured.
-     */
-    protected String m_objectName;
+	/**
+	 * Name of the object, where the exception occured.
+	 */
+	protected String m_objectName;
 
-    /**
-     * Name of the field, which would be duplicated.
-     */
-    protected String m_fieldName;
+	/**
+	 * Name of the field, which would be duplicated.
+	 */
+	protected String m_fieldName;
 
-    /**
-     * Constructor.
-     * 
-     * @param objectName
-     *            Is the name of the object, where the exception occured.
-     * @param fieldName
-     *            Is the name of the field, which would be duplicated.
-     */
-    public DuplicatedFieldException(String objectName, String fieldName) {
-        this(objectName, fieldName, (Throwable) null);
-    }
+	/**
+	 * Constructor.
+	 *
+	 * @param objectName
+	 *            Is the name of the object, where the exception occured.
+	 * @param fieldName
+	 *            Is the name of the field, which would be duplicated.
+	 */
+	public DuplicatedFieldException(String objectName, String fieldName) {
+		this(objectName, fieldName, (Throwable) null);
+	}
 
-    /**
-     * Constructor.
-     * 
-     * @param objectName
-     *            Is the name of the object, where the exception occured.
-     * @param fieldName
-     *            Is the name of the field, which would be duplicated.
-     * @param cause
-     *            Is the cause for this exception.
-     */
-    public DuplicatedFieldException(String objectName, String fieldName,
-            Throwable cause) {
-        super(EXCEPTION_MESSAGE_FIELDDUPLICATED, cause);
-        m_objectName = objectName;
-        m_fieldName = fieldName;
-    }
+	/**
+	 * Constructor.
+	 *
+	 * @param objectName
+	 *            Is the name of the object, where the exception occured.
+	 * @param fieldName
+	 *            Is the name of the field, which would be duplicated.
+	 * @param cause
+	 *            Is the cause for this exception.
+	 */
+	public DuplicatedFieldException(String objectName, String fieldName,
+			Throwable cause) {
+		super(EXCEPTION_MESSAGE_FIELDDUPLICATED, cause);
+		m_objectName = objectName;
+		m_fieldName = fieldName;
+	}
 
-    /**
-     * @return Returns the objectName.
-     */
-    public String getObjectName() {
-        return m_objectName;
-    }
+	/**
+	 * @return Returns the objectName.
+	 */
+	public String getObjectName() {
+		return m_objectName;
+	}
 
-    /**
-     * @return Returns the fieldName.
-     */
-    public String getFieldName() {
-        return m_fieldName;
-    }
+	/**
+	 * @return Returns the fieldName.
+	 */
+	public String getFieldName() {
+		return m_fieldName;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object[] getFormatParameters() {
-        return new Object[] {m_objectName, m_fieldName};
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public Object[] getFormatParameters() {
+		return new Object[] {m_objectName, m_fieldName};
+	}
 }

@@ -25,7 +25,7 @@ import ch.elca.el4j.tests.remoting.jaxws.service.CalculatorValueObject;
 import ch.elca.el4j.tests.remoting.jaxws.service.SpecialCalculatorException;
 
 /**
- * 
+ *
  * This class is a annotated version of {@link CalculatorImpl}.
  *
  * <script type="text/javascript">printFileStatus
@@ -36,72 +36,72 @@ import ch.elca.el4j.tests.remoting.jaxws.service.SpecialCalculatorException;
  * );</script>
  *
  * @author Stefan Wismer (SWI)
- * 
- * 
+ *
+ *
  * IMPORTANT:
- * 
+ *
  * WebService naming convention:
  * name = name of implemented core interface + "WS"
  * serviceName = name of implemented core interface + "WSService"
  * targetNamespace = "http://gen." + package name of implemented core interface
  */
 @WebService(name = "CalculatorWS",
-    serviceName = "CalculatorWSService",
-    targetNamespace = "http://gen.service.jaxws.remoting.tests.el4j.elca.ch/")
+	serviceName = "CalculatorWSService",
+	targetNamespace = "http://gen.service.jaxws.remoting.tests.el4j.elca.ch/")
 public class CalculatorImplJaxws implements Calculator {
 
-    /**
-     * {@inheritDoc}
-     */
-    @WebMethod
-    public int countNumberOfUppercaseLetters(String text) {
-        if (text == null) {
-            return 0;
-        }
+	/**
+	 * {@inheritDoc}
+	 */
+	@WebMethod
+	public int countNumberOfUppercaseLetters(String text) {
+		if (text == null) {
+			return 0;
+		}
  
-        int numberOfUppercaseLetters = 0;
-        char[] c = text.toCharArray();
-        for (int i = 0; i < c.length; i++) {
-            if (c[i] >= 'A' && c[i] <= 'Z') {
-                numberOfUppercaseLetters++;
-            }
-        }
-        return numberOfUppercaseLetters;
-    }
+		int numberOfUppercaseLetters = 0;
+		char[] c = text.toCharArray();
+		for (int i = 0; i < c.length; i++) {
+			if (c[i] >= 'A' && c[i] <= 'Z') {
+				numberOfUppercaseLetters++;
+			}
+		}
+		return numberOfUppercaseLetters;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @WebMethod
-    public CalculatorValueObject echoValueObject(
-        CalculatorValueObject valueObject) {
-        
-        return valueObject;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@WebMethod
+	public CalculatorValueObject echoValueObject(
+		CalculatorValueObject valueObject) {
+		
+		return valueObject;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @WebMethod
-    public double getArea(double a, double b) {
-        return a * b;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@WebMethod
+	public double getArea(double a, double b) {
+		return a * b;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @WebMethod
-    public void throwMeASpecialException(
-        String action) throws SpecialCalculatorException {
-        throw new SpecialCalculatorException(action);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@WebMethod
+	public void throwMeASpecialException(
+		String action) throws SpecialCalculatorException {
+		throw new SpecialCalculatorException(action);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @WebMethod
-    public void throwMeAnException() throws CalculatorException {
-        throw new CalculatorException();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@WebMethod
+	public void throwMeAnException() throws CalculatorException {
+		throw new CalculatorException();
+	}
 
 }

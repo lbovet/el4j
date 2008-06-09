@@ -23,36 +23,36 @@ import ch.elca.el4j.plugins.database.AbstractDBExecutionMojo;
 
 
 /**
- * This class is a database mojo for the 'delete' statement. 
+ * This class is a database mojo for the 'delete' statement.
  * It deletes the entries previously added to the database table.
- * 
+ *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
  * );</script>
- * 
+ *
  * @goal delete
  * @author David Stefan (DST)
  */
 public class DeleteMojo extends AbstractDBExecutionMojo {
 
-    /**
-     * Action this mojo is implementing and identifier sql files have to start
-     * with.
-     */
-    private static final String ACTION = "delete";
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void executeInternal() throws MojoExecutionException, MojoFailureException {
-        try {
-            executeAction(ACTION, true, false);
-        } catch (Exception e) {
-            throw new MojoFailureException(e.getMessage());
-        }
-    }
+	/**
+	 * Action this mojo is implementing and identifier sql files have to start
+	 * with.
+	 */
+	private static final String ACTION = "delete";
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void executeInternal() throws MojoExecutionException, MojoFailureException {
+		try {
+			executeAction(ACTION, true, false);
+		} catch (Exception e) {
+			throw new MojoFailureException(e.getMessage());
+		}
+	}
 
 }

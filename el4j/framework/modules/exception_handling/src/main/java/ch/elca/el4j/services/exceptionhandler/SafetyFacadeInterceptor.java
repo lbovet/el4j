@@ -23,7 +23,7 @@ import org.aopalliance.intercept.MethodInvocation;
  * This interceptor implements a safety facade. It allows to catch any
  * exceptions thrown by the proxied bean and to handle them by exception
  * handlers.
- * 
+ *
  * <p/>Don't setup this interceptor directly as long as you don't need access to
  * it. Instead use the {@link
  * ch.elca.el4j.services.exceptionhandler.SafetyFacadeFactoryBean}.
@@ -39,41 +39,41 @@ import org.aopalliance.intercept.MethodInvocation;
  * @see ch.elca.el4j.services.exceptionhandler.SafetyFacadeFactoryBean
  */
 public class SafetyFacadeInterceptor
-    extends AbstractExceptionHandlerInterceptor {
-    
-    /** The exception configurations. */
-    ExceptionConfiguration[] m_exceptionConfigurations;
-    
-    /**
-     * Default constructor. Configures the interceptor to handle only those
-     * exceptions that are <b>not</b> defined in the signature (excluding
-     * unchecked exceptions, which are handled always).
-     */
-    public SafetyFacadeInterceptor() {
-        super();
-        // change this behaviour in the SafetyFacadeFactoryBean too
-        // (to be done manually since Java doesn't support multi inheritance).
-        setForwardSignatureExceptions(true);
-        setHandleRTSignatureExceptions(true);
-    }
-    
-    /**
-     * Sets the exception configurations.
-     * 
-     * @param exceptionConfigurations
-     *      The exception configurations to set.
-     */
-    public void setExceptionConfigurations(
-            ExceptionConfiguration[] exceptionConfigurations) {
-        m_exceptionConfigurations = exceptionConfigurations;
-    }
+	extends AbstractExceptionHandlerInterceptor {
+	
+	/** The exception configurations. */
+	ExceptionConfiguration[] m_exceptionConfigurations;
+	
+	/**
+	 * Default constructor. Configures the interceptor to handle only those
+	 * exceptions that are <b>not</b> defined in the signature (excluding
+	 * unchecked exceptions, which are handled always).
+	 */
+	public SafetyFacadeInterceptor() {
+		super();
+		// change this behaviour in the SafetyFacadeFactoryBean too
+		// (to be done manually since Java doesn't support multi inheritance).
+		setForwardSignatureExceptions(true);
+		setHandleRTSignatureExceptions(true);
+	}
+	
+	/**
+	 * Sets the exception configurations.
+	 *
+	 * @param exceptionConfigurations
+	 *      The exception configurations to set.
+	 */
+	public void setExceptionConfigurations(
+			ExceptionConfiguration[] exceptionConfigurations) {
+		m_exceptionConfigurations = exceptionConfigurations;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    protected Object handleException(Throwable t, MethodInvocation invocation)
-        throws Throwable {
-        
-        return doHandleException(t, invocation, m_exceptionConfigurations);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	protected Object handleException(Throwable t, MethodInvocation invocation)
+		throws Throwable {
+		
+		return doHandleException(t, invocation, m_exceptionConfigurations);
+	}
 }

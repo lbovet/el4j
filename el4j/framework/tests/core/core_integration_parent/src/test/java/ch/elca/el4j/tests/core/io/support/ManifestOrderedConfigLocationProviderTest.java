@@ -37,31 +37,31 @@ import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
  * @author Andreas Bur (ABU)
  */
 public class ManifestOrderedConfigLocationProviderTest
-    extends AbstractOrderTestCase {
+	extends AbstractOrderTestCase {
 
-    /** Some configuration files. */
-    public static final String[] LOCATIONS = {
-        "scenarios/core/io/support/mandatory/1.xml",
-        "scenarios/core/io/support/mandatory/2.xml",
-        "scenarios/core/io/support/mandatory/3.xml",
-        "scenarios/core/io/support/optional/a.xml",
-        "scenarios/core/io/support/a.xml",
-        "scenarios/core/io/support/ab.xml",
-        "scenarios/core/io/support/b.xml"
-    };
-    
-    /**
-     * Tests whether all of the above configuration files are found.
-     */
-    @Test
-    public void testFindConfigFiles() {
-        ManifestOrderedConfigLocationProvider provider
-            = new ManifestOrderedConfigLocationProvider();
-        String[] configLocations = provider.getConfigLocations();
-        
-        for (int i = 0; i < LOCATIONS.length; i++) {
-            assertTrue("Missing '" + LOCATIONS[i] + "'",
-                    containsStringEndingWith(LOCATIONS[i], configLocations));
-        }
-    }
+	/** Some configuration files. */
+	public static final String[] LOCATIONS = {
+		"scenarios/core/io/support/mandatory/1.xml",
+		"scenarios/core/io/support/mandatory/2.xml",
+		"scenarios/core/io/support/mandatory/3.xml",
+		"scenarios/core/io/support/optional/a.xml",
+		"scenarios/core/io/support/a.xml",
+		"scenarios/core/io/support/ab.xml",
+		"scenarios/core/io/support/b.xml"
+	};
+	
+	/**
+	 * Tests whether all of the above configuration files are found.
+	 */
+	@Test
+	public void testFindConfigFiles() {
+		ManifestOrderedConfigLocationProvider provider
+			= new ManifestOrderedConfigLocationProvider();
+		String[] configLocations = provider.getConfigLocations();
+		
+		for (int i = 0; i < LOCATIONS.length; i++) {
+			assertTrue("Missing '" + LOCATIONS[i] + "'",
+					containsStringEndingWith(LOCATIONS[i], configLocations));
+		}
+	}
 }

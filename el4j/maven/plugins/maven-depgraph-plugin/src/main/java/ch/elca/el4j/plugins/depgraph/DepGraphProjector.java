@@ -19,7 +19,7 @@ package ch.elca.el4j.plugins.depgraph;
 import org.apache.maven.plugin.MojoExecutionException;
 
 /**
- * 
+ *
  * This class is used to create some sort of output from a given
  * Dependency element.
  *
@@ -33,14 +33,14 @@ import org.apache.maven.plugin.MojoExecutionException;
  * @author Philippe Jacot (PJA)
  */
 public interface DepGraphProjector {
-    /**
-     * Role of this project for plexus.
-     */
-    String ROLE = DepGraphProjector.class.getName();
-        
-    /**
-     * Project the dependency graph somehow.
-     * @param graph The graph to project
-     */
-    public void project(DependencyGraph graph) throws MojoExecutionException;
+	/**
+	 * Role of this project for plexus.
+	 */
+	String ROLE = DepGraphProjector.class.getName();
+		
+	/**
+	 * Project the dependency graph somehow.
+	 * @param graph The graph to project
+	 */
+	public void project(DependencyGraph graph) throws MojoExecutionException;
 }

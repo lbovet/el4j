@@ -22,7 +22,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 
 /**
  * Test environment support plugin. Filters the test resources of given env dir
- * and saves the generate test resources in a special dir. 
+ * and saves the generate test resources in a special dir.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -32,57 +32,57 @@ import org.apache.maven.plugin.MojoExecutionException;
  * );</script>
  *
  * @author Martin Zeltner (MZE)
- * 
+ *
  * @goal testResources
  * @phase generate-test-resources
  * @requiresProject true
  */
 public class TestEnvSupportMojo extends AbstractEnvSupportMojo {
-    // Checkstyle: MemberName off
-    /**
-     * The test output directory into which to copy the env resources.
-     * 
-     * @parameter expression="${envsupport.testOutputDirectory}" 
-     *            default-value="${project.build.directory}/env-test"
-     * @required
-     */
-    private File testOutputDirectory;
+	// Checkstyle: MemberName off
+	/**
+	 * The test output directory into which to copy the env resources.
+	 *
+	 * @parameter expression="${envsupport.testOutputDirectory}"
+	 *            default-value="${project.build.directory}/env-test"
+	 * @required
+	 */
+	private File testOutputDirectory;
 
-    /**
-     * The test resource directory where to transfer files.
-     * 
-     * @parameter expression="${envsupport.testResourceDirectory}" 
-     *            default-value="src/test/env"
-     * @required
-     */
-    private File testResourceDirectory;
-    
-    /**
-     * The global test resource directory where to transfer files.
-     * 
-     * @parameter expression="${envsupport.globalTestResourceDirectory}"
-     */
-    private File globalTestResourceDirectory;
-    
-    /**
-     * Flag to indicate if the global test resource dir should be used.
-     * 
-     * @parameter expression="${envsupport.useGlobalTestResourceDirectory}"
-     *            default-value="false"
-     */
-    private boolean useGlobalTestResourceDirectory;
-    // Checkstyle: MemberName on
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void execute() throws MojoExecutionException {
-        if (useGlobalTestResourceDirectory) {
-            copyResourcesFiltered(globalTestResourceDirectory, 
-                testOutputDirectory, "globalTestResources");
-        } else {
-            copyResourcesFiltered(testResourceDirectory, testOutputDirectory,
-                "testResources");
-        }
-    }
+	/**
+	 * The test resource directory where to transfer files.
+	 *
+	 * @parameter expression="${envsupport.testResourceDirectory}"
+	 *            default-value="src/test/env"
+	 * @required
+	 */
+	private File testResourceDirectory;
+	
+	/**
+	 * The global test resource directory where to transfer files.
+	 *
+	 * @parameter expression="${envsupport.globalTestResourceDirectory}"
+	 */
+	private File globalTestResourceDirectory;
+	
+	/**
+	 * Flag to indicate if the global test resource dir should be used.
+	 *
+	 * @parameter expression="${envsupport.useGlobalTestResourceDirectory}"
+	 *            default-value="false"
+	 */
+	private boolean useGlobalTestResourceDirectory;
+	// Checkstyle: MemberName on
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void execute() throws MojoExecutionException {
+		if (useGlobalTestResourceDirectory) {
+			copyResourcesFiltered(globalTestResourceDirectory,
+				testOutputDirectory, "globalTestResources");
+		} else {
+			copyResourcesFiltered(testResourceDirectory, testOutputDirectory,
+				"testResources");
+		}
+	}
 }

@@ -40,58 +40,58 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * @author Martin Zeltner (MZE)
  */
 public class Log4jXmlLoader implements InitializingBean, BeanNameAware {
-    /**
-     * This is the location of the log4j configuration file.
-     */
-    private String m_configLocation;
+	/**
+	 * This is the location of the log4j configuration file.
+	 */
+	private String m_configLocation;
 
-    /**
-     * This is the name of the bean.
-     */
-    private String m_beanName;
+	/**
+	 * This is the name of the bean.
+	 */
+	private String m_beanName;
 
-    /**
-     * @return Returns the configLocation.
-     */
-    public String getConfigLocation() {
-        return m_configLocation;
-    }
+	/**
+	 * @return Returns the configLocation.
+	 */
+	public String getConfigLocation() {
+		return m_configLocation;
+	}
 
-    /**
-     * @param configLocation
-     *            The configLocation to set.
-     */
-    public void setConfigLocation(String configLocation) {
-        Reject.ifEmpty(configLocation,
-                "Config location of log4j loader must not be empty!");
-        this.m_configLocation = configLocation.trim();
-        System.setProperty("log4j.configuration", configLocation);
-        URL url = Log4jXmlLoader.class.getClassLoader().getResource(
-                m_configLocation);
-        DOMConfigurator.configure(url);
-    }
+	/**
+	 * @param configLocation
+	 *            The configLocation to set.
+	 */
+	public void setConfigLocation(String configLocation) {
+		Reject.ifEmpty(configLocation,
+				"Config location of log4j loader must not be empty!");
+		this.m_configLocation = configLocation.trim();
+		System.setProperty("log4j.configuration", configLocation);
+		URL url = Log4jXmlLoader.class.getClassLoader().getResource(
+				m_configLocation);
+		DOMConfigurator.configure(url);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void afterPropertiesSet() throws Exception {
-        if (!StringUtils.hasText(getConfigLocation())) {
-            CoreNotificationHelper.notifyLackingEssentialProperty(
-                    "configLocation", this);
-        }
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void afterPropertiesSet() throws Exception {
+		if (!StringUtils.hasText(getConfigLocation())) {
+			CoreNotificationHelper.notifyLackingEssentialProperty(
+					"configLocation", this);
+		}
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void setBeanName(String beanName) {
-        m_beanName = beanName;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setBeanName(String beanName) {
+		m_beanName = beanName;
+	}
 
-    /**
-     * @return Returns the beanName.
-     */
-    public String getBeanName() {
-        return m_beanName;
-    }
+	/**
+	 * @return Returns the beanName.
+	 */
+	public String getBeanName() {
+		return m_beanName;
+	}
 }

@@ -32,31 +32,31 @@ import ch.elca.el4j.services.remoting.ProtocolSpecificConfiguration;
  *
  * @author Stefan Wismer (SWI)
  */
-public class JaxwsProtocolConfiguration implements 
-    ProtocolSpecificConfiguration {
-    
-    /**
-     * The service implementation class.
-     */
-    Class<? extends Service> m_serviceImplementation;
-    
-    /** {@inheritDoc} */
-    public void afterPropertiesSet() throws Exception { }
+public class JaxwsProtocolConfiguration implements
+	ProtocolSpecificConfiguration {
+	
+	/**
+	 * The service implementation class.
+	 */
+	Class<? extends Service> m_serviceImplementation;
+	
+	/** {@inheritDoc} */
+	public void afterPropertiesSet() throws Exception { }
 
-    /**
-     * @return Returns the serviceImplementation.
-     */
-    public Class<? extends Service> getServiceImplementation() {
-        return m_serviceImplementation;
-    }
+	/**
+	 * @return Returns the serviceImplementation.
+	 */
+	public Class<? extends Service> getServiceImplementation() {
+		return m_serviceImplementation;
+	}
 
-    /**
-     * @param serviceImplementation Is the serviceImplementation to set.
-     */
-    public void setServiceImplementation(
-        Class<? extends Service> serviceImplementation) {
-        
-        m_serviceImplementation = serviceImplementation;
-    }
+	/**
+	 * @param serviceImplementation Is the serviceImplementation to set.
+	 */
+	public void setServiceImplementation(
+		Class<? extends Service> serviceImplementation) {
+		
+		m_serviceImplementation = serviceImplementation;
+	}
 
 }
