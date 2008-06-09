@@ -41,10 +41,18 @@ case $1 in
 	"release_tomcat")
 		mvn -f external/pom.xml clean install -fae -B -Pauto,tomcat6x,db2,integrationTests $2
 		mvn -f internal/pom.xml clean install -fae -B -Pauto,tomcat6x,db2,integrationTests $2
+		
+		# test templates
+		./internal/etc/release-scripts/createTemplates.sh clean
+		./internal/etc/release-scripts/createTemplates.sh -Pauto,tomcat6x,db2,integrationTests $2
 		;;
 	"release_weblogic")
 		mvn -f external/pom.xml clean install -fae -B -Pauto,weblogic10x,oracle,integrationTests ${ORACLE_SETTINGS} $2
 		mvn -f internal/pom.xml clean install -fae -B -Pauto,weblogic10x,oracle,integrationTests ${ORACLE_SETTINGS} $2
+		
+		# test templates
+		./internal/etc/release-scripts/createTemplates.sh clean
+		./internal/etc/release-scripts/createTemplates.sh -Pauto,tomcat6x,db2,integrationTests ${ORACLE_SETTINGS} $2
 		;;
 	"release_website")
 		cd external/site
