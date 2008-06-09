@@ -14,8 +14,8 @@
 		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 			attributeFormDefault="qualified" elementFormDefault="qualified"
 			targetNamespace="http://service.remoting.tests.el4j.elca.ch"
-            xmlns:ns1="another.test.another.path">
-            <xsd:import namespace="another.test.another.path" />
+			xmlns:ns1="another.test.another.path">
+			<xsd:import namespace="another.test.another.path" />
 			<xsd:element name="echoValueObject">
 				<xsd:complexType>
 					<xsd:sequence>
@@ -66,7 +66,7 @@
 					</xsd:sequence>
 				</xsd:complexType>
 			</xsd:element>
-		</xsd:schema> 
+		</xsd:schema>
 		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 			elementFormDefault="qualified"
 			targetNamespace="another.test.another.path" version="1.0">
