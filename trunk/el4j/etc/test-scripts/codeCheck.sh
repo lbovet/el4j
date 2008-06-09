@@ -1,6 +1,6 @@
 #!/bin/bash
 
-types="xml xsd wsdl html xhtml css"
+types="java xml xsd wsdl html xhtml css"
 # xsl not included
 
 # search for illegal whitespaces
