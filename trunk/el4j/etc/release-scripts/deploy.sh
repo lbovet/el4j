@@ -121,6 +121,10 @@ fi
 cd internal
 mvn deploy -N
 
+cd applications
+mvn deploy -N
+cd ..
+
 cd framework
 mvn deploy -N
 
