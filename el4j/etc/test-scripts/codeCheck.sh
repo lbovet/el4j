@@ -1,5 +1,12 @@
 #!/bin/bash
 
+if [ $# -lt 1 ] ; then
+	echo "Please specify whether you want to check external or internal (external/internal)"
+	exit 1
+fi
+
+cd $1
+
 types="java xml xsd wsdl html xhtml css"
 # xsl not included
 
@@ -33,6 +40,17 @@ for i in $(cat files.tmp) ; do
 done
 
 echo "done"
+
+if [ $1 == "internal" ] ; then
+	# search for LGPL header
+	for i in $(cat files.tmp) ; do
+		grep "LGPL" $i > /dev/null
+		if [ $? -eq 0 ] ; then
+			echo "LGPL header found in $i"
+			result=1
+		fi
+	done
+fi
 
 rm current.tmp
 rm files.tmp
