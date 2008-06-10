@@ -33,6 +33,7 @@ case $1 in
 		# test templates
 		./internal/etc/release-scripts/createTemplates.sh clean
 		./internal/etc/release-scripts/createTemplates.sh
+		./internal/etc/release-scripts/createTemplates.sh clean
 		;;
 	"internal_svn")
 		cd internal
@@ -45,6 +46,7 @@ case $1 in
 		# test templates
 		./internal/etc/release-scripts/createTemplates.sh clean
 		./internal/etc/release-scripts/createTemplates.sh -Pauto,tomcat6x,db2,integrationTests $2
+		./internal/etc/release-scripts/createTemplates.sh clean
 		;;
 	"release_weblogic")
 		mvn -f external/pom.xml clean install -fae -B -Pauto,weblogic10x,oracle,integrationTests ${ORACLE_SETTINGS} $2
@@ -53,6 +55,7 @@ case $1 in
 		# test templates
 		./internal/etc/release-scripts/createTemplates.sh clean
 		./internal/etc/release-scripts/createTemplates.sh -Pauto,tomcat6x,db2,integrationTests ${ORACLE_SETTINGS} $2
+		./internal/etc/release-scripts/createTemplates.sh clean
 		;;
 	"release_website")
 		cd external/site
