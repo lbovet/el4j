@@ -63,7 +63,7 @@ public class JavaReader extends AbstractReader {
 				state = new ReadingState(true);
 			} else if (line.contains(MARKER_EXCLUDE)) {
 				state = new ReadingState(false);
-			} 
+			}
 			return state;
 		}
 	}

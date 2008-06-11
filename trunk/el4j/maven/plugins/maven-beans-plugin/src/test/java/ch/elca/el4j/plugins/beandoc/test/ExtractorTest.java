@@ -58,9 +58,9 @@ public class ExtractorTest extends TestCase {
 		doTest("test.xml");
 	}
 	
-	/** 
+	/**
 	 * Perform a check of the extractor.
-	 * @param file The test file. 
+	 * @param file The test file.
 	 */
 	public void doTest(String file) throws Exception {
 		

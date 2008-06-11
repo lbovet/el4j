@@ -24,7 +24,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Reader for xml files. 
+ * Reader for xml files.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/etc/eclipse/codeTemplates.xml $",
@@ -63,7 +63,7 @@ public class XmlReader extends AbstractReader {
 				state = new ReadingState(true);
 			} else if (line.contains(MARKER_EXCLUDE)) {
 				state = new ReadingState(false);
-			} 
+			}
 			return state;
 		}
 	}
