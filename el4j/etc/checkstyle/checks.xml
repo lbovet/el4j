@@ -120,7 +120,7 @@
 		<module name="RedundantImport" />
 		<module name="UnusedImports" />
 		<module name="ImportOrder">
-			<property name="groups" value="java,javax,org,com" />
+			<property name="groups" value="java,javax,org,com,ch,junit,net" />
 			<property name="ordered" value="true" />
 			<property name="separated" value="true" />
 		</module>
@@ -190,6 +190,18 @@
 			<property name="format" value="System\.out\.print"/>
 			<property name="ignoreComments " value="true"/>
 			<property name="message" value="Use logger instead of system.out"/>
+		</module>
+		
+		<module name="GenericIllegalRegexp">
+			<property name="format" value="^\s* [^*^-]"/>
+			<property name="ignoreComments " value="true"/>
+			<property name="message" value="Use tabs for indentation"/>
+		</module>
+		
+		<module name="GenericIllegalRegexp">
+			<property name="format" value="\S\s+$"/>
+			<property name="ignoreComments " value="true"/>
+			<property name="message" value="Remove whitespaces at end of line"/>
 		</module>
 
 
