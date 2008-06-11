@@ -70,7 +70,13 @@ public class BeansMojo extends AbstractMojo {
 		
 		URL[] classpath = constructClasspath();
 		
-		ConfigurationExtractor ex = new ConfigurationExtractor(sourceFile);
+		File file = new File(sourceFile);
+		
+		if (!file.isAbsolute()) {
+			file = new File(m_project.getBasedir(), sourceFile);
+		}
+		
+		ConfigurationExtractor ex = new ConfigurationExtractor(file);
 		
 		BeanPathResolver resolver = new BeanPathResolver();
 		String[] files = resolver.resolve(
@@ -87,9 +93,9 @@ public class BeansMojo extends AbstractMojo {
 			throw new MojoFailureException("Failed to create beans directory.");
 		}
 		
-		for (String file : files) {
+		for (String f : files) {
 			try {
-				mgr.copy(file, beanDirectory);
+				mgr.copy(f, beanDirectory);
 			} catch (IOException e) {
 				
 				throw new MojoFailureException("IO exception copying files. "
@@ -111,7 +117,7 @@ public class BeansMojo extends AbstractMojo {
 			list = m_project.getRuntimeClasspathElements();
 		} catch (DependencyResolutionRequiredException e) {
 			// Can't happen - dependency resolution required.
-			throw new Error(e);
+			throw new RuntimeException(e);
 		}
 		for (Object o : list) {
 			String s = o.toString();
