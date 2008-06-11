@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.elca.el4j.plugins.beans.BeanPathResolver;
-import ch.elca.el4j.plugins.beans.resolve.ResolverManager;
 
 import junit.framework.TestCase;
 
@@ -61,7 +60,7 @@ public class BeanPathResolverTest extends TestCase {
 
 		m_classpath.add(new File("target/test-classes/jar/beanJar.jar")
 			.getAbsoluteFile().toURL());
-		m_classpath.add(new File("target/test-classes/file")
+		m_classpath.add(new File("target/test-classes/file/")
 			.getAbsoluteFile().toURL());
 
 	}

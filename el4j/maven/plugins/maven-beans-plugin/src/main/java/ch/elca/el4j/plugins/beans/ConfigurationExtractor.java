@@ -20,11 +20,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Extracts configuration information (inclusive and exclusive configuration
@@ -41,43 +36,29 @@ import java.util.regex.Pattern;
  */
 public class ConfigurationExtractor {
 
-	/** Marker for the beginning of a configuration include entry. */
-	private static final String MARKER_INCLUDE = "$$ BEANS INCLUDE $$";
-	
-	/** Marker for the beginning of a configuration exclude entry. */
-	private static final String MARKER_EXCLUDE = "$$ BEANS EXCLUDE $$";
-	
-	/** Inclusive conf locations. This is set by a method. */
-	private String[] m_inclusive;
-	
-	/** Exclusive conf locations. This is set by a method. */
-	private String[] m_exclusive;
-	
-	/** The current state. */
-	private LineReadingState m_state;
+	/** The reader that holds the locations for us. */
+	private AbstractReader m_reader;
 	
 	/**
 	 * Extract configuration from a source file.
-	 * @param source The file to read from.
+	 * @param sourceFile The file to read from.
 	 */
-	public ConfigurationExtractor(String source) {
+	public ConfigurationExtractor(File sourceFile) {
 		
-		File sourceFile = new File(source);
 		if (!sourceFile.exists() || !sourceFile.canRead()) {
 			throw new RuntimeException("Reading from source file impossible.");
 		}
 		
 		BufferedReader r = getReader(sourceFile);
 		
-		if (source.endsWith(".java")) {
-			try {
-				readJava(r);
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
+		if (sourceFile.toString().endsWith(".java")) {
+			m_reader = new JavaReader();
+		} else if (sourceFile.toString().endsWith(".xml")) {
+			m_reader = new XmlReader();
 		} else {
 			throw new Error("Not yet implemented.");
 		}
+		m_reader.read(r);
 	}
 	
 	/**
@@ -96,102 +77,16 @@ public class ConfigurationExtractor {
 	}
 	
 	/**
-	 * Read configuration information from a .java file.
-	 * @param r A reader for the file.
-	 */
-	private void readJava(BufferedReader r) throws IOException {
-		
-		String line;
-		m_state = new SearchingState();
-		while ((line = r.readLine()) != null) {
-			m_state = m_state.processLine(line);
-		}
-	}
-
-	/**
-	 * State in the line reading state machine.
-	 */
-	interface LineReadingState {
-		/**
-		 * Process a line.
-		 * @param line The line to process.
-		 * @return the new state. Can be <code>this</code>.
-		 */
-		LineReadingState processLine(String line);
-	}
-	
-	/**
-	 * STATE : We are searching for a marker to begin reading at.
-	 */
-	class SearchingState implements LineReadingState {
-		
-		/** {@inheritDoc} */
-		public LineReadingState processLine(String line) {
-			if (line.contains(MARKER_INCLUDE)) {
-				return new ReadingState(true);
-			} else if (line.contains(MARKER_EXCLUDE)) {
-				return new ReadingState(false);
-			} else {
-				return this;
-			}
-		}
-	}
-	
-	/**
-	 * STATE : We saw a "begin" marker. Now we read until the end.
-	 */
-	class ReadingState implements LineReadingState {
-		
-		/** Whether we are collecting inclusive or exclusive data. */
-		private boolean m_include;
-		
-		/** The data we collect. */
-		private List<String> m_data;
-		
-		/**
-		 * @param inclusive
-		 * Whether we are collecting inclusive or exclusive data.
-		 */
-		public ReadingState(boolean inclusive) {
-			m_include = inclusive;
-			m_data = new LinkedList<String>();
-		}
-		
-		/** {@inheritDoc} */
-		public LineReadingState processLine(String line) {
-			final String regex = ".*\"(.*)\".*";
-			Pattern p = Pattern.compile(regex);
-			Matcher m = p.matcher(line);
-			if (m.matches()) {
-				m_data.add(m.group(1));
-			}
-			if (line.contains("}")) {
-				String[] result = m_data.toArray(new String[0]);
-				if (m_include) {
-					m_inclusive = result;
-				} else {
-					m_exclusive = result;
-				}
-				return new SearchingState();
-			} else {
-				return this;
-			}
-		}
-	}
-	
-	/**
 	 * @return Returns the inclusive configuration.
 	 */
 	public String[] getInclusive() {
-		return m_inclusive;
+		return m_reader.getInclusive();
 	}
 
 	/**
 	 * @return Returns the exclusive configuration.
 	 */
 	public String[] getExclusive() {
-		return m_exclusive;
+		return m_reader.getExclusive();
 	}
-	
-	
 }
