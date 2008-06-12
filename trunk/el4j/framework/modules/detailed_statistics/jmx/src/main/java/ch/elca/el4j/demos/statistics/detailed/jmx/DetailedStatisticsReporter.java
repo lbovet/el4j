@@ -117,8 +117,9 @@ public class DetailedStatisticsReporter implements
 	public String showMeasureIDTable() {
 		String result = "";
 		String[][] table;
+		// Due to unexpected method calls, display all measurements for now.
 		List<MeasureItem> measureItems
-			= m_dataRepository.getFirstMeasureItems();
+			= m_dataRepository.getAllMeasureItems();
 		// Add one row for labeling
 		int noOfRowsInTable = measureItems.size() + 1;
 		// Checkstyle: MagicNumber off

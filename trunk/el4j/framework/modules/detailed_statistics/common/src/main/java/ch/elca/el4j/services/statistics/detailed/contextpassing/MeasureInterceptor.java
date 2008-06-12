@@ -16,8 +16,11 @@
  */
 package ch.elca.el4j.services.statistics.detailed.contextpassing;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Proxy;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Map;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
@@ -84,6 +87,9 @@ public class MeasureInterceptor  implements MethodInterceptor {
 
 	/** Level for MeasureItem. */
 	private String m_level = null;
+	
+	/**	Mapping of proxied class names and their substitutes. */
+	private Map<String, String> m_proxyMap;
 
 	/**
 	 * The constructor.
@@ -131,129 +137,176 @@ public class MeasureInterceptor  implements MethodInterceptor {
 		DetailedStatisticsContext context
 			= DetailedStatisticsSharedContextHolder.getContext();
 
-		int seqNumber;
-		int[] hierarchy;
+		int seqNumber = 0;
+		int[] hierarchy = new int[0];
+		long startTime = 0;
+		boolean ignoreThisMeasure = false;
 		
 		// Indicates that the ID was newly created in this currently running
 		// invoke method. At the end of this currently running invoke method,
 		// we should drop it again.
 		boolean dropIdAtEnd = false;
-
 		
-		// depth++
-		context.setDepth(context.getDepth() + 1);
-		seqNumber = context.getSequenceNumber();
-		seqNumber++;
-
-		s_logger.info(methodInvocation);
-		s_logger.info("depth:" + context.getDepth());
-		
-		
-		/* ---------------------------------------------------------------------
-		 * If no mesure id is available this is the first measure and the
-		 * interceptor has to generate a new MeasureId
-		 * -------------------------------------------------------------------*/
-		if (context.getMeasureId() == null) {
-
-			// The id does not exist : client side, or first call
-			// of the invoker from service side
-			context.setMeasureId(MeasureId.createID());
-			hierarchy = new int[]{1};
+		// Decide whether to leave proxied class name, substitute it or leave
+		// proxy description completely away.
+		String className = methodInvocation.getThis().getClass().getName();
+		Object target = methodInvocation.getThis();
+		if (target.getClass().getSuperclass().equals(Proxy.class)
+			&& m_proxyMap != null) {
 			
-			dropIdAtEnd = true;
-
-		} else {
+			InvocationHandler handler = Proxy.getInvocationHandler(target);
+			String proxyClassName = handler.getClass().getName();
+			
+			if (m_proxyMap.containsKey(proxyClassName)) {
+				if (m_proxyMap.get(proxyClassName).equals("")) {
+					ignoreThisMeasure = true;
+				} else {
+					className = (String) m_proxyMap.get(proxyClassName);
+				}
+			}
+		}
+		
+		// Proxied class was not ignored.
+		if (!ignoreThisMeasure) {
+		
+			// depth++
+			context.setDepth(context.getDepth() + 1);
+			seqNumber = context.getSequenceNumber();
+			seqNumber++;
+	
+			s_logger.info(methodInvocation);
+			s_logger.info("depth:" + context.getDepth());
+				
+			/* ----------------------------------------------------------------
+			 * If no mesure id is available this is the first measure and the
+			 * interceptor has to generate a new MeasureId
+			 * ---------------------------------------------------------------*/
+			if (context.getMeasureId() == null) {
+	
+				// The id does not exist : client side, or first call
+				// of the invoker from service side
+				context.setMeasureId(MeasureId.createID());
+				hierarchy = new int[]{1};
+				
+				dropIdAtEnd = true;
+	
+			} else {
 			/* ----------------------------------------------------------------
 			 * A MeasureId was found in the shared context
 			 * This means an additional call in the existing measuring chain.
 			 * ---------------------------------------------------------------*/
-
-			hierarchy = context.getHierarchy();
-
-			// after previous depth incremental!
-			assert (context.getDepth() <= hierarchy.length);
-
-			s_logger.info("*hier:" + hierarchy.length
-				+ " " + context.getDepth());
-			
-			// extend hierarchy-array if needed
-			if ((hierarchy.length + 1) == context.getDepth()) {
-				int[] extendedHierarchy = new int[hierarchy.length + 1];
-				for (int i = 0; i < hierarchy.length; i++) {
-					extendedHierarchy[i] = hierarchy[i];
-				}
-				extendedHierarchy[hierarchy.length] = 0;
-
-				hierarchy = extendedHierarchy;
-			}
+	
+				hierarchy = context.getHierarchy();
+	
+				// after previous depth incremental!
+				assert (context.getDepth() <= hierarchy.length);
+	
+				s_logger.info("*hier:" + hierarchy.length
+					+ " " + context.getDepth());
 				
-			s_logger.info("hier:" + hierarchy.length + " "
-				+ context.getDepth());
-			hierarchy[context.getDepth() - 1]
-				= hierarchy[context.getDepth() - 1] + 1;
+				// extend hierarchy-array if needed
+				if ((hierarchy.length + 1) == context.getDepth()) {
+					int[] extendedHierarchy = new int[hierarchy.length + 1];
+					for (int i = 0; i < hierarchy.length; i++) {
+						extendedHierarchy[i] = hierarchy[i];
+					}
+					extendedHierarchy[hierarchy.length] = 0;
+	
+					hierarchy = extendedHierarchy;
+				}
+					
+				s_logger.info("hier:" + hierarchy.length + " "
+					+ context.getDepth());
+				hierarchy[context.getDepth() - 1]
+					= hierarchy[context.getDepth() - 1] + 1;
+			}
+	 
+			// Perform invocation and measure time
+			startTime = System.currentTimeMillis();
+	
+			long lastStartTime = context.getStartTime();
+	
+			// Correction of unsynchronized clocks.
+			if (startTime < lastStartTime) {
+				startTime = lastStartTime;
+			}
+	
+			// Put the values in shared context
+			context.setStartTime(startTime);
+			context.setSequenceNumber(seqNumber);
+			context.setHierarchy(hierarchy);
 		}
-
-
- 
-		// Perform invocation and measure time
-		long startTime = System.currentTimeMillis();
-
-		long lastStartTime = context.getStartTime();
-
-		// Correction of unsynchronized clocks.
-		if (startTime < lastStartTime) {
-			startTime = lastStartTime;
-		}
-
-		// Put the values in shared context
-		context.setStartTime(startTime);
-		context.setSequenceNumber(seqNumber);
-		context.setHierarchy(hierarchy);
-
+		
 		Object retVal = null;
 		try {
 			// the invocation
 			retVal = methodInvocation.proceed();
+		
 		} catch (Throwable t) {
 			throw t;
 		} finally {
-			// Calculate duration after invocation
-			long duration = System.currentTimeMillis() - startTime;
-
+		
+			// Proxied class was not ignored.
+			if (!ignoreThisMeasure) {
+				// Calculate duration after invocation
+				long duration = System.currentTimeMillis() - startTime;
+	
 			/*
-			 * ---------------------------------------------------------------------
+			 * -----------------------------------------------------------------
 			 * Create MeasureItem and pass it to the CollectorService that
 			 * stores is
-			 * -------------------------------------------------------------------
+			 * -----------------------------------------------------------------
 			 */
-			if (m_collectorService != null) {
-				MeasureItem tempMeasure = new MeasureItem(context
-						.getMeasureId(), seqNumber, s_hostName, m_level,
-						methodInvocation.getThis().getClass().getName(),
-						methodInvocation.getMethod().getName(), startTime,
-						duration, arrayToString(hierarchy, context.getDepth()));
-				m_collectorService.add(tempMeasure);
-
-			} else {
-				s_logger
-						.info("invoke, Unable to write measure because "
-								+ "MeasureCollectorService is not available. "
-								+ "The measure is ignored");
-			}
-
-			// depth--
-			context.setDepth(context.getDepth() - 1);
-
-			if (dropIdAtEnd) {
-				// start with a fresh context
-				DetailedStatisticsSharedContextHolder
+				if (m_collectorService != null) {
+					MeasureItem tempMeasure = new MeasureItem(
+						context.getMeasureId(), seqNumber, s_hostName, m_level,
+						className, methodInvocation.getMethod().getName(),
+						startTime, duration,
+						arrayToString(hierarchy, context.getDepth()));
+					m_collectorService.add(tempMeasure);
+	
+				} else {
+					s_logger.info("invoke, Unable to write measure because "
+						+ "MeasureCollectorService is not available. "
+						+ "The measure is ignored");
+				}
+	
+				// depth--
+				context.setDepth(context.getDepth() - 1);
+	
+				if (dropIdAtEnd) {
+					// start with a fresh context
+					DetailedStatisticsSharedContextHolder
 						.setContext(new DetailedStatisticsContext());
+				}
+				
 			}
-
 		}
 		return retVal;
 	}
 
+	/**
+	 * Sets the mapping between proxied class names and their subsitutes.
+	 * 
+	 * @param proxyMap Fully qualified class names and respective short name of
+	 * replacement. Leave value empty if proxied class should be ignored.
+	 */
+	public void setProxyMap(Map<String, String> proxyMap) {
+		
+		this.m_proxyMap = proxyMap;
+	}
+	
+	/**
+	 * Returns the mapping between proxied class names and their substitutes.
+	 * 
+	 * @return Fully qualified class names and respective short name of
+	 * replacement.
+	 */
+	public Map<String, String> getProxyMap() {
+		
+		return this.m_proxyMap;
+	}
+	
 	/**
 	 * Print the hierarchy array as String with "-" between every array entry.
 	 *
