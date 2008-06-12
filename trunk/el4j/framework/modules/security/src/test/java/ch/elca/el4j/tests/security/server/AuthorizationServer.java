@@ -68,6 +68,16 @@ public class AuthorizationServer {
 	}
 	
 	/**
+	 * Returns the Spring Application Context for this Authorization Server.
+	 * 
+	 * @return The ApplicationContext for this authorization.
+	 */
+	public static ConfigurableApplicationContext getApplicationContext() {
+		
+		return s_appContext;
+	}
+	
+	/**
 	 * Close the application context after the AuthorizationServer has been
 	 * used.
 	 */
