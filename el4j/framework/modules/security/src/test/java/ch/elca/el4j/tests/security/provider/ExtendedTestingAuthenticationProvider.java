@@ -22,6 +22,8 @@ import org.acegisecurity.AuthenticationException;
 import org.acegisecurity.BadCredentialsException;
 import org.acegisecurity.providers.TestingAuthenticationProvider;
 
+import ch.elca.el4j.services.security.encryption.RSACipher;
+
 /**
  * Provider for testing reasons. This class throws a BadCredentialsException in
  * case the username is not equal to the password.
@@ -38,6 +40,20 @@ import org.acegisecurity.providers.TestingAuthenticationProvider;
 public class ExtendedTestingAuthenticationProvider extends
 	TestingAuthenticationProvider {
 
+	/**	 */
+	private RSACipher m_cipher;
+	
+	/**	Length of the RSA key pair. */
+	private final int m_keyLength = 256;
+	
+	/**
+	 * Default constructor in which the cipher will be initialized.
+	 */
+	public ExtendedTestingAuthenticationProvider() {
+		
+		m_cipher = new RSACipher(m_keyLength);
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -48,8 +64,11 @@ public class ExtendedTestingAuthenticationProvider extends
 			return null;
 		}
 		
+		String encryptedCredential = authentication.getCredentials().toString();
+		String decryptedCredential = m_cipher.decrypt(encryptedCredential);
+		
 		if (authentication.getPrincipal().toString().equals(
-			authentication.getCredentials().toString())) {
+			decryptedCredential)) {
 			return authentication;
 		} else {
 			throw new BadCredentialsException(
@@ -58,5 +77,16 @@ public class ExtendedTestingAuthenticationProvider extends
 					+ " and Credential "
 					+ authentication.getCredentials().toString() + ".");
 		}
+	}
+	
+	/**
+	 * Obtain the public key to encrypt the password to avoid passing it in
+	 * clear over the network.
+	 * 
+	 * @return The public key suitable to encrypt the password with
+	 */
+	public String getPublicKey() {
+		
+		return m_cipher.getPublicKey();
 	}
 }

@@ -34,6 +34,8 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
+import ch.elca.el4j.services.security.encryption.RSACipher;
+import ch.elca.el4j.tests.security.provider.ExtendedTestingAuthenticationProvider;
 import ch.elca.el4j.tests.security.sample.SampleService;
 
 // Checkstyle: EmptyBlock off
@@ -196,6 +198,18 @@ public class AuthorizationLocalTest {
 	}
 
 	/**
+	 * Returns the local authentication provider.
+	 * 
+	 * @return The ExtendedTestingAuthenticationProvider of this application
+	 * context.
+	 */
+	private ExtendedTestingAuthenticationProvider getAuthenticationProvider() {
+		
+		return (ExtendedTestingAuthenticationProvider)
+			m_ac.getBean("extendedTestingAuthenticationProvider");
+	}
+	
+	/**
 	 * @return Returns the sample service.
 	 */
 	private SampleService getSampleService() {
@@ -213,10 +227,15 @@ public class AuthorizationLocalTest {
 	 * @param role
 	 *            The role
 	 */
-	private static void createSecureContext(String principal,
+	private void createSecureContext(String principal,
 		String credential, String role) {
+		
+		String publicKey = getAuthenticationProvider().getPublicKey();
+		RSACipher rsaCipher = new RSACipher(publicKey);
+		String encryptedCredential = rsaCipher.encrypt(credential);
+		
 		TestingAuthenticationToken auth = new TestingAuthenticationToken(
-			principal, credential, new GrantedAuthority[] {
+			principal, encryptedCredential, new GrantedAuthority[] {
 				new GrantedAuthorityImpl("ROLE_TELLER"),
 				new GrantedAuthorityImpl(role)});
 		SecurityContext sc = SecurityContextHolder.getContext();
@@ -226,7 +245,7 @@ public class AuthorizationLocalTest {
 	/**
 	 * Delete the secure context, i.e. logging out the user.
 	 */
-	private static void destroySecureContext() {
+	private void destroySecureContext() {
 		SecurityContextHolder.setContext(new SecurityContextImpl());
 	}
 }

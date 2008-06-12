@@ -35,8 +35,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.security.authentication.AuthenticationService;
+import ch.elca.el4j.services.security.encryption.RSACipher;
 import ch.elca.el4j.tests.security.sample.SampleService;
 import ch.elca.el4j.tests.security.server.AuthorizationServer;
+import ch.elca.el4j.tests.security.provider.ExtendedTestingAuthenticationProvider;
 
 // Checkstyle: EmptyBlock off
 // Checkstyle: MagicNumber off
@@ -215,6 +217,18 @@ public class AuthorizationDistributedTest {
 	}
 
 	/**
+	 * Returns the authentication provider of the authorization server.
+	 * 
+	 * @return The ExtendedTestingAuthenticationProvider of the server.
+	 */
+	private ExtendedTestingAuthenticationProvider getAuthenticationProvider() {
+		
+		return (ExtendedTestingAuthenticationProvider)
+			AuthorizationServer.getApplicationContext().
+			getBean("extendedTestingAuthenticationProvider");
+	}
+	
+	/**
 	 * @return Returns the sample service.
 	 */
 	private SampleService getSampleService() {
@@ -234,8 +248,13 @@ public class AuthorizationDistributedTest {
 	 */
 	private void createSecureContext(String principal, String credential,
 		String role) {
+		
+		String publicKey = getAuthenticationProvider().getPublicKey();
+		RSACipher rsaCipher = new RSACipher(publicKey);
+		String encryptedCredential = rsaCipher.encrypt(credential);
+		
 		Authentication auth = new TestingAuthenticationToken(principal,
-			credential, new GrantedAuthority[] {
+			encryptedCredential, new GrantedAuthority[] {
 				new GrantedAuthorityImpl("ROLE_TELLER"),
 				new GrantedAuthorityImpl(role)});
 
@@ -249,8 +268,13 @@ public class AuthorizationDistributedTest {
 	 * @param credential is the credential.
 	 */
 	private void destroySecureContext(String principal, String credential) {
+		
+		String publicKey = getAuthenticationProvider().getPublicKey();
+		RSACipher rsaCipher = new RSACipher(publicKey);
+		String encryptedCredential = rsaCipher.encrypt(credential);
+		
 		Authentication auth = new TestingAuthenticationToken(principal,
-			credential, new GrantedAuthority[]{});
+			encryptedCredential, new GrantedAuthority[]{});
 		
 		getAuthenticationService().authenticate(auth);
 	}
