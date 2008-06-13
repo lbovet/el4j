@@ -38,7 +38,10 @@
 							<contextURL>${jee-web.context}</contextURL>
 							<serviceURL>*.Jaxws.Remotingtests</serviceURL>
 							
-							<wsdlUrls><wsdlUrl>http://www.xmlme.com/WSShakespeare.asmx?WSDL</wsdlUrl></wsdlUrls>
+							<wsdlUrls>
+								<wsdlUrl>http://www.xmlme.com/WSShakespeare.asmx?WSDL</wsdlUrl>
+								<!-- <wsdlUrl>${basedir}/src/wsdl/WSShakespeare.asmx.xml</wsdlUrl> -->
+							</wsdlUrls>
 						</configuration>
 					</execution>
 				</executions>
