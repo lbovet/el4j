@@ -159,8 +159,8 @@
 								<phase>integration-test</phase>
 								<configuration>
 									<tasks>
-										<echo message="Sleeping now for 10 seconds after deployment but before executing the JAX-WS tests."/>
-										<sleep seconds="10"/>
+										<echo message="Sleeping now for 2 seconds after deployment but before executing the JAX-WS tests."/>
+										<sleep seconds="2"/>
 									</tasks>
 								</configuration>
 								<goals>
@@ -279,8 +279,8 @@
 								<phase>integration-test</phase>
 								<configuration>
 									<tasks>
-										<echo message="Sleeping now for 10 seconds after deployment but before executing the JAX-WS tests."/>
-										<sleep seconds="10"/>
+										<echo message="Sleeping now for 2 seconds after deployment but before executing the JAX-WS tests."/>
+										<sleep seconds="2"/>
 									</tasks>
 								</configuration>
 								<goals>
