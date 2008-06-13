@@ -18,7 +18,7 @@
 			<value>ignored</value>
 		</property>
 		<property name="servicePort">
-			<value>0</value>
+			<value>9999</value>
 		</property>
 		
 		<property name="contextPath">
