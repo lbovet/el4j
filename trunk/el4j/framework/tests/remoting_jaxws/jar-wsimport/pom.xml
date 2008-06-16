@@ -42,6 +42,9 @@
 								<wsdlUrl>http://www.xmlme.com/WSShakespeare.asmx?WSDL</wsdlUrl>
 								<!-- <wsdlUrl>${basedir}/src/wsdl/WSShakespeare.asmx.xml</wsdlUrl> -->
 							</wsdlUrls>
+							<!-- Define a (relative) runtime wsdl location (used for local wsdl), otherwise
+							the absolute path to the local wsdlUrl is taken -->
+							<!-- <wsdlLocation>Shakespeare.wsdl</wsdlLocation> -->
 						</configuration>
 					</execution>
 				</executions>
