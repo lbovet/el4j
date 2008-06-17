@@ -21,5 +21,6 @@
 	<modules>
 		<module>external</module>
 		<module>internal</module>
+		<module>sandbox</module>
 	</modules>
 </project>

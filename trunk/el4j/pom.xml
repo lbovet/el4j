@@ -1995,6 +1995,10 @@
 		<distmgt.repository.name.internal>Internal EL4J repository</distmgt.repository.name.internal>
 		<distmgt.repository.url.internal>${project-server.path}/maven2repository</distmgt.repository.url.internal>
 
+		<distmgt.repository.id.sandbox>httpSandbox</distmgt.repository.id.sandbox>
+		<distmgt.repository.name.sandbox>Sandbox EL4J repository</distmgt.repository.name.sandbox>
+		<distmgt.repository.url.sandbox>http://leaffy.elca.ch:8082/nexus/content/repositories/sandbox</distmgt.repository.url.sandbox>
+
 		<distmgt.site.id.external>sshSourceForgeEL4J</distmgt.site.id.external>
 		<distmgt.site.name.external>SourceForge EL4J website</distmgt.site.name.external>
 		<distmgt.site.url.external>scpexe://shell.sourceforge.net/home/groups/e/el/el4j/htdocs</distmgt.site.url.external>
