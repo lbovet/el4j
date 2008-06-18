@@ -47,7 +47,7 @@
 					<key>
 						<value>ch.elca.el4j.services.remoting.ClientContextInvocationHandler</value>
 					</key>
-					<value>RMI-Proxy (Client side)</value>
+					<value>RMI-Client</value>
 				</entry>
 			</map>
 		</property>
