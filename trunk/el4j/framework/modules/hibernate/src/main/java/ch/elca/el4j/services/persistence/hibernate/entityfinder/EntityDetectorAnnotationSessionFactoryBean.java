@@ -2,6 +2,7 @@ package ch.elca.el4j.services.persistence.hibernate.entityfinder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 
 import javax.persistence.Entity;
 
@@ -58,6 +59,26 @@ public class EntityDetectorAnnotationSessionFactoryBean extends AnnotationSessio
 	 */
 	protected String[] getAutoDetectEntityPackage() {
 		return autoDetectEntityPackage;
+	}
+	
+	/**
+	 * Specify the names of annotated packages, for which (including all
+	 * sub packages) package-level JDK 1.5+ annotation metadata will be read.
+	 * 
+	 * @param annotatedPackages    a list of annotated packages
+	 */
+	public void setAutoDetectAnnotatedPackages(String[] annotatedPackages) {
+		final Package[] packages = Package.getPackages();
+		
+		HashSet<String> detectedAnnotatedPackages = new HashSet<String>();
+		for (String prefix : annotatedPackages) {
+			for (Package p : packages) {
+				if (p.getName().startsWith(prefix)) {
+					detectedAnnotatedPackages.add(p.getName());
+				}
+			}
+		}
+		setAnnotatedPackages(detectedAnnotatedPackages.toArray(new String[0]));
 	}
 
 	/**
