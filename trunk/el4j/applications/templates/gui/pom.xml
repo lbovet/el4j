@@ -26,6 +26,7 @@
 		<module>standalone-client</module>
 		<module>secure-server</module>
 		<module>secure-thin-client</module>
+		<module>jasper-thin-client</module>
 	</modules>
 	<profiles>
 		<profile>
