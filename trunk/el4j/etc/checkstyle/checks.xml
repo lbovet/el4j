@@ -26,11 +26,12 @@
 
 	<!-- Commment supppression filters -->
 	<!-- MagicNumber filter -->
-	<module name="SuppressionCommentFilter">
+	<!-- <module name="SuppressionCommentFilter">
 		<property name="offCommentFormat" value="Checkstyle: MagicNumber off" />
 		<property name="onCommentFormat" value="Checkstyle: MagicNumber on" />
 		<property name="checkFormat" value="MagicNumber" />
-	</module>
+	</module> -->
+	
 	<!-- UncommentedMain filter -->
 	<module name="SuppressionCommentFilter">
 		<property name="offCommentFormat" value="Checkstyle: UncommentedMain off" />
@@ -235,7 +236,7 @@
 		</module>
 		<!--module name="IllegalToken"/-->
 		<module name="InnerAssignment" />
-		<module name="MagicNumber" />
+		<!-- <module name="MagicNumber" /> -->
 		<module name="MissingSwitchDefault" />
 		<!--module name="ModifiedControlVariable"/ doesn't exist in 3.4-->
 		<module name="RedundantThrows">
