@@ -76,4 +76,10 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 	 */
 	public int findCountByCriteria(DetachedCriteria hibernateCriteria)
 		throws DataAccessException;
+	
+	
+	/**
+	 * @return    the convenience Hibernate template
+	 */
+	public ConvenienceHibernateTemplate getConvenienceHibernateTemplate();
 }
