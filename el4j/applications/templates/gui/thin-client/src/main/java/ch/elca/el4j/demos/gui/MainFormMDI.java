@@ -227,7 +227,7 @@ public class MainFormMDI extends MDIApplication {
 	/**
 	 * @return    the created menu bar
 	 */
-	private JMenuBar createMenuBar() {
+	protected JMenuBar createMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
 		String[] fileMenuActionNames = {"quit"};
 		String[] editMenuActionNames = {"cut", "copy", "paste", "delete"};
