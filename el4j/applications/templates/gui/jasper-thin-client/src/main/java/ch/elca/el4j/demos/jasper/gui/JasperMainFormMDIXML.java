@@ -16,20 +16,11 @@
  */
 package ch.elca.el4j.demos.jasper.gui;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import javax.swing.JDesktopPane;
-import javax.swing.JFrame;
-import javax.swing.JPopupMenu;
-
 import org.jdesktop.application.Action;
 
 import ch.elca.el4j.demos.gui.MainFormMDIXML;
 import ch.elca.el4j.demos.jasper.gui.reporting.ReportSaver;
 import ch.elca.el4j.demos.jasper.gui.reporting.ReportViewer;
-
-import cookxml.cookswing.CookSwing;
 
 
 /**
@@ -48,7 +39,7 @@ import cookxml.cookswing.CookSwing;
  * @author Fabian Reichlin (FRE)
  */
 public class JasperMainFormMDIXML extends MainFormMDIXML {
-	
+		
 	/**
 	 * Shows the report viewer.
 	 */
