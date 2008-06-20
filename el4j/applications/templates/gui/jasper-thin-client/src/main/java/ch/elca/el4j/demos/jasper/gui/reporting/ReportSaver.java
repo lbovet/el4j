@@ -44,7 +44,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 public class ReportSaver extends JFileChooser {
 
 	/**
-	 * Version number needed by serialization. 
+	 * Version number needed by serialization.
 	 */
 	public static final long serialVersionUID = 1L;
 	
