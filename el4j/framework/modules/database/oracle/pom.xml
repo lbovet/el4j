@@ -15,30 +15,23 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>module-database</artifactId>
+	<artifactId>module-database-oracle</artifactId>
 	<version>${version.module-database}</version>
 	<packaging>jar</packaging>
-	<name>EL4J module database</name>
-	<description>Module database of the EL4J framework.</description>
+	<name>EL4J module database for oracle</name>
+	<description>Module database for oracle of the EL4J framework.</description>
 	<dependencies>
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-database-common</artifactId>
 		</dependency>
 
+		<!-- Oracle driver -->
 		<dependency>
-			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-database-db2</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-database-oracle</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-database-mysql</artifactId>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc14_g</artifactId>
+			<version>10.2.0.3.0</version>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 </project>

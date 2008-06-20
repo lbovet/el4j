@@ -15,30 +15,23 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>module-database</artifactId>
+	<artifactId>module-database-mysql</artifactId>
 	<version>${version.module-database}</version>
 	<packaging>jar</packaging>
-	<name>EL4J module database</name>
-	<description>Module database of the EL4J framework.</description>
+	<name>EL4J module database for mysql</name>
+	<description>Module database for mysql of the EL4J framework.</description>
 	<dependencies>
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-database-common</artifactId>
 		</dependency>
 
+		<!-- MySQL driver -->
 		<dependency>
-			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-database-db2</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-database-oracle</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-database-mysql</artifactId>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector</artifactId>
+			<version>5.0.6</version>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 </project>

@@ -15,30 +15,20 @@
 		<version>1.5-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>module-database</artifactId>
+	<artifactId>module-database-common</artifactId>
 	<version>${version.module-database}</version>
 	<packaging>jar</packaging>
-	<name>EL4J module database</name>
-	<description>Module database of the EL4J framework.</description>
+	<name>EL4J module database common</name>
+	<description>Module database common of the EL4J framework.</description>
 	<dependencies>
+		<!-- DBCP libraries -->
 		<dependency>
-			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-database-common</artifactId>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
 		</dependency>
-
 		<dependency>
-			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-database-db2</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-database-oracle</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-database-mysql</artifactId>
+			<groupId>commons-pool</groupId>
+			<artifactId>commons-pool</artifactId>
 		</dependency>
 	</dependencies>
 </project>

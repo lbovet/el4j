@@ -23,9 +23,13 @@
 		Module databases of the EL4J framework.
 	</description>
 	<modules>
-		<module>all</module>
-		<!-- <module>db2</module>
+		<module>common</module>
+		
+		<module>db2</module>
 		<module>mysql</module>
-		<module>oracle</module> -->
+		<module>oracle</module>
+		
+		<!-- compatibility module -->
+		<module>all</module>
 	</modules>
 </project>
