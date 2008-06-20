@@ -24,15 +24,12 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 
-import org.bushe.swing.event.EventBus;
 import org.jdesktop.application.Action;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
-import ch.elca.el4j.demos.gui.events.ExampleEvent;
 import ch.elca.el4j.gui.swing.AbstractMDIApplication;
 
 import cookxml.cookswing.CookSwing;
-
 
 /**
  * Sample MDI application that demonstrates how to use the framework.
@@ -73,6 +70,7 @@ public class MainFormMDIXML extends AbstractMDIApplication {
 	/** {@inheritDoc} */
 	@Override
 	protected void initialize(String[] args) {
+		
 		/*GenericConfig overrideConfig = (GenericConfig) GUIApplication
 			.getInstance().getSpringContext().getBean("overrideConfig");
 		overrideConfig.setParent(GUIApplication.getInstance().getConfig());
@@ -87,6 +85,9 @@ public class MainFormMDIXML extends AbstractMDIApplication {
 	 */
 	@Override
 	protected void startup() {
+		MainFormActions actions = new MainFormActions(this);
+		super.addActionMappingInstance(actions);
+		
 		CookSwing cookSwing = new CookSwing(this);
 		showMain((JFrame) cookSwing.render("gui/main.xml"));
 		
@@ -98,51 +99,6 @@ public class MainFormMDIXML extends AbstractMDIApplication {
 				}
 			}
 		});
-	}
-
-	@Action
-	public void showDemo1() {
-		show("ResourceInjectionDemoForm");
-	}
-	
-	@Action
-	public void showDemo2() {
-		show("CancelableDemoForm");
-	}
-
-	@Action
-	public void showDemo3() {
-		show("MasterDetailDemoForm");
-	}
-	
-	@Action
-	public void showDemo4() {
-		show("BindingDemoForm");
-	}
-	
-	@Action
-	public void showDemo5() {
-		show("EventBusDemoForm");
-	}
-	
-	@Action
-	public void showDemo6() {
-		show("XMLDemoForm");
-	}
-	
-	@Action
-	public void showSearch() {
-		show("SearchDialog");
-	}
-	
-	@Action
-	public void showRefDB() {
-		show("RefDBDemoForm");
-	}
-	
-	@Action
-	public void sendExampleEvent() {
-		EventBus.publish(new ExampleEvent("I'm an Example Event!"));
 	}
 
 	/**
@@ -190,15 +146,7 @@ public class MainFormMDIXML extends AbstractMDIApplication {
 		m_admin = !m_admin;
 		firePropertyChange("admin", oldAdmin, m_admin);
 	}
-	
-	/**
-	 * Show the about dialog.
-	 */
-	@Action
-	public void about() {
-		show("AboutDialog");
-	}
-	
+
 	/**
 	 * Indicates whether permission "admin" is set
 	 *  (used via enabledProperty field of \@Action).

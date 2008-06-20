@@ -31,13 +31,12 @@ import javax.swing.JToolBar;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import org.bushe.swing.event.EventBus;
 import org.jdesktop.application.Action;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
-import ch.elca.el4j.demos.gui.events.ExampleEvent;
 import ch.elca.el4j.gui.swing.MDIApplication;
 
+// Checkstyle: MagicNumber off
 /**
  * Sample MDI application that demonstrates how to use the framework.
  *
@@ -69,6 +68,9 @@ public class MainFormMDI extends MDIApplication {
 	 */
 	@Override
 	protected void startup() {
+		MainFormActions actions = new MainFormActions(this);
+		super.addActionMappingInstance(actions);
+		
 		getMainFrame().setJMenuBar(createMenuBar());
 		showMain(createMainPanel());
 	}
@@ -101,47 +103,6 @@ public class MainFormMDI extends MDIApplication {
 		panel.add(m_desktopPane, BorderLayout.CENTER);
 		return panel;
 	}
-
-	@Action
-	public void showDemo1() {
-		show("ResourceInjectionDemoForm");
-	}
-	
-	@Action
-	public void showDemo2() {
-		show("CancelableDemoForm");
-	}
-
-	@Action
-	public void showDemo3() {
-		show("MasterDetailDemoForm");
-	}
-	
-	@Action
-	public void showDemo4() {
-		show("BindingDemoForm");
-	}
-	
-	@Action
-	public void showDemo5() {
-		show("EventBusDemoForm");
-	}
-	
-	@Action
-	public void showSearch() {
-		show("SearchDialog");
-	}
-	
-	@Action
-	public void showRefDB() {
-		show("RefDBDemoForm");
-	}
-	
-	@Action
-	public void sendExampleEvent() {
-		EventBus.publish(new ExampleEvent("I'm an Example Event!"));
-	}
-	
 
 	/**
 	 * A "special" help only for admins (for demo purpose only).
@@ -187,14 +148,6 @@ public class MainFormMDI extends MDIApplication {
 		boolean oldAdmin = m_admin;
 		m_admin = !m_admin;
 		firePropertyChange("admin", oldAdmin, m_admin);
-	}
-	
-	/**
-	 * Show the about dialog.
-	 */
-	@Action
-	public void about() {
-		show("AboutDialog");
 	}
 	
 	/**
