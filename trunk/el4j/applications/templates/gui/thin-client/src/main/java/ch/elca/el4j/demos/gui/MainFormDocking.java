@@ -28,14 +28,12 @@ import javax.swing.JToolBar;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import org.bushe.swing.event.EventBus;
 import org.jdesktop.application.Action;
-import org.noos.xing.mydoggy.ToolWindowAnchor;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
-import ch.elca.el4j.demos.gui.events.ExampleEvent;
 import ch.elca.el4j.gui.swing.DockingApplication;
 
+// Checkstyle: MagicNumber off
 /**
  * Sample Docking application that demonstrates how to use the framework.
  *
@@ -62,6 +60,9 @@ public class MainFormDocking extends DockingApplication {
 	 */
 	@Override
 	protected void startup() {
+		MainFormActions actions = new MainFormActions(this);
+		super.addActionMappingInstance(actions);
+		
 		getMainFrame().setJMenuBar(createMenuBar());
 		showMain(createMainPanel());
 	}
@@ -77,47 +78,6 @@ public class MainFormDocking extends DockingApplication {
 		
 		return panel;
 	}
-
-	@Action
-	public void showDemo1() {
-		show("ResourceInjectionDemoForm");
-	}
-	
-	@Action
-	public void showDemo2() {
-		show("CancelableDemoForm");
-	}
-
-	@Action
-	public void showDemo3() {
-		show("MasterDetailDemoForm");
-	}
-	
-	@Action
-	public void showDemo4() {
-		show("BindingDemoForm");
-	}
-	
-	@Action
-	public void showDemo5() {
-		show("EventBusDemoForm");
-	}
-	
-	@Action
-	public void showSearch() {
-		show("SearchDialog", ToolWindowAnchor.LEFT);
-	}
-	
-	@Action
-	public void showRefDB() {
-		show("RefDBDemoForm");
-	}
-	
-	@Action
-	public void sendExampleEvent() {
-		EventBus.publish(new ExampleEvent("I'm an Example Event!"));
-	}
-	
 
 	/**
 	 * A "special" help only for admins (for demo purpose only).
@@ -166,14 +126,6 @@ public class MainFormDocking extends DockingApplication {
 	}
 	
 	/**
-	 * Show the about dialog.
-	 */
-	@Action
-	public void about() {
-		show("AboutDialog");
-	}
-	
-	/**
 	 * Indicates whether permission "admin" is set
 	 *  (used via enabledProperty field of \@Action).
 	 *  @return    <code>true</code> if user has admin rights
@@ -199,7 +151,6 @@ public class MainFormDocking extends DockingApplication {
 		}*/
 		return m_admin;
 	}
- 
 
 	/**
 	 * @return    the created menu bar
@@ -220,7 +171,6 @@ public class MainFormDocking extends DockingApplication {
 		return menuBar;
 	}
 	
-
 	/**
 	 * @return    the created tool bar
 	 */
