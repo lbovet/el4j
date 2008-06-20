@@ -61,19 +61,14 @@ public final class MainFormDistributedMDI {
 			Exceptions.getInstance().addHandler(new ExampleExceptionHandler());
 
 			PlasticLookAndFeel.setPlasticTheme(new ExperienceBlue());
-
 		
 			String[] applicationContextPaths = {
 				"classpath*:mandatory/*.xml",
 				"classpath*:optional/security-client.xml",
 				"classpath*:scenarios/securityscope/distributed-security"
 					+ "-scope-client.xml",
-				//"classpath*:scenarios/services/serviceExporter.xml",
-
 				"classpath:scenarios/remoting/client/*.xml",
-				"classpath:scenarios/swing/demo/*.xml"
-
-			};
+				"classpath:scenarios/swing/demo/*.xml"};
 
 			ModuleApplicationContextConfiguration contextConfig
 				= new ModuleApplicationContextConfiguration();
