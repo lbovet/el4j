@@ -319,12 +319,7 @@ public abstract class GUIApplication extends SingleFrameApplication {
 		org.jdesktop.application.ApplicationContext ac
 			= Application.getInstance().getContext();
 		
-		Action action = ac.getActionMap(object).get(actionName);
-		if (action == null) {
-			// search in all instances with action mappings
-			action = getAction(actionName);
-		}
-		return action;
+		return ac.getActionMap(object).get(actionName);
 	}
 	
 	/**
