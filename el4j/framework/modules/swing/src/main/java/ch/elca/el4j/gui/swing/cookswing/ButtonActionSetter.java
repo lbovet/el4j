@@ -17,6 +17,7 @@
 package ch.elca.el4j.gui.swing.cookswing;
 
 import javax.swing.AbstractButton;
+import javax.swing.Action;
 
 import ch.elca.el4j.gui.swing.GUIApplication;
 
@@ -68,6 +69,12 @@ public class ButtonActionSetter implements Setter {
 		GUIApplication app = GUIApplication.getInstance();
 		String attrValue = (String) value;
 		AbstractButton button = (AbstractButton) obj;
-		button.setAction(app.getAction(actionHolder, attrValue));
+		
+		Action action = app.getAction(actionHolder, attrValue);
+		if (action == null) {
+			// search in all instances with action mappings
+			action = app.getAction(attrValue);
+		}
+		button.setAction(action);
 	}
 }
