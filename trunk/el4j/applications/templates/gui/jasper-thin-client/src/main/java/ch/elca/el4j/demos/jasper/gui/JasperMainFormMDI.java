@@ -52,7 +52,7 @@ public class JasperMainFormMDI extends MainFormMDI {
 	}
 	
 	/**
-	 * Shows a save dialog to store the report as PDF. 
+	 * Shows a save dialog to store the report as PDF.
 	 */
 	@Action
 	public void showReportSaver() {

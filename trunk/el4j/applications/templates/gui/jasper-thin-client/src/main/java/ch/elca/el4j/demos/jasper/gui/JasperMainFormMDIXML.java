@@ -59,7 +59,7 @@ public class JasperMainFormMDIXML extends MainFormMDIXML {
 	}
 	
 	/**
-	 * Shows a save dialog to store the report as PDF. 
+	 * Shows a save dialog to store the report as PDF.
 	 */
 	@Action
 	public void showReportSaver() {
