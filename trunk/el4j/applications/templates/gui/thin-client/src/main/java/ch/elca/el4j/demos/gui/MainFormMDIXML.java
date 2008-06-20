@@ -100,6 +100,11 @@ public class MainFormMDIXML extends AbstractMDIApplication {
 			}
 		});
 	}
+	
+	@Action
+	public void showDemo6() {
+		show("XMLDemoForm");
+	}
 
 	/**
 	 * A "special" help only for admins (for demo purpose only).

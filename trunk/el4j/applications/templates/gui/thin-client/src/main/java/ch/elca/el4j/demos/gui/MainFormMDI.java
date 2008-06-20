@@ -55,12 +55,12 @@ public class MainFormMDI extends MDIApplication {
 	/**
 	 * A example popup menu.
 	 */
-	private JPopupMenu m_popup;
+	protected JPopupMenu m_popup;
 	
 	/**
 	 * Determines if user is admin (for activation demo).
 	 */
-	private boolean m_admin = false;
+	protected boolean m_admin = false;
 	
 	/**
 	 * Main definition of the GUI.
@@ -78,7 +78,7 @@ public class MainFormMDI extends MDIApplication {
 	/**
 	 * @return    the created main panel
 	 */
-	private JComponent createMainPanel() {
+	protected JComponent createMainPanel() {
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.add(createToolBar(), BorderLayout.NORTH);
 		
@@ -199,7 +199,7 @@ public class MainFormMDI extends MDIApplication {
 	/**
 	 * @return    the created tool bar
 	 */
-	private JToolBar createToolBar() {
+	protected JToolBar createToolBar() {
 		String[] toolbarActionNames = {"quit"};
 		JToolBar toolBar = new JToolBar();
 		toolBar.setFloatable(false);
