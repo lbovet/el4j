@@ -1,7 +1,10 @@
 --------------------------------------------------------------------------------
                         Known issues for EL4J version  1.4
 --------------------------------------------------------------------------------
- * None so far
+ * el4j-version of webstart-maven-plugin has somehow disappeared on el4-services.
+   Please use official version 1.0-alpha-2, as all manually applied patches are
+   included. If you need exactly this el4j-version, please contact SWI.
+   (fixed in 3087)
 
 
 --------------------------------------------------------------------------------
