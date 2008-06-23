@@ -200,7 +200,7 @@
 		</module>
 		
 		<module name="GenericIllegalRegexp">
-			<property name="format" value="\S\s+$"/>
+			<property name="format" value="\S\s\s+$"/>
 			<property name="ignoreComments " value="true"/>
 			<property name="message" value="Remove whitespaces at end of line"/>
 		</module>
