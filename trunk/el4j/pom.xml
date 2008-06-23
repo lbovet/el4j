@@ -1230,6 +1230,13 @@
 				<!-- Deploy packed war by default. -->
 				<jee-web.war.location>${project.build.directory}/${jee-web.war.name}.war</jee-web.war.location>
 			</properties>
+			<repositories>
+				<repository>
+					<id>java.net</id>
+					<url>http://download.java.net/maven/1</url>
+					<layout>legacy</layout>
+				</repository>
+			</repositories>
 		</profile>
 
 		<!-- DB -->
