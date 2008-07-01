@@ -40,6 +40,9 @@ Documentation
     
     * {{{http://www.elca.ch/live/3/resources/infoweekArticleMai06EL4J.pdf}
       EL4J Introduction Article (in German) (PDF)}}   
+
+    * {{{docs/pdf/Module-basedDevelopmentWithSpringMaven2.pdf}
+      Module-based Development With Spring and Maven 2 (PDF)}} (Jazoon Presentation)
     
     * {{{docs/pdf/IdentityFixerAnnouncement.pdf}
       An article about the identity fixer (to preserve object identities over process boundaries) (PDF)}}   
