@@ -434,6 +434,12 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 			for (Resource resource : resources) {
 				getLog().info("Processing resource: " + resource.getFilename());
 				List<String> sqlStmts = extractStmtsFromFile(resource.getURL());
+				
+				if (sqlStmts.size() == 0) {
+					throw new DatabaseHolderException(
+						"Error in " + resource.getFilename()
+						+ ": No valid SQL statements found.", null);
+				}
 				// Execute statements extracted from file.
 				// Collect exception and throw them afterwards to ensure that
 				// all SQL Statements are processed.
@@ -441,6 +447,8 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 					try {
 						stmt = connection.createStatement();
 						sqlString = sqlString.replace("###SEMICOLUMN###", ";");
+						
+						getLog().debug(sqlString);
 						stmt.execute(sqlString);
 					} catch (SQLException e) {
 						sqlExceptions.add(e);
@@ -471,7 +479,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 				}
 			}
 			throw new DatabaseHolderException(
-				"Error during sql statement execution", sqlExceptions.get(0));
+				"Error during SQL statement execution", sqlExceptions.get(0));
 		}
 	}
 
