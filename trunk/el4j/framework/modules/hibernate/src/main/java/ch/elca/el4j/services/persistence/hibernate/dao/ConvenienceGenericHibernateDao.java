@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.springframework.dao.DataAccessException;
 
 import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
@@ -82,4 +83,20 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 	 * @return    the convenience Hibernate template
 	 */
 	public ConvenienceHibernateTemplate getConvenienceHibernateTemplate();
+	
+	/**
+	 * @return    the default {@link Order} to order the results
+	 */
+	public List<Order> getDefaultOrder();
+
+	/**
+	 * @param defaultOrder    the default {@link Order} to order the results
+	 */
+	public void setDefaultOrder(Order defaultOrder);
+	
+	/**
+	 * @param defaultOrder    the default list of {@link Order}s
+	 *                        to order the results
+	 */
+	public void setDefaultOrder(List<Order> defaultOrder);
 }
