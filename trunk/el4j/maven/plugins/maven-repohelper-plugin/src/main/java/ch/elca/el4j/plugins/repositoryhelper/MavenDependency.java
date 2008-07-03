@@ -35,6 +35,11 @@ public class MavenDependency {
 	private String m_libraryPath;
 	
 	/**
+	 * Path to the optional pom.xml file.
+	 */
+	private String m_pomPath;
+	
+	/**
 	 * Group id.
 	 */
 	private String m_groupId;
@@ -66,6 +71,20 @@ public class MavenDependency {
 	 */
 	public final void setLibraryPath(String libraryPath) {
 		m_libraryPath = libraryPath;
+	}
+	
+	/**
+	 * @return Returns the pomPath.
+	 */
+	public String getPomPath() {
+		return m_pomPath;
+	}
+
+	/**
+	 * @param pomPath Is the pomPath to set.
+	 */
+	public void setPomPath(String pomPath) {
+		m_pomPath = pomPath;
 	}
 
 	/**
