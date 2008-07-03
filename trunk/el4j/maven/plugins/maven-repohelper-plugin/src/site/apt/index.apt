@@ -9,7 +9,9 @@ Repository helper plugin
 
   The Repository helper plugin can be used to install (local repository) or
   deploy (install plus deploying on a remote repository) multiple jars and their 
-  source zips in one pass. Just name the files as follows:
+  source zips in one pass. It is also possible to provide a pom.xml file, instead
+  of using a generated one (with no additional dependencies).
+  Just name the files as follows:
   
     * <<name>>-<<version>>.jar
     
@@ -24,6 +26,10 @@ Repository helper plugin
     * <<name>>-<<version>>-src.zip
     
       * Like the jar file but with ending <<<-src.zip>>>
+
+    * <<name>>-<<version>>-pom.xml
+    
+      * Like the jar file but with ending <<<-pom.xml>>>
 
   Create a directory (i.e. <<<libraries>>>), create sub-directories and
   put your files in them. The subdirectory path where the files are will be 
