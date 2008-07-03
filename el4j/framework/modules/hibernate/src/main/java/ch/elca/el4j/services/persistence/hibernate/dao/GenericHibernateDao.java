@@ -19,11 +19,14 @@ package ch.elca.el4j.services.persistence.hibernate.dao;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.hibernate.LockMode;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -62,6 +65,16 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	implements ConvenienceGenericHibernateDao<T, ID>, InitializingBean {
 	
 	/**
+	 * The domain class this DAO is responsible for.
+	 */
+	private Class<T> m_persistentClass;
+	
+	/**
+	 * The default hibernate {@link Order} to order results.
+	 */
+	private List<Order> m_defaultOrder = null;
+	
+	/**
 	 * Set up the Generic Dao. Auto-derive the parametrized type.
 	 */
 	@SuppressWarnings("unchecked")
@@ -74,11 +87,6 @@ public class GenericHibernateDao<T, ID extends Serializable>
 			// in that case, one needs to set the persistencClass otherwise.
 		}
 	}
-	
-	/**
-	 * The domain class this DAO is responsible for.
-	 */
-	private Class<T> m_persistentClass;
 	
 	/**
 	 * New: this callback is in general no longer required (the constructor
@@ -98,6 +106,26 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	public Class<T> getPersistentClass() {
 		assert m_persistentClass != null;
 		return m_persistentClass;
+	}
+	
+	/** {@inheritDoc} */
+	public List<Order> getDefaultOrder() {
+		return m_defaultOrder;
+	}
+	
+	/** {@inheritDoc} */
+	public void setDefaultOrder(Order defaultOrder) {
+		if (defaultOrder != null) {
+			m_defaultOrder = new ArrayList<Order>();
+			m_defaultOrder.add(defaultOrder);
+		} else {
+			m_defaultOrder = null;
+		}
+	}
+	
+	/** {@inheritDoc} */
+	public void setDefaultOrder(List<Order> defaultOrder) {
+		m_defaultOrder = defaultOrder;
 	}
 
 	/**
@@ -168,7 +196,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	@SuppressWarnings("unchecked")
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<T> getAll() throws DataAccessException {
-		return getConvenienceHibernateTemplate().loadAll(getPersistentClass());
+		return getConvenienceHibernateTemplate().findByCriteria(getCriteria());
 	}
 
 	
@@ -182,8 +210,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	@SuppressWarnings("unchecked")
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<T> findByQuery(QueryObject q) throws DataAccessException {
-		DetachedCriteria hibernateCriteria = CriteriaTransformer.transform(
-			q, getPersistentClass());
+		DetachedCriteria hibernateCriteria = getCriteria(q);
 		
 		ConvenienceHibernateTemplate template
 			= getConvenienceHibernateTemplate();
@@ -203,8 +230,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	@SuppressWarnings("unchecked")
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int findCountByQuery(QueryObject q) throws DataAccessException {
-		DetachedCriteria hibernateCriteria = CriteriaTransformer.transform(
-			q, getPersistentClass());
+		DetachedCriteria hibernateCriteria = getCriteria(q);
 		
 		ConvenienceHibernateTemplate template
 			= getConvenienceHibernateTemplate();
@@ -330,5 +356,43 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	 */
 	protected String getPersistentClassName() {
 		return getPersistentClass().getSimpleName();
+	}
+	
+	/**
+	 * @return    a suitable {@link DetachedCriteria}
+	 */
+	protected DetachedCriteria getCriteria() {
+		DetachedCriteria criteria
+			= DetachedCriteria.forClass(getPersistentClass());
+		
+		return fillCriteria(criteria);
+	}
+	
+	/**
+	 * @param queryObject    an EL4J {@link QueryObject}
+	 * @return               a suitable {@link DetachedCriteria}
+	 */
+	protected DetachedCriteria getCriteria(QueryObject queryObject) {
+		DetachedCriteria criteria
+			= CriteriaTransformer.transform(queryObject, getPersistentClass());
+		
+		return fillCriteria(criteria);
+	}
+	
+	/**
+	 * @param criteria    the criteria to fill
+	 * @return            the criteria enhanced with order and distinct
+	 *                    restrictions (if set using setDefaultOrder)
+	 */
+	protected DetachedCriteria fillCriteria(DetachedCriteria criteria) {
+		if (m_defaultOrder != null) {
+			for (Order order : m_defaultOrder) {
+				criteria.addOrder(order);
+			}
+		}
+		criteria.setResultTransformer(
+			CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+		
+		return criteria;
 	}
 }
