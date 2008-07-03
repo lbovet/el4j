@@ -22,6 +22,8 @@ import java.util.List;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.OptimisticLockingFailureException;
 
 import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
 
@@ -43,6 +45,16 @@ import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
  */
 public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 	extends ConvenienceGenericDao<T, ID> {
+	
+	/**
+	 * @param entity    The domain object to save or update
+	 * @return          The saved or updated object
+	 * @throws DataAccessException
+	 * @throws DataIntegrityViolationException
+	 * @throws OptimisticLockingFailureException
+	 */
+	public T saveOrUpdateAndFlush(T entity) throws DataAccessException,
+		DataIntegrityViolationException, OptimisticLockingFailureException;
 
 	/**
 	 * @param hibernateCriteria    the criteria that the result has to fulfill
