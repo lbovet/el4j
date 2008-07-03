@@ -286,13 +286,8 @@ public class GenericHibernateDao<T, ID extends Serializable>
 		return entity;
 	}
 	
-	/**
-	 * @param entity    The domain object to save or update
-	 * @return          The saved or updated object
-	 * @throws DataAccessException
-	 * @throws DataIntegrityViolationException
-	 * @throws OptimisticLockingFailureException
-	 */
+	
+	/** {@inheritDoc} */
 	@ReturnsUnchangedParameter
 	@SuppressWarnings("unchecked")
 	@Transactional(propagation = Propagation.REQUIRED)
