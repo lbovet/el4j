@@ -144,6 +144,11 @@ public class LibraryDeployerMojo extends AbstractLibraryAdderMojo {
 		cmd.createArgument().setValue("-Dpackaging=jar");
 		cmd.createArgument().setValue("-Dfile=" + dependency.getLibraryPath());
 		
+		if (dependency.getPomPath() != null) {
+			cmd.createArgument().setValue(
+				"-DpomFile=" + dependency.getPomPath());
+		}
+		
 		if (m_repositoryUrlString != null) {
 			cmd.createArgument().setValue("-Durl=" + m_repositoryUrlString);
 		}

@@ -75,6 +75,14 @@ public abstract class AbstractLibraryAdderMojo extends AbstractMojo {
 	protected String sourceExtension;
 	
 	/**
+	 * Extension of pom files.
+	 *
+	 * @parameter expression="${sourceExtension}" default-value="-pom.xml"
+	 * @required
+	 */
+	protected String pomExtension;
+	
+	/**
 	 * Pattern to lookup jar files.
 	 *
 	 * @parameter expression="${jarLookupPattern}" default-value="**\/*.jar"
@@ -429,6 +437,20 @@ public abstract class AbstractLibraryAdderMojo extends AbstractMojo {
 			
 			dependency.setClassifier(classifier);
 			dependency.setLibraryPath(filePath);
+			
+			// add pom.xml file if available
+			File pomFile = new File(file.getParentFile(),
+				filename + pomExtension);
+			if (pomFile.exists()) {
+				try {
+					dependency.setPomPath(pomFile.getCanonicalPath());
+				} catch (IOException e) {
+					reportFileProblem(
+						"Could not get canonical path of file with name '"
+						+ pomFile + "'.", e);
+					continue;
+				}
+			}
 			dependencyList.add(dependency);
 		}
 		

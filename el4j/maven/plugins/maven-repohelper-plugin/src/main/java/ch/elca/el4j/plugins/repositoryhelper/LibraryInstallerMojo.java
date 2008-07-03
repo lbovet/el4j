@@ -50,6 +50,11 @@ public class LibraryInstallerMojo extends AbstractLibraryAdderMojo {
 		cmd.createArgument().setValue("-Dpackaging=jar");
 		cmd.createArgument().setValue("-Dfile=" + dependency.getLibraryPath());
 		
+		if (dependency.getPomPath() != null) {
+			cmd.createArgument().setValue(
+				"-DpomFile=" + dependency.getPomPath());
+		}
+		
 		String classifier = dependency.getClassifier();
 		if (StringUtils.hasText(classifier)) {
 			cmd.createArgument().setValue("-Dclassifier=" + classifier);
