@@ -50,4 +50,25 @@ public class DaoAutocollectionTests {
 		assertTrue(ac.getBeanNamesForType(GenericDao.class).length == 2);
 	}
 	
+	/**
+	 * Test the dao name pattern matching functionality.
+	 */
+	@Test public void testDaoPatternMatching() {
+		ApplicationContext ac =	new ClassPathXmlApplicationContext(
+			new String[] {"scenarios/core/dao/springConfig.xml"});
+		
+		// Pattern is "ti*"
+		DaoRegistry registry = (DaoRegistry) ac.getBean("registryWithFilter");
+		
+		// This one is called "titi". It should work.
+		GenericDao<?> dao = registry.getFor(String.class);
+		assertTrue(dao != null);
+		assertTrue(dao instanceof Dao1);
+		
+		// This one should not match.
+		dao = registry.getFor(Long.class);
+		assertTrue(dao == null);
+
+	}
+	
 }
