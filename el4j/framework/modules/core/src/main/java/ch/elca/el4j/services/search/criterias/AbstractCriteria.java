@@ -43,7 +43,7 @@ public abstract class AbstractCriteria implements Criteria {
 	private Object m_value;
 	
 	/**
-	 * Default constructor for remoting protocols like hessian and burlap added.
+	 * Default constructor for remoting protocols like hessian added.
 	 */
 	protected AbstractCriteria() { }
 	

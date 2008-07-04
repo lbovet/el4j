@@ -18,7 +18,7 @@
 		<load-on-startup>100</load-on-startup>
 	</servlet>
 	
-	<!-- Used by Hessian and Burlap tests -->
+	<!-- Used by Hessian tests -->
 	<servlet-mapping>
 		<servlet-name>remotingtemplate</servlet-name>
 		<url-pattern>*.Remotingtests</url-pattern>

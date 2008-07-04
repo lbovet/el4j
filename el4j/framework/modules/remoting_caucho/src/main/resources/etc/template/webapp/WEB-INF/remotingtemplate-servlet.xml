@@ -12,7 +12,6 @@
 	<!-- $Date$ -->
 	<!-- $Author$ -->
 	
-	<import resource="classpath:etc/template/server/web/burlap-server-config.xml"/>
 	<import resource="classpath:etc/template/server/web/hessian-server-config.xml"/>
 	
 	<bean id="beanNameHandlerMapping"

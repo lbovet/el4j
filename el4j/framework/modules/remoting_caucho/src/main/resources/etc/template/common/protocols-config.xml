@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-	Spring bean configuration file to setup hessian and burlap.
+	Spring bean configuration file to setup hessian.
 -->
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -25,21 +25,6 @@
 			<map>
 				<entry key="overloadEnabled" value="false" />
 			</map>
-		</property>
-		<property name="implicitContextPassingRegistry">
-			<ref local="implicitContextPassingRegistry" />
-		</property>
-	</bean>
-
-	<bean id="burlapProtocol" class="ch.elca.el4j.services.remoting.protocol.Burlap">
-		<property name="serviceHost">
-			<value>localhost</value>
-		</property>
-		<property name="servicePort">
-			<value>8080</value>
-		</property>
-		<property name="contextPath">
-			<value>module-remoting_and_interface_enrichment-tests-web</value>
 		</property>
 		<property name="implicitContextPassingRegistry">
 			<ref local="implicitContextPassingRegistry" />
