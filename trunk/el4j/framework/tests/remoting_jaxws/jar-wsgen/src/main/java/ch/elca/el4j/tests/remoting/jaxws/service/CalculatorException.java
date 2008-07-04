@@ -40,8 +40,7 @@ public class CalculatorException extends BaseException {
 	}
 	
 	/**
-	 * Set the message. Used to serialize with XFire. If this is not wanted
-	 * remove the exception test for xfire.
+	 * Set the message.
 	 * @param message The message
 	 */
 	public void setMessage(String message) {

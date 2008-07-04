@@ -17,14 +17,6 @@
 
 package ch.elca.el4j.tests.remoting.service;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-
-
 /**
  * This is a value object for test reason.
  *
@@ -37,34 +29,25 @@ import javax.xml.bind.annotation.XmlType;
  *
  * @author Martin Zeltner (MZE)
  */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "")
-@XmlRootElement(
-	name = "CalculatorValueObject"
-)
 public class CalculatorValueObject {
 	/**
 	 * Int test value.
 	 */
-	@XmlElement(name = "myOwnInt")
 	private int m_myInt;
 
 	/**
 	 * Long test value.
 	 */
-	@XmlElement(name = "myOwnLong")
 	private long m_myLong;
 	
 	/**
 	 * Double test value.
 	 */
-	@XmlElement(name = "myOwnDouble")
 	private double m_myDouble;
 	
 	/**
 	 * String test value.
 	 */
-	@XmlElement(name = "myOwnString")
 	private String m_myString;
 	
 	/**
@@ -73,21 +56,16 @@ public class CalculatorValueObject {
 	 * There is no @XmlElementWrapper possible.
 	 * byte[] is translated to xs:base64Binary
 	 */
-	@XmlElement(name = "myOwnByteArray", type = byte[].class)
 	private byte[] m_myByteArray;
 	
 	/**
 	 * String array test value.
 	 */
-	@XmlElementWrapper(name = "myOwnStrings")
-	@XmlElement(name = "myOwnStringArrayElement", type = String[].class)
 	private String[] m_myStringArray;
 	
 	/**
 	 * String array test value.
 	 */
-	@XmlElementWrapper(name = "myOwnInts")
-	@XmlElement(name = "myOwnIntArrayElement", type = int[].class)
 	private int[] m_myIntArray;
 
 	/**

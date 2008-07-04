@@ -16,10 +16,6 @@
  */
 package ch.elca.el4j.demos.remoting;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-
 /**
  * This class represents a complex number.
  *
@@ -32,8 +28,6 @@ import javax.xml.bind.annotation.XmlType;
  *
  * @author Rashid Waraich (RWA)
  */
-@XmlRootElement(name = "MyOwnCmplexNumber")
-@XmlType(name = "")
 public class ComplexNumber implements java.io.Serializable {
 	/**
 	 * The real part of the complex number.

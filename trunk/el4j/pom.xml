@@ -1552,21 +1552,6 @@
 				<scope>test</scope>
 			</dependency>
 
-			<!-- module-remoting_xfire -->
-			<dependency>
-				<groupId>ch.elca.el4j.modules</groupId>
-				<artifactId>module-remoting_xfire</artifactId>
-				<version>${version.module-remoting_xfire}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>ch.elca.el4j.modules</groupId>
-				<artifactId>module-remoting_xfire</artifactId>
-				<version>${version.module-remoting_xfire}</version>
-				<type>test-jar</type>
-				<scope>test</scope>
-			</dependency>
-			
 			<!-- module-remoting_jaxws -->
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
@@ -1578,21 +1563,6 @@
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-remoting_jaxws</artifactId>
 				<version>${version.module-remoting_jaxws}</version>
-				<type>test-jar</type>
-				<scope>test</scope>
-			</dependency>
-
-			<!-- module-remoting_soap -->
-			<dependency>
-				<groupId>ch.elca.el4j.modules</groupId>
-				<artifactId>module-remoting_soap</artifactId>
-				<version>${version.module-remoting_soap}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>ch.elca.el4j.modules</groupId>
-				<artifactId>module-remoting_soap</artifactId>
-				<version>${version.module-remoting_soap}</version>
 				<type>test-jar</type>
 				<scope>test</scope>
 			</dependency>

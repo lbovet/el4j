@@ -43,8 +43,7 @@ public class CalculatorImpl implements Calculator {
 
 	/**
 	 * Constructor added due to exception logging flood with jdk logging
-	 * and Hessian. Further, default constructor inserted for Aegis (xfire), as
-	 * it requires always a no-argument constructor also.
+	 * and Hessian.
 	 */
 	public CalculatorImpl() {
 		String loggerName = HessianSkeleton.class.getName();

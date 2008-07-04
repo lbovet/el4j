@@ -34,7 +34,7 @@ package ch.elca.el4j.services.search.criterias;
 public class IncludeCriteria extends AbstractCriteria {
 
 	/**
-	 * Default constructor for remoting protocols like hessian and burlap added.
+	 * Default constructor for remoting protocols like hessian added.
 	 */
 	protected IncludeCriteria() { }
 	

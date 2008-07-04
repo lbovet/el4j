@@ -16,8 +16,6 @@
  */
 package ch.elca.el4j.tests.remoting.service;
 
-import javax.jws.WebService;
-
 /**
  * This interface is a calculator.
  *
@@ -30,7 +28,6 @@ import javax.jws.WebService;
  *
  * @author Martin Zeltner (MZE)
  */
-@WebService
 public interface Calculator {
 	/**
 	 * This method calculates the area of a rectangle.
