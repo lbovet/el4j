@@ -44,10 +44,6 @@
 					<groupId>ch.elca.el4j.modules</groupId>
 					<artifactId>module-database</artifactId>
 				</exclusion>
-				<exclusion>
-					<groupId>ch.elca.el4j.modules</groupId>
-					<artifactId>module-ibatis</artifactId>
-				</exclusion>
 			</exclusions>
 		</dependency>
 

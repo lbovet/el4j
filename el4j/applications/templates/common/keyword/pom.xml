@@ -89,17 +89,10 @@
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-hibernate</artifactId>
-			<type>jar</type>
-		</dependency>
-		<dependency>
-			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-ibatis</artifactId>
-			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-database</artifactId>
-			<type>jar</type>
 		</dependency>
 	</dependencies>
 </project>

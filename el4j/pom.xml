@@ -1455,21 +1455,6 @@
 				<scope>test</scope>
 			</dependency>
 
-			<!-- module-ibatis -->
-			<dependency>
-				<groupId>ch.elca.el4j.modules</groupId>
-				<artifactId>module-ibatis</artifactId>
-				<version>${version.module-ibatis}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>ch.elca.el4j.modules</groupId>
-				<artifactId>module-ibatis</artifactId>
-				<version>${version.module-ibatis}</version>
-				<type>test-jar</type>
-				<scope>test</scope>
-			</dependency>
-
 			<!-- module-jmx -->
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
@@ -2089,9 +2074,6 @@
 		<version.module-hibernate>
 			1.8-SNAPSHOT
 		</version.module-hibernate>
-		<version.module-ibatis>
-			1.7-SNAPSHOT
-		</version.module-ibatis>
 		<version.module-jmx>
 			1.9-SNAPSHOT
 		</version.module-jmx>
