@@ -23,6 +23,7 @@
 		Maven 2 plugins of EL4J.
 	</description>
 	<modules>
+		<module>maven-beans-plugin</module>
 		<module>maven-database-plugin</module>
 	</modules>
 	<dependencyManagement>
