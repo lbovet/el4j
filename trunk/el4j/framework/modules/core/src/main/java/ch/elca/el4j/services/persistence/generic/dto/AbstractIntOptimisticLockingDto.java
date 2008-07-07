@@ -25,21 +25,7 @@ import javax.persistence.Version;
 
 /**
  * This is an abstract class for optimistic locking. The used version type is an
- * integer. Here an example, how this dto must be used in combination with
- * ibatis.<br>
- * <br>
- * <b>sql-map-file.xml:</b>
- * <pre><code>
- * ...
- *     <statement id="updateMyTable">
- *         update MYTABLE set COL1=#col1#, ...,
- *             OPTIMISTIC_LOCKING_VERSION=OPTIMISTIC_LOCKING_VERSION+1
- *             where ID=#id#
- *                 and OPTIMISTIC_LOCKING_VERSION=#optimisticLockingVersion#
- *     </statement>
- * ...
- * </code></pre>
- *
+ * integer.
  * In java code the update count must be checked to know if the version number
  * on database has been increased. If yes, the version number of dto must be
  * increased too.<br>
