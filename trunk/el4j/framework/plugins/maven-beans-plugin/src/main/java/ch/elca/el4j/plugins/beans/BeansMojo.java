@@ -79,6 +79,18 @@ public class BeansMojo extends AbstractMojo {
 		ConfigurationExtractor ex = new ConfigurationExtractor(file);
 		
 		BeanPathResolver resolver = new BeanPathResolver();
+		resolver.setLogger(new LogCallback() {
+
+			/** {@inheritDoc} */
+			public boolean isActive() {
+				return getLog().isInfoEnabled();
+			}
+
+			/** {@inheritDoc} */
+			public void log(String str) {
+				getLog().info(str);
+			}
+		});
 		String[] files = resolver.resolve(
 			ex.getInclusive(), ex.getExclusive(), classpath);
 
@@ -104,8 +116,6 @@ public class BeansMojo extends AbstractMojo {
 		}
 	}
 	
-
-	
 	/**
 	 * Constructs an URL[] representing the runtime classpath.
 	 * @return The urls.
@@ -129,5 +139,23 @@ public class BeansMojo extends AbstractMojo {
 			}
 		}
 		return classpath.toArray(new URL[0]);
+	}
+	
+	/**
+	 * Interface to allow other classes to use the mojo logger.
+	 */
+	interface LogCallback {
+		/**
+		 * Log a debug message.
+		 * @param str The mesasge to log.
+		 */
+		void log(String str);
+
+		/**
+		 * Whether to do logging (saves time if we skip the statements
+		 * completely otherwise). Calls Logger.isDebugEnabled().
+		 * @return Whether logging is active.
+		 */
+		boolean isActive();
 	}
 }
