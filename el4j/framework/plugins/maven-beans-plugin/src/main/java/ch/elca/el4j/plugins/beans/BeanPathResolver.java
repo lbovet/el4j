@@ -24,6 +24,7 @@ import java.util.List;
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.core.context.ModuleApplicationContextConfiguration;
 import ch.elca.el4j.core.context.ModuleApplicationContextUtils;
+import ch.elca.el4j.plugins.beans.BeansMojo.LogCallback;
 import ch.elca.el4j.plugins.beans.resolve.Resolver;
 import ch.elca.el4j.plugins.beans.resolve.ResolverManager;
 
@@ -44,6 +45,16 @@ import ch.elca.el4j.plugins.beans.resolve.ResolverManager;
 public class BeanPathResolver {
 
 	/**
+	 * Callback to get the mojo logger for debug output of the classpath.
+	 */
+	private LogCallback m_logger;
+	
+	/** 
+	 * The classpath, saved for logging.
+	 */
+	private URL[] m_givenClasspath;
+	
+	/**
 	 * Resolve the bean path.
 	 *
 	 * @param inclusiveLocations The inclusive locations.
@@ -53,6 +64,8 @@ public class BeanPathResolver {
 	 */
 	public String[] resolve(String[] inclusiveLocations,
 		String[] exclusiveLocations, URL[] classpath) {
+		
+		m_givenClasspath = classpath;
 		
 		// Create a classloader for the target classpath and launch the
 		// resolver with it.
@@ -139,10 +152,48 @@ public class BeanPathResolver {
 			ModuleApplicationContextUtils utils
 				= new ModuleApplicationContextUtils(ctx);
 			
+			URL[] urls = ((URLClassLoader) Thread.currentThread()
+					.getContextClassLoader()).getURLs();
+			
+			if (m_logger != null && m_logger.isActive()) {
+				m_logger.log("Running bean path resolution.");
+				m_logger.log("Classpath as passed: ");
+				for (URL u : m_givenClasspath) {
+					m_logger.log(" > " + u);
+				}
+				m_logger.log("Current thread context classpath:");
+				for (URL u : urls) {
+					m_logger.log(" > " + u);
+				}
+				m_logger.log("Inclusive files:");
+				for (String s : m_inclusive) {
+					m_logger.log(" + " + s);
+				}
+				m_logger.log("Exclusive files:");
+				for (String s : m_exclusive) {
+					m_logger.log(" - " + s);
+				}
+			}
+			
 			// AllowBeanDefinitionOverriding is an unused parameter?
 			String[] result = utils.calculateInputFiles(
 				m_inclusive, m_exclusive, false);
 			m_result = result;
+			
+			if (m_logger != null && m_logger.isActive()) {
+				m_logger.log("Resolved files:");
+				for (String s : m_result) {
+					m_logger.log(" * " + s);
+				}
+			}
 		}
+	}
+	
+	/**
+	 * Inject the mojo logger from the mojo.
+	 * @param log The mojo logger.
+	 */
+	void setLogger(LogCallback log) {
+		m_logger = log;
 	}
 }
