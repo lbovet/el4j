@@ -1,0 +1,35 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.ajax4jsf.org/rich"
+	template="layout/template.xhtml">
+
+	<ui:define name="body">
+
+		<rich:panel headerClass="topPanel">
+			<f:facet name="header">#{messages.Error}</f:facet>
+			<p>
+				 #{messages.ErrorDesc}
+			</p>
+			<p>
+			     <ui:remove><!-- here we show how to access the handled exception
+			     and to perform some action with it --></ui:remove>
+			     <b>#{messages[errorResolver.getErrorMessage(org.jboss.seam.exception)]}</b>
+			</p>
+			<p>
+                 #{messages.ConversationEnd}
+            </p>
+			<p>
+			     #{messages.TechDetails}
+			</p>
+			<p>
+			     <h:messages globalOnly="true" />
+			</p>
+		</rich:panel>
+
+	</ui:define>
+</ui:composition>
