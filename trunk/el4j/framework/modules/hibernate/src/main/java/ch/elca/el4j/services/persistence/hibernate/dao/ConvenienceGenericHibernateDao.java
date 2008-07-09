@@ -99,16 +99,10 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 	/**
 	 * @return    the default {@link Order} to order the results
 	 */
-	public List<Order> getDefaultOrder();
+	public Order[] getDefaultOrder();
 
 	/**
 	 * @param defaultOrder    the default {@link Order} to order the results
 	 */
-	public void setDefaultOrder(Order defaultOrder);
-	
-	/**
-	 * @param defaultOrder    the default list of {@link Order}s
-	 *                        to order the results
-	 */
-	public void setDefaultOrder(List<Order> defaultOrder);
+	public void setDefaultOrder(Order... defaultOrder);
 }

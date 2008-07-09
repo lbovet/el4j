@@ -72,7 +72,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	/**
 	 * The default hibernate {@link Order} to order results.
 	 */
-	private List<Order> m_defaultOrder = null;
+	private Order[] m_defaultOrder = null;
 	
 	/**
 	 * Set up the Generic Dao. Auto-derive the parametrized type.
@@ -109,22 +109,12 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	}
 	
 	/** {@inheritDoc} */
-	public List<Order> getDefaultOrder() {
+	public Order[] getDefaultOrder() {
 		return m_defaultOrder;
 	}
 	
 	/** {@inheritDoc} */
-	public void setDefaultOrder(Order defaultOrder) {
-		if (defaultOrder != null) {
-			m_defaultOrder = new ArrayList<Order>();
-			m_defaultOrder.add(defaultOrder);
-		} else {
-			m_defaultOrder = null;
-		}
-	}
-	
-	/** {@inheritDoc} */
-	public void setDefaultOrder(List<Order> defaultOrder) {
+	public void setDefaultOrder(Order... defaultOrder) {
 		m_defaultOrder = defaultOrder;
 	}
 
