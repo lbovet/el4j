@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<!-- Version: $Revision$ -->
+	<!-- URL: $URL$ -->
+	<!-- Date: $Date$ -->
+	<!-- Author: $Author$ -->
+	
+	<parent>
+		<groupId>ch.elca.el4j</groupId>
+		<artifactId>el4j</artifactId>
+		<version>1.5-SNAPSHOT</version>
+	</parent>
+	
+	<groupId>ch.elca.el4j.maven.repo</groupId>
+	<artifactId>el4j-maven-repo</artifactId>
+	<packaging>jar</packaging>
+	<name>EL4J m2repo in svn demo</name>
+	<description>Example of how to store a maven 2 repository in subversion</description>
+	
+<!--	<scm>
+		<connection>scm:svn:http://el4j.svn.sourceforge.net/svnroot/el4j/trunk</connection>
+		<developerConnection>scm:svn:https://el4j.svn.sourceforge.net/svnroot/el4j/trunk</developerConnection>
+		<url>http://el4j.svn.sourceforge.net/viewvc/el4j/trunk/</url>
+	</scm>
+
+	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-scm</artifactId>
+				<version>1.0-beta-3</version>
+			</extension>
+		</extensions>
+	</build>-->
+	<dependencies>
+		<dependency>
+			<groupId>ch.elca.el4j</groupId>
+			<artifactId>m2repo-test</artifactId>
+			<version>1.0</version>
+		</dependency>
+	</dependencies>
+	<repositories>
+		<repository>
+			<id>projectSnvRepo</id>
+			<url>http://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/maven/svn-m2repo/m2repository</url>
+		</repository>
+	</repositories>
+</project>
