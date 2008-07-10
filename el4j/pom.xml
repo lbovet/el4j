@@ -1626,21 +1626,6 @@
 				<scope>runtime</scope>
 			</dependency>
 
-			<!-- module-webtest -->
-			<dependency>
-				<groupId>ch.elca.el4j.modules</groupId>
-				<artifactId>module-webtest</artifactId>
-				<version>${version.module-webtest}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>ch.elca.el4j.modules</groupId>
-				<artifactId>module-webtest</artifactId>
-				<version>${version.module-webtest}</version>
-				<type>test-jar</type>
-				<scope>test</scope>
-			</dependency>
-
 			<!-- module-xml_merge -->
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
@@ -2105,9 +2090,6 @@
 		<version.module-web>
 			1.10-SNAPSHOT
 		</version.module-web>
-		<version.module-webtest>
-			1.6-SNAPSHOT
-		</version.module-webtest>
 		<version.module-xml_merge>
 			1.6-SNAPSHOT
 		</version.module-xml_merge>
