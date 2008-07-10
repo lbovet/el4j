@@ -35,7 +35,6 @@ import org.apache.commons.collections.map.ReferenceMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.aop.IntroductionInterceptor;
-import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.support.IntroductionInfoSupport;
 
 import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.NewEntityState;
@@ -186,11 +185,11 @@ public abstract class AbstractIdentityFixer {
 	 * Also searches in superclasses.
 	 *
 	 * @param c the concerned class
-	 * @return
-	 */    protected static List<AccessibleObject> instanceAccessibleObjects(Class<?> c) {
+	 * @return The accessible objects of this class.
+	 */    
+	protected static List<AccessibleObject>
+	instanceAccessibleObjects(Class<?> c) {
 		List<AccessibleObject> fs = new ArrayList<AccessibleObject>();
-		
-		
 		
 		//TODO: also search interfaces?
 		for (Class<?> sc = c; sc != null; sc = sc.getSuperclass()) {
@@ -244,6 +243,19 @@ public abstract class AbstractIdentityFixer {
 		return fields;
 	}
 
+	/*
+	 * (TODO?)
+	 * The current merge algorithm recurses over all fields of all objects in
+	 * the object graph. This includes internal private ones of Collection
+	 * instances and, while good for correctness, is not very efficient. 
+	 * 
+	 * It would be an improvement to treat collection objects specially : their
+	 * entries are operated on by merge, but the collection instance itself is 
+	 * immutable. Coding this might prove rather difficult and subtle, though.
+	 * 
+	 * DBD
+	 */
+	
 	/**
 	 * Actually performs the merge.
 	 *
@@ -404,6 +416,14 @@ public abstract class AbstractIdentityFixer {
 	 *         value, <code>false</code> otherwise
 	 */
 	protected abstract boolean immutableValue(Object o);
+	
+	/*
+	 * Warning: The ReturnsUnchangedParameter annotation is not always found
+	 * if a DAO is wrapped or proxied and the wrapper does not declare the 
+	 * annotation again. This can cause bugs in the identity fixer algorithm.
+	 * 
+	 * As a guideline, all DAO save* methods must have the annotation present. 
+	 */
 	
 	/**
 	 * A generic "around advice" (as defined in AOP terminology) for remote
