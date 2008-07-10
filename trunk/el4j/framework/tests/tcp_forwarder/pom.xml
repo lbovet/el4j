@@ -30,10 +30,6 @@
 		</dependency>
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-webtest</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-database</artifactId>
 		</dependency>
 		<dependency>
