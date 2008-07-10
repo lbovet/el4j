@@ -80,13 +80,8 @@ public abstract class DockingApplication extends GUIApplication {
 	/** {@inheritDoc} */
 	@Override
 	public void show(JComponent component) {
-		if (JPanel.class.isAssignableFrom(component.getClass())) {
-			JPanel panel = (JPanel) component;
-			JFrameWrapper wrapper = JFrameWrapperFactory.wrap(panel);
-			addContent(wrapper);
-		} else {
-			super.show(component);
-		}
+		JFrameWrapper wrapper = JFrameWrapperFactory.wrap(component);
+		addContent(wrapper);
 	}
 	
 	/**
@@ -95,13 +90,8 @@ public abstract class DockingApplication extends GUIApplication {
 	 */
 	@SuppressWarnings("unchecked")
 	public void show(JComponent component, ToolWindowAnchor anchor) {
-		if (JPanel.class.isAssignableFrom(component.getClass())) {
-			JPanel panel = (JPanel) component;
-			JFrameWrapper wrapper = JFrameWrapperFactory.wrap(panel);
-			createToolWindow(wrapper, anchor);
-		} else {
-			super.show(component);
-		}
+		JFrameWrapper wrapper = JFrameWrapperFactory.wrap(component);
+		createToolWindow(wrapper, anchor);
 	}
 	
 	/**

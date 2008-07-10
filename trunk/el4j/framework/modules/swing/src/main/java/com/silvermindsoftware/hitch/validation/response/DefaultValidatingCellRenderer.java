@@ -63,6 +63,14 @@ public class DefaultValidatingCellRenderer extends DefaultListCellRenderer {
 	public Component getListCellRendererComponent(JList list,
 		Object value, int index, boolean isSelected, boolean cellHasFocus) {
 		
+		// check if values is validateable
+		if (value == null || !ValidatedProperty.class.isAssignableFrom(
+			value.getClass())) {
+			
+			return super.getListCellRendererComponent(
+				list, value, index, isSelected, cellHasFocus);
+		}
+		
 		Component renderer = super.getListCellRendererComponent(list,
 				((ValidatedProperty) value).getValue(), index, isSelected,
 				cellHasFocus);

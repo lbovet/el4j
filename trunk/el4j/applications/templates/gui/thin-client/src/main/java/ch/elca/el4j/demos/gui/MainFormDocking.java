@@ -29,6 +29,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import org.jdesktop.application.Action;
+import org.noos.xing.mydoggy.ToolWindowAnchor;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import ch.elca.el4j.gui.swing.DockingApplication;
@@ -77,6 +78,14 @@ public class MainFormDocking extends DockingApplication {
 		panel.add((Component) getToolWindowManager(), BorderLayout.CENTER);
 		
 		return panel;
+	}
+	
+	/**
+	 * Show search dialog in a toolbox.
+	 */
+	@Action
+	public void showSearch() {
+		show("SearchDialog", ToolWindowAnchor.LEFT);
 	}
 
 	/**
