@@ -1,4 +1,37 @@
 --------------------------------------------------------------------------------
+ Date :   10.07.08
+                            EL4J version  1.5
+--------------------------------------------------------------------------------
+
+* Core
+  = fixed bugs in convenience zip (added some files)
+  = switch to tabs (from n blanks)
+  = tool upgrades: spring 2.5.5, new maven checkstyle plugin, cookXml updated to 3.0.1-patch2, 
+  = Removed: Burlap, XFire and Soap (Axis), Struts, Module ibatis, module webtests 
+
+* Database
+  = Improved Hibernate convenience
+    + Hibernate entity detector now also detects classes in sub-packages (setAutoDetectAnnotatedPackages)
+    + GenericEnumUserType added which allows to customize the mapping of enum types
+    + Type mapping for EnumSet added
+    + SaveOrUpdateAndFlush added to Generic DAO interface
+    + Added DAO name pattern matching to DefaultDaoRegistry. namePattern collects only DAOs that 
+	  match the pattern.
+  = Module database split into submodules (one for each database): optionally you can now just load
+     the files you require. 
+
+* Maven
+  = beans:beans plugin to generate Spring ide config files (to get the graph of spring bean in eclipse)
+    => this does not yet run recursively)
+  = example of how to store a maven 2 repository in subversion (refer to external/maven/svn-m2repo)
+  = we switched our mvn proxy from artifactory to nexus
+  
+* Varia
+  = cleaned up the detailed measuring service, now it runs in 1 JVMs (to simplify the understanding)
+  = jasper reports demo in the swing application template
+  = Swing: Validating editors/renderer improved, first input from JPO implemented
+
+-------------------------------------------------------------------------------
  Date :   04.06.08
                             EL4J version  1.4
 --------------------------------------------------------------------------------
