@@ -72,6 +72,13 @@ public class DefaultValidatingTableCellRenderer
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int column) {
 		
+		// check if values is validateable
+		if (value == null || !ValidatedProperty.class.isAssignableFrom(
+			value.getClass())) {
+			
+			return super.getTableCellRendererComponent(
+				table, value, isSelected, hasFocus, row, column);
+		}
 		Object v = ((ValidatedProperty) value).getValue();
 		Class<?> vClass = (v != null) ? v.getClass() : String.class;
 		

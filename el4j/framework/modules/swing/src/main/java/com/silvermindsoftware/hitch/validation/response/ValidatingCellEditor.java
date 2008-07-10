@@ -74,6 +74,15 @@ public class ValidatingCellEditor extends AbstractCellEditor implements
 			boolean isSelected, int rowIndex, int vColIndex) {
 		Component component = null;
 		
+		// check if values is validateable
+		if (value == null || !ValidatedProperty.class.isAssignableFrom(
+			value.getClass())) {
+			
+			return table.getDefaultEditor(String.class).
+				getTableCellEditorComponent(
+					table, value, isSelected, rowIndex, vColIndex);
+		}
+		
 		m_property = (ValidatedProperty) value;
 		Object propValue = m_property.getValue();
 		Class<?> propValueClass
