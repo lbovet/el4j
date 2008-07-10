@@ -186,7 +186,7 @@ public abstract class AbstractIdentityFixer {
 	 *
 	 * @param c the concerned class
 	 * @return The accessible objects of this class.
-	 */    
+	 */
 	protected static List<AccessibleObject>
 	instanceAccessibleObjects(Class<?> c) {
 		List<AccessibleObject> fs = new ArrayList<AccessibleObject>();
