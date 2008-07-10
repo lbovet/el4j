@@ -53,7 +53,7 @@
 	<repositories>
 		<repository>
 			<id>projectSnvRepo</id>
-			<url>http://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/maven/svn-m2repo/m2repository</url>
+			<url>http://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/maven/demos/svn-m2repo/m2repository</url>
 		</repository>
 	</repositories>
 </project>
