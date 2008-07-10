@@ -20,17 +20,20 @@ import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Properties;
 
 import org.hibernate.HibernateException;
-import org.hibernate.type.NullableType;
+import org.hibernate.type.StringType;
 import org.hibernate.type.TypeFactory;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 /**
- * Generic user type for enumerations. Based on <a 
- * href="http://weblog.dangertree.net/2007/09/23/mapping-java-5-enums-with-hibernate/">
- * http://weblog.dangertree.net/2007/09/23/mapping-java-5-enums-with-hibernate/</a>
+ * Generic user type for set of enumerations implementing
+ * {@link SerializableEnum}.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -39,72 +42,85 @@ import org.hibernate.type.TypeFactory;
  *    "$Author$"
  * );</script>
  *
- * @author Martin Zeltner (MZE)
  * @author Stefan Wismer (SWI)
  */
-public class GenericEnumUserType extends AbstractGenericEnumUserType {
+public class GenericEnumSetUserType extends AbstractGenericEnumUserType {
 	
+	/**
+	 * The separator to use.
+	 */
+	private String m_separator = ",";
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public void setParameterValues(Properties parameters) {
 		super.setParameterValues(parameters);
-
-		Class<?> identifierType = null;
-		try {
-			identifierType = m_enumClass.getMethod("getValue",
-				new Class[0]).getReturnType();
-		} catch (Exception e) {
-			throw new HibernateException("Failed to obtain identifier method",
-				e);
+		
+		String separator = parameters.getProperty("separator");
+		if (separator != null && separator.length() > 0) {
+			m_separator = separator;
 		}
 
-		m_type = (NullableType) TypeFactory.basic(identifierType.getName());
-
-		if (m_type == null) {
-			throw new HibernateException("Unsupported identifier type "
-				+ identifierType.getName());
-		}
-
+		m_type = (StringType) TypeFactory.basic(String.class.getName());
 		m_sqlTypes = new int[] {m_type.sqlType()};
 
+		// It's important to use toString() while inserting!
 		m_valueMapping = new HashMap<Object, SerializableEnum<?>>();
 		for (SerializableEnum<?> value : getEnumValues()) {
-			m_valueMapping.put(value.getValue(), value);
+			m_valueMapping.put(value.getValue().toString(), value);
 		}
 	}
-
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	public Object nullSafeGet(ResultSet rs, String[] names, Object owner)
 		throws HibernateException, SQLException {
-		Object identifier = m_type.get(rs, names[0]);
-		if (rs.wasNull()) {
-			return null;
+		String setAsString = (String) m_type.get(rs, names[0]);
+		EnumSet set = EnumSet.noneOf((Class<? extends Enum>) m_enumClass);
+		
+		if (!rs.wasNull() && StringUtils.hasLength(setAsString)) {
+			try {
+				String[] values = setAsString.split(m_separator);
+				
+				for (String value : values) {
+					set.add(m_valueMapping.get(value));
+				}
+			} catch (Exception e) {
+				throw new HibernateException("Exception while invoking "
+					+ "method 'values' of "
+					+ "enumeration class '" + m_enumClass + "'", e);
+			}
 		}
 
-		try {
-			return m_valueMapping.get(identifier);
-		} catch (Exception e) {
-			throw new HibernateException("Exception while invoking "
-				+ "method 'values' of "
-				+ "enumeration class '" + m_enumClass + "'", e);
-		}
+		return set;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	public void nullSafeSet(PreparedStatement st, Object value, int index)
 		throws HibernateException, SQLException {
 		try {
-			if (value == null) {
+			EnumSet set = ((EnumSet) value);
+			if (CollectionUtils.isEmpty(set)) {
 				st.setNull(index, m_type.sqlType());
 			} else {
-				Object identifier = ((SerializableEnum<?>) value).getValue();
-				m_type.set(st, identifier, index);
+				StringBuilder sb = null;
+				
+				for (Iterator iterator = set.iterator(); iterator.hasNext();) {
+					SerializableEnum e = (SerializableEnum) iterator.next();
+					if (sb == null) {
+						sb = new StringBuilder();
+					} else {
+						sb.append(m_separator);
+					}
+					sb.append(e.getValue());
+				}
+				m_type.set(st, sb.toString(), index);
 			}
 		} catch (Exception e) {
 			throw new HibernateException("Exception while invoking 'getValue' "
@@ -117,28 +133,41 @@ public class GenericEnumUserType extends AbstractGenericEnumUserType {
 	 */
 	public Object assemble(Serializable cached, Object owner)
 		throws HibernateException {
-		return cached;
+		return deepCopy(cached);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	public Object deepCopy(Object value) throws HibernateException {
-		return value;
+		if (value != null) {
+			EnumSet enumSet = (EnumSet) value;
+			return enumSet.clone();
+		} else {
+			return EnumSet.noneOf((Class<? extends Enum>) m_enumClass);
+		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public Serializable disassemble(Object value) throws HibernateException {
-		return (Serializable) value;
+		return (Serializable) deepCopy(value);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	public boolean equals(Object x, Object y) throws HibernateException {
-		return x == y;
+		if (x != null && y != null) {
+			EnumSet enumSetX = (EnumSet) x;
+			EnumSet enumSetY = (EnumSet) y;
+			return enumSetX.equals(enumSetY);
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -152,7 +181,7 @@ public class GenericEnumUserType extends AbstractGenericEnumUserType {
 	 * {@inheritDoc}
 	 */
 	public boolean isMutable() {
-		return false;
+		return true;
 	}
 
 	/**
@@ -160,6 +189,7 @@ public class GenericEnumUserType extends AbstractGenericEnumUserType {
 	 */
 	public Object replace(Object original, Object target, Object owner)
 		throws HibernateException {
-		return original;
+		return deepCopy(original);
 	}
+
 }
