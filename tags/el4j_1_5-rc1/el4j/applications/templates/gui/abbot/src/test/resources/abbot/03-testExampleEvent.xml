@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AWTTestScript>
+	<!-- General components. -->
+	<component class="javax.swing.JDesktopPane" id="JDesktopPane Instance" index="1"
+		parent="JPanel Instance" window="mainFrame" />
+	<component class="javax.swing.JLayeredPane" id="JLayeredPane Instance" index="1"
+		parent="JRootPane Instance" window="mainFrame" />
+	<component class="javax.swing.JMenuBar" id="JMenuBar Instance" index="2"
+		parent="JLayeredPane Instance" window="mainFrame" />
+	<component class="javax.swing.JPanel" id="JPanel Instance" index="0"
+		parent="JLayeredPane Instance" window="mainFrame" />
+	<component class="javax.swing.JPopupMenu" id="JPopupMenu Instance" index="0"
+		invoker="demoMenu" />
+	<component class="javax.swing.JRootPane" id="JRootPane Instance" index="0"
+		parent="mainFrame" />
+	<component class="javax.swing.JMenu" id="demoMenu" index="2" name="demoMenu"
+		parent="JMenuBar Instance" text="Demos" window="mainFrame" />
+	<component class="javax.swing.JFrame" id="mainFrame" name="mainFrame" root="true"
+		title="AppFramework + MDI Example" />
+	
+	
+
+	<!-- Specific Components -->
+	<component class="ch.elca.el4j.gui.swing.wrapper.JInteralFrameWrapper" id="EventBus"
+		index="0" parent="JDesktopPane Instance" title="Event Bus Demo Form" window="mainFrame" />
+	<component class="javax.swing.JMenuItem" id="EventBusMenu" index="1"
+		parent="JPopupMenu Instance" text="EventBus Demo" window="mainFrame" />
+	<component class="javax.swing.JMenuItem" id="Send" index="1"
+		parent="JPopupMenu Instance" text="Send an ExampleEvent" window="mainFrame" />
+	<component class="javax.swing.JLabel" id="events" index="1" parent="EventBus" />
+
+	<!-- Launcher -->
+	<launch args="[]" class="ch.elca.el4j.demos.gui.MainStandaloneMDI" method="main" />
+	
+	<action args="EventBusMenu" method="actionSelectMenuItem" />
+	<wait args="EventBus" class="abbot.tester.ComponentTester" method="assertComponentShowing" />
+	<assert component="events" method="getText" value=".*EventBusDemoForm.*" />
+	
+	<action args="Send" method="actionSelectMenuItem" />
+	<assert component="events" method="getText" value=".*Example Event.*" />
+	
+	<annotation userDismiss="true">
+		<![CDATA[<html>Performed the event bus test.
+		<ul>
+		<li>Event Bus demo</li>
+		<li>Sending an Example Event</li>
+		</ul>
+		</html>]]>
+	</annotation>
+		
+	<action args="EventBus" class="javax.swing.JInternalFrame" method="actionClose" />
+	<wait args="EventBus" class="abbot.tester.ComponentTester" invert="true" method="assertComponentShowing" />
+	
+	<terminate />
+</AWTTestScript>
