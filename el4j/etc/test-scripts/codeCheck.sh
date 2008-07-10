@@ -12,7 +12,7 @@ cd $1
 #################
 types="java xml xsd wsdl html xhtml css"
 # xsl not included
-excludeFolders="\./sandbox/ \./maven/svn-m2repo/m2repository"
+excludeFolders="\./sandbox/ \./maven/demos/svn-m2repo/m2repository"
 
 
 # search for illegal whitespaces
