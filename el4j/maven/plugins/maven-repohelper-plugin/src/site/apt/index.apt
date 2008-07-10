@@ -43,12 +43,22 @@ Repository helper plugin
       + libraries
         + org
           + springframework
-            - spring-2.0.jar
-            - spring-2.0-src.zip
+            - spring-2.5.jar
+            - spring-2.5-src.zip
++------------
+
+  Alternatively you can do it using a flat hierarchy:
+
++------------
+    SOME_DIR
+      + libraries
+        + org.springframework
+          - spring-2.5.jar
+          - spring-2.5-src.zip
 +------------
 
   In the repository these artifacts will be available with
-  <<<groupId=org.springframework>>>, <<<artifactId=spring>> and <<<version=2.0>>>.
+  <<<groupId=org.springframework>>>, <<<artifactId=spring>>> and <<<version=2.0>>>.
   One will have no <<<classifier>>> (default) and the other artifact will have 
   <<<classifier=sources>>>. FYI, the <maven-eclipse-plugin> tries to download
   artifacts with <<<classifier=sources>>> for each dependency of an Eclipse
