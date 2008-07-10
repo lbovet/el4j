@@ -7,15 +7,27 @@ fi
 
 cd $1
 
+#################
+# Configuration #
+#################
 types="java xml xsd wsdl html xhtml css"
 # xsl not included
+excludeFolders="\./sandbox/ \./maven/svn-m2repo/m2repository"
+
 
 # search for illegal whitespaces
 echo "Searching for all included files ($types)..."
 
+find ./ -type f | grep -v "/\.svn" | grep -v "/target/" | grep -v "/\.settings/" > all_files.tmp
 echo "" > files.tmp
 for i in $types ; do
-	find ./ -name "*.$i" | grep -v "/target/" | grep -v "/.settings/" | grep -v "/sandbox/" >> files.tmp
+	cat all_files.tmp | grep "\.$i$" >> files.tmp
+done
+rm all_files.tmp
+
+for i in $excludeFolders ; do
+	cat files.tmp | grep -v "$i" >> files.tmp2
+	mv files.tmp2 files.tmp
 done
 
 echo -n "Checking for illegal whitespaces..."
