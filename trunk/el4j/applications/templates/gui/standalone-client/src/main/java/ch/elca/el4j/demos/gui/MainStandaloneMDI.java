@@ -62,6 +62,9 @@ public final class MainStandaloneMDI {
 
 			PlasticLookAndFeel.setPlasticTheme(new ExperienceBlue());
 			
+			// This comment is for beans-plugin.
+			
+			// $$ BEANS INCLUDE $$
 			String[] applicationContextPaths = {
 				"classpath*:mandatory/*.xml",
 				"classpath*:scenarios/db/raw/*.xml",

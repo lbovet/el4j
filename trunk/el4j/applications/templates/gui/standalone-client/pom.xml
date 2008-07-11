@@ -43,6 +43,22 @@
 					</archive>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>ch.elca.el4j.maven.plugins</groupId>
+				<artifactId>maven-beans-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>beans</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>beans</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<sourceFile>src/main/java/ch/elca/el4j/demos/gui/MainStandaloneMDI.java</sourceFile>
+				</configuration>
+			</plugin>
 			
 		</plugins>
 	</build>
