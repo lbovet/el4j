@@ -155,12 +155,11 @@ public class RemotingBenchmark {
 	 */
 	public RemotingBenchmark() {
 		Resource resource = new ClassPathResource(FILE_PATH_OF_BIG_TEXT_FILE);
-		InputStream in = null;
+		BufferedReader reader = null;
 		StringBuffer sb = new StringBuffer();
 		try {
-			in = resource.getInputStream();
-			BufferedReader reader = new BufferedReader(
-					new InputStreamReader(in));
+			InputStream in = resource.getInputStream();
+			reader = new BufferedReader(new InputStreamReader(in));
 			String line;
 			while ((line = reader.readLine()) != null) {
 				sb.append(line);
@@ -171,9 +170,9 @@ public class RemotingBenchmark {
 			s_logger.error("Unable to read file '" + FILE_PATH_OF_BIG_TEXT_FILE
 					+ "'", e);
 		} finally {
-			if (in != null) {
+			if (reader != null) {
 				try {
-					in.close();
+					reader.close();
 				} catch (IOException e) {
 					s_logger.error("Unable to close file '"
 							+ FILE_PATH_OF_BIG_TEXT_FILE + "'", e);

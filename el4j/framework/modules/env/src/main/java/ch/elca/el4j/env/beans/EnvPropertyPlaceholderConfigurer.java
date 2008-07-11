@@ -66,7 +66,7 @@ public class EnvPropertyPlaceholderConfigurer
 	 * This logger is used to print out some global debugging info.
 	 * Consult it for info what is going on.
 	 */
-	protected static Log s_el4jLogger
+	protected static final Log s_el4jLogger
 		= LogFactory.getLog(ModuleApplicationContext.EL4J_DEBUGGING_LOGGER);
 	
 	/**

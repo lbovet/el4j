@@ -274,12 +274,11 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 	private void internalTestInsertGetRemoveAnnotation(int maxClobSize,
 		String filepath, String annotator) {
 		Resource resource = new ClassPathResource(filepath);
-		InputStream in = null;
+		BufferedReader reader = null;
 		StringBuffer sb = new StringBuffer();
 		try {
-			in = resource.getInputStream();
-			BufferedReader reader
-				= new BufferedReader(new InputStreamReader(in));
+			InputStream in = resource.getInputStream();
+			reader = new BufferedReader(new InputStreamReader(in));
 			String line;
 			while ((line = reader.readLine()) != null
 				&& sb.length() < maxClobSize) {
@@ -289,9 +288,9 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		} catch (IOException e) {
 			fail("Unable to read file '" + filepath + "'");
 		} finally {
-			if (in != null) {
+			if (reader != null) {
 				try {
-					in.close();
+					reader.close();
 				} catch (IOException e) {
 					fail("Unable to close file '" + filepath + "'");
 				}

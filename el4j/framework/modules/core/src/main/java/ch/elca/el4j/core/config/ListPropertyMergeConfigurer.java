@@ -145,7 +145,7 @@ public class ListPropertyMergeConfigurer extends PropertyOverrideConfigurer {
 	 */
 	public final void setPropertiesPersister(
 		PropertiesPersister propertiesPersister) {
-		setPropertiesPersister(propertiesPersister);
+		super.setPropertiesPersister(propertiesPersister);
 		m_propertiesPersister = propertiesPersister;
 	}
 
@@ -154,7 +154,7 @@ public class ListPropertyMergeConfigurer extends PropertyOverrideConfigurer {
 	 */
 	public final void setIgnoreResourceNotFound(
 		boolean ignoreResourceNotFound) {
-		setIgnoreResourceNotFound(ignoreResourceNotFound);
+		super.setIgnoreResourceNotFound(ignoreResourceNotFound);
 		m_ignoreResourceNotFound = ignoreResourceNotFound;
 	}
 

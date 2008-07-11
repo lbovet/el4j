@@ -45,11 +45,6 @@ import ch.elca.el4j.services.xmlmerge.merge.DefaultXmlMerge;
  * @author Alex Mathey (AMA)
  */
 public class XmlMergeResource extends AbstractResource {
-
-	/**
-	 * An InputStream containing the data of this merged resource.
-	 */
-	InputStream m_result;
 	
 	/**
 	 * The list of resources to merge.

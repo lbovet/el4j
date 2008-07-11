@@ -44,7 +44,7 @@ public abstract class AbstractExceptionHandlerInterceptor
 	implements MethodInterceptor {
 
 	/** Holds the number of retries. */
-	protected static ThreadLocal s_retries = new ThreadLocal();
+	protected static final ThreadLocal s_retries = new ThreadLocal();
 	
 	/** The static logger. */
 	private static Log s_logger = LogFactory.getLog(
@@ -92,7 +92,7 @@ public abstract class AbstractExceptionHandlerInterceptor
 	 *      The number of retries to set.
 	 */
 	protected static void setRetries(int retries) {
-		s_retries.set(new Integer(retries));
+		s_retries.set(Integer.valueOf(retries));
 	}
 
 	/**

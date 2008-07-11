@@ -145,12 +145,12 @@ public class PropertyChangeListenerMixinTest {
 		List<Integer> list = model.getList();
 		((ObservableList<Integer>) list).addObservableListListener(testListener);
 		list.add(1);
-		assertEquals(testListener.event.toString(), "add");
+		assertEquals(testListener.event, "add");
 		list.remove(0);
-		assertEquals(testListener.event.toString(), "remove");
+		assertEquals(testListener.event, "remove");
 		list.add(1);
-		assertEquals(testListener.event.toString(), "add");
+		assertEquals(testListener.event, "add");
 		list.set(0, 2);
-		assertEquals(testListener.event.toString(), "replace");
+		assertEquals(testListener.event, "replace");
 	}
 }

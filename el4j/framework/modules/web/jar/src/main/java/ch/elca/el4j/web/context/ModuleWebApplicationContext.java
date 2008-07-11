@@ -70,7 +70,7 @@ public class ModuleWebApplicationContext extends XmlWebApplicationContext {
 	 * This logger is used to print out some global debugging info. Consult it
 	 * for info what is going on.
 	 */
-	protected static Log s_el4jLogger
+	protected static final Log s_el4jLogger
 		= LogFactory.getLog(ModuleApplicationContext.EL4J_DEBUGGING_LOGGER);
 
 	/**
@@ -259,10 +259,11 @@ public class ModuleWebApplicationContext extends XmlWebApplicationContext {
 			s_el4jLogger.debug("mostSpecificBeanDefinitionCounts:"
 				+ mostSpecificBeanDefinitionCounts);
 
+			BufferedReader reader = null;
 			try {
 				for (String configLocation : m_configLocations) {
 					Resource res = getResource(configLocation);
-					BufferedReader reader = new BufferedReader(
+					reader = new BufferedReader(
 						new InputStreamReader(res.getInputStream()));
 					StringBuffer buf = new StringBuffer();
 					while (reader.ready()) {
@@ -276,7 +277,16 @@ public class ModuleWebApplicationContext extends XmlWebApplicationContext {
 			} catch (Exception e) {
 				// deliberately ignore exception
 				s_el4jLogger.debug("Error during printing of config location "
-					+ m_configLocations, e);
+					+ StringUtils.arrayToCommaDelimitedString(m_configLocations)
+					, e);
+			} finally {
+				if (reader != null) {
+					try {
+						reader.close();
+					} catch (IOException e) {
+						s_el4jLogger.debug("Error closing reader", e);
+					}
+				}
 			}
 		}
 	}

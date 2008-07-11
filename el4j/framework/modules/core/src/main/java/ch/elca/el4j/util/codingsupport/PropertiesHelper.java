@@ -23,6 +23,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Properties;
 
 import org.springframework.core.io.Resource;
@@ -80,6 +81,16 @@ public class PropertiesHelper {
 			CoreNotificationHelper.notifyMisconfiguration(
 					"An IOException was thrown. The responsible file is '"
 					+ inputFileName + "'.", e);
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (IOException e) {
+					CoreNotificationHelper.notifyMisconfiguration(
+						"An IOException was thrown. The responsible file is '"
+						+ inputFileName + "'.", e);
+				}
+			}
 		}
 
 		return props;
@@ -102,7 +113,7 @@ public class PropertiesHelper {
 		String fileName = null;
 
 		Resource res = pmrpr.getResource(outputFileName);
-
+		OutputStream out = null;
 		try {
 			try {
 				// Resolve the resource into an absolute file path
@@ -112,7 +123,8 @@ public class PropertiesHelper {
 				File file = new File(outputFileName);
 				fileName = file.getAbsolutePath();
 			}
-			props.store(new FileOutputStream(fileName), "Title");
+			out = new FileOutputStream(fileName);
+			props.store(out, "Title");
 		} catch (FileNotFoundException e) {
 			CoreNotificationHelper.notifyMisconfiguration(
 					"The file '" + outputFileName + "' could not be found.", e);
@@ -120,6 +132,16 @@ public class PropertiesHelper {
 			CoreNotificationHelper.notifyMisconfiguration(
 					"An IOException was thrown. The responsible file is '"
 					+ outputFileName + "'.", e);
+		} finally {
+			if (out != null) {
+				try {
+					out.close();
+				} catch (IOException e) {
+					CoreNotificationHelper.notifyMisconfiguration(
+						"The file '" + outputFileName
+						+ "' could not be close.", e);
+				}
+			}
 		}
 
 	}

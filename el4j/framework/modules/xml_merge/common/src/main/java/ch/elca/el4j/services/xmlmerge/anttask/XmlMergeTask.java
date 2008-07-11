@@ -35,6 +35,7 @@ import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.FileSet;
 
+import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.xmlmerge.AbstractXmlMergeException;
 import ch.elca.el4j.services.xmlmerge.ConfigurationException;
 import ch.elca.el4j.services.xmlmerge.XmlMerge;
@@ -180,10 +181,22 @@ public class XmlMergeTask extends Task {
 			confFile = new File(getProject().getBaseDir(), m_confFilename);
 		}
 
+		InputStream configIn = null;
 		try {
-			confProps.load(new FileInputStream(confFile));
+			configIn = new FileInputStream(confFile);
+			confProps.load(configIn);
 		} catch (IOException e) {
 			throw new BuildException(e);
+		} finally {
+			if (configIn != null) {
+				try {
+					configIn.close();
+				} catch (IOException e) {
+					CoreNotificationHelper.notifyMisconfiguration(
+						"The file '" + confFile
+						+ "' could not be close.", e);
+				}
+			}
 		}
 
 		// Create the XmlMerge instance and execute the merge

@@ -646,7 +646,7 @@ public class MavenRecursiveMojo extends AbstractMojo {
 			StringBuffer line = new StringBuffer(StringUtils.rightPad(
 				projectData.getName().concat(" "), 55, "."));
 			line.append(" ");
-			Double duration = (Double.parseDouble(new Long(projectData
+			Double duration = (Double.parseDouble(Long.valueOf(projectData
 				.getDuration()).toString()) / 1000);
 			line.append(projectData.getStateDescription());
 			line.append(" [").append(String.format("%.3f", duration)).append(

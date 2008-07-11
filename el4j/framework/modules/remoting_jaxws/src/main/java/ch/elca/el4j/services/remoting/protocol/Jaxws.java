@@ -79,7 +79,7 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
 		
 		// just return something that can be instantiated.
 		// WSSpringServlet will search and register all bindings
-		return new String();
+		return "";
 	}
 
 	/** {@inheritDoc} */

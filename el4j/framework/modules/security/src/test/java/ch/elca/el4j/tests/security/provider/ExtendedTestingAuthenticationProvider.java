@@ -44,7 +44,7 @@ public class ExtendedTestingAuthenticationProvider extends
 	private RSACipher m_cipher;
 	
 	/**	Length of the RSA key pair. */
-	private final int m_keyLength = 256;
+	private static final int m_keyLength = 256;
 	
 	/**
 	 * Default constructor in which the cipher will be initialized.

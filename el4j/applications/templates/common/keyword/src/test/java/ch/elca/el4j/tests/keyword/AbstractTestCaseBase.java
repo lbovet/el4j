@@ -18,6 +18,7 @@ package ch.elca.el4j.tests.keyword;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.sql.DataSource;
 
@@ -111,20 +112,36 @@ public abstract class AbstractTestCaseBase {
 	@Before
 	public void setUp() throws Exception {
 		Connection con = null;
+		Statement stmt = null;
 		try {
 			con = getDataSource().getConnection();
 			
+			// try to delete REFERENCEKEYWORDRELATIONSHIPS
 			try {
-				con.createStatement().execute(
-					"DELETE FROM REFERENCEKEYWORDRELATIONSHIPS");
+				stmt = con.createStatement();
+				stmt.executeUpdate("DELETE FROM REFERENCEKEYWORDRELATIONSHIPS");
 			} catch (SQLException e) {
 				s_logger.info("There was a problem while deleting rows of "
 					+ "table 'REFERENCEKEYWORDRELATIONSHIPS'. Maybe the table "
 					+ "does not exist.");
+			} finally {
+				if (stmt != null) {
+					stmt.close();
+				}
 			}
-			con.createStatement().execute("DELETE FROM KEYWORDS");
+			
+			// try to delete KEYWORDS
+			stmt = con.createStatement();
+			stmt.execute("DELETE FROM KEYWORDS");
 			con.commit();
+		} catch (SQLException e) {
+			s_logger.info("There was a problem while deleting rows of "
+				+ "table 'REFERENCEKEYWORDRELATIONSHIPS' or 'KEYWORDS'"
+				+ ". Maybe a table does not exist.");
 		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
 			if (con != null) {
 				try {
 					con.close();

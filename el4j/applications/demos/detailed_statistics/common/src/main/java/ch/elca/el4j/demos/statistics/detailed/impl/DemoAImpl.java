@@ -46,14 +46,14 @@ public class DemoAImpl implements DemoA {
 
 		// Checkstyle: MagicNumber off
 		try {
-			Thread.sleep(3 * number);
+			Thread.sleep(3L * number);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		m_demoB.computeB(3);
 		
 		try {
-			Thread.sleep(3 * number);
+			Thread.sleep(3L * number);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

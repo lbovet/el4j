@@ -108,7 +108,7 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
 	 * This logger is used to print out some global debugging info.
 	 * Consult it for info what is going on.
 	 */
-	protected static Log s_el4jLogger
+	protected static final Log s_el4jLogger
 		= LogFactory.getLog(EL4J_DEBUGGING_LOGGER);
 	
 	/**
@@ -384,7 +384,7 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
 			}
 			for (String configLocation : m_configLocations) {
 				Resource res = getResource(configLocation);
-				BufferedReader reader;
+				BufferedReader reader = null;
 				try {
 					reader = new BufferedReader(new InputStreamReader(res
 						.getInputStream()));
@@ -400,6 +400,16 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
 					s_el4jLogger.debug(
 						"Error during printing of config location "
 							+ configLocation, e);
+				} finally {
+					if (reader != null) {
+						try {
+							reader.close();
+						} catch (IOException e) {
+							s_el4jLogger.debug(
+								"Error during printing of config location "
+									+ configLocation, e);
+						}
+					}
 				}
 			}
 		}

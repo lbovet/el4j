@@ -80,7 +80,7 @@ public class ExampleInterceptor
 		}
 
 		Object[] param = methodInvocation.getArguments();
-		param[0] = new Integer(factor);
+		param[0] = Integer.valueOf(factor);
 
 		// This is an around advice.
 		// Invoke the next interceptor in the chain.

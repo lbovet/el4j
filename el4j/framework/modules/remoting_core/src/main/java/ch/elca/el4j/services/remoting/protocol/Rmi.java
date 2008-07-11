@@ -68,7 +68,7 @@ public class Rmi extends AbstractInetSocketAddressProtocol {
 		props.addPropertyValue("service", serviceProxy);
 		props.addPropertyValue("serviceInterface", serviceInterfaceWithContext);
 		props.addPropertyValue("serviceName", exporterBean.getServiceName());
-		props.addPropertyValue("registryPort", new Integer(getServicePort()));
+		props.addPropertyValue("registryPort", Integer.valueOf(getServicePort()));
 
 		appContext.registerSingleton("rmiExporterBeanGen",
 				getExporterObjectType(), props);
