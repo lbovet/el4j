@@ -112,7 +112,7 @@ public abstract class AbstractDefaultEnum implements Serializable {
 	/**
 	 * A hastable containing all instances of this class.
 	 */
-	protected static Hashtable<String,Object> s_singletons =
+	protected static final Hashtable<String,Object> s_singletons =
 		new Hashtable<String,Object>();
 
 	/**

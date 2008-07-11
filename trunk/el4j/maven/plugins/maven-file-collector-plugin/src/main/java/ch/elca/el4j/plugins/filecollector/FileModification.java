@@ -658,8 +658,12 @@ public class FileModification {
 	 *                if an error occurs
 	 */
 	public static void deleteDir(File directory) throws FileException {
-	// Does directory exist and is it a directory ...
-		if (directory != null && !directory.exists()) {
+		if (directory == null) {
+			throw new IllegalArgumentException("Directory must not be null.");
+		}
+		
+		// Does directory exist and is it a directory ...
+		if (!directory.exists()) {
 			// Source file for deletion does not exist
 			
 			if (s_logger.isWarnEnabled()) {
@@ -670,7 +674,7 @@ public class FileModification {
 			throw new FileException("Could not delete directory {0} because it "
 				+ "does not exist", new Object[] {directory});
 			
-		} else if (directory != null && !directory.isDirectory()) {
+		} else if (!directory.isDirectory()) {
 			// Source file is no file
 			if (s_logger.isWarnEnabled()) {
 				s_logger.warn("Could not delete directory "

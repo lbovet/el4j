@@ -59,7 +59,7 @@ import org.apache.commons.logging.LogFactory;
 public final class XmlFilter implements Filter {
 
 	/** The static logger. */
-	protected static Log s_logger = LogFactory.getLog(XmlFilter.class);
+	private static final Log s_logger = LogFactory.getLog(XmlFilter.class);
 	
 	/**
 	 * List of browsers known to support XSLT. Currently, only IE 6.0 fully
@@ -141,8 +141,7 @@ public final class XmlFilter implements Filter {
 			chain.doFilter(request, responseWrapper);
 
 			// Get response from servlet
-			StringReader sr = new StringReader(new String(responseWrapper
-					.toString()));
+			StringReader sr = new StringReader(responseWrapper.toString());
 			Source xmlSource = new StreamSource(sr);
 			
 			try {

@@ -21,6 +21,7 @@
  */
 package ch.elca.el4j.gui.swing.mdi;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import javax.swing.JInternalFrame;
 
@@ -31,7 +32,7 @@ import javax.swing.JInternalFrame;
  * @since 1.04
  */
 public final class JInternalFrameComparator
-	implements Comparator<JInternalFrame> {
+	implements Comparator<JInternalFrame>, Serializable {
 	
 	/**
 	 * Compares internal frames based on their title.

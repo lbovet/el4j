@@ -72,7 +72,7 @@ public abstract class AbstractIntKeyIntOptimisticLockingDto
 	 */
 	@Transient
 	public final Object getKeyAsObject() {
-		return isKeyNew() ? null : new Integer(getKey());
+		return isKeyNew() ? null : Integer.valueOf(getKey());
 	}
 
 	/**

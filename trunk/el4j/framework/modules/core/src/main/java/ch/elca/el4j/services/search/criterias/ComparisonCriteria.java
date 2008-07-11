@@ -88,7 +88,7 @@ public class ComparisonCriteria extends AbstractCriteria {
 	 */
 	public static ComparisonCriteria equals(String field, int value) {
 		return new ComparisonCriteria(
-			field, new Integer(value), "=", "Integer");
+			field, Integer.valueOf(value), "=", "Integer");
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class ComparisonCriteria extends AbstractCriteria {
 	 */
 	public static ComparisonCriteria equals(String field, long value) {
 		return new ComparisonCriteria(
-			field, new Long(value), "=", "Long");
+			field, Long.valueOf(value), "=", "Long");
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class ComparisonCriteria extends AbstractCriteria {
 	 */
 	public static ComparisonCriteria equals(String field, short value) {
 		return new ComparisonCriteria(
-			field, new Short(value), "=", "Short");
+			field, Short.valueOf(value), "=", "Short");
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class ComparisonCriteria extends AbstractCriteria {
 	 */
 	public static ComparisonCriteria equals(String field, byte value) {
 		return new ComparisonCriteria(
-			field, new Byte(value), "=", "Byte");
+			field, Byte.valueOf(value), "=", "Byte");
 	}
 	
 	/**

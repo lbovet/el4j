@@ -60,7 +60,7 @@ public class RewritingMessageSource implements MessageSource {
 		= new HashMap<Locale, MessageRewriter>();
 	
 	/** The logger. (duh!) */
-	protected static Log s_logger
+	protected static final Log s_logger
 		= LogFactory.getLog(RewritingMessageSource.class);
 	
 	/**

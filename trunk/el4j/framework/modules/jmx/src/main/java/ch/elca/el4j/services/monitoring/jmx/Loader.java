@@ -65,7 +65,7 @@ public class Loader implements ApplicationContextAware, InitializingBean,
 	/**
 	 * A map containing the MBean Server as key and the JvmMB as value.
 	 */
-	protected static Map<MBeanServer, JvmMBMBean> s_jvmMBs
+	protected static final Map<MBeanServer, JvmMBMBean> s_jvmMBs
 		= new HashMap<MBeanServer, JvmMBMBean>();
 
 	/**

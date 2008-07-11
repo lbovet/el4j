@@ -103,11 +103,11 @@ public class DiffOperationFactory implements OperationFactory {
 
 		if (originalElement != null && patchElement == null) {
 			return m_onlyInOriginalOperationFactory.getOperation(
-				originalElement, patchElement);
+				originalElement, null);
 		}
 
 		if (originalElement == null && patchElement != null) {
-			return m_onlyInPatchOperationFactory.getOperation(originalElement,
+			return m_onlyInPatchOperationFactory.getOperation(null,
 				patchElement);
 		}
 

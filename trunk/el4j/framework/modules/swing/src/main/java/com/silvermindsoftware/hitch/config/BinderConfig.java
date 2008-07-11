@@ -108,7 +108,8 @@ public class BinderConfig {
 			try {
 				field = ClassManager.getClassInfo(formClass).getField(modelField);
 			} catch (NoSuchFieldException e) {
-				//ignored
+				log.error("Error while getting field " + modelField);
+				return;
 			}
 
 			// iterate modelObject fields

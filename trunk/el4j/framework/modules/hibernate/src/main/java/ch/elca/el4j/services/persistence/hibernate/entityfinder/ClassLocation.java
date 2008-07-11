@@ -63,7 +63,7 @@ public class ClassLocation {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
+		if ((obj == null) || (obj.getClass() != this.getClass())) {
 			return false;
 		}
 		if (getClass() != HibernateProxyHelper.getClassWithoutInitializingProxy(obj)) {

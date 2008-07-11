@@ -113,13 +113,9 @@ public class ExceptionChainConverterInterceptorTest {
 			new Exception("t3", new RuntimeException("t4", null))));
 
 	private void checkThrowableIsCorrectlyHandled(Throwable result) {
-		assertTrue(result instanceof Throwable);
 		assertFalse(result.getCause() instanceof Exception);
-		assertTrue(result.getCause() instanceof Throwable);
 		assertFalse(result.getCause().getCause() instanceof Exception);
-		assertTrue(result.getCause().getCause() instanceof Throwable);
 		assertFalse(result.getCause().getCause().getCause() instanceof RuntimeException);
-		assertTrue(result.getCause().getCause().getCause() instanceof Throwable);
 	}
 
 	// to be able to call the protected method of class to test

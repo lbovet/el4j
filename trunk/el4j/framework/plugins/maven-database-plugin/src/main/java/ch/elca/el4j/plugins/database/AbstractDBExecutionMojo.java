@@ -491,7 +491,8 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 	 * @return Array of resources
 	 */
 	private List<Resource> getResources(List<String> sourcePaths) {
-		HashMap<URL, Resource> resourcesMap = new HashMap<URL, Resource>();
+		HashMap<String, Resource> resourcesMap
+			= new HashMap<String, Resource>();
 		Resource[] resources;
 		List<Resource> result = new ArrayList<Resource>();
 
@@ -499,9 +500,10 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 			for (String source : sourcePaths) {
 				resources = getConnPropHolder().getResources(source);
 				for (Resource resource : resources) {
-					if (!resourcesMap.containsKey(resource.getURL())) {
+					if (!resourcesMap.containsKey(resource.getURL().toString())) {
 						result.add(resource);
-						resourcesMap.put(resource.getURL(), resource);
+						resourcesMap.put(resource.getURL().toString(),
+							resource);
 					}
 				}
 			}
@@ -573,8 +575,9 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 		Matcher beginStmtMatcher;
 		String expectedDelimiter = delimiter;
 
+		BufferedReader buffRead = null;
 		try {
-			BufferedReader buffRead = new BufferedReader(new InputStreamReader(
+			buffRead = new BufferedReader(new InputStreamReader(
 				fileURL.openStream()));
 			while ((part = buffRead.readLine()) != null) {
 				part = StringUtils.trimWhitespace(part);
@@ -614,6 +617,15 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 			}
 		} catch (IOException e) {
 			throw new DatabaseHolderException(e);
+		} finally {
+			if (buffRead != null) {
+				try {
+					buffRead.close();
+				} catch (IOException e) {
+					getLog().error("The file '" + fileURL
+						+ "' could not be close.", e);
+				}
+			}
 		}
 		return result;
 	}

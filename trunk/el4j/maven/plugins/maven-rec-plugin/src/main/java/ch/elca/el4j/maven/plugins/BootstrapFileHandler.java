@@ -142,10 +142,11 @@ public class BootstrapFileHandler {
 			&& BOOTSTRAP_XML_NAMESPACE.equals(namespace.getURI())) {
 			return doc;
 		} else {
+			String uri = namespace != null ? namespace.getURI() : "null";
 			throw new JDOMException(
 				"Wrong namespace of bootstrap-file! Should be <"
 					+ BOOTSTRAP_XML_NAMESPACE + ">, but found <"
-					+ namespace.getURI() + ">.");
+					+ uri + ">.");
 		}
 	}
 

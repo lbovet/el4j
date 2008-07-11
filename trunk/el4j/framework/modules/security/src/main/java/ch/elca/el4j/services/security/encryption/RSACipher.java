@@ -47,10 +47,10 @@ public class RSACipher implements Serializable  {
 	private final BigInteger m_e = BigInteger.valueOf(17);
 
 	/**	 */
-	private final int m_chunkSize = 8;
+	private static final int m_chunkSize = 8;
 
 	/**  */
-	private final String m_cipherDelimiter = "l";
+	private static final String m_cipherDelimiter = "l";
 	
 	/**	 */
 	private BigInteger m_pubKey = BigInteger.ZERO;
@@ -190,7 +190,7 @@ public class RSACipher implements Serializable  {
 		BigInteger[] biArr = new BigInteger[biArrLen];
 		int biArrCounter = 0;
 		int chunkCounter = 0;
-		String chunkStr = new String();
+		String chunkStr = "";
 		// generate first random row:
 		String firstRow = "";
 		while (firstRow.length() < 65) {

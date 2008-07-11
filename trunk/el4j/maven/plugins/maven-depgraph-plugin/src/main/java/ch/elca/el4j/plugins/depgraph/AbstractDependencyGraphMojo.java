@@ -292,6 +292,7 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
 				filter, m_collector);
 		} catch (DependencyTreeBuilderException e) {
 			s_log.error("Error resolving artifacts", e);
+			return;
 		}
 		
 		DependencyNode filteredNodes = applyDependencyFilter(rootNode, filter);

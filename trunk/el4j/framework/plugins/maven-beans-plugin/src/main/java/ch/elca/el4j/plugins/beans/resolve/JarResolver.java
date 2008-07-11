@@ -115,7 +115,7 @@ public class JarResolver extends AbstractResolver {
 			(p.m_filePath.equals("") ? ""
 			: p.m_filePath + "/") + p.m_fileName);
 		if (entryFile == null) {
-			throw new IOException("Entry does not exist. " + entryFile);
+			throw new IOException("Entry does not exist. " + file);
 		}
 		
 		File destDir = createDir(p.m_jarName, target);

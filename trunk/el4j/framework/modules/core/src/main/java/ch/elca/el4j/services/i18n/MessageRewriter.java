@@ -118,7 +118,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  */
 public class MessageRewriter {
 	/** Hm ... now what could this be ...? ;) */
-	protected static Log s_logger
+	private static final Log s_logger
 		= LogFactory.getLog(MessageRewriter.class);
 
 	/** An empty Object[]. */
@@ -170,6 +170,15 @@ public class MessageRewriter {
 			} catch (IllegalRuleFormatException e) {
 				e.m_lineNumber = lineNumber;
 				throw e;
+			} finally {
+				if (reader != null) {
+					try {
+						reader.close();
+					} catch (IOException e) {
+						throw new RuntimeException(
+							"closing from ressource failed", e);
+					}
+				}
 			}
 		}
 		Collections.reverse(m_rules);

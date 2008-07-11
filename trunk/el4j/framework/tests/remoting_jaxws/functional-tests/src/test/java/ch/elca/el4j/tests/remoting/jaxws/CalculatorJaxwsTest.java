@@ -184,16 +184,16 @@ public class CalculatorJaxwsTest {
 		
 		if (echo.getMyIntegerList().size() == list.size()) {
 			assertTrue("List items are not equal.",
-				echo.getMyIntegerList().get(0).equals(new Integer(4))
-				&& echo.getMyIntegerList().get(1).equals(new Integer(7)));
+				echo.getMyIntegerList().get(0).equals(Integer.valueOf(4))
+				&& echo.getMyIntegerList().get(1).equals(Integer.valueOf(7)));
 		} else {
 			fail("List size is not equal.");
 		}
 		
 		if (echo.getMyIntegerSet().size() == set.size()) {
 			assertTrue("Set items are not equal.",
-				echo.getMyIntegerSet().contains(new Integer(2))
-				&& echo.getMyIntegerSet().contains(new Integer(5)));
+				echo.getMyIntegerSet().contains(Integer.valueOf(2))
+				&& echo.getMyIntegerSet().contains(Integer.valueOf(5)));
 		} else {
 			fail("Set size is not equal.");
 		}

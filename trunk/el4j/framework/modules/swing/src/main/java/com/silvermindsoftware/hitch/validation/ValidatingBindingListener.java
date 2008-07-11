@@ -131,8 +131,10 @@ public class ValidatingBindingListener implements BindingListener {
 			}
 		} else {
 			s_logger.debug(
-				"Could not validate on binding sync: Neither " + source
-				+ " nor " + target + " implements ValidationCapability");
+				"Could not validate on binding sync: Neither "
+				+ binding.getSourceObject() + " nor "
+				+ binding.getTargetObject()
+				+ " implements ValidationCapability");
 			//m_listener.setValid(null, (JComponent) binding.getTargetObject());
 		}
 	}

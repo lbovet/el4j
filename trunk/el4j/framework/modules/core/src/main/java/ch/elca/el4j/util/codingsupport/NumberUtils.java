@@ -103,8 +103,7 @@ public final class NumberUtils {
 		Integer result = null;
 		if (StringUtils.hasText(s)) {
 			try {
-				int number = Integer.parseInt(s.trim());
-				result = new Integer(number);
+				result = Integer.valueOf(s.trim());
 			} catch (NumberFormatException e) {
 				result = null;
 			}
@@ -124,8 +123,7 @@ public final class NumberUtils {
 		Long result = null;
 		if (StringUtils.hasText(s)) {
 			try {
-				long number = Long.parseLong(s.trim());
-				result = new Long(number);
+				result = Long.valueOf(s.trim());
 			} catch (NumberFormatException e) {
 				result = null;
 			}

@@ -18,6 +18,7 @@ package ch.elca.el4j.tests.refdb;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.sql.DataSource;
 
@@ -149,26 +150,23 @@ public abstract class AbstractTestCaseBase {
 	@Before
 	public void setUp() throws Exception {
 		Connection con = null;
+		Statement s = null;
 		try {
 			con = getDataSource().getConnection();
-			con.createStatement().execute(
-				"DELETE FROM REFERENCEKEYWORDRELATIONSHIPS");
-			con.createStatement().execute(
-				"DELETE FROM FILES");
-			con.createStatement().execute(
-				"DELETE FROM ANNOTATIONS");
-			con.createStatement().execute(
-				"DELETE FROM LINKS");
-			con.createStatement().execute(
-				"DELETE FROM BOOKS");
-			con.createStatement().execute(
-				"DELETE FROM FORMALPUBLICATIONS");
-			con.createStatement().execute(
-				"DELETE FROM REFERENCESTABLE");
-			con.createStatement().execute(
-				"DELETE FROM KEYWORDS");
+			s = con.createStatement();
+			s.executeUpdate("DELETE FROM REFERENCEKEYWORDRELATIONSHIPS");
+			s.executeUpdate("DELETE FROM FILES");
+			s.executeUpdate("DELETE FROM ANNOTATIONS");
+			s.executeUpdate("DELETE FROM LINKS");
+			s.executeUpdate("DELETE FROM BOOKS");
+			s.executeUpdate("DELETE FROM FORMALPUBLICATIONS");
+			s.executeUpdate("DELETE FROM REFERENCESTABLE");
+			s.executeUpdate("DELETE FROM KEYWORDS");
 			con.commit();
 		} finally {
+			if (s != null) {
+				s.close();
+			}
 			if (con != null) {
 				try {
 					con.close();

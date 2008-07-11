@@ -50,7 +50,7 @@ public abstract class AbstractWrapperFactory<T extends FrameWrapper> {
 	/**
 	 * A mapping between wrapped component and wrapper.
 	 */
-	protected static Map<JComponent, WeakReference<FrameWrapper>>
+	protected static final Map<JComponent, WeakReference<FrameWrapper>>
 	s_componentToWrapper
 		= new HashMap<JComponent, WeakReference<FrameWrapper>>();
 	

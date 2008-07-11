@@ -64,11 +64,6 @@ import ch.elca.el4j.services.xmlmerge.matcher.TagMatcher;
 public class DefaultXmlMerge implements XmlMerge {
 
 	/**
-	 * Root mapper.
-	 */
-	private Mapper m_rootMapper = new IdentityMapper();
-
-	/**
 	 * Root merge action.
 	 */
 	private MergeAction m_rootMergeAction = new OrderedMergeAction();
@@ -94,9 +89,7 @@ public class DefaultXmlMerge implements XmlMerge {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void setRootMapper(Mapper rootMapper) {
-		this.m_rootMapper = rootMapper;
-	}
+	public void setRootMapper(Mapper rootMapper) { }
 
 	/**
 	 * {@inheritDoc}

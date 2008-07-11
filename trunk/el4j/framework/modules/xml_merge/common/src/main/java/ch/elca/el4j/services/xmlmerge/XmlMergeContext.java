@@ -20,7 +20,7 @@ public class XmlMergeContext {
 
 	protected static final String ENTITY_RESOLVER_KEY = "entityResolver";
 	
-	protected static ThreadLocal<Map<String,Object>> m_context = new ThreadLocal<Map<String,Object>>() {
+	protected static final ThreadLocal<Map<String,Object>> m_context = new ThreadLocal<Map<String,Object>>() {
 		protected Map<String,Object> initialValue() {
 			return new HashMap<String, Object>();
 		}
