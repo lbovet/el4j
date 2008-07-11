@@ -34,69 +34,69 @@ import ch.elca.el4j.plugins.beans.BeansMojo;
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
- *    "$Revision$",
- *    "$Date$",
- *    "$Author$"
+ *	"$Revision$",
+ *	"$Date$",
+ *	"$Author$"
  * );</script>
  *
  * @author David Bernhard (DBD)
  */
 public class BeansMojoTest {
 
-    /** The test output directory. */
-    private File m_testOutDir = new File("target/test-output");
-    
-    /**
-     * Test of the beans mojo.
-     * @throws Exception If anything goes wrong.
-     */
-    @Test public void testMojo() throws Exception {
+	/** The test output directory. */
+	private File m_testOutDir = new File("target/test-output");
+	
+	/**
+	 * Test of the beans mojo.
+	 * @throws Exception If anything goes wrong.
+	 */
+	@Test public void testMojo() throws Exception {
 
-        m_testOutDir.mkdir();
-        
-        BeansMojo mojo = new BeansMojo();
-        
-        Field proj = BeansMojo.class.getDeclaredField("m_project");
-        proj.setAccessible(true);
-        proj.set(mojo, new MavenProjectStub());
-        
-        Field source = BeansMojo.class.getDeclaredField("sourceFile");
-        source.setAccessible(true);
-        source.set(mojo, 
-            new ClassPathResource("MojoTestFile.java")
-                .getFile().getAbsolutePath());
-        
-        mojo.execute();
-        
-        File file1 = new File(m_testOutDir, 
-        	"target/beans/files/beansInAFile.xml").getAbsoluteFile();
-        assertTrue(file1.exists() && file1.isFile());
-        
-        File jarDir = new File(m_testOutDir, "target/beans/beanJar.jar")
-        	.getAbsoluteFile();
-        assertTrue(jarDir.exists() && jarDir.isDirectory());
+		m_testOutDir.mkdir();
+		
+		BeansMojo mojo = new BeansMojo();
+		
+		Field proj = BeansMojo.class.getDeclaredField("m_project");
+		proj.setAccessible(true);
+		proj.set(mojo, new MavenProjectStub());
+		
+		Field source = BeansMojo.class.getDeclaredField("sourceFile");
+		source.setAccessible(true);
+		source.set(mojo, 
+			new ClassPathResource("MojoTestFile.java")
+				.getFile().getAbsolutePath());
+		
+		mojo.execute();
+		
+		File file1 = new File(m_testOutDir, 
+			"target/beans/files/beansInAFile.xml").getAbsoluteFile();
+		assertTrue(file1.exists() && file1.isFile());
+		
+		File jarDir = new File(m_testOutDir, "target/beans/beanJar.jar")
+			.getAbsoluteFile();
+		assertTrue(jarDir.exists() && jarDir.isDirectory());
 
-        File file2 = new File(jarDir, "beansInAJar.xml").getAbsoluteFile();
-        assertTrue(file2.exists() && file2.isFile());
-        
-    }
+		File file2 = new File(jarDir, "beansInAJar.xml").getAbsoluteFile();
+		assertTrue(file2.exists() && file2.isFile());
+		
+	}
 
-    /** Test class. */
-    class MavenProjectStub extends MavenProject {
+	/** Test class. */
+	class MavenProjectStub extends MavenProject {
 
-        /** @return The output directory. */
-        @Override public File getBasedir() {
-            return m_testOutDir.getAbsoluteFile();
-        }
+		/** @return The output directory. */
+		@Override public File getBasedir() {
+			return m_testOutDir.getAbsoluteFile();
+		}
 
-        /** @return A test classpath. */
-        public List<?> getRuntimeClasspathElements() {
-            List<String> l = new ArrayList<String>();
-            l.add("target/test-classes/file/");
-            l.add("target/test-classes/jar/beanJar.jar");
-            return l;
-        }
-    }
+		/** @return A test classpath. */
+		public List<?> getRuntimeClasspathElements() {
+			List<String> l = new ArrayList<String>();
+			l.add("target/test-classes/file/");
+			l.add("target/test-classes/jar/beanJar.jar");
+			return l;
+		}
+	}
 }
 
 
