@@ -49,10 +49,11 @@ if [ $auto == true ] ; then
 fi
 
 # process settings.xml
+echo "Copy current settings.xml to $workingDir/settings.xml.backup"
 mv ~/.m2/settings.xml settings.xml.backup
 cat external/etc/m2/settings.xml \
-	| sed "s#~/.m2/repository#D:/$workingDir/m2repository#" \
-	| sed "s#~/myproject#D:/$workingDir#" \
+	| sed "s#~/.m2/repository#$workingDir/m2repository#" \
+	| sed "s#~/myproject#$workingDir#" \
 	> ~/.m2/settings.xml
 
 echo "Open ~/.m2/settings.xml and fill in all passwords that will be needed for deployment."

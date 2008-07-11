@@ -48,7 +48,9 @@ echo "Detailed Statistics"
 mvn package
 echo "Enter 'mvn exec:java' in the window that will appear next. Press Enter to open window..."
 read dummy
+cd service
 cygstart bash -i
+cd ..
 
 echo ""
 echo "Open http://localhost:9092/ in a web browser"
@@ -91,12 +93,17 @@ read dummy
 # stop the daemons via the console application (in console 2):
 mvn exec:java -Dexec.args=stop
 
+echo "Wait until daemons have stopped. Close opened window and press Enter to continue"
+read dummy
+
 echo "Scheduler"
 echo "Not yet supported. Please execute test manually."
 read dummy
 
-echo "RefDb Web"
-cd ../../templates/refdb/web/war
-echo "After tomcat has started open http://localhost:8080/refdb-web in a browser."
-echo "To stop tomcat, press Ctrl-C."
-mvn db:prepareDB cargo:undeploy cargo:deploy cargo:start
+#cd ../scheduler/
+#cd scheduler_init
+#mvn exec:java
+
+echo "NT login"
+cd ../nt_login/
+mvn exec:java
