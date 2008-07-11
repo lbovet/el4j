@@ -27,6 +27,12 @@ echo "If it is, press Enter, if it is not, press Ctrl-C."
 echo "Press Enter to continue"
 read dummy
 
+echo "Which tag should be chosen? (like 1.1.1)"
+read tagDot
+tagScore=$(echo $tagDot | sed "s/\./_/g")
+echo "Tag is $tagDot, OK?"
+read dummy
+
 function makeRelease() {
 	echo "Step 1: Release $1"
 	cd $1
@@ -36,12 +42,6 @@ function makeRelease() {
 	echo "Which revision is it?"
 	read revision
 	echo "Revision is $revision, OK?"
-	read dummy
-
-	echo "Which tag should be chosen? (like 1.1.1)"
-	read tagDot
-	tagScore=$(echo $tagDot | sed "s/\./_/g")
-	echo "Tag is $tagDot, OK?"
 	read dummy
 
 	echo "Command is:"
