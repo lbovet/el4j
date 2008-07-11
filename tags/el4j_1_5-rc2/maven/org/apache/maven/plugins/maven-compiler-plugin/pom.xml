@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <artifactId>maven-plugins</artifactId>
+    <groupId>org.apache.maven.plugins</groupId>
+    <version>3</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>maven-compiler-plugin</artifactId>
+  <packaging>maven-plugin</packaging>
+  <name>Maven Compiler Plugin</name>
+  <version>2.1-el4j_20080110_1520</version>
+  <inceptionYear>2001</inceptionYear>
+  <prerequisites>
+    <maven>2.0</maven>
+  </prerequisites>
+  <issueManagement>
+    <system>JIRA</system>
+    <url>http://jira.codehaus.org/browse/MCOMPILER</url>
+  </issueManagement>
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-plugin-api</artifactId>
+      <version>2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-utils</artifactId>
+      <version>1.0.4</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-compiler-api</artifactId>
+      <version>1.6-el4j_20080110_1520</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-compiler-manager</artifactId>
+      <version>1.5.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-compiler-javac</artifactId>
+      <version>1.6-el4j_20080110_1520</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-artifact</artifactId>
+      <version>2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven.shared</groupId>
+      <artifactId>maven-plugin-testing-harness</artifactId>
+      <version>1.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  
+  <build>
+    <extensions>
+        <!-- Transport -->
+        <extension>
+            <groupId>org.apache.maven.wagon</groupId>
+            <artifactId>wagon-ftp</artifactId>
+            <version>1.0-beta-1</version>
+        </extension>
+    </extensions>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.0.4</version>
+        <executions>
+          <execution>
+            <id>createSourceJars</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <distributionManagement>
+      <repository>
+          <id>${distmgt.repository.id.external}</id>
+          <name>${distmgt.repository.name.external}</name>
+          <url>${distmgt.repository.url.external}</url>
+      </repository>
+      <snapshotRepository>
+          <id>${distmgt.snapshot-repository.id.external}</id>
+          <name>${distmgt.snapshot-repository.name.external}</name>
+          <url>${distmgt.snapshot-repository.url.external}</url>
+      </snapshotRepository>
+  </distributionManagement>
+
+  <properties>
+      <distmgt.repository.id.external>
+          ftpEl4ElcaServices
+      </distmgt.repository.id.external>
+      <distmgt.repository.name.external>
+          External EL4J repository
+      </distmgt.repository.name.external>
+      <distmgt.repository.url.external>
+          ftp://el4.elca-services.ch/htdocs/el4j/maven2repository
+      </distmgt.repository.url.external>
+
+      <distmgt.snapshot-repository.id.external>
+          ftpEl4ElcaServicesSnapshot
+      </distmgt.snapshot-repository.id.external>
+      <distmgt.snapshot-repository.name.external>
+          External EL4J snapshot repository
+      </distmgt.snapshot-repository.name.external>
+      <distmgt.snapshot-repository.url.external>
+          ftp://el4.elca-services.ch/htdocs/el4j/maven2snapshots
+      </distmgt.snapshot-repository.url.external>
+  </properties>
+  
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-changelog-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </reporting>
+  <repositories>
+    <repository>
+      <id>codehaus.org</id>
+      <url>http://snapshots.repository.codehaus.org/</url>
+    </repository>
+  </repositories>
+</project>

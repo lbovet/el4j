@@ -1,0 +1,36 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                             "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:el4j="http://www.elca.ch/el4j/taglib"
+	template="layout/template.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+
+	<ui:define name="body">
+
+		<h:messages />
+		<h2>
+			Edit employee (non-generic):
+		</h2>
+		<h:form>
+			<ui:remove><!-- manually specified form,
+				selectedEmployee is outjected by employeeManager --></ui:remove>
+			<s:validateAll>
+				<h:panelGrid columns="2">
+					Visa: <h:inputText value="#{selectedEmployee.visa}" required="true" />
+					First Name: <h:inputText value="#{selectedEmployee.firstName}" required="true" />
+					Last Name: <h:inputText value="#{selectedEmployee.lastName}" required="true" />
+				</h:panelGrid>
+			</s:validateAll>
+
+			<h:commandButton value="#{messages.Save}"
+				action="#{employeeManager.saveAndRedirect(selectedEmployee, '/employeeOverviewEmpMgr.xhtml')}" />
+			<s:button value="#{messages.Cancel}"
+				view="/employeeOverviewEmpMgr.xhtml"
+				action="#{employeeManager.cancelEdit()}" />
+		</h:form>
+	</ui:define>
+
+</ui:composition>
