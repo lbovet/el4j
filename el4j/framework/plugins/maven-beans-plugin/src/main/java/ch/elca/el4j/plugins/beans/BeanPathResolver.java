@@ -60,19 +60,28 @@ public class BeanPathResolver {
 	 * @param inclusiveLocations The inclusive locations.
 	 * @param exclusiveLocations The exclusive locations.
 	 * @param classpath The classpath to search.
+	 * @param baseDir The working directory to use.
 	 * @return The bean files found.
 	 */
 	public String[] resolve(String[] inclusiveLocations,
-		String[] exclusiveLocations, URL[] classpath) {
+		String[] exclusiveLocations, URL[] classpath, String baseDir) {
 		
 		m_givenClasspath = classpath;
 		
 		// Create a classloader for the target classpath and launch the
 		// resolver with it.
 		
+		/*
+		 * We're trying to shift the system working directory to get around
+		 * a bug that beans-plugin fails if called from a super pom/directory.
+		 */
+		String cwd = System.getProperty("user.dir");
+		
 		try {
 			ClassLoader loader = new URLClassLoader(classpath);
 
+			System.setProperty("user.dir", baseDir);
+			
 			ResolverRunner r
 				= new ResolverRunner(inclusiveLocations, exclusiveLocations);
 			r.setContextClassLoader(loader);
@@ -85,6 +94,8 @@ public class BeanPathResolver {
 			
 		} catch (Exception e) {
 			throw new RuntimeException(e);
+		} finally {
+			System.setProperty("user.dir", cwd);
 		}
 	}
 
@@ -166,12 +177,16 @@ public class BeanPathResolver {
 					m_logger.log(" > " + u);
 				}
 				m_logger.log("Inclusive files:");
-				for (String s : m_inclusive) {
-					m_logger.log(" + " + s);
+				if (m_inclusive != null) {
+					for (String s : m_inclusive) {
+						m_logger.log(" + " + s);
+					}
 				}
 				m_logger.log("Exclusive files:");
-				for (String s : m_exclusive) {
-					m_logger.log(" - " + s);
+				if (m_exclusive != null) {
+					for (String s : m_exclusive) {
+						m_logger.log(" - " + s);
+					}
 				}
 			}
 			

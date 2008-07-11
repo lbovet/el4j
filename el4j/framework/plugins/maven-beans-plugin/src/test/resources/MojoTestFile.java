@@ -36,7 +36,7 @@ public class MojoTestFile {
 		// $$ BEANS INCLUDE $$
 		String[] included = {
 			"classpath:beansInAFile.xml",
-			"classpath*:beansInAJar.xml"
+			"classpath:beansInAJar.xml"
 		};
 		
 		// $$ BEANS EXCLUDE $$

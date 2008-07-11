@@ -19,6 +19,8 @@ package ch.elca.el4j.plugins.beans;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
@@ -92,7 +94,8 @@ public class BeansMojo extends AbstractMojo {
 			}
 		});
 		String[] files = resolver.resolve(
-			ex.getInclusive(), ex.getExclusive(), classpath);
+			ex.getInclusive(), ex.getExclusive(), classpath,
+			m_project.getBasedir().toString());
 
 		ResolverManager mgr = new ResolverManager(classpath);
 		
@@ -132,7 +135,9 @@ public class BeansMojo extends AbstractMojo {
 		for (Object o : list) {
 			String s = o.toString();
 			try {
-				classpath.add(new File(s).toURL());
+				File f1 = new File(s);
+				URL u1 = f1.toURL();
+				classpath.add(u1);
 			} catch (MalformedURLException e) {
 				// Shouldn't really happen.
 				throw new RuntimeException(e);

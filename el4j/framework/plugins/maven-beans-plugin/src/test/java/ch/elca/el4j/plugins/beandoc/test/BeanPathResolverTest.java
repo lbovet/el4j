@@ -52,15 +52,15 @@ public class BeanPathResolverTest extends TestCase {
 	/** {@inheritDoc} */
 	public void setUp() throws Exception {
 		m_inclusive = new String[] {
-			"classpath:beansInAFile.xml",
-			"classpath*:beansInAJar.xml"
+			"classpath:file/beansInAFile.xml",
+			"classpath:beansInAJar.xml"
 		};
 		m_exclusive = new String[] {};
 		m_classpath = new ArrayList<URL>();
 
 		m_classpath.add(new File("target/test-classes/jar/beanJar.jar")
 			.getAbsoluteFile().toURL());
-		m_classpath.add(new File("target/test-classes/file/")
+		m_classpath.add(new File("target/test-classes/")
 			.getAbsoluteFile().toURL());
 
 	}
@@ -74,7 +74,8 @@ public class BeanPathResolverTest extends TestCase {
 				
 		BeanPathResolver r = new BeanPathResolver();
 		String[] result = r.resolve(m_inclusive, m_exclusive,
-			m_classpath.toArray(new URL[0]));
+			m_classpath.toArray(new URL[0]),
+			new File("target/test-classes").getAbsolutePath());
 
 		/*
 		 * Test files:
