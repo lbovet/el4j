@@ -2,10 +2,12 @@
  News
  -----
  -----
- 04 Jun 2008
+ 14 Jul 2008
  -----
 
 News
+
+  * <14/07/2008> - <<EL4J 1.5 released!>> Main features: Clean ups (Some older parts were removed, some bugs fixed), more convenience methods for hibernate access, new beans:beans maven plugin that generates Spring IDE files, ...
 
   * <30/6/2008> - <<Jazoon Presentation is online:>> {{{docs/pdf/Module-basedDevelopmentWithSpringMaven2.pdf}Module-based Development With Spring and Maven 2}} by Philipp H. Oser and Martin Zeltner
 
