@@ -80,6 +80,7 @@ cd ..
 
 cd plugins
 # maven-metadata.xml is not updated in 2.0.9 if mvn deploy is not called for every plugin explicitly
+mvn deploy -N
 for i in $(ls | grep "^maven-") ; do
 	cd $i
 	mvn deploy
