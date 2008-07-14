@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AWTTestScript>
+
+	<component class="javax.swing.JDesktopPane"
+		id="JDesktopPane Instance" index="1" parent="JPanel Instance"
+		window="mainFrame" />
+	<component class="javax.swing.JLayeredPane"
+		id="JLayeredPane Instance" index="1" parent="JRootPane Instance"
+		window="mainFrame" />
+	<component class="javax.swing.JMenuBar" id="JMenuBar Instance"
+		index="2" parent="JLayeredPane Instance" window="mainFrame" />
+	<component class="javax.swing.JPanel" id="JPanel Instance" index="0"
+		parent="JLayeredPane Instance" window="mainFrame" />
+	<component class="javax.swing.JPopupMenu" id="JPopupMenu Instance"
+		index="0" invoker="demoMenu" />
+	<component class="javax.swing.JRootPane" id="JRootPane Instance"
+		index="0" parent="mainFrame" />
+	<component class="javax.swing.JMenuItem"
+		id="Resource Injection Demo" index="0" parent="JPopupMenu Instance"
+		text="Resource Injection Demo" window="mainFrame" />
+	<component
+		class="ch.elca.el4j.gui.swing.wrapper.JInteralFrameWrapper"
+		id="ResourceInjectionDemoForm" index="0"
+		name="ch.elca.el4j.demos.gui.ResourceInjectionDemoForm"
+		parent="JDesktopPane Instance" title="Ressource Injection Demo Frame"
+		window="mainFrame" />
+	<component class="javax.swing.JLabel" id="someLabel" index="0"
+		name="someLabel" parent="ResourceInjectionDemoForm" />
+	<component class="javax.swing.JMenu" id="demoMenu" index="2"
+		name="demoMenu" parent="JMenuBar Instance" text="Demos"
+		window="mainFrame" />
+	<component class="javax.swing.JFrame" id="mainFrame"
+		name="mainFrame" root="true" title="AppFramework + MDI Example" />
+
+	
+	<!-- Don't need this anymore (classpath)
+	<launch args="[]" class="ch.elca.el4j.demos.gui.MainStandaloneMDI" classpath=".;../standalone-client/target/swing-demo-standalone-client-2.6-SNAPSHOT.jar" method="main" />
+	-->
+	<launch args="[]" class="ch.elca.el4j.demos.gui.MainStandaloneMDI" method="main" />
+
+	<action args="Resource Injection Demo" method="actionSelectMenuItem" />
+	<wait args="ResourceInjectionDemoForm" class="abbot.tester.ComponentTester" method="assertComponentShowing" />
+	<assert component="someLabel" method="getText"
+		value="This text has been set using resource injection.*" />
+	<!-- Have a look at the properties file: 'ResourceInjectionDemoFrame.properties' -->
+	
+	<annotation userDismiss="true">
+		<![CDATA[<html>Performed the Resource Injection Demo test.
+		<ul>
+		<li>Verifying injected text.</li>
+		</ul>
+		</html>]]>
+	</annotation>
+	
+	<action args="ResourceInjectionDemoForm" class="javax.swing.JInternalFrame" method="actionClose" />
+	<wait args="ResourceInjectionDemoForm" class="abbot.tester.ComponentTester" invert="true" method="assertComponentShowing" />
+
+	<terminate />
+
+</AWTTestScript>

@@ -1,0 +1,278 @@
+div#globalMessages {
+	text-align: right;
+	max-width: 100em;
+	position: absolute;
+	top: 2.5em;
+	right: 0.5em;
+	
+}
+
+.globalMessages {
+	padding: 5px;
+}
+
+a:active, a:link, a:visited {
+	color: #0D5798;    
+}
+a:hover {
+	color: #8CAFCD;
+}
+
+.menuButtons {
+	background-color: #FF6600; /*#8CAFCD*/
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.menuButtons a {
+    font-weight: bold;
+    text-decoration: none;
+	padding-left: 25px;
+	padding-right: 25px;
+}
+.menuButtons a:active, .menuButtons a:link, .menuButtons a:visited {
+	font-family: Arial,sans-serif;
+	background-color: #FF6600; /*#8CAFCD*/
+	color: white;
+	border-right: 1px solid white;
+}
+.menuButtons a:hover {
+	font-family: Arial,sans-serif;
+    background-color: white;
+    color: #FF6600; /*#8CAFCD*/
+}
+
+.loginout {
+	font-family: Arial,sans-serif;
+	text-align: right;
+	padding-right: 10px;
+	padding-top: 5px;
+	font-size: 0.85em;
+}
+.loginout a {
+	text-decoration: none;
+}
+
+.footer {
+	text-align: center;
+	font-size: 0.8em;
+}
+
+.actionButtons {
+	width: 100%;
+	text-align: center;
+	padding-top: 10px;
+}
+.tableControl {
+	width: 100%;
+	text-align: right;
+	padding-top: 15px;
+}
+.actionButtons a, .tableControl a {
+	font-family: Arial,sans-serif;
+	font-weight: bold;
+	color: #578BB8;
+	border: 1px solid #578BB8;
+	text-decoration: none;
+	padding: 5px;
+	margin: 5px;
+}
+
+.actionButtons a:hover, .tableControl a:hover {
+	color: white;
+	background-color: #578BB8;
+	margin: 5px;
+}
+
+img {
+	border: 0;
+}
+
+h1 {
+	font-family: Arial,sans-serif;
+	color: #578BB8;
+	font-size: 1.6em;
+	margin-top: 0;
+}
+
+body {
+	margin: 0px;
+	font-family: Arial,sans-serif;
+	color: #616161;
+}
+
+.body {
+	padding: 30px;
+}
+
+
+table {
+	width: 100%;
+}
+th {
+	background-color: #578BB8;
+	color: white;
+	font-family: Arial,sans-serif;
+	padding: 5px;
+	
+}
+td {
+	background-color: #F0F0F0;
+	text-align: center;
+}
+.narrow {
+	width: 20%;
+}
+.wide {
+	width: 80%;
+}
+.first td {
+	background-color: #F0F0F0;
+}
+.second td {
+	background-color: white;
+}
+
+.dialog 
+{
+	padding: 15px;
+	background-color: #F0F0F0;
+	margin: 10px;	
+}
+.dialog table
+{
+	width: 100%;
+
+}
+
+.dialog td
+{
+	text-align: left;
+}
+.columnHeader:link, .columnHeader:visited, .columnHeader:active
+{
+	color: white;
+	text-decoration: none;
+}
+
+.columnHeader:hover
+{
+    color: #FF6600;
+}
+
+.message {
+	border: 1px solid #FFCC00;
+	padding: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	background-color: #F0F0F0;
+}
+
+.prop {
+	padding: 5px;
+}
+.prop .name {
+	font-weight: bold;
+	text-align: left;
+	width: 115px;
+}
+.prop .value {
+	text-align: left;
+}
+.prop .errors {
+	color: red;
+	text-align: left;
+}
+/*.value input {
+	width:190px;
+}*/
+.errors input {
+	border: 1px solid red;
+}
+
+/* Seam Date Picker */
+
+/* the div that holds the date picker calendar */
+.seam-date {
+    width: 300px;
+}
+
+
+/* the table (within the div) that holds the date picker calendar */
+.seam-date table {
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    text-align: center;
+    color: #505050;
+    background: #fff url(../img/input.bg.gif) 0 0 repeat-x;
+    background-color: #FFFFFF;
+    border: 1px solid #AAAAAA;
+    margin-top: 5px;
+}
+
+
+.seam-date-title div {
+    font-size: 12px;
+    color: gray;
+    font-weight: bold;
+}
+
+
+/* the forward/backward buttons at the top */
+.seam-date-title button{
+    font-family: Verdana, Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    color: gray;
+    background: #FFFFFF;
+    font-weight: bold;
+    padding: 0px;
+    border: 1px solid #AAAAAA;
+}
+
+
+/* the "This Month" and "Close" buttons at the bottom */
+.seam-date-footer {
+	display: none;
+}
+
+.seam-date-footer button {
+    font-family: Verdana, Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    color: gray;
+    background: #FFFFFF;
+    font-weight: bold;
+    border: 1px solid #AAAAAA;
+}
+
+
+
+/* a table cell that holds the names of days of the week (Mo, Tu, We, etc.) */
+.seam-date-header td {
+    background-color: #CCCCCC;
+    border: 1px solid #AAAAAA;
+    color: white;
+    width: 14%;
+}
+
+
+
+/* a table cell that holds a date number (either blank or 1-31) */
+.seam-date-week td.seam-date-day {
+    border: 1px solid #ece9d8;
+    width: 14%;
+}
+
+/* the date number table cell that the mouse pointer is currently over (you can use contrasting colors to make it apparent which cell is being hovered over) */
+.seam-date-week td.seam-date-hover  {
+    background-color: #CCCCCC;
+    border: 1px solid #AAAAAA;
+    cursor: pointer;
+    color: red;
+}
+
+
+/* additional style information for the cell that holds a highlighted day (usually either today's date or the current date field value) */ 
+.seam-date-week td.seam-date-selected {
+    background-color: #CCCCCC;        
+    border: 1px solid #AAAAAA;
+    font-weight: bold;
+}

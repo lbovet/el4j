@@ -1,0 +1,11 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:el4j="http://www.elca.ch/el4j/taglib">
+
+	<el4j:set var="columnList" value="#{utils.computeFieldList(entityClassName, shown, hidden)}" />
+	<c:forEach items="#{columnList}" var="col">
+		<el4j:column fieldName="#{col}" />
+	</c:forEach>
+
+</ui:composition>
