@@ -9,7 +9,7 @@ echo "Executing: svn switch https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/
 svn switch https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j
 cd ..
 
-version=$(cat external/pom.xml | grep "<version.el4j-framework.current>" -A 1 | tail -n 1 | tr -d ' \t\r\n')
+version=$(cat external/pom.xml | grep "<version.el4j-framework.current>" -A 1 | tail -n 1 | tr -d ' \t\r\n' | sed 's/-SNAPSHOT//')
 
 cd external/site/src/site/resources/docs/pdf
 ./wikiPdfDownloadScript.sh
