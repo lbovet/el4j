@@ -73,6 +73,11 @@
 		| Authentication profiles can be used whenever maven must make a connection to a remote server.
 		|-->
 	<servers>
+		<!-- <server>
+			<id>el4jRepositoryInternal</id>
+			<username>__USR_EL4__</username>
+			<password>__PWD_EL4__</password>
+		</server> -->
 		<!--server>
 			<id>ftpEl4ElcaServices</id>
 			<username>__USR_SRV__</username>
