@@ -18,7 +18,7 @@
 	<groupId>ch.elca.el4j</groupId>
 	<artifactId>EL4JArchetypeCore</artifactId>
 	<version>1.7-SNAPSHOT</version>
-	<packaging>maven-plugin</packaging>
+	<packaging>jar</packaging>
 
 	<name>Hello World Module Archetype</name>
 	<description>Archetype of a Hello World project/module.</description>
