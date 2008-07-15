@@ -136,7 +136,7 @@
 			<property name="max" value="2000" />
 		</module>
 		<module name="LineLength">
-			<property name="max" value="80" />
+			<property name="max" value="120" />
 			<!-- Ignore long javadoc lines containing only one word and ignore -->
 			<!-- Ignore the long '("$URL: ...' lines. -->
 			<!-- Ignore the import lines. -->
@@ -195,13 +195,13 @@
 		
 		<module name="GenericIllegalRegexp">
 			<property name="format" value="^\s* [^*^-]"/>
-			<property name="ignoreComments " value="true"/>
+			<property name="ignoreComments" value="true"/>
 			<property name="message" value="Use tabs for indentation"/>
 		</module>
 		
 		<module name="GenericIllegalRegexp">
 			<property name="format" value="\S\s\s+$"/>
-			<property name="ignoreComments " value="true"/>
+			<property name="ignoreComments" value="true"/>
 			<property name="message" value="Remove whitespaces at end of line"/>
 		</module>
 
