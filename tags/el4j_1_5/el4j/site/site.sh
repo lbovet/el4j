@@ -22,14 +22,14 @@ mvn -N -Pgenerate.doc.set.framework-modules jxr:jxr &
 mvn -Pgenerate.doc.set.framework-modules javadoc:javadoc &
 
 # generate doc for applications
-#mvn -N -Pgenerate.doc.set.framework-applications collector:aggregate-files
-#mvn -N -Pgenerate.doc.set.framework-applications jxr:jxr
-#mvn -Pgenerate.doc.set.framework-applications javadoc:javadoc
+mvn -N -Pgenerate.doc.set.framework-applications collector:aggregate-files
+mvn -N -Pgenerate.doc.set.framework-applications jxr:jxr &
+mvn -Pgenerate.doc.set.framework-applications javadoc:javadoc &
 
 # generate doc for tests
 mvn -N -Pgenerate.doc.set.framework-tests collector:aggregate-files
 mvn -N -Pgenerate.doc.set.framework-tests jxr:jxr &
-mvn -Pgenerate.doc.set.framework-tests javadoc:javadoc &
+mvn -Pgenerate.doc.set.framework-tests javadoc:test-javadoc &
 
 # generate doc for demos
 #mvn -N -Pgenerate.doc.set.framework-demos collector:aggregate-files
