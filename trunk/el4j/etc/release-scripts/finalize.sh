@@ -88,6 +88,9 @@ echo "##########################################################################
 echo "#Work is not finished yet! Check all pom.xml and site.xml files if they are correct #"
 echo "#Look at the files that have a CHECK! tag.                                          #"
 echo "#####################################################################################"
+echo "#The archetype version (maven/archetype) and <version.el4j-framework.current>       #"
+echo "#in pom.xml are definetly wrong and have to be corrected!                           #"
+echo "#####################################################################################"
 echo ""
 
 rm pom.files.txt
