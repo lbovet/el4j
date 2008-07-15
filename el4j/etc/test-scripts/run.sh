@@ -98,7 +98,7 @@ case $1 in
 		cd ../../../..
 		
 		# execute archetype
-		version=$(cat external/maven/archetypes/module-template/pom.xml | grep "<version>" | tail -n 1 | tr -d ' \t\r\n<>version/' | sed 's/-SNAPSHOT//')
+		version=$(cat external/maven/archetypes/module-template/pom.xml | grep "<version>" | tail -n 1 | tr -d ' \t\r\n<>version/')
 
 		#mvn archetype:create -DarchetypeGroupId=ch.elca.el4j
 		mvn org.apache.maven.plugins:maven-archetype-plugin:1.0-alpha-7:create -DarchetypeGroupId=ch.elca.el4j  \
