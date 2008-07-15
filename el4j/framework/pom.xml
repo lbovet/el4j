@@ -208,7 +208,6 @@
 				<jxr.title>EL4J framework modules ${project.version} Reference</jxr.title>
 			</properties>
 		</profile>
-		<!--
 		<profile>
 			<id>generate.doc.set.framework-applications</id>
 			<build>
@@ -274,7 +273,6 @@
 				<jxr.title>EL4J framework applications ${project.version} Reference</jxr.title>
 			</properties>
 		</profile>
-		-->
 		<profile>
 			<id>generate.doc.set.framework-tests</id>
 			<build>
@@ -307,6 +305,7 @@
 							<aggregate>true</aggregate>
 							<sourcepath>${aggregated.files.output.directory}</sourcepath>
 							<reportOutputDirectory>${javadoc.output.directory}</reportOutputDirectory>
+							<destDir>./</destDir>
 							<doctitle>${javadoc.title}</doctitle>
 							<windowtitle>${javadoc.title}</windowtitle>
 							<show>private</show>
@@ -426,9 +425,7 @@
 	<properties>
 		<!-- Sets values -->
 		<set.framework-modules>framework-modules</set.framework-modules>
-		<!--
 		<set.framework-applications>framework-applications</set.framework-applications>
-		-->
 		<set.framework-tests>framework-tests</set.framework-tests>
 		<!--
 		<set.framework-demos>framework-demos</set.framework-demos>
