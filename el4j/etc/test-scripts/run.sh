@@ -92,6 +92,12 @@ case $1 in
 		mvn -f internal/pom.xml clean install -fae -B -Pauto,weblogic10x,db2,integrationTests $2
 		;;
 	"archetype")
+		# install archetype
+		cd external/maven/archetypes/module-template
+		mvn clean install
+		cd ../../../..
+		
+		# execute archetype
 		version=$(cat external/maven/archetypes/module-template/pom.xml | grep "<version>" | tail -n 1 | tr -d ' \t\r\n<>version/' | sed 's/-SNAPSHOT//')
 
 		#mvn archetype:create -DarchetypeGroupId=ch.elca.el4j
