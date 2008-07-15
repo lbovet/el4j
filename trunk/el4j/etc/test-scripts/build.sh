@@ -9,8 +9,10 @@
 PROFILE=$1
 LOG_DIR=$2
 
-# Log directory
-mkdir $LOG_DIR
+if [ $# -ge 2 ] ; then
+	# Log directory
+	mkdir $LOG_DIR
+fi
 
 if [ $# -ge 3 ] && [ $3 == "Java6" ] ; then
 	cat settings.xml \
@@ -22,6 +24,12 @@ else
 	OPTS=""
 fi
 
-# perform the maven build and copy the result in case of errors
-./run.sh $PROFILE $OPTS || ( ( \
-find . -path "*target/surefire-reports*" -exec cp  {} $LOG_DIR/ \; ) && (( ps -ely )) && (( 0 )) )
+if [ $# -ge 2 ] ; then
+	# perform the maven build and copy the result in case of errors
+	./run.sh $PROFILE $OPTS || ( ( \
+	find . -path "*target/surefire-reports*" -exec cp  {} $LOG_DIR/ \; ) && (( ps -ely )) && (( 0 )) )
+else
+	# no log file -> just run tests
+	./run.sh $PROFILE $OPTS
+fi
+
