@@ -18,6 +18,7 @@ package ch.elca.el4j.demos.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -29,6 +30,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import org.jdesktop.application.Action;
+import org.jdesktop.application.ResourceMap;
 import org.noos.xing.mydoggy.ToolWindowAnchor;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
@@ -73,7 +75,25 @@ public class MainFormDocking extends DockingApplication {
 	 */
 	protected JComponent createMainPanel() {
 		JPanel panel = new JPanel(new BorderLayout());
-		panel.add(createToolBar(), BorderLayout.NORTH);
+		JToolBar toolbar = createToolBar();
+		panel.add(toolbar, BorderLayout.NORTH);
+		
+		// register extensions
+		Map<String, GUIExtension> extensions = (Map<String, GUIExtension>)
+			getSpringContext().getBeansOfType(GUIExtension.class);
+		
+		for (GUIExtension extension : extensions.values()) {
+			super.addActionMappingInstance(extension);
+			
+			extension.setApplication(this);
+			extension.extendMenuBar(getMainFrame().getJMenuBar());
+			extension.extendToolBar(toolbar);
+			
+			// inject properties because non-Actions don't do it automatically
+			ResourceMap map = getContext().getResourceMap(extension.getClass());
+			map.injectComponents(getMainFrame().getJMenuBar());
+			map.injectComponent(toolbar);
+		}
 		
 		panel.add((Component) getToolWindowManager(), BorderLayout.CENTER);
 		
