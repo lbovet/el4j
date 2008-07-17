@@ -18,13 +18,16 @@ package ch.elca.el4j.demos.gui;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Map;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+import javax.swing.JToolBar;
 
 import org.jdesktop.application.Action;
+import org.jdesktop.application.ResourceMap;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import ch.elca.el4j.gui.swing.AbstractMDIApplication;
@@ -55,6 +58,11 @@ public class MainFormMDIXML extends AbstractMDIApplication {
 	 * A example popup menu.
 	 */
 	private JPopupMenu m_popup;
+	
+	/**
+	 * The toolbar.
+	 */
+	private JToolBar m_toolbar;
 	
 	/**
 	 * Determines if user is admin (for activation demo).
@@ -89,7 +97,7 @@ public class MainFormMDIXML extends AbstractMDIApplication {
 		super.addActionMappingInstance(actions);
 		
 		CookSwing cookSwing = new CookSwing(this);
-		showMain((JFrame) cookSwing.render("gui/main.xml"));
+		setMainFrame((JFrame) cookSwing.render("gui/main.xml"));
 		
 		m_desktopPane.addMouseListener(new MouseAdapter() {
 			@Override
@@ -99,6 +107,25 @@ public class MainFormMDIXML extends AbstractMDIApplication {
 				}
 			}
 		});
+		
+		// register extensions
+		Map<String, GUIExtension> extensions = (Map<String, GUIExtension>)
+			getSpringContext().getBeansOfType(GUIExtension.class);
+		
+		for (GUIExtension extension : extensions.values()) {
+			super.addActionMappingInstance(extension);
+			
+			extension.setApplication(this);
+			extension.extendMenuBar(getMainFrame().getJMenuBar());
+			extension.extendToolBar(m_toolbar);
+			
+			// inject properties because non-Actions don't do it automatically
+			ResourceMap map = getContext().getResourceMap(extension.getClass());
+			map.injectComponents(getMainFrame().getJMenuBar());
+			map.injectComponent(m_toolbar);
+		}
+		
+		showMain();
 	}
 	
 	@Action

@@ -20,6 +20,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -32,6 +33,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import org.jdesktop.application.Action;
+import org.jdesktop.application.ResourceMap;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import ch.elca.el4j.gui.swing.MDIApplication;
@@ -80,7 +82,8 @@ public class MainFormMDI extends MDIApplication {
 	 */
 	protected JComponent createMainPanel() {
 		JPanel panel = new JPanel(new BorderLayout());
-		panel.add(createToolBar(), BorderLayout.NORTH);
+		JToolBar toolbar = createToolBar();
+		panel.add(toolbar, BorderLayout.NORTH);
 		
 		createDefaultDesktopPane();
 		
@@ -95,6 +98,24 @@ public class MainFormMDI extends MDIApplication {
 				}
 			}
 		});
+		
+		// register extensions
+		Map<String, GUIExtension> extensions = (Map<String, GUIExtension>)
+			getSpringContext().getBeansOfType(GUIExtension.class);
+		
+		for (GUIExtension extension : extensions.values()) {
+			super.addActionMappingInstance(extension);
+			
+			extension.setApplication(this);
+			extension.extendMenuBar(getMainFrame().getJMenuBar());
+			extension.extendToolBar(toolbar);
+			
+			// inject properties because non-Actions don't do it automatically
+			ResourceMap map = getContext().getResourceMap(extension.getClass());
+			map.injectComponents(getMainFrame().getJMenuBar());
+			map.injectComponent(toolbar);
+		}
+		
 		
 		// set default size (if size has not yet been saved by AppFW)
 		getMainFrame().getContentPane().setPreferredSize(

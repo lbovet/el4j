@@ -46,7 +46,7 @@
 	<panel preferredsize="640,480">
 		<borderlayout>
 			<constraint location="North">
-				<el4j:flattoolbar>
+				<el4j:flattoolbar cx:var="m_toolbar">
 					<button action="quit" />
 					<button action="cut" />
 					<button action="copy" />
