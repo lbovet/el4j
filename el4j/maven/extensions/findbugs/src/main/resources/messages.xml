@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <MessageCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                  xsi:noNamespaceSchemaLocation="messagecollection.xsd">
+	xsi:noNamespaceSchemaLocation="messagecollection.xsd">
 
-  <Detector class="ch.elca.el4j.findbugs.FindBannedMethodCalls" >
-    <Details>
-      <![CDATA[
-        <p> Banned methods (provided by ESAPI). See http://www.owasp.org/index.php/ESAPI_Secure_Coding_Guideline#Banned_APIs
-      ]]>
-    </Details>
-  </Detector>
+	<Detector class="ch.elca.el4j.findbugs.FindBannedMethodCalls">
+		<Details>
+			<![CDATA[
+				<p> Banned methods (provided by ESAPI). See http://www.owasp.org/index.php/ESAPI_Secure_Coding_Guideline#Banned_APIs
+			]]>
+		</Details>
+	</Detector>
 
 
-  <BugPattern type="ESAPI_BANNED_API_CALL">
-    <ShortDescription>Call method banned by ESAPI</ShortDescription>
+	<BugPattern type="ESAPI_BANNED_API_CALL">
+		<ShortDescription>Call method banned by ESAPI</ShortDescription>
 
-    <LongDescription>{1} calls banned method</LongDescription>
+		<LongDescription>{1} calls banned method</LongDescription>
 
-    <Details>
-      <![CDATA[
-        <p> See http://www.owasp.org/index.php/ESAPI_Secure_Coding_Guideline#Banned_APIs
-      ]]>
-    </Details>
-  </BugPattern>
+		<Details>
+			<![CDATA[
+				<p> See http://www.owasp.org/index.php/ESAPI_Secure_Coding_Guideline#Banned_APIs
+			]]>
+		</Details>
+	</BugPattern>
 
-  <!-- More BugPattern nodes would go here... -->
+	<!-- More BugPattern nodes would go here... -->
 
-  <BugCode abbrev="ESAPI">ESAPI banned method calls</BugCode>
+	<BugCode abbrev="ESAPI">ESAPI banned method calls</BugCode>
 
-  <!-- More BugCode nodes would go here... -->
+	<!-- More BugCode nodes would go here... -->
 
 </MessageCollection>
