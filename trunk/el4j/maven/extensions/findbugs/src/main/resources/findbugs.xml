@@ -1,15 +1,13 @@
 <FindbugsPlugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   				xsi:noNamespaceSchemaLocation="findbugsplugin.xsd"
-				pluginid="ch.elca.el4j.findbugs"
-                defaultenabled="true"
-                provider="FindBugs project" 
-                website="http://findbugs.sourceforge.net"
-                >
+	xsi:noNamespaceSchemaLocation="findbugsplugin.xsd"
+	pluginid="ch.elca.el4j.findbugs" defaultenabled="true"
+	provider="FindBugs project"
+	website="http://findbugs.sourceforge.net">
 
 	<Detector class="ch.elca.el4j.findbugs.FindBannedMethodCalls"
-            speed="fast"
-            reports="ESAPI_BANNED_API_CALL"
-	    />
-	<BugPattern type="ESAPI_BANNED_API_CALL" abbrev="ESAPI" category="MALICIOUS_CODE" />
+		speed="fast" reports="ESAPI_BANNED_API_CALL" />
+		
+	<BugPattern type="ESAPI_BANNED_API_CALL" abbrev="ESAPI"
+		category="MALICIOUS_CODE" />
 
 </FindbugsPlugin>
