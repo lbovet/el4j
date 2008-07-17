@@ -112,13 +112,14 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>1.2</version>
+				<version>1.2-el4j_20080716_1200</version>
 				<configuration>
 					<xmlOutput>true</xmlOutput>
 					<!-- Min, Default, Max -->
 					<effort>Max</effort>
 					<!-- High, Default, Low, Ignore, and Exp -->
 					<threshold>Low</threshold>
+					<pluginList>${el4j.external}/maven/extensions/findbugs/findbugs-checks.jar</pluginList>
 				</configuration>
 			</plugin>
 			<plugin>
