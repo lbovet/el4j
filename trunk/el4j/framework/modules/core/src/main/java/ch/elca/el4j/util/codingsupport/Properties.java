@@ -43,6 +43,8 @@ import java.util.Map;
  * );</script>
  *
  * @author Andreas Bur (ABU)
+ * 
+ * @deprecated use &lt;util:properties&gt; instead.
  */
 public class Properties extends java.util.Properties {
 
