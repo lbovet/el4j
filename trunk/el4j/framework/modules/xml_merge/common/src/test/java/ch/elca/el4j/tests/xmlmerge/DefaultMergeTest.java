@@ -56,15 +56,14 @@ import ch.elca.el4j.services.xmlmerge.factory.XPathOperationFactory;
 import ch.elca.el4j.services.xmlmerge.merge.DefaultXmlMerge;
 
 /**
- *
  * This class tests several functionalities of the xml_merge module, using a
  * <code>DefaultXmlMerge</code> instance.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$URL:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/xml_merge/common/src/test/java/ch/elca/el4j/tests/xmlmerge/DefaultMergeTest.java $",
- *    "$Revision:1078 $",
- *    "$Date:2006-09-04 16:40:08 +0000 (Mo, 04 Sep 2006) $",
- *    "$Author:mathey $"
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
  * );</script>
  *
  * @author Laurent Bovet (LBO)
@@ -516,15 +515,14 @@ public class DefaultMergeTest {
 	}
 	
 	/**
-	 *
 	 * This class is a custom matcher. With this matcher, the original and patch
 	 * elements match only if their tag name is "servlet-name".
 	 *
 	 * <script type="text/javascript">printFileStatus
-	 *   ("$URL:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/xml_merge/common/src/test/java/ch/elca/el4j/tests/xmlmerge/DefaultMergeTest.java $",
-	 *    "$Revision:1078 $",
-	 *    "$Date:2006-09-04 16:40:08 +0000 (Mo, 04 Sep 2006) $",
-	 *    "$Author:mathey $"
+	 *   ("$URL$",
+	 *    "$Revision$",
+	 *    "$Date$",
+	 *    "$Author$"
 	 * );</script>
 	 *
 	 * @author Laurent Bovet (LBO)

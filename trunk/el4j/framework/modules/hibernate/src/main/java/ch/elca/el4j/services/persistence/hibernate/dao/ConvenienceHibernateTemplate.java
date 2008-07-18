@@ -23,7 +23,6 @@ import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
- *
  * This is a convenience class for the Hibernate template.
  *  Features:
  *   <ul>
@@ -33,12 +32,11 @@ import ch.elca.el4j.util.codingsupport.Reject;
  *            (they use the <em>Strong</em> suffixes)
  *   </ul>
  *
- *
  * <script type="text/javascript">printFileStatus
- *   ("$URL:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/hibernate/src/main/java/ch/elca/el4j/services/persistence/hibernate/dao/ConvenienceHibernateTemplate.java $",
- *    "$Revision:1059 $",
- *    "$Date:2006-09-04 13:33:11 +0000 (Mo, 04 Sep 2006) $",
- *    "$Author:mathey $"
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
  * );</script>
  *
  * @author Alex Mathey (AMA)

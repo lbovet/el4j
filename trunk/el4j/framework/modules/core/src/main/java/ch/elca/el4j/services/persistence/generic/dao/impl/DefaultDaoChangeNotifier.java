@@ -26,10 +26,10 @@ import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier;
  * A default implementation with no notable features.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$URL:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/core/src/main/java/ch/elca/el4j/services/persistence/generic/dao/impl/DefaultRepositoryChangeNotifier.java $",
- *    "$Revision:1040 $",
- *    "$Date:2006-09-04 09:11:56 +0000 (Mo, 04 Sep 2006) $",
- *    "$Author:mathey $"
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
  * );</script>
  *
  * @author Adrian Moos (AMS)

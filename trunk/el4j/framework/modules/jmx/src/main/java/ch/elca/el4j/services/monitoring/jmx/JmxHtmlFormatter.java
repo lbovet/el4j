@@ -17,11 +17,14 @@
 package ch.elca.el4j.services.monitoring.jmx;
 
 /**
- * This class creates a HtmlAdapter for an MBeanServer. <script
- * type="text/javascript">printFileStatus ("$URL:
- * https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/module/jmx/java/ch/elca/el4j/services/monitoring/jmx/HtmlAdapterFactoryBean.java
- * $", "$Revision$", "$Date: 2006-03-13 14:15:43 +0100 (Mo, 13 Mrz 2006)
- * $", "$Author$" );</script>
+ * This class creates a HtmlAdapter for an MBeanServer.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Rashid Waraich (RWA)
  */

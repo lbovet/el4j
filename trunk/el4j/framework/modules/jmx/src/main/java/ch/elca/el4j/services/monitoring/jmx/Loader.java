@@ -50,11 +50,14 @@ import ch.elca.el4j.util.codingsupport.Reject;
 /**
  * Entry point for the JMX package. If this bean is defined in an Application
  * Context, then it will set up the whole JMX world by creating the proxies and
- * setting the corresponding references. <script
- * type="text/javascript">printFileStatus ("$URL:
- * https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/module/jmx/java/ch/elca/el4j/services/monitoring/jmx/Loader.java
- * $", "$Revision$", "$Date: 2006-08-14 11:10:54 +0200 (Mo, 14 Aug 2006)
- * $", "$Author$" );</script>
+ * setting the corresponding references.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Raphael Boog (RBO)
  * @author Rashid Waraich (RWA)
