@@ -29,6 +29,19 @@
 				value="%d %5p [%c] %m%n"/>
 		</layout>
 	</appender>
+	
+	<!-- <appender name="acegiSecurityLogfile" class="ch.elca.el4j.util.logging.appenders.SmartRollingFileAppender">
+		<param name="File" value="el4j-logging/security_el4j_logging_output.log"/>
+		<param name="MaxFileSize" value="100KB"/>
+		<param name="MaxBackupIndex" value="10"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p %-17c{2} (%30F:%L) %3x - %m%n"/>
+		</layout>
+		<filter class="org.apache.log4j.varia.StringMatchFilter">
+			<param name="StringToMatch" value="org.acegisecurity" />
+			<param name="AcceptOnMatch" value="true" />
+		</filter>
+	</appender> -->
 
 	
 	
@@ -36,6 +49,12 @@
 	<logger name="ch.elca.el4j">
 		<level value="WARN"/>
 	</logger>
+	
+	<!-- logger for acegi security in JBoss Seam web applications -->
+	<!-- <logger name="org.jboss.seam.web">
+		<level value="ERROR"/>
+		<appender-ref ref="acegiSecurityLogfile"/>
+	</logger> -->
 	
 	<!-- EL4J framwork: debug output, such as all Spring configuration files that are loaded -->
 	<!--logger name="el4j.debugging">
