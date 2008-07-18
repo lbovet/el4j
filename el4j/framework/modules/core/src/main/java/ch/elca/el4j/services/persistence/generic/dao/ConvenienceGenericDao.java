@@ -64,7 +64,10 @@ public interface ConvenienceGenericDao<T, ID extends Serializable>
 	T findById(ID id) throws DataRetrievalFailureException, DataAccessException;
 	
 	/**
-	 * Retrieves a domain object by identifier lazily.
+	 * Retrieves a domain object by identifier lazily. It uses Hibernate lazy loading, namely
+	 * the method load() instead of get(). For detailed information about fetching strategies see
+	 * http://www.hibernate.org/hib_docs/v3/reference/en/html/performance.html.
+	 * 
 	 * @see findById
 	 */
 	T findByIdLazy(ID id) throws DataRetrievalFailureException, DataAccessException;
