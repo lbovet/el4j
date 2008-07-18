@@ -20,11 +20,14 @@ import org.apache.log4j.Appender;
 import org.apache.log4j.Level;
 
 /**
- * The interface of the logging proxy class, for setting logging properties via
- * JMX. <script type="text/javascript">printFileStatus ("$URL:
- * https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/module/jmx/java/ch/elca/el4j/services/monitoring/jmx/SpringBeanMBMBean.java
- * $", "$Revision$", "$Date: 2006-03-13 14:15:43 +0100 (Mo, 13 Mrz 2006)
- * $", "$Author$" );</script>
+ * The interface of the logging proxy class, for setting logging properties via JMX.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Rashid Waraich (RWA)
  */
