@@ -47,6 +47,8 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 	extends ConvenienceGenericDao<T, ID> {
 	
 	/**
+	 * Convenience method: Executes saveOrUpdate and flush on that entity.
+	 * 
 	 * @param entity    The domain object to save or update
 	 * @return          The saved or updated object
 	 * @throws DataAccessException
@@ -57,6 +59,8 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 		DataIntegrityViolationException, OptimisticLockingFailureException;
 
 	/**
+	 * Retrieves all the domain objects matching a Hibernate criteria.
+	 * 
 	 * @param hibernateCriteria    the criteria that the result has to fulfill
 	 * @return                     all object that fulfill the criteria
 	 * @throws DataAccessException
@@ -67,6 +71,8 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 		throws DataAccessException;
 	
 	/**
+	 * Retrieves a range of domain objects matching a Hibernate criteria.
+	 * 
 	 * @param hibernateCriteria    the criteria that the result has to fulfill
 	 * @param firstResult          the index of the first result to return
 	 * @param maxResults           the maximum number of results to return
@@ -80,6 +86,8 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 		int firstResult, int maxResults) throws DataAccessException;
 	
 	/**
+	 * Retrieves the number of domain objects matching a Hibernate criteria.
+	 * 
 	 * @param hibernateCriteria    the criteria that the result has to fulfill
 	 * @return                     the number of objects that fulfill
 	 *                             the criteria
@@ -102,7 +110,17 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 	public Order[] getDefaultOrder();
 
 	/**
+	 * Set default order of results returned by getAll and findByQuery (not findByCriteria!).
+	 * If defaultOrder is <code>null</code> then default ordering is deactivated.
+	 * 
 	 * @param defaultOrder    the default {@link Order} to order the results
 	 */
 	public void setDefaultOrder(Order... defaultOrder);
+	
+	/**
+	 * Create a {@link DetachedCriteria} what contains default ordering and distinct constraints.
+	 * 
+	 * @return    a {@link DetachedCriteria}
+	 */
+	public DetachedCriteria getOrderedCriteria();
 }
