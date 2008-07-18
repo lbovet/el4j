@@ -19,7 +19,6 @@ package ch.elca.el4j.services.persistence.hibernate.dao;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -41,15 +40,14 @@ import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 /**
- *
  * This class is a Hibernate-specific implementation of the
  * ConvenienceGenericDao interface.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$URL:https://svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/hibernate/src/main/java/ch/elca/el4j/services/persistence/hibernate/dao/GenericHibernateDao.java $",
- *    "$Revision:1059 $",
- *    "$Date:2006-09-04 13:33:11 +0000 (Mo, 04 Sep 2006) $",
- *    "$Author:mathey $"
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
  * );</script>
  *
  * @param <T>
@@ -145,15 +143,12 @@ public class GenericHibernateDao<T, ID extends Serializable>
 		
 		T entity;
 		if (lock) {
-			entity = (T) getConvenienceHibernateTemplate()
-				.get(getPersistentClass(), id, LockMode.UPGRADE);
+			entity = (T) getConvenienceHibernateTemplate().get(getPersistentClass(), id, LockMode.UPGRADE);
 		} else {
-			entity = (T) getConvenienceHibernateTemplate()
-				.get(getPersistentClass(), id);
+			entity = (T) getConvenienceHibernateTemplate().get(getPersistentClass(), id);
 		}
 		if (entity == null) {
-			throw new DataRetrievalFailureException("The desired domain object"
-				+ " could not be retrieved.");
+			throw new DataRetrievalFailureException("The desired domain object could not be retrieved.");
 		}
 		return entity;
 	}
@@ -186,7 +181,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	@SuppressWarnings("unchecked")
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<T> getAll() throws DataAccessException {
-		return getConvenienceHibernateTemplate().findByCriteria(getCriteria());
+		return getConvenienceHibernateTemplate().findByCriteria(getOrderedCriteria());
 	}
 
 	
@@ -202,11 +197,9 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	public List<T> findByQuery(QueryObject q) throws DataAccessException {
 		DetachedCriteria hibernateCriteria = getCriteria(q);
 		
-		ConvenienceHibernateTemplate template
-			= getConvenienceHibernateTemplate();
+		ConvenienceHibernateTemplate template = getConvenienceHibernateTemplate();
 		
-		return template.findByCriteria(
-			hibernateCriteria, q.getFirstResult(), q.getMaxResults());
+		return template.findByCriteria(hibernateCriteria, q.getFirstResult(), q.getMaxResults());
 	}
 
 	/**
@@ -222,8 +215,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	public int findCountByQuery(QueryObject q) throws DataAccessException {
 		DetachedCriteria hibernateCriteria = getCriteria(q);
 		
-		ConvenienceHibernateTemplate template
-			= getConvenienceHibernateTemplate();
+		ConvenienceHibernateTemplate template = getConvenienceHibernateTemplate();
 
 		return template.findCountByCriteria(hibernateCriteria);
 	}
@@ -234,8 +226,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	public List<T> findByCriteria(DetachedCriteria hibernateCriteria)
 		throws DataAccessException {
 		
-		ConvenienceHibernateTemplate template
-			= getConvenienceHibernateTemplate();
+		ConvenienceHibernateTemplate template = getConvenienceHibernateTemplate();
 		
 		return template.findByCriteria(hibernateCriteria);
 	}
@@ -243,14 +234,12 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	/** {@inheritDoc} */
 	@SuppressWarnings("unchecked")
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<T> findByCriteria(DetachedCriteria hibernateCriteria,
-		int firstResult, int maxResults) throws DataAccessException {
+	public List<T> findByCriteria(DetachedCriteria hibernateCriteria, int firstResult, int maxResults)
+		throws DataAccessException {
 		
-		ConvenienceHibernateTemplate template
-			= getConvenienceHibernateTemplate();
+		ConvenienceHibernateTemplate template = getConvenienceHibernateTemplate();
 		
-		return template.findByCriteria(hibernateCriteria,
-			firstResult, maxResults);
+		return template.findByCriteria(hibernateCriteria, firstResult, maxResults);
 	}
 	
 	/** {@inheritDoc} */
@@ -259,8 +248,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	public int findCountByCriteria(DetachedCriteria hibernateCriteria)
 		throws DataAccessException {
 		
-		ConvenienceHibernateTemplate template
-			= getConvenienceHibernateTemplate();
+		ConvenienceHibernateTemplate template = getConvenienceHibernateTemplate();
 
 		return template.findCountByCriteria(hibernateCriteria);
 	}
@@ -271,8 +259,8 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	@Transactional(propagation = Propagation.REQUIRED)
 	public T saveOrUpdate(T entity) throws DataAccessException,
 		DataIntegrityViolationException, OptimisticLockingFailureException {
-		getConvenienceHibernateTemplate().saveOrUpdateStrong(entity,
-			getPersistentClassName());
+		
+		getConvenienceHibernateTemplate().saveOrUpdateStrong(entity, getPersistentClassName());
 		return entity;
 	}
 	
@@ -283,6 +271,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	@Transactional(propagation = Propagation.REQUIRED)
 	public T saveOrUpdateAndFlush(T entity) throws DataAccessException,
 		DataIntegrityViolationException, OptimisticLockingFailureException {
+		
 		T tmp = saveOrUpdate(entity);
 		flush();
 		return tmp;
@@ -332,6 +321,13 @@ public class GenericHibernateDao<T, ID extends Serializable>
 		getConvenienceHibernateTemplate().flush();
 	}
 	
+	/** {@inheritDoc} */
+	public DetachedCriteria getOrderedCriteria() {
+		DetachedCriteria criteria = DetachedCriteria.forClass(getPersistentClass());
+		
+		return addOrder(makeDistinct(criteria));
+	}
+	
 	/**
 	 * Returns the simple name of the persistent class this DAO is responsible
 	 * for.
@@ -344,39 +340,39 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	}
 	
 	/**
-	 * @return    a suitable {@link DetachedCriteria}
-	 */
-	protected DetachedCriteria getCriteria() {
-		DetachedCriteria criteria
-			= DetachedCriteria.forClass(getPersistentClass());
-		
-		return fillCriteria(criteria);
-	}
-	
-	/**
-	 * @param queryObject    an EL4J {@link QueryObject}
+	 * @param queryObject    an EL4J {@link QueryObject} that should be converted to a {@link DetachedCriteria}
 	 * @return               a suitable {@link DetachedCriteria}
 	 */
 	protected DetachedCriteria getCriteria(QueryObject queryObject) {
-		DetachedCriteria criteria
-			= CriteriaTransformer.transform(queryObject, getPersistentClass());
+		DetachedCriteria criteria = CriteriaTransformer.transform(queryObject, getPersistentClass());
 		
-		return fillCriteria(criteria);
+		if (queryObject.getOrderConstraints().size() == 0) {
+			criteria = addOrder(criteria);
+		}
+		
+		return makeDistinct(criteria);
 	}
 	
+	
 	/**
-	 * @param criteria    the criteria to fill
-	 * @return            the criteria enhanced with order and distinct
-	 *                    restrictions (if set using setDefaultOrder)
+	 * @param criteria    the criteria to modify
+	 * @return            the criteria enhanced with order constraints (if set using setDefaultOrder)
 	 */
-	protected DetachedCriteria fillCriteria(DetachedCriteria criteria) {
+	protected DetachedCriteria addOrder(DetachedCriteria criteria) {
 		if (m_defaultOrder != null) {
 			for (Order order : m_defaultOrder) {
 				criteria.addOrder(order);
 			}
 		}
-		criteria.setResultTransformer(
-			CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+		return criteria;
+	}
+	
+	/**
+	 * @param criteria    the criteria to modify
+	 * @return            the criteria enhanced with distinct restrictions
+	 */
+	protected DetachedCriteria makeDistinct(DetachedCriteria criteria) {
+		criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		
 		return criteria;
 	}
