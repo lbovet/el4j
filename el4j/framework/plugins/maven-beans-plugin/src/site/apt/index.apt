@@ -10,9 +10,10 @@ Maven beans plugin
   This plugin collects all beans files that are used in a ModuleApplicationContext and copies them to a target directory. To do this, it parses a java or XML source file that must have special comments.
   The purpose is to allow easy viewing of the beans with Spring IDE.
 
-  Here is a sample configuration. The important parameter is *sourceFile* which designates the file to be parsed.
+  Here is a sample configuration. The important parameter is <<sourceFile>> which designates the file to be parsed.
   
   The plugin is run by executing "mvn beans:beans" from its directory.
+  
 +----------------
 <plugin>
 	<groupId>ch.elca.el4j.plugins</groupId>
@@ -24,13 +25,14 @@ Maven beans plugin
 	</configuration>
 </plugin>
 +----------------
-The file must follow this convention:
 
-The inclusive locations are marked with a comment "// $$ BEANS INCLUDE $$" on a line of its own. For XML, use <!-- $$ BEANS INCLUDE $$ -->
-The following lines may each contain one string at most enclosed in double quotes.
-The inclusive lines as soon as a "}" is read (java) or a closing tag (xml).
+  The file must follow this convention:
 
-If exclusive lines are present, they are preceded with "// $$ BEANS EXCLUDE $$", the rest is the same for them.
+  The inclusive locations are marked with a comment "<<// $$ BEANS INCLUDE $$>>" on a line of its own. For XML, use <<\<!-- $$ BEANS INCLUDE $$ --\>>>
+  The following lines may each contain one string at most enclosed in double quotes.
+  The inclusive lines as soon as a "<<}>>" is read (java) or a closing tag (xml).
+
+  If exclusive lines are present, they are preceded with "<<// $$ BEANS EXCLUDE $$>>", the rest is the same for them.
 
 Example:
 
@@ -47,6 +49,6 @@ String[] applicationContextPaths = {
 }; 
 +----------------
 
-Collected beans are stored in target/beans. Any bean files in a jar are extracted and placed in a subdirectoy of the corresponding name; files from the file system are placed in a directory files/.
+  Collected beans are stored in <<<target/beans>>>. Any bean files in a jar are extracted and placed in a subdirectoy of the corresponding name; files from the file system are placed in a directory <<<files/>>>.
 
-To use Spring IDE, import the beans/ directory as a source directory and scan it for beans.
+  To use Spring IDE, import the <<<beans/>>> directory as a source directory and scan it for beans.
