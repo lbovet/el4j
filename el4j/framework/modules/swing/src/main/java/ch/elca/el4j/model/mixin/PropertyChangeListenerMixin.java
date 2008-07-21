@@ -196,8 +196,16 @@ public class PropertyChangeListenerMixin extends
 					invocation.getThis().getClass());
 		}
 		
-
-		if (invocation.getMethod().getName().startsWith("set")) {
+		/*
+		 * Bugfix : "setXyz" is a setter for property "xyz" but "set" on its own
+		 * is not! For example, List.set(int position, Object value) takes two
+		 * parameters and is not a setter. This used to cause an IllegalArgEx.
+		 * 
+		 * DBD
+		 */
+		
+		if (invocation.getMethod().getName().startsWith("set")
+			&& !invocation.getMethod().getName().equals("set")) {
 			if (invocation.getArguments().length == 1) {
 
 				// invoke the corresponding get method to see
@@ -225,7 +233,8 @@ public class PropertyChangeListenerMixin extends
 				throw new IllegalArgumentException(
 						"Too many arguments for Interceptor");
 			}
-		} else if (invocation.getMethod().getName().startsWith("get")) {
+		} else if (invocation.getMethod().getName().startsWith("get")
+			&& !invocation.getMethod().getName().equals("get")) {
 			Object result = super.invoke(invocation);
 			if (result == null) {
 				return null;
