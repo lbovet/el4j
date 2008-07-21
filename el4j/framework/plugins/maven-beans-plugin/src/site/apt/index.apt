@@ -33,6 +33,7 @@ The inclusive lines as soon as a "}" is read (java) or a closing tag (xml).
 If exclusive lines are present, they are preceded with "// $$ BEANS EXCLUDE $$", the rest is the same for them.
 
 Example:
+
 +----------------
 // $$ BEANS INCLUDE $$ 
 String[] applicationContextPaths = {
