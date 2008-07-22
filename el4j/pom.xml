@@ -533,7 +533,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-eclipse-plugin</artifactId>
-					<version>2.5.1</version>
+					<version>2.5.1-el4j_20080722_1200</version> <!-- patched because of problems with artifact version checks -->
 					<configuration>
 						<additionalProjectnatures>
 							<projectnature>de.mvmsoft.checkclipse.CheckclipseNature</projectnature>
@@ -541,7 +541,7 @@
 						<additionalBuildcommands>
 							<buildcommand>de.mvmsoft.checkclipse.CheckclipseBuilder</buildcommand>
 						</additionalBuildcommands>
-						<workspace>${basedir}/workspace</workspace>
+						<workspace>${el4j.project.home}/workspace</workspace>
 						<wtpversion>2.0</wtpversion>
 						<reactorProjectGroupIdPrefixes>${eclipse.reactorProjectGroupIdPrefixes}</reactorProjectGroupIdPrefixes>
 					</configuration>
