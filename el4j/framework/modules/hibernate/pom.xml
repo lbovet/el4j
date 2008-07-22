@@ -135,4 +135,11 @@
 			<version>1.5.3</version>
 		</dependency>
 	</dependencies>
+	<repositories>
+		<!-- used for Hibernate Search 3.0.1.GA (in central is only 3.0.0.GA) -->
+		<repository>
+			<id>jboss</id>
+			<url>http://repository.jboss.org/maven2</url>
+		</repository>
+	</repositories>
 </project>
