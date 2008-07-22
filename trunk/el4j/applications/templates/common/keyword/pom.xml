@@ -94,5 +94,12 @@
 			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-database</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-core</artifactId>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 </project>

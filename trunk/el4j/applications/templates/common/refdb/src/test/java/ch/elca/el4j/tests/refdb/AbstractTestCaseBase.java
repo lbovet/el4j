@@ -24,10 +24,7 @@ import javax.sql.DataSource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.junit.After;
 import org.junit.Before;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
 
 import ch.elca.el4j.apps.refdb.dao.AnnotationDao;
 import ch.elca.el4j.apps.refdb.dao.BookDao;
@@ -39,8 +36,8 @@ import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.File;
 import ch.elca.el4j.apps.refdb.dom.FormalPublication;
 import ch.elca.el4j.apps.refdb.dom.Link;
-import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
+import ch.elca.el4j.tests.core.AbstractTest;
 
 /**
  * This class is a base class for tests in module-refdb-core.
@@ -54,17 +51,12 @@ import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
  *
  * @author Martin Zeltner (MZE)
  */
-public abstract class AbstractTestCaseBase {
+public abstract class AbstractTestCaseBase extends AbstractTest {
 	/**
 	 * Private logger.
 	 */
 	private static Log s_logger
 		= LogFactory.getLog(AbstractTestCaseBase.class);
-
-	/**
-	 * Application context to load beans.
-	 */
-	private ConfigurableApplicationContext m_applicationContext;
 
 	/**
 	 * Data source. Created by application context.
@@ -104,34 +96,13 @@ public abstract class AbstractTestCaseBase {
 	protected AbstractTestCaseBase() { }
 
 	/**
-	 * @return Returns the applicationContext.
-	 */
-	protected synchronized ApplicationContext getApplicationContext() {
-		if (m_applicationContext == null) {
-			m_applicationContext = new ModuleApplicationContext(
-				getIncludeConfigLocations(), getExcludeConfigLocations(),
-				isBeanOverridingAllowed(), (ApplicationContext) null);
-		}
-		return m_applicationContext;
-	}
-
-	/**
 	 * @return Returns <code>true</code> if bean definition overriding should
 	 *         be allowed.
 	 */
+	@Override
 	protected boolean isBeanOverridingAllowed() {
 		return false;
 	}
-	
-	/**
-	 * @return Returns the string array with exclude locations.
-	 */
-	protected abstract String[] getExcludeConfigLocations();
-
-	/**
-	 * @return Returns the string array with include locations.
-	 */
-	protected abstract String[] getIncludeConfigLocations();
 	
 	/**
 	 * @return Returns the dataSource.
@@ -174,16 +145,6 @@ public abstract class AbstractTestCaseBase {
 					s_logger.info("Connection could not be closed.");
 				}
 			}
-		}
-	}
-	
-	/**
-	 * Clean up after each test.
-	 */
-	@After
-	public void tearDown() {
-		if (m_applicationContext != null) {
-			m_applicationContext.close();
 		}
 	}
 
