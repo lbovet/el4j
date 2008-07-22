@@ -42,7 +42,7 @@
 /instance/org.eclipse.debug.ui/pref_state_memento.org.eclipse.debug.ui.ExpressionView=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<VariablesViewMemento org.eclipse.debug.ui.SASH_DETAILS_PART\="315" org.eclipse.debug.ui.SASH_VIEW_PART\="684"/>
 /instance/org.eclipse.jst.j2ee.ejb.annotations.xdoclet/XDOCLETBUILDERACTIVE=true
 /instance/org.eclipse.jdt.ui/formatter_profile=_EL4J Standard Formatting
-/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.alignment_for_conditional_expression=80
+/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.alignment_for_conditional_expression=120
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.comment.format_header=false
 /instance/org.eclipse.wst.sse.ui/useQuickDiffPrefPage=true
 /instance/org.eclipse.core.resources/version=1
@@ -325,7 +325,7 @@
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_before_comma_in_enum_declarations=do not insert
 /instance/org.eclipse.jdt.ui/sp_cleanup.add_default_serial_version_id=true
 @org.eclipse.jdt.ui=3.3.2.r332_20080128
-/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.comment.line_length=80
+/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.comment.line_length=120
 /instance/org.eclipse.core.net/proxiesEnabled=true
 @org.eclipse.wst.dtd.ui=1.0.201.v200705302225
 /instance/org.eclipse.jdt.ui/org.eclipse.jdt.ui.importorder=java;javax;org;com;
@@ -404,7 +404,7 @@ file_export_version=3.0
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_before_opening_brace_in_enum_declaration=insert
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_before_opening_paren_in_parenthesized_expression=do not insert
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_before_comma_in_multiple_local_declarations=do not insert
-/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.lineSplit=80
+/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.lineSplit=120
 /instance/org.eclipse.core.net/org.eclipse.core.net.hasMigrated=true
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_before_opening_paren_in_if=insert
 /instance/org.eclipse.team.cvs.ui/pref_first_startup=false
