@@ -29,4 +29,27 @@
 		</dependency>
 	</dependencies>
 	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>package</id>
+						<phase>package</phase>
+						<configuration>
+							<tasks>
+								<!-- <echo message="Copy ${basedir}/target/${artifactId}-${version}.jar to ${basedir}/findbugs-checks.jar"/> -->
+								<copy file="${basedir}/target/${artifactId}-${version}.jar" tofile="${basedir}/findbugs-checks.jar" overwrite="true" />
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
