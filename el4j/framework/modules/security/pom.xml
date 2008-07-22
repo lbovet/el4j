@@ -37,6 +37,11 @@
 			
 		<!-- Third party tools -->
 		<dependency>
+			<groupId>org.owasp</groupId>
+			<artifactId>esapi</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
 			<groupId>org.acegisecurity</groupId>
 			<artifactId>acegi-security</artifactId>
 			<version>1.0.7</version>
