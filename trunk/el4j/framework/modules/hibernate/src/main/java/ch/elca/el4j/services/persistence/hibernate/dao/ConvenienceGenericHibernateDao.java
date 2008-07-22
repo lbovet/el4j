@@ -47,7 +47,7 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 	extends ConvenienceGenericDao<T, ID> {
 	
 	/**
-	 * Convenience method: Executes saveOrUpdate and flush on that entity.
+	 * Convenience method: Executes saveOrUpdate() and flush() on that entity.
 	 * 
 	 * @param entity    The domain object to save or update
 	 * @return          The saved or updated object
@@ -59,7 +59,7 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 		DataIntegrityViolationException, OptimisticLockingFailureException;
 
 	/**
-	 * Retrieves all the domain objects matching a Hibernate criteria.
+	 * Retrieves all the domain objects matching the Hibernate criteria.
 	 * 
 	 * @param hibernateCriteria    the criteria that the result has to fulfill
 	 * @return                     all object that fulfill the criteria
@@ -71,7 +71,7 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 		throws DataAccessException;
 	
 	/**
-	 * Retrieves a range of domain objects matching a Hibernate criteria.
+	 * Retrieves a range of domain objects matching the Hibernate criteria.
 	 * 
 	 * @param hibernateCriteria    the criteria that the result has to fulfill
 	 * @param firstResult          the index of the first result to return
@@ -86,7 +86,7 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 		int firstResult, int maxResults) throws DataAccessException;
 	
 	/**
-	 * Retrieves the number of domain objects matching a Hibernate criteria.
+	 * Retrieves the number of domain objects matching the Hibernate criteria.
 	 * 
 	 * @param hibernateCriteria    the criteria that the result has to fulfill
 	 * @return                     the number of objects that fulfill
