@@ -266,16 +266,6 @@
 				<weblogic10x.cargo.log.file>${project.build.directory}/cargo-weblogic.log</weblogic10x.cargo.log.file>
 				<weblogic10x.jrockit.home>/opt/bea/jrockit-R27.4.0-jdk1.5.0_12</weblogic10x.jrockit.home>
 				
-				<!-- Birt -->
-				<birt.home>${el4j.project.tools}/birt-runtime-2_1_0</birt.home>
-				
-				<!-- Eclipse: what projects are to be considered "local" (and shall not be used as JARs but directly as eclipse projects) -->
-				<!--eclipse.reactorProjectGroupIdPrefixes>
-								ch.elca.el4j.modules,
-								ch.elca.el4j.tests,
-								ch.elca.el4j.applications
-						</eclipse.reactorProjectGroupIdPrefixes-->
-						
 				<!-- EL4J team specific settings -->
 				<!-- Uncomment the following on leaffy -->
 				<!--project-server.path>file:/home/java</project-server.path-->
