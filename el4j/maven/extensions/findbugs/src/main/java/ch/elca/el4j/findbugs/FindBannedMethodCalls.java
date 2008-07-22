@@ -67,6 +67,8 @@ import edu.umd.cs.findbugs.ba.type.TypeFrame;
 public class FindBannedMethodCalls implements Detector {
 
 	private BugReporter bugReporter;
+	
+	private AnalysisContext analysisContext;
 
 	private static final boolean DEBUG = false;
 
@@ -136,6 +138,10 @@ public class FindBannedMethodCalls implements Detector {
 	}
 
 	public void init(ClassContext classContext) {
+		if (analysisContext != null && analysisContext == classContext.getAnalysisContext()) {
+			// analysis context is the same -> use cached BannedMethodCalls
+			return;
+		}
 		m_banned = new BannedMethodCalls(classContext.getAnalysisContext());
 
 		try {
@@ -216,6 +222,9 @@ public class FindBannedMethodCalls implements Detector {
 			String cName = invoke.getClassName(cpg);
 
 			if (!m_banned.isBanned(cName, mName)) {
+				if (DEBUG) {
+					System.out.println("Check method " + cName + "." + mName);
+				}
 				continue;
 			}
 
