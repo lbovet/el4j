@@ -83,9 +83,7 @@ public class IPAddressFilter implements Filter {
 	/**     */
 	private boolean m_disabled = false;
 
-	/**
-	 * {@inheritDoc}
-	 */
+	/** {@inheritDoc} */
 	public void init(FilterConfig config) throws ServletException {
 		
 		m_systemProperty = config.getInitParameter(PROPERTY_PARAM_NAME);
@@ -100,9 +98,7 @@ public class IPAddressFilter implements Filter {
 		s_log.debug("Using property: " + m_systemProperty);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+	/** {@inheritDoc} */
 	public void doFilter(ServletRequest request, ServletResponse response,
 		FilterChain chain)
 		throws IOException, ServletException {
@@ -125,11 +121,9 @@ public class IPAddressFilter implements Filter {
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-    public void destroy() {
-    	// nothing to do
+	/** {@inheritDoc} */
+	public void destroy() {
+		// nothing to do
 	}
 
 	/**
