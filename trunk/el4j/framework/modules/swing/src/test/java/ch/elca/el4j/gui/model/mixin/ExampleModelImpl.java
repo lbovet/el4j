@@ -38,4 +38,10 @@ public class ExampleModelImpl implements ExampleModel {
 	public void setMap(Map<Integer, Integer> map) {
 		m_map = map;
 	}
+	
+	public void set() { }
+	public void setXandY(int x, int y) { }
+	public int getYofX(int x) {
+		return 0;
+	}
 }

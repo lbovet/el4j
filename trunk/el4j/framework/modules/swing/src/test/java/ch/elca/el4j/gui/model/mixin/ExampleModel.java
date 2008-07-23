@@ -12,4 +12,9 @@ public interface ExampleModel {
 	
 	public Map<Integer, Integer> getMap();
 	public void setMap(Map<Integer, Integer> map);
+	
+	// no java bean getters/setters
+	public void set();
+	public void setXandY(int x, int y);
+	public int getYofX(int x);
 }

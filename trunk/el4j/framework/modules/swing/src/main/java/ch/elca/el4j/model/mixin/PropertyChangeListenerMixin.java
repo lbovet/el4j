@@ -67,8 +67,7 @@ public class PropertyChangeListenerMixin extends
 	/**
 	 * The logger.
 	 */
-	private static final Log s_logger = LogFactory
-			.getLog(PropertyChangeListenerMixin.class);
+	private static final Log s_logger = LogFactory.getLog(PropertyChangeListenerMixin.class);
 	
 	/**
 	 * The support for property change notification.
@@ -106,8 +105,8 @@ public class PropertyChangeListenerMixin extends
 	 *
 	 * @param <T>      the object class
 	 * @param object   the object to be wrapped
-	 * @return the same object wrapped with a spring proxy that has the
-	 *         {@link PropertyChangeListenerMixin} as {@link Advisor}
+	 * @return         the same object wrapped with a spring proxy that has the
+	 *                 {@link PropertyChangeListenerMixin} as {@link Advisor}
 	 */
 	public static <T> T addPropertyChangeMixin(T object) {
 		return AopHelper.addAdvice(object, new PropertyChangeListenerMixin());
@@ -118,11 +117,10 @@ public class PropertyChangeListenerMixin extends
 	 *
 	 * @param <T>      the object class
 	 * @param list     the list to be wrapped
-	 * @return the corresponding {@link ObservableList}
+	 * @return         the corresponding {@link ObservableList}
 	 */
 	public static <T> List<T> addPropertyChangeMixin(List<T> list) {
-		List<T> wrappedList
-			= AopHelper.addAdvice(list, new PropertyChangeListenerMixin());
+		List<T> wrappedList = AopHelper.addAdvice(list, new PropertyChangeListenerMixin());
 		
 		if (list instanceof ObservableList) {
 			return wrappedList;
@@ -138,11 +136,10 @@ public class PropertyChangeListenerMixin extends
 	 * @param <K>      the key class of the map
 	 * @param <V>      the value class of the map
 	 * @param map      the map to be wrapped
-	 * @return the corresponding {@link ObservableMap}
+	 * @return         the corresponding {@link ObservableMap}
 	 */
 	public static <K, V> Map<K, V> addPropertyChangeMixin(Map<K, V> map) {
-		Map<K, V> wrappedMap
-			= AopHelper.addAdvice(map, new PropertyChangeListenerMixin());
+		Map<K, V> wrappedMap = AopHelper.addAdvice(map, new PropertyChangeListenerMixin());
 		
 		if (map instanceof ObservableMap) {
 			return wrappedMap;
@@ -171,13 +168,13 @@ public class PropertyChangeListenerMixin extends
 
 	/** {@inheritDoc} */
 	public void removePropertyChangeListener(String key,
-			PropertyChangeListener l) {
+		PropertyChangeListener l) {
+		
 		m_changeSupport.removePropertyChangeListener(key, l);
 	}
 
 	/** {@inheritDoc} */
-	protected void firePropertyChange(String key, Object oldValue,
-			Object newValue) {
+	protected void firePropertyChange(String key, Object oldValue, Object newValue) {
 		s_logger.debug("Fire " + key + ": " + oldValue + " -> " + newValue);
 		m_changeSupport.firePropertyChange(key, oldValue, newValue);
 	}
@@ -188,53 +185,40 @@ public class PropertyChangeListenerMixin extends
 	public Object invoke(MethodInvocation invocation) throws Throwable {
 		// initialize PropertyChangeSupport here
 		if (m_changeSupport == null) {
-			m_changeSupport = new PropertyChangeSupport(
-					AopContext.currentProxy());
+			m_changeSupport = new PropertyChangeSupport(AopContext.currentProxy());
 		}
 		if (m_classValidator == null) {
-			m_classValidator = new ClassValidator(
-					invocation.getThis().getClass());
+			m_classValidator = new ClassValidator(invocation.getThis().getClass());
 		}
 		
-		/*
-		 * Bugfix : "setXyz" is a setter for property "xyz" but "set" on its own
-		 * is not! For example, List.set(int position, Object value) takes two
-		 * parameters and is not a setter. This used to cause an IllegalArgEx.
-		 * 
-		 * DBD
-		 */
+		String methodName = invocation.getMethod().getName();
 		
-		if (invocation.getMethod().getName().startsWith("set")
-			&& !invocation.getMethod().getName().equals("set")) {
-			if (invocation.getArguments().length == 1) {
+		// Only intercept java bean setters and getters (setXyz(xyz) and getXyz())
+		if (methodName.startsWith("set") && !methodName.equals("set")
+			&& invocation.getArguments().length == 1) {
 
-				// invoke the corresponding get method to see
-				// if the value has actually changed
-				Method getter = getGetter(invocation.getMethod());
+			// invoke the corresponding get method to see
+			// if the value has actually changed
+			Method getter = getGetter(invocation.getMethod());
 
-				if (getter != null) {
-					// modification check is unimportant
-					// for write only methods
-					Object oldVal = getter.invoke(invocation.getThis());
-					Object result = super.invoke(invocation);
+			if (getter != null) {
+				// modification check is unimportant
+				// for write only methods
+				Object oldVal = getter.invoke(invocation.getThis());
+				Object result = super.invoke(invocation);
 
-					String fieldName = invocation.getMethod().getName()
-							.substring("set".length());
-					fieldName = fieldName.substring(0, 1).toLowerCase()
-							+ fieldName.substring(1);
+				String fieldName = methodName.substring("set".length());
+				fieldName = fieldName.substring(0, 1).toLowerCase() + fieldName.substring(1);
 
-					firePropertyChange(fieldName, oldVal, getter
-							.invoke(invocation.getThis()));
-					return result;
-				}
-				throw new IllegalArgumentException(
-						"Mixin Interceptor is not able to find getter Method");
+				firePropertyChange(fieldName, oldVal, getter.invoke(invocation.getThis()));
+				return result;
 			} else {
 				throw new IllegalArgumentException(
-						"Too many arguments for Interceptor");
+					"Mixin Interceptor is not able to find getter Method");
 			}
-		} else if (invocation.getMethod().getName().startsWith("get")
-			&& !invocation.getMethod().getName().equals("get")) {
+		} else if (methodName.startsWith("get") && !methodName.equals("get")
+			&& invocation.getArguments().length == 0) {
+			
 			Object result = super.invoke(invocation);
 			if (result == null) {
 				return null;
@@ -244,15 +228,13 @@ public class PropertyChangeListenerMixin extends
 			if (List.class.isAssignableFrom(result.getClass())) {
 				if (!(result instanceof ObservableList)) {
 					// replace List by ObservableList
-					result = ObservableCollections.observableList(
-						(List) result);
+					result = ObservableCollections.observableList((List) result);
 					modified = true;
 				}
 			} else if (Map.class.isAssignableFrom(result.getClass())) {
 				if (!(result instanceof ObservableMap)) {
 					// replace Map by ObservableMap
-					result = ObservableCollections.observableMap(
-						(Map) result);
+					result = ObservableCollections.observableMap((Map) result);
 					modified = true;
 				}
 			}
@@ -270,9 +252,8 @@ public class PropertyChangeListenerMixin extends
 	}
 	
 	/**
-	 * @param setter
-	 *            the setter method
-	 * @return the corresponding getter method
+	 * @param setter    the setter method
+	 * @return          the corresponding getter method
 	 */
 	private Method getGetter(Method setter) {
 		Method getter = null;
@@ -300,9 +281,8 @@ public class PropertyChangeListenerMixin extends
 	}
 
 	/**
-	 * @param getter
-	 *            the getter method
-	 * @return the corresponding setter method
+	 * @param getter    the getter method
+	 * @return          the corresponding setter method
 	 */
 	private Method getSetter(Method getter) {
 		Method setter = null;
@@ -316,8 +296,7 @@ public class PropertyChangeListenerMixin extends
 
 		String setterName = getter.getName().replaceFirst("get", "set");
 		try {
-			setter = getter.getDeclaringClass().getMethod(setterName,
-					getter.getReturnType());
+			setter = getter.getDeclaringClass().getMethod(setterName, getter.getReturnType());
 
 			// cache setter
 			synchronized (m_methodCache) {
@@ -335,14 +314,12 @@ public class PropertyChangeListenerMixin extends
 		try {
 			m_backup.clear();
 
-			BeanInfo info = Introspector.getBeanInfo(
-					AopContext.currentProxy().getClass());
+			BeanInfo info = Introspector.getBeanInfo(AopContext.currentProxy().getClass());
 			for (PropertyDescriptor pd : info.getPropertyDescriptors()) {
 				Method r = pd.getReadMethod();
 				Method w = pd.getWriteMethod();
 				if (r != null && w != null) {
-					m_backup.put(pd.getWriteMethod(), r.invoke(
-							AopContext.currentProxy()));
+					m_backup.put(pd.getWriteMethod(), r.invoke(AopContext.currentProxy()));
 				}
 			}
 		} catch (Exception e) {
@@ -356,8 +333,7 @@ public class PropertyChangeListenerMixin extends
 			try {
 				method.invoke(AopContext.currentProxy(), m_backup.get(method));
 			} catch (Exception e) {
-				s_logger.warn("Could not restore property with setter "
-						+ method.getName());
+				s_logger.warn("Could not restore property with setter " + method.getName());
 			}
 		}
 	}
@@ -371,16 +347,14 @@ public class PropertyChangeListenerMixin extends
 	/** {@inheritDoc} */
 	@SuppressWarnings("unchecked")
 	public boolean isValid() {
-		InvalidValue[] validationMessages = m_classValidator
-			.getInvalidValues(AopContext.currentProxy());
+		InvalidValue[] validationMessages = m_classValidator.getInvalidValues(AopContext.currentProxy());
 		return validationMessages.length == 0;
 	}
 
 	/** {@inheritDoc} */
 	@SuppressWarnings("unchecked")
 	public boolean isValid(String property) {
-		InvalidValue[] validationMessages = m_classValidator.getInvalidValues(
-			AopContext.currentProxy(), property);
+		InvalidValue[] validationMessages = m_classValidator.getInvalidValues(AopContext.currentProxy(), property);
 		return validationMessages.length == 0;
 	}
 }
