@@ -23,6 +23,19 @@
 	<description>
 		Module security of the EL4J framework.
 	</description>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<!-- run mvn exec:java to generate a new 128-bit AES key -->
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>ch.elca.el4j.services.security.encryption.AESCipher</mainClass>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 	<dependencies>
 		<!-- EL4J framework modules -->
 		<dependency>
