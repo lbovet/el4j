@@ -75,7 +75,7 @@
 		</property>
 	</bean>
 
-	<bean id="autoProxyCreator"
+	<bean id="securityAutoProxyCreator"
 		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
 		<property name="interceptorNames">
 			<list>
