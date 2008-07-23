@@ -32,7 +32,7 @@
 	
 	<!-- Add a simple interceptor to all service methods -->
 	<bean id="traceInterceptor" class="org.springframework.aop.interceptor.SimpleTraceInterceptor"/>
-	<bean id="autoProxyCreator" class="ch.elca.el4j.core.aop.IntelligentExclusiveBeanNameAutoProxyCreator">
+	<bean id="traceAutoProxyCreator" class="ch.elca.el4j.core.aop.IntelligentExclusiveBeanNameAutoProxyCreator">
 		<property name="beanNames">
 			<value>*Service</value>
 		</property>

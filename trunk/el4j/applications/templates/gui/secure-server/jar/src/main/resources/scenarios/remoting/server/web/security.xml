@@ -72,7 +72,7 @@
 
 	<!-- <bean id="autoProxyCreator"
 		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator"> -->
-	<bean id="autoProxyCreator"
+	<bean id="securityAutoProxyCreator"
 		class="ch.elca.el4j.core.aop.IntelligentExclusiveBeanNameAutoProxyCreator">
 		<property name="interceptorNames">
 			<list>
