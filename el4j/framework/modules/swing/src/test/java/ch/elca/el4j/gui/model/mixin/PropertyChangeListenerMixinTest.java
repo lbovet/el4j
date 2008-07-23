@@ -62,7 +62,7 @@ public class PropertyChangeListenerMixinTest {
 	
 	@SuppressWarnings("unused")
 	private class ListListener implements ObservableListListener {
-		public String event;
+		public String event = null;
 		
 		public void listElementsAdded(ObservableList list, int index, int length) {
 			event = "add";
@@ -128,6 +128,23 @@ public class PropertyChangeListenerMixinTest {
 		assertEquals(testListener.event.getNewValue(), "property1 has changed");
 		
 		((PropertyChangeListenerCapability) model).removePropertyChangeListener("property99", testListener);
+	}
+	
+	@Test
+	public void testNonJavaBeansMethodCalls() {
+		// create model
+		ExampleModel model = new ExampleModelImpl();
+		model = PropertyChangeListenerMixin.addPropertyChangeMixin(model);
+		
+		// add listener
+		PropertyListener testListener = new PropertyListener();
+		((PropertyChangeListenerCapability) model).addPropertyChangeListener(testListener);
+		
+		model.set();
+		model.setXandY(0, 0);
+		model.getYofX(0);
+		
+		assertEquals(testListener.event, null);
 	}
 	
 	@Test
