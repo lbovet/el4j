@@ -82,10 +82,28 @@ public interface ConvenienceGenericDao<T, ID extends Serializable>
 	 *             If domain object has been deleted in the meantime
 	 * @throws DataAccessException
 	 *             If general data access problem occurred
+	 * @deprecated Renamed to deleteById as of el4j 1.6
 	 */
+	@Deprecated
 	@RollbackConstraint(rollbackFor = { DataAccessException.class,
 			OptimisticLockingFailureException.class })
 	void delete(ID id)
+		throws OptimisticLockingFailureException, DataAccessException;
+	
+	/**
+	 * Deletes the domain object with the given id, disregarding any
+	 * concurrent modifications that may have occurred.
+	 *
+	 * @param id
+	 *             The id of the domain object to delete
+	 * @throws OptimisticLockingFailureException
+	 *             If domain object has been deleted in the meantime
+	 * @throws DataAccessException
+	 *             If general data access problem occurred
+	 */
+	@RollbackConstraint(rollbackFor = { DataAccessException.class,
+			OptimisticLockingFailureException.class })
+	void deleteById(ID id)
 		throws OptimisticLockingFailureException, DataAccessException;
 	
 	/**
