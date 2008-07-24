@@ -173,9 +173,7 @@ public class DefaultDaoRegistry implements DaoRegistry,
 	protected void initDao(GenericDao<?> dao) {
 	}
 	
-	/**
-	 * @return Returns the registered DAOs.
-	 */
+	/** {@inheritDoc} */
 	public Map<Class<?>, ? extends GenericDao<?>> getDaos() {
 		return m_daos;
 	}
