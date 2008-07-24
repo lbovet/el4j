@@ -292,8 +292,16 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	}
 
 	/** {@inheritDoc} */
+	@Deprecated
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void delete(ID id) throws DataAccessException {
+		getConvenienceHibernateTemplate().deleteStrong(getPersistentClass(),
+			id, getPersistentClassName());
+	}
+	
+	/** {@inheritDoc} */
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void deleteById(ID id) throws DataAccessException {
 		getConvenienceHibernateTemplate().deleteStrong(getPersistentClass(),
 			id, getPersistentClassName());
 	}
