@@ -64,7 +64,7 @@ public final class MainFormDistributedMDI {
 
 			String[] applicationContextPaths = {
 				"classpath*:mandatory/*.xml",
-				"classpath:scenarios/swing/demo/*.xml",
+				"classpath:scenarios/gui/swing/*.xml",
 				"classpath:scenarios/remoting/client/httpInvoker-client-config.xml"
 			};
 			
