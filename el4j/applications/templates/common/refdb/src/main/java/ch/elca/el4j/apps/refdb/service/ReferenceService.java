@@ -114,6 +114,20 @@ public interface ReferenceService extends KeywordService {
 	 */
 	public List<Reference> searchReferences(QueryObject query)
 		throws DataAccessException;
+	
+	/**
+	 * Search references using Hibernate Search.
+	 * 
+	 * @param critera
+	 *            Is the word to search in Reference objects
+	 * @param field
+	 *            Is the field where to do the search
+	 * @return Returns a list of references. Returns never <code>null</code>.
+	 * @throws DataAccessException
+	 *             If general data access problem occurred.
+	 */
+	public List<Reference> searchReferences(String field, String critera)
+		throws DataAccessException;
 
 	/**
 	 * Save reference. If reference is new, viz is has no primary key, it will

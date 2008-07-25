@@ -68,4 +68,20 @@ public interface GenericReferenceDao<T extends Reference,
 	 * @return True if a reference with the given id exists
 	 */
 	public boolean referenceExists(ID id);
+	
+	/**
+	 * Get all the references which have in the reference field the specific word.
+	 * 
+	 * @param critera
+	 *            Is the condition to search.
+	 * @param field
+	 *            Is the field where to do the search
+	 * @return Returns the desired reference.
+	 * @throws DataAccessException
+	 *             If general data access problem occurred.
+	 * @throws DataRetrievalFailureException
+	 *             If reference could not be retrieved.
+	 */
+	public List<T> search(String field, String critera)
+		throws DataAccessException, DataRetrievalFailureException;
 }

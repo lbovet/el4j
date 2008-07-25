@@ -2,11 +2,16 @@ package ch.elca.el4j.apps.refdb.dao.impl.hibernate;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.queryParser.MultiFieldQueryParser;
+import org.apache.lucene.queryParser.ParseException;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.impl.CriteriaImpl;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.transaction.annotation.Propagation;
@@ -45,6 +50,8 @@ import ch.elca.el4j.util.codingsupport.Reject;
 public class GenericHibernateReferenceDao<T extends Reference,
 	ID extends Serializable> extends GenericHibernateDao<T, ID>
 	implements GenericReferenceDao<T, ID> {
+	
+	private final String TOKEN = ",";
 
 	/**
 	 * {@inheritDoc}
@@ -58,8 +65,7 @@ public class GenericHibernateReferenceDao<T extends Reference,
 		DetachedCriteria criteria
 			= DetachedCriteria.forClass(getPersistentClass());
 		criteria.add(Restrictions.like("name", name));
-		List<T> result
-			= getConvenienceHibernateTemplate().findByCriteria(criteria);
+		List<T> result = getConvenienceHibernateTemplate().findByCriteria(criteria);
 		
 		// TODO MZE: Is this really needed although lazy loading is already
 		// switched off?
@@ -101,4 +107,26 @@ public class GenericHibernateReferenceDao<T extends Reference,
 		return false;
 	}
 	
+	/** {@inheritDoc} */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<T> search(String field, String critera)
+		throws DataAccessException, DataRetrievalFailureException {
+
+		Reject.ifEmpty(critera);
+		String[] entityFields = field.split(TOKEN);
+		
+		FullTextSession fullTextSession = Search.createFullTextSession(getSession());
+		MultiFieldQueryParser parser = new MultiFieldQueryParser(entityFields, new StandardAnalyzer());
+		org.apache.lucene.search.Query luceneQuery;
+		try {
+			luceneQuery = parser.parse(critera);
+		} catch (ParseException e) {
+			return new ArrayList<T>(0);
+		}
+		org.hibernate.Query query = fullTextSession.createFullTextQuery(luceneQuery, getPersistentClass());
+		
+		@SuppressWarnings("unchecked")
+		List<T> result = (List<T>) query.list();
+		return result;
+	}
 }
