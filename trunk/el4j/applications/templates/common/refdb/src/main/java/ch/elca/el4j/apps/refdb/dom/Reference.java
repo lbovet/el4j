@@ -24,17 +24,17 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-
-
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 import org.hibernate.validator.AssertTrue;
 
 import org.hibernate.validator.NotNull;
 
 import ch.elca.el4j.apps.keyword.dom.Keyword;
-import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
+import ch.elca.el4j.services.persistence.hibernate.dto.AbstractIndexedIntKeyIntOptimisticLockingDto;
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
 /**
@@ -53,6 +53,7 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  */
 
 @Entity
+@Indexed
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING,
 	name = "CLASSTYPE")
@@ -60,7 +61,7 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
 @Table(name = "REFERENCESTABLE")
 @SequenceGenerator(name = "keyid_generator",
 	sequenceName = "reference_sequence")
-public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
+public class Reference extends AbstractIndexedIntKeyIntOptimisticLockingDto {
 	/**
 	 * Name of the reference (book title, ...).
 	 */
@@ -152,6 +153,7 @@ public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
 	/**
 	 * @return Returns the description.
 	 */
+	@Field
 	public String getDescription() {
 		return m_description;
 	}
@@ -200,6 +202,7 @@ public class Reference extends AbstractIntKeyIntOptimisticLockingDto {
 	 * @return Returns the name.
 	 */
 	@NotNull
+	@Field
 	//@Length(min = 3)
 	public String getName() {
 		return m_name;

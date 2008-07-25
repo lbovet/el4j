@@ -224,6 +224,31 @@ public class DefaultReferenceService extends DefaultKeywordService
 		list.addAll(listBooks);
 		return list;
 	}
+	
+	/** {@inheritDoc} */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Reference> searchReferences(String field, String critera) {
+
+		// Call hibernate Search
+		List<Link> listLinks = getLinkDao().search(field, critera);
+		List<FormalPublication> listFormalPublications = getFormalPublicationDao().search(field, critera);
+		List<Book> listBooks = getBookDao().search(field, critera);
+
+		List<Reference> listTmp = new LinkedList<Reference>();
+		listTmp.addAll(listLinks);
+		listTmp.addAll(listFormalPublications);
+		listTmp.addAll(listBooks);
+
+		// Delete the duplicate entity
+
+		List<Reference> list = new LinkedList<Reference>();
+		for (Reference entity : listTmp) {
+			if (!list.contains(entity)) {
+				list.add(entity);
+			}
+		}
+		return list;
+	}
 
 	/**
 	 * {@inheritDoc}
