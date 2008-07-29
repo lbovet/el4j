@@ -24,8 +24,8 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import org.apache.commons.codec.binary.Base64;
+
 
 /**
  * This class can be used to en/decrypt Strings using the AES algorithm.
@@ -51,16 +51,6 @@ public class AESCipher {
 	private static Log s_logger = LogFactory.getLog(AESCipher.class);
 	
 	/**
-	 * Base64 encoder.
-	 */
-	private BASE64Encoder m_encoder = new BASE64Encoder();
-	
-	/**
-	 * Base64 decoder.
-	 */
-	private BASE64Decoder m_decoder = new BASE64Decoder();
-	
-	/**
 	 * Cipher used for encryption.
 	 */
 	private Cipher m_cipherEncypt;
@@ -75,7 +65,7 @@ public class AESCipher {
 	 */
 	public AESCipher(String base64encodedKey) {
 		try {
-			byte[] key = m_decoder.decodeBuffer(base64encodedKey);
+			byte[] key = Base64.decodeBase64(base64encodedKey.getBytes());
 			SecretKeySpec skeySpec = new SecretKeySpec(key, "AES");
 			
 			m_cipherEncypt = Cipher.getInstance("AES");
@@ -94,7 +84,7 @@ public class AESCipher {
 	 */
 	public String encrypt(String plainText) {
 		try {
-			return PREFIX + m_encoder.encode(m_cipherEncypt.doFinal(plainText.getBytes()));
+			return PREFIX + Base64.encodeBase64(m_cipherEncypt.doFinal(plainText.getBytes()));
 		} catch (Exception e) {
 			s_logger.error("Error while encrypting text", e);
 			return null;
@@ -109,7 +99,7 @@ public class AESCipher {
 		try {
 			if (encyptedText.startsWith(PREFIX)) {
 				return new String(m_cipherDecypt.doFinal(
-					m_decoder.decodeBuffer(encyptedText.substring(PREFIX.length()))));
+						Base64.decodeBase64(encyptedText.substring(PREFIX.length()).getBytes())));
 			} else {
 				s_logger.error("Error while decrypting text: encyptedText does not start with " + PREFIX);
 				return encyptedText;
@@ -133,7 +123,7 @@ public class AESCipher {
 		SecretKey skey = kgen.generateKey();
 		byte[] raw = skey.getEncoded();
 
-		System.out.println("Generated AES-128 key:" + new BASE64Encoder().encode(raw));
+		System.out.println("Generated AES-128 key:" + Base64.encodeBase64(raw));
 	}
 
 }
