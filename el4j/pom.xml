@@ -533,7 +533,8 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-eclipse-plugin</artifactId>
-					<version>2.5.1-el4j_20080722_1200</version> <!-- patched because of problems with artifact version checks -->
+					<!-- patched because of problems with artifact version checks and module dependencies order -->
+					<version>2.5.1-el4j_20080804_1600</version>
 					<configuration>
 						<additionalProjectnatures>
 							<projectnature>de.mvmsoft.checkclipse.CheckclipseNature</projectnature>
