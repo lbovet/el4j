@@ -68,7 +68,7 @@ public final class MainFormDistributedMDI {
 				"classpath*:scenarios/securityscope/distributed-security"
 					+ "-scope-client.xml",
 				"classpath:scenarios/remoting/client/*.xml",
-				"classpath:scenarios/swing/demo/*.xml"};
+				"classpath:scenarios/gui/swing/*.xml"};
 
 			ModuleApplicationContextConfiguration contextConfig
 				= new ModuleApplicationContextConfiguration();
