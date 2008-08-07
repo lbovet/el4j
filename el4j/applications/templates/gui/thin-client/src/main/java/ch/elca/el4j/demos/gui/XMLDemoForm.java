@@ -40,7 +40,7 @@ import cookxml.cookswing.CookSwing;
  * Demonstrates how to use cookSwing.
  *
  * The most important command is <code>cookSwing.render("test.xml");</code>. It
- * processes the whole XML file and initializes bound local variables (e.g.
+ * processes the whole XML file and initializes corresponing local variables (e.g.
  * <code>m_firstName</code>).
  *
  * As this class implements {@link Bindable}, cookSwing is able to set up all
@@ -64,11 +64,16 @@ public class XMLDemoForm extends JPanel implements Bindable {
 	private final Binder m_binder = BinderManager.getBinder(this);
 	
 	public XMLDemoForm() {
+		// Create or load data. This has to be done before creating and binding the GUI components.
 		createData();
 		
+		// Create the GUI components from an XML description.
+		// When a component has a property cx:var the created component is assigned to the corresponding variable.
+		// As we implement Bindable, all specified bindings are registerd in m_binder.
 		CookSwing cookSwing = new CookSwing(this);
 		cookSwing.render("gui/xmlDemoForm.xml");
 		
+		// Bind all bindings created during cookSwing.render()
 		m_binder.bindAll();
 	}
 
@@ -76,6 +81,7 @@ public class XMLDemoForm extends JPanel implements Bindable {
 		m_persons = new ArrayList<Person>();
 		
 		Person person1 = new DefaultPerson("Test", "Last", 4);
+		// all objects that should be bound to a GUI component must have a property change capability to work corretly.
 		person1 = PropertyChangeListenerMixin.addPropertyChangeMixin(person1);
 		
 		Person person2 = new DefaultPerson("Test2", "Last2", 88);
@@ -90,6 +96,7 @@ public class XMLDemoForm extends JPanel implements Bindable {
 	
 	/** {@inheritDoc} */
 	public Binder getBinder() {
+		// this method is called during cookSwing.render() to register the bindings specified in the XML
 		return m_binder;
 	}
 	
@@ -98,7 +105,6 @@ public class XMLDemoForm extends JPanel implements Bindable {
 	 */
 	@Action
 	public void info() {
-		m_statusLabel.setText("Person: " + m_firstName.getText()
-			+ " " + m_lastName.getText());
+		m_statusLabel.setText("Person: " + m_firstName.getText() + " " + m_lastName.getText());
 	}
 }
