@@ -20,10 +20,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
-import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.Property;
 
 import org.w3c.dom.Element;
+
+import com.silvermindsoftware.hitch.binding.PropertyUtil;
 
 import cookxml.core.DecodeEngine;
 import cookxml.core.exception.CookXmlException;
@@ -80,7 +81,7 @@ public abstract class AbstractBindingCreator implements Creator {
 		String src = elm.getAttribute(SOURCE);
 		if (!src.equals("")) {
 			if (src.contains(".")) {
-				Property prop = BeanProperty.create(
+				Property prop = PropertyUtil.create(
 					src.substring(src.indexOf(".") + 1));
 				obj = prop.getValue(decodeEngine.getVariable(
 					src.substring(0, src.indexOf("."))));

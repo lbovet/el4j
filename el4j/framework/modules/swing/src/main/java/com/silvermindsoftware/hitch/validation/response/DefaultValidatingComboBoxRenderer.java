@@ -22,8 +22,9 @@ import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 
-import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.swingbinding.validation.ValidationCapability;
+
+import com.silvermindsoftware.hitch.binding.PropertyUtil;
 
 import ch.elca.el4j.gui.swing.GUIApplication;
 
@@ -105,7 +106,7 @@ public class DefaultValidatingComboBoxRenderer
 		
 		Component renderer;
 		if (m_property != null) {
-			Object propValue = BeanProperty.create(m_property).getValue(value);
+			Object propValue = PropertyUtil.create(m_property).getValue(value);
 			renderer = super.getListCellRendererComponent(list,
 					propValue, index, isSelected, cellHasFocus);
 			

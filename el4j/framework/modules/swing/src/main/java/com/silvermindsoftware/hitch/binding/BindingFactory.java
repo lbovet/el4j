@@ -23,7 +23,6 @@ import javax.swing.JComponent;
 
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
-import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.BindingListener;
 import org.jdesktop.beansbinding.Bindings;
 import org.jdesktop.beansbinding.Property;
@@ -132,7 +131,7 @@ public class BindingFactory {
 	public AutoBinding createBinding(UpdateStrategy strategy,
 		Object modelObject, String modelProperty, JComponent formComponent) {
 		
-		Property modelPropertyName = BeanProperty.create(modelProperty);
+		Property modelPropertyName = PropertyUtil.create(modelProperty);
 		
 		AutoBinding binding = null;
 		// is a special binding registered?

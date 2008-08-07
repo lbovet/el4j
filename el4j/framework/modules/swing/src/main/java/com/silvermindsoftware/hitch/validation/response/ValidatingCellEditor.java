@@ -27,11 +27,11 @@ import javax.swing.event.CellEditorListener;
 import javax.swing.table.TableCellEditor;
 
 import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
-import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.Binding;
 import org.jdesktop.swingbinding.validation.ValidatedProperty;
 
 import com.silvermindsoftware.hitch.binding.BindingFactory;
+import com.silvermindsoftware.hitch.binding.PropertyUtil;
 import com.silvermindsoftware.hitch.validation.ValidatingBindingListener;
 
 import ch.elca.el4j.gui.swing.GUIApplication;
@@ -126,7 +126,7 @@ public class ValidatingCellEditor extends AbstractCellEditor implements
 	/** {@inheritDoc} */
 	public Object getCellEditorValue() {
 		// get new value from model
-		return BeanProperty.create(m_property.getProperty()).getValue(
+		return PropertyUtil.create(m_property.getProperty()).getValue(
 			m_property.getParent());
 	}
 	

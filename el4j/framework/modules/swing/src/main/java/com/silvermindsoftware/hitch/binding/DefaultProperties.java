@@ -30,7 +30,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
-import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.Property;
 
 /**
@@ -75,7 +74,7 @@ public class DefaultProperties {
 	 * @param property         the property as String
 	 */
 	public void register(Object widget, String property) {
-		m_defaultProperties.put(widget, BeanProperty.create(property));
+		m_defaultProperties.put(widget, PropertyUtil.create(property));
 	}
 	
 	/**

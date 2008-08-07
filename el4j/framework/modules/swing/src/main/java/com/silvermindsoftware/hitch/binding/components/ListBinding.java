@@ -24,13 +24,12 @@ import javax.swing.ListCellRenderer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jdesktop.beansbinding.AutoBinding;
-import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.Property;
 import org.jdesktop.swingbinding.JListBinding;
 import org.jdesktop.swingbinding.SwingBindings;
-import org.springframework.context.ApplicationContext;
 
 import com.silvermindsoftware.hitch.binding.AbstractBindingCreator;
+import com.silvermindsoftware.hitch.binding.PropertyUtil;
 
 import ch.elca.el4j.gui.swing.GUIApplication;
 import ch.elca.el4j.util.config.GenericConfig;
@@ -62,7 +61,7 @@ public class ListBinding extends AbstractBindingCreator<JList> {
 	 * @param property    which property to show in the list
 	 */
 	public ListBinding(String property) {
-		this(BeanProperty.create(property));
+		this(PropertyUtil.create(property));
 	}
 	
 	/**
