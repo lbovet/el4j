@@ -22,12 +22,13 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
 import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
-import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.Property;
 import org.jdesktop.swingbinding.JListBinding;
 import org.jdesktop.swingbinding.SwingBindings;
 import org.springframework.context.ApplicationContext;
 import org.w3c.dom.Element;
+
+import com.silvermindsoftware.hitch.binding.PropertyUtil;
 
 import ch.elca.el4j.gui.swing.GUIApplication;
 import ch.elca.el4j.util.config.GenericConfig;
@@ -58,7 +59,7 @@ public class ListBindingCreator extends AbstractBindingCreator {
 		Object parentObj, DecodeEngine decodeEngine) throws CreatorException {
 		
 		UpdateStrategy updateStrategy = getUpdateStrategy(elm);
-		Property prop = BeanProperty.create(elm.getAttribute(PROPERTY));
+		Property prop = PropertyUtil.create(elm.getAttribute(PROPERTY));
 		
 		List listSource = (List) getSource(decodeEngine, elm);
 		if (listSource == null) {

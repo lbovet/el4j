@@ -25,16 +25,16 @@ import java.util.Set;
 
 import javax.swing.JComponent;
 
-
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
-import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.Binding;
 import org.jdesktop.beansbinding.BindingGroup;
 import org.jdesktop.beansbinding.Property;
 
+
 import com.silvermindsoftware.hitch.binding.BindingCreator;
 import com.silvermindsoftware.hitch.binding.BindingFactory;
+import com.silvermindsoftware.hitch.binding.PropertyUtil;
 import com.silvermindsoftware.hitch.meta.ComponentMeta;
 import com.silvermindsoftware.hitch.meta.FormMeta;
 import com.silvermindsoftware.hitch.meta.ModelMeta;
@@ -196,7 +196,7 @@ public class BinderImpl implements Binder {
 	public AutoBinding addManualBinding(Object model, String property,
 		JComponent component, BindingCreator creator, boolean performValidate) {
 		
-		Property modelPropertyName = BeanProperty.create(property);
+		Property modelPropertyName = PropertyUtil.create(property);
 		
 		AutoBinding b = creator.createBinding(
 			modelPropertyName.getValue(model), component);
@@ -278,7 +278,7 @@ public class BinderImpl implements Binder {
 		
 		Property modelPropertyName = null;
 		if (property != null) {
-			modelPropertyName = BeanProperty.create(property);
+			modelPropertyName = PropertyUtil.create(property);
 		}
 		for (BindingGroup group : m_bindings) {
 			for (Binding binding : group.getBindings()) {

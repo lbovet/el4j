@@ -20,11 +20,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.jdesktop.application.ApplicationContext;
-import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.Property;
 import org.jdesktop.swingbinding.JTableBinding;
 import org.jdesktop.swingbinding.JTableBinding.ColumnBinding;
 import org.w3c.dom.Element;
+
+import com.silvermindsoftware.hitch.binding.PropertyUtil;
 
 import ch.elca.el4j.gui.swing.GUIApplication;
 
@@ -63,7 +64,7 @@ public class ColumnBindingCreator extends AbstractBindingCreator {
 		// read attributes
 		JTableBinding tb = ((NoAddValueHolder<JTableBinding>)
 			parentObj).getObject();
-		Property prop = BeanProperty.create(elm.getAttribute(PROPERTY));
+		Property prop = PropertyUtil.create(elm.getAttribute(PROPERTY));
 		
 		// create binding
 		ColumnBinding cb = tb.addColumnBinding(prop);

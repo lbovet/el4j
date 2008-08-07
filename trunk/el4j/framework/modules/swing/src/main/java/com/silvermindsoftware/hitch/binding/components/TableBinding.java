@@ -19,21 +19,19 @@ package com.silvermindsoftware.hitch.binding.components;
 import java.util.List;
 
 import javax.swing.JTable;
-import javax.swing.ListCellRenderer;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
-import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.Property;
 import org.jdesktop.swingbinding.JTableBinding;
 import org.jdesktop.swingbinding.JTableBinding.ColumnBinding;
 import org.jdesktop.swingbinding.SwingBindings;
 import org.jdesktop.swingbinding.validation.ValidatedProperty;
-import org.springframework.context.ApplicationContext;
 
 import com.silvermindsoftware.hitch.binding.AbstractBindingCreator;
+import com.silvermindsoftware.hitch.binding.PropertyUtil;
 
 import ch.elca.el4j.gui.swing.GUIApplication;
 import ch.elca.el4j.util.config.GenericConfig;
@@ -114,7 +112,7 @@ public class TableBinding extends AbstractBindingCreator<JTable> {
 			m_updateStrategy, list, formComponent);
 		
 		for (int i = 0; i < m_propertyNames.length; i++) {
-			Property prop = BeanProperty.create(m_propertyNames[i]);
+			Property prop = PropertyUtil.create(m_propertyNames[i]);
 			ColumnBinding cb = tb.addColumnBinding(prop);
 			
 			cb.setColumnName(m_columnLabels[i]);
