@@ -1915,7 +1915,7 @@
 			<!-- JavaX projects -->
 			<dependency>
 				<groupId>javax.mail</groupId>
-				<artifactId>javamail</artifactId>
+				<artifactId>mail</artifactId>
 				<version>1.4</version>
 			</dependency>
 			<dependency>
