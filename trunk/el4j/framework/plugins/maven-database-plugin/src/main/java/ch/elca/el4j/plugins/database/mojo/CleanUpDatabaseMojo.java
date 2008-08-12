@@ -24,7 +24,7 @@ import ch.elca.el4j.plugins.database.util.derby.DerbyNetworkServerStarter;
 
 
 /**
- * This class is a convenience mojo that includes the 'drop' and 'stop' mojo.
+ * <em>DEPRECATED</em> This class is a convenience mojo that includes the 'drop' and 'stop' mojo.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
