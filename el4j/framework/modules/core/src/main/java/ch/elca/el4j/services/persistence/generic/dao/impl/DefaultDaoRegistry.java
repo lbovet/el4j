@@ -175,6 +175,11 @@ public class DefaultDaoRegistry implements DaoRegistry,
 	
 	/** {@inheritDoc} */
 	public Map<Class<?>, ? extends GenericDao<?>> getDaos() {
+		if ((!m_initialized) && m_collectDaos) {
+			m_initialized = true;
+			initDaosFromSpringBeans();
+		}
+		
 		return m_daos;
 	}
 
