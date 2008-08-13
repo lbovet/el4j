@@ -46,31 +46,30 @@
 				<artifactId>maven-checkclipse-helper-plugin</artifactId>
 			</plugin>
 			
-			<!-- the clirr-maven-plugin has to be in in the build-section. Otherwise the version-tag is ignored! -->
+			<!--
+			the clirr-maven-plugin has to be in in the build-section. 
+			If it is placed only in the reporting-section, the version-tag is ignored when directly calling the plugin!
+			The version-tag must be defined in the build section.
+			Note that the version-tag is ignored if this part is put into to pluginManagement-section.
+			-->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>clirr-maven-plugin</artifactId>
 				<version>2.2.2-el4j_20080812_1330</version>
 				<!--<version>2.2.1</version>-->
-				<configuration>
-					<failOnError>false</failOnError>
-					<logResults>true</logResults>
-					<minSeverity>info</minSeverity>
-					<!-- <textOutputFile>target/clirroutput.txt</textOutputFile> -->
-					<xmlOutputFile>target/clirr-result.xml</xmlOutputFile>
-					<xrefLocation>${project.build.directory}/site/../xref</xrefLocation>
-					<!-- Compare the current code against the following version  -->
-					<!-- <comparisonVersion>1.10</comparisonVersion> -->
-				</configuration>
 			</plugin>
 
-			<!-- the dashboard-maven-plugin must be in the build-section. If it is placed in the reporting-section, the version-tag is ignored! -->
+			<!--
+			the dashboard-maven-plugin must be in the build-section, too.
+			If it is placed only in the reporting-section, the version-tag is ignored when directly calling the plugin!
+			The version-tag must be defined in the build section.
+			Note that the version-tag is ignored if this part is put into to pluginManagement-section.
+			-->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>dashboard-maven-plugin</artifactId>
 				<version>1.0.0-beta-1-el4j_20080812_1330</version>
 			</plugin>
-			
 		</plugins>
 	</build>
 	<modules>
@@ -147,17 +146,37 @@
 				</reportSets>
 			</plugin>
 			
-			<!-- the clirr-maven-plugin has to be added to the reporting section, too.
-			If not, dashboard does not use clirr! -->
+			<!--
+			the clirr-maven-plugin has to be added to the reporting section AND the build section.
+			If is not in the build-section, the wrong version is downloaded when calling the plugin.
+			If it is not in the reporting-section, dashboard does not use clirr.
+			The version-tag is defined in the build section.
+			-->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>clirr-maven-plugin</artifactId>
+				<!-- <version>2.2.2-el4j_20080812_1330</version> -->
+				<configuration>
+					<failOnError>false</failOnError>
+					<logResults>true</logResults>
+					<minSeverity>info</minSeverity>
+					<!-- <textOutputFile>target/clirroutput.txt</textOutputFile> -->
+					<xmlOutputFile>target/clirr-result.xml</xmlOutputFile>
+					<xrefLocation>${project.build.directory}/site/../xref</xrefLocation>
+					<!-- Compare the current code against the following version  -->
+					<!-- <comparisonVersion>1.10</comparisonVersion> -->
+				</configuration>
 			</plugin>
 			
-			<!-- the dashboard-plugin has to be added to the reporting section, otherwise it does not work properly. -->
+			<!--
+			the dashboard-plugin  has to be added to the reporting section AND the build section.
+			If isn not in the build-section, the wrong version is downloaded when calling the plugin.		
+			The version-tag is defined in the build section.			
+			-->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>dashboard-maven-plugin</artifactId>
+				<!--<version>1.0.0-beta-1-el4j_20080812_1330</version>-->
 			</plugin>
 		</plugins>
 	</reporting>
