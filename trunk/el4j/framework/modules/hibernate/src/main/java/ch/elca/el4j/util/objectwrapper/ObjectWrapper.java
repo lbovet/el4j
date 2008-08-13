@@ -133,7 +133,7 @@ public class ObjectWrapper {
 	 * implement the interface already in which case wrap() will succeed on it.
 	 * To be sure of this, use wrappablePresent(wrappableClass, objectClass).
 	 * @param cls The wrappable class.
- 	 * @return <code>true</code> if the wrappable exists.
+	 * @return <code>true</code> if the wrappable exists.
 	 */
 	public boolean wrappablePresent(Class<? extends Wrappable> cls) {
 		return m_wrappables.containsKey(cls);
