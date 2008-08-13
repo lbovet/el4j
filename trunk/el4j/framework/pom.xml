@@ -170,8 +170,8 @@
 			
 			<!--
 			the dashboard-plugin  has to be added to the reporting section AND the build section.
-			If isn not in the build-section, the wrong version is downloaded when calling the plugin.		
-			The version-tag is defined in the build section.			
+			If isn not in the build-section, the wrong version is downloaded when calling the plugin.
+			The version-tag is defined in the build section.
 			-->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
