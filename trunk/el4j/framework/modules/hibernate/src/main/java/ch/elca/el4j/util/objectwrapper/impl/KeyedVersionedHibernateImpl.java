@@ -66,6 +66,10 @@ public class KeyedVersionedHibernateImpl extends AbstractWrapper implements Keye
 
 	/** {@inheritDoc} */
 	public void setVersion(Serializable version) {
+		// This is a workaround.
+		// We do not have a setVersion method on hibernate's metadata,
+		// so we need to get the version property's index, look up its name
+		// with the index in the list of names and set it by name as a property.
 		String versionName = m_meta.getPropertyNames()[m_meta.getVersionProperty()];
 		m_meta.setPropertyValue(m_target, versionName, version, EntityMode.POJO);
 	}
