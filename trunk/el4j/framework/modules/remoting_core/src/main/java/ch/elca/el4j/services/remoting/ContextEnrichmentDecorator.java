@@ -20,6 +20,7 @@ package ch.elca.el4j.services.remoting;
 import java.util.Map;
 
 import ch.elca.el4j.util.interfaceenrichment.EnrichmentDecorator;
+import ch.elca.el4j.util.interfaceenrichment.InterfaceEnricher;
 import ch.elca.el4j.util.interfaceenrichment.MethodDescriptor;
 
 
@@ -58,7 +59,16 @@ public class ContextEnrichmentDecorator implements EnrichmentDecorator {
 	 * {@inheritDoc}
 	 */
 	public Class[] changedExtendedInterface(Class[] extendedInterfaces) {
-		return extendedInterfaces;
+		InterfaceEnricher interfaceIndirector = new InterfaceEnricher();
+		ClassLoader cl = Thread.currentThread().getContextClassLoader();
+		
+		Class[] changedInterfaces = new Class[extendedInterfaces.length];
+		for (int i = 0; i < extendedInterfaces.length; i++) {
+			changedInterfaces[i] = interfaceIndirector.createShadowInterfaceAndLoadItDirectly(
+				extendedInterfaces[i], this, cl);
+		}
+		
+		return changedInterfaces;
 	}
 
 	/**
