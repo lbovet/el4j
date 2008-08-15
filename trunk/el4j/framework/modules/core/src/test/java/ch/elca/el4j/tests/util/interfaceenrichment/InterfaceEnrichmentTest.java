@@ -62,6 +62,10 @@ public class InterfaceEnrichmentTest {
 		public void setMyArray(MyValueObject[] myArray);
 	}
 	
+	public interface SubInterface extends MyArrayInterface {
+		public int getInt();
+	}
+	
 	/**
 	 * Test value object, which is used in test interface above.
 	 *
@@ -148,7 +152,17 @@ public class InterfaceEnrichmentTest {
 		 * {@inheritDoc}
 		 */
 		public Class[] changedExtendedInterface(Class[] extendedInterfaces) {
-			return new Class[] {Remote.class};
+			InterfaceEnricher interfaceIndirector = new InterfaceEnricher();
+			ClassLoader cl = Thread.currentThread().getContextClassLoader();
+			
+			Class[] changedInterfaces = new Class[extendedInterfaces.length + 1];
+			for (int i = 0; i < extendedInterfaces.length; i++) {
+				changedInterfaces[i] = interfaceIndirector.createShadowInterfaceAndLoadItDirectly(
+					extendedInterfaces[i], this, cl);
+			}
+			changedInterfaces[extendedInterfaces.length] = Remote.class;
+			
+			return changedInterfaces;
 		}
 
 		/**
@@ -187,5 +201,34 @@ public class InterfaceEnrichmentTest {
 		}
 		assertEquals(1, newInterface.getInterfaces().length);
 		assertEquals(Remote.class, newInterface.getInterfaces()[0]);
+	}
+	
+	@Test
+	public void testSubInterfaceEnrichmentWithArrayParameter() {
+		InterfaceEnricher ie = new InterfaceEnricher();
+		Class oldInterface = SubInterface.class;
+		EnrichmentDecorator ed = new MyEnrichmentDecorator();
+		ClassLoader cl = Thread.currentThread().getContextClassLoader();
+		
+		Class newInterface  = ie.createShadowInterfaceAndLoadItDirectly(
+			oldInterface, ed, cl);
+
+		assertNotNull(newInterface);
+		assertEquals(ClassUtils.getShortName(oldInterface) + "MyNew",
+			ClassUtils.getShortName(newInterface));
+		Method[] methods = newInterface.getMethods();
+		assertEquals(3, methods.length);
+		for (int i = 0; i < methods.length; i++) {
+			assertEquals(1, methods[i].getExceptionTypes().length);
+			assertEquals(RemoteException.class,
+				methods[i].getExceptionTypes()[0]);
+		}
+		assertEquals(2, newInterface.getInterfaces().length);
+		
+		// test if parent interface is enriched too
+		Class parentInterface = ie.createShadowInterfaceAndLoadItDirectly(
+			MyArrayInterface.class, ed, cl);
+		assertEquals(parentInterface, newInterface.getInterfaces()[0]);
+		assertEquals(Remote.class, newInterface.getInterfaces()[1]);
 	}
 }
