@@ -257,7 +257,9 @@
 		<!--module name="IllegalCatch"/-->
 		<module name="PackageDeclaration" />
 		<module name="JUnitTestCase" />
-		<module name="ReturnCount" />
+		<module name="ReturnCount">
+			<property name="max" value="3"/>
+		</module>
 		<!--module name="IllegalType"/-->
 		<module name="DeclarationOrder" />
 		<module name="ParameterAssignment" />
