@@ -109,17 +109,31 @@ public abstract class AbstractIntKeyIntOptimisticLockingDto
 	 * {@inheritDoc}
 	 */
 	public int hashCode() {
-		return m_key;
+		return m_keyNew ? super.hashCode() : m_key;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		/*if (getClass() != HibernateProxyHelper.getClassWithoutInitializingProxy(obj)) {
+			return false;
+		}*/
 		if (obj instanceof AbstractIntKeyIntOptimisticLockingDto) {
-			AbstractIntKeyIntOptimisticLockingDto other
-				= (AbstractIntKeyIntOptimisticLockingDto) obj;
-			return m_key == other.m_key;
+			final AbstractIntKeyIntOptimisticLockingDto other = (AbstractIntKeyIntOptimisticLockingDto) obj;
+			if (isKeyNew() && other.isKeyNew()) {
+				// one or both objects are transient
+				return hashCode() == other.hashCode();
+			} else {
+				// both objects are persistent
+				return getKey() == other.getKey();
+			}
 		} else {
 			return false;
 		}
