@@ -38,6 +38,7 @@
 		</profile>
 	</profiles>
 	<properties>
+		<!-- if you want to deploy to the root context in tomcat, use "ROOT", not "". See also http://jira.codehaus.org/browse/CARGO-516 -->
 		<jee-web.context>swing-demo</jee-web.context>
 	</properties>
 
