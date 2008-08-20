@@ -954,7 +954,7 @@
 				<jee-web.containerId>tomcat6x</jee-web.containerId>
 				
 				<jee-web.host>localhost</jee-web.host>
-				<jee-web.port>8080</jee-web.port>
+				<jee-web.port>8080</jee-web.port> <!-- this is fixed to 8080, other values are ignored -->
 				<jee-web.war.name>${project.build.finalName}</jee-web.war.name>
 				<jee-web.webapp.directory>${project.build.directory}/exploded-wars/${jee-web.war.name}</jee-web.webapp.directory>
 				<jee-web.context>${project.artifactId}</jee-web.context>
@@ -1937,6 +1937,12 @@
 		</dependencies>
 	</dependencyManagement>
 	<properties>
+		<!-- host and port to be used when connecting from the same machine.
+		This is needed e.g. on linux if port is forwarded to another port using iptables because internal requests don't get forwarded.
+		Sometimes using the public IP address doesn't work, so the host can be overridden here using 'localhost' -->
+		<jee-web.internal.host>${jee-web.host}</jee-web.internal.host>
+		<jee-web.internal.port>${jee-web.port}</jee-web.internal.port>
+		
 		<!-- RMI -->
 		<rmi.host>localhost</rmi.host>
 		<rmi.port>8099</rmi.port>
