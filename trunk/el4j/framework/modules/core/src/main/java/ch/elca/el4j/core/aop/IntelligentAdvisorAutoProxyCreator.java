@@ -16,11 +16,22 @@
  */
 package ch.elca.el4j.core.aop;
 
+import java.lang.reflect.Proxy;
+import java.util.List;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.adapter.AdvisorAdapterRegistry;
 import org.springframework.aop.framework.adapter.GlobalAdvisorAdapterRegistry;
 import org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.aop.support.AopUtils;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+
+import ch.elca.el4j.util.codingsupport.AopHelper;
 
 /**
  * Intelligent autoproxy creator for advisors. Will not create a new proxy for a
@@ -39,6 +50,10 @@ import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreato
  */
 public class IntelligentAdvisorAutoProxyCreator
 	extends DefaultAdvisorAutoProxyCreator {
+	
+	protected static final Log s_logger = 
+		LogFactory.getLog(IntelligentAdvisorAutoProxyCreator.class);	
+	
 	/**
 	 * COPYIED FROM SUPERCLASS!
 	 *
@@ -84,6 +99,43 @@ public class IntelligentAdvisorAutoProxyCreator
 		return proxy;
 	}
 
+	/**
+	 * Here we additionally de-proxy beans (to avoid that certain applications of interceptors fail)
+	 * {@inheritDoc}
+	 */
+	@Override	
+	protected Object[] getAdvicesAndAdvisorsForBean(Class beanClass, String beanName, TargetSource targetSource) {
+		beanClass = deproxyBeanClass(beanClass, beanName, getBeanFactory());			
+		
+		return super.getAdvicesAndAdvisorsForBean(beanClass, beanName, targetSource);
+	}
+
+	/**
+	 *  Check whether beanClass is a proxy and "deproxy" it if it is one
+	 * @param beanClass
+	 * @param beanName
+	 * @param beanFactory the beanFactory (to be able to keep this method static)
+	 * @return a deproxies beanClass if possible, otherwise return the bean class itself
+	 */
+	protected static Class deproxyBeanClass(Class beanClass, String beanName, BeanFactory beanFactory) {
+ 		if (AopUtils.isCglibProxyClass(beanClass)) {
+			beanClass = AopHelper.getClassOfCglibProxyClass(beanClass);
+		} else if (Proxy.isProxyClass(beanClass) && (beanFactory instanceof DefaultListableBeanFactory)) {			
+			DefaultListableBeanFactory factory = (DefaultListableBeanFactory) beanFactory;
+			BeanDefinition beanDefinition = factory.getBeanDefinition(beanName);
+			if (!beanDefinition.isAbstract()) { 
+				String beanClassName = beanDefinition.getBeanClassName();
+				try {
+					// replace the beanClass (if it works - otherwise keep "old" beanClass)
+					beanClass = beanClass.getClassLoader().loadClass(beanClassName);
+				} catch (ClassNotFoundException e) { 
+					s_logger.debug("error deproxying beanClass:" + beanClass, e);
+				} // ignore error in loading class, just return null			
+			}			
+		}
+		return beanClass;
+	}
+	
 	/**
 	 * @return Returns the interceptorNames.
 	 */

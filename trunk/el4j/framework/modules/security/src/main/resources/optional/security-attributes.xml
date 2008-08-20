@@ -17,7 +17,7 @@
 		to any bean in child factories.
 	-->
 	<bean id="autoproxy"
-		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
+		class="ch.elca.el4j.core.aop.IntelligentAdvisorAutoProxyCreator">
 	</bean>
 	
 	<!--
