@@ -28,19 +28,19 @@
 		<property name="beanNames" value="*Dao"/>
 		
 		<!--  
-		      This order indicates in what order this auto proxy creator is applied.
-		      Out of the box, the auto proxy creator that applies the transaction
-		      interceptor has the order "100", so it is applied before this auto
-		      proxy creator (so the transaction interceptor is AFTER this interceptor). 
-		      These orders can be changed. 
-		      Refer also to the file 'transactionJava5Annotations.xml' for more info.  
-		      -->
+			This order indicates in what order this auto proxy creator is applied.
+			Out of the box, the auto proxy creator that applies the transaction
+			interceptor has the order "100", so it is applied before this auto
+			proxy creator (so the transaction interceptor is AFTER this interceptor). 
+			These orders can be changed. 
+			Refer also to the file 'transactionJava5Annotations.xml' for more info.  
+		-->
 		<property name="order" value="200"></property>
 		<property name="proxyTargetClass" value="false"/>		
 		<property name="interceptorNames">
-		  <list>
-		  	<value>testInterceptor</value>
-		  </list>
+			<list>
+				<value>testInterceptor</value>
+			</list>
 		</property>
 	</bean>
 	

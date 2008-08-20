@@ -105,8 +105,7 @@ public class IntelligentAdvisorAutoProxyCreator
 	 */
 	@Override	
 	protected Object[] getAdvicesAndAdvisorsForBean(Class beanClass, String beanName, TargetSource targetSource) {
-		beanClass = deproxyBeanClass(beanClass, beanName, getBeanFactory());			
-		
+		beanClass = deproxyBeanClass(beanClass, beanName, getBeanFactory());
 		return super.getAdvicesAndAdvisorsForBean(beanClass, beanName, targetSource);
 	}
 
@@ -118,12 +117,12 @@ public class IntelligentAdvisorAutoProxyCreator
 	 * @return a deproxies beanClass if possible, otherwise return the bean class itself
 	 */
 	protected static Class deproxyBeanClass(Class beanClass, String beanName, BeanFactory beanFactory) {
- 		if (AopUtils.isCglibProxyClass(beanClass)) {
+		if (AopUtils.isCglibProxyClass(beanClass)) {
 			beanClass = AopHelper.getClassOfCglibProxyClass(beanClass);
 		} else if (Proxy.isProxyClass(beanClass) && (beanFactory instanceof DefaultListableBeanFactory)) {			
 			DefaultListableBeanFactory factory = (DefaultListableBeanFactory) beanFactory;
 			BeanDefinition beanDefinition = factory.getBeanDefinition(beanName);
-			if (!beanDefinition.isAbstract()) { 
+			if (!beanDefinition.isAbstract()) {
 				String beanClassName = beanDefinition.getBeanClassName();
 				try {
 					// replace the beanClass (if it works - otherwise keep "old" beanClass)
@@ -135,7 +134,7 @@ public class IntelligentAdvisorAutoProxyCreator
 		}
 		return beanClass;
 	}
-	
+
 	/**
 	 * @return Returns the interceptorNames.
 	 */
