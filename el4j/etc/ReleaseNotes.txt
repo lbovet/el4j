@@ -1,9 +1,14 @@
+
+
+
 --------------------------------------------------------------------------------
  Date :   10.07.08
                             EL4J version  1.5
 --------------------------------------------------------------------------------
 
 * Core
+  = We run findbugs on EL4J and corrected some issues it found.
+  = Own env plugin added again (to fix some issues in eclipse)
   = fixed bugs in convenience zip (added some files)
   = switch to tabs (from n blanks)
   = tool upgrades: spring 2.5.5, new maven checkstyle plugin, cookXml updated to 3.0.1-patch2, 
@@ -21,8 +26,7 @@
      the files you require. 
 
 * Maven
-  = beans:beans plugin to generate Spring ide config files (to get the graph of spring bean in eclipse)
-    => this does not yet run recursively)
+  = beans:beans plugin to generate Spring IDE config files (to get the graph of spring beans in eclipse)
   = example of how to store a maven 2 repository in subversion (refer to external/maven/svn-m2repo)
   = we switched our mvn proxy from artifactory to nexus
   
