@@ -19,7 +19,7 @@
 		General AOP definitions.
 	-->
 	<bean id="transactionAutoproxy"
-		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
+		class="ch.elca.el4j.core.aop.IntelligentAdvisorAutoProxyCreator">
 		<property name="proxyTargetClass">
 			<!--
 				false:

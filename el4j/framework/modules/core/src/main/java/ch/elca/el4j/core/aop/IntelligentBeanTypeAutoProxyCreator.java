@@ -128,6 +128,17 @@ public class IntelligentBeanTypeAutoProxyCreator
 	}
 
 	/**
+	 * Here we additionally de-proxy beans (to avoid that certain applications of interceptors fail)
+	 * {@inheritDoc}
+	 */
+	@Override	
+	protected Object[] getAdvicesAndAdvisorsForBean(Class beanClass, String beanName, TargetSource targetSource) {
+		beanClass = IntelligentAdvisorAutoProxyCreator.deproxyBeanClass(beanClass, beanName, getBeanFactory());			
+		
+		return super.getAdvicesAndAdvisorsForBean(beanClass, beanName, targetSource);
+	}	
+	
+	/**
 	 * COPYIED FROM SUPERCLASS!
 	 *
 	 * Set whether the common interceptors should be applied before
@@ -139,5 +150,6 @@ public class IntelligentBeanTypeAutoProxyCreator
 	public void setApplyCommonInterceptorsFirst(
 		boolean applyCommonInterceptorsFirst) {
 		m_applyCommonInterceptorsFirst = applyCommonInterceptorsFirst;
+		super.setApplyCommonInterceptorsFirst(applyCommonInterceptorsFirst);
 	}
 }

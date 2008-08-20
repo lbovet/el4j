@@ -12,6 +12,7 @@ import org.springframework.aop.framework.Advised;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.aop.support.DefaultIntroductionAdvisor;
+import org.springframework.util.ClassUtils;
 
 /**
  * Similar to Spring's AOPUtil class, with some more features:
@@ -85,6 +86,36 @@ public class AopHelper {
 		return AopUtils.isCglibProxyClass(clazz);
 	}
 
+	/**
+	 * Return the class name (String) of a CGLIB-generated class.
+	 * @param clazz the class to work on
+	 * @return null if it is not a proxy class
+	 */
+	public static String getClassNameOfCglibProxyClass(Class clazz) {
+		if (AopUtils.isCglibProxyClass(clazz)) {
+			int pos = clazz.getName().indexOf(ClassUtils.CGLIB_CLASS_SEPARATOR);
+			return clazz.getName().substring(0, pos);
+		}
+		return null;
+	}	
+	
+	/**
+	 * Return the class (Class) of a CGLIB-generated class. 
+	 * @param clazz
+	 * @return null if no class was found or if it's not a proxy class
+	 */
+	public static Class getClassOfCglibProxyClass(Class clazz) {
+		String className = getClassNameOfCglibProxyClass(clazz);
+		if (className != null){
+			try {
+				return clazz.getClassLoader().loadClass(className);
+			} catch (ClassNotFoundException e) { 
+				// ignore error in loading class, just return null
+			} 
+		}
+		return null;
+	}	
+	
 	/**
 	 * Determine the target class of the given bean instance,
 	 * which might be an AOP proxy.
