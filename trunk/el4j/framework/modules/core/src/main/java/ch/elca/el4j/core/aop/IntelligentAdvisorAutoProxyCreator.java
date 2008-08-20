@@ -119,7 +119,8 @@ public class IntelligentAdvisorAutoProxyCreator
 	protected static Class deproxyBeanClass(Class beanClass, String beanName, BeanFactory beanFactory) {
 		if (AopUtils.isCglibProxyClass(beanClass)) {
 			beanClass = AopHelper.getClassOfCglibProxyClass(beanClass);
-		} else if (Proxy.isProxyClass(beanClass) && (beanFactory instanceof DefaultListableBeanFactory)) {			
+		} else if (Proxy.isProxyClass(beanClass) && (beanFactory instanceof DefaultListableBeanFactory)) {
+
 			DefaultListableBeanFactory factory = (DefaultListableBeanFactory) beanFactory;
 			BeanDefinition beanDefinition = factory.getBeanDefinition(beanName);
 			if (!beanDefinition.isAbstract()) {
@@ -127,10 +128,10 @@ public class IntelligentAdvisorAutoProxyCreator
 				try {
 					// replace the beanClass (if it works - otherwise keep "old" beanClass)
 					beanClass = beanClass.getClassLoader().loadClass(beanClassName);
-				} catch (ClassNotFoundException e) { 
+				} catch (ClassNotFoundException e) {
 					s_logger.debug("error deproxying beanClass:" + beanClass, e);
-				} // ignore error in loading class, just return null			
-			}			
+				} // ignore error in loading class, just return null
+			}
 		}
 		return beanClass;
 	}
