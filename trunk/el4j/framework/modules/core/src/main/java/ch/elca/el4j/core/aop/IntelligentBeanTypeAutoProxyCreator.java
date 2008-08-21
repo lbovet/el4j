@@ -133,8 +133,8 @@ public class IntelligentBeanTypeAutoProxyCreator
 	 */
 	@Override	
 	protected Object[] getAdvicesAndAdvisorsForBean(Class beanClass, String beanName, TargetSource targetSource) {
-		beanClass = IntelligentAdvisorAutoProxyCreator.deproxyBeanClass(beanClass, beanName, getBeanFactory());			
-		
+		beanClass = IntelligentAdvisorAutoProxyCreator.deproxyBeanClass(beanClass, beanName, getBeanFactory());
+
 		return super.getAdvicesAndAdvisorsForBean(beanClass, beanName, targetSource);
 	}	
 	
