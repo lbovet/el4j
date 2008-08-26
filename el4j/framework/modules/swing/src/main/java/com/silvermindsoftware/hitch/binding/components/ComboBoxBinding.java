@@ -24,10 +24,8 @@ import javax.swing.ListCellRenderer;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.swingbinding.JComboBoxBinding;
 import org.jdesktop.swingbinding.SwingBindings;
-import org.springframework.context.ApplicationContext;
 
 import com.silvermindsoftware.hitch.binding.AbstractBindingCreator;
-import com.silvermindsoftware.hitch.validation.response.ValidationResponder;
 
 import ch.elca.el4j.gui.swing.GUIApplication;
 import ch.elca.el4j.util.config.GenericConfig;
@@ -52,14 +50,12 @@ public class ComboBoxBinding extends AbstractBindingCreator<JComboBox> {
 		List list = (List) object;
 		JComboBoxBinding cb = SwingBindings.createJComboBoxBinding(
 			m_updateStrategy, list, formComponent);
-		// TODO test combo box
 		return cb;
 	}
 	
 	/** {@inheritDoc} */
 	public void addValidation(JComboBox formComponent) {
 		GenericConfig config = GUIApplication.getInstance().getConfig();
-		formComponent.setRenderer(
-			(ListCellRenderer) config.get("cellRenderer"));
+		formComponent.setRenderer((ListCellRenderer) config.get("cellRenderer"));
 	}
 }

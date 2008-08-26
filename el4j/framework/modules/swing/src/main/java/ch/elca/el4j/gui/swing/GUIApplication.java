@@ -297,11 +297,8 @@ public abstract class GUIApplication extends SingleFrameApplication {
 	 * @see #addActionMappingInstance(Object)
 	 */
 	public Action getAction(String actionName) {
-		org.jdesktop.application.ApplicationContext ac
-			= Application.getInstance().getContext();
-		
 		for (Object candidate : m_instancesWithActionMappings) {
-			Action foundAction = ac.getActionMap(candidate).get(actionName);
+			Action foundAction = getAction(candidate, actionName);
 			if (foundAction != null) {
 				return foundAction;
 			}
@@ -319,7 +316,13 @@ public abstract class GUIApplication extends SingleFrameApplication {
 		org.jdesktop.application.ApplicationContext ac
 			= Application.getInstance().getContext();
 		
-		return ac.getActionMap(object).get(actionName);
+		Action action = null;
+		Class<?> cls = object.getClass();
+		while (action == null && cls != Object.class) {
+			action = ac.getActionMap(cls, object).get(actionName);
+			cls = cls.getSuperclass();
+		}
+		return action;
 	}
 	
 	/**
