@@ -37,7 +37,7 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
  *
  * @author Stefan Wismer (SWI)
  */
-public final class ModuleApplicationContextCache {
+public final class ModuleTestContextCache {
 	/**
 	 * The actual cache.
 	 */
@@ -47,7 +47,7 @@ public final class ModuleApplicationContextCache {
 	/**
 	 * The hidden constructor.
 	 */
-	private ModuleApplicationContextCache() {
+	private ModuleTestContextCache() {
 		throw new AssertionError();
 	}
 	
@@ -55,7 +55,7 @@ public final class ModuleApplicationContextCache {
 	 * @param config    a {@link ModuleApplicationContext} configuration
 	 * @return          the corresponding {@link ModuleApplicationContext}
 	 */
-	public static ApplicationContext get(ModuleApplicationContextConfiguration config) {
+	public static ApplicationContext get(ModuleTestContextConfiguration config) {
 		return get(new Configuration(config));
 	}
 	
@@ -100,7 +100,7 @@ public final class ModuleApplicationContextCache {
 	/**
 	 * Data holder for {@link ModuleApplicationContext} configurations that can be used as key in {@link Map}s.
 	 */
-	private static class Configuration implements ModuleApplicationContextConfiguration {
+	private static class Configuration implements ModuleTestContextConfiguration {
 		private final String[] m_inclusiveConfigLocations;
 		private final String[] m_exclusiveConfigLocations;
 		private final boolean m_allowBeanDefinitionOverriding;
@@ -113,7 +113,7 @@ public final class ModuleApplicationContextCache {
 			m_allowBeanDefinitionOverriding = allowBeanDefinitionOverriding;
 		}
 		
-		Configuration(ModuleApplicationContextConfiguration config) {
+		Configuration(ModuleTestContextConfiguration config) {
 			m_inclusiveConfigLocations = config.getInclusiveConfigLocations();
 			m_exclusiveConfigLocations = config.getExclusiveConfigLocations();
 			m_allowBeanDefinitionOverriding = config.isBeanOverridingAllowed();
