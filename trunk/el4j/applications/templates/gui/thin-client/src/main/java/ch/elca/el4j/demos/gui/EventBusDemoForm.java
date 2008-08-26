@@ -69,12 +69,12 @@ public class EventBusDemoForm extends JPanel {
 		setBounds(0, 0, 500, 50);
 	}
 	
-	@EventSubscriber(eventClass = ExampleEvent.class)
+	@EventSubscriber
 	public void onEvent(ExampleEvent event) {
 		m_lastEvent.setText("example event: [" + event.getMessage() + "]");
 	}
 	
-	@EventSubscriber(eventClass = SearchProgressEvent.class)
+	@EventSubscriber
 	public void onEvent(SearchProgressEvent event) {
 		m_lastEvent.setText("search event: [" + event.getMessage() + "]");
 	}

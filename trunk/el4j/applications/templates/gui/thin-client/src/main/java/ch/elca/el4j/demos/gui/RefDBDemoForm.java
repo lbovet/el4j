@@ -291,7 +291,7 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 	 *
 	 * @param event    the ReferenceUpdateEvent
 	 */
-	@EventSubscriber(eventClass = ReferenceUpdateEvent.class)
+	@EventSubscriber
 	public void onEvent(ReferenceUpdateEvent event) {
 		for (int i = 0; i < m_refList.size(); i++) {
 			if (m_refList.get(i).getKey() == event.getKey()) {
@@ -317,7 +317,7 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 	 *
 	 * @param event    the SearchRefDBEvent
 	 */
-	@EventSubscriber(eventClass = SearchRefDBEvent.class)
+	@EventSubscriber
 	public void onEvent(SearchRefDBEvent event) {
 		QueryObject query = new QueryObject();
 		query.addCriteria(LikeCriteria.caseInsensitive(
