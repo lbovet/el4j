@@ -48,7 +48,7 @@ public abstract class AbstractTest {
 	protected synchronized ApplicationContext getApplicationContext() {
 		if (m_applicationContext == null) {
 			
-			m_applicationContext = ModuleApplicationContextCache.get(getIncludeConfigLocations(),
+			m_applicationContext = ModuleTestContextCache.get(getIncludeConfigLocations(),
 				getExcludeConfigLocations(), isBeanOverridingAllowed());
 		}
 		return m_applicationContext;

@@ -19,7 +19,7 @@ package ch.elca.el4j.tests.core;
 /**
  * This interface allows to store a {@link ModuleApplicationContext} configuration in an external class
  * (outside of subclass of {@link AbstractTest}) in a standardized way.
- * @see ch.elca.el4j.core.context.ModuleApplicationContextCache
+ * @see ch.elca.el4j.core.context.ModuleTestContextCache
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -30,7 +30,7 @@ package ch.elca.el4j.tests.core;
  *
  * @author Stefan Wismer (SWI)
  */
-public interface ModuleApplicationContextConfiguration {
+public interface ModuleTestContextConfiguration {
 	/**
 	 * @return    the string array with inclusive locations.
 	 */
