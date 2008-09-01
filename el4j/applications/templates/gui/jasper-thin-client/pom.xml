@@ -41,5 +41,11 @@
 			<artifactId>jasperreports</artifactId>
 			<version>3.0.0</version>
 		</dependency>
+		<!-- use explicit version to prevent downloading some "brew" (=snapshot) version -->
+		<dependency>
+			<groupId>jfree</groupId>
+			<artifactId>jfreechart</artifactId>
+			<version>1.0.9</version>
+		</dependency>
 	</dependencies>
 </project>
