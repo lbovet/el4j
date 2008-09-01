@@ -65,6 +65,11 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
 	private String m_driverName;
 	
 	/**
+	 * The (first) resource from where the properties were read.
+	 */
+	private String m_resource;
+	
+	/**
 	 * Constructor.
 	 * @param repository Maven repository
 	 * @param project Maven project
@@ -111,6 +116,13 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
 		} catch (Exception e) {
 			throw new DatabaseHolderException(e);
 		}
+	}
+	
+	/**
+	 * @return Returns the (first) resource from where the properties were read.
+	 */
+	public String getResource() {
+		return m_resource;
 	}
 	
 	/**
@@ -176,6 +188,8 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
 			
 			Resource[] resources = getResources(source);
 			Properties properties = getProperties(resources);
+			// only the first resource is taken
+			m_resource = resources[0].getURL().toString();
 			m_driverName = properties.getProperty("dataSource.driverClassName");
 		} catch (Exception e) {
 			throw new DatabaseHolderException(
