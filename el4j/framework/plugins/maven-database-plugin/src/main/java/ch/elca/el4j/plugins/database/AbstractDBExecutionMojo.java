@@ -432,7 +432,11 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 			// Process resources from back to beginning to beginn with
 			// Resources of uppermost dependency first
 			for (Resource resource : resources) {
-				getLog().info("Processing resource: " + resource.getFilename());
+				if (getLog().isDebugEnabled()) {
+					getLog().debug("Processing resource: " + resource.getURL().toString());
+				} else {
+					getLog().info("Processing resource: " + resource.getFilename());
+				}
 				List<String> sqlStmts = extractStmtsFromFile(resource.getURL());
 				
 				if (sqlStmts.size() == 0) {
@@ -640,8 +644,10 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 		prop.put("user", getConnPropHolder().getUsername());
 		prop.put("password", getConnPropHolder().getPassword());
 		Driver driver = getConnPropHolder().getDriver();
+		getLog().debug("Reading properties from " + getConnPropHolder().getResource());
 		getLog().info("Trying to connect to db '"
-			+ getConnPropHolder().getDbName() + "' at '"
+			+ getConnPropHolder().getDbName() + "', user '"
+			+ getConnPropHolder().getUsername() + "' at '"
 			+ getConnPropHolder().getUrl() + "'");
 
 		try {
