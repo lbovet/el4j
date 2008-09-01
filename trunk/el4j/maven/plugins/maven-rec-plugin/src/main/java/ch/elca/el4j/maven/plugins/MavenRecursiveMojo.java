@@ -97,6 +97,13 @@ public class MavenRecursiveMojo extends AbstractMojo {
 	 * @required
 	 */
 	private String command;
+	
+	/**
+	 * List of allowed packaging types.
+	 * 
+	 * @parameter expression="${mvn.rec.allowedPackaging}" default-value="jar,war"
+	 */
+	private String allowedPackagingList;
 
 	/*
 	 * (non-Javadoc)
@@ -149,18 +156,20 @@ public class MavenRecursiveMojo extends AbstractMojo {
 
 	/**
 	 * Returns true if the specified packaging-type is allowed to execute this
-	 * plugin on. Only "jar" and "war" packagings are allowed.
+	 * plugin on.
 	 *
 	 * @param packaging
 	 *            the packaging-type of the project.
 	 * @return true if the specified packaging-type is allowed, otherwise false.
 	 */
 	private boolean isAllowedPackaging(String packaging) {
-		List<String> allowedPackaging = new ArrayList<String>();
-		allowedPackaging.add("jar");
-		allowedPackaging.add("war");
-
-		return allowedPackaging.contains(packaging);
+		String[] list = allowedPackagingList.split(",");
+		for (String allowed : list) {
+			if (allowed.trim().equals(packaging)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
