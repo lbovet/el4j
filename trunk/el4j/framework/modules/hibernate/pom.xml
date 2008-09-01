@@ -34,28 +34,16 @@
 		<!-- Third party tools -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate</artifactId>
-			<version>3.2.6.ga</version>
+			<artifactId>hibernate-core</artifactId>
+			<version>3.3.0.SP1</version>
 			<exclusions>
 				<!--
 					Exclude the dependencies if it would be taken from another
 					repository than the el4.elca-services.ch
 				-->
 				<exclusion>
-					<groupId>net.sf.ehcache</groupId>
-					<artifactId>ehcache</artifactId>
-				</exclusion>
-				<exclusion>
 					<groupId>javax.transaction</groupId>
 					<artifactId>jta</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>asm</groupId>
-					<artifactId>asm-attrs</artifactId>
 				</exclusion>
 				<exclusion>
 					<groupId>dom4j</groupId>
@@ -66,14 +54,6 @@
 					<artifactId>antlr</artifactId>
 				</exclusion>
 				<exclusion>
-					<groupId>cglib</groupId>
-					<artifactId>cglib</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>asm</groupId>
-					<artifactId>asm</artifactId>
-				</exclusion>
-				<exclusion>
 					<groupId>commons-collections</groupId>
 					<artifactId>commons-collections</artifactId>
 				</exclusion>
@@ -82,18 +62,18 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-annotations</artifactId>
-			<version>3.3.0.ga</version>
+			<version>3.4.0.GA</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>3.0.0.ga</version>
+			<version>3.1.0.CR2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-commons-annotations</artifactId>
-			<!-- version 3.3.0.ga is binary identical to 3.0.0.ga . This might be a deployment error, so we use 3.0.0.ga (to be sure) -->
-			<version>3.0.0.ga</version>
+			<!-- version 3.3.0.ga is a deployment error. Don't use it. -->
+			<version>3.1.0.GA</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -107,11 +87,6 @@
 			<groupId>javax.transaction</groupId>
 			<artifactId>jta</artifactId>
 			<version>1.0.1B</version>
-		</dependency>
-		<dependency>
-			<groupId>asm</groupId>
-			<artifactId>asm-attrs</artifactId>
-			<version>1.5.3</version>
 		</dependency>
 		<dependency>
 			<groupId>dom4j</groupId>
@@ -130,11 +105,17 @@
 			<version>2.7.7</version>
 		</dependency>
 		<dependency>
-			<groupId>asm</groupId>
-			<artifactId>asm</artifactId>
-			<version>1.5.3</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.5.2</version>
+		</dependency>
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.4.GA</version>
 		</dependency>
 	</dependencies>
+	
 	<repositories>
 		<!-- used for Hibernate Search 3.0.1.GA (in central is only 3.0.0.GA) -->
 		<repository>
