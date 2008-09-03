@@ -31,10 +31,12 @@ import ch.elca.el4j.gui.swing.splash.ImageSplashScreen;
  *
  * See also associated MainFormMDI.properties file that contains resources
  *
- * <script type="text/javascript">printFileStatus ("$URL:
- * https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/applications/templates/gui/thin-client/src/main/java/ch/elca/el4j/demos/gui/MainFormDistributedMDI.java
- * $", "$Revision$", "$Date: 2007-11-28 11:24:49 +0100 (Mi, 28 Nov 2007)
- * $", "$Author$" );</script>
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Stefan Wismer (SWI)
  */

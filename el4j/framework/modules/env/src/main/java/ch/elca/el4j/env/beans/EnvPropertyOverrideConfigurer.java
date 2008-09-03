@@ -39,11 +39,14 @@ import ch.elca.el4j.util.encryption.PasswordSource;
 import ch.elca.el4j.util.env.PropertyEncryptionUtil;
 
 /**
- * Specific property override configurer for the EL4J environment. <script
- * type="text/javascript">printFileStatus ("$URL:
- * https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/env/src/main/java/ch/elca/el4j/env/beans/EnvPropertyOverrideConfigurer.java
- * $", "$Revision$", "$Date: 2008-03-11 10:05:35 +0100 (Tue, 11 Mar 2008)
- * $", "$Author$" );</script>
+ * Specific property override configurer for the EL4J environment.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

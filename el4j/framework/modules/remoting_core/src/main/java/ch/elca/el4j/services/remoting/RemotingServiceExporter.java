@@ -30,13 +30,16 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.util.interfaceenrichment.EnrichmentDecorator;
 import ch.elca.el4j.util.interfaceenrichment.InterfaceEnricher;
 
+
 /**
  * This class is the global remote service exporter bean.
  *
- * <script type="text/javascript">printFileStatus ("$URL:
- * https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/framework/modules/remoting_core/src/main/java/ch/elca/el4j/services/remoting/RemotingServiceExporter.java
- * $", "$Revision$", "$Date: 2006-12-18 16:15:46 +0100 (Mo, 18 Dez 2006)
- * $", "$Author$" );</script>
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Martin Zeltner (MZE)
  */

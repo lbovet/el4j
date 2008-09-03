@@ -19,14 +19,18 @@ package ch.elca.el4j.maven.logging;
 import org.codehaus.plexus.logging.AbstractLogger;
 import org.codehaus.plexus.logging.Logger;
 
+
 /**
  * Base class for various formatting loggers.
- * <script type="text/javascript">printFileStatus ("$URL:
- * https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/etc/eclipse/codeTemplates.xml
- * $", "$Revision$", "$Date: 2008-03-04 09:04:15 +0100 (Tue, 04 Mar 2008)
- * $", "$Author$" );</script>
  *
- * @author your David Bernhard (DBD)
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author David Bernhard (DBD)
  */
 public abstract class AbstractFormattingLogger extends AbstractLogger {
 
