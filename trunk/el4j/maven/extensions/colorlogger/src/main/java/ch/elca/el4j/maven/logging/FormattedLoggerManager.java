@@ -29,14 +29,18 @@ import org.codehaus.plexus.personality.plexus.lifecycle.phase.Initializable;
 import ch.elca.el4j.maven.logging.console.ColorLogger;
 import ch.elca.el4j.maven.logging.html.HtmlLogger;
 
+
 /**
  * {@link LoggerManager} implementation that returns a ColorLogger or
  * HtmlLogger if a property is set, otherwise a ConsoleLogger. Based on
- * {@link ConsoleLoggerManager}. <script type="text/javascript">printFileStatus
- * ("$URL:
- * https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/etc/eclipse/codeTemplates.xml
- * $", "$Revision$", "$Date: 2008-03-04 09:04:15 +0100 (Tue, 04 Mar 2008)
- * $", "$Author$" );</script>
+ * {@link ConsoleLoggerManager}.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author David Bernhard (DBD)
  */

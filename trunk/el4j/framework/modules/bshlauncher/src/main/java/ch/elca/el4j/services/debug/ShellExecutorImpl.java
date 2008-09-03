@@ -27,13 +27,13 @@ import bsh.TargetError;
  *      <li> {@code $_} the last return result
  *    </ul>
  *
- *
- *
  * <script type="text/javascript">printFileStatus
- *   ("$Source: /cvsroot/leafproject/leaf/debug/src/dist/ch/elca/leaf/services/debug/AbstractEvaluator.java,v $",
- *   "$Revision$", "$Date$", "$Author$"
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
  * );</script>
- **/
+ */
 public class ShellExecutorImpl implements ShellExecutor {
 
 	private ByteArrayOutputStream out;

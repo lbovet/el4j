@@ -16,13 +16,13 @@
  */
 package ch.elca.el4j.plugins.filecollector;
 
+
 /**
- *
  * This exception will be thrown when an abnormal situation is detected during
  * file access or modification.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$Source$",
+ *   ("$URL$",
  *    "$Revision$",
  *    "$Date$",
  *    "$Author$"
