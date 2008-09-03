@@ -15,7 +15,6 @@ types="java xml xsd wsdl html xhtml css"
 excludeFolders="\./sandbox/ \./maven/demos/svn-m2repo/m2repository"
 
 
-# search for illegal whitespaces
 echo "Searching for all included files ($types)..."
 
 find ./ -type f | grep -v "/\.svn" | grep -v "/target/" | grep -v "/\.settings/" > all_files.tmp
@@ -30,8 +29,37 @@ for i in $excludeFolders ; do
 	mv files.tmp2 files.tmp
 done
 
-echo -n "Checking for illegal whitespaces..."
 result=0
+
+# check if all java files contain "printFileStatus" and "URL: "
+echo "Checking for valid printFileStatus..."
+echo "" > java_files.tmp
+cat files.tmp | grep  ".java$" >> java_files.tmp
+for i in $(cat java_files.tmp) ; do
+	
+	# dummy command to make it unix style
+	sed "s/ABC/ABC/" < $i > current.tmp
+	
+	egrep "printFileStatus" current.tmp > /dev/null
+	if [ $? -ne 0 ] ; then
+		# test deactivated: too many matches
+		echo -n "dummy" > /dev/null
+		#echo "$i: printFileStatus missing."
+		#result=1
+	else
+		egrep "URL: http" current.tmp > /dev/null
+		if [ $? -ne 0 ] ; then
+			echo "$i: 'URL:' has to be followed by a space"
+			egrep -n "URL: http" $i
+			result=1
+		fi
+	fi
+done
+rm java_files.tmp
+echo "done"
+
+# search for illegal whitespaces
+echo "Checking for illegal whitespaces..."
 for i in $(cat files.tmp) ; do
 	
 	# dummy command to make it unix style
@@ -50,7 +78,6 @@ for i in $(cat files.tmp) ; do
 		result=1
 	fi
 done
-
 echo "done"
 
 if [ $1 == "internal" ] ; then
