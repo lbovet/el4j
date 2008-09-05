@@ -22,7 +22,7 @@ import java.rmi.server.RMISocketFactory;
 import org.springframework.beans.factory.InitializingBean;
 
 /**
- * This Bean is used initialize the new {@link RMISocketFactory}, more
+ * This bean is used initialize the new {@link RMISocketFactory}, more
  * precisely the {@link RMITimeoutSocketFactoryInitializingBean}. It sets the
  * timeout to the value defined in the spring configuration file rmi-timeout.xml
  * (in mandatory) and then sets the global socket factory from which RMI gets
