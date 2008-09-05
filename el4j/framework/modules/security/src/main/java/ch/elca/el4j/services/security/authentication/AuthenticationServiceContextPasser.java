@@ -39,10 +39,20 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  *
  * @author Raphael Boog (RBO)
  * @author Andreas Pfenninger (APR)
+ * @author Dominik Zindel (DZI)
  */
 public class AuthenticationServiceContextPasser extends
 	AbstractImplicitContextPasser {
 
+	/*
+	 * The retry interceptor requires that, for implicit context passing, an
+	 * InheritableThreadLocal be used and not (as the acegi-default value) a
+	 * ThreadLocal. To achieve this, we set the corresponding strategy.
+	 */
+	static {
+		SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
+	}
+	
 	/**
 	 * Private logger of this class.
 	 */
