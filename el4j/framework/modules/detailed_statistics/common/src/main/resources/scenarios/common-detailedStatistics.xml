@@ -17,19 +17,15 @@
 			<value>${rmiProtocol.servicePort}</value>
 		</property>
 		<property name="implicitContextPassingRegistry">
-			<ref local="implicitContextPassingRegistry" />
+			<ref bean="defaultImplicitContextPassingRegistry" />
 		</property>
 	</bean>
-
-	<!-- Implicit context passing registry -->
-	<bean id="implicitContextPassingRegistry"
-		class="ch.elca.el4j.core.contextpassing.DefaultImplicitContextPassingRegistry" />
 
 
 	<bean id="sharedContextImplicitContextPasser"
 		class="ch.elca.el4j.services.statistics.detailed.contextpassing.DetailedStatisticsImplicitContextPasser">
 		<property name="implicitContextPassingRegistry">
-			<ref bean="implicitContextPassingRegistry" />
+			<ref bean="defaultImplicitContextPassingRegistry" />
 		</property>
 	</bean>
 

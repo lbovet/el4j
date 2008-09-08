@@ -29,7 +29,7 @@
 				<value>remoteCollector</value>
 				<value>dataRepository</value>
 				<value>rmiCollectorExporter</value>
-				<value>implicitContextPassingRegistry</value>
+				<value>defaultImplicitContextPassingRegistry</value>
 				<value>sharedContextImplicitContextPasser</value>
 				<value>clientInterceptor</value>
 				<value>mBeanServer</value>
