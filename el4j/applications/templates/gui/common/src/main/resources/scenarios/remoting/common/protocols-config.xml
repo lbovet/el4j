@@ -26,10 +26,8 @@
 			<value>${jee-web.context}</value>
 		</property>
 		<property name="implicitContextPassingRegistry">
-			<ref local="implicitContextPassingRegistry" />
+			<ref bean="defaultImplicitContextPassingRegistry" />
 		</property>
 	</bean>
 	
-	<bean id="implicitContextPassingRegistry"
-		class="ch.elca.el4j.core.contextpassing.DefaultImplicitContextPassingRegistry" />
 </beans>
