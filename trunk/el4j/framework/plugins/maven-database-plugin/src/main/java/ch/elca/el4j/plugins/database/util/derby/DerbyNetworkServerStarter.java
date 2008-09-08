@@ -19,6 +19,7 @@ package ch.elca.el4j.plugins.database.util.derby;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.derby.drda.NetworkServerControl;
 
 /**
@@ -43,6 +44,21 @@ public final class DerbyNetworkServerStarter {
 	 * Derby Database directory.
 	 */
 	private static String s_derbyDir;
+	
+	/**
+	 * Derby Database port.
+	 */
+	private static int s_port;
+	
+	/**
+	 * Derby Database user name.
+	 */
+	private static String s_username;
+	
+	/**
+	 * Derby Database password.
+	 */
+	private static String s_password;
 
 	
 	/** to hide constructor. */
@@ -65,8 +81,11 @@ public final class DerbyNetworkServerStarter {
 		// check if homeDir was set.
 		assert (s_derbyDir != null);
 		setWorkingDir();
-		s_server = new NetworkServerControl(InetAddress.getByName("0.0.0.0"),
-			NetworkServerControl.DEFAULT_PORTNUMBER);
+		if (StringUtils.isNotBlank(s_username) && StringUtils.isNotBlank(s_password)) {
+			s_server = new NetworkServerControl(InetAddress.getByName("0.0.0.0"), s_port, s_username, s_password);
+		} else {
+			s_server = new NetworkServerControl(InetAddress.getByName("0.0.0.0"), s_port);
+		}
 	}
 	
 	/**
@@ -77,6 +96,33 @@ public final class DerbyNetworkServerStarter {
 	 */
 	public static void setHomeDir(String dir) {
 		s_derbyDir = dir;
+	}
+	
+	/**
+	 * Set the port under which Derby should run.
+	 * 
+	 * @param port    the port number
+	 */
+	public static void setPort(int port) {
+		s_port = port > 0 ? port : NetworkServerControl.DEFAULT_PORTNUMBER;
+	}
+	
+	/**
+	 * Set the user name required to access Derby.
+	 * 
+	 * @param username    the user name
+	 */
+	public static void setUsername(String username) {
+		s_username = username;
+	}
+	
+	/**
+	 * Set the password required to access Derby.
+	 * 
+	 * @param password    the password
+	 */
+	public static void setPassword(String password) {
+		s_password = password;
 	}
 
 	/**

@@ -46,6 +46,27 @@ public class StartMojo extends AbstractDBMojo {
 	private static final int DELAY = 500;
 	
 	/**
+	 * The port to run derby.
+	 *
+	 * @parameter expression="${db.port}"  default-value="-1"
+	 */
+	private int dbPort;
+	
+	/**
+	 * The user name required to access derby.
+	 *
+	 * @parameter expression="${db.username}"  default-value=""
+	 */
+	private String dbUsername;
+	
+	/**
+	 * The password required to access derby.
+	 *
+	 * @parameter expression="${db.password}"  default-value=""
+	 */
+	private String dbPassword;
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	public void executeInternal() throws MojoExecutionException, MojoFailureException {
@@ -53,8 +74,10 @@ public class StartMojo extends AbstractDBMojo {
 			if (needStartup()) {
 				getLog().info("Starting database (StartMojo)...");
 				
-				
 				DerbyNetworkServerStarter.setHomeDir(getDerbyLocation());
+				DerbyNetworkServerStarter.setPort(dbPort);
+				DerbyNetworkServerStarter.setUsername(dbUsername);
+				DerbyNetworkServerStarter.setPassword(dbPassword);
 				DerbyNetworkServerStarter.startNetworkServer();
 				if (hasToWait()) {
 					Thread.sleep(DELAY);
