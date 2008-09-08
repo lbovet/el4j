@@ -25,7 +25,7 @@ import ch.elca.el4j.plugins.database.util.derby.DerbyNetworkServerStarter;
 /**
  * This class is a database mojo for the 'start' statement.
  * In case of using derby it starts the DerbyNetworkServer.
- * In case of using oracle, is doesn nothing (as we require
+ * In case of using oracle, is does nothing (as we require
  * the oracle database to run when using this plugin).
  *
  * <script type="text/javascript">printFileStatus
@@ -48,7 +48,7 @@ public class StartMojo extends AbstractDBMojo {
 	/**
 	 * The port to run derby.
 	 *
-	 * @parameter expression="${db.port}"  default-value="-1"
+	 * @parameter expression="${db.internal.port}"  default-value="-1"
 	 */
 	private int dbPort;
 	
