@@ -47,7 +47,7 @@ public class PrepareMojo extends AbstractDBExecutionMojo {
 	/**
 	 * The port to run derby.
 	 *
-	 * @parameter expression="${db.port}"  default-value="-1"
+	 * @parameter expression="${db.internal.port}"  default-value="-1"
 	 */
 	private int dbPort;
 	
