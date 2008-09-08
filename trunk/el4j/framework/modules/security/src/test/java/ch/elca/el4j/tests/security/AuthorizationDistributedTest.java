@@ -75,6 +75,7 @@ public class AuthorizationDistributedTest {
 	 * Server config locations.
 	 */
 	private String[] m_configLocationsServer = new String[] {
+		"classpath*:mandatory/*.xml",
 		"classpath:optional/security-attributes.xml",
 		"classpath:scenarios/services/sampleService.xml",
 		"classpath:scenarios/server/applicationContextTest.xml",
@@ -87,6 +88,7 @@ public class AuthorizationDistributedTest {
 	 * Client config locations.
 	 */
 	private String[] m_configLocationsClient = new String[] {
+		"classpath*:mandatory/*.xml",
 		"classpath:scenarios/services/serviceProxy.xml",
 		"classpath:scenarios/securityscope/"
 			+ "distributed-security-scope-client.xml",
