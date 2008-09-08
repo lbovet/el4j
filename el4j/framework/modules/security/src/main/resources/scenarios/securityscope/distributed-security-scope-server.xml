@@ -24,7 +24,7 @@
 	<bean id="authenticationServiceContextPasser"
 		class="ch.elca.el4j.services.security.authentication.SecureUsernamePasswordAuthenticationServiceContextPasser">
 		<property name="implicitContextPassingRegistry">
-			<ref bean="implicitContextPassingRegistry"/>
+			<ref bean="defaultImplicitContextPassingRegistry"/>
 		</property>
 		<property name="key" value="6u8jFjvGHDFYqJPOBtHJfg==" />
 	</bean>
