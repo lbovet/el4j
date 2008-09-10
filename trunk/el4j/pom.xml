@@ -1248,6 +1248,9 @@
 				<db.name>db2</db.name>
 				<db.host>localhost</db.host>
 				<db.port>1527</db.port>
+				<!-- at which port should Derby (server) run (if started using db:start or db:prepare)
+				This might not be the same as db.port (see tcp-forwarder), so we cannot use ${db.port} here -->
+				<db.internal.port>1527</db.internal.port>
 				<db.database-name>el4j</db.database-name>
 				<db.create-database>true</db.create-database>
 				<db.url>jdbc:derby://${db.host}:${db.port}/${db.database-name};create=${db.create-database}</db.url>
