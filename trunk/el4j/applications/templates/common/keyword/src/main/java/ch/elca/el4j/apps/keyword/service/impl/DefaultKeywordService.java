@@ -20,6 +20,9 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.transaction.annotation.Propagation;
@@ -46,7 +49,7 @@ import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
  * @author Adrian Moos (AMS)
  */
 public class DefaultKeywordService
-	implements KeywordService, InitializingBean {
+	implements KeywordService, ApplicationListener {
 	
 	/**
 	 * Hibernate DAO registry.
@@ -81,14 +84,13 @@ public class DefaultKeywordService
 	protected KeywordDao getKeywordDao() {
 		return (KeywordDao) getDaoRegistry().getFor(Keyword.class);
 	}
-	/**
-	 * {@inheritDoc}
-	 */
-	public void afterPropertiesSet() throws Exception {
-				
-		CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-			getKeywordDao(), "keywordDao",
-			this);
+	
+	/** {@inheritDoc} */
+	public synchronized void onApplicationEvent(ApplicationEvent event) {
+		if (event instanceof ContextRefreshedEvent) {
+			// Spring context is completely initialized (in contrast to afterPropertiesSet)
+			CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(getKeywordDao(), "keywordDao", this);
+		}
 	}
 	
 	/**

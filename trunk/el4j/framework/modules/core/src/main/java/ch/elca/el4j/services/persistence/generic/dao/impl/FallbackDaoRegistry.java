@@ -35,7 +35,7 @@ public class FallbackDaoRegistry extends DefaultDaoRegistry {
 	/**
 	 * The bean name of the fallback DAO prototype.
 	 */
-	private String m_daoPrototypeBeanName;
+	protected String m_daoPrototypeBeanName;
 	
 	/** {@inheritDoc} */
 	@Override
@@ -58,7 +58,7 @@ public class FallbackDaoRegistry extends DefaultDaoRegistry {
 	 * @return      A new generic DAO for this entityType
 	 */
 	@SuppressWarnings("unchecked")
-	private <T> GenericDao<T> createFor(Class<T> entityType) {
+	protected <T> GenericDao<T> createFor(Class<T> entityType) {
 		GenericDao<T> dao = null;
 		if (m_daoPrototypeBeanName != null) {
 			dao = (GenericDao<T>) m_applicationContext.getBean(

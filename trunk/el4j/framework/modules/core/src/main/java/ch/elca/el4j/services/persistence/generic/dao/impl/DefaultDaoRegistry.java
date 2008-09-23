@@ -18,18 +18,21 @@
 package ch.elca.el4j.services.persistence.generic.dao.impl;
 
 import java.lang.reflect.Proxy;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.util.PatternMatchUtils;
 
+import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
 
@@ -62,7 +65,7 @@ import net.sf.cglib.proxy.Enhancer;
  * @author Alex Mathey (AMA)
  */
 public class DefaultDaoRegistry implements DaoRegistry,
-	ApplicationContextAware {
+	ApplicationContextAware, ApplicationListener {
 
 	/**
 	 * Private logger of this class.
@@ -73,8 +76,7 @@ public class DefaultDaoRegistry implements DaoRegistry,
 	/**
 	 * The map containing the registered DAOs.
 	 */
-	protected Map<Class<?>, GenericDao<?>> m_daos
-		= new HashMap<Class<?>, GenericDao<?>>();
+	protected Map<Class<?>, GenericDao<?>> m_daos = new ConcurrentHashMap<Class<?>, GenericDao<?>>();
 
 	/** 
 	 * The application context. 
@@ -87,8 +89,50 @@ public class DefaultDaoRegistry implements DaoRegistry,
 	 */
 	protected String m_daoNamePattern = "*";
 	
-	/** was {@link initDaosFromSpringBeans} already called? */
+	/** 
+	 * Was {@link initDaosFromSpringBeans} already called?
+	 */
 	protected boolean m_initialized = false;
+	
+	/**
+	 * The thread ID of the thread that set the application context (in general the thread that created this object).
+	 */
+	protected long m_creatorThreadId;
+	
+	/**
+	 * Is Spring context completely initialized?
+	 */
+	protected volatile boolean m_applicationContextIsReady = false;
+	
+	/** {@inheritDoc} */
+	public synchronized void onApplicationEvent(ApplicationEvent event) {
+		if (event instanceof ContextRefreshedEvent) {
+			m_applicationContextIsReady = true;
+		}
+	}
+	
+	/**
+	 * Check if Spring context is completely initialized and wait if we are in multi-threaded environment.
+	 */
+	public synchronized void waitUntilApplicationContextIsReady() {
+		// if we are in the same thread, waiting probably doesn't make sense, so we have to check this.
+		if (Thread.currentThread().getId() != m_creatorThreadId) {
+			// access from another thread -> wait
+			try {
+				while (!m_applicationContextIsReady) {
+					this.wait();
+				}
+			} catch (InterruptedException e) {
+				// application context might be ready now
+			}
+		}
+		if (!m_applicationContextIsReady) {
+			CoreNotificationHelper.notifyMisconfiguration("Trying to get DAOs before Spring context is "
+				+ "fully initialized. Some DAOs might not be found. "
+				+ "Implement org.springframework.context.ApplicationListener to listen to "
+				+ "org.springframework.context.event.ContextRefreshedEvent");
+		}
+	}
 	
 	/**
 	 * {@inheritDoc}
@@ -146,16 +190,16 @@ public class DefaultDaoRegistry implements DaoRegistry,
 	 * Load all GenericDaos from this spring bean's bean factory.
 	 */
 	protected void initDaosFromSpringBeans() {
-		String[] beanNamesToLoad
-			= m_applicationContext.getBeanNamesForType(GenericDao.class);
+		waitUntilApplicationContextIsReady();
+		
+		String[] beanNamesToLoad = m_applicationContext.getBeanNamesForType(GenericDao.class);
 		for (String name : beanNamesToLoad) {
 			if (!PatternMatchUtils.simpleMatch(m_daoNamePattern, name)) {
 				// Doesn't match - so skip it.
 				continue;
 			}
 			
-			GenericDao<?> dao = (GenericDao<?>)
-				m_applicationContext.getBean(name);
+			GenericDao<?> dao = (GenericDao<?>) m_applicationContext.getBean(name);
 			
 			// avoid adding a DAO again
 			if (!m_daos.values().contains(dao)) {
@@ -199,6 +243,7 @@ public class DefaultDaoRegistry implements DaoRegistry,
 	public void setApplicationContext(ApplicationContext applicationContext)
 		throws BeansException {
 		m_applicationContext = applicationContext;
+		m_creatorThreadId = Thread.currentThread().getId();
 	}
 	
 	/**
