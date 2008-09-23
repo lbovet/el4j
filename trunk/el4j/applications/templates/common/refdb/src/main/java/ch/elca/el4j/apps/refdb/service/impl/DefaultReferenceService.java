@@ -290,11 +290,11 @@ public class DefaultReferenceService extends DefaultKeywordService
 		throws DataAccessException, OptimisticLockingFailureException  {
 		
 		if (getLinkDao().referenceExists(key)) {
-			getLinkDao().delete(key);
+			getLinkDao().deleteById(key);
 		} else if (getBookDao().referenceExists(key)) {
-			getBookDao().delete(key);
+			getBookDao().deleteById(key);
 		} else if (getFormalPublicationDao().referenceExists(key)) {
-			getFormalPublicationDao().delete(key);
+			getFormalPublicationDao().deleteById(key);
 		} else {
 			CoreNotificationHelper.notifyOptimisticLockingFailure(
 				Constants.REFERENCE);
@@ -309,7 +309,7 @@ public class DefaultReferenceService extends DefaultKeywordService
 		throws OptimisticLockingFailureException {
 		
 		KeywordDao dao = getKeywordDao();
-		dao.delete(key);
+		dao.deleteById(key);
 	}
 	
 	/**
@@ -323,14 +323,14 @@ public class DefaultReferenceService extends DefaultKeywordService
 		
 		if (getLinkDao().referenceExists(refKey)) {
 			keywordSet = getLinkDao().findById(refKey).getKeywords();
-			getLinkDao().delete(refKey);
+			getLinkDao().deleteById(refKey);
 		} else if (getBookDao().referenceExists(refKey)) {
 			keywordSet = getBookDao().findById(refKey).getKeywords();
-			getBookDao().delete(refKey);
+			getBookDao().deleteById(refKey);
 		} else if (getFormalPublicationDao().referenceExists(refKey)) {
 			keywordSet = getFormalPublicationDao().findById(refKey).
 				getKeywords();
-			getFormalPublicationDao().delete(refKey);
+			getFormalPublicationDao().deleteById(refKey);
 		} else {
 			CoreNotificationHelper.notifyOptimisticLockingFailure(
 				Constants.REFERENCE);
@@ -342,14 +342,15 @@ public class DefaultReferenceService extends DefaultKeywordService
 		Iterator<Keyword> it = keywordSet.iterator();
 		while (it.hasNext()) {
 			int delKey = it.next().getKey();
-			keywordDao.delete(delKey);
+			keywordDao.deleteById(delKey);
 		}
 		
 	}
 	
-	public void manualHibernateIndexing() throws DataAccessException, DataRetrievalFailureException {
+	// TODO integrate this (ELJ-39)
+	/*public void manualHibernateIndexing() throws DataAccessException, DataRetrievalFailureException {
 		getLinkDao().manualHibernateIndexing();
 		getFormalPublicationDao().manualHibernateIndexing();
 		getBookDao().manualHibernateIndexing();
-	}
+	}*/
 }
