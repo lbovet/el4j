@@ -22,6 +22,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -62,7 +65,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * @author Alex Mathey (AMA)
  */
 public class DefaultReferenceService extends DefaultKeywordService
-	implements ReferenceService {
+	implements ReferenceService, ApplicationListener {
 	
 	/**
 	 * Constructor.
@@ -102,19 +105,20 @@ public class DefaultReferenceService extends DefaultKeywordService
 			.getFor(Book.class);
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	public void afterPropertiesSet() throws Exception {
-		super.afterPropertiesSet();
-		CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-			getFileDao(), "fileDao", this);
-		CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-			getLinkDao(), "linkDao", this);
-		CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-			getFormalPublicationDao(), "formalPublicationDao", this);
-		CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-			getBookDao(), "bookDao", this);
+	/** {@inheritDoc} */
+	public void onApplicationEvent(ApplicationEvent event) {
+		super.onApplicationEvent(event);
+		if (event instanceof ContextRefreshedEvent) {
+			// Spring context is completely initialized (in contrast to afterPropertiesSet)
+			CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+				getFileDao(), "fileDao", this);
+			CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+				getLinkDao(), "linkDao", this);
+			CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+				getFormalPublicationDao(), "formalPublicationDao", this);
+			CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+				getBookDao(), "bookDao", this);
+		}
 	}
 
 	/**
@@ -341,5 +345,11 @@ public class DefaultReferenceService extends DefaultKeywordService
 			keywordDao.delete(delKey);
 		}
 		
+	}
+	
+	public void manualHibernateIndexing() throws DataAccessException, DataRetrievalFailureException {
+		getLinkDao().manualHibernateIndexing();
+		getFormalPublicationDao().manualHibernateIndexing();
+		getBookDao().manualHibernateIndexing();
 	}
 }
