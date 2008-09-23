@@ -58,14 +58,12 @@ public interface ReferenceService extends KeywordService {
 	 * @throws DataIntegrityViolationException
 	 *             If file could not be inserted.
 	 * @throws OptimisticLockingFailureException
-	 *             If file has been modificated in the meantime.
+	 *             If file has been modified in the meantime.
 	 */
-	@RollbackConstraint(rollbackFor = { DataAccessException.class,
-			DataIntegrityViolationException.class,
+	@RollbackConstraint(rollbackFor = { DataAccessException.class, DataIntegrityViolationException.class,
 			OptimisticLockingFailureException.class })
 	public FileDescriptorView saveFileAndReturnFileDescriptorView(File file)
-		throws DataAccessException, DataIntegrityViolationException,
-			OptimisticLockingFailureException;
+		throws DataAccessException, DataIntegrityViolationException, OptimisticLockingFailureException;
 
 	/**
 	 * Get a reference by primary key.
@@ -78,8 +76,7 @@ public interface ReferenceService extends KeywordService {
 	 * @throws DataRetrievalFailureException
 	 *             If link could not be retrieved.
 	 */
-	public Reference getReferenceByKey(int key)
-		throws DataAccessException, DataRetrievalFailureException;
+	public Reference getReferenceByKey(int key) throws DataAccessException, DataRetrievalFailureException;
 
 	/**
 	 * Get all references with the same name.
@@ -90,8 +87,7 @@ public interface ReferenceService extends KeywordService {
 	 * @throws DataAccessException
 	 *             If general data access problem occurred.
 	 */
-	public List<Reference> getReferencesByName(String name)
-		throws DataAccessException;
+	public List<Reference> getReferencesByName(String name) throws DataAccessException;
 
 	/**
 	 * Get all references.
@@ -112,8 +108,7 @@ public interface ReferenceService extends KeywordService {
 	 * @throws DataAccessException
 	 *             If general data access problem occurred.
 	 */
-	public List<Reference> searchReferences(QueryObject query)
-		throws DataAccessException;
+	public List<Reference> searchReferences(QueryObject query) throws DataAccessException;
 	
 	/**
 	 * Search references using Hibernate Search.
@@ -126,8 +121,7 @@ public interface ReferenceService extends KeywordService {
 	 * @throws DataAccessException
 	 *             If general data access problem occurred.
 	 */
-	public List<Reference> searchReferences(String field, String critera)
-		throws DataAccessException;
+	public List<Reference> searchReferences(String field, String critera) throws DataAccessException;
 
 	/**
 	 * Save reference. If reference is new, viz is has no primary key, it will
@@ -141,14 +135,12 @@ public interface ReferenceService extends KeywordService {
 	 * @throws DataIntegrityViolationException
 	 *             If reference could not be inserted.
 	 * @throws OptimisticLockingFailureException
-	 *             If reference has been modificated in the meantime.
+	 *             If reference has been modified in the meantime.
 	 */
-	@RollbackConstraint(rollbackFor = { DataAccessException.class,
-			DataIntegrityViolationException.class,
+	@RollbackConstraint(rollbackFor = { DataAccessException.class, DataIntegrityViolationException.class,
 			OptimisticLockingFailureException.class })
 	public Reference saveReference(Reference reference)
-		throws DataAccessException, DataIntegrityViolationException,
-			OptimisticLockingFailureException;
+		throws DataAccessException, DataIntegrityViolationException, OptimisticLockingFailureException;
 
 	/**
 	 * Delete reference. Primary key will be used.
@@ -160,10 +152,8 @@ public interface ReferenceService extends KeywordService {
 	 * @throws OptimisticLockingFailureException
 	 *             If reference could not be deleted.
 	 */
-	@RollbackConstraint(rollbackFor = { DataAccessException.class,
-			OptimisticLockingFailureException.class })
-	public void deleteReference(int key)
-		throws DataAccessException, OptimisticLockingFailureException;
+	@RollbackConstraint(rollbackFor = { DataAccessException.class, OptimisticLockingFailureException.class })
+	public void deleteReference(int key) throws DataAccessException, OptimisticLockingFailureException;
 	
 	/**
 	 * Delete keyword. Primary key will be used.
@@ -173,10 +163,8 @@ public interface ReferenceService extends KeywordService {
 	 * @throws OptimisticLockingFailureException
 	 *          Keyword could not be deleted.
 	 */
-	@RollbackConstraint(rollbackFor = { DataAccessException.class,
-		OptimisticLockingFailureException.class })
-	public void deleteKeyword(int key)
-		throws OptimisticLockingFailureException;
+	@RollbackConstraint(rollbackFor = { DataAccessException.class, OptimisticLockingFailureException.class })
+	public void deleteKeyword(int key) throws OptimisticLockingFailureException;
 	
 	/**
 	 * Deletes a reference and all its according keywords.
@@ -185,10 +173,7 @@ public interface ReferenceService extends KeywordService {
 	 * @throws DataIntegrityViolationException
 	 *          If deleted keywords belong to other references.
 	 */
-	@RollbackConstraint(rollbackFor = {
-		DataAccessException.class,
-		DataIntegrityViolationException.class,
-		OptimisticLockingFailureException.class })
-	public void deleteReferenceAndKeywords(int refKey)
-		throws DataIntegrityViolationException;
+	@RollbackConstraint(rollbackFor = { DataAccessException.class, DataIntegrityViolationException.class,
+			OptimisticLockingFailureException.class })
+	public void deleteReferenceAndKeywords(int refKey) throws DataIntegrityViolationException;
 }
