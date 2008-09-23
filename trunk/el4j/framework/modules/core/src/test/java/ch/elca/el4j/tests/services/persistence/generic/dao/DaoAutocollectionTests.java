@@ -24,6 +24,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
+import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
 
 public class DaoAutocollectionTests {
 
@@ -34,7 +35,7 @@ public class DaoAutocollectionTests {
 		
 		//System.out.println("beans: "+StringUtils.arrayToCommaDelimitedString(ac.getBeanDefinitionNames()));
 		
-		DaoRegistry registry = (DaoRegistry)ac.getBean("registry");
+		DaoRegistry registry = (DaoRegistry) ac.getBean("registry");
 		
 		GenericDao<?> dao = registry.getFor(String.class);
 		//System.out.println("registry: "+DataDumper.dump(((DefaultDaoRegistry)registry).getDaos()));
@@ -53,7 +54,8 @@ public class DaoAutocollectionTests {
 	/**
 	 * Test the dao name pattern matching functionality.
 	 */
-	@Test public void testDaoPatternMatching() {
+	@Test
+	public void testDaoPatternMatching() {
 		ApplicationContext ac =	new ClassPathXmlApplicationContext(
 			new String[] {"scenarios/core/dao/springConfig.xml"});
 		
@@ -69,6 +71,19 @@ public class DaoAutocollectionTests {
 		dao = registry.getFor(Long.class);
 		assertTrue(dao == null);
 
+	}
+	
+	/**
+	 * Test if {@link DefaultDaoRegistry} blocks until Spring context is ready.
+	 */
+	@Test
+	public void testConcurrent() {
+		final ApplicationContext ac = new ClassPathXmlApplicationContext(
+			new String[] {"scenarios/core/dao/springConfig.xml", "scenarios/core/dao/concurrentConfig.xml"});
+		
+		ImpatientClass impatientClass = (ImpatientClass) ac.getBean("impatientClass");
+		
+		assertTrue("DaoRegistry didn't wait for completely initialized Spring context", impatientClass.join());
 	}
 	
 }

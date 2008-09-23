@@ -108,6 +108,7 @@ public class DefaultDaoRegistry implements DaoRegistry,
 	public synchronized void onApplicationEvent(ApplicationEvent event) {
 		if (event instanceof ContextRefreshedEvent) {
 			m_applicationContextIsReady = true;
+			this.notify();
 		}
 	}
 	
