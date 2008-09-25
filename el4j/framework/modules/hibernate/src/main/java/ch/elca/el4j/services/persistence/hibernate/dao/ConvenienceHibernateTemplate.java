@@ -80,10 +80,7 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
 		Object result = get(entityClass, id);
 		
 		if (result == null || !(entityClass.isInstance(result))) {
-			String message = "The desired " + objectName + " could not be"
-				+ " retrieved.";
-			CoreNotificationHelper.notifyDataRetrievalFailure(message,
-				objectName);
+			CoreNotificationHelper.notifyObjectRetrievalFailure(entityClass, id, objectName);
 		}
 		return result;
 	}
@@ -101,10 +98,7 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
 		Object result = load(entityClass, id);
 		
 		if (result == null || !(entityClass.isInstance(result))) {
-			String message = "The desired " + objectName + " could not be"
-				+ " retrieved.";
-			CoreNotificationHelper.notifyDataRetrievalFailure(message,
-				objectName);
+			CoreNotificationHelper.notifyObjectRetrievalFailure(entityClass, id, objectName);
 		}
 		return result;
 	}
@@ -148,7 +142,7 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
 			if (result.isEmpty()) {
 				message = "The desired " + objectName
 					+ " does not exist.";
-			} else if (result.size() > 0) {
+			} else if (result.size() > 1) {
 				message = "The query resulted in more than one persistent "
 					+ " instance.";
 			}
