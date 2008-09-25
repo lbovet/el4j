@@ -235,17 +235,20 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
 	protected void prepareQuery(Query queryObject) {
 		super.prepareQuery(queryObject);
 		
-		if (getFirstResult() != QueryObject.NO_CONSTRAINT){
+		if (getFirstResult() != QueryObject.NO_CONSTRAINT) {
 			queryObject.setFirstResult(getFirstResult());
 		}
 		
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void prepareCriteria(Criteria criteria) {
 		super.prepareCriteria(criteria);
 
-		if (getFirstResult() != QueryObject.NO_CONSTRAINT){
+		if (getFirstResult() != QueryObject.NO_CONSTRAINT) {
 			criteria.setFirstResult(getFirstResult());
 		}
 		
@@ -253,11 +256,9 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
 
 	
 	/**
-	 * Count number of results of a search.
-	 * @param criteria
-	 * @param firstResult
-	 * @param maxResults
-	 * @return
+	 * Counts the number of results of a search.
+	 * @param criteria The criteria for the query.
+	 * @return The number of results of the query.
 	 * @throws DataAccessException
 	 */
 	public int findCountByCriteria(final DetachedCriteria criteria)
@@ -267,24 +268,32 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
 		Object result =  executeWithNativeSession(new HibernateCallback() {
 			public Object doInHibernate(Session session) throws HibernateException {
 				Criteria executableCriteria = criteria.getExecutableCriteria(session);
-				executableCriteria.setProjection( Projections.rowCount() );
+				executableCriteria.setProjection(Projections.rowCount());
 								
 				prepareCriteria(executableCriteria);
 				
 				return executableCriteria.uniqueResult();
 			}
 		});
-		if (result == null){
+		if (result == null) {
 			result = 0;
 		}
 		
-		return (Integer)result;
+		return (Integer) result;
 	}
 	
+	/**
+	 * Gets the id of the first result to return.
+	 * @return The id of the first result to return.
+	 */
 	public int getFirstResult() {
 		return m_firstResult;
 	}
 
+	/**
+	 * Sets the id of the first result to return.
+	 * @param firstResult The id of the first result to return.
+	 */
 	public void setFirstResult(int firstResult) {
 		m_firstResult = firstResult;
 	}
