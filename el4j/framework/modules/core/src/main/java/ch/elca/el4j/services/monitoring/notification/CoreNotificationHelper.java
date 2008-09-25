@@ -26,6 +26,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException;
+import org.springframework.orm.ObjectRetrievalFailureException;
 import org.springframework.util.StringUtils;
 
 import ch.elca.el4j.core.exceptions.MisconfigurationRTException;
@@ -278,6 +279,52 @@ public final class CoreNotificationHelper {
 		}
 	}
 
+	/**
+	 * Method to log that an object could not be retrieved. This method will
+	 * always throw an exception.
+	 * 
+	 * @param entityClass
+	 *            The persistent class.
+	 * @param identifier
+	 *            The ID of the object that should have been retrieved.
+	 * @param objectName
+	 *            The name of the object.
+	 */
+	public static void notifyObjectRetrievalFailure(Class<?> entityClass,
+		Object identifier, String objectName)
+		throws ObjectRetrievalFailureException {
+		notifyObjectRetrievalFailure(entityClass, identifier, objectName,
+			null, null);
+	}
+	
+	/**
+	 * Method to log that an object could not be retrieved. This method will
+	 * always throw an exception.
+	 * 
+	 * @param entityClass
+	 *            The persistent class.
+	 * @param identifier
+	 *            The ID of the object that should have been retrieved.
+	 * @param objectName
+	 *            The name of the object.
+	 * @param detailedMessage
+	 *            A detailed message.
+	 * @param cause
+	 *            The source of the exception.
+	 */
+	public static void notifyObjectRetrievalFailure(Class<?> entityClass,
+		Object identifier, String objectName, String detailedMessage,
+		Throwable cause) throws ObjectRetrievalFailureException {
+		String message = StringUtils.hasText(detailedMessage) ? detailedMessage
+			: "The desired " + objectName + " with ID " + identifier
+				+ " could not be" + " retrieved.";
+		s_logger.error(message);
+
+		throw new ObjectRetrievalFailureException(entityClass, identifier,
+			message, cause);
+	}
+	
+	
 	/**
 	 * Method to log that the object could not be updated correctly. This method
 	 * will always throw an exception.
