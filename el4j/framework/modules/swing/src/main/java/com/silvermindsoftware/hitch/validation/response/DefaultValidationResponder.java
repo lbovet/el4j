@@ -47,7 +47,7 @@ public class DefaultValidationResponder implements ValidationResponder {
 	protected final Color m_invalidColor;
 
 	/**
-	 * The default contructor reading the invalidColor from Spring config.
+	 * The default constructor reading the invalidColor from Spring config.
 	 */
 	public DefaultValidationResponder() {
 		m_invalidColor = null;
