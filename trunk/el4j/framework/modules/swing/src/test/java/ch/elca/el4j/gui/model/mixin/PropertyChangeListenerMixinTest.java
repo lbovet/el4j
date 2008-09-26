@@ -5,14 +5,17 @@ import static org.junit.Assert.assertTrue;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jdesktop.observablecollections.ObservableList;
 import org.jdesktop.observablecollections.ObservableListListener;
 import org.junit.Test;
+import org.springframework.aop.framework.Advised;
 
 import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
 import ch.elca.el4j.model.mixin.SaveRestoreCapability;
+import ch.elca.el4j.util.codingsupport.AopHelper;
 
 import com.silvermindsoftware.hitch.events.PropertyChangeListenerCapability;
 
@@ -169,5 +172,46 @@ public class PropertyChangeListenerMixinTest {
 		assertEquals(testListener.event, "add");
 		list.set(0, 2);
 		assertEquals(testListener.event, "replace");
+	}
+	
+	private class MyList<T> extends ArrayList<T> {
+		private String m_name;
+
+		/**
+		 * @return Returns the name.
+		 */
+		public String getName() {
+			return m_name;
+		}
+
+		/**
+		 * @param name Is the name to set.
+		 */
+		public void setName(String name) {
+			m_name = name;
+		}
+		
+	}
+	
+	@Test
+	public void testAdvising() throws Exception {
+		ExampleModel model = new ExampleModelImpl();
+		model = PropertyChangeListenerMixin.addPropertyChangeMixin(model);
+		model = PropertyChangeListenerMixin.addPropertyChangeMixin(model);
+
+		if (model instanceof Advised) {
+			Advised advised = (Advised) model;
+			assertEquals(advised.getAdvisors().length, 1);
+		}
+		
+		List<String> list = new MyList<String>();
+		list = PropertyChangeListenerMixin.addPropertyChangeMixin(list);
+		list = PropertyChangeListenerMixin.addPropertyChangeMixin(list);
+		
+		if (list instanceof Advised) {
+			Advised advised = (Advised) list;
+			assertEquals(advised.getAdvisors().length, 1);
+		}
+		System.out.println(model);
 	}
 }

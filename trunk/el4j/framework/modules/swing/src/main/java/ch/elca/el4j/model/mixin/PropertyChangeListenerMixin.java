@@ -21,6 +21,7 @@ import java.beans.Introspector;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
@@ -70,25 +71,31 @@ public class PropertyChangeListenerMixin extends
 	private static final Log s_logger = LogFactory.getLog(PropertyChangeListenerMixin.class);
 	
 	/**
+	 * Should bean property be overwritten by proxied property to speed up following accesses?
+	 * This field is intended to be overwritten by subclasses.
+	 */
+	protected boolean m_writeBack = true;
+	
+	/**
 	 * The support for property change notification.
 	 */
-	private PropertyChangeSupport m_changeSupport;
+	protected PropertyChangeSupport m_changeSupport;
 	
 	/**
 	 * Getter-to-setter/setter-to-getter method cache.
 	 */
-	private Map<Method, Method> m_methodCache = new HashMap<Method, Method>();
+	protected Map<Method, Method> m_methodCache = new HashMap<Method, Method>();
 
 	/**
 	 * The stored properties (a map containing the setter-method and its value).
 	 */
-	private Map<Method, Object> m_backup = new HashMap<Method, Object>();
+	protected Map<Method, Object> m_backup = new HashMap<Method, Object>();
 	
 	/**
 	 * Hibernate class validator.
 	 */
 	@SuppressWarnings("unchecked")
-	private ClassValidator m_classValidator;
+	protected ClassValidator m_classValidator;
 	
 
 	/**
@@ -109,7 +116,15 @@ public class PropertyChangeListenerMixin extends
 	 *                 {@link PropertyChangeListenerMixin} as {@link Advisor}
 	 */
 	public static <T> T addPropertyChangeMixin(T object) {
-		return AopHelper.addAdvice(object, new PropertyChangeListenerMixin());
+		if (!AopHelper.isProxiedBy(object, PropertyChangeListenerMixin.class)) {
+			if (object instanceof List) {
+				return (T) addPropertyChangeMixin((List) object);
+			} else {
+				return AopHelper.addAdvice(object, new PropertyChangeListenerMixin());
+			}
+		} else {
+			return object;
+		}
 	}
 	
 	/**
@@ -120,13 +135,15 @@ public class PropertyChangeListenerMixin extends
 	 * @return         the corresponding {@link ObservableList}
 	 */
 	public static <T> List<T> addPropertyChangeMixin(List<T> list) {
-		List<T> wrappedList = AopHelper.addAdvice(list, new PropertyChangeListenerMixin());
-		
-		if (list instanceof ObservableList) {
-			return wrappedList;
+		if (!AopHelper.isProxiedBy(list, PropertyChangeListenerMixin.class)) {
+			if (list instanceof ObservableList) {
+				return list;
+			} else {
+				// replace List by ObservableList
+				return ObservableCollections.observableList(list);
+			}
 		} else {
-			// replace List by ObservableList
-			return ObservableCollections.observableList(wrappedList);
+			return list;
 		}
 	}
 	
@@ -139,13 +156,11 @@ public class PropertyChangeListenerMixin extends
 	 * @return         the corresponding {@link ObservableMap}
 	 */
 	public static <K, V> Map<K, V> addPropertyChangeMixin(Map<K, V> map) {
-		Map<K, V> wrappedMap = AopHelper.addAdvice(map, new PropertyChangeListenerMixin());
-		
 		if (map instanceof ObservableMap) {
-			return wrappedMap;
+			return map;
 		} else {
 			// replace Map by ObservableMap
-			return ObservableCollections.observableMap(wrappedMap);
+			return ObservableCollections.observableMap(map);
 		}
 	}
 
@@ -220,42 +235,54 @@ public class PropertyChangeListenerMixin extends
 			&& invocation.getArguments().length == 0) {
 			
 			Object result = super.invoke(invocation);
-			if (result == null) {
-				return null;
-			}
 			
-			boolean modified = false;
-			if (List.class.isAssignableFrom(result.getClass())) {
-				if (!(result instanceof ObservableList)) {
-					// replace List by ObservableList
-					result = ObservableCollections.observableList((List) result);
-					modified = true;
-				}
-			} else if (Map.class.isAssignableFrom(result.getClass())) {
-				if (!(result instanceof ObservableMap)) {
-					// replace Map by ObservableMap
-					result = ObservableCollections.observableMap((Map) result);
-					modified = true;
-				}
-			}
+			Object wrappedResult = applyMixinToResult(result);
+			
 			// reassign value if modified
-			if (modified) {
+			if (m_writeBack && wrappedResult != result) {
 				Method setter = getSetter(invocation.getMethod());
 				if (setter != null) {
-					setter.invoke(invocation.getThis(), result);
+					setter.invoke(invocation.getThis(), wrappedResult);
 				}
 			}
-			return result;
+			return wrappedResult;
 		} else {
 			return super.invoke(invocation);
 		}
+	}
+
+	/**
+	 * Add property change listeners to result of method invocation. 
+	 * 
+	 * @param object    the result of the method invocation
+	 * @return          the wrapped result
+	 */
+	protected Object applyMixinToResult(Object object) {
+		if (object == null) {
+			return null;
+		}
+		Object result = object;
+		
+		if (List.class.isAssignableFrom(object.getClass())) {
+			if (!(object instanceof ObservableList)) {
+				// replace List by ObservableList
+				result = ObservableCollections.observableList((List) object);
+			}
+		} else if (Map.class.isAssignableFrom(object.getClass())) {
+			if (!(object instanceof ObservableMap)) {
+				// replace Map by ObservableMap
+				result = ObservableCollections.observableMap((Map) object);
+			}
+		}
+		
+		return result;
 	}
 	
 	/**
 	 * @param setter    the setter method
 	 * @return          the corresponding getter method
 	 */
-	private Method getGetter(Method setter) {
+	protected Method getGetter(Method setter) {
 		Method getter = null;
 
 		// attempt cache retrieval.
@@ -284,7 +311,7 @@ public class PropertyChangeListenerMixin extends
 	 * @param getter    the getter method
 	 * @return          the corresponding setter method
 	 */
-	private Method getSetter(Method getter) {
+	protected Method getSetter(Method getter) {
 		Method setter = null;
 
 		// attempt cache retrieval.
