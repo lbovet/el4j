@@ -65,7 +65,9 @@ public abstract class AbstractTest {
 	/**
 	 * @return Returns the string array with exclude locations.
 	 */
-	protected abstract String[] getExcludeConfigLocations();
+	protected String[] getExcludeConfigLocations() {
+		return null;
+	}
 
 	/**
 	 * @return Returns the string array with include locations.
