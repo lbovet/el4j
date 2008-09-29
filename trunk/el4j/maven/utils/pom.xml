@@ -20,11 +20,24 @@
 	<version>${version.maven-utils}</version>
 	
 	<packaging>jar</packaging>
-	<name>EL4J Maven utils</name>
+	<name>EL4J maven utils</name>
 	<description>
 		Various debugging utilities for maven projects.
 	</description>
-
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			
+			<!-- IDE -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 	<dependencies>
 		<dependency>
 			<groupId>commons-logging</groupId>
@@ -35,5 +48,4 @@
 			<artifactId>log4j</artifactId>
 		</dependency>
 	</dependencies>
-
 </project>
