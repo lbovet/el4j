@@ -240,6 +240,24 @@ public class AopHelper {
 	public static boolean isProxied(Object object) {
 		return (object instanceof Advised);
 	}
+	
+	/**
+	 * Is the given object advised by an instance of the given advice class?
+	 * @param object    the adviced object
+	 * @param cls       the advice class
+	 * @return          <code>true</code> if object is adviced by given advice class
+	 */
+	public static boolean isProxiedBy(Object object, Class<? extends Advice> cls) {
+		if (object instanceof Advised) {
+			Advised advised = (Advised) object;
+			for (Advisor advisor : advised.getAdvisors()) {
+				if (advisor.getAdvice().getClass() == cls) {
+					return true;
+				}
+			} 
+		}
+		return false;
+	}
 
 	
 	// Remark: we could add here a remove advice method (it could
