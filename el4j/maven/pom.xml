@@ -23,8 +23,8 @@
 		EL4J artifacts related to Maven.
 	</description>
 	<modules>
+		<module>utils</module>
 		<module>plugins</module>
 		<module>helpers</module>
-		<module>utils</module>
 	</modules>
 </project>
