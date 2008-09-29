@@ -60,8 +60,7 @@ public interface ReferenceService extends KeywordService {
 	 * @throws OptimisticLockingFailureException
 	 *             If file has been modified in the meantime.
 	 */
-	@RollbackConstraint(rollbackFor = { DataAccessException.class, DataIntegrityViolationException.class,
-			OptimisticLockingFailureException.class })
+	@RollbackConstraint
 	public FileDescriptorView saveFileAndReturnFileDescriptorView(File file)
 		throws DataAccessException, DataIntegrityViolationException, OptimisticLockingFailureException;
 
@@ -137,8 +136,7 @@ public interface ReferenceService extends KeywordService {
 	 * @throws OptimisticLockingFailureException
 	 *             If reference has been modified in the meantime.
 	 */
-	@RollbackConstraint(rollbackFor = { DataAccessException.class, DataIntegrityViolationException.class,
-			OptimisticLockingFailureException.class })
+	@RollbackConstraint
 	public Reference saveReference(Reference reference)
 		throws DataAccessException, DataIntegrityViolationException, OptimisticLockingFailureException;
 
@@ -152,7 +150,7 @@ public interface ReferenceService extends KeywordService {
 	 * @throws OptimisticLockingFailureException
 	 *             If reference could not be deleted.
 	 */
-	@RollbackConstraint(rollbackFor = { DataAccessException.class, OptimisticLockingFailureException.class })
+	@RollbackConstraint
 	public void deleteReference(int key) throws DataAccessException, OptimisticLockingFailureException;
 	
 	/**
@@ -163,7 +161,7 @@ public interface ReferenceService extends KeywordService {
 	 * @throws OptimisticLockingFailureException
 	 *          Keyword could not be deleted.
 	 */
-	@RollbackConstraint(rollbackFor = { DataAccessException.class, OptimisticLockingFailureException.class })
+	@RollbackConstraint
 	public void deleteKeyword(int key) throws OptimisticLockingFailureException;
 	
 	/**
@@ -173,7 +171,6 @@ public interface ReferenceService extends KeywordService {
 	 * @throws DataIntegrityViolationException
 	 *          If deleted keywords belong to other references.
 	 */
-	@RollbackConstraint(rollbackFor = { DataAccessException.class, DataIntegrityViolationException.class,
-			OptimisticLockingFailureException.class })
+	@RollbackConstraint
 	public void deleteReferenceAndKeywords(int refKey) throws DataIntegrityViolationException;
 }

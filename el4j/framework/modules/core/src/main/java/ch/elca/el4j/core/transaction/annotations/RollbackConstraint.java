@@ -23,13 +23,17 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import ch.elca.el4j.core.transaction.AnnotationTransactionMetaDataSource;
+
 /**
- * This annotation is a subsection of class
- * {@link org.springframework.transaction.annotation.Transactional}. It is
- * mostly used on interfaces to pre-define the rule-based behavior of
- * transactions. It is only useful in combination with annotation
- * {@link org.springframework.transaction.annotation.Transactional} that is
- * mostly defined on implementing class.
+ * <p>This annotation is a subsection of class {@link org.springframework.transaction.annotation.Transactional}.
+ * It is mostly used on interfaces to pre-define the rule-based behavior of transactions. It is only useful in 
+ * combination with annotation {@link org.springframework.transaction.annotation.Transactional} that is mostly defined 
+ * on implementing class.</p>
+ * 
+ * <p><b>This annotation is read in class {@link AnnotationTransactionMetaDataSource}. If the annotation has no
+ * parameters set the meta data source will automatically add {@link RuntimeException} and {@link Error} as
+ * rollback-for.</b></p>
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -40,6 +44,7 @@ import java.lang.annotation.Target;
  *
  * @author Martin Zeltner (MZE)
  * @see org.springframework.transaction.annotation.Transactional
+ * @see AnnotationTransactionMetaDataSource
  */
 @Target({ ElementType.METHOD, ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
