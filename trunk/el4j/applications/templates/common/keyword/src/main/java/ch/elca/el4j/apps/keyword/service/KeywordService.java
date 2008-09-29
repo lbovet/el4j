@@ -49,9 +49,7 @@ public interface KeywordService {
 	 * @throws OptimisticLockingFailureException
 	 *             If a keyword could not be deleted.
 	 */
-	@RollbackConstraint(rollbackFor = {
-			OptimisticLockingFailureException.class,
-			DataAccessException.class })
+	@RollbackConstraint
 	public void deleteKeywords(Collection<?> keys)
 		throws OptimisticLockingFailureException, DataAccessException;
 }

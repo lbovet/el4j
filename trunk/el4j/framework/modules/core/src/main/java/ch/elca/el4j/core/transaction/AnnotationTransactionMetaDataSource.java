@@ -68,7 +68,7 @@ public class AnnotationTransactionMetaDataSource
 		}
 		
 		// If there was a transactional metadata look out for a
-		// roolback constraint.
+		// rollback constraint.
 		Collection result;
 		if (rbta != null) {
 			for (Object att : metaData) {
@@ -177,6 +177,12 @@ public class AnnotationTransactionMetaDataSource
 			NoRollbackRuleAttribute rule
 				= new NoRollbackRuleAttribute(nrbfc[i]);
 			rollBackRules.add(rule);
+		}
+		
+		// Add runtime exception and error if the rollback constraint did not define anything
+		if (rollBackRules.isEmpty()) {
+			rollBackRules.add(new RollbackRuleAttribute(RuntimeException.class));
+			rollBackRules.add(new RollbackRuleAttribute(Error.class));
 		}
 	
 		rbta.getRollbackRules().addAll(rollBackRules);

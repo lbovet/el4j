@@ -85,8 +85,7 @@ public interface ConvenienceGenericDao<T, ID extends Serializable>
 	 * @deprecated Renamed to deleteById as of el4j 1.6
 	 */
 	@Deprecated
-	@RollbackConstraint(rollbackFor = { DataAccessException.class,
-			OptimisticLockingFailureException.class })
+	@RollbackConstraint
 	void delete(ID id)
 		throws OptimisticLockingFailureException, DataAccessException;
 	
@@ -101,8 +100,7 @@ public interface ConvenienceGenericDao<T, ID extends Serializable>
 	 * @throws DataAccessException
 	 *             If general data access problem occurred
 	 */
-	@RollbackConstraint(rollbackFor = { DataAccessException.class,
-			OptimisticLockingFailureException.class })
+	@RollbackConstraint
 	void deleteById(ID id)
 		throws OptimisticLockingFailureException, DataAccessException;
 	
@@ -126,8 +124,7 @@ public interface ConvenienceGenericDao<T, ID extends Serializable>
 	 * @throws DataAccessException
 	 *             If general data access problem occurred
 	 */
-	@RollbackConstraint(rollbackFor = { DataAccessException.class,
-			OptimisticLockingFailureException.class })
+	@RollbackConstraint
 	void delete(T entity)
 		throws OptimisticLockingFailureException, DataAccessException;
 	
@@ -139,8 +136,7 @@ public interface ConvenienceGenericDao<T, ID extends Serializable>
 	 * @throws DataAccessException
 	 *             If general data access problem occurred
 	 */
-	@RollbackConstraint(rollbackFor = { DataAccessException.class,
-			OptimisticLockingFailureException.class })
+	@RollbackConstraint
 	public void deleteAll()
 		throws OptimisticLockingFailureException, DataAccessException;
 	

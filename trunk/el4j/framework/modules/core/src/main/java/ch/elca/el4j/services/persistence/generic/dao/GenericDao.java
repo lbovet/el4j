@@ -125,9 +125,7 @@ public interface GenericDao<T> {
 	 * @return The saved or updated domain object
 	 */
 	@ReturnsUnchangedParameter
-	@RollbackConstraint(rollbackFor = { DataAccessException.class,
-			DataIntegrityViolationException.class,
-			OptimisticLockingFailureException.class })
+	@RollbackConstraint
 	T saveOrUpdate(T entity) throws DataAccessException,
 		DataIntegrityViolationException, OptimisticLockingFailureException;
 
@@ -142,8 +140,7 @@ public interface GenericDao<T> {
 	 * @throws OptimisticLockingFailureException
 	 *             If domain object has been modified/deleted in the meantime
 	 */
-	@RollbackConstraint(rollbackFor = { DataAccessException.class,
-			OptimisticLockingFailureException.class })
+	@RollbackConstraint
 	void delete(Collection<T> entities)
 		throws OptimisticLockingFailureException, DataAccessException;
 }
