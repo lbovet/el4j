@@ -22,7 +22,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import zappini.designgridlayout.DesignGridLayout;
+import net.java.dev.designgridlayout.DesignGridLayout;
+
 
 /**
  * This class represents a standard search dialog.
@@ -108,12 +109,12 @@ public abstract class AbstractSearchDialog extends JPanel {
 		DesignGridLayout layout = new DesignGridLayout(this);
 		setLayout(layout);
 
-		layout.row().left().add(m_searchFor, 2);
+		layout.leftRow().add(m_searchFor);
 		layout.row().add(m_searchField, 2);
-		layout.row().right().add(m_searchButton);
+		layout.rightRow().add(m_searchButton);
 		if (m_options != null) {
 			for (JComponent component : m_options) {
-				layout.row().left().add(component, 2);
+				layout.leftRow().add(component);
 			}
 		}
 	}

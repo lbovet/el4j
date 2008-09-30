@@ -20,11 +20,12 @@ import org.w3c.dom.Element;
 
 import ch.elca.el4j.gui.swing.cookswing.binding.NoAddValueHolder;
 
+import net.java.dev.designgridlayout.DesignGridLayout;
+import net.java.dev.designgridlayout.IRow;
+
 import cookxml.core.DecodeEngine;
 import cookxml.core.interfaces.Creator;
 
-import zappini.designgridlayout.DesignGridLayout;
-import zappini.designgridlayout.Row;
 
 /**
  * A cookSwing creator for &lt;row&gt;s, rows inside a designgridlayout.
@@ -47,7 +48,21 @@ public class RowCreator implements Creator {
 		if (parentObj == null || !(parentObj instanceof DesignGridLayout)) {
 			return null;
 		}
-		return new NoAddValueHolder<Row>(((DesignGridLayout) parentObj).row());
+		
+		// search for align attribute, which is required for row construction
+		String align = elm.getAttribute("align");
+		IRow row = null;
+		if (align.equals("left")) {
+			row = ((DesignGridLayout) parentObj).leftRow();
+		} else if (align.equals("right")) {
+			row = ((DesignGridLayout) parentObj).rightRow();
+		} else if (align.equals("center")) {
+			row = ((DesignGridLayout) parentObj).centerRow();
+		} else {
+			// align="grid" or not set
+			row = ((DesignGridLayout) parentObj).row();
+		}
+		return new NoAddValueHolder<IRow>(row);
 	}
 
 	/** {@inheritDoc} */

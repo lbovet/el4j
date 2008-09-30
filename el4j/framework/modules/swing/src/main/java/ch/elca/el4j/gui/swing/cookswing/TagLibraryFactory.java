@@ -16,18 +16,6 @@
  */
 package ch.elca.el4j.gui.swing.cookswing;
 
-import ch.elca.el4j.gui.swing.cookswing.binding.BindingCreator;
-import ch.elca.el4j.gui.swing.cookswing.binding.ColumnBindingCreator;
-import ch.elca.el4j.gui.swing.cookswing.binding.ComboBoxBindingCreator;
-import ch.elca.el4j.gui.swing.cookswing.binding.ListBindingCreator;
-import ch.elca.el4j.gui.swing.cookswing.binding.NoAddVarSetter;
-import ch.elca.el4j.gui.swing.cookswing.binding.TableBindingCreator;
-import ch.elca.el4j.gui.swing.cookswing.designgridlayout.DesignGridLayoutCreator;
-import ch.elca.el4j.gui.swing.cookswing.designgridlayout.RowAdder;
-import ch.elca.el4j.gui.swing.cookswing.designgridlayout.RowAlignSetter;
-import ch.elca.el4j.gui.swing.cookswing.designgridlayout.RowCreator;
-import ch.elca.el4j.gui.swing.cookswing.designgridlayout.RowHeightSetter;
-
 import cookxml.common.CommonLib;
 import cookxml.cookswing.CookSwing;
 import cookxml.cookswing.CookSwingLib;
@@ -36,6 +24,17 @@ import cookxml.core.adder.DefaultAdder;
 import cookxml.core.setter.DefaultSetter;
 import cookxml.core.setter.DoNothingSetter;
 import cookxml.core.taglibrary.InheritableTagLibrary;
+
+import ch.elca.el4j.gui.swing.cookswing.binding.BindingCreator;
+import ch.elca.el4j.gui.swing.cookswing.binding.ColumnBindingCreator;
+import ch.elca.el4j.gui.swing.cookswing.binding.ComboBoxBindingCreator;
+import ch.elca.el4j.gui.swing.cookswing.binding.ListBindingCreator;
+import ch.elca.el4j.gui.swing.cookswing.binding.NoAddVarSetter;
+import ch.elca.el4j.gui.swing.cookswing.binding.TableBindingCreator;
+import ch.elca.el4j.gui.swing.cookswing.designgridlayout.DesignGridLayoutCreator;
+import ch.elca.el4j.gui.swing.cookswing.designgridlayout.EmptyRowCreator;
+import ch.elca.el4j.gui.swing.cookswing.designgridlayout.RowAdder;
+import ch.elca.el4j.gui.swing.cookswing.designgridlayout.RowCreator;
 
 /**
  * This factory creates the enhanced tag library.
@@ -155,8 +154,10 @@ public final class TagLibraryFactory {
 		tagLibrary.setCreator("row", new RowCreator());
 		tagLibrary.setAdder("row", new RowAdder());
 		tagLibrary.setSetter("row", null, DoNothingSetter.getInstance());
-		tagLibrary.setSetter("row", "align", new RowAlignSetter());
-		tagLibrary.setSetter("row", "height", new RowHeightSetter());
+		
+		// <emptyrow>
+		tagLibrary.setCreator("emptyrow", new EmptyRowCreator());
+		tagLibrary.setSetter("emptyrow", null, DoNothingSetter.getInstance());
 		
 		
 		return tagLibrary;

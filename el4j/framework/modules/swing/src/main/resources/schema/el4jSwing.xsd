@@ -154,20 +154,16 @@
 		</complexContent>
 	</complexType>
 	
-	<complexType name="vgap">
-		<complexContent>
-			<extension base="cookXmlCommon:object" />
-		</complexContent>
-	</complexType>
+	<complexType name="emptyrow" />
 	
-	<complexType name="empty">
+	<!-- <complexType name="empty">
 		<complexContent>
 			<extension base="cookXmlCommon:object" />
 		</complexContent>
-	</complexType>
+	</complexType> -->
 	
 	<element name="designgridlayout" type="el4j:designgridlayout" substitutionGroup="cookXmlCommon:object" />
 	<element name="row" type="el4j:row" substitutionGroup="cookXmlCommon:object" />
-	<element name="vgap" type="el4j:row" substitutionGroup="cookXmlCommon:object" />
-	<element name="empty" type="el4j:row" substitutionGroup="cookXmlCommon:object" />
+	<element name="emptyrow" type="el4j:emptyrow" />
+	<!-- <element name="empty" type="el4j:row" substitutionGroup="cookXmlCommon:object" /> -->
 </schema>

@@ -43,8 +43,8 @@ import ch.elca.el4j.demos.model.Person;
 import ch.elca.el4j.gui.swing.widgets.IntegerField;
 import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
 
-import zappini.designgridlayout.DesignGridLayout;
-import zappini.designgridlayout.Row;
+import net.java.dev.designgridlayout.DesignGridLayout;
+
 
 /**
  * Demonstrates how to use the automatic bean binding.
@@ -55,7 +55,7 @@ import zappini.designgridlayout.Row;
  *
  * Non-trivial bindings like lists or tables need special information. In this
  * demo the <code>JList</code> should show the <code>value</code> property of
- * each list element. Therfore, it is necessary to specify that by
+ * each list element. Therefore, it is necessary to specify that by
  * (<code>m_binder.addManualBinding(... new ListBinding("value") ...)</code>).
  *
  * There is also shown how to manually bind components: the textfield
@@ -143,24 +143,19 @@ public class BindingDemoForm extends JPanel {
 
 		// the text fields are twice as wide as the labels
 		// Checkstyle: MagicNumber off
-		layout.row().left().add(
-			"These fields are bound to the underlying Person model.");
-		layout.row().left().add(
-			"Validation Info: Firstname must be longer than 3 charcters.");
+		layout.leftRow().add(new JLabel("These fields are bound to the underlying Person model."));
+		layout.leftRow().add(new JLabel("Validation Info: Firstname must be longer than 3 charcters."));
 
-		layout.row().add("First Name").add(m_firstName, 2)
-			.add("Last Name").add(m_lastName, 2);
-		layout.row().add("Age").add(m_age, 2).add(Row.EMPTY, 3);
-		layout.row().add("Current Validation Message:")
-		.add(m_validationMessage, 3);
+		layout.row().add(new JLabel("First Name")).add(m_firstName, 2).add(new JLabel("Last Name")).add(m_lastName, 2);
+		layout.row().add(new JLabel("Age")).add(m_age, 2).empty(3);
+		layout.row().add(new JLabel("Current Validation Message:")).add(m_validationMessage, 3);
 		
 		// add a vertical spacer
-		layout.row().height(20);
+		layout.emptyRow(20);
 		
-		layout.row().left().add(
-			"Edit list items. Negative numbers are invalid.");
-		layout.row().add("List Selection").add(m_curListSelection, 2)
-			.add("The list").add(m_numbers, 2);
+		layout.leftRow().add(new JLabel("Edit list items. Negative numbers are invalid."));
+		layout.row().add(new JLabel("List Selection")).add(m_curListSelection, 2)
+			.add(new JLabel("The list")).add(m_numbers, 2);
 		
 		// Checkstyle: MagicNumber on
 	}

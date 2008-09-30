@@ -15,8 +15,9 @@
 		<constraint location="North">
 			<panel>
 				<el4j:designgridlayout>
-					<el4j:row align="left" height="30">
-						<label text="A label in left aligned row that has a height of 30 pixels" />
+					<el4j:emptyrow height="30" />
+					<el4j:row align="left">
+						<label text="A label in left aligned row. Above there is an empty row (height: 30 pixels)" />
 					</el4j:row>
 					<el4j:row>
 						<label name="lblFirstName" horizontalalignment="RIGHT" />

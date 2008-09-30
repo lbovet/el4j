@@ -23,12 +23,12 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableModel;
 
-import org.bushe.swing.event.annotation.AnnotationProcessor;
 import org.bushe.swing.event.annotation.EventSubscriber;
 import org.jdesktop.application.Action;
 import org.jdesktop.beansbinding.AbstractBindingListener;
@@ -52,9 +52,9 @@ import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.LikeCriteria;
 
-import cookxml.cookswing.CookSwing;
+import net.java.dev.designgridlayout.DesignGridLayout;
 
-import zappini.designgridlayout.DesignGridLayout;
+import cookxml.cookswing.CookSwing;
 
 
 /**
@@ -185,14 +185,14 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 
 		// the first two rows contains a label and a text field each
 		
-		layout.row().add("Name").add(m_name);
-		layout.row().add("Description").add(m_description);
-		layout.row().add("Incomplete").add(m_incomplete);
+		layout.row().add(new JLabel("Name")).add(m_name);
+		layout.row().add(new JLabel("Description")).add(m_description);
+		layout.row().add(new JLabel("Incomplete")).add(m_incomplete);
 		layout.row().add(m_createButton).add(m_deleteButton);
 		// Hint: spacers can be inserted using add(Row.EMPTY)
 
 		// Checkstyle: MagicNumber off
-		layout.row().height(10);
+		layout.emptyRow(10);
 		// Checkstyle: MagicNumber on
 	}
 
