@@ -61,6 +61,13 @@
 			<groupId>net.java.dev.designgridlayout</groupId>
 			<artifactId>designgridlayout</artifactId>
 			<version>0.9</version>
+			<exclusions>
+				<exclusion>
+					<!-- designgridlayout uses older version 1.0.2 -->
+					<groupId>org.jdesktop.layout</groupId>
+					<artifactId>swing-layout</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.yuanheng.cookxml</groupId>
