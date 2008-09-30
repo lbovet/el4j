@@ -17,6 +17,7 @@
 package ch.elca.el4j.demos.gui;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -35,7 +36,7 @@ import ch.elca.el4j.gui.swing.wrapper.AbstractWrapperFactory;
 import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
 import ch.elca.el4j.model.mixin.SaveRestoreCapability;
 
-import zappini.designgridlayout.DesignGridLayout;
+import net.java.dev.designgridlayout.DesignGridLayout;
 
 /**
  * This GUI can be used to edit a reference from the refDB.
@@ -151,8 +152,8 @@ public class ReferenceEditorForm extends JPanel {
 		setLayout(layout);
 
 		// the first two rows contains a label and a text field each
-		layout.row().label("Name").add(m_name);
-		layout.row().label("Description").add(m_description);
+		layout.row().label(new JLabel("Name")).add(m_name);
+		layout.row().label(new JLabel("Description")).add(m_description);
 		layout.row().add(m_okButton).add(m_cancelButton);
 	}
 }

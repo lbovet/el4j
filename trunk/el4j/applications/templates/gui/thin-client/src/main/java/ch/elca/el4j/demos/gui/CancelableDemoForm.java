@@ -17,6 +17,7 @@
 package ch.elca.el4j.demos.gui;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -33,7 +34,8 @@ import ch.elca.el4j.gui.swing.GUIApplication;
 import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
 import ch.elca.el4j.model.mixin.SaveRestoreCapability;
 
-import zappini.designgridlayout.DesignGridLayout;
+import net.java.dev.designgridlayout.DesignGridLayout;
+
 
 /**
  * This class demonstrates a form that has a cancel button to restore the
@@ -123,7 +125,7 @@ public class CancelableDemoForm extends JPanel {
 		setLayout(layout);
 
 		// the first two rows contains a label and a text field each
-		layout.row().label("First Name").add(firstName);
+		layout.row().label(new JLabel("First Name")).add(firstName);
 		layout.row().add(m_okButton).add(m_cancelButton);
 	}
 }

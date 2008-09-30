@@ -20,6 +20,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -45,7 +46,7 @@ import ch.elca.el4j.gui.swing.widgets.IntegerField;
 import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
 import ch.elca.el4j.model.tablemodel.TableSorter;
 
-import zappini.designgridlayout.DesignGridLayout;
+import net.java.dev.designgridlayout.DesignGridLayout;
 
 /**
  * Demonstrates master/detail view.
@@ -180,15 +181,13 @@ public class MasterDetailDemoForm extends JPanel {
 		// the first two rows contains a label and a text field each
 
 		// the text fields are twice as wide as the labels
-		layout.row().add("First Name").add(m_firstName, 2).add("Smart").add(
-				m_smart, 2);
-		layout.row().add("Last Name").add(m_lastName, 2).add("Age").add(
-				m_age, 2);
+		layout.row().add(new JLabel("First Name")).add(m_firstName, 2).add(new JLabel("Smart")).add(m_smart, 2);
+		layout.row().add(new JLabel("Last Name")).add(m_lastName, 2).add(new JLabel("Age")).add(m_age, 2);
 		layout.row().add(m_createButton).add(m_deleteButton);
 		// Hint: spacers can be inserted using add(Row.EMPTY)
 
 		// Checkstyle: MagicNumber off
-		layout.row().height(10);
+		layout.emptyRow(10);
 		// Checkstyle: MagicNumber on
 	}
 	

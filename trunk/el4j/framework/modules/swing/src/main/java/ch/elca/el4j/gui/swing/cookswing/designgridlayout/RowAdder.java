@@ -20,13 +20,13 @@ import javax.swing.JComponent;
 
 import ch.elca.el4j.gui.swing.cookswing.binding.NoAddValueHolder;
 
+import net.java.dev.designgridlayout.IGridRow;
+
 import cookxml.core.DecodeEngine;
 import cookxml.core.interfaces.Adder;
 
-import zappini.designgridlayout.Row;
-
 /**
- * This cookXML adder handles &lt;row&gt; elemts: They get added to the parent
+ * This cookXML adder handles &lt;row&gt; elements: They get added to the parent
  * designgridlayout.
  *
  * <script type="text/javascript">printFileStatus
@@ -57,8 +57,13 @@ public class RowAdder implements Adder {
 			}
 			
 			// create row
-			((NoAddValueHolder<Row>) parent).getObject()
-				.add((JComponent) child, span);
+			IGridRow row = ((NoAddValueHolder<IGridRow>) parent).getObject();
+			if (child != null) {
+				row.add((JComponent) child, span);
+			} else {
+				row.empty(span);
+			}
+				
 			return true;
 		}
 		return false;
