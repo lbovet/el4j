@@ -31,6 +31,7 @@ for i in $(cat files.tmp | egrep "\.sh") ; do
 	echo "svn propset svn:mime-type application/x-sh $i" >> updateProp.txt
 	echo "svn propset svn:executable ON $i" >> updateProp.txt
 done
-rm cat files.tmp
+cat files.tmp
+rm files.tmp
 
 echo "Copy everthing from updateProp.txt to cygwin shell"
