@@ -71,12 +71,12 @@ for i in $(cat files.tmp) ; do
 		egrep -n "^[[:blank:]]* [^*^-]" $i
 		result=1
 	fi
-	egrep "[^[:blank:]^*][[:blank:]][[:blank:]]+$" current.tmp > /dev/null
-	if [ $? -eq 0 ] ; then
-		echo "$i: Spaces at end of line found."
-		egrep -n "[^[:blank:]^*][[:blank:]][[:blank:]]+$" $i
-		result=1
-	fi
+#	egrep "[^[:blank:]^*][[:blank:]][[:blank:]]+$" current.tmp > /dev/null
+#	if [ $? -eq 0 ] ; then
+#		echo "$i: Spaces at end of line found."
+#		egrep -n "[^[:blank:]^*][[:blank:]][[:blank:]]+$" $i
+#		result=1
+#	fi
 done
 echo "done"
 
