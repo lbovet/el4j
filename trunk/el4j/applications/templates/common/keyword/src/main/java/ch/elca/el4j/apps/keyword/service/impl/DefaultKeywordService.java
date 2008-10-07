@@ -19,7 +19,9 @@ package ch.elca.el4j.apps.keyword.service.impl;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -49,12 +51,17 @@ import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
  * @author Adrian Moos (AMS)
  */
 public class DefaultKeywordService
-	implements KeywordService, ApplicationListener {
+	implements KeywordService, ApplicationContextAware, ApplicationListener {
 	
 	/**
 	 * Hibernate DAO registry.
 	 */
 	protected DaoRegistry m_daoRegistry;
+	
+	/** 
+	 * The application context. Used to detect the right ContextRefreshedEvent.
+	 */
+	protected ApplicationContext m_applicationContext;
 
 	/**
 	 * Constructor.
@@ -88,8 +95,10 @@ public class DefaultKeywordService
 	/** {@inheritDoc} */
 	public synchronized void onApplicationEvent(ApplicationEvent event) {
 		if (event instanceof ContextRefreshedEvent) {
-			// Spring context is completely initialized (in contrast to afterPropertiesSet)
-			CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(getKeywordDao(), "keywordDao", this);
+			if (((ContextRefreshedEvent) event).getApplicationContext() == m_applicationContext) {
+				// Spring context is completely initialized (in contrast to afterPropertiesSet)
+				CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(getKeywordDao(), "keywordDao", this);
+			}
 		}
 	}
 	
@@ -105,10 +114,10 @@ public class DefaultKeywordService
 				Object element = it.next();
 				if (element instanceof Number) {
 					int key = ((Number) element).intValue();
-					getKeywordDao().delete(key);
+					getKeywordDao().deleteById(key);
 				} else if (element instanceof String) {
 					int key = Integer.parseInt((String) element);
-					getKeywordDao().delete(key);
+					getKeywordDao().deleteById(key);
 				} else {
 					CoreNotificationHelper.notifyMisconfiguration(
 						"Given keys must be of type number or string. "
@@ -118,5 +127,9 @@ public class DefaultKeywordService
 			}
 		}
 	}
-
+	
+	/** {@inheritDoc} */
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		m_applicationContext = applicationContext;
+	}
 }

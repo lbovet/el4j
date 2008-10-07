@@ -352,7 +352,7 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 	public void onEvent(SearchRefDBEvent event) {
 		QueryObject query = new QueryObject();
 		query.addCriteria(LikeCriteria.caseInsensitive(
-			event.getField(), event.getValue()));
+			event.getFields()[0], event.getValue()));
 		
 		// do not reassign m_refList, otherwise you need to setup the whole
 		// property change mechanism and the binding!

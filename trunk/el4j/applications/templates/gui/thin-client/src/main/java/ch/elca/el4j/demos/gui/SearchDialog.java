@@ -118,7 +118,7 @@ public class SearchDialog extends AbstractSearchDialog {
 		@Override
 		protected Void doInBackground() throws InterruptedException {
 			// send refBD event
-			EventBus.publish(new SearchRefDBEvent("description",
+			EventBus.publish(new SearchRefDBEvent(new String[]{"description"},
 				"%" + m_searchField.getText() + "%"));
 			
 			// Checkstyle: MagicNumber off

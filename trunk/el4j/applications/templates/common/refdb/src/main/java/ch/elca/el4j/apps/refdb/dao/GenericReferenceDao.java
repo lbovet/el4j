@@ -74,14 +74,22 @@ public interface GenericReferenceDao<T extends Reference,
 	 * 
 	 * @param critera
 	 *            Is the condition to search.
-	 * @param field
-	 *            Is the field where to do the search
+	 * @param fields
+	 *            Is the fields where to do the search
 	 * @return Returns the desired reference.
 	 * @throws DataAccessException
 	 *             If general data access problem occurred.
 	 * @throws DataRetrievalFailureException
 	 *             If reference could not be retrieved.
 	 */
-	public List<T> search(String field, String critera)
+	public List<T> search(String[] fields, String critera)
 		throws DataAccessException, DataRetrievalFailureException;
+	
+	/**
+	 * Trigger Hibernate Search index process explicitly.
+	 * 
+	 * @throws DataAccessException
+	 * @throws DataRetrievalFailureException
+	 */
+	public void createHibernateSearchIndex() throws DataAccessException, DataRetrievalFailureException;
 }

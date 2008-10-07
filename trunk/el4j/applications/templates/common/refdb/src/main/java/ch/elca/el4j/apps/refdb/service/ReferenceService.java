@@ -114,13 +114,13 @@ public interface ReferenceService extends KeywordService {
 	 * 
 	 * @param critera
 	 *            Is the word to search in Reference objects
-	 * @param field
-	 *            Is the field where to do the search
+	 * @param fields
+	 *            Is the fields where to do the search
 	 * @return Returns a list of references. Returns never <code>null</code>.
 	 * @throws DataAccessException
 	 *             If general data access problem occurred.
 	 */
-	public List<Reference> searchReferences(String field, String critera) throws DataAccessException;
+	public List<Reference> searchReferences(String[] fields, String critera) throws DataAccessException;
 
 	/**
 	 * Save reference. If reference is new, viz is has no primary key, it will
@@ -173,4 +173,12 @@ public interface ReferenceService extends KeywordService {
 	 */
 	@RollbackConstraint
 	public void deleteReferenceAndKeywords(int refKey) throws DataIntegrityViolationException;
+	
+	/**
+	 * Trigger Hibernate Search index process explicitly.
+	 * 
+	 * @throws DataAccessException
+	 * @throws DataRetrievalFailureException
+	 */
+	public void createHibernateSearchIndex() throws DataAccessException, DataRetrievalFailureException;
 }

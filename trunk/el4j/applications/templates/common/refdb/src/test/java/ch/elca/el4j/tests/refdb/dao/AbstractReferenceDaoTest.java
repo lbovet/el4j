@@ -173,7 +173,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		annotation2.getWhenInserted().setNanos(0);
 		annotation.getWhenInserted().setNanos(0);
 		for (Annotation l : list) {
-			((Annotation)l).getWhenInserted().setNanos(0);
+			((Annotation) l).getWhenInserted().setNanos(0);
 		}
 		
 		assertTrue("First annotation has not been found",
@@ -197,7 +197,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		annotation.setGrade(8);
 		annotation.setContent("This is only a short comment.");
 		Annotation annotation2 = dao.saveOrUpdate(annotation);
-		dao.delete(annotation2.getKey());
+		dao.deleteById(annotation2.getKey());
 		try {
 			dao.findById(annotation2.getKey());
 			fail("The removed annotation is still in the DB.");
@@ -243,7 +243,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		} catch (OptimisticLockingFailureException e) {
 			s_logger.debug("Expected exception catched.", e);
 		}
-		dao.delete(annotation3.getKey());
+		dao.deleteById(annotation3.getKey());
 	}
 
 	/**
@@ -323,7 +323,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		assertEquals("The inserted and read domain objects are not equal",
 			annotation, annotation2);
 
-		dao.delete(annotation.getKey());
+		dao.deleteById(annotation.getKey());
 
 		List<Annotation> list = dao.getAll();
 		assertEquals("The removed annotation is still in the DB.",
@@ -441,7 +441,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		byte[] content = "This is only a test content.".getBytes();
 		file.setContent(content);
 		File file2 = dao.saveOrUpdate(file);
-		dao.delete(file2.getKey());
+		dao.deleteById(file2.getKey());
 		try {
 			dao.findById(file2.getKey());
 			fail("The removed file is still in the DB.");
@@ -488,7 +488,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		} catch (OptimisticLockingFailureException e) {
 			s_logger.debug("Expected exception catched.", e);
 		}
-		dao.delete(file3.getKey());
+		dao.deleteById(file3.getKey());
 	}
 
 	/**
@@ -508,7 +508,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 	 * Tests inheritance.
 	 * Create a FormalPublication, a Book and a reference. Then, getAll() on
 	 * FormalPublicationDAO must only return the FormalPublication
-	 * object, not the Reference and not the Bool
+	 * object, not the Reference and not the Book
 	 */
 	@Test
 	public void testInsertGetFormalPublication() {
@@ -535,20 +535,12 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		
 		getBookDao().saveOrUpdate(book);
 		
-		
-		
 		//now only! load all FormalPublications
-		List list = dao.getAll();
-		
+		List<FormalPublication> list = dao.getAll();
 		
 		
 		assertTrue("Not only FormalPublication returned",
-			list.size() == 1 &&
-			list.get(0).getClass() == FormalPublication.class );
-		
-		
-		
-		
+			list.size() == 1 && list.get(0).getClass() == FormalPublication.class);
 	}
 
 	/**
@@ -576,8 +568,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			int readBytes;
 			byte[] bytes = new byte[ARRAY_SIZE];
-			while (out.size() <= maxBlobSize - ARRAY_SIZE
-				&& (readBytes = in.read(bytes)) > 0) {
+			while (out.size() <= maxBlobSize - ARRAY_SIZE && (readBytes = in.read(bytes)) > 0) {
 				out.write(bytes, 0, readBytes);
 				out.flush();
 			}
@@ -613,17 +604,12 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		file = dao.saveOrUpdate(file);
 		File file2 = (File) dao.getByName(name).get(0);
 
-		assertEquals("The inserted and read domain objects are not equal",
-			file, file2);
+		assertEquals("The inserted and read domain objects are not equal", file, file2);
 
-		dao.delete(file2.getKey());
+		dao.deleteById(file2.getKey());
 
 		List<File> list = dao.getAll();
-		assertEquals("The removed file is still in the DB.",
-			0, list.size());
+		assertEquals("The removed file is still in the DB.", 0, list.size());
 	}
-	
-	
-	
 }
 //Checkstyle: MagicNumber on
