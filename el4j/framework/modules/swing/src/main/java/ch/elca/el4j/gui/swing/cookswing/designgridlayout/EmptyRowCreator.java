@@ -18,13 +18,12 @@ package ch.elca.el4j.gui.swing.cookswing.designgridlayout;
 
 import org.w3c.dom.Element;
 
+import cookxml.core.DecodeEngine;
+import cookxml.core.interfaces.Creator;
+
 import ch.elca.el4j.gui.swing.cookswing.binding.NoAddValueHolder;
 
 import net.java.dev.designgridlayout.DesignGridLayout;
-import net.java.dev.designgridlayout.IRow;
-
-import cookxml.core.DecodeEngine;
-import cookxml.core.interfaces.Creator;
 
 
 /**

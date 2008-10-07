@@ -77,8 +77,7 @@ public class CreateComponentCreator implements Creator {
 
 	/** {@inheritDoc} */
 	public Object editFinished(String parentNS, String parentTag, Element elm,
-		Object parentObj, Object obj, DecodeEngine decodeEngine)
-		throws CookXmlException {
+		Object parentObj, Object obj, DecodeEngine decodeEngine) throws CookXmlException {
 		
 		Object form = decodeEngine.getVariable("this");
 		String methodName = elm.getAttribute(FINISH_METHOD);
@@ -97,24 +96,25 @@ public class CreateComponentCreator implements Creator {
 	 * @param parameters    optional parameters
 	 * @return              the return value of the invoked method
 	 */
-	protected Object invokeMethod(Object form, String methodName,
-		Object... parameters) {
-		
-		// list all methods to access private methods as well
-		final Method[] methods = form.getClass().getDeclaredMethods();
-		for (int i = 0; i < methods.length; ++i) {
-			if (methodName.equals(methods[i].getName())) {
-				try {
-					methods[i].setAccessible(true);
-					return methods[i].invoke(form, parameters);
-				} catch (Exception e) {
-					// try next method
-					continue;
+	protected Object invokeMethod(Object form, String methodName, Object... parameters) {
+		Class<?> formClass = form.getClass();
+		while (formClass != Object.class) {
+			// list all methods to access private methods as well
+			final Method[] publicMethods = formClass.getDeclaredMethods();
+			for (int i = 0; i < publicMethods.length; ++i) {
+				if (methodName.equals(publicMethods[i].getName())) {
+					try {
+						publicMethods[i].setAccessible(true);
+						return publicMethods[i].invoke(form, parameters);
+					} catch (Exception e) {
+						// try next method
+						continue;
+					}
 				}
 			}
+			formClass = formClass.getSuperclass();
 		}
-		s_logger.error("Error processing <create-component>. "
-			+ "Could not find method '" + methodName + "'.");
+		s_logger.error("Error processing <create-component>. Could not find method '" + methodName + "'.");
 		return null;
 	}
 }
