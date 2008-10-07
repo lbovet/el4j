@@ -78,9 +78,12 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-search</artifactId>
-			<version>3.0.1.GA</version>
+			<version>3.1.0.Beta1</version>
+		</dependency><dependency>
+			<groupId>org.hibernate.apache.lucene.solr</groupId>
+			<artifactId>apache-solr-analyzer</artifactId>
+			<version>1.2.0</version>
 		</dependency>
-
 		
 		<!-- Needed dependencies by hibernate core -->
 		<dependency>

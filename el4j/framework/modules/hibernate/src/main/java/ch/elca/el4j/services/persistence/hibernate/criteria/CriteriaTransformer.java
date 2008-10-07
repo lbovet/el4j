@@ -24,7 +24,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Junction;
 import org.hibernate.criterion.Restrictions;
 
@@ -118,7 +117,7 @@ public class CriteriaTransformer {
 	
 	
 	/**
-	 * Converts EL4J Criteria to Hibernate Criterion
+	 * Converts EL4J Criteria to Hibernate Criterion.
 	 * @param criteria
 	 * @return the converted Criterion
 	 */
@@ -128,15 +127,15 @@ public class CriteriaTransformer {
 		if (criteria instanceof OrCriteria) {
 			Junction combination = Restrictions.disjunction();
 			
-			addCriteriaListToJunction(((OrCriteria)criteria).getCriterias(), combination);
+			addCriteriaListToJunction(((OrCriteria) criteria).getCriterias(), combination);
 			criterion = combination;
 		} else if (criteria instanceof AndCriteria) {
 			Junction combination = Restrictions.conjunction();
 			
-			addCriteriaListToJunction(((AndCriteria)criteria).getCriterias(), combination);
+			addCriteriaListToJunction(((AndCriteria) criteria).getCriterias(), combination);
 			criterion = combination;
 		} else if (criteria instanceof NotCriteria) {
-			Criteria innerCriteria = ((NotCriteria)criteria).getCriteria();
+			Criteria innerCriteria = ((NotCriteria) criteria).getCriteria();
 			criterion = Restrictions.not(el4jCriteria2HibernateCriterion(innerCriteria));
 		} else if (criteria instanceof AbstractCriteria) {
 			AbstractCriteria abstractCrit = (AbstractCriteria) criteria;
@@ -147,41 +146,41 @@ public class CriteriaTransformer {
 			if (criteria instanceof LikeCriteria) {
 				LikeCriteria currentEl4jLikeCriteria = (LikeCriteria) criteria;
 				if (currentEl4jLikeCriteria.isCaseSensitive().booleanValue()) {
-					criterion = Expression.like(currentCriteriaField,
+					criterion = Restrictions.like(currentCriteriaField,
 						currentCriteriaValue);
 				} else {
-					criterion = Expression.like(currentCriteriaField,
+					criterion = Restrictions.like(currentCriteriaField,
 						currentCriteriaValue).ignoreCase();
 				}
 			} else if (criteria instanceof ComparisonCriteria) {
-				String operator = ((ComparisonCriteria)criteria).getOperator();
-				if (operator.equals("=")){
-					criterion = Expression.eq(currentCriteriaField,
+				String operator = ((ComparisonCriteria) criteria).getOperator();
+				if (operator.equals("=")) {
+					criterion = Restrictions.eq(currentCriteriaField,
 										currentCriteriaValue);
-				} else if (operator.equals("<")){
-					criterion = Expression.lt(currentCriteriaField,
+				} else if (operator.equals("<")) {
+					criterion = Restrictions.lt(currentCriteriaField,
 						currentCriteriaValue);
-				} else if (operator.equals("<=")){
-					criterion = Expression.le(currentCriteriaField,
+				} else if (operator.equals("<=")) {
+					criterion = Restrictions.le(currentCriteriaField,
 						currentCriteriaValue);
-				} else if (operator.equals(">")){
-					criterion = Expression.gt(currentCriteriaField,
+				} else if (operator.equals(">")) {
+					criterion = Restrictions.gt(currentCriteriaField,
 						currentCriteriaValue);
-				} else if (operator.equals(">=")){
-					criterion = Expression.ge(currentCriteriaField,
+				} else if (operator.equals(">=")) {
+					criterion = Restrictions.ge(currentCriteriaField,
 						currentCriteriaValue);
-				} else if (operator.equals("!=")){
-					criterion = Expression.ne(currentCriteriaField,
+				} else if (operator.equals("!=")) {
+					criterion = Restrictions.ne(currentCriteriaField,
 						currentCriteriaValue);
-				}else {
-					s_logger.info(" Operator not handled "+operator);
+				} else {
+					s_logger.info(" Operator not handled " + operator);
 				}
 				
 			} else {
-				s_logger.info(" Criteria not handled "+criteria);
+				s_logger.info(" Criteria not handled " + criteria);
 			}
 		} else {
-			s_logger.info(" Criteria not handled "+criteria);
+			s_logger.info(" Criteria not handled " + criteria);
 		}
 		return criterion;
 	}
