@@ -154,7 +154,9 @@
 		</complexContent>
 	</complexType>
 	
-	<complexType name="emptyrow" />
+	<complexType name="emptyrow">
+		<attribute name="height" type="integer" />
+	</complexType>
 	
 	<!-- <complexType name="empty">
 		<complexContent>
