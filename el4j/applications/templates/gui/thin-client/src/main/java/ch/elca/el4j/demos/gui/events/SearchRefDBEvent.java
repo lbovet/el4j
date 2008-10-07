@@ -30,34 +30,34 @@ package ch.elca.el4j.demos.gui.events;
  */
 public class SearchRefDBEvent {
 	/**
-	 * The field where to search.
+	 * The fields where to search.
 	 */
-	private String m_field;
+	private String[] m_fields;
 	/**
 	 * The value that the {@link #m_field} should match.
 	 */
 	private String m_value;
 	
 	/**
-	 * @param field    the field where to search
+	 * @param fields    the field where to search
 	 * @param value    the value that the field should match
 	 */
-	public SearchRefDBEvent(String field, String value) {
-		m_field = field;
+	public SearchRefDBEvent(String[] fields, String value) {
+		m_fields = fields;
 		m_value = value;
 	}
 	/**
-	 * @return    the field where to search
+	 * @return    the fields where to search
 	 */
-	public String getField() {
-		return m_field;
+	public String[] getFields() {
+		return m_fields;
 	}
 	
 	/**
-	 * @param field    the field where to search
+	 * @param fields    the fields where to search
 	 */
-	public void setField(String field) {
-		this.m_field = field;
+	public void setFields(String[] fields) {
+		this.m_fields = fields;
 	}
 	
 	/**

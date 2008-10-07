@@ -22,6 +22,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -65,7 +68,12 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * @author Alex Mathey (AMA)
  */
 public class DefaultReferenceService extends DefaultKeywordService
-	implements ReferenceService, ApplicationListener {
+	implements ReferenceService, ApplicationContextAware, ApplicationListener {
+	
+	/** 
+	 * The application context.  Used to detect the right ContextRefreshedEvent.
+	 */
+	protected ApplicationContext m_applicationContext;
 	
 	/**
 	 * Constructor.
@@ -76,24 +84,21 @@ public class DefaultReferenceService extends DefaultKeywordService
 	 * @return Returns the DAO for files.
 	 */
 	public FileDao getFileDao() {
-		return (FileDao) getDaoRegistry()
-			.getFor(File.class);
+		return (FileDao) getDaoRegistry().getFor(File.class);
 	}
 
 	/**
 	 * @return Returns the DAO for links.
 	 */
 	public LinkDao getLinkDao() {
-		return (LinkDao) getDaoRegistry()
-			.getFor(Link.class);
+		return (LinkDao) getDaoRegistry().getFor(Link.class);
 	}
 	
 	/**
 	 * @return Returns the DAO for formal publications.
 	 */
 	public FormalPublicationDao getFormalPublicationDao() {
-		return (FormalPublicationDao) getDaoRegistry()
-			.getFor(FormalPublication.class);
+		return (FormalPublicationDao) getDaoRegistry().getFor(FormalPublication.class);
 	}
 	
 	/**
@@ -101,23 +106,24 @@ public class DefaultReferenceService extends DefaultKeywordService
 	 * @return
 	 */
 	public BookDao getBookDao() {
-		return (BookDao) getDaoRegistry()
-			.getFor(Book.class);
+		return (BookDao) getDaoRegistry().getFor(Book.class);
 	}
 	
 	/** {@inheritDoc} */
 	public void onApplicationEvent(ApplicationEvent event) {
 		super.onApplicationEvent(event);
 		if (event instanceof ContextRefreshedEvent) {
-			// Spring context is completely initialized (in contrast to afterPropertiesSet)
-			CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-				getFileDao(), "fileDao", this);
-			CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-				getLinkDao(), "linkDao", this);
-			CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-				getFormalPublicationDao(), "formalPublicationDao", this);
-			CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-				getBookDao(), "bookDao", this);
+			if (((ContextRefreshedEvent) event).getApplicationContext() == m_applicationContext) {
+				// Spring context is completely initialized (in contrast to afterPropertiesSet)
+				CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+					getFileDao(), "fileDao", this);
+				CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+					getLinkDao(), "linkDao", this);
+				CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+					getFormalPublicationDao(), "formalPublicationDao", this);
+				CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+					getBookDao(), "bookDao", this);
+			}
 		}
 	}
 
@@ -132,18 +138,13 @@ public class DefaultReferenceService extends DefaultKeywordService
 		File newFile = getFileDao().saveOrUpdate(file);
 		
 		FileDescriptorView fileView = new FileDescriptorView();
-		fileView.setKey(
-			newFile.getKey());
-		fileView.setKeyToReference(
-			newFile.getKeyToReference());
-		fileView.setName(
-			newFile.getName());
-		fileView.setMimeType(
-			newFile.getMimeType());
-		fileView.setSize(
-			newFile.getSize());
-		fileView.setOptimisticLockingVersion(
-			newFile.getOptimisticLockingVersion());
+		fileView.setKey(newFile.getKey());
+		fileView.setKeyToReference(newFile.getKeyToReference());
+		fileView.setName(newFile.getName());
+		fileView.setMimeType(newFile.getMimeType());
+		fileView.setSize(newFile.getSize());
+		fileView.setOptimisticLockingVersion(newFile.getOptimisticLockingVersion());
+		
 		return fileView;
 	}
 
@@ -162,8 +163,7 @@ public class DefaultReferenceService extends DefaultKeywordService
 		} else if (getFormalPublicationDao().referenceExists(key)) {
 			reference = getFormalPublicationDao().findById(key);
 		} else {
-			CoreNotificationHelper.notifyDataRetrievalFailure(
-				Constants.REFERENCE);
+			CoreNotificationHelper.notifyDataRetrievalFailure(Constants.REFERENCE);
 		}
 		return reference;
 	}
@@ -176,12 +176,9 @@ public class DefaultReferenceService extends DefaultKeywordService
 		throws DataAccessException {
 		Reject.ifEmpty(name);
 		
-		List<Link> listLinks
-			= getLinkDao().getByName(name);
-		List<FormalPublication> listFormalPublications
-			= getFormalPublicationDao().getByName(name);
-		List<Book> listBooks
-			= getBookDao().getByName(name);
+		List<Link> listLinks = getLinkDao().getByName(name);
+		List<FormalPublication> listFormalPublications = getFormalPublicationDao().getByName(name);
+		List<Book> listBooks = getBookDao().getByName(name);
 		
 		List<Reference> list = new LinkedList<Reference>();
 		list.addAll(listLinks);
@@ -195,12 +192,9 @@ public class DefaultReferenceService extends DefaultKeywordService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Reference> getAllReferences() throws DataAccessException {
-		List<Link> listLinks
-			= getLinkDao().getAll();
-		List<FormalPublication> listFormalPublications
-			= getFormalPublicationDao().getAll();
-		List<Book> listBooks
-			= getBookDao().getAll();
+		List<Link> listLinks = getLinkDao().getAll();
+		List<FormalPublication> listFormalPublications = getFormalPublicationDao().getAll();
+		List<Book> listBooks = getBookDao().getAll();
 		
 		List<Reference> list = new LinkedList<Reference>();
 		list.addAll(listLinks);
@@ -209,17 +203,14 @@ public class DefaultReferenceService extends DefaultKeywordService
 		return list;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+	/** {@inheritDoc} */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Reference> searchReferences(QueryObject query)
 		throws DataAccessException {
 		Reject.ifNull(query);
 		
 		List<Link> listLinks = getLinkDao().findByQuery(query);
-		List<FormalPublication> listFormalPublications
-			= getFormalPublicationDao().findByQuery(query);
+		List<FormalPublication> listFormalPublications = getFormalPublicationDao().findByQuery(query);
 		List<Book> listBooks = getBookDao().findByQuery(query);
 		
 		List<Reference> list = new LinkedList<Reference>();
@@ -231,32 +222,23 @@ public class DefaultReferenceService extends DefaultKeywordService
 	
 	/** {@inheritDoc} */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Reference> searchReferences(String field, String critera) {
+	public List<Reference> searchReferences(String[] fields, String critera) {
 
 		// Call hibernate Search
-		List<Link> listLinks = getLinkDao().search(field, critera);
-		List<FormalPublication> listFormalPublications = getFormalPublicationDao().search(field, critera);
-		List<Book> listBooks = getBookDao().search(field, critera);
+		List<Link> listLinks = getLinkDao().search(fields, critera);
+		List<FormalPublication> listFormalPublications = getFormalPublicationDao().search(fields, critera);
+		List<Book> listBooks = getBookDao().search(fields, critera);
 
-		List<Reference> listTmp = new LinkedList<Reference>();
-		listTmp.addAll(listLinks);
-		listTmp.addAll(listFormalPublications);
-		listTmp.addAll(listBooks);
-
-		// Delete the duplicate entity
-
-		List<Reference> list = new LinkedList<Reference>();
-		for (Reference entity : listTmp) {
-			if (!list.contains(entity)) {
-				list.add(entity);
-			}
-		}
-		return list;
+		// use set to avoid duplicate entries
+		Set<Reference> resultSet = new HashSet<Reference>();
+		resultSet.addAll(listLinks);
+		resultSet.addAll(listFormalPublications);
+		resultSet.addAll(listBooks);
+		
+		return new LinkedList<Reference>(resultSet);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+	/** {@inheritDoc} */
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Reference saveReference(Reference reference)
 		throws DataAccessException, DataIntegrityViolationException ,
@@ -271,20 +253,15 @@ public class DefaultReferenceService extends DefaultKeywordService
 			Book book = (Book) reference;
 			newReference = getBookDao().saveOrUpdate(book);
 		} else if (reference instanceof FormalPublication) {
-			FormalPublication formalPublication
-				= (FormalPublication) reference;
-			newReference
-				= getFormalPublicationDao().saveOrUpdate(formalPublication);
+			FormalPublication formalPublication = (FormalPublication) reference;
+			newReference = getFormalPublicationDao().saveOrUpdate(formalPublication);
 		} else {
-			CoreNotificationHelper.notifyMisconfiguration(
-				"Unknown kind of reference.");
+			CoreNotificationHelper.notifyMisconfiguration("Unknown kind of reference.");
 		}
 		return newReference;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+	/** {@inheritDoc} */
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void deleteReference(int key)
 		throws DataAccessException, OptimisticLockingFailureException  {
@@ -296,14 +273,11 @@ public class DefaultReferenceService extends DefaultKeywordService
 		} else if (getFormalPublicationDao().referenceExists(key)) {
 			getFormalPublicationDao().deleteById(key);
 		} else {
-			CoreNotificationHelper.notifyOptimisticLockingFailure(
-				Constants.REFERENCE);
+			CoreNotificationHelper.notifyOptimisticLockingFailure(Constants.REFERENCE);
 		}
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
+	/** {@inheritDoc} */
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void deleteKeyword(int key)
 		throws OptimisticLockingFailureException {
@@ -312,9 +286,7 @@ public class DefaultReferenceService extends DefaultKeywordService
 		dao.deleteById(key);
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
+	/** {@inheritDoc} */
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void deleteReferenceAndKeywords(int refKey)
 		throws DataIntegrityViolationException {
@@ -344,13 +316,17 @@ public class DefaultReferenceService extends DefaultKeywordService
 			int delKey = it.next().getKey();
 			keywordDao.deleteById(delKey);
 		}
-		
 	}
 	
-	// TODO integrate this (ELJ-39)
-	/*public void manualHibernateIndexing() throws DataAccessException, DataRetrievalFailureException {
-		getLinkDao().manualHibernateIndexing();
-		getFormalPublicationDao().manualHibernateIndexing();
-		getBookDao().manualHibernateIndexing();
-	}*/
+	/** {@inheritDoc} */
+	public void createHibernateSearchIndex() throws DataAccessException, DataRetrievalFailureException {
+		getLinkDao().createHibernateSearchIndex();
+		getBookDao().createHibernateSearchIndex();
+		getFormalPublicationDao().createHibernateSearchIndex();
+	}
+	
+	/** {@inheritDoc} */
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		m_applicationContext = applicationContext;
+	}
 }

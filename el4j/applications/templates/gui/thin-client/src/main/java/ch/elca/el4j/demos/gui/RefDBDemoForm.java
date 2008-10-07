@@ -83,53 +83,56 @@ import cookxml.cookswing.CookSwing;
  * @author Stefan Wismer (SWI)
  */
 public class RefDBDemoForm extends JPanel implements Bindable {
-	private JTextField m_name;
-	private JTextField m_description;
-	private JCheckBox m_incomplete;
+	protected JTextField m_name;
+	protected JTextField m_description;
+	protected JCheckBox m_incomplete;
 	
-	private JButton m_createButton;
-	private JButton m_deleteButton;
+	protected JButton m_createButton;
+	protected JButton m_deleteButton;
 	
-	private JTable m_references;
+	protected JTable m_references;
 	
 	/**
 	 * The list of references.
 	 */
-	private List<Reference> m_refList;
+	protected List<Reference> m_refList;
 	
 	/**
 	 * The manually created list binding.
 	 */
 	@SuppressWarnings("unchecked")
-	private AutoBinding m_listBinding;
+	protected AutoBinding m_listBinding;
 	
 	/**
 	 * The editor GUI for a reference.
 	 */
-	private ReferenceEditorForm m_editor;
+	protected ReferenceEditorForm m_editor = new ReferenceEditorForm();
 	
 	/**
 	 * The model to bind to this form.
 	 */
-	private ReferenceService m_service;
+	protected ReferenceService m_service;
 	
 	/**
 	 * The binder instance variable.
 	 */
-	private final Binder m_binder = BinderManager.getBinder(this);
+	protected final Binder m_binder = BinderManager.getBinder(this);
 	
 	public RefDBDemoForm() {
 		loadModel();
-		m_editor = new ReferenceEditorForm();
 
-		setLayout(new BorderLayout());
-		
-		CookSwing cookSwing = new CookSwing(this);
-		add(cookSwing.render("gui/refDBDemoForm.xml"));
+		createUI();
 		
 		m_binder.bindAll();
 		
 		createDataBinding();
+	}
+
+	protected void createUI() {
+		setLayout(new BorderLayout());
+		
+		CookSwing cookSwing = new CookSwing(this);
+		add(cookSwing.render("gui/refDBDemoForm.xml"));
 	}
 	
 	/** {@inheritDoc} */
@@ -178,7 +181,7 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 	 * @param formPanel    the panel to layout
 	 */
 	@SuppressWarnings("unused")
-	private void setGridPanelLayout(JPanel formPanel) {
+	protected void setGridPanelLayout(JPanel formPanel) {
 		// create the form layout
 		DesignGridLayout layout = new DesignGridLayout(formPanel);
 		formPanel.setLayout(layout);
@@ -189,14 +192,13 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 		layout.row().add(new JLabel("Description")).add(m_description);
 		layout.row().add(new JLabel("Incomplete")).add(m_incomplete);
 		layout.row().add(m_createButton).add(m_deleteButton);
-		// Hint: spacers can be inserted using add(Row.EMPTY)
 
 		// Checkstyle: MagicNumber off
 		layout.emptyRow(10);
 		// Checkstyle: MagicNumber on
 	}
 
-	private void loadModel() {
+	protected void loadModel() {
 		GUIApplication app = GUIApplication.getInstance();
 		ServiceBroker.setApplicationContext(
 			app.getSpringContext());
@@ -217,9 +219,7 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 	 * Bind the model to the table.
 	 */
 	@SuppressWarnings("unchecked")
-	private void createDataBinding() {
-
-
+	protected void createDataBinding() {
 		//updateBinding();
 		
 		m_references.setRowSelectionAllowed(true);
@@ -321,7 +321,7 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 	public void onEvent(SearchRefDBEvent event) {
 		QueryObject query = new QueryObject();
 		query.addCriteria(LikeCriteria.caseInsensitive(
-			event.getField(), event.getValue()));
+			event.getFields()[0], event.getValue()));
 		
 		// do not reassign m_refList, otherwise you need to setup the whole
 		// property change mechanism and the binding!
