@@ -1,8 +1,13 @@
 package ch.elca.el4j.services.persistence.hibernate.dao;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.queryParser.MultiFieldQueryParser;
+import org.apache.lucene.queryParser.ParseException;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -10,6 +15,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -70,9 +77,8 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
 	 * @throws org.springframework.dao.DataRetrievalFailureException
 	 *             in case the persistent instance is null
 	 */
-	public Object getByIdStrong(Class<?> entityClass, Serializable id,
-		final String objectName) throws DataAccessException,
-		DataRetrievalFailureException {
+	public Object getByIdStrong(Class<?> entityClass, Serializable id, final String objectName)
+		throws DataAccessException, DataRetrievalFailureException {
 
 		Reject.ifNull(id, "The identifier must not be null.");
 		Reject.ifEmpty(objectName, "The name of the persistent object type "
@@ -89,9 +95,9 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
 	 * Retrieves a persistent instance lazily.
 	 * @see getByIdStrong
 	 */
-	public Object getByIdStrongLazy(Class<?> entityClass, Serializable id,
-		final String objectName) throws DataAccessException,
-		DataRetrievalFailureException {
+	public Object getByIdStrongLazy(Class<?> entityClass, Serializable id, final String objectName)
+		throws DataAccessException, DataRetrievalFailureException {
+		
 		Reject.ifNull(id, "The identifier must not be null.");
 		Reject.ifEmpty(objectName, "The name of the persistent object type "
 			+ "must not be empty.");
@@ -128,15 +134,14 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
 	 *             in case the list of persistent instances is empty, or if it
 	 *             contains more than one object
 	 */
-	public Object findByNamedParamStrong(String queryString,
-		String paramName, Object value, final String objectName)
+	public Object findByNamedParamStrong(String queryString, String paramName, Object value, final String objectName)
 		throws DataAccessException, DataRetrievalFailureException {
 		
 		Reject.ifEmpty(paramName);
 		Reject.ifNull(value);
 		Reject.ifEmpty(objectName, "The name of the persistent object type "
 			+ "must not be empty.");
-		List result = findByNamedParam(queryString, paramName, value);
+		List<?> result = findByNamedParam(queryString, paramName, value);
 		if (result.size() != 1) {
 			String message = "";
 			if (result.isEmpty()) {
@@ -170,6 +175,7 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
 	 */
 	public void saveOrUpdateStrong(Object entity, final String objectName)
 		throws DataAccessException, OptimisticLockingFailureException {
+		
 		Reject.ifNull(entity);
 		Reject.ifEmpty(objectName, "The name of the persistent object type "
 			+ "must not be empty.");
@@ -199,8 +205,9 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
 	 * @throws org.springframework.dao.DataRetrievalFailureException
 	 *             in case the persistent instance to delete is null
 	 */
-	public void deleteStrong(Class<?> entityClass, Serializable id,
-		final String objectName) throws DataRetrievalFailureException {
+	public void deleteStrong(Class<?> entityClass, Serializable id, final String objectName)
+		throws DataRetrievalFailureException {
+		
 		Reject.ifEmpty(objectName, "The name of the persistent object type "
 			+ "must not be empty.");
 		Object toDelete = null;
@@ -261,8 +268,7 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
 	 * @return The number of results of the query.
 	 * @throws DataAccessException
 	 */
-	public int findCountByCriteria(final DetachedCriteria criteria)
-		throws DataAccessException {
+	public int findCountByCriteria(final DetachedCriteria criteria) throws DataAccessException {
 
 		Assert.notNull(criteria, "DetachedCriteria must not be null");
 		Object result =  executeWithNativeSession(new HibernateCallback() {
@@ -296,5 +302,68 @@ public class ConvenienceHibernateTemplate extends HibernateTemplate {
 	 */
 	public void setFirstResult(int firstResult) {
 		m_firstResult = firstResult;
+	}
+	
+	// Hibernate Search
+	
+	/**
+	 * Trigger Hibernate Search index process explicitly.
+	 * 
+	 * @param objects    objects to index
+	 * @throws DataAccessException
+	 * @throws DataRetrievalFailureException
+	 */
+	public void createHibernateSearchIndex(final Collection<?> objects)
+		throws DataAccessException, DataRetrievalFailureException {
+		
+		Assert.notNull(objects, "Objects to index by Hibernate Search must not be null");
+		executeWithNativeSession(new HibernateCallback() {
+			public Object doInHibernate(Session session) throws HibernateException {
+				FullTextSession fullTextSession = Search.getFullTextSession(session);
+				
+				//Transaction tx = fullTextSession.beginTransaction();
+				for (Object object : objects) {
+					fullTextSession.index(object);
+				}
+				//tx.commit();
+				
+				return null;
+			}
+		});
+	}
+	
+	/**
+	 * Search for objects having fields that match the search string.
+	 * 
+	 * @param <T>             the type of entities
+	 * @param entityClass     the class of the entities to search
+	 * @param fields          the names of the fields to consider while searching
+	 * @param searchString    the search string
+	 * @return                all entities having fields that match the search string.
+	 * @throws DataAccessException
+	 * @throws DataRetrievalFailureException
+	 */
+	@SuppressWarnings("unchecked")
+	public <T> List<T> search(final Class<T> entityClass, final String[] fields, final String searchString)
+		throws DataAccessException, DataRetrievalFailureException {
+		
+		Reject.ifEmpty(searchString);
+		return (List) executeWithNativeSession(new HibernateCallback() {
+			public Object doInHibernate(Session session) throws HibernateException {
+				FullTextSession fullTextSession = Search.getFullTextSession(session);
+				
+				MultiFieldQueryParser parser = new MultiFieldQueryParser(fields, new StandardAnalyzer());
+				org.apache.lucene.search.Query luceneQuery;
+				try {
+					luceneQuery = parser.parse(searchString);
+				} catch (ParseException e) {
+					return new ArrayList(0);
+				}
+				org.hibernate.Query query = fullTextSession.createFullTextQuery(luceneQuery, entityClass);
+				
+				List result = (List) query.list();
+				return result;
+			}
+		});
 	}
 }
