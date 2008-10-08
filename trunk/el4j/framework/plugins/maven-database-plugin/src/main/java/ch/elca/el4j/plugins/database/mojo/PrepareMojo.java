@@ -80,7 +80,18 @@ public class PrepareMojo extends AbstractDBExecutionMojo {
 				DerbyNetworkServerStarter.setPassword(dbPassword);
 				DerbyNetworkServerStarter.startNetworkServer();
 			}
-			Thread.sleep(DELAY);
+			
+			long startTime = System.currentTimeMillis();
+			long remainingTime = DELAY;
+			do {
+				try {
+					Thread.sleep(remainingTime);
+				} catch (InterruptedException ie) {
+					getLog().debug("executeInternal: sleep interrupted.");
+				}
+				remainingTime = DELAY - (System.currentTimeMillis() - startTime);
+			} while (remainingTime > 0);
+			
 			getLog().info("Executing silent drop");
 			// Execute a silent drop
 			try {
