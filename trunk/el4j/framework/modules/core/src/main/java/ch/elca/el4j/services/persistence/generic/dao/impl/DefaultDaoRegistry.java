@@ -26,6 +26,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.util.PatternMatchUtils;
 
 import ch.elca.el4j.core.context.ModuleApplicationListener;
@@ -65,7 +66,7 @@ import net.sf.cglib.proxy.Enhancer;
  * @author Adrian Moos (AMS)
  * @author Alex Mathey (AMA)
  */
-public class DefaultDaoRegistry implements DaoRegistry, ModuleApplicationListener {
+public class DefaultDaoRegistry implements DaoRegistry, ApplicationContextAware, ModuleApplicationListener {
 
 	/**
 	 * Private logger of this class.
