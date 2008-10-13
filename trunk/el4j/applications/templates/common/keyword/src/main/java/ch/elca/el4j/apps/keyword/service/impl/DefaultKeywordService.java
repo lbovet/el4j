@@ -19,12 +19,6 @@ package ch.elca.el4j.apps.keyword.service.impl;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.ApplicationEvent;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.transaction.annotation.Propagation;
@@ -33,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.elca.el4j.apps.keyword.dao.KeywordDao;
 import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.apps.keyword.service.KeywordService;
+import ch.elca.el4j.core.context.ModuleApplicationListener;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 
@@ -50,18 +45,12 @@ import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
  * @author Alex Mathey (AMA)
  * @author Adrian Moos (AMS)
  */
-public class DefaultKeywordService
-	implements KeywordService, ApplicationContextAware, ApplicationListener {
+public class DefaultKeywordService implements KeywordService, ModuleApplicationListener {
 	
 	/**
 	 * Hibernate DAO registry.
 	 */
 	protected DaoRegistry m_daoRegistry;
-	
-	/** 
-	 * The application context. Used to detect the right ContextRefreshedEvent.
-	 */
-	protected ApplicationContext m_applicationContext;
 
 	/**
 	 * Constructor.
@@ -93,14 +82,10 @@ public class DefaultKeywordService
 	}
 	
 	/** {@inheritDoc} */
-	public synchronized void onApplicationEvent(ApplicationEvent event) {
-		if (event instanceof ContextRefreshedEvent) {
-			if (((ContextRefreshedEvent) event).getApplicationContext() == m_applicationContext) {
-				// Spring context is completely initialized (in contrast to afterPropertiesSet)
-				CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(getKeywordDao(), "keywordDao", this);
-			}
-		}
+	public synchronized void onContextRefreshed() {
+		CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(getKeywordDao(), "keywordDao", this);
 	}
+	
 	
 	/**
 	 * {@inheritDoc}
@@ -126,10 +111,5 @@ public class DefaultKeywordService
 				}
 			}
 		}
-	}
-	
-	/** {@inheritDoc} */
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		m_applicationContext = applicationContext;
 	}
 }

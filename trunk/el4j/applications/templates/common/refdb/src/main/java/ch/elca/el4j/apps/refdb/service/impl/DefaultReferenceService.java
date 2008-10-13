@@ -22,12 +22,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.ApplicationEvent;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DataRetrievalFailureException;
@@ -50,6 +44,7 @@ import ch.elca.el4j.apps.refdb.dom.FormalPublication;
 import ch.elca.el4j.apps.refdb.dom.Link;
 import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.apps.refdb.service.ReferenceService;
+import ch.elca.el4j.core.context.ModuleApplicationListener;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.util.codingsupport.Reject;
@@ -68,12 +63,7 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * @author Alex Mathey (AMA)
  */
 public class DefaultReferenceService extends DefaultKeywordService
-	implements ReferenceService, ApplicationContextAware, ApplicationListener {
-	
-	/** 
-	 * The application context.  Used to detect the right ContextRefreshedEvent.
-	 */
-	protected ApplicationContext m_applicationContext;
+	implements ReferenceService, ModuleApplicationListener {
 	
 	/**
 	 * Constructor.
@@ -110,21 +100,15 @@ public class DefaultReferenceService extends DefaultKeywordService
 	}
 	
 	/** {@inheritDoc} */
-	public void onApplicationEvent(ApplicationEvent event) {
-		super.onApplicationEvent(event);
-		if (event instanceof ContextRefreshedEvent) {
-			if (((ContextRefreshedEvent) event).getApplicationContext() == m_applicationContext) {
-				// Spring context is completely initialized (in contrast to afterPropertiesSet)
-				CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-					getFileDao(), "fileDao", this);
-				CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-					getLinkDao(), "linkDao", this);
-				CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-					getFormalPublicationDao(), "formalPublicationDao", this);
-				CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
-					getBookDao(), "bookDao", this);
-			}
-		}
+	public synchronized void onContextRefreshed() {
+		CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+			getFileDao(), "fileDao", this);
+		CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+			getLinkDao(), "linkDao", this);
+		CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+			getFormalPublicationDao(), "formalPublicationDao", this);
+		CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
+			getBookDao(), "bookDao", this);
 	}
 
 	/**
@@ -323,10 +307,5 @@ public class DefaultReferenceService extends DefaultKeywordService
 		getLinkDao().createHibernateSearchIndex();
 		getBookDao().createHibernateSearchIndex();
 		getFormalPublicationDao().createHibernateSearchIndex();
-	}
-	
-	/** {@inheritDoc} */
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		m_applicationContext = applicationContext;
 	}
 }
