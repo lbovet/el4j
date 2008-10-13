@@ -16,10 +16,7 @@
  */
 package ch.elca.el4j.tests.services.persistence.generic.dao;
 
-import org.springframework.context.ApplicationEvent;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
-
+import ch.elca.el4j.core.context.ModuleApplicationListener;
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
 
@@ -35,7 +32,7 @@ import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
  *
  * @author Stefan Wismer (SWI)
  */
-public class ImpatientClass implements ApplicationListener {
+public class ImpatientClass implements ModuleApplicationListener {
 	/**
 	 * The dao registry.
 	 */
@@ -57,10 +54,8 @@ public class ImpatientClass implements ApplicationListener {
 	private boolean m_successful = false;
 	
 	/** {@inheritDoc} */
-	public void onApplicationEvent(ApplicationEvent event) {
-		if (event instanceof ContextRefreshedEvent) {
-			m_contextIsReady = true;
-		}
+	public void onContextRefreshed() {
+		m_contextIsReady = true;
 	}
 	/**
 	 * @return   the DAO registry
