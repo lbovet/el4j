@@ -20,6 +20,7 @@ package ch.elca.el4j.web.context;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Collection;
 
 import javax.servlet.ServletContext;
 
@@ -41,6 +42,7 @@ import org.springframework.web.context.support.XmlWebApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.core.context.ModuleApplicationContextUtils;
+import ch.elca.el4j.core.context.ModuleApplicationListener;
 import ch.elca.el4j.core.io.support.ListResourcePatternResolverDecorator;
 import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
 
@@ -404,5 +406,21 @@ public class ModuleWebApplicationContext extends XmlWebApplicationContext {
 		ModuleApplicationContextUtils ctxUtil
 			= new ModuleApplicationContextUtils(this);
 		ctxUtil.invokeBeanFactoryPostProcessorsStrictlyOrdered(beanFactory);
+	}
+	
+	/**
+	 * Notify all {@link ModuleApplicationListener}s that context has been refreshed.
+	 * 
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	protected void finishRefresh() {
+		Collection<ModuleApplicationListener> listeners = getBeansOfType(
+			ModuleApplicationListener.class, true, false).values();
+		for (ModuleApplicationListener listener : listeners) {
+			listener.onContextRefreshed();
+		}
+		super.finishRefresh();
 	}
 }
