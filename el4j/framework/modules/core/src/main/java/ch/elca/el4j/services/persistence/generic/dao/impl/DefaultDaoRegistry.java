@@ -135,8 +135,8 @@ public class DefaultDaoRegistry implements DaoRegistry, ApplicationContextAware,
 		if (!m_applicationContextIsReady) {
 			CoreNotificationHelper.notifyMisconfiguration("Trying to get DAOs before Spring context is "
 				+ "fully initialized. Some DAOs might not be found. "
-				+ "Implement org.springframework.context.ApplicationListener to listen to "
-				+ "org.springframework.context.event.ContextRefreshedEvent");
+				+ "Implement ch.elca.el4j.core.context.ModuleApplicationListener to get notified as soon "
+				+ "Spring context is fully initialized");
 		}
 	}
 	
