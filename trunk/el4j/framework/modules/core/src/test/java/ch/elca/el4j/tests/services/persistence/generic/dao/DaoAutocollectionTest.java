@@ -20,18 +20,18 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
 import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
 
-public class DaoAutocollectionTests {
+public class DaoAutocollectionTest {
 
 	@Test
 	public void testDaoAutocollection() {
-		ApplicationContext ac =
-			new ClassPathXmlApplicationContext(new String[] {"scenarios/core/dao/springConfig.xml"});
+		ApplicationContext ac = new ModuleApplicationContext(
+			new String[] {"scenarios/core/dao/springConfig.xml"}, false);
 		
 		//System.out.println("beans: "+StringUtils.arrayToCommaDelimitedString(ac.getBeanDefinitionNames()));
 		
@@ -56,8 +56,8 @@ public class DaoAutocollectionTests {
 	 */
 	@Test
 	public void testDaoPatternMatching() {
-		ApplicationContext ac =	new ClassPathXmlApplicationContext(
-			new String[] {"scenarios/core/dao/springConfig.xml"});
+		ApplicationContext ac =	new ModuleApplicationContext(
+			new String[] {"scenarios/core/dao/springConfig.xml"}, false);
 		
 		// Pattern is "ti*"
 		DaoRegistry registry = (DaoRegistry) ac.getBean("registryWithFilter");
@@ -78,8 +78,8 @@ public class DaoAutocollectionTests {
 	 */
 	@Test
 	public void testConcurrent() {
-		final ApplicationContext ac = new ClassPathXmlApplicationContext(
-			new String[] {"scenarios/core/dao/springConfig.xml", "scenarios/core/dao/concurrentConfig.xml"});
+		final ApplicationContext ac = new ModuleApplicationContext(
+			new String[] {"scenarios/core/dao/springConfig.xml", "scenarios/core/dao/concurrentConfig.xml"}, false);
 		
 		ImpatientClass impatientClass = (ImpatientClass) ac.getBean("impatientClass");
 		

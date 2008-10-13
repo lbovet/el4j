@@ -26,12 +26,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.ApplicationEvent;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.util.PatternMatchUtils;
 
+import ch.elca.el4j.core.context.ModuleApplicationListener;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
@@ -53,6 +50,10 @@ import net.sf.cglib.proxy.Enhancer;
  *         to automatically set the session factory/
  *        sql map client template.
  *   </ul>
+ *   
+ * Important: This class has to be created inside a ModuleApplicationContext,
+ * because it waits for this context to be fully initialized. If another
+ * context is taken it will wait forever.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -64,14 +65,18 @@ import net.sf.cglib.proxy.Enhancer;
  * @author Adrian Moos (AMS)
  * @author Alex Mathey (AMA)
  */
-public class DefaultDaoRegistry implements DaoRegistry,
-	ApplicationContextAware, ApplicationListener {
+public class DefaultDaoRegistry implements DaoRegistry, ModuleApplicationListener {
 
 	/**
 	 * Private logger of this class.
 	 */
 	private static Log s_logger
 		= LogFactory.getLog(DefaultDaoRegistry.class);
+	
+	/**
+	 * Whether to collect DAOs automatically.
+	 */
+	protected boolean m_collectDaos = true;
 	
 	/**
 	 * The map containing the registered DAOs.
@@ -105,11 +110,9 @@ public class DefaultDaoRegistry implements DaoRegistry,
 	protected volatile boolean m_applicationContextIsReady = false;
 	
 	/** {@inheritDoc} */
-	public synchronized void onApplicationEvent(ApplicationEvent event) {
-		if (event instanceof ContextRefreshedEvent) {
-			m_applicationContextIsReady = true;
-			this.notify();
-		}
+	public synchronized void onContextRefreshed() {
+		m_applicationContextIsReady = true;
+		this.notify();
 	}
 	
 	/**
@@ -119,12 +122,13 @@ public class DefaultDaoRegistry implements DaoRegistry,
 		// if we are in the same thread, waiting probably doesn't make sense, so we have to check this.
 		if (Thread.currentThread().getId() != m_creatorThreadId) {
 			// access from another thread -> wait
-			try {
-				while (!m_applicationContextIsReady) {
+			while (!m_applicationContextIsReady) {
+				try {
+					s_logger.debug("Waiting for Spring context to be fully initialized.");
 					this.wait();
+				} catch (InterruptedException e) {
+					s_logger.debug("Interrupted: Application context might be ready now.");
 				}
-			} catch (InterruptedException e) {
-				// application context might be ready now
 			}
 		}
 		if (!m_applicationContextIsReady) {
@@ -146,21 +150,22 @@ public class DefaultDaoRegistry implements DaoRegistry,
 			initDaosFromSpringBeans();
 		}
 		
+		Class<T> actualEntityType = entityType;
 		// ensure this works when the entityType is proxied by an cglib proxy:
 		//  Thanks Ky (QKP) for the hint!
 		if (Enhancer.isEnhanced(entityType)) {
 			// "undo" cglib proxying:
-			entityType = (Class<T>) entityType.getSuperclass();
+			actualEntityType = (Class<T>) entityType.getSuperclass();
 		}
 		
-		GenericDao<T> candidateReturn = (GenericDao<T>) m_daos.get(entityType);
+		GenericDao<T> candidateReturn = (GenericDao<T>) m_daos.get(actualEntityType);
 		
 		if (candidateReturn != null) {
 			return candidateReturn;
-		} else if (Proxy.isProxyClass(entityType)) {
+		} else if (Proxy.isProxyClass(actualEntityType)) {
 			// if a jdk proxy and candidateReturn is null, try improving
 			Class[] otherPossibilities
-				= AopProxyUtils.proxiedUserInterfaces(entityType);
+				= AopProxyUtils.proxiedUserInterfaces(actualEntityType);
 			if (otherPossibilities != null) {
 				s_logger.info("Trying to unwrap JDK proxy to get DAO for type");
 				for (Class c : otherPossibilities) {
@@ -246,11 +251,6 @@ public class DefaultDaoRegistry implements DaoRegistry,
 		m_applicationContext = applicationContext;
 		m_creatorThreadId = Thread.currentThread().getId();
 	}
-	
-	/**
-	 * Whether to collect DAOs automatically.
-	 */
-	protected boolean m_collectDaos = true;
 
 	/**
 	 * See {@link setCollectDaos}.

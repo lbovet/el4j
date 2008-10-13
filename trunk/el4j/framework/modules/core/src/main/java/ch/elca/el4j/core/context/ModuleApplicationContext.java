@@ -20,6 +20,7 @@ package ch.elca.el4j.core.context;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Collection;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -526,5 +527,21 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
 		ModuleApplicationContextUtils ctxUtil
 			= new ModuleApplicationContextUtils(this);
 		ctxUtil.invokeBeanFactoryPostProcessorsStrictlyOrdered(beanFactory);
+	}
+	
+	/**
+	 * Notify all {@link ModuleApplicationListener}s that context has been refreshed.
+	 * 
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	protected void finishRefresh() {
+		Collection<ModuleApplicationListener> listeners = getBeansOfType(
+			ModuleApplicationListener.class, true, false).values();
+		for (ModuleApplicationListener listener : listeners) {
+			listener.onContextRefreshed();
+		}
+		super.finishRefresh();
 	}
 }
