@@ -17,14 +17,18 @@
 
 package ch.elca.el4j.core.aop;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.aop.Advisor;
 import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.adapter.AdvisorAdapterRegistry;
 import org.springframework.aop.framework.adapter.GlobalAdvisorAdapterRegistry;
 import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;
+import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 
 /**
  * Auto proxy creator that identifies beans to proxy via a list of names.
@@ -91,6 +95,11 @@ public class ExclusiveBeanNameAutoProxyCreator
 	private boolean m_applyCommonInterceptorsFirst;	
 	
 	/**
+	 * Should the output of a {@link FactoryBean} be proxied instead of the factory itself?
+	 */
+	private boolean m_proxyFactoryBeanOutput = true;
+	
+	/**
 	 * Set the names of the beans that must not automatically get wrapped with
 	 * proxies. A name can specify a prefix to match by ending with "*",
 	 * e.g. "myBean,tx*" will match the bean named "myBean" and all beans whose
@@ -120,6 +129,39 @@ public class ExclusiveBeanNameAutoProxyCreator
 		if (!m_hasBeanNames) {
 			super.setBeanNames(AUTOPROXY_ALL_BEANS);
 		}
+	}
+	
+	/**
+	 * Wrap a bean if necessary. If bean is actually a {@link FactoryBean} then wrap it
+	 * using {@link GenericProxiedFactoryBean}.
+	 * 
+	 * {@inheritDoc}
+	 */
+	protected Object wrapIfNecessary(Object bean, String beanName, Object cacheKey) {
+		if (m_proxyFactoryBeanOutput && bean instanceof FactoryBean) {
+			return new GenericProxiedFactoryBean((FactoryBean) bean, resolveInterceptorNames());
+		} else {
+			return super.wrapIfNecessary(bean, beanName, cacheKey);
+		}
+	}
+	
+	/**
+	 * COPYIED FROM SUPERCLASS!
+	 * 
+	 * @return    a list of {@link Advisor}s to use for auto proxying
+	 */
+	private Advisor[] resolveInterceptorNames() {
+		ConfigurableBeanFactory cbf = (getBeanFactory() instanceof ConfigurableBeanFactory
+			? (ConfigurableBeanFactory) getBeanFactory() : null);
+		List<Advisor> advisors = new ArrayList<Advisor>();
+		for (int i = 0; i < getInterceptorNames().length; i++) {
+			String beanName = getInterceptorNames()[i];
+			if (cbf == null || !cbf.isCurrentlyInCreation(beanName)) {
+				Object next = getBeanFactory().getBean(beanName);
+				advisors.add(getAdvisorAdapterRegistry().wrap(next));
+			}
+		}
+		return advisors.toArray(new Advisor[advisors.size()]);
 	}
 
 	/**
@@ -232,5 +274,20 @@ public class ExclusiveBeanNameAutoProxyCreator
 		boolean applyCommonInterceptorsFirst) {
 		m_applyCommonInterceptorsFirst = applyCommonInterceptorsFirst;
 		super.setApplyCommonInterceptorsFirst(applyCommonInterceptorsFirst);
+	}
+	
+	/**
+	 * @return Should the output of a {@link FactoryBean} be proxied instead of the factory itself?
+	 */
+	public boolean isProxyFactoryBeanOutput() {
+		return m_proxyFactoryBeanOutput;
+	}
+
+	/**
+	 * @param proxyFactoryBeanOutput
+	 *            Should the output of a {@link FactoryBean} be proxied instead of the factory itself?
+	 */
+	public void setProxyFactoryBeanOutput(boolean proxyFactoryBeanOutput) {
+		m_proxyFactoryBeanOutput = proxyFactoryBeanOutput;
 	}
 }
