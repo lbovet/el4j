@@ -9,7 +9,7 @@
 	<complexType name="object" mixed="true">
 		<sequence minOccurs="0" maxOccurs="unbounded">
 			<choice>
-				<element ref="cookXmlCommon:object" />
+				<!-- <element ref="cookXmlCommon:object" /> -->
 				<any processContents="lax"/>
 			</choice>
 		</sequence>
