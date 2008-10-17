@@ -640,8 +640,7 @@ public class WeakIdentityHashMap<K,V> /*extends AbstractMap*/ implements Map<K,V
 		/**
 		 * Create new entry.
 		 */
-		Entry(K key, V value, ReferenceQueue queue,
-			  int hash, Entry<K,V> next) {
+		Entry(K key, V value, ReferenceQueue queue, int hash, Entry<K,V> next) {
 			super( key, queue );
 			this.value = value;
 			this.hash = hash;
