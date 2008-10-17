@@ -26,9 +26,12 @@ import org.springframework.aop.TargetSource;
 import org.springframework.aop.framework.adapter.AdvisorAdapterRegistry;
 import org.springframework.aop.framework.adapter.GlobalAdvisorAdapterRegistry;
 import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 /**
  * Auto proxy creator that identifies beans to proxy via a list of names.
@@ -71,6 +74,11 @@ public class ExclusiveBeanNameAutoProxyCreator
 	
 	/** Whether there have been inclusive patterns set. */
 	private boolean m_hasBeanNames = false;
+	
+	/**
+	 * COPYIED FROM SUPERCLASS!
+	 */
+	private List<String> beanNames;
 	
 	/**
 	 * COPYIED FROM SUPERCLASS!
@@ -119,7 +127,11 @@ public class ExclusiveBeanNameAutoProxyCreator
 		if (beanNames.length > 0) {
 			m_hasBeanNames = true;
 		}
-		super.setBeanNames(beanNames);
+		Assert.notEmpty(beanNames, "'beanNames' must not be empty");
+		this.beanNames = new ArrayList<String>(beanNames.length);
+		for (int i = 0; i < beanNames.length; i++) {
+			this.beanNames.add(StringUtils.trimWhitespace(beanNames[i]));
+		}
 	}
 
 	/**
@@ -127,7 +139,7 @@ public class ExclusiveBeanNameAutoProxyCreator
 	 */
 	public void afterPropertiesSet() throws Exception {
 		if (!m_hasBeanNames) {
-			super.setBeanNames(AUTOPROXY_ALL_BEANS);
+			setBeanNames(AUTOPROXY_ALL_BEANS);
 		}
 	}
 	
@@ -139,7 +151,11 @@ public class ExclusiveBeanNameAutoProxyCreator
 	 */
 	protected Object wrapIfNecessary(Object bean, String beanName, Object cacheKey) {
 		if (m_proxyFactoryBeanOutput && bean instanceof FactoryBean) {
-			return new GenericProxiedFactoryBean((FactoryBean) bean, resolveInterceptorNames());
+			if (getAdvicesAndAdvisorsForBean(FactoryBean.class, beanName, null) != DO_NOT_PROXY) {
+				return new GenericProxiedFactoryBean((FactoryBean) bean, resolveInterceptorNames());
+			} else {
+				return bean;
+			}
 		} else {
 			return super.wrapIfNecessary(bean, beanName, cacheKey);
 		}
@@ -212,8 +228,20 @@ public class ExclusiveBeanNameAutoProxyCreator
 			beanClass = IntelligentAdvisorAutoProxyCreator.
 				deproxyBeanClass(beanClass, beanName, getBeanFactory());
 			
-			return super.getAdvicesAndAdvisorsForBean(
-				beanClass, beanName, targetSource);
+			if (this.beanNames != null) {
+				for (String mappedName : this.beanNames) {
+					if (!m_proxyFactoryBeanOutput && FactoryBean.class.isAssignableFrom(beanClass)) {
+						if (!mappedName.startsWith(BeanFactory.FACTORY_BEAN_PREFIX)) {
+							continue;
+						}
+						mappedName = mappedName.substring(BeanFactory.FACTORY_BEAN_PREFIX.length());
+					}
+					if (isMatch(beanName, mappedName)) {
+						return PROXY_WITHOUT_ADDITIONAL_INTERCEPTORS;
+					}
+				}
+			}
+			return DO_NOT_PROXY;
 		}
 	}
 	
