@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- Version: $Revision$ -->
+	<!-- URL: $URL$ -->
+	<!-- Date: $Date$ -->
+	<!-- Author: $Author$ -->
+
+	<parent>
+		<groupId>ch.elca.el4j.applications</groupId>
+		<artifactId>el4j-templates-common</artifactId>
+		<version>1.6-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>refdb</artifactId>
+	<version>${version.application-refdb}</version>
+	<packaging>jar</packaging>
+	<name>EL4J application refdb</name>
+	<description>RefDb application of the EL4J framework.</description>
+	
+	<profiles>
+		<profile>
+			<id>integrationTests</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			
+			<build>
+				<plugins>
+					<!-- EL4J Database plugin to start and fill DB automatically -->
+					<plugin>
+						<groupId>ch.elca.el4j.maven.plugins</groupId>
+						<artifactId>maven-database-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>prepare</id>
+								<goals>
+									<goal>prepare</goal>
+								</goals>
+								<phase>pre-integration-test</phase>
+							</execution>
+							<!-- Delete tables and stop Network Server -->
+							<execution>
+								<id>cleanUp</id>
+								<goals>
+									<goal>cleanUp</goal>
+								</goals>
+								<phase>post-integration-test</phase>
+							</execution>
+						</executions>
+					</plugin>
+
+					<!-- skip unit test run, tests to be executed during integration-test -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<skip>true</skip>
+						</configuration>
+						<executions>
+							<execution>
+								<id>surefire-it</id>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>test</goal>
+								</goals>
+								<configuration>
+									<skip>false</skip>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+	
+	<dependencies>
+		<dependency>
+			<groupId>ch.elca.el4j.applications</groupId>
+			<artifactId>keyword</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-env</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-core</artifactId>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>
