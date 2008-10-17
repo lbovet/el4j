@@ -801,7 +801,7 @@
 		<module>framework</module>
 		<module>applications</module>
 		<module>site</module>
-  </modules>
+	</modules>
 	<reporting>
 		<plugins>
 			<plugin>
