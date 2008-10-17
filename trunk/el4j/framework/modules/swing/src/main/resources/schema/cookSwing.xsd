@@ -76,13 +76,13 @@
 	<complexType name="component" mixed="true">
 		<complexContent>
 			<extension base="cookSwing:listeners">
-				<sequence minOccurs="0" maxOccurs="unbounded">
+				<!-- <sequence minOccurs="0" maxOccurs="unbounded">
 					<choice>
 						<element ref="cookSwing:border" />
 						<element ref="cookSwing:layout" />
-						<!-- TODO more -->
+						<!- - TODO more - ->
 					</choice>
-				</sequence>
+				</sequence> -->
 				<attribute name="alignmentx" type="float" />
 				<attribute name="alignmenty" type="float" />
 				<attribute name="autoscrolls" type="boolean" />
@@ -428,9 +428,9 @@
 	<complexType name="formattedtextfield" mixed="true">
 		<complexContent>
 			<extension base="cookSwing:textfield">
-				<sequence minOccurs="0" maxOccurs="1">
+				<!-- <sequence minOccurs="0" maxOccurs="1">
 					<element ref="cookSwing:formatter" />
-				</sequence>
+				</sequence> -->
 				<attribute name="focuslostbehavior" type="string" />
 			</extension>
 		</complexContent>
@@ -879,9 +879,9 @@
 	<complexType name="bevelborder" mixed="true">
 		<complexContent>
 			<extension base="cookSwing:border">
-				<sequence minOccurs="0" maxOccurs="1">
+				<!-- <sequence minOccurs="0" maxOccurs="1">
 					<element ref="cookSwing:insets"></element>
-				</sequence>
+				</sequence> -->
 				<attribute name="highlight" type="string" />
 				<attribute name="highlightinner" type="string" />
 				<attribute name="highlightouter" type="int" />
@@ -934,13 +934,13 @@
 	<complexType name="matteborder" mixed="true">
 		<complexContent>
 			<extension base="cookSwing:border">
-				<sequence maxOccurs="unbounded" minOccurs="0">
+				<!-- <sequence maxOccurs="unbounded" minOccurs="0">
 					<choice>
 						<element ref="cookSwing:color"></element>
 						<element ref="cookSwing:icon"></element>
 						<element ref="cookSwing:insets"></element>
 					</choice>
-				</sequence>
+				</sequence> -->
 				<attribute name="bottom" type="int" />
 				<attribute name="color" type="string" />
 				<attribute name="insets" type="string" />
@@ -956,9 +956,9 @@
 	<complexType name="titledborder" mixed="true">
 		<complexContent>
 			<extension base="cookSwing:border">
-				<sequence minOccurs="0" maxOccurs="1">
+				<!-- <sequence minOccurs="0" maxOccurs="1">
 					<element ref="cookSwing:border"></element>
-				</sequence>
+				</sequence> -->
 				<attribute name="title" type="string" />
 				<attribute name="titlecolor" type="string" />
 				<attribute name="titlefont" type="string" />
@@ -997,9 +997,9 @@
 	<complexType name="borderlayout" mixed="true">
 		<complexContent>
 			<extension base="cookSwing:layout">
-				<sequence minOccurs="0" maxOccurs="unbounded">
+				<!-- <sequence minOccurs="0" maxOccurs="unbounded">
 					<element ref="cookSwing:constraint"></element>
-				</sequence>
+				</sequence> -->
 				<attribute name="hgap" type="int" />
 				<attribute name="vgap" type="int" />
 			</extension>
@@ -1009,9 +1009,9 @@
 	<complexType name="constraint" mixed="true">
 		<complexContent>
 			<extension base="cookXmlCommon:object">
-				<sequence minOccurs="0" maxOccurs="unbounded">
+				<!-- <sequence minOccurs="0" maxOccurs="unbounded">
 					<element ref="cookXmlCommon:object"></element>
-				</sequence>
+				</sequence> -->
 				<attribute name="location" type="string" />
 				<attribute name="name" type="string" />
 			</extension>
@@ -1046,9 +1046,9 @@
 	<complexType name="gridbaglayout" mixed="true">
 		<complexContent>
 			<extension base="cookSwing:layout">
-				<sequence minOccurs="0" maxOccurs="unbounded">
+				<!-- <sequence minOccurs="0" maxOccurs="unbounded">
 					<element ref="cookSwing:gridbagconstraints"></element>
-				</sequence>
+				</sequence> -->
 				<attribute name="columnweights" type="float" />
 				<attribute name="columnwidths" type="int" />
 				<attribute name="rowheights" type="int" />
@@ -1060,9 +1060,9 @@
 	<complexType name="gridbagconstraints" mixed="true">
 		<complexContent>
 			<extension base="cookXmlCommon:object">
-				<sequence minOccurs="0" maxOccurs="unbounded">
+				<!-- <sequence minOccurs="0" maxOccurs="unbounded">
 					<element ref="cookXmlCommon:object"></element>
-				</sequence>
+				</sequence> -->
 				<attribute name="anchor" type="string" />
 				<attribute name="fill" type="string" />
 				<attribute name="gridheight" type="string" />
@@ -1112,9 +1112,9 @@
 	<complexType name="springlayout" mixed="true">
 		<complexContent>
 			<extension base="cookSwing:layout">
-				<sequence minOccurs="0" maxOccurs="unbounded">
+				<!-- <sequence minOccurs="0" maxOccurs="unbounded">
 					<element ref="cookSwing:springconstraint"></element>
-				</sequence>
+				</sequence> -->
 			</extension>
 		</complexContent>
 	</complexType>
@@ -1198,9 +1198,9 @@
 	<complexType name="dateformatter" mixed="true">
 		<complexContent>
 			<extension base="cookSwing:formatter">
-				<sequence minOccurs="0" maxOccurs="1">
+				<!-- <sequence minOccurs="0" maxOccurs="1">
 					<element ref="cookXmlCommon:dateformat"></element>
-				</sequence>
+				</sequence> -->
 				<attribute name="maximum" type="string" />
 				<attribute name="minimum" type="string" />
 			</extension>
