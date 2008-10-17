@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.springframework.aop.Advisor;
 import org.springframework.aop.TargetSource;
+import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.framework.adapter.AdvisorAdapterRegistry;
 import org.springframework.aop.framework.adapter.GlobalAdvisorAdapterRegistry;
 import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;
@@ -31,6 +32,7 @@ import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.util.Assert;
+import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
 
 /**
@@ -45,7 +47,7 @@ import org.springframework.util.StringUtils;
  *
  * <p>Exclusion has higher precedence than inclusions.
  *
- * Aditional features of this auto proxy creator:
+ * Additional features of this auto proxy creator:
  *  <ul>
  *   <li>Do not add a second proxy around a bean (if already one exists). This is the
  *        feature of the Intelligent*AutoProxyCreator
@@ -78,7 +80,7 @@ public class ExclusiveBeanNameAutoProxyCreator
 	/**
 	 * COPYIED FROM SUPERCLASS!
 	 */
-	private List<String> beanNames;
+	private List<String> m_beanNames;
 	
 	/**
 	 * COPYIED FROM SUPERCLASS!
@@ -128,9 +130,9 @@ public class ExclusiveBeanNameAutoProxyCreator
 			m_hasBeanNames = true;
 		}
 		Assert.notEmpty(beanNames, "'beanNames' must not be empty");
-		this.beanNames = new ArrayList<String>(beanNames.length);
+		m_beanNames = new ArrayList<String>(beanNames.length);
 		for (int i = 0; i < beanNames.length; i++) {
-			this.beanNames.add(StringUtils.trimWhitespace(beanNames[i]));
+			m_beanNames.add(StringUtils.trimWhitespace(beanNames[i]));
 		}
 	}
 
@@ -151,8 +153,37 @@ public class ExclusiveBeanNameAutoProxyCreator
 	 */
 	protected Object wrapIfNecessary(Object bean, String beanName, Object cacheKey) {
 		if (m_proxyFactoryBeanOutput && bean instanceof FactoryBean) {
-			if (getAdvicesAndAdvisorsForBean(FactoryBean.class, beanName, null) != DO_NOT_PROXY) {
-				return new GenericProxiedFactoryBean((FactoryBean) bean, resolveInterceptorNames());
+			Class<?> beanClass = ((FactoryBean) bean).getObjectType();
+			Object[] specificInterceptors = getAdvicesAndAdvisorsForBean(beanClass, beanName, null);
+			
+			if (specificInterceptors != DO_NOT_PROXY) {
+				ProxyFactory proxyFactory = new ProxyFactory();
+				// Copy our properties (proxyTargetClass etc) inherited from ProxyConfig.
+				proxyFactory.copyFrom(this);
+				
+				if (!shouldProxyTargetClass(beanClass, beanName)) {
+					// Must allow for introductions; can't just set interfaces to
+					// the target's interfaces only.
+					Class<?>[] targetInterfaces = ClassUtils.getAllInterfacesForClass(
+						beanClass, getClass().getClassLoader());
+					for (int i = 0; i < targetInterfaces.length; i++) {
+						proxyFactory.addInterface(targetInterfaces[i]);
+					}
+				}
+				
+				Advisor[] advisors = buildAdvisors(beanName, specificInterceptors);
+				for (int i = 0; i < advisors.length; i++) {
+					proxyFactory.addAdvisor(advisors[i]);
+				}
+				
+				customizeProxyFactory(proxyFactory);
+				
+				proxyFactory.setFrozen(isFrozen());
+				if (advisorsPreFiltered()) {
+					proxyFactory.setPreFiltered(true);
+				}
+				
+				return new GenericProxiedFactoryBean((FactoryBean) bean, proxyFactory);
 			} else {
 				return bean;
 			}
@@ -228,8 +259,8 @@ public class ExclusiveBeanNameAutoProxyCreator
 			beanClass = IntelligentAdvisorAutoProxyCreator.
 				deproxyBeanClass(beanClass, beanName, getBeanFactory());
 			
-			if (this.beanNames != null) {
-				for (String mappedName : this.beanNames) {
+			if (this.m_beanNames != null) {
+				for (String mappedName : this.m_beanNames) {
 					if (!m_proxyFactoryBeanOutput && FactoryBean.class.isAssignableFrom(beanClass)) {
 						if (!mappedName.startsWith(BeanFactory.FACTORY_BEAN_PREFIX)) {
 							continue;
