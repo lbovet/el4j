@@ -181,24 +181,22 @@
 			</roles>
 			<timezone>+1</timezone>
 		</contributor>
-				<developer>
-			<id>floke</id>
+		<contributor>
 			<name>Florian Keusch</name>
 			<roles>
 				<role>Ex-Intern</role>
-				<role>Java Developer</role>
+				<role>Java contributor</role>
 			</roles>
 			<timezone>+1</timezone>
-		</developer>
-		<developer>
-			<id>fabianr</id>
+		</contributor>
+		<contributor>
 			<name>Fabian Reichlin</name>
 			<roles>
 				<role>Ex-Intern</role>
-				<role>Java Developer</role>
+				<role>Java contributor</role>
 			</roles>
 			<timezone>+1</timezone>
-		</developer>
+		</contributor>
 	</contributors>
 
 	<licenses>
