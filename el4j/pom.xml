@@ -534,6 +534,9 @@
 					<version>1.0.3-20061204.110918-2</version>
 			-->
 					<version>1.1</version> <!-- was 1.1-beta-1 -->
+					<configuration>
+						<classpathScope>test</classpathScope>
+					</configuration>
 				</plugin>
 
 				<!-- IDE -->
