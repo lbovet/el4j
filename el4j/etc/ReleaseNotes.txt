@@ -1,6 +1,72 @@
+--------------------------------------------------------------------------------
+ Date :   22.10.08
+                            EL4J version  1.5.1
+--------------------------------------------------------------------------------
 
+* Core
+  = Bug fix 1) for interception: sometimes when specifying multiple interceptors (particularly if the 2nd of these 
+    interceptors is a TransactionInterceptor that is applied via an annotation), the second interceptor was 
+    not added. Cause: the detection whether to add a Transaction interceptor or not did not work when the underlying 
+    bean was already proxied. ExclusiveBeanNameAutoProxyCreator is now more 'intelligent' in that it does not reproxy 
+    an already proxied bean (if this is possible). We have also added a sample interceptor in the keyword demo application. 
+    Intelligent auto proxy creators are now used more often.
+  = Bug fix 2) for interception: ExclusiveBeanNameAutoProxyCreator now supports proxying beans created by FactoryBeans 
+    (such as remoting proxies). This feature can be turned off by disabling property "proxyFactoryBeanOutput".
+  = ModuleApplicationListener added that allows beans to get notified as soon as the Spring context is fully initialized.
+  = DefaultDaoRegistry: Checks now if the Spring context is completely initialized before searching for DAOs and wait if we are 
+    in multi-threaded environment (this solves some spurious application startups issues).
+  = If the RollbackConstraint annotation has no params, RuntimeException and Error will be automatically 
+    added in the matadata source. Otherwise one would risk that an unspecified runtime exception does not lead to 
+	a transaction rollback (which is rarely desired). If a given RuntimeException should not roll back your transaction, 
+	add the specific runtime exception in the noRollbackFor list of the annotation (rollbackFor must then be set too). 
+    noRollbackFor list entries override rollbackFor entries.
+  = hashCode and equals improved in Abstract(Indexed)IntKeyIntOptimisticLockingDto   	
+  = We removed an old asm dependency  	
+  = Upgraded EasyMock version to 2.4 (makeThreadSafe does not work with version 2.3)
+  = Tomcat version updated
+  
+* Maven
+  = Maven-datbase-plugin: Port, username, and password are now used when starting Derby (thanks to QKP), 
+    use db.internal.port instead of db.port to avoid conflicts with tcp-forwarder.
+  = Maven-rec-plugin: Make allowedPackagingList configurable (thanks to Stefan Fritz, Progress Software GesmbH)
+  = Added the clirr-maven-plugin and dashboard-maven-plugin with the appropriate (patched) version. Generates aggregated report.
+  = Patched eclipse maven plugin  
+  = Database plugin now sleeps correctly even if its delay call is interrupted  
+  = Updated maven plugins and to new versions
+  
+* Remoting
+  = cleaned up some locations of default spring config files (to be more consistent). Particularly for the 
+    implicit context passing support
+  = added a socketfactory for RMI so that the timeout for the connection can be customized. This factory is 
+    now used by default and the default timeout is set to 1 minute.
+  = update to hessian 3.2.0  
 
+* Security
+  = set the strategy used by the securityntextholder of acegi for implicit context passing to 
+    MODE_INHERITABLETHREADLOCAL as the retry interceptor (with the implementation using a Future) 
+    forbids the use of ThreadLocal for implicit context passers (-> use InheritableThreadLocal instead)
+  = SecureUsernamePasswordAuthenticationServiceContextPasser added which allows sending credentials encrypted over the network
+  = Add an IP Address Filter.
+  = Detect banned java methods via a findbugs plugin
+  
+* Hibernate
+  = Update to hibernate 3.3.0SP1
+  = Support for hibernate search added
+  = Modified the ConvenienceHibernateTemplate so that an ObjectRetrievalFailureException is now thrown instead of a 
+    DataRetrievalFailureException (where this makes sense, method signature unchanged).
+  = Added ObjectWrapper to module-hibernate. See also wiki topic OfflinerAspects.
 
+* Swing
+  = Various improvements: clean ups in cookswing, eventBus upgraded, NPE in beansbinding fixed, ObservableFilteredList added
+  = Enhancement and bug fixes in PropertyChangeListener: Don't wrap object multiple times, don't track changes 
+    on properties of collections, allow easier subclassing.
+  = GetAction improved: search @Action annotations also in super classes, cleanup
+  = PropertyUtil added to hitch to get more flexibility while creating properties
+  = Update to designgridlayout 0.9
+
+* Various
+  = jasper reports updated
+  
 --------------------------------------------------------------------------------
  Date :   10.07.08
                             EL4J version  1.5
