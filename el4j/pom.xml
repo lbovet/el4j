@@ -870,8 +870,8 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>dashboard-maven-plugin</artifactId>
-				<version>1.0.0-beta-1-el4j_20080812_1330</version>
-				<!--<version>1.0.0-beta-1-el4j_20080812_1330</version>-->
+				<version>1.0.0-beta-1-el4j_20081022_0930</version>
+				<!-- <version>1.0.0-beta-1-el4j_20080812_1330</version>-->
 			</plugin>
 			
 		</plugins>
@@ -948,7 +948,7 @@
 						<plugin>
 							<groupId>org.codehaus.mojo</groupId>
 							<artifactId>dashboard-maven-plugin</artifactId>
-							<version>1.0.0-beta-1-el4j_20080812_1330</version>
+							<!-- <version>1.0.0-beta-1-el4j_20081022_0930</version> -->
 						</plugin>
 					</plugins>
 				</pluginManagement>
