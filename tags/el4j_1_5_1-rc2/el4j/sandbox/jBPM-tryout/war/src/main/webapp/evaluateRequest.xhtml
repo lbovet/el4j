@@ -1,0 +1,77 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.ajax4jsf.org/rich"
+	template="layout/template.xhtml">
+
+	<ui:define name="body">
+
+		<rich:panel headerClass="topPanel">
+			<f:facet name="header">Holiday request</f:facet>
+			<p><b>Evaluate request '#{holidayRequest.name}'</b></p>
+
+			<h:form>
+
+				<table>
+
+					<tr>
+						<td><h:outputLabel styleClass="desc" value="Start date"
+							for="startdate"></h:outputLabel></td>
+						<td><h:outputText id="startdate"
+							value="#{holidayRequest.startDate}" /></td>
+
+					</tr>
+
+					<tr>
+						<td><h:outputLabel value="Duration" for="duration"></h:outputLabel>
+						</td>
+						<td><h:outputText id="duration"
+							value="#{holidayRequest.duration}" /></td>
+					</tr>
+
+					<tr>
+						<td><h:outputLabel value="Details" for="details"></h:outputLabel>
+						</td>
+						<td valign="middle"><h:outputText id="details"
+							value="#{holidayRequest.information}" />
+					    </td>
+					</tr>
+
+                    </table>
+                    
+                    
+					
+					<h:commandButton action="requestDetails"
+                                value="Request (more) details">
+                                <f:param name="taskId" value="#{param.taskId}" />
+                    </h:commandButton>
+					
+					<br/>
+					 <br/>
+					
+                    <table>
+					<tr>
+						<td>Your decision:</td>
+						<td><h:inputText value="#{holidayRequest.decision}" /></td>
+					</tr>
+
+				</table>
+
+                <br/>				
+
+				<h:commandButton action="toList" value="Send decision">
+					<f:param name="taskId" value="#{param.taskId}" />
+				</h:commandButton>
+				<h:commandButton action="toListCancel" value="Cancel">
+                </h:commandButton>
+                
+			</h:form>
+		</rich:panel>
+
+	</ui:define>
+
+</ui:composition>
