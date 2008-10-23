@@ -45,8 +45,13 @@
 
 	
 	
-	<!-- EL4J framwork: show only warnings -->
+	<!-- EL4J framework: show only warnings -->
 	<logger name="ch.elca.el4j">
+		<level value="WARN"/>
+	</logger>
+	
+	<!-- logger used by eventbus. This is necessary, otherwise exceptions in event listeners are swallowed -->
+	<logger name="org.bushe.swing">
 		<level value="WARN"/>
 	</logger>
 	
