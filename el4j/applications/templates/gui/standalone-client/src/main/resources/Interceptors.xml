@@ -14,7 +14,7 @@
 <!--
 
 	<bean id="traceInterceptor" class="org.springframework.aop.interceptor.SimpleTraceInterceptor"/>
-	<bean id="traceautoProxyCreator" class="ch.elca.el4j.core.aop.IntelligentExclusiveBeanNameAutoProxyCreator">
+	<bean id="traceautoProxyCreator" class="ch.elca.el4j.core.aop.ExclusiveBeanNameAutoProxyCreator">
 		<property name="beanNames">
 			<value>*Service</value>
 		</property>
@@ -33,6 +33,9 @@
 <!--
 
 		<property name="order" value="120"/>
+		
+		<!- - proxy factories directly (instead of their output) - ->
+		<property name="proxyFactoryBeanOutput" value="false" />
 	</bean>
 
 -->
