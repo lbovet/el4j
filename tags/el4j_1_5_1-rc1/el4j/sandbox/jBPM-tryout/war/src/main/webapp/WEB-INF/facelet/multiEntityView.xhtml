@@ -1,0 +1,26 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+
+
+	<c:set var="relatedSize" value="#{entity[fieldName].size()}" />
+
+	<s:span rendered="#{relatedSize == 0}">
+		<h:outputText value="No #{el4j:h10nEntityName(utils.getRelatedEntityShortName(entityClassName, fieldName))}" />
+	</s:span>
+
+	<s:span rendered="#{(relatedSize gt 0) and (relatedSize le 3)}">
+		<ui:repeat value="#{entity[fieldName].toArray()}" var="ent">
+			<h:outputText value="#{ent.toString()}" />
+			<br />
+		</ui:repeat>
+	</s:span>
+
+	<s:span rendered="#{relatedSize gt 3}">
+		<c:set var="relatedH10n" value="#{el4j:h10nEntityNamePlural(utils.getRelatedEntityShortName(entityClassName, fieldName))}" />
+		<h:outputText value="#{entity[fieldName].size()} #{relatedH10n}" />
+	</s:span>
+
+</ui:composition>

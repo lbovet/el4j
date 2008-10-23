@@ -1,0 +1,768 @@
+Index: maven-artifact-manager/pom.xml
+===================================================================
+--- maven-artifact-manager/pom.xml	(revision 601332)
++++ maven-artifact-manager/pom.xml	(working copy)
+@@ -23,7 +23,7 @@
+   <parent>
+     <artifactId>maven</artifactId>
+     <groupId>org.apache.maven</groupId>
+-    <version>2.0.8</version>
++    <version>2.0.8-el4j-20071205</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+   <artifactId>maven-artifact-manager</artifactId>
+Index: maven-artifact-manager/src/main/java/org/apache/maven/artifact/manager/DefaultWagonManager.java
+===================================================================
+--- maven-artifact-manager/src/main/java/org/apache/maven/artifact/manager/DefaultWagonManager.java	(revision 601332)
++++ maven-artifact-manager/src/main/java/org/apache/maven/artifact/manager/DefaultWagonManager.java	(working copy)
+@@ -57,7 +57,7 @@
+ import java.io.IOException;
+ import java.security.NoSuchAlgorithmException;
+ import java.util.Collection;
+-import java.util.HashMap;
++import java.util.LinkedHashMap;
+ import java.util.Iterator;
+ import java.util.List;
+ import java.util.Map;
+@@ -72,16 +72,16 @@
+ 
+     // TODO: proxies, authentication and mirrors are via settings, and should come in via an alternate method - perhaps
+     // attached to ArtifactRepository before the method is called (so AR would be composed of WR, not inherit it)
+-    private Map proxies = new HashMap();
++    private Map proxies = new LinkedHashMap();
+ 
+-    private Map authenticationInfoMap = new HashMap();
++    private Map authenticationInfoMap = new LinkedHashMap();
+ 
+-    private Map serverPermissionsMap = new HashMap();
++    private Map serverPermissionsMap = new LinkedHashMap();
+ 
+-    private Map mirrors = new HashMap();
++    private Map mirrors = new LinkedHashMap();
+ 
+     /** Map( String, XmlPlexusConfiguration ) with the repository id and the wagon configuration */
+-    private Map serverConfigurationMap = new HashMap();
++    private Map serverConfigurationMap = new LinkedHashMap();
+ 
+     private TransferListener downloadMonitor;
+ 
+@@ -91,7 +91,7 @@
+ 
+     private boolean interactive = true;
+ 
+-    private Map availableWagons = new HashMap();
++    private Map availableWagons = new LinkedHashMap();
+ 
+     private RepositoryPermissions defaultRepositoryPermissions;
+ 
+@@ -189,8 +189,8 @@
+             wagon.addTransferListener( downloadMonitor );
+         }
+ 
+-        Map checksums = new HashMap( 2 );
+-        Map sums = new HashMap( 2 );
++        Map checksums = new LinkedHashMap( 2 );
++        Map sums = new LinkedHashMap( 2 );
+ 
+         // TODO: configure these on the repository
+         try
+Index: maven-artifact-manager/src/main/java/org/apache/maven/artifact/repository/metadata/DefaultRepositoryMetadataManager.java
+===================================================================
+--- maven-artifact-manager/src/main/java/org/apache/maven/artifact/repository/metadata/DefaultRepositoryMetadataManager.java	(revision 601332)
++++ maven-artifact-manager/src/main/java/org/apache/maven/artifact/repository/metadata/DefaultRepositoryMetadataManager.java	(working copy)
+@@ -36,7 +36,7 @@
+ import java.io.IOException;
+ import java.io.Reader;
+ import java.util.Date;
+-import java.util.HashMap;
++import java.util.LinkedHashMap;
+ import java.util.HashSet;
+ import java.util.Iterator;
+ import java.util.List;
+@@ -154,7 +154,7 @@
+         // TODO: this needs to be repeated here so the merging doesn't interfere with the written metadata
+         //  - we'd be much better having a pristine input, and an ongoing metadata for merging instead
+ 
+-        Map previousMetadata = new HashMap();
++        Map previousMetadata = new LinkedHashMap();
+         ArtifactRepository selected = null;
+         for ( Iterator i = remoteRepositories.iterator(); i.hasNext(); )
+         {
+Index: maven-artifact-manager/src/main/java/org/apache/maven/artifact/resolver/DefaultArtifactResolver.java
+===================================================================
+--- maven-artifact-manager/src/main/java/org/apache/maven/artifact/resolver/DefaultArtifactResolver.java	(revision 601332)
++++ maven-artifact-manager/src/main/java/org/apache/maven/artifact/resolver/DefaultArtifactResolver.java	(working copy)
+@@ -186,8 +186,27 @@
+                     // TODO: force should be passed to the wagon manager
+                     if ( artifact.getRepository() != null )
+                     {
+-                        // the transformations discovered the artifact - so use it exclusively
+-                        wagonManager.getArtifact( artifact, artifact.getRepository() );
++                        // TODO: force should be passed to the wagon manager
++                        if ( artifact.getRepository() != null )
++                        {
++                            // the transformations discovered the artifact - so use it exclusively
++                            try {
++                            	wagonManager.getArtifact( artifact, artifact.getRepository() );
++                            } catch (Exception e) {
++                            	wagonManager.getArtifact( artifact, repositories ); 
++							}
++                        }
++                        else
++                        {
++                            wagonManager.getArtifact( artifact, repositories );
++                        }
++
++                        if ( !artifact.isResolved() && !destination.exists() )
++                        {
++                            throw new ArtifactResolutionException(
++                                "Failed to resolve artifact, possibly due to a repository list that is not appropriately equipped for this artifact's metadata.",
++                                artifact, remoteRepositories );
++                        }
+                     }
+                     else
+                     {
+Index: maven-artifact-manager/src/test/java/org/apache/maven/artifact/resolver/ArtifactResolverTest.java
+===================================================================
+--- maven-artifact-manager/src/test/java/org/apache/maven/artifact/resolver/ArtifactResolverTest.java	(revision 601332)
++++ maven-artifact-manager/src/test/java/org/apache/maven/artifact/resolver/ArtifactResolverTest.java	(working copy)
+@@ -28,7 +28,7 @@
+ 
+ import java.util.ArrayList;
+ import java.util.Collections;
+-import java.util.HashSet;
++import java.util.LinkedHashSet;
+ import java.util.List;
+ import java.util.Set;
+ 
+@@ -105,7 +105,7 @@
+                                              List remoteRepositories )
+                 throws ArtifactMetadataRetrievalException
+             {
+-                Set dependencies = new HashSet();
++                Set dependencies = new LinkedHashSet();
+ 
+                 if ( "g".equals( artifact.getArtifactId() ) )
+                 {
+@@ -161,7 +161,7 @@
+                                              List remoteRepositories )
+                 throws ArtifactMetadataRetrievalException
+             {
+-                Set dependencies = new HashSet();
++                Set dependencies = new LinkedHashSet();
+ 
+                 if ( "i".equals( artifact.getArtifactId() ) )
+                 {
+@@ -247,3 +247,4 @@
+ 
+ }
+ 
++
+Index: maven-artifact-test/pom.xml
+===================================================================
+--- maven-artifact-test/pom.xml	(revision 601332)
++++ maven-artifact-test/pom.xml	(working copy)
+@@ -23,7 +23,7 @@
+   <parent>
+     <artifactId>maven</artifactId>
+     <groupId>org.apache.maven</groupId>
+-    <version>2.0.8</version>
++    <version>2.0.8-el4j-20071205</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+   <artifactId>maven-artifact-test</artifactId>
+Index: maven-artifact/pom.xml
+===================================================================
+--- maven-artifact/pom.xml	(revision 601332)
++++ maven-artifact/pom.xml	(working copy)
+@@ -23,7 +23,7 @@
+   <parent>
+     <artifactId>maven</artifactId>
+     <groupId>org.apache.maven</groupId>
+-    <version>2.0.8</version>
++    <version>2.0.8-el4j-20071205</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+   <artifactId>maven-artifact</artifactId>
+Index: maven-artifact/src/main/java/org/apache/maven/artifact/ArtifactStatus.java
+===================================================================
+--- maven-artifact/src/main/java/org/apache/maven/artifact/ArtifactStatus.java	(revision 601332)
++++ maven-artifact/src/main/java/org/apache/maven/artifact/ArtifactStatus.java	(working copy)
+@@ -19,7 +19,7 @@
+  * under the License.
+  */
+ 
+-import java.util.HashMap;
++import java.util.LinkedHashMap;
+ import java.util.Map;
+ 
+ /**
+@@ -74,7 +74,7 @@
+ 
+         if ( map == null )
+         {
+-            map = new HashMap();
++            map = new LinkedHashMap();
+         }
+         map.put( key, this );
+     }
+Index: maven-artifact/src/main/java/org/apache/maven/artifact/ArtifactUtils.java
+===================================================================
+--- maven-artifact/src/main/java/org/apache/maven/artifact/ArtifactUtils.java	(revision 601332)
++++ maven-artifact/src/main/java/org/apache/maven/artifact/ArtifactUtils.java	(working copy)
+@@ -24,7 +24,7 @@
+ 
+ import java.util.ArrayList;
+ import java.util.Collection;
+-import java.util.HashMap;
++import java.util.LinkedHashMap;
+ import java.util.Iterator;
+ import java.util.List;
+ import java.util.Map;
+@@ -75,7 +75,7 @@
+ 
+     public static Map artifactMapByVersionlessId( Collection artifacts )
+     {
+-        Map artifactMap = new HashMap();
++        Map artifactMap = new LinkedHashMap();
+ 
+         if ( artifacts != null )
+         {
+@@ -92,7 +92,7 @@
+ 
+     public static Map artifactMapByArtifactId( Collection artifacts )
+     {
+-        Map artifactMap = new HashMap();
++        Map artifactMap = new LinkedHashMap();
+ 
+         if ( artifacts != null )
+         {
+Index: maven-artifact/src/main/java/org/apache/maven/artifact/DefaultArtifact.java
+===================================================================
+--- maven-artifact/src/main/java/org/apache/maven/artifact/DefaultArtifact.java	(revision 601332)
++++ maven-artifact/src/main/java/org/apache/maven/artifact/DefaultArtifact.java	(working copy)
+@@ -31,7 +31,7 @@
+ import java.io.File;
+ import java.util.Collection;
+ import java.util.Collections;
+-import java.util.HashMap;
++import java.util.LinkedHashMap;
+ import java.util.List;
+ import java.util.Map;
+ import java.util.regex.Matcher;
+@@ -250,7 +250,7 @@
+     {
+         if ( metadataMap == null )
+         {
+-            metadataMap = new HashMap();
++            metadataMap = new LinkedHashMap();
+         }
+ 
+         ArtifactMetadata m = (ArtifactMetadata) metadataMap.get( metadata.getKey() );
+@@ -487,9 +487,12 @@
+         // I am assuming this is happening as a result of the MNG-1577 work, but somehow the value
+         // of versionRange just goes null or is not set. But this is happeningin Yoko and the value is
+         // set when attaching the JAR and not set when attaching the test JAR.
+-        if ( versionRange == null )
+-        {
+-            versionRange = VersionRange.createFromVersion( version );
++		if (versionRange == null) {
++            if (version != null) {
++                versionRange = VersionRange.createFromVersion(version);
++            } else if (baseVersion != null) {
++                versionRange = VersionRange.createFromVersion(baseVersion);
++            }
+         }
+ 
+         return versionRange;
+Index: maven-artifact/src/main/java/org/apache/maven/artifact/resolver/AbstractArtifactResolutionException.java
+===================================================================
+--- maven-artifact/src/main/java/org/apache/maven/artifact/resolver/AbstractArtifactResolutionException.java	(revision 601332)
++++ maven-artifact/src/main/java/org/apache/maven/artifact/resolver/AbstractArtifactResolutionException.java	(working copy)
+@@ -22,7 +22,7 @@
+ import org.apache.maven.artifact.Artifact;
+ import org.apache.maven.artifact.repository.ArtifactRepository;
+ 
+-import java.util.HashSet;
++import java.util.LinkedHashSet;
+ import java.util.Iterator;
+ import java.util.List;
+ 
+@@ -187,7 +187,7 @@
+             sb.append( "from the specified remote repositories:" );
+             sb.append( LS + "  " );
+ 
+-            for ( Iterator i = new HashSet( remoteRepositories ).iterator(); i.hasNext(); )
++            for ( Iterator i = new LinkedHashSet( remoteRepositories ).iterator(); i.hasNext(); )
+             {
+                 ArtifactRepository remoteRepository = (ArtifactRepository) i.next();
+ 
+Index: maven-artifact/src/main/java/org/apache/maven/artifact/resolver/ArtifactResolutionResult.java
+===================================================================
+--- maven-artifact/src/main/java/org/apache/maven/artifact/resolver/ArtifactResolutionResult.java	(revision 601332)
++++ maven-artifact/src/main/java/org/apache/maven/artifact/resolver/ArtifactResolutionResult.java	(working copy)
+@@ -19,6 +19,7 @@
+  * under the License.
+  */
+ 
++import java.util.LinkedHashSet;
+ import java.util.Iterator;
+ import java.util.LinkedHashSet;
+ import java.util.Set;
+Index: maven-artifact/src/main/java/org/apache/maven/artifact/resolver/DefaultArtifactCollector.java
+===================================================================
+--- maven-artifact/src/main/java/org/apache/maven/artifact/resolver/DefaultArtifactCollector.java	(revision 601332)
++++ maven-artifact/src/main/java/org/apache/maven/artifact/resolver/DefaultArtifactCollector.java	(working copy)
+@@ -33,8 +33,8 @@
+ 
+ import java.util.ArrayList;
+ import java.util.Collections;
+-import java.util.HashMap;
+-import java.util.HashSet;
++import java.util.LinkedHashMap;
++import java.util.LinkedHashSet;
+ import java.util.Iterator;
+ import java.util.LinkedHashMap;
+ import java.util.LinkedHashSet;
+Index: maven-artifact/src/test/java/org/apache/maven/artifact/resolver/DefaultArtifactCollectorTest.java
+===================================================================
+--- maven-artifact/src/test/java/org/apache/maven/artifact/resolver/DefaultArtifactCollectorTest.java	(revision 601332)
++++ maven-artifact/src/test/java/org/apache/maven/artifact/resolver/DefaultArtifactCollectorTest.java	(working copy)
+@@ -22,8 +22,7 @@
+ import java.util.ArrayList;
+ import java.util.Arrays;
+ import java.util.Collections;
+-import java.util.HashMap;
+-import java.util.HashSet;
++import java.util.LinkedHashMap;
+ import java.util.Iterator;
+ import java.util.LinkedHashSet;
+ import java.util.List;
+@@ -776,7 +775,7 @@
+     {
+         private Artifact artifact;
+ 
+-        private Set dependencies = new HashSet();
++        private Set dependencies = new LinkedHashSet();
+ 
+         public ArtifactSpec addDependency( String id, String version )
+             throws InvalidVersionSpecificationException
+@@ -817,9 +816,9 @@
+     private class Source
+         implements ArtifactMetadataSource
+     {
+-        private Map artifacts = new HashMap();
++        private Map artifacts = new LinkedHashMap();
+ 
+-        private Map versions = new HashMap();
++        private Map versions = new LinkedHashMap();
+ 
+         public ResolutionGroup retrieve( Artifact artifact, ArtifactRepository localRepository,
+                                          List remoteRepositories )
+@@ -851,7 +850,7 @@
+                                      ArtifactFilter dependencyFilter )
+             throws InvalidVersionSpecificationException
+         {
+-            Set projectArtifacts = new HashSet();
++            Set projectArtifacts = new LinkedHashSet();
+ 
+             for ( Iterator i = dependencies.iterator(); i.hasNext(); )
+             {
+Index: maven-core/pom.xml
+===================================================================
+--- maven-core/pom.xml	(revision 601332)
++++ maven-core/pom.xml	(working copy)
+@@ -2,7 +2,7 @@
+   <parent>
+     <artifactId>maven</artifactId>
+     <groupId>org.apache.maven</groupId>
+-    <version>2.0.8</version>
++    <version>2.0.8-el4j-20071205</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+   <artifactId>maven-core</artifactId>
+Index: maven-error-diagnostics/pom.xml
+===================================================================
+--- maven-error-diagnostics/pom.xml	(revision 601332)
++++ maven-error-diagnostics/pom.xml	(working copy)
+@@ -23,7 +23,7 @@
+   <parent>
+     <artifactId>maven</artifactId>
+     <groupId>org.apache.maven</groupId>
+-    <version>2.0.8</version>
++    <version>2.0.8-el4j-20071205</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+   <artifactId>maven-error-diagnostics</artifactId>
+Index: maven-model/pom.xml
+===================================================================
+--- maven-model/pom.xml	(revision 601332)
++++ maven-model/pom.xml	(working copy)
+@@ -23,7 +23,7 @@
+   <parent>
+     <artifactId>maven</artifactId>
+     <groupId>org.apache.maven</groupId>
+-    <version>2.0.8</version>
++    <version>2.0.8-el4j-20071205</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+   <artifactId>maven-model</artifactId>
+Index: maven-monitor/pom.xml
+===================================================================
+--- maven-monitor/pom.xml	(revision 601332)
++++ maven-monitor/pom.xml	(working copy)
+@@ -23,7 +23,7 @@
+   <parent>
+     <artifactId>maven</artifactId>
+     <groupId>org.apache.maven</groupId>
+-    <version>2.0.8</version>
++    <version>2.0.8-el4j-20071205</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+   <artifactId>maven-monitor</artifactId>
+Index: maven-plugin-api/pom.xml
+===================================================================
+--- maven-plugin-api/pom.xml	(revision 601332)
++++ maven-plugin-api/pom.xml	(working copy)
+@@ -23,7 +23,7 @@
+   <parent>
+     <artifactId>maven</artifactId>
+     <groupId>org.apache.maven</groupId>
+-    <version>2.0.8</version>
++    <version>2.0.8-el4j-20071205</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+   <artifactId>maven-plugin-api</artifactId>
+Index: maven-plugin-descriptor/pom.xml
+===================================================================
+--- maven-plugin-descriptor/pom.xml	(revision 601332)
++++ maven-plugin-descriptor/pom.xml	(working copy)
+@@ -23,7 +23,7 @@
+   <parent>
+     <artifactId>maven</artifactId>
+     <groupId>org.apache.maven</groupId>
+-    <version>2.0.8</version>
++    <version>2.0.8-el4j-20071205</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+   <artifactId>maven-plugin-descriptor</artifactId>
+Index: maven-plugin-parameter-documenter/pom.xml
+===================================================================
+--- maven-plugin-parameter-documenter/pom.xml	(revision 601332)
++++ maven-plugin-parameter-documenter/pom.xml	(working copy)
+@@ -23,7 +23,7 @@
+   <parent>
+     <artifactId>maven</artifactId>
+     <groupId>org.apache.maven</groupId>
+-    <version>2.0.8</version>
++    <version>2.0.8-el4j-20071205</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+   <artifactId>maven-plugin-parameter-documenter</artifactId>
+Index: maven-plugin-registry/pom.xml
+===================================================================
+--- maven-plugin-registry/pom.xml	(revision 601332)
++++ maven-plugin-registry/pom.xml	(working copy)
+@@ -21,7 +21,7 @@
+   <parent>
+     <artifactId>maven</artifactId>
+     <groupId>org.apache.maven</groupId>
+-    <version>2.0.8</version>
++    <version>2.0.8-el4j-20071205</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>org.apache.maven</groupId>
+Index: maven-profile/pom.xml
+===================================================================
+--- maven-profile/pom.xml	(revision 601332)
++++ maven-profile/pom.xml	(working copy)
+@@ -23,7 +23,7 @@
+   <parent>
+     <artifactId>maven</artifactId>
+     <groupId>org.apache.maven</groupId>
+-    <version>2.0.8</version>
++    <version>2.0.8-el4j-20071205</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+   <artifactId>maven-profile</artifactId>
+Index: maven-project/pom.xml
+===================================================================
+--- maven-project/pom.xml	(revision 601332)
++++ maven-project/pom.xml	(working copy)
+@@ -23,7 +23,7 @@
+   <parent>
+     <artifactId>maven</artifactId>
+     <groupId>org.apache.maven</groupId>
+-    <version>2.0.8</version>
++    <version>2.0.8-el4j-20071205</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+   <artifactId>maven-project</artifactId>
+Index: maven-project/src/main/java/org/apache/maven/project/DefaultMavenProjectBuilder.java
+===================================================================
+--- maven-project/src/main/java/org/apache/maven/project/DefaultMavenProjectBuilder.java	(revision 601332)
++++ maven-project/src/main/java/org/apache/maven/project/DefaultMavenProjectBuilder.java	(working copy)
+@@ -88,8 +88,7 @@
+ import java.util.ArrayList;
+ import java.util.Collections;
+ import java.util.Date;
+-import java.util.HashMap;
+-import java.util.HashSet;
++import java.util.LinkedHashMap;
+ import java.util.Iterator;
+ import java.util.LinkedHashSet;
+ import java.util.LinkedList;
+@@ -155,9 +154,9 @@
+ 
+     private ModelValidator validator;
+ 
+-    private Map rawProjectCache = new HashMap();
++    private Map rawProjectCache = new LinkedHashMap();
+ 
+-    private Map processedProjectCache = new HashMap();
++    private Map processedProjectCache = new LinkedHashMap();
+ 
+     // TODO: make it a component
+     private MavenXpp3Reader modelReader;
+@@ -917,7 +916,7 @@
+         // TODO: Clean this up...we're using this to 'jump' the interpolation step for model properties not expressed in XML.
+         //  [BP] - Can this above comment be explained?
+         // We don't need all the project methods that are added over those in the model, but we do need basedir
+-        Map context = new HashMap( System.getProperties() );
++        Map context = new LinkedHashMap( System.getProperties() );
+ 
+         if ( projectDir != null )
+         {
+@@ -1451,7 +1450,7 @@
+                                          List plugins )
+         throws ProjectBuildingException
+     {
+-        Set pluginArtifacts = new HashSet();
++        Set pluginArtifacts = new LinkedHashSet();
+ 
+         for ( Iterator i = plugins.iterator(); i.hasNext(); )
+         {
+@@ -1494,7 +1493,7 @@
+                                          List reports )
+         throws ProjectBuildingException
+     {
+-        Set pluginArtifacts = new HashSet();
++        Set pluginArtifacts = new LinkedHashSet();
+ 
+         if ( reports != null )
+         {
+@@ -1540,7 +1539,7 @@
+                                             List extensions )
+         throws ProjectBuildingException
+     {
+-        Set extensionArtifacts = new HashSet();
++        Set extensionArtifacts = new LinkedHashSet();
+ 
+         if ( extensions != null )
+         {
+Index: maven-project/src/main/java/org/apache/maven/project/injection/DefaultProfileInjector.java
+===================================================================
+--- maven-project/src/main/java/org/apache/maven/project/injection/DefaultProfileInjector.java	(revision 601332)
++++ maven-project/src/main/java/org/apache/maven/project/injection/DefaultProfileInjector.java	(working copy)
+@@ -39,7 +39,7 @@
+ import org.codehaus.plexus.util.xml.Xpp3Dom;
+ 
+ import java.util.ArrayList;
+-import java.util.HashMap;
++import java.util.LinkedHashMap;
+ import java.util.Iterator;
+ import java.util.LinkedHashMap;
+ import java.util.List;
+@@ -408,7 +408,7 @@
+             }
+             else
+             {
+-                Map depsMap = new HashMap();
++                Map depsMap = new LinkedHashMap();
+ 
+                 List deps = modelDepMgmt.getDependencies();
+ 
+@@ -456,7 +456,7 @@
+                     modelReporting.setOutputDirectory( profileReporting.getOutputDirectory() );
+                 }
+ 
+-                Map mergedReportPlugins = new HashMap();
++                Map mergedReportPlugins = new LinkedHashMap();
+ 
+                 Map profileReportersByKey = profileReporting.getReportPluginsAsMap();
+ 
+@@ -524,7 +524,7 @@
+ 
+         recessive.setConfiguration( merge( dominantConfig, recessiveConfig ) );
+ 
+-        Map mergedReportSets = new HashMap();
++        Map mergedReportSets = new LinkedHashMap();
+ 
+         Map dominantReportSetsById = dominant.getReportSetsAsMap();
+ 
+@@ -592,7 +592,7 @@
+ 
+     private void injectDependencies( Profile profile, Model model )
+     {
+-        Map depsMap = new HashMap();
++        Map depsMap = new LinkedHashMap();
+ 
+         List deps = model.getDependencies();
+ 
+Index: maven-project/src/main/java/org/apache/maven/project/MavenProject.java
+===================================================================
+--- maven-project/src/main/java/org/apache/maven/project/MavenProject.java	(revision 601332)
++++ maven-project/src/main/java/org/apache/maven/project/MavenProject.java	(working copy)
+@@ -24,7 +24,7 @@
+ import java.io.Writer;
+ import java.util.ArrayList;
+ import java.util.Collections;
+-import java.util.HashMap;
++import java.util.LinkedHashMap;
+ import java.util.Iterator;
+ import java.util.List;
+ import java.util.Map;
+@@ -142,7 +142,7 @@
+ 
+     private Map managedVersionMap;
+ 
+-    private Map projectReferences = new HashMap();
++    private Map projectReferences = new LinkedHashMap();
+ 
+     private Build buildOverlay;
+ 
+@@ -295,7 +295,7 @@
+         
+         if ( moduleAdjustments == null )
+         {
+-            moduleAdjustments = new HashMap();
++            moduleAdjustments = new LinkedHashMap();
+             
+             List modules = getModules();
+             if ( modules != null )
+Index: maven-project/src/main/java/org/apache/maven/project/ModelUtils.java
+===================================================================
+--- maven-project/src/main/java/org/apache/maven/project/ModelUtils.java	(revision 601332)
++++ maven-project/src/main/java/org/apache/maven/project/ModelUtils.java	(working copy)
+@@ -56,7 +56,7 @@
+ import java.util.Map;
+ import java.util.Properties;
+ import java.util.TreeMap;
+-import java.util.HashMap;
++import java.util.LinkedHashMap;
+ 
+ public final class ModelUtils
+ {
+@@ -1098,7 +1098,7 @@
+ 
+     public static List mergeDependencyList( List child, List parent )
+     {
+-        Map depsMap = new HashMap();
++        Map depsMap = new LinkedHashMap();
+ 
+         if ( parent != null )
+         {
+Index: maven-reporting/maven-reporting-api/pom.xml
+===================================================================
+--- maven-reporting/maven-reporting-api/pom.xml	(revision 601332)
++++ maven-reporting/maven-reporting-api/pom.xml	(working copy)
+@@ -23,7 +23,7 @@
+   <parent>
+     <artifactId>maven-reporting</artifactId>
+     <groupId>org.apache.maven.reporting</groupId>
+-    <version>2.0.8</version>
++    <version>2.0.8-el4j-20071205</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+   <artifactId>maven-reporting-api</artifactId>
+Index: maven-reporting/pom.xml
+===================================================================
+--- maven-reporting/pom.xml	(revision 601332)
++++ maven-reporting/pom.xml	(working copy)
+@@ -23,7 +23,7 @@
+   <parent>
+     <artifactId>maven</artifactId>
+     <groupId>org.apache.maven</groupId>
+-    <version>2.0.8</version>
++    <version>2.0.8-el4j-20071205</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>org.apache.maven.reporting</groupId>
+Index: maven-repository-metadata/pom.xml
+===================================================================
+--- maven-repository-metadata/pom.xml	(revision 601332)
++++ maven-repository-metadata/pom.xml	(working copy)
+@@ -23,7 +23,7 @@
+   <parent>
+     <artifactId>maven</artifactId>
+     <groupId>org.apache.maven</groupId>
+-    <version>2.0.8</version>
++    <version>2.0.8-el4j-20071205</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+   <artifactId>maven-repository-metadata</artifactId>
+Index: maven-script/maven-script-ant/pom.xml
+===================================================================
+--- maven-script/maven-script-ant/pom.xml	(revision 601332)
++++ maven-script/maven-script-ant/pom.xml	(working copy)
+@@ -23,7 +23,7 @@
+   <parent>
+     <artifactId>maven-script</artifactId>
+     <groupId>org.apache.maven</groupId>
+-    <version>2.0.8</version>
++    <version>2.0.8-el4j-20071205</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+   <artifactId>maven-script-ant</artifactId>
+Index: maven-script/maven-script-beanshell/pom.xml
+===================================================================
+--- maven-script/maven-script-beanshell/pom.xml	(revision 601332)
++++ maven-script/maven-script-beanshell/pom.xml	(working copy)
+@@ -23,7 +23,7 @@
+   <parent>
+     <artifactId>maven-script</artifactId>
+     <groupId>org.apache.maven</groupId>
+-    <version>2.0.8</version>
++    <version>2.0.8-el4j-20071205</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+   <artifactId>maven-script-beanshell</artifactId>
+Index: maven-script/pom.xml
+===================================================================
+--- maven-script/pom.xml	(revision 601332)
++++ maven-script/pom.xml	(working copy)
+@@ -23,7 +23,7 @@
+   <parent>
+     <artifactId>maven</artifactId>
+     <groupId>org.apache.maven</groupId>
+-    <version>2.0.8</version>
++    <version>2.0.8-el4j-20071205</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>org.apache.maven</groupId>
+Index: maven-settings/pom.xml
+===================================================================
+--- maven-settings/pom.xml	(revision 601332)
++++ maven-settings/pom.xml	(working copy)
+@@ -23,7 +23,7 @@
+   <parent>
+     <artifactId>maven</artifactId>
+     <groupId>org.apache.maven</groupId>
+-    <version>2.0.8</version>
++    <version>2.0.8-el4j-20071205</version>
+   </parent>
+   <modelVersion>4.0.0</modelVersion>
+   <artifactId>maven-settings</artifactId>
+Index: pom.xml
+===================================================================
+--- pom.xml	(revision 601332)
++++ pom.xml	(working copy)
+@@ -28,7 +28,7 @@
+   <artifactId>maven</artifactId>
+   <packaging>pom</packaging>
+   <name>Maven</name>
+-  <version>2.0.8</version>
++  <version>2.0.8-el4j-20071205</version>
+   <description>Maven is a project development management and comprehension tool. Based on the concept of a project object model: builds, dependency management, documentation creation, site publication, and distribution publication are all controlled from the declarative file. Maven can be extended by plugins to utilise a number of other development tools for reporting or the build process.</description>
+   <url>http://maven.apache.org</url>
+   <issueManagement>

@@ -1,0 +1,44 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:el4j="http://www.elca.ch/el4j/taglib"
+	template="layout/template.xhtml">
+
+	<ui:define name="body">
+
+		<h1>#{messages.OptimisticLockingResolver}</h1>
+		<p>#{messages.OptimisticLockingExceptionMessage}</p>
+		<h:form>
+			<el4j:set var="entityClassName" value="#{optimisticLockingExceptionResolver.getEntityClassName()}" />
+			<el4j:set var="entityShortName" value="#{utils.getEntityShortName(entityClassName)}" />
+			
+			<el4j:set var="fieldList" value="#{optimisticLockingExceptionResolver.getChangedFields()}" />
+			
+			<ui:remove><!-- list all changed fields --></ui:remove>
+			<c:forEach items="#{fieldList}" var="fieldName">
+				<ui:decorate template="WEB-INF/facelet/field.xhtml">
+					<ui:remove><!-- append value of currentObject --></ui:remove>
+					<ui:define name="customRemark">
+						<el4j:defaultViewMapping entity="#{currentObject}"/>
+					</ui:define>
+				</ui:decorate>
+			</c:forEach>
+			
+			<div style="clear: both" />
+
+			<p style="font-size: 10px">
+				*) #{messages.RequiredFieldNote}
+			</p>
+
+			<h:commandButton value="#{messages.Save}" action="#{optimisticLockingExceptionResolver.save()}" />
+			<s:button value="#{messages.Cancel}" view="#{masterPage}" />
+		</h:form>
+		<h:messages styleClass="message" />
+
+	</ui:define>
+</ui:composition>
