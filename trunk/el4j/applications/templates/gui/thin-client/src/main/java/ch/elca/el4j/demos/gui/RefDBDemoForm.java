@@ -104,11 +104,6 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 	protected AutoBinding m_listBinding;
 	
 	/**
-	 * The editor GUI for a reference.
-	 */
-	protected ReferenceEditorForm m_editor = new ReferenceEditorForm();
-	
-	/**
 	 * The model to bind to this form.
 	 */
 	protected ReferenceService m_service;
@@ -180,7 +175,6 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 	 *
 	 * @param formPanel    the panel to layout
 	 */
-	@SuppressWarnings("unused")
 	protected void setGridPanelLayout(JPanel formPanel) {
 		// create the form layout
 		DesignGridLayout layout = new DesignGridLayout(formPanel);
@@ -252,11 +246,13 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 					Object item = dlm.getValueAt(index, 0);
 					if (item instanceof ValidatedProperty) {
 						ValidatedProperty p = (ValidatedProperty) item;
-						m_editor.setReference((Reference) p.getParent());
+						
+						ReferenceEditorForm editor = new ReferenceEditorForm();
+						editor.setReference((Reference) p.getParent());
 						if (AbstractWrapperFactory
-							.getWrapper(m_editor) == null) {
+							.getWrapper(editor) == null) {
 							// open the editor for this reference
-							GUIApplication.getInstance().show(m_editor);
+							GUIApplication.getInstance().show(editor);
 						}
 					}
 				}
