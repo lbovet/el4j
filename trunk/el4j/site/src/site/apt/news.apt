@@ -2,10 +2,12 @@
  News
  -----
  -----
- 14 Jul 2008
+ 24 Oct 2008
  -----
 
 News
+
+  * <24/10/2008> - <<EL4J 1.5.1 released!>> This is mainly a maintenance release: Clean ups, upgrade to new plugins and improved modules.
 
   * <14/07/2008> - <<EL4J 1.5 released!>> Main features: Clean ups (some older parts were removed, some bugs fixed), more convenience methods for hibernate access, new beans:beans maven plugin that generates Spring IDE files, ...
 
