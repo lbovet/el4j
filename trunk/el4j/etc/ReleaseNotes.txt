@@ -26,7 +26,9 @@
   = Tomcat version updated.
   
 * Maven
-  = Maven-datbase-plugin: Port, username, and password are now used when starting Derby (thanks to QKP), 
+  = Maven-beans-plugin: New plugin that generates config files for Spring IDE that one can easily visualize the 
+    Spring config of EL4J
+  = Maven-database-plugin: Port, username, and password are now used when starting Derby (thanks to QKP), 
     use db.internal.port instead of db.port to avoid conflicts with tcp-forwarder.
   = Maven-rec-plugin: Make allowedPackagingList configurable (thanks to Stefan Fritz, Progress Software GesmbH).
   = Added the clirr-maven-plugin and dashboard-maven-plugin with the appropriate (patched) version. Generates aggregated report.
