@@ -9,7 +9,11 @@ echo "Executing: svn switch https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/
 svn switch https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j
 cd ..
 
-version=$(cat external/pom.xml | grep "<version.el4j-framework.current>" -A 1 | tail -n 1 | tr -d ' \t\r\n' | sed 's/-SNAPSHOT//')
+echo "Which tag/version should be chosen for the new release? (like 1.1.1)"
+read version
+version=$(echo $version | sed "s/\./_/g")
+echo "Version is $version, OK?"
+read dummy
 
 cd external/site/src/site/resources/docs/pdf
 ./wikiPdfDownloadScript.sh
