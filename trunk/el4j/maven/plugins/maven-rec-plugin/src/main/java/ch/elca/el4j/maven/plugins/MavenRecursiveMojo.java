@@ -439,7 +439,10 @@ public class MavenRecursiveMojo extends AbstractMojo {
 	 */
 	public File getRootDir(MavenProject project) {
 
-		if (project.getParent() == null) {
+		if (project.getParent() == null || project.getParent().getFile() == null) {
+			getLog().warn("Parent pom.xml of " + project.getFile().getAbsolutePath()
+				+ " is not located in the parent folder");
+			getLog().warn("mvn-rec will probably ignore some dependencies.");
 			return project.getFile().getParentFile();
 		}
 
