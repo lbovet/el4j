@@ -1,0 +1,52 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.ajax4jsf.org/rich"
+	template="layout/template.xhtml">
+
+	<ui:define name="body">
+
+		<h:messages globalOnly="true" styleClass="message" />
+
+		<rich:panel headerClass="topPanel">
+			<f:facet name="header">#{messages.Welcome}!</f:facet>
+			<p>
+				This demo application features:
+			</p>
+			<ul>
+				<li>
+					Generic master/detail views
+				</li>
+				<li>
+					Generic humanizatuion (h10n) support
+				</li>
+				<li>
+					EL4J/Spring integration
+				</li>
+				<li>
+					Seam components (only used in presentation layer)
+				</li>
+				<li>
+					Templated Facelets views
+				</li>
+				<li>
+					Facelets template tags
+				</li>
+				<li>
+					Richfaces JSF Components
+				</li>
+				<li>
+					Default CSS stylesheet
+				</li>
+				<li>
+					Deployment to Plain tomcat
+				</li>
+			</ul>
+		</rich:panel>
+
+	</ui:define>
+</ui:composition>
