@@ -84,7 +84,7 @@ public class AESCipher {
 	 */
 	public String encrypt(String plainText) {
 		try {
-			return PREFIX + Base64.encodeBase64(m_cipherEncypt.doFinal(plainText.getBytes()));
+			return PREFIX + new String(Base64.encodeBase64(m_cipherEncypt.doFinal(plainText.getBytes())));
 		} catch (Exception e) {
 			s_logger.error("Error while encrypting text", e);
 			return null;
