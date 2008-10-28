@@ -47,10 +47,10 @@ import java.awt.Window;
 public class ImageSplashScreen {
 	
 	/**
-	 * Default EL4J splash screen gif.
+	 * Default EL4J splash screen png.
 	 */
 	public static final String DEFAULT_SPLASH_SCREEN
-		= "/ch/elca/el4j/gui/swing/splash/resources/splash-screen.gif";
+		= "/ch/elca/el4j/gui/swing/splash/resources/splash-screen.png";
 	
 	/**
 	 * The frame containing the splash image.
