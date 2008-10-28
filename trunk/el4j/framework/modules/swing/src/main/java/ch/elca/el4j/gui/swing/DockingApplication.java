@@ -67,7 +67,6 @@ public abstract class DockingApplication extends GUIApplication {
 	 * @param beanName    the Spring bean name
 	 * @param anchor      the anchor of the docked window
 	 */
-	@SuppressWarnings("unchecked")
 	public void show(String beanName, ToolWindowAnchor anchor)
 		throws NoSuchBeanDefinitionException {
 		
@@ -137,12 +136,18 @@ public abstract class DockingApplication extends GUIApplication {
 	protected Content addContent(JFrame content) {
 		ContentManager contentManager = m_toolWindowManager.getContentManager();
 		
-		// remove if content already exists
-		if (contentManager.getContent(content) != null) {
-			contentManager.removeContent(
-				contentManager.getContent(content));
+		String id = Integer.toString(content.getContentPane().hashCode());
+		
+		Content newContent = null;
+		// Does content already exists?
+		if (contentManager.getContent(id) != null) {
+			newContent = contentManager.getContent(id);
+		} else {
+			// create new
+			newContent = contentManager.addContent(id, content.getTitle(), null, content.getContentPane());
 		}
-		return contentManager.addContent(content.toString(), content.getTitle(),
-			null, content.getContentPane());
+		newContent.setSelected(true);
+		
+		return newContent;
 	}
 }
