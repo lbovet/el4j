@@ -11,15 +11,22 @@ jar-file of the swing-demo-thin-client and all the jars it depends on.
 Webstart reads the jnlp-file, downloads all necessary jars from the host 
 and executes the swing-demo-thin-client.
 
-Invoke the following commands to install and deploy the demo-application:
+Invoke the following commands to install and deploy the demo-application.
+Note that you need a database up and running for the webstart to work
+(you may start a database, e.g. by executing
+mvn db:prepare db:block
+in the folder of standalone-client).
 
 mvn clean install
 mvn cargo:undeploy cargo:deploy cargo:start
 
-Now, open your browser and enter the following url:
-http://localhost:8080/swing-demo-webstart/
+You can safely ignore the error message (ClassNotFoundException) when
+executing the command above.
 
-Click on the "Launch"-link to download and run the swing-demo-thin-client.
+Now, open your browser and enter the following url:
+http://localhost:8080/swing-demo/
+
+Click on the "Launch"-link to download and run the demo client (standalone version).
 If webstart asks you to accept the "EL4J Webstart Demo"-certificate, click 
 "accept/run". 
 
