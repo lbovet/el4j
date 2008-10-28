@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.validator.Length;
+import org.hibernate.validator.Min;
 import org.hibernate.validator.NotNull;
 
 public class DefaultPerson implements Person {
@@ -60,6 +61,7 @@ public class DefaultPerson implements Person {
 		m_lastName = lastName;
 	}
 
+	@Min(0)
 	public int getAge() {
 		return m_age;
 	}
