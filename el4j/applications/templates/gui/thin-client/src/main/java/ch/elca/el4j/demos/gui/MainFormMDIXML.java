@@ -16,10 +16,13 @@
  */
 package ch.elca.el4j.demos.gui;
 
+import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Map;
 
+import javax.swing.Box;
+import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -73,6 +76,13 @@ public class MainFormMDIXML extends AbstractMDIApplication {
 	@Override
 	protected JDesktopPane getDesktopPane() {
 		return m_desktopPane;
+	}
+	
+	/**
+	 * @return    a horizontal glue.
+	 */
+	protected Component createMenuGlue() {
+		return Box.createHorizontalGlue();
 	}
 	
 	/** {@inheritDoc} */
