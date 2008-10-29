@@ -96,14 +96,14 @@ mvn exec:java -Dexec.args=stop
 echo "Wait until daemons have stopped. Close opened window and press Enter to continue"
 read dummy
 
-echo "Scheduler"
-echo "Not yet supported. Please execute test manually."
-read dummy
+#echo "Scheduler"
+#echo "Not yet supported. Please execute test manually."
+#read dummy
 
 #cd ../scheduler/
 #cd scheduler_init
 #mvn exec:java
 
 echo "NT login"
-cd ../nt_login/
+cd nt_login/
 mvn exec:java
