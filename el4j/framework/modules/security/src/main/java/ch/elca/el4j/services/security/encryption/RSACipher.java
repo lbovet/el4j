@@ -95,18 +95,18 @@ public class RSACipher implements Serializable  {
 	public String encrypt(String text) {
 
 		BigInteger[] biArr = padding(text);
-		String cipher = "";
+		StringBuffer cipher = new StringBuffer();
 		for (int i = 0; i < biArr.length; i++) {
 			BigInteger bi = biArr[i];
 			BigInteger c = bi.modPow(m_e, m_pubKey);
-			if (cipher.compareTo("") == 0) {
-				cipher = c.toString();
+			if (cipher.length() == 0) {
+				cipher.append(c.toString());
 			} else {
-				cipher = cipher.concat(m_cipherDelimiter);
-				cipher = cipher.concat(c.toString());
+				cipher.append(m_cipherDelimiter);
+				cipher.append(c.toString());
 			}
 		}
-		return cipher;
+		return cipher.toString();
 	}
 
 	/**
@@ -241,7 +241,7 @@ public class RSACipher implements Serializable  {
 	 * @return
 	 */
 	private String unpadding(String[] txtcode) {
-		String text = "";
+		StringBuffer buf = new StringBuffer();
 		for (int i = 1; i < txtcode.length; i++) {
 			String codeChunk = txtcode[i].substring(1);
 			String codeStr = "";
@@ -255,12 +255,11 @@ public class RSACipher implements Serializable  {
 				}
 				char[] ch = new char[1];
 				ch[0] = (char) code;
-				String str = new String(ch);
-				text = text.concat(str);
+				buf.append(ch);
 				j = j + m_chunkSize;
 			}
 		}
-		return text;
+		return buf.toString();
 	}
 }
 

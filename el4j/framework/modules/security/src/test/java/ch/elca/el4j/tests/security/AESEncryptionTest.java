@@ -42,7 +42,7 @@ import ch.elca.el4j.services.security.encryption.AESCipher;
  *
  * @author Dominik Zindel (DZI)
  */
-public class EncryptionTest {
+public class AESEncryptionTest {
 
 	/**
 	 * The cipher used for en- and decryption.
@@ -72,7 +72,6 @@ public class EncryptionTest {
 		byte[] raw = skey.getEncoded();
 
 		m_key = new String(Base64.encodeBase64(raw));
-
 		m_cipher = new AESCipher(m_key);
 	}
 	
@@ -87,15 +86,32 @@ public class EncryptionTest {
 		assertEquals(m_text, decrypted);
 	}
 	
+	
 	/**
-	 * Encrypts a text, modifies the encrypted text, decrypts it and
-	 * checks if the result is really different from the original input.
+	 * Tests the encryption of a text.
 	 */
 	@Test
-	public void testDiffEnDecryption() {
-		String encrypted = (m_cipher.encrypt(m_text)).substring(1) + "_";
-		String decrypted = m_cipher.decrypt(encrypted);
-		assertFalse(m_text.equals(decrypted));
+	public void testEncryption() {
+		String key = "wNGjAjybVC1FfQn628cU0w==";
+		String expectedEncrypted = "{AES-128}kmzDaaD2WTU4MblFz5396rxOHw9VthnIFiJmESbvn08=";
+		AESCipher cipher = new AESCipher(key);
+		
+		String encrypted = cipher.encrypt(m_text);
+		
+		assertEquals(expectedEncrypted, encrypted);
+	}
+	
+	/**
+	 * Tests the decryption of an encrypted text.
+	 */
+	@Test
+	public void testDecryption() {
+		String key = "wNGjAjybVC1FfQn628cU0w==";
+		String encrypted = "{AES-128}kmzDaaD2WTU4MblFz5396rxOHw9VthnIFiJmESbvn08=";
+		AESCipher cipher = new AESCipher(key);
+		
+		String decrypted = cipher.decrypt(encrypted);
+		assertEquals(m_text, decrypted);
 	}
 	
 }
