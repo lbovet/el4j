@@ -321,6 +321,11 @@
 					</executions>
 				</plugin>
 				<plugin>
+					<groupId>ch.elca.el4j.maven.plugins</groupId>
+					<artifactId>maven-beans-plugin</artifactId>
+					<version>${version.maven-beans-plugin}</version>
+				</plugin>
+				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<!--
