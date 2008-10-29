@@ -155,7 +155,11 @@
 	</complexType>
 	
 	<complexType name="emptyrow">
-		<attribute name="height" type="integer" />
+		<complexContent>
+			<extension base="cookXmlCommon:object">
+				<attribute name="height" type="integer" />
+			</extension>
+		</complexContent>
 	</complexType>
 	
 	<!-- <complexType name="empty">
@@ -166,6 +170,6 @@
 	
 	<element name="designgridlayout" type="el4j:designgridlayout" substitutionGroup="cookXmlCommon:object" />
 	<element name="row" type="el4j:row" substitutionGroup="cookXmlCommon:object" />
-	<element name="emptyrow" type="el4j:emptyrow" />
+	<element name="emptyrow" type="el4j:emptyrow" substitutionGroup="cookXmlCommon:object" />
 	<!-- <element name="empty" type="el4j:row" substitutionGroup="cookXmlCommon:object" /> -->
 </schema>
