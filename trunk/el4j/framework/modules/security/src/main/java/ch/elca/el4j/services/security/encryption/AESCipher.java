@@ -92,17 +92,17 @@ public class AESCipher {
 	}
 	
 	/**
-	 * @param encyptedText    encrypted text
+	 * @param encryptedText    encrypted text
 	 * @return                decrypted text
 	 */
-	public String decrypt(String encyptedText) {
+	public String decrypt(String encryptedText) {
 		try {
-			if (encyptedText.startsWith(PREFIX)) {
+			if (encryptedText.startsWith(PREFIX)) {
 				return new String(m_cipherDecypt.doFinal(
-						Base64.decodeBase64(encyptedText.substring(PREFIX.length()).getBytes())));
+						Base64.decodeBase64(encryptedText.substring(PREFIX.length()).getBytes())));
 			} else {
 				s_logger.error("Error while decrypting text: encyptedText does not start with " + PREFIX);
-				return encyptedText;
+				return encryptedText;
 			}
 		} catch (Exception e) {
 			s_logger.error("Error while decrypting text", e);
