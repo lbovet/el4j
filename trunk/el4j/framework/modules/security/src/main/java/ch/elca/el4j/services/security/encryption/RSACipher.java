@@ -59,10 +59,12 @@ public class RSACipher implements Serializable  {
 	private BigInteger m_priKey = BigInteger.ZERO;
 
 	/**
-	 * Creates a new cipher for encryption and decryption. It generates a new
-	 * key pair.
+	 * Creates a new cipher for encryption and decryption. It generates a new key pair.
 	 * 
-	 * @param keyLength The length of the key.
+	 * @param keyLength
+	 *            The length of the key. That the algorithm does not work with all values, typical key lengths are 512,
+	 *            1024, 2048, 3072 and 4096. Note that longer keys are more secure but also slower (several minutes).
+	 *            Keys of length < 1024 are considered unsecure, 1024 is the minimum but still not perfectly secure.
 	 */
 	public RSACipher(int keyLength) {
 		genKeyPair(keyLength);
