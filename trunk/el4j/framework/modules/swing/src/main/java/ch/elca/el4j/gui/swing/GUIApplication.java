@@ -28,6 +28,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
+import javax.swing.UIManager;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -157,6 +158,30 @@ public abstract class GUIApplication extends SingleFrameApplication {
 				try {
 					GUIApplication application = Application
 						.create(applicationClass);
+					
+					// apply first look and feel in list that is available
+					final String lnfKey = "Application.preferredLookAndFeel";
+					String lnfs = application.getContext().getResourceMap().getString(lnfKey);
+					if (lnfs != null) {
+						for (String lnf : lnfs.split(",")) {
+							try {
+								lnf = lnf.trim();
+								if (lnf.equalsIgnoreCase("system")) {
+									String name = UIManager.getSystemLookAndFeelClassName();
+									UIManager.setLookAndFeel(name);
+								} else {
+									UIManager.setLookAndFeel(lnf);
+								}
+								
+								break;
+							} catch (Exception e) {
+								s_logger.info("Look and feel '" + lnf + "' is not available.");
+								// try next
+								continue;
+							}
+						}
+					}
+					
 					Application.setInstance(application);
 
 					// new: set the spring context early
