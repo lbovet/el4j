@@ -49,93 +49,93 @@
 #            * =cd ../..=
 
 # make sure you are in right folder
+
+performInternal=$(cat .performInternal)
+performExternal=$(cat .performExternal)
+el4jNext=$(cat .nextVersion)
+
+
+echo "You are preparing version $el4jNext with the following settings: performExternal=$performExternal, performInternal=$performInternal. OK?"
+read dummy
+
 if ! [ -e external ] ; then
 	echo "Error: Folder 'external' not found. Go to its parent folder (el4j)!"
 	exit
 fi
 
-if [ $# -eq 1 ] ; then
-	performInternal=$1
-	auto=true
-else
-	echo "Process internal? (y/n)"
-	read performInternal
-	auto=false
+
+if  [ $performExternal == "y" ] ; then
+
+	cd external
+	mvn deploy -N
+	
+	cd applications
+	mvn deploy -N
+	cd ..
+	
+	cd framework
+	mvn deploy -N
+	
+	cd modules
+	mvn deploy
+	cd ..
+	
+	cd plugins
+	# maven-metadata.xml is not updated in 2.0.9 if mvn deploy is not called for every plugin explicitly
+	mvn deploy -N
+	for i in $(ls | grep "^maven-") ; do
+		cd $i
+		mvn deploy
+		cd ..
+	done
+	cd ../..
+	
+	cd maven
+	mvn deploy -N
+	
+	cd utils
+	mvn deploy
+	cd ..
+	
+	cd archetypes
+	for i in $(ls) ; do
+		cd $i
+		mvn deploy
+		cd ..
+	done
+	cd ..
+	
+	cd plugins
+	# maven-metadata.xml is not updated in 2.0.9 if mvn deploy is not called for every plugin explicitly
+	for i in $(ls | grep "^maven-") ; do
+		cd $i
+		mvn deploy
+		cd ..
+	done
+	cd ../..
+	
+	cd ..
 fi
 
-
-cd external
-mvn deploy -N
-
-cd applications
-mvn deploy -N
-cd ..
-
-cd framework
-mvn deploy -N
-
-cd modules
-mvn deploy
-cd ..
-
-cd plugins
-# maven-metadata.xml is not updated in 2.0.9 if mvn deploy is not called for every plugin explicitly
-mvn deploy -N
-for i in $(ls | grep "^maven-") ; do
-	cd $i
-	mvn deploy
+if  [ $performInternal == "y" ] ; then
+	cd internal
+	mvn deploy -N
+	
+	cd applications
+	mvn deploy -N
 	cd ..
-done
-cd ../..
-
-cd maven
-mvn deploy -N
-
-cd utils
-mvn deploy
-cd ..
-
-cd archetypes
-for i in $(ls) ; do
-	cd $i
+	
+	cd framework
+	mvn deploy -N
+	
+	cd modules
 	mvn deploy
-	cd ..
-done
-cd ..
-
-cd plugins
-# maven-metadata.xml is not updated in 2.0.9 if mvn deploy is not called for every plugin explicitly
-for i in $(ls | grep "^maven-") ; do
-	cd $i
+	cd ../..
+	
+	cd maven
+	mvn deploy -N
+	
+	cd plugins
 	mvn deploy
-	cd ..
-done
-cd ../..
-
-cd ..
-
-
-if [ ${performInternal:0:1} != "y" ] ; then
-	exit
+	cd ../..
 fi
-
-cd internal
-mvn deploy -N
-
-cd applications
-mvn deploy -N
-cd ..
-
-cd framework
-mvn deploy -N
-
-cd modules
-mvn deploy
-cd ../..
-
-cd maven
-mvn deploy -N
-
-cd plugins
-mvn deploy
-cd ../..

@@ -5,6 +5,15 @@
 #      * Remove the =-SNAPSHOT= for modules and plugins that weren't changed. E.g. 1.6-SNAPSHOT -> 1.6
 
 # make sure you are in right folder
+
+performInternal=$(cat .performInternal)
+performExternal=$(cat .performExternal)
+el4jNext=$(cat .nextVersion)
+
+echo "You are preparing version $el4jNext with the following settings: performExternal=$performExternal, performInternal=$performInternal. OK?"
+read dummy
+
+
 if ! [ -e external ] ; then
 	echo "Error: Folder 'external' not found. Go to its parent folder (el4j)!"
 	exit
@@ -17,10 +26,8 @@ if [ $# -eq 1 ] ; then
 	el4jNext=$el4jCurrent-$1
 	auto=true
 else
-	echo "Current version is $el4jCurrent-SNAPSHOT, OK?"
+	echo "Current version (i.e. the version to be adapted) is $el4jCurrent-SNAPSHOT, OK?"
 	read dummy
-	echo "Enter next el4j version number"
-	read el4jNext
 	
 	echo "Replacing '$el4jCurrent-SNAPSHOT' by '$el4jNext', OK?"
 	read dummy
@@ -33,8 +40,20 @@ echo "Searching for pom.xml files..."
 
 
 # list pom files
-find ./ -name "pom.xml" > pom.files.txt
-find ./ -name "site.xml" >> pom.files.txt
+if [ $performExternal == "y" ] && [ $performInternal == "y" ] ; then
+	find ./ -name "pom.xml" > pom.files.txt
+	find ./ -name "site.xml" >> pom.files.txt
+else
+	if  [ $performExternal == "y" ] ; then
+		find external/ -name "pom.xml" > pom.files.txt
+		find external/ -name "site.xml" >> pom.files.txt
+	else
+		if [ $performInternal == "y" ] ; then
+			find internal/ -name "pom.xml" > pom.files.txt
+			find internal/ -name "site.xml" >> pom.files.txt
+		fi
+	fi
+fi
 
 ################################
 # el4j x.y-SNAPSHOT -> x.y #
@@ -52,8 +71,11 @@ done
 ##################################
 # el4j modules: remove -SNAPSHOT #
 ##################################
-search="external/pom.xml"
-if [ -e internal ] ; then
+if  [ $performExternal == "y" ] ; then
+	search="external/pom.xml"
+fi
+
+if [ -e internal ] && [ $performInternal == "y" ] ; then
 	search="$search internal/pom.xml"
 fi
 
