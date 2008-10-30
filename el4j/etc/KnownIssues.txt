@@ -1,4 +1,18 @@
 --------------------------------------------------------------------------------
+                        Known issues for EL4J version  1.5.1
+--------------------------------------------------------------------------------
+ * None so far.
+
+--------------------------------------------------------------------------------
+                        Known issues for EL4J version  1.5
+--------------------------------------------------------------------------------
+ * Version of maven-beans-plugin is missing in the root pom.xml. Thus, always the
+ newest version will be downloaded which might cause problems.
+ Specify the version number of the plugin in the pom.xml of the project in which
+ the problem occurs <version>${version.maven-beans-plugin}</version>.
+
+
+--------------------------------------------------------------------------------
                         Known issues for EL4J version  1.4
 --------------------------------------------------------------------------------
  * el4j-version of webstart-maven-plugin has somehow disappeared on el4-services.
