@@ -20,26 +20,33 @@ function update() {
     mv $1.new $1
 }
 
+performInternal=$(cat .performInternal)
+performExternal=$(cat .performExternal)
+el4jNext=$(cat .nextVersion)
+
+echo "You are preparing version $el4jNext with the following settings: performExternal=$performExternal, performInternal=$performInternal. OK?"
+read dummy
+
 # make sure you are in right folder
 if ! [ -e external ] ; then
 	echo "Error: Folder 'external' not found. Go to its parent folder (el4j)!"
 	exit
 fi
-echo "I have also to revert all changes. Press Ctrl-C to stop."
-read dummy
+echo "I also have to revert all changes. Press Ctrl-C to stop."
 
-cd external
-echo "Cleaning ..."
-mvn clean
-svn revert -R ./
-svn switch https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j
+	read dummy
 
-echo "Process internal? (y/n)"
-read performInternal
+if [ $performExternal == "y" ] ; then
+	cd external
+	echo "Cleaning external..."
+	mvn clean
+	svn revert -R ./
+	svn switch https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j
+fi
 
 if [ $performInternal == "y" ] ; then
 	cd ../internal
-	echo "Cleaning ..."
+	echo "Cleaning internal..."
 	mvn clean
 	svn revert -R ./
 	svn switch https://cvs.elca.ch/subversion/el4j-internal/trunk
@@ -47,7 +54,7 @@ if [ $performInternal == "y" ] ; then
 fi
 
 
-echo "Enter current el4j version number (without -SNAPSHOT)"
+echo "Enter current (old) el4j version number (without -SNAPSHOT)"
 read el4jCurrent
 echo "Enter next el4j snapshot version number (without -SNAPSHOT)"
 read el4jNext
@@ -56,8 +63,20 @@ el4jCurrent=$el4jCurrent-SNAPSHOT
 el4jNext=$el4jNext-SNAPSHOT
 
 # list pom files
-find ./ -name "pom.xml" > pom.files.txt
-find ./ -name "site.xml" >> pom.files.txt
+if [ $performExternal == "y" ] && [ $performInternal == "y" ] ; then
+	find ./ -name "pom.xml" > pom.files.txt
+	find ./ -name "site.xml" >> pom.files.txt
+else
+	if  [ $performExternal == "y" ] ; then
+		find external/ -name "pom.xml" > pom.files.txt
+		find external/ -name "site.xml" >> pom.files.txt
+	else
+		if [ $performInternal == "y" ] ; then
+			find internal/ -name "pom.xml" > pom.files.txt
+			find internal/ -name "site.xml" >> pom.files.txt
+		fi
+	fi
+fi
 
 #####################################
 # el4j a.b-SNAPSHOT -> x.y-SNAPSHOT #
@@ -76,7 +95,9 @@ done
 # el4j modules: increase minor #
 ################################
 
-update external/pom.xml
+if [ $performExternal == "y" ] ; then
+	update external/pom.xml
+fi
 
 if [ $performInternal == "y" ] ; then
 	update internal/pom.xml
@@ -89,7 +110,7 @@ echo "#Work is not finished yet! Check all pom.xml and site.xml files if they ar
 echo "#Look at the files that have a CHECK! tag.                                          #"
 echo "#####################################################################################"
 echo "#The archetype version (maven/archetype) and <version.el4j-framework.current>       #"
-echo "#in pom.xml are definetly wrong and have to be corrected!                           #"
+echo "#in pom.xml are definitely wrong and have to be corrected!                           #"
 echo "#####################################################################################"
 echo ""
 

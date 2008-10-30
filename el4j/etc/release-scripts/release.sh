@@ -27,11 +27,15 @@ echo "If it is, press Enter, if it is not, press Ctrl-C."
 echo "Press Enter to continue"
 read dummy
 
-echo "Which tag should be chosen? (like 1.1.1)"
-read tagDot
-tagScore=$(echo $tagDot | sed "s/\./_/g")
-echo "Tag is $tagDot, OK?"
+
+performInternal=$(cat .performInternal)
+performExternal=$(cat .performExternal)
+tagDot=$(cat .nextVersion)
+
+echo "You are preparing version $el4jNext with the following settings: performExternal=$performExternal, performInternal=$performInternal. OK?"
 read dummy
+
+tagScore=$(echo $tagDot | sed "s/\./_/g")
 
 function makeRelease() {
 	echo "Step 1: Release $1"
@@ -59,15 +63,12 @@ function makeRelease() {
 	echo "$2 done."
 	cd ..
 }
-
-makeRelease "external" "https://el4j.svn.sourceforge.net/svnroot/el4j" "/el4j"
-
-echo "Process internal? (y/n)"
-read performInternal
-
-if [ $performInternal != "y" ] ; then
-	exit
+if  [ $performExternal == "y" ] ; then
+	makeRelease "external" "https://el4j.svn.sourceforge.net/svnroot/el4j" "/el4j"
 fi
 
-makeRelease "internal" "https://cvs.elca.ch/subversion/el4j-internal" ""
+
+if [ $performInternal == "y" ] ; then
+	makeRelease "internal" "https://cvs.elca.ch/subversion/el4j-internal" ""
+fi
 echo "Hint: The next script to execute is update.sh"

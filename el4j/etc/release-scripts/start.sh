@@ -8,6 +8,21 @@
 #   * %box% Copy settings.xml from etc/m2/ to ~/.m2/ (Backup your settings before)
 
 # Use "start.sh yes 3" to create an alpha version 3 of external AND internal (because of "yes")
+
+echo "Do you want to prepare a release for external? (y/n)"
+read performExternal
+echo "Do you want to prepare a release for internal? (y/n)"
+read performInternal
+echo "What will be the next version of EL4J? That is the number of the new release or release candidate (without -rc). Example: 1.5.1"
+read nextVersion
+echo "You will prepare version $nextversion with the following settings: performExternal=$performExternal, performInternal=$performInternal. OK?"
+read dummy
+
+echo $performInternal > .performInternal
+echo $performExternal > .performExternal
+echo $nextVersion > .nextVersion
+
+
 if [ $# -eq 2 ] ; then
 	echo "This script will download el4j from trunk, modify version and deploy it without user interaction!"
 	echo "Be sure to have all passwords that will be needed for deployment stored in ~/.m2/settings.xml"
@@ -17,9 +32,9 @@ if [ $# -eq 2 ] ; then
 else
 	workingDir="d:/el4jFresh"
 	
-	echo "Checkout internal? (y/n)"
-	read performInternal
-	auto=false
+	#echo "Checkout internal? (y/n)"
+	#read performInternal
+	#auto=false
 fi
 
 
@@ -31,6 +46,9 @@ mkdir tools
 # Copy maven
 echo "Take the following maven version, OK?"
 mvn --version
+read dummy
+echo "ok, I'll now work for quite a long time. Please be patient."
+
 cp -r $(which mvn)/../../../maven tools
 
 svn checkout https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j external
