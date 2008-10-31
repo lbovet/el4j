@@ -18,6 +18,7 @@ package ch.elca.el4j.maven.plugins.abbot;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -127,66 +128,47 @@ public class AbbotMojo extends AbstractMojo {
 		return findFilesIn(testDir);
 	}
 	
+
 	/**
 	 * Run all the tests in the given directory through JUnit.
 	 * @param abbotCL The ClassLoader to use for tests.
 	 * @throws MojoExecutionException If a test fails.
 	 */
 	public void runTests(ClassLoader abbotCL) throws MojoExecutionException {
-		
 		List<String> scripts = findScripts();
+		
+		// TestSuite suite = new TestSuite();
+		Object suite = construct(abbotCL, "junit.framework.TestSuite", new Object[0]);
 
-		Class<?> testClass;
-		Class<?> runnerClass;
-		Class<?> suiteClass;
-		Constructor<?> testConstructor;
-		Method runMethod;
-		Object suite;
-		Method addMethod;
-		try {
-			testClass = abbotCL.loadClass(
-				"junit.extensions.abbot.ScriptFixture");
-			testConstructor = testClass.getConstructor(String.class);
-			runnerClass = abbotCL.loadClass("junit.textui.TestRunner");
-			runMethod = runnerClass.getMethod("run",
-				abbotCL.loadClass("junit.framework.Test"));
-			suiteClass = abbotCL.loadClass("junit.framework.TestSuite");
-			suite = suiteClass.newInstance();
-			addMethod = suiteClass.getMethod("addTest",
-				abbotCL.loadClass("junit.framework.Test"));
-		} catch (Throwable e) {
-			getLog().error("Fatal error loading class.");
-			throw new RuntimeException("Invalid class.", e);
-		}
-
-		// Run the tests.
 		getLog().info("Running abbot tests.");
 		
 		for (String current : scripts) {
 			getLog().info("Abbot test script: " + current);
-		 
+
 			// Test test = new ScriptFixture(current);
-			// TestRunner.run(test);
-
-			try {
-				Object test = testConstructor.newInstance(current);
-				// suite.addTest(test)
-				addMethod.invoke(suite, test);
-			} catch (Exception e) {
-				throw new RuntimeException("Cannot create a test.", e);
-			}
-
+			Object test = construct(abbotCL, "junit.extensions.abbot.ScriptFixture", current);
+			
+			// suite.addTest(test);
+			castCall(suite, "addTest", new Object[] {test}, new Class<?>[] {cls(abbotCL, "junit.framework.Test")});
 		}
-
-		try {
-			// TestRunner.run(suite)
-			runMethod.invoke(null, suite);
-		} catch (Exception e) {
-			throw new MojoExecutionException("Error during test: " + e);
+		
+		// TestResult result = TestRunner.run(suite);
+		Object result = staticCastCall(abbotCL, "junit.textui.TestRunner", "run", 
+			new Object[] {suite}, new Class<?>[] {cls(abbotCL, "junit.framework.Test")});
+		
+		// int numFailures = result.faliureCount();
+		int numFailures = (Integer) call(result, "failureCount", new Object[0]);
+		
+		// int numErrors = result.errorCount();
+		int numErrors = (Integer) call(result, "errorCount", new Object[0]);
+		
+		if (numErrors > 0 || numFailures > 0) {
+			getLog().error("Abbot tests failed. There were " + numErrors + " errors and "
+				+ numFailures + " failures.");
+			throw new MojoExecutionException("Abbot tests failed.");
 		}
 		
 		getLog().info("Abbot tests complete.");
-		
 	}
 	
 	/**
@@ -245,5 +227,141 @@ public class AbbotMojo extends AbstractMojo {
 			}
 		}
 		return scripts;
+	}
+	
+	/*
+	 * Utility methods for "type-free java". Needed because we have to do everything "by name"
+	 * over the abbot classloader using "Object" as type.
+	 */
+	
+	/**
+	 * Create an object reflectively by calling the constructor.
+	 * @param cl The class loader to use.
+	 * @param className The name of the class to create.
+	 * @param parameters The constructor parameters.
+	 * @return The instantiated object.
+	 */
+	private Object construct(ClassLoader cl, String className, Object... parameters) {
+		try {
+			Class<?> objectClass = cl.loadClass(className);
+			Class<?>[] paramClasses = toClass(parameters);
+			
+			Constructor<?> c = objectClass.getConstructor(paramClasses);
+			return c.newInstance(parameters);
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Class not found: " + className, e);
+		} catch (NoSuchMethodException e) {
+			throw new RuntimeException("No such constructor.", e);
+		} catch (InstantiationException e) {
+			throw new RuntimeException("Cannot instantiate class " + className, e);
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException("Constructor not accessible", e);
+		} catch (InvocationTargetException e) {
+			throw new RuntimeException("Constructor threw exception", e);
+		}
+	}
+	
+	/**
+	 * Call a method reflectively.
+	 * @param target The target object.
+	 * @param methodName The method name.
+	 * @param parameters The method parameters.
+	 * @return The return value.
+	 */
+	private Object call(Object target, String methodName, Object... parameters) {
+		Class<?> targetClass = target.getClass();
+		
+		Class<?>[] paramClasses = toClass(parameters);
+		
+		try {
+			Method method = targetClass.getMethod(methodName, paramClasses);
+			Object result = method.invoke(target, parameters);
+			return result;
+		} catch (NoSuchMethodException e) {
+			throw new RuntimeException("Method does not exist", e);
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException("Method not accessible", e);
+		} catch (InvocationTargetException e) {
+			throw new RuntimeException("Method threw exception", e);
+		}
+	}
+	
+	/**
+	 * Call a method reflectively, providing an explicit class for each parameter.
+	 * @param target The target object.
+	 * @param methodName The method name.
+	 * @param parameters The method parameters.
+	 * @param paramClasses The parameter classes to use.
+	 * @return The return value.
+	 */
+	private Object castCall(Object target, String methodName, Object[] parameters, Class<?>[] paramClasses) {
+		Class<?> targetClass = target.getClass();
+		
+		try {
+			Method method = targetClass.getMethod(methodName, paramClasses);
+			Object result = method.invoke(target, parameters);
+			return result;
+		} catch (NoSuchMethodException e) {
+			throw new RuntimeException("Method does not exist", e);
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException("Method not accessible", e);
+		} catch (InvocationTargetException e) {
+			throw new RuntimeException("Method threw exception", e);
+		}
+	}
+	
+	/**
+	 * Call a static method relfectively.
+	 * @param cl The classloader to use.
+	 * @param className The name of the class containing the method.
+	 * @param methodName The method to call.
+	 * @param parameters The method parameters.
+	 * @param paramClasses The parameter classes to use.
+	 * @return The call result.
+	 */
+	private Object staticCastCall(ClassLoader cl, String className, String methodName, Object[] parameters
+		, Class<?>[] paramClasses) {
+		try {
+			Class<?> cls = cl.loadClass(className);
+			Method method = cls.getMethod(methodName, paramClasses);
+			return method.invoke(null, parameters);
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("No such class: " + className, e);
+		} catch (NoSuchMethodException e) {
+			throw new RuntimeException("No such mothod: " + methodName, e);
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException("Method not accessible", e);
+		} catch (InvocationTargetException e) {
+			throw new RuntimeException("Method threw exception", e);
+		}
+	}
+	
+	/**
+	 * Transform an array of objects to their respective class objects.
+	 * @param objects The objects.
+	 * @return The class objects for these objects.
+	 */
+	private Class<?>[] toClass(Object... objects) {
+		Class<?>[] classes = new Class<?>[objects.length];
+		
+		for (int i = 0; i < objects.length; i++) {
+			classes[i] = objects[i].getClass();
+		}
+		
+		return classes;
+	}
+	
+	/**
+	 * Get the class object from a class loader by name.
+	 * @param cl The class loader.
+	 * @param className The class name.
+	 * @return The class object.
+	 */
+	private Class<?> cls(ClassLoader cl, String className) {
+		try {
+			return cl.loadClass(className);
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("No such class: " + className);
+		}
 	}
 }
