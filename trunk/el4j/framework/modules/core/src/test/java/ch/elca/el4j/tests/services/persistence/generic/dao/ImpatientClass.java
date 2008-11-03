@@ -16,6 +16,11 @@
  */
 package ch.elca.el4j.tests.services.persistence.generic.dao;
 
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
+import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.core.context.ModuleApplicationListener;
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
@@ -32,7 +37,12 @@ import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
  *
  * @author Stefan Wismer (SWI)
  */
-public class ImpatientClass implements ModuleApplicationListener {
+public class ImpatientClass implements ApplicationContextAware, ModuleApplicationListener {
+	/**
+	 * The Spring application context.
+	 */
+	private ModuleApplicationContext m_applicationContext;
+	
 	/**
 	 * The dao registry.
 	 */
@@ -46,12 +56,17 @@ public class ImpatientClass implements ModuleApplicationListener {
 	/**
 	 * Is context ready?
 	 */
-	private boolean m_contextIsReady = false;
+	private volatile boolean m_contextIsReady = false;
 	
 	/**
 	 * Was test successful?
 	 */
 	private boolean m_successful = false;
+	
+	/** {@inheritDoc} */
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		m_applicationContext = (ModuleApplicationContext) applicationContext;
+	}
 	
 	/** {@inheritDoc} */
 	public void onContextRefreshed() {
@@ -79,22 +94,19 @@ public class ImpatientClass implements ModuleApplicationListener {
 				// if daoRegistry access is done before context is ready -> waiting for completely
 				// initialized Spring context didn't work!!!
 				
-				if (m_contextIsReady) {
+				if (m_contextIsReady || m_applicationContext.isRefreshed()) {
 					m_successful = true;
 				}
 			}
 		});
 		m_impatientThread.start();
 		
-		// delay the Spring context initialization (one second, see thread)
+		// delay the Spring context initialization (100ms, see thread)
 		try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) { }
 	}
 	
-	/**
-	 *
-	 */
 	/**
 	 * Wait until impatient thread finally has accessed the DAO registry.
 	 * 
