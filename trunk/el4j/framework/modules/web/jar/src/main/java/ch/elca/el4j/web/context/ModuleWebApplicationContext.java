@@ -41,6 +41,7 @@ import org.springframework.web.context.support.ServletContextResourcePatternReso
 import org.springframework.web.context.support.XmlWebApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
+import ch.elca.el4j.core.context.RefreshableModuleApplicationContext;
 import ch.elca.el4j.core.context.ModuleApplicationContextUtils;
 import ch.elca.el4j.core.context.ModuleApplicationListener;
 import ch.elca.el4j.core.io.support.ListResourcePatternResolverDecorator;
@@ -66,7 +67,8 @@ import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
  * @author Martin Zeltner (MZE)
  * @see ch.elca.el4j.core.context.ModuleApplicationContext
  */
-public class ModuleWebApplicationContext extends XmlWebApplicationContext {
+public class ModuleWebApplicationContext extends XmlWebApplicationContext
+	implements RefreshableModuleApplicationContext {
 	
 	/**
 	 * This logger is used to print out some global debugging info. Consult it
@@ -117,6 +119,16 @@ public class ModuleWebApplicationContext extends XmlWebApplicationContext {
 	 * The resource pattern resolver.
 	 */
 	private ListResourcePatternResolverDecorator m_patternResolver;
+	
+	/**
+	 * Is context refreshed i.e. fully initialized?
+	 */
+	private boolean m_refreshed = false;
+	
+	/**
+	 * Synchronization monitor for the "refreshed" flag.
+	 */
+	private final Object m_refreshedMonitor = new Object();
 	
 	/**
 	 * <ul>
@@ -408,6 +420,17 @@ public class ModuleWebApplicationContext extends XmlWebApplicationContext {
 		ctxUtil.invokeBeanFactoryPostProcessorsStrictlyOrdered(beanFactory);
 	}
 	
+	
+	/** {@inheritDoc} */
+	@Override
+	protected void prepareRefresh() {
+		synchronized (m_refreshedMonitor) {
+			m_refreshed = false;
+		}
+		
+		super.prepareRefresh();
+	}
+	
 	/**
 	 * Notify all {@link ModuleApplicationListener}s that context has been refreshed.
 	 * 
@@ -416,11 +439,22 @@ public class ModuleWebApplicationContext extends XmlWebApplicationContext {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void finishRefresh() {
+		synchronized (m_refreshedMonitor) {
+			m_refreshed = true;
+		}
+		
 		Collection<ModuleApplicationListener> listeners = getBeansOfType(
 			ModuleApplicationListener.class, true, false).values();
 		for (ModuleApplicationListener listener : listeners) {
 			listener.onContextRefreshed();
 		}
 		super.finishRefresh();
+	}
+	
+	/** {@inheritDoc} */
+	public boolean isRefreshed() {
+		synchronized (m_refreshedMonitor) {
+			return m_refreshed;
+		}
 	}
 }
