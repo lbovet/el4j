@@ -29,6 +29,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.util.PatternMatchUtils;
 
+import ch.elca.el4j.core.context.ModuleApplicationContext;
+import ch.elca.el4j.core.context.RefreshableModuleApplicationContext;
 import ch.elca.el4j.core.context.ModuleApplicationListener;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
@@ -122,6 +124,16 @@ public class DefaultDaoRegistry implements DaoRegistry, ApplicationContextAware,
 	public synchronized void waitUntilApplicationContextIsReady() {
 		// if we are in the same thread, waiting probably doesn't make sense, so we have to check this.
 		if (Thread.currentThread().getId() != m_creatorThreadId) {
+			
+			// context might be ready but caller got the contextRefreshed-event earlier than we did.
+			if (!m_applicationContextIsReady) {
+				if (m_applicationContext instanceof RefreshableModuleApplicationContext) {
+					RefreshableModuleApplicationContext context
+						= (RefreshableModuleApplicationContext) m_applicationContext;
+					m_applicationContextIsReady = context.isRefreshed();
+				}
+			}
+			
 			// access from another thread -> wait
 			while (!m_applicationContextIsReady) {
 				try {
