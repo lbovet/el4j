@@ -39,7 +39,7 @@
 	<action args="Send" method="actionSelectMenuItem" />
 	<assert component="events" method="getText" value=".*Example Event.*" />
 	
-	<annotation userDismiss="true">
+	<!-- <annotation userDismiss="true">
 		<![CDATA[<html>Performed the event bus test.
 		<ul>
 		<li>Event Bus demo</li>
@@ -47,7 +47,8 @@
 		</ul>
 		</html>]]>
 	</annotation>
-		
+	-->
+	
 	<action args="EventBus" class="javax.swing.JInternalFrame" method="actionClose" />
 	<wait args="EventBus" class="abbot.tester.ComponentTester" invert="true" method="assertComponentShowing" />
 	

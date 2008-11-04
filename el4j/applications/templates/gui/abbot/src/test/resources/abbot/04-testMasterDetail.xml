@@ -44,7 +44,7 @@
 	<action args="delete" method="actionClick" />
 	 
 	
-	<annotation userDismiss="true">
+	<!-- <annotation userDismiss="true">
 		<![CDATA[<html>Performed the event bus test.
 		<ul>
 		<li>Create some entries.</li>
@@ -52,7 +52,8 @@
 		</ul>
 		</html>]]>
 	</annotation>
-		
+	-->
+	
 	<action args="frame" class="javax.swing.JInternalFrame" method="actionClose" />
 	<wait args="frame" class="abbot.tester.ComponentTester" invert="true" method="assertComponentShowing" />
 	
