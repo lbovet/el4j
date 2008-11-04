@@ -45,7 +45,7 @@ public class ButtonActionSetter implements Setter {
 	private Object m_actionHolder;
 	
 	/**
-	 * The default constuctor: actionHolder is the associated class.
+	 * The default constructor: actionHolder is the associated class.
 	 * @see CookSwing#CookSwing(Object)
 	 */
 	public ButtonActionSetter() { }

@@ -17,6 +17,9 @@
 package ch.elca.el4j.gui.swing.wrapper;
 
 import javax.swing.JComponent;
+import javax.swing.JInternalFrame;
+
+import ch.elca.el4j.gui.swing.frames.InternalApplicationFrame;
 
 /**
  * This class wraps components into {@link JInternalFrame}s.
@@ -30,14 +33,12 @@ import javax.swing.JComponent;
  *
  * @author Stefan Wismer (SWI)
  */
-public class JInteralFrameWrapperFactory
-	extends AbstractWrapperFactory<JInteralFrameWrapper> {
+public class JInteralFrameWrapperFactory extends AbstractWrapperFactory<InternalApplicationFrame> {
 	
 	/**
 	 * The abstract factory.
 	 */
-	private static AbstractWrapperFactory<JInteralFrameWrapper> s_factory
-		= null;
+	private static AbstractWrapperFactory<InternalApplicationFrame> s_factory = null;
 	
 	/**
 	 * Wraps a GUI component into a {@link JInternalFrame}.
@@ -45,7 +46,7 @@ public class JInteralFrameWrapperFactory
 	 * @param component    the component to wrap
 	 * @return             the wrapper
 	 */
-	public static JInteralFrameWrapper wrap(JComponent component) {
+	public static InternalApplicationFrame wrap(JComponent component) {
 		if (s_factory == null) {
 			s_factory = new JInteralFrameWrapperFactory();
 		}
@@ -54,20 +55,11 @@ public class JInteralFrameWrapperFactory
 
 	/** {@inheritDoc} */
 	@Override
-	protected JInteralFrameWrapper createWrapper() {
-		return new JInteralFrameWrapper();
+	protected InternalApplicationFrame createApplicationFrame(String name, String title, JComponent component) {
+		InternalApplicationFrame frame = new InternalApplicationFrame(new JInternalFrame());
+		frame.setName(name);
+		frame.setTitle(title);
+		frame.setContent(component);
+		return frame;
 	}
-
-	/** {@inheritDoc} */
-	@Override
-	protected void setName(JInteralFrameWrapper wrapper, String name) {
-		wrapper.setName(name);
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	protected void setTitle(JInteralFrameWrapper wrapper, String title) {
-		wrapper.setTitle(title);
-	}
-
 }

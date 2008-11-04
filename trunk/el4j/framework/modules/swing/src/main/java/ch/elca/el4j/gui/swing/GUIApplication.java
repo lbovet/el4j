@@ -42,10 +42,9 @@ import ch.elca.el4j.core.context.ModuleApplicationContextConfiguration;
 import ch.elca.el4j.gui.swing.config.DefaultConfig;
 import ch.elca.el4j.gui.swing.cookswing.TagLibraryFactory;
 import ch.elca.el4j.gui.swing.exceptions.Exceptions;
-import ch.elca.el4j.gui.swing.wrapper.JFrameWrapper;
+import ch.elca.el4j.gui.swing.frames.ApplicationFrame;
 import ch.elca.el4j.gui.swing.wrapper.JFrameWrapperFactory;
 import ch.elca.el4j.util.config.GenericConfig;
-
 import cookxml.cookswing.CookSwing;
 import cookxml.core.exceptionhandler.StrictExceptionHandler;
 
@@ -105,6 +104,11 @@ public abstract class GUIApplication extends SingleFrameApplication {
 	 * @param springContext     the new Spring context
 	 */
 	public void setSpringContext(ApplicationContext springContext) {
+		if (springContext instanceof ModuleApplicationContext) {
+			ModuleApplicationContext context = (ModuleApplicationContext) springContext;
+			context.getBeanFactory().registerSingleton("GUIApplication", this);
+			//context.getBeanFactory().registerSingleton("GUIApplicationConfig", getConfig());
+		}
 		m_springContext = springContext;
 	}
 	
@@ -144,20 +148,17 @@ public abstract class GUIApplication extends SingleFrameApplication {
 		// install exception handler
 		Thread.setDefaultUncaughtExceptionHandler(Exceptions.getInstance());
 		// little hack to make it work also in Swing/AWT
-		System.setProperty("sun.awt.exception.handler",
-			Exceptions.class.getName());
+		System.setProperty("sun.awt.exception.handler", Exceptions.class.getName());
 		
 		// configure CookSwing
-		CookSwing.setDefaultExceptionHandler(
-			StrictExceptionHandler.getInstance());
+		CookSwing.setDefaultExceptionHandler(StrictExceptionHandler.getInstance());
 		CookSwing.setDefaultAccessible(true);
 		CookSwing.setSwingTagLibrary(TagLibraryFactory.getTagLibrary());
 
 		Runnable doCreateAndShowGUI = new Runnable() {
 			public void run() {
 				try {
-					GUIApplication application = Application
-						.create(applicationClass);
+					GUIApplication application = Application.create(applicationClass);
 					
 					// apply first look and feel in list that is available
 					final String lnfKey = "Application.preferredLookAndFeel";
@@ -185,8 +186,7 @@ public abstract class GUIApplication extends SingleFrameApplication {
 					Application.setInstance(application);
 
 					// new: set the spring context early
-					application.setSpringContext(new ModuleApplicationContext(
-						contextConfig));
+					application.setSpringContext(new ModuleApplicationContext(contextConfig));
 					
 					// set default config
 					application.setConfig(new DefaultConfig());
@@ -195,8 +195,7 @@ public abstract class GUIApplication extends SingleFrameApplication {
 					application.startup();
 					application.waitForReady();
 				} catch (Exception e) {
-					String msg = String.format(
-						"Application %s failed to launch", applicationClass);
+					String msg = String.format("Application %s failed to launch", applicationClass);
 					s_logger.error(msg, e);
 					throw (new Error(msg, e));
 				}
@@ -234,8 +233,15 @@ public abstract class GUIApplication extends SingleFrameApplication {
 	 * @param component    the component to show
 	 */
 	public void show(JComponent component) {
-		JFrameWrapper wrapper = JFrameWrapperFactory.wrap(component);
-		show(wrapper);
+		show(JFrameWrapperFactory.wrap(component));
+	}
+	
+	/**
+	 * Show a frame.
+	 * @param frame    the frame to show
+	 */
+	public void show(ApplicationFrame frame) {
+		frame.show();
 	}
 	
 	/**

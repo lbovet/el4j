@@ -26,6 +26,8 @@ import org.jdesktop.application.Application;
 import org.jdesktop.application.ApplicationContext;
 import org.jdesktop.application.ResourceMap;
 
+import ch.elca.el4j.gui.swing.frames.ApplicationFrame;
+
 /**
  * This abstract class helps wrapping components into a container like
  * {@link JInternalFrame} or {@link JFrame}. As the module Swing supports
@@ -46,13 +48,12 @@ import org.jdesktop.application.ResourceMap;
  *
  * @author Stefan Wismer (SWI)
  */
-public abstract class AbstractWrapperFactory<T extends FrameWrapper> {
+public abstract class AbstractWrapperFactory<T extends ApplicationFrame> {
 	/**
 	 * A mapping between wrapped component and wrapper.
 	 */
-	protected static final Map<JComponent, WeakReference<FrameWrapper>>
-	s_componentToWrapper
-		= new HashMap<JComponent, WeakReference<FrameWrapper>>();
+	protected static Map<JComponent, WeakReference<ApplicationFrame>> s_componentToWrapper
+		= new HashMap<JComponent, WeakReference<ApplicationFrame>>();
 	
 	/**
 	 * Wraps a GUI component.
@@ -68,8 +69,6 @@ public abstract class AbstractWrapperFactory<T extends FrameWrapper> {
 				return (T) s_componentToWrapper.get(component).get();
 			}
 		}
-		T wrapper = createWrapper();
-		
 		ApplicationContext appContext = Application.getInstance().getContext();
 		ResourceMap map = appContext.getResourceMap(component.getClass());
 		
@@ -77,23 +76,20 @@ public abstract class AbstractWrapperFactory<T extends FrameWrapper> {
 		if (name == null) {
 			name = component.getClass().getName();
 		}
-		setName(wrapper, name);
 		
 		String title = map.getString("title");
 		if (title == null) {
 			title = name;
 		}
-		setTitle(wrapper, title);
+		
+		T wrapper = createApplicationFrame(name, title, component);
 		
 		
 		// inject values from properties file
 		component.setName(name);
 		map.injectComponents(component);
 		
-		s_componentToWrapper.put(component,
-			new WeakReference<FrameWrapper>(wrapper));
-		
-		wrapper.setContent(component);
+		s_componentToWrapper.put(component, new WeakReference<ApplicationFrame>(wrapper));
 		
 		return wrapper;
 	}
@@ -102,25 +98,13 @@ public abstract class AbstractWrapperFactory<T extends FrameWrapper> {
 	/**
 	 * @return    the concrete wrapper
 	 */
-	protected abstract T createWrapper();
-	
-	/**
-	 * @param wrapper    the wrapper to set the name
-	 * @param name       the name to set
-	 */
-	protected abstract void setName(T wrapper, String name);
-	
-	/**
-	 * @param wrapper    the wrapper to set the title
-	 * @param title      the title to set
-	 */
-	protected abstract void setTitle(T wrapper, String title);
+	protected abstract T createApplicationFrame(String name, String title, JComponent component);
 	
 	/**
 	 * @param component    a wrapped component
 	 * @return             the corresponding wrapper
 	 */
-	public static FrameWrapper getWrapper(JComponent component) {
+	public static ApplicationFrame getFrame(JComponent component) {
 		if (s_componentToWrapper.get(component) == null) {
 			return null;
 		} else {

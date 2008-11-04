@@ -14,7 +14,7 @@ import java.util.List;
  * which occur anywhere in the application. Clients may register Exception
  * handlers to deal with these exception in any way they see fit. If no
  * registered Exception handler recognizes an exception that has been raised
- * it is printed to {@link System#err} but otherwise ignored.
+ * it is printed to {@link System#err}.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -68,16 +68,18 @@ public final class Exceptions implements Thread.UncaughtExceptionHandler {
 	 * {@link System#err}.
 	 */
 	public void handle(Exception e) {
+		boolean handled = false;
 		for (Iterator<Handler> i = handlers.iterator(); i.hasNext();) {
 			Handler handler = i.next();
 			if (handler.recognize(e)) {
 				handler.handle(e);
-				return;
+				handled = true;
 			}
 		}
-
-		System.err.println("Exception was not recognized by any Exception Handler: " + e);
-		e.printStackTrace(System.err);
+		if (!handled) {
+			System.err.println("Exception was not recognized by any Exception Handler: " + e);
+			e.printStackTrace(System.err);
+		}
 	}
 	
 	/**
