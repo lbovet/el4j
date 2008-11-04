@@ -1,7 +1,7 @@
 /*
  * EL4J, the Extension Library for the J2EE, adds incremental enhancements to
  * the spring framework, http://el4j.sf.net
- * Copyright (C) 2005 by ELCA Informatique SA, Av. de la Harpe 22-24,
+ * Copyright (C) 2008 by ELCA Informatique SA, Av. de la Harpe 22-24,
  * 1000 Lausanne, Switzerland, http://www.elca.ch
  *
  * EL4J is published under the GNU Lesser General Public License (LGPL)
@@ -14,12 +14,10 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.gui.swing.wrapper;
-
-import javax.swing.JComponent;
+package ch.elca.el4j.gui.swing.frames;
 
 /**
- * This class wraps a component.
+ * This marker interface signals that the component needs access to the surrounding frame.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -30,24 +28,9 @@ import javax.swing.JComponent;
  *
  * @author Stefan Wismer (SWI)
  */
-public interface FrameWrapper {
+public interface ApplicationFrameAware {
 	/**
-	 * @param component    the wrapped content.
+	 * @param applicationFrame    the {@link ApplicationFrame} that contains the called object.
 	 */
-	public void setContent(JComponent component);
-	
-	/**
-	 * @return    the wrapped component
-	 */
-	public JComponent getContent();
-	
-	/**
-	 * Show the wrapper.
-	 */
-	public void show();
-	
-	/**
-	 * Dispose the Wrapper.
-	 */
-	public void dispose();
+	public void setApplicationFrame(ApplicationFrame applicationFrame);
 }

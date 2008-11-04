@@ -17,6 +17,9 @@
 package ch.elca.el4j.gui.swing.wrapper;
 
 import javax.swing.JComponent;
+import javax.swing.JFrame;
+
+import ch.elca.el4j.gui.swing.frames.ExternalApplicationFrame;
 
 /**
  * This class wraps components into {@link JFrame}s.
@@ -30,13 +33,12 @@ import javax.swing.JComponent;
  *
  * @author Stefan Wismer (SWI)
  */
-public class JFrameWrapperFactory
-	extends AbstractWrapperFactory<JFrameWrapper> {
+public class JFrameWrapperFactory extends AbstractWrapperFactory<ExternalApplicationFrame> {
 	
 	/**
 	 * The abstract factory.
 	 */
-	private static AbstractWrapperFactory<JFrameWrapper> s_factory = null;
+	private static AbstractWrapperFactory<ExternalApplicationFrame> s_factory = null;
 	
 	/**
 	 * Wraps a GUI component into a {@link JFrame}.
@@ -44,7 +46,7 @@ public class JFrameWrapperFactory
 	 * @param component    the component to wrap
 	 * @return             the wrapper
 	 */
-	public static JFrameWrapper wrap(JComponent component) {
+	public static ExternalApplicationFrame wrap(JComponent component) {
 		if (s_factory == null) {
 			s_factory = new JFrameWrapperFactory();
 		}
@@ -53,19 +55,11 @@ public class JFrameWrapperFactory
 	
 	/** {@inheritDoc} */
 	@Override
-	protected JFrameWrapper createWrapper() {
-		return new JFrameWrapper();
-	}
-	
-	/** {@inheritDoc} */
-	@Override
-	protected void setName(JFrameWrapper wrapper, String name) {
-		wrapper.setName(name);
-	}
-	
-	/** {@inheritDoc} */
-	@Override
-	protected void setTitle(JFrameWrapper wrapper, String title) {
-		wrapper.setTitle(title);
+	protected ExternalApplicationFrame createApplicationFrame(String name, String title, JComponent component) {
+		ExternalApplicationFrame frame = new ExternalApplicationFrame(new JFrame());
+		frame.setName(name);
+		frame.setTitle(title);
+		frame.setContent(component);
+		return frame;
 	}
 }

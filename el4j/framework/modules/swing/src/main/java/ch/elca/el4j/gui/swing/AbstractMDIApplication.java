@@ -16,22 +16,17 @@
  */
 package ch.elca.el4j.gui.swing;
 
-import java.beans.PropertyVetoException;
-
 import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.bushe.swing.event.EventBus;
-import org.jdesktop.application.Application;
-import org.jdesktop.application.ApplicationContext;
-import org.jdesktop.application.ResourceMap;
 
-import ch.elca.el4j.gui.swing.wrapper.JInteralFrameWrapper;
+import ch.elca.el4j.gui.swing.frames.ApplicationFrame;
 import ch.elca.el4j.gui.swing.wrapper.JInteralFrameWrapperFactory;
 
 /**
@@ -61,56 +56,36 @@ public abstract class AbstractMDIApplication extends GUIApplication {
 	protected abstract JDesktopPane getDesktopPane();
 	
 	/**
-	 * Adds an internal frame to the MDI application.
-	 * @param frame     the frame to add
-	 * @see #show(JInternalFrame,int)
-	 */
-	public void showInternalFrame(JComponent frame) {
-		if (frame instanceof JInternalFrame) {
-			show((JInternalFrame) frame, JLayeredPane.DEFAULT_LAYER);
-			try {
-				((JInternalFrame) frame).setSelected(true);
-			} catch (PropertyVetoException e) {
-				// ignore
-			}
-		}
-	}
-	
-	/**
 	 * @param component    the panel to show as MDI child window
 	 */
 	@Override
 	public void show(JComponent component) {
-		if (JPanel.class.isAssignableFrom(component.getClass())) {
-			JPanel panel = (JPanel) component;
-			JInteralFrameWrapper wrapper
-				= JInteralFrameWrapperFactory.wrap(panel);
-			showInternalFrame(wrapper);
-		} else {
-			super.show(component);
-		}
+		show(JInteralFrameWrapperFactory.wrap(component));
 	}
 
-	/**
-	 * Adds an internal frame to the MDI application
-	 *   In particular: keeps track of the frame, adds listeners
-	 *    to frame events and ensures properties of the frame
-	 *    are stored persistently.
-	 * @param frame the internal frame to add
-	 * @param index the position at which to insert the
-	 *          component, or -1 to append the component to the end
-	 */
-	public void show(JInternalFrame frame, int index) {
-		ApplicationContext appContext = Application.getInstance().getContext();
-		ResourceMap map = appContext.getResourceMap(frame.getClass());
+	
+	/** {@inheritDoc} */
+	@Override
+	public void show(ApplicationFrame frame) {
+		JInternalFrame jiframe = (JInternalFrame) frame.getFrame();
 		
-		frame.addInternalFrameListener(new ListenerToEvent());
-
-		// inject values from properties file
-		map.injectComponents(frame);
-
-		getDesktopPane().add(frame, index);
-		frame.show();
+		// (resources are already injected in frame)
+		/*if (jiframe.getClass().getClassLoader() != null) {
+			ApplicationContext appContext = Application.getInstance().getContext();
+			ResourceMap map = appContext.getResourceMap(jiframe.getClass());
+			
+			// inject values from properties file
+			map.injectComponents(jiframe);
+		}*/
+		
+		if (!ArrayUtils.contains(getDesktopPane().getComponents(), jiframe)) {
+			jiframe.addInternalFrameListener(new ListenerToEvent());
+		
+			getDesktopPane().add(jiframe, JLayeredPane.DEFAULT_LAYER);
+			super.show(frame);
+		}
+		
+		frame.setSelected(true);
 	}
 	
 	/**
