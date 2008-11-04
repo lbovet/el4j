@@ -30,7 +30,14 @@ cd ../../light_statistics
 mvn package
 echo "Enter 'mvn exec:java' in the window that will appear next. Press Enter to open window..."
 read dummy
-cygstart bash -i
+case "`uname`" in
+CYGWIN*)
+	cygstart bash -i
+	;;
+*)
+	xterm&
+	;;
+esac
 
 echo ""
 echo "Open http://localhost:9092/ in a web browser"
@@ -49,7 +56,15 @@ mvn package
 echo "Enter 'mvn exec:java' in the window that will appear next. Press Enter to open window..."
 read dummy
 cd service
-cygstart bash -i
+case "`uname`" in
+CYGWIN*)
+	cygstart bash -i
+	;;
+*)
+	xterm&
+	;;
+esac
+
 cd ..
 
 echo ""
@@ -74,7 +89,14 @@ mvn install
 cd controller
 echo "Enter 'mvn exec:java' in the window that will appear next. Press Enter to open window..."
 read dummy
-cygstart bash -i
+case "`uname`" in
+CYGWIN*)
+	cygstart bash -i
+	;;
+*)
+	xterm&
+	;;
+esac
 cd ..
 
 echo "Press Enter when controller has started..."
@@ -96,6 +118,8 @@ mvn exec:java -Dexec.args=stop
 echo "Wait until daemons have stopped. Close opened window and press Enter to continue"
 read dummy
 
+cd ..
+
 #echo "Scheduler"
 #echo "Not yet supported. Please execute test manually."
 #read dummy
@@ -105,5 +129,14 @@ read dummy
 #mvn exec:java
 
 echo "NT login"
-cd nt_login/
-mvn exec:java
+
+case "`uname`" in
+CYGWIN*)
+	cd ../nt_login/
+	mvn exec:java
+	;;
+*)
+	echo "NT login cannot be tested on Linux..."
+	;;
+esac
+
