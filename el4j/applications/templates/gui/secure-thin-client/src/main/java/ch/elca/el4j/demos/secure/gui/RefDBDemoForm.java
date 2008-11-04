@@ -285,7 +285,7 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 						ValidatedProperty p = (ValidatedProperty) item;
 						m_editor.setReference((Reference) p.getParent());
 						if (AbstractWrapperFactory
-							.getWrapper(m_editor) == null) {
+							.getFrame(m_editor) == null) {
 							// open the editor for this reference
 							GUIApplication.getInstance().show(m_editor);
 						}

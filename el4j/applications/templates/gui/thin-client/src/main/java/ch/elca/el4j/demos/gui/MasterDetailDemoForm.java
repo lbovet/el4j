@@ -32,6 +32,7 @@ import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.Bindings;
 import org.jdesktop.beansbinding.Property;
 import org.jdesktop.swingbinding.validation.ValidatedProperty;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.silvermindsoftware.hitch.Binder;
 import com.silvermindsoftware.hitch.BinderManager;
@@ -91,15 +92,14 @@ public class MasterDetailDemoForm extends JPanel {
 	@ModelObject(isDefault = true)
 	private Person person;
 
-	public MasterDetailDemoForm() {
-		GUIApplication app = GUIApplication.getInstance();
-		
+	@Autowired
+	public MasterDetailDemoForm(GUIApplication application) {
 		createComponents();
 		createLayout();
 		
 		// assign actions
-		m_createButton.setAction(app.getAction(this, "create"));
-		m_deleteButton.setAction(app.getAction(this, "delete"));
+		m_createButton.setAction(application.getAction(this, "create"));
+		m_deleteButton.setAction(application.getAction(this, "delete"));
 		
 		addData();
 		createDataBinding();

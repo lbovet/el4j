@@ -33,12 +33,12 @@ import ch.elca.el4j.gui.swing.exceptions.Handler;
 public class ExampleExceptionHandler implements Handler {
 	/** {@inheritDoc} */
 	public boolean recognize(Exception e) {
-		return (e instanceof RuntimeException);
+		return (e instanceof Exception);
 	}
 	
 	/** {@inheritDoc} */
 	public void handle(Exception e) {
-		System.err.println("Runtime Exception!");
+		System.err.println("An exception occured!");
 		e.printStackTrace(System.err);
 	}
 }

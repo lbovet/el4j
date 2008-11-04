@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.jdesktop.application.Action;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.silvermindsoftware.hitch.Binder;
 import com.silvermindsoftware.hitch.BinderManager;
@@ -71,15 +72,14 @@ public class CancelableDemoForm extends JPanel {
 	 */
 	private final Binder m_binder = BinderManager.getBinder(this);
 	
-	public CancelableDemoForm() {
-		GUIApplication app = GUIApplication.getInstance();
-		
+	@Autowired
+	public CancelableDemoForm(GUIApplication application) {
 		createComponents();
 		createLayout();
 		
 		// assign actions
-		m_okButton.setAction(app.getAction(this, "applyChanges"));
-		m_cancelButton.setAction(app.getAction(this, "discardChanges"));
+		m_okButton.setAction(application.getAction(this, "applyChanges"));
+		m_cancelButton.setAction(application.getAction(this, "discardChanges"));
 		
 		// creating model entirely programmatically:
 		person = new DefaultPerson();

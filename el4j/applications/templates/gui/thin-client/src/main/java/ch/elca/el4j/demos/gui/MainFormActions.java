@@ -90,6 +90,11 @@ public class MainFormActions {
 		EventBus.publish(new ExampleEvent("I'm an Example Event!"));
 	}
 	
+	@Action
+	public void throwException() {
+		throw new IllegalArgumentException();
+	}
+	
 	/**
 	 * Show the about dialog.
 	 */

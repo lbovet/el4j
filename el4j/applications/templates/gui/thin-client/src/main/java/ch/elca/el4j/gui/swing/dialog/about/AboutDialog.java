@@ -36,6 +36,7 @@ import org.jdesktop.application.Action;
 import org.jdesktop.application.ApplicationActionMap;
 import org.jdesktop.application.ApplicationContext;
 import org.jdesktop.application.ResourceMap;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.elca.el4j.gui.swing.GUIApplication;
 
@@ -80,9 +81,9 @@ public class AboutDialog extends JDialog {
 	/**
 	 * The constructor.
 	 */
-	public AboutDialog() {
-		GUIApplication app = GUIApplication.getInstance();
-		ApplicationContext appContext = app.getContext();
+	@Autowired
+	public AboutDialog(GUIApplication application) {
+		ApplicationContext appContext = application.getContext();
 		m_resourceMap = appContext.getResourceMap(AboutDialog.class);
 
 		setTitle(getRes("aboutText"));
