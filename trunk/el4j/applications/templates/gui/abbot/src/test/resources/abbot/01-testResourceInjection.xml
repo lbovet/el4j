@@ -44,13 +44,14 @@
 		value="This text has been set using resource injection.*" />
 	<!-- Have a look at the properties file: 'ResourceInjectionDemoFrame.properties' -->
 	
-	<annotation userDismiss="true">
+	<!--<annotation userDismiss="true">
 		<![CDATA[<html>Performed the Resource Injection Demo test.
 		<ul>
 		<li>Verifying injected text.</li>
 		</ul>
 		</html>]]>
 	</annotation>
+	-->
 	
 	<action args="ResourceInjectionDemoForm" class="javax.swing.JInternalFrame" method="actionClose" />
 	<wait args="ResourceInjectionDemoForm" class="abbot.tester.ComponentTester" invert="true" method="assertComponentShowing" />

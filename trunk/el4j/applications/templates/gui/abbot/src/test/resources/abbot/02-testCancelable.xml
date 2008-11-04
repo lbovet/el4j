@@ -30,7 +30,7 @@
 	<action args="reject" method="actionClick" />
 	<assert component="firstName" method="getText" value="Somebody" />
 
-	<annotation userDismiss="true">
+	<!--<annotation userDismiss="true">
 		<![CDATA[<html>Performed the Cancelable Demo test.
 		<ul>
 		<li>Setting text</li>
@@ -39,7 +39,8 @@
 		</ul>
 		</html>]]>
 	</annotation>
-		
+-->	
+	
 	<action args="Cancelable Demo Form" class="javax.swing.JInternalFrame" method="actionClose" />
 	<wait args="Cancelable Demo Form" class="abbot.tester.ComponentTester" invert="true" method="assertComponentShowing" />
 	
