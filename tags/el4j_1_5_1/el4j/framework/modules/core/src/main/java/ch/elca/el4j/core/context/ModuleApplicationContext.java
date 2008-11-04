@@ -99,7 +99,8 @@ import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
  * @author Andreas Bur (ABU)
  * @author Martin Zeltner (MZE)
  */
-public class ModuleApplicationContext extends AbstractXmlApplicationContext {
+public class ModuleApplicationContext extends AbstractXmlApplicationContext
+	implements RefreshableModuleApplicationContext {
 	/**
 	 * The common debugging logger for EL4J.
 	 */
@@ -154,6 +155,16 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
 	 * The resource pattern resolver.
 	 */
 	private ListResourcePatternResolverDecorator m_patternResolver;
+	
+	/**
+	 * Is context refreshed i.e. fully initialized?
+	 */
+	private boolean m_refreshed = false;
+	
+	/**
+	 * Synchronization monitor for the "refreshed" flag.
+	 */
+	private final Object m_refreshedMonitor = new Object();
 	
 	/**
 	 * @see ch.elca.el4j.core.context.ModuleApplicationContext#ModuleApplicationContext(
@@ -529,6 +540,17 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
 		ctxUtil.invokeBeanFactoryPostProcessorsStrictlyOrdered(beanFactory);
 	}
 	
+	
+	/** {@inheritDoc} */
+	@Override
+	protected void prepareRefresh() {
+		synchronized (m_refreshedMonitor) {
+			m_refreshed = false;
+		}
+		
+		super.prepareRefresh();
+	}
+	
 	/**
 	 * Notify all {@link ModuleApplicationListener}s that context has been refreshed.
 	 * 
@@ -537,11 +559,22 @@ public class ModuleApplicationContext extends AbstractXmlApplicationContext {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void finishRefresh() {
+		synchronized (m_refreshedMonitor) {
+			m_refreshed = true;
+		}
+		
 		Collection<ModuleApplicationListener> listeners = getBeansOfType(
 			ModuleApplicationListener.class, true, false).values();
 		for (ModuleApplicationListener listener : listeners) {
 			listener.onContextRefreshed();
 		}
 		super.finishRefresh();
+	}
+	
+	/** {@inheritDoc} */
+	public boolean isRefreshed() {
+		synchronized (m_refreshedMonitor) {
+			return m_refreshed;
+		}
 	}
 }
