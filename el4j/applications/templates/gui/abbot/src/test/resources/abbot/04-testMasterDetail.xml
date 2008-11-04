@@ -11,17 +11,17 @@
 	<component class="javax.swing.JFrame" id="mainFrame" name="mainFrame" root="true" title="AppFramework + MDI Example" />
 	
 	<!-- Specific Components -->
-	<component class="ch.elca.el4j.gui.swing.wrapper.JInteralFrameWrapper" id="frame"
+	<component class="javax.swing.JInternalFrame" id="frame"
 		index="0" parent="JDesktopPane Instance" title="Master/Detail Demo Frame" window="mainFrame" />
 	<component class="javax.swing.JMenuItem" id="mdMenu" index="1"
-		parent="JPopupMenu Instance" text="Master/Detail Demo" window="mainFrame" />
+		parent="JPopupMenu Instance" text="Master/Detail Demo..." window="mainFrame" />
 	<component class="javax.swing.JTextField" id="first" index="1" parent="frame" />
 	<component class="javax.swing.JTextField" id="last" index="5" parent="frame" />
 	<component class="javax.swing.JTextField" id="age" index="7" parent="frame" />
 	<component class="javax.swing.JCheckBox" id="smart" parent="frame" />
-	<component class="javax.swing.JButton" id="create" tag="create" parent="frame" />
-	<component class="javax.swing.JButton" id="delete" tag="Delete" parent="frame" />
-	<component class="javax.swing.JTable" id="table" parent="frame" />
+	<component class="javax.swing.JButton" id="create" index="8" parent="frame" text="create" window="mainFrame" />
+	<component class="javax.swing.JButton" id="delete" index="9" parent="frame" text="Delete" window="mainFrame" />
+	<component class="javax.swing.JTable" id="table" index="10" parent="frame" />
 
 	<!-- Launcher -->
 	<launch args="[]" class="ch.elca.el4j.demos.gui.MainStandaloneMDI" method="main" />

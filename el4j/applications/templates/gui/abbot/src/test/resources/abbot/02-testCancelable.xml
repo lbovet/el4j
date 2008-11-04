@@ -12,7 +12,7 @@
 	<component class="javax.swing.JFrame" id="mainFrame" name="mainFrame" root="true" title="AppFramework + MDI Example" />
 
 	<!-- Specific Components -->
-	<component class="ch.elca.el4j.gui.swing.wrapper.JInteralFrameWrapper" id="Cancelable Demo Form" index="0" name="Cancelable Demo Form" parent="JDesktopPane Instance" title="Cancelable Demo Form" window="mainFrame" />
+	<component class="javax.swing.JInternalFrame" id="Cancelable Demo Form" index="0" name="Cancelable Demo Form" parent="JDesktopPane Instance" title="Cancelable Demo Form" window="mainFrame" />
 	<component class="javax.swing.JMenuItem" id="Cancelable Form Demo" index="1" parent="JPopupMenu Instance" text="Cancelable Form Demo" window="mainFrame" />
 	<component class="javax.swing.JTextField" id="firstName" index="1" parent="Cancelable Demo Form" />
 	<component class="javax.swing.JButton" id="accept" tag="Apply" parent="Cancelable Demo Form" />

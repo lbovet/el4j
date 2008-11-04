@@ -19,7 +19,7 @@
 		id="Resource Injection Demo" index="0" parent="JPopupMenu Instance"
 		text="Resource Injection Demo" window="mainFrame" />
 	<component
-		class="ch.elca.el4j.gui.swing.wrapper.JInteralFrameWrapper"
+		class="javax.swing.JInternalFrame"
 		id="ResourceInjectionDemoForm" index="0"
 		name="ch.elca.el4j.demos.gui.ResourceInjectionDemoForm"
 		parent="JDesktopPane Instance" title="Ressource Injection Demo Frame"
