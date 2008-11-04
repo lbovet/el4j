@@ -49,7 +49,7 @@ import net.java.dev.designgridlayout.DesignGridLayout;
 /**
  * Demonstrates how to use the automatic bean binding.
  *
- * This demo shows have form components having the same name as properties of
+ * This demo shows how form components that have the same name as properties of
  * the model (like <code>firstName</code>) get automatically bound. Binding
  * is done using <code>m_binder.addAutoBinding(this)</code>.
  *
@@ -58,12 +58,12 @@ import net.java.dev.designgridlayout.DesignGridLayout;
  * each list element. Therefore, it is necessary to specify that by
  * (<code>m_binder.addManualBinding(... new ListBinding("value") ...)</code>).
  *
- * There is also shown how to manually bind components: the textfield
+ * We also shown how to manually bind components: the textfield
  * <code>m_curListSelection</code> is set to always show the selected list item
  * value.
  *
  * Another aspect shown here is the ability to provide a custom validation
- * responder (a class that knows how to react on (in)valid values). Our
+ * responder (a class that knows how to react to (in)valid values). Our
  * <code>CustomValidationResponder</code> shows the validation messages on a
  * label on the form (see {@link CustomValidationResponder}).
  *

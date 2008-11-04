@@ -21,7 +21,7 @@ import javax.swing.table.*;
  * with the rows in a different order.
  * <p/>
  * TableSorter registers itself as a listener to the underlying model,
- * just as the JTable itself would. Events recieved from the model
+ * just as the JTable itself would. Events received from the model
  * are examined, sometimes manipulated (typically widened), and then
  * passed on to the TableSorter's listeners (typically the JTable).
  * If a change to the model has invalidated the order of TableSorter's
@@ -54,11 +54,21 @@ import javax.swing.table.*;
  * This is a long overdue rewrite of a class of the same name that
  * first appeared in the swing table demos in 1997.
  *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
  * @author Philip Milne
  * @author Brendon McLean
  * @author Dan van Enckevort
  * @author Parwinder Sekhon
  * @version 2.0 02/27/04
+ * 
+ * @see ch.elca.el4j.demos.gui.MasterDetailDemoForm for a demonstration of its use.
+ * 
  */
 
 // SWI: suppressChangeEvents added

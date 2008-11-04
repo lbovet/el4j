@@ -19,14 +19,12 @@ package ch.elca.el4j.gui.swing.wrapper;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
-import org.noos.xing.mydoggy.Content;
 import org.noos.xing.mydoggy.ContentManager;
 
 import ch.elca.el4j.gui.swing.DockingApplication;
 import ch.elca.el4j.gui.swing.GUIApplication;
-import ch.elca.el4j.gui.swing.frames.ContentConfiguration;
 import ch.elca.el4j.gui.swing.frames.ContentApplicationFrame;
-import ch.elca.el4j.gui.swing.frames.ExternalApplicationFrame;
+import ch.elca.el4j.gui.swing.frames.ContentConfiguration;
 
 public class ContentWrapperFactory extends AbstractWrapperFactory<ContentApplicationFrame> {
 	/**
