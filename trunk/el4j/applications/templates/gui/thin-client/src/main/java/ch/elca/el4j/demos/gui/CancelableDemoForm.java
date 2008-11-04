@@ -39,8 +39,8 @@ import net.java.dev.designgridlayout.DesignGridLayout;
 
 
 /**
- * This class demonstrates a form that has a cancel button to restore the
- * original value.
+ * Demonstrates a form that has a cancel button to restore the
+ * original value (undo of the changes made to fields).
  *
  * Adding the ability to save and restore values (simple undo) is simple:
  * Just apply a mixin using <code>addPropertyChangeMixin</code>.

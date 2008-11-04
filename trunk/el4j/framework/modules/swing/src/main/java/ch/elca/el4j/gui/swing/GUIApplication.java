@@ -45,23 +45,25 @@ import ch.elca.el4j.gui.swing.exceptions.Exceptions;
 import ch.elca.el4j.gui.swing.frames.ApplicationFrame;
 import ch.elca.el4j.gui.swing.wrapper.JFrameWrapperFactory;
 import ch.elca.el4j.util.config.GenericConfig;
+
 import cookxml.cookswing.CookSwing;
 import cookxml.core.exceptionhandler.StrictExceptionHandler;
 
 
 /**
- * Parent class for new applications. (For MDI applications refer to
+ * Parent class for GUI applications. (For MDI applications refer to
  *  {@link ch.elca.el4j.gui.swing.MDIApplication })
  *
  * Additional features:
- *   * give access to a Spring application context
- *   * allows installing a handler for uncaught exceptions
- *     @see ch.elca.el4j.gui.swing.exceptions.Exceptions
- *     @see ch.elca.el4j.gui.swing.exceptions.Handler
- *   * defines a convenience method for menus
- *   * defines a getAction(String) method
+ *  <ul>
+ *   <li> give access to a Spring application context
+ *   <li> allows installing a handler for uncaught exceptions, refer also to {@link ch.elca.el4j.gui.swing.exceptions.Exceptions} and
+ *         {@link ch.elca.el4j.gui.swing.exceptions.Handler}
+ *   <li> defines a convenience method for menus
+ *   <li> defines a getAction(String) method
  *      (refer to recommended programming pattern with this method of
  *       the app framework )
+ *  </ul>
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -92,7 +94,7 @@ public abstract class GUIApplication extends SingleFrameApplication {
 	
 	
 	/**
-	 * @return      the Spring context
+	 * @return      the Spring application context
 	 */
 	public ApplicationContext getSpringContext() {
 		return m_springContext;

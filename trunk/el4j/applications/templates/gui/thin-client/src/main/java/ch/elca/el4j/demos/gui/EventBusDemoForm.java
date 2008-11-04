@@ -69,7 +69,7 @@ import cookxml.cookswing.CookSwing;
 @SuppressWarnings("serial")
 public class EventBusDemoForm extends JPanel implements Bindable, ApplicationFrameAware {
 	/**
-	 * The list of exception entries.
+	 * The list of event entries.
 	 */
 	protected List<EventEntry> m_events;
 	/**

@@ -23,7 +23,7 @@ import ch.elca.el4j.gui.swing.mdi.WindowMenu;
 
 
 /**
- * Parent class for new MDI applications not using an XML GUI description.
+ * Parent class for MDI applications not using an XML GUI description.
  * MDI Applications using XML GUIs should use {@link AbstractMDIApplication}.
  *
  * <script type="text/javascript">printFileStatus

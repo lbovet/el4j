@@ -19,17 +19,8 @@ package ch.elca.el4j.gui.swing.wrapper;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
-import org.noos.xing.mydoggy.ContentManager;
-import org.noos.xing.mydoggy.DockedTypeDescriptor;
-import org.noos.xing.mydoggy.ToolWindow;
-import org.noos.xing.mydoggy.ToolWindowActionHandler;
 import org.noos.xing.mydoggy.ToolWindowAnchor;
-import org.noos.xing.mydoggy.ToolWindowManager;
-import org.noos.xing.mydoggy.ToolWindowTab;
-import org.noos.xing.mydoggy.ToolWindowType;
 
-import ch.elca.el4j.gui.swing.DockingApplication;
-import ch.elca.el4j.gui.swing.GUIApplication;
 import ch.elca.el4j.gui.swing.frames.ToolWindowTabApplicationFrame;
 import ch.elca.el4j.gui.swing.frames.ToolWindowTabConfiguration;
 

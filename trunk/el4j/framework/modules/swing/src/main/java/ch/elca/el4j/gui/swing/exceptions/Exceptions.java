@@ -10,8 +10,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * This class contains a repository of strategies for dealing with Exceptions
- * which occur anywhere in the application. Clients may register Exception
+ * This class contains a repository of strategies for handling Exceptions.
+ * Clients may register Exception
  * handlers to deal with these exception in any way they see fit. If no
  * registered Exception handler recognizes an exception that has been raised
  * it is printed to {@link System#err}.

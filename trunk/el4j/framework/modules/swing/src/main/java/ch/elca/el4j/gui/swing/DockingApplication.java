@@ -40,7 +40,7 @@ import ch.elca.el4j.gui.swing.wrapper.ContentWrapperFactory;
 import ch.elca.el4j.gui.swing.wrapper.ToolWindowWrapperFactory;
 
 /**
- * Parent class for new Docking applications.
+ * Parent class for Docking applications.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",

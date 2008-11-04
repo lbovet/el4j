@@ -37,7 +37,7 @@ import cookxml.cookswing.CookSwing;
 
 
 /**
- * Demonstrates how to use cookSwing.
+ * Demonstrates how to use cookSwing. CookSwing allows to define a form in XML.
  *
  * The most important command is <code>cookSwing.render("test.xml");</code>. It
  * processes the whole XML file and initializes corresponing local variables (e.g.
@@ -69,7 +69,7 @@ public class XMLDemoForm extends JPanel implements Bindable {
 		
 		// Create the GUI components from an XML description.
 		// When a component has a property cx:var the created component is assigned to the corresponding variable.
-		// As we implement Bindable, all specified bindings are registerd in m_binder.
+		// As we implement Bindable, all specified bindings are registered in m_binder.
 		CookSwing cookSwing = new CookSwing(this);
 		cookSwing.render("gui/xmlDemoForm.xml");
 		
