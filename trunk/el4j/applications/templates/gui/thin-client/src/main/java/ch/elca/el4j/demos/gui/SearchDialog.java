@@ -26,6 +26,7 @@ import org.bushe.swing.event.EventBus;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.Task;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.elca.el4j.demos.gui.events.SearchProgressEvent;
 import ch.elca.el4j.demos.gui.events.SearchRefDBEvent;
@@ -69,10 +70,11 @@ public class SearchDialog extends AbstractSearchDialog {
 	/**
 	 * The constructor.
 	 */
-	public SearchDialog() {
+	@Autowired
+	public SearchDialog(GUIApplication application) {
 		super();
 		
-		m_application = GUIApplication.getInstance();
+		m_application = application;
 		m_resourceMap = m_application.getContext()
 			.getResourceMap(SearchDialog.class);
 		m_searchButton.setAction(m_application.getAction(this, "search"));

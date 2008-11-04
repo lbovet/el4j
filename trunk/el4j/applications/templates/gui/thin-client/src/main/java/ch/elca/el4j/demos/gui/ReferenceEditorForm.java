@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 
 import org.bushe.swing.event.EventBus;
 import org.jdesktop.application.Action;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.silvermindsoftware.hitch.Binder;
 import com.silvermindsoftware.hitch.BinderManager;
@@ -32,6 +33,9 @@ import com.silvermindsoftware.hitch.annotations.ModelObject;
 import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.demos.gui.events.ReferenceUpdateEvent;
 import ch.elca.el4j.gui.swing.GUIApplication;
+import ch.elca.el4j.gui.swing.cookswing.binding.Bindable;
+import ch.elca.el4j.gui.swing.frames.ApplicationFrame;
+import ch.elca.el4j.gui.swing.frames.ApplicationFrameAware;
 import ch.elca.el4j.gui.swing.wrapper.AbstractWrapperFactory;
 import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
 import ch.elca.el4j.model.mixin.SaveRestoreCapability;
@@ -55,7 +59,7 @@ import net.java.dev.designgridlayout.DesignGridLayout;
  * @author Stefan Wismer (SWI)
  */
 @Form(autoBind = true)
-public class ReferenceEditorForm extends JPanel {
+public class ReferenceEditorForm extends JPanel implements ApplicationFrameAware {
 	private JTextField m_name;
 	private JTextField m_description;
 	
@@ -77,19 +81,20 @@ public class ReferenceEditorForm extends JPanel {
 	 * The binder instance variable.
 	 */
 	private final Binder m_binder = BinderManager.getBinder(this);
+	private ApplicationFrame m_applicationFrame;
 	
 	public ReferenceEditorForm() {
-		GUIApplication app = GUIApplication.getInstance();
+		GUIApplication application = GUIApplication.getInstance();
 		createComponents();
 		createLayout();
 		
 		// assign actions
-		m_okButton.setAction(app.getAction(this, "applyChanges"));
-		m_cancelButton.setAction(app.getAction(this, "discardChanges"));
+		m_okButton.setAction(application.getAction(this, "applyChanges"));
+		m_cancelButton.setAction(application.getAction(this, "discardChanges"));
 	}
 	
 	/**
-	 * @param reference    the refernce to be edited on the GUI
+	 * @param reference    the reference to be edited on the GUI
 	 */
 	public void setReference(Reference reference) {
 		m_reference = PropertyChangeListenerMixin
@@ -116,7 +121,7 @@ public class ReferenceEditorForm extends JPanel {
 		m_binder.removeAll();
 		
 		EventBus.publish(new ReferenceUpdateEvent(m_reference.getKey()));
-		AbstractWrapperFactory.getWrapper(this).dispose();
+		m_applicationFrame.close();
 		m_reference = null;
 	}
 	
@@ -129,7 +134,7 @@ public class ReferenceEditorForm extends JPanel {
 		m_reference.setKey(m_key);
 		m_binder.removeAll();
 		
-		AbstractWrapperFactory.getWrapper(this).dispose();
+		m_applicationFrame.close();
 		m_reference = null;
 	}
 	
@@ -155,5 +160,9 @@ public class ReferenceEditorForm extends JPanel {
 		layout.row().label(new JLabel("Name")).add(m_name);
 		layout.row().label(new JLabel("Description")).add(m_description);
 		layout.row().add(m_okButton).add(m_cancelButton);
+	}
+	
+	public void setApplicationFrame(ApplicationFrame applicationFrame) {
+		m_applicationFrame = applicationFrame;
 	}
 }

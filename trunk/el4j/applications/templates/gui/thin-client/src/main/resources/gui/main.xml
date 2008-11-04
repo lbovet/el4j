@@ -32,6 +32,7 @@
 			<menusplit />
 			<menuitem action="showDemo5" />
 			<menuitem action="sendExampleEvent" />
+			<menuitem action="throwException" />
 			<menuitem action="showDemo6" />
 		</menu>
 		<el4j:windowmenu name="windowMenu" desktopPaneId="dp"/>

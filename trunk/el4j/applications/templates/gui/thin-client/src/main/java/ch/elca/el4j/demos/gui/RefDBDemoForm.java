@@ -250,7 +250,7 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 						ReferenceEditorForm editor = new ReferenceEditorForm();
 						editor.setReference((Reference) p.getParent());
 						if (AbstractWrapperFactory
-							.getWrapper(editor) == null) {
+							.getFrame(editor) == null) {
 							// open the editor for this reference
 							GUIApplication.getInstance().show(editor);
 						}

@@ -99,6 +99,9 @@ public class MainFormMDI extends MDIApplication {
 			}
 		});
 		
+		// implicitly register graphical exception handler
+		getSpringContext().getBean("ExceptionsForm");
+		
 		// register extensions
 		Map<String, GUIExtension> extensions = (Map<String, GUIExtension>)
 			getSpringContext().getBeansOfType(GUIExtension.class);
@@ -208,7 +211,7 @@ public class MainFormMDI extends MDIApplication {
 		String[] demoMenuActionNames
 			= {"showDemo1", "showDemo2", "showDemo3", "showDemo4", "---",
 				"showSearch", "showRefDB", "---",
-				"showDemo5", "sendExampleEvent"};
+				"showDemo5", "sendExampleEvent", "throwException"};
 		String[] helpMenuActionNames = {"help", "toggleAdmin", "about"};
 		menuBar.add(createMenu("fileMenu", fileMenuActionNames));
 		menuBar.add(createMenu("editMenu", editMenuActionNames));
