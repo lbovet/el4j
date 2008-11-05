@@ -52,6 +52,7 @@ import ch.elca.el4j.gui.swing.GUIApplication;
  *
  * @author Stefan Wismer (SWI)
  */
+@SuppressWarnings("serial")
 public class AboutDialog extends JDialog {
 	/**
 	 * The logger.
@@ -79,14 +80,14 @@ public class AboutDialog extends JDialog {
 	protected JButton m_closeButton;
 
 	/**
-	 * The constructor.
+	 * @param application   the GUI application
 	 */
 	@Autowired
 	public AboutDialog(GUIApplication application) {
 		ApplicationContext appContext = application.getContext();
 		m_resourceMap = appContext.getResourceMap(AboutDialog.class);
 
-		setTitle(getRes("aboutText"));
+		setTitle(getRes("aboutTitle"));
 		
 		createComponents();
 
@@ -170,23 +171,9 @@ public class AboutDialog extends JDialog {
 	 * @return   the about text
 	 */
 	protected String getAboutText() {
-		final String br = "<br> ";
-		
-		StringBuilder sb = new StringBuilder();
-		sb.append("<html>");
-		sb.append(getRes("Application.title")).append(br).append(br);
-		sb.append(getRes("Application.description")).append(br).append(
-				br);
-		sb.append(getRes("versionText")).append(" ");
-		sb.append(getRes("Application.version")).append(br);
-		sb.append(getRes("buildIdText")).append(" ");
-		sb.append(getRes("Application.buildId")).append(br)
-				.append(br);
-		sb.append(getRes("Application.copyright")).append(br);
-		sb.append(getRes("Application.homepage"));
-		sb.append("</html>");
-		
-		return sb.toString();
+		String revision = getRes("revision");
+		revision = revision.replaceAll("[^0-9]", "");
+		return getRes("aboutText").replace("#Revision#", revision);
 	}
 
 	/**

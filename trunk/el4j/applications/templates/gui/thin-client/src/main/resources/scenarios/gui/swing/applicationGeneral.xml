@@ -21,14 +21,14 @@
 	<bean id="MasterDetailDemoForm" class="ch.elca.el4j.demos.gui.MasterDetailDemoForm" lazy-init="true"/>
 	<bean id="BindingDemoForm" class="ch.elca.el4j.demos.gui.BindingDemoForm" lazy-init="true"/>
 	<bean id="EventBusDemoForm" class="ch.elca.el4j.demos.gui.EventBusDemoForm" lazy-init="true"/>
-	<bean id="SearchDialog" class="ch.elca.el4j.demos.gui.SearchDialog" lazy-init="true"/>
+	<bean id="SearchDialog" class="ch.elca.el4j.demos.gui.SearchForm" lazy-init="true"/>
 
 	<bean id="RefDBDemoForm" class="ch.elca.el4j.demos.gui.RefDBDemoForm" lazy-init="true"/>
 	<bean id="ReferenceEditorForm" class="ch.elca.el4j.demos.gui.ReferenceEditorForm" lazy-init="true"/>
 	
 	<bean id="XMLDemoForm" class="ch.elca.el4j.demos.gui.XMLDemoForm" lazy-init="true" scope="prototype"/>
 	
-	<bean id="AboutDialog" class="ch.elca.el4j.gui.swing.dialog.about.AboutDialog" lazy-init="true"/>
+	<bean id="AboutDialog" class="ch.elca.el4j.demos.gui.AboutDialog" lazy-init="true"/>
 	
 	<!-- example how to override default configurations. See ch.elca.el4j.demos.gui.MainFormMDIXML.initialize() -->
 	<bean id="overrideConfig" class="ch.elca.el4j.util.config.GenericConfig" lazy-init="true" scope="prototype">
