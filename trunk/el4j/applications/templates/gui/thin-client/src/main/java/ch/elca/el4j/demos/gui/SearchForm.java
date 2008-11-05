@@ -31,7 +31,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ch.elca.el4j.demos.gui.events.SearchProgressEvent;
 import ch.elca.el4j.demos.gui.events.SearchRefDBEvent;
 import ch.elca.el4j.gui.swing.GUIApplication;
-import ch.elca.el4j.gui.swing.dialog.search.AbstractSearchDialog;
 
 /**
  * This class represents a simple search dialog.
@@ -50,7 +49,7 @@ import ch.elca.el4j.gui.swing.dialog.search.AbstractSearchDialog;
  *
  * @author Stefan Wismer (SWI)
  */
-public class SearchDialog extends AbstractSearchDialog {
+public class SearchForm extends AbstractSearchFrom {
 	/**
 	 * The appFramework application.
 	 */
@@ -71,12 +70,12 @@ public class SearchDialog extends AbstractSearchDialog {
 	 * The constructor.
 	 */
 	@Autowired
-	public SearchDialog(GUIApplication application) {
+	public SearchForm(GUIApplication application) {
 		super();
 		
 		m_application = application;
 		m_resourceMap = m_application.getContext()
-			.getResourceMap(SearchDialog.class);
+			.getResourceMap(SearchForm.class);
 		m_searchButton.setAction(m_application.getAction(this, "search"));
 		
 		// Checkstyle: MagicNumber off
