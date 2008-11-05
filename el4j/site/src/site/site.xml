@@ -21,7 +21,7 @@
 	<skin>
 		<groupId>ch.elca.el4j</groupId>
 		<artifactId>el4j-skin</artifactId>
-		<version>1.6-SNAPSHOT</version>
+		<version>1.5.1</version>
 	</skin>
 	<poweredBy>
 		<logo name="SourceForge.net"
@@ -68,6 +68,7 @@
 		<menu name="Support">
 			<item name="General" href="support.html" />
 			<item name="Mailing Lists" href="mail-lists.html" />
+			<item name="Discussion Forums" href="http://sourceforge.net/forum/forum.php?forum_id=492230" />
 			<item name="Issue Tracking" href="issue-tracking.html" />
 		</menu>
 		<menu name="Reports">
