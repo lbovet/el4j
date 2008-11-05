@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.gui.swing.dialog.about;
+package ch.elca.el4j.demos.gui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;

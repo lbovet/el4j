@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.gui.swing.widgets;
+package ch.elca.el4j.demos.gui.widgets;
 
 import java.awt.Color;
 import java.awt.event.KeyAdapter;

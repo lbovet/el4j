@@ -37,10 +37,10 @@ import com.silvermindsoftware.hitch.binding.components.ListBinding;
 import com.silvermindsoftware.hitch.validation.response.ValidationResponder;
 
 import ch.elca.el4j.demos.gui.validation.CustomValidationResponder;
+import ch.elca.el4j.demos.gui.widgets.IntegerField;
 import ch.elca.el4j.demos.model.DefaultPerson;
 import ch.elca.el4j.demos.model.MyNumber;
 import ch.elca.el4j.demos.model.Person;
-import ch.elca.el4j.gui.swing.widgets.IntegerField;
 import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
 
 import net.java.dev.designgridlayout.DesignGridLayout;
@@ -76,11 +76,24 @@ import net.java.dev.designgridlayout.DesignGridLayout;
  *
  * @author Stefan Wismer (SWI)
  */
+@SuppressWarnings("serial")
 @Form(autoBind = true)
 public class BindingDemoForm extends JPanel {
-	// fields must have the same name as the property in the model to get bound
+	// fields must have the same name as the property in the model to get bound (prefix "m_" gets removed)
+	
+	/**
+	 * The textfield for firstName. Bound to m_person.firstName (m_person because of @ModelObject annotation)
+	 */
 	private JTextField m_firstName;
+	
+	/**
+	 * The textfield for lastName. Bound to m_person.lastName
+	 */
 	private JTextField m_lastName;
+	
+	/**
+	 * The textfield for age. Bound to m_person.age
+	 */
 	private JTextField m_age;
 
 	private JTextField m_curListSelection;
@@ -99,7 +112,6 @@ public class BindingDemoForm extends JPanel {
 	@ModelObject(isDefault = true)
 	private Person m_person;
 
-	@SuppressWarnings("unchecked")
 	public BindingDemoForm() {
 		createComponents();
 		createLayout();

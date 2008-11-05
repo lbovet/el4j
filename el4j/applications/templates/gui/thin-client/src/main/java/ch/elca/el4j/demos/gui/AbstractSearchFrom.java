@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.gui.swing.dialog.search;
+package ch.elca.el4j.demos.gui;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -37,7 +37,7 @@ import net.java.dev.designgridlayout.DesignGridLayout;
  *
  * @author Stefan Wismer (SWI)
  */
-public abstract class AbstractSearchDialog extends JPanel {
+public abstract class AbstractSearchFrom extends JPanel {
 	/**
 	 * The label stating something like 'Search for:'.
 	 */
@@ -61,7 +61,7 @@ public abstract class AbstractSearchDialog extends JPanel {
 	/**
 	 * The constructor.
 	 */
-	protected AbstractSearchDialog() {
+	protected AbstractSearchFrom() {
 		createBasicComponents();
 		createOptionalComponents();
 		createLayout();

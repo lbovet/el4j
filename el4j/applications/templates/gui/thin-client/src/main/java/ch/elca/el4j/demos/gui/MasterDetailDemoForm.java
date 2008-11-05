@@ -40,10 +40,10 @@ import com.silvermindsoftware.hitch.annotations.Form;
 import com.silvermindsoftware.hitch.annotations.ModelObject;
 import com.silvermindsoftware.hitch.binding.components.TableBinding;
 
+import ch.elca.el4j.demos.gui.widgets.IntegerField;
 import ch.elca.el4j.demos.model.DefaultPerson;
 import ch.elca.el4j.demos.model.Person;
 import ch.elca.el4j.gui.swing.GUIApplication;
-import ch.elca.el4j.gui.swing.widgets.IntegerField;
 import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
 import ch.elca.el4j.model.tablemodel.TableSorter;
 
