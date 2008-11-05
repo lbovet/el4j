@@ -60,7 +60,14 @@ import net.java.dev.designgridlayout.DesignGridLayout;
  */
 @Form(autoBind = true)
 public class ReferenceEditorForm extends JPanel implements ApplicationFrameAware {
+	/**
+	 * The textfield for a reference name. Bound to m_reference.name (prefix "m_" gets removed).
+	 */
 	private JTextField m_name;
+	
+	/**
+	 * The textfield for a reference description. Bound to m_reference.description (prefix "m_" gets removed).
+	 */
 	private JTextField m_description;
 	
 	private JButton m_okButton;

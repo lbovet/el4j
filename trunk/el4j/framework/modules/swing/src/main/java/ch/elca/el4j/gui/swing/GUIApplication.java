@@ -88,7 +88,8 @@ public abstract class GUIApplication extends SingleFrameApplication {
 	protected ApplicationContext m_springContext;
 	
 	/**
-	 * The configuration.
+	 * The configuration. This is used to set constant parameters like colors to mark values as
+	 * invalid or default renderers.
 	 */
 	protected GenericConfig m_config;
 	

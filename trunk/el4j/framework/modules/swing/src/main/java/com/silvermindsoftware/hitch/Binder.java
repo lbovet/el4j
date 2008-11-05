@@ -41,7 +41,8 @@ import com.silvermindsoftware.hitch.validation.response.ValidationResponder;
  */
 public interface Binder {
 	/**
-	 * Add all bindings that can be derived from the binding annotaions.
+	 * Add all bindings that can be derived from the binding annotations. The name of the annotated fields must match
+	 * a property of the model (field prefix "m_" is removed if applicable).
 	 *
 	 * @param container    the GUI component container to bind to
 	 * @param modelId      the optional model identifiers
