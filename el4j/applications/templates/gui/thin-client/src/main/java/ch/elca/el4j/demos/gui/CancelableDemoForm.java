@@ -57,15 +57,15 @@ import net.java.dev.designgridlayout.DesignGridLayout;
 @Form(autoBind = true)
 public class CancelableDemoForm extends JPanel {
 	/**
-	 * The first name. Bound to the model.
+	 * The first name. Bound to the model (m_person.firstName ; prefix "m_" gets removed)
 	 */
-	private JTextField firstName;
+	private JTextField m_firstName;
 	
 	private JButton m_okButton;
 	private JButton m_cancelButton;
 	
 	@ModelObject(isDefault = true)
-	private Person person;
+	private Person m_person;
 	
 	/**
 	 * The binder instance variable.
@@ -82,14 +82,14 @@ public class CancelableDemoForm extends JPanel {
 		m_cancelButton.setAction(application.getAction(this, "discardChanges"));
 		
 		// creating model entirely programmatically:
-		person = new DefaultPerson();
-		person = PropertyChangeListenerMixin.addPropertyChangeMixin(person);
+		m_person = new DefaultPerson();
+		m_person = PropertyChangeListenerMixin.addPropertyChangeMixin(m_person);
 
 		// initialize model
-		person.setFirstName("Nobody");
+		m_person.setFirstName("Nobody");
 		
 		// save properties
-		((SaveRestoreCapability) person).save();
+		((SaveRestoreCapability) m_person).save();
 		
 		// bind the variable "person" to "this"
 		// this interprets the @ModelObject annotation (see above)
@@ -99,19 +99,19 @@ public class CancelableDemoForm extends JPanel {
 	
 	@Action
 	public void applyChanges() {
-		((SaveRestoreCapability) person).save();
+		((SaveRestoreCapability) m_person).save();
 	}
 	
 	@Action
 	public void discardChanges() {
-		((SaveRestoreCapability) person).restore();
+		((SaveRestoreCapability) m_person).restore();
 	}
 	
 	/**
 	 * Create the form components.
 	 */
 	private void createComponents() {
-		firstName = new JTextField();
+		m_firstName = new JTextField();
 		m_okButton = new JButton();
 		m_cancelButton = new JButton();
 	}
@@ -125,7 +125,7 @@ public class CancelableDemoForm extends JPanel {
 		setLayout(layout);
 
 		// the first two rows contains a label and a text field each
-		layout.row().label(new JLabel("First Name")).add(firstName);
+		layout.row().label(new JLabel("First Name")).add(m_firstName);
 		layout.row().add(m_okButton).add(m_cancelButton);
 	}
 }
