@@ -106,6 +106,12 @@ public class MasterDetailDemoForm extends JPanel {
 		
 		
 		binder.bindAll();
+		
+		// add sorting functionality to table.
+		// this has to be done after bindAll(), otherwise tableModel gets overwritten again
+		TableSorter sorter = new TableSorter(
+			m_children.getModel(), m_children.getTableHeader());
+		m_children.setModel(sorter);
 	}
 	
 	/**
@@ -244,11 +250,6 @@ public class MasterDetailDemoForm extends JPanel {
 		binder.addManualBinding(Bindings.createAutoBinding(
 			UpdateStrategy.READ_WRITE,
 			m_children, selectedAgeP, m_age, textP));
-		
-		// add sorting functionality to table
-		TableSorter sorter = new TableSorter(
-			m_children.getModel(), m_children.getTableHeader());
-		m_children.setModel(sorter);
 	}
 	
 	/**
