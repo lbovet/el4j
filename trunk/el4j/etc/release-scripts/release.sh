@@ -32,7 +32,7 @@ performInternal=$(cat .performInternal)
 performExternal=$(cat .performExternal)
 tagDot=$(cat .nextVersion)
 
-echo "You are preparing version $el4jNext with the following settings: performExternal=$performExternal, performInternal=$performInternal. OK?"
+echo "You are preparing version $tagDot with the following settings: performExternal=$performExternal, performInternal=$performInternal. OK?"
 read dummy
 
 tagScore=$(echo $tagDot | sed "s/\./_/g")
