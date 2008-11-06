@@ -18,6 +18,7 @@ package ch.elca.el4j.demos.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -97,6 +98,10 @@ public class MainFormDocking extends DockingApplication {
 			map.injectComponents(getMainFrame().getJMenuBar());
 			map.injectComponent(toolbar);
 		}
+		
+		// set default size (if size has not yet been saved by AppFW)
+		getMainFrame().getContentPane().setPreferredSize(
+			new Dimension(640, 480));
 		
 		panel.add((Component) getToolWindowManager(), BorderLayout.CENTER);
 		
