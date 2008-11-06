@@ -9,6 +9,8 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.*;
 
+import org.jdesktop.swingbinding.validation.ValidatedProperty;
+
 /**
  * TableSorter is a decorator for TableModels; adding sorting
  * functionality to a supplied TableModel. TableSorter does
@@ -315,6 +317,16 @@ public class TableSorter extends AbstractTableModel {
 				int column = directive.column;
 				Object o1 = tableModel.getValueAt(row1, column);
 				Object o2 = tableModel.getValueAt(row2, column);
+				
+				// SWI: make compare aware of validation
+				if (o1 instanceof ValidatedProperty) {
+					ValidatedProperty vp = (ValidatedProperty) o1;
+					o1 = vp.getValue();
+				}
+				if (o2 instanceof ValidatedProperty) {
+					ValidatedProperty vp = (ValidatedProperty) o2;
+					o2 = vp.getValue();
+				}
 
 				int comparison = 0;
 				// Define null less than everything, except null.
@@ -324,6 +336,8 @@ public class TableSorter extends AbstractTableModel {
 					comparison = -1;
 				} else if (o2 == null) {
 					comparison = 1;
+				} else if (o1 instanceof String && o2 instanceof String) {
+					comparison = ((String) o1).compareToIgnoreCase((String) o2);
 				} else {
 					comparison = getComparator(column).compare(o1, o2);
 				}
