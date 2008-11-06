@@ -63,24 +63,15 @@ To start working with the EL4J sources
 
 To start a new GUI application 
  * Check out the GUI demo application under external/applications/templates/gui (assuming you have downloaded the
-   source code of el4j)
+   source code of el4j). Within ELCA, you can get a pre-packaged zip with all code in it.
  * Set up your EL4J environment (see the examples above)
  * Follow the steps in the file external/applications/templates/gui/README.txt
 
-To start a new JSF web application using JBoss Seam
+To start a new JSF web application using JBoss Seam (remark: this application template is only available within ELCA)
  * Check out the web demo application under external/applications/templates/web (assuming you have downloaded the
    source code of el4j)
  * Set up your EL4J environment (see the examples above)
  * Follow the steps in the file external/applications/templates/web/README.txt
- 
-To start with the web application template (due to proprietary technology, this is only available within ELCA)
- * Download the latest web-template-[version].zip from http://leaffy.elca.ch/java/el4j/templates/ and unzip it to el4j/web-template
- * Open a cygwin console and go to el4j/web-template, where the template is located.
- * Type mvn clean install to install the template.
- * cd web/war
- * Type in the command mvn db:prepare cargo:undeploy cargo:deploy cargo:start to prepare the database and deploy the template to tomcat
- * Open your browser and go to the webpage http://localhost:8080/web-template-web/
- * More info: http://wiki.elca.ch/twiki/el4j/bin/view/EL4J/WebApplicationTemplate
  
 More information:
  * The local ./docs directory
