@@ -161,6 +161,11 @@ public class FormMeta {
 		Method modelPropertySetterMethod = null;
 
 		Field modelPropertyField = null;
+		
+		// SWI: remove "m_" if necessary
+		if (modelProperty.startsWith("m_")) {
+			modelProperty = modelProperty.substring(2);
+		}
 
 		// getter
 		try {

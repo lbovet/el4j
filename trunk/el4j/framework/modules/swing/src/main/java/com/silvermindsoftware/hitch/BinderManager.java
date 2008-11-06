@@ -100,6 +100,12 @@ public class BinderManager {
 					boundComponentFields.add(field);
 				} else if (field.isAnnotationPresent(ModelObject.class)) {
 					ModelObject modelObject = field.getAnnotation(ModelObject.class);
+					
+					// SWI: remove "m_" if necessary
+					String modelId = field.getName();
+					if (modelId.startsWith("m_")) {
+						modelId = modelId.substring(2);
+					}
 
 					ErrorContext.put("- Processing Annotation for model object field " +
 							field.getName() + " of type " + modelObject.getClass().getName());
@@ -109,7 +115,7 @@ public class BinderManager {
 						formMeta.putModelMeta("[default]", field);
 					} else {
 						ErrorContext.put("- Model Object is NOT default");
-						formMeta.putModelMeta(field.getName(), field);
+						formMeta.putModelMeta(modelId, field);
 					}
 
 					Class modelObjectType = field.getType();
@@ -151,7 +157,7 @@ public class BinderManager {
 										" of type " + formClassField.getType().getName());
 
 									formMeta.addComponentMeta(
-										modelObject.isDefault() ? "[default]" : field.getName(),
+										modelObject.isDefault() ? "[default]" : modelId,
 										componentFieldName, formClassField, void.class,
 										new String[]{}, true, ReadOnly.DEFAULT,
 										moMethod.getParameterTypes()[0]);
@@ -179,9 +185,15 @@ public class BinderManager {
 				ErrorContext.put("processing BoundComponent field " + field.getName() + " of type " + field.getType().getName());
 
 				BoundComponent boundComponent = field.getAnnotation(BoundComponent.class);
+				
+				// SWI: remove "m_" if necessary
+				String modelId = boundComponent.modelId();
+				if (modelId.startsWith("m_")) {
+					modelId = modelId.substring(2);
+				}
 
 				formMeta.addComponentMeta(
-						boundComponent.modelId(),
+						modelId,
 						boundComponent.property().equals("[default]") ?
 								field.getName() : boundComponent.property(),
 						field, boundComponent.handler(),
