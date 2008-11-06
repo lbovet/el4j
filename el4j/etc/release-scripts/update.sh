@@ -21,13 +21,12 @@ fi
 
 echo "Update framework (external and internal)"
 el4jCurrent=$(cat external/pom.xml | grep "<version.el4j-framework.current>" -A 1 | tail -n 1 | tr -d ' \t\r\n' | sed 's/-SNAPSHOT//')
-
 if [ $# -eq 1 ] ; then
 	el4jNext=$el4jCurrent-$1
 	auto=true
 else
-	echo "Current version (i.e. the version to be adapted) is $el4jCurrent-SNAPSHOT, OK?"
-	read dummy
+	echo "Current version (i.e. the version to be adapted) is probably $el4jCurrent-SNAPSHOT. Please type in the correct number (without -SNAPSHOT, e.g 1.6)."
+	read el4jCurrent
 	
 	echo "Replacing '$el4jCurrent-SNAPSHOT' by '$el4jNext', OK?"
 	read dummy
