@@ -60,6 +60,7 @@
 		</menu>
 		<menu name="Support">
 			<item name="Mailing Lists" href="mail-lists.html" />
+			<item name="Discussion Forums" href="http://sourceforge.net/forum/forum.php?forum_id=492230" />
 			<item name="Issue Tracking" href="issue-tracking.html" />
 			<item name="Project Team" href="team-list.html" />
 		</menu>
