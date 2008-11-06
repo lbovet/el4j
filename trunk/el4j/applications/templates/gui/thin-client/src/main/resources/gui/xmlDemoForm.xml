@@ -34,7 +34,7 @@
 						<cc:null colspan="3"/>
 						
 						<label name="lblAge" horizontalalignment="RIGHT" />
-						<cc:object cx:ctor="ch.elca.el4j.gui.swing.widgets.IntegerField" colspan="2">
+						<cc:object cx:ctor="ch.elca.el4j.demos.gui.widgets.IntegerField" colspan="2">
 							<el4j:binding src="m_person" property="age" updateStrategy="read write" validation="true" />
 						</cc:object>
 					</el4j:row>
