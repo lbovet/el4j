@@ -119,6 +119,8 @@ rm pom.files.txt
 echo "Hint: The next step is to commit the new version to the trunk."
 echo "... and don't forget to restore your maven settings (mv ~/.m2/settings.xml.backup ~/.m2/settings.xml)"
 
+rm .nextVersion .performInternal .performExternal
+
 exit
 # not used yet
 
