@@ -5,6 +5,8 @@ package ch.elca.el4j.gui.swing.exceptions;
 /* http://publicobject.com/glazedlists/                      publicobject.com,*/
 /*                                                     O'Dell Engineering Ltd.*/
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -67,7 +69,7 @@ public final class Exceptions implements Thread.UncaughtExceptionHandler {
 	 * {@link Handler} can be found, the Exception is printed to
 	 * {@link System#err}.
 	 */
-	public void handle(Exception e) {
+	public void handle(final Exception e) {
 		boolean handled = false;
 		for (Iterator<Handler> i = handlers.iterator(); i.hasNext();) {
 			Handler handler = i.next();
@@ -77,8 +79,14 @@ public final class Exceptions implements Thread.UncaughtExceptionHandler {
 			}
 		}
 		if (!handled) {
+			// print stacktrace to syserr
 			System.err.println("Exception was not recognized by any Exception Handler: " + e);
 			e.printStackTrace(System.err);
+			
+			// open exception dialog
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			new ExceptionDialog(sw.toString()).setVisible(true);
 		}
 	}
 	
