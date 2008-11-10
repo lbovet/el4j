@@ -41,6 +41,7 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.core.context.ModuleApplicationContextConfiguration;
 import ch.elca.el4j.gui.swing.config.DefaultConfig;
 import ch.elca.el4j.gui.swing.cookswing.TagLibraryFactory;
+import ch.elca.el4j.gui.swing.exceptions.CookXmlExceptionHandler;
 import ch.elca.el4j.gui.swing.exceptions.Exceptions;
 import ch.elca.el4j.gui.swing.frames.ApplicationFrame;
 import ch.elca.el4j.gui.swing.wrapper.JFrameWrapperFactory;
@@ -154,7 +155,7 @@ public abstract class GUIApplication extends SingleFrameApplication {
 		System.setProperty("sun.awt.exception.handler", Exceptions.class.getName());
 		
 		// configure CookSwing
-		CookSwing.setDefaultExceptionHandler(StrictExceptionHandler.getInstance());
+		CookSwing.setDefaultExceptionHandler(CookXmlExceptionHandler.getInstance());
 		CookSwing.setDefaultAccessible(true);
 		CookSwing.setSwingTagLibrary(TagLibraryFactory.getTagLibrary());
 
