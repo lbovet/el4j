@@ -20,6 +20,7 @@
 	<name>EL4J application swing demo</name>
 	<description>Swing demo application of the EL4J framework.</description>
 	<modules>
+		<module>abbot</module>
 		<module>common</module>
 		<module>server</module>
 		<module>thin-client</module>
