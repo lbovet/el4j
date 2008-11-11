@@ -785,6 +785,16 @@
 					<artifactId>maven-rec-plugin</artifactId>
 					<version>${version.maven-rec-plugin}</version>
 				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>clirr-maven-plugin</artifactId>
+					<version>${version.clirr-maven-plugin}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>dashboard-maven-plugin</artifactId>
+					<version>${version.dashboard-maven-plugin}</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		<extensions>
@@ -2252,6 +2262,8 @@
 		<version.taglist-maven-plugin>2.2</version.taglist-maven-plugin>
 		<version.maven-plugin-plugin>2.4.2</version.maven-plugin-plugin>
 		<version.cobertura-maven-plugin>2.2</version.cobertura-maven-plugin>
+		<version.clirr-maven-plugin>2.2.2-el4j_20080812_1330</version.clirr-maven-plugin>
+		<version.dashboard-maven-plugin>1.0.0-beta-1-el4j_20081022_0930</version.dashboard-maven-plugin>
 
 		<!-- Eclipse -->
 		<eclipse.reactorProjectGroupIdPrefixes/>
