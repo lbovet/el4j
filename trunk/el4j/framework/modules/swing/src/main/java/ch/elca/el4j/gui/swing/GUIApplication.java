@@ -351,13 +351,7 @@ public abstract class GUIApplication extends SingleFrameApplication {
 		org.jdesktop.application.ApplicationContext ac
 			= Application.getInstance().getContext();
 		
-		Action action = null;
-		Class<?> cls = object.getClass();
-		while (action == null && cls != Object.class) {
-			action = ac.getActionMap(cls, object).get(actionName);
-			cls = cls.getSuperclass();
-		}
-		return action;
+		return ac.getActionMap(object).get(actionName);
 	}
 	
 	/**
