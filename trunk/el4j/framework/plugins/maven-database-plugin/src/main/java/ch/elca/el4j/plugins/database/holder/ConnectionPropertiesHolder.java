@@ -140,8 +140,8 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
 			try {
 				Resource[] resources = getResources(source);
 				Properties properties = getProperties(resources);
-				m_url = properties.getProperty("dataSource.url");
-				m_username = properties.getProperty("dataSource.username");
+				m_url = properties.getProperty("dataSource.jdbcUrl");
+				m_username = properties.getProperty("dataSource.user");
 				m_password = properties.getProperty("dataSource.password");
 			} catch (Exception e) {
 				throw new DatabaseHolderException(
@@ -166,8 +166,8 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
 			throw new DatabaseHolderException(
 				"Error reading connection properties!", e);
 		}
-		m_url = properties.getProperty("dataSource.url");
-		m_username = properties.getProperty("dataSource.username");
+		m_url = properties.getProperty("dataSource.jdbcUrl");
+		m_username = properties.getProperty("dataSource.user");
 		m_password = properties.getProperty("dataSource.password");
 		return StringUtils.hasText(m_url) && StringUtils.hasText(m_username);
 	}
@@ -190,7 +190,7 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
 			Properties properties = getProperties(resources);
 			// only the first resource is taken
 			m_resource = resources[0].getURL().toString();
-			m_driverName = properties.getProperty("dataSource.driverClassName");
+			m_driverName = properties.getProperty("dataSource.driverClass");
 		} catch (Exception e) {
 			throw new DatabaseHolderException(
 				"Error reading Driver Name properties at " + source, e);

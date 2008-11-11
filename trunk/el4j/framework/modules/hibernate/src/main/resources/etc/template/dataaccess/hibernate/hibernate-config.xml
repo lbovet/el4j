@@ -49,7 +49,11 @@
 		<!-- List of Hibernate properties -->
 		<property name="hibernateProperties">
 			<props>
+		    	<prop key="connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</prop>
 
+				<prop key="c3p0.max_size">100</prop>
+				<prop key="c3p0.idleConnectionTestPeriod">300</prop>
+				
 				<!-- Database-specific Hibernate dialect. -->
 				<prop key="hibernate.dialect">
 					${databaseDialect}
@@ -103,6 +107,7 @@
 		<property name="useTransactionAwareDataSource">
 			<value>true</value>
 		</property>
+
 		<property name="dataSource">
 			<ref bean="dataSource" />
 		</property>

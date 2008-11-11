@@ -38,7 +38,7 @@
 			<version>3.3.0.SP1</version>
 			<exclusions>
 				<!--
-					Exclude the dependencies if it would be taken from another
+					Exclude the dependencies if they were taken from another
 					repository than the el4.elca-services.ch
 				-->
 				<exclusion>
@@ -117,6 +117,12 @@
 			<artifactId>javassist</artifactId>
 			<version>3.4.GA</version>
 		</dependency>
+		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.1.2</version>
+		</dependency>
+		
 	</dependencies>
 	
 	<repositories>

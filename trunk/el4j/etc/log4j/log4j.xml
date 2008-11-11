@@ -71,6 +71,12 @@
 		<level value="DEBUG"/>
 	</logger-->
 	
+	<!-- c3p0 -->
+	<logger name=">log4j.logger.com.mchange.v2.resourcepool.BasicResourcePool">
+		<level value="DEBUG"/>
+	</logger>
+	
+	
 	<root>
 		<level value="WARN"/>
 		<appender-ref ref="console"/>
