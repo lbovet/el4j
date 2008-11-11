@@ -21,7 +21,7 @@
 	<skin>
 		<groupId>ch.elca.el4j</groupId>
 		<artifactId>el4j-skin</artifactId>
-		<version>1.5.1</version>
+		<version>1.6-SNAPSHOT</version>
 	</skin>
 	<poweredBy>
 		<logo name="SourceForge.net"
