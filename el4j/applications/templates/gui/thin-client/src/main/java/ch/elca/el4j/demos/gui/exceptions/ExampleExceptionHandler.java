@@ -38,7 +38,7 @@ public class ExampleExceptionHandler implements Handler {
 	
 	/** {@inheritDoc} */
 	public void handle(Exception e) {
-		System.err.println("An exception occured!");
+		System.err.println("An exception occurred!");
 		e.printStackTrace(System.err);
 	}
 }
