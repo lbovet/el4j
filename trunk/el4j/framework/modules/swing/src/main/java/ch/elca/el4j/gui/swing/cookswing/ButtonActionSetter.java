@@ -75,6 +75,9 @@ public class ButtonActionSetter implements Setter {
 			// search in all instances with action mappings
 			action = app.getAction(attrValue);
 		}
+		if (action == null) {
+			throw new ActionNotFoundException(attrValue);
+		}
 		button.setAction(action);
 	}
 }
