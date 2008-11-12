@@ -21,7 +21,7 @@ import cookxml.core.DecodeEngine;
 import cookxml.core.exception.SetterException;
 
 /**
- * This setter enhanced the {@link VarSetter} so that it can set variables of
+ * This setter enhances the {@link VarSetter} so that it can set variables of
  * type {@link NoAddValueHolder}.
  *
  * <script type="text/javascript">printFileStatus

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="http://www.elca.ch/el4j/cookSwing"
 	xmlns:el4j="http://www.elca.ch/el4j/cookSwing"
@@ -10,63 +10,71 @@
 	
 	
 	<!-- components -->
-	<complexType name="flattoolbar">
+	<element name="flattoolbar" substitutionGroup="cookSwing:component" >
 		<annotation>
 			<documentation>
 				<![CDATA[A toolbar containing flatly rendered buttons.]]>
 			</documentation>
 		</annotation>
-		<complexContent>
-			<extension base="cookSwing:toolbar" />
-		</complexContent>
-	</complexType>
+		<complexType>
+			<complexContent>
+				<extension base="cookSwing:toolbar" />
+			</complexContent>
+		</complexType>
+	</element>
 
-	<complexType name="windowmenu">
+	
+	<element name="windowmenu" substitutionGroup="cookSwing:component">
 		<annotation>
 			<documentation>
-				<![CDATA[A window menu listing all opened windows and operations
-				on them.]]>
+				<![CDATA[A window menu listing all opened windows and operations on them.]]>
 			</documentation>
 		</annotation>
-		<complexContent>
-			<extension base="cookSwing:component">
-				<attribute name="desktopPaneId" type="IDREF">
-					<annotation>
-						<documentation>
-							<![CDATA[The id of the corresponding desktoppane.]]>
-						</documentation>
-					</annotation>
-				</attribute>
-			</extension>
-		</complexContent>
-	</complexType>
+		<complexType>
+			<complexContent>
+				<extension base="cookSwing:component">
+					<attribute name="desktopPaneId" type="IDREF">
+						<annotation>
+							<documentation>
+								<![CDATA[The id of the corresponding desktoppane.]]>
+							</documentation>
+						</annotation>
+					</attribute>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
 	
-	<complexType name="create-component">
-		<complexContent>
-			<extension base="cookXmlCommon:object">
-				<attribute name="create-method" type="string">
-					<annotation>
-						<documentation>
-							<![CDATA[The method to call to create the component.
-							(This is called when opening tag is processed)]]>
-						</documentation>
-					</annotation>
-				</attribute>
-				<attribute name="finish-method" type="string">
-					<annotation>
-						<documentation>
-							<![CDATA[The method to call to finish the component.
-							(This is called when closing tag is processed)]]>
-						</documentation>
-					</annotation>
-				</attribute>
-			</extension>
-		</complexContent>
-	</complexType>
-
-	<element name="flattoolbar" type="el4j:flattoolbar" substitutionGroup="cookSwing:component" />
-	<element name="windowmenu" type="el4j:windowmenu" substitutionGroup="cookSwing:component" />
-	<element name="create-component" type="el4j:create-component" substitutionGroup="cookXmlCommon:object" />
+	
+	<element name="create-component" substitutionGroup="cookXmlCommon:object">
+		<annotation>
+			<documentation>
+				<![CDATA[Create an object by calling a method defined by attribute "create-method".]]>
+			</documentation>
+		</annotation>
+		<complexType>
+			<complexContent>
+				<extension base="cookXmlCommon:object">
+					<attribute name="create-method" type="string">
+						<annotation>
+							<documentation>
+								<![CDATA[The method to call to create the component.
+								(This is called when the opening tag is processed)]]>
+							</documentation>
+						</annotation>
+					</attribute>
+					<attribute name="finish-method" type="string">
+						<annotation>
+							<documentation>
+								<![CDATA[The method to call to finish the component.
+								(This is called when the closing tag is processed)]]>
+							</documentation>
+						</annotation>
+					</attribute>
+				</extension>
+			</complexContent>
+		</complexType>
+	</element>
 
 
 	
