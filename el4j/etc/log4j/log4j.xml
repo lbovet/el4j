@@ -72,9 +72,9 @@
 	</logger-->
 	
 	<!-- c3p0 -->
-	<logger name=">log4j.logger.com.mchange.v2.resourcepool.BasicResourcePool">
+	<!--<logger name=">log4j.logger.com.mchange.v2.resourcepool.BasicResourcePool">
 		<level value="DEBUG"/>
-	</logger>
+	</logger>-->
 	
 	
 	<root>
