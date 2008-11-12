@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.demos.gui;
+package ch.elca.el4j.demos.gui.forms;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -24,6 +24,7 @@ import javax.swing.JTextField;
 import org.bushe.swing.event.EventBus;
 import org.jdesktop.application.Action;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.silvermindsoftware.hitch.Binder;
 import com.silvermindsoftware.hitch.BinderManager;
@@ -31,6 +32,7 @@ import com.silvermindsoftware.hitch.annotations.Form;
 import com.silvermindsoftware.hitch.annotations.ModelObject;
 
 import ch.elca.el4j.apps.refdb.dom.Reference;
+import ch.elca.el4j.core.context.annotations.LazyInit;
 import ch.elca.el4j.demos.gui.events.ReferenceUpdateEvent;
 import ch.elca.el4j.gui.swing.GUIApplication;
 import ch.elca.el4j.gui.swing.cookswing.binding.Bindable;
@@ -58,6 +60,8 @@ import net.java.dev.designgridlayout.DesignGridLayout;
  *
  * @author Stefan Wismer (SWI)
  */
+@LazyInit
+@Component("referenceEditorForm")
 @Form(autoBind = true)
 public class ReferenceEditorForm extends JPanel implements ApplicationFrameAware {
 	/**

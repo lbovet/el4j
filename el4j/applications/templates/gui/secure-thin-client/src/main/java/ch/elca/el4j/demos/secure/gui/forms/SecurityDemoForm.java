@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.demos.secure.gui;
+package ch.elca.el4j.demos.secure.gui.forms;
 
 import java.awt.Dimension;
 
@@ -23,7 +23,10 @@ import javax.swing.JPanel;
 
 import org.acegisecurity.context.SecurityContextHolder;
 import org.acegisecurity.providers.UsernamePasswordAuthenticationToken;
+import org.springframework.stereotype.Component;
 
+import ch.elca.el4j.core.context.annotations.LazyInit;
+import ch.elca.el4j.demos.secure.gui.PrivateData;
 import ch.elca.el4j.gui.swing.GUIApplication;
 
 /**
@@ -38,6 +41,8 @@ import ch.elca.el4j.gui.swing.GUIApplication;
  *
  * @author Stefan Wismer (SWI)
  */
+@LazyInit
+@Component("securityDemoForm")
 public class SecurityDemoForm extends JPanel {
 	public SecurityDemoForm() {
 		JLabel someLabel = new JLabel();

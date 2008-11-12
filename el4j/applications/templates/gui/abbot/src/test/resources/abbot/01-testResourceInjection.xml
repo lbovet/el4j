@@ -21,7 +21,7 @@
 	<component
 		class="javax.swing.JInternalFrame"
 		id="ResourceInjectionDemoForm" index="0"
-		name="ch.elca.el4j.demos.gui.ResourceInjectionDemoForm"
+		name="ch.elca.el4j.demos.gui.forms.ResourceInjectionDemoForm"
 		parent="JDesktopPane Instance" title="Ressource Injection Demo Frame"
 		window="mainFrame" />
 	<component class="javax.swing.JLabel" id="someLabel" index="0"

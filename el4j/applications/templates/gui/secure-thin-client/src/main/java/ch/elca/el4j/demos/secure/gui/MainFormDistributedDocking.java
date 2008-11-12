@@ -54,7 +54,7 @@ public final class MainFormDistributedDocking {
 				"classpath*:scenarios/securityscope/distributed-security"
 					+ "-scope-client.xml",
 				"classpath:scenarios/remoting/client/*.xml",
-				"classpath:scenarios/gui/swing/*.xml"};
+				"classpath*:scenarios/gui/swing/*.xml"};
 			
 			ModuleApplicationContextConfiguration contextConfig
 				= new ModuleApplicationContextConfiguration();

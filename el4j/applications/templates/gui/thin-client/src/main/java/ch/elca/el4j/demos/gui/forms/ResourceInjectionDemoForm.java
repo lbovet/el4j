@@ -14,12 +14,17 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.demos.gui;
+package ch.elca.el4j.demos.gui.forms;
 
 import java.awt.Dimension;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+import ch.elca.el4j.core.context.annotations.LazyInit;
 
 /**
  * This class is a very simple resource injection demo form.
@@ -34,7 +39,9 @@ import javax.swing.JPanel;
  *
  * @author Stefan Wismer (SWI)
  */
-@SuppressWarnings("unchecked")
+@LazyInit
+@Scope("prototype")
+@Component("resourceInjectionDemoForm")
 public class ResourceInjectionDemoForm extends JPanel {
 	public ResourceInjectionDemoForm() {
 		JLabel someLabel = new JLabel();

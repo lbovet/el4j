@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.demos.gui;
+package ch.elca.el4j.demos.gui.forms;
 
 import java.awt.BorderLayout;
 
@@ -33,6 +33,7 @@ import org.jdesktop.beansbinding.Bindings;
 import org.jdesktop.beansbinding.Property;
 import org.jdesktop.swingbinding.validation.ValidatedProperty;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.silvermindsoftware.hitch.Binder;
 import com.silvermindsoftware.hitch.BinderManager;
@@ -40,6 +41,7 @@ import com.silvermindsoftware.hitch.annotations.Form;
 import com.silvermindsoftware.hitch.annotations.ModelObject;
 import com.silvermindsoftware.hitch.binding.components.TableBinding;
 
+import ch.elca.el4j.core.context.annotations.LazyInit;
 import ch.elca.el4j.demos.gui.widgets.IntegerField;
 import ch.elca.el4j.demos.model.DefaultPerson;
 import ch.elca.el4j.demos.model.Person;
@@ -68,6 +70,8 @@ import net.java.dev.designgridlayout.DesignGridLayout;
  *
  * @author Stefan Wismer (SWI)
  */
+@LazyInit
+@Component("masterDetailDemoForm")
 @Form(autoBind = true)
 public class MasterDetailDemoForm extends JPanel {
 	// fields must have the same name as the property in the model to get bound

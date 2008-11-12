@@ -14,33 +14,28 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.demos.secure.gui;
+package ch.elca.el4j.demos.gui.forms;
 
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableModel;
 
-import org.acegisecurity.AccessDeniedException;
-import org.acegisecurity.context.SecurityContextHolder;
-import org.acegisecurity.providers.UsernamePasswordAuthenticationToken;
-import org.bushe.swing.event.annotation.AnnotationProcessor;
 import org.bushe.swing.event.annotation.EventSubscriber;
 import org.jdesktop.application.Action;
 import org.jdesktop.beansbinding.AbstractBindingListener;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.Binding;
 import org.jdesktop.swingbinding.validation.ValidatedProperty;
+import org.springframework.stereotype.Component;
 
 import com.silvermindsoftware.hitch.Binder;
 import com.silvermindsoftware.hitch.BinderManager;
@@ -48,14 +43,12 @@ import com.silvermindsoftware.hitch.BinderManager;
 import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.apps.refdb.service.ReferenceService;
-import ch.elca.el4j.demos.gui.ReferenceEditorForm;
+import ch.elca.el4j.core.context.annotations.LazyInit;
 import ch.elca.el4j.demos.gui.events.ReferenceUpdateEvent;
 import ch.elca.el4j.demos.gui.events.SearchRefDBEvent;
 import ch.elca.el4j.demos.model.ServiceBroker;
 import ch.elca.el4j.gui.swing.GUIApplication;
 import ch.elca.el4j.gui.swing.cookswing.binding.Bindable;
-import ch.elca.el4j.gui.swing.exceptions.Exceptions;
-import ch.elca.el4j.gui.swing.exceptions.Handler;
 import ch.elca.el4j.gui.swing.wrapper.AbstractWrapperFactory;
 import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
 import ch.elca.el4j.services.search.QueryObject;
@@ -67,7 +60,20 @@ import cookxml.cookswing.CookSwing;
 
 
 /**
- * This class demonstrates how to securely connect to the refDB.
+ * This class demonstrates how to connect to the refDB.
+ *
+ * A single click on a table entry highlight the whole row. A double click opens
+ * a simple editor ({@link ReferenceEditorForm}) that allows editing the
+ * selected entry.
+ *
+ * Binding is done manually (see m_listBinding.getSpecialBinding).
+ * This form listens to two events:
+ * <ul>
+ *   <li>ReferenceUpdateEvent: The editor commits the changes: we need to
+ *       update the table.</li>
+ *   <li>SearchRefDBEvent: A search on the refDB is requested: query the
+ *       database and show the result</li>
+ * </ul>
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -78,86 +84,54 @@ import cookxml.cookswing.CookSwing;
  *
  * @author Stefan Wismer (SWI)
  */
+@LazyInit
+@Component("refDBDemoForm")
 public class RefDBDemoForm extends JPanel implements Bindable {
+	protected JTextField m_name;
+	protected JTextField m_description;
+	protected JCheckBox m_incomplete;
 	
-	public RefDBDemoForm() {
-		// set security token
-		SecurityContextHolder.getContext().setAuthentication(
-			new UsernamePasswordAuthenticationToken("el4normal", "el4j"));
-		//SecurityContextHolder.getContext().setAuthentication(
-		//    new UsernamePasswordAuthenticationToken("el4super", "secret"));
-		
-		Exceptions.getInstance().addHandler(new Handler() {
-			public boolean recognize(Exception e) {
-				if (e instanceof InvocationTargetException) {
-					InvocationTargetException ite
-						= (InvocationTargetException) e;
-					if (ite.getTargetException()
-						instanceof AccessDeniedException) {
-						return true;
-					}
-				}
-				return false;
-			}
-			public void handle(Exception e) {
-				JOptionPane.showMessageDialog(RefDBDemoForm.this,
-					"Access denied.", "RefDBDemoForm",
-					JOptionPane.ERROR_MESSAGE);
-			}
-		});
-		init();
-	}
+	protected JButton m_createButton;
+	protected JButton m_deleteButton;
 	
-	private JTextField m_name;
-	private JTextField m_description;
-	private JCheckBox m_incomplete;
-	
-	private JButton m_createButton;
-	private JButton m_deleteButton;
-	
-	private JTable m_references;
+	protected JTable m_references;
 	
 	/**
 	 * The list of references.
 	 */
-	private List<Reference> m_refList;
+	protected List<Reference> m_refList;
 	
 	/**
 	 * The manually created list binding.
 	 */
 	@SuppressWarnings("unchecked")
-	private AutoBinding m_listBinding;
-	
-	/**
-	 * The editor GUI for a reference.
-	 */
-	private ReferenceEditorForm m_editor;
+	protected AutoBinding m_listBinding;
 	
 	/**
 	 * The model to bind to this form.
 	 */
-	private ReferenceService m_service;
+	protected ReferenceService m_service;
 	
 	/**
 	 * The binder instance variable.
 	 */
-	private final Binder m_binder = BinderManager.getBinder(this);
+	protected final Binder m_binder = BinderManager.getBinder(this);
 	
-	/**
-	 * Initialize the form.
-	 */
-	protected void init() {
+	public RefDBDemoForm() {
 		loadModel();
-		m_editor = new ReferenceEditorForm();
 
-		setLayout(new BorderLayout());
-		
-		CookSwing cookSwing = new CookSwing(this);
-		add(cookSwing.render("gui/refDBDemoForm.xml"));
+		createUI();
 		
 		m_binder.bindAll();
 		
 		createDataBinding();
+	}
+
+	protected void createUI() {
+		setLayout(new BorderLayout());
+		
+		CookSwing cookSwing = new CookSwing(this);
+		add(cookSwing.render("gui/refDBDemoForm.xml"));
 	}
 	
 	/** {@inheritDoc} */
@@ -194,12 +168,9 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 			if (o != null) {
 				Reference selectedReference
 					= (Reference) ((ValidatedProperty) o).getParent();
-				
-				m_service.deleteReference(selectedReference.getKey());
 				m_refList.remove(selectedReference);
+				m_service.deleteReference(selectedReference.getKey());
 			}
-			m_listBinding.unbind();
-			m_listBinding.bind();
 		}
 	}
 
@@ -208,8 +179,7 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 	 *
 	 * @param formPanel    the panel to layout
 	 */
-	@SuppressWarnings("unused")
-	private void setGridPanelLayout(JPanel formPanel) {
+	protected void setGridPanelLayout(JPanel formPanel) {
 		// create the form layout
 		DesignGridLayout layout = new DesignGridLayout(formPanel);
 		formPanel.setLayout(layout);
@@ -220,14 +190,13 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 		layout.row().add(new JLabel("Description")).add(m_description);
 		layout.row().add(new JLabel("Incomplete")).add(m_incomplete);
 		layout.row().add(m_createButton).add(m_deleteButton);
-		// Hint: spacers can be inserted using add(Row.EMPTY)
 
 		// Checkstyle: MagicNumber off
 		layout.emptyRow(10);
 		// Checkstyle: MagicNumber on
 	}
 
-	private void loadModel() {
+	protected void loadModel() {
 		GUIApplication app = GUIApplication.getInstance();
 		ServiceBroker.setApplicationContext(
 			app.getSpringContext());
@@ -248,9 +217,7 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 	 * Bind the model to the table.
 	 */
 	@SuppressWarnings("unchecked")
-	private void createDataBinding() {
-
-
+	protected void createDataBinding() {
 		//updateBinding();
 		
 		m_references.setRowSelectionAllowed(true);
@@ -283,11 +250,13 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 					Object item = dlm.getValueAt(index, 0);
 					if (item instanceof ValidatedProperty) {
 						ValidatedProperty p = (ValidatedProperty) item;
-						m_editor.setReference((Reference) p.getParent());
+						
+						ReferenceEditorForm editor = new ReferenceEditorForm();
+						editor.setReference((Reference) p.getParent());
 						if (AbstractWrapperFactory
-							.getFrame(m_editor) == null) {
+							.getFrame(editor) == null) {
 							// open the editor for this reference
-							GUIApplication.getInstance().show(m_editor);
+							GUIApplication.getInstance().show(editor);
 						}
 					}
 				}
@@ -367,17 +336,5 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 			m_references.setColumnSelectionInterval(0,
 				m_references.getColumnCount() - 1);
 		}
-	}
-	
-	/** {@inheritDoc} */
-	public void onOpen() {
-		// register all event subscribers
-		AnnotationProcessor.process(this);
-	}
-	
-	/** {@inheritDoc} */
-	public void onClose() {
-		// unregister all event subscribers
-		AnnotationProcessor.unsubscribe(this);
 	}
 }

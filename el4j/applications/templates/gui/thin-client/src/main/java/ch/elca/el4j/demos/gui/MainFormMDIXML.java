@@ -118,7 +118,7 @@ public class MainFormMDIXML extends AbstractMDIApplication {
 		});
 		
 		// implicitly register graphical exception handler
-		getSpringContext().getBean("ExceptionsForm");
+		getSpringContext().getBean("exceptionsForm");
 		
 		// register extensions
 		Map<String, GUIExtension> extensions = (Map<String, GUIExtension>)
@@ -142,7 +142,7 @@ public class MainFormMDIXML extends AbstractMDIApplication {
 	
 	@Action
 	public void showDemo6() {
-		show("XMLDemoForm");
+		show("xmlDemoForm");
 	}
 
 	/**
@@ -151,7 +151,7 @@ public class MainFormMDIXML extends AbstractMDIApplication {
 	@Action(enabledProperty = "admin")
 	public void help() {
 		try {
-			show("SecurityDemoForm");
+			show("securityDemoForm");
 		} catch (NoSuchBeanDefinitionException e) {
 			JOptionPane.showMessageDialog(null,
 				"This demo doesn't support security. "

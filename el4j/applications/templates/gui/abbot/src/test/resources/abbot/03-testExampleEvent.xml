@@ -19,15 +19,15 @@
 	<component class="javax.swing.JPanel" id="JPanel Instance 2"
 		index="0" parent="JLayeredPane Instance" window="mainFrame" />
 	<component class="javax.swing.JPanel" id="JPanel Instance 3"
-		index="1" parent="ch.elca.el4j.demos.gui.EventBusDemoForm 2" window="mainFrame" />
+		index="1" parent="ch.elca.el4j.demos.gui.forms.EventBusDemoForm 2" window="mainFrame" />
 	<component class="javax.swing.JPopupMenu" id="JPopupMenu Instance"
 		index="0" invoker="demoMenu" />
 	<component class="javax.swing.JRootPane" id="JRootPane Instance"
 		index="0" parent="mainFrame" />
 	<component class="javax.swing.JRootPane" id="JRootPane Instance 2"
-		index="0" parent="ch.elca.el4j.demos.gui.EventBusDemoForm" window="mainFrame" />
+		index="0" parent="ch.elca.el4j.demos.gui.forms.EventBusDemoForm" window="mainFrame" />
 	<component class="javax.swing.JScrollPane" id="JScrollPane Instance"
-		index="0" parent="ch.elca.el4j.demos.gui.EventBusDemoForm 2" window="mainFrame" />
+		index="0" parent="ch.elca.el4j.demos.gui.forms.EventBusDemoForm 2" window="mainFrame" />
 	<component class="javax.swing.JTable" id="JTable Instance"
 		index="0" parent="JViewport Instance" window="mainFrame" />
 	<component class="javax.swing.JViewport" id="JViewport Instance"
@@ -37,12 +37,12 @@
 		window="mainFrame" />
 	<component class="java.awt.Window" id="Window Instance"
 		parent="Frame Instance" />
-	<component class="javax.swing.JInternalFrame" id="ch.elca.el4j.demos.gui.EventBusDemoForm"
-		index="0" name="ch.elca.el4j.demos.gui.EventBusDemoForm" parent="JDesktopPane Instance"
+	<component class="javax.swing.JInternalFrame" id="ch.elca.el4j.demos.gui.forms.EventBusDemoForm"
+		index="0" name="ch.elca.el4j.demos.gui.forms.EventBusDemoForm" parent="JDesktopPane Instance"
 		title="Event Bus Demo Form" window="mainFrame" />
-	<component class="ch.elca.el4j.demos.gui.EventBusDemoForm"
-		id="ch.elca.el4j.demos.gui.EventBusDemoForm 2" index="0"
-		name="ch.elca.el4j.demos.gui.EventBusDemoForm" parent="JLayeredPane Instance 2"
+	<component class="ch.elca.el4j.demos.gui.forms.EventBusDemoForm"
+		id="ch.elca.el4j.demos.gui.forms.EventBusDemoForm 2" index="0"
+		name="ch.elca.el4j.demos.gui.forms.EventBusDemoForm" parent="JLayeredPane Instance 2"
 		window="mainFrame" />
 	<component class="javax.swing.JMenu" id="demoMenu" index="2"
 		name="demoMenu" parent="JMenuBar Instance" text="Demos" window="mainFrame" />
@@ -55,7 +55,7 @@
 	<wait args="mainFrame" class="abbot.tester.ComponentTester"
 		method="assertComponentShowing" />
 	<action args="EventBus Demo..." method="actionSelectMenuItem" />
-	<wait args="ch.elca.el4j.demos.gui.EventBusDemoForm" class="abbot.tester.ComponentTester"
+	<wait args="ch.elca.el4j.demos.gui.forms.EventBusDemoForm" class="abbot.tester.ComponentTester"
 		method="assertComponentShowing" />
 	<action args="Send an ExampleEvent" method="actionSelectMenuItem" />
 	<action

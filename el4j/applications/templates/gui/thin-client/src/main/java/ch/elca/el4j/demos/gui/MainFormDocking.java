@@ -80,7 +80,7 @@ public class MainFormDocking extends DockingApplication {
 		panel.add(toolbar, BorderLayout.NORTH);
 		
 		// implicitly register graphical exception handler
-		getSpringContext().getBean("ExceptionsForm");
+		getSpringContext().getBean("exceptionsForm");
 		
 		// register extensions
 		Map<String, GUIExtension> extensions = (Map<String, GUIExtension>)
@@ -113,7 +113,7 @@ public class MainFormDocking extends DockingApplication {
 	 */
 	@Action
 	public void showSearch() {
-		show("SearchDialog", "Search", ToolWindowAnchor.LEFT);
+		show("searchForm", "Search", ToolWindowAnchor.LEFT);
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class MainFormDocking extends DockingApplication {
 	@Action(enabledProperty = "admin")
 	public void help() {
 		try {
-			show("SecurityDemoForm");
+			show("securityDemoForm");
 		} catch (NoSuchBeanDefinitionException e) {
 			JOptionPane.showMessageDialog(null,
 				"This demo doesn't support security. "

@@ -18,6 +18,7 @@ package ch.elca.el4j.demos.gui;
 
 import org.bushe.swing.event.EventBus;
 import org.jdesktop.application.Action;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import ch.elca.el4j.demos.gui.events.ExampleEvent;
 import ch.elca.el4j.gui.swing.GUIApplication;
@@ -52,37 +53,42 @@ public class MainFormActions {
 	
 	@Action
 	public void showDemo1() {
-		m_app.show("ResourceInjectionDemoForm");
+		m_app.show("resourceInjectionDemoForm");
 	}
 	
 	@Action
 	public void showDemo2() {
-		m_app.show("CancelableDemoForm");
+		m_app.show("cancelableDemoForm");
 	}
 
 	@Action
 	public void showDemo3() {
-		m_app.show("MasterDetailDemoForm");
+		m_app.show("masterDetailDemoForm");
 	}
 	
 	@Action
 	public void showDemo4() {
-		m_app.show("BindingDemoForm");
+		m_app.show("bindingDemoForm");
 	}
 	
 	@Action
 	public void showDemo5() {
-		m_app.show("EventBusDemoForm");
+		m_app.show("eventBusDemoForm");
 	}
 	
 	@Action
 	public void showSearch() {
-		m_app.show("SearchDialog");
+		m_app.show("searchForm");
 	}
 	
 	@Action
 	public void showRefDB() {
-		m_app.show("RefDBDemoForm");
+		// try to run secure version of refDB editor (see swing-demo-secure-thin-client)
+		try {
+			m_app.show("secureRefDBDemoForm");
+		} catch (NoSuchBeanDefinitionException e) {
+			m_app.show("refDBDemoForm");
+		}
 	}
 	
 	@Action
@@ -100,6 +106,6 @@ public class MainFormActions {
 	 */
 	@Action
 	public void about() {
-		m_app.show("AboutDialog");
+		m_app.show("aboutDialog");
 	}
 }
