@@ -17,6 +17,7 @@
 package ch.elca.el4j.services.persistence.hibernate.dao;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
@@ -26,6 +27,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
 import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
+import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
+import ch.elca.el4j.services.persistence.hibernate.dao.extent.InvalidExtentException;
+import ch.elca.el4j.services.search.QueryObject;
 
 /**
  * This interface extends {@link ConvenienceGenericDao} with query methods using
@@ -123,4 +127,20 @@ public interface ConvenienceGenericHibernateDao<T, ID extends Serializable>
 	 * @return    a {@link DetachedCriteria}
 	 */
 	public DetachedCriteria getOrderedCriteria();
+	
+	/**
+	 * The extent of the graph of objects in which 
+	 * objects should be loaded per default.
+	 * @return the extent.
+	 */
+	public DataExtent getExtent();
+	
+	/**
+	 * Set the default extent of the graph of objects
+	 * in which objects should be loaded.
+	 * @param extent	the extent to set.
+	 * @return returns if the setting was successful,
+	 * 		meaning false when extent is not valid.
+	 */
+	public boolean setExtent(DataExtent extent);
 }
