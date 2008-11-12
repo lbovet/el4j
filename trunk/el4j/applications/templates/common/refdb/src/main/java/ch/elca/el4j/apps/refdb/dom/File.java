@@ -18,8 +18,12 @@ package ch.elca.el4j.apps.refdb.dom;
 
 import java.util.Arrays;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import org.hibernate.validator.NotNull;
 
@@ -54,23 +58,32 @@ public class File extends FileDescriptorView {
 	 * Mime type of the binary content of the file.
 	 */
 	//private String m_mimeType;
-
+	
 	/**
 	 * Data of the document (typically binary).
 	 */
-	private byte[] m_content;
+	private BinaryData<File> m_data;
 
 	/**
 	 * Size of the content in bytes.
 	 */
 	//private int m_size;
 	
+	/** Default generator. */
+	public File() {
+		m_data = new BinaryData<File>();
+	}
+	
 	/**
 	 * @return Returns the content.
 	 */
-	@NotNull
+	@Transient
 	public byte[] getContent() {
-		return m_content;
+		if (m_data == null) {
+			return null;
+		} else {
+			return m_data.getData();
+		}
 	}
  
 	/**
@@ -78,9 +91,29 @@ public class File extends FileDescriptorView {
 	 *            The content to set.
 	 */
 	public void setContent(byte[] content) {
-		m_content = content;
+		if (m_data == null) {
+			m_data = new BinaryData<File>();
+		}
+		m_data.setData(content);
+		
 	}
-
+	/**
+	 * @return Returns the data.
+	 */
+	@NotNull
+	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+	@JoinColumn(name = "content_key", unique = true)
+	public BinaryData<File> getData() {
+		return m_data;
+	}
+ 
+	/**
+	 * @param data
+	 *            The data to set.
+	 */
+	public void setData(BinaryData<File> data) {
+		m_data = data;
+	}
 	
 	//the following properties are inherited by FiledescriptorView
 	/**
@@ -170,7 +203,7 @@ public class File extends FileDescriptorView {
 				&& ObjectUtils.nullSaveEquals(getName(), other.getName())
 				&& ObjectUtils.nullSaveEquals(getMimeType(),
 					other.getMimeType())
-				&& Arrays.equals(m_content, other.m_content);
+				&& Arrays.equals(m_data.getData(), other.m_data.getData());
 		} else {
 			return false;
 		}
