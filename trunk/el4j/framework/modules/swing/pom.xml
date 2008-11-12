@@ -77,7 +77,7 @@
 		<dependency>
 			<groupId>org.yuanheng.cookswing</groupId>
 			<artifactId>cookswing</artifactId>
-			<version>1.5-patch1</version>
+			<version>1.5-patch2</version>
 		</dependency>
 		
 		<dependency>
