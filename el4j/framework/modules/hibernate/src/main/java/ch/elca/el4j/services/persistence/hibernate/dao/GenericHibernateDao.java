@@ -19,11 +19,9 @@ package ch.elca.el4j.services.persistence.hibernate.dao;
 
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
-import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 

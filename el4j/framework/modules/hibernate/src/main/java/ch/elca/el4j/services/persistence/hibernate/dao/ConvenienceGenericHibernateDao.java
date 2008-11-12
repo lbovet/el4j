@@ -17,7 +17,6 @@
 package ch.elca.el4j.services.persistence.hibernate.dao;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
@@ -28,8 +27,6 @@ import org.springframework.dao.OptimisticLockingFailureException;
 
 import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
-import ch.elca.el4j.services.persistence.hibernate.dao.extent.InvalidExtentException;
-import ch.elca.el4j.services.search.QueryObject;
 
 /**
  * This interface extends {@link ConvenienceGenericDao} with query methods using
