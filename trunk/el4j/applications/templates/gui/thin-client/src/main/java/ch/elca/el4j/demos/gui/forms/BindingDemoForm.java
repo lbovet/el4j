@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.demos.gui;
+package ch.elca.el4j.demos.gui.forms;
 
 import java.awt.BorderLayout;
 
@@ -28,6 +28,7 @@ import org.jdesktop.beansbinding.BeanProperty;
 import org.jdesktop.beansbinding.BindingGroup;
 import org.jdesktop.beansbinding.Bindings;
 import org.jdesktop.beansbinding.Property;
+import org.springframework.stereotype.Component;
 
 import com.silvermindsoftware.hitch.Binder;
 import com.silvermindsoftware.hitch.BinderManager;
@@ -36,6 +37,7 @@ import com.silvermindsoftware.hitch.annotations.ModelObject;
 import com.silvermindsoftware.hitch.binding.components.ListBinding;
 import com.silvermindsoftware.hitch.validation.response.ValidationResponder;
 
+import ch.elca.el4j.core.context.annotations.LazyInit;
 import ch.elca.el4j.demos.gui.validation.CustomValidationResponder;
 import ch.elca.el4j.demos.gui.widgets.IntegerField;
 import ch.elca.el4j.demos.model.DefaultPerson;
@@ -76,6 +78,8 @@ import net.java.dev.designgridlayout.DesignGridLayout;
  *
  * @author Stefan Wismer (SWI)
  */
+@LazyInit
+@Component("bindingDemoForm")
 @SuppressWarnings("serial")
 @Form(autoBind = true)
 public class BindingDemoForm extends JPanel {

@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.demos.gui;
+package ch.elca.el4j.demos.gui.forms;
 
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
@@ -31,10 +31,12 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 import org.jdesktop.application.Action;
+import org.springframework.stereotype.Component;
 
 import com.silvermindsoftware.hitch.Binder;
 import com.silvermindsoftware.hitch.BinderManager;
 
+import ch.elca.el4j.core.context.annotations.LazyInit;
 import ch.elca.el4j.gui.swing.GUIApplication;
 import ch.elca.el4j.gui.swing.cookswing.binding.Bindable;
 import ch.elca.el4j.gui.swing.exceptions.Exceptions;
@@ -57,6 +59,8 @@ import cookxml.cookswing.CookSwing;
  *
  * @author Stefan Wismer (SWI)
  */
+@LazyInit
+@Component("exceptionsForm")
 public class ExceptionsForm extends JPanel implements Bindable, Handler, ApplicationFrameAware {
 	/**
 	 * The list of exception entries.
@@ -198,7 +202,7 @@ public class ExceptionsForm extends JPanel implements Bindable, Handler, Applica
 	/** {@inheritDoc} */
 	public void handle(Exception e) {
 		// ensure that this form is visible
-		GUIApplication.getInstance().show("ExceptionsForm");
+		GUIApplication.getInstance().show("exceptionsForm");
 		
 		SimpleDateFormat fmt = new SimpleDateFormat("HH:mm:ss");
 		m_exceptions.add(0, new ExceptionEntry(fmt.format(new Date()), e));

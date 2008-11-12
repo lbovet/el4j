@@ -19,8 +19,8 @@ package ch.elca.el4j.demos.secure.gui;
 import org.acegisecurity.annotation.Secured;
 
 /**
- * This class is used to test access restricion unsing
- * acegis '@Secured' annotation.
+ * This class is used to test access restriction using
+ * acegi's '@Secured' annotation.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",

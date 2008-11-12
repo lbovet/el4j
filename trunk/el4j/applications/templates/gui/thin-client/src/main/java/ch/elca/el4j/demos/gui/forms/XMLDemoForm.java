@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.demos.gui;
+package ch.elca.el4j.demos.gui.forms;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +24,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.jdesktop.application.Action;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import com.silvermindsoftware.hitch.Binder;
 import com.silvermindsoftware.hitch.BinderManager;
 
+import ch.elca.el4j.core.context.annotations.LazyInit;
 import ch.elca.el4j.demos.model.DefaultPerson;
 import ch.elca.el4j.demos.model.Person;
 import ch.elca.el4j.gui.swing.cookswing.binding.Bindable;
@@ -55,6 +58,9 @@ import cookxml.cookswing.CookSwing;
  *
  * @author Stefan Wismer (SWI)
  */
+@LazyInit
+@Scope("prototype")
+@Component("xmlDemoForm")
 public class XMLDemoForm extends JPanel implements Bindable {
 	private JTextField m_firstName;
 	private JTextField m_lastName;

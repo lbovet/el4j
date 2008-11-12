@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.demos.gui;
+package ch.elca.el4j.demos.gui.forms;
 
 import java.awt.Dimension;
 
@@ -27,7 +27,9 @@ import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import ch.elca.el4j.core.context.annotations.LazyInit;
 import ch.elca.el4j.demos.gui.events.SearchProgressEvent;
 import ch.elca.el4j.demos.gui.events.SearchRefDBEvent;
 import ch.elca.el4j.gui.swing.GUIApplication;
@@ -49,7 +51,9 @@ import ch.elca.el4j.gui.swing.GUIApplication;
  *
  * @author Stefan Wismer (SWI)
  */
-public class SearchForm extends AbstractSearchFrom {
+@LazyInit
+@Component("searchForm")
+public class SearchForm extends AbstractSearchForm {
 	/**
 	 * The appFramework application.
 	 */

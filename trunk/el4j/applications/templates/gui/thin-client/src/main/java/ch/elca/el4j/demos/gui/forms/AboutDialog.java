@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.demos.gui;
+package ch.elca.el4j.demos.gui.forms;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -37,7 +37,9 @@ import org.jdesktop.application.ApplicationActionMap;
 import org.jdesktop.application.ApplicationContext;
 import org.jdesktop.application.ResourceMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import ch.elca.el4j.core.context.annotations.LazyInit;
 import ch.elca.el4j.gui.swing.GUIApplication;
 
 /**
@@ -52,6 +54,8 @@ import ch.elca.el4j.gui.swing.GUIApplication;
  *
  * @author Stefan Wismer (SWI)
  */
+@LazyInit
+@Component("aboutDialog")
 @SuppressWarnings("serial")
 public class AboutDialog extends JDialog {
 	/**

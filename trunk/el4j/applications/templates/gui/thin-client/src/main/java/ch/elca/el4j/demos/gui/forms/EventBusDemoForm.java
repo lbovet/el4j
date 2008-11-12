@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.demos.gui;
+package ch.elca.el4j.demos.gui.forms;
 
 import java.awt.BorderLayout;
 import java.text.SimpleDateFormat;
@@ -28,7 +28,9 @@ import javax.swing.event.InternalFrameEvent;
 
 import org.bushe.swing.event.annotation.EventSubscriber;
 import org.jdesktop.application.Action;
+import org.springframework.stereotype.Component;
 
+import ch.elca.el4j.core.context.annotations.LazyInit;
 import ch.elca.el4j.demos.gui.events.ExampleEvent;
 import ch.elca.el4j.demos.gui.events.SearchProgressEvent;
 import ch.elca.el4j.gui.swing.cookswing.binding.Bindable;
@@ -66,6 +68,8 @@ import cookxml.cookswing.CookSwing;
  *
  * @author Stefan Wismer (SWI)
  */
+@LazyInit
+@Component("eventBusDemoForm")
 @SuppressWarnings("serial")
 public class EventBusDemoForm extends JPanel implements Bindable, ApplicationFrameAware {
 	/**
