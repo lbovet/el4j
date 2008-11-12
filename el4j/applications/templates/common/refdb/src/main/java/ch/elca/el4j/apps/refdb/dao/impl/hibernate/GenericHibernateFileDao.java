@@ -47,7 +47,7 @@ public class GenericHibernateFileDao<T, ID extends Serializable>
 			+ domainClassName.toLowerCase() + " where name = :name";
 		List<T> result = getConvenienceHibernateTemplate()
 			.findByNamedParam(queryString, "name", name);
-		return result;
+		return fetchExtent(result);
 	}
 	
 }

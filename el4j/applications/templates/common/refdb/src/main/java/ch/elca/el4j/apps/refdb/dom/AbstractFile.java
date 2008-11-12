@@ -16,7 +16,9 @@
  */
 package ch.elca.el4j.apps.refdb.dom;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.MappedSuperclass;
 
 import org.hibernate.validator.NotNull;

@@ -59,6 +59,13 @@ CREATE TABLE annotations (
   optimisticLockingVersion  INTEGER        NOT NULL
 );
 
+CREATE TABLE blobs (
+  keyId                     INTEGER        NOT NULL
+    PRIMARY KEY AUTO_INCREMENT,
+  content                   LONGBLOB       NOT NULL,
+  optimisticLockingVersion  INTEGER        NOT NULL
+);
+
 CREATE TABLE files (
   keyId                     INTEGER        NOT NULL
     PRIMARY KEY AUTO_INCREMENT,
@@ -67,7 +74,8 @@ CREATE TABLE files (
   name                      VARCHAR(64)    NOT NULL,
   mimeType                  VARCHAR(32)    NOT NULL,
   contentSize               DOUBLE         NOT NULL,
-  content                   LONGBLOB       NOT NULL,
+  content_key				INTEGER        
+  	NOT NULL REFERENCES blobs(keyId),
   optimisticLockingVersion  INTEGER        NOT NULL,
   dtype						VARCHAR(100)
 );

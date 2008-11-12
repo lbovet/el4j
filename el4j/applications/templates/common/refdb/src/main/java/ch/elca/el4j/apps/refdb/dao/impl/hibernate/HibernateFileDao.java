@@ -1,7 +1,6 @@
 package ch.elca.el4j.apps.refdb.dao.impl.hibernate;
 
 
-import ch.elca.el4j.apps.refdb.dao.FileDao;
 import ch.elca.el4j.apps.refdb.dom.File;
 import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
 
@@ -20,6 +19,6 @@ import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
  */
 @AutocollectedGenericDao("fileDao")
 public class HibernateFileDao extends GenericHibernateFileDao<File, Integer>
-	implements FileDao {
+	implements GenericHibernateFileDaoInterface {
 
 }
