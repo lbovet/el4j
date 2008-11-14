@@ -102,7 +102,7 @@ public class GenericHibernateDaoTest extends AbstractReferenceDaoTest {
 		dao.saveOrUpdate(file);
 		
 		// Reset the extent to null
-		dao.setExtent(null);
+		dao.setExtent(File.header());
 		File file2 = dao.findById(file.getKey());
 		try {
 			file2.getContent();
@@ -130,11 +130,8 @@ public class GenericHibernateDaoTest extends AbstractReferenceDaoTest {
 		file.setContent(content);
 		
 		// Set Extent explicitly to "with content"
-		try {
-			dao.setExtent(new DataExtent(File.class).include("content", byte[].class));
-		} catch (NoSuchMethodException e1) {
-			fail("Field content doesnt exist.");
-		}
+		dao.setExtent(File.all());
+		
 		dao.saveOrUpdate(file);
 		
 		File file2 = dao.findById(file.getKey());
@@ -163,7 +160,7 @@ public class GenericHibernateDaoTest extends AbstractReferenceDaoTest {
 		file.setContent(content);
 		
 		// Set Extent explicitly to "all"
-		dao.setExtent(new DataExtent(File.class).all());
+		dao.setExtent(File.all());
 		dao.saveOrUpdate(file);
 		
 		File file2 = dao.findById(file.getKey());

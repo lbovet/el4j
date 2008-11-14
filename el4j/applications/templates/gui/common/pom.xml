@@ -36,4 +36,39 @@
 		</dependency>
 
 	</dependencies>
+	
+	<profiles>
+		<!-- DB -->
+		<profile>
+			<id>db2</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<db.username>el4j_user</db.username>
+				<db.password>el4j_user</db.password>
+			</properties>
+		</profile>
+		<profile>
+			<id>oracle</id>
+			<properties>
+				<db.username>LEAF3</db.username>
+				<db.password>LEAF</db.password>
+			</properties>
+		</profile>
+		<profile>
+			<id>oracle10</id>
+			<properties>
+				<db.username>LEAF3</db.username>
+				<db.password>LEAF</db.password>
+			</properties>
+		</profile>
+		<profile>
+			<id>mysql</id>
+			<properties>
+				<db.username>root</db.username>
+				<db.password>admin</db.password>
+			</properties>
+		</profile>
+	</profiles>
 </project>

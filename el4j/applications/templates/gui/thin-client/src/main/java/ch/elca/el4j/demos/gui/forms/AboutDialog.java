@@ -19,6 +19,7 @@ package ch.elca.el4j.demos.gui.forms;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Insets;
+import java.io.IOException;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -34,9 +35,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ApplicationActionMap;
-import org.jdesktop.application.ApplicationContext;
 import org.jdesktop.application.ResourceMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import ch.elca.el4j.core.context.annotations.LazyInit;
@@ -68,6 +69,11 @@ public class AboutDialog extends JDialog {
 	 */
 	protected ResourceMap m_resourceMap;
 	
+	/**
+	 * The applicationContext.
+	 */
+	protected ApplicationContext m_applicationContext;
+	
 	
 	/**
 	 * The main panel.
@@ -88,15 +94,15 @@ public class AboutDialog extends JDialog {
 	 */
 	@Autowired
 	public AboutDialog(GUIApplication application) {
-		ApplicationContext appContext = application.getContext();
-		m_resourceMap = appContext.getResourceMap(AboutDialog.class);
+		m_applicationContext = application.getSpringContext();
+		m_resourceMap = application.getContext().getResourceMap(AboutDialog.class);
 
 		setTitle(getRes("aboutTitle"));
 		
 		createComponents();
 
 		// assign actions
-		ApplicationActionMap actionMap = appContext.getActionMap(this);
+		ApplicationActionMap actionMap = application.getContext().getActionMap(this);
 		m_closeButton.setAction(actionMap.get("close"));
 
 		add(m_panel);
@@ -193,10 +199,10 @@ public class AboutDialog extends JDialog {
 	 * @return               an ImageIcon, or null if the path was invalid.
 	 */
 	protected ImageIcon createImageIcon(String path) {
-		java.net.URL imgURL = getClass().getResource(path);
-		if (imgURL != null) {
+		try {
+			java.net.URL imgURL = m_applicationContext.getResource(path).getURL();
 			return new ImageIcon(imgURL, "");
-		} else {
+		} catch (IOException e) {
 			s_logger.error("Couldn't find file: " + path);
 			return null;
 		}
