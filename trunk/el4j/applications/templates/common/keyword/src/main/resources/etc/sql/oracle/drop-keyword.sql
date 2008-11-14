@@ -3,5 +3,5 @@
 -- Date: $Date$
 -- Author: $Author$
 
-DROP TABLE keywords;
+DROP TABLE keywords CASCADE CONSTRAINTS;
 DROP SEQUENCE keyword_sequence;

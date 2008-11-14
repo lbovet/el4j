@@ -366,11 +366,8 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		file.setContent(content);
 		File file2 = dao.saveOrUpdate(file);
 		// Include content in extent
-		try {
-			dao.setExtent(new DataExtent(File.class).include("content", byte[].class));
-		} catch (NoSuchMethodException e) {
-			fail("Field content doesnt exist.");
-		}
+		dao.setExtent(File.all());
+		
 		File file3 = dao.findById(file2.getKey());
 		
 		assertEquals("The inserted and read domain objects are not equal",
@@ -394,11 +391,8 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		file.setContent(content);
 		File file2 = dao.saveOrUpdate(file);
 		// Include content in extent
-		try {
-			dao.setExtent(new DataExtent(File.class).include("content", byte[].class));
-		} catch (NoSuchMethodException e) {
-			fail("Field content doesnt exist.");
-		}
+		dao.setExtent(File.all());
+		
 		List<File> list = dao.getByName(file2.getName());
 		assertEquals("List contains more than one file of name '"
 			+ file2.getName() + "'", 1, list.size());
@@ -621,11 +615,8 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		file.setContent(content);
 		file = dao.saveOrUpdate(file);
 		// Include content in extent
-		try {
-			dao.setExtent(new DataExtent(File.class).include("content", byte[].class));
-		} catch (NoSuchMethodException e) {
-			fail("Field content doesnt exist.");
-		}
+		dao.setExtent(File.all());
+		
 		File file2 = (File) dao.getByName(name).get(0);
 
 		assertEquals("The inserted and read domain objects are not equal", file, file2);
