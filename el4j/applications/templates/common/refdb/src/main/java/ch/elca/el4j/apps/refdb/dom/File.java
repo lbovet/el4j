@@ -27,6 +27,7 @@ import javax.persistence.Transient;
 
 import org.hibernate.validator.NotNull;
 
+import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
 /**
@@ -207,5 +208,23 @@ public class File extends FileDescriptorView {
 		} else {
 			return false;
 		}
+	}
+	
+	/***  Predefined Fetching extent ***/
+	
+	/**
+	 * Light fetching variant: only fetch header data, no content.
+	 * @return the light fetch extent.
+	 */
+	public static DataExtent header() {
+		return new DataExtent(File.class).all().exclude("data").exclude("content");
+	}
+	
+	/**
+	 * Heavy fetching variant: fetch the whole file, including content.
+	 * @return the heavy fetch extent.
+	 */
+	public static DataExtent all() {
+		return new DataExtent(File.class).all();
 	}
 }
