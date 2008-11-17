@@ -33,3 +33,7 @@ else
 	./run.sh $PROFILE $OPTS
 fi
 
+# move old el4j-logs to ~/el4j/logs/el4j-logging/
+for logFile in $(find /tmp/el4j-logging/ -mtime +1) ; do
+	mv $logFile ~/el4j/logs/el4j-logging/
+done
