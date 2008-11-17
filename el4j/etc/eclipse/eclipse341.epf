@@ -1,4 +1,5 @@
 #Tue Oct 14 14:35:18 CEST 2008
+/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.problem.missingSerialVersion=ignore
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.codeComplete.staticFieldPrefixes=s_
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.codeComplete.fieldPrefixes=m_
 /instance/org.eclipse.jdt.ui/org.eclipse.jdt.ui.importorder=java;javax;org;com;ch;junit;net;;
