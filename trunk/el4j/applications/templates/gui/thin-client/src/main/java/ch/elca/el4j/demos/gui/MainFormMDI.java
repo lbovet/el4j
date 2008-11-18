@@ -25,7 +25,6 @@ import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
@@ -34,7 +33,6 @@ import javax.swing.border.EmptyBorder;
 
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import ch.elca.el4j.gui.swing.MDIApplication;
 
@@ -129,38 +127,11 @@ public class MainFormMDI extends MDIApplication {
 	}
 
 	/**
-	 * A "special" help only for admins (for demo purpose only).
+	 * Demo help.
 	 */
-	@Action(enabledProperty = "admin")
+	@Action//(enabledProperty = "admin")
 	public void help() {
-		try {
-			show("securityDemoForm");
-		} catch (NoSuchBeanDefinitionException e) {
-			JOptionPane.showMessageDialog(null,
-				"This demo doesn't support security. "
-				+ "Use swing-demo-secure-... instead.");
-		}
-		/*
-		JHelp helpViewer = null;
-		try {
-			// Get the classloader of this class.
-			ClassLoader cl = MainForm.class.getClassLoader();
-			// Use the findHelpSet method of HelpSet to create a URL referencing
-			// the helpset file.
-			// Note that in this example the location of the helpset is implied
-			// as being in the same
-			// directory as the program by specifying "jhelpset.hs" without any
-			// directory prefix,
-			// this should be adjusted to suit the implementation.
-			URL url = HelpSet.findHelpSet(cl, "jhelpset.hs");
-			// Create a new JHelp object with a new HelpSet.
-			helpViewer = new JHelp(new HelpSet(cl, url));
-			// Set the initial entry point in the table of contents.
-			helpViewer.setCurrentID("Simple.Introduction");
-		} catch (Exception e) {
-			System.err.println("API Help Set not found");
-		}
-		*/
+		show("helpDialog");
 	}
 	
 	/**
