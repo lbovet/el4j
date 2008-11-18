@@ -13,7 +13,4 @@
 	<!-- $Author$ -->
 	
 	<import resource="classpath:etc/template/server/web/hessian-server-config.xml"/>
-	
-	<bean id="beanNameHandlerMapping"
-		class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
 </beans>
