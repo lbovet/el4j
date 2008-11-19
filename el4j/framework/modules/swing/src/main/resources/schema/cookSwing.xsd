@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema targetNamespace="http://cookxml.sf.net/cookswing/"
-	xmlns="http://www.w3.org/2001/XMLSchema"
-	xmlns:cookSwing="http://cookxml.sf.net/cookswing/"
-	xmlns:cookXmlCommon="http://cookxml.sf.net/common/">
+<schema targetNamespace="http://cookxml.sf.net/cookswing/" xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:cookSwing="http://cookxml.sf.net/cookswing/" xmlns:cookXmlCommon="http://cookxml.sf.net/common/">
 
-	<import namespace="http://cookxml.sf.net/common/" schemaLocation="http://el4.elca-services.ch/el4j/schema/swing/cookXmlCommon.xsd" />
-	
+	<import namespace="http://cookxml.sf.net/common/"
+		schemaLocation="http://el4.elca-services.ch/el4j/schema/swing/cookXmlCommon.xsd" />
+
 	<complexType name="listeners">
 		<complexContent>
 			<extension base="cookXmlCommon:object">
@@ -39,8 +38,7 @@
 				<attribute name="mousewheellistener" type="string" />
 				<attribute name="popupmenulistener" type="string" />
 				<attribute name="propertychangelistener" type="string" />
-				<attribute name="tablecolumnmodellistener"
-					type="string" />
+				<attribute name="tablecolumnmodellistener" type="string" />
 				<attribute name="tablemodellistener" type="string" />
 				<attribute name="textlistener" type="string" />
 				<attribute name="treeexpansionlistener" type="string" />
@@ -72,17 +70,15 @@
 			<extension base="cookSwing:window-constants" />
 		</complexContent>
 	</complexType>
-	
+
 	<complexType name="component" mixed="true">
 		<complexContent>
 			<extension base="cookSwing:listeners">
-				<!-- <sequence minOccurs="0" maxOccurs="unbounded">
-					<choice>
-						<element ref="cookSwing:border" />
-						<element ref="cookSwing:layout" />
-						<!- - TODO more - ->
-					</choice>
-				</sequence> -->
+				<!--
+					<sequence minOccurs="0" maxOccurs="unbounded"> <choice> <element
+					ref="cookSwing:border" /> <element ref="cookSwing:layout" /> <!- -
+					TODO more - -> </choice> </sequence>
+				-->
 				<attribute name="alignmentx" type="float" />
 				<attribute name="alignmenty" type="float" />
 				<attribute name="autoscrolls" type="boolean" />
@@ -95,8 +91,7 @@
 				<attribute name="enabled" type="boolean" />
 				<attribute name="focusable" type="boolean" />
 				<attribute name="focuscycleroot" type="boolean" />
-				<attribute name="focustraversalkeysenabled"
-					type="boolean" />
+				<attribute name="focustraversalkeysenabled" type="boolean" />
 				<attribute name="font" type="cookSwing:font" />
 				<attribute name="foreground" type="cookSwing:color" />
 				<attribute name="ignorerepaint" type="boolean" />
@@ -110,8 +105,7 @@
 				<attribute name="requestfocusenabled" type="boolean" />
 				<attribute name="size" type="cookSwing:dimension" />
 				<attribute name="tooltiptext" type="string" />
-				<attribute name="verifyinputwhenfocustarget"
-					type="boolean" />
+				<attribute name="verifyinputwhenfocustarget" type="boolean" />
 				<attribute name="visible" type="boolean" />
 			</extension>
 		</complexContent>
@@ -141,17 +135,17 @@
 		<complexContent>
 			<extension base="cookSwing:window-constants">
 				<attribute name="decorated" type="string" />
-				<attribute name="defaultlookandfeeldecorated"
-					type="boolean" />
+				<attribute name="defaultlookandfeeldecorated" type="boolean" />
 				<attribute name="extendedstate" type="cookSwing:framestate" />
 				<attribute name="iconimage" type="string" />
 				<attribute name="maximizedbounds" type="cookSwing:rectangle" />
 				<attribute name="resizable" type="boolean" />
 				<attribute name="state" type="int">
-					
-                    <annotation>
-                    	<documentation>Obsolete! User extendedstate instead!</documentation>
-                    </annotation>
+
+					<annotation>
+						<documentation>Obsolete! User extendedstate instead!
+						</documentation>
+					</annotation>
 				</attribute>
 				<attribute name="title" type="string" />
 				<attribute name="undecorated" type="boolean" />
@@ -188,8 +182,7 @@
 	<complexType name="scrollpane">
 		<complexContent>
 			<extension base="cookSwing:component">
-				<attribute name="horizontalscrollbarpolicy"
-					type="cookSwing:horizontalscrollbarpolicy" />
+				<attribute name="horizontalscrollbarpolicy" type="cookSwing:horizontalscrollbarpolicy" />
 				<attribute name="verticalscrollbarpolicy" type="cookSwing:verticalscrollbarpolicy" />
 				<attribute name="viewportborder" type="string" />
 				<attribute name="wheelscrollingenabled" type="boolean" />
@@ -234,12 +227,10 @@
 		substitutionGroup="cookSwing:component" />
 	<element name="dialog" type="cookSwing:dialog"
 		substitutionGroup="cookSwing:window-constants" />
-	<element name="frame" type="cookSwing:frame"
-		substitutionGroup="cookSwing:window-constants" />
+	<element name="frame" type="cookSwing:frame" substitutionGroup="cookSwing:window-constants" />
 	<element name="internalframe" type="cookSwing:internalframe"
 		substitutionGroup="cookSwing:window-constants" />
-	<element name="panel" type="cookSwing:panel"
-		substitutionGroup="cookSwing:component" />
+	<element name="panel" type="cookSwing:panel" substitutionGroup="cookSwing:component" />
 	<element name="rootpane" type="cookSwing:rootpane"
 		substitutionGroup="cookSwing:component" />
 	<element name="scrollpane" type="cookSwing:scrollpane"
@@ -342,11 +333,9 @@
 		<complexContent>
 			<extension base="cookSwing:component">
 				<attribute name="borderpainted" type="boolean" />
-				<attribute name="defaultlightweightpopupenabled"
-					type="boolean" />
+				<attribute name="defaultlightweightpopupenabled" type="boolean" />
 				<attribute name="label" type="string" />
-				<attribute name="lightweightpopupenabled"
-					type="boolean" />
+				<attribute name="lightweightpopupenabled" type="boolean" />
 				<attribute name="popupsize" type="string" />
 				<attribute name="selected" type="boolean" />
 			</extension>
@@ -355,14 +344,12 @@
 
 	<element name="menubar" type="cookSwing:menubar"
 		substitutionGroup="cookSwing:component" />
-	<element name="menu" type="cookSwing:menu"
-		substitutionGroup="cookSwing:abstractbutton" />
+	<element name="menu" type="cookSwing:menu" substitutionGroup="cookSwing:abstractbutton" />
 	<element name="menuitem" type="cookSwing:menuitem"
 		substitutionGroup="cookSwing:abstractbutton" />
 	<element name="checkboxmenuitem" type="cookSwing:checkboxmenuitem"
 		substitutionGroup="cookSwing:abstractbutton" />
-	<element name="radiobuttonmenuitem"
-		type="cookSwing:radiobuttonmenuitem"
+	<element name="radiobuttonmenuitem" type="cookSwing:radiobuttonmenuitem"
 		substitutionGroup="cookSwing:abstractbutton" />
 	<element name="menusplit" type="cookSwing:menusplit"
 		substitutionGroup="cookSwing:component" />
@@ -431,9 +418,10 @@
 	<complexType name="formattedtextfield" mixed="true">
 		<complexContent>
 			<extension base="cookSwing:textfield">
-				<!-- <sequence minOccurs="0" maxOccurs="1">
-					<element ref="cookSwing:formatter" />
-				</sequence> -->
+				<!--
+					<sequence minOccurs="0" maxOccurs="1"> <element
+					ref="cookSwing:formatter" /> </sequence>
+				-->
 				<attribute name="focuslostbehavior" type="string" />
 			</extension>
 		</complexContent>
@@ -481,8 +469,7 @@
 		substitutionGroup="cookSwing:component" />
 	<element name="textfield" type="cookSwing:textfield"
 		substitutionGroup="cookSwing:textcomponent" />
-	<element name="formattedtextfield"
-		type="cookSwing:formattedtextfield"
+	<element name="formattedtextfield" type="cookSwing:formattedtextfield"
 		substitutionGroup="cookSwing:textfield" />
 	<element name="passwordfield" type="cookSwing:passwordfield"
 		substitutionGroup="cookSwing:textfield" />
@@ -531,8 +518,7 @@
 		<complexContent>
 			<extension base="cookSwing:component">
 				<attribute name="editable" type="boolean" />
-				<attribute name="lightweightpopupenabled"
-					type="boolean" />
+				<attribute name="lightweightpopupenabled" type="boolean" />
 				<attribute name="maximumrowcount" type="int" />
 				<attribute name="popupvisible" type="boolean" />
 				<attribute name="selectedindex" type="int" />
@@ -543,12 +529,10 @@
 	<complexType name="filechooser">
 		<complexContent>
 			<extension base="cookSwing:component">
-				<attribute name="acceptallfilefilterused"
-					type="boolean" />
+				<attribute name="acceptallfilefilterused" type="boolean" />
 				<attribute name="approvebuttonmnemonic" type="string" />
 				<attribute name="approvebuttontext" type="string" />
-				<attribute name="approvebuttontooltiptext"
-					type="string" />
+				<attribute name="approvebuttontooltiptext" type="string" />
 				<attribute name="controlbuttonsareshown" type="boolean" />
 				<attribute name="dragenabled" type="boolean" />
 				<attribute name="dialogtype" type="string" />
@@ -739,8 +723,7 @@
 	<complexType name="table">
 		<complexContent>
 			<extension base="cookSwing:component">
-				<attribute name="autocreatecolumnsfrommodel"
-					type="boolean" />
+				<attribute name="autocreatecolumnsfrommodel" type="boolean" />
 				<attribute name="autoresizemode" type="string" />
 				<attribute name="cellselectionenabled" type="boolean" />
 				<attribute name="columnselectionallowed" type="boolean" />
@@ -748,8 +731,7 @@
 				<attribute name="editingrow" type="int" />
 				<attribute name="gridcolor" type="string" />
 				<attribute name="intercellspacing" type="string" />
-				<attribute name="preferredscrollableviewportsize"
-					type="string" />
+				<attribute name="preferredscrollableviewportsize" type="string" />
 				<attribute name="rowheight" type="int" />
 				<attribute name="rowmargin" type="int" />
 				<attribute name="rowselectionallowed" type="boolean" />
@@ -758,8 +740,7 @@
 				<attribute name="showgrid" type="boolean" />
 				<attribute name="showhorizontallines" type="boolean" />
 				<attribute name="showverticallines" type="boolean" />
-				<attribute name="surrendersfocusonkeystroke"
-					type="boolean" />
+				<attribute name="surrendersfocusonkeystroke" type="boolean" />
 			</extension>
 		</complexContent>
 	</complexType>
@@ -819,10 +800,8 @@
 		substitutionGroup="cookSwing:component" />
 	<element name="filechooser" type="cookSwing:filechooser"
 		substitutionGroup="cookSwing:component" />
-	<element name="label" type="cookSwing:label"
-		substitutionGroup="cookSwing:component" />
-	<element name="list" type="cookSwing:list"
-		substitutionGroup="cookSwing:component" />
+	<element name="label" type="cookSwing:label" substitutionGroup="cookSwing:component" />
+	<element name="list" type="cookSwing:list" substitutionGroup="cookSwing:component" />
 	<element name="progressbar" type="cookSwing:progressbar"
 		substitutionGroup="cookSwing:component" />
 	<element name="radiobutton" type="cookSwing:radiobutton"
@@ -835,39 +814,31 @@
 		substitutionGroup="cookSwing:component" />
 	<element name="spinner" type="cookSwing:spinner"
 		substitutionGroup="cookSwing:component" />
-	<element name="spinner-dateeditor"
-		type="cookSwing:spinner-dateeditor"
+	<element name="spinner-dateeditor" type="cookSwing:spinner-dateeditor"
 		substitutionGroup="cookSwing:component" />
-	<element name="spinner-defaulteditor"
-		type="cookSwing:spinner-defaulteditor"
+	<element name="spinner-defaulteditor" type="cookSwing:spinner-defaulteditor"
 		substitutionGroup="cookSwing:component" />
-	<element name="spinner-listeditor"
-		type="cookSwing:spinner-listeditor"
+	<element name="spinner-listeditor" type="cookSwing:spinner-listeditor"
 		substitutionGroup="cookSwing:component" />
-	<element name="spinner-numbereditor"
-		type="cookSwing:spinner-numbereditor"
+	<element name="spinner-numbereditor" type="cookSwing:spinner-numbereditor"
 		substitutionGroup="cookSwing:component" />
 	<element name="spinnerdatemodel" type="cookSwing:spinnerdatemodel"
 		substitutionGroup="cookSwing:component" />
 	<element name="spinnerlistmodel" type="cookSwing:spinnerlistmodel"
 		substitutionGroup="cookSwing:component" />
-	<element name="spinnernumbermodel"
-		type="cookSwing:spinnernumbermodel"
+	<element name="spinnernumbermodel" type="cookSwing:spinnernumbermodel"
 		substitutionGroup="cookSwing:component" />
 	<element name="splitpane" type="cookSwing:splitpane"
 		substitutionGroup="cookSwing:component" />
-	<element name="tab" type="cookSwing:tab"
-		substitutionGroup="cookXmlCommon:object" />
-	<element name="table" type="cookSwing:table"
-		substitutionGroup="cookSwing:component" />
+	<element name="tab" type="cookSwing:tab" substitutionGroup="cookXmlCommon:object" />
+	<element name="table" type="cookSwing:table" substitutionGroup="cookSwing:component" />
 	<element name="tableheader" type="cookSwing:tableheader"
 		substitutionGroup="cookSwing:component" />
 	<element name="togglebutton" type="cookSwing:togglebutton"
 		substitutionGroup="cookSwing:abstractbutton" />
 	<element name="tooltip" type="cookSwing:tooltip"
 		substitutionGroup="cookSwing:component" />
-	<element name="tree" type="cookSwing:tree"
-		substitutionGroup="cookSwing:component" />
+	<element name="tree" type="cookSwing:tree" substitutionGroup="cookSwing:component" />
 
 
 
@@ -882,9 +853,10 @@
 	<complexType name="bevelborder" mixed="true">
 		<complexContent>
 			<extension base="cookSwing:border">
-				<!-- <sequence minOccurs="0" maxOccurs="1">
-					<element ref="cookSwing:insets"></element>
-				</sequence> -->
+				<!--
+					<sequence minOccurs="0" maxOccurs="1"> <element
+					ref="cookSwing:insets"></element> </sequence>
+				-->
 				<attribute name="highlight" type="string" />
 				<attribute name="highlightinner" type="string" />
 				<attribute name="highlightouter" type="int" />
@@ -937,13 +909,12 @@
 	<complexType name="matteborder" mixed="true">
 		<complexContent>
 			<extension base="cookSwing:border">
-				<!-- <sequence maxOccurs="unbounded" minOccurs="0">
-					<choice>
-						<element ref="cookSwing:color"></element>
-						<element ref="cookSwing:icon"></element>
-						<element ref="cookSwing:insets"></element>
-					</choice>
-				</sequence> -->
+				<!--
+					<sequence maxOccurs="unbounded" minOccurs="0"> <choice> <element
+					ref="cookSwing:color"></element> <element
+					ref="cookSwing:icon"></element> <element
+					ref="cookSwing:insets"></element> </choice> </sequence>
+				-->
 				<attribute name="bottom" type="int" />
 				<attribute name="color" type="string" />
 				<attribute name="insets" type="string" />
@@ -959,9 +930,10 @@
 	<complexType name="titledborder" mixed="true">
 		<complexContent>
 			<extension base="cookSwing:border">
-				<!-- <sequence minOccurs="0" maxOccurs="1">
-					<element ref="cookSwing:border"></element>
-				</sequence> -->
+				<!--
+					<sequence minOccurs="0" maxOccurs="1"> <element
+					ref="cookSwing:border"></element> </sequence>
+				-->
 				<attribute name="title" type="string" />
 				<attribute name="titlecolor" type="string" />
 				<attribute name="titlefont" type="string" />
@@ -1000,9 +972,10 @@
 	<complexType name="borderlayout" mixed="true">
 		<complexContent>
 			<extension base="cookSwing:layout">
-				<!-- <sequence minOccurs="0" maxOccurs="unbounded">
-					<element ref="cookSwing:constraint"></element>
-				</sequence> -->
+				<!--
+					<sequence minOccurs="0" maxOccurs="unbounded"> <element
+					ref="cookSwing:constraint"></element> </sequence>
+				-->
 				<attribute name="hgap" type="int" />
 				<attribute name="vgap" type="int" />
 			</extension>
@@ -1012,9 +985,10 @@
 	<complexType name="constraint" mixed="true">
 		<complexContent>
 			<extension base="cookXmlCommon:object">
-				<!-- <sequence minOccurs="0" maxOccurs="unbounded">
-					<element ref="cookXmlCommon:object"></element>
-				</sequence> -->
+				<!--
+					<sequence minOccurs="0" maxOccurs="unbounded"> <element
+					ref="cookXmlCommon:object"></element> </sequence>
+				-->
 				<attribute name="location" type="string" />
 				<attribute name="name" type="string" />
 			</extension>
@@ -1049,9 +1023,10 @@
 	<complexType name="gridbaglayout" mixed="true">
 		<complexContent>
 			<extension base="cookSwing:layout">
-				<!-- <sequence minOccurs="0" maxOccurs="unbounded">
-					<element ref="cookSwing:gridbagconstraints"></element>
-				</sequence> -->
+				<!--
+					<sequence minOccurs="0" maxOccurs="unbounded"> <element
+					ref="cookSwing:gridbagconstraints"></element> </sequence>
+				-->
 				<attribute name="columnweights" type="float" />
 				<attribute name="columnwidths" type="int" />
 				<attribute name="rowheights" type="int" />
@@ -1063,9 +1038,10 @@
 	<complexType name="gridbagconstraints" mixed="true">
 		<complexContent>
 			<extension base="cookXmlCommon:object">
-				<!-- <sequence minOccurs="0" maxOccurs="unbounded">
-					<element ref="cookXmlCommon:object"></element>
-				</sequence> -->
+				<!--
+					<sequence minOccurs="0" maxOccurs="unbounded"> <element
+					ref="cookXmlCommon:object"></element> </sequence>
+				-->
 				<attribute name="anchor" type="string" />
 				<attribute name="fill" type="string" />
 				<attribute name="gridheight" type="string" />
@@ -1115,9 +1091,10 @@
 	<complexType name="springlayout" mixed="true">
 		<complexContent>
 			<extension base="cookSwing:layout">
-				<!-- <sequence minOccurs="0" maxOccurs="unbounded">
-					<element ref="cookSwing:springconstraint"></element>
-				</sequence> -->
+				<!--
+					<sequence minOccurs="0" maxOccurs="unbounded"> <element
+					ref="cookSwing:springconstraint"></element> </sequence>
+				-->
 			</extension>
 		</complexContent>
 	</complexType>
@@ -1162,8 +1139,7 @@
 		substitutionGroup="cookSwing:layout" />
 	<element name="gridbaglayout" type="cookSwing:gridbaglayout"
 		substitutionGroup="cookSwing:layout" />
-	<element name="gridbagconstraints"
-		type="cookSwing:gridbagconstraints"
+	<element name="gridbagconstraints" type="cookSwing:gridbagconstraints"
 		substitutionGroup="cookXmlCommon:object" />
 	<element name="gridlayout" type="cookSwing:gridlayout"
 		substitutionGroup="cookSwing:layout" />
@@ -1201,9 +1177,10 @@
 	<complexType name="dateformatter" mixed="true">
 		<complexContent>
 			<extension base="cookSwing:formatter">
-				<!-- <sequence minOccurs="0" maxOccurs="1">
-					<element ref="cookXmlCommon:dateformat"></element>
-				</sequence> -->
+				<!--
+					<sequence minOccurs="0" maxOccurs="1"> <element
+					ref="cookXmlCommon:dateformat"></element> </sequence>
+				-->
 				<attribute name="maximum" type="string" />
 				<attribute name="minimum" type="string" />
 			</extension>
@@ -1227,8 +1204,7 @@
 				<attribute name="placeholder" type="string" />
 				<attribute name="placeholdercharacter" type="string" />
 				<attribute name="validcharacters" type="string" />
-				<attribute name="valuecontainsliteralcharacters"
-					type="boolean" />
+				<attribute name="valuecontainsliteralcharacters" type="boolean" />
 			</extension>
 		</complexContent>
 	</complexType>
@@ -1248,8 +1224,7 @@
 		substitutionGroup="cookSwing:formatter" />
 	<element name="dateformatter" type="cookSwing:dateformatter"
 		substitutionGroup="cookSwing:formatter" />
-	<element name="internationalformatter"
-		type="cookSwing:internationalformatter"
+	<element name="internationalformatter" type="cookSwing:internationalformatter"
 		substitutionGroup="cookSwing:formatter" />
 	<element name="maskformatter" type="cookSwing:maskformatter"
 		substitutionGroup="cookSwing:formatter" />
@@ -1292,124 +1267,55 @@
 
 
 	<!-- common types -->
-	<!--<complexType name="uimanager">
-		<complexContent>
-			<extension base="cookXmlCommon:object">
-				<attribute name="systemlookandfeel" type="boolean" />
-				<attribute name="lookandfeel" type="string" />
-			</extension>
-		</complexContent>
-	</complexType>
+	<!--
+		<complexType name="uimanager"> <complexContent> <extension
+		base="cookXmlCommon:object"> <attribute name="systemlookandfeel"
+		type="boolean" /> <attribute name="lookandfeel" type="string" />
+		</extension> </complexContent> </complexType> <complexType
+		name="color"> <complexContent> <extension base="cookXmlCommon:object">
+		<attribute name="locale" type="string" /> <attribute name="ui"
+		type="string" /> <attribute name="value" type="string" /> </extension>
+		</complexContent> </complexType> <complexType name="cursor">
+		<complexContent> <extension base="cookXmlCommon:object"> <attribute
+		name="type" type="string" /> </extension> </complexContent>
+		</complexType> <complexType name="dimension"> <complexContent>
+		<extension base="cookXmlCommon:object"> <attribute name="height"
+		type="int" /> <attribute name="width" type="int" /> </extension>
+		</complexContent> </complexType> <complexType name="font">
+		<complexContent> <extension base="cookXmlCommon:object"> <attribute
+		name="locale" type="string" /> <attribute name="src" type="string" />
+		<attribute name="ui" type="string" /> </extension> </complexContent>
+		</complexType> <complexType name="icon"> <complexContent> <extension
+		base="cookXmlCommon:object"> <attribute name="locale" type="string" />
+		<attribute name="src" type="string" /> <attribute name="ui"
+		type="string" /> </extension> </complexContent> </complexType>
 
-	<complexType name="color">
-		<complexContent>
-			<extension base="cookXmlCommon:object">
-				<attribute name="locale" type="string" />
-				<attribute name="ui" type="string" />
-				<attribute name="value" type="string" />
-			</extension>
-		</complexContent>
-	</complexType>
-
-	<complexType name="cursor">
-		<complexContent>
-			<extension base="cookXmlCommon:object">
-				<attribute name="type" type="string" />
-			</extension>
-		</complexContent>
-	</complexType>
-
-	<complexType name="dimension">
-		<complexContent>
-			<extension base="cookXmlCommon:object">
-				<attribute name="height" type="int" />
-				<attribute name="width" type="int" />
-			</extension>
-		</complexContent>
-	</complexType>
-
-	<complexType name="font">
-		<complexContent>
-			<extension base="cookXmlCommon:object">
-				<attribute name="locale" type="string" />
-				<attribute name="src" type="string" />
-				<attribute name="ui" type="string" />
-			</extension>
-		</complexContent>
-	</complexType>
-
-	<complexType name="icon">
-		<complexContent>
-			<extension base="cookXmlCommon:object">
-				<attribute name="locale" type="string" />
-				<attribute name="src" type="string" />
-				<attribute name="ui" type="string" />
-			</extension>
-		</complexContent>
-	</complexType>
-
-	<complexType name="image">
-		<complexContent>
-			<extension base="cookXmlCommon:object">
-				<attribute name="src" type="string" />
-			</extension>
-		</complexContent>
-	</complexType>
-
-	<complexType name="imageicon">
-		<complexContent>
-			<extension base="cookXmlCommon:object">
-				<attribute name="src" type="string" />
-			</extension>
-		</complexContent>
-	</complexType>
-
-	<complexType name="insets">
-		<complexContent>
-			<extension base="cookXmlCommon:object">
-				<attribute name="bottom" type="int" />
-				<attribute name="left" type="int" />
-				<attribute name="right" type="int" />
-				<attribute name="top" type="int" />
-			</extension>
-		</complexContent>
-	</complexType>
-
-	<complexType name="keystroke">
-		<complexContent>
-			<extension base="cookXmlCommon:object">
-				<attribute name="keychar" type="string" />
-				<attribute name="keycode" type="string" />
-				<attribute name="modifiers" type="string" />
-				<attribute name="onkeyrelease" type="boolean" />
-				<attribute name="string" type="string" />
-			</extension>
-		</complexContent>
-	</complexType>
-
-	<complexType name="point">
-		<complexContent>
-			<extension base="cookXmlCommon:object">
-				<attribute name="x" type="int" />
-				<attribute name="y" type="int" />
-			</extension>
-		</complexContent>
-	</complexType>
-
-	<complexType name="rectangle">
-		<complexContent>
-			<extension base="cookXmlCommon:object">
-				<attribute name="bounds" type="string" />
-				<attribute name="height" type="int" />
-				<attribute name="location" type="string" />
-				<attribute name="size" type="string" />
-				<attribute name="width" type="int" />
-				<attribute name="x" type="int" />
-				<attribute name="y" type="int" />
-			</extension>
-		</complexContent>
-	</complexType>
-	
+		<complexType name="image"> <complexContent> <extension
+		base="cookXmlCommon:object"> <attribute name="src" type="string" />
+		</extension> </complexContent> </complexType> <complexType
+		name="imageicon"> <complexContent> <extension
+		base="cookXmlCommon:object"> <attribute name="src" type="string" />
+		</extension> </complexContent> </complexType> <complexType
+		name="insets"> <complexContent> <extension
+		base="cookXmlCommon:object"> <attribute name="bottom" type="int" />
+		<attribute name="left" type="int" /> <attribute name="right"
+		type="int" /> <attribute name="top" type="int" /> </extension>
+		</complexContent> </complexType> <complexType name="keystroke">
+		<complexContent> <extension base="cookXmlCommon:object"> <attribute
+		name="keychar" type="string" /> <attribute name="keycode"
+		type="string" /> <attribute name="modifiers" type="string" />
+		<attribute name="onkeyrelease" type="boolean" /> <attribute
+		name="string" type="string" /> </extension> </complexContent>
+		</complexType> <complexType name="point"> <complexContent> <extension
+		base="cookXmlCommon:object"> <attribute name="x" type="int" />
+		<attribute name="y" type="int" /> </extension> </complexContent>
+		</complexType> <complexType name="rectangle"> <complexContent>
+		<extension base="cookXmlCommon:object"> <attribute name="bounds"
+		type="string" /> <attribute name="height" type="int" /> <attribute
+		name="location" type="string" /> <attribute name="size" type="string"
+		/> <attribute name="width" type="int" /> <attribute name="x"
+		type="int" /> <attribute name="y" type="int" /> </extension>
+		</complexContent> </complexType>
 	-->
 	<!-- Common simple types -->
 
@@ -1418,15 +1324,15 @@
 			<documentation>
 				<![CDATA[There are three valid types of values:
 
-    * "#rrggbb" or "rrggbb" for RGB color.
-    * Name of predefined colors in java.awt.Color.
-    * ui:key for colors that can be retrieved from UIManager with the given key.
+	* "#rrggbb" or "rrggbb" for RGB color.
+	* Name of predefined colors in java.awt.Color.
+	* ui:key for colors that can be retrieved from UIManager with the given key.
 				]]>
 			</documentation>
 		</annotation>
 		<restriction base="string"></restriction>
 	</simpleType>
-	
+
 	<simpleType name="cursor">
 		<annotation>
 			<documentation>
@@ -1436,7 +1342,7 @@
 		</annotation>
 		<restriction base="string"></restriction>
 	</simpleType>
-	
+
 	<simpleType name="dimension">
 		<annotation>
 			<documentation>
@@ -1445,20 +1351,20 @@
 		</annotation>
 		<restriction base="string"></restriction>
 	</simpleType>
-	
+
 	<simpleType name="font">
 		<annotation>
 			<documentation>
 				<![CDATA[There are two valid types of values:
 
-    * "fontname,style,size". For example, "monospace,bold italic,12".
-    * ui:key for fonts that can be retrieved from UIManager with the given key.
+	* "fontname,style,size". For example, "monospace,bold italic,12".
+	* ui:key for fonts that can be retrieved from UIManager with the given key.
 				]]>
 			</documentation>
 		</annotation>
 		<restriction base="string"></restriction>
 	</simpleType>
-	
+
 	<simpleType name="locale">
 		<annotation>
 			<documentation>
@@ -1467,7 +1373,7 @@
 		</annotation>
 		<restriction base="string"></restriction>
 	</simpleType>
-	
+
 	<simpleType name="point">
 		<annotation>
 			<documentation>
@@ -1476,7 +1382,7 @@
 		</annotation>
 		<restriction base="string"></restriction>
 	</simpleType>
-	
+
 	<simpleType name="rectangle">
 		<annotation>
 			<documentation>
@@ -1485,22 +1391,22 @@
 		</annotation>
 		<restriction base="string"></restriction>
 	</simpleType>
-	
+
 	<simpleType name="debugoption">
 		<annotation>
 			<documentation>
 				<![CDATA[determines how the component should display the information; one of the following options:
 
-    * LOG_OPTION - causes a text message to be printed.
-    * FLASH_OPTION - causes the drawing to flash several times.
-    * BUFFERED_OPTION - creates an ExternalWindow that displays the operations performed 
-    	on the View's offscreen buffer.
-    * NONE_OPTION disables debugging.
-    * A value of 0 causes no changes to the debugging options. 
+	* LOG_OPTION - causes a text message to be printed.
+	* FLASH_OPTION - causes the drawing to flash several times.
+	* BUFFERED_OPTION - creates an ExternalWindow that displays the operations performed 
+		on the View's offscreen buffer.
+	* NONE_OPTION disables debugging.
+	* A value of 0 causes no changes to the debugging options. 
 
 debugoption is bitwise OR'd into the current value
 				]]>
-			</documentation>	
+			</documentation>
 		</annotation>
 		<restriction base="string">
 			<enumeration value="LOG_OPTION" />
@@ -1510,41 +1416,41 @@ debugoption is bitwise OR'd into the current value
 			<enumeration value="0" />
 		</restriction>
 	</simpleType>
-	
+
 	<simpleType name="dragmode">
 		<annotation>
 			<documentation>
 				<![CDATA[Sets the "dragging style" used by the desktop pane. one of the following options:
 
-    * LIVE_DRAG_MODE - Indicates that the entire contents of the item being dragged
-    	 should appear inside the desktop pane.
-    * OUTLINE_DRAG_MODE - Indicates that an outline only of the item being dragged 
-    	 should appear inside the desktop pane.
+	* LIVE_DRAG_MODE - Indicates that the entire contents of the item being dragged
+		should appear inside the desktop pane.
+	* OUTLINE_DRAG_MODE - Indicates that an outline only of the item being dragged 
+		should appear inside the desktop pane.
 				]]>
-			</documentation>	
+			</documentation>
 		</annotation>
 		<restriction base="string">
 			<enumeration value="LIVE_DRAG_MODE" />
 			<enumeration value="OUTLINE_DRAG_MODE" />
 		</restriction>
 	</simpleType>
-	
+
 	<simpleType name="framestate">
 		<annotation>
 			<documentation>
 				<![CDATA[Sets the state of this frame. The state is represented as a bitwise mask.
 
-    * NORMAL
-      Indicates that no state bits are set.
-    * ICONIFIED
-    * MAXIMIZED_HORIZ
-    * MAXIMIZED_VERT
-    * MAXIMIZED_BOTH
-      Concatenates MAXIMIZED_HORIZ and MAXIMIZED_VERT. 
+	* NORMAL
+		Indicates that no state bits are set.
+	* ICONIFIED
+	* MAXIMIZED_HORIZ
+	* MAXIMIZED_VERT
+	* MAXIMIZED_BOTH
+		Concatenates MAXIMIZED_HORIZ and MAXIMIZED_VERT. 
 
 Note that if the state is not supported on a given platform, nothing will happen.
 				]]>
-			</documentation>	
+			</documentation>
 		</annotation>
 		<restriction base="string">
 			<enumeration value="NORMAL" />
@@ -1554,17 +1460,17 @@ Note that if the state is not supported on a given platform, nothing will happen
 			<enumeration value="MAXIMIZED_BOTH" />
 		</restriction>
 	</simpleType>
-	
+
 	<simpleType name="horizontalscrollbarpolicy">
 		<annotation>
 			<documentation>
 				<![CDATA[Determines when the horizontal scrollbar appears in the scrollpane. The options are:
 
-    * HORIZONTAL_SCROLLBAR_AS_NEEDED
-    * HORIZONTAL_SCROLLBAR_NEVER
-    * HORIZONTAL_SCROLLBAR_ALWAYS 
+	* HORIZONTAL_SCROLLBAR_AS_NEEDED
+	* HORIZONTAL_SCROLLBAR_NEVER
+	* HORIZONTAL_SCROLLBAR_ALWAYS 
 				]]>
-			</documentation>	
+			</documentation>
 		</annotation>
 		<restriction base="string">
 			<enumeration value="HORIZONTAL_SCROLLBAR_AS_NEEDED" />
@@ -1572,17 +1478,17 @@ Note that if the state is not supported on a given platform, nothing will happen
 			<enumeration value="HORIZONTAL_SCROLLBAR_ALWAYS" />
 		</restriction>
 	</simpleType>
-	
+
 	<simpleType name="verticalscrollbarpolicy">
 		<annotation>
 			<documentation>
 				<![CDATA[Determines when the vertical scrollbar appears in the scrollpane. Legal values are:
 
-    * VERTICAL_SCROLLBAR_AS_NEEDED
-    * VERTICAL_SCROLLBAR_NEVER
-    * VERTICAL_SCROLLBAR_ALWAYS
+	* VERTICAL_SCROLLBAR_AS_NEEDED
+	* VERTICAL_SCROLLBAR_NEVER
+	* VERTICAL_SCROLLBAR_ALWAYS
 				]]>
-			</documentation>	
+			</documentation>
 		</annotation>
 		<restriction base="string">
 			<enumeration value="VERTICAL_SCROLLBAR_AS_NEEDED" />
@@ -1590,38 +1496,38 @@ Note that if the state is not supported on a given platform, nothing will happen
 			<enumeration value="VERTICAL_SCROLLBAR_ALWAYS" />
 		</restriction>
 	</simpleType>
-	
+
 	<simpleType name="tablayoutpolicy">
 		<annotation>
 			<documentation>
 				<![CDATA[Sets the policy which the tabbedpane will use in laying out the tabs when all the tabs will not fit within a single run. Possible values are:
 
-    * WRAP_TAB_LAYOUT
-    * SCROLL_TAB_LAYOUT 
+	* WRAP_TAB_LAYOUT
+	* SCROLL_TAB_LAYOUT 
 
 The default value, if not set by the UI, is WRAP_TAB_LAYOUT. 
 				]]>
-			</documentation>	
+			</documentation>
 		</annotation>
 		<restriction base="string">
 			<enumeration value="WRAP_TAB_LAYOUT" />
 			<enumeration value="SCROLL_TAB_LAYOUT" />
 		</restriction>
 	</simpleType>
-	
+
 	<simpleType name="tabplacement">
 		<annotation>
 			<documentation>
 				<![CDATA[Sets the tab placement for this tabbedpane. Possible values are:
-
-    * TOP
-    * BOTTOM
-    * LEFT
-    * RIGHT 
-
+	
+	* TOP
+	* BOTTOM
+	* LEFT
+	* RIGHT 
+	
 The default value, if not set, is TOP.
 				]]>
-			</documentation>	
+			</documentation>
 		</annotation>
 		<restriction base="string">
 			<enumeration value="TOP" />
@@ -1630,16 +1536,16 @@ The default value, if not set, is TOP.
 			<enumeration value="RIGHT" />
 		</restriction>
 	</simpleType>
-	
+
 	<simpleType name="windowdecorationstyle">
 		<annotation>
 			<documentation>
 				<![CDATA[Sets the type of Window decorations (such as borders, widgets for closing a Window, title ...)
-				 the JRootPane should provide. The default is to provide no Window decorations (NONE). 
-				 Possible values are: NONE, FRAME, PLAIN_DIALOG, INFORMATION_DIALOG, ERROR_DIALOG, 
-				 COLOR_CHOOSER_DIALOG, FILE_CHOOSER_DIALOG, QUESTION_DIALOG, or WARNING_DIALOG
+			the JRootPane should provide. The default is to provide no Window decorations (NONE). 
+			Possible values are: NONE, FRAME, PLAIN_DIALOG, INFORMATION_DIALOG, ERROR_DIALOG, 
+			COLOR_CHOOSER_DIALOG, FILE_CHOOSER_DIALOG, QUESTION_DIALOG, or WARNING_DIALOG
 				]]>
-			</documentation>	
+			</documentation>
 		</annotation>
 		<restriction base="string">
 			<enumeration value="NONE" />
@@ -1653,33 +1559,27 @@ The default value, if not set, is TOP.
 			<enumeration value="WARNING_DIALOG" />
 		</restriction>
 	</simpleType>
-	
-	
 
-	<!--<element name="uimanager" type="cookSwing:uimanager"
-		substitutionGroup="cookXmlCommon:object" />
 
-	<element name="color" type="cookSwing:color"
-		substitutionGroup="cookXmlCommon:object" />
-	<element name="cursor" type="cookSwing:cursor"
-		substitutionGroup="cookXmlCommon:object" />
-	<element name="dimension" type="cookSwing:dimension"
-		substitutionGroup="cookXmlCommon:object" />
-	<element name="font" type="cookSwing:font"
-		substitutionGroup="cookXmlCommon:object" />
-	<element name="icon" type="cookSwing:icon"
-		substitutionGroup="cookXmlCommon:object" />
-	<element name="image" type="cookSwing:image"
-		substitutionGroup="cookXmlCommon:object" />
-	<element name="imageicon" type="cookSwing:imageicon"
-		substitutionGroup="cookXmlCommon:object" />
-	<element name="insets" type="cookSwing:insets"
-		substitutionGroup="cookXmlCommon:object" />
-	<element name="keystroke" type="cookSwing:keystroke"
-		substitutionGroup="cookXmlCommon:object" />
-	<element name="point" type="cookSwing:point"
-		substitutionGroup="cookXmlCommon:object" />
-	<element name="rectangle" type="cookSwing:rectangle"
-		substitutionGroup="cookXmlCommon:object" />
 
---></schema>
+	<!--
+		<element name="uimanager" type="cookSwing:uimanager"
+		substitutionGroup="cookXmlCommon:object" /> <element name="color"
+		type="cookSwing:color" substitutionGroup="cookXmlCommon:object" />
+		<element name="cursor" type="cookSwing:cursor"
+		substitutionGroup="cookXmlCommon:object" /> <element name="dimension"
+		type="cookSwing:dimension" substitutionGroup="cookXmlCommon:object" />
+		<element name="font" type="cookSwing:font"
+		substitutionGroup="cookXmlCommon:object" /> <element name="icon"
+		type="cookSwing:icon" substitutionGroup="cookXmlCommon:object" />
+		<element name="image" type="cookSwing:image"
+		substitutionGroup="cookXmlCommon:object" /> <element name="imageicon"
+		type="cookSwing:imageicon" substitutionGroup="cookXmlCommon:object" />
+		<element name="insets" type="cookSwing:insets"
+		substitutionGroup="cookXmlCommon:object" /> <element name="keystroke"
+		type="cookSwing:keystroke" substitutionGroup="cookXmlCommon:object" />
+		<element name="point" type="cookSwing:point"
+		substitutionGroup="cookXmlCommon:object" /> <element name="rectangle"
+		type="cookSwing:rectangle" substitutionGroup="cookXmlCommon:object" />
+	-->
+</schema>
