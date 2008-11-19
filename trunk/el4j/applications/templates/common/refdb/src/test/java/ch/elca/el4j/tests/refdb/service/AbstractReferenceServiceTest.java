@@ -38,6 +38,7 @@ import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.apps.refdb.dao.AnnotationDao;
 import ch.elca.el4j.apps.refdb.dao.FileDao;
 import ch.elca.el4j.apps.refdb.dao.FileDescriptorViewDao;
+import ch.elca.el4j.apps.refdb.dao.impl.hibernate.GenericHibernateFileDaoInterface;
 import ch.elca.el4j.apps.refdb.dom.Annotation;
 import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.File;
@@ -1313,7 +1314,8 @@ public abstract class AbstractReferenceServiceTest
 		ReferenceService service = getReferenceService();
 		FileDescriptorViewDao fileDescriptorViewDao
 			= getFileDescriptorViewDao();
-		FileDao fileDao = getFileDao();
+		// Use HibernateFileDao to set extent
+		GenericHibernateFileDaoInterface fileDao = (GenericHibernateFileDaoInterface) getFileDao();
 		
 		File file = new File();
 		file.setKeyToReference(fakeReferenceKey);
@@ -1328,7 +1330,7 @@ public abstract class AbstractReferenceServiceTest
 		fileDescriptorViewDao.modifyFileDescriptorView(fileView);
 
 		File file2 = fileDao.getByName(
-			"iBatis SqlMap 2.0 Developer Guide").get(0);
+			"iBatis SqlMap 2.0 Developer Guide", File.ALL).get(0);
 		file.setName("iBatis SqlMap 2.0 Developer Guide");
 		assertTrue("Files are not equals.", file.equals(file2));
 

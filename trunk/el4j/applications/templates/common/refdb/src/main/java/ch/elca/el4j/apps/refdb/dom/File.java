@@ -216,15 +216,13 @@ public class File extends FileDescriptorView {
 	 * Light fetching variant: only fetch header data, no content.
 	 * @return the light fetch extent.
 	 */
-	public static DataExtent header() {
-		return new DataExtent(File.class).all().exclude("data").exclude("content");
-	}
+	public static final DataExtent HEADER
+		= new DataExtent(File.class).all().without("data", "content");
 	
 	/**
 	 * Heavy fetching variant: fetch the whole file, including content.
 	 * @return the heavy fetch extent.
 	 */
-	public static DataExtent all() {
-		return new DataExtent(File.class).all();
-	}
+	public static final DataExtent ALL
+		= new DataExtent(File.class).all();
 }

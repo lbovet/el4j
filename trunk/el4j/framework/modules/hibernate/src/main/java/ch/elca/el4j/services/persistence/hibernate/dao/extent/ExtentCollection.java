@@ -76,4 +76,37 @@ public class ExtentCollection extends AbstractExtentPart {
 		m_containedEntity = entity;
 	}
 	
+	/**
+	 * Returns a new Collection object, based on the given name and class.
+	 * @param name	the name of the collection.
+	 * @param c		the class of the contained entity.
+	 * @return	the Collection object.
+	 */
+	static public ExtentCollection collection(String name, Class<?> c) {
+		return new ExtentCollection(name, c);
+	}
+	
+	/**
+	 * Returns a new Collection object, based on the given class and method.
+	 * @param c		the class of the contained entity.
+	 * @param m		the method to get the collection.
+	 * @return	the Collection object.
+	 */
+	static public ExtentCollection collection(Class<?> c, Method m) {
+		return new ExtentCollection(c, m);
+	}
+	
+	/**
+	 * Returns a new Collection object, based on the given name and entity.
+	 * @param name			the name of the collection.
+	 * @param entity		the contained entity.
+	 * @return	the Collection object.
+	 */
+	static public ExtentCollection collection(String name, ExtentEntity entity) {
+		ExtentCollection c = new ExtentCollection(name);
+		c.setContainedEntity(entity);
+		return c;
+		
+	}
+	
 }

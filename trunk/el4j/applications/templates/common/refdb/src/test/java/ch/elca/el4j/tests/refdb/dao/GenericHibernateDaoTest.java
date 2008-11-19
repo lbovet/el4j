@@ -17,6 +17,9 @@
 package ch.elca.el4j.tests.refdb.dao;
 
 
+import static org.junit.Assert.fail;
+import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentCollection.collection;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,9 +27,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LazyInitializationException;
 import org.junit.Test;
-import static org.junit.Assert.fail;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataRetrievalFailureException;
 
-import ch.elca.el4j.apps.refdb.dao.FileDao;
 import ch.elca.el4j.apps.refdb.dao.impl.hibernate.GenericHibernateFileDaoInterface;
 import ch.elca.el4j.apps.refdb.dom.File;
 import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
@@ -37,6 +40,7 @@ import ch.elca.el4j.tests.person.dao.impl.hibernate.GenericHibernatePersonDaoInt
 import ch.elca.el4j.tests.person.dom.Brain;
 import ch.elca.el4j.tests.person.dom.Person;
 import ch.elca.el4j.tests.person.dom.Tooth;
+import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
 /**
  *
  * Test case for <code>GenericHibernateDao</code> to test
@@ -51,11 +55,11 @@ import ch.elca.el4j.tests.person.dom.Tooth;
  *
  * @author Andreas Rueedlinger (ARR)
  */
-public class GenericHibernateDaoTest extends AbstractReferenceDaoTest {
+public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 	/**
 	 * Private logger.
 	 */
-	protected static Log s_logger
+	private static Log s_logger
 		= LogFactory.getLog(GenericHibernateDaoTest.class);
 	
 	/**
@@ -91,7 +95,7 @@ public class GenericHibernateDaoTest extends AbstractReferenceDaoTest {
 	public void testInsertFileLazyContent() {
 		int fakeReferenceKey = addDefaultFakeReference();
 		
-		// User HibernateFileDao to set extent
+		// Use HibernateFileDao to set extent
 		GenericHibernateFileDaoInterface dao = (GenericHibernateFileDaoInterface) getFileDao();
 		File file = new File();
 		file.setKeyToReference(fakeReferenceKey);
@@ -101,11 +105,13 @@ public class GenericHibernateDaoTest extends AbstractReferenceDaoTest {
 		file.setContent(content);
 		dao.saveOrUpdate(file);
 		
-		// Reset the extent to null
-		dao.setExtent(File.header());
-		File file2 = dao.findById(file.getKey());
+		// Only load the header
+		File file2 = dao.findById(file.getKey(), File.HEADER);
+		// Load without extent
+		File file3 = dao.findById(file.getKey());
 		try {
 			file2.getContent();
+			file3.getContent();
 			fail("Could access file content which should not have been loaded.");
 		} catch (LazyInitializationException e) {
 			s_logger.debug("Expected exception catched.", e);
@@ -114,13 +120,13 @@ public class GenericHibernateDaoTest extends AbstractReferenceDaoTest {
 	
 	/**
 	 * This test checks the explicit loading of file content
-	 * using {@see DataExtent#include}.
+	 * using {@see DataExtent#with}.
 	 */
 	@Test
 	public void testInsertFileEagerContent() {
 		int fakeReferenceKey = addDefaultFakeReference();
 		
-		// User HibernateFileDao to set extent
+		// Use HibernateFileDao to set extent
 		GenericHibernateFileDaoInterface dao = (GenericHibernateFileDaoInterface) getFileDao();
 		File file = new File();
 		file.setKeyToReference(fakeReferenceKey);
@@ -129,12 +135,41 @@ public class GenericHibernateDaoTest extends AbstractReferenceDaoTest {
 		byte[] content = "This is only a test content.".getBytes();
 		file.setContent(content);
 		
-		// Set Extent explicitly to "with content"
-		dao.setExtent(File.all());
+		dao.saveOrUpdate(file);
+		
+		File file2;
+		try {
+			DataExtent ex = new DataExtent(File.class);
+			ex.with("content");
+			file2 = dao.findById(file.getKey(), ex);
+			file2.getContent();
+		} catch (NoSuchMethodException e) {
+			fail("Content could not be added to the file extent.");
+		} catch (LazyInitializationException e) {
+			fail("Content has not been loaded though forced explicitly.");
+		}
+	}
+	
+	/**
+	 * This test checks the explicit loading of file content
+	 * using {@see File.ALL} predefined constant.
+	 */
+	@Test
+	public void testInsertFileEagerContent2() {
+		int fakeReferenceKey = addDefaultFakeReference();
+		
+		// Use HibernateFileDao to set extent
+		GenericHibernateFileDaoInterface dao = (GenericHibernateFileDaoInterface) getFileDao();
+		File file = new File();
+		file.setKeyToReference(fakeReferenceKey);
+		file.setName("iBatis Developer Guide");
+		file.setMimeType("text/plain");
+		byte[] content = "This is only a test content.".getBytes();
+		file.setContent(content);
 		
 		dao.saveOrUpdate(file);
 		
-		File file2 = dao.findById(file.getKey());
+		File file2 = dao.findById(file.getKey(), File.ALL);
 		try {
 			file2.getContent();
 		} catch (LazyInitializationException e) {
@@ -143,14 +178,13 @@ public class GenericHibernateDaoTest extends AbstractReferenceDaoTest {
 	}
 	
 	/**
-	 * This test checks the explicit loading of file content
-	 * using {@see DataExtent#all}.
+	 * Test refresh after lazy loading and repeat the query.
 	 */
 	@Test
-	public void testInsertFileEagerContent2() {
+	public void testRefreshCatching() {
 		int fakeReferenceKey = addDefaultFakeReference();
 		
-		// User HibernateFileDao to set extent
+		// Use HibernateFileDao to set extent
 		GenericHibernateFileDaoInterface dao = (GenericHibernateFileDaoInterface) getFileDao();
 		File file = new File();
 		file.setKeyToReference(fakeReferenceKey);
@@ -159,16 +193,20 @@ public class GenericHibernateDaoTest extends AbstractReferenceDaoTest {
 		byte[] content = "This is only a test content.".getBytes();
 		file.setContent(content);
 		
-		// Set Extent explicitly to "all"
-		dao.setExtent(File.all());
 		dao.saveOrUpdate(file);
 		
 		File file2 = dao.findById(file.getKey());
 		try {
 			file2.getContent();
 		} catch (LazyInitializationException e) {
-			fail("Content has not been loaded though forced explicitly.");
+			dao.refresh(file2, File.ALL);
+			try {
+				file2.getContent();
+			} catch (LazyInitializationException e2) {
+				fail("Lazy loading problem still exists after refreshing.");
+			}
 		}
+		
 	}
 	
 	/**
@@ -220,7 +258,7 @@ public class GenericHibernateDaoTest extends AbstractReferenceDaoTest {
 	}
 	
 	/**
-	 * This test checks lazy lodaing of persons brain.
+	 * This test checks lazy loading of persons brain.
 	 */
 	@Test
 	public void testLazyBrain() {
@@ -242,22 +280,21 @@ public class GenericHibernateDaoTest extends AbstractReferenceDaoTest {
 		
 		// Set Extent explicitly to "with brain"
 		try {
-			dao.setExtent(new DataExtent(Person.class).include(Brain.class));
+			DataExtent withBrain = new DataExtent(Person.class).with("brain");
+			person2 = dao.findById(person.getKey(), withBrain);
+			try {
+				person2.getBrain().getIq();
+			} catch (LazyInitializationException e) {
+				fail("Brain has not been loaded though forced explicitly.");
+			}
 		} catch (NoSuchMethodException e1) {
 			fail("Fields doesnt exist.");
 		}
 		
-		person2 = dao.findById(person.getKey());
-		try {
-			person2.getBrain().getIq();
-		} catch (LazyInitializationException e) {
-			fail("Brain has not been loaded though forced explicitly.");
-		}
-		
 		// Set Extent explicitly to "all"
-		dao.setExtent(new DataExtent(Person.class).all());
+		DataExtent wholePerson = new DataExtent(Person.class).all();
 		
-		person2 = dao.findById(person.getKey());
+		person2 = dao.findById(person.getKey(), wholePerson);
 		try {
 			person2.getBrain().getIq();
 		} catch (LazyInitializationException e) {
@@ -317,9 +354,6 @@ public class GenericHibernateDaoTest extends AbstractReferenceDaoTest {
 		QueryObject query = new QueryObject();
 		query.addCriteria(LikeCriteria.caseInsensitive("name", "%Mary Muster%"));
 		
-		// Reset the extent of the dao
-		dao.setExtent(null);
-		
 		try {
 			Person mary = dao.findByQuery(query).get(0);
 			
@@ -339,10 +373,9 @@ public class GenericHibernateDaoTest extends AbstractReferenceDaoTest {
 		// Add the friends to the extent
 		DataExtent ex;
 		try {
-			ex = new DataExtent(Person.class).includeList("friends", Person.class);
-			dao.setExtent(ex);
-
-			Person mary = dao.findByQuery(query).get(0);
+			ex = new DataExtent(Person.class).with("friends");
+			
+			Person mary = dao.findByQuery(query, ex).get(0);
 			
 			List<Person> f = mary.getFriends();
 			if (!f.isEmpty()) {
@@ -361,10 +394,9 @@ public class GenericHibernateDaoTest extends AbstractReferenceDaoTest {
 		// Check circular reference in Extent
 		try {
 			ex = new DataExtent(Person.class);
-			ex.includeList("friends", ex.getRootEntity());
-			dao.setExtent(ex);
-		
-			Person mary = dao.findByQuery(query).get(0);
+			ex.withSubentities(collection("friends", ex.getRootEntity()));
+			
+			Person mary = dao.findByQuery(query, ex).get(0);
 			
 			List<Person> f = mary.getFriends();
 			for (int i = 0; i < f.size(); i++) {

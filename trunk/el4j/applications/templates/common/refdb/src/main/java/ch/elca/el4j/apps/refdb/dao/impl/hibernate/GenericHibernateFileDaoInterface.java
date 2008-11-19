@@ -16,9 +16,15 @@
  */
 package ch.elca.el4j.apps.refdb.dao.impl.hibernate;
 
+import java.util.List;
+
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataRetrievalFailureException;
+
 import ch.elca.el4j.apps.refdb.dao.FileDao;
 import ch.elca.el4j.apps.refdb.dom.File;
 import ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHibernateDao;
+import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
 
 /**
  * The HibernateDao Interface to be used to both access 
@@ -36,4 +42,20 @@ import ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHiberna
 public interface GenericHibernateFileDaoInterface 
 	extends ConvenienceGenericHibernateDao<File, Integer>, FileDao {
 
+	/**
+	 * Get all the files or file descriptors with the same name.
+	 * Loads at least the given extent.
+	 *
+	 * @param name
+	 *            Is the name of a file or file descriptor.
+	 * @param extent
+	 * 			  the extent in which objects get loaded.
+	 * @return Returns the desired file or file descriptor.
+	 * @throws DataAccessException
+	 *             If general data access problem occurred.
+	 * @throws DataRetrievalFailureException
+	 *             If file or file descriptor could not be retrieved.
+	 */
+	public List<File> getByName(String name, DataExtent extent)
+		throws DataAccessException, DataRetrievalFailureException;
 }

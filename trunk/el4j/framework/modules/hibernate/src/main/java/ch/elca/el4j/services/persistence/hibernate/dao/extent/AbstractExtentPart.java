@@ -57,20 +57,6 @@ public abstract class AbstractExtentPart implements Serializable {
 	}
 	
 	/**
-	 * Set the Name of the extent-part, must be consistent with method.
-	 * @param name	 the name of the extent-part.
-	 * @throws NoSuchMethodException 
-	 */
-	public void setName(String name) throws NoSuchMethodException {
-		if (m_method != null && m_method.getName().equals(toGetterName(name))) {
-			m_name = name;
-		} else {
-			throw new NoSuchMethodException("Entity name must be consistent with extent-part method.");
-		}
-		
-	}
-	
-	/**
 	 * Method to get the extent-part, null if root entity,
 	 * otherwise set latest when added as child.
 	 * @return the method to get the extent-part.
@@ -84,7 +70,7 @@ public abstract class AbstractExtentPart implements Serializable {
 	 * If name is not consistent, the extent-part is renamed.
 	 * @param method	the method to set.
 	 */
-	public void setMethod(Method method) {
+	protected void setMethod(Method method) {
 		m_method = method;
 		if (!m_method.getName().equals(toGetterName(m_name))) {
 			m_name = toFieldName(m_method.getName());
