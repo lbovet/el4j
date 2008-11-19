@@ -78,14 +78,10 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	 */
 	private Order[] m_defaultOrder = null;
 	
-	/** 
-	 * The least extent of the graph of objects in which 
-	 * objects should be loaded.
-	 */
-	private DataExtent m_extent;
-	
 	/**
 	 * Map indicating which objects have already been fetched.
+	 * This map is used internally in the recursive 
+	 * {@link #fetchExtentObject(Object, ExtentEntity)} method
 	 */
 	private Map<Object, WeakReference<ExtentEntity>> m_fetchedObjects 
 		= new HashMap<Object, WeakReference<ExtentEntity>>();
@@ -168,7 +164,27 @@ public class GenericHibernateDao<T, ID extends Serializable>
 		if (entity == null) {
 			throw new DataRetrievalFailureException("The desired domain object could not be retrieved.");
 		}
-		return fetchExtent(entity);
+		return entity;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public T findById(ID id, boolean lock, DataExtent extent)
+		throws DataAccessException, DataRetrievalFailureException {
+		
+		T entity;
+		if (lock) {
+			entity = (T) getConvenienceHibernateTemplate().get(getPersistentClass(), id, LockMode.UPGRADE);
+		} else {
+			entity = (T) getConvenienceHibernateTemplate().get(getPersistentClass(), id);
+		}
+		if (entity == null) {
+			throw new DataRetrievalFailureException("The desired domain object could not be retrieved.");
+		}
+		return fetchExtent(entity, extent);
 	}
 	
 	/**
@@ -178,8 +194,19 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public T findById(ID id)
 		throws DataAccessException, DataRetrievalFailureException {
+		return (T) getConvenienceHibernateTemplate().getByIdStrong(
+			getPersistentClass(), id, getPersistentClassName());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public T findById(ID id, DataExtent extent)
+		throws DataAccessException, DataRetrievalFailureException {
 		return fetchExtent((T) getConvenienceHibernateTemplate().getByIdStrong(
-			getPersistentClass(), id, getPersistentClassName()));
+			getPersistentClass(), id, getPersistentClassName()), extent);
 	}
 	
 	/**
@@ -199,7 +226,16 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	@SuppressWarnings("unchecked")
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<T> getAll() throws DataAccessException {
-		return fetchExtent(getConvenienceHibernateTemplate().findByCriteria(getOrderedCriteria()));
+		return getConvenienceHibernateTemplate().findByCriteria(getOrderedCriteria());
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<T> getAll(DataExtent extent) throws DataAccessException {
+		return fetchExtent(getConvenienceHibernateTemplate().findByCriteria(getOrderedCriteria()), extent);
 	}
 
 	
@@ -217,7 +253,25 @@ public class GenericHibernateDao<T, ID extends Serializable>
 		
 		ConvenienceHibernateTemplate template = getConvenienceHibernateTemplate();
 		
-		return fetchExtent(template.findByCriteria(hibernateCriteria, q.getFirstResult(), q.getMaxResults()));
+		return template.findByCriteria(hibernateCriteria, q.getFirstResult(), q.getMaxResults());
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 *
+	 * This method supports paging (see QueryObject for info on
+	 *  how to use this).
+	 *
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<T> findByQuery(QueryObject q, DataExtent extent) throws DataAccessException {
+		DetachedCriteria hibernateCriteria = getCriteria(q);
+		
+		ConvenienceHibernateTemplate template = getConvenienceHibernateTemplate();
+		
+		return fetchExtent(template.findByCriteria(hibernateCriteria, q.getFirstResult(), 
+			q.getMaxResults()), extent);
 	}
 
 	/**
@@ -245,9 +299,141 @@ public class GenericHibernateDao<T, ID extends Serializable>
 		
 		ConvenienceHibernateTemplate template = getConvenienceHibernateTemplate();
 		
-		return fetchExtent(template.findByCriteria(hibernateCriteria));
+		return template.findByCriteria(hibernateCriteria);
 	}
 	
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<T> findByCriteria(DetachedCriteria hibernateCriteria, DataExtent extent)
+		throws DataAccessException {
+		
+		ConvenienceHibernateTemplate template = getConvenienceHibernateTemplate();
+		
+		return fetchExtent(template.findByCriteria(hibernateCriteria), extent);
+	}
+	
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<T> findByCriteria(DetachedCriteria hibernateCriteria, int firstResult, int maxResults)
+		throws DataAccessException {
+		
+		ConvenienceHibernateTemplate template = getConvenienceHibernateTemplate();
+		
+		return template.findByCriteria(hibernateCriteria, firstResult, maxResults);
+	}
+
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<T> findByCriteria(DetachedCriteria hibernateCriteria, int firstResult, int maxResults,
+			DataExtent extent) throws DataAccessException {
+		
+		ConvenienceHibernateTemplate template = getConvenienceHibernateTemplate();
+		
+		return fetchExtent(template.findByCriteria(hibernateCriteria, firstResult, maxResults), extent);
+	}
+	
+	/** {@inheritDoc} */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int findCountByCriteria(DetachedCriteria hibernateCriteria)
+		throws DataAccessException {
+		
+		ConvenienceHibernateTemplate template = getConvenienceHibernateTemplate();
+
+		return template.findCountByCriteria(hibernateCriteria);
+	}
+	
+	/** {@inheritDoc} */
+	@ReturnsUnchangedParameter
+	@Transactional(propagation = Propagation.REQUIRED)
+	public T saveOrUpdate(T entity) throws DataAccessException,
+		DataIntegrityViolationException, OptimisticLockingFailureException {
+		
+		getConvenienceHibernateTemplate().saveOrUpdateStrong(entity, getPersistentClassName());
+		return entity;
+	}
+	
+	
+	/** {@inheritDoc} */
+	@ReturnsUnchangedParameter
+	@Transactional(propagation = Propagation.REQUIRED)
+	public T saveOrUpdateAndFlush(T entity) throws DataAccessException,
+		DataIntegrityViolationException, OptimisticLockingFailureException {
+		
+		T tmp = saveOrUpdate(entity);
+		flush();
+		return tmp;
+	}
+
+	/** {@inheritDoc} */
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void delete(T entity) throws DataAccessException {
+		getConvenienceHibernateTemplate().delete(entity);
+	}
+	
+	/** {@inheritDoc} */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public T refresh(T entity) throws DataAccessException,
+	DataRetrievalFailureException {
+		getConvenienceHibernateTemplate().refresh(entity);
+		return entity;
+	}
+	
+	/** {@inheritDoc} */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public T refresh(T entity, DataExtent extent) throws DataAccessException,
+	DataRetrievalFailureException {
+		getConvenienceHibernateTemplate().refresh(entity);
+		return fetchExtent(entity, extent);
+	}
+	
+	/** {@inheritDoc} */
+	@Deprecated
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void delete(ID id) throws DataAccessException {
+		getConvenienceHibernateTemplate().deleteStrong(getPersistentClass(),
+			id, getPersistentClassName());
+	}
+	
+	/** {@inheritDoc} */
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void deleteById(ID id) throws DataAccessException {
+		getConvenienceHibernateTemplate().deleteStrong(getPersistentClass(),
+			id, getPersistentClassName());
+	}
+
+	/** {@inheritDoc} */
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void delete(Collection<T> entities) throws DataAccessException,
+			DataIntegrityViolationException, OptimisticLockingFailureException {
+		getConvenienceHibernateTemplate().deleteAll(entities);
+	}
+	
+	/** {@inheritDoc} */
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void deleteAll()
+		throws OptimisticLockingFailureException, DataAccessException {
+		List<T> list = getAll();
+		if (list.size() > 0) {
+			delete(list);
+		}
+	}
+	
+	/** {@inheritDoc} */
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void flush() {
+		getConvenienceHibernateTemplate().flush();
+	}
+	
+	/** {@inheritDoc} */
+	public DetachedCriteria getOrderedCriteria() {
+		DetachedCriteria criteria = DetachedCriteria.forClass(getPersistentClass());
+		
+		return addOrder(makeDistinct(criteria));
+	}
+
 	/** 
 	 * Prototype of Extent-based fetching,
 	 * steps through all the retrieved objects and calls
@@ -258,13 +444,13 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	 * 
 	 * @throws DataAccessException 
 	 */
-	protected List<T> fetchExtent(List<T> objects)
+	protected List<T> fetchExtent(List<T> objects, DataExtent extent)
 		throws DataAccessException {
 		
-		if (m_extent != null) {
+		if (extent != null) {
 			m_fetchedObjects.clear();
 			for (Object obj : objects) {
-				fetchExtentObject(obj, m_extent.getRootEntity());
+				fetchExtentObject(obj, extent.getRootEntity());
 			}
 			m_fetchedObjects.clear();
 		}
@@ -281,12 +467,12 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	 * 
 	 * @throws DataAccessException 
 	 */
-	protected T fetchExtent(T object)
+	protected T fetchExtent(T object, DataExtent extent)
 		throws DataAccessException {
 		
-		if (m_extent != null) {
+		if (extent != null) {
 			m_fetchedObjects.clear();
-			fetchExtentObject(object, m_extent.getRootEntity());
+			fetchExtentObject(object, extent.getRootEntity());
 			m_fetchedObjects.clear();
 		}
 		return object;
@@ -338,124 +524,6 @@ public class GenericHibernateDao<T, ID extends Serializable>
 			throw new RuntimeException(e);
 		}
 		
-	}
-	
-	/** {@inheritDoc} */
-	@SuppressWarnings("unchecked")
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<T> findByCriteria(DetachedCriteria hibernateCriteria, int firstResult, int maxResults)
-		throws DataAccessException {
-		
-		ConvenienceHibernateTemplate template = getConvenienceHibernateTemplate();
-		
-		return fetchExtent(template.findByCriteria(hibernateCriteria, firstResult, maxResults));
-	}
-	
-	/** {@inheritDoc} */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int findCountByCriteria(DetachedCriteria hibernateCriteria)
-		throws DataAccessException {
-		
-		ConvenienceHibernateTemplate template = getConvenienceHibernateTemplate();
-
-		return template.findCountByCriteria(hibernateCriteria);
-	}
-	
-	/** {@inheritDoc} */
-	@ReturnsUnchangedParameter
-	@Transactional(propagation = Propagation.REQUIRED)
-	public T saveOrUpdate(T entity) throws DataAccessException,
-		DataIntegrityViolationException, OptimisticLockingFailureException {
-		
-		getConvenienceHibernateTemplate().saveOrUpdateStrong(entity, getPersistentClassName());
-		return entity;
-	}
-	
-	
-	/** {@inheritDoc} */
-	@ReturnsUnchangedParameter
-	@Transactional(propagation = Propagation.REQUIRED)
-	public T saveOrUpdateAndFlush(T entity) throws DataAccessException,
-		DataIntegrityViolationException, OptimisticLockingFailureException {
-		
-		T tmp = saveOrUpdate(entity);
-		flush();
-		return tmp;
-	}
-
-	/** {@inheritDoc} */
-	@Transactional(propagation = Propagation.REQUIRED)
-	public void delete(T entity) throws DataAccessException {
-		getConvenienceHibernateTemplate().delete(entity);
-	}
-	
-	/** {@inheritDoc} */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public T refresh(T entity) throws DataAccessException,
-	DataRetrievalFailureException {
-		getConvenienceHibernateTemplate().refresh(entity);
-		return fetchExtent(entity);
-	}
-
-	/** {@inheritDoc} */
-	@Deprecated
-	@Transactional(propagation = Propagation.REQUIRED)
-	public void delete(ID id) throws DataAccessException {
-		getConvenienceHibernateTemplate().deleteStrong(getPersistentClass(),
-			id, getPersistentClassName());
-	}
-	
-	/** {@inheritDoc} */
-	@Transactional(propagation = Propagation.REQUIRED)
-	public void deleteById(ID id) throws DataAccessException {
-		getConvenienceHibernateTemplate().deleteStrong(getPersistentClass(),
-			id, getPersistentClassName());
-	}
-
-	/** {@inheritDoc} */
-	@Transactional(propagation = Propagation.REQUIRED)
-	public void delete(Collection<T> entities) throws DataAccessException,
-			DataIntegrityViolationException, OptimisticLockingFailureException {
-		getConvenienceHibernateTemplate().deleteAll(entities);
-	}
-	
-	/** {@inheritDoc} */
-	@Transactional(propagation = Propagation.REQUIRED)
-	public void deleteAll()
-		throws OptimisticLockingFailureException, DataAccessException {
-		List<T> list = getAll();
-		if (list.size() > 0) {
-			delete(list);
-		}
-	}
-	
-	/** {@inheritDoc} */
-	@Transactional(propagation = Propagation.REQUIRED)
-	public void flush() {
-		getConvenienceHibernateTemplate().flush();
-	}
-	
-	/** {@inheritDoc} */
-	public DetachedCriteria getOrderedCriteria() {
-		DetachedCriteria criteria = DetachedCriteria.forClass(getPersistentClass());
-		
-		return addOrder(makeDistinct(criteria));
-	}
-	
-	/** {@inheritDoc} */
-	public DataExtent getExtent() {
-		return m_extent;
-	}
-	
-	/** {@inheritDoc} */
-	public boolean setExtent(DataExtent extent) {
-		if (extent == null) {
-			m_extent = null;
-			return true;
-		} else {
-			m_extent = extent;
-			return true;
-		}
 	}
 	
 	/**

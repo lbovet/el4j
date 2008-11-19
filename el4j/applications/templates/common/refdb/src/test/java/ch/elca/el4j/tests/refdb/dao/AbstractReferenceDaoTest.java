@@ -44,7 +44,6 @@ import ch.elca.el4j.apps.refdb.dom.Annotation;
 import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.File;
 import ch.elca.el4j.apps.refdb.dom.FormalPublication;
-import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
 import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
 
 // Checkstyle: MagicNumber off
@@ -356,7 +355,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 	public void testInsertGetFileByKey() {
 		int fakeReferenceKey = addDefaultFakeReference();
 		
-		// User HibernateFileDao to set extent
+		// Use HibernateFileDao to set extent
 		GenericHibernateFileDaoInterface dao = (GenericHibernateFileDaoInterface) getFileDao();
 		File file = new File();
 		file.setKeyToReference(fakeReferenceKey);
@@ -365,10 +364,9 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		byte[] content = "This is only a test content.".getBytes();
 		file.setContent(content);
 		File file2 = dao.saveOrUpdate(file);
-		// Include content in extent
-		dao.setExtent(File.all());
 		
-		File file3 = dao.findById(file2.getKey());
+		// Explicitly load everything
+		File file3 = dao.findById(file2.getKey(), File.ALL);
 		
 		assertEquals("The inserted and read domain objects are not equal",
 			file3, file2);
@@ -381,7 +379,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 	public void testInsertGetFileByName() {
 		int fakeReferenceKey = addDefaultFakeReference();
 		
-		// User HibernateFileDao to set extent
+		// Use HibernateFileDao to set extent
 		GenericHibernateFileDaoInterface dao = (GenericHibernateFileDaoInterface) getFileDao();
 		File file = new File();
 		file.setKeyToReference(fakeReferenceKey);
@@ -390,10 +388,8 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		byte[] content = "This is only a test content.".getBytes();
 		file.setContent(content);
 		File file2 = dao.saveOrUpdate(file);
-		// Include content in extent
-		dao.setExtent(File.all());
 		
-		List<File> list = dao.getByName(file2.getName());
+		List<File> list = dao.getByName(file2.getName(), File.ALL);
 		assertEquals("List contains more than one file of name '"
 			+ file2.getName() + "'", 1, list.size());
 		File file3 = (File) list.get(0);
@@ -410,7 +406,8 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 	public void testInsertGetAllFiles() {
 		int fakeReferenceKey = addDefaultFakeReference();
 		
-		FileDao dao = getFileDao();
+		// Use HibernateFileDao to set extent
+		GenericHibernateFileDaoInterface dao = (GenericHibernateFileDaoInterface) getFileDao();
 		File file = new File();
 		file.setKeyToReference(fakeReferenceKey);
 		file.setName("iBatis Developer Guide");
@@ -430,7 +427,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		file2.setContent(content2);
 		dao.saveOrUpdate(file);
 		dao.saveOrUpdate(file2);
-		List<File> list = dao.getAll();
+		List<File> list = dao.getAll(File.ALL);
 		assertEquals("Wrong number of files in DB", 2, list.size());
 		assertTrue("First file has not been found", list.contains(file));
 		assertTrue("Second file has not been found", list.contains(file2));
@@ -473,7 +470,8 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 	public void testInsertModificateRemoveFileByTwoPersons() {
 		int fakeReferenceKey = addDefaultFakeReference();
 		
-		FileDao dao = getFileDao();
+		// Use HibernateFileDao to set extent
+		GenericHibernateFileDaoInterface dao = (GenericHibernateFileDaoInterface) getFileDao();
 		File file = new File();
 		file.setKeyToReference(fakeReferenceKey);
 		file.setName("iBatis Developer Guide");
@@ -483,9 +481,9 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		dao.saveOrUpdate(file);
 
 		File file2 = (File) dao.getByName(
-			"iBatis Developer Guide").get(0);
+			"iBatis Developer Guide", File.ALL).get(0);
 		File file3 = (File) dao.getByName(
-			"iBatis Developer Guide").get(0);
+			"iBatis Developer Guide", File.ALL).get(0);
 		content = "This is another test content.".getBytes();
 		file2.setContent(content);
 		dao.saveOrUpdate(file2);
@@ -606,7 +604,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 
 		int fakeReferenceKey = addDefaultFakeReference();
 		
-		// User HibernateFileDao to set extent
+		// Use HibernateFileDao to set extent
 		GenericHibernateFileDaoInterface dao = (GenericHibernateFileDaoInterface) getFileDao();
 		File file = new File();
 		file.setKeyToReference(fakeReferenceKey);
@@ -614,10 +612,8 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		file.setMimeType(mimeType);
 		file.setContent(content);
 		file = dao.saveOrUpdate(file);
-		// Include content in extent
-		dao.setExtent(File.all());
 		
-		File file2 = (File) dao.getByName(name).get(0);
+		File file2 = (File) dao.getByName(name, File.ALL).get(0);
 
 		assertEquals("The inserted and read domain objects are not equal", file, file2);
 

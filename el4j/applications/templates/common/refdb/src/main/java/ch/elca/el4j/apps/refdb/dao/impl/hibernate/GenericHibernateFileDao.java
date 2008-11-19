@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.elca.el4j.apps.refdb.dao.GenericFileDao;
+import ch.elca.el4j.apps.refdb.dom.File;
+import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
 import ch.elca.el4j.util.codingsupport.Reject;
 
 
@@ -47,7 +49,23 @@ public class GenericHibernateFileDao<T, ID extends Serializable>
 			+ domainClassName.toLowerCase() + " where name = :name";
 		List<T> result = getConvenienceHibernateTemplate()
 			.findByNamedParam(queryString, "name", name);
-		return fetchExtent(result);
+		return result;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<T> getByName(String name, DataExtent extent) throws DataAccessException,
+		DataRetrievalFailureException {
+		Reject.ifEmpty(name);
+		String domainClassName = getPersistentClassName();
+		String queryString = "from " + domainClassName + " "
+			+ domainClassName.toLowerCase() + " where name = :name";
+		List<T> result = getConvenienceHibernateTemplate()
+			.findByNamedParam(queryString, "name", name);
+		return fetchExtent(result, extent);
 	}
 	
 }

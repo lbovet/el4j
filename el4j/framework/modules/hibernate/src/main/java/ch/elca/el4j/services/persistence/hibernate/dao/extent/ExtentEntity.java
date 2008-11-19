@@ -31,7 +31,7 @@ import javax.persistence.Transient;
  *   <li> with/without: add/remove fields to/from the extent
  *   <li> include/exclude: add/remove sub-entities 
  *   <li> includeList/excludeList: add/remove collections (must implement
- *   		{@see java.util.Collection} interface
+ *   		{@link java.util.Collection} interface
  *  </ul>
  *
  *
@@ -106,133 +106,11 @@ public class ExtentEntity extends AbstractExtentPart {
 	}
 	
 	/**
-	 * Set Class of the entity. Class must be consistent with
-	 * the defined fields and child entities.
-	 * @param c		the class of the entity.
-	 * @throws NoSuchMethodException 
-	 */
-	public void setEntityClass(Class<?> c) throws NoSuchMethodException {
-		Class<?> oldClass = m_entityClass;
-		m_entityClass = c;
-		if (!validateFields()) {
-			m_entityClass = oldClass;
-			throw new NoSuchMethodException("New Entity class is not consistent "
-				+ "with defined fields and child-entities.");
-		}
-		
-	}
-	
-	/**
 	 * Field-methods of the entity.
 	 * @return the field-methods of the entity.
 	 */
 	public List<Method> getFields() {
 		return m_fields;
-	}
-
-	/**
-	 * Fields of the entity as getter names.
-	 * @return the getter names of the entity.
-	 */
-	/*public List<String> getGetters() {
-		List<String> getters = new LinkedList<String>();
-		for (String s : m_fields) {
-			getters.add("get" + firstCharUpper(s));
-		}
-		return getters;
-	}*/
-	
-	/**
-	 * Set Field-methods of the entity.
-	 * @param fields	 the field-methods of the entity.
-	 * @throws NoSuchMethodException 
-	 */
-	public void setFields(List<Method> fields) throws NoSuchMethodException {
-		if (validateFields(fields)) {
-			m_fields = fields;
-		} else {
-			throw new NoSuchMethodException("Fields to add does not conform with entity class.");
-		}
-	}
-	
-	/**
-	 * Set Field-methods of the entity as a list of strings.
-	 * @param names	 the field-names of the entity.
-	 * @throws NoSuchMethodException 
-	 */
-	public void setFieldsAsNames(List<String> names) throws NoSuchMethodException {
-		for (String s : names) {
-			String mName = toGetterName(s);
-			if (validateFieldName(mName)) {
-				m_fields.add(m_entityClass.getMethod(mName));
-			}
-		}
-	}
-	
-	/**
-	 * Add a field-method to the fields of the entity.
-	 * @param field	 the field-method to add.
-	 */
-	public void addField(Method field) {
-		if (validateField(field)) {
-			m_fields.add(field);
-		}
-	}
-	
-	/**
-	 * Add a field-method to the fields of the entity as string.
-	 * @param name	 the field-method to add.
-	 * @throws NoSuchMethodException 
-	 */
-	public void addFieldAsName(String name) throws NoSuchMethodException {
-		String mName = toGetterName(name);
-		m_fields.add(m_entityClass.getMethod(mName));
-	}
-	
-	/**
-	 * Remove a field-method from the fields of the entity.
-	 * @param field	 the field-method to remove.
-	 * @return returns the success of the operation
-	 */
-	public boolean removeField(Method field) {
-		return m_fields.remove(field);
-	}
-	
-	/**
-	 * Remove a field from the fields of the entity as name.
-	 * @param name	 the field as name to remove.
-	 * @return returns the success of the operation
-	 */
-	public boolean removeField(String name) {
-		for (Method m : m_fields) {
-			if (m.getName().equals(toGetterName(name))) {
-				return m_fields.remove(m);
-			}
-		}
-		return false;
-	}
-	
-	/**
-	 * Remove field-methods from the fields of the entity.
-	 * @param fields	 the field-methods to remove.
-	 * @return returns the success of the operation
-	 */
-	public boolean removeFields(Method... fields) {
-		return m_fields.remove(fields);
-	}
-	
-	/**
-	 * Remove fields as names from the fields of the entity.
-	 * @param names	 the field names to remove.
-	 * @return returns the success of the operation
-	 */
-	public boolean removeFields(String... names) {
-		for (String name : names) {
-			if (!removeField(name)) {
-				return false;
-			}
-		}
-		return true;
 	}
 	
 	/**
@@ -244,17 +122,37 @@ public class ExtentEntity extends AbstractExtentPart {
 	}
 	
 	/**
-	 * Set Child entities. Methods of child entities are set and consistency
-	 * to parent class is checked.
-	 * @param children	 the child entities of the entity.
-	 * @throws NoSuchMethodException 
+	 * Collections.
+	 * @return the collections of the entity.
 	 */
-	public void setChildEntities(List<ExtentEntity> children) throws NoSuchMethodException {
-		for (ExtentEntity ent : children) {
-			Method m  = m_entityClass.getMethod(ent.getGetterName());
-			ent.setMethod(m);
+	public List<ExtentCollection> getCollections() {
+		return m_collections;
+	}
+	
+	/**
+	 * Add a field-method to the fields of the entity.
+	 * @param field	 the field-method to add.
+	 * @throws NoSuchMethodException 
+	 * @throws SecurityException 
+	 */
+	private void addField(Method field) throws NoSuchMethodException {
+		// Check here again if Method is valid.
+		m_entityClass.getMethod(field.getName());
+		m_fields.add(field);
+	}
+	
+	/**
+	 * Remove a field from the fields of the entity as name.
+	 * @param name	 the field as name to remove.
+	 * @return returns the success of the operation
+	 */
+	private boolean removeField(String name) {
+		for (Method m : m_fields) {
+			if (m.getName().equals(toGetterName(name))) {
+				return m_fields.remove(m);
+			}
 		}
-		m_childEntities = children;
+		return false;
 	}
 	
 	/**
@@ -263,7 +161,7 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * @param child	 the child to add.
 	 * @throws NoSuchMethodException 
 	 */
-	public void addChildEntity(ExtentEntity child) throws NoSuchMethodException {
+	private void addChildEntity(ExtentEntity child) throws NoSuchMethodException {
 		Method m  = m_entityClass.getMethod(child.getGetterName());
 		child.setMethod(m);
 		m_childEntities.add(child);
@@ -274,7 +172,7 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * @param name	 name of the entity to remove.
 	 * @return returns the success of the operation
 	 */
-	public boolean removeEntity(String name) {
+	private boolean removeEntity(String name) {
 		for (ExtentEntity e : m_childEntities) {
 			if (e.getName().equals(name)) {
 				m_childEntities.remove(e);
@@ -282,42 +180,6 @@ public class ExtentEntity extends AbstractExtentPart {
 			}
 		}
 		return false;
-	}
-	
-	/**
-	 * Remove an entity from the children of the entity.
-	 * @param c	 class of the entity to remove.
-	 * @return returns the success of the operation
-	 */
-	public boolean removeEntity(Class<?> c) {
-		for (ExtentEntity e : m_childEntities) {
-			if (e.getEntityClass().equals(c)) {
-				m_childEntities.remove(e);
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	/**
-	 * Collections.
-	 * @return the collections of the entity.
-	 */
-	public List<ExtentCollection> getCollections() {
-		return m_collections;
-	}
-	
-	/**
-	 * Set Child collections.
-	 * @param collections	 the collections of the entity.
-	 * @throws NoSuchMethodException 
-	 */
-	public void setCollections(List<ExtentCollection> collections) throws NoSuchMethodException {
-		for (ExtentCollection c : collections) {
-			Method m  = m_entityClass.getMethod(c.getGetterName());
-			c.setMethod(m);
-		}
-		m_collections = collections;
 	}
 	
 	/**
@@ -325,10 +187,30 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * @param collection	 the collection to add.
 	 * @throws NoSuchMethodException 
 	 */
-	public void addCollection(ExtentCollection collection) throws NoSuchMethodException {
+	private void addCollection(ExtentCollection collection) throws NoSuchMethodException {
 		Method m  = m_entityClass.getMethod(collection.getGetterName());
 		collection.setMethod(m);
-		m_collections.add(collection);
+		boolean consistent = false;
+		// Check if the class of the contained entity is consistent
+		Type rawType = m.getGenericReturnType();
+		if (rawType instanceof ParameterizedType) {
+			Type[] pt = ((ParameterizedType) m.getGenericReturnType())
+			.getActualTypeArguments();
+			if (pt.length > 0 && pt[0] instanceof Class<?>) {
+				if (((Class<?>) pt[0]).isAssignableFrom(
+					collection.getContainedEntity().getEntityClass())) {
+					
+					consistent = true;
+				}
+			}
+		}
+		if (consistent) {
+			m_collections.add(collection);
+		} else {
+			throw new NoSuchMethodException("Collection type [" 
+				+ collection.getContainedEntity().getEntityClass().getSimpleName() 
+				+ "] doesnt conform with class definition.");
+		}
 	}
 	
 	/**
@@ -336,24 +218,9 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * @param name	 name of the collection to remove.
 	 * @return returns the success of the operation
 	 */
-	public boolean removeCollection(String name) {
+	private boolean removeCollection(String name) {
 		for (ExtentCollection e : m_collections) {
 			if (e.getName().equals(name)) {
-				m_collections.remove(e);
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	/**
-	 * Remove a collection from the collections of the entity.
-	 * @param c	 class of the collection to remove.
-	 * @return returns the success of the operation
-	 */
-	public boolean removeCollection(Class<?> c) {
-		for (ExtentCollection e : m_collections) {
-			if (e.getName().equals(c)) {
 				m_collections.remove(e);
 				return true;
 			}
@@ -364,16 +231,16 @@ public class ExtentEntity extends AbstractExtentPart {
 	/**
 	 * Validates the correctness of the fields of this entity.
 	 * @return if the fields of the entity is valid
-	 */
+	 *//*
 	private boolean validateFields() {
 		return validateFields(m_fields);
 	}
 	
-	/**
+	*//**
 	 * Checks the validation of the given methods in this entity.
 	 * @param fields	the fields to validate.
 	 * @return if the fields are valid
-	 */
+	 *//*
 	private boolean validateFields(List<Method> fields) {
 		for (Method m : fields) {
 			if (!validateField(m)) {
@@ -383,11 +250,11 @@ public class ExtentEntity extends AbstractExtentPart {
 		return true;
 	}
 	
-	/**
+	*//**
 	 * Checks the validation of the given method in this entity.
 	 * @param field		the field to validate.
 	 * @return if the field is valid
-	 */
+	 *//*
 	private boolean validateField(Method field) {
 		try {
 			Method m = m_entityClass.getMethod(field.getName());
@@ -398,13 +265,13 @@ public class ExtentEntity extends AbstractExtentPart {
 		} catch (Exception e) {
 			return false;
 		}
-	}
+	}*/
 	
 	/**
 	 * Checks the validation of the given field in this entity.
 	 * @param name		the field-name to validate.
 	 * @return if the field is valid
-	 */
+	 *//*
 	private boolean validateFieldName(String name) {
 		try {
 			m_entityClass.getMethod(name);
@@ -412,8 +279,19 @@ public class ExtentEntity extends AbstractExtentPart {
 		} catch (Exception e) {
 			return false;
 		}
-	}
+	}*/
 	
+	/**
+	 * Add a method to the extent (given as name).
+	 * Automatically checks if a property, entity or a collection.
+	 * @param name	 the field to add.
+	 * @throws NoSuchMethodException 
+	 */
+	private void addMethodAsName(String name) throws NoSuchMethodException {
+		String mName = toGetterName(name);
+		Method m = m_entityClass.getMethod(mName);
+		fetchMethod(m, DataExtent.DEFAULT_LOADING_DEPTH);
+	}
 	
 	
 	//*************** Fluent API ******************//
@@ -449,7 +327,8 @@ public class ExtentEntity extends AbstractExtentPart {
 	}
 	
 	/**
-	 * Extend the entity by fields.
+	 * Extend the entity by the given fields.
+	 * Fields are either simple properties, sub-entities or collections.
 	 * @param fields	fields to be added.
 	 * 
 	 * @return the new ExtentEntity Object.
@@ -457,19 +336,44 @@ public class ExtentEntity extends AbstractExtentPart {
 	 */
 	public ExtentEntity with(String... fields) throws NoSuchMethodException {
 		for (String s : fields) {
-			addFieldAsName(s);
+			addMethodAsName(s);
+		}
+		return this;
+	}
+	
+	/**
+	 * Extend the entity by the given sub-entities.
+	 * @param entities	entities to be added.
+	 * 
+	 * @return the new ExtentEntity Object.
+	 * @throws NoSuchMethodException 
+	 */
+	public ExtentEntity withSubentities(AbstractExtentPart... entities) throws NoSuchMethodException {
+		for (AbstractExtentPart entity : entities) {
+			if (entity instanceof ExtentEntity) {
+				addChildEntity((ExtentEntity) entity);
+			} else {
+				addCollection((ExtentCollection) entity);
+			}
 		}
 		return this;
 	}
 	
 	/**
 	 * Exclude fields from the entity.
+	 * Fields are either simple properties, sub-entities or collections.
 	 * @param fields	fields to be excluded.
 	 * 
 	 * @return the new ExtentEntity Object.
 	 */
 	public ExtentEntity without(String...fields) {
-		removeFields(fields);
+		for (String s : fields) {
+			if (!removeField(s)) {
+				if (!removeEntity(s)) {
+					removeCollection(s);
+				}
+			}
+		}
 		return this;
 	}
 	
@@ -482,12 +386,12 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * 
 	 * @return the new ExtentEntity Object.
 	 * @throws NoSuchMethodException 
-	 */
+	 *//*
 	public ExtentEntity include(Class<?> c, String... fields) throws NoSuchMethodException {
 		return include(c.getSimpleName(), c, fields);
 	}
 	
-	/**
+	*//**
 	 * Extend the entity by an entity given as class,
 	 * name is the name of the class.
 	 * Explore all the fields and sub-entities to given depth.
@@ -496,12 +400,12 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * 
 	 * @return the new ExtentEntity Object.
 	 * @throws NoSuchMethodException 
-	 */
+	 *//*
 	public ExtentEntity include(Class<?> c, int depth) throws NoSuchMethodException {
 		return include(c.getSimpleName(), c, depth);
 	}
 	
-	/**
+	*//**
 	 * Extend the entity by an entity given as class and name.
 	 * If fields are empty, all the fields/entities of the class are added.
 	 * @param name		name of the entity.
@@ -510,12 +414,12 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * 
 	 * @return the new ExtentEntity Object.
 	 * @throws NoSuchMethodException 
-	 */
+	 *//*
 	public ExtentEntity include(String name, Class<?> c, String... fields) throws NoSuchMethodException {
 		ExtentEntity tmp = entity(name, c);
 		if (fields.length > 0) {
 			for (String s : fields) {
-				tmp.addFieldAsName(s);
+				tmp.addMethodAsName(s);
 			}
 		} else {
 			// Fetch all fields if empty
@@ -525,7 +429,7 @@ public class ExtentEntity extends AbstractExtentPart {
 		return this;
 	}
 	
-	/**
+	*//**
 	 * Extend the entity by an entity given as class and name.
 	 * Explore all the fields and sub-entities to given depth.
 	 * @param name		name of the entity.
@@ -534,7 +438,7 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * 
 	 * @return the new ExtentEntity Object.
 	 * @throws NoSuchMethodException 
-	 */
+	 *//*
 	public ExtentEntity include(String name, Class<?> c, int depth) throws NoSuchMethodException {
 		ExtentEntity tmp = entity(name, c);
 
@@ -542,18 +446,18 @@ public class ExtentEntity extends AbstractExtentPart {
 		return this;
 	}
 	
-	/**
+	*//**
 	 * Extend the entity by the given entity.
 	 * @param entity	the entity to add.
 	 * @return	the new ExtentEntity Object.
 	 * @throws NoSuchMethodException 
-	 */
+	 *//*
 	public ExtentEntity include(ExtentEntity entity) throws NoSuchMethodException {
 		addChildEntity(entity);
 		return this;
 	}
 	
-	/**
+	*//**
 	 * Extend the entity by an entity given as class,
 	 * name is the name of the class.
 	 * If fields are empty, all the fields/entities of the class are added.
@@ -562,12 +466,12 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * 
 	 * @return the new ExtentEntity Object.
 	 * @throws NoSuchMethodException 
-	 */
+	 *//*
 	public ExtentEntity includeList(Class<?> c, String... fields) throws NoSuchMethodException {
 		return includeList(c.getSimpleName(), c, fields);
 	}
 	
-	/**
+	*//**
 	 * Extend the entity by an entity given as class,
 	 * name is the name of the class.
 	 * Explore all the fields and sub-entities to given depth.
@@ -576,12 +480,12 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * 
 	 * @return the new ExtentEntity Object.
 	 * @throws NoSuchMethodException 
-	 */
+	 *//*
 	public ExtentEntity includeList(Class<?> c, int depth) throws NoSuchMethodException {
 		return includeList(c.getSimpleName(), c, depth);
 	}
 	
-	/**
+	*//**
 	 * Extend the entity by an entity given as class and name.
 	 * If fields are empty, all the fields/entities of the class are added.
 	 * @param name		name of the entity.
@@ -590,12 +494,12 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * 
 	 * @return the new ExtentEntity Object.
 	 * @throws NoSuchMethodException 
-	 */
+	 *//*
 	public ExtentEntity includeList(String name, Class<?> c, String... fields) throws NoSuchMethodException {
 		ExtentCollection tmp = new ExtentCollection(name, c);
 		if (fields.length > 0) {
 			for (String s : fields) {
-				tmp.getContainedEntity().addFieldAsName(s);
+				tmp.getContainedEntity().addMethodAsName(s);
 			}
 		} else {
 			// Fetch all fields if empty
@@ -605,7 +509,7 @@ public class ExtentEntity extends AbstractExtentPart {
 		return this;
 	}
 	
-	/**
+	*//**
 	 * Extend the  by an entity given as class and name.
 	 * Explore all the fields and sub-entities to given depth.
 	 * @param name		name of the entity.
@@ -614,7 +518,7 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * 
 	 * @return the new ExtentEntity Object.
 	 * @throws NoSuchMethodException 
-	 */
+	 *//*
 	public ExtentEntity includeList(String name, Class<?> c, int depth) throws NoSuchMethodException {
 		ExtentCollection tmp = new ExtentCollection(name, c);
 		tmp.getContainedEntity().fetchAllFields(depth);
@@ -622,25 +526,25 @@ public class ExtentEntity extends AbstractExtentPart {
 		return this;
 	}
 	
-	/**
+	*//**
 	 * Extend the  by a collection containing the given entity.
 	 * @param entity	the entity in the collection to be added.
 	 * @return the new ExtentEntity Object.
 	 * @throws NoSuchMethodException 
-	 */
+	 *//*
 	public ExtentEntity includeList(ExtentEntity entity) throws NoSuchMethodException {
 		String name = entity.getName();
 		return includeList(name, entity);
 	}
 	
-	/**
+	*//**
 	 * Extend the  by a collection containing the given entity,
 	 * name of the collection is name.
 	 * @param name		the name of the collection.
 	 * @param entity	the entity in the collection to be added.
 	 * @return the new ExtentEntity Object.
 	 * @throws NoSuchMethodException 
-	 */
+	 *//*
 	public ExtentEntity includeList(String name, ExtentEntity entity) throws NoSuchMethodException {
 		ExtentCollection tmp = new ExtentCollection(name);
 		tmp.setContainedEntity(entity);
@@ -649,12 +553,12 @@ public class ExtentEntity extends AbstractExtentPart {
 	}
 	
 	
-	/**
+	*//**
 	 * Exclude the entity/collection given as string from the .
 	 * @param name		name of the entity/collection.
 	 * 
 	 * @return the new ExtentEntity Object.
-	 */
+	 *//*
 	public ExtentEntity exclude(String name) {
 		if (!removeEntity(name)) {
 			removeCollection(name);
@@ -662,25 +566,25 @@ public class ExtentEntity extends AbstractExtentPart {
 		return this;
 	}
 	
-	/**
+	*//**
 	 * Exclude the entity given as class from the .
 	 * @param c		class of the entity.
 	 * 
 	 * @return the new ExtentEntity Object.
-	 */
+	 *//*
 	public ExtentEntity exclude(Class<?> c) {
 		if (!removeEntity(c)) {
 			removeCollection(c);
 		}
 		return this;
-	}
+	}*/
 	
 	/**
-	 * Add all fields to the entity.
+	 * Include all fields, entities and collections of the class-entity.
 	 * @param depth		Exploration depth.
 	 * @return the new ExtentEntity Object.
 	 */
-	public ExtentEntity fetchAllFields(int depth) {
+	public ExtentEntity all(int depth) {
 		if (depth > 0) {
 			try {
 				for (Method m : m_entityClass.getMethods()) {
@@ -696,16 +600,16 @@ public class ExtentEntity extends AbstractExtentPart {
 	/**
 	 * Add the method to the entity in the appropriate manner,
 	 * as field, entity or collection.
+	 * Ensure when calling the function that method exists in entity class.
 	 * @param m			the method to be added.
 	 * @param depth		Exploration depth.
 	 * @throws NoSuchMethodException 
 	 */
 	private void fetchMethod(Method m, int depth) throws NoSuchMethodException {
 		// Fetch only the methods with getter and no arguments
-		// Exclude getClass() and Transient fields
+		// Exclude getClass()
 		boolean isGetter = m.getName().startsWith("get") && m.getParameterTypes().length == 0;
-		if (isGetter && !m.getName().equals("getClass") 
-			&& m.getAnnotation(Transient.class) == null && !m.getName().equals("get")) {
+		if (isGetter && !m.getName().equals("getClass") && !m.getName().equals("get")) {
 
 			if (m.getReturnType().isPrimitive() || m.getReturnType().isEnum()
 				|| m.getReturnType().equals(String.class)) {
@@ -716,7 +620,7 @@ public class ExtentEntity extends AbstractExtentPart {
 			} else {
 				ExtentEntity tmp = entity(m.getReturnType(), m);
 				if (depth > 1) {
-					tmp.fetchAllFields(depth - 1);
+					tmp.all(depth - 1);
 				}
 				addChildEntity(tmp);
 			}
@@ -743,7 +647,7 @@ public class ExtentEntity extends AbstractExtentPart {
 				collectionName = collectionName.substring(0, 1).toLowerCase() + collectionName.substring(1);
 				ExtentCollection tmp = new ExtentCollection(t, m);
 				if (depth > 1) {
-					tmp.getContainedEntity().fetchAllFields(depth - 1);
+					tmp.getContainedEntity().all(depth - 1);
 				}
 				addCollection(tmp);
 			}
@@ -751,4 +655,126 @@ public class ExtentEntity extends AbstractExtentPart {
 		
 	}
 	
+	//******** trash *************//
+	
+	/**
+	 * Set Class of the entity. Class must be consistent with
+	 * the defined fields and child entities.
+	 * @param c		the class of the entity.
+	 * @throws NoSuchMethodException 
+	 *//*
+	private void setEntityClass(Class<?> c) throws NoSuchMethodException {
+		Class<?> oldClass = m_entityClass;
+		m_entityClass = c;
+		if (!validateFields()) {
+			m_entityClass = oldClass;
+			throw new NoSuchMethodException("New Entity class is not consistent "
+				+ "with defined fields and child-entities.");
+		}
+		
+	}
+	
+	*//**
+	 * Set Field-methods of the entity.
+	 * @param fields	 the field-methods of the entity.
+	 * @throws NoSuchMethodException 
+	 *//*
+	private void setFields(List<Method> fields) throws NoSuchMethodException {
+		if (validateFields(fields)) {
+			m_fields = fields;
+		} else {
+			throw new NoSuchMethodException("Fields to add does not conform with entity class.");
+		}
+	}
+	
+	*//**
+	 * Set Field-methods of the entity as a list of strings.
+	 * @param names	 the field-names of the entity.
+	 * @throws NoSuchMethodException 
+	 *//*
+	private void setFieldsAsNames(List<String> names) throws NoSuchMethodException {
+		for (String s : names) {
+			String mName = toGetterName(s);
+			if (validateFieldName(mName)) {
+				m_fields.add(m_entityClass.getMethod(mName));
+			}
+		}
+	}*/
+	
+	/**
+	 * Remove a field-method from the fields of the entity.
+	 * @param field	 the field-method to remove.
+	 * @return returns the success of the operation
+	 */
+	private boolean removeField(Method field) {
+		return m_fields.remove(field);
+	}
+	
+	
+	/**
+	 * Remove field-methods from the fields of the entity.
+	 * @param fields	 the field-methods to remove.
+	 * @return returns the success of the operation
+	 */
+	private boolean removeFields(Method... fields) {
+		return m_fields.remove(fields);
+	}
+	
+	/**
+	 * Set Child entities. Methods of child entities are set and consistency
+	 * to parent class is checked.
+	 * @param children	 the child entities of the entity.
+	 * @throws NoSuchMethodException 
+	 */
+	private void setChildEntities(List<ExtentEntity> children) throws NoSuchMethodException {
+		for (ExtentEntity ent : children) {
+			Method m  = m_entityClass.getMethod(ent.getGetterName());
+			ent.setMethod(m);
+		}
+		m_childEntities = children;
+	}
+
+	/**
+	 * Remove an entity from the children of the entity.
+	 * @param c	 class of the entity to remove.
+	 * @return returns the success of the operation
+	 *//*
+	private boolean removeEntity(Class<?> c) {
+		for (ExtentEntity e : m_childEntities) {
+			if (e.getEntityClass().equals(c)) {
+				m_childEntities.remove(e);
+				return true;
+			}
+		}
+		return false;
+	}*/
+
+	/**
+	 * Set Child collections.
+	 * @param collections	 the collections of the entity.
+	 * @throws NoSuchMethodException 
+	 */
+	private void setCollections(List<ExtentCollection> collections) throws NoSuchMethodException {
+		for (ExtentCollection c : collections) {
+			Method m  = m_entityClass.getMethod(c.getGetterName());
+			c.setMethod(m);
+		}
+		m_collections = collections;
+	}
+
+	/**
+	 * Remove a collection from the collections of the entity.
+	 * @param c	 class of the collection to remove.
+	 * @return returns the success of the operation
+	 *//*
+	private boolean removeCollection(Class<?> c) {
+		for (ExtentCollection e : m_collections) {
+			if (e.getName().equals(c)) {
+				m_collections.remove(e);
+				return true;
+			}
+		}
+		return false;
+	}
+	*/
 }
