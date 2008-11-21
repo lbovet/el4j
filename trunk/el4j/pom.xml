@@ -795,6 +795,21 @@
 					<artifactId>dashboard-maven-plugin</artifactId>
 					<version>${version.dashboard-maven-plugin}</version>
 				</plugin>
+				<plugin>
+					<groupId>ch.elca.el4j.maven.plugins</groupId>
+					<artifactId>maven-cobertura-runtime-plugin</artifactId>
+					<version>${version.maven-cobertura-runtime-plugin}</version>
+					<executions>
+						<execution>
+							<id>cobertura-runtime_instrument-and-collectsources</id>
+							<phase>test-compile</phase>
+							<goals>
+								<goal>instrument</goal>
+								<goal>sourcecollector</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		<extensions>
@@ -1287,6 +1302,24 @@
 				<db.url>jdbc:mysql://${db.host}:${db.port}/${db.database-name}?zeroDateTimeBehavior=convertToNull</db.url>
 			</properties>
 		</profile>
+		
+		<profile>
+			<id>cobertura-runtime</id>
+			<dependencies>
+				<dependency>
+					<groupId>ch.elca.el4j.modules</groupId>
+					<artifactId>module-cobertura-runtime</artifactId>
+				</dependency>
+			</dependencies>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>ch.elca.el4j.maven.plugins</groupId>
+						<artifactId>maven-cobertura-runtime-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
 	<repositories>
 		<repository>
@@ -1677,7 +1710,7 @@
 				<scope>runtime</scope>
 			</dependency>
 
-			<!-- module-core -->
+			<!-- module-bshlauncher -->
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-bshlauncher</artifactId>
@@ -1688,6 +1721,21 @@
 				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-bshlauncher</artifactId>
 				<version>${version.module-bshlauncher}</version>
+				<type>test-jar</type>
+				<scope>test</scope>
+			</dependency>
+			
+			<!-- module-cobertura-runtime -->
+			<dependency>
+				<groupId>ch.elca.el4j.modules</groupId>
+				<artifactId>module-cobertura-runtime</artifactId>
+				<version>${version.module-cobertura-runtime}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>ch.elca.el4j.modules</groupId>
+				<artifactId>module-cobertura-runtime</artifactId>
+				<version>${version.module-cobertura-runtime}</version>
 				<type>test-jar</type>
 				<scope>test</scope>
 			</dependency>
@@ -1926,6 +1974,11 @@
 				<artifactId>ehcache</artifactId>
 				<version>1.5.0</version>
 			</dependency>
+			<dependency>
+				<groupId>net.sourceforge.cobertura</groupId>
+				<artifactId>cobertura</artifactId>
+				<version>1.9</version>
+			</dependency>
 
 			<!-- JavaX projects -->
 			<dependency>
@@ -1948,6 +2001,13 @@
 				<artifactId>servlet-api</artifactId>
 				<version>2.5</version>
 				<scope>provided</scope>
+			</dependency>
+			
+			<!-- Codehaus -->
+			<dependency>
+				<groupId>org.codehaus.plexus</groupId>
+				<artifactId>plexus-utils</artifactId>
+				<version>1.5.6</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -2056,6 +2116,9 @@
 		<version.maven-extension-findbugs-checks>
 			1.0-SNAPSHOT
 		</version.maven-extension-findbugs-checks>
+		<version.maven-cobertura-runtime-plugin>
+			1.0-SNAPSHOT
+		</version.maven-cobertura-runtime-plugin>
 		
 		<!-- EL4J framework module version numbers -->
 		<version.module-core>
@@ -2142,6 +2205,9 @@
 		<version.application-refdb>
 			2.8-SNAPSHOT
 		</version.application-refdb>
+		<version.module-cobertura-runtime>
+			1.0-SNAPSHOT
+		</version.module-cobertura-runtime>
 
 		<!-- Maven utils -->
 		<version.maven-utils>
@@ -2183,6 +2249,17 @@
 
 		<!-- Eclipse -->
 		<eclipse.reactorProjectGroupIdPrefixes/>
+		
+		<!-- Cobertura -->
+		<cobertura-runtime.dataDirectory>${el4j.project.home}/cobertura-runtime</cobertura-runtime.dataDirectory>
+		<cobertura-runtime.dataFilename>el4j-cobertura.ser</cobertura-runtime.dataFilename>
+		<cobertura-runtime.sourceCollectorDirectoryName>java-sources</cobertura-runtime.sourceCollectorDirectoryName>
+		<net.sourceforge.cobertura.datafile>${cobertura-runtime.dataDirectory}/${cobertura-runtime.dataFilename}</net.sourceforge.cobertura.datafile>
+		<cobertura-runtime.keepReports>false</cobertura-runtime.keepReports>
+		<cobertura-runtime.jmxRmiRegistryPort>8199</cobertura-runtime.jmxRmiRegistryPort>
+		<cobertura-runtime.jmxServiceHost>localhost</cobertura-runtime.jmxServiceHost>
+		<cobertura-runtime.jmxServiceName>coberturaRuntimeConnector</cobertura-runtime.jmxServiceName>
+		<cobertura-runtime.jmxServiceUrl>service:jmx:rmi://${cobertura-runtime.jmxServiceHost}/jndi/rmi://${cobertura-runtime.jmxServiceHost}:${cobertura-runtime.jmxRmiRegistryPort}/${cobertura-runtime.jmxServiceName}</cobertura-runtime.jmxServiceUrl>
 
 		<!-- Used Maven version -->
 		<el4j.java.version>1.5</el4j.java.version>
