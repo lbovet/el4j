@@ -32,6 +32,8 @@ import javax.swing.UIManager;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.bushe.swing.event.EventServiceExistsException;
+import org.bushe.swing.event.EventServiceLocator;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -41,6 +43,7 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.core.context.ModuleApplicationContextConfiguration;
 import ch.elca.el4j.gui.swing.config.DefaultConfig;
 import ch.elca.el4j.gui.swing.cookswing.TagLibraryFactory;
+import ch.elca.el4j.gui.swing.eventbus.ExceptionThowingEventService;
 import ch.elca.el4j.gui.swing.exceptions.CookXmlExceptionHandler;
 import ch.elca.el4j.gui.swing.exceptions.Exceptions;
 import ch.elca.el4j.gui.swing.frames.ApplicationFrame;
@@ -153,6 +156,13 @@ public abstract class GUIApplication extends SingleFrameApplication {
 		Thread.setDefaultUncaughtExceptionHandler(Exceptions.getInstance());
 		// little hack to make it work also in Swing/AWT
 		System.setProperty("sun.awt.exception.handler", Exceptions.class.getName());
+		// register custom eventService that not only logs errors but also throws exceptions
+		try {
+			EventServiceLocator.setEventService(EventServiceLocator.SERVICE_NAME_EVENT_BUS,
+				new ExceptionThowingEventService());
+		} catch (EventServiceExistsException e1) {
+			s_logger.warn("Unable to register EventService");
+		}
 		
 		// configure CookSwing
 		CookSwing.setDefaultExceptionHandler(CookXmlExceptionHandler.getInstance());
@@ -164,29 +174,6 @@ public abstract class GUIApplication extends SingleFrameApplication {
 				try {
 					GUIApplication application = Application.create(applicationClass);
 					
-					// apply first look and feel in list that is available
-					final String lnfKey = "Application.preferredLookAndFeel";
-					String lnfs = application.getContext().getResourceMap().getString(lnfKey);
-					if (lnfs != null) {
-						for (String lnf : lnfs.split(",")) {
-							try {
-								lnf = lnf.trim();
-								if (lnf.equalsIgnoreCase("system")) {
-									String name = UIManager.getSystemLookAndFeelClassName();
-									UIManager.setLookAndFeel(name);
-								} else {
-									UIManager.setLookAndFeel(lnf);
-								}
-								
-								break;
-							} catch (Exception e) {
-								s_logger.info("Look and feel '" + lnf + "' is not available.");
-								// try next
-								continue;
-							}
-						}
-					}
-					
 					Application.setInstance(application);
 
 					// new: set the spring context early
@@ -194,6 +181,8 @@ public abstract class GUIApplication extends SingleFrameApplication {
 					
 					// set default config
 					application.setConfig(new DefaultConfig());
+					
+					setupLookAndFeel(application);
 					
 					application.initialize(args);
 					application.startup();
@@ -354,6 +343,13 @@ public abstract class GUIApplication extends SingleFrameApplication {
 		return ac.getActionMap(object).get(actionName);
 	}
 	
+	public Action getAction(Class<?> cls, Object object, String actionName) {
+		org.jdesktop.application.ApplicationContext ac
+			= Application.getInstance().getContext();
+		
+		return ac.getActionMap(cls, object).get(actionName);
+	}
+	
 	/**
 	 * Returns the string for a specific resource id.
 	 * @param id    the resource id
@@ -396,6 +392,35 @@ public abstract class GUIApplication extends SingleFrameApplication {
 	/** {@inheritDoc} */
 	public void removeActionMappingInstance(Object o) {
 		m_instancesWithActionMappings.remove(o);
+	}
+
+	/**
+	 * Setup look and feel of the application.
+	 * @param application    the GUI application
+	 */
+	private static void setupLookAndFeel(GUIApplication application) {
+		// apply first look and feel in list that is available
+		final String lnfKey = "Application.preferredLookAndFeel";
+		String lnfs = application.getContext().getResourceMap().getString(lnfKey);
+		if (lnfs != null) {
+			for (String lnf : lnfs.split(",")) {
+				try {
+					lnf = lnf.trim();
+					if (lnf.equalsIgnoreCase("system")) {
+						String name = UIManager.getSystemLookAndFeelClassName();
+						UIManager.setLookAndFeel(name);
+					} else {
+						UIManager.setLookAndFeel(lnf);
+					}
+					
+					break;
+				} catch (Exception e) {
+					s_logger.info("Look and feel '" + lnf + "' is not available.");
+					// try next
+					continue;
+				}
+			}
+		}
 	}
 	
 }
