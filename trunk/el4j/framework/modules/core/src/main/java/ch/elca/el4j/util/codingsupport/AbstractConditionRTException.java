@@ -14,7 +14,6 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-
 package ch.elca.el4j.util.codingsupport;
 
 import ch.elca.el4j.core.exceptions.BaseRTException;
