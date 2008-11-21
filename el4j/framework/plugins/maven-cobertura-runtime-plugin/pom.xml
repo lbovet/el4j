@@ -16,7 +16,7 @@
 	<description>
 		Used to decorate code with cobertura stuff where the code will be used in runtime environment, 
 		i.e. also on customer side.
-    </description>
+	</description>
 	<build>
 		<plugins>
 			<plugin>
