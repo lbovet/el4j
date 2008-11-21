@@ -19,7 +19,9 @@ package ch.elca.el4j.plugins.database;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.factory.ArtifactFactory;
@@ -92,6 +94,10 @@ public class DepGraphWalker {
 	 */
 	private ArtifactFactory m_factory;
 
+	/**
+	 * Set of visited DepGraphArtifacts.
+	 */
+	private Set<DepGraphArtifact> m_visitedDepGraphArtifacts = new HashSet<DepGraphArtifact>();;
 
 	/**
 	 * Constructor.
@@ -333,6 +339,10 @@ public class DepGraphWalker {
 	 *            The root (i.e. project) artifact
 	 */
 	private void createDAG(DepGraphArtifact artifact) {
+		if (m_visitedDepGraphArtifacts.contains(artifact)) {
+			return;
+		}
+		m_visitedDepGraphArtifacts.add(artifact);
 		m_dag.addVertex(artifact.getQualifiedName());
 		for (DepGraphArtifact dep : artifact.getDependencies()) {
 			createDAG(dep);
