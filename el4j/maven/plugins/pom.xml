@@ -70,11 +70,6 @@
 				<artifactId>maven-project</artifactId>
 				<version>${el4j.maven.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>org.codehaus.plexus</groupId>
-				<artifactId>plexus-utils</artifactId>
-				<version>1.2</version>
-			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<reporting>
