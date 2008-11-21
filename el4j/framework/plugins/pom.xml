@@ -25,5 +25,6 @@
 	<modules>
 		<module>maven-beans-plugin</module>
 		<module>maven-database-plugin</module>
+		<module>maven-cobertura-runtime-plugin</module>
 	</modules>
 </project>
