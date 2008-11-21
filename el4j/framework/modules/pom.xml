@@ -42,5 +42,6 @@
 		<module>web</module>
 		<module>xml_merge</module>
 		<module>bshlauncher</module>
+		<module>cobertura-runtime</module>
 	</modules>
 </project>
