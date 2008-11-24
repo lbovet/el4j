@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 if [ $# -lt 1 ] ; then
 	echo "Please specify whether you want to check external or internal (external/internal)"
