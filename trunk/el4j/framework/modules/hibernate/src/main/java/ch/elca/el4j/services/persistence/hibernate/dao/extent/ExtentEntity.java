@@ -21,6 +21,8 @@ import java.util.List;
 
 import javax.persistence.Transient;
 
+import ch.elca.el4j.util.codingsupport.BeanPropertyUtils;
+
 
 /**
  * A ExtentEntity represents a complex Data Type in an Extent.
@@ -90,7 +92,7 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * @param method	the method to get the entity
 	 */
 	private ExtentEntity(Class<?> c, Method method) {
-		m_name = toFieldName(method.getName());
+		m_name = toFieldName(method);
 		m_entityClass = c;
 		//m_method = method;
 		m_fields = new LinkedList<String>();
@@ -161,11 +163,15 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * @throws NoSuchMethodException 
 	 */
 	private void addChildEntity(ExtentEntity child) throws NoSuchMethodException {
-		Method m  = m_entityClass.getMethod(child.getGetterName());
-		//child.setMethod(m);
-		if (m != null) {
-			child.setParent(this);
-			m_childEntities.add(child);
+		try {
+			Method m  = BeanPropertyUtils.getReadMethod(m_entityClass, child.getName());
+			//child.setMethod(m);
+			if (m != null) {
+				child.setParent(this);
+				m_childEntities.add(child);
+			}
+		} catch (IllegalArgumentException e) {
+			throw new NoSuchMethodException(e.getMessage());
 		}
 	}
 	
@@ -190,28 +196,32 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * @throws NoSuchMethodException 
 	 */
 	private void addCollection(ExtentCollection collection) throws NoSuchMethodException {
-		Method m  = m_entityClass.getMethod(collection.getGetterName());
-		collection.setParent(this);
-		boolean consistent = false;
-		// Check if the class of the contained entity is consistent
-		Type rawType = m.getGenericReturnType();
-		if (rawType instanceof ParameterizedType) {
-			Type[] pt = ((ParameterizedType) m.getGenericReturnType())
-			.getActualTypeArguments();
-			if (pt.length > 0 && pt[0] instanceof Class<?>) {
-				if (((Class<?>) pt[0]).isAssignableFrom(
-					collection.getContainedEntity().getEntityClass())) {
-					
-					consistent = true;
+		try {
+			Method m  = BeanPropertyUtils.getReadMethod(m_entityClass, collection.getName());
+			collection.setParent(this);
+			boolean consistent = false;
+			// Check if the class of the contained entity is consistent
+			Type rawType = m.getGenericReturnType();
+			if (rawType instanceof ParameterizedType) {
+				Type[] pt = ((ParameterizedType) m.getGenericReturnType())
+				.getActualTypeArguments();
+				if (pt.length > 0 && pt[0] instanceof Class<?>) {
+					if (((Class<?>) pt[0]).isAssignableFrom(
+						collection.getContainedEntity().getEntityClass())) {
+						
+						consistent = true;
+					}
 				}
 			}
-		}
-		if (consistent) {
-			m_collections.add(collection);
-		} else {
-			throw new NoSuchMethodException("Collection type [" 
-				+ collection.getContainedEntity().getEntityClass().getSimpleName() 
-				+ "] doesnt conform with class definition.");
+			if (consistent) {
+				m_collections.add(collection);
+			} else {
+				throw new NoSuchMethodException("Collection type [" 
+					+ collection.getContainedEntity().getEntityClass().getSimpleName() 
+					+ "] doesnt conform with class definition.");
+			}
+		} catch (IllegalArgumentException e) {
+			throw new NoSuchMethodException(e.getMessage());
 		}
 	}
 	
@@ -290,9 +300,16 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * @throws NoSuchMethodException 
 	 */
 	private void addMethodAsName(String name) throws NoSuchMethodException {
-		String mName = toGetterName(name);
-		Method m = m_entityClass.getMethod(mName);
-		fetchMethod(m, DataExtent.DEFAULT_LOADING_DEPTH);
+		try {
+			Method m = BeanPropertyUtils.getReadMethod(m_entityClass, name);
+			if (m != null) {
+				fetchMethod(m, DataExtent.DEFAULT_LOADING_DEPTH);
+			} else {
+				throw new NoSuchMethodException("Method doesn't exist.");
+			}
+		} catch (IllegalArgumentException e) {
+			throw new NoSuchMethodException(e.getMessage());
+		}
 	}
 	
 	
@@ -617,7 +634,7 @@ public class ExtentEntity extends AbstractExtentPart {
 			if (m.getReturnType().isPrimitive() || m.getReturnType().isEnum()
 				|| m.getReturnType().equals(String.class)) {
 				
-				addField(toFieldName(m.getName()));
+				addField(toFieldName(m));
 			} else if (Collection.class.isAssignableFrom(m.getReturnType())) {
 				fetchCollection(m, depth);
 			} else {
@@ -648,8 +665,6 @@ public class ExtentEntity extends AbstractExtentPart {
 			if (pt.length > 0 && pt[0] instanceof Class<?>) {
 				Class<?> t = (Class<?>) ((ParameterizedType) m.getGenericReturnType())
 					.getActualTypeArguments()[0];
-				String collectionName = m.getName().substring(3);
-				collectionName = collectionName.substring(0, 1).toLowerCase() + collectionName.substring(1);
 				ExtentCollection tmp = new ExtentCollection(t, m);
 				if (depth > 1) {
 					tmp.getContainedEntity().all(depth - 1);

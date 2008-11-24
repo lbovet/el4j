@@ -19,6 +19,8 @@ package ch.elca.el4j.services.persistence.hibernate.dao.extent;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 
+import ch.elca.el4j.util.codingsupport.BeanPropertyUtils;
+
 /**
  * An ExtentPart is the abstract super Class of Extent parts like ExtentEntity or ExtentCollection.
  *
@@ -53,10 +55,10 @@ public abstract class AbstractExtentPart implements Serializable {
 	 * Getter-Name of the extent-part.
 	 * Convention: "get" + name (with first letter in uppercase).
 	 * @return the getter-name of the extent-part.
-	 */
+	 *//*
 	public String getGetterName() {
 		return "get" + firstCharUpper(m_name);
-	}
+	}*/
 	
 	/**
 	 * Return the parent entity of the current extent part,
@@ -81,7 +83,7 @@ public abstract class AbstractExtentPart implements Serializable {
 	 * @throws NoSuchMethodException 
 	 */
 	public Method getMethod() throws SecurityException, NoSuchMethodException {
-		return m_parent.getEntityClass().getMethod(getGetterName());
+		return BeanPropertyUtils.getReadMethod(m_parent.getEntityClass(), getName());
 	}
 	
 	/* Helper Functions */
@@ -90,10 +92,10 @@ public abstract class AbstractExtentPart implements Serializable {
 	 * Helper function to convert a string into its Getter-Method-name.
 	 * @param str	string to be converted
 	 * @return method name
-	 */
+	 *//*
 	protected String toGetterName(String str) {
 		return "get" + firstCharUpper(str);
-	}
+	}*/
 	
 	/**
 	 * Helper function to convert a string from Getter-Method-name
@@ -101,8 +103,14 @@ public abstract class AbstractExtentPart implements Serializable {
 	 * @param str	string to be converted
 	 * @return field name
 	 */
-	protected String toFieldName(String str) {
-		return firstCharLower(str.substring(3));
+	protected String toFieldName(Method m) {
+		String str = m.getName();
+		if (m.getReturnType().equals(boolean.class)) {
+			return firstCharLower(str.substring(2));
+		} else {
+			return firstCharLower(str.substring(3));
+		}
+		
 	}
 	
 	/**
