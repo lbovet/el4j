@@ -50,7 +50,8 @@ public class ExtentEntity extends AbstractExtentPart {
 	private Class<?> m_entityClass;
 	
 	/** The field-methods of the entity. */
-	private List<Method> m_fields;
+	//private List<Method> m_fields;
+	private List<String> m_fields;
 	
 	/** The child-entities of the entity. */
 	private List<ExtentEntity> m_childEntities;
@@ -65,7 +66,7 @@ public class ExtentEntity extends AbstractExtentPart {
 	private ExtentEntity(Class<?> c) {
 		m_name = firstCharLower(c.getSimpleName());
 		m_entityClass = c;
-		m_fields = new LinkedList<Method>();
+		m_fields = new LinkedList<String>();
 		m_childEntities = new LinkedList<ExtentEntity>();
 		m_collections = new LinkedList<ExtentCollection>();
 	}
@@ -78,7 +79,7 @@ public class ExtentEntity extends AbstractExtentPart {
 	private ExtentEntity(String name, Class<?> c) {
 		m_name = name;
 		m_entityClass = c;
-		m_fields = new LinkedList<Method>();
+		m_fields = new LinkedList<String>();
 		m_childEntities = new LinkedList<ExtentEntity>();
 		m_collections = new LinkedList<ExtentCollection>();
 	}
@@ -91,8 +92,8 @@ public class ExtentEntity extends AbstractExtentPart {
 	private ExtentEntity(Class<?> c, Method method) {
 		m_name = toFieldName(method.getName());
 		m_entityClass = c;
-		m_method = method;
-		m_fields = new LinkedList<Method>();
+		//m_method = method;
+		m_fields = new LinkedList<String>();
 		m_childEntities = new LinkedList<ExtentEntity>();
 		m_collections = new LinkedList<ExtentCollection>();
 	}
@@ -109,7 +110,7 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * Field-methods of the entity.
 	 * @return the field-methods of the entity.
 	 */
-	public List<Method> getFields() {
+	public List<String> getFields() {
 		return m_fields;
 	}
 	
@@ -135,9 +136,7 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * @throws NoSuchMethodException 
 	 * @throws SecurityException 
 	 */
-	private void addField(Method field) throws NoSuchMethodException {
-		// Check here again if Method is valid.
-		m_entityClass.getMethod(field.getName());
+	private void addField(String field) {
 		m_fields.add(field);
 	}
 	
@@ -147,24 +146,27 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * @return returns the success of the operation
 	 */
 	private boolean removeField(String name) {
-		for (Method m : m_fields) {
+		/*for (Method m : m_fields) {
 			if (m.getName().equals(toGetterName(name))) {
 				return m_fields.remove(m);
 			}
-		}
-		return false;
+		}*/
+		return m_fields.remove(name);
 	}
 	
 	/**
-	 * Add a child-entity to the entity. Method of child entity is set and consistency
+	 * Add a child-entity to the entity. Parent of child entity is set and consistency
 	 * to parent class is checked.
 	 * @param child	 the child to add.
 	 * @throws NoSuchMethodException 
 	 */
 	private void addChildEntity(ExtentEntity child) throws NoSuchMethodException {
 		Method m  = m_entityClass.getMethod(child.getGetterName());
-		child.setMethod(m);
-		m_childEntities.add(child);
+		//child.setMethod(m);
+		if (m != null) {
+			child.setParent(this);
+			m_childEntities.add(child);
+		}
 	}
 	
 	/**
@@ -189,7 +191,7 @@ public class ExtentEntity extends AbstractExtentPart {
 	 */
 	private void addCollection(ExtentCollection collection) throws NoSuchMethodException {
 		Method m  = m_entityClass.getMethod(collection.getGetterName());
-		collection.setMethod(m);
+		collection.setParent(this);
 		boolean consistent = false;
 		// Check if the class of the contained entity is consistent
 		Type rawType = m.getGenericReturnType();
@@ -586,12 +588,12 @@ public class ExtentEntity extends AbstractExtentPart {
 	 */
 	public ExtentEntity all(int depth) {
 		if (depth > 0) {
-			try {
-				for (Method m : m_entityClass.getMethods()) {
+			for (Method m : m_entityClass.getMethods()) {
+				try {
 					fetchMethod(m, depth);
+				} catch (NoSuchMethodException e) {
+					// Non persistent Method throws NoSuchMethodException
 				}
-			} catch (NoSuchMethodException e) {
-				// Method exists as we came here having found it!
 			}
 		}
 		return this;
@@ -607,14 +609,15 @@ public class ExtentEntity extends AbstractExtentPart {
 	 */
 	private void fetchMethod(Method m, int depth) throws NoSuchMethodException {
 		// Fetch only the methods with getter and no arguments
-		// Exclude getClass()
+		// Exclude getClass() and transient getters
 		boolean isGetter = m.getName().startsWith("get") && m.getParameterTypes().length == 0;
-		if (isGetter && !m.getName().equals("getClass") && !m.getName().equals("get")) {
+		if (isGetter && !m.getName().equals("getClass") && !m.getName().equals("get")
+			/*&& m.getAnnotation(Transient.class) == null*/) {
 
 			if (m.getReturnType().isPrimitive() || m.getReturnType().isEnum()
 				|| m.getReturnType().equals(String.class)) {
 				
-				addField(m);
+				addField(toFieldName(m.getName()));
 			} else if (Collection.class.isAssignableFrom(m.getReturnType())) {
 				fetchCollection(m, depth);
 			} else {
@@ -624,6 +627,8 @@ public class ExtentEntity extends AbstractExtentPart {
 				}
 				addChildEntity(tmp);
 			}
+		} else {
+			throw new NoSuchMethodException("No persistent field of the data type.");
 		}
 	}
 	
@@ -705,34 +710,34 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * Remove a field-method from the fields of the entity.
 	 * @param field	 the field-method to remove.
 	 * @return returns the success of the operation
-	 */
+	 *//*
 	private boolean removeField(Method field) {
 		return m_fields.remove(field);
 	}
 	
 	
-	/**
+	*//**
 	 * Remove field-methods from the fields of the entity.
 	 * @param fields	 the field-methods to remove.
 	 * @return returns the success of the operation
-	 */
+	 *//*
 	private boolean removeFields(Method... fields) {
 		return m_fields.remove(fields);
 	}
 	
-	/**
+	*//**
 	 * Set Child entities. Methods of child entities are set and consistency
 	 * to parent class is checked.
 	 * @param children	 the child entities of the entity.
 	 * @throws NoSuchMethodException 
-	 */
+	 *//*
 	private void setChildEntities(List<ExtentEntity> children) throws NoSuchMethodException {
 		for (ExtentEntity ent : children) {
 			Method m  = m_entityClass.getMethod(ent.getGetterName());
 			ent.setMethod(m);
 		}
 		m_childEntities = children;
-	}
+	}*/
 
 	/**
 	 * Remove an entity from the children of the entity.
@@ -753,14 +758,14 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * Set Child collections.
 	 * @param collections	 the collections of the entity.
 	 * @throws NoSuchMethodException 
-	 */
+	 *//*
 	private void setCollections(List<ExtentCollection> collections) throws NoSuchMethodException {
 		for (ExtentCollection c : collections) {
 			Method m  = m_entityClass.getMethod(c.getGetterName());
 			c.setMethod(m);
 		}
 		m_collections = collections;
-	}
+	}*/
 
 	/**
 	 * Remove a collection from the collections of the entity.

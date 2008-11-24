@@ -35,8 +35,10 @@ public abstract class AbstractExtentPart implements Serializable {
 	/** The name of the extent-part. */
 	protected String m_name;
 	
+	/** The parent of the entity, null if root */
+	protected ExtentEntity m_parent;
 	/** The method to get the extent-part. */
-	protected Method m_method;
+	//protected Method m_method;
 	
 	
 	/**
@@ -57,24 +59,29 @@ public abstract class AbstractExtentPart implements Serializable {
 	}
 	
 	/**
+	 * Return the parent entity of the current extent part,
+	 * null if root or contained in a collection.
+	 * @return the parent.
+	 */
+	public ExtentEntity getParent() {
+		return m_parent;
+	}
+	
+	/**
+	 * Sets the parent of the extent-part.
+	 * @param parent	the parent to set.
+	 */
+	protected void setParent(ExtentEntity parent) {
+		m_parent = parent;
+	}
+	/**
 	 * Method to get the extent-part, null if root entity,
 	 * otherwise set latest when added as child.
 	 * @return the method to get the extent-part.
+	 * @throws NoSuchMethodException 
 	 */
-	public Method getMethod() {
-		return m_method;
-	}
-
-	/**
-	 * Set the method to get the extent-part.
-	 * If name is not consistent, the extent-part is renamed.
-	 * @param method	the method to set.
-	 */
-	protected void setMethod(Method method) {
-		m_method = method;
-		if (!m_method.getName().equals(toGetterName(m_name))) {
-			m_name = toFieldName(m_method.getName());
-		}
+	public Method getMethod() throws SecurityException, NoSuchMethodException {
+		return m_parent.getEntityClass().getMethod(getGetterName());
 	}
 	
 	/* Helper Functions */

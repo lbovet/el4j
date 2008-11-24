@@ -78,4 +78,8 @@ public class DummyDao<T> implements GenericDao<T>{
 		return null;
 	}
 
+	public T reload(T entity) throws DataAccessException, DataRetrievalFailureException {
+		return null;
+	}
+
 }
