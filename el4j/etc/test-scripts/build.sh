@@ -26,8 +26,14 @@ fi
 
 if [ $# -ge 2 ] ; then
 	# perform the maven build and copy the result in case of errors
-	./run.sh $PROFILE $OPTS || ( ( \
-	find . -path "*target/surefire-reports*" -exec cp  {} $LOG_DIR/ \; ) && (( ps -ely )) && (( 0 )) )
+	if ./run.sh $PROFILE $OPTS ; then
+		echo Build successful
+	else
+		echo Build failed
+		find . -path "*target/surefire-reports*" -exec cp  {} $LOG_DIR/ \;
+		ps -ely
+		false
+	fi
 else
 	# no log file -> just run tests
 	./run.sh $PROFILE $OPTS
