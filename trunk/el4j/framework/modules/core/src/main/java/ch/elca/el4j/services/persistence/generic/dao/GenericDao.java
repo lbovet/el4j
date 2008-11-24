@@ -109,6 +109,21 @@ public interface GenericDao<T> {
 	 */
 	T refresh(T entity) throws DataAccessException,
 		DataRetrievalFailureException;
+	
+	/**
+	 * Re-reads the state of the given domain object from the undermost
+	 * store (eg. the database).
+	 *
+	 * @param entity
+	 *            The domain object to re-load the state of
+	 * @throws DataAccessException
+	 *             If general data access problem occurred
+	 * @throws DataRetrievalFailureException
+	 *             If domain object could not be re-loaded
+	 * @return The reloaded entity
+	 */
+	T reload(T entity) throws DataAccessException,
+		DataRetrievalFailureException;
 
 	/**
 	 * Saves or updates the given domain object.

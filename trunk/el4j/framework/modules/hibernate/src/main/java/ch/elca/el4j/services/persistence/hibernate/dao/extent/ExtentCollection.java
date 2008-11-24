@@ -57,7 +57,7 @@ public class ExtentCollection extends AbstractExtentPart {
 	public ExtentCollection(Class<?> c, Method method) {
 		m_name = toFieldName(method.getName());
 		m_containedEntity = entity(c);
-		m_method = method;
+		//m_method = method;
 	}
 	/**
 	 * Contained entity of the collection.

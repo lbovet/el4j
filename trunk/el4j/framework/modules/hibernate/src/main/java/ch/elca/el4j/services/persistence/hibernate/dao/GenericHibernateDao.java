@@ -18,17 +18,18 @@
 package ch.elca.el4j.services.persistence.hibernate.dao;
 
 import java.io.Serializable;
-import java.lang.ref.WeakReference;
 import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import org.apache.commons.collections.map.ReferenceMap;
+import org.hibernate.EntityMode;
+import org.hibernate.Hibernate;
 import org.hibernate.LockMode;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.proxy.HibernateProxy;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -83,8 +84,10 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	 * This map is used internally in the recursive 
 	 * {@link #fetchExtentObject(Object, ExtentEntity)} method
 	 */
-	private Map<Object, WeakReference<ExtentEntity>> m_fetchedObjects 
-		= new HashMap<Object, WeakReference<ExtentEntity>>();
+	private ReferenceMap m_fetchedObjects
+		= new ReferenceMap(ReferenceMap.HARD, ReferenceMap.WEAK);
+//	private Map<Object, WeakReference<ExtentEntity>> m_fetchedObjects 
+//		= new HashMap<Object, WeakReference<ExtentEntity>>();
 	
 	/**
 	 * Set up the Generic Dao. Auto-derive the parametrized type.
@@ -151,7 +154,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	 * @return The desired domain object
 	 */
 	@SuppressWarnings("unchecked")
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(propagation = Propagation.REQUIRED/*propagation = Propagation.SUPPORTS, readOnly = true*/)
 	public T findById(ID id, boolean lock)
 		throws DataAccessException, DataRetrievalFailureException {
 		
@@ -171,7 +174,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(propagation = Propagation.REQUIRED/*propagation = Propagation.SUPPORTS, readOnly = true*/)
 	public T findById(ID id, boolean lock, DataExtent extent)
 		throws DataAccessException, DataRetrievalFailureException {
 		
@@ -191,7 +194,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(propagation = Propagation.REQUIRED/*propagation = Propagation.SUPPORTS, readOnly = true*/)
 	public T findById(ID id)
 		throws DataAccessException, DataRetrievalFailureException {
 		return (T) getConvenienceHibernateTemplate().getByIdStrong(
@@ -202,7 +205,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(propagation = Propagation.REQUIRED/*propagation = Propagation.SUPPORTS, readOnly = true*/)
 	public T findById(ID id, DataExtent extent)
 		throws DataAccessException, DataRetrievalFailureException {
 		return fetchExtent((T) getConvenienceHibernateTemplate().getByIdStrong(
@@ -224,7 +227,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(propagation = Propagation.REQUIRED/*propagation = Propagation.SUPPORTS, readOnly = true*/)
 	public List<T> getAll() throws DataAccessException {
 		return getConvenienceHibernateTemplate().findByCriteria(getOrderedCriteria());
 	}
@@ -233,7 +236,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(propagation = Propagation.REQUIRED/*propagation = Propagation.SUPPORTS, readOnly = true*/)
 	public List<T> getAll(DataExtent extent) throws DataAccessException {
 		return fetchExtent(getConvenienceHibernateTemplate().findByCriteria(getOrderedCriteria()), extent);
 	}
@@ -247,7 +250,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	 *
 	 */
 	@SuppressWarnings("unchecked")
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(propagation = Propagation.REQUIRED/*propagation = Propagation.SUPPORTS, readOnly = true*/)
 	public List<T> findByQuery(QueryObject q) throws DataAccessException {
 		DetachedCriteria hibernateCriteria = getCriteria(q);
 		
@@ -264,7 +267,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	 *
 	 */
 	@SuppressWarnings("unchecked")
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(propagation = Propagation.REQUIRED/*propagation = Propagation.SUPPORTS, readOnly = true*/)
 	public List<T> findByQuery(QueryObject q, DataExtent extent) throws DataAccessException {
 		DetachedCriteria hibernateCriteria = getCriteria(q);
 		
@@ -282,7 +285,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	 *
 	 * @return how many elements do we find with the given query
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(propagation = Propagation.REQUIRED/*propagation = Propagation.SUPPORTS, readOnly = true*/)
 	public int findCountByQuery(QueryObject q) throws DataAccessException {
 		DetachedCriteria hibernateCriteria = getCriteria(q);
 		
@@ -293,7 +296,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	
 	/** {@inheritDoc} */
 	@SuppressWarnings("unchecked")
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(propagation = Propagation.REQUIRED/*propagation = Propagation.SUPPORTS, readOnly = true*/)
 	public List<T> findByCriteria(DetachedCriteria hibernateCriteria)
 		throws DataAccessException {
 		
@@ -304,7 +307,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	
 	/** {@inheritDoc} */
 	@SuppressWarnings("unchecked")
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(propagation = Propagation.REQUIRED/*propagation = Propagation.SUPPORTS, readOnly = true*/)
 	public List<T> findByCriteria(DetachedCriteria hibernateCriteria, DataExtent extent)
 		throws DataAccessException {
 		
@@ -315,7 +318,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	
 	/** {@inheritDoc} */
 	@SuppressWarnings("unchecked")
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(propagation = Propagation.REQUIRED/*propagation = Propagation.SUPPORTS, readOnly = true*/)
 	public List<T> findByCriteria(DetachedCriteria hibernateCriteria, int firstResult, int maxResults)
 		throws DataAccessException {
 		
@@ -326,7 +329,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 
 	/** {@inheritDoc} */
 	@SuppressWarnings("unchecked")
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(propagation = Propagation.REQUIRED/*propagation = Propagation.SUPPORTS, readOnly = true*/)
 	public List<T> findByCriteria(DetachedCriteria hibernateCriteria, int firstResult, int maxResults,
 			DataExtent extent) throws DataAccessException {
 		
@@ -336,7 +339,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	}
 	
 	/** {@inheritDoc} */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(propagation = Propagation.REQUIRED/*propagation = Propagation.SUPPORTS, readOnly = true*/)
 	public int findCountByCriteria(DetachedCriteria hibernateCriteria)
 		throws DataAccessException {
 		
@@ -382,11 +385,35 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	}
 	
 	/** {@inheritDoc} */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(propagation = Propagation.REQUIRED/*propagation = Propagation.SUPPORTS, readOnly = true*/)
 	public T refresh(T entity, DataExtent extent) throws DataAccessException,
 	DataRetrievalFailureException {
 		getConvenienceHibernateTemplate().refresh(entity);
 		return fetchExtent(entity, extent);
+	}
+	
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.REQUIRED)
+	public T reload(T entity) throws DataAccessException,
+		DataRetrievalFailureException {
+		ID id = (ID) getSessionFactory().getClassMetadata(entity.getClass())
+			.getIdentifier(entity, EntityMode.POJO);
+		T refresh = (T) findById(id);
+		return refresh;
+
+	}
+	
+	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.REQUIRED)
+	public T reload(T entity, DataExtent extent) throws DataAccessException,
+		DataRetrievalFailureException {
+		ID id = (ID) getSessionFactory().getClassMetadata(entity.getClass())
+			.getIdentifier(entity, EntityMode.POJO);
+		T refresh = (T) findById(id, extent);
+		return refresh;
+
 	}
 	
 	/** {@inheritDoc} */
@@ -440,6 +467,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	 * the methods of the extent to ensure loading from db.
 	 * 
 	 * @param objects	list of objects to load in given extent
+	 * @param extent	the fetch-extent
 	 * @return returns the new list of objects.
 	 * 
 	 * @throws DataAccessException 
@@ -463,6 +491,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 	 * the methods of the extent to ensure loading from db.
 	 * 
 	 * @param object	object to load in given extent
+	 * @param extent	the fetch-extent
 	 * @return returns the new object.
 	 * 
 	 * @throws DataAccessException 
@@ -490,21 +519,23 @@ public class GenericHibernateDao<T, ID extends Serializable>
 		throws DataAccessException {
 		
 		Object[] nullArg = null;
-		m_fetchedObjects.put(object, new WeakReference<ExtentEntity>(entity));
-		
+		m_fetchedObjects.put(object, entity);
+		//Hibernate.initialize(object);
+		//etSession().refresh(object);
 		try {
 			// Fetch the base type fields
-			/* Obsolete for the moment: properties not lazy
-			for (String field : entity.getGetters()) {
-				Method fieldGetter = entity.getEntityClass().getMethod(field, nullClass);
-				fieldGetter.invoke(object, nullArg);
+			/*for (Method m : entity.getFields()) {
+				m.invoke(object, nullArg);
 			}*/
 			// Fetch the child entities
 			for (ExtentEntity ent : entity.getChildEntities()) {
 				Object obj = ent.getMethod().invoke(object, nullArg);
-				// Call one method of the object to guarantee its existence
-				obj.toString();
-				if (!m_fetchedObjects.containsKey(obj) || !m_fetchedObjects.get(obj).get().equals(ent)) {
+				// Initialize the object if it is a proxy
+				if (obj instanceof HibernateProxy) {
+					Hibernate.initialize(obj);
+					getSession().refresh(obj);
+				}
+				if (!m_fetchedObjects.containsKey(obj) || !m_fetchedObjects.get(obj).equals(ent)) {
 					fetchExtentObject(obj, ent);
 				}
 			}
@@ -512,10 +543,13 @@ public class GenericHibernateDao<T, ID extends Serializable>
 			for (ExtentCollection c : entity.getCollections()) {
 				Collection<?> coll = (Collection<?>) c.getMethod().invoke(object, nullArg);
 				for (Object o : coll) {
-					// Call one method of the object to guarantee its existence
-					o.toString();
-					if (!m_fetchedObjects.containsKey(o) 
-						|| !m_fetchedObjects.get(o).get().equals(c.getContainedEntity())) {
+					// Initialize the object if it is a proxy
+					if (o instanceof HibernateProxy) {
+						Hibernate.initialize(o);
+						getSession().refresh(o);
+					}
+					if (!m_fetchedObjects.containsKey(o)
+						|| !m_fetchedObjects.get(o).equals(c.getContainedEntity())) {
 						fetchExtentObject(o, c.getContainedEntity());
 					}
 				}
