@@ -50,18 +50,18 @@ public class CoberturaSourceCollector extends AbstractCoberturaMojo {
 	/**
 	 * Comma separated includes for the files list.
 	 *
-	 * @parameter expression="${cobertura-runtime.fileListIncludes}" default-value="**\/*.java"
+	 * @parameter expression="${cobertura-runtime.sourceFileListIncludes}" default-value="**\/*.java"
 	 * @required
 	 */
-	protected String fileListIncludes;
+	protected String sourceFileListIncludes;
 
 	/**
 	 * Comma separated excludes for the files list.
 	 *
-	 * @parameter expression="${cobertura-runtime.fileListExcludes}" default-value="**\/*Test.java"
+	 * @parameter expression="${cobertura-runtime.sourceFileListExcludes}" default-value="**\/*Test.java"
 	 * @required
 	 */
-	protected String fileListExcludes;
+	protected String sourceFileListExcludes;
 	
 	//Checkstyle: MemberName on
 	
@@ -151,8 +151,8 @@ public class CoberturaSourceCollector extends AbstractCoberturaMojo {
 			if (sourceDirectory.exists() && sourceDirectory.isDirectory() && sourceDirectory.canRead()) {
 				try {
 					List<String> fileList = FileUtils.getFileNames(
-						sourceDirectory, fileListIncludes,
-						fileListExcludes, false, true);
+						sourceDirectory, sourceFileListIncludes,
+						sourceFileListExcludes, false, true);
 					sourceFiles.addAll(fileList);
 					getLog().info("Project " + project.getGroupId() + ":" + project.getArtifactId()
 						+ " has " + sourceFiles.size() + " file(s) in " + directoryName
