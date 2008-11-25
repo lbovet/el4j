@@ -17,8 +17,10 @@
 package ch.elca.el4j.tests.refdb.dao;
 
 
-import static org.junit.Assert.fail;
 import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentCollection.collection;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -27,8 +29,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LazyInitializationException;
 import org.junit.Test;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataRetrievalFailureException;
 
 import ch.elca.el4j.apps.refdb.dao.impl.hibernate.GenericHibernateFileDaoInterface;
 import ch.elca.el4j.apps.refdb.dom.File;
@@ -41,6 +41,8 @@ import ch.elca.el4j.tests.person.dom.Brain;
 import ch.elca.el4j.tests.person.dom.Person;
 import ch.elca.el4j.tests.person.dom.Tooth;
 import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
+
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 /**
  *
  * Test case for <code>GenericHibernateDao</code> to test
@@ -59,7 +61,7 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger
+	protected static Log s_logger
 		= LogFactory.getLog(GenericHibernateDaoTest.class);
 	
 	/**
@@ -89,36 +91,6 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 	}
 	
 	/**
-	 * This test checks the lazy loading of file content.
-	 */
-	@Test
-	public void testInsertFileLazyContent() {
-		int fakeReferenceKey = addDefaultFakeReference();
-		
-		// Use HibernateFileDao to set extent
-		GenericHibernateFileDaoInterface dao = (GenericHibernateFileDaoInterface) getFileDao();
-		File file = new File();
-		file.setKeyToReference(fakeReferenceKey);
-		file.setName("iBatis Developer Guide");
-		file.setMimeType("text/plain");
-		byte[] content = "This is only a test content.".getBytes();
-		file.setContent(content);
-		dao.saveOrUpdate(file);
-		
-		// Only load the header
-		File file2 = dao.findById(file.getKey(), File.HEADER);
-		// Load without extent
-		File file3 = dao.findById(file.getKey());
-		try {
-			file2.getContent();
-			file3.getContent();
-			fail("Could access file content which should not have been loaded.");
-		} catch (LazyInitializationException e) {
-			s_logger.debug("Expected exception catched.", e);
-		}
-	}
-	
-	/**
 	 * This test checks the explicit loading of file content
 	 * using {@see DataExtent#with}.
 	 */
@@ -142,12 +114,15 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 			DataExtent ex = new DataExtent(File.class);
 			ex.with("content");
 			file2 = dao.findById(file.getKey(), ex);
-			file2.getContent();
+			if (file2.getContent() == null) {
+				fail("Content has not been loaded though forced explicitly.");
+			}
 		} catch (NoSuchMethodException e) {
 			fail("Content could not be added to the file extent.");
 		} catch (LazyInitializationException e) {
 			fail("Content has not been loaded though forced explicitly.");
 		}
+		
 	}
 	
 	/**
@@ -171,43 +146,14 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 		
 		File file2 = dao.findById(file.getKey(), File.ALL);
 		try {
-			file2.getContent();
+			if (file2.getContent() == null) {
+				fail("Content has not been loaded though forced explicitly.");
+			}
 		} catch (LazyInitializationException e) {
 			fail("Content has not been loaded though forced explicitly.");
 		}
 	}
 	
-	/**
-	 * Test refresh after lazy loading and repeat the query.
-	 */
-	@Test
-	public void testRefreshCatching() {
-		int fakeReferenceKey = addDefaultFakeReference();
-		
-		// Use HibernateFileDao to set extent
-		GenericHibernateFileDaoInterface dao = (GenericHibernateFileDaoInterface) getFileDao();
-		File file = new File();
-		file.setKeyToReference(fakeReferenceKey);
-		file.setName("iBatis Developer Guide");
-		file.setMimeType("text/plain");
-		byte[] content = "This is only a test content.".getBytes();
-		file.setContent(content);
-		
-		dao.saveOrUpdate(file);
-		
-		File file2 = dao.findById(file.getKey());
-		try {
-			file2.getContent();
-		} catch (LazyInitializationException e) {
-			dao.refresh(file2, File.ALL);
-			try {
-				file2.getContent();
-			} catch (LazyInitializationException e2) {
-				fail("Lazy loading problem still exists after refreshing.");
-			}
-		}
-		
-	}
 	
 	/**
 	 * This test inserts a simple Person.
@@ -256,6 +202,95 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 		person3.setFriends(friends);
 		dao.saveOrUpdate(person3);
 	}
+	
+	/**
+	 * testtest
+	 *//*
+	@Test
+	public void testing() {
+		
+		DefaultDaoRegistry daoRegistry
+			= (DefaultDaoRegistry) getApplicationContext()
+				.getBean("daoRegistry");
+		ConvenienceGenericHibernateDao<Appendix, Integer> dao 
+			= (ConvenienceGenericHibernateDao<Appendix, Integer>) daoRegistry
+			.getFor(Appendix.class);
+		
+		Appendix a = new Appendix();
+		a.setFilename("Foo");
+		a.setMimetype("text/html");
+		
+		try {
+			a.setPrimitiveData(fileContent("etc/testfiles/test.pdf"));
+		} catch (IOException e1) {
+			a.setPrimitiveData("Fileersatz".getBytes());
+		}
+		
+		try {
+			dao.saveOrUpdate(a);
+		} catch (InvalidStateException e) {
+			System.err.println(e.getInvalidValues());
+		}
+		
+		Appendix b = dao.findById(a.getKey());
+//		System.out.println(new String(b.getPrimitiveData()));
+		try {
+			b.getData().getBinaryStream();
+		} catch (SQLException e) {
+			e.toString();
+		}
+		
+		DataExtent ex = new DataExtent(Appendix.class);
+		try {
+			ex.with("data", "primitiveData");
+			Appendix c = dao.findById(a.getKey(), ex);
+			System.out.println(new String(c.getPrimitiveData()));
+		} catch (NoSuchMethodException e) {
+			// shouldnt happen
+		} catch (Exception e) {
+			fail("BLOB and Derby still not working!");
+		}
+		
+	}
+	
+	private byte[] fileContent(String filepath) throws IOException {
+		Resource resource = new ClassPathResource(filepath);
+		java.io.File file = resource.getFile();
+		InputStream is = resource.getInputStream();
+
+		// Get the size of the file
+		long length = file.length();
+		
+		// You cannot create an array using a long type.
+		// It needs to be an int type.
+		// Before converting to an int type, check
+		// to ensure that file is not larger than Integer.MAX_VALUE.
+		if (length > Integer.MAX_VALUE) {
+		    // File is too large
+		}
+		
+		// Create the byte array to hold the data
+		byte[] bytes = new byte[(int) length];
+		
+		// Read in the bytes
+		int offset = 0;
+		int numRead = 0;
+		while (offset < bytes.length
+			&& (numRead=is.read(bytes, offset, bytes.length-offset)) >= 0) {
+			offset += numRead;
+		}
+		
+		// Ensure all the bytes have been read in
+		if (offset < bytes.length) {
+			throw new IOException("Could not completely read file " + file.getName());
+		}
+		
+		// Close the input stream and return bytes
+		is.close();
+		
+		return bytes;
+
+	}*/
 	
 	/**
 	 * This test checks lazy loading of persons brain.
@@ -326,7 +361,7 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 		friends.add(person2);
 		person3.setFriends(friends);
 		
-		Person person4 = new Person("Mary Muster");
+		Person person4 = new Person("Tom Muster");
 		b = new Brain();
 		b.setIq(99);
 		person4.setBrain(b);
@@ -336,6 +371,7 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 		
 		friends = new LinkedList<Person>();
 		friends.add(person4);
+		person1.setFriends(friends);
 		
 		dao.saveOrUpdate(person1);
 		dao.saveOrUpdate(person2);
@@ -416,7 +452,46 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 		}
 	}
 	
-	
+	/**
+	 * Test reload of the given extent: does it revert whole graph?.
+	 */
+	@Test
+	public void testReloadReverting() {
+		insertFriendsScenario();
+		
+		GenericHibernatePersonDaoInterface dao = getPersonDao();
+		
+		QueryObject query = new QueryObject();
+		query.addCriteria(LikeCriteria.caseInsensitive("name", "%Mary Muster%"));
+		DataExtent ex = new DataExtent(Person.class);
+		ex.all(3);
+		
+		try {
+			Person person1 = dao.findByQuery(query, ex).get(0);
+			
+			person1.getFriends().get(0).setName("Jean-Pierre");
+			try {
+				Person p1 = dao.reload(person1);
+				
+				try {
+					assertTrue("Hibernate did revert the Persons Friends although not told.", p1.getFriends()
+						.get(0).getName().equals("Jean-Pierre"));
+				} catch (LazyInitializationException e) {
+					s_logger.debug("Expected Exception catched.", e);
+				}
+
+				Person p2 = dao.reload(person1, ex);
+				p2.getName();
+				
+				assertFalse("Hibernate did not revert the Persons Friends.", p2.getFriends()
+					.get(0).getName().equals("Jean-Pierre"));
+			} catch (LazyInitializationException e) {
+				fail("Could not accesss friends of person with extent depth 3.");
+			}
+		} catch (Exception e) {
+			fail("Loading person and accessing friends failed.");
+		}
+	}
 	
 	/**
 	 * @return Returns the person DAO.

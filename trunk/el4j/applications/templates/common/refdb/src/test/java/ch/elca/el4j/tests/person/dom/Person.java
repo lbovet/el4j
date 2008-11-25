@@ -103,7 +103,7 @@ public class Person extends AbstractDomainObject {
 	/**
 	 * @return Returns the friends.
 	 */
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
 	@JoinTable(name = "friends")
 	public List<Person> getFriends() {
 		return m_friends;

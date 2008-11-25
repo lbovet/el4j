@@ -40,7 +40,7 @@ public class GenericHibernateFileDao<T, ID extends Serializable>
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(propagation = Propagation.REQUIRED/*propagation = Propagation.SUPPORTS, readOnly = true*/)
 	public List<T> getByName(String name) throws DataAccessException,
 		DataRetrievalFailureException {
 		Reject.ifEmpty(name);
@@ -56,7 +56,7 @@ public class GenericHibernateFileDao<T, ID extends Serializable>
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(propagation = Propagation.REQUIRED/*propagation = Propagation.SUPPORTS, readOnly = true*/)
 	public List<T> getByName(String name, DataExtent extent) throws DataAccessException,
 		DataRetrievalFailureException {
 		Reject.ifEmpty(name);
