@@ -16,12 +16,6 @@
  */
 package ch.elca.el4j.tests.refdb.dao;
 
-
-import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentCollection.collection;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,6 +23,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LazyInitializationException;
 import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import ch.elca.el4j.apps.refdb.dao.impl.hibernate.GenericHibernateFileDaoInterface;
 import ch.elca.el4j.apps.refdb.dom.File;
@@ -41,8 +38,7 @@ import ch.elca.el4j.tests.person.dom.Brain;
 import ch.elca.el4j.tests.person.dom.Person;
 import ch.elca.el4j.tests.person.dom.Tooth;
 import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
-
-import com.mchange.v2.c3p0.ComboPooledDataSource;
+import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentCollection.collection;
 /**
  *
  * Test case for <code>GenericHibernateDao</code> to test
@@ -204,95 +200,6 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 	}
 	
 	/**
-	 * testtest
-	 *//*
-	@Test
-	public void testing() {
-		
-		DefaultDaoRegistry daoRegistry
-			= (DefaultDaoRegistry) getApplicationContext()
-				.getBean("daoRegistry");
-		ConvenienceGenericHibernateDao<Appendix, Integer> dao 
-			= (ConvenienceGenericHibernateDao<Appendix, Integer>) daoRegistry
-			.getFor(Appendix.class);
-		
-		Appendix a = new Appendix();
-		a.setFilename("Foo");
-		a.setMimetype("text/html");
-		
-		try {
-			a.setPrimitiveData(fileContent("etc/testfiles/test.pdf"));
-		} catch (IOException e1) {
-			a.setPrimitiveData("Fileersatz".getBytes());
-		}
-		
-		try {
-			dao.saveOrUpdate(a);
-		} catch (InvalidStateException e) {
-			System.err.println(e.getInvalidValues());
-		}
-		
-		Appendix b = dao.findById(a.getKey());
-//		System.out.println(new String(b.getPrimitiveData()));
-		try {
-			b.getData().getBinaryStream();
-		} catch (SQLException e) {
-			e.toString();
-		}
-		
-		DataExtent ex = new DataExtent(Appendix.class);
-		try {
-			ex.with("data", "primitiveData");
-			Appendix c = dao.findById(a.getKey(), ex);
-			System.out.println(new String(c.getPrimitiveData()));
-		} catch (NoSuchMethodException e) {
-			// shouldnt happen
-		} catch (Exception e) {
-			fail("BLOB and Derby still not working!");
-		}
-		
-	}
-	
-	private byte[] fileContent(String filepath) throws IOException {
-		Resource resource = new ClassPathResource(filepath);
-		java.io.File file = resource.getFile();
-		InputStream is = resource.getInputStream();
-
-		// Get the size of the file
-		long length = file.length();
-		
-		// You cannot create an array using a long type.
-		// It needs to be an int type.
-		// Before converting to an int type, check
-		// to ensure that file is not larger than Integer.MAX_VALUE.
-		if (length > Integer.MAX_VALUE) {
-		    // File is too large
-		}
-		
-		// Create the byte array to hold the data
-		byte[] bytes = new byte[(int) length];
-		
-		// Read in the bytes
-		int offset = 0;
-		int numRead = 0;
-		while (offset < bytes.length
-			&& (numRead=is.read(bytes, offset, bytes.length-offset)) >= 0) {
-			offset += numRead;
-		}
-		
-		// Ensure all the bytes have been read in
-		if (offset < bytes.length) {
-			throw new IOException("Could not completely read file " + file.getName());
-		}
-		
-		// Close the input stream and return bytes
-		is.close();
-		
-		return bytes;
-
-	}*/
-	
-	/**
 	 * This test checks lazy loading of persons brain.
 	 */
 	@Test
@@ -363,7 +270,6 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 		
 		Person person4 = new Person("Tom Muster");
 		b = new Brain();
-		b.setIq(99);
 		person4.setBrain(b);
 		friends = new LinkedList<Person>();
 		friends.add(person3);
@@ -427,9 +333,22 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 			fail("Field friends doesnt exist");
 		}
 		
+	}
+	
+	/**
+	 * This test checks the if circular references results in infinite loops.
+	 */
+	@Test(timeout = 10000)
+	public void testCircularFriends() {
+		insertFriendsScenario();
+		GenericHibernatePersonDaoInterface dao = getPersonDao();
+		
+		QueryObject query = new QueryObject();
+		query.addCriteria(LikeCriteria.caseInsensitive("name", "%Mary Muster%"));
+		
 		// Check circular reference in Extent
 		try {
-			ex = new DataExtent(Person.class);
+			DataExtent ex = new DataExtent(Person.class);
 			ex.withSubentities(collection("friends", ex.getRootEntity()));
 			
 			Person mary = dao.findByQuery(query, ex).get(0);

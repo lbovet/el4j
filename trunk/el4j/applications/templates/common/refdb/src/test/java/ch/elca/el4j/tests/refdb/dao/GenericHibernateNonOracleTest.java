@@ -16,10 +16,10 @@
  */
 package ch.elca.el4j.tests.refdb.dao;
 
-import static org.junit.Assert.fail;
 
 import org.hibernate.LazyInitializationException;
 import org.junit.Test;
+import static org.junit.Assert.fail;
 
 import ch.elca.el4j.apps.refdb.dao.impl.hibernate.GenericHibernateFileDaoInterface;
 import ch.elca.el4j.apps.refdb.dom.File;

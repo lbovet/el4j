@@ -37,7 +37,7 @@ public abstract class AbstractExtentPart implements Serializable {
 	/** The name of the extent-part. */
 	protected String m_name;
 	
-	/** The parent of the entity, null if root */
+	/** The parent of the entity, null if root. */
 	protected ExtentEntity m_parent;
 	/** The method to get the extent-part. */
 	//protected Method m_method;
@@ -50,15 +50,6 @@ public abstract class AbstractExtentPart implements Serializable {
 	public String getName() {
 		return m_name;
 	}
-	
-	/**
-	 * Getter-Name of the extent-part.
-	 * Convention: "get" + name (with first letter in uppercase).
-	 * @return the getter-name of the extent-part.
-	 *//*
-	public String getGetterName() {
-		return "get" + firstCharUpper(m_name);
-	}*/
 	
 	/**
 	 * Return the parent entity of the current extent part,
@@ -89,18 +80,9 @@ public abstract class AbstractExtentPart implements Serializable {
 	/* Helper Functions */
 	
 	/**
-	 * Helper function to convert a string into its Getter-Method-name.
-	 * @param str	string to be converted
-	 * @return method name
-	 *//*
-	protected String toGetterName(String str) {
-		return "get" + firstCharUpper(str);
-	}*/
-	
-	/**
 	 * Helper function to convert a string from Getter-Method-name
 	 * to field name.
-	 * @param str	string to be converted
+	 * @param m		the method to get the field name of.
 	 * @return field name
 	 */
 	protected String toFieldName(Method m) {

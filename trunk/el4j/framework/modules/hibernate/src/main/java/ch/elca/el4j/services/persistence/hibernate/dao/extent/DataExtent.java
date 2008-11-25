@@ -11,9 +11,9 @@
  */
 package ch.elca.el4j.services.persistence.hibernate.dao.extent;
 
-import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntity.entity;
-
 import java.io.Serializable;
+
+import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntity.entity;
 
 
 /**
@@ -22,14 +22,15 @@ import java.io.Serializable;
  * Features: <br>
  *  <ul>
  *   <li> new DataExtent: provide root class and optionally the name of the root 
- *   <li> with/without: add/remove fields to/from the extent
- *   <li> include/exclude: add/remove sub-entities 
- *   <li> includeList/excludeList: add/remove collections (must implement
- *   		{@link java.util.Collection} interface
+ *   <li> with/without: add/remove fields, sub-entities and/or collections to/from the extent.
+ *   <li> withSubentities: add sub-entities to the extent, convenient for adding entities you want
+ *   		to define in detail.
+ *   <li> all: add everything to the graph of objects.
  *   <li> see also features of {@link ExtentEntity} to write your code in a convenient way
  *  </ul>
  *
- *  Remark: Be sure to import the static method {@link ExtentEntity#entity} to create easily new Entities<br> 
+ *  Remark: Be sure to import the static methods {@link ExtentEntity#entity} and 
+ *  	{@link ExtentCollection#collection} to create easily new Entities and Collections.<br> 
  *  <br>
  *  Sample code: <br>
  * 		<code>
@@ -40,17 +41,13 @@ import java.io.Serializable;
  * 	// Person has a List of Teeth, a Tooth has a 'Person' as owner, 
  * 	// the owner has a list of 'Person' as friends, the friends are again
  * 	// the same 'Person'-entity as defined in the beginning.
- * 	ex.includeList(entity("teeth", Tooth.class)
- *		.include(entity("owner", Person.class).includeList("friends", ex.getRootEntity())));
- *	
- *	// Same code semantics, but without fluent API:	
- *	ExtentCollection teeth = new ExtentCollection("teeth", Tooth.class);
- *	ExtentEntity p1 = entity("owner", Person.class);
- *	ExtentCollection friends = new ExtentCollection("friends", Person.class);
- *	teeth.getContainedEntity().addChildEntity(p1);
- *	p1.addCollection(friends);
- *	friends.setContainedEntity(ex.getRootEntity());
- *	ex.getRootEntity().addCollection(teeth);
+ * 	ex.withSubentities(
+ *		collection("teeth",
+ *			entity(Tooth.class)
+ *				.with("owner")
+ *			),
+ *		collection("friends", ex.getRootEntity())
+ *	);
  *			</pre>
  *		</code>
  *
