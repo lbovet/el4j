@@ -23,10 +23,8 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Arrays;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.Transient;
 
@@ -52,6 +50,22 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  */
 @Entity
 public class File extends FileDescriptorView {
+	
+	/***  Predefined Fetching extents ***/
+	
+	/**
+	 * Light fetching variant: only fetch header data, no content.
+	 * @return the light fetch extent.
+	 */
+	public static final DataExtent HEADER
+		= new DataExtent(File.class).all().without("data", "content");
+	
+	/**
+	 * Heavy fetching variant: fetch the whole file, including content.
+	 * @return the heavy fetch extent.
+	 */
+	public static final DataExtent ALL
+		= new DataExtent(File.class).all();
 	
 	/**
 	 * Private logger.
@@ -173,19 +187,4 @@ public class File extends FileDescriptorView {
 		}
 	}
 	
-	/***  Predefined Fetching extent ***/
-	
-	/**
-	 * Light fetching variant: only fetch header data, no content.
-	 * @return the light fetch extent.
-	 */
-	public static final DataExtent HEADER
-		= new DataExtent(File.class).all().without("data", "content");
-	
-	/**
-	 * Heavy fetching variant: fetch the whole file, including content.
-	 * @return the heavy fetch extent.
-	 */
-	public static final DataExtent ALL
-		= new DataExtent(File.class).all();
 }

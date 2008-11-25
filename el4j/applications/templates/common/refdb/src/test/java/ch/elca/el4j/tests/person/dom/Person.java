@@ -32,22 +32,47 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.validator.NotNull;
 
+/**
+ * Person domain object.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Andreas Rueedlinger (ARR)
+ */
 @Entity
 @Table(name = "person")
 @SequenceGenerator(name = "keyid_generator", sequenceName = "person_sequence")
 public class Person extends AbstractDomainObject {
+	
+	/** See corresponding setter method for more details. */
 	private String m_name;
+	
+	/** See corresponding setter method for more details. */
 	private Brain m_brain;
+	
+	/** See corresponding setter method for more details. */
 	private List<Tooth> m_teeth;
+	
+	/** See corresponding setter method for more details. */
 	private List<Person> m_friends;
 	
-	/** The legal status. */
+	/** See corresponding setter method for more details. */
 	private LegalStatus m_legalStatus;
 	
+	/** Default constructor. */
 	public Person() {
 		m_legalStatus = LegalStatus.SINGLE;
 	}
 	
+	/** 
+	 * Default constructor. 
+	 * @param name		the name of the person.
+	 */
 	public Person(String name) {
 		this();
 		m_name = name;

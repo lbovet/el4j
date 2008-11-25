@@ -16,17 +16,13 @@
  */
 package ch.elca.el4j.tests.refdb.dao;
 
-import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntity.entity;
-import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentCollection.collection;
-import static org.junit.Assert.fail;
 
-import java.lang.reflect.Method;
-import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
+import static org.junit.Assert.fail;
 
 import ch.elca.el4j.apps.refdb.dom.File;
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
@@ -36,6 +32,8 @@ import ch.elca.el4j.tests.person.dom.Brain;
 import ch.elca.el4j.tests.person.dom.Person;
 import ch.elca.el4j.tests.person.dom.Tooth;
 import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
+import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentCollection.collection;
+import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntity.entity;
 
 
 /**
@@ -259,21 +257,13 @@ public class DataExtentTest extends AbstractTestCaseBase {
 			ex.withSubentities(
 				collection("teeth",
 					entity(Tooth.class)
-						.withSubentities(entity("owner", Person.class)
-					)
+						.with("owner")
 				),
 				collection("friends", ex.getRootEntity())
 			);
 		} catch (NoSuchMethodException e) {
 			fail("Friends construction not accepted by validator.");
 		}
-		/* ExtentContainer teeth = new ExtentContainer("teeth", Tooth.class);
-		ExtentEntity p1 = entity("owner", Person.class);
-		ExtentContainer friends = new ExtentContainer("friends", Person.class);
-		teeth.getContainedEntity().addChildEntity(p1);
-		p1.addContainer(friends);
-		friends.setContainedEntity(ex.getRootEntity());
-		ex.getRootEntity().addContainer(teeth);*/
 		
 	}
 }

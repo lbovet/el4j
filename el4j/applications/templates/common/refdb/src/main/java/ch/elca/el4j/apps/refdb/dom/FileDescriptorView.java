@@ -39,8 +39,8 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="FILES")
-@SequenceGenerator(name="keyid_generator", sequenceName="file_sequence")
+@Table(name = "FILES")
+@SequenceGenerator(name = "keyid_generator", sequenceName = "file_sequence")
 public class FileDescriptorView extends AbstractFile {
 
 }

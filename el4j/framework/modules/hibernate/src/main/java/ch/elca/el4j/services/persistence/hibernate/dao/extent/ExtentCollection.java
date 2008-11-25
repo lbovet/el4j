@@ -10,13 +10,19 @@
  * agreement you entered into with ELCA.
  */
 package ch.elca.el4j.services.persistence.hibernate.dao.extent;
-import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntity.entity;
 
 import java.lang.reflect.Method;
-import java.util.LinkedList;
+
+import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntity.entity;
 
 /**
  * An ExtentCollection represents a collection of an entity.
+ * <br>
+ * Features: <br>
+ *  <ul>
+ *   <li> static method collection: create a new entity-collection.
+ *  </ul>
+ * For further details, see {@link DataExtent}. 
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -82,7 +88,7 @@ public class ExtentCollection extends AbstractExtentPart {
 	 * @param c		the class of the contained entity.
 	 * @return	the Collection object.
 	 */
-	static public ExtentCollection collection(String name, Class<?> c) {
+	public static ExtentCollection collection(String name, Class<?> c) {
 		return new ExtentCollection(name, c);
 	}
 	
@@ -92,7 +98,7 @@ public class ExtentCollection extends AbstractExtentPart {
 	 * @param m		the method to get the collection.
 	 * @return	the Collection object.
 	 */
-	static public ExtentCollection collection(Class<?> c, Method m) {
+	public static ExtentCollection collection(Class<?> c, Method m) {
 		return new ExtentCollection(c, m);
 	}
 	
@@ -102,7 +108,7 @@ public class ExtentCollection extends AbstractExtentPart {
 	 * @param entity		the contained entity.
 	 * @return	the Collection object.
 	 */
-	static public ExtentCollection collection(String name, ExtentEntity entity) {
+	public static ExtentCollection collection(String name, ExtentEntity entity) {
 		ExtentCollection c = new ExtentCollection(name);
 		c.setContainedEntity(entity);
 		return c;

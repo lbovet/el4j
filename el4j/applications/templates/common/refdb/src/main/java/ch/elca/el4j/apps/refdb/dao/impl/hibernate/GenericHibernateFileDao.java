@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.elca.el4j.apps.refdb.dao.GenericFileDao;
-import ch.elca.el4j.apps.refdb.dom.File;
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
 import ch.elca.el4j.util.codingsupport.Reject;
 

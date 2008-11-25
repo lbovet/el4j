@@ -526,7 +526,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 			for (ExtentEntity ent : entity.getChildEntities()) {
 				Object obj = ent.getMethod().invoke(object, nullArg);
 				// Initialize the object if it is a proxy
-				if (obj instanceof HibernateProxy) {
+				if (obj instanceof HibernateProxy && !Hibernate.isInitialized(obj)) {
 					Hibernate.initialize(obj);
 					getSession().refresh(obj);
 				}
@@ -539,7 +539,7 @@ public class GenericHibernateDao<T, ID extends Serializable>
 				Collection<?> coll = (Collection<?>) c.getMethod().invoke(object, nullArg);
 				for (Object o : coll) {
 					// Initialize the object if it is a proxy
-					if (o instanceof HibernateProxy) {
+					if (o instanceof HibernateProxy && !Hibernate.isInitialized(o)) {
 						Hibernate.initialize(o);
 						getSession().refresh(o);
 					}
