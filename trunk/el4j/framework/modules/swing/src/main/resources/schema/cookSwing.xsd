@@ -282,7 +282,7 @@
 			<extension base="cookSwing:component">
 				<attribute name="borderpainted" type="boolean" />
 				<attribute name="helpmenu" type="string" />
-				<attribute name="margin" type="string" />
+				<attribute name="margin" type="cookSwing:insets" />
 			</extension>
 		</complexContent>
 	</complexType>
@@ -336,7 +336,7 @@
 				<attribute name="defaultlightweightpopupenabled" type="boolean" />
 				<attribute name="label" type="string" />
 				<attribute name="lightweightpopupenabled" type="boolean" />
-				<attribute name="popupsize" type="string" />
+				<attribute name="popupsize" type="cookSwing:dimension" />
 				<attribute name="selected" type="boolean" />
 			</extension>
 		</complexContent>
@@ -362,7 +362,7 @@
 			<extension base="cookSwing:component">
 				<attribute name="borderpainted" type="boolean" />
 				<attribute name="floatable" type="boolean" />
-				<attribute name="margin" type="string" />
+				<attribute name="margin" type="cookSwing:insets" />
 				<attribute name="orientation" type="string" />
 				<attribute name="rollover" type="boolean" />
 			</extension>
@@ -372,7 +372,7 @@
 	<complexType name="toolbar-separator">
 		<complexContent>
 			<extension base="cookSwing:component">
-				<attribute name="separatorsize" type="string" />
+				<attribute name="separatorsize" type="cookSwing:dimension" />
 			</extension>
 		</complexContent>
 	</complexType>
@@ -409,7 +409,7 @@
 		<complexContent>
 			<extension base="cookSwing:textcomponent">
 				<attribute name="columns" type="int" />
-				<attribute name="horizontalalignment" type="string" />
+				<attribute name="horizontalalignment" type="cookSwing:horizontalalignment" />
 				<attribute name="scrolloffset" type="int" />
 			</extension>
 		</complexContent>
@@ -535,10 +535,10 @@
 				<attribute name="approvebuttontooltiptext" type="string" />
 				<attribute name="controlbuttonsareshown" type="boolean" />
 				<attribute name="dragenabled" type="boolean" />
-				<attribute name="dialogtype" type="string" />
+				<attribute name="dialogtype" type="cookSwing:dialogtype" />
 				<attribute name="dialogtitle" type="string" />
 				<attribute name="filehidingenabled" type="boolean" />
-				<attribute name="fileselectionmode" type="string" />
+				<attribute name="fileselectionmode" type="cookSwing:fileselectionmode" />
 				<attribute name="multiselectionenabled" type="boolean" />
 			</extension>
 		</complexContent>
@@ -550,14 +550,14 @@
 				<attribute name="disabledicon" type="string" />
 				<attribute name="displayedmnemonic" type="string" />
 				<attribute name="displayedmnemonicindex" type="int" />
-				<attribute name="horizontalalignment" type="string" />
-				<attribute name="horizontaltextposition" type="string" />
+				<attribute name="horizontalalignment" type="cookSwing:horizontalalignment" />
+				<attribute name="horizontaltextposition" type="cookSwing:horizontaltextposition" />
 				<attribute name="icon" type="string" />
 				<attribute name="icontextgap" type="int" />
 				<attribute name="labelfor" type="string" />
 				<attribute name="text" type="string" />
-				<attribute name="verticalalignment" type="string" />
-				<attribute name="verticaltextposition" type="string" />
+				<attribute name="verticalalignment" type="cookSwing:verticalalignment" />
+				<attribute name="verticaltextposition" type="cookSwing:verticaltextposition" />
 			</extension>
 		</complexContent>
 	</complexType>
@@ -568,11 +568,11 @@
 				<attribute name="dragenabled" type="boolean" />
 				<attribute name="fixedcellheight" type="int" />
 				<attribute name="fixedcellwidth" type="int" />
-				<attribute name="layoutorientation" type="string" />
+				<attribute name="layoutorientation" type="cookSwing:layoutorientation" />
 				<attribute name="selectedindex" type="int" />
-				<attribute name="selectionbackground" type="string" />
-				<attribute name="selectionforeground" type="string" />
-				<attribute name="selectionmode" type="string" />
+				<attribute name="selectionbackground" type="cookSwing:color" />
+				<attribute name="selectionforeground" type="cookSwing:color" />
+				<attribute name="selectionmode" type="cookSwing:selectionmode" />
 				<attribute name="visiblerowcount" type="int" />
 			</extension>
 		</complexContent>
@@ -584,7 +584,7 @@
 				<attribute name="indeterminate" type="boolean" />
 				<attribute name="maximum" type="int" />
 				<attribute name="minimum" type="int" />
-				<attribute name="orientation" type="string" />
+				<attribute name="orientation" type="cookSwing:orientation" />
 				<attribute name="string" type="string" />
 				<attribute name="stringpainted" type="boolean" />
 				<attribute name="value" type="int" />
@@ -603,7 +603,7 @@
 			<extension base="cookSwing:component">
 				<attribute name="maximum" type="int" />
 				<attribute name="minimum" type="int" />
-				<attribute name="orientation" type="string" />
+				<attribute name="orientation" type="cookSwing:orientation" />
 				<attribute name="unitincrement" type="int" />
 				<attribute name="value" type="int" />
 			</extension>
@@ -613,7 +613,7 @@
 	<complexType name="separator">
 		<complexContent>
 			<extension base="cookSwing:component">
-				<attribute name="orientation" type="string" />
+				<attribute name="orientation" type="cookSwing:orientation" />
 			</extension>
 		</complexContent>
 	</complexType>
@@ -626,7 +626,7 @@
 				<attribute name="maximum" type="int" />
 				<attribute name="minimum" type="int" />
 				<attribute name="minortickspacing" type="int" />
-				<attribute name="orientation" type="string" />
+				<attribute name="orientation" type="cookSwing:orientation" />
 				<attribute name="paintlabels" type="boolean" />
 				<attribute name="paintticks" type="boolean" />
 				<attribute name="painttrack" type="boolean" />
@@ -673,7 +673,7 @@
 	<complexType name="spinnerdatemodel">
 		<complexContent>
 			<extension base="cookSwing:component">
-				<attribute name="calendarfield" type="string" />
+				<attribute name="calendarfield" type="cookSwing:calendarfield" />
 			</extension>
 		</complexContent>
 	</complexType>
@@ -698,7 +698,7 @@
 				<attribute name="dividersize" type="int" />
 				<attribute name="lastdividerlocation" type="int" />
 				<attribute name="onetouchexpandable" type="boolean" />
-				<attribute name="orientation" type="string" />
+				<attribute name="orientation" type="cookSwing:orientation" />
 				<attribute name="resizeweight" type="float" />
 			</extension>
 		</complexContent>
@@ -707,11 +707,11 @@
 	<complexType name="tab">
 		<complexContent>
 			<extension base="cookXmlCommon:object">
-				<attribute name="background" type="string" />
+				<attribute name="background" type="cookSwing:color" />
 				<attribute name="disabledicon" type="string" />
 				<attribute name="displayedmnemonicindex" type="int" />
 				<attribute name="enabled" type="boolean" />
-				<attribute name="foreground" type="string" />
+				<attribute name="foreground" type="cookSwing:color" />
 				<attribute name="icon" type="string" />
 				<attribute name="mnemonic" type="string" />
 				<attribute name="title" type="string" />
@@ -724,18 +724,18 @@
 		<complexContent>
 			<extension base="cookSwing:component">
 				<attribute name="autocreatecolumnsfrommodel" type="boolean" />
-				<attribute name="autoresizemode" type="string" />
+				<attribute name="autoresizemode" type="cookSwing:autoresizemode" />
 				<attribute name="cellselectionenabled" type="boolean" />
 				<attribute name="columnselectionallowed" type="boolean" />
 				<attribute name="editingcolumn" type="int" />
 				<attribute name="editingrow" type="int" />
-				<attribute name="gridcolor" type="string" />
-				<attribute name="intercellspacing" type="string" />
-				<attribute name="preferredscrollableviewportsize" type="string" />
+				<attribute name="gridcolor" type="cookSwing:color" />
+				<attribute name="intercellspacing" type="cookSwing:dimension" />
+				<attribute name="preferredscrollableviewportsize" type="cookSwing:dimension" />
 				<attribute name="rowheight" type="int" />
 				<attribute name="rowmargin" type="int" />
 				<attribute name="rowselectionallowed" type="boolean" />
-				<attribute name="selectionbackground" type="string" />
+				<attribute name="selectionbackground" type="cookSwing:color" />
 				<attribute name="selectionmode" type="string" />
 				<attribute name="showgrid" type="boolean" />
 				<attribute name="showhorizontallines" type="boolean" />
@@ -857,14 +857,14 @@
 					<sequence minOccurs="0" maxOccurs="1"> <element
 					ref="cookSwing:insets"></element> </sequence>
 				-->
-				<attribute name="highlight" type="string" />
-				<attribute name="highlightinner" type="string" />
-				<attribute name="highlightouter" type="int" />
-				<attribute name="shadow" type="string" />
-				<attribute name="shadowinner" type="int" />
-				<attribute name="shadowouter" type="string" />
+				<attribute name="highlight" type="cookSwing:color" />
+				<attribute name="highlightinner" type="cookSwing:color" />
+				<attribute name="highlightouter" type="cookSwing:color" />
+				<attribute name="shadow" type="cookSwing:color" />
+				<attribute name="shadowinner" type="cookSwing:color" />
+				<attribute name="shadowouter" type="cookSwing:color" />
 				<attribute name="soft" type="boolean" />
-				<attribute name="type" type="string" />
+				<attribute name="type" type="cookSwing:bordertype" />
 			</extension>
 		</complexContent>
 	</complexType>
@@ -879,7 +879,7 @@
 		<complexContent>
 			<extension base="cookSwing:border">
 				<attribute name="bottom" type="int" />
-				<attribute name="insets" type="string" />
+				<attribute name="insets" type="cookSwing:insets" />
 				<attribute name="left" type="int" />
 				<attribute name="right" type="int" />
 				<attribute name="top" type="int" />
@@ -890,9 +890,9 @@
 	<complexType name="etchedborder">
 		<complexContent>
 			<extension base="cookSwing:border">
-				<attribute name="highlight" type="string" />
-				<attribute name="shadow" type="string" />
-				<attribute name="type" type="string" />
+				<attribute name="highlight" type="cookSwing:color" />
+				<attribute name="shadow" type="cookSwing:color" />
+				<attribute name="type" type="cookSwing:bordertype" />
 			</extension>
 		</complexContent>
 	</complexType>
@@ -900,7 +900,7 @@
 	<complexType name="lineborder">
 		<complexContent>
 			<extension base="cookSwing:border">
-				<attribute name="color" type="string" />
+				<attribute name="color" type="cookSwing:color" />
 				<attribute name="thickness" type="int" />
 			</extension>
 		</complexContent>
@@ -916,10 +916,10 @@
 					ref="cookSwing:insets"></element> </choice> </sequence>
 				-->
 				<attribute name="bottom" type="int" />
-				<attribute name="color" type="string" />
-				<attribute name="insets" type="string" />
+				<attribute name="color" type="cookSwing:color" />
+				<attribute name="insets" type="cookSwing:insets" />
 				<attribute name="left" type="int" />
-				<attribute name="mattecolor" type="string" />
+				<attribute name="mattecolor" type="cookSwing:color" />
 				<attribute name="right" type="int" />
 				<attribute name="tileicon" type="string" />
 				<attribute name="top" type="int" />
@@ -935,8 +935,8 @@
 					ref="cookSwing:border"></element> </sequence>
 				-->
 				<attribute name="title" type="string" />
-				<attribute name="titlecolor" type="string" />
-				<attribute name="titlefont" type="string" />
+				<attribute name="titlecolor" type="cookSwing:color" />
+				<attribute name="titlefont" type="cookSwing:font" />
 				<attribute name="titlejustification" type="string" />
 				<attribute name="titleposition" type="string" />
 			</extension>
@@ -1042,13 +1042,13 @@
 					<sequence minOccurs="0" maxOccurs="unbounded"> <element
 					ref="cookXmlCommon:object"></element> </sequence>
 				-->
-				<attribute name="anchor" type="string" />
-				<attribute name="fill" type="string" />
-				<attribute name="gridheight" type="string" />
-				<attribute name="gridwidth" type="string" />
+				<attribute name="anchor" type="cookSwing:anchor" />
+				<attribute name="fill" type="cookSwing:fill" />
+				<attribute name="gridheight" type="int" />
+				<attribute name="gridwidth" type="int" />
 				<attribute name="gridx" type="int" />
 				<attribute name="gridy" type="int" />
-				<attribute name="insets" type="string" />
+				<attribute name="insets" type="cookSwing:insets" />
 				<attribute name="ipadx" type="int" />
 				<attribute name="ipady" type="int" />
 				<attribute name="weightx" type="float" />
@@ -1351,6 +1351,15 @@
 		</annotation>
 		<restriction base="string"></restriction>
 	</simpleType>
+	
+	<simpleType name="insets">
+		<annotation>
+			<documentation>
+				<![CDATA[The format is "#,#,#,#" in the order of top, left, bottom and right.]]>
+			</documentation>
+		</annotation>
+		<restriction base="string"></restriction>
+	</simpleType>
 
 	<simpleType name="font">
 		<annotation>
@@ -1560,8 +1569,281 @@ The default value, if not set, is TOP.
 		</restriction>
 	</simpleType>
 
+	<simpleType name="horizontalalignment">
+		<annotation>
+			<documentation>
+				<![CDATA[Sets the horizontal alignment of the text. Valid keys are:
 
+	* LEFT
+	* CENTER
+	* RIGHT
+	* LEADING
+	* TRAILING 
+				]]>
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="LEFT" />
+			<enumeration value="CENTER" />
+			<enumeration value="RIGHT" />
+			<enumeration value="LEADING" />
+			<enumeration value="TRAILING" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="horizontaltextposition">
+		<annotation>
+			<documentation>
+				<![CDATA[Sets the horizontal position of the label's text, relative to its image.  Valid keys are:
 
+	* LEFT
+	* CENTER
+	* RIGHT
+	* LEADING
+	* TRAILING 
+				]]>
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="LEFT" />
+			<enumeration value="CENTER" />
+			<enumeration value="RIGHT" />
+			<enumeration value="LEADING" />
+			<enumeration value="TRAILING" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="verticalalignment">
+		<annotation>
+			<documentation>
+				<![CDATA[Sets the alignment of the label's contents along the Y axis.
+
+	The default value of this property is CENTER. 
+
+	* TOP
+	* CENTER
+	* BOTTOM
+				]]>
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="TOP" />
+			<enumeration value="CENTER" />
+			<enumeration value="BOTTOM" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="verticaltextposition">
+		<annotation>
+			<documentation>
+				<![CDATA[Sets the vertical position of the label's text, relative to its image. 
+
+	The default value of this property is CENTER. 
+
+	* TOP
+	* CENTER
+	* BOTTOM
+				]]>
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="TOP" />
+			<enumeration value="CENTER" />
+			<enumeration value="BOTTOM" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="dialogtype">
+		<annotation>
+			<documentation>
+				<![CDATA[dialogType - the type of dialog to be displayed:
+
+	* OPEN_DIALOG
+	* SAVE_DIALOG
+	* CUSTOM_DIALOG 
+
+				]]>
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="OPEN_DIALOG" />
+			<enumeration value="SAVE_DIALOG" />
+			<enumeration value="CUSTOM_DIALOG" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="fileselectionmode">
+		<annotation>
+			<documentation>
+				<![CDATA[mode - the type of files to be displayed:
+
+	* FILES_ONLY
+	* DIRECTORIES_ONLY
+	* FILES_AND_DIRECTORIES 
+
+				]]>
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="FILES_ONLY" />
+			<enumeration value="DIRECTORIES_ONLY" />
+			<enumeration value="FILES_AND_DIRECTORIES" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="layoutorientation">
+		<annotation>
+			<documentation>
+				<![CDATA[Defines the way list cells are layed out:
+
+	* VERTICAL
+	* HORIZONTAL_WRAP
+	* VERTICAL_WRAP
+
+				]]>
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="VERTICAL" />
+			<enumeration value="HORIZONTAL_WRAP" />
+			<enumeration value="VERTICAL_WRAP" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="selectionmode">
+		<annotation>
+			<documentation>
+				<![CDATA[Determines whether single-item or multiple-item selections are allowed. The following selectionMode values are allowed: 
+
+	* SINGLE_SELECTION
+	* SINGLE_INTERVAL_SELECTION
+	* MULTIPLE_INTERVAL_SELECTION
+
+				]]>
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="SINGLE_SELECTION" />
+			<enumeration value="SINGLE_INTERVAL_SELECTION" />
+			<enumeration value="MULTIPLE_INTERVAL_SELECTION" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="orientation">
+		<annotation>
+			<documentation>
+				<![CDATA[Sets the orientation:
+
+	* VERTICAL
+	* HORIZONTAL
+
+				]]>
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="VERTICAL" />
+			<enumeration value="HORIZONTAL" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="bordertype">
+		<annotation>
+			<documentation>
+				<![CDATA[RAISED or LOWERED border.]]>
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="RAISED" />
+			<enumeration value="LOWERED" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="calendarfield">
+		<annotation>
+			<documentation>
+				<![CDATA[ The legal values for calendarField are:
+
+	* ERA
+	* YEAR
+	* MONTH
+	* WEEK_OF_YEAR
+	* WEEK_OF_MONTH
+	* DAY_OF_MONTH
+	* DAY_OF_YEAR
+	* DAY_OF_WEEK
+	* DAY_OF_WEEK_IN_MONTH
+	* AM_PM
+	* HOUR
+	* HOUR_OF_DAY
+	* MINUTE
+	* SECOND
+	* MILLISECOND 
+				]]>
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="VERTICAL" />
+			<enumeration value="HORIZONTAL" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="autoresizemode">
+		<annotation>
+			<documentation>
+				<![CDATA[mode - One of 5 legal values:
+				AUTO_RESIZE_OFF, AUTO_RESIZE_NEXT_COLUMN, AUTO_RESIZE_SUBSEQUENT_COLUMNS, AUTO_RESIZE_LAST_COLUMN, AUTO_RESIZE_ALL_COLUMNS
+				]]>
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="AUTO_RESIZE_OFF" />
+			<enumeration value="AUTO_RESIZE_NEXT_COLUMN" />
+			<enumeration value="AUTO_RESIZE_SUBSEQUENT_COLUMNS" />
+			<enumeration value="AUTO_RESIZE_LAST_COLUMN" />
+			<enumeration value="AUTO_RESIZE_ALL_COLUMNS" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="anchor">
+		<annotation>
+			<documentation>
+				<![CDATA[This field is used when the component is smaller than its display area. It determines where, within the display area, to place the component.
+
+	There are two kinds of possible values: relative and absolute.
+	Relative values are interpreted relative to the container's component orientation property while absolute values are not. 
+	The absolute values are: CENTER, NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, and NORTHWEST. 
+	The relative values are: PAGE_START, PAGE_END, LINE_START, LINE_END, FIRST_LINE_START, FIRST_LINE_END, LAST_LINE_START and LAST_LINE_END. 
+	The default value is CENTER. 
+				]]>
+			</documentation>
+		</annotation>
+		<restriction base="string"/>
+	</simpleType>
+	
+	<simpleType name="fill">
+		<annotation>
+			<documentation>
+				<![CDATA[This field is used when the component's display area is larger than the component's requested size. It determines whether to resize the component, and if so, how.
+
+The following values are valid for fill:
+
+	* NONE: Do not resize the component.
+	* HORIZONTAL: Make the component wide enough to fill its display area horizontally, but do not change its height.
+	* VERTICAL: Make the component tall enough to fill its display area vertically, but do not change its width.
+	* BOTH: Make the component fill its display area entirely. 
+
+The default value is NONE.
+				]]>
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="NONE" />
+			<enumeration value="HORIZONTAL" />
+			<enumeration value="VERTICAL" />
+			<enumeration value="BOTH" />
+		</restriction>
+	</simpleType>
+	
 	<!--
 		<element name="uimanager" type="cookSwing:uimanager"
 		substitutionGroup="cookXmlCommon:object" /> <element name="color"
