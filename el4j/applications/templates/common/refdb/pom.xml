@@ -76,6 +76,59 @@
 				</plugins>
 			</build>
 		</profile>
+		<profile>
+			<id>oracle</id>
+			<build>
+				<plugins>
+					<!-- EL4J Database plugin to start and fill DB automatically -->
+					<plugin>
+						<groupId>ch.elca.el4j.maven.plugins</groupId>
+						<artifactId>maven-database-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>prepare</id>
+								<goals>
+									<goal>prepare</goal>
+								</goals>
+								<phase>pre-integration-test</phase>
+							</execution>
+							<!-- Delete tables and stop Network Server -->
+							<execution>
+								<id>cleanUp</id>
+								<goals>
+									<goal>cleanUp</goal>
+								</goals>
+								<phase>post-integration-test</phase>
+							</execution>
+						</executions>
+					</plugin>
+
+					<!-- skip unit test run, tests to be executed during integration-test -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<excludes>
+								<exclude>**/*NonOracleTest.java</exclude>
+							</excludes>
+
+						</configuration>
+						<executions>
+							<execution>
+								<id>surefire-it</id>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>test</goal>
+								</goals>
+								<configuration>
+									<skip>false</skip>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
 	
 	<dependencies>

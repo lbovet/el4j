@@ -120,11 +120,8 @@ public class DataExtentTest extends AbstractTestCaseBase {
 				}
 			}
 			ex.without("name");
-			List<Method> ms = ex.getRootEntity().getFields();
-			for (Method m : ms) {
-				if (m.getName().equals("getName")) {
-					fail("Removed field 'name' still in person extent.");
-				}
+			if (ex.getRootEntity().getFields().contains("name")) {
+				fail("Removed field 'name' still in person extent.");
 			}
 			ex.without("brain");
 			List<ExtentEntity> es = ex.getRootEntity().getChildEntities();
@@ -202,13 +199,7 @@ public class DataExtentTest extends AbstractTestCaseBase {
 		}
 		found = false;
 		
-		List<Method> ms = ex.getRootEntity().getFields();
-		for (Method m : ms) {
-			if (m.getName().equals("getName")) {
-				found = true;
-			}
-		}
-		if (!found) {
+		if (!ex.getRootEntity().getFields().contains("name")) {
 			fail("All feature does not add field name.");
 		}
 		found = false;

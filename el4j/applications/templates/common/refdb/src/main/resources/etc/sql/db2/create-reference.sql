@@ -61,13 +61,24 @@ CREATE TABLE annotations (
   optimisticLockingVersion  INTEGER        NOT NULL
 );
 
-CREATE TABLE blobs (
-  keyId                     INTEGER        NOT NULL
-    GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) 
-    PRIMARY KEY,
-  content                   BLOB           NOT NULL,
-  optimisticLockingVersion  INTEGER        NOT NULL
-);
+--CREATE TABLE blobs (
+--  keyId                     INTEGER        NOT NULL
+--    GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) 
+--    PRIMARY KEY,
+--  content                   BLOB           NOT NULL,
+--  optimisticLockingVersion  INTEGER        NOT NULL
+--);
+CREATE TABLE appendix
+(
+	keyid                       INTEGER NOT NULL
+		GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) 
+		PRIMARY KEY,
+	data                        BLOB NOT NULL,
+	filename                    VARCHAR(50) NOT NULL,
+	mimetype                    VARCHAR(30) NOT NULL,
+	optimisticLockingVersion  INTEGER NOT NULL
+)
+;
 
 CREATE TABLE files (
   keyId                     INTEGER        NOT NULL
@@ -78,8 +89,9 @@ CREATE TABLE files (
   name                      VARCHAR(64)    NOT NULL,
   mimeType                  VARCHAR(32)    NOT NULL,
   contentSize               DOUBLE         NOT NULL,
-  content_key				INTEGER        
-  	NOT NULL REFERENCES blobs(keyId),
+  --content_key				INTEGER        
+  --	NOT NULL REFERENCES blobs(keyId),
+  content					BLOB		   NOT NULL,
   optimisticLockingVersion  INTEGER        NOT NULL,
   dtype						VARCHAR(100)
 );

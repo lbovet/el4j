@@ -16,15 +16,23 @@
  */
 package ch.elca.el4j.apps.refdb.dom;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.Arrays;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.Lob;
 import javax.persistence.Transient;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.hibernate.Hibernate;
 import org.hibernate.validator.NotNull;
 
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
@@ -46,143 +54,98 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
 public class File extends FileDescriptorView {
 	
 	/**
-	 * Primary key of related reference.
+	 * Private logger.
 	 */
-	//private int m_keyToReference;
+	private static Log s_logger = LogFactory.getLog(File.class);
+	
+	/** See corresponding setter method for more details. */
+	private byte[] m_content;
+	
+	/** See corresponding setter method for more details. */
+	private Blob m_data;
 
 	/**
-	 * Name of the document.
-	 */
-	//private String m_name;
-
-	/**
-	 * Mime type of the binary content of the file.
-	 */
-	//private String m_mimeType;
-	
-	/**
-	 * Data of the document (typically binary).
-	 */
-	private BinaryData<File> m_data;
-
-	/**
-	 * Size of the content in bytes.
-	 */
-	//private int m_size;
-	
-	/** Default generator. */
-	public File() {
-		m_data = new BinaryData<File>();
-	}
-	
-	/**
+	 * Content of the file (usually binary).
 	 * @return Returns the content.
 	 */
 	@Transient
 	public byte[] getContent() {
-		if (m_data == null) {
-			return null;
-		} else {
-			return m_data.getData();
+		if (m_content == null) {
+			InputStream in = null;
+			ByteArrayOutputStream out = null;
+			byte[] primitiveData = null;
+			Blob blob = getData();
+			if (blob != null) {
+				try {
+					in = blob.getBinaryStream();
+					out = new ByteArrayOutputStream();
+					byte[] buffer = new byte[4096];
+					int readBytes;
+					while ((readBytes = in.read(buffer)) > 0) {
+						out.write(buffer, 0, readBytes);
+					}
+					primitiveData = out.toByteArray();
+				} catch (IOException e) {
+					s_logger.error("Error while reading content stream.", e);
+				} catch (SQLException e) {
+					s_logger.error("Error while retrieving content.", e);
+				} finally {
+					if (in != null) {
+						try {
+							in.close();
+						} catch (Exception e) {
+							s_logger.error("Error while closing input stream.");
+						}
+					}
+					if (out != null) {
+						try {
+							out.close();
+						} catch (Exception e) {
+							s_logger.error("Error while closing output stream.");
+						}
+					}
+				}
+			}
+			if (primitiveData != null) {
+				m_content = primitiveData.length > 0 ? primitiveData : null;
+			}
 		}
+		return m_content;
 	}
  
 	/**
+	 * Set the content of the file.
 	 * @param content
 	 *            The content to set.
 	 */
 	public void setContent(byte[] content) {
-		if (m_data == null) {
-			m_data = new BinaryData<File>();
+		if (content != null && content.length > 0) {
+			setData(Hibernate.createBlob(content));
+			m_content = content;
+		} else {
+			setData(null);
+			m_content = null;
 		}
-		m_data.setData(content);
-		
 	}
+	
 	/**
+	 * Content of the file converted to Blob. Used by hibernate only!
 	 * @return Returns the data.
 	 */
 	@NotNull
-	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
-	@JoinColumn(name = "content_key", unique = true)
-	public BinaryData<File> getData() {
+	@Lob
+	@Column(name = "content")
+	private Blob getData() {
 		return m_data;
 	}
- 
+	
 	/**
-	 * @param data
-	 *            The data to set.
+	 * Set the content as Blob. Used by hibernate only!
+	 * @param data	the data to set.
 	 */
-	public void setData(BinaryData<File> data) {
+	private void setData(Blob data) {
 		m_data = data;
 	}
-	
-	//the following properties are inherited by FiledescriptorView
-	/**
-	 * @return Returns the mimeType
-	 */
-	/*@NotNull
-	public String getMimeType() {
-		return m_mimeType;
-	}*/
-
-	/**
-	 * @param mimeType
-	 *            The mimeType to set.
-	 */
-	/*public void setMimeType(String mimeType) {
-		m_mimeType = mimeType;
-	}*/
-
-	/**
-	 * @return Returns the name
-	 */
-	/*@NotNull
-	public String getName() {
-		return m_name;
-	}*/
-
-	/**
-	 * @param name
-	 *            The name to set.
-	 */
-	/*public void setName(String name) {
-		m_name = name;
-	}*/
-
-	/**
-	 * @return Returns the size of the content in bytes.
-	 */
-	/*@NotNull
-	public int getSize() {
-		if (m_content != null && m_size <= 0) {
-			m_size = m_content.length;
-		}
-		return m_size;
-	}*/
-
-	/**
-	 * @param size
-	 *            The size of the content in bytes.
-	 */
-	/*public void setSize(int size) {
-		m_size = size;
-	}*/
-
-	/**
-	 * @return Returns the key to reference.
-	 */
-	//@NotNull
-	/*public int getKeyToReference() {
-		return m_keyToReference;
-	}*/
-
-	/**
-	 * @param keyToReference
-	 *            The key to reference to set.
-	 */
-	/*public void setKeyToReference(int keyToReference) {
-		m_keyToReference = keyToReference;
-	}*/
 	
 	/**
 	 * {@inheritDoc}
@@ -204,7 +167,7 @@ public class File extends FileDescriptorView {
 				&& ObjectUtils.nullSaveEquals(getName(), other.getName())
 				&& ObjectUtils.nullSaveEquals(getMimeType(),
 					other.getMimeType())
-				&& Arrays.equals(m_data.getData(), other.m_data.getData());
+				&& Arrays.equals(getContent(), other.getContent());
 		} else {
 			return false;
 		}
