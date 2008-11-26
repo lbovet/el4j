@@ -25,9 +25,11 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.collections.map.AbstractReferenceMap;
@@ -49,10 +51,10 @@ import ch.elca.el4j.util.codingsupport.AopHelper;
  *
  * Object Identity is an important concept in OOP, but is not always
  * guaranteed or maintained. For instance, sending an object back and
- * forth over the wire (using any standard remoting protocal) will create new
+ * forth over the wire (using any standard remoting protocol) will create new
  * objects, causing changes applied to the object not to propagate properly -
  * even within a single VM. Similarly, loosing an OR-Mapper's context between
- * load invocations typically results in creating multiplie proxies to the same
+ * load invocations typically results in creating multiple proxies to the same
  * persisted object. Accepting that loss of identity complicates the programming
  * model, and contradicts OO methodology.
  *
@@ -78,13 +80,13 @@ import ch.elca.el4j.util.codingsupport.AopHelper;
  * identity fixer. {@link GenericInterceptor} provides a generic Spring AOP
  * interceptor to be wrapped around the identity-mangling objects. As an
  * alternative, manual
- * access to indentity translation is granted by {@link #merge(Object, Object)}.
+ * access to identity translation is granted by {@link #merge(Object, Object)}.
  *
  * <h4>Guarantees</h4>
  * During its lifetime, an identity fixer will always return the same object
  * for every logical identity. It will update the shared instance with the state
  * of the new copies, and notify registered observers about every such update.
- * These guarantees extend to objects (directly or indirecly) referenced by the
+ * These guarantees extend to objects (directly or indirectly) referenced by the
  * translated object unless they are recognized as immutable values by
  * {@link #immutableValue(Object)}.
  *
@@ -104,7 +106,7 @@ import ch.elca.el4j.util.codingsupport.AopHelper;
  */
 public abstract class AbstractIdentityFixer {
 	/**
-	 * Id for objects of anynomous types (= value types).
+	 * Id for objects of anonymous types (= value types).
 	 */
 	protected static final Object ANONYMOUS = new Object();
 	
@@ -119,7 +121,7 @@ public abstract class AbstractIdentityFixer {
 	static ObjectIdentifier s_oi = new ObjectIdentifier();
 	
 	
-	/** Indendation for tracing. */
+	/** Indentation for tracing. */
 	int m_traceIndentation = 0;
 	
 	/** The notifier for broadcasting changes. */
@@ -130,6 +132,11 @@ public abstract class AbstractIdentityFixer {
 	 * @see #id(Object)
 	 */
 	Map<Object, Object> m_representatives;
+	
+	/**
+	 * A set of objects whose fields should be refreshed (overwritten but with respect to identity) in any case.
+	 */
+	Set<Object> m_objectsToUpdateAllFields = new HashSet<Object>();;
 
 
 	/**
@@ -268,7 +275,7 @@ public abstract class AbstractIdentityFixer {
 	 *              updated.
 	 * @param reached
 	 *              the set of objects in the updated object graph that have
-	 *              been (or are beeing) merged. Used to avoid merging an
+	 *              been (or are being) merged. Used to avoid merging an
 	 *              object more than once.
 	 * @return
 	 *              the representative.
@@ -337,15 +344,21 @@ public abstract class AbstractIdentityFixer {
 		} else {
 			for (Field f : fields(updated.getClass())) {
 				try {
-					f.set(
-						attached,
-						merge(
-							anchor != null ? f.get(anchor) : null,
-							f.get(updated),
-							isIdentical,
-							reached
-						)
+					Object fieldValue = f.get(updated);
+					Object merged = merge(
+						anchor != null ? f.get(anchor) : null,
+						fieldValue,
+						isIdentical,
+						reached
 					);
+					// SWI: perform overwrite only on entities, not on values!
+					// Otherwise all changes to the current state of the object get lost
+					// This can be disabled by adding the object to m_objectsToUpdateAllFields
+					if (m_objectsToUpdateAllFields.contains(updated)
+						|| (fieldValue != null && id(fieldValue) != ANONYMOUS)) {
+						
+						f.set(attached, merged);
+					}
 				} catch (IllegalAccessException e) { assert false : e; }
 			}
 		}
@@ -375,12 +388,31 @@ public abstract class AbstractIdentityFixer {
 	 * @return The representative.
 	 */
 	public <T> T merge(T anchor, T updated) {
-		return merge(
+		T result = merge(
 			anchor,
 			updated,
 			anchor != null,
 			new IdentityHashMap<Object, Object>()
 		);
+		m_objectsToUpdateAllFields.clear();
+		return result;
+	}
+	
+	/**
+	 * @param object    the object to test
+	 * @return          <code>true</code> if object is a representative.
+	 */
+	public boolean isRepresentative(Object object) {
+		return m_representatives.containsValue(object);
+	}
+	
+	/**
+	 * Mark an object such that its fields get overwritten the next time a merge operation occurs.
+	 * Changes get lost, but identity is kept.
+	 * @param object    the object to reload
+	 */
+	public void refreshFieldsOfObject(Object object) {
+		m_objectsToUpdateAllFields.add(object);
 	}
 	
 	/**
@@ -391,7 +423,7 @@ public abstract class AbstractIdentityFixer {
 	 * <p>
 	 * The ID objects returned by this method must be value-comparable using
 	 * {@code equals} (which implies that hashCode must be overridden as well).
-	 * To permit garbage-collection, ids refering to the object they identify
+	 * To permit garbage-collection, ids referring to the object they identify
 	 * should do so with weak references.
 	 *
 	 * @param o
@@ -462,7 +494,6 @@ public abstract class AbstractIdentityFixer {
 		 * @param o .
 		 * @return .
 		 */
-		@SuppressWarnings("unchecked")
 		public Object decorate(Object o) {
 			return AopHelper.addAdvice(o, this);
 		}
