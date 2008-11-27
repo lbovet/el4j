@@ -51,36 +51,57 @@ public class MainFormActions {
 		m_app = app;
 	}
 	
+	/**
+	 * Show the ResourceInjectionDemoForm.
+	 */
 	@Action
 	public void showDemo1() {
 		m_app.show("resourceInjectionDemoForm");
 	}
 	
+	/**
+	 * Show the CancelableDemoForm.
+	 */
 	@Action
 	public void showDemo2() {
 		m_app.show("cancelableDemoForm");
 	}
 
+	/**
+	 * Show the Master/Detail DemoForm.
+	 */
 	@Action
 	public void showDemo3() {
 		m_app.show("masterDetailDemoForm");
 	}
 	
+	/**
+	 * Show the BindingDemoForm.
+	 */
 	@Action
 	public void showDemo4() {
 		m_app.show("bindingDemoForm");
 	}
 	
+	/**
+	 * Show the EventBusDemoForm.
+	 */
 	@Action
 	public void showDemo5() {
 		m_app.show("eventBusDemoForm");
 	}
 	
+	/**
+	 * Show the SeearchForm.
+	 */
 	@Action
 	public void showSearch() {
 		m_app.show("searchForm");
 	}
 	
+	/**
+	 * Show the RefDB demo.
+	 */
 	@Action
 	public void showRefDB() {
 		// try to run secure version of refDB editor (see swing-demo-secure-thin-client)
@@ -91,16 +112,31 @@ public class MainFormActions {
 		}
 	}
 	
+
+	/**
+	 * CookSwing XML Demo.
+	 */
+	@Action
+	public void showDemo6() {
+		m_app.show("xmlDemoForm");
+	}
+	
+	/**
+	 * Send an example event.
+	 */
 	@Action
 	public void sendExampleEvent() {
 		EventBus.publish(new ExampleEvent("I'm an Example Event!"));
 	}
 	
+	/**
+	 * Throw an example exception.
+	 */
 	@Action
 	public void throwException() {
 		throw new IllegalArgumentException();
 	}
-	
+
 	/**
 	 * Show the about dialog.
 	 */
@@ -108,4 +144,13 @@ public class MainFormActions {
 	public void about() {
 		m_app.show("aboutDialog");
 	}
+	
+	/**
+	 * A help only for admins (for demo purpose only).
+	 */
+	@Action
+	public void help() {
+		m_app.show("helpDialog");
+	}
+	
 }

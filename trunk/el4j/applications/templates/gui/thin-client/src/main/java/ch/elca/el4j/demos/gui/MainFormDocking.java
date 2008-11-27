@@ -53,6 +53,7 @@ import ch.elca.el4j.gui.swing.DockingApplication;
  * @author Stefan Wismer (SWI)
  */
 public class MainFormDocking extends DockingApplication {
+
 	/**
 	 * Determines if user is admin (for activation demo).
 	 */
@@ -74,6 +75,7 @@ public class MainFormDocking extends DockingApplication {
 	/**
 	 * @return    the created main panel
 	 */
+	@SuppressWarnings("unchecked")
 	protected JComponent createMainPanel() {
 		JPanel panel = new JPanel(new BorderLayout());
 		JToolBar toolbar = createToolBar();
@@ -107,7 +109,7 @@ public class MainFormDocking extends DockingApplication {
 		
 		return panel;
 	}
-	
+
 	/**
 	 * Show search dialog in a toolbox.
 	 */
@@ -118,9 +120,11 @@ public class MainFormDocking extends DockingApplication {
 
 	/**
 	 * A "special" help only for admins (for demo purpose only).
+	 * Must be placed in the GUIApplication, since the propertyChange cannot
+	 * be fired!
 	 */
-	@Action//(enabledProperty = "admin")
-	public void help() {
+	@Action(enabledProperty = "admin")
+	public void helpAdmin() {
 		try {
 			show("securityDemoForm");
 		} catch (NoSuchBeanDefinitionException e) {
@@ -128,7 +132,15 @@ public class MainFormDocking extends DockingApplication {
 				"This demo doesn't support security. "
 				+ "Use swing-demo-secure-... instead.");
 		}
-		show("helpDialog");
+	}
+	
+	/**
+	 * Indicates whether permission "admin" is set
+	 *  (used via enabledProperty field of \@Action).
+	 *  @return    <code>true</code> if user has admin rights
+	 */
+	public boolean isAdmin() {
+		return hasRole("ROLE_SUPERVISOR");
 	}
 	
 	/**
@@ -140,15 +152,6 @@ public class MainFormDocking extends DockingApplication {
 		boolean oldAdmin = m_admin;
 		m_admin = !m_admin;
 		firePropertyChange("admin", oldAdmin, m_admin);
-	}
-	
-	/**
-	 * Indicates whether permission "admin" is set
-	 *  (used via enabledProperty field of \@Action).
-	 *  @return    <code>true</code> if user has admin rights
-	 */
-	public boolean isAdmin() {
-		return hasRole("ROLE_SUPERVISOR");
 	}
 	
 	/**
@@ -180,7 +183,7 @@ public class MainFormDocking extends DockingApplication {
 			= {"showDemo1", "showDemo2", "showDemo3", "showDemo4", "---",
 				"showSearch", "showRefDB", "---",
 				"showDemo5", "sendExampleEvent", "throwException"};
-		String[] helpMenuActionNames = {"help", "toggleAdmin", "about"};
+		String[] helpMenuActionNames = {"help", "helpAdmin", "toggleAdmin", "about"};
 		menuBar.add(createMenu("fileMenu", fileMenuActionNames));
 		menuBar.add(createMenu("editMenu", editMenuActionNames));
 		menuBar.add(createMenu("demoMenu", demoMenuActionNames));
