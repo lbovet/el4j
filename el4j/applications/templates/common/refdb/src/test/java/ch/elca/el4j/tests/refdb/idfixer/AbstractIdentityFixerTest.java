@@ -97,12 +97,14 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
 			skw
 		);
 		
+		kw.setName("new");
 		skw = m_keywordDao.getAll().iterator().next();
 		assertSame(
 			"finding a previously saved keyword returns a new instance",
 			kw,
 			skw
 		);
+		assertEquals(kw.getName(), "new");
 	}
 	
 	/**
@@ -142,7 +144,9 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
 		
 		Keyword kwn = (Keyword) ref.getKeywords().iterator().next();
 		assertEquals("associated keyword is different instance", kw, kwn);
-		assertEquals("state not propagated", kwn.getName(), "Another name");
+		//assertEquals("state not propagated", kwn.getName(), "Another name");
+		// renameKeyword() stored a new value to the database, but gets merged with current value
+		assertEquals("state not propagated", kwn.getName(), "hibernate");
 	}
 	
 	/** Renames the only keyword to "another name". */
