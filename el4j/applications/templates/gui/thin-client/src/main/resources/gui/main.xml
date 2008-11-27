@@ -39,6 +39,7 @@
 		<el4j:create-component create-method="createMenuGlue"/>
 		<menu name="helpMenu">
 			<menuitem action="help" />
+			<menuitem action="helpAdmin" />
 			<menuitem action="toggleAdmin" />
 			<menuitem action="about" />
 		</menu>

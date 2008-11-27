@@ -25,6 +25,7 @@ import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
@@ -33,6 +34,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import ch.elca.el4j.gui.swing.MDIApplication;
 
@@ -78,6 +80,7 @@ public class MainFormMDI extends MDIApplication {
 	/**
 	 * @return    the created main panel
 	 */
+	@SuppressWarnings("unchecked")
 	protected JComponent createMainPanel() {
 		JPanel panel = new JPanel(new BorderLayout());
 		JToolBar toolbar = createToolBar();
@@ -127,11 +130,28 @@ public class MainFormMDI extends MDIApplication {
 	}
 
 	/**
-	 * Demo help.
+	 * A "special" help only for admins (for demo purpose only).
+	 * Must be placed in the GUIApplication, since the propertyChange cannot
+	 * be fired!
 	 */
-	@Action//(enabledProperty = "admin")
-	public void help() {
-		show("helpDialog");
+	@Action(enabledProperty = "admin")
+	public void helpAdmin() {
+		try {
+			show("securityDemoForm");
+		} catch (NoSuchBeanDefinitionException e) {
+			JOptionPane.showMessageDialog(null,
+				"This demo doesn't support security. "
+				+ "Use swing-demo-secure-... instead.");
+		}
+	}
+	
+	/**
+	 * Indicates whether permission "admin" is set
+	 *  (used via enabledProperty field of \@Action).
+	 *  @return    <code>true</code> if user has admin rights
+	 */
+	public boolean isAdmin() {
+		return hasRole("ROLE_SUPERVISOR");
 	}
 	
 	/**
@@ -143,15 +163,6 @@ public class MainFormMDI extends MDIApplication {
 		boolean oldAdmin = m_admin;
 		m_admin = !m_admin;
 		firePropertyChange("admin", oldAdmin, m_admin);
-	}
-	
-	/**
-	 * Indicates whether permission "admin" is set
-	 *  (used via enabledProperty field of \@Action).
-	 *  @return    <code>true</code> if user has admin rights
-	 */
-	public boolean isAdmin() {
-		return hasRole("ROLE_SUPERVISOR");
 	}
 	
 	/**
@@ -171,7 +182,7 @@ public class MainFormMDI extends MDIApplication {
 		}*/
 		return m_admin;
 	}
- 
+
 	/**
 	 * @return    the created menu bar
 	 */
@@ -183,7 +194,7 @@ public class MainFormMDI extends MDIApplication {
 			= {"showDemo1", "showDemo2", "showDemo3", "showDemo4", "---",
 				"showSearch", "showRefDB", "---",
 				"showDemo5", "sendExampleEvent", "throwException"};
-		String[] helpMenuActionNames = {"help", "toggleAdmin", "about"};
+		String[] helpMenuActionNames = {"help", "helpAdmin", "toggleAdmin", "about"};
 		menuBar.add(createMenu("fileMenu", fileMenuActionNames));
 		menuBar.add(createMenu("editMenu", editMenuActionNames));
 		menuBar.add(createMenu("demoMenu", demoMenuActionNames));

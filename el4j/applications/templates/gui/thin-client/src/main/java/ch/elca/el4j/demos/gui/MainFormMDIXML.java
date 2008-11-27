@@ -24,11 +24,13 @@ import java.util.Map;
 import javax.swing.Box;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
 
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import ch.elca.el4j.gui.swing.AbstractMDIApplication;
 import cookxml.cookswing.CookSwing;
@@ -97,6 +99,7 @@ public class MainFormMDIXML extends AbstractMDIApplication {
 	 * Main definition of the GUI.
 	 *  This method is called back by the GUI framework
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void startup() {
 		MainFormActions actions = new MainFormActions(this);
@@ -136,26 +139,30 @@ public class MainFormMDIXML extends AbstractMDIApplication {
 		
 		showMain();
 	}
-	
-	@Action
-	public void showDemo6() {
-		show("xmlDemoForm");
-	}
 
 	/**
 	 * A "special" help only for admins (for demo purpose only).
+	 * Must be placed in the GUIApplication, since the propertyChange cannot
+	 * be fired!
 	 */
-	@Action//(enabledProperty = "admin")
-	public void help() {
-		show("helpDialog");
-		
-		/*try {
+	@Action(enabledProperty = "admin")
+	public void helpAdmin() {
+		try {
 			show("securityDemoForm");
 		} catch (NoSuchBeanDefinitionException e) {
 			JOptionPane.showMessageDialog(null,
 				"This demo doesn't support security. "
 				+ "Use swing-demo-secure-... instead.");
-		}*/
+		}
+	}
+	
+	/**
+	 * Indicates whether permission "admin" is set
+	 *  (used via enabledProperty field of \@Action).
+	 *  @return    <code>true</code> if user has admin rights
+	 */
+	public boolean isAdmin() {
+		return hasRole("ROLE_SUPERVISOR");
 	}
 	
 	/**
@@ -167,15 +174,6 @@ public class MainFormMDIXML extends AbstractMDIApplication {
 		boolean oldAdmin = m_admin;
 		m_admin = !m_admin;
 		firePropertyChange("admin", oldAdmin, m_admin);
-	}
-
-	/**
-	 * Indicates whether permission "admin" is set
-	 *  (used via enabledProperty field of \@Action).
-	 *  @return    <code>true</code> if user has admin rights
-	 */
-	public boolean isAdmin() {
-		return hasRole("ROLE_SUPERVISOR");
 	}
 	
 	/**
@@ -195,4 +193,5 @@ public class MainFormMDIXML extends AbstractMDIApplication {
 		}*/
 		return m_admin;
 	}
+
 }
