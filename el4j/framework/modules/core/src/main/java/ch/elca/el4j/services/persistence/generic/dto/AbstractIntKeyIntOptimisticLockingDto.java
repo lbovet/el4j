@@ -18,13 +18,11 @@
 package ch.elca.el4j.services.persistence.generic.dto;
 
 import javax.persistence.Column;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
-
 
 import ch.elca.el4j.util.codingsupport.Reject;
 
@@ -63,7 +61,7 @@ public abstract class AbstractIntKeyIntOptimisticLockingDto
 	@Id @GeneratedValue(strategy = GenerationType.AUTO,
 		generator = "keyid_generator")
 	@Column(name = "KEYID")
-	public final int getKey() {
+	public int getKey() {
 		return m_key;
 	}
 	
@@ -71,14 +69,14 @@ public abstract class AbstractIntKeyIntOptimisticLockingDto
 	 * {@inheritDoc}
 	 */
 	@Transient
-	public final Object getKeyAsObject() {
+	public Object getKeyAsObject() {
 		return isKeyNew() ? null : Integer.valueOf(getKey());
 	}
 
 	/**
 	 * @param key The key to set.
 	 */
-	public final void setKey(int key) {
+	public void setKey(int key) {
 		m_key = key;
 		m_keyNew = false;
 	}
@@ -89,7 +87,7 @@ public abstract class AbstractIntKeyIntOptimisticLockingDto
 	 *
 	 * @param keyObject Is the key as object to set.
 	 */
-	public final void setKey(Object keyObject) {
+	public void setKey(Object keyObject) {
 		Reject.ifNull(keyObject);
 		Reject.ifNotAssignableTo(keyObject, Number.class);
 		int key = ((Number) keyObject).intValue();
@@ -101,7 +99,7 @@ public abstract class AbstractIntKeyIntOptimisticLockingDto
 	 *         method <code>setKey</code>.
 	 */
 	@Transient
-	public final boolean isKeyNew() {
+	public boolean isKeyNew() {
 		return m_keyNew;
 	}
 	
@@ -122,23 +120,27 @@ public abstract class AbstractIntKeyIntOptimisticLockingDto
 		if (obj == null) {
 			return false;
 		}
-		/*if (getClass() != HibernateProxyHelper.getClassWithoutInitializingProxy(obj)) {
+		/* The following is a solution that works for hibernate lazy loading proxies.
+		 if (getClass() != HibernateProxyHelper.getClassWithoutInitializingProxy(obj)) {
 			return false;
 		}*/
 		if (obj instanceof AbstractIntKeyIntOptimisticLockingDto) {
 			final AbstractIntKeyIntOptimisticLockingDto other = (AbstractIntKeyIntOptimisticLockingDto) obj;
-			if (isKeyNew() && other.isKeyNew()) {
-				// one or both objects are transient
-				return hashCode() == other.hashCode();
-			} else {
-				// both objects are persistent
-				return getKey() == other.getKey();
-			}
-		} else {
-			return false;
+			if (!isKeyNew() && !other.isKeyNew()) {
+				return getKey() == other.getKey() && getClass() == other.getClass();
+			} 
 		}
+		return false;
 	}
 
+	/**
+	 * Reset the key state to "new". This is required in some circumstances (offlining), otherwise
+	 * it should NOT be used.
+	 */
+	public void resetNew() {
+		m_keyNew = true;
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 *
