@@ -66,12 +66,6 @@ CREATE TABLE annotations (
   optimisticLockingVersion  INTEGER        NOT NULL
 );
 
---CREATE TABLE blobs (
---  keyId                     INTEGER        NOT NULL
-    --PRIMARY KEY,
-  --content                   BLOB       NOT NULL,
-  --optimisticLockingVersion  INTEGER        NOT NULL
---);
 CREATE TABLE appendix
 (
 	keyid                       NUMBER(10) NOT NULL PRIMARY KEY,
@@ -97,8 +91,6 @@ CREATE TABLE files (
   name                      VARCHAR(64)    NOT NULL,
   mimeType                  VARCHAR(32)    NOT NULL,
   contentSize               NUMBER(10)     NOT NULL,
---  content_key				INTEGER        
---  	NOT NULL REFERENCES blobs(keyId),
   content					BLOB		   NOT NULL,
   optimisticLockingVersion  INTEGER        NOT NULL,
   dtype						VARCHAR(100)
