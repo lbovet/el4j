@@ -30,6 +30,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.jdesktop.application.Action;
 import org.springframework.stereotype.Component;
 
@@ -159,9 +160,7 @@ public class ExceptionsForm extends JPanel implements Bindable, Handler, Applica
 	 * @param e    the exception to display
 	 */
 	private void updateStacktrace(Exception e) {
-		StringWriter sw = new StringWriter();
-		e.printStackTrace(new PrintWriter(sw));
-		m_stacktrace.setText(sw.toString());
+		m_stacktrace.setText(ExceptionUtils.getStackTrace(e));
 		m_stacktrace.setCaretPosition(0);
 	}
 	
