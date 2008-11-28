@@ -11,4 +11,3 @@ DROP TABLE books;
 DROP TABLE formalpublications;
 DROP TABLE links;
 DROP TABLE referencesTable;
---DROP TABLE blobs;
