@@ -27,6 +27,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
@@ -185,6 +186,21 @@ public abstract class AbstractEnvSupportMojo extends AbstractMojo {
 					+ "filter file '" + filterFile + "'", e);
 			}
 		}
+		
+		// Now, apply overridden system properties (on the command line).
+		// Copied from our patched resources-plugin.
+		final String prefix = "override.";
+		Properties overrides = System.getProperties();
+		for (Iterator i = overrides.keySet().iterator(); i.hasNext();) {
+			String currentKey = (String) i.next();
+			if (currentKey.startsWith(prefix)) {
+				String trueKey = currentKey.substring(prefix.length());
+				m_filterProperties.put(trueKey, overrides.get(currentKey));
+				getLog().info(
+					"Property " + trueKey + " overridden, is now: " + overrides.get(currentKey));
+			}
+
+		}
 	}
 
 	/**
@@ -218,7 +234,7 @@ public abstract class AbstractEnvSupportMojo extends AbstractMojo {
 	
 			// support @token@
 			reader = new InterpolationFilterReader(reader,
-				m_filterProperties, "@", "@");
+					m_filterProperties, "@", "@");
 	
 			boolean isPropertiesFile = false;
 	
@@ -227,8 +243,8 @@ public abstract class AbstractEnvSupportMojo extends AbstractMojo {
 			}
 	
 			reader = new InterpolationFilterReader(reader,
-				new ReflectionProperties(
-					project, isPropertiesFile), "${", "}");
+					new ReflectionProperties(
+						project, isPropertiesFile), "${", "}");
 	
 			IOUtil.copy(reader, fileWriter);
 		} finally {
