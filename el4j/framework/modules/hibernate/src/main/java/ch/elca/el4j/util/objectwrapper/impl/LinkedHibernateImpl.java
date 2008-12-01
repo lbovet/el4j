@@ -40,10 +40,10 @@ import ch.elca.el4j.util.objectwrapper.interfaces.Linked;
  * Hibernate annotation implementation of Linked.
  *
  * <script type="text/javascript">printFileStatus
- *   ("$URL: https://cvs.elca.ch/subversion/el4j-internal/trunk/sandbox/cacher/src/main/java/caching/aspects/impl/LinkedHibernateImpl.java $",
- *    "$Revision: 1583 $",
- *    "$Date: 2008-08-08 14:19:17 +0200 (Fri, 08 Aug 2008) $",
- *    "$Author: dbd@ELCA.CH $"
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
  * );</script>
  *
  * @author David Bernhard (DBD)
