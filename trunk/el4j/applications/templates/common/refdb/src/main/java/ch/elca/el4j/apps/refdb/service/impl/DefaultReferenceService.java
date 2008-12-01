@@ -39,7 +39,6 @@ import ch.elca.el4j.apps.refdb.dao.FormalPublicationDao;
 import ch.elca.el4j.apps.refdb.dao.LinkDao;
 import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.File;
-import ch.elca.el4j.apps.refdb.dom.FileDescriptorView;
 import ch.elca.el4j.apps.refdb.dom.FormalPublication;
 import ch.elca.el4j.apps.refdb.dom.Link;
 import ch.elca.el4j.apps.refdb.dom.Reference;
@@ -109,27 +108,6 @@ public class DefaultReferenceService extends DefaultKeywordService
 			getFormalPublicationDao(), "formalPublicationDao", this);
 		CoreNotificationHelper.notifyIfEssentialPropertyIsEmpty(
 			getBookDao(), "bookDao", this);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Transactional(propagation = Propagation.REQUIRED)
-	public FileDescriptorView saveFileAndReturnFileDescriptorView(File file)
-		throws DataAccessException, DataIntegrityViolationException,
-			OptimisticLockingFailureException {
-		Reject.ifNull(file);
-		File newFile = getFileDao().saveOrUpdate(file);
-		
-		FileDescriptorView fileView = new FileDescriptorView();
-		fileView.setKey(newFile.getKey());
-		fileView.setKeyToReference(newFile.getKeyToReference());
-		fileView.setName(newFile.getName());
-		fileView.setMimeType(newFile.getMimeType());
-		fileView.setSize(newFile.getSize());
-		fileView.setOptimisticLockingVersion(newFile.getOptimisticLockingVersion());
-		
-		return fileView;
 	}
 
 	/**

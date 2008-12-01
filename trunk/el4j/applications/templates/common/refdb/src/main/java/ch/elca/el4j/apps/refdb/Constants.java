@@ -40,11 +40,6 @@ public final class Constants {
 	public static final String FILE = "File";
 
 	/**
-	 * Is the string representation of a file descriptor view.
-	 */
-	public static final String FILE_DESCRIPTOR_VIEW = "FileDescriptorView";
-
-	/**
 	 * Is the string representation of a reference.
 	 */
 	public static final String REFERENCE = "Reference";

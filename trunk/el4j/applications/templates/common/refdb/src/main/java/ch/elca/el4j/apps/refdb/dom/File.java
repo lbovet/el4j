@@ -26,6 +26,8 @@ import java.util.Arrays;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.apache.commons.logging.Log;
@@ -49,7 +51,9 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  * @author Martin Zeltner (MZE)
  */
 @Entity
-public class File extends FileDescriptorView {
+@Table(name = "FILES")
+@SequenceGenerator(name = "keyid_generator", sequenceName = "file_sequence")
+public class File extends AbstractFile {
 	
 	/***  Predefined Fetching extents ***/
 	
