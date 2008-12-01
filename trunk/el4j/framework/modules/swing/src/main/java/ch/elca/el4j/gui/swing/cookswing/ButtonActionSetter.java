@@ -68,9 +68,28 @@ public class ButtonActionSetter implements Setter {
 		}
 		GUIApplication app = GUIApplication.getInstance();
 		String attrValue = (String) value;
+		// Check attrValue if it contains class name
+		String[] parsedValues = attrValue.split("#");
+		boolean composedAttr = false;
+		Class<?> c = null;
+		if (parsedValues.length == 2) {
+			composedAttr = true;
+			try {
+				c =  Class.forName(parsedValues[0]);
+				attrValue = parsedValues[1];
+			} catch (ClassNotFoundException e) {
+				composedAttr = false;
+			}
+		}
+		Action action;
+		if (composedAttr) {
+			action = app.getAction(c, actionHolder, attrValue);
+		} else {
+			action = app.getAction(actionHolder, attrValue);
+		}
+		
 		AbstractButton button = (AbstractButton) obj;
 		
-		Action action = app.getAction(actionHolder, attrValue);
 		if (action == null) {
 			// search in all instances with action mappings
 			action = app.getAction(attrValue);

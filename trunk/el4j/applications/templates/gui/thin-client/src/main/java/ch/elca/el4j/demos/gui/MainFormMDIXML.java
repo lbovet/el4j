@@ -151,8 +151,17 @@ public class MainFormMDIXML extends AbstractMDIApplication {
 			show("securityDemoForm");
 		} catch (NoSuchBeanDefinitionException e) {
 			JOptionPane.showMessageDialog(null,
-				"This demo doesn't support security. "
-				+ "Use swing-demo-secure-... instead.");
+				"This demo doesn't support security.\n"
+				+ "To enable the security module, you have to use "
+				+ "the swing-demo-secure-... variant of your client instead.\n"
+				+ "If you are using the swing-demo-standalone-client, there is no secure"
+				+ "variant of that client.\nIn order to use the security module there,"
+				+ "modify the pom.xml as follows:\n"
+				+ " - look for the tag <dependencies>\n"
+				+ " - change the dependency with the articfactId 'swing-demo-thin-client'"
+				+ "to 'swing-demo-secure-thin-client'\n"
+				+ " - rebuild the demo with mvn clean install"
+				+ " - restart the demo.");
 		}
 	}
 	
