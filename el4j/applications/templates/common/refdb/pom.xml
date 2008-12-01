@@ -129,7 +129,8 @@
 				</plugins>
 			</build>
 		</profile>
-		<id>oracle10</id>
+		<profile>
+			<id>oracle10</id>
 			<build>
 				<plugins>
 					<!-- EL4J Database plugin to start and fill DB automatically -->
