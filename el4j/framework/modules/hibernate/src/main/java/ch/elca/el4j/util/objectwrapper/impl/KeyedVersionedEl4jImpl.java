@@ -23,8 +23,7 @@ import ch.elca.el4j.util.objectwrapper.ObjectWrapperRTException;
 import ch.elca.el4j.util.objectwrapper.interfaces.KeyedVersioned;
 
 /**
- * Impelementation of KeyedVersioned that uses the provided methods of the EL4J base class. It is
- * thus more efficient.
+ * Implementation of KeyedVersioned that uses the provided methods of the EL4J base class. Thus, it is more efficient.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
