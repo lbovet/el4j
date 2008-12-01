@@ -121,7 +121,7 @@ public abstract class AbstractIntKeyIntOptimisticLockingDto
 			return false;
 		}
 		/* The following is a solution that works for hibernate lazy loading proxies.
-		 if (getClass() != HibernateProxyHelper.getClassWithoutInitializingProxy(obj)) {
+		if (getClass() != HibernateProxyHelper.getClassWithoutInitializingProxy(obj)) {
 			return false;
 		}*/
 		if (obj instanceof AbstractIntKeyIntOptimisticLockingDto) {
