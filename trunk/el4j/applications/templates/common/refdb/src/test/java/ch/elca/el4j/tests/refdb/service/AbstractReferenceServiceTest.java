@@ -1303,45 +1303,6 @@ public abstract class AbstractReferenceServiceTest
 	}
 	
 	/**
-	 * This test adds a file and gets a FileDescriptorView. This view will be
-	 * modified and saved. The file will be get as normal file and as
-	 * FileDescriptorView.
-	 */
-	@Test
-	public void testInsertModifyFileWithFileDescriptorView() {
-		int fakeReferenceKey = addDefaultFakeReference();
-		
-		ReferenceService service = getReferenceService();
-		FileDescriptorViewDao fileDescriptorViewDao
-			= getFileDescriptorViewDao();
-		// Use HibernateFileDao to set extent
-		GenericHibernateFileDaoInterface fileDao = (GenericHibernateFileDaoInterface) getFileDao();
-		
-		File file = new File();
-		file.setKeyToReference(fakeReferenceKey);
-		file.setName("iBatis Developer Guide");
-		file.setMimeType("text/plain");
-		byte[] content = "This is only a test content.".getBytes();
-		file.setContent(content);
-		FileDescriptorView fileView
-			= service.saveFileAndReturnFileDescriptorView(file);
-
-		fileView.setName("iBatis SqlMap 2.0 Developer Guide");
-		fileDescriptorViewDao.modifyFileDescriptorView(fileView);
-
-		File file2 = fileDao.getByName(
-			"iBatis SqlMap 2.0 Developer Guide", File.ALL).get(0);
-		file.setName("iBatis SqlMap 2.0 Developer Guide");
-		assertTrue("Files are not equals.", file.equals(file2));
-
-		FileDescriptorView fileView2
-			= fileDescriptorViewDao.getByReference(
-				fakeReferenceKey).get(0);
-		assertTrue("FileDescriptorViews are not equals.",
-			fileView.equals(fileView2));
-	}
-	
-	/**
 	 * Will try to add some incomplete file by using the special method
 	 * {@link ReferenceService#saveFileAndReturnFileDescriptorView(File)}.
 	 */
