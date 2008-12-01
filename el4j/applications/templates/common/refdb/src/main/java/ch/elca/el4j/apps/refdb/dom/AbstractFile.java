@@ -25,7 +25,7 @@ import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimistic
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
 /**
- * Base class for FileDescriptorView domain object.
+ * Base class for File domain object.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",

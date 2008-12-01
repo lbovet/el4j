@@ -24,8 +24,6 @@ import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
 
 import ch.elca.el4j.apps.keyword.service.KeywordService;
-import ch.elca.el4j.apps.refdb.dom.File;
-import ch.elca.el4j.apps.refdb.dom.FileDescriptorView;
 import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.core.transaction.annotations.RollbackConstraint;
 import ch.elca.el4j.services.search.QueryObject;
@@ -46,24 +44,6 @@ import ch.elca.el4j.services.search.QueryObject;
  */
 public interface ReferenceService extends KeywordService {
 	
-	/**
-	 * Save file. If file is new, viz is has no primary key, it will be
-	 * inserted. Otherwise, the file will be updated.
-	 *
-	 * @param file
-	 *            Is the file to save.
-	 * @return Returns the saved file without its content (FileDescriptorView).
-	 * @throws DataAccessException
-	 *             If general data access problem occurred.
-	 * @throws DataIntegrityViolationException
-	 *             If file could not be inserted.
-	 * @throws OptimisticLockingFailureException
-	 *             If file has been modified in the meantime.
-	 */
-	@RollbackConstraint
-	public FileDescriptorView saveFileAndReturnFileDescriptorView(File file)
-		throws DataAccessException, DataIntegrityViolationException, OptimisticLockingFailureException;
-
 	/**
 	 * Get a reference by primary key.
 	 *

@@ -36,13 +36,8 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import ch.elca.el4j.apps.keyword.dao.KeywordDao;
 import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.apps.refdb.dao.AnnotationDao;
-import ch.elca.el4j.apps.refdb.dao.FileDao;
-import ch.elca.el4j.apps.refdb.dao.FileDescriptorViewDao;
-import ch.elca.el4j.apps.refdb.dao.impl.hibernate.GenericHibernateFileDaoInterface;
 import ch.elca.el4j.apps.refdb.dom.Annotation;
 import ch.elca.el4j.apps.refdb.dom.Book;
-import ch.elca.el4j.apps.refdb.dom.File;
-import ch.elca.el4j.apps.refdb.dom.FileDescriptorView;
 import ch.elca.el4j.apps.refdb.dom.FormalPublication;
 import ch.elca.el4j.apps.refdb.dom.Link;
 import ch.elca.el4j.apps.refdb.dom.Reference;
@@ -87,11 +82,6 @@ public abstract class AbstractReferenceServiceTest
 	private KeywordDao m_keywordDao;
 	
 	/**
-	 * File descriptor view DAO. Created by application context.
-	 */
-	private FileDescriptorViewDao m_fileDescriptorViewDao;
-	
-	/**
 	 * Hide default constructor.
 	 */
 	protected AbstractReferenceServiceTest() { }
@@ -120,20 +110,6 @@ public abstract class AbstractReferenceServiceTest
 				.getFor(Keyword.class);
 		}
 		return m_keywordDao;
-	}
-	
-	/**
-	 * @return Returns the file descriptor view DAO.
-	 */
-	public FileDescriptorViewDao getFileDescriptorViewDao() {
-		if (m_fileDescriptorViewDao == null) {
-			DefaultDaoRegistry daoRegistry
-				= (DefaultDaoRegistry) getApplicationContext()
-					.getBean("daoRegistry");
-			m_fileDescriptorViewDao = (FileDescriptorViewDao) daoRegistry
-				.getFor(FileDescriptorView.class);
-		}
-		return m_fileDescriptorViewDao;
 	}
 	
 	/**
@@ -1302,30 +1278,6 @@ public abstract class AbstractReferenceServiceTest
 		return dao.saveOrUpdate(keyword);
 	}
 	
-	/**
-	 * Will try to add some incomplete file by using the special method
-	 * {@link ReferenceService#saveFileAndReturnFileDescriptorView(File)}.
-	 */
-	@Test
-	public void testAddingIncompleteFileByFileDescriptorViewMethod() {
-		ReferenceService service = getReferenceService();
-		
-		int fakeReferenceKey = addDefaultFakeReference();
-		
-		File file = new File();
-		file.setKeyToReference(fakeReferenceKey);
-		file.setMimeType("text/plain");
-		byte[] content = "This is only a test content.".getBytes();
-		file.setContent(content);
-		
-		try {
-			service.saveFileAndReturnFileDescriptorView(file);
-			fail("Was able to save a file without a name.");
-		} catch (DataIntegrityViolationException e) {
-			s_logger.debug("Expected exception catched.", e);
-		}
-	}
-
 	/**
 	 * This test tries to insert an annotation without a content. Because the
 	 * annotation and its content are written in two steps, the first step

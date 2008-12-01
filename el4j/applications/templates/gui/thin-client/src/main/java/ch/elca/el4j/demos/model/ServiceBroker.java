@@ -24,13 +24,11 @@ import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.apps.refdb.dao.AnnotationDao;
 import ch.elca.el4j.apps.refdb.dao.BookDao;
 import ch.elca.el4j.apps.refdb.dao.FileDao;
-import ch.elca.el4j.apps.refdb.dao.FileDescriptorViewDao;
 import ch.elca.el4j.apps.refdb.dao.FormalPublicationDao;
 import ch.elca.el4j.apps.refdb.dao.LinkDao;
 import ch.elca.el4j.apps.refdb.dom.Annotation;
 import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.File;
-import ch.elca.el4j.apps.refdb.dom.FileDescriptorView;
 import ch.elca.el4j.apps.refdb.dom.FormalPublication;
 import ch.elca.el4j.apps.refdb.dom.Link;
 import ch.elca.el4j.apps.refdb.service.ReferenceService;
@@ -85,11 +83,6 @@ public class ServiceBroker {
 	 * Is the cached file DAO.
 	 */
 	private static FileDao s_cachedFileDao = null;
-	
-	/**
-	 * Is the cached file descriptor view DAO.
-	 */
-	private static FileDescriptorViewDao s_cachedFileDescriptorViewDao = null;
 	
 	/**
 	 * Hide default constructor.
@@ -213,16 +206,6 @@ public class ServiceBroker {
 		return (FileDao) getDaoFor(File.class, true, s_cachedFileDao);
 	}
 	
-	/**
-	 * @return Returns the cached file descriptor view DAO.
-	 * @see #getDaoFor(Class, boolean, GenericDao)
-	 */
-	public static synchronized FileDescriptorViewDao getFileFileDescriptorView()
-	{
-		return (FileDescriptorViewDao) getDaoFor(FileDescriptorView.class,
-			true, s_cachedFileDescriptorViewDao);
-	}
-
 	/**
 	 *
 	 * @param applicationContext    the spring application context

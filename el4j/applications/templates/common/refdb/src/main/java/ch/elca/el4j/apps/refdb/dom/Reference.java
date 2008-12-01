@@ -116,11 +116,6 @@ public class Reference extends AbstractIndexedIntKeyIntOptimisticLockingDto {
 	private Set<File> m_files;
 	
 	/**
-	 * Set of file descriptor views for this reference.
-	 */
-	private Set<FileDescriptorView> m_fileDescriptorViews;
-	
-	/**
 	 * @return Returns the date.
 	 */
 	@Column(name = "DOCUMENTDATE")
@@ -314,27 +309,6 @@ public class Reference extends AbstractIndexedIntKeyIntOptimisticLockingDto {
 		m_files = files;
 	}
 	
-	/**
-	 * @return Returns the set of file descriptor views for this reference (only
-	 *         used if Hibernate is used to perform ORM).
-	 */
-	//relation to FileDescriptorView is not saved in REFERENCESTABLE,
-	//because it is unidirectional from FileDescriptorView to Reference
-	@Transient
-	public Set<FileDescriptorView> getFileDescriptorViews() {
-		return m_fileDescriptorViews;
-	}
-	
-	/**
-	 * @param fileDescriptorViews
-	 *            The set of file descriptor views for this reference (only used
-	 *            if Hibernate is used to perform ORM).
-	 */
-	public void setFileDescriptorViews(Set<FileDescriptorView>
-		fileDescriptorViews) {
-		m_fileDescriptorViews = fileDescriptorViews;
-	}
-
 	/**
 	 * {@inheritDoc}
 	 */
