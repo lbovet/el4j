@@ -506,9 +506,12 @@ public class GenericHibernateDao<T, ID extends Serializable>
 		throws DataAccessException {
 		
 		Object[] nullArg = null;
+		if (object == null || entity == null || fetchedObjects == null) {
+			return;
+		}
 		fetchedObjects.put(object, entity);
 		try {
-			// Fetch the base type fields, obsolete without bytecode instrumentation
+			// Fetch the base type fields, obsolete without byte-code instrumentation
 			/*for (Method m : entity.getFields()) {
 				m.invoke(object, nullArg);
 			}*/
