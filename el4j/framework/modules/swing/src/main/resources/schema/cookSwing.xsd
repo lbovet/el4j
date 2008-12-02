@@ -1196,8 +1196,8 @@
 						<documentation>
 							<![CDATA[Sets the orientation, or how the splitter is divided. The options are:<br>
 			
-			    * VERTICAL_SPLIT (above/below orientation of components)<br>
-			    * HORIZONTAL_SPLIT (left/right orientation of components) 
+				* VERTICAL_SPLIT (above/below orientation of components)<br>
+				* HORIZONTAL_SPLIT (left/right orientation of components) 
 			
 							]]>
 						</documentation>
