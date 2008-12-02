@@ -3,7 +3,8 @@
 	targetNamespace="http://www.elca.ch/el4j/cookSwing"
 	xmlns:el4j="http://www.elca.ch/el4j/cookSwing"
 	xmlns:cookXmlCommon="http://cookxml.sf.net/common/"
-	xmlns:cookSwing="http://cookxml.sf.net/cookswing/">
+	xmlns:cookSwing="http://cookxml.sf.net/cookswing/"
+	version="1.4">
 
 	<import namespace="http://cookxml.sf.net/common/" schemaLocation="http://el4.elca-services.ch/el4j/schema/swing/cookXmlCommon.xsd" />
 	<import namespace="http://cookxml.sf.net/cookswing/" schemaLocation="http://el4.elca-services.ch/el4j/schema/swing/cookSwing.xsd" />

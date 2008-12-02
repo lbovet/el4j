@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema targetNamespace="http://cookxml.sf.net/cookswing/" xmlns="http://www.w3.org/2001/XMLSchema"
-	xmlns:cookSwing="http://cookxml.sf.net/cookswing/" xmlns:cookXmlCommon="http://cookxml.sf.net/common/">
+	xmlns:cookSwing="http://cookxml.sf.net/cookswing/" xmlns:cookXmlCommon="http://cookxml.sf.net/common/"
+	version ="1.4">
 
 	<import namespace="http://cookxml.sf.net/common/"
 		schemaLocation="http://el4.elca-services.ch/el4j/schema/swing/cookXmlCommon.xsd" />
@@ -698,7 +699,7 @@
 				<attribute name="dividersize" type="int" />
 				<attribute name="lastdividerlocation" type="int" />
 				<attribute name="onetouchexpandable" type="boolean" />
-				<attribute name="orientation" type="cookSwing:orientation" />
+				<attribute name="orientation" type="cookSwing:splitorientation" />
 				<attribute name="resizeweight" type="float" />
 			</extension>
 		</complexContent>
@@ -1743,6 +1744,23 @@ The default value, if not set, is TOP.
 		<restriction base="string">
 			<enumeration value="VERTICAL" />
 			<enumeration value="HORIZONTAL" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="splitorientation">
+		<annotation>
+			<documentation>
+				<![CDATA[Sets the orientation, or how the splitter is divided. The options are:
+
+    * VERTICAL_SPLIT (above/below orientation of components)
+    * HORIZONTAL_SPLIT (left/right orientation of components) 
+
+				]]>
+			</documentation>
+		</annotation>
+		<restriction base="string">
+			<enumeration value="VERTICAL_SPLIT" />
+			<enumeration value="HORIZONTAL_SPLIT" />
 		</restriction>
 	</simpleType>
 	

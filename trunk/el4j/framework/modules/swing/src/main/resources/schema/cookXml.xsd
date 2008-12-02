@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema targetNamespace="http://cookxml.sf.net/"
 	xmlns="http://www.w3.org/2001/XMLSchema"
-	xmlns:cookXml="http://cookxml.sf.net/">
+	xmlns:cookXml="http://cookxml.sf.net/"
+	version="1.4">
 
 	<attribute name="add" type="boolean" />
 	<attribute name="ctor" type="string" />
