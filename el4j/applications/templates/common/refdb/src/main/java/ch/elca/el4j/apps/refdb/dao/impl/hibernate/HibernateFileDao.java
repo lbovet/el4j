@@ -29,5 +29,23 @@ import ch.elca.el4j.util.codingsupport.Reject;
 @AutocollectedGenericDao("fileDao")
 public class HibernateFileDao extends GenericHibernateFileDao<File, Integer>
 	implements GenericHibernateFileDaoInterface {
+	
+
+	/***  Predefined Fetching extents ***/
+	
+	/**
+	 * Light fetching variant: only fetch header data, no content.
+	 * @return the light fetch extent.
+	 */
+	public static final DataExtent HEADER
+		= new DataExtent(File.class).all().without("data", "content");
+	
+	/**
+	 * Heavy fetching variant: fetch the whole file, including content.
+	 * @return the heavy fetch extent.
+	 */
+	public static final DataExtent ALL
+		= new DataExtent(File.class).all();
+	
 
 }

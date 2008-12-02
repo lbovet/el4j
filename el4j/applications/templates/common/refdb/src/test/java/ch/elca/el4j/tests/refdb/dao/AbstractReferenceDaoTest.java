@@ -40,6 +40,7 @@ import ch.elca.el4j.apps.refdb.dao.AnnotationDao;
 import ch.elca.el4j.apps.refdb.dao.FileDao;
 import ch.elca.el4j.apps.refdb.dao.FormalPublicationDao;
 import ch.elca.el4j.apps.refdb.dao.impl.hibernate.GenericHibernateFileDaoInterface;
+import ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateFileDao;
 import ch.elca.el4j.apps.refdb.dom.Annotation;
 import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.File;
@@ -366,7 +367,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		File file2 = dao.saveOrUpdate(file);
 		
 		// Explicitly load everything
-		File file3 = dao.findById(file2.getKey(), File.ALL);
+		File file3 = dao.findById(file2.getKey(), HibernateFileDao.ALL);
 		
 		assertEquals("The inserted and read domain objects are not equal",
 			file3, file2);
@@ -389,7 +390,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		file.setContent(content);
 		File file2 = dao.saveOrUpdate(file);
 		
-		List<File> list = dao.getByName(file2.getName(), File.ALL);
+		List<File> list = dao.getByName(file2.getName(), HibernateFileDao.ALL);
 		assertEquals("List contains more than one file of name '"
 			+ file2.getName() + "'", 1, list.size());
 		File file3 = (File) list.get(0);
@@ -427,7 +428,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		file2.setContent(content2);
 		dao.saveOrUpdate(file);
 		dao.saveOrUpdate(file2);
-		List<File> list = dao.getAll(File.ALL);
+		List<File> list = dao.getAll(HibernateFileDao.ALL);
 		assertEquals("Wrong number of files in DB", 2, list.size());
 		assertTrue("First file has not been found", list.contains(file));
 		assertTrue("Second file has not been found", list.contains(file2));
@@ -481,9 +482,9 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		dao.saveOrUpdate(file);
 
 		File file2 = (File) dao.getByName(
-			"iBatis Developer Guide", File.ALL).get(0);
+			"iBatis Developer Guide", HibernateFileDao.ALL).get(0);
 		File file3 = (File) dao.getByName(
-			"iBatis Developer Guide", File.ALL).get(0);
+			"iBatis Developer Guide", HibernateFileDao.ALL).get(0);
 		content = "This is another test content.".getBytes();
 		file2.setContent(content);
 		dao.saveOrUpdate(file2);
@@ -613,7 +614,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		file.setContent(content);
 		file = dao.saveOrUpdate(file);
 		
-		File file2 = (File) dao.getByName(name, File.ALL).get(0);
+		File file2 = (File) dao.getByName(name, HibernateFileDao.ALL).get(0);
 
 		assertEquals("The inserted and read domain objects are not equal", file, file2);
 

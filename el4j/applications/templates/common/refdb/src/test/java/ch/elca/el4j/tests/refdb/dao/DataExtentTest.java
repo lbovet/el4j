@@ -28,10 +28,12 @@ import com.mchange.util.AssertException;
 import static org.junit.Assert.fail;
 import static org.junit.Assert.assertEquals;
 
+import ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateFileDao;
 import ch.elca.el4j.apps.refdb.dom.File;
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentCollection;
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntity;
+import ch.elca.el4j.tests.person.dao.impl.hibernate.HibernatePersonDao;
 import ch.elca.el4j.tests.person.dom.Brain;
 import ch.elca.el4j.tests.person.dom.Person;
 import ch.elca.el4j.tests.person.dom.Tooth;
@@ -338,6 +340,25 @@ public class DataExtentTest extends AbstractTestCaseBase {
 		} catch (NoSuchMethodException e) {
 			fail("Friends construction not accepted by validator.");
 		}
+		
+	}
+	
+	/**
+	 * This test checks various features of the DataExtent fluent API.
+	 */
+	@Test
+	public void testPredefinedExtents() {
+		DataExtent ex = HibernateFileDao.ALL;
+		
+		ex = HibernateFileDao.HEADER;
+		
+		ex = HibernatePersonDao.LIGHT_PERSON;
+		
+		ex = HibernatePersonDao.HEAVY_PERSON;
+		
+		ex = HibernatePersonDao.PERSON_GRAPH_2;
+		
+		ex = HibernatePersonDao.PERSON_GRAPH_3;
 		
 	}
 }
