@@ -16,6 +16,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -59,6 +61,12 @@ public class ExtentEntity extends AbstractExtentPart {
 	/** The collections of the entity. */
 	private List<ExtentCollection> m_collections;
 	
+	/** The id of the entity. */
+	private String m_entityId;
+	
+	/** Is the entity a root entity. */
+	private boolean m_root = false;
+	
 	/**
 	 * Default Creator, hidden.
 	 * @param c		the class of the entity
@@ -69,6 +77,7 @@ public class ExtentEntity extends AbstractExtentPart {
 		m_fields = new LinkedList<String>();
 		m_childEntities = new LinkedList<ExtentEntity>();
 		m_collections = new LinkedList<ExtentCollection>();
+		m_entityId = String.format("|%s[][][]|", m_entityClass.getName());
 	}
 	
 	/**
@@ -82,6 +91,7 @@ public class ExtentEntity extends AbstractExtentPart {
 		m_fields = new LinkedList<String>();
 		m_childEntities = new LinkedList<ExtentEntity>();
 		m_collections = new LinkedList<ExtentCollection>();
+		m_entityId = String.format("|%s[][][]|", m_name);
 	}
 	
 	/**
@@ -96,6 +106,24 @@ public class ExtentEntity extends AbstractExtentPart {
 		m_fields = new LinkedList<String>();
 		m_childEntities = new LinkedList<ExtentEntity>();
 		m_collections = new LinkedList<ExtentCollection>();
+		m_entityId = String.format("|%s[][][]|", m_name);
+	}
+	
+	/** {@inheritDoc} */
+	public String getId() {
+		return m_entityId;
+	}
+	
+	/** {@inheritDoc} */
+	protected void updateId() {
+		rebuildId();
+	}
+	
+	/**
+	 * @return if the entity is a root entity.
+	 */
+	public boolean isRoot() {
+		return m_root;
 	}
 	
 	/**
@@ -131,13 +159,45 @@ public class ExtentEntity extends AbstractExtentPart {
 	}
 	
 	/**
+	 * Rebuild the id string.
+	 * Go recursive through all children and get their id.
+	 * If entity is root and has a parent, infinite loops are prevented
+	 * by not updating the parent and outputting the hashCode when to toString is called.
+	 */
+	private void rebuildId() {
+		// Rebuild the id string
+		String id = "|";
+		
+		if (isRoot()) {
+			id += m_entityClass.getName();
+		} else {
+			id += m_name;
+		}
+		id += m_fields.toString();
+		id += m_childEntities.toString();
+		id += m_collections.toString();
+		id += "|";
+		
+		// Inform the parent if id changed
+		if (!m_entityId.equals(id)) {
+			m_entityId = id;
+			if (m_parent != null && !isRoot()) {
+				m_parent.updateId();
+			}
+		}
+	}
+	/**
 	 * Add a field-method to the fields of the entity.
 	 * @param field	 the field-method to add.
 	 * @throws NoSuchMethodException 
 	 * @throws SecurityException 
 	 */
 	private void addField(String field) {
-		m_fields.add(field);
+		if (!m_fields.contains(field)) {
+			m_fields.add(field);
+			Collections.sort(m_fields);
+			rebuildId();
+		}
 	}
 	
 	/**
@@ -146,7 +206,12 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * @return returns the success of the operation
 	 */
 	private boolean removeField(String name) {
-		return m_fields.remove(name);
+		if (m_fields.remove(name)) {
+			rebuildId();
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	/**
@@ -162,6 +227,8 @@ public class ExtentEntity extends AbstractExtentPart {
 			if (m != null) {
 				child.setParent(this);
 				m_childEntities.add(child);
+				Collections.sort(m_childEntities);
+				rebuildId();
 			}
 		} catch (IllegalArgumentException e) {
 			throw new NoSuchMethodException(e.getMessage());
@@ -177,6 +244,7 @@ public class ExtentEntity extends AbstractExtentPart {
 		for (ExtentEntity e : m_childEntities) {
 			if (e.getName().equals(name)) {
 				m_childEntities.remove(e);
+				rebuildId();
 				return true;
 			}
 		}
@@ -208,6 +276,8 @@ public class ExtentEntity extends AbstractExtentPart {
 			}
 			if (consistent) {
 				m_collections.add(collection);
+				Collections.sort(m_collections);
+				rebuildId();
 			} else {
 				throw new NoSuchMethodException("Collection type [" 
 					+ collection.getContainedEntity().getEntityClass().getSimpleName() 
@@ -227,6 +297,7 @@ public class ExtentEntity extends AbstractExtentPart {
 		for (ExtentCollection e : m_collections) {
 			if (e.getName().equals(name)) {
 				m_collections.remove(e);
+				rebuildId();
 				return true;
 			}
 		}
@@ -255,6 +326,18 @@ public class ExtentEntity extends AbstractExtentPart {
 	
 	//*************** Fluent API ******************//
 	
+	
+	/**
+	 * Returns a new Entity object, based on the given class.
+	 * @param c		the class of the entity.
+	 * @return	the Entity object.
+	 */
+	public static ExtentEntity rootEntity(Class<?> c) {
+		ExtentEntity tmp = new ExtentEntity(c);
+		tmp.m_root = true;
+		return tmp;
+		
+	}
 	
 	/**
 	 * Returns a new Entity object, based on the given class.
@@ -408,6 +491,17 @@ public class ExtentEntity extends AbstractExtentPart {
 			}
 		}
 		
+	}
+	
+
+	/** {@inheritDoc} */
+	@Override
+	public String toString() {
+		if (m_parent != null && isRoot()) {
+			return super.nativeToString();
+		} else {
+			return m_entityId;
+		}
 	}
 	
 }

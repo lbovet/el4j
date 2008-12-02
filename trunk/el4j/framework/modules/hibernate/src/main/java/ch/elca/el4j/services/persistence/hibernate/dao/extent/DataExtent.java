@@ -11,9 +11,10 @@
  */
 package ch.elca.el4j.services.persistence.hibernate.dao.extent;
 
-import java.io.Serializable;
+import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntity.rootEntity;
 
-import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntity.entity;
+import java.io.Serializable;
+import java.util.HashSet;
 
 
 /**
@@ -58,6 +59,8 @@ import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntit
  *    "$Author$"
  * );</script>
  *
+ * @see ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateFileDao for an example 
+ *
  * @author Andreas Rueedlinger (ARR)
  */
 public class DataExtent implements Serializable {
@@ -69,27 +72,10 @@ public class DataExtent implements Serializable {
 	
 	/**
 	 * Default Creator.
-	 * @param root	the root entity of the extent
-	 */
-	public DataExtent(ExtentEntity root) {
-		m_rootEntity = root;
-	}
-	
-	/**
-	 * Default Creator.
 	 * @param c		the class of the root entity.
 	 */
 	public DataExtent(Class<?> c) {
-		m_rootEntity = entity(c);
-	}
-	
-	/**
-	 * Default Creator.
-	 * @param name	the name of the root entity.
-	 * @param c		the class of the root entity.
-	 */
-	public DataExtent(String name, Class<?> c) {
-		m_rootEntity = entity(name, c);
+		m_rootEntity = rootEntity(c);
 	}
 	
 	/**
@@ -98,6 +84,16 @@ public class DataExtent implements Serializable {
 	 */
 	public ExtentEntity getRootEntity() {
 		return m_rootEntity;
+	}
+	
+	/**
+	 * The id of the data extent.
+	 * If two extents contain the same subparts,
+	 * this id should be equal.
+	 * @return the id of the extent.
+	 */
+	public String getExtentId() {
+		return m_rootEntity.getId();
 	}
 	
 	//****************** Fluent API **********************//
@@ -159,6 +155,30 @@ public class DataExtent implements Serializable {
 	public DataExtent all(int depth) {
 		m_rootEntity.all(depth);
 		return this;
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public int hashCode() {
+		return getExtentId().hashCode();
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public boolean equals(Object object) {
+		if (super.equals(object)) {
+			return true;
+		} else if (object instanceof DataExtent) {
+			return getExtentId().equals(((DataExtent) object).getExtentId());
+		} else {
+			return false;
+		}
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public String toString() {
+		return getExtentId();
 	}
 
 	

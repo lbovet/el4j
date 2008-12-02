@@ -33,15 +33,12 @@ import ch.elca.el4j.util.codingsupport.BeanPropertyUtils;
  *
  * @author Andreas Rueedlinger (ARR)
  */
-public abstract class AbstractExtentPart implements Serializable {
+public abstract class AbstractExtentPart implements Serializable, Comparable<AbstractExtentPart> {
 	/** The name of the extent-part. */
 	protected String m_name;
 	
 	/** The parent of the entity, null if root. */
-	protected ExtentEntity m_parent;
-	/** The method to get the extent-part. */
-	//protected Method m_method;
-	
+	protected AbstractExtentPart m_parent;
 	
 	/**
 	 * Name of the extent-part.
@@ -56,15 +53,37 @@ public abstract class AbstractExtentPart implements Serializable {
 	 * null if root or contained in a collection.
 	 * @return the parent.
 	 */
-	public ExtentEntity getParent() {
+	public AbstractExtentPart getParent() {
 		return m_parent;
+	}
+	
+	/**
+	 * @return the id of the extent part.
+	 */
+	public abstract String getId();
+	
+	/**
+	 * Updates the id of the extent part.
+	 * Should be used be children to inform its parent.
+	 */
+	protected abstract void updateId();
+	
+	/** {@inheritDoc} */
+	public int compareTo(AbstractExtentPart other) {
+		if (m_name != null) {
+			return m_name.compareTo(other.m_name);
+		} else if (other.m_name == null) {
+			return 0;
+		} else {
+			return -1;
+		}
 	}
 	
 	/**
 	 * Sets the parent of the extent-part.
 	 * @param parent	the parent to set.
 	 */
-	protected void setParent(ExtentEntity parent) {
+	protected void setParent(AbstractExtentPart parent) {
 		m_parent = parent;
 	}
 	/**
@@ -74,7 +93,43 @@ public abstract class AbstractExtentPart implements Serializable {
 	 * @throws NoSuchMethodException 
 	 */
 	public Method getMethod() throws SecurityException, NoSuchMethodException {
-		return BeanPropertyUtils.getReadMethod(m_parent.getEntityClass(), getName());
+		if (m_parent instanceof ExtentCollection) {
+			return null;
+		} else {
+			return BeanPropertyUtils.getReadMethod(((ExtentEntity) m_parent).getEntityClass(), getName());
+		}
+	}
+	
+
+	/** {@inheritDoc} */
+	@Override
+	public int hashCode() {
+		return getId().hashCode();
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public boolean equals(Object object) {
+		if (super.equals(object)) {
+			return true;
+		} else if (object instanceof AbstractExtentPart) {
+			return getId().equals(((AbstractExtentPart) object).getId());
+		} else {
+			return false;
+		}
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public String toString() {
+		return getId();
+	}
+	
+	/**
+	 * @return the old native implementation of the toString method.
+	 */
+	protected String nativeToString() {
+		return super.toString();
 	}
 	
 	/* Helper Functions */

@@ -22,7 +22,11 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
+
+import com.mchange.util.AssertException;
+
 import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
 
 import ch.elca.el4j.apps.refdb.dom.File;
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
@@ -86,7 +90,7 @@ public class DataExtentTest extends AbstractTestCaseBase {
 		
 		// Try to add some existing fields
 		try {
-			ex.with("name", "friends", "brain");
+			ex.with("name", "legalStatus", "friends", "brain");
 		} catch (NoSuchMethodException e) {
 			fail("Could not add existing fields, entities and collections to person extent.");
 		}
@@ -210,6 +214,76 @@ public class DataExtentTest extends AbstractTestCaseBase {
 		}
 		if (!found) {
 			fail("All feature does not add field brain");
+		}
+	}
+	
+	/**
+	 * This test checks if the id is built correctly.
+	 */
+	@Test
+	public void testIdBuilder() {
+		DataExtent ex = new DataExtent(Person.class);
+		
+		assertEquals("Id was built incorrectly.", "|ch.elca.el4j.tests.person.dom.Person[][][]|",
+			ex.toString());
+		
+		try {
+			ex.with("name", "legalStatus", "brain");
+			assertEquals("Id was built incorrectly.", ex.toString(),
+				"|ch.elca.el4j.tests.person.dom.Person[legalStatus, name][|brain[][][]|][]|");
+			
+			ex.with("friends").without("legalStatus");
+			assertEquals("Id was built incorrectly.", ex.toString(),
+				"|ch.elca.el4j.tests.person.dom.Person[name][|brain[][][]|]"
+				+ "[friends[|ch.elca.el4j.tests.person.dom.Person[][][]|]]|");
+				
+		} catch (NoSuchMethodException e) {
+			fail("Extent could not be built.");
+		}
+	}
+	
+	/**
+	 * This test checks if the id of 2 differently built extends are equal.
+	 */
+	@Test
+	public void testIdEquality() {
+		try {
+			// Test equality of all against adding all
+			DataExtent ex = new DataExtent(Person.class);
+			ex.all();
+			
+			DataExtent ex2 = new DataExtent(Person.class);
+			ex2.with("name", "legalStatus", "key", "version", "brain", "friends", "teeth");
+			
+			assertEquals("Ids of equal extents are not equal.", ex.toString(),
+				ex2.toString());
+			
+			// Test equality when fields are added to entity in advance/afterwards
+			ex = new DataExtent(Person.class);
+			ExtentEntity ent = entity("brain", Brain.class);
+			ex.withSubentities(ent);
+			ent.with("iq");
+			
+			ex2 = new DataExtent(Person.class);
+			ex2.withSubentities(entity("brain", Brain.class).with("iq"));
+			
+			assertEquals("Ids of equal extents are not equal.", ex.toString(),
+				ex2.toString());
+			
+			// Check the update mechanism doesn't result in infinite loops
+			ex = new DataExtent(Person.class);
+			ent = entity(Tooth.class);
+			ex.withSubentities(
+				collection("teeth",
+					ent
+				),
+				collection("friends", ex.getRootEntity())
+			);
+			ent.with("owner");
+			ex.toString();
+			
+		} catch (NoSuchMethodException e) {
+			fail("Extent could not be built.");
 		}
 	}
 	
