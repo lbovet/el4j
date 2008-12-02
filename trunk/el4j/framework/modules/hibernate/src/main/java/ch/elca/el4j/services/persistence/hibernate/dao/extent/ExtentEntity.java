@@ -17,7 +17,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -430,7 +429,7 @@ public class ExtentEntity extends AbstractExtentPart {
 				try {
 					fetchMethod(m, depth);
 				} catch (NoSuchMethodException e) {
-					// Non persistent Method throws NoSuchMethodException
+					// not possible since we found the method!
 				}
 			}
 		}

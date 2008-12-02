@@ -11,15 +11,42 @@
  */
 package ch.elca.el4j.services.persistence.hibernate.dao.extent;
 
-import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntity.rootEntity;
-
 import java.io.Serializable;
-import java.util.HashSet;
+
+import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntity.rootEntity;
 
 
 /**
  * A DataExtent represents the extent of the graphs of objects to be
  * loaded in a hibernate query.<br>
+ * Be careful in not mixing up the notion of an extent:<br>
+ * In this context it is referring to the extent of the DOM to be loaded from the underlying
+ * persistent store.<br>
+ * In other contexts like for example OpenJPA the notion can have a different meaning.<br>
+ * <br>
+ * Principle:<br>
+ * An Extent represents a part of the DOM that should be loaded together.<br>
+ * It can be used to pool together associated entities in order 
+ * to provide performance improvements over standard data fetching.<br>
+ * Specifying the extent when loading entities with Hibernate 
+ * allows for tuning of lazy loading and eager fetching behavior.<br>
+ * For details about how to use the “ Fetch Type ” in order to control whether a field is fetched eagerly or lazily,
+ * see the corresponding reference manual of Java Persistence API 
+ * (eg. {@link http://java.sun.com/javaee/5/docs/api/javax/persistence/FetchType.html})<br>
+ * 
+ * In a DataExtent we distinguish between fields, entities and collections:<br>
+ * <ul>
+ * 	<li> Fields: ... TODO: java fields or fields in db??
+ * 	<li> Entities: ... TODO: see fields
+ * 	<li> Collections: all data types implementing the {@link java.util.Collection} interface should be
+ * 		added to the extent as collection for a proper fetching at runtime.
+ * </ul>
+ * Note that any part of the extent that is eagerly loaded according to the JPA metadata rules cannot be changed to 
+ * a lazy loading behavior with DataExtent. On the other hand, all as lazy loading indicated parts can be forced to
+ * be loaded at runtime in each query.<br>
+ * Also, parts of the extent that does not get loaded but accessed at runtime will throw a LazyLoadingException as it 
+ * would without using DataExtent's.<br>
+ * <br> 
  * Features: <br>
  *  <ul>
  *   <li> new DataExtent: provide root class and optionally the name of the root 
@@ -60,7 +87,7 @@ import java.util.HashSet;
  * );</script>
  *
  * @see ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateFileDao for an example 
- *
+ * 
  * @author Andreas Rueedlinger (ARR)
  */
 public class DataExtent implements Serializable {
