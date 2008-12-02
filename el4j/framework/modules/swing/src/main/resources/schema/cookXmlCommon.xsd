@@ -2,7 +2,8 @@
 <schema targetNamespace="http://cookxml.sf.net/common/"
 	xmlns="http://www.w3.org/2001/XMLSchema"
 	xmlns:cookXmlCommon="http://cookxml.sf.net/common/"
-	xmlns:cookXml="http://cookxml.sf.net/">
+	xmlns:cookXml="http://cookxml.sf.net/"
+	version="1.4">
 
 	<import namespace="http://cookxml.sf.net/" schemaLocation="http://el4.elca-services.ch/el4j/schema/swing/cookXml.xsd" />
 	
