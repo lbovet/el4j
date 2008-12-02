@@ -83,28 +83,140 @@
 				<attribute name="alignmentx" type="float" />
 				<attribute name="alignmenty" type="float" />
 				<attribute name="autoscrolls" type="boolean" />
-				<attribute name="background" type="cookSwing:color" />
-				<attribute name="bounds" type="cookSwing:rectangle" />
-				<attribute name="cursor" type="cookSwing:cursor" />
-				<attribute name="debuggraphicsoptions" type="cookSwing:debugoption" />
-				<attribute name="defaultlocale" type="cookSwing:locale" />
+				<attribute name="background" type="cookSwing:color">
+					<annotation>
+						<documentation>
+							<![CDATA[There are three valid types of values:<br>
+			
+				* "#rrggbb" or "rrggbb" for RGB color.<br>
+				* Name of predefined colors in java.awt.Color.<br>
+				* ui:key for colors that can be retrieved from UIManager with the given key.
+							]]>
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="bounds" type="string">
+					<annotation>
+						<documentation>
+							<![CDATA[The format is "#,#,#,#" in the order of x, y, width, and height.]]>
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="cursor" type="string">
+					<annotation>
+						<documentation>
+							<![CDATA["One of the cursor names defined in java.awt.Cursor without the _CURSOR  suffix <br>
+							(e.g "HAND" would be converted to a hand cursor).]]>
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="debuggraphicsoptions">
+					<annotation>
+						<documentation>
+							<![CDATA[determines how the component should display the information; one of the following options:<br>
+			
+				* LOG_OPTION - causes a text message to be printed.<br>
+				* FLASH_OPTION - causes the drawing to flash several times.<br>
+				* BUFFERED_OPTION - creates an ExternalWindow that displays the operations performed <br>
+					on the View's offscreen buffer.
+				* NONE_OPTION disables debugging.<br>
+				* A value of 0 causes no changes to the debugging options. <br>
+			<br>
+			debugoption is bitwise OR'd into the current value
+							]]>
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="LOG_OPTION" />
+							<enumeration value="FLASH_OPTION" />
+							<enumeration value="BUFFERED_OPTION" />
+							<enumeration value="NONE_OPTION" />
+							<enumeration value="0" />
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="defaultlocale" type="string">
+					<annotation>
+						<documentation>
+							<![CDATA[The format is "lang_country_variant". For example, "en_US".]]>
+						</documentation>
+					</annotation>
+				</attribute>
 				<attribute name="doublebuffered" type="boolean" />
 				<attribute name="enabled" type="boolean" />
 				<attribute name="focusable" type="boolean" />
 				<attribute name="focuscycleroot" type="boolean" />
 				<attribute name="focustraversalkeysenabled" type="boolean" />
-				<attribute name="font" type="cookSwing:font" />
-				<attribute name="foreground" type="cookSwing:color" />
+				<attribute name="font" type="cookSwing:font">
+					<annotation>
+						<documentation>
+							<![CDATA[There are two valid types of values:<br>
+			
+				* "fontname,style,size". For example, "monospace,bold italic,12".<br>
+				* ui:key for fonts that can be retrieved from UIManager with the given key.
+							]]>
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="foreground" type="cookSwing:color">
+					<annotation>
+						<documentation>
+							<![CDATA[There are three valid types of values:<br>
+			
+				* "#rrggbb" or "rrggbb" for RGB color.<br>
+				* Name of predefined colors in java.awt.Color.<br>
+				* ui:key for colors that can be retrieved from UIManager with the given key.
+							]]>
+						</documentation>
+					</annotation>
+				</attribute>
 				<attribute name="ignorerepaint" type="boolean" />
-				<attribute name="locale" type="cookSwing:locale" />
-				<attribute name="location" type="cookSwing:point" />
-				<attribute name="maximumsize" type="cookSwing:dimension" />
-				<attribute name="minimumsize" type="cookSwing:dimension" />
+				<attribute name="locale" type="string">
+					<annotation>
+						<documentation>
+							<![CDATA[The format is "lang_country_variant". For example, "en_US".]]>
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="location" type="string">
+					<annotation>
+						<documentation>
+							<![CDATA[The format is "x,y" or "x y" to specify the x and y postions.]]>
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="maximumsize" type="cookSwing:dimension">
+					<annotation>
+						<documentation>
+							<![CDATA["# #", "#,#" or "#x#" format. to specify the width, then height of the dimension.]]>
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="minimumsize" type="cookSwing:dimension">
+					<annotation>
+						<documentation>
+							<![CDATA["# #", "#,#" or "#x#" format. to specify the width, then height of the dimension.]]>
+						</documentation>
+					</annotation>
+				</attribute>
 				<attribute name="name" type="string" />
 				<attribute name="opaque" type="boolean" />
-				<attribute name="preferredsize" type="cookSwing:dimension" />
+				<attribute name="preferredsize" type="cookSwing:dimension">
+					<annotation>
+						<documentation>
+							<![CDATA["# #", "#,#" or "#x#" format. to specify the width, then height of the dimension.]]>
+						</documentation>
+					</annotation>
+				</attribute>
 				<attribute name="requestfocusenabled" type="boolean" />
-				<attribute name="size" type="cookSwing:dimension" />
+				<attribute name="size" type="cookSwing:dimension">
+					<annotation>
+						<documentation>
+							<![CDATA["# #", "#,#" or "#x#" format. to specify the width, then height of the dimension.]]>
+						</documentation>
+					</annotation>
+				</attribute>
 				<attribute name="tooltiptext" type="string" />
 				<attribute name="verifyinputwhenfocustarget" type="boolean" />
 				<attribute name="visible" type="boolean" />
@@ -115,7 +227,25 @@
 	<complexType name="desktoppane">
 		<complexContent>
 			<extension base="cookSwing:component">
-				<attribute name="dragmode" type="cookSwing:dragmode" />
+				<attribute name="dragmode">
+					<annotation>
+						<documentation>
+							<![CDATA[Sets the "dragging style" used by the desktop pane. one of the following options:<br>
+			
+				* LIVE_DRAG_MODE - Indicates that the entire contents of the item being dragged<br>
+					should appear inside the desktop pane.<br>
+				* OUTLINE_DRAG_MODE - Indicates that an outline only of the item being dragged 
+					should appear inside the desktop pane.
+							]]>
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="LIVE_DRAG_MODE" />
+							<enumeration value="OUTLINE_DRAG_MODE" />
+						</restriction>
+					</simpleType>
+				</attribute>
 			</extension>
 		</complexContent>
 	</complexType>
@@ -137,9 +267,41 @@
 			<extension base="cookSwing:window-constants">
 				<attribute name="decorated" type="string" />
 				<attribute name="defaultlookandfeeldecorated" type="boolean" />
-				<attribute name="extendedstate" type="cookSwing:framestate" />
+				<attribute name="extendedstate">
+					<annotation>
+						<documentation>
+							<![CDATA[Sets the state of this frame. The state is represented as a bitwise mask.<br>
+			
+				* NORMAL<br>
+					Indicates that no state bits are set.<br>
+				* ICONIFIED<br>
+				* MAXIMIZED_HORIZ<br>
+				* MAXIMIZED_VERT<br>
+				* MAXIMIZED_BOTH<br>
+					Concatenates MAXIMIZED_HORIZ and MAXIMIZED_VERT. <br>
+			
+			Note that if the state is not supported on a given platform, nothing will happen.
+							]]>
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="NORMAL" />
+							<enumeration value="ICONIFIED" />
+							<enumeration value="MAXIMIZED_HORIZ" />
+							<enumeration value="MAXIMIZED_VERT" />
+							<enumeration value="MAXIMIZED_BOTH" />
+						</restriction>
+					</simpleType>
+				</attribute>
 				<attribute name="iconimage" type="string" />
-				<attribute name="maximizedbounds" type="cookSwing:rectangle" />
+				<attribute name="maximizedbounds" type="string">
+					<annotation>
+						<documentation>
+							<![CDATA[The format is "#,#,#,#" in the order of x, y, width, and height.]]>
+						</documentation>
+					</annotation>
+				</attribute>
 				<attribute name="resizable" type="boolean" />
 				<attribute name="state" type="int">
 
@@ -166,7 +328,13 @@
 				<attribute name="layer" type="int" />
 				<attribute name="maximizable" type="boolean" />
 				<attribute name="maximum" type="boolean" />
-				<attribute name="normalbounds" type="cookSwing:rectangle" />
+				<attribute name="normalbounds" type="string">
+					<annotation>
+						<documentation>
+							<![CDATA[The format is "#,#,#,#" in the order of x, y, width, and height.]]>
+						</documentation>
+					</annotation>
+				</attribute>
 				<attribute name="resizable" type="boolean" />
 				<attribute name="selected" type="boolean" />
 				<attribute name="title" type="string" />
@@ -183,8 +351,44 @@
 	<complexType name="scrollpane">
 		<complexContent>
 			<extension base="cookSwing:component">
-				<attribute name="horizontalscrollbarpolicy" type="cookSwing:horizontalscrollbarpolicy" />
-				<attribute name="verticalscrollbarpolicy" type="cookSwing:verticalscrollbarpolicy" />
+				<attribute name="horizontalscrollbarpolicy">
+					<annotation>
+						<documentation>
+							<![CDATA[Determines when the horizontal scrollbar appears in the scrollpane. The options are:<br>
+			
+				* HORIZONTAL_SCROLLBAR_AS_NEEDED<br>
+				* HORIZONTAL_SCROLLBAR_NEVER<br>
+				* HORIZONTAL_SCROLLBAR_ALWAYS
+							]]>
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="HORIZONTAL_SCROLLBAR_AS_NEEDED" />
+							<enumeration value="HORIZONTAL_SCROLLBAR_NEVER" />
+							<enumeration value="HORIZONTAL_SCROLLBAR_ALWAYS" />
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="verticalscrollbarpolicy">
+					<annotation>
+						<documentation>
+							<![CDATA[Determines when the vertical scrollbar appears in the scrollpane. Legal values are:<br>
+			
+				* VERTICAL_SCROLLBAR_AS_NEEDED<br>
+				* VERTICAL_SCROLLBAR_NEVER<br>
+				* VERTICAL_SCROLLBAR_ALWAYS
+							]]>
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="VERTICAL_SCROLLBAR_AS_NEEDED" />
+							<enumeration value="VERTICAL_SCROLLBAR_NEVER" />
+							<enumeration value="VERTICAL_SCROLLBAR_ALWAYS" />
+						</restriction>
+					</simpleType>
+				</attribute>
 				<attribute name="viewportborder" type="string" />
 				<attribute name="wheelscrollingenabled" type="boolean" />
 			</extension>
@@ -195,8 +399,47 @@
 		<complexContent>
 			<extension base="cookSwing:component">
 				<attribute name="selectedindex" type="int" />
-				<attribute name="tablayoutpolicy" type="cookSwing:tablayoutpolicy" />
-				<attribute name="tabplacement" type="cookSwing:tabplacement" />
+				<attribute name="tablayoutpolicy">
+					<annotation>
+						<documentation>
+							<![CDATA[Sets the policy which the tabbedpane will use in laying out the tabs when all the tabs will not fit within a single run. Possible values are:<br>
+				* WRAP_TAB_LAYOUT<br>
+				* SCROLL_TAB_LAYOUT <br>
+			
+			The default value, if not set by the UI, is WRAP_TAB_LAYOUT. 
+							]]>
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="WRAP_TAB_LAYOUT" />
+							<enumeration value="SCROLL_TAB_LAYOUT" />
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="tabplacement">
+					<annotation>
+						<documentation>
+							<![CDATA[Sets the tab placement for this tabbedpane. Possible values are:<br>
+				
+				* TOP<br>
+				* BOTTOM<br>
+				* LEFT<br>
+				* RIGHT <br>
+				
+			The default value, if not set, is TOP.
+							]]>
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="TOP" />
+							<enumeration value="BOTTOM" />
+							<enumeration value="LEFT" />
+							<enumeration value="RIGHT" />
+						</restriction>
+					</simpleType>
+				</attribute>
 			</extension>
 		</complexContent>
 	</complexType>
@@ -204,7 +447,30 @@
 	<complexType name="rootpane">
 		<complexContent>
 			<extension base="cookSwing:component">
-				<attribute name="windowdecorationstyle" type="cookSwing:windowdecorationstyle" />
+				<attribute name="windowdecorationstyle">
+					<annotation>
+						<documentation>
+							<![CDATA[Sets the type of Window decorations (such as borders, widgets for closing a Window, title ...)<br>
+						the JRootPane should provide. The default is to provide no Window decorations (NONE). <br>
+						Possible values are: NONE, FRAME, PLAIN_DIALOG, INFORMATION_DIALOG, ERROR_DIALOG, <br>
+						COLOR_CHOOSER_DIALOG, FILE_CHOOSER_DIALOG, QUESTION_DIALOG, or WARNING_DIALOG
+							]]>
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="NONE" />
+							<enumeration value="FRAME" />
+							<enumeration value="PLAIN_DIALOG" />
+							<enumeration value="INFORMATION_DIALOG" />
+							<enumeration value="ERROR_DIALOG" />
+							<enumeration value="COLOR_CHOOSER_DIALOG" />
+							<enumeration value="FILE_CHOOSER_DIALOG" />
+							<enumeration value="QUESTION_DIALOG" />
+							<enumeration value="WARNING_DIALOG" />
+						</restriction>
+					</simpleType>
+				</attribute>
 			</extension>
 		</complexContent>
 	</complexType>
@@ -283,7 +549,13 @@
 			<extension base="cookSwing:component">
 				<attribute name="borderpainted" type="boolean" />
 				<attribute name="helpmenu" type="string" />
-				<attribute name="margin" type="cookSwing:insets" />
+				<attribute name="margin" type="cookSwing:insets">
+					<annotation>
+						<documentation>
+							<![CDATA[The format is "#,#,#,#" in the order of top, left, bottom and right.]]>
+						</documentation>
+					</annotation>
+				</attribute>
 			</extension>
 		</complexContent>
 	</complexType>
@@ -337,7 +609,13 @@
 				<attribute name="defaultlightweightpopupenabled" type="boolean" />
 				<attribute name="label" type="string" />
 				<attribute name="lightweightpopupenabled" type="boolean" />
-				<attribute name="popupsize" type="cookSwing:dimension" />
+				<attribute name="popupsize" type="cookSwing:dimension">
+					<annotation>
+						<documentation>
+							<![CDATA["# #", "#,#" or "#x#" format. to specify the width, then height of the dimension.]]>
+						</documentation>
+					</annotation>
+				</attribute>
 				<attribute name="selected" type="boolean" />
 			</extension>
 		</complexContent>
@@ -363,7 +641,13 @@
 			<extension base="cookSwing:component">
 				<attribute name="borderpainted" type="boolean" />
 				<attribute name="floatable" type="boolean" />
-				<attribute name="margin" type="cookSwing:insets" />
+				<attribute name="margin" type="cookSwing:insets">
+					<annotation>
+						<documentation>
+							<![CDATA[The format is "#,#,#,#" in the order of top, left, bottom and right.]]>
+						</documentation>
+					</annotation>
+				</attribute>
 				<attribute name="orientation" type="string" />
 				<attribute name="rollover" type="boolean" />
 			</extension>
@@ -373,7 +657,13 @@
 	<complexType name="toolbar-separator">
 		<complexContent>
 			<extension base="cookSwing:component">
-				<attribute name="separatorsize" type="cookSwing:dimension" />
+				<attribute name="separatorsize" type="cookSwing:dimension">
+					<annotation>
+						<documentation>
+							<![CDATA["# #", "#,#" or "#x#" format. to specify the width, then height of the dimension.]]>
+						</documentation>
+					</annotation>
+				</attribute>
 			</extension>
 		</complexContent>
 	</complexType>
@@ -536,10 +826,48 @@
 				<attribute name="approvebuttontooltiptext" type="string" />
 				<attribute name="controlbuttonsareshown" type="boolean" />
 				<attribute name="dragenabled" type="boolean" />
-				<attribute name="dialogtype" type="cookSwing:dialogtype" />
+				<attribute name="dialogtype">
+					<annotation>
+						<documentation>
+							<![CDATA[dialogType - the type of dialog to be displayed:<br>
+				
+				* OPEN_DIALOG<br>
+				* SAVE_DIALOG<br>
+				* CUSTOM_DIALOG 
+				
+							]]>
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="OPEN_DIALOG" />
+							<enumeration value="SAVE_DIALOG" />
+							<enumeration value="CUSTOM_DIALOG" />
+						</restriction>
+					</simpleType>
+				</attribute>
 				<attribute name="dialogtitle" type="string" />
 				<attribute name="filehidingenabled" type="boolean" />
-				<attribute name="fileselectionmode" type="cookSwing:fileselectionmode" />
+				<attribute name="fileselectionmode">
+					<annotation>
+						<documentation>
+							<![CDATA[mode - the type of files to be displayed:<br>
+			
+				* FILES_ONLY<br>
+				* DIRECTORIES_ONLY<br>
+				* FILES_AND_DIRECTORIES 
+			
+							]]>
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="FILES_ONLY" />
+							<enumeration value="DIRECTORIES_ONLY" />
+							<enumeration value="FILES_AND_DIRECTORIES" />
+						</restriction>
+					</simpleType>
+				</attribute>
 				<attribute name="multiselectionenabled" type="boolean" />
 			</extension>
 		</complexContent>
@@ -552,13 +880,75 @@
 				<attribute name="displayedmnemonic" type="string" />
 				<attribute name="displayedmnemonicindex" type="int" />
 				<attribute name="horizontalalignment" type="cookSwing:horizontalalignment" />
-				<attribute name="horizontaltextposition" type="cookSwing:horizontaltextposition" />
+				<attribute name="horizontaltextposition">
+					<annotation>
+						<documentation>
+							<![CDATA[Sets the horizontal position of the label's text, relative to its image.  Valid keys are:<br>
+			
+				* LEFT<br>
+				* CENTER<br>
+				* RIGHT<br>
+				* LEADING<br>
+				* TRAILING 
+							]]>
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="LEFT" />
+							<enumeration value="CENTER" />
+							<enumeration value="RIGHT" />
+							<enumeration value="LEADING" />
+							<enumeration value="TRAILING" />
+						</restriction>
+					</simpleType>
+				</attribute>
 				<attribute name="icon" type="string" />
 				<attribute name="icontextgap" type="int" />
 				<attribute name="labelfor" type="string" />
 				<attribute name="text" type="string" />
-				<attribute name="verticalalignment" type="cookSwing:verticalalignment" />
-				<attribute name="verticaltextposition" type="cookSwing:verticaltextposition" />
+				<attribute name="verticalalignment">
+					<annotation>
+						<documentation>
+							<![CDATA[Sets the alignment of the label's contents along the Y axis.<br>
+			
+				The default value of this property is CENTER. <br>
+			
+				* TOP<br>
+				* CENTER<br>
+				* BOTTOM
+							]]>
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="CENTER" />
+							<enumeration value="TOP" />
+							<enumeration value="BOTTOM" />
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="verticaltextposition">
+					<annotation>
+						<documentation>
+							<![CDATA[Sets the vertical position of the label's text, relative to its image. <br>
+			
+				The default value of this property is CENTER. <br>
+			
+				* TOP<br>
+				* CENTER<br>
+				* BOTTOM
+							]]>
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="CENTER" />
+							<enumeration value="TOP" />
+							<enumeration value="BOTTOM" />
+						</restriction>
+					</simpleType>
+				</attribute>
 			</extension>
 		</complexContent>
 	</complexType>
@@ -569,11 +959,71 @@
 				<attribute name="dragenabled" type="boolean" />
 				<attribute name="fixedcellheight" type="int" />
 				<attribute name="fixedcellwidth" type="int" />
-				<attribute name="layoutorientation" type="cookSwing:layoutorientation" />
+				<attribute name="layoutorientation">
+					<annotation>
+						<documentation>
+							<![CDATA[Defines the way list cells are layed out:<br>
+			
+				* VERTICAL<br>
+				* HORIZONTAL_WRAP<br>
+				* VERTICAL_WRAP
+			
+							]]>
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="VERTICAL" />
+							<enumeration value="HORIZONTAL_WRAP" />
+							<enumeration value="VERTICAL_WRAP" />
+						</restriction>
+					</simpleType>
+				</attribute>
 				<attribute name="selectedindex" type="int" />
-				<attribute name="selectionbackground" type="cookSwing:color" />
-				<attribute name="selectionforeground" type="cookSwing:color" />
-				<attribute name="selectionmode" type="cookSwing:selectionmode" />
+				<attribute name="selectionbackground" type="cookSwing:color">
+					<annotation>
+						<documentation>
+							<![CDATA[There are three valid types of values:<br>
+			
+				* "#rrggbb" or "rrggbb" for RGB color.<br>
+				* Name of predefined colors in java.awt.Color.<br>
+				* ui:key for colors that can be retrieved from UIManager with the given key.
+							]]>
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="selectionforeground" type="cookSwing:color">
+					<annotation>
+						<documentation>
+							<![CDATA[There are three valid types of values:<br>
+			
+				* "#rrggbb" or "rrggbb" for RGB color.<br>
+				* Name of predefined colors in java.awt.Color.<br>
+				* ui:key for colors that can be retrieved from UIManager with the given key.
+							]]>
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="selectionmode">
+					<annotation>
+						<documentation>
+							<![CDATA[Determines whether single-item or multiple-item selections are allowed. The following selectionMode values are allowed:<br> 
+			
+				* SINGLE_SELECTION<br>
+				* SINGLE_INTERVAL_SELECTION<br>
+				* MULTIPLE_INTERVAL_SELECTION
+			
+							]]>
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="SINGLE_SELECTION" />
+							<enumeration value="SINGLE_INTERVAL_SELECTION" />
+							<enumeration value="MULTIPLE_INTERVAL_SELECTION" />
+						</restriction>
+					</simpleType>
+				</attribute>
 				<attribute name="visiblerowcount" type="int" />
 			</extension>
 		</complexContent>
@@ -674,7 +1124,49 @@
 	<complexType name="spinnerdatemodel">
 		<complexContent>
 			<extension base="cookSwing:component">
-				<attribute name="calendarfield" type="cookSwing:calendarfield" />
+				<attribute name="calendarfield">
+					<annotation>
+						<documentation>
+							<![CDATA[ The legal values for calendarField are:<br>
+				
+				* ERA<br>
+				* YEAR<br>
+				* MONTH<br>
+				* WEEK_OF_YEAR<br>
+				* WEEK_OF_MONTH<br>
+				* DAY_OF_MONTH<br>
+				* DAY_OF_YEAR<br>
+				* DAY_OF_WEEK<br>
+				* DAY_OF_WEEK_IN_MONTH<br>
+				* AM_PM<br>
+				* HOUR<br>
+				* HOUR_OF_DAY<br>
+				* MINUTE<br>
+				* SECOND<br>
+				* MILLISECOND
+							]]>
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="ERA" />
+							<enumeration value="YEAR" />
+							<enumeration value="MONTH" />
+							<enumeration value="WEEK_OF_YEAR" />
+							<enumeration value="WEEK_OF_MONTH" />
+							<enumeration value="DAY_OF_MONTH" />
+							<enumeration value="DAY_OF_YEAR" />
+							<enumeration value="DAY_OF_WEEK" />
+							<enumeration value="DAY_OF_WEEK_IN_MONTH" />
+							<enumeration value="AM_PM" />
+							<enumeration value="HOUR" />
+							<enumeration value="HOUR_OF_DAY" />
+							<enumeration value="MINUTE" />
+							<enumeration value="SECOND" />
+							<enumeration value="MILLISECOND" />
+						</restriction>
+					</simpleType>
+				</attribute>
 			</extension>
 		</complexContent>
 	</complexType>
@@ -699,7 +1191,24 @@
 				<attribute name="dividersize" type="int" />
 				<attribute name="lastdividerlocation" type="int" />
 				<attribute name="onetouchexpandable" type="boolean" />
-				<attribute name="orientation" type="cookSwing:splitorientation" />
+				<attribute name="orientation">
+					<annotation>
+						<documentation>
+							<![CDATA[Sets the orientation, or how the splitter is divided. The options are:<br>
+			
+			    * VERTICAL_SPLIT (above/below orientation of components)<br>
+			    * HORIZONTAL_SPLIT (left/right orientation of components) 
+			
+							]]>
+						</documentation>
+					</annotation>
+					<simpleType >
+						<restriction base="string">
+							<enumeration value="VERTICAL_SPLIT" />
+							<enumeration value="HORIZONTAL_SPLIT" />
+						</restriction>
+					</simpleType>
+				</attribute>
 				<attribute name="resizeweight" type="float" />
 			</extension>
 		</complexContent>
@@ -708,11 +1217,32 @@
 	<complexType name="tab">
 		<complexContent>
 			<extension base="cookXmlCommon:object">
-				<attribute name="background" type="cookSwing:color" />
-				<attribute name="disabledicon" type="string" />
+				<attribute name="background" type="cookSwing:color">
+					<annotation>
+						<documentation>
+							<![CDATA[There are three valid types of values:<br>
+			
+				* "#rrggbb" or "rrggbb" for RGB color.<br>
+				* Name of predefined colors in java.awt.Color.<br>
+				* ui:key for colors that can be retrieved from UIManager with the given key.
+							]]>
+						</documentation>
+					</annotation>
+				</attribute>
 				<attribute name="displayedmnemonicindex" type="int" />
 				<attribute name="enabled" type="boolean" />
-				<attribute name="foreground" type="cookSwing:color" />
+				<attribute name="foreground" type="cookSwing:color">
+					<annotation>
+						<documentation>
+							<![CDATA[There are three valid types of values:<br>
+			
+				* "#rrggbb" or "rrggbb" for RGB color.<br>
+				* Name of predefined colors in java.awt.Color.<br>
+				* ui:key for colors that can be retrieved from UIManager with the given key.
+							]]>
+						</documentation>
+					</annotation>
+				</attribute>
 				<attribute name="icon" type="string" />
 				<attribute name="mnemonic" type="string" />
 				<attribute name="title" type="string" />
@@ -725,18 +1255,69 @@
 		<complexContent>
 			<extension base="cookSwing:component">
 				<attribute name="autocreatecolumnsfrommodel" type="boolean" />
-				<attribute name="autoresizemode" type="cookSwing:autoresizemode" />
+				<attribute name="autoresizemode">
+					<annotation>
+						<documentation>
+							<![CDATA[mode - One of 5 legal values:<br>
+							AUTO_RESIZE_OFF, AUTO_RESIZE_NEXT_COLUMN, AUTO_RESIZE_SUBSEQUENT_COLUMNS, AUTO_RESIZE_LAST_COLUMN, AUTO_RESIZE_ALL_COLUMNS
+							]]>
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="AUTO_RESIZE_OFF" />
+							<enumeration value="AUTO_RESIZE_NEXT_COLUMN" />
+							<enumeration value="AUTO_RESIZE_SUBSEQUENT_COLUMNS" />
+							<enumeration value="AUTO_RESIZE_LAST_COLUMN" />
+							<enumeration value="AUTO_RESIZE_ALL_COLUMNS" />
+						</restriction>
+					</simpleType>
+				</attribute>
 				<attribute name="cellselectionenabled" type="boolean" />
 				<attribute name="columnselectionallowed" type="boolean" />
 				<attribute name="editingcolumn" type="int" />
 				<attribute name="editingrow" type="int" />
-				<attribute name="gridcolor" type="cookSwing:color" />
-				<attribute name="intercellspacing" type="cookSwing:dimension" />
-				<attribute name="preferredscrollableviewportsize" type="cookSwing:dimension" />
+				<attribute name="gridcolor" type="cookSwing:color">
+					<annotation>
+						<documentation>
+							<![CDATA[There are three valid types of values:<br>
+			
+				* "#rrggbb" or "rrggbb" for RGB color.<br>
+				* Name of predefined colors in java.awt.Color.<br>
+				* ui:key for colors that can be retrieved from UIManager with the given key.
+							]]>
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="intercellspacing" type="cookSwing:dimension">
+					<annotation>
+						<documentation>
+							<![CDATA["# #", "#,#" or "#x#" format. to specify the width, then height of the dimension.]]>
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="preferredscrollableviewportsize" type="cookSwing:dimension">
+					<annotation>
+						<documentation>
+							<![CDATA["# #", "#,#" or "#x#" format. to specify the width, then height of the dimension.]]>
+						</documentation>
+					</annotation>
+				</attribute>
 				<attribute name="rowheight" type="int" />
 				<attribute name="rowmargin" type="int" />
 				<attribute name="rowselectionallowed" type="boolean" />
-				<attribute name="selectionbackground" type="cookSwing:color" />
+				<attribute name="selectionbackground" type="cookSwing:color">
+					<annotation>
+						<documentation>
+							<![CDATA[There are three valid types of values:<br>
+			
+				* "#rrggbb" or "rrggbb" for RGB color.<br>
+				* Name of predefined colors in java.awt.Color.<br>
+				* ui:key for colors that can be retrieved from UIManager with the given key.
+							]]>
+						</documentation>
+					</annotation>
+				</attribute>
 				<attribute name="selectionmode" type="string" />
 				<attribute name="showgrid" type="boolean" />
 				<attribute name="showhorizontallines" type="boolean" />
@@ -858,14 +1439,86 @@
 					<sequence minOccurs="0" maxOccurs="1"> <element
 					ref="cookSwing:insets"></element> </sequence>
 				-->
-				<attribute name="highlight" type="cookSwing:color" />
-				<attribute name="highlightinner" type="cookSwing:color" />
-				<attribute name="highlightouter" type="cookSwing:color" />
-				<attribute name="shadow" type="cookSwing:color" />
-				<attribute name="shadowinner" type="cookSwing:color" />
-				<attribute name="shadowouter" type="cookSwing:color" />
+				<attribute name="highlight" type="cookSwing:color">
+					<annotation>
+						<documentation>
+							<![CDATA[There are three valid types of values:<br>
+			
+				* "#rrggbb" or "rrggbb" for RGB color.<br>
+				* Name of predefined colors in java.awt.Color.<br>
+				* ui:key for colors that can be retrieved from UIManager with the given key.
+							]]>
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="highlightinner" type="cookSwing:color">
+					<annotation>
+						<documentation>
+							<![CDATA[There are three valid types of values:<br>
+			
+				* "#rrggbb" or "rrggbb" for RGB color.<br>
+				* Name of predefined colors in java.awt.Color.<br>
+				* ui:key for colors that can be retrieved from UIManager with the given key.
+							]]>
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="highlightouter" type="cookSwing:color">
+					<annotation>
+						<documentation>
+							<![CDATA[There are three valid types of values:<br>
+			
+				* "#rrggbb" or "rrggbb" for RGB color.<br>
+				* Name of predefined colors in java.awt.Color.<br>
+				* ui:key for colors that can be retrieved from UIManager with the given key.
+							]]>
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="shadow" type="cookSwing:color">
+					<annotation>
+						<documentation>
+							<![CDATA[There are three valid types of values:<br>
+			
+				* "#rrggbb" or "rrggbb" for RGB color.<br>
+				* Name of predefined colors in java.awt.Color.<br>
+				* ui:key for colors that can be retrieved from UIManager with the given key.
+							]]>
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="shadowinner" type="cookSwing:color">
+					<annotation>
+						<documentation>
+							<![CDATA[There are three valid types of values:<br>
+			
+				* "#rrggbb" or "rrggbb" for RGB color.<br>
+				* Name of predefined colors in java.awt.Color.<br>
+				* ui:key for colors that can be retrieved from UIManager with the given key.
+							]]>
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="shadowouter" type="cookSwing:color">
+					<annotation>
+						<documentation>
+							<![CDATA[There are three valid types of values:<br>
+			
+				* "#rrggbb" or "rrggbb" for RGB color.<br>
+				* Name of predefined colors in java.awt.Color.<br>
+				* ui:key for colors that can be retrieved from UIManager with the given key.
+							]]>
+						</documentation>
+					</annotation>
+				</attribute>
 				<attribute name="soft" type="boolean" />
-				<attribute name="type" type="cookSwing:bordertype" />
+				<attribute name="type" type="cookSwing:bordertype">
+					<annotation>
+						<documentation>
+							<![CDATA[RAISED or LOWERED border.]]>
+						</documentation>
+					</annotation>
+				</attribute>
 			</extension>
 		</complexContent>
 	</complexType>
@@ -880,7 +1533,13 @@
 		<complexContent>
 			<extension base="cookSwing:border">
 				<attribute name="bottom" type="int" />
-				<attribute name="insets" type="cookSwing:insets" />
+				<attribute name="insets" type="cookSwing:insets">
+					<annotation>
+						<documentation>
+							<![CDATA[The format is "#,#,#,#" in the order of top, left, bottom and right.]]>
+						</documentation>
+					</annotation>
+				</attribute>
 				<attribute name="left" type="int" />
 				<attribute name="right" type="int" />
 				<attribute name="top" type="int" />
@@ -891,9 +1550,37 @@
 	<complexType name="etchedborder">
 		<complexContent>
 			<extension base="cookSwing:border">
-				<attribute name="highlight" type="cookSwing:color" />
-				<attribute name="shadow" type="cookSwing:color" />
-				<attribute name="type" type="cookSwing:bordertype" />
+				<attribute name="highlight" type="cookSwing:color">
+					<annotation>
+						<documentation>
+							<![CDATA[There are three valid types of values:<br>
+			
+				* "#rrggbb" or "rrggbb" for RGB color.<br>
+				* Name of predefined colors in java.awt.Color.<br>
+				* ui:key for colors that can be retrieved from UIManager with the given key.
+							]]>
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="shadow" type="cookSwing:color">
+					<annotation>
+						<documentation>
+							<![CDATA[There are three valid types of values:<br>
+			
+				* "#rrggbb" or "rrggbb" for RGB color.<br>
+				* Name of predefined colors in java.awt.Color.<br>
+				* ui:key for colors that can be retrieved from UIManager with the given key.
+							]]>
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="type" type="cookSwing:bordertype">
+					<annotation>
+						<documentation>
+							<![CDATA[RAISED or LOWERED border.]]>
+						</documentation>
+					</annotation>
+				</attribute>
 			</extension>
 		</complexContent>
 	</complexType>
@@ -901,7 +1588,18 @@
 	<complexType name="lineborder">
 		<complexContent>
 			<extension base="cookSwing:border">
-				<attribute name="color" type="cookSwing:color" />
+				<attribute name="color" type="cookSwing:color">
+					<annotation>
+						<documentation>
+							<![CDATA[There are three valid types of values:<br>
+			
+				* "#rrggbb" or "rrggbb" for RGB color.<br>
+				* Name of predefined colors in java.awt.Color.<br>
+				* ui:key for colors that can be retrieved from UIManager with the given key.
+							]]>
+						</documentation>
+					</annotation>
+				</attribute>
 				<attribute name="thickness" type="int" />
 			</extension>
 		</complexContent>
@@ -917,10 +1615,38 @@
 					ref="cookSwing:insets"></element> </choice> </sequence>
 				-->
 				<attribute name="bottom" type="int" />
-				<attribute name="color" type="cookSwing:color" />
-				<attribute name="insets" type="cookSwing:insets" />
+				<attribute name="color" type="cookSwing:color">
+					<annotation>
+						<documentation>
+							<![CDATA[There are three valid types of values:<br>
+			
+				* "#rrggbb" or "rrggbb" for RGB color.<br>
+				* Name of predefined colors in java.awt.Color.<br>
+				* ui:key for colors that can be retrieved from UIManager with the given key.
+							]]>
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="insets" type="cookSwing:insets">
+					<annotation>
+						<documentation>
+							<![CDATA[The format is "#,#,#,#" in the order of top, left, bottom and right.]]>
+						</documentation>
+					</annotation>
+				</attribute>
 				<attribute name="left" type="int" />
-				<attribute name="mattecolor" type="cookSwing:color" />
+				<attribute name="mattecolor" type="cookSwing:color">
+					<annotation>
+						<documentation>
+							<![CDATA[There are three valid types of values:<br>
+			
+				* "#rrggbb" or "rrggbb" for RGB color.<br>
+				* Name of predefined colors in java.awt.Color.<br>
+				* ui:key for colors that can be retrieved from UIManager with the given key.
+							]]>
+						</documentation>
+					</annotation>
+				</attribute>
 				<attribute name="right" type="int" />
 				<attribute name="tileicon" type="string" />
 				<attribute name="top" type="int" />
@@ -936,8 +1662,29 @@
 					ref="cookSwing:border"></element> </sequence>
 				-->
 				<attribute name="title" type="string" />
-				<attribute name="titlecolor" type="cookSwing:color" />
-				<attribute name="titlefont" type="cookSwing:font" />
+				<attribute name="titlecolor" type="cookSwing:color">
+					<annotation>
+						<documentation>
+							<![CDATA[There are three valid types of values:<br>
+			
+				* "#rrggbb" or "rrggbb" for RGB color.<br>
+				* Name of predefined colors in java.awt.Color.<br>
+				* ui:key for colors that can be retrieved from UIManager with the given key.
+							]]>
+						</documentation>
+					</annotation>
+				</attribute>
+				<attribute name="titlefont" type="cookSwing:font">
+					<annotation>
+						<documentation>
+							<![CDATA[There are two valid types of values:<br>
+			
+				* "fontname,style,size". For example, "monospace,bold italic,12".<br>
+				* ui:key for fonts that can be retrieved from UIManager with the given key.
+							]]>
+						</documentation>
+					</annotation>
+				</attribute>
 				<attribute name="titlejustification" type="string" />
 				<attribute name="titleposition" type="string" />
 			</extension>
@@ -1043,13 +1790,77 @@
 					<sequence minOccurs="0" maxOccurs="unbounded"> <element
 					ref="cookXmlCommon:object"></element> </sequence>
 				-->
-				<attribute name="anchor" type="cookSwing:anchor" />
-				<attribute name="fill" type="cookSwing:fill" />
+				<attribute name="anchor">
+					<annotation>
+						<documentation>
+							<![CDATA[This field is used when the component is smaller than its display area. It determines where, within the display area, to place the component.<br>
+			
+				There are two kinds of possible values: relative and absolute.<br>
+				Relative values are interpreted relative to the container's component orientation property while absolute values are not.<br> 
+				The absolute values are: CENTER, NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, and NORTHWEST. <br>
+				The relative values are: PAGE_START, PAGE_END, LINE_START, LINE_END, FIRST_LINE_START, FIRST_LINE_END, LAST_LINE_START and LAST_LINE_END.<br> 
+				The default value is CENTER. 
+							]]>
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="CENTER" />
+							<enumeration value="NORTH" />
+							<enumeration value="NORTHEAST" />
+							<enumeration value="EAST" />
+							<enumeration value="SOUTHEAST" />
+							<enumeration value="SOUTH" />
+							<enumeration value="SOUTHWEST" />
+							<enumeration value="WEST" />
+							<enumeration value="NORTHWEST" />
+							<enumeration value="PAGE_START" />
+							<enumeration value="PAGE_END" />
+							<enumeration value="LINE_START" />
+							<enumeration value="LINE_END" />
+							<enumeration value="FIRST_LINE_START" />
+							<enumeration value="FIRST_LINE_END" />
+							<enumeration value="LAST_LINE_START" />
+							<enumeration value="LAST_LINE_END" />
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="fill">
+					<annotation>
+						<documentation>
+							<![CDATA[This field is used when the component's display area is larger than the component's requested size. It determines whether to resize the component, and if so, how.<br>
+			
+			The following values are valid for fill:<br>
+			
+				* NONE: Do not resize the component.<br>
+				* HORIZONTAL: Make the component wide enough to fill its display area horizontally, but do not change its height.<br>
+				* VERTICAL: Make the component tall enough to fill its display area vertically, but do not change its width.<br>
+				* BOTH: Make the component fill its display area entirely.<br> 
+			
+			The default value is NONE.
+							]]>
+						</documentation>
+					</annotation>
+					<simpleType>
+						<restriction base="string">
+							<enumeration value="NONE" />
+							<enumeration value="HORIZONTAL" />
+							<enumeration value="VERTICAL" />
+							<enumeration value="BOTH" />
+						</restriction>
+					</simpleType>
+				</attribute>
 				<attribute name="gridheight" type="int" />
 				<attribute name="gridwidth" type="int" />
 				<attribute name="gridx" type="int" />
 				<attribute name="gridy" type="int" />
-				<attribute name="insets" type="cookSwing:insets" />
+				<attribute name="insets" type="cookSwing:insets">
+					<annotation>
+						<documentation>
+							<![CDATA[The format is "#,#,#,#" in the order of top, left, bottom and right.]]>
+						</documentation>
+					</annotation>
+				</attribute>
 				<attribute name="ipadx" type="int" />
 				<attribute name="ipady" type="int" />
 				<attribute name="weightx" type="float" />
@@ -1266,79 +2077,17 @@
 		substitutionGroup="cookXmlCommon:object" />
 
 
-
-	<!-- common types -->
-	<!--
-		<complexType name="uimanager"> <complexContent> <extension
-		base="cookXmlCommon:object"> <attribute name="systemlookandfeel"
-		type="boolean" /> <attribute name="lookandfeel" type="string" />
-		</extension> </complexContent> </complexType> <complexType
-		name="color"> <complexContent> <extension base="cookXmlCommon:object">
-		<attribute name="locale" type="string" /> <attribute name="ui"
-		type="string" /> <attribute name="value" type="string" /> </extension>
-		</complexContent> </complexType> <complexType name="cursor">
-		<complexContent> <extension base="cookXmlCommon:object"> <attribute
-		name="type" type="string" /> </extension> </complexContent>
-		</complexType> <complexType name="dimension"> <complexContent>
-		<extension base="cookXmlCommon:object"> <attribute name="height"
-		type="int" /> <attribute name="width" type="int" /> </extension>
-		</complexContent> </complexType> <complexType name="font">
-		<complexContent> <extension base="cookXmlCommon:object"> <attribute
-		name="locale" type="string" /> <attribute name="src" type="string" />
-		<attribute name="ui" type="string" /> </extension> </complexContent>
-		</complexType> <complexType name="icon"> <complexContent> <extension
-		base="cookXmlCommon:object"> <attribute name="locale" type="string" />
-		<attribute name="src" type="string" /> <attribute name="ui"
-		type="string" /> </extension> </complexContent> </complexType>
-
-		<complexType name="image"> <complexContent> <extension
-		base="cookXmlCommon:object"> <attribute name="src" type="string" />
-		</extension> </complexContent> </complexType> <complexType
-		name="imageicon"> <complexContent> <extension
-		base="cookXmlCommon:object"> <attribute name="src" type="string" />
-		</extension> </complexContent> </complexType> <complexType
-		name="insets"> <complexContent> <extension
-		base="cookXmlCommon:object"> <attribute name="bottom" type="int" />
-		<attribute name="left" type="int" /> <attribute name="right"
-		type="int" /> <attribute name="top" type="int" /> </extension>
-		</complexContent> </complexType> <complexType name="keystroke">
-		<complexContent> <extension base="cookXmlCommon:object"> <attribute
-		name="keychar" type="string" /> <attribute name="keycode"
-		type="string" /> <attribute name="modifiers" type="string" />
-		<attribute name="onkeyrelease" type="boolean" /> <attribute
-		name="string" type="string" /> </extension> </complexContent>
-		</complexType> <complexType name="point"> <complexContent> <extension
-		base="cookXmlCommon:object"> <attribute name="x" type="int" />
-		<attribute name="y" type="int" /> </extension> </complexContent>
-		</complexType> <complexType name="rectangle"> <complexContent>
-		<extension base="cookXmlCommon:object"> <attribute name="bounds"
-		type="string" /> <attribute name="height" type="int" /> <attribute
-		name="location" type="string" /> <attribute name="size" type="string"
-		/> <attribute name="width" type="int" /> <attribute name="x"
-		type="int" /> <attribute name="y" type="int" /> </extension>
-		</complexContent> </complexType>
-	-->
 	<!-- Common simple types -->
 
 	<simpleType name="color">
 		<annotation>
 			<documentation>
-				<![CDATA[There are three valid types of values:
+				<![CDATA[There are three valid types of values:<br>
 
-	* "#rrggbb" or "rrggbb" for RGB color.
-	* Name of predefined colors in java.awt.Color.
+	* "#rrggbb" or "rrggbb" for RGB color.<br>
+	* Name of predefined colors in java.awt.Color.<br>
 	* ui:key for colors that can be retrieved from UIManager with the given key.
 				]]>
-			</documentation>
-		</annotation>
-		<restriction base="string"></restriction>
-	</simpleType>
-
-	<simpleType name="cursor">
-		<annotation>
-			<documentation>
-				<![CDATA["One of the cursor names defined in java.awt.Cursor without the _CURSOR  suffix 
-				(e.g "HAND" would be converted to a hand cursor).]]>
 			</documentation>
 		</annotation>
 		<restriction base="string"></restriction>
@@ -1365,9 +2114,9 @@
 	<simpleType name="font">
 		<annotation>
 			<documentation>
-				<![CDATA[There are two valid types of values:
+				<![CDATA[There are two valid types of values:<br>
 
-	* "fontname,style,size". For example, "monospace,bold italic,12".
+	* "fontname,style,size". For example, "monospace,bold italic,12".<br>
 	* ui:key for fonts that can be retrieved from UIManager with the given key.
 				]]>
 			</documentation>
@@ -1375,210 +2124,15 @@
 		<restriction base="string"></restriction>
 	</simpleType>
 
-	<simpleType name="locale">
-		<annotation>
-			<documentation>
-				<![CDATA[The format is "lang_country_variant". For example, "en_US".]]>
-			</documentation>
-		</annotation>
-		<restriction base="string"></restriction>
-	</simpleType>
-
-	<simpleType name="point">
-		<annotation>
-			<documentation>
-				<![CDATA[The format is "x,y" or "x y" to specify the x and y postions.]]>
-			</documentation>
-		</annotation>
-		<restriction base="string"></restriction>
-	</simpleType>
-
-	<simpleType name="rectangle">
-		<annotation>
-			<documentation>
-				<![CDATA[The format is "#,#,#,#" in the order of x, y, width, and height.]]>
-			</documentation>
-		</annotation>
-		<restriction base="string"></restriction>
-	</simpleType>
-
-	<simpleType name="debugoption">
-		<annotation>
-			<documentation>
-				<![CDATA[determines how the component should display the information; one of the following options:
-
-	* LOG_OPTION - causes a text message to be printed.
-	* FLASH_OPTION - causes the drawing to flash several times.
-	* BUFFERED_OPTION - creates an ExternalWindow that displays the operations performed 
-		on the View's offscreen buffer.
-	* NONE_OPTION disables debugging.
-	* A value of 0 causes no changes to the debugging options. 
-
-debugoption is bitwise OR'd into the current value
-				]]>
-			</documentation>
-		</annotation>
-		<restriction base="string">
-			<enumeration value="LOG_OPTION" />
-			<enumeration value="FLASH_OPTION" />
-			<enumeration value="BUFFERED_OPTION" />
-			<enumeration value="NONE_OPTION" />
-			<enumeration value="0" />
-		</restriction>
-	</simpleType>
-
-	<simpleType name="dragmode">
-		<annotation>
-			<documentation>
-				<![CDATA[Sets the "dragging style" used by the desktop pane. one of the following options:
-
-	* LIVE_DRAG_MODE - Indicates that the entire contents of the item being dragged
-		should appear inside the desktop pane.
-	* OUTLINE_DRAG_MODE - Indicates that an outline only of the item being dragged 
-		should appear inside the desktop pane.
-				]]>
-			</documentation>
-		</annotation>
-		<restriction base="string">
-			<enumeration value="LIVE_DRAG_MODE" />
-			<enumeration value="OUTLINE_DRAG_MODE" />
-		</restriction>
-	</simpleType>
-
-	<simpleType name="framestate">
-		<annotation>
-			<documentation>
-				<![CDATA[Sets the state of this frame. The state is represented as a bitwise mask.
-
-	* NORMAL
-		Indicates that no state bits are set.
-	* ICONIFIED
-	* MAXIMIZED_HORIZ
-	* MAXIMIZED_VERT
-	* MAXIMIZED_BOTH
-		Concatenates MAXIMIZED_HORIZ and MAXIMIZED_VERT. 
-
-Note that if the state is not supported on a given platform, nothing will happen.
-				]]>
-			</documentation>
-		</annotation>
-		<restriction base="string">
-			<enumeration value="NORMAL" />
-			<enumeration value="ICONIFIED" />
-			<enumeration value="MAXIMIZED_HORIZ" />
-			<enumeration value="MAXIMIZED_VERT" />
-			<enumeration value="MAXIMIZED_BOTH" />
-		</restriction>
-	</simpleType>
-
-	<simpleType name="horizontalscrollbarpolicy">
-		<annotation>
-			<documentation>
-				<![CDATA[Determines when the horizontal scrollbar appears in the scrollpane. The options are:
-
-	* HORIZONTAL_SCROLLBAR_AS_NEEDED
-	* HORIZONTAL_SCROLLBAR_NEVER
-	* HORIZONTAL_SCROLLBAR_ALWAYS 
-				]]>
-			</documentation>
-		</annotation>
-		<restriction base="string">
-			<enumeration value="HORIZONTAL_SCROLLBAR_AS_NEEDED" />
-			<enumeration value="HORIZONTAL_SCROLLBAR_NEVER" />
-			<enumeration value="HORIZONTAL_SCROLLBAR_ALWAYS" />
-		</restriction>
-	</simpleType>
-
-	<simpleType name="verticalscrollbarpolicy">
-		<annotation>
-			<documentation>
-				<![CDATA[Determines when the vertical scrollbar appears in the scrollpane. Legal values are:
-
-	* VERTICAL_SCROLLBAR_AS_NEEDED
-	* VERTICAL_SCROLLBAR_NEVER
-	* VERTICAL_SCROLLBAR_ALWAYS
-				]]>
-			</documentation>
-		</annotation>
-		<restriction base="string">
-			<enumeration value="VERTICAL_SCROLLBAR_AS_NEEDED" />
-			<enumeration value="VERTICAL_SCROLLBAR_NEVER" />
-			<enumeration value="VERTICAL_SCROLLBAR_ALWAYS" />
-		</restriction>
-	</simpleType>
-
-	<simpleType name="tablayoutpolicy">
-		<annotation>
-			<documentation>
-				<![CDATA[Sets the policy which the tabbedpane will use in laying out the tabs when all the tabs will not fit within a single run. Possible values are:
-
-	* WRAP_TAB_LAYOUT
-	* SCROLL_TAB_LAYOUT 
-
-The default value, if not set by the UI, is WRAP_TAB_LAYOUT. 
-				]]>
-			</documentation>
-		</annotation>
-		<restriction base="string">
-			<enumeration value="WRAP_TAB_LAYOUT" />
-			<enumeration value="SCROLL_TAB_LAYOUT" />
-		</restriction>
-	</simpleType>
-
-	<simpleType name="tabplacement">
-		<annotation>
-			<documentation>
-				<![CDATA[Sets the tab placement for this tabbedpane. Possible values are:
-	
-	* TOP
-	* BOTTOM
-	* LEFT
-	* RIGHT 
-	
-The default value, if not set, is TOP.
-				]]>
-			</documentation>
-		</annotation>
-		<restriction base="string">
-			<enumeration value="TOP" />
-			<enumeration value="BOTTOM" />
-			<enumeration value="LEFT" />
-			<enumeration value="RIGHT" />
-		</restriction>
-	</simpleType>
-
-	<simpleType name="windowdecorationstyle">
-		<annotation>
-			<documentation>
-				<![CDATA[Sets the type of Window decorations (such as borders, widgets for closing a Window, title ...)
-			the JRootPane should provide. The default is to provide no Window decorations (NONE). 
-			Possible values are: NONE, FRAME, PLAIN_DIALOG, INFORMATION_DIALOG, ERROR_DIALOG, 
-			COLOR_CHOOSER_DIALOG, FILE_CHOOSER_DIALOG, QUESTION_DIALOG, or WARNING_DIALOG
-				]]>
-			</documentation>
-		</annotation>
-		<restriction base="string">
-			<enumeration value="NONE" />
-			<enumeration value="FRAME" />
-			<enumeration value="PLAIN_DIALOG" />
-			<enumeration value="INFORMATION_DIALOG" />
-			<enumeration value="ERROR_DIALOG" />
-			<enumeration value="COLOR_CHOOSER_DIALOG" />
-			<enumeration value="FILE_CHOOSER_DIALOG" />
-			<enumeration value="QUESTION_DIALOG" />
-			<enumeration value="WARNING_DIALOG" />
-		</restriction>
-	</simpleType>
-
 	<simpleType name="horizontalalignment">
 		<annotation>
 			<documentation>
-				<![CDATA[Sets the horizontal alignment of the text. Valid keys are:
+				<![CDATA[Sets the horizontal alignment of the text. Valid keys are:<br>
 
-	* LEFT
-	* CENTER
-	* RIGHT
-	* LEADING
+	* LEFT<br>
+	* CENTER<br>
+	* RIGHT<br>
+	* LEADING<br>
 	* TRAILING 
 				]]>
 			</documentation>
@@ -1589,153 +2143,15 @@ The default value, if not set, is TOP.
 			<enumeration value="RIGHT" />
 			<enumeration value="LEADING" />
 			<enumeration value="TRAILING" />
-		</restriction>
-	</simpleType>
-	
-	<simpleType name="horizontaltextposition">
-		<annotation>
-			<documentation>
-				<![CDATA[Sets the horizontal position of the label's text, relative to its image.  Valid keys are:
-
-	* LEFT
-	* CENTER
-	* RIGHT
-	* LEADING
-	* TRAILING 
-				]]>
-			</documentation>
-		</annotation>
-		<restriction base="string">
-			<enumeration value="LEFT" />
-			<enumeration value="CENTER" />
-			<enumeration value="RIGHT" />
-			<enumeration value="LEADING" />
-			<enumeration value="TRAILING" />
-		</restriction>
-	</simpleType>
-	
-	<simpleType name="verticalalignment">
-		<annotation>
-			<documentation>
-				<![CDATA[Sets the alignment of the label's contents along the Y axis.
-
-	The default value of this property is CENTER. 
-
-	* TOP
-	* CENTER
-	* BOTTOM
-				]]>
-			</documentation>
-		</annotation>
-		<restriction base="string">
-			<enumeration value="TOP" />
-			<enumeration value="CENTER" />
-			<enumeration value="BOTTOM" />
-		</restriction>
-	</simpleType>
-	
-	<simpleType name="verticaltextposition">
-		<annotation>
-			<documentation>
-				<![CDATA[Sets the vertical position of the label's text, relative to its image. 
-
-	The default value of this property is CENTER. 
-
-	* TOP
-	* CENTER
-	* BOTTOM
-				]]>
-			</documentation>
-		</annotation>
-		<restriction base="string">
-			<enumeration value="TOP" />
-			<enumeration value="CENTER" />
-			<enumeration value="BOTTOM" />
-		</restriction>
-	</simpleType>
-	
-	<simpleType name="dialogtype">
-		<annotation>
-			<documentation>
-				<![CDATA[dialogType - the type of dialog to be displayed:
-
-	* OPEN_DIALOG
-	* SAVE_DIALOG
-	* CUSTOM_DIALOG 
-
-				]]>
-			</documentation>
-		</annotation>
-		<restriction base="string">
-			<enumeration value="OPEN_DIALOG" />
-			<enumeration value="SAVE_DIALOG" />
-			<enumeration value="CUSTOM_DIALOG" />
-		</restriction>
-	</simpleType>
-	
-	<simpleType name="fileselectionmode">
-		<annotation>
-			<documentation>
-				<![CDATA[mode - the type of files to be displayed:
-
-	* FILES_ONLY
-	* DIRECTORIES_ONLY
-	* FILES_AND_DIRECTORIES 
-
-				]]>
-			</documentation>
-		</annotation>
-		<restriction base="string">
-			<enumeration value="FILES_ONLY" />
-			<enumeration value="DIRECTORIES_ONLY" />
-			<enumeration value="FILES_AND_DIRECTORIES" />
-		</restriction>
-	</simpleType>
-	
-	<simpleType name="layoutorientation">
-		<annotation>
-			<documentation>
-				<![CDATA[Defines the way list cells are layed out:
-
-	* VERTICAL
-	* HORIZONTAL_WRAP
-	* VERTICAL_WRAP
-
-				]]>
-			</documentation>
-		</annotation>
-		<restriction base="string">
-			<enumeration value="VERTICAL" />
-			<enumeration value="HORIZONTAL_WRAP" />
-			<enumeration value="VERTICAL_WRAP" />
-		</restriction>
-	</simpleType>
-	
-	<simpleType name="selectionmode">
-		<annotation>
-			<documentation>
-				<![CDATA[Determines whether single-item or multiple-item selections are allowed. The following selectionMode values are allowed: 
-
-	* SINGLE_SELECTION
-	* SINGLE_INTERVAL_SELECTION
-	* MULTIPLE_INTERVAL_SELECTION
-
-				]]>
-			</documentation>
-		</annotation>
-		<restriction base="string">
-			<enumeration value="SINGLE_SELECTION" />
-			<enumeration value="SINGLE_INTERVAL_SELECTION" />
-			<enumeration value="MULTIPLE_INTERVAL_SELECTION" />
 		</restriction>
 	</simpleType>
 	
 	<simpleType name="orientation">
 		<annotation>
 			<documentation>
-				<![CDATA[Sets the orientation:
+				<![CDATA[Sets the orientation:<br>
 
-	* VERTICAL
+	* VERTICAL<br>
 	* HORIZONTAL
 
 				]]>
@@ -1744,23 +2160,6 @@ The default value, if not set, is TOP.
 		<restriction base="string">
 			<enumeration value="VERTICAL" />
 			<enumeration value="HORIZONTAL" />
-		</restriction>
-	</simpleType>
-	
-	<simpleType name="splitorientation">
-		<annotation>
-			<documentation>
-				<![CDATA[Sets the orientation, or how the splitter is divided. The options are:
-
-    * VERTICAL_SPLIT (above/below orientation of components)
-    * HORIZONTAL_SPLIT (left/right orientation of components) 
-
-				]]>
-			</documentation>
-		</annotation>
-		<restriction base="string">
-			<enumeration value="VERTICAL_SPLIT" />
-			<enumeration value="HORIZONTAL_SPLIT" />
 		</restriction>
 	</simpleType>
 	
@@ -1776,110 +2175,4 @@ The default value, if not set, is TOP.
 		</restriction>
 	</simpleType>
 	
-	<simpleType name="calendarfield">
-		<annotation>
-			<documentation>
-				<![CDATA[ The legal values for calendarField are:
-
-	* ERA
-	* YEAR
-	* MONTH
-	* WEEK_OF_YEAR
-	* WEEK_OF_MONTH
-	* DAY_OF_MONTH
-	* DAY_OF_YEAR
-	* DAY_OF_WEEK
-	* DAY_OF_WEEK_IN_MONTH
-	* AM_PM
-	* HOUR
-	* HOUR_OF_DAY
-	* MINUTE
-	* SECOND
-	* MILLISECOND 
-				]]>
-			</documentation>
-		</annotation>
-		<restriction base="string">
-			<enumeration value="VERTICAL" />
-			<enumeration value="HORIZONTAL" />
-		</restriction>
-	</simpleType>
-	
-	<simpleType name="autoresizemode">
-		<annotation>
-			<documentation>
-				<![CDATA[mode - One of 5 legal values:
-				AUTO_RESIZE_OFF, AUTO_RESIZE_NEXT_COLUMN, AUTO_RESIZE_SUBSEQUENT_COLUMNS, AUTO_RESIZE_LAST_COLUMN, AUTO_RESIZE_ALL_COLUMNS
-				]]>
-			</documentation>
-		</annotation>
-		<restriction base="string">
-			<enumeration value="AUTO_RESIZE_OFF" />
-			<enumeration value="AUTO_RESIZE_NEXT_COLUMN" />
-			<enumeration value="AUTO_RESIZE_SUBSEQUENT_COLUMNS" />
-			<enumeration value="AUTO_RESIZE_LAST_COLUMN" />
-			<enumeration value="AUTO_RESIZE_ALL_COLUMNS" />
-		</restriction>
-	</simpleType>
-	
-	<simpleType name="anchor">
-		<annotation>
-			<documentation>
-				<![CDATA[This field is used when the component is smaller than its display area. It determines where, within the display area, to place the component.
-
-	There are two kinds of possible values: relative and absolute.
-	Relative values are interpreted relative to the container's component orientation property while absolute values are not. 
-	The absolute values are: CENTER, NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, and NORTHWEST. 
-	The relative values are: PAGE_START, PAGE_END, LINE_START, LINE_END, FIRST_LINE_START, FIRST_LINE_END, LAST_LINE_START and LAST_LINE_END. 
-	The default value is CENTER. 
-				]]>
-			</documentation>
-		</annotation>
-		<restriction base="string"/>
-	</simpleType>
-	
-	<simpleType name="fill">
-		<annotation>
-			<documentation>
-				<![CDATA[This field is used when the component's display area is larger than the component's requested size. It determines whether to resize the component, and if so, how.
-
-The following values are valid for fill:
-
-	* NONE: Do not resize the component.
-	* HORIZONTAL: Make the component wide enough to fill its display area horizontally, but do not change its height.
-	* VERTICAL: Make the component tall enough to fill its display area vertically, but do not change its width.
-	* BOTH: Make the component fill its display area entirely. 
-
-The default value is NONE.
-				]]>
-			</documentation>
-		</annotation>
-		<restriction base="string">
-			<enumeration value="NONE" />
-			<enumeration value="HORIZONTAL" />
-			<enumeration value="VERTICAL" />
-			<enumeration value="BOTH" />
-		</restriction>
-	</simpleType>
-	
-	<!--
-		<element name="uimanager" type="cookSwing:uimanager"
-		substitutionGroup="cookXmlCommon:object" /> <element name="color"
-		type="cookSwing:color" substitutionGroup="cookXmlCommon:object" />
-		<element name="cursor" type="cookSwing:cursor"
-		substitutionGroup="cookXmlCommon:object" /> <element name="dimension"
-		type="cookSwing:dimension" substitutionGroup="cookXmlCommon:object" />
-		<element name="font" type="cookSwing:font"
-		substitutionGroup="cookXmlCommon:object" /> <element name="icon"
-		type="cookSwing:icon" substitutionGroup="cookXmlCommon:object" />
-		<element name="image" type="cookSwing:image"
-		substitutionGroup="cookXmlCommon:object" /> <element name="imageicon"
-		type="cookSwing:imageicon" substitutionGroup="cookXmlCommon:object" />
-		<element name="insets" type="cookSwing:insets"
-		substitutionGroup="cookXmlCommon:object" /> <element name="keystroke"
-		type="cookSwing:keystroke" substitutionGroup="cookXmlCommon:object" />
-		<element name="point" type="cookSwing:point"
-		substitutionGroup="cookXmlCommon:object" /> <element name="rectangle"
-		type="cookSwing:rectangle" substitutionGroup="cookXmlCommon:object" />
-	-->
 </schema>
