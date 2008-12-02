@@ -38,12 +38,16 @@ public class ExtentCollection extends AbstractExtentPart {
 	/** The sub-entity of the collection. */
 	private ExtentEntity m_containedEntity;
 	
+	/** The id of the entity. */
+	private String m_collectionId;
+	
 	/**
 	 * Default Creator.
 	 * @param name	the name of the collection
 	 */
 	public ExtentCollection(String name) {
 		m_name = name;
+		m_collectionId = name;
 	}
 	/**
 	 * Default Creator.
@@ -53,6 +57,8 @@ public class ExtentCollection extends AbstractExtentPart {
 	public ExtentCollection(String name, Class<?> c) {
 		m_name = name;
 		m_containedEntity = entity(c);
+		m_collectionId = m_name + "[" + m_containedEntity.toString() + "]";
+		m_containedEntity.setParent(this);
 	}
 	
 	/**
@@ -63,8 +69,26 @@ public class ExtentCollection extends AbstractExtentPart {
 	public ExtentCollection(Class<?> c, Method method) {
 		m_name = toFieldName(method);
 		m_containedEntity = entity(c);
-		//m_method = method;
+		m_collectionId = m_name + "[" + m_containedEntity.toString() + "]";
+		m_containedEntity.setParent(this);
 	}
+	
+	/** {@inheritDoc} */
+	public String getId() {
+		return m_collectionId;
+	}
+	
+	/** {@inheritDoc} */
+	public void updateId() {
+		String id = m_name + "[" + m_containedEntity.toString() + "]";
+		if (!m_collectionId.equals(id)) {
+			m_collectionId = id;
+			if (m_parent != null) {
+				m_parent.updateId();
+			}
+		}
+	}
+	
 	/**
 	 * Contained entity of the collection.
 	 * @return the name of the field.
@@ -80,6 +104,9 @@ public class ExtentCollection extends AbstractExtentPart {
 	public void setContainedEntity(ExtentEntity entity) {
 		// Method and Name of entity does not matter
 		m_containedEntity = entity;
+		m_containedEntity.setParent(this);
+		m_collectionId = m_name + "[" + m_containedEntity.toString() + "]";
+		
 	}
 	
 	/**
