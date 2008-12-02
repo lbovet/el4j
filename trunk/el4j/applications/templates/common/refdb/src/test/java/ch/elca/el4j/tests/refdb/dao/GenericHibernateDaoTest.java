@@ -16,6 +16,11 @@
  */
 package ch.elca.el4j.tests.refdb.dao;
 
+import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentCollection.collection;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,11 +28,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LazyInitializationException;
 import org.junit.Test;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import ch.elca.el4j.apps.refdb.dao.impl.hibernate.GenericHibernateFileDaoInterface;
+import ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateFileDao;
 import ch.elca.el4j.apps.refdb.dom.File;
 import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
@@ -38,7 +41,6 @@ import ch.elca.el4j.tests.person.dom.Brain;
 import ch.elca.el4j.tests.person.dom.Person;
 import ch.elca.el4j.tests.person.dom.Tooth;
 import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
-import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentCollection.collection;
 /**
  *
  * Test case for <code>GenericHibernateDao</code> to test
@@ -123,7 +125,7 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 	
 	/**
 	 * This test checks the explicit loading of file content
-	 * using {@see File.ALL} predefined constant.
+	 * using {@see HibernateFileDao.ALL} predefined constant.
 	 */
 	@Test
 	public void testInsertFileEagerContent2() {
@@ -140,7 +142,7 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 		
 		dao.saveOrUpdate(file);
 		
-		File file2 = dao.findById(file.getKey(), File.ALL);
+		File file2 = dao.findById(file.getKey(), HibernateFileDao.ALL);
 		try {
 			if (file2.getContent() == null) {
 				fail("Content has not been loaded though forced explicitly.");

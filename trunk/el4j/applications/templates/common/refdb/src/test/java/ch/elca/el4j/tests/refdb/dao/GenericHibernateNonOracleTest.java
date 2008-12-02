@@ -17,11 +17,13 @@
 package ch.elca.el4j.tests.refdb.dao;
 
 
-import org.hibernate.LazyInitializationException;
-import org.junit.Test;
 import static org.junit.Assert.fail;
 
+import org.hibernate.LazyInitializationException;
+import org.junit.Test;
+
 import ch.elca.el4j.apps.refdb.dao.impl.hibernate.GenericHibernateFileDaoInterface;
+import ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateFileDao;
 import ch.elca.el4j.apps.refdb.dom.File;
 
 /**
@@ -58,7 +60,7 @@ public class GenericHibernateNonOracleTest extends GenericHibernateDaoTest {
 		dao.saveOrUpdate(file);
 		
 		// Only load the header
-		File file2 = dao.findById(file.getKey(), File.HEADER);
+		File file2 = dao.findById(file.getKey(), HibernateFileDao.HEADER);
 		// Load without extent
 		File file3 = dao.findById(file.getKey());
 		
@@ -97,7 +99,7 @@ public class GenericHibernateNonOracleTest extends GenericHibernateDaoTest {
 		if (file2.getContent() != null) {
 			fail("Could load lazy content.");
 		} else {
-			file2 = dao.refresh(file2, File.ALL);
+			file2 = dao.refresh(file2, HibernateFileDao.ALL);
 			if (file2.getContent() == null) {
 				fail("Lazy loading problem still exists after refreshing.");
 			}
