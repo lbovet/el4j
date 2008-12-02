@@ -30,7 +30,7 @@ import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntit
  * to provide performance improvements over standard data fetching.<br>
  * Specifying the extent when loading entities with Hibernate 
  * allows for tuning of lazy loading and eager fetching behavior.<br>
- * For details about how to use the “ Fetch Type ” in order to control whether a field is fetched eagerly or lazily,
+ * For details about how to use the "Fetch Type" in order to control whether a field is fetched eagerly or lazily,
  * see the corresponding reference manual of Java Persistence API 
  * (eg. {@link http://java.sun.com/javaee/5/docs/api/javax/persistence/FetchType.html})<br>
  * 
