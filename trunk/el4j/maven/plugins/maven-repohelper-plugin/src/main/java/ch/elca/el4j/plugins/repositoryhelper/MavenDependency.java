@@ -58,6 +58,11 @@ public class MavenDependency {
 	 * Classifier.
 	 */
 	private String m_classifier;
+	
+	/**
+	 * Flag if this dep is only a pom. Default is <code>false</code>.
+	 */
+	private boolean m_pomOnly = false;
 
 	/**
 	 * @return Returns the libraryPath.
@@ -143,6 +148,20 @@ public class MavenDependency {
 		m_version = version;
 	}
 	
+	/**
+	 * @return Returns the <code>true</code> if this dep is only a pom.
+	 */
+	public final boolean isPomOnly() {
+		return m_pomOnly;
+	}
+
+	/**
+	 * @param pomOnly Must be set to <code>true</code> if this dep is only a pom.
+	 */
+	public final void setPomOnly(boolean pomOnly) {
+		m_pomOnly = pomOnly;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */

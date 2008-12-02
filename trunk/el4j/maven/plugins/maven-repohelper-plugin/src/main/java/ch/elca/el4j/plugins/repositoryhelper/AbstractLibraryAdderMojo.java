@@ -18,8 +18,10 @@ package ch.elca.el4j.plugins.repositoryhelper;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.apache.maven.plugin.AbstractMojo;
@@ -49,6 +51,11 @@ import org.springframework.util.StringUtils;
  * @author Martin Zeltner (MZE)
  */
 public abstract class AbstractLibraryAdderMojo extends AbstractMojo {
+	/**
+	 * Is the classifier for poms.
+	 */
+	protected static final String POM_CLASSIFIER = "pom";
+	
 	// Checkstyle: MemberName off
 	/**
 	 * Directory where the libraries to add are.
@@ -77,7 +84,7 @@ public abstract class AbstractLibraryAdderMojo extends AbstractMojo {
 	/**
 	 * Extension of pom files.
 	 *
-	 * @parameter expression="${sourceExtension}" default-value="-pom.xml"
+	 * @parameter expression="${pomExtension}" default-value="-pom.xml"
 	 * @required
 	 */
 	protected String pomExtension;
@@ -98,6 +105,15 @@ public abstract class AbstractLibraryAdderMojo extends AbstractMojo {
 	 * @required
 	 */
 	protected String sourceLookupPattern;
+	
+	/**
+	 * Pattern to lookup pom files.
+	 *
+	 * @parameter expression="${pomLookupPattern}"
+	 *            default-value="**\/*-pom.xml"
+	 * @required
+	 */
+	protected String pomLookupPattern;
 	
 	/**
 	 * Flag to indicate if the add process should stop on problem.
@@ -149,6 +165,8 @@ public abstract class AbstractLibraryAdderMojo extends AbstractMojo {
 			= getFiles(libraryDirectory, jarLookupPattern);
 		List<File> sourceList
 			= getFiles(libraryDirectory, sourceLookupPattern);
+		List<File> pomList
+			= getFiles(libraryDirectory, pomLookupPattern);
 		
 		/**
 		 * Translate normal filenames into maven dependencies.
@@ -157,6 +175,8 @@ public abstract class AbstractLibraryAdderMojo extends AbstractMojo {
 			jarList, m_libraryDirectoryCanonical, jarExtension, "");
 		List<MavenDependency> sourceDepList = getDependencies(sourceList,
 			m_libraryDirectoryCanonical, sourceExtension, "sources");
+		List<MavenDependency> pomDepList = getDependencies(pomList,
+			m_libraryDirectoryCanonical, pomExtension, POM_CLASSIFIER);
 		
 		if (justCheckDirectories) {
 			getLog().info("Directory check successfully terminated.");
@@ -166,10 +186,37 @@ public abstract class AbstractLibraryAdderMojo extends AbstractMojo {
 		}
 		
 		/**
-		 * Add libraries and sources.
+		 * Filter out poms that are already bound to a library or a source.
+		 */
+		Map<String, MavenDependency> pomFilePathMap = new HashMap<String, MavenDependency>();
+		for (MavenDependency pomDep : pomDepList) {
+			pomFilePathMap.put(pomDep.getPomPath(), pomDep);
+		}
+		if (!pomFilePathMap.isEmpty()) {
+			for (MavenDependency jarDep : jarDepList) {
+				String pomPath = jarDep.getPomPath();
+				if (pomFilePathMap.containsKey(pomPath)) {
+					// filter out
+					MavenDependency depToRemove = pomFilePathMap.remove(pomPath);
+					pomDepList.remove(depToRemove);
+				}
+			}
+			for (MavenDependency sourceDep : sourceDepList) {
+				String pomPath = sourceDep.getPomPath();
+				if (pomFilePathMap.containsKey(pomPath)) {
+					// filter out
+					MavenDependency depToRemove = pomFilePathMap.remove(pomPath);
+					pomDepList.remove(depToRemove);
+				}
+			}
+		}
+		
+		/**
+		 * Add libraries, sources and poms.
 		 */
 		addLibraries(jarDepList, m_baseDirCanonical);
 		addLibraries(sourceDepList, m_baseDirCanonical);
+		addLibraries(pomDepList, m_baseDirCanonical);
 	}
 	
 	/**
@@ -381,7 +428,7 @@ public abstract class AbstractLibraryAdderMojo extends AbstractMojo {
 	 * @param classifier
 	 *            Is the type of the dependency. For jars this is empty, for
 	 *            source it is <code>classifier</code>.
-	 * @return Reuturns the converted file list as a list of maven dependencies.
+	 * @return Returns the converted file list as a list of maven dependencies.
 	 * @throws MojoExecutionException On file problem.
 	 */
 	protected List<MavenDependency> getDependencies(List<File> fileList,
@@ -397,16 +444,14 @@ public abstract class AbstractLibraryAdderMojo extends AbstractMojo {
 		
 		for (File file : fileList) {
 			String filenameWithExtension = file.getName();
-			logger.debug(
-				"Inspecting file with name '" + filenameWithExtension + "'.");
+			logger.debug("Inspecting file with name '" + filenameWithExtension + "'.");
 			
 			String filePath = null;
 			try {
 				filePath = file.getCanonicalPath();
 			} catch (IOException e) {
 				reportFileProblem(
-					"Could not get canonical path of file with name '"
-					+ filenameWithExtension + "'.", e);
+					"Could not get canonical path of file with name '" + filenameWithExtension + "'.", e);
 				continue;
 			}
 			
@@ -420,42 +465,43 @@ public abstract class AbstractLibraryAdderMojo extends AbstractMojo {
 				0, filenameWithExtension.length() - fileExtension.length());
 			
 			
-			MavenDependency dependency
-				= extractAndSetVersionAndArtifactId(filename);
+			MavenDependency dependency = extractAndSetVersionAndArtifactId(filename);
 			
 			if (dependency == null
 				|| !StringUtils.hasText(dependency.getVersion())
 				|| !StringUtils.hasText(dependency.getArtifactId())) {
 				reportFileProblem("Version or artifact id of given file with "
-					+ "name '" + filenameWithExtension
-					+ "' could not be extracted.", null);
+					+ "name '" + filenameWithExtension + "' could not be extracted.", null);
 				continue;
 			}
 			
-			extractAndSetGroupId(basePath, filenameWithExtension,
-				filePath, dependency);
+			extractAndSetGroupId(basePath, filenameWithExtension, filePath, dependency);
 			
 			dependency.setClassifier(classifier);
 			dependency.setLibraryPath(filePath);
 			
-			// add pom.xml file if available
-			File pomFile = new File(file.getParentFile(),
-				filename + pomExtension);
-			if (pomFile.exists()) {
-				try {
-					dependency.setPomPath(pomFile.getCanonicalPath());
-				} catch (IOException e) {
-					reportFileProblem(
-						"Could not get canonical path of file with name '"
-						+ pomFile + "'.", e);
-					continue;
+			boolean isPomOnly = StringUtils.hasText(classifier) && classifier.equals(POM_CLASSIFIER);
+			if (isPomOnly) {
+				// Mark dep that it is only for a pom
+				dependency.setPomOnly(true);
+				// Is only a pom dep, so the pom path is already known
+				dependency.setPomPath(filePath);
+			} else {
+				// Set pom path if available
+				File pomFile = new File(file.getParentFile(), filename + pomExtension);
+				if (pomFile.exists()) {
+					try {
+						dependency.setPomPath(pomFile.getCanonicalPath());
+					} catch (IOException e) {
+						reportFileProblem("Could not get canonical path of file with name '" + pomFile + "'.", e);
+						continue;
+					}
 				}
 			}
 			dependencyList.add(dependency);
 		}
 		
-		logger.info(dependencyList.size()
-			+ " dependencies are ready to be uploaded.");
+		logger.info(dependencyList.size() + " dependencies are ready to be uploaded.");
 		if (logger.isDebugEnabled()) {
 			for (MavenDependency dependency : dependencyList) {
 				logger.debug(dependency.toString());

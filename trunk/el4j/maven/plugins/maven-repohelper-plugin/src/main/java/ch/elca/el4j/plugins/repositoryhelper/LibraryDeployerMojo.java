@@ -100,8 +100,7 @@ public class LibraryDeployerMojo extends AbstractLibraryAdderMojo {
 		if (repositoryUrl != null) {
 			m_repositoryUrlString = repositoryUrl.toString();
 		} else if (repositoryDirectory != null) {
-			checkIfWritableDirectory(repositoryDirectory,
-				"Repository");
+			checkIfWritableDirectory(repositoryDirectory, "Repository");
 			try {
 				m_repositoryUrlString = repositoryDirectory.toURL().toString();
 			} catch (MalformedURLException e) {
@@ -134,31 +133,35 @@ public class LibraryDeployerMojo extends AbstractLibraryAdderMojo {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected void modifyCommandLine(MavenDependency dependency,
-		Commandline cmd) {
-		cmd.createArgument().setValue("deploy:deploy-file");
-		cmd.createArgument().setValue("-DgroupId=" + dependency.getGroupId());
-		cmd.createArgument().setValue("-DartifactId="
-			+ dependency.getArtifactId());
-		cmd.createArgument().setValue("-Dversion=" + dependency.getVersion());
-		cmd.createArgument().setValue("-Dpackaging=jar");
-		cmd.createArgument().setValue("-Dfile=" + dependency.getLibraryPath());
+	protected void modifyCommandLine(MavenDependency dependency, Commandline cmd) {
+		cmd.createArg().setValue("deploy:deploy-file");
+		cmd.createArg().setValue("-DgroupId=" + dependency.getGroupId());
+		cmd.createArg().setValue("-DartifactId=" + dependency.getArtifactId());
+		cmd.createArg().setValue("-Dversion=" + dependency.getVersion());
+		cmd.createArg().setValue("-Dfile=" + dependency.getLibraryPath());
 		
-		if (dependency.getPomPath() != null) {
-			cmd.createArgument().setValue(
-				"-DpomFile=" + dependency.getPomPath());
+		// Set these values only if it is not a pom
+		if (!dependency.isPomOnly()) {
+			cmd.createArg().setValue("-Dpackaging=jar");
+			String classifier = dependency.getClassifier();
+			if (StringUtils.hasText(classifier)) {
+				cmd.createArg().setValue("-Dclassifier=" + classifier);
+			}
 		}
 		
 		if (m_repositoryUrlString != null) {
-			cmd.createArgument().setValue("-Durl=" + m_repositoryUrlString);
+			cmd.createArg().setValue("-Durl=" + m_repositoryUrlString);
 		}
 		if (StringUtils.hasText(repositoryId)) {
-			cmd.createArgument().setValue("-DrepositoryId=" + repositoryId);
+			cmd.createArg().setValue("-DrepositoryId=" + repositoryId);
 		}
 		
-		String classifier = dependency.getClassifier();
-		if (StringUtils.hasText(classifier)) {
-			cmd.createArgument().setValue("-Dclassifier=" + classifier);
+		// Use existing pom or let the plugin generate one
+		if (dependency.getPomPath() != null) {
+			cmd.createArg().setValue("-DpomFile=" + dependency.getPomPath());
+			cmd.createArg().setValue("-DgeneratePom=false");
+		} else {
+			cmd.createArg().setValue("-DgeneratePom=true");
 		}
 	}
 	

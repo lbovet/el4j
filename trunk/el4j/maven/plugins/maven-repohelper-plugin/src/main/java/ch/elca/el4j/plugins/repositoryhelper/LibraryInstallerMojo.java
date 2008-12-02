@@ -40,26 +40,29 @@ public class LibraryInstallerMojo extends AbstractLibraryAdderMojo {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected void modifyCommandLine(MavenDependency dependency,
-		Commandline cmd) {
-		cmd.createArgument().setValue("install:install-file");
-		cmd.createArgument().setValue("-DgroupId=" + dependency.getGroupId());
-		cmd.createArgument().setValue("-DartifactId="
-			+ dependency.getArtifactId());
-		cmd.createArgument().setValue("-Dversion=" + dependency.getVersion());
-		cmd.createArgument().setValue("-Dpackaging=jar");
-		cmd.createArgument().setValue("-Dfile=" + dependency.getLibraryPath());
+	protected void modifyCommandLine(MavenDependency dependency, Commandline cmd) {
+		cmd.createArg().setValue("install:install-file");
+		cmd.createArg().setValue("-DgroupId=" + dependency.getGroupId());
+		cmd.createArg().setValue("-DartifactId=" + dependency.getArtifactId());
+		cmd.createArg().setValue("-Dversion=" + dependency.getVersion());
+		cmd.createArg().setValue("-Dfile=" + dependency.getLibraryPath());
 		
+		// Set these values only if it is not a pom
+		if (!dependency.isPomOnly()) {
+			cmd.createArg().setValue("-Dpackaging=jar");
+			String classifier = dependency.getClassifier();
+			if (StringUtils.hasText(classifier)) {
+				cmd.createArg().setValue("-Dclassifier=" + classifier);
+			}
+		}
+		
+		// Use existing pom or let the plugin generate one
 		if (dependency.getPomPath() != null) {
-			cmd.createArgument().setValue(
-				"-DpomFile=" + dependency.getPomPath());
+			cmd.createArg().setValue("-DpomFile=" + dependency.getPomPath());
+			cmd.createArg().setValue("-DgeneratePom=false");
+		} else {
+			cmd.createArg().setValue("-DgeneratePom=true");
 		}
-		
-		String classifier = dependency.getClassifier();
-		if (StringUtils.hasText(classifier)) {
-			cmd.createArgument().setValue("-Dclassifier=" + classifier);
-		}
-		cmd.createArgument().setValue("-DgeneratePom=true");
 	}
 	
 	/**
