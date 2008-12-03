@@ -17,8 +17,11 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.springframework.util.Assert;
 
 import ch.elca.el4j.util.codingsupport.BeanPropertyUtils;
 
@@ -50,14 +53,13 @@ public class ExtentEntity extends AbstractExtentPart {
 	/** The class of the entity. */
 	private Class<?> m_entityClass;
 	
-	/** The field-methods of the entity. */
-	//private List<Method> m_fields;
+	/** The field-methods of the entity, always stays sorted. */
 	private List<String> m_fields;
 	
-	/** The child-entities of the entity. */
+	/** The child-entities of the entity, always stays sorted by name. */
 	private List<ExtentEntity> m_childEntities;
 	
-	/** The collections of the entity. */
+	/** The collections of the entity, always stays sorted by name. */
 	private List<ExtentCollection> m_collections;
 	
 	/** The id of the entity. */
@@ -65,6 +67,9 @@ public class ExtentEntity extends AbstractExtentPart {
 	
 	/** Is the entity a root entity. */
 	private boolean m_root = false;
+	
+	/** Is the ExtentEntity frozen, eg. must not be changed anymore. */
+	private boolean m_frozen;
 	
 	/**
 	 * Default Creator, hidden.
@@ -138,7 +143,7 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * @return the field-methods of the entity.
 	 */
 	public List<String> getFields() {
-		return m_fields;
+		return new LinkedList<String>(m_fields);
 	}
 	
 	/**
@@ -146,7 +151,7 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * @return the child entities of the entity.
 	 */
 	public List<ExtentEntity> getChildEntities() {
-		return m_childEntities;
+		return new LinkedList<ExtentEntity>(m_childEntities);
 	}
 	
 	/**
@@ -154,7 +159,7 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * @return the collections of the entity.
 	 */
 	public List<ExtentCollection> getCollections() {
-		return m_collections;
+		return new LinkedList<ExtentCollection>(m_collections);
 	}
 	
 	/**
@@ -376,6 +381,7 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * @throws NoSuchMethodException 
 	 */
 	public ExtentEntity with(String... fields) throws NoSuchMethodException {
+		Assert.state(!m_frozen, "DataExtent is frozen and cannot be changed anymore");
 		for (String s : fields) {
 			addMethodAsName(s);
 		}
@@ -390,6 +396,7 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * @throws NoSuchMethodException 
 	 */
 	public ExtentEntity withSubentities(AbstractExtentPart... entities) throws NoSuchMethodException {
+		Assert.state(!m_frozen, "DataExtent is frozen and cannot be changed anymore");
 		for (AbstractExtentPart entity : entities) {
 			if (entity instanceof ExtentEntity) {
 				addChildEntity((ExtentEntity) entity);
@@ -408,6 +415,7 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * @return the new ExtentEntity Object.
 	 */
 	public ExtentEntity without(String...fields) {
+		Assert.state(!m_frozen, "DataExtent is frozen and cannot be changed anymore");
 		for (String s : fields) {
 			if (!removeField(s)) {
 				if (!removeEntity(s)) {
@@ -424,6 +432,7 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * @return the new ExtentEntity Object.
 	 */
 	public ExtentEntity all(int depth) {
+		Assert.state(!m_frozen, "DataExtent is frozen and cannot be changed anymore");
 		if (depth > 0) {
 			for (Method m : m_entityClass.getMethods()) {
 				try {
@@ -434,6 +443,134 @@ public class ExtentEntity extends AbstractExtentPart {
 			}
 		}
 		return this;
+	}
+	
+	/**
+	 * Merge two ExtentEntities. Returns the union of the entities.
+	 * The class of the two entities should be the same, the name and the parent is taken from 
+	 * this object.
+	 * @param other	the extent to be merged with.
+	 * @return	the merged entity.
+	 */
+	public ExtentEntity merge(ExtentEntity other) {
+		Assert.state(!m_frozen, "DataExtent is frozen and cannot be changed anymore");
+		if (m_entityClass.equals(other.m_entityClass) && !this.equals(other)) {
+			mergeFields(other.m_fields);
+			mergeEntities(other.m_childEntities);
+			mergeCollections(other.m_collections);
+			rebuildId();
+		}
+		return this;
+	}
+	
+	/**
+	 * Freeze the ExtentEntity, meaning that no further changes to it are possible.
+	 * @return the frozen ExtentEntity.
+	 */
+	public ExtentEntity freeze() {
+		if (!m_frozen) {
+			m_frozen = true;
+			for (ExtentEntity ent : m_childEntities) {
+				ent.freeze();
+			}
+			for (ExtentCollection c : m_collections) {
+				c.freeze();
+			}
+		}
+		return this;
+	}
+	
+	/**
+	 * Merge the List of fields into the current  field list.
+	 * @param otherFields the fields to merge with.
+	 */
+	private void mergeFields(List<String> otherFields) {
+		// Merge fields
+		Iterator<String> i = otherFields.iterator();
+		String f = null;
+		if (i.hasNext()) {
+			f = i.next();
+		}
+		for (int k = 0; k < m_fields.size() && f != null; k++) {
+			int result = m_fields.get(k).compareTo(f);
+			if (result > 0) {
+				// add element if it is before the current element
+				m_fields.add(k, f);
+			}
+			if (result >= 0) {
+				// Iterate to next element
+				if (i.hasNext()) {
+					f = i.next();
+				} else {
+					f = null;
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Merge the List of entities into the current entity list.
+	 * @param otherEntities the entities to merge with.
+	 */
+	private void mergeEntities(List<ExtentEntity> otherEntities) {
+		// Merge fields
+		Iterator<ExtentEntity> i = otherEntities.iterator();
+		ExtentEntity e = null;
+		if (i.hasNext()) {
+			e = i.next();
+		}
+		for (int k = 0; k < m_childEntities.size() && e != null; k++) {
+			int result = m_childEntities.get(k).compareTo(e);
+			if (result > 0) {
+				// add element if it is before the current element
+				m_childEntities.add(k, e);
+			} else if (result == 0 && !e.equals(m_childEntities.get(k))) {
+				// Merge the two child entities
+				// TODO infinite loops??
+				m_childEntities.get(k).merge(e);
+			}
+			if (result >= 0) {
+				// Iterate to next element
+				if (i.hasNext()) {
+					e = i.next();
+				} else {
+					e = null;
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Merge the List of entities into the current entity list.
+	 * @param otherEntities the entities to merge with.
+	 */
+	private void mergeCollections(List<ExtentCollection> otherCollections) {
+		// Merge fields
+		Iterator<ExtentCollection> i = otherCollections.iterator();
+		ExtentCollection c = null;
+		if (i.hasNext()) {
+			c = i.next();
+		}
+		for (int k = 0; k < m_collections.size() && c != null; k++) {
+			int result = m_collections.get(k).compareTo(c);
+			if (result > 0) {
+				// add element if it is before the current element
+				m_collections.add(k, c);
+			} else if (result == 0 
+				&& !c.getContainedEntity().equals(m_collections.get(k).getContainedEntity())) {
+				// Merge the two contained entities
+				// TODO infinite loops??
+				m_collections.get(k).merge(c);
+			}
+			if (result >= 0) {
+				// Iterate to next element
+				if (i.hasNext()) {
+					c = i.next();
+				} else {
+					c = null;
+				}
+			}
+		}
 	}
 	
 	/**

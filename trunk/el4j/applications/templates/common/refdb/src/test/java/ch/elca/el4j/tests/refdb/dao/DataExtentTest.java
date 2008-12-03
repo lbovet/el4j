@@ -22,11 +22,12 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 
 import com.mchange.util.AssertException;
 
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertEquals;
 
 import ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateFileDao;
 import ch.elca.el4j.apps.refdb.dom.File;
@@ -282,7 +283,6 @@ public class DataExtentTest extends AbstractTestCaseBase {
 				collection("friends", ex.getRootEntity())
 			);
 			ent.with("owner");
-			ex.toString();
 			
 		} catch (NoSuchMethodException e) {
 			fail("Extent could not be built.");
@@ -344,13 +344,22 @@ public class DataExtentTest extends AbstractTestCaseBase {
 	}
 	
 	/**
-	 * This test checks various features of the DataExtent fluent API.
+	 * This test checks the predefined extents in the example daos.
 	 */
 	@Test
 	public void testPredefinedExtents() {
 		DataExtent ex = HibernateFileDao.ALL;
 		
 		ex = HibernateFileDao.HEADER;
+		
+		try {
+			ex = HibernateFileDao.HEADER.with("content");
+			fail("Could modify extent constant.");
+		} catch (IllegalStateException e) {
+			s_logger.debug("Catched expected exception.", e);
+		} catch (NoSuchMethodException e) {
+			fail("Could not build extent.");
+		}
 		
 		ex = HibernatePersonDao.LIGHT_PERSON;
 		
@@ -360,5 +369,56 @@ public class DataExtentTest extends AbstractTestCaseBase {
 		
 		ex = HibernatePersonDao.PERSON_GRAPH_3;
 		
+	}
+	
+	/**
+	 * This test checks the merging feature of DataExtent.
+	 */
+	@Test
+	public void testMerging() {
+		DataExtent ex1;
+		DataExtent ex2;
+		ExtentEntity ent1;
+		ExtentEntity ent2;
+		
+		try {
+			
+			ent1 = entity(File.class).with("name");
+			String oldEntity = ent1.toString();
+			ent2 = entity(Person.class).with("legalStatus");
+			assertEquals("Merged two entities of different type.", oldEntity, ent1.merge(ent2).toString());
+			
+			ex1 = HibernateFileDao.HEADER;
+			ex2 = new DataExtent(File.class).all().without("name");
+			String extentBefore = ex2.toString();
+			assertNotSame("Merging dit not extend the extent.", extentBefore, ex2.merge(ex1).toString());
+			
+			ex1 = new DataExtent(Person.class);
+			ent1 = entity(Tooth.class);
+			ex1.withSubentities(
+				collection("teeth",
+					ent1
+				),
+				collection("friends", ex1.getRootEntity())
+			);
+			ent1.with("owner");
+			
+			ex2 = new DataExtent(Person.class);
+			ent2 = entity(Tooth.class);
+			ex2.withSubentities(
+				collection("teeth",
+					ent2
+				),
+				collection("friends", ex1.getRootEntity())
+			);
+			ent2.with("owner");
+			
+			String oldExtent = ex1.toString();
+			ex1.merge(ex2);
+			assertEquals("Extents built in same way does result in a different merge", ex1.toString(), oldExtent);
+			
+		} catch (NoSuchMethodException e) {
+			fail("Failed to construct the extents.");
+		}
 	}
 }

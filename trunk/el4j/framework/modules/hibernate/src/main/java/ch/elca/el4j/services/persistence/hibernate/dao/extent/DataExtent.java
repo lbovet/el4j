@@ -13,6 +13,8 @@ package ch.elca.el4j.services.persistence.hibernate.dao.extent;
 
 import java.io.Serializable;
 
+import org.springframework.util.Assert;
+
 import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntity.rootEntity;
 
 
@@ -34,13 +36,34 @@ import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntit
  * see the corresponding reference manual of Java Persistence API 
  * (eg. {@link http://java.sun.com/javaee/5/docs/api/javax/persistence/FetchType.html})<br>
  * 
- * In a DataExtent we distinguish between fields, entities and collections:<br>
+ * In a DataExtent we internally distinguish between fields, entities and collections:<br>
  * <ul>
- * 	<li> Fields: ... TODO: java fields or fields in db??
- * 	<li> Entities: ... TODO: see fields
+ * 	<li> Fields: fields/methods in persistent class which are of a simple java type or of type string or enum.<br>
+ * 		These fields are normally stored in the same table as the root entity and cannot have any child entities.<br>
+ * 		Note that you cannot lazy-load such fields without byte-code instrumentation, thus normally all fields are
+ * 		loaded eagerly and you should not have to mention any fields in your extent.<br>
+ * 		Exception: the type {@link java.sql.Blob} and {@link java.sql.Clob} are loaded lazy per default. 
+ * 		Since there are different handling policies from different db vendors, be careful when using these types.<br>
+ * 		For example oracle takes care of the lazy loading of a blob outside a session, whereas with derby you have 
+ * 		to read out the blob during the session into for example a byte array. For an example see 
+ * 		{@link ch.elca.el4j.apps.refdb.dom.File}.
+ * 	<li> Entities: entities are the complex data types in a persistent class. Normally they get stored in a different 
+ * 		entity table and can have child entities and fields themselves. To define an entity lazy loading, specify the 
+ * 		fetch property for example in your association annotation:<br>
+ * 		<code>@OneToOne(fetch = FetchType.LAZY)</code><br>
  * 	<li> Collections: all data types implementing the {@link java.util.Collection} interface should be
  * 		added to the extent as collection for a proper fetching at runtime.
  * </ul>
+ * Remark: When using DataExtent you don't have to have any knowledge about the db mapping or anything like that. 
+ * It suffices to know the interface of the entity you are about to use. For example if you have:<br>
+ * <code><pre>
+ * public class Employee {
+ * 	...
+ * 	public Employee getManager() {...
+ * </pre></code>
+ * To be sure that you can access the manager of an employee after retrieving it from the dao, add the manager to 
+ * the extent you pass as an extra argument to the dao: <code>dao.findById(id, extent.with("manager"));</code><br>
+ * <br>
  * Note that any part of the extent that is eagerly loaded according to the JPA metadata rules cannot be changed to 
  * a lazy loading behavior with DataExtent. On the other hand, all as lazy loading indicated parts can be forced to
  * be loaded at runtime in each query.<br>
@@ -64,18 +87,37 @@ import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntit
  * 		<code>
  * 			<pre>
  * 	// The Extent Object of type 'Person'
- * 	ex = new DataExtent(Person.class);
+ * 	extent = new DataExtent(Person.class);
  * 	// Construct a complex graph:
  * 	// Person has a List of Teeth, a Tooth has a 'Person' as owner, 
  * 	// the owner has a list of 'Person' as friends, the friends are again
  * 	// the same 'Person'-entity as defined in the beginning.
- * 	ex.withSubentities(
+ * 	extent.withSubentities(
  *		collection("teeth",
  *			entity(Tooth.class)
  *				.with("owner")
  *			),
- *		collection("friends", ex.getRootEntity())
+ *		collection("friends", extent.getRootEntity())
  *	);
+ *	
+ *	// Extent of a File
+ *	extent = new DataExtent(File.class);
+ *	// Create a simple, light extent for an overview over the files
+ *	extent.with("name", "lastModified", "fileSize", "mimeType");
+ *	dao.getAll(extent);
+ *	// Note: there will potentially be loaded more than you specify, if it is defined to be fetched eagerly
+ *
+ *	// Another extent to see also the file content
+ *	extent = new DataExtent(File.class);
+ *	extent.with("name", "content", "lastModified", "fileSize", "mimeType");
+ *	dao.findById(id, extent);
+ *
+ *	// Extent in a reference DOM, where references are loaded lazily
+ *	extent = new DataExtent(Publication.class);
+ *	extent.all(3);
+ *	dao.findByName(publicationName, extent);
+ *	// Now you have loaded all referenced publications, books, papers, ... to a depth of 3
+ *	// Eg. using the parent of the parent is now possible.
  *			</pre>
  *		</code>
  *
@@ -181,6 +223,26 @@ public class DataExtent implements Serializable {
 	 */
 	public DataExtent all(int depth) {
 		m_rootEntity.all(depth);
+		return this;
+	}
+	
+	/**
+	 * Merge two DataExtents. Returns
+	 * The class of the two rootEntities should be the same.
+	 * @param other	the extent to be merged with.
+	 * @return	 the union of the extents.
+	 */
+	public DataExtent merge(DataExtent other) {
+		m_rootEntity.merge(other.m_rootEntity);
+		return this;
+	}
+	
+	/**
+	 * Freeze the extent, meaning that no further changes to it are possible.
+	 * @return the frozen extent.
+	 */
+	public DataExtent freeze() {
+		m_rootEntity.freeze();
 		return this;
 	}
 	

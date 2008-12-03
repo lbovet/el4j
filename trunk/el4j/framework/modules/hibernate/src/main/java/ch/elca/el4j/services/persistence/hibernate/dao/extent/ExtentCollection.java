@@ -13,6 +13,8 @@ package ch.elca.el4j.services.persistence.hibernate.dao.extent;
 
 import java.lang.reflect.Method;
 
+import org.springframework.util.Assert;
+
 import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntity.entity;
 
 /**
@@ -40,6 +42,9 @@ public class ExtentCollection extends AbstractExtentPart {
 	
 	/** The id of the entity. */
 	private String m_collectionId;
+	
+	/** Is the ExtentCollection frozen, eg. must not be changed anymore. */
+	private boolean m_frozen;
 	
 	/**
 	 * Default Creator.
@@ -79,7 +84,7 @@ public class ExtentCollection extends AbstractExtentPart {
 	}
 	
 	/** {@inheritDoc} */
-	public void updateId() {
+	protected void updateId() {
 		String id = m_name + "[" + m_containedEntity.toString() + "]";
 		if (!m_collectionId.equals(id)) {
 			m_collectionId = id;
@@ -102,6 +107,7 @@ public class ExtentCollection extends AbstractExtentPart {
 	 * @param entity	 the contained entity of the collection.
 	 */
 	public void setContainedEntity(ExtentEntity entity) {
+		Assert.state(!m_frozen, "DataExtent is frozen and cannot be changed anymore");
 		// Method and Name of entity does not matter
 		m_containedEntity = entity;
 		m_containedEntity.setParent(this);
@@ -140,6 +146,33 @@ public class ExtentCollection extends AbstractExtentPart {
 		c.setContainedEntity(entity);
 		return c;
 		
+	}
+	
+	/**
+	 * Merge two ExtentCollections. Returns the union of the extents.
+	 * The class of the two contained entities of the collections should be the same,
+	 * the name and the parent is taken from this object.
+	 * @param other	the collection to be merged with.
+	 * @return	the merged collection.
+	 */
+	public ExtentCollection merge(ExtentCollection other) {
+		Assert.state(!m_frozen, "DataExtent is frozen and cannot be changed anymore");
+		if (m_containedEntity.getEntityClass().equals(other.m_containedEntity.getClass()) && !this.equals(other)) {
+			m_containedEntity.merge(other.m_containedEntity);
+		}
+		return this;
+	}
+	
+	/**
+	 * Freeze the ExtentCollection, meaning that no further changes to it are possible.
+	 * @return the frozen ExtentCollection.
+	 */
+	public ExtentCollection freeze() {
+		if (!m_frozen) {
+			m_frozen = true;
+			m_containedEntity.freeze();
+		}
+		return this;
 	}
 	
 }

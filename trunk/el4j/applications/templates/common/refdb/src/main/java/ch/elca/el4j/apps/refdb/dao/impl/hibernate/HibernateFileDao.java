@@ -38,14 +38,14 @@ public class HibernateFileDao extends GenericHibernateFileDao<File, Integer>
 	 * @return the light fetch extent.
 	 */
 	public static final DataExtent HEADER
-		= new DataExtent(File.class).all().without("data", "content");
+		= new DataExtent(File.class).all().without("data", "content").freeze();
 	
 	/**
 	 * Heavy fetching variant: fetch the whole file, including content.
 	 * @return the heavy fetch extent.
 	 */
 	public static final DataExtent ALL
-		= new DataExtent(File.class).all();
+		= new DataExtent(File.class).all().freeze();
 	
 
 }
