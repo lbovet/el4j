@@ -225,17 +225,31 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * @throws NoSuchMethodException 
 	 */
 	private void addChildEntity(ExtentEntity child) throws NoSuchMethodException {
-		try {
-			Method m  = BeanPropertyUtils.getReadMethod(m_entityClass, child.getName());
-			//child.setMethod(m);
-			if (m != null) {
-				child.setParent(this);
-				m_childEntities.add(child);
-				Collections.sort(m_childEntities);
-				rebuildId();
+		if (!m_childEntities.contains(child)) {
+			// Merge entity with already existing one when same name
+			for (ExtentEntity ent : m_childEntities) {
+				if (ent.m_name.equals(child.m_name)) {
+					try {
+						BeanPropertyUtils.getReadMethod(m_entityClass, child.getName());
+						ent.merge(child);
+						return;
+					} catch (IllegalArgumentException e) {
+						throw new NoSuchMethodException(e.getMessage());
+					}
+				}
 			}
-		} catch (IllegalArgumentException e) {
-			throw new NoSuchMethodException(e.getMessage());
+			try {
+				Method m  = BeanPropertyUtils.getReadMethod(m_entityClass, child.getName());
+				//child.setMethod(m);
+				if (m != null) {
+					child.setParent(this);
+					m_childEntities.add(child);
+					Collections.sort(m_childEntities);
+					rebuildId();
+				}
+			} catch (IllegalArgumentException e) {
+				throw new NoSuchMethodException(e.getMessage());
+			}
 		}
 	}
 	
@@ -261,34 +275,46 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * @throws NoSuchMethodException 
 	 */
 	private void addCollection(ExtentCollection collection) throws NoSuchMethodException {
-		try {
-			Method m  = BeanPropertyUtils.getReadMethod(m_entityClass, collection.getName());
-			collection.setParent(this);
-			boolean consistent = false;
-			// Check if the class of the contained entity is consistent
-			Type rawType = m.getGenericReturnType();
-			if (rawType instanceof ParameterizedType) {
-				Type[] pt = ((ParameterizedType) m.getGenericReturnType())
-				.getActualTypeArguments();
-				if (pt.length > 0 && pt[0] instanceof Class<?>) {
-					if (((Class<?>) pt[0]).isAssignableFrom(
-						collection.getContainedEntity().getEntityClass())) {
-						
-						consistent = true;
+		if (!m_collections.contains(collection)) {
+			// Merge collection with already existing one when same name
+			for (ExtentCollection c : m_collections) {
+				if (c.m_name.equals(collection.m_name)) {
+					try {
+						BeanPropertyUtils.getReadMethod(m_entityClass, collection.getName());
+						c.merge(collection);
+						return;
+					} catch (IllegalArgumentException e) {
+						throw new NoSuchMethodException(e.getMessage());
 					}
 				}
 			}
-			if (consistent) {
-				m_collections.add(collection);
-				Collections.sort(m_collections);
-				rebuildId();
-			} else {
-				throw new NoSuchMethodException("Collection type [" 
-					+ collection.getContainedEntity().getEntityClass().getSimpleName() 
-					+ "] doesnt conform with class definition.");
+			try {
+				Method m = BeanPropertyUtils.getReadMethod(m_entityClass, collection.getName());
+				collection.setParent(this);
+				boolean consistent = false;
+				// Check if the class of the contained entity is consistent
+				Type rawType = m.getGenericReturnType();
+				if (rawType instanceof ParameterizedType) {
+					Type[] pt = ((ParameterizedType) m.getGenericReturnType()).getActualTypeArguments();
+					if (pt.length > 0 && pt[0] instanceof Class<?>) {
+						if (((Class<?>) pt[0]).isAssignableFrom(collection.getContainedEntity().getEntityClass())) {
+
+							consistent = true;
+						}
+					}
+				}
+				if (consistent) {
+					m_collections.add(collection);
+					Collections.sort(m_collections);
+					rebuildId();
+				} else {
+					throw new NoSuchMethodException("Collection type ["
+						+ collection.getContainedEntity().getEntityClass().getSimpleName()
+						+ "] doesnt conform with class definition.");
+				}
+			} catch (IllegalArgumentException e) {
+				throw new NoSuchMethodException(e.getMessage());
 			}
-		} catch (IllegalArgumentException e) {
-			throw new NoSuchMethodException(e.getMessage());
 		}
 	}
 	
@@ -486,23 +512,27 @@ public class ExtentEntity extends AbstractExtentPart {
 	 */
 	private void mergeFields(List<String> otherFields) {
 		// Merge fields
-		Iterator<String> i = otherFields.iterator();
-		String f = null;
-		if (i.hasNext()) {
-			f = i.next();
-		}
-		for (int k = 0; k < m_fields.size() && f != null; k++) {
-			int result = m_fields.get(k).compareTo(f);
-			if (result > 0) {
-				// add element if it is before the current element
-				m_fields.add(k, f);
+		if (m_fields.isEmpty()) {
+			m_fields.addAll(otherFields);
+		} else {
+			Iterator<String> i = otherFields.iterator();
+			String f = null;
+			if (i.hasNext()) {
+				f = i.next();
 			}
-			if (result >= 0) {
-				// Iterate to next element
-				if (i.hasNext()) {
-					f = i.next();
-				} else {
-					f = null;
+			for (int k = 0; k < m_fields.size() && f != null; k++) {
+				int result = m_fields.get(k).compareTo(f);
+				if (result > 0) {
+					// add element if it is before the current element
+					m_fields.add(k, f);
+				}
+				if (result >= 0) {
+					// Iterate to next element
+					if (i.hasNext()) {
+						f = i.next();
+					} else {
+						f = null;
+					}
 				}
 			}
 		}
@@ -513,28 +543,32 @@ public class ExtentEntity extends AbstractExtentPart {
 	 * @param otherEntities the entities to merge with.
 	 */
 	private void mergeEntities(List<ExtentEntity> otherEntities) {
-		// Merge fields
-		Iterator<ExtentEntity> i = otherEntities.iterator();
-		ExtentEntity e = null;
-		if (i.hasNext()) {
-			e = i.next();
-		}
-		for (int k = 0; k < m_childEntities.size() && e != null; k++) {
-			int result = m_childEntities.get(k).compareTo(e);
-			if (result > 0) {
-				// add element if it is before the current element
-				m_childEntities.add(k, e);
-			} else if (result == 0 && !e.equals(m_childEntities.get(k))) {
-				// Merge the two child entities
-				// TODO infinite loops??
-				m_childEntities.get(k).merge(e);
+		// Merge entities
+		if (m_childEntities.isEmpty()) {
+			m_childEntities.addAll(otherEntities);
+		} else {
+			Iterator<ExtentEntity> i = otherEntities.iterator();
+			ExtentEntity e = null;
+			if (i.hasNext()) {
+				e = i.next();
 			}
-			if (result >= 0) {
-				// Iterate to next element
-				if (i.hasNext()) {
-					e = i.next();
-				} else {
-					e = null;
+			for (int k = 0; k < m_childEntities.size() && e != null; k++) {
+				int result = m_childEntities.get(k).compareTo(e);
+				if (result > 0) {
+					// add element if it is before the current element
+					m_childEntities.add(k, e);
+				} else if (result == 0 && !e.equals(m_childEntities.get(k))) {
+					// Merge the two child entities
+					// TODO infinite loops??
+					m_childEntities.get(k).merge(e);
+				}
+				if (result >= 0) {
+					// Iterate to next element
+					if (i.hasNext()) {
+						e = i.next();
+					} else {
+						e = null;
+					}
 				}
 			}
 		}
@@ -542,32 +576,36 @@ public class ExtentEntity extends AbstractExtentPart {
 	
 	/**
 	 * Merge the List of entities into the current entity list.
-	 * @param otherEntities the entities to merge with.
+	 * @param otherCollections the collections to merge with.
 	 */
 	private void mergeCollections(List<ExtentCollection> otherCollections) {
-		// Merge fields
-		Iterator<ExtentCollection> i = otherCollections.iterator();
-		ExtentCollection c = null;
-		if (i.hasNext()) {
-			c = i.next();
-		}
-		for (int k = 0; k < m_collections.size() && c != null; k++) {
-			int result = m_collections.get(k).compareTo(c);
-			if (result > 0) {
-				// add element if it is before the current element
-				m_collections.add(k, c);
-			} else if (result == 0 
-				&& !c.getContainedEntity().equals(m_collections.get(k).getContainedEntity())) {
-				// Merge the two contained entities
-				// TODO infinite loops??
-				m_collections.get(k).merge(c);
+		// Merge collections
+		if (m_collections.isEmpty()) {
+			m_collections.addAll(otherCollections);
+		} else {
+			Iterator<ExtentCollection> i = otherCollections.iterator();
+			ExtentCollection c = null;
+			if (i.hasNext()) {
+				c = i.next();
 			}
-			if (result >= 0) {
-				// Iterate to next element
-				if (i.hasNext()) {
-					c = i.next();
-				} else {
-					c = null;
+			for (int k = 0; k < m_collections.size() && c != null; k++) {
+				int result = m_collections.get(k).compareTo(c);
+				if (result > 0) {
+					// add element if it is before the current element
+					m_collections.add(k, c);
+				} else if (result == 0 
+					&& !c.getContainedEntity().equals(m_collections.get(k).getContainedEntity())) {
+					// Merge the two contained entities
+					// TODO infinite loops??
+					m_collections.get(k).merge(c);
+				}
+				if (result >= 0) {
+					// Iterate to next element
+					if (i.hasNext()) {
+						c = i.next();
+					} else {
+						c = null;
+					}
 				}
 			}
 		}

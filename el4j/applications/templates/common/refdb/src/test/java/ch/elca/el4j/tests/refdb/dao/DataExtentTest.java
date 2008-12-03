@@ -344,6 +344,30 @@ public class DataExtentTest extends AbstractTestCaseBase {
 	}
 	
 	/**
+	 * This test inspects the adding of fields/entities multiple times.
+	 */
+	@Test
+	public void testMultipleAdd() {
+		DataExtent ex = new DataExtent(Person.class);
+		try {
+			ex.with("name", "name", "brain", "brain");
+			assertEquals("Could add name field multiple times.", 
+				ex.getRootEntity().getFields().size(), 1);
+			assertEquals("Could add brain entity multiple times.", 
+				ex.getRootEntity().getChildEntities().size(), 1);
+			
+			ex.withSubentities(entity(Brain.class).with("iq", "owner"));
+			assertEquals("Did not merge brain entities when adding.", 
+				ex.getRootEntity().getChildEntities().size(), 1);
+			
+		} catch (NoSuchMethodException e) {
+			fail("Failed to build Person extent.");
+		}
+		
+		
+	}
+	
+	/**
 	 * This test checks the predefined extents in the example daos.
 	 */
 	@Test
@@ -354,7 +378,7 @@ public class DataExtentTest extends AbstractTestCaseBase {
 		
 		try {
 			ex = HibernateFileDao.HEADER.with("content");
-			fail("Could modify extent constant.");
+			fail("Could modify extent constant.\n" + ex.toString());
 		} catch (IllegalStateException e) {
 			s_logger.debug("Catched expected exception.", e);
 		} catch (NoSuchMethodException e) {
