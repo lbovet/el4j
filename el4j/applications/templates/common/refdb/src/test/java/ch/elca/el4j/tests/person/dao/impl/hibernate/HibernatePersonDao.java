@@ -53,28 +53,28 @@ public class HibernatePersonDao
 	 * @return the light fetch extent.
 	 */
 	public static final DataExtent LIGHT_PERSON
-		= new DataExtent(Person.class).all().without("friends", "teeth");
+		= new DataExtent(Person.class).all().without("friends", "teeth").freeze();
 	
 	/**
 	 * Heavy fetching variant: fetch the whole person graph, direct friends and the teeth.
 	 * @return the heavy fetch extent.
 	 */
 	public static final DataExtent HEAVY_PERSON
-		= new DataExtent(Person.class).all();
+		= new DataExtent(Person.class).all().freeze();
 	
 	/**
 	 * Load all associated entities to a depth of 2.
 	 * @return the extent for the whole person graph, depth 2.
 	 */
 	public static final DataExtent PERSON_GRAPH_2
-		=  new DataExtent(Person.class).all(2);
+		=  new DataExtent(Person.class).all(2).freeze();
 	
 	/**
 	 * Load all associated entities to a depth of 3.
 	 * @return the extent for the whole person graph, depth 3.
 	 */
 	public static final DataExtent PERSON_GRAPH_3
-		=  new DataExtent(Person.class).all(3);
+		=  new DataExtent(Person.class).all(3).freeze();
 	
 	
 }
