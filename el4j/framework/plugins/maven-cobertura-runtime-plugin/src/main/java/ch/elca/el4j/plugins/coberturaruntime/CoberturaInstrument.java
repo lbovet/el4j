@@ -65,6 +65,13 @@ public class CoberturaInstrument extends AbstractCoberturaMojo {
 	 */
 	protected String fileListExcludes;
 	
+	/**
+	 * Comma separated list of methods to ignore for instrumentation. By default no method is ignored.
+	 *
+	 * @parameter expression="${cobertura-runtime.ignoredMethods}" default-value=""
+	 */
+	protected String ignoredMethods;
+	
 	//Checkstyle: MemberName on
 	
 	/**
@@ -143,6 +150,18 @@ public class CoberturaInstrument extends AbstractCoberturaMojo {
 		arguments.add(coberturaDataPath);
 		arguments.add("--destination");
 		arguments.add(outputDirectoryString);
+		
+		// Append ignored methods
+		if (StringUtils.hasText(ignoredMethods)) {
+			String[] ignoredMethodsArray = ignoredMethods.split(",");
+			for (String ignoredMethod : ignoredMethodsArray) {
+				if (StringUtils.hasText(ignoredMethod)) {
+					arguments.add("--ignoreMethod");
+					arguments.add(ignoredMethod);
+				}
+			}
+		}
+		
 		for (File instrumentableFile : instrumentableFiles) {
 			try {
 				String canonicalPath = instrumentableFile.getCanonicalPath();

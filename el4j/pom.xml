@@ -2007,7 +2007,7 @@
 			<dependency>
 				<groupId>net.sourceforge.cobertura</groupId>
 				<artifactId>cobertura</artifactId>
-				<version>1.9</version>
+				<version>1.9-el4j_20081202_1200</version>
 			</dependency>
 
 			<!-- JavaX projects -->
@@ -2273,7 +2273,7 @@
 		<version.maven-pmd-plugin>2.4</version.maven-pmd-plugin>
 		<version.taglist-maven-plugin>2.2</version.taglist-maven-plugin>
 		<version.maven-plugin-plugin>2.4.2</version.maven-plugin-plugin>
-		<version.cobertura-maven-plugin>2.2</version.cobertura-maven-plugin>
+		<version.cobertura-maven-plugin>2.2-el4j_20081202_1400</version.cobertura-maven-plugin>
 		<version.clirr-maven-plugin>2.2.2-el4j_20080812_1330</version.clirr-maven-plugin>
 		<version.dashboard-maven-plugin>1.0.0-beta-1-el4j_20081022_0930</version.dashboard-maven-plugin>
 
@@ -2290,6 +2290,7 @@
 		<cobertura-runtime.jmxServiceHost>localhost</cobertura-runtime.jmxServiceHost>
 		<cobertura-runtime.jmxServiceName>coberturaRuntimeConnector</cobertura-runtime.jmxServiceName>
 		<cobertura-runtime.jmxServiceUrl>service:jmx:rmi://${cobertura-runtime.jmxServiceHost}/jndi/rmi://${cobertura-runtime.jmxServiceHost}:${cobertura-runtime.jmxRmiRegistryPort}/${cobertura-runtime.jmxServiceName}</cobertura-runtime.jmxServiceUrl>
+		<cobertura-runtime.ignoredMethods/>
 
 		<!-- Used Maven version -->
 		<el4j.java.version>1.5</el4j.java.version>

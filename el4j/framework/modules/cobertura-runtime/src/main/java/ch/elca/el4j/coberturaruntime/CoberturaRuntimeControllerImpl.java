@@ -18,7 +18,6 @@ package ch.elca.el4j.coberturaruntime;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -215,21 +214,25 @@ public class CoberturaRuntimeControllerImpl implements CoberturaRuntimeControlle
 	 * @param coberturaDataFile Is the file reference of the cobertura data.
 	 */
 	protected synchronized void setGlobalCoverageDataAndDataFile(ProjectData coverageData, File coberturaDataFile) {
-		try {
-			Field globalProjectDataField = ProjectData.class.getDeclaredField("globalProjectData");
-			globalProjectDataField.set(null, coverageData);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException("Exception while trying to set the global coverage data!", e);
-		}
+//		try {
+//			Method globalProjectDataSetter = ProjectData.class.getDeclaredMethod(
+//				"setGlobalProjectData", ProjectData.class);
+//			globalProjectDataSetter.invoke(null, coverageData);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			throw new RuntimeException("Exception while trying to set the global coverage data!", e);
+//		}
+		ProjectData.setGlobalProjectData(coverageData);
 		
-		try {
-			Field defaultFileField = CoverageDataFileHandler.class.getDeclaredField("defaultFile");
-			defaultFileField.set(null, coberturaDataFile);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException("Exception while trying to set the default coverage data file!", e);
-		}
+//		try {
+//			Method defaultDataFileSetter = CoverageDataFileHandler.class.getDeclaredMethod(
+//				"setDefaultDataFile", File.class);
+//			defaultDataFileSetter.invoke(null, coberturaDataFile);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			throw new RuntimeException("Exception while trying to set the default coverage data file!", e);
+//		}
+		CoverageDataFileHandler.setDefaultDataFile(coberturaDataFile);
 	}
 
 	/** {@inheritDoc} */
