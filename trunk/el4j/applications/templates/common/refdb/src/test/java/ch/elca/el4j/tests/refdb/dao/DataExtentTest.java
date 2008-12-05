@@ -16,18 +16,14 @@
  */
 package ch.elca.el4j.tests.refdb.dao;
 
-
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
-import static org.junit.Assert.fail;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
-
-import com.mchange.util.AssertException;
-
+import static org.junit.Assert.fail;
 
 import ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateFileDao;
 import ch.elca.el4j.apps.refdb.dom.File;
@@ -273,6 +269,12 @@ public class DataExtentTest extends AbstractTestCaseBase {
 			assertEquals("Ids of equal extents are not equal.", ex.toString(),
 				ex2.toString());
 			
+			// Test equality of two deep objects
+			ex = new DataExtent(Person.class).all(10);
+			ex2 = new DataExtent(Person.class).all(10);
+			assertEquals("Ids of equal extents are not equal.", ex.toString(),
+				ex2.toString());
+			
 			// Check the update mechanism doesn't result in infinite loops
 			ex = new DataExtent(Person.class);
 			ent = entity(Tooth.class);
@@ -359,6 +361,12 @@ public class DataExtentTest extends AbstractTestCaseBase {
 			ex.withSubentities(entity(Brain.class).with("iq", "owner"));
 			assertEquals("Did not merge brain entities when adding.", 
 				ex.getRootEntity().getChildEntities().size(), 1);
+			assertEquals("Dot not merge brain entities when adding.", "|brain[iq][|owner[][][]|][]|",
+				ex.getRootEntity().getChildEntities().get(0).toString());
+			
+			ex = new DataExtent(Person.class).all(10);
+			DataExtent ex2 = new DataExtent(Person.class).all(10).all(9).all(8).all(7);
+			assertEquals("Equal extents are not equal.", ex, ex2);
 			
 		} catch (NoSuchMethodException e) {
 			fail("Failed to build Person extent.");
@@ -393,6 +401,12 @@ public class DataExtentTest extends AbstractTestCaseBase {
 		
 		ex = HibernatePersonDao.PERSON_GRAPH_3;
 		
+		try {
+			DataExtent ex2 = new DataExtent(Person.class).withSubentities(collection("friends", ex.getRootEntity()));
+		} catch (NoSuchMethodException e) {
+			fail("Could not build person extent.");
+		}
+		
 	}
 	
 	/**
@@ -406,6 +420,15 @@ public class DataExtentTest extends AbstractTestCaseBase {
 		ExtentEntity ent2;
 		
 		try {
+			
+			ex1 = new DataExtent(Person.class);
+			ex2 = new DataExtent(Person.class).all();
+			DataExtent ex3 = new DataExtent(Person.class);
+			DataExtent ex4 = new DataExtent(Person.class).all();
+			DataExtent ex5 = new DataExtent(Person.class);
+			assertEquals("Merging failed.", ex1.merge(ex2), ex2);
+			assertEquals("Merging failed.", ex4.merge(ex3), ex2);
+			assertEquals("Merging failed", ex5.merge(ex2), ex2.merge(ex3));
 			
 			ent1 = entity(File.class).with("name");
 			String oldEntity = ent1.toString();

@@ -529,14 +529,15 @@ public class GenericHibernateDao<T, ID extends Serializable>
 			// Fetch the collections
 			for (ExtentCollection c : entity.getCollections()) {
 				Collection<?> coll = (Collection<?>) c.getMethod().invoke(object, nullArg);
-				for (Object o : coll) {
-					// Initialize the object if it is a proxy
-					if (o instanceof HibernateProxy && !Hibernate.isInitialized(o)) {
-						Hibernate.initialize(o);
-					}
-					if (!fetchedObjects.containsKey(o)
-						|| !fetchedObjects.get(o).equals(c.getContainedEntity())) {
-						fetchExtentObject(o, c.getContainedEntity(), fetchedObjects);
+				if (coll != null) {
+					for (Object o : coll) {
+						// Initialize the object if it is a proxy
+						if (o instanceof HibernateProxy && !Hibernate.isInitialized(o)) {
+							Hibernate.initialize(o);
+						}
+						if (!fetchedObjects.containsKey(o) || !fetchedObjects.get(o).equals(c.getContainedEntity())) {
+							fetchExtentObject(o, c.getContainedEntity(), fetchedObjects);
+						}
 					}
 				}
 			}

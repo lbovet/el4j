@@ -137,7 +137,7 @@ public class File extends AbstractFile {
 	@NotNull
 	@Lob
 	@Column(name = "content")
-	private Blob getData() {
+	public Blob getData() {
 		return m_data;
 	}
 	
@@ -145,7 +145,7 @@ public class File extends AbstractFile {
 	 * Set the content as Blob. Used by hibernate only!
 	 * @param data	the data to set.
 	 */
-	private void setData(Blob data) {
+	public void setData(Blob data) {
 		m_data = data;
 	}
 	
