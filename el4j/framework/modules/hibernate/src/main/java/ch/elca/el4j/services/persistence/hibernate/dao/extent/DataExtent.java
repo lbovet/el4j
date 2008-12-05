@@ -13,8 +13,6 @@ package ch.elca.el4j.services.persistence.hibernate.dao.extent;
 
 import java.io.Serializable;
 
-import org.springframework.util.Assert;
-
 import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntity.rootEntity;
 
 
@@ -26,7 +24,7 @@ import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntit
  * persistent store.<br>
  * In other contexts like for example OpenJPA the notion can have a different meaning.<br>
  * <br>
- * Principle:<br>
+ * <b>Principle:</b><br>
  * An Extent represents a part of the DOM that should be loaded together.<br>
  * It can be used to pool together associated entities in order 
  * to provide performance improvements over standard data fetching.<br>
@@ -54,7 +52,7 @@ import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntit
  * 	<li> Collections: all data types implementing the {@link java.util.Collection} interface should be
  * 		added to the extent as collection for a proper fetching at runtime.
  * </ul>
- * Remark: When using DataExtent you don't have to have any knowledge about the db mapping or anything like that. 
+ * <b>Remark:</b> When using DataExtent you don't have to have any knowledge about the db mapping or anything like that. 
  * It suffices to know the interface of the entity you are about to use. For example if you have:<br>
  * <code><pre>
  * public class Employee {
@@ -70,20 +68,26 @@ import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntit
  * Also, parts of the extent that does not get loaded but accessed at runtime will throw a LazyLoadingException as it 
  * would without using DataExtent's.<br>
  * <br> 
- * Features: <br>
+ * <b>Features:</b> <br>
  *  <ul>
  *   <li> new DataExtent: provide root class and optionally the name of the root 
- *   <li> with/without: add/remove fields, sub-entities and/or collections to/from the extent.
+ *   <li> with/without: add/remove fields, sub-entities and/or collections to/from the extent.<br>
+ *   	If the part to add already exists in the extent, the two corresponding parts are merged.
  *   <li> withSubentities: add sub-entities to the extent, convenient for adding entities you want
  *   		to define in detail.
  *   <li> all: add everything to the graph of objects.
+ *   <li> merge: merge two DataExtents to one. The class has to be the same.
+ *   <li> freeze: freeze an extent to prevent any changes to it afterwards.<br>
+ *   	Example: the predefined convenience extents in 
+ *   	{@link ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateFileDao} and in
+ *   	{@link ch.elca.el4j.tests.person.dao.impl.hibernate.HibernatePersonDao} are frozen.
  *   <li> see also features of {@link ExtentEntity} to write your code in a convenient way
  *  </ul>
  *
  *  Remark: Be sure to import the static methods {@link ExtentEntity#entity} and 
  *  	{@link ExtentCollection#collection} to create easily new Entities and Collections.<br> 
  *  <br>
- *  Sample code: <br>
+ *  <b>Sample code:</b> <br>
  * 		<code>
  * 			<pre>
  * 	// The Extent Object of type 'Person'

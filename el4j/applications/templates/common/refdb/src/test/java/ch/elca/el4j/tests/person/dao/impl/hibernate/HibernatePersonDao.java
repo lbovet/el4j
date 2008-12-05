@@ -16,17 +16,10 @@
  */
 package ch.elca.el4j.tests.person.dao.impl.hibernate;
 
-import javax.persistence.Entity;
-
-import ch.elca.el4j.apps.refdb.dom.File;
 import ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao;
 import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
-import ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntity;
 import ch.elca.el4j.tests.person.dom.Person;
-import ch.elca.el4j.tests.person.dom.Tooth;
-import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentCollection.collection;
-import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntity.entity;
 
 /**
  *
