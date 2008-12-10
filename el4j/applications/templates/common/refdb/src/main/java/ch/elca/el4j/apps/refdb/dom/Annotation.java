@@ -16,16 +16,19 @@
  */
 package ch.elca.el4j.apps.refdb.dom;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.validator.NotNull;
 
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
-import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
 /**
  * Annotation domain object. This class describes an annotation of a reference
@@ -47,9 +50,9 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
 	sequenceName = "annotation_sequence")
 public class Annotation extends AbstractIntKeyIntOptimisticLockingDto {
 	/**
-	 * Primary key of related reference.
+	 * Related reference.
 	 */
-	private int m_keyToReference;
+	private Reference m_reference;
 
 	/**
 	 * Name of the user annotating a reference.
@@ -68,10 +71,10 @@ public class Annotation extends AbstractIntKeyIntOptimisticLockingDto {
 	private String m_content;
 
 	/**
-	 * Timestamp when does the annotation has been inserted (created
+	 * Date when does the annotation has been inserted (created
 	 * automatically).
 	 */
-	private Timestamp m_whenInserted;
+	private Date m_whenInserted;
 
 	/**
 	 * @return Returns the annotator.
@@ -125,9 +128,10 @@ public class Annotation extends AbstractIntKeyIntOptimisticLockingDto {
 	 * @return Returns the m_whenInserted.
 	 */
 	@NotNull
-	public Timestamp getWhenInserted() {
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getWhenInserted() {
 		if (m_whenInserted == null) {
-			m_whenInserted = new Timestamp(System.currentTimeMillis());
+			m_whenInserted = new Date();
 		}
 		return m_whenInserted;
 	}
@@ -136,49 +140,26 @@ public class Annotation extends AbstractIntKeyIntOptimisticLockingDto {
 	 * @param whenInserted
 	 *            The whenInserted to set.
 	 */
-	public void setWhenInserted(Timestamp whenInserted) {
+	public void setWhenInserted(Date whenInserted) {
 		m_whenInserted = whenInserted;
 	}
 
 	/**
-	 * @return Returns the key to reference.
+	 * @return Returns the related reference.
 	 */
 	@NotNull
-	public int getKeyToReference() {
-		return m_keyToReference;
+	@ManyToOne
+	@JoinColumn(name = "keyToReference", nullable = false,
+		unique = false, updatable = false)
+	public Reference getReference() {
+		return m_reference;
 	}
 
 	/**
-	 * @param keyToReference
-	 *            The key to reference to set.
+	 * @param reference
+	 *            The related reference to set.
 	 */
-	public void setKeyToReference(int keyToReference) {
-		m_keyToReference = keyToReference;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public int hashCode() {
-		return super.hashCode();
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean equals(Object object) {
-		if (super.equals(object)
-			&& object instanceof Annotation) {
-			Annotation other = (Annotation) object;
-
-			return m_keyToReference == other.m_keyToReference
-				&& ObjectUtils.nullSaveEquals(m_annotator, other.m_annotator)
-				&& m_grade == other.m_grade
-				&& ObjectUtils.nullSaveEquals(m_content, other.m_content)
-				&& org.springframework.util.ObjectUtils.nullSafeEquals(
-					m_whenInserted, other.m_whenInserted);
-		} else {
-			return false;
-		}
+	public void setReference(Reference reference) {
+		m_reference = reference;
 	}
 }

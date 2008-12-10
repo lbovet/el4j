@@ -26,6 +26,7 @@ import org.hibernate.validator.ClassValidator;
 import org.hibernate.validator.InvalidValue;
 import org.junit.Test;
 
+import ch.elca.el4j.apps.refdb.dom.Link;
 import ch.elca.el4j.apps.refdb.dom.Reference;
 
 //Checkstyle: MagicNumber off
@@ -54,7 +55,7 @@ public class ReferenceValidationTest {
 	 */
 	@Test
 	public void testValidate() {
-		Reference reference = new Reference();
+		Reference reference = new Link();
 		reference.setName("Java");
 		reference.setDescription("Java related reference");
 		Calendar c = Calendar.getInstance();

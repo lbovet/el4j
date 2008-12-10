@@ -123,6 +123,7 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
 		Book hia = new Book();
 		hia.setName("hibernate in action");
 		hia.setKeywords(kws);
+		hia.setAuthorName("Christian Bauer, Gavin King");
 		m_bookDao.saveOrUpdate(hia);
 		
 		renameKeyword();

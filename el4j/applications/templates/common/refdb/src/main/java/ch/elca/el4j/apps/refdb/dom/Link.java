@@ -23,8 +23,6 @@ import javax.persistence.Table;
 
 import org.hibernate.search.annotations.Indexed;
 
-import ch.elca.el4j.util.codingsupport.ObjectUtils;
-
 /**
  * Link domain object. This class is a reference and describes an internet link
  * (URL).
@@ -41,7 +39,6 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
 @Entity
 @Indexed
 @Table(name = "LINKS")
-@DiscriminatorValue("LINK")
 @PrimaryKeyJoinColumn(name = "KEYTOREFERENCE")
 public class Link extends Reference {
 	/**
@@ -62,25 +59,5 @@ public class Link extends Reference {
 	 */
 	public void setUrl(String url) {
 		this.m_url = url;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public int hashCode() {
-		return super.hashCode();
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean equals(Object object) {
-		if (super.equals(object)
-			&& object instanceof Link) {
-			Link other = (Link) object;
-			return ObjectUtils.nullSaveEquals(m_url, other.m_url);
-		} else {
-			return false;
-		}
 	}
 }

@@ -17,12 +17,13 @@
 package ch.elca.el4j.apps.refdb.dom;
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
 import org.hibernate.validator.NotNull;
 
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
-import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
 /**
  * Base class for File domain object.
@@ -41,9 +42,9 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
 public abstract class AbstractFile extends AbstractIntKeyIntOptimisticLockingDto {
 
 	/**
-	 * Primary key of related reference.
+	 * Related reference.
 	 */
-	private int m_keyToReference;
+	private Reference m_reference;
 
 	/**
 	 * Name of the document.
@@ -110,41 +111,21 @@ public abstract class AbstractFile extends AbstractIntKeyIntOptimisticLockingDto
 	}
  
 	/**
-	 * @return Returns the key to reference.
+	 * @return Returns the related reference.
 	 */
-	//@NotNull
-	public int getKeyToReference() {
-		return m_keyToReference;
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "keyToReference", nullable = false,
+		unique = false, updatable = false)
+	public Reference getReference() {
+		return m_reference;
 	}
 
 	/**
-	 * @param keyToReference
-	 *            The key to reference to set.
+	 * @param reference
+	 *            The related reference to set.
 	 */
-	public void setKeyToReference(int keyToReference) {
-		m_keyToReference = keyToReference;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public int hashCode() {
-		return super.hashCode();
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean equals(Object object) {
-		if (super.equals(object)
-			&& object instanceof AbstractFile) {
-			AbstractFile other = (AbstractFile) object;
-
-			return m_keyToReference == other.m_keyToReference
-				&& ObjectUtils.nullSaveEquals(m_name, other.m_name)
-				&& ObjectUtils.nullSaveEquals(m_mimeType, other.m_mimeType);
-		} else {
-			return false;
-		}
+	public void setReference(Reference reference) {
+		m_reference = reference;
 	}
 }
