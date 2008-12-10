@@ -25,6 +25,7 @@ import org.junit.Test;
 import ch.elca.el4j.apps.refdb.dao.impl.hibernate.GenericHibernateFileDaoInterface;
 import ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateFileDao;
 import ch.elca.el4j.apps.refdb.dom.File;
+import ch.elca.el4j.apps.refdb.dom.Reference;
 
 /**
 *
@@ -47,12 +48,12 @@ public class GenericHibernateNonOracleTest extends GenericHibernateDaoTest {
 	 */
 	@Test
 	public void testInsertFileLazyContent() {
-		int fakeReferenceKey = addDefaultFakeReference();
+		Reference fakeReference = addDefaultFakeReference();
 		
 		// Use HibernateFileDao to set extent
 		GenericHibernateFileDaoInterface dao = (GenericHibernateFileDaoInterface) getFileDao();
 		File file = new File();
-		file.setKeyToReference(fakeReferenceKey);
+		file.setReference(fakeReference);
 		file.setName("iBatis Developer Guide");
 		file.setMimeType("text/plain");
 		byte[] content = "This is only a test content.".getBytes();
@@ -82,12 +83,12 @@ public class GenericHibernateNonOracleTest extends GenericHibernateDaoTest {
 	 */
 	@Test
 	public void testRefreshCatching() {
-		int fakeReferenceKey = addDefaultFakeReference();
+		Reference fakeReference = addDefaultFakeReference();
 		
 		// Use HibernateFileDao to set extent
 		GenericHibernateFileDaoInterface dao = (GenericHibernateFileDaoInterface) getFileDao();
 		File file = new File();
-		file.setKeyToReference(fakeReferenceKey);
+		file.setReference(fakeReference);
 		file.setName("iBatis Developer Guide");
 		file.setMimeType("text/plain");
 		byte[] content = "This is only a test content.".getBytes();

@@ -32,6 +32,7 @@ import org.junit.Test;
 import ch.elca.el4j.apps.refdb.dao.impl.hibernate.GenericHibernateFileDaoInterface;
 import ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateFileDao;
 import ch.elca.el4j.apps.refdb.dom.File;
+import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
 import ch.elca.el4j.services.search.QueryObject;
@@ -94,12 +95,12 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 	 */
 	@Test
 	public void testInsertFileEagerContent() {
-		int fakeReferenceKey = addDefaultFakeReference();
+		Reference fakeReference = addDefaultFakeReference();
 		
 		// Use HibernateFileDao to set extent
 		GenericHibernateFileDaoInterface dao = (GenericHibernateFileDaoInterface) getFileDao();
 		File file = new File();
-		file.setKeyToReference(fakeReferenceKey);
+		file.setReference(fakeReference);
 		file.setName("iBatis Developer Guide");
 		file.setMimeType("text/plain");
 		byte[] content = "This is only a test content.".getBytes();
@@ -129,12 +130,12 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 	 */
 	@Test
 	public void testInsertFileEagerContent2() {
-		int fakeReferenceKey = addDefaultFakeReference();
+		Reference fakeReference = addDefaultFakeReference();
 		
 		// Use HibernateFileDao to set extent
 		GenericHibernateFileDaoInterface dao = (GenericHibernateFileDaoInterface) getFileDao();
 		File file = new File();
-		file.setKeyToReference(fakeReferenceKey);
+		file.setReference(fakeReference);
 		file.setName("iBatis Developer Guide");
 		file.setMimeType("text/plain");
 		byte[] content = "This is only a test content.".getBytes();
@@ -358,8 +359,8 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 			List<Person> f = mary.getFriends();
 			for (int i = 0; i < f.size(); i++) {
 				List<Person> f2 = f.get(i).getFriends();
-				for (int j = 0; j < f2.size(); i++) {
-					f2.get(i).getName();
+				for (int j = 0; j < f2.size(); j++) {
+					f2.get(j).getName();
 				}
 			}
 			

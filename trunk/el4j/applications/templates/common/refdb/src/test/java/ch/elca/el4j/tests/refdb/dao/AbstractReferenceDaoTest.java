@@ -45,6 +45,7 @@ import ch.elca.el4j.apps.refdb.dom.Annotation;
 import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.File;
 import ch.elca.el4j.apps.refdb.dom.FormalPublication;
+import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
 
 // Checkstyle: MagicNumber off
@@ -80,11 +81,11 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 	 */
 	@Test
 	public void testInsertAnnotation() {
-		int fakeReferenceKey = addDefaultFakeReference();
+		Reference fakeReference = addDefaultFakeReference();
 		
 		AnnotationDao dao = getAnnotationDao();
 		Annotation annotation = new Annotation();
-		annotation.setKeyToReference(fakeReferenceKey);
+		annotation.setReference(fakeReference);
 		annotation.setAnnotator("Martin Zeltner");
 		annotation.setGrade(8);
 		annotation.setContent("This is only a short comment.");
@@ -97,11 +98,11 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 	 */
 	@Test
 	public void testInsertGetAnnotationByKey() {
-		int fakeReferenceKey = addDefaultFakeReference();
+		Reference fakeReference = addDefaultFakeReference();
 		
 		AnnotationDao dao = getAnnotationDao();
 		Annotation annotation = new Annotation();
-		annotation.setKeyToReference(fakeReferenceKey);
+		annotation.setReference(fakeReference);
 		annotation.setAnnotator("Hans Bauer");
 		annotation.setGrade(1);
 		annotation.setContent("This is an comment.");
@@ -110,8 +111,8 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 			= dao.findById(annotation2.getKey());
 		
 		// the next two lines are here due to a strange bug of mysql
-		annotation2.getWhenInserted().setNanos(0);
-		annotation3.getWhenInserted().setNanos(0);
+//		annotation2.getWhenInserted().setNanos(0);
+//		annotation3.getWhenInserted().setNanos(0);
 		
 		assertEquals("The inserted and read domain objects are not equal",
 			annotation3, annotation2);
@@ -122,11 +123,11 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 	 */
 	@Test
 	public void testInsertGetAnnotationByAnnotator() {
-		int fakeReferenceKey = addDefaultFakeReference();
+		Reference fakeReference = addDefaultFakeReference();
 		
 		AnnotationDao dao = getAnnotationDao();
 		Annotation annotation = new Annotation();
-		annotation.setKeyToReference(fakeReferenceKey);
+		annotation.setReference(fakeReference);
 		annotation.setAnnotator("Martin Zeltner");
 		annotation.setGrade(8);
 		annotation.setContent("This is only a short comment.");
@@ -138,9 +139,9 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		Annotation annotation3 = list.get(0);
 		
 		// the next two lines are here due to a strange bug of mysql
-		annotation2.getWhenInserted().setNanos(0);
-		annotation3.getWhenInserted().setNanos(0);
-		
+//		annotation2.getWhenInserted().setNanos(0);
+//		annotation3.getWhenInserted().setNanos(0);
+//		
 		assertEquals("The inserted and read domain objects are not equal",
 			annotation3, annotation2);
 	}
@@ -152,17 +153,17 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 	 */
 	@Test
 	public void testInsertGetAllAnnotations() {
-		int fakeReferenceKey = addDefaultFakeReference();
+		Reference fakeReference = addDefaultFakeReference();
 		
 		AnnotationDao dao = getAnnotationDao();
 		Annotation annotation = new Annotation();
-		annotation.setKeyToReference(fakeReferenceKey);
+		annotation.setReference(fakeReference);
 		annotation.setAnnotator("Martin Zeltner");
 		annotation.setGrade(8);
 		annotation.setContent("This is only a short comment.");
 
 		Annotation annotation2 = new Annotation();
-		annotation2.setKeyToReference(fakeReferenceKey);
+		annotation2.setReference(fakeReference);
 		annotation2.setAnnotator("Hans Bauer");
 		annotation2.setGrade(1);
 		annotation2.setContent("This is an comment.");
@@ -172,10 +173,10 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		assertEquals("Wrong number of annotations in DB", 2, list.size());
 		
 		// the next lines are here due to a strange bug of mysql
-		annotation2.getWhenInserted().setNanos(0);
-		annotation.getWhenInserted().setNanos(0);
+//		annotation2.getWhenInserted().setNanos(0);
+//		annotation.getWhenInserted().setNanos(0);
 		for (Annotation l : list) {
-			((Annotation) l).getWhenInserted().setNanos(0);
+//			((Annotation) l).getWhenInserted().setNanos(0);
 		}
 		
 		assertTrue("First annotation has not been found",
@@ -190,11 +191,11 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 	 */
 	@Test
 	public void testInsertRemoveAnnotation() {
-		int fakeReferenceKey = addDefaultFakeReference();
+		Reference fakeReference = addDefaultFakeReference();
 		
 		AnnotationDao dao = getAnnotationDao();
 		Annotation annotation = new Annotation();
-		annotation.setKeyToReference(fakeReferenceKey);
+		annotation.setReference(fakeReference);
 		annotation.setAnnotator("Martin Zeltner");
 		annotation.setGrade(8);
 		annotation.setContent("This is only a short comment.");
@@ -218,11 +219,11 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 	 */
 	@Test
 	public void testInsertModificateRemoveAnnotationByTwoPersons() {
-		int fakeReferenceKey = addDefaultFakeReference();
+		Reference fakeReference = addDefaultFakeReference();
 		
 		AnnotationDao dao = getAnnotationDao();
 		Annotation annotation = new Annotation();
-		annotation.setKeyToReference(fakeReferenceKey);
+		annotation.setReference(fakeReference);
 		annotation.setAnnotator("Martin Zeltner");
 		annotation.setGrade(8);
 		annotation.setContent("This is only a short comment.");
@@ -306,11 +307,11 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 			content = sb.toString();
 		}
 		
-		int fakeReferenceKey = addDefaultFakeReference();
+		Reference fakeReference = addDefaultFakeReference();
 		
 		AnnotationDao dao = getAnnotationDao();
 		Annotation annotation = new Annotation();
-		annotation.setKeyToReference(fakeReferenceKey);
+		annotation.setReference(fakeReference);
 		annotation.setAnnotator(annotator);
 		annotation.setGrade(10);
 		annotation.setContent(content);
@@ -319,8 +320,8 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 			= (Annotation) dao.getAnnotationsByAnnotator(annotator).get(0);
 
 		// the next two lines are here due to a strange bug of mysql
-		annotation2.getWhenInserted().setNanos(0);
-		annotation.getWhenInserted().setNanos(0);
+//		annotation2.getWhenInserted().setNanos(0);
+//		annotation.getWhenInserted().setNanos(0);
 		
 		assertEquals("The inserted and read domain objects are not equal",
 			annotation, annotation2);
@@ -337,11 +338,11 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 	 */
 	@Test
 	public void testInsertFile() {
-		int fakeReferenceKey = addDefaultFakeReference();
+		Reference fakeReference = addDefaultFakeReference();
 		
 		FileDao dao = getFileDao();
 		File file = new File();
-		file.setKeyToReference(fakeReferenceKey);
+		file.setReference(fakeReference);
 		file.setName("iBatis Developer Guide");
 		file.setMimeType("text/plain");
 		byte[] content = "This is only a test content.".getBytes();
@@ -354,12 +355,11 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 	 */
 	@Test
 	public void testInsertGetFileByKey() {
-		int fakeReferenceKey = addDefaultFakeReference();
+		Reference fakeReference = addDefaultFakeReference();
 		
-		// Use HibernateFileDao to set extent
-		GenericHibernateFileDaoInterface dao = (GenericHibernateFileDaoInterface) getFileDao();
+		FileDao dao = getFileDao();
 		File file = new File();
-		file.setKeyToReference(fakeReferenceKey);
+		file.setReference(fakeReference);
 		file.setName("iBatis Developer Guide");
 		file.setMimeType("text/plain");
 		byte[] content = "This is only a test content.".getBytes();
@@ -367,7 +367,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		File file2 = dao.saveOrUpdate(file);
 		
 		// Explicitly load everything
-		File file3 = dao.findById(file2.getKey(), HibernateFileDao.ALL);
+		File file3 = dao.findById(file2.getKey());
 		
 		assertEquals("The inserted and read domain objects are not equal",
 			file3, file2);
@@ -378,19 +378,18 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 	 */
 	@Test
 	public void testInsertGetFileByName() {
-		int fakeReferenceKey = addDefaultFakeReference();
+		Reference fakeReference = addDefaultFakeReference();
 		
-		// Use HibernateFileDao to set extent
-		GenericHibernateFileDaoInterface dao = (GenericHibernateFileDaoInterface) getFileDao();
+		FileDao dao = getFileDao();
 		File file = new File();
-		file.setKeyToReference(fakeReferenceKey);
+		file.setReference(fakeReference);
 		file.setName("iBatis Developer Guide");
 		file.setMimeType("text/plain");
 		byte[] content = "This is only a test content.".getBytes();
 		file.setContent(content);
 		File file2 = dao.saveOrUpdate(file);
 		
-		List<File> list = dao.getByName(file2.getName(), HibernateFileDao.ALL);
+		List<File> list = dao.getByName(file2.getName());
 		assertEquals("List contains more than one file of name '"
 			+ file2.getName() + "'", 1, list.size());
 		File file3 = (File) list.get(0);
@@ -405,18 +404,17 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 	 */
 	@Test
 	public void testInsertGetAllFiles() {
-		int fakeReferenceKey = addDefaultFakeReference();
+		Reference fakeReference = addDefaultFakeReference();
 		
-		// Use HibernateFileDao to set extent
-		GenericHibernateFileDaoInterface dao = (GenericHibernateFileDaoInterface) getFileDao();
+		FileDao dao = getFileDao();
 		File file = new File();
-		file.setKeyToReference(fakeReferenceKey);
+		file.setReference(fakeReference);
 		file.setName("iBatis Developer Guide");
 		file.setMimeType("text/plain");
 		byte[] content = "This is only a test content.".getBytes();
 		file.setContent(content);
 		File file2 = new File();
-		file2.setKeyToReference(fakeReferenceKey);
+		file2.setReference(fakeReference);
 		file2.setName("Spring Reference Documentation");
 		file2.setMimeType("text/html");
 		StringBuffer sb = new StringBuffer();
@@ -428,7 +426,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		file2.setContent(content2);
 		dao.saveOrUpdate(file);
 		dao.saveOrUpdate(file2);
-		List<File> list = dao.getAll(HibernateFileDao.ALL);
+		List<File> list = dao.getAll();
 		assertEquals("Wrong number of files in DB", 2, list.size());
 		assertTrue("First file has not been found", list.contains(file));
 		assertTrue("Second file has not been found", list.contains(file2));
@@ -440,11 +438,11 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 	 */
 	@Test
 	public void testInsertRemoveFile() {
-		int fakeReferenceKey = addDefaultFakeReference();
+		Reference fakeReference = addDefaultFakeReference();
 		
 		FileDao dao = getFileDao();
 		File file = new File();
-		file.setKeyToReference(fakeReferenceKey);
+		file.setReference(fakeReference);
 		file.setName("iBatis Developer Guide");
 		file.setMimeType("text/plain");
 		byte[] content = "This is only a test content.".getBytes();
@@ -469,12 +467,11 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 	 */
 	@Test
 	public void testInsertModificateRemoveFileByTwoPersons() {
-		int fakeReferenceKey = addDefaultFakeReference();
+		Reference fakeReference = addDefaultFakeReference();
 		
-		// Use HibernateFileDao to set extent
-		GenericHibernateFileDaoInterface dao = (GenericHibernateFileDaoInterface) getFileDao();
+		FileDao dao = getFileDao();
 		File file = new File();
-		file.setKeyToReference(fakeReferenceKey);
+		file.setReference(fakeReference);
 		file.setName("iBatis Developer Guide");
 		file.setMimeType("text/plain");
 		byte[] content = "This is only a test content.".getBytes();
@@ -482,9 +479,9 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		dao.saveOrUpdate(file);
 
 		File file2 = (File) dao.getByName(
-			"iBatis Developer Guide", HibernateFileDao.ALL).get(0);
+			"iBatis Developer Guide").get(0);
 		File file3 = (File) dao.getByName(
-			"iBatis Developer Guide", HibernateFileDao.ALL).get(0);
+			"iBatis Developer Guide").get(0);
 		content = "This is another test content.".getBytes();
 		file2.setContent(content);
 		dao.saveOrUpdate(file2);
@@ -603,18 +600,17 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 			}
 		}
 
-		int fakeReferenceKey = addDefaultFakeReference();
+		Reference fakeReference = addDefaultFakeReference();
 		
-		// Use HibernateFileDao to set extent
-		GenericHibernateFileDaoInterface dao = (GenericHibernateFileDaoInterface) getFileDao();
+		FileDao dao = getFileDao();
 		File file = new File();
-		file.setKeyToReference(fakeReferenceKey);
+		file.setReference(fakeReference);
 		file.setName(name);
 		file.setMimeType(mimeType);
 		file.setContent(content);
 		file = dao.saveOrUpdate(file);
 		
-		File file2 = (File) dao.getByName(name, HibernateFileDao.ALL).get(0);
+		File file2 = (File) dao.getByName(name).get(0);
 
 		assertEquals("The inserted and read domain objects are not equal", file, file2);
 

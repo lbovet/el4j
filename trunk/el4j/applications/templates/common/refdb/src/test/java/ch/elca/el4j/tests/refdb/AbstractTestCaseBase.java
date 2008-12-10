@@ -36,6 +36,7 @@ import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.File;
 import ch.elca.el4j.apps.refdb.dom.FormalPublication;
 import ch.elca.el4j.apps.refdb.dom.Link;
+import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
 import ch.elca.el4j.tests.core.AbstractTest;
 
@@ -155,12 +156,12 @@ public abstract class AbstractTestCaseBase extends AbstractTest {
 	 *            Is the name the fake reference must have.
 	 * @return Returns the key of the created reference.
 	 */
-	protected int addFakeReference(String name) {
+	protected Reference addFakeReference(String name) {
 		Link link = new Link();
 		link.setName(name);
 		LinkDao dao = getLinkDao();
 		link = dao.saveOrUpdate(link);
-		return link.getKey();
+		return link;
 	}
 	
 	/**
@@ -168,7 +169,7 @@ public abstract class AbstractTestCaseBase extends AbstractTest {
 	 *
 	 * @return Returns the primary key of the fake reference.
 	 */
-	protected int addDefaultFakeReference() {
+	protected Reference addDefaultFakeReference() {
 		return addFakeReference("Fake reference");
 	}
 	

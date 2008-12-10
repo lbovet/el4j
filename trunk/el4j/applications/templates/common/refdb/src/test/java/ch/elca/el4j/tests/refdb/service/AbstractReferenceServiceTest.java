@@ -197,8 +197,8 @@ public abstract class AbstractReferenceServiceTest
 		Link link2 = (Link) service.getReferenceByKey(link.getKey());
 		
 		// the next two lines are here due to a strange bug of mysql
-		link.getWhenInserted().setNanos(0);
-		link2.getWhenInserted().setNanos(0);
+//		link.getWhenInserted().setNanos(0);
+//		link2.getWhenInserted().setNanos(0);
 		
 		assertTrue("Links are not equal.", link.equals(link2));
 
@@ -280,8 +280,8 @@ public abstract class AbstractReferenceServiceTest
 		Link link2 = (Link) list.get(0);
 		
 		// the next two lines are here due to a strange bug of mysql
-		link.getWhenInserted().setNanos(0);
-		link2.getWhenInserted().setNanos(0);
+//		link.getWhenInserted().setNanos(0);
+//		link2.getWhenInserted().setNanos(0);
 		
 		assertTrue("Links are not equal.", link.equals(link2));
 
@@ -368,11 +368,11 @@ public abstract class AbstractReferenceServiceTest
 		assertEquals("There are not two links.", 2, list.size());
 		
 		// the next two lines are here due to a strange bug of mysql
-		link.getWhenInserted().setNanos(0);
-		link2.getWhenInserted().setNanos(0);
+//		link.getWhenInserted().setNanos(0);
+//		link2.getWhenInserted().setNanos(0);
 		
 		for (Reference l : list) {
-			l.getWhenInserted().setNanos(0);
+//			l.getWhenInserted().setNanos(0);
 			if (!(((Link) l).equals(link) || ((Link) l).equals(link2))) {
 				fail("There is an unexpected link (1).");
 			}
@@ -385,8 +385,8 @@ public abstract class AbstractReferenceServiceTest
 		Link link4 = (Link) list.get(0);
 		
 		// the next two lines are here due to a strange bug of mysql
-		link4.getWhenInserted().setNanos(0);
-		link2.getWhenInserted().setNanos(0);
+//		link4.getWhenInserted().setNanos(0);
+//		link2.getWhenInserted().setNanos(0);
 		
 		assertTrue("There is an unexpected link (2).", link4.equals(link2));
 	}
@@ -479,8 +479,8 @@ public abstract class AbstractReferenceServiceTest
 				formalPublication.getKey());
 		
 		// the next two lines are here due to a strange bug of mysql
-		formalPublication.getWhenInserted().setNanos(0);
-		formalPublication2.getWhenInserted().setNanos(0);
+//		formalPublication.getWhenInserted().setNanos(0);
+//		formalPublication2.getWhenInserted().setNanos(0);
 		
 		assertTrue("Formal publications are not equal.",
 			formalPublication.equals(formalPublication2));
@@ -555,8 +555,8 @@ public abstract class AbstractReferenceServiceTest
 			= (FormalPublication) list.get(0);
 		
 		// the next two lines are here due to a strange bug of mysql
-		formalPublication.getWhenInserted().setNanos(0);
-		formalPublication2.getWhenInserted().setNanos(0);
+//		formalPublication.getWhenInserted().setNanos(0);
+//		formalPublication2.getWhenInserted().setNanos(0);
 		
 		assertTrue("Formal publications are not equal.",
 			formalPublication.equals(formalPublication2));
@@ -653,11 +653,11 @@ public abstract class AbstractReferenceServiceTest
 		assertEquals("There are not two formal publications.", 2, list.size());
 		
 		// the next two lines are here due to a strange bug of mysql
-		formalPublication.getWhenInserted().setNanos(0);
-		formalPublication2.getWhenInserted().setNanos(0);
+//		formalPublication.getWhenInserted().setNanos(0);
+//		formalPublication2.getWhenInserted().setNanos(0);
 		
 		for (Reference f : list) {
-			f.getWhenInserted().setNanos(0);
+//			f.getWhenInserted().setNanos(0);
 			if (!(((FormalPublication) f).equals(formalPublication)
 				|| ((FormalPublication) f).equals(formalPublication2))) {
 				fail("There is an unexpected formal publication.");
@@ -672,8 +672,8 @@ public abstract class AbstractReferenceServiceTest
 			= (FormalPublication) list.get(0);
 		
 		// the next two lines are here due to a strange bug of mysql
-		formalPublication4.getWhenInserted().setNanos(0);
-		formalPublication2.getWhenInserted().setNanos(0);
+//		formalPublication4.getWhenInserted().setNanos(0);
+//		formalPublication2.getWhenInserted().setNanos(0);
 		
 		assertTrue("There is an unexpected formal publication.",
 			formalPublication4.equals(formalPublication2));
@@ -765,8 +765,8 @@ public abstract class AbstractReferenceServiceTest
 		Book book2 = (Book) service.getReferenceByKey(book.getKey());
 		
 		// the next two lines are here due to a strange bug of mysql
-		book.getWhenInserted().setNanos(0);
-		book2.getWhenInserted().setNanos(0);
+//		book.getWhenInserted().setNanos(0);
+//		book2.getWhenInserted().setNanos(0);
 		
 		assertTrue("Books are not equal.", book.equals(book2));
 
@@ -839,9 +839,9 @@ public abstract class AbstractReferenceServiceTest
 		Book book2 = (Book) list.get(0);
 		
 		// the next two lines are here due to a strange bug of mysql
-		book.getWhenInserted().setNanos(0);
-		book2.getWhenInserted().setNanos(0);
-		
+//		book.getWhenInserted().setNanos(0);
+//		book2.getWhenInserted().setNanos(0);
+//		
 		assertTrue("Books are not equal.", book.equals(book2));
 
 		Set<Keyword> listKeywords2 = book2.getKeywords();
@@ -934,11 +934,11 @@ public abstract class AbstractReferenceServiceTest
 		assertEquals("There are not two books.", 2, list.size());
 		
 		// the next two lines are here due to a strange bug of mysql
-		book.getWhenInserted().setNanos(0);
-		book2.getWhenInserted().setNanos(0);
+//		book.getWhenInserted().setNanos(0);
+//		book2.getWhenInserted().setNanos(0);
 		
 		for (Reference b : list) {
-			b.getWhenInserted().setNanos(0);
+//			b.getWhenInserted().setNanos(0);
 			if (!(((Book) b).equals(book) || ((Book) b).equals(book2))) {
 				fail("There is an unexpected book.");
 			}
@@ -951,8 +951,8 @@ public abstract class AbstractReferenceServiceTest
 		Book book4 = (Book) list.get(0);
 		
 		// the next two lines are here due to a strange bug of mysql
-		book4.getWhenInserted().setNanos(0);
-		book2.getWhenInserted().setNanos(0);
+//		book4.getWhenInserted().setNanos(0);
+//		book2.getWhenInserted().setNanos(0);
 		
 		assertTrue("There is an unexpected book.", book4.equals(book2));
 	}
@@ -1034,6 +1034,7 @@ public abstract class AbstractReferenceServiceTest
 		bUmlDistilled.setDescription(
 			"A brief guide to the standard object modeling language.");
 		bUmlDistilled.setIncomplete(false);
+		bUmlDistilled.setAuthorName("Martin Fowler, Kendall Scott");
 		Set<Keyword> keywordsUmlDistilled = new HashSet<Keyword>();
 		keywordsUmlDistilled.add(kUml);
 		keywordsUmlDistilled.add(kLanguage);
@@ -1045,6 +1046,7 @@ public abstract class AbstractReferenceServiceTest
 		bBeginningJsp2.setDescription(
 			"Build Web Applications Using Jsp, Java, and Struts.");
 		bBeginningJsp2.setIncomplete(true);
+		bBeginningJsp2.setAuthorName("Ben Galbraith, Peter den Haan");
 		Set<Keyword> keywordsBeginningJsp2 = new HashSet<Keyword>();
 		keywordsBeginningJsp2.add(kJ2ee);
 		keywordsBeginningJsp2.add(kJava);
@@ -1055,6 +1057,7 @@ public abstract class AbstractReferenceServiceTest
 
 		Book bZombie = new Book();
 		bZombie.setName("Zombie");
+		bZombie.setAuthorName("Zombie");
 
 		Link lLeoEngGer = new Link();
 		lLeoEngGer.setName("LEO Dictionary English-German");
@@ -1087,6 +1090,7 @@ public abstract class AbstractReferenceServiceTest
 		fSqlMaps2DevGuide.setDescription("This guide shows you how to "
 			+ "develop an application using SqlMap 2.0.");
 		fSqlMaps2DevGuide.setIncomplete(true);
+		fSqlMaps2DevGuide.setAuthorName("iBatis");
 		Set<Keyword> keywordsSqlMaps2DevGuide = new HashSet<Keyword>();
 		keywordsSqlMaps2DevGuide.add(kJava);
 		keywordsSqlMaps2DevGuide.add(kIbatis);
@@ -1099,6 +1103,7 @@ public abstract class AbstractReferenceServiceTest
 		f2dBarcodePdf417.setDescription("Describse who a "
 			+ "PDF417 2D barcode is built-up.");
 		f2dBarcodePdf417.setIncomplete(false);
+		f2dBarcodePdf417.setAuthorName("Some author");
 		Set<Keyword> keywords2dBarcodePdf417 = new HashSet<Keyword>();
 		keywords2dBarcodePdf417.add(k2d);
 		keywords2dBarcodePdf417.add(kBarcode);
@@ -1128,12 +1133,12 @@ public abstract class AbstractReferenceServiceTest
 			+ "description='' and incomplete=false.", 3, list.size());
 
 		// the next two lines are here due to a strange bug of mysql
-		bUmlDistilled.getWhenInserted().setNanos(0);
-		lLeoEngGer.getWhenInserted().setNanos(0);
-		f2dBarcodePdf417.getWhenInserted().setNanos(0);
+//		bUmlDistilled.getWhenInserted().setNanos(0);
+//		lLeoEngGer.getWhenInserted().setNanos(0);
+//		f2dBarcodePdf417.getWhenInserted().setNanos(0);
 		
 		for (Reference r : list) {
-			r.getWhenInserted().setNanos(0);
+//			r.getWhenInserted().setNanos(0);
 			if (!(r.equals(bUmlDistilled)
 				|| r.equals(lLeoEngGer)
 				|| r.equals(f2dBarcodePdf417))) {
@@ -1148,13 +1153,13 @@ public abstract class AbstractReferenceServiceTest
 			+ "query name='2' and description=''.", 4, list.size());
 		
 		// the next two lines are here due to a strange bug of mysql
-		bBeginningJsp2.getWhenInserted().setNanos(0);
-		lJ2eeJsp.getWhenInserted().setNanos(0);
-		fSqlMaps2DevGuide.getWhenInserted().setNanos(0);
-		f2dBarcodePdf417.getWhenInserted().setNanos(0);
+//		bBeginningJsp2.getWhenInserted().setNanos(0);
+//		lJ2eeJsp.getWhenInserted().setNanos(0);
+//		fSqlMaps2DevGuide.getWhenInserted().setNanos(0);
+//		f2dBarcodePdf417.getWhenInserted().setNanos(0);
 		
 		for (Reference r : list) {
-			r.getWhenInserted().setNanos(0);
+//			r.getWhenInserted().setNanos(0);
 			if (!(r.equals(bBeginningJsp2) || r.equals(lJ2eeJsp)
 				|| r.equals(fSqlMaps2DevGuide)
 				|| r.equals(f2dBarcodePdf417))) {
@@ -1170,7 +1175,7 @@ public abstract class AbstractReferenceServiceTest
 			+ "description='' and incomplete=true.", 3, list.size());
 		
 		for (Reference r : list) {
-			r.getWhenInserted().setNanos(0);
+//			r.getWhenInserted().setNanos(0);
 			if (!(r.equals(bBeginningJsp2)
 				|| r.equals(lJ2eeJsp)
 				|| r.equals(fSqlMaps2DevGuide))) {
@@ -1186,7 +1191,7 @@ public abstract class AbstractReferenceServiceTest
 			+ "description='deVeLop'.", 2, list.size());
 		
 		for (Reference r : list) {
-			r.getWhenInserted().setNanos(0);
+//			r.getWhenInserted().setNanos(0);
 			if (!(r.equals(lJ2eeJsp) || r.equals(fSqlMaps2DevGuide))) {
 				fail("There was an unexpected reference.");
 			}
@@ -1200,7 +1205,7 @@ public abstract class AbstractReferenceServiceTest
 			+ "query name='JAVA' and description='WEB'.", 1, list.size());
 		
 		for (Reference r : list) {
-			r.getWhenInserted().setNanos(0);
+//			r.getWhenInserted().setNanos(0);
 			if (!r.equals(lJ2eeJsp)) {
 				fail("There was an unexpected reference.");
 			}
@@ -1216,7 +1221,7 @@ public abstract class AbstractReferenceServiceTest
 			3, list.size());
 		
 		for (Reference r : list) {
-			r.getWhenInserted().setNanos(0);
+//			r.getWhenInserted().setNanos(0);
 			if (!(r.equals(bBeginningJsp2) || r.equals(lJ2eeJsp)
 				|| r.equals(fSqlMaps2DevGuide))) {
 				fail("There was an unexpected reference.");
@@ -1235,7 +1240,7 @@ public abstract class AbstractReferenceServiceTest
 			2, list.size());
 		
 		for (Reference r : list) {
-			r.getWhenInserted().setNanos(0);
+//			r.getWhenInserted().setNanos(0);
 			if (!(r.equals(bBeginningJsp2) || r.equals(lJ2eeJsp))) {
 				fail("There was an unexpected reference.");
 			}
@@ -1255,7 +1260,7 @@ public abstract class AbstractReferenceServiceTest
 			1, list.size());
 		
 		for (Reference r : list) {
-			r.getWhenInserted().setNanos(0);
+//			r.getWhenInserted().setNanos(0);
 			if (!r.equals(bBeginningJsp2)) {
 				fail("There was an unexpected reference.");
 			}
@@ -1288,12 +1293,12 @@ public abstract class AbstractReferenceServiceTest
 	 */
 	@Test
 	public void testIncompleteAnnotationInsertion() {
-		int fakeReferenceKey = addDefaultFakeReference();
+		Reference fakeReference = addDefaultFakeReference();
 		
 		AnnotationDao annotationDao = getAnnotationDao();
 		
 		Annotation annotation = new Annotation();
-		annotation.setKeyToReference(fakeReferenceKey);
+		annotation.setReference(fakeReference);
 		annotation.setAnnotator("Mister Lazy");
 		annotation.setGrade(1);
 		// Extra do not add a content.
@@ -1333,6 +1338,7 @@ public abstract class AbstractReferenceServiceTest
 		Set<Keyword> keywordsGolding = new HashSet<Keyword>();
 		keywordsGolding.add(kFut);
 		bGolding.setKeywords(keywordsGolding);
+		bGolding.setAuthorName("Balthazar Getty");
 		bGolding = (Book) service.saveReference(bGolding);
 		
 		Book bHuxley = new Book();
@@ -1341,6 +1347,7 @@ public abstract class AbstractReferenceServiceTest
 		keywordsHuxley.add(kCls);
 		keywordsHuxley.add(kFut);
 		bHuxley.setKeywords(keywordsHuxley);
+		bHuxley.setAuthorName("Aldous Huxley");
 		bHuxley = (Book) service.saveReference(bHuxley);
 		
 		int delKey = bHuxley.getKey();

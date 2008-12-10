@@ -24,8 +24,6 @@ import javax.persistence.Table;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.validator.Pattern;
 
-import ch.elca.el4j.util.codingsupport.ObjectUtils;
-
 /**
  * Book domain object. This class is a formal publication and describes a book.
  *
@@ -41,7 +39,6 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
 @Entity
 @Indexed
 @Table(name = "BOOKS")
-@DiscriminatorValue("BOOK")
 @PrimaryKeyJoinColumn(name = "KEYTOREFERENCE")
 public class Book extends FormalPublication {
 	/**
@@ -63,27 +60,5 @@ public class Book extends FormalPublication {
 	 */
 	public void setIsbnNumber(String isbnNumber) {
 		this.m_isbnNumber = isbnNumber;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public int hashCode() {
-		return super.hashCode();
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean equals(Object object) {
-		if (super.equals(object)
-			&& object instanceof Book) {
-			Book other = (Book) object;
-
-			return ObjectUtils.nullSaveEquals(
-				m_isbnNumber, other.m_isbnNumber);
-		} else {
-			return false;
-		}
 	}
 }

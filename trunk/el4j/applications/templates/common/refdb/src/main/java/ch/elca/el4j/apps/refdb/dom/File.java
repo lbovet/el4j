@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
-import java.util.Arrays;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,9 +33,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
 import org.hibernate.validator.NotNull;
-
-import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
-import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
 /**
  * File domain object.
@@ -147,32 +143,6 @@ public class File extends AbstractFile {
 	 */
 	public void setData(Blob data) {
 		m_data = data;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public int hashCode() {
-		return super.hashCode();
-	}
-	
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean equals(Object object) {
-		if (super.equals(object)
-			&& object instanceof File) {
-			File other = (File) object;
-
-			return getKeyToReference() == other.getKeyToReference()
-				&& ObjectUtils.nullSaveEquals(getName(), other.getName())
-				&& ObjectUtils.nullSaveEquals(getMimeType(),
-					other.getMimeType())
-				&& Arrays.equals(getContent(), other.getContent());
-		} else {
-			return false;
-		}
 	}
 	
 }

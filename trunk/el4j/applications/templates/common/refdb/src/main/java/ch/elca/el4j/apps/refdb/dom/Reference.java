@@ -16,26 +16,38 @@
  */
 package ch.elca.el4j.apps.refdb.dom;
 
-import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.hibernate.annotations.Type;
-import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.validator.AssertTrue;
-
+import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
 
 import ch.elca.el4j.apps.keyword.dom.Keyword;
+import ch.elca.el4j.core.metadata.ContainedClass;
 import ch.elca.el4j.services.persistence.hibernate.dto.AbstractIndexedIntKeyIntOptimisticLockingDto;
-import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
 /**
  * Reference domain object. This is the base reference class and describes a
@@ -55,13 +67,10 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
 @Entity
 @Indexed
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING,
-	name = "CLASSTYPE")
-@DiscriminatorValue("REFERENCE")
 @Table(name = "REFERENCESTABLE")
 @SequenceGenerator(name = "keyid_generator",
 	sequenceName = "reference_sequence")
-public class Reference extends AbstractIndexedIntKeyIntOptimisticLockingDto {
+public abstract class Reference extends AbstractIndexedIntKeyIntOptimisticLockingDto {
 	/**
 	 * Name of the reference (book title, ...).
 	 */
@@ -90,10 +99,10 @@ public class Reference extends AbstractIndexedIntKeyIntOptimisticLockingDto {
 	private boolean m_incomplete = true;
 
 	/**
-	 * Timestamp when does the reference has been inserted (created
+	 * Date when does the reference has been inserted (created
 	 * automatically).
 	 */
-	private Timestamp m_whenInserted;
+	private Date m_whenInserted;
 
 	/**
 	 * Date of the referenced document (publication date, last update, ...).
@@ -119,8 +128,7 @@ public class Reference extends AbstractIndexedIntKeyIntOptimisticLockingDto {
 	 * @return Returns the date.
 	 */
 	@Column(name = "DOCUMENTDATE")
-	//FBI: in this case, type is necessary for hibernate to parse date correctly
-	@Type(type = "date")
+	@Temporal(TemporalType.DATE)
 	public Date getDate() {
 		return m_date;
 	}
@@ -148,7 +156,6 @@ public class Reference extends AbstractIndexedIntKeyIntOptimisticLockingDto {
 	/**
 	 * @return Returns the description.
 	 */
-	@Field
 	public String getDescription() {
 		return m_description;
 	}
@@ -197,8 +204,7 @@ public class Reference extends AbstractIndexedIntKeyIntOptimisticLockingDto {
 	 * @return Returns the name.
 	 */
 	@NotNull
-	@Field
-	//@Length(min = 3)
+	@Length(min = 3)
 	public String getName() {
 		return m_name;
 	}
@@ -231,9 +237,11 @@ public class Reference extends AbstractIndexedIntKeyIntOptimisticLockingDto {
 	/**
 	 * @return Returns the whenInserted.
 	 */
-	public Timestamp getWhenInserted() {
+	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getWhenInserted() {
 		if (m_whenInserted == null) {
-			m_whenInserted = new Timestamp(System.currentTimeMillis());
+			m_whenInserted = new Date();
 		}
 		return m_whenInserted;
 	}
@@ -242,7 +250,7 @@ public class Reference extends AbstractIndexedIntKeyIntOptimisticLockingDto {
 	 * @param whenInserted
 	 *            The whenInserted to set.
 	 */
-	public void setWhenInserted(Timestamp whenInserted) {
+	public void setWhenInserted(Date whenInserted) {
 		m_whenInserted = whenInserted;
 	}
 
@@ -257,6 +265,7 @@ public class Reference extends AbstractIndexedIntKeyIntOptimisticLockingDto {
 			inverseJoinColumns = { @JoinColumn(name = "KEYKEYWORD") }
 	)
 	@LazyCollection(value = LazyCollectionOption.FALSE)
+	@ContainedClass(Keyword.class)
 	public Set<Keyword> getKeywords() {
 		return m_keywords;
 	}
@@ -273,9 +282,9 @@ public class Reference extends AbstractIndexedIntKeyIntOptimisticLockingDto {
 	 * @return Returns the set of annotations for this reference (only used if
 	 *         Hibernate is used to perform ORM).
 	 */
-	//relation to Annotation is not saved in REFERENCESTABLE,
-	//because it is unidirectional from Annotation to Reference
-	@Transient
+	@OneToMany(mappedBy = "reference", cascade = { CascadeType.ALL })
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	@ContainedClass(Annotation.class)
 	public Set<Annotation> getAnnotations() {
 		return m_annotations;
 	}
@@ -293,9 +302,9 @@ public class Reference extends AbstractIndexedIntKeyIntOptimisticLockingDto {
 	 * @return Returns the set of files for this reference (only used if
 	 *         Hibernate is used to perform ORM).
 	 */
-	//relation to File is not saved in REFERENCESTABLE,
-	//because it is unidirectional from File to Reference
-	@Transient
+	@OneToMany(mappedBy = "reference", cascade = { CascadeType.ALL })
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	@ContainedClass(File.class)
 	public Set<File> getFiles() {
 		return m_files;
 	}
@@ -307,36 +316,6 @@ public class Reference extends AbstractIndexedIntKeyIntOptimisticLockingDto {
 	 */
 	public void setFiles(Set<File> files) {
 		m_files = files;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public int hashCode() {
-		return super.hashCode();
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean equals(Object object) {
-		if (super.equals(object)
-			&& object instanceof Reference) {
-			Reference other = (Reference) object;
-
-			return ObjectUtils.nullSaveEquals(m_name, other.m_name)
-				&& ObjectUtils.nullSaveEquals(m_hashValue, other.m_hashValue)
-				&& ObjectUtils.nullSaveEquals(
-					m_description, other.m_description)
-				&& ObjectUtils.nullSaveEquals(m_version, other.m_version)
-				&& m_incomplete == other.m_incomplete
-				&& org.springframework.util.ObjectUtils.nullSafeEquals(
-					m_whenInserted, other.m_whenInserted)
-				&& org.springframework.util.ObjectUtils.nullSafeEquals(
-					m_date, other.m_date);
-		} else {
-			return false;
-		}
 	}
 	
 	/**

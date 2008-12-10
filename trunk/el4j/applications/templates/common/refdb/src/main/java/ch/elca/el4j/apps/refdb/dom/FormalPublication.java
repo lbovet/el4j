@@ -23,8 +23,9 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import org.hibernate.search.annotations.Indexed;
-
-import ch.elca.el4j.util.codingsupport.ObjectUtils;
+import org.hibernate.validator.Length;
+import org.hibernate.validator.Min;
+import org.hibernate.validator.NotNull;
 
 /**
  * FormalPublication domain object. This class is a reference and describes a
@@ -41,7 +42,6 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  */
 @Entity
 @Indexed
-@DiscriminatorValue("FORMALPUBLICATION")
 @Table(name = "FORMALPUBLICATIONS")
 @PrimaryKeyJoinColumn(name = "KEYTOREFERENCE")
 public class FormalPublication extends Reference {
@@ -65,13 +65,11 @@ public class FormalPublication extends Reference {
 	/**
 	 * @return Returns the authorName.
 	 */
-	//@NotNull
-	//@Length(min = 3)
+	@NotNull
+	@Length(min = 3)
 	public String getAuthorName() {
 		return m_authorName;
 	}
-	
-	// Checkstyle: MagicNumber on
 	
 	/**
 	 * @param authorName
@@ -84,11 +82,13 @@ public class FormalPublication extends Reference {
 	/**
 	 * @return Returns the pageNum.
 	 */
-	//@Pattern(regex = "[0-9]*")
+	@Min(0)
 	public int getPageNum() {
 		return m_pageNum;
 	}
-
+	
+	// Checkstyle: MagicNumber on
+	
 	/**
 	 * @param pageNum
 	 *            The pageNum to set.
@@ -112,26 +112,4 @@ public class FormalPublication extends Reference {
 		m_publisher = publisher;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public int hashCode() {
-		return super.hashCode();
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean equals(Object object) {
-		if (super.equals(object)
-			&& object instanceof FormalPublication) {
-			FormalPublication other = (FormalPublication) object;
-
-			return ObjectUtils.nullSaveEquals(m_authorName, other.m_authorName)
-				&& ObjectUtils.nullSaveEquals(m_publisher,  other.m_publisher)
-				&& m_pageNum == other.m_pageNum;
-		} else {
-			return false;
-		}
-	}
 }
