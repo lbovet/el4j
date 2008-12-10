@@ -231,8 +231,8 @@ public class PropertyChangeListenerMixin extends
 				throw new IllegalArgumentException(
 					"Mixin Interceptor is not able to find getter Method");
 			}
-		} else if (methodName.startsWith("get") && !methodName.equals("get")
-			&& invocation.getArguments().length == 0) {
+		} else if (((methodName.startsWith("get") && !methodName.equals("get"))
+			|| methodName.startsWith("is")) && invocation.getArguments().length == 0) {
 			
 			Object result = super.invoke(invocation);
 			
@@ -301,8 +301,19 @@ public class PropertyChangeListenerMixin extends
 				m_methodCache.put(setter, getter);
 			}
 		} catch (NoSuchMethodException ex) {
-			// must be write only
-			getter = null;
+			// try boolean getter method
+			try {
+				getterName = setter.getName().replaceFirst("set", "is");
+				getter = setter.getDeclaringClass().getMethod(getterName);
+				// cache getter
+				synchronized (m_methodCache) {
+					m_methodCache.put(setter, getter);
+				}
+			} catch (NoSuchMethodException e) {
+				// must be write only
+				getter = null;
+			}
+			
 		}
 		return getter;
 	}
@@ -320,8 +331,13 @@ public class PropertyChangeListenerMixin extends
 		if (setter != null) {
 			return setter;
 		}
-
-		String setterName = getter.getName().replaceFirst("get", "set");
+		String setterName;
+		if (getter.getName().startsWith("is")) {
+			setterName = getter.getName().replaceFirst("is", "set");
+		} else {
+			setterName = getter.getName().replaceFirst("get", "set");
+		}
+		
 		try {
 			setter = getter.getDeclaringClass().getMethod(setterName, getter.getReturnType());
 

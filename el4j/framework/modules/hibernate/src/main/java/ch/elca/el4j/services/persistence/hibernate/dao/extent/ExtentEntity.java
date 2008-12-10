@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.springframework.util.Assert;
 
+import ch.elca.el4j.core.metadata.ContainedClass;
 import ch.elca.el4j.util.codingsupport.BeanPropertyUtils;
 
 
@@ -650,19 +651,28 @@ public class ExtentEntity extends AbstractExtentPart {
 	 */
 	private void fetchCollection(Method m, int depth) throws NoSuchMethodException {
 		// Special treatment if collection type
-		Type rawType = m.getGenericReturnType();
-		if (rawType instanceof ParameterizedType) {
-			Type[] pt = ((ParameterizedType) m.getGenericReturnType())
-			.getActualTypeArguments();
-			if (pt.length > 0 && pt[0] instanceof Class<?>) {
-				Class<?> t = (Class<?>) ((ParameterizedType) m.getGenericReturnType())
-					.getActualTypeArguments()[0];
-				ExtentCollection tmp = new ExtentCollection(t, m);
-				if (depth > 1) {
-					tmp.getContainedEntity().all(depth - 1);
+		Class<?> t = null;
+		// First try to read out the contained type of the annotation
+		ContainedClass containedAnnotation = m.getAnnotation(ContainedClass.class);
+		if (containedAnnotation == null) {
+			Type rawType = m.getGenericReturnType();
+			if (rawType instanceof ParameterizedType) {
+				Type[] pt = ((ParameterizedType) m.getGenericReturnType())
+				.getActualTypeArguments();
+				if (pt.length > 0 && pt[0] instanceof Class<?>) {
+					t = (Class<?>) ((ParameterizedType) m.getGenericReturnType())
+						.getActualTypeArguments()[0];
 				}
-				addCollection(tmp);
 			}
+		} else {
+			t = containedAnnotation.value();
+		}
+		if (t != null) {
+			ExtentCollection tmp = new ExtentCollection(t, m);
+			if (depth > 1) {
+				tmp.getContainedEntity().all(depth - 1);
+			}
+			addCollection(tmp);
 		}
 		
 	}
