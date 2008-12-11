@@ -16,10 +16,10 @@
  */
 package ch.elca.el4j.apps.refdb.dom;
 
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.validator.Pattern;
@@ -41,6 +41,10 @@ import org.hibernate.validator.Pattern;
 @Table(name = "BOOKS")
 @PrimaryKeyJoinColumn(name = "KEYTOREFERENCE")
 public class Book extends FormalPublication {
+	
+	/** See corresponding getter for informations. */
+	private final String m_type = "Book";
+	
 	/**
 	 * ISBN number of a book.
 	 */
@@ -60,5 +64,12 @@ public class Book extends FormalPublication {
 	 */
 	public void setIsbnNumber(String isbnNumber) {
 		this.m_isbnNumber = isbnNumber;
+	}
+	
+	/** {@inheritDoc} */
+	@Transient
+	@Override
+	public String getType() {
+		return m_type;
 	}
 }

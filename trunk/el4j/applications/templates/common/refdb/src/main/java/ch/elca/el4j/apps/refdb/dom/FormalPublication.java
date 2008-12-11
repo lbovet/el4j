@@ -17,10 +17,10 @@
 package ch.elca.el4j.apps.refdb.dom;
 
 
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.validator.Length;
@@ -45,6 +45,10 @@ import org.hibernate.validator.NotNull;
 @Table(name = "FORMALPUBLICATIONS")
 @PrimaryKeyJoinColumn(name = "KEYTOREFERENCE")
 public class FormalPublication extends Reference {
+	
+	/** See corresponding getter for informations. */
+	private final String m_type = "FormalPublication";
+	
 	/**
 	 * Name of the author.
 	 */
@@ -110,6 +114,13 @@ public class FormalPublication extends Reference {
 	 */
 	public void setPublisher(String publisher) {
 		m_publisher = publisher;
+	}
+	
+	/** {@inheritDoc} */
+	@Transient
+	@Override
+	public String getType() {
+		return m_type;
 	}
 
 }

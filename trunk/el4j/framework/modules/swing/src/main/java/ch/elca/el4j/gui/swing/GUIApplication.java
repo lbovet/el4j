@@ -43,7 +43,7 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.core.context.ModuleApplicationContextConfiguration;
 import ch.elca.el4j.gui.swing.config.DefaultConfig;
 import ch.elca.el4j.gui.swing.cookswing.TagLibraryFactory;
-import ch.elca.el4j.gui.swing.eventbus.ExceptionThowingEventService;
+import ch.elca.el4j.gui.swing.eventbus.ExceptionThrowingEventService;
 import ch.elca.el4j.gui.swing.exceptions.CookXmlExceptionHandler;
 import ch.elca.el4j.gui.swing.exceptions.Exceptions;
 import ch.elca.el4j.gui.swing.frames.ApplicationFrame;
@@ -159,7 +159,7 @@ public abstract class GUIApplication extends SingleFrameApplication {
 		// register custom eventService that not only logs errors but also throws exceptions
 		try {
 			EventServiceLocator.setEventService(EventServiceLocator.SERVICE_NAME_EVENT_BUS,
-				new ExceptionThowingEventService());
+				new ExceptionThrowingEventService());
 		} catch (EventServiceExistsException e1) {
 			s_logger.warn("Unable to register EventService");
 		}
