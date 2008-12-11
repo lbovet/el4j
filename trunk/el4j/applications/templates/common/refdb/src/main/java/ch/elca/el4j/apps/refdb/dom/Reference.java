@@ -322,6 +322,10 @@ public abstract class Reference extends AbstractIndexedIntKeyIntOptimisticLockin
 		m_files = files;
 	}
 	
+	/** {@inheritDoc} */
+	public String toString() {
+		return m_name;
+	}
 	/**
 	 * Checks whether the reference is valid. Should always be true.
 	 * @return true if the reference is valid, false otherwise
