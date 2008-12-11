@@ -31,7 +31,7 @@ import org.bushe.swing.event.SwingEventService;
  *
  * @author Stefan Wismer (SWI)
  */
-public class ExceptionThowingEventService extends SwingEventService {
+public class ExceptionThrowingEventService extends SwingEventService {
 	/** {@inheritDoc} */
 	@SuppressWarnings("unchecked")
 	@Override

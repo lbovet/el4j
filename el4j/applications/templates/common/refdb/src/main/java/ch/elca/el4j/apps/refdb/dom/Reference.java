@@ -18,14 +18,10 @@ package ch.elca.el4j.apps.refdb.dom;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -36,6 +32,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.LazyCollection;
@@ -112,7 +109,7 @@ public abstract class Reference extends AbstractIndexedIntKeyIntOptimisticLockin
 	/**
 	 * Set of keywords for this reference.
 	 */
-	private Set<Keyword> m_keywords = new HashSet<Keyword>();
+	private Set<Keyword> m_keywords;
 
 	/**
 	 * Set of annotations for this reference.
@@ -123,6 +120,13 @@ public abstract class Reference extends AbstractIndexedIntKeyIntOptimisticLockin
 	 * Set of files for this reference.
 	 */
 	private Set<File> m_files;
+	
+	/**
+	 * The type this reference is actually of.
+	 * @return the type of this reference.
+	 */
+	@Transient
+	public abstract String getType();
 	
 	/**
 	 * @return Returns the date.
