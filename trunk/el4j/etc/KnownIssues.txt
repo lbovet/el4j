@@ -1,7 +1,10 @@
 --------------------------------------------------------------------------------
                         Known issues for EL4J version  1.5.1
 --------------------------------------------------------------------------------
- * None so far.
+ * (These issues may not be new, but they were not well documented before:
+     ** Do not use a blank " " in the path to your working directory => it will not work
+	 ** If during try out, you have persistent problems when derby wants to create a table
+	 , delete the derby database files with something like: rm -r d:/Projects/EL4J/tools/derby/derby-databases/*
 
 --------------------------------------------------------------------------------
                         Known issues for EL4J version  1.5
