@@ -1,0 +1,62 @@
+H1 Offliner Implementation details
+
+H2 The mapping table
+Hibernate allows us to work with POJOs and let it handle all the key generation and management issues. For access to a single database, this makes it easier, for copying between databases, it is unhelpful. In particular, hibernate will not allow us to insert a row with a given primary key into a table unless that key already exists there.
+
+To work around this, we store a mapping table which allows us, for each class, to look up the local and database key. For example, if we have a Bean with key 100 in the database and want to offline it, we first set the key to zero then store the bean locally. This makes hibernate generate a new key, say -42. We store the pair (100, -42) in the mapping table. On resynchronizing, we look up the local key and set the bean's key back to the one it had in the database.
+
+The bare minimum requirements for keys are that
+
+1. Keys are serializable and have proper equals/hashcode implementations (this is a hibernate requirement).
+2. Local and remote keys are distinguishable. No key can appear in both the local and the remote database. This is required on resynchronisation to preseve object identity.
+
+The current implementation is that all keys must be of type Long (that is capital-L to get Serializable) and the database must use positive, the local database negative keys. It would be nice to do this more generically but there are pitfalls with java generics if we do not have the precise type available at compile-time (which is unrealistic). 
+
+The offliner accesses keys generically through the aspects package. Extensions to key type or distinguishing scheme can be made by swapping out the aspects implementations.
+
+H2 Versioning
+Because an object may be locally saved several times in the offlining process, we store the remote version while offlining and restore it on synchronizing. Further, we manually update the local versions to eliminate conflicts: If, during the offlining process, an object is offlined three times
+
+- The first time, it will offline with version 0 (or whatever the server version was).
+- The second time, if it is the same object reference we detect it by the fact it now has a local key. (The same then happens on pass three.) If it is a different reference, it will be inserted with version 0 causing the local version to rise to 1.
+- The third time, if we did nothing, we would be committing an object of version 0 when the local database version is 1. This is a conflict.
+
+To prevent this, the local save process is
+
+1. Read the current local version.
+2. Set the version on the object to commit to the current local version. This effectively disables versioning locally.
+3. Save the object.
+
+
+H2 Object graph traversal
+Where objects reference other objects, several issues arise:
+
+- Hibernate's lazy fetching strategies mean we cannot access referenced objects once the session that got the root object is closed, unless they were already fetched by some other operation.
+- When we save an object into the local database, its references become foreign keys. These must also be adapted to contain the local database's foreign keys for the objects in question.
+
+While offlining or synchronizing an object - these two are known as operations - the process is as follows:
+
+1. (For all objects)
+1.1. Iterate over all associated objects.
+1.2. Recursively perform the operation on the associated objects. This sets the primary keys of the associates correctly, which means hibernate will generate foreign keys correctly.
+2. Perform the operation on the object in question.
+
+This guarantees that whenever an object is saved, all its properties are set correctly. It is not, however, particularly efficient: saving n objects can generate O(n^2) save statements.
+
+H2 Synchronization and conflicts
+While synchronizing, exceptions from the server are wrapped in Conflict objects and returned at the end of the operation. Mapping entries are marked as PROCESSED after the first attempt to save them so no object is synchronized more than once. (This works because synchronize() is called once for the entire contents of the local database. This technique cannot be used for offline(...) as it allows for multiple independent offline operations.) If a conflict is encountered synchronizing a child object, the parent is automatically marked as conflicted (dependent conflict).
+
+H2 Algorithm choice
+The current synchronisation algorithm guarantees that all changed objects are synchronized by iterating over all objects and cascading on each object's graph. This has one efficiency drawback : If the objects have cascade&eq;SAVE set, hibernate will cascade too potentially resulting in O(n^2) database commits for n objects. This can be avoided if hibernate notices itself when it is trying to recommit an object it has just saved already - n^2 operations im memory are certainly cheaper than on the database.
+
+The offliner design was based on the abstraction that only remoting dao-proxies are available server-side. If we could have a separate offlining process running on the server and use this instead, we could handle the server's session management ourselves and ensure that objects are neither sent multiple times from client to server during one synchronisation, nor - if we can do the whole synchronisation in one server session - written multiple times to the database (hibernate's session cache would then prevent this).
+
+Another algorithm we discussed involved having the offliner store the list of operations on the local database (updates etc.) and then send this list to the server which executes it again during synchronisation. As I did not implement this, I cannot say for certain whether it would work - I see no reason why it should not in theory. However, instead of sending the end result of the user's edits in the local database, it would mean sending the whole history. For example, changing an object 10 times would mean sending it not once but 10 times to the server and saving it 10 times to the database there. (In the case of a single object, this could of course be optimized trivially - it is multiple modifications of object assocations I am worried about).
+
+The concept of an object's identity plays a central role here. With one database, a primary key is a simple choice of identifier. With two, we need to manage two primary keys (local and remote) for each object and further take into account newly created objects that have no key yet. Transferring a list of object operations like "A.setParent(B)" to the server would mean matching the client-side and server-side identities of A and B up. I also noticed that a "unique object identifier" of type (Class X PK) is a central building block of object identity management.
+
+Further, if a client makes 10 changes to an object locally then synchronizes, it seems logical to me that the server's version of this object rises by 1. Currently, this is the case. If we replay the edit history, it would rise by 10.
+
+Offlining is an example of where an abstraction (hibernate, ORM) that makes one thing easier (persisting objects in a single database) creates a whole host of new problems when something that the abstraction was not designed for (offlining) is attempted. For example, the whole association management becomes more or less straight-forward when done in plain SQL. However, we want a solution that does not depend on low-level details of our database (and thus is open to incompatibilities between different database types, for instance) and so switching back to plain SQL is not an option.
+
+What would be possible - and interesting - is a new kind of database-independent "object-oriented query language" which can be used for transmitting object changes to the server. I envisage something like "UPDATE Person:1000 parent=Person:2000" to mean "On the instance of Person with key 1000, call setParent using the Person with key 2000 as argument". This would mean no actual domain objects ever have to get sent to the server. (Person:1000 is again an "unique object identifier" as stated above.) 

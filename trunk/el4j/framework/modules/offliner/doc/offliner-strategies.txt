@@ -1,0 +1,25 @@
+Offlining/Batching strategies
+
+A class is "out-independent" if no two instances of this class depend on each other. (For instance, several Imputations may depend on the same ImputationNumber, but no two Imputations depend on each other in the sense that following any chain of pointers from one leads you to the other. So Imputation is an out-independent class.)
+
+For such classes we can batch transfers by collecting any number of instances in an Object[] and transferring the whole array at once. This can only transfer an object several times within a batch if two instances hold a pointer to the same logical element of another class, but they are different instances i.e. a and b of class C1 both have pointers to x of class C2 and a.c2.equals(b.c2) == true but a.c2 != b.c2. This can be fixed by an identity fixing scheme.
+
+If a and b are not in the same batch, the client will either have to resend x when b is transferred or have an option to transfer b without its dependency x and relink them on the server.
+
+We can avoid ever sending an object twice if each object graph is sent in one batch. This leads to the following problems: if a --> x and b --> x (--> = has pointer to), we need to somehow notice that a and b belong to the same graph. The only way is to iterate over all objects in the local database and give each a "graph id". For n objects this takes up to 3n database read/writes (first pass: read objects and save ids, keeping id links in memory for speed, total 2n operations; second pass: readjust ids that point to the same graph, time 1n). If we have n elements with no links between them at all, these are 3n unnecessary operations on the database.
+
+This strategy also allows us to send any number of disjoint object graphs in one batch.
+
+Call a class "independent" if no two instances can ever have links that meet. (This covers all classes with no outgoing links at all or with only 1:* multiplicity outgoing links. Imputation is not independent because two Imputations can use the same ImputationNumber.) For such classes we do not need any object graph processing and can batch them in any way we like. Independent is a strict subset of out-independent.
+
+In the case that all instances of a class form a connected graph (quite possible in real-world applications), if we transfer objects (trasferring an object takes all its dependencies with it) we either need to send the whole set of instances in one batch or resend some instances where we split into batches. If we could somehow transfer each object individually, breaking the links before sending and relinking on the server, we can batch however we want. (If we serialize locally, send the result as binary data in whatever chunk size we wish, and deserialize on the server again we can control the chunk size but still need to send the whole graph at once.) 
+
+Here is one way to achieve this: Assume each object can a) be saved as and reconstructed from a mapping of bean properties and b) has a unique id. If a has a link to b, instead of transferring b with a we look up b's id and only transfer the id along with a. (Which is pretty much what SQL does: hold a foreign key instead of the object itself.) We still cannot use a on the server without b, but if we transfer b first we can send a later (in another batch) and do not need to retransfer b.
+
+Together with graph component searching, this allows us to batch pretty much anything in any way we want, subject only to the condition that when we want to save an object to the server database, all its dependencies must be there too. (If save does not cascade, we might get away with only the direct dependencies being present. Transitive dependencies just need to be ignored by hibernate.)
+
+Consider a Person class with a "Person parent" and "Set<Person> children". In the database, only the parent pointer is saved (as foreign key) and children is marked as transient. If we serialize, we risk the children set being serialized along with any person we send to the server. (We could mark it as transient, but then when we deserialize we have to somehow restore the links). Even if the connected component of n Persons is small enough that this does not matter normally, a bad offlining strategy might send the whole graph n times.
+
+Any serialization must somehow restore the links, unless all we want to do is save the person to the database in which case we can set children to null. (Getting the person back is harder, but we can save him to the local database, drop the Person object and reload from the local database and let hibernate do that work for us. However, if a child is missing we get "garbage in = garbage out".)
+
+Again if we can transfer ids instead of object references, we send each object once only, but we do need to track which objects we have already sent so we never try and reconstruct a partially sent graph.

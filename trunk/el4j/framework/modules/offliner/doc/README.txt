@@ -1,0 +1,1 @@
+The offifial documentation source for this module is - apart form javadoc - the EL4J wiki. These text files exist because it is easier to write in a proper editor like Notepad++ than in a browser text field.

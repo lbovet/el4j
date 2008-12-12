@@ -1,0 +1,24 @@
+H1 Offlining
+This page describes the offliner's offline operation.
+
+Offline copies a selection of objects to the local database. They must be database instances in the sense that 
+1. They are instances of entity classes for which a table exists in the local database.
+2. Their class is declared in the offliner's list of classes to manage (when resynchronizing, the offliner iterates over this list).
+3. They have an id set that makes them uniquely identifiable and recognizable as coming from the database. In particular, this id must not be null/zero. (To save new instances of entity classes into the local database, get a dao from the local database and use its save method instead.)
+4. All FK associations of an object must be resolved at the time it is passed to offline. (We cannot save objects with and unresolved lazy FK references in their object graph to a database.)
+
+If the objects passed to offline do not exist yet in the local database they are created. If they exist under the same version as the new one to offline, the objects are ignored. If the version in the local database is older than on the server, the object is updated as long as it has not been modified in the local database. 
+
+One consequence of this is that if you check out an already offlined object from the server, modify some data then try to offline it, it will not be offlined again because the version is unchanged. This would lose your changes. The correct procedure is first to save it back to the server, then reload it (with the new version) and then offline it. Alternatively, load the local databased version and modify that then save it back to the local database with a regular save. This procedure is required to ensure the object can be recommitted to the server afterwards. As a general rule, anything passed to offline should come directly from the server's database.
+
+Any object added to the local database is on =synchronize= returned (updated) to the server with the same id/PK and version. Any other changes made to it are kept.
+
+You can offline the same object many times in a row. The offliner ensures there will not be an exception here. <i>Internally, the offliner may offline something several times in a row during processing of an object graph.</i> The version in the local database should not rise in this case.
+
+Offline only runs on the object graph rooted at the object(s) you pass it. It is primarily (when called by the user) meant to add new objects to the local database that are not there yet. To update all objects already in the local database, use synchronize. <i>Internally, synchronize calls offline on the objects changed on the server.</i>
+
+If the local database is non-empty, you should synchronize before offlining any new objects. Offline can only fail if an object has been changed both in the local database and the database. Objects unchanged on the server since the last offline are ignored. 
+
+Offline does not provide conflict management - if you synchronize before offlining and the synchronize succeeds, there will not be any offlining conflicts.
+
+<i>There is one other rare case that causes an offline exception: Trying to update an object of an older version that you offlined it as earlier. This is a bug in the application calling the offliner, as database versions do not decrease over time.</i>

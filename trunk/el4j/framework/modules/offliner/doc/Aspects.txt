@@ -1,0 +1,123 @@
+H1 The Offliner Aspects Module
+
+<i>This page has since become outdated; the module is called ObjectWrapper and integreted into module-hibernate.</i>
+
+H2 Motivation
+
+The offliner works with the concept of a "generic domain object". These can be of any domain class and are known to have some properties like "primary key" or "version". In addition, they all have "properties" imposed by the offliner like a mapping entry (mapping entries and domain objects are in a 1:1 relationship) or a unique key. These properties are, to use the correct name, aspects of domain objects. For instance "having a primary key" is an aspect.
+
+This package came into being because the code for dealing with this became messy and introduced unwanted dependencies. For instance, the object graph walker needs information about an object's identity (i.e. its unique key). This can be got from hibernate. Earlier, this meant the object graph walker had a dependency on hibernate's session factory which is not nice.
+
+The aspects package separates the aspects (Keyed etc.) that the walker or offliner use from the implementation. In fact the mapping table has two different implementations on the client and on the server.
+
+H2 Other Approaches
+
+<b>Having the graph walker load keys from the hibernate session factory</b> is an unwanted and unnecesary dependency. 
+
+<b>Requiring domain objects to implement the necessary interfaces (Keyed) themselves</b> i.e. in an AbstractDomainObject class would be an elegant object-oriented solution. But it is implausible for two reasons:
+1. We want to be able to plug the offliner into an existing application. The application should have the offliner as a dependency and not the other way round. Therefore we cannot mandate a base class for domain objects nor access such a class in both the application and the offliner.
+2. Aspects like UniqueKeyed or Mapped are offliner-specific, so it makes no sense to require application classes to implement them. Also it prevents us from choosing different implementations (on the client and server).
+
+<b>Having one utility class to deal with all aspects</b> might look like this:
+<pre>
+public class DomainObjectUtils {
+	public static Serializable getKey(Object object);
+	public static void setKey(Object object, Serializable key);
+	public static long getVersion(Object object);
+	public static void setVersion(Object object, long version);
+    // ...
+}
+</pre>
+
+You might be able to do this in C, in java this kind of code smells. It is one of the motivating examples in Object-Oriented Programming 101 that this kind of code can be done better.
+
+<b>Having one big aspect class instead of several small ones.</b>
+This may well be the final form of this package, but I find several small (fit on one page) classes with a clear purpose easier to use and maintain than one big class for five purposes. Also, if one of the apsects needs to be varied from client to server (mapping table) whereas the others stay the same, there is no way around using several classes.
+
+This does not preclude merging some aspects, for instance KeyedVersioned, UniqueKeyed and Typed could all become something like DomainObject - this would lose us the option of casting to Keyed objects for which we do not want to do offlining and so never need unique key or type information but admittedly such objects are never used by the offliner at the moment. All offliner-related aspects could be united in one OfflineableAspect too. I still think it is cleaner to separate unrelated aspects but it won't harm anyone to merge them.
+
+H2 Using aspects
+
+We have a domain object obj given and want its key. What we would really like to do is <code>"key = obj.getKey();"</code>. Aspects allows us to do this with only one extra line of code:
+<pre>
+Keyed objKeyed = aspects.createAspect(KeyedAspect.class, obj);
+key = objKeyed.getKey();
+</pre>
+objKeyed can be kept around for further key-related operations. A setKey() on it sets the key in the actual object obj, to which it holds a reference.
+
+The main class of the aspects package is called Aspects. To set it up, create a prototype of each aspect implementaion (the reasoning is explained below), create an Aspects object and link them up:
+<pre>
+Aspects aspects = new Aspects();
+UniqueKeyedApsect uka = new UniqueKeyedImpl();
+apsects.add(UniqueKeyedAspect.class, uka);
+</pre>
+
+Or using spring:
+<pre>
+<bean id="aspects" class="caching.aspects.Aspects">
+	<property name="aspects">
+		<map>
+			<entry key="caching.aspects.UniqueKeyedAspect" value-ref="uniqueKeyedAspect" />
+		</map>
+	</property>
+</bean>
+
+<bean id="uniqueKeyedAspect" class="caching.aspects.impl.UniqueKeyedImpl" />
+</pre>
+
+To use an aspect on an object, call createApsect(apsectClass, object). If the object already implements this aspect, it is returned unchanged. If not, the aspect is looked up in the aspects object's map of registered apsects. If it is not found, an AspectRTException is thrown. If it is found, the aspect is set up for this object as described below. This too can throw an AspectRTException if it is impossible to handle the aspect for this object (like Keyed on something that is not a domain object).
+
+To check if an aspect is registered, boolean aspectPresent exists. The version taking an object also returns true if the object already implements the aspect. None of these methods can guarantee that aspect creation will not fail due to an exception from the aspect implementation, though.
+
+H2 The aspects package implementation
+
+The aspect interfaces are in the package caching.aspects and named *Aspect. These are all interfaces (no implementation). Apsect itself is a base "marker" interface that all aspect interfaces extend.
+
+Implementations are in caching.aspects.impl, their names end in -"Impl". Where one implementation is provided, it is named like the aspect but dropping the "Aspect" part i.e. TypedAspect becomes TypedImpl. Where several exist, an identifier is added i.e. KeyedVersionedAspect has KeyedVersionedHibernateImpl and KeyedVersionedreflectionImpl.
+
+AspectRTException is thrown by any aspects package class when an illegal operation is attempted. This inlcudes
+- Trying to use an aspect for which there is no implementation (at create time)
+- Trying to use an aspect on an object that it can not be used on (it is best to complain at create time, but it is feasible that in some situations the problem can only be detected later when an aspect method is actually called).
+
+InternalAspectRTException is thrown if a "this can never happen" line is reached in Aspects or an implementation and indicates a serious bug in the aspects package.
+
+The base class of all implementations is AbstractAspect. This is required for now. Because interfaces or base classes cannot mandate constructors and I do not want to make this requirement implicit (via reflection), I use the prototype design pattern. Prototypes of the implementations are added to the Aspects class, when one is required it is cloned (Cloneable is declared in AbstractAspect and all implementations must allow cloning) and these protetced properties are set: m_target is the object we are creating an aspect for, m_aspect is the aspects object. (This allows one aspect to depend on another.) Next, create() is called. This is the effective "constructor" and must prepare the aspect or throw AspectRTException if there is a problem like an object that cannot be used with this aspect. If create() returns the aspect is returned to the user.
+
+If an aspect requires external dependencies like hibernate's session factory, they can be passed in the true constructor (for the prototype). This is independent of the Aspects class which only sees the finished prototype. The prototype pattern thus allows instantiation of the aspect class itself to be decoupled from instantiation for a specific object. One nice side-effect of this pattern is that all required classes can easily be declared as spring beans. As the cloning is done by the Aspects class, no spring prototype qualifier is required.
+
+H2 Writing your own aspects
+
+Suppose you want to create a ValidatableAspect that performs validation on objects.
+1. Create an interface ValidatableAspect extends Aspect.
+2. Create an implementation ValidatableImpl extends AbstractAspect implements ValidatableAspect.
+3. In the constructor of your implementation, load any dependencies (to the validator, perhaps) that your aspect will need. Remember this is a prototype.
+4. In create(), you can check if an object actually is validatable. When create() is called,
+the aspects object creating the implementation (a clone of your prototype) will have m_aspects set to itself and m_target to the object this clone should refer to. Throw an AspectRTException if it is not a valid object. If you need to "import" other aspects, check they are present with m_aspects.aspectPresent(aspectClass) and throw an excpetion if not.
+5. Implement the apsect methods (validate, for example). They can use m_target and m_aspects as they please. They can also throw AspectRTException if necessary.
+
+In your application,
+1. Instantiate the implemantation once (prototype) with its dependencies.
+2. Register it with your aspects object.
+
+H2 Naming
+
+I called this package aspects because that was what I was designing it as. However, there is a valid point that the name may scare off future maintainers as apsects can be quite complicated both as a concept and to implement. 
+
+There are no dynamic proxies, bytecode modification, cglib or anything else involved in this package. The original objects can be used further after they have been "aspected". If a dfferent name is required, here are a few possibilities:
+
+ObjectInformation. Simple enough, but not entirely to my design point. Getting a key from an object might be information but setting it back to the object is an action on the object (and perhaps the database) that is more powerful than looking up information.
+
+ObjectStrategy. The aspects package does provide a strategy to look up keys etc. on domain objects, but from the user's point of view he does not want to select or care about different strategies for looking up keys, he just wants the key from an object. Having a ComparisonStrategy for a sort operation makes sense because the user can influence the strategy independently of the algorithm and vary what strategy he wants to sort by. The graph walker is satisified with just getting a key, in fact it should be completely independent of key-getting strategies. Also, the strategy is not as a rule varied at run-time, rather fixed once (even once for all object classes) at startup. For some aspects, only one strategy exists anyway.
+
+Perhaps something like ObjectWrapper or ObjectCaster would be possible. Example code would be
+<pre>
+Keyed keyedObj = ObjectWrapper.wrap(Keyed.class, object)
+Keyed keyedObj = ObjectCaster.castTo(Keyed.class, object)
+</pre>
+or even something like
+<pre>
+Keyed keyedObj = ObjectCaster.cast(object).to(Keyed.class)
+</pre>
+though I am skeptical of such "language enhancements".
+
+I am not completely happy with any other name becuase none captures exactly what I designed the package as, but once again no harm can come from renaming it provided the name is meaningful to whoever works with the package next - the decision on which I will happily leave to others.

@@ -2238,6 +2238,9 @@
 		<version.module-cobertura-runtime>
 			1.0-SNAPSHOT
 		</version.module-cobertura-runtime>
+		<version.module-offliner>
+			1.0.1-SNAPSHOT
+		</version.module-offliner>
 
 		<!-- Maven utils -->
 		<version.maven-utils>

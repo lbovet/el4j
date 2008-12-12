@@ -1,0 +1,32 @@
+This page contains the requirements and implementation of the offliner's key management.
+
+H1 Requirements
+1. The offliner must be able to save a generic key in a field of the mapping table.
+2. Keys must form three disjoint nonempty sets NULL, LOCAL and REMOTE.
+3. New instances of objects must have a key from NULL.
+4. Objects with NULL keys must be insertable into any database and get a generated non-NULL key, namely from REMOTE in the remote database and LOCAL in the local one. No key of these sets may ever be generated twice (except if the database is reset) even between different runs of the application. _Notes: Clearing the local database after a synchronize *is* a database reset in the local database. While NULL can and usually will contain one element, LOCAL and REMOTE must contain at least as many elements as there will ever be objects._
+5. equals() on domain objects fulfills the hibernate contract.
+6. The offliner must be able to reset keys to a NULL value. equals() must then treat the object as new.
+
+The hibernate contract for equals() is
+1. For any object a, a.equals(null) is false. _This is part of the java contract._
+2. For any object a, a.equals(a) is true. In fact a == b implies a.equals(b) == true. _This is part of the java contract._
+3. For any object a that has not yet been saved to the database and got a key, a.equals(b) nust be false except if a == b. 
+4. For any objects a, b (of the same class) that both have been saved and thus have keys, a.equals(b) if and only if the keys are equal.
+
+H1 Default implementation
+1. The key field is of type VARCHAR, keys of String, Integer and Long can be saved and read via an extra class. They are prefixed with S, I or L to distinguish.
+2. Keys must be of type Long. 0L is NULL, >0 is REMOTE and <0 is LOCAL. _Negative keys are not possible in Oracle!_ 
+3. New objects get their field of type long automatically initialized to 0L by java.
+4. The NULL convention matches that of hibernate. The remote database uses a sequence (start with 1, increment by 1) and the local database starts with and increments by -1 respectively.
+5. equals() in the example base class tests for key == 0L and acts acordingly. 
+6. setKey(0L) is a reset. _Note: EL4J has a default implementation with a boolean isKeyNew field that is set to false on the first setKey(). We cannot use this for resettable objects._
+
+H1 Custom implementations
+Of the default implementation,
+1. New types can be added by extending GenericSerializableUtil.
+2. For a new type added in 1. or a String or Integer type, you need to provide a TypedAspect implementation that distinguishes key types.
+3. The default value new instances of your domain objects get must be a NULL value. 
+4. It is your own responsibility to make your conventions hibernate- and database-compatible.
+5. This is your own responsability.
+6. Your TypedAspect must provide a nullKey implementation that resets a key to a NULL value.
