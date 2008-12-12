@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>ch.elca.el4j.internal.modules</groupId>
-		<artifactId>el4j-internal-framework-modules</artifactId>
+		<groupId>ch.elca.el4j.modules</groupId>
+		<artifactId>el4j-framework-modules</artifactId>
 		<version>1.6-SNAPSHOT</version>
 	</parent>
 
