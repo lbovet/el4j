@@ -1,0 +1,252 @@
+H1 Offliner
+
+H2 Purpose
+
+We have a database that we access via hibernate in a client/server environment. We would like to be able to offline a subset of the data on the client and work with it offline, then resynchronize with the server.
+
+The offliner does this by using a second database local to the client (and known as the local database). This means at any time the user can work with a database (daos, queries etc.). In addition, he can perform offliner operations.
+
+H2 Offliner Terminology
+
+H3 Remote
+   Refers to the remote database which holds the master copy of the data. We can either work with it directly or offline some data, use it then resynchronize. Where appropriate, the full term remote database is used. 
+H3 Local
+   Refers to the client or the client's local copy of some data. 
+H3 Database
+   Unqualified, this is the remote database. "Local database" is used where necessary to mean the client's local database seen as a database. 
+H3 Offline (noun)
+   Refers the the client's local copy of some data. 
+H3 offline (verb)
+   To copy data from the database into the local database. 
+H3 (re)synchronize
+   To copy data from the local database back to the database, managing versioning and optimistic locking conflicts in the process. 
+
+H2 Usage
+The offliner implements DaoRegistry. Applications must get all their daos from the offliner and not cache them in between calls that change the offliner's state. At any time, the offliner returns a dao for the currently active data source (remote database or local one). The offliner can be set to the states online and offline to switch between the two.
+
+The offliner supports the two operations offline and synchronize. Offline copies a set of objects from the database into the local database, either the objects themselves can be passed to the method or a hibernate query in which case the offliner executes it on the database and puts the results in the local database. Synchronize takes no parameters, copies all changed data to synchronize the local database with the database and returns the conflicts (objects changed both in the local database and the database, which it won't overwrite) encountered. 
+
+The best way to use the offliner is
+
+1. Offline some data.
+2. Go offline.
+3. Use and edit the local data.
+4. Synchronize.
+5. Repeat the last two steps as often as you like in any order.
+
+H2 Offliner setup
+
+Both the client and the server part of the offliner use the object wrapper package. This is documented separately; it is enough to copy the provided configurations for it.
+
+On the server, run an OffliningServer which needs a DaoRegistry for the database and an object wrapper implementation. On the client, run the OfflinerClientImpl and link it to a OfflinerInfo object which you have filled with the necessary data:
+- The client-side object wrapper implementation.
+- The client-side DaoRegistry for the local database (the local database).
+- A client-side DaoRegistry for the server dao remoting proxies.
+- The domain classes you wish to use with the offliner and a chunking strategy for each.
+- The offlining server (remoting proxy).
+- An offlining state table (just use an instance of the default implementation).
+
+H2 Setup in detail
+
+H3 Common beans (client and server)
+<pre>
+	<!-- Common wrappers. -->
+	
+	<bean id="objectWrapper" class="ch.elca.el4j.util.objectwrapper.ObjectWrapper">
+		<property name="wrappables">
+			<map>
+				<entry key="ch.elca.el4j.util.objectwrapper.interfaces.KeyedVersioned" value-ref="keyedVersioned" /> 
+				<entry key="ch.elca.el4j.util.objectwrapper.interfaces.Linked" value-ref="linked" />
+				<entry key="ch.elca.el4j.services.persistence.hibernate.offlining.objectwrapper.Mapped" value-ref="mapped" />
+				<entry key="ch.elca.el4j.services.persistence.hibernate.offlining.objectwrapper.Typed" value-ref="typed" />
+				<entry key="ch.elca.el4j.services.persistence.hibernate.offlining.objectwrapper.UniqueKeyed" value-ref="uniqueKeyed" />
+				<entry key="ch.elca.el4j.services.persistence.hibernate.offlining.objectwrapper.OffliningStateWrappable" value-ref="offliningState" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="keyedVersioned" class="ch.elca.el4j.util.objectwrapper.impl.KeyedVersionedHibernateImpl">
+		<constructor-arg ref="sessionFactory" />
+	</bean>
+	
+	<bean id="linked" class="ch.elca.el4j.util.objectwrapper.impl.LinkedHibernateImpl">
+		<constructor-arg ref="sessionFactory" />
+	</bean>
+
+	<!-- Mapped is separate for local and remote. -->
+	
+	<bean id="typed" class="ch.elca.el4j.services.persistence.hibernate.offlining.objectwrapper.impl.TypedImpl" />
+	
+	<bean id="uniqueKeyed" class="ch.elca.el4j.services.persistence.hibernate.offlining.objectwrapper.impl.UniqueKeyedImpl" />
+    
+	<bean id="offliningState" class="ch.elca.el4j.services.persistence.hibernate.offlining.objectwrapper.impl.OffliningStateTableImpl">
+		<constructor-arg ref="stateTable" />
+	</bean>
+	
+	<!-- The state table. Although this is in common, there are two different
+	tables on the client and the server. -->
+	
+	<bean id="stateTable" class="ch.elca.el4j.services.persistence.hibernate.offlining.util.OffliningStateTable" />
+</pre>
+
+H3 Server-side beans
+<pre>
+	<!-- It is assumed the database is set up as usual in EL4J. -->
+
+	<!-- The mapping table server implementation (in-memory). -->
+	<bean id="mappingTable" class="ch.elca.el4j.services.persistence.hibernate.offlining.util.ServerMappingTable" />
+   
+	<!-- The mapped server implementation. -->
+	<bean id="mapped" class="ch.elca.el4j.services.persistence.hibernate.offlining.objectwrapper.impl.MemoryMappedImpl">
+		<constructor-arg ref="mappingTable" />
+	</bean>
+
+	<!-- The offlining server. -->
+	<bean id="offliningServer" class="ch.elca.el4j.services.persistence.hibernate.offlining.impl.OffliningServerImpl">
+		<constructor-arg ref="daoRegistry" />
+		<constructor-arg ref="mappingTable" />
+		<constructor-arg ref="objectWrapper" />
+		<constructor-arg ref="stateTable" />
+	</bean>
+</pre>
+
+H3 Client-side beans
+<pre>
+	<!-- It is assumed the client-side database is set up correctly and the server daos are exported as proxies to the client. -->
+
+	<!-- The dao registry. We must restrict this not to inlcude server dao proxies. One possibility is to name client-side daos *Dao as usual and server proxies *Rao. -->
+	<bean id="daoRegistry"
+		class="ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry">
+		<property name="namePattern" value="*Dao" />
+	</bean>
+			
+	<!-- A second DaoRegistry that collects the server-side dao proxies. -->
+	<!-- A "RAO" is a "remote access object", to keep them distinct from the local "DAO" ones. -->
+	<bean id="daoRegistryRemote"
+		class="ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry">
+		<property name="namePattern" value="*Rao" />
+	</bean>
+
+	<!-- The client-side mapping table dao. Note that this is not autocollected by default as it is in a different package from the domain classes. This is ok because only the offliner uses it (in the mapping table implementation) and needs an explicit reference to it anyway. -->
+	<bean id="mapDao" class="ch.elca.el4j.services.persistence.hibernate.offlining.impl.MappingTableDao" />
+
+	<!-- The offliner properties dao. -->
+	<bean id="propertyDao" class="ch.elca.el4j.services.persistence.hibernate.offlining.util.PropertyDao" />
+
+	<!-- The client-side mapping table implementation that uses the mapping dao. -->
+	<bean id="mapped" class="ch.elca.el4j.services.persistence.hibernate.offlining.objectwrapper.impl.DatabaseMappedImpl">
+		<constructor-arg ref="mapDao" />
+	</bean>
+
+	<!-- Replace this with a proxy for the server-side offlining server. -->
+	<!-- <bean id="server" class="ch.elca.el4j.services.persistence.hibernate.offlining.test.RmiOffliningServerSimulator" scope="singleton"/> -->
+
+	<!-- The offliner info object. All client-side configuration is done here. -->
+	<bean id="info" class="ch.elca.el4j.services.persistence.hibernate.offlining.impl.OfflinerInfo">
+			
+		<!-- The object wrapper. -->
+		<property name="wrapper" ref="objectWrapper"/>
+			
+		<!-- The client-side dao registry. -->
+		<property name="clientDaoRegistry" value="daoRegistry" />
+		
+		<!-- The dao registry for the server proxies. -->
+		<property name="serverDaoRegistry" value="daoRegistryRemote" />
+
+		<!-- The server. -->
+		<property name="server" ref="server" />
+		
+		<!-- The state table. (We should really instantiate this internally, 
+		but then we can't use spring for the wrapper package either.) -->
+		<property name="stateTable" ref="stateTable" />
+
+		<!-- Create one singleton instance of each strategy you want to use. 
+		<bean id="allStrategy" class="ch.elca.el4j.services.persistence.hibernate.offlining.chunk.AllStrategyImpl" scope="singleton" />
+		-->
+		
+		<!-- The classes map. This must be a linked hash map to preserve order of the keys.
+		It has two purposes: One, as a sorted list of all classes to iterate over when
+		synchronizing. Two, to provide a chunking strategy for each class. -->
+		<property name="classes">
+			<util:map map-class="java.util.LinkedHashMap">
+				<!-- Enter domain classes and strategies here. -->
+				
+				<!-- 
+				<entry key="test.testclasses.Person" ref="allStrategy"/>
+				-->
+			</util:map>
+		</property>
+	</bean>
+
+	<!-- The actual offliner. Note that we use the spring implementation as it is required to ensure
+	the context is ready before we access any DAOs. If you create the offliner in java, use the
+	OfflinerClientImpl directly. -->
+	<bean id="offliner" class="ch.elca.el4j.services.persistence.hibernate.offlining.impl.OfflinerSpringImpl">
+		<constructor-arg ref="info" />
+	</bean>
+</pre>
+
+H2 Setting up the database
+The database set-up is the user's responsibility. The remote database will usually be given, the local database must be identical to hibernate but use keys from a disjoint set. For example, if you have a domain object SimplePerson with the following table definition in the remote database:
+<pre>
+CREATE TABLE SIMPLEPERSON (
+    ID BIGINT NOT NULL PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY 
+		(START WITH 1, INCREMENT BY 1),
+    VERSION BIGINT NOT NULL,
+    NAME VARCHAR(40) NOT NULL,
+    EMAIL VARCHAR(40) NOT NULL
+);
+</pre>
+You could do the same locally except that you replace the key generator with (START WITH -1, INCREMENT BY -1). The Typed implementation must be compatible with your strategy, this (positive/negative) is the default strategy although it does not work under Oracle.
+
+You must implement Typed yourself if you want to change this scheme, here is the default:
+<pre>
+	/** {@inheritDoc} */
+	public KeyType getType() {
+		Serializable key = m_wrapper.wrap(KeyedVersioned.class, m_target) 
+			.getKey();
+		if (key instanceof Long) {
+			Long keyAsLong = (Long) key;
+			return (keyAsLong.equals(0L) ? KeyType.NULL 
+				: (keyAsLong > 0L ? KeyType.REMOTE : KeyType.LOCAL));
+		} else if (key instanceof Integer) {
+			Integer keyAsInt = (Integer) key;
+			return (keyAsInt.equals(0) ? KeyType.NULL 
+				: (keyAsInt > 0 ? KeyType.REMOTE : KeyType.LOCAL));
+		} else {
+			throw new IllegalArgumentException("Key not of type Long."
+				+ " The default implementation requires this.");
+		}
+	}
+
+	/** {@inheritDoc} */
+	public void nullKey() {
+		try {
+			m_wrapper.wrap(KeyedVersioned.class, m_target).setKey(0L);
+		} catch (ClassCastException ex) {
+			throw new IllegalStateException("The default implementation requires "
+				+ "keys of type long.");
+		}
+	}
+</pre>
+
+Finally, you must set up the mapping and property tables in the local database. The create script is in the offliner's test resources, the relevant part is
+<pre>
+CREATE TABLE KEYMAP (
+	ID INT NOT NULL PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY 
+		(START WITH 1, INCREMENT BY 1),    
+	LOCALBASEVERSION VARCHAR(128) NOT NULL,
+	REMOTEBASEVERSION VARCHAR(128) NOT NULL,
+	DELETEVERSION BIGINT NOT NULL,
+	SYNCVERSION INT,
+    LOCALKEY VARCHAR(128) NOT NULL,
+    REMOTEKEY VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE OFFLINERPROPERTIES (
+	ID INT NOT NULL PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY 
+		(START WITH 1, INCREMENT BY 1),
+	PROPNAME VARCHAR(30) NOT NULL UNIQUE,
+    PROPVALUE VARCHAR(40)
+);
+</pre>
