@@ -53,8 +53,7 @@ public final class MainStandaloneDocking {
 				"classpath*:scenarios/db/raw/*.xml",
 				"classpath*:scenarios/dataaccess/hibernate/*.xml",
 				"classpath*:scenarios/dataaccess/hibernate/refdb/*.xml",
-				"classpath*:optional/interception/transactionJava5Annotations.xml",
-				"classpath*:Interceptors.xml",
+				"classpath:optional/interception/transactionJava5Annotations.xml",
 				"classpath*:scenarios/gui/swing/*.xml"
 			};
 			
