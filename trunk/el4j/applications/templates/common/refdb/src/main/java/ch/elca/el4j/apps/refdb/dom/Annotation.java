@@ -162,4 +162,10 @@ public class Annotation extends AbstractIntKeyIntOptimisticLockingDto {
 	public void setReference(Reference reference) {
 		m_reference = reference;
 	}
+	
+	/** {@inheritDoc} */
+	public String toString() {
+		return (m_reference == null ? "null" : m_reference.toString())
+			+ "/" + (m_annotator == null ? "unknown" : m_annotator);
+	}
 }
