@@ -94,6 +94,11 @@ public class Keyword extends AbstractIntKeyIntOptimisticLockingDto {
 	public void setDescription(String description) {
 		m_description = description;
 	}
+	
+	/** {@inheritDoc} */
+	public String toString() {
+		return m_name;
+	}
 
 	/**
 	 * {@inheritDoc}

@@ -128,4 +128,9 @@ public abstract class AbstractFile extends AbstractIntKeyIntOptimisticLockingDto
 	public void setReference(Reference reference) {
 		m_reference = reference;
 	}
+	
+	/** {@inheritDoc} */
+	public String toString() {
+		return m_name;
+	}
 }
