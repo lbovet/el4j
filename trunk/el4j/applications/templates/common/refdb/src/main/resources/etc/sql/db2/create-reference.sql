@@ -28,7 +28,7 @@ CREATE TABLE formalPublications (
   	NOT NULL REFERENCES referencesTable(keyId),
   authorName                VARCHAR(64),
   publisher                 VARCHAR(64),
-  pageNum                   SMALLINT
+  pageNum                   SMALLINT NOT NULL DEFAULT 0
 );
 
 CREATE TABLE books (
@@ -36,7 +36,7 @@ CREATE TABLE books (
   	NOT NULL REFERENCES referencesTable(keyId),
   authorName                VARCHAR(64),
   publisher                 VARCHAR(64),
-  pageNum                   SMALLINT,
+  pageNum                   SMALLINT NOT NULL DEFAULT 0,
   isbnNumber                VARCHAR(20)
 );
 
@@ -60,18 +60,6 @@ CREATE TABLE annotations (
   whenInserted              TIMESTAMP      NOT NULL,
   optimisticLockingVersion  INTEGER        NOT NULL
 );
-
-CREATE TABLE appendix
-(
-	keyid                       INTEGER NOT NULL
-		GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) 
-		PRIMARY KEY,
-	data                        BLOB NOT NULL,
-	filename                    VARCHAR(50) NOT NULL,
-	mimetype                    VARCHAR(30) NOT NULL,
-	optimisticLockingVersion  INTEGER NOT NULL
-)
-;
 
 CREATE TABLE files (
   keyId                     INTEGER        NOT NULL

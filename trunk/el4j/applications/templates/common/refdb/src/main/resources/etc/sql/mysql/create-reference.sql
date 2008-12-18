@@ -27,7 +27,7 @@ CREATE TABLE formalPublications (
   	NOT NULL REFERENCES referencesTable(keyId),
   authorName                VARCHAR(64),
   publisher                 VARCHAR(64),
-  pageNum                   SMALLINT
+  pageNum                   SMALLINT NOT NULL DEFAULT 0
 );
 
 CREATE TABLE books (
@@ -35,7 +35,7 @@ CREATE TABLE books (
   	NOT NULL REFERENCES referencesTable(keyId),
   authorName                VARCHAR(64),
   publisher                 VARCHAR(64),
-  pageNum                   SMALLINT,
+  pageNum                   SMALLINT NOT NULL DEFAULT 0,
   isbnNumber                VARCHAR(20)
 );
 
