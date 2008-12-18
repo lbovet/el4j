@@ -4,7 +4,6 @@
 -- Author: $Author$
 
 DROP TABLE files;
-DROP TABLE appendix;
 DROP TABLE annotations;
 DROP TABLE referenceKeywordRelationships;
 DROP TABLE books;
@@ -15,4 +14,3 @@ DROP TABLE referencesTable;
 DROP SEQUENCE reference_sequence;
 DROP SEQUENCE annotation_sequence;
 DROP SEQUENCE file_sequence;
-DROP SEQUENCE appendix_keyid_SEQ;

@@ -8,7 +8,6 @@
 CREATE SEQUENCE reference_sequence    INCREMENT BY 1 START WITH 10;
 CREATE SEQUENCE annotation_sequence   INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE file_sequence         INCREMENT BY 1 START WITH 1;
---CREATE SEQUENCE blob_sequence         INCREMENT BY 1 START WITH 1;
 
 CREATE TABLE referencesTable (
   keyId                     INTEGER        
@@ -34,7 +33,7 @@ CREATE TABLE formalPublications (
   	NOT NULL REFERENCES referencesTable(keyId),
   authorName                VARCHAR(64),
   publisher                 VARCHAR(64),
-  pageNum                   NUMBER(4)
+  pageNum                   NUMBER(4) DEFAULT 0 NOT NULL
 );
 
 CREATE TABLE books (
@@ -42,7 +41,7 @@ CREATE TABLE books (
   	NOT NULL REFERENCES referencesTable(keyId),
   authorName                VARCHAR(64),
   publisher                 VARCHAR(64),
-  pageNum                   NUMBER(4),
+  pageNum                   NUMBER(4) DEFAULT 0 NOT NULL,
   isbnNumber                VARCHAR(20)
 );
 
@@ -66,23 +65,6 @@ CREATE TABLE annotations (
   optimisticLockingVersion  INTEGER        NOT NULL
 );
 
-CREATE TABLE appendix
-(
-	keyid                       NUMBER(10) NOT NULL PRIMARY KEY,
-	data                        BLOB NOT NULL,
-	filename                    VARCHAR2(50) NOT NULL,
-	mimetype                    VARCHAR2(30) NOT NULL,
-	optimisticLockingVersion  NUMBER(10) DEFAULT 0 NOT NULL
-)
-;
-CREATE SEQUENCE appendix_keyid_SEQ
-INCREMENT BY 1
-START WITH 1
-NOMAXVALUE
-MINVALUE 1
-NOCYCLE
-NOCACHE
-NOORDER;
 CREATE TABLE files (
   keyId                     INTEGER        
   	NOT NULL PRIMARY KEY,
