@@ -102,44 +102,9 @@ public class HibernateFormalPublicationDao
 		List finalResult = new ArrayList();
 		while (it3.hasNext()) {
 			currentPublication = (FormalPublication) it3.next();
-			if (!(currentPublication instanceof Book)) {
-				finalResult.add(currentPublication);
-			}
+			finalResult.add(currentPublication);
 		}
 		return finalResult;
 	}
-	
-	/**
-	 * The result set just contains "real" formal publications.
-	 *
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<FormalPublication> getAll() throws DataAccessException {
-		//TODO MZE: Find a better solution. Perhaps rewrite the hibernate file.
-		List<FormalPublication> mixedFps = super.getAll();
-		List<FormalPublication> fps = new ArrayList<FormalPublication>();
-		for (FormalPublication fp : mixedFps) {
-			if (fp.getClass() == FormalPublication.class) {
-				fps.add(fp);
-			}
-		}
-		return fps;
-	}
-	
-	/** {@inheritDoc} */
-	@Override
-	public List<FormalPublication> getByName(String name)
-		throws DataAccessException, DataRetrievalFailureException {
-		//TODO MZE: Find a better solution. Perhaps rewrite the hibernate file.
-		List<FormalPublication> mixedFps = super.getByName(name);
-		List<FormalPublication> fps = new ArrayList<FormalPublication>();
-		for (FormalPublication fp : mixedFps) {
-			if (fp.getClass() == FormalPublication.class) {
-				fps.add(fp);
-			}
-		}
-		return fps;
-	}
+
 }

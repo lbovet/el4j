@@ -40,7 +40,7 @@ import org.hibernate.validator.Pattern;
 @Indexed
 @Table(name = "BOOKS")
 @PrimaryKeyJoinColumn(name = "KEYTOREFERENCE")
-public class Book extends FormalPublication {
+public class Book extends AbstractFormalPublication {
 	
 	/** See corresponding getter for informations. */
 	private final String m_type = "Book";
