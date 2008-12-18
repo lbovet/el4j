@@ -23,9 +23,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.search.annotations.Indexed;
-import org.hibernate.validator.Length;
-import org.hibernate.validator.Min;
-import org.hibernate.validator.NotNull;
 
 /**
  * FormalPublication domain object. This class is a reference and describes a
@@ -44,77 +41,10 @@ import org.hibernate.validator.NotNull;
 @Indexed
 @Table(name = "FORMALPUBLICATIONS")
 @PrimaryKeyJoinColumn(name = "KEYTOREFERENCE")
-public class FormalPublication extends Reference {
+public class FormalPublication extends AbstractFormalPublication {
 	
 	/** See corresponding getter for informations. */
 	private final String m_type = "FormalPublication";
-	
-	/**
-	 * Name of the author.
-	 */
-	private String m_authorName;
-
-	/**
-	 * Name of the publisher.
-	 */
-	private String m_publisher;
-
-	/**
-	 * Number pages of the publication.
-	 */
-	private int m_pageNum;
-
-	// Checkstyle: MagicNumber off
-	
-	/**
-	 * @return Returns the authorName.
-	 */
-	@NotNull
-	@Length(min = 3)
-	public String getAuthorName() {
-		return m_authorName;
-	}
-	
-	/**
-	 * @param authorName
-	 *            The authorName to set.
-	 */
-	public void setAuthorName(String authorName) {
-		m_authorName = authorName;
-	}
-
-	/**
-	 * @return Returns the pageNum.
-	 */
-	@Min(0)
-	public int getPageNum() {
-		return m_pageNum;
-	}
-	
-	// Checkstyle: MagicNumber on
-	
-	/**
-	 * @param pageNum
-	 *            The pageNum to set.
-	 */
-	public void setPageNum(int pageNum) {
-		m_pageNum = pageNum;
-	}
-
-	/**
-	 * @return Returns the publisher.
-	 */
-	public String getPublisher() {
-		return m_publisher;
-	}
-
-	/**
-	 * @param publisher
-	 *            The publisher to set.
-	 */
-	public void setPublisher(String publisher) {
-		m_publisher = publisher;
-	}
 	
 	/** {@inheritDoc} */
 	@Transient
