@@ -60,7 +60,7 @@
 			<value>oracle.jdbc.driver.OracleDriver</value>
 		</property>
 		<property name="jdbcUrl">
-			<value>jdbc:oracle:thin:@tulipe.elca.ch:1521:d92a</value>
+			<value>jdbc:oracle:thin:@srv11645.elca.ch:1521:DL04</value>
 		</property>
 		<property name="user">
 			<value>LEAF2</value>
