@@ -56,7 +56,7 @@ public class OracleTypedImpl extends AbstractWrapper implements Typed {
 			Long keyAsLong = (Long) key;
 			if (keyAsLong.equals(0L)) {
 				result = KeyType.NULL;
-			} else if (0L < keyAsLong && keyAsLong < (1L << 31)) {
+			} else if (0L < keyAsLong && keyAsLong <= (2000000000)) {
 				result = KeyType.REMOTE;
 			} else {
 				result = KeyType.LOCAL;
@@ -65,7 +65,7 @@ public class OracleTypedImpl extends AbstractWrapper implements Typed {
 			Integer keyAsInt = (Integer) key;
 			if (keyAsInt.equals(0)) {
 				result = KeyType.NULL;
-			} else if (0 < keyAsInt && keyAsInt < (1 << 31)) {
+			} else if (0 < keyAsInt && keyAsInt <= (2000000000)) {
 				result = KeyType.REMOTE;
 			} else {
 				result = KeyType.LOCAL;
