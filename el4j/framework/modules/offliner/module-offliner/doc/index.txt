@@ -1,0 +1,21 @@
+Index of all offliner documentation
+
+offliner.txt	Main page
+- Packages.txt offliner packages documentation
+- offliner-spec.txt offliner specifications
+-- KeyVersion.txt Key and version handling
+-- offliner-strategies.txt Design document for offliner strategies.
+-- tests.txt Tests and their meaning.
+
+- offliner-impl.txt offliner implementation details
+-- offlining.txt offline operation.
+-- sync.txt Synchronization and conflict resolution
+-- mappingentries.txt Mapping entries.
+-- keymgmt.txt Key management implementation
+
+- graphwalker.txt Graph walker operation.
+
+- Aspects.txt Aspects motivation and implementation
+-- Aspects-list.txt List of aspect implementations
+
+- versions.txt offliner versions.

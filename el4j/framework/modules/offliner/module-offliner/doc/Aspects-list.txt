@@ -1,0 +1,98 @@
+H1 List of all wrappables and implementations in the offliner
+
+H2 KeyedVersioned
+    Provides get/set methods for key and version.
+
+	<pre>	
+	Serializable getKey();
+	void setKey(Serializable key);
+	Object getVersion();
+	void setVersion(Object version);
+	Class<?> getKeyClass();
+	Class<?> getVersionClass();
+	</pre>
+	
+H3 KeyedVersionedHibernateImpl
+	Gets the information from hibernate's ClassMetadata over the SessionFactory.
+H3 KeyedVersionedReflectionImpl
+	Uses reflection to get the bean properties "key" and "version".
+H3 (Possible) KeyedVersionedBaseClassImpl
+	Where a project already has a base class for domain objects providing access to key and version, use it directly.
+	
+H2 Linked
+	Provides access to all links to other domain objects a domain object holds.
+	
+	<pre>
+	String[] getLinkNames();
+	String[] getCollectionLinkNames();
+	Object getlinkByName(String linkName);
+	Collection<?> getCollectionLinkByName(String name);
+	Object[] getAllLinked();
+	</pre>
+	
+H3 LinkedHibernateImpl
+	Uses hibernate metadata to collect links and checks annotations to discard invrse ones.
+H3 (in test packages) 
+	Custom implementations for test classes that can vary both for the class and provide two different implementations for one class (Person can have a ParentLinkImpl and a ChildLinkImpl). 
+H3 (Possible) 
+	Logical definition of link using custom metadata (i.e. in combination with dbbrowser DetailWidget-like access to classes).
+
+H2 Mapped
+	Provides generic access to the MappingEntry for an object. The entry is currently detached from the object and needs to be saved back, but this is not required.
+	
+	<pre>
+	MappingEntry getEntry();
+	void setEntry(MappingEntry entry);
+	</pre>
+	
+H3 DatabaseMappedImpl
+	Uses a database table and a dao. Keys must be of type long. (On the client)
+H3 MemoryMappedImpl
+	Uses an in-memory collection. (On the server)
+H3 (User implementation)
+	Probably users will implement a database solution which uses different tables for different key types. This is required if the key type is not "long".
+	
+H2 Typed
+	Provides access to key type information.
+	
+	<pre>
+	public enum KeyType {NULL, LOCAL, REMOTE;}
+	KeyType getType();
+	void nullKey();
+	</pre>
+	
+H3 TypedImpl
+	Mandates long keys and uses zero/positive/negative to distinguish types.
+H3 (User implementation) 
+	Users will as a rule have their own implementation and key type, the provided one is more of an example than a feature. Oracle users must customize as negative keys are not allowed there.
+	
+H2 UniqueKeyed
+	Associates a unique (across class boundaries) key to each domain object. Required for identity management. 
+	
+	<pre>
+	UniqueKey getUniqueKey();
+	void setUniqueKey(UniqueKey key) throws IllegalArgumentException;
+	</pre>
+	
+H3 UniqueKeyedImpl
+	Uses a string of the form "classname:key" where toString() is used on the key class.
+H3 (Possible) 
+	Something more effcient than comparing strings. An int would do for the class type, if the key is numeric too (which it often is) that could be compared directly too.
+	
+H2 OffliningStateAspect
+	Allows us to query an object's state with respect to synchronization.
+	<pre>
+	OffliningState getState();
+	void setState(OffliningState state);
+	</pre>
+	
+	The states are:
+	 $ NEW : Created in the local database.
+	 $ OFFLINED : Created by offline() and unchanged in the local database since then.
+	 $ CHANGED : Changed in the local database since the last synchronization.
+	 $ DELETED : Deleted locally.
+	 $ PROCESSED : Processed during the current synchronization already.
+	 $ CONFLICTED : Conflict occurred during the current synchronization.
+	
+H3 OffliningStateTableImpl
+	Implementation using an im-memory table.
