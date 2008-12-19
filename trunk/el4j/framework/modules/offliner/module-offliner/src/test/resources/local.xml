@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+<!-- Convenience Hibernate Session Factory Bean: it autocollects all @entity-annotated classes in
+		the Java packages given under the property autoDetectEntityPackage -->
+	<bean id="sessionFactory" class="ch.elca.el4j.services.persistence.hibernate.entityfinder.EntityDetectorAnnotationSessionFactoryBean">
+	
+			<!-- the package that entity auto-detection will browse.	-->
+		<property name="autoDetectEntityPackage">
+			<value>ch.elca.el4j.services.persistence.hibernate.offlining.testclasses</value>
+		</property>
+		
+		<property name="annotatedClasses">
+			<list>
+				<!-- only add here entities that are not automatically discovered
+					(ie, those that do not stand inside autoDetectEntityPackage)
+					<value>ch.elca.el4j.dom.MyEntity</value>
+				-->
+				<value>ch.elca.el4j.services.persistence.hibernate.offlining.impl.MappingEntry</value>
+				<value>ch.elca.el4j.services.persistence.hibernate.offlining.util.OfflinerProperty</value>
+			</list>
+		</property>
+		
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${databaseDialect}</prop>
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>
+				<prop key="hibernate.max_fetch_depth">3</prop>
+			</props>
+		</property>
+		<property name="useTransactionAwareDataSource">
+			<value>true</value>
+		</property>
+		<property name="dataSource">
+			<ref bean="dataSource"/>
+		</property>
+	</bean>
+	
+	<!-- This scan finds the extra mapping table dao for the local database. -->
+	<context:component-scan use-default-filters="false"
+		annotation-config="false"
+		base-package="ch.elca.el4j.services.persistence.hibernate.offlining.impl">
+		<context:include-filter type="annotation"
+			expression="ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao" />
+	</context:component-scan>
+	
+	<bean id="daoRegistry"
+		class="ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry">
+		<property name="namePattern" value="*Dao" />
+	</bean>
+			
+	<!-- The remote proxy beans. -->
+	
+	<bean id="daoRegistryRemote"
+		class="ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry">
+		<property name="namePattern" value="*Rao" />
+	</bean>
+	
+	<!-- A "RAO" is a "remote access object", to keep them distinct from the
+		local "DAO" ones. -->
+
+	<bean id="mapDao" class="ch.elca.el4j.services.persistence.hibernate.offlining.impl.MappingTableDao" />
+	<bean id="propertyDao" class="ch.elca.el4j.services.persistence.hibernate.offlining.util.PropertyDao" />
+	
+	<bean id="mapped" class="ch.elca.el4j.services.persistence.hibernate.offlining.objectwrapper.impl.DatabaseMappedImpl">
+		<constructor-arg ref="mapDao" />
+	</bean>
+		
+	<!-- REMOTING -->
+	
+	<bean id="rmiProtocol" class="ch.elca.el4j.services.remoting.protocol.Rmi">
+		<property name="serviceHost">
+			<value>${rmi.host}</value>
+		</property>
+		<property name="servicePort">
+			<value>${rmi.port}</value>
+		</property>
+		<!--
+		<property name="implicitContextPassingRegistry">
+			<ref local="rmiImplicitContextPassingRegistry" />
+		</property>
+		-->	
+	</bean>
+
+	<!--
+	<bean id="rmiImplicitContextPassingRegistry"
+		class="ch.elca.el4j.core.contextpassing.DefaultImplicitContextPassingRegistry" />
+	-->
+		
+	<bean id="server" class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
+		<property name="remoteProtocol">
+			<ref bean="rmiProtocol" />
+		</property>
+		<property name="serviceInterface">
+			<value>ch.elca.el4j.services.persistence.hibernate.offlining.impl.OffliningServer</value>
+		</property>
+		<property name="serviceName">
+			<value>Offlining.Server</value>
+		</property>
+	</bean>
+	
+	<bean id="personRao" class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
+		<property name="remoteProtocol">
+			<ref bean="rmiProtocol" />
+		</property>
+		<property name="serviceInterface">
+			<value>ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHibernateDao</value>
+		</property>
+		<property name="serviceName">
+			<value>Offlining.PersonDao</value>
+		</property>
+	</bean>
+	
+	<bean id="simplePersonRao" class="ch.elca.el4j.services.remoting.RemotingProxyFactoryBean">
+		<property name="remoteProtocol">
+			<ref bean="rmiProtocol" />
+		</property>
+		<property name="serviceInterface">
+			<value>ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHibernateDao</value>
+		</property>
+		<property name="serviceName">
+			<value>Offlining.SimplePersonDao</value>
+		</property>
+	</bean>
+</beans>

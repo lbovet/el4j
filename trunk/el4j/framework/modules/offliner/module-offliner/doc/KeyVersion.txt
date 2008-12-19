@@ -1,0 +1,76 @@
+H1 Offliner Key and Version handling
+
+Hibernate assumes it alone is responsible for the primary keys and versions of persistent objects and the user will never do something unusual like change them himself. Unfortunately, when dealing with two databases, we have to do exactly this and cheat, hack and trick our way around hibernate's assumptions.
+
+H2 Hibernate's assumptions
+
+- An object with a key of 0 (<i>For numeric keys. Possibly <code>null</code> for string keys, not tested.</i>) is new. It will recieve a key on saving into the database. The version field is saved as it is, no version conflicts can occur for new objects.
+- An object with a non-zero key is assumed to be a saved instance. Hibernate looks for the database entry with this key and
+-- If none exists, assumes the object was deleted in the meantime. Optimistic locking conflict.
+-- If it exists, compares the versions:
+--- If they are equal, the object is saved and the version incremented.
+--- If the versions differ, a versioning (optimistic locking) conflict is thrown.
+
+H2 Getting past these assumptions
+
+The basic principle of "cheating" hibernate is <i>whenever an object is saved to a database, it must carry the exact key and version it last had when it came from that database</i>.
+
+The second principle is whenever an object is newly saved to the local database, its key must be nulled first.
+
+From this, it is clear that we somewhere have to store metadata for each object holding at least the "other" key and version, so we can swap them with the object's current ones when we move it from one database to the next.
+
+H2 Metadata implementation
+
+In fact we hold all data in the metadata - henceforth known as the mapping entry - that is, local and remote keys and versions. This allows us to tell easily when an object has been changed: For X being one of "local" or "remote", if an object has an X key then it has been changed since the last offline/sync (and thus needs some kind of update in the next one) if and only if its X version differs from its X base version in the mapping entry.
+
+The current state of an object can be found by looking at its key: If is from the REMOTE subset of all possible keys (as defined in the TypedAspect implementation) it is from the database, otherwise (LOCAL) from the local database (NULL keys are an exception in any case, the offliner should never see any when moving objects between databases).
+
+The mapping entry stores UniqueKey instances instead of the actual keys. As unique keys and actual keys can be converted back and forth, this is just an indirection and not a problem.
+
+H2 Key and Version Modification
+The normal operations copy objects try and from one database to the other. They fail if changed data would be overwritten. Force operations are meant for conflict resolution and overwrite their target even if it has been changed.
+
+Note that a force(obj) will only force obj but not its children. Therefore, forcing objects which are dependent-conflicted will not work (and leave the mapping entry unchanged). The object that caused the conflict first must be determined from the conflict type and forced.
+
+H3 Adding an object to the local database that is new there
+1. The object's remote key and version are saved to the mapping entry to allow us to copy it back.
+2. The object's key is nulled and the object saved to the local database.
+3. The object's local key and version are saved to the mapping entry.
+
+H3 Updating an object in the local database with a new server version
+We assume the server version is greater than the remote base one. If they are equal, we can skip the save; if it is smaller something is wrong with the server. We are only allowed to overwrite a local object of local base version (i.e. not a changed local object) except in a force operation.
+1. The remote version is copied into the mapping entry.
+2. The object's key and version are set to the current local one (queried from the local database) to allow the overwrite.
+3. The object's local version is copied to the metadata from the saved instance. (Unless the last step failed).
+
+H3 Synchronizing a locally changed object with the server (Phase 1)
+This procedure is done on the server.
+1. The object's local version is saved temporarily.
+2. The object's key and version are set to the remote ones.
+3. The update is performed.
+If the update suceeds,
+4. The object's remote version is saved in the mapping entry.
+5. The object's local version is set to the one saved in step one. This makes the object "unchanged".
+If the update fails, the mapping entry versions are left as they are so the object does not appear unchanged. The version is left one the remote one in case the user needs to investigate it from the Conflict object.
+
+H3 Synchronizing a new object in the local database with the server (Phase 1)
+1. The object's local version is saved temporarily.
+2. The key is nulled.
+3. The object is saved to the database. (If it fails, we abort here.)
+4. The local key is saved from the temporary to the mapping entry.
+5. The remote key and version are saved to the mapping entry.
+
+H3 Synchronizing a remotely changed object (Phase 3)
+The object is processed as in "updating an object in the local database with a new server version". In fact, phase 3 just fires an offline operation on all changed objects.
+
+H3 Forcing an overwrite in the local database
+1. The object's remote version in the metadata is set to its current remote version.
+2. The key and version are set from the current local one to force the update.
+3. The object is saved to the local database.
+4. The local version from the saved object is saved to the mapping entry.
+
+H3 Forcing an overwrite on the server
+1. The object's local version is saved to the mapping entry.
+2. The remote instance is loaded from the database and the object's key and version set from it.
+3. The object is saved to the database.
+4. The object's remote version is saved into the mapping entry.

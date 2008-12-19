@@ -1,0 +1,93 @@
+H1 Offliner test cases
+
+H2 Running tests
+
+As the tests use a server accessible over RMI, before running tests the server must be started by running the main class from ServerMain.
+
+H2 Strategy-independent tests
+
+H3 testOffline
+Check offline operation works.
+Check dependent objects are offlined too.
+
+H3 testOfflineIdentity
+Check several offline operations in sequence do not produce clones in the local database.
+
+H3 testOfflineServerNew
+Check offline corrrectly updates new objects from the server.
+
+H3 testOfflineFailOnNew
+Check the local database fails if the local databased instance was updated.
+
+H3 testForceRemote
+Create a conflict then resolve it by forcing the remote version.
+Also check a force on a dependent conflict fails.
+
+H3 testForceLocal
+Create a conflict then resolve it by forcing the local version.
+Also check a force on a dependent conflict fails.
+
+H3 testDeleteResolution
+Provoke a deletion conflict and ensure the resolutuion strategy works.
+
+H2 Strategy dependent tests
+
+All these tests are rerun with all chunking strategies. Each strategy must derive a subclass.
+
+H3 testIdentity
+Check several offline operations in sequence do not produce clones in the local database.
+
+H3 testOfflineAndCommit
+Read test data and save it back again.
+This is simple offline-commit operation without modifying anything in the local database.
+It must not produce any problems.
+
+H3 testModification
+Modify object contents and references in the local database.
+Ensure they are committed correctly.
+
+H3 testCreateInOffline
+Create new objects in the local database.
+They only acquire a server key on synchronization. 
+Ensure they are written back correctly.
+
+H3 testDelete
+Delete an object in the local database causing it to be marked for deletion
+in the metadata and deleted on sync. Ensure this happens.
+	 
+H3 testDeleteConflict
+Delete an object in the local database that has a non-offlined object
+pointing to it on the server.
+Ensure the conflict is reported correctly.
+
+H3 testDeleteOrder
+Ensure deletes are performed in the correct order on the server
+(important when there are references between the objects to delete).
+Ensure deletes that already fail in the local database do not contribute to the order.
+
+H3 testWrongDeleteOrder
+Force a conflict by messing with the delete order.
+Most of this method is like testDeleteOrder,
+except for a modification to break the delete order.
+	 
+H3 testConcurrentFailure
+Modify data on the server which is also in the local database,
+then try and recommit.
+Check the conflict and its dependent conflicts are reported correctly.
+
+H3 testDependentConflict
+Check that in a graph of objects where some are conflicted,
+those that are not conflicted are updated correctly.
+	 
+H3 testServerVersion
+Ensure that a server version > 0 of data does not change offliner semantics.
+
+H3 testEvict
+Test the offliner's evict function that removes an object
+from the local database without causing a delete on the server.
+
+H3 testMultipleSync
+Check multiple synchronizations work as expected.
+Cases:
+- Change in local database.
+- Change on server.

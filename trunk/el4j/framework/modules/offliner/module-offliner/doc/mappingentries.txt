@@ -1,0 +1,21 @@
+H1 Mapping entries
+Each domain object has offliner metadata associated with it. This is represented by the MappingEntry class and can be accessed as if it were a bean property of the domain class via the aspects package.
+
+Offliner metadata is persistent in the local database. However, where an object's metadata would only contain default values or values derivable from the object itself it is allowed not to store any metadata and return a new instance of MappingEntry in the getter.
+
+Mapping entries contain the following properties:
+ - Local and remote unique keys that identify the object.
+ - The base version under which the object was last offlined.
+ - A delete version. This is 0 unless the object is pending deletion in which case it indicates the order in which the objects must be deleted.
+ 
+The local database status was a property of hte mapping entry in 1.1. It is now recompupted when needed based on the object an the mapping entry. Because the mapping entry for RMI efficiency reasons cannot contain a link to its object, offline status is a separate aspect.
+It takes the following values:
+- NEW if an object has been created in the local database and never synchronized.
+- OFFLINED if the object is offlined and has not been changed in the local database.
+- CHANGED if the object is offlined and has been changed in the local database.
+- DELETED if the object has been deleted from the local database but is pending deletion on the server.
+The status can be queried by comparing the version and keys of the object with those of the mapping entry.
+In addition, during synchronization operations the following states can occur:
+- PROCESSED if the entry has been processed successfully in the current sync operation.
+- CONFLICTED if the entry has caused a conflict.
+These must be set back to other values (PROCESSED becomes OFFLINED, CONFLICTED CHANGED or DELETED) when the sync operation ends even if it ends in failure.
