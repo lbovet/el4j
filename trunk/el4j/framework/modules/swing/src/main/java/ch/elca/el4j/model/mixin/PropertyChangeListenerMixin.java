@@ -191,6 +191,11 @@ public class PropertyChangeListenerMixin extends
 	/** {@inheritDoc} */
 	protected void firePropertyChange(String key, Object oldValue, Object newValue) {
 		s_logger.debug("Fire " + key + ": " + oldValue + " -> " + newValue);
+		// Do not fire a property change when old and new value are null
+		// This case is not handled in the propertyChangeSupport we call
+		if (oldValue == null && newValue == null) {
+			return;
+		}
 		m_changeSupport.firePropertyChange(key, oldValue, newValue);
 	}
 
