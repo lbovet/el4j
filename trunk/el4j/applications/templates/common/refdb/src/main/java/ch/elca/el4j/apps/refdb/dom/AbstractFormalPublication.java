@@ -58,8 +58,8 @@ public abstract class AbstractFormalPublication extends Reference {
 	/**
 	 * @return Returns the authorName.
 	 */
-	@NotNull
-	@Length(min = 3)
+	@NotNull(message = "{AbstractFormalPublication.authorName}")
+	@Length(min = 3, message = "{AbstractFormalPublication.authorName}")
 	public String getAuthorName() {
 		return m_authorName;
 	}
@@ -75,7 +75,7 @@ public abstract class AbstractFormalPublication extends Reference {
 	/**
 	 * @return Returns the pageNum.
 	 */
-	@Min(0)
+	@Min(value = 0, message = "{AbstractFormalPublication.pageNum}")
 	public int getPageNum() {
 		return m_pageNum;
 	}
