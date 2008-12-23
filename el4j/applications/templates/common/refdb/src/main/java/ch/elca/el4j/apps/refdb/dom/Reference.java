@@ -207,8 +207,8 @@ public abstract class Reference extends AbstractIndexedIntKeyIntOptimisticLockin
 	/**
 	 * @return Returns the name.
 	 */
-	@NotNull
-	@Length(min = 3)
+	@NotNull(message = "{Reference.name}")
+	@Length(min = 3, message = "{Reference.name}")
 	public String getName() {
 		return m_name;
 	}
@@ -330,7 +330,7 @@ public abstract class Reference extends AbstractIndexedIntKeyIntOptimisticLockin
 	 * Checks whether the reference is valid. Should always be true.
 	 * @return true if the reference is valid, false otherwise
 	 */
-	@AssertTrue
+	@AssertTrue(message = "{Reference.dateInvariant}")
 	public boolean invariant() {
 		// Ensure that the creation date of the referenced document is
 		// smaller than its insertion date.
