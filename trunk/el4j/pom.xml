@@ -2009,6 +2009,11 @@
 				<artifactId>cobertura</artifactId>
 				<version>1.9-el4j_20081202_1200</version>
 			</dependency>
+			<dependency>
+				<groupId>net.sourceforge.htmlunit</groupId>
+				<artifactId>htmlunit</artifactId>
+				<version>2.3</version>
+			</dependency>
 
 			<!-- JavaX projects -->
 			<dependency>
