@@ -40,6 +40,7 @@ public class HibernateIdentityFixerTest extends AbstractIdentityFixerTest {
 	protected String[] getIncludeConfigLocations() {
 		return new String[] {
 			"classpath*:mandatory/*.xml",
+			"classpath*:mandatory/refdb/*.xml",
 			"classpath*:scenarios/db/raw/*.xml",
 			"classpath*:scenarios/dataaccess/hibernate/*.xml",
 			"classpath*:scenarios/dataaccess/hibernate/refdb/*.xml",

@@ -7,11 +7,9 @@
 	<!-- $URL$ -->
 	<!-- $Date$ -->
 	<!-- $Author$ -->
+
+	<!-- Allows to register DAOs. Automatically collects all GenericDaos from the application context -->
+	<bean id="daoRegistry"
+		class="ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry" />
 	
-	<bean id="referenceService"
-		class="ch.elca.el4j.apps.refdb.service.impl.DefaultReferenceService">
-		<property name="daoRegistry">
-			<ref bean="daoRegistry"/>
-		</property>
-	</bean>
 </beans>
