@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.tests.refdb.dao;
+package ch.elca.el4j.tests.refdb.extent;
 
 import java.util.List;
 
@@ -35,6 +35,7 @@ import ch.elca.el4j.tests.person.dom.Brain;
 import ch.elca.el4j.tests.person.dom.Person;
 import ch.elca.el4j.tests.person.dom.Tooth;
 import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
+
 import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentCollection.collection;
 import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntity.entity;
 
@@ -65,6 +66,7 @@ public class DataExtentTest extends AbstractTestCaseBase {
 	protected String[] getIncludeConfigLocations() {
 		return new String[] {
 			"classpath*:mandatory/*.xml",
+			"classpath*:mandatory/refdb/*.xml",
 			"classpath*:scenarios/db/raw/*.xml",
 			"classpath*:scenarios/dataaccess/*.xml",
 			"classpath*:scenarios/dataaccess/hibernate/*.xml",
@@ -76,6 +78,7 @@ public class DataExtentTest extends AbstractTestCaseBase {
 	 * {@inheritDoc}
 	 */
 	protected String[] getExcludeConfigLocations() {
+		// use extent-test-hibernate-config.xml instead
 		return new String[] {
 			"classpath*:scenarios/dataaccess/hibernate/refdb/refdb-core-hibernate-config.xml"};
 	}
