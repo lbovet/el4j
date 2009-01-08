@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.tests.refdb.dao;
+package ch.elca.el4j.tests.refdb.extent;
 
 
 import static org.junit.Assert.fail;
