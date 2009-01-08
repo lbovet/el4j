@@ -7,20 +7,8 @@
 	<!-- $URL$ -->
 	<!-- $Date$ -->
 	<!-- $Author$ -->
-
-	<!-- Allows to register DAOs. Automatically collects all GenericDaos from the application context -->
-	<bean id="daoRegistry"
-		class="ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry" />
-	
-	<bean id="keywordService"
-		class="ch.elca.el4j.apps.keyword.service.impl.DefaultKeywordService">
-		<property name="daoRegistry">
-			<ref bean="daoRegistry"/>
-		</property>
-	</bean>
 	
 	<!-- Declaration of a sample interceptor (to see how it is done) -->
-	
 	<bean id="testInterceptor" class="org.springframework.aop.interceptor.DebugInterceptor">
 	</bean>
 	

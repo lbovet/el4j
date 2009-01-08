@@ -67,6 +67,7 @@ public final class MainStandaloneMDI {
 			// $$ BEANS INCLUDE $$
 			String[] applicationContextPaths = {
 				"classpath*:mandatory/*.xml",
+				"classpath*:mandatory/refdb/*.xml",
 				"classpath*:scenarios/db/raw/*.xml",
 				"classpath*:scenarios/dataaccess/hibernate/*.xml",
 				"classpath*:scenarios/dataaccess/hibernate/refdb/*.xml",

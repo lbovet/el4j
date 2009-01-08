@@ -64,12 +64,13 @@ public class HibernateKeywordDaoTest
 			"classpath*:scenarios/db/raw/*.xml",
 			"classpath*:scenarios/dataaccess/hibernate/*.xml",
 			"classpath*:scenarios/dataaccess/hibernate/keyword/*.xml",
+			"classpath*:optional/keyword/test-interceptor-config.xml",
 			"classpath*:optional/interception/transactionJava5Annotations.xml"};
 	}
 	
 	
 	/**
-	 * This test inserts five keywords and performs different searchs on it.
+	 * This test inserts five keywords and performs different searches on it.
 	 *  TODO For now, the full criteria converter only works with hibernate
 	 *   therefore we only put the test here.
 	 *

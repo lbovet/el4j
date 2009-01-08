@@ -8,8 +8,8 @@
 	<!-- $Date$ -->
 	<!-- $Author$ -->
 	
-	<bean id="referenceService"
-		class="ch.elca.el4j.apps.refdb.service.impl.DefaultReferenceService">
+	<bean id="keywordService"
+		class="ch.elca.el4j.apps.keyword.service.impl.DefaultKeywordService">
 		<property name="daoRegistry">
 			<ref bean="daoRegistry"/>
 		</property>

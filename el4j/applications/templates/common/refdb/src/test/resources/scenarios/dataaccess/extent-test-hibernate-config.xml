@@ -48,7 +48,6 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${databaseDialect}</prop>
-				<!-- <prop key="hibernate.hbm2ddl.auto">create</prop>-->
 				<prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>
 				<prop key="hibernate.max_fetch_depth">0</prop>
 				<prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.RAMDirectoryProvider</prop>

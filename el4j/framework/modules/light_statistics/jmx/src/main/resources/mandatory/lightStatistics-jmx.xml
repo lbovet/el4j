@@ -12,7 +12,7 @@
 	<!-- $Author$ -->
 	
 	<!-- The light statistics reporter bean. Override the format string to
-		fulfil your needs.
+		fulfill your needs.
 		
 		Note: Fields are in the range form 0 to 25 -->
 	<bean id="lightStatisticsReporter"
