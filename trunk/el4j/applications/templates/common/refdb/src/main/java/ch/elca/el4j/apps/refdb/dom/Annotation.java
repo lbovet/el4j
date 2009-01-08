@@ -16,16 +16,29 @@
  */
 package ch.elca.el4j.apps.refdb.dom;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Clob;
+import java.sql.SQLException;
 import java.util.Date;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.hibernate.Hibernate;
 import org.hibernate.validator.NotNull;
 
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
@@ -50,6 +63,11 @@ import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimistic
 	sequenceName = "annotation_sequence")
 public class Annotation extends AbstractIntKeyIntOptimisticLockingDto {
 	/**
+	 * Private logger.
+	 */
+	private static Log s_logger = LogFactory.getLog(Annotation.class);
+	
+	/**
 	 * Related reference.
 	 */
 	private Reference m_reference;
@@ -68,7 +86,10 @@ public class Annotation extends AbstractIntKeyIntOptimisticLockingDto {
 	/**
 	 * Comment that the annotator makes about the reference.
 	 */
-	private String m_content;
+	private String m_content = null;
+	
+	/** See corresponding setter method for more details. */
+	private Clob m_data;
 
 	/**
 	 * Date when does the annotation has been inserted (created
@@ -80,6 +101,7 @@ public class Annotation extends AbstractIntKeyIntOptimisticLockingDto {
 	 * @return Returns the annotator.
 	 */
 	@NotNull
+	@Column(length = 64)
 	public String getAnnotator() {
 		return m_annotator;
 	}
@@ -95,8 +117,48 @@ public class Annotation extends AbstractIntKeyIntOptimisticLockingDto {
 	/**
 	 * @return Returns the content.
 	 */
-	@NotNull
+	@Transient
 	public String getContent() {
+		if (m_content == null) {
+			InputStream in = null;
+			ByteArrayOutputStream out = null;
+			String primitiveData = null;
+			Clob clob = getData();
+			if (clob != null) {
+				try {
+					in = clob.getAsciiStream();
+					out = new ByteArrayOutputStream();
+					byte[] buffer = new byte[4096];
+					int readBytes;
+					while ((readBytes = in.read(buffer)) > 0) {
+						out.write(buffer, 0, readBytes);
+					}
+					primitiveData = out.toString();
+				} catch (IOException e) {
+					s_logger.error("Error while reading content stream.", e);
+				} catch (SQLException e) {
+					s_logger.error("Error while retrieving content.", e);
+				} finally {
+					if (in != null) {
+						try {
+							in.close();
+						} catch (Exception e) {
+							s_logger.error("Error while closing input stream.");
+						}
+					}
+					if (out != null) {
+						try {
+							out.close();
+						} catch (Exception e) {
+							s_logger.error("Error while closing output stream.");
+						}
+					}
+				}
+			}
+			if (primitiveData != null) {
+				m_content = primitiveData.length() > 0 ? primitiveData : null;
+			}
+		}
 		return m_content;
 	}
 
@@ -105,7 +167,33 @@ public class Annotation extends AbstractIntKeyIntOptimisticLockingDto {
 	 *            The content to set.
 	 */
 	public void setContent(String content) {
-		m_content = content;
+		if (content != null && content.length() > 0) {
+			setData(Hibernate.createClob(content));
+			m_content = content;
+		} else {
+			setData(null);
+			m_content = null;
+		}
+	}
+	
+	/**
+	 * Content of the file converted to Blob. Used by hibernate only!
+	 * @return Returns the data.
+	 */
+	@NotNull
+	@Lob
+	@Basic(fetch = FetchType.EAGER)
+	@Column(name = "content")
+	public Clob getData() {
+		return m_data;
+	}
+	
+	/**
+	 * Set the content as Blob. Used by hibernate only!
+	 * @param data    the data to set.
+	 */
+	public void setData(Clob data) {
+		m_data = data;
 	}
 
 	/**
