@@ -32,6 +32,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.validator.NotNull;
 
+import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
+
 /**
  * Person domain object.
  *
@@ -47,7 +49,7 @@ import org.hibernate.validator.NotNull;
 @Entity
 @Table(name = "person")
 @SequenceGenerator(name = "keyid_generator", sequenceName = "person_sequence")
-public class Person extends AbstractDomainObject {
+public class Person extends AbstractIntKeyIntOptimisticLockingDto {
 	
 	/** See corresponding setter method for more details. */
 	private String m_name;
