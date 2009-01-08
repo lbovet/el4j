@@ -20,9 +20,11 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
+import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
+
 @Entity
 @SequenceGenerator(name = "keyid_generator", sequenceName = "tooth_sequence")
-public class Tooth extends AbstractDomainObject {
+public class Tooth extends AbstractIntKeyIntOptimisticLockingDto {
 	private int m_age;
 	private Person m_owner;
 	
