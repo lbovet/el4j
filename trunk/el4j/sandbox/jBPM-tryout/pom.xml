@@ -10,8 +10,8 @@
 	<!-- Author: $Author$ -->
 
 	<parent>
-		<groupId>ch.elca.el4j.applications</groupId>
-		<artifactId>el4j-applications</artifactId>
+		<groupId>ch.elca.el4j.internal.applications</groupId>
+		<artifactId>el4j-internal-applications</artifactId>
 		<version>1.6-SNAPSHOT</version>
 	</parent>
 
@@ -38,45 +38,6 @@
 		</dependencies>
 	</dependencyManagement>
 
-	<repositories>
-		<repository>
-		<snapshots>
-			<enabled>true</enabled>
-		</snapshots>
-		<releases>
-			<enabled>false</enabled>
-		</releases>
-		<id>el4jSnapshotRepositoryInternal</id>
-		<name>
-			Internal snapshot repository of the EL4J project
-		</name>
-		<url>http://leaffy.elca.ch/java/maven2snapshots</url>
-		</repository>
-		<repository>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<id>el4jReleaseRepositoryExternal</id>
-			<name>External release repository of the EL4J project</name>
-			<url>http://el4.elca-services.ch/el4j/maven2repository</url>
-		</repository>
-		<repository>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<id>el4jSnapshotRepositoryExternal</id>
-			<!--id>apache.snapshots</id-->
-			<name>External snapshot repository of the EL4J project</name>
-			<url>http://el4.elca-services.ch/el4j/maven2snapshots</url>
-		</repository>
-	</repositories>
-	
 	<properties>
 		<version.jBPM-tryout>1.0-SNAPSHOT</version.jBPM-tryout>
 	</properties>

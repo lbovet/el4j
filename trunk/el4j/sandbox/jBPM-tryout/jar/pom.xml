@@ -92,7 +92,7 @@
 	
 		<!--  JSF web Application Template modules -->
 		<dependency>
-			<groupId>ch.elca.el4j.modules</groupId>
+			<groupId>ch.elca.el4j.internal.modules</groupId>
 			<artifactId>module-jsf-jar</artifactId>
 		</dependency>
 		<dependency>
@@ -113,7 +113,7 @@
 		
 		<dependency>
 			<groupId>ch.elca.el4j.applications</groupId>
-			<artifactId>keyword-dao</artifactId>
+			<artifactId>keyword</artifactId>
 			<exclusions>
 				<exclusion>
 					<groupId>ch.elca.el4j.modules</groupId>
