@@ -165,9 +165,7 @@
 	
 	<complexType name="emptyrow">
 		<complexContent>
-			<extension base="cookXmlCommon:object">
-				<attribute name="height" type="integer" />
-			</extension>
+			<extension base="cookXmlCommon:object" />
 		</complexContent>
 	</complexType>
 	

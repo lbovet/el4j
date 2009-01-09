@@ -23,7 +23,6 @@ import javax.swing.JTextField;
 
 import org.bushe.swing.event.EventBus;
 import org.jdesktop.application.Action;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.silvermindsoftware.hitch.Binder;
@@ -35,10 +34,8 @@ import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.core.context.annotations.LazyInit;
 import ch.elca.el4j.demos.gui.events.ReferenceUpdateEvent;
 import ch.elca.el4j.gui.swing.GUIApplication;
-import ch.elca.el4j.gui.swing.cookswing.binding.Bindable;
 import ch.elca.el4j.gui.swing.frames.ApplicationFrame;
 import ch.elca.el4j.gui.swing.frames.ApplicationFrameAware;
-import ch.elca.el4j.gui.swing.wrapper.AbstractWrapperFactory;
 import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
 import ch.elca.el4j.model.mixin.SaveRestoreCapability;
 
@@ -92,6 +89,10 @@ public class ReferenceEditorForm extends JPanel implements ApplicationFrameAware
 	 * The binder instance variable.
 	 */
 	private final Binder m_binder = BinderManager.getBinder(this);
+	
+	/**
+	 * The application frame this form is embedded.
+	 */
 	private ApplicationFrame m_applicationFrame;
 	
 	public ReferenceEditorForm() {
@@ -168,11 +169,12 @@ public class ReferenceEditorForm extends JPanel implements ApplicationFrameAware
 		setLayout(layout);
 
 		// the first two rows contains a label and a text field each
-		layout.row().label(new JLabel("Name")).add(m_name);
-		layout.row().label(new JLabel("Description")).add(m_description);
-		layout.row().add(m_okButton).add(m_cancelButton);
+		layout.row().grid(new JLabel("Name")).add(m_name);
+		layout.row().grid(new JLabel("Description")).add(m_description);
+		layout.row().grid().add(m_okButton).add(m_cancelButton);
 	}
 	
+	/** {@inheritDoc} */
 	public void setApplicationFrame(ApplicationFrame applicationFrame) {
 		m_applicationFrame = applicationFrame;
 	}

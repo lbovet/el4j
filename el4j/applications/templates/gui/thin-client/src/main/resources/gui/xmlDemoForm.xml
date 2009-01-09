@@ -15,10 +15,10 @@
 		<constraint location="North">
 			<panel>
 				<el4j:designgridlayout>
-					<el4j:emptyrow height="30" />
 					<el4j:row align="left">
-						<label text="A label in left aligned row. Above there is an empty row (height: 30 pixels)" />
+						<label text="A label in left aligned row. Below there is a (small) empty row." />
 					</el4j:row>
+					<el4j:emptyrow />
 					<el4j:row>
 						<label name="lblFirstName" horizontalalignment="RIGHT" />
 						<textfield cx:var="m_firstName" colspan="2">

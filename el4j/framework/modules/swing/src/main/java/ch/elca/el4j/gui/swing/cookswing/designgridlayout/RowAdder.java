@@ -21,6 +21,7 @@ import javax.swing.JComponent;
 import ch.elca.el4j.gui.swing.cookswing.binding.NoAddValueHolder;
 
 import net.java.dev.designgridlayout.IGridRow;
+import net.java.dev.designgridlayout.IRow;
 
 import cookxml.core.DecodeEngine;
 import cookxml.core.interfaces.Adder;
@@ -46,24 +47,30 @@ public class RowAdder implements Adder {
 		Object child, DecodeEngine decodeEngine) throws Exception {
 		
 		if (parentTag.equals("row") && parent instanceof NoAddValueHolder) {
-			// read span attribute
-			String spanAttr = decodeEngine.getCurrentElement()
-				.getAttribute("colspan");
-			int span = 1;
-			try {
-				span = Integer.parseInt(spanAttr);
-			} catch (NumberFormatException e) {
-				span = 1;
-			}
 			
 			// create row
-			IGridRow row = ((NoAddValueHolder<IGridRow>) parent).getObject();
-			if (child != null) {
-				row.add((JComponent) child, span);
-			} else {
-				row.empty(span);
-			}
+			IRow row = ((NoAddValueHolder<IRow>) parent).getObject();
+			if (row instanceof IGridRow) {
+				IGridRow gridRow = (IGridRow) row;
 				
+				// read span attribute
+				String spanAttr = decodeEngine.getCurrentElement().getAttribute("colspan");
+				int span = 1;
+				try {
+					span = Integer.parseInt(spanAttr);
+				} catch (NumberFormatException e) {
+					span = 1;
+				}
+				
+				if (child != null) {
+					gridRow.add((JComponent) child, span);
+				} else {
+					gridRow.empty(span);
+				}
+			} else {
+				row.add((JComponent) child);
+			}
+			
 			return true;
 		}
 		return false;

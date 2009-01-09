@@ -159,18 +159,19 @@ public class BindingDemoForm extends JPanel {
 
 		// the text fields are twice as wide as the labels
 		// Checkstyle: MagicNumber off
-		layout.leftRow().add(new JLabel("These fields are bound to the underlying Person model."));
-		layout.leftRow().add(new JLabel("Validation Info: Firstname must be longer than 3 charcters."));
+		layout.row().left().add(new JLabel("These fields are bound to the underlying Person model."));
+		layout.row().left().add(new JLabel("Validation Info: Firstname must be longer than 3 charcters."));
 
-		layout.row().add(new JLabel("First Name")).add(m_firstName, 2).add(new JLabel("Last Name")).add(m_lastName, 2);
-		layout.row().add(new JLabel("Age")).add(m_age, 2).empty(3);
-		layout.row().add(new JLabel("Current Validation Message:")).add(m_validationMessage, 3);
+		layout.row().grid().add(new JLabel("First Name")).add(m_firstName, 2)
+			.add(new JLabel("Last Name")).add(m_lastName, 2);
+		layout.row().grid().add(new JLabel("Age")).add(m_age, 2).empty(3);
+		layout.row().grid().add(new JLabel("Current Validation Message:")).add(m_validationMessage, 3);
 		
 		// add a vertical spacer
-		layout.emptyRow(20);
+		layout.emptyRow();
 		
-		layout.leftRow().add(new JLabel("Edit list items. Negative numbers are invalid."));
-		layout.row().add(new JLabel("List Selection")).add(m_curListSelection, 2)
+		layout.row().left().add(new JLabel("Edit list items. Negative numbers are invalid."));
+		layout.row().grid().add(new JLabel("List Selection")).add(m_curListSelection, 2)
 			.add(new JLabel("The list")).add(m_numbers, 2);
 		
 		// Checkstyle: MagicNumber on

@@ -191,14 +191,9 @@ public class MasterDetailDemoForm extends JPanel {
 		// the first two rows contains a label and a text field each
 
 		// the text fields are twice as wide as the labels
-		layout.row().add(new JLabel("First Name")).add(m_firstName, 2).add(new JLabel("Smart")).add(m_smart, 2);
-		layout.row().add(new JLabel("Last Name")).add(m_lastName, 2).add(new JLabel("Age")).add(m_age, 2);
-		layout.row().add(m_createButton).add(m_deleteButton);
-		// Hint: spacers can be inserted using add(Row.EMPTY)
-
-		// Checkstyle: MagicNumber off
-		layout.emptyRow(10);
-		// Checkstyle: MagicNumber on
+		layout.row().grid().add(new JLabel("First Name")).add(m_firstName, 2).add(new JLabel("Smart")).add(m_smart, 2);
+		layout.row().grid().add(new JLabel("Last Name")).add(m_lastName, 2).add(new JLabel("Age")).add(m_age, 2);
+		layout.row().grid().add(m_createButton).add(m_deleteButton);
 	}
 	
 	/**
