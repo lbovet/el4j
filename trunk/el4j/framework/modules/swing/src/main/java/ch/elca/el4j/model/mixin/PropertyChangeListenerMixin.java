@@ -21,11 +21,12 @@ import java.beans.Introspector;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.beans.PropertyDescriptor;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.logging.Log;
@@ -36,6 +37,7 @@ import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
 import org.jdesktop.observablecollections.ObservableMap;
 import org.jdesktop.swingbinding.validation.ValidationCapability;
+import org.springframework.aop.Advisor;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.aop.support.DelegatingIntroductionInterceptor;
 
@@ -50,6 +52,9 @@ import ch.elca.el4j.util.codingsupport.AopHelper;
  *
  * To see each fired property change, set the log4j level for this class to
  * debug
+ * 
+ * It also contains a simple implementation of the {@link SaveRestoreCapability}. All Java bean properties of
+ * primitive or immutable (see IMMUTABLE_CLASSES) type can be saved and restored.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -70,6 +75,23 @@ public class PropertyChangeListenerMixin extends
 	 */
 	private static final Log s_logger = LogFactory.getLog(PropertyChangeListenerMixin.class);
 	
+	/**
+	 * A (incomplete) list of immutable classes.
+	 */
+	private static final Set<Class<?>> IMMUTABLE_CLASSES;
+	
+	static {
+		IMMUTABLE_CLASSES = new HashSet<Class<?>>();
+		IMMUTABLE_CLASSES.add(Integer.class);
+		IMMUTABLE_CLASSES.add(String.class);
+		IMMUTABLE_CLASSES.add(Float.class);
+		IMMUTABLE_CLASSES.add(Double.class);
+		IMMUTABLE_CLASSES.add(Byte.class);
+		IMMUTABLE_CLASSES.add(Long.class);
+		IMMUTABLE_CLASSES.add(Short.class);
+		IMMUTABLE_CLASSES.add(Boolean.class);
+		IMMUTABLE_CLASSES.add(Character.class);
+	}
 	/**
 	 * Should bean property be overwritten by proxied property to speed up following accesses?
 	 * This field is intended to be overwritten by subclasses.
@@ -357,7 +379,11 @@ public class PropertyChangeListenerMixin extends
 		return setter;
 	}
 	
-	/** {@inheritDoc} */
+	/**
+	 * {@inheritDoc}
+	 * Attention: Only Java bean properties of primitive or immutable (see IMMUTABLE_CLASSES) type
+	 * can be saved and restored.
+	 */
 	public void save() {
 		try {
 			m_backup.clear();
@@ -366,7 +392,9 @@ public class PropertyChangeListenerMixin extends
 			for (PropertyDescriptor pd : info.getPropertyDescriptors()) {
 				Method r = pd.getReadMethod();
 				Method w = pd.getWriteMethod();
-				if (r != null && w != null) {
+				if (r != null && w != null && (r.getReturnType().isPrimitive()
+					|| IMMUTABLE_CLASSES.contains(r.getReturnType()))) {
+					
 					m_backup.put(pd.getWriteMethod(), r.invoke(AopContext.currentProxy()));
 				}
 			}
@@ -375,7 +403,11 @@ public class PropertyChangeListenerMixin extends
 		}
 	}
 
-	/** {@inheritDoc} */
+	/**
+	 * {@inheritDoc}
+	 * Attention: Only Java bean properties of primitive or immutable (see IMMUTABLE_CLASSES) type
+	 * can be saved and restored.
+	 */
 	public void restore() {
 		for (Method method : m_backup.keySet()) {
 			try {
