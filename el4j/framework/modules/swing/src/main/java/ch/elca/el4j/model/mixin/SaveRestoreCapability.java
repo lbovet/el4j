@@ -17,7 +17,7 @@
 package ch.elca.el4j.model.mixin;
 
 /**
- * The interface to make that a java bean can save and restore its properties.
+ * The interface to save and restore the state of java bean.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
