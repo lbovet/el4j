@@ -109,12 +109,12 @@ public abstract class AbstractSearchForm extends JPanel {
 		DesignGridLayout layout = new DesignGridLayout(this);
 		setLayout(layout);
 
-		layout.leftRow().add(m_searchFor);
-		layout.row().add(m_searchField, 2);
-		layout.rightRow().add(m_searchButton);
+		layout.row().left().add(m_searchFor);
+		layout.row().grid().add(m_searchField, 2);
+		layout.row().right().add(m_searchButton);
 		if (m_options != null) {
 			for (JComponent component : m_options) {
-				layout.leftRow().add(component);
+				layout.row().left().add(component);
 			}
 		}
 	}

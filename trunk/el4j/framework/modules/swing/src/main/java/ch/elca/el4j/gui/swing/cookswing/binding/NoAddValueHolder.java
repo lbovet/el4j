@@ -37,13 +37,11 @@ public class NoAddValueHolder<T> implements NoAdd {
 	/**
 	 * The hold object.
 	 */
-	@SuppressWarnings("unchecked")
 	private T m_object;
 	
 	/**
 	 * @param object    the object
 	 */
-	@SuppressWarnings("unchecked")
 	public NoAddValueHolder(T object) {
 		m_object = object;
 	}
@@ -51,7 +49,6 @@ public class NoAddValueHolder<T> implements NoAdd {
 	/**
 	 * @return Returns the object.
 	 */
-	@SuppressWarnings("unchecked")
 	public T getObject() {
 		return m_object;
 	}
@@ -59,7 +56,6 @@ public class NoAddValueHolder<T> implements NoAdd {
 	/**
 	 * @param object Is the object to set.
 	 */
-	@SuppressWarnings("unchecked")
 	public void setObject(T object) {
 		m_object = object;
 	}

@@ -220,15 +220,10 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 
 		// the first two rows contains a label and a text field each
 		
-		layout.row().add(new JLabel("Name")).add(m_name);
-		layout.row().add(new JLabel("Description")).add(m_description);
-		layout.row().add(new JLabel("Incomplete")).add(m_incomplete);
-		layout.row().add(m_createButton).add(m_deleteButton);
-		// Hint: spacers can be inserted using add(Row.EMPTY)
-
-		// Checkstyle: MagicNumber off
-		layout.emptyRow(10);
-		// Checkstyle: MagicNumber on
+		layout.row().grid().add(new JLabel("Name")).add(m_name);
+		layout.row().grid().add(new JLabel("Description")).add(m_description);
+		layout.row().grid().add(new JLabel("Incomplete")).add(m_incomplete);
+		layout.row().grid().add(m_createButton).add(m_deleteButton);
 	}
 
 	private void loadModel() {

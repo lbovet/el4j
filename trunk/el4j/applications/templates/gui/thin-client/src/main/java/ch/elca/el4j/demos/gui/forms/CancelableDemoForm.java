@@ -129,7 +129,7 @@ public class CancelableDemoForm extends JPanel {
 		setLayout(layout);
 
 		// the first two rows contains a label and a text field each
-		layout.row().label(new JLabel("First Name")).add(m_firstName);
-		layout.row().add(m_okButton).add(m_cancelButton);
+		layout.row().grid(new JLabel("First Name")).add(m_firstName);
+		layout.row().grid().add(m_okButton).add(m_cancelButton);
 	}
 }

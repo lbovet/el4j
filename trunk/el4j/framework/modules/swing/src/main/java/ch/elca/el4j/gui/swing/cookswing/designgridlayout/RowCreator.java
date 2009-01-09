@@ -53,14 +53,14 @@ public class RowCreator implements Creator {
 		String align = elm.getAttribute("align");
 		IRow row = null;
 		if (align.equals("left")) {
-			row = ((DesignGridLayout) parentObj).leftRow();
+			row = ((DesignGridLayout) parentObj).row().left();
 		} else if (align.equals("right")) {
-			row = ((DesignGridLayout) parentObj).rightRow();
+			row = ((DesignGridLayout) parentObj).row().right();
 		} else if (align.equals("center")) {
-			row = ((DesignGridLayout) parentObj).centerRow();
+			row = ((DesignGridLayout) parentObj).row().center();
 		} else {
 			// align="grid" or not set
-			row = ((DesignGridLayout) parentObj).row();
+			row = ((DesignGridLayout) parentObj).row().grid();
 		}
 		return new NoAddValueHolder<IRow>(row);
 	}

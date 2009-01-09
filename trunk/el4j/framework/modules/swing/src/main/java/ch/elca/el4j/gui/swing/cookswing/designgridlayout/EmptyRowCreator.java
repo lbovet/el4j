@@ -18,12 +18,12 @@ package ch.elca.el4j.gui.swing.cookswing.designgridlayout;
 
 import org.w3c.dom.Element;
 
-import cookxml.core.DecodeEngine;
-import cookxml.core.interfaces.Creator;
-
 import ch.elca.el4j.gui.swing.cookswing.binding.NoAddValueHolder;
 
 import net.java.dev.designgridlayout.DesignGridLayout;
+
+import cookxml.core.DecodeEngine;
+import cookxml.core.interfaces.Creator;
 
 
 /**
@@ -48,17 +48,7 @@ public class EmptyRowCreator implements Creator {
 			return null;
 		}
 		
-		// search for align attribute, which is required for row construction
-		String heightAttribute = elm.getAttribute("height");
-		int height;
-		try {
-			height = Integer.parseInt(heightAttribute);
-		} catch (Exception e) {
-			height = -1;
-		}
-		if (height != -1) {
-			((DesignGridLayout) parentObj).emptyRow(height);
-		}
+		((DesignGridLayout) parentObj).emptyRow();
 		
 		return new NoAddValueHolder<Object>(parentObj);
 	}
