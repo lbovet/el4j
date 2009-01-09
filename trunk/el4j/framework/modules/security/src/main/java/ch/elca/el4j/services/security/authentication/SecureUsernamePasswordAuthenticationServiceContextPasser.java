@@ -64,7 +64,6 @@ public class SecureUsernamePasswordAuthenticationServiceContextPasser extends
 		if (auth instanceof UsernamePasswordAuthenticationToken) {
 			UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(
 				auth.getPrincipal(), m_cipher.encrypt((String) auth.getCredentials()), auth.getAuthorities());
-			result.setAuthenticated(auth.isAuthenticated());
 			
 			return result;
 		} else {
@@ -84,7 +83,6 @@ public class SecureUsernamePasswordAuthenticationServiceContextPasser extends
 		if (auth instanceof UsernamePasswordAuthenticationToken) {
 			UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(
 				auth.getPrincipal(), m_cipher.decrypt((String) auth.getCredentials()), auth.getAuthorities());
-			result.setAuthenticated(auth.isAuthenticated());
 			
 			SecurityContextHolder.getContext().setAuthentication(result);
 		} else {
