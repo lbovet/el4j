@@ -90,7 +90,7 @@ public class OffliningVisitor implements NodeVisitor {
 
 	/** {@inheritDoc} */
 	public Object markError(Object node, Object cause) {
-		return Conflict.newDependent(node);
+		return Conflict.newDependent(Conflict.Phase.OFFLINE, node);
 	}
 
 	/** {@inheritDoc} */
@@ -190,7 +190,7 @@ public class OffliningVisitor implements NodeVisitor {
 			try {
 				saveObject(node);
 			} catch (Exception e) {
-				throw new NodeException(new Conflict(e, null, node));
+				throw new NodeException(new Conflict(Conflict.Phase.OFFLINE, e, null, node));
 			}
 			entry.setLocalBaseVersion(nodeKeyed.getVersion());
 		} else if (difference == 0) {
@@ -202,7 +202,7 @@ public class OffliningVisitor implements NodeVisitor {
 			// Complain.
 			
 			s_log.debug("Remote version higher in local db.");
-			throw new NodeException(new Conflict(null, null, node));
+			throw new NodeException(new Conflict(Conflict.Phase.OFFLINE, null, null, node));
 		}
 	}
 	

@@ -83,7 +83,7 @@ public class ForcedSynchronizingVisitor extends ServerSynchronizingVisitor {
 			try {
 				saveObject(node);
 			} catch (Exception e) {
-				throw new NodeException(new Conflict(e, node, null));
+				throw new NodeException(new Conflict(Conflict.Phase.FORCE, e, node, null));
 			}
 			// The save was ok, so update the mapping entry.
 			entry.setRemoteBaseVersion(nodeKeyed.getVersion());
