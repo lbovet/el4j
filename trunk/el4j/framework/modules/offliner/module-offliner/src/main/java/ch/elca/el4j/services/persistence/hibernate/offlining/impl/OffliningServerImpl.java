@@ -124,10 +124,10 @@ public class OffliningServerImpl implements OffliningServer {
 				Serializable key = entry.getRemoteKey().getKey();
 				TotallyGenericDaoUtility.getDao(m_daoRegistry, cls).deleteById(key);
 			} catch (OptimisticLockingFailureException ex) {
-				conflicts.add(new Conflict(ex, null, entry.getRemoteKey()));
+				conflicts.add(new Conflict(Conflict.Phase.DELETE, ex, null, entry.getRemoteKey()));
 				undeletable.add(entry);
 			} catch (DataAccessException ex) {
-				conflicts.add(new Conflict(ex, null, entry.getRemoteKey()));
+				conflicts.add(new Conflict(Conflict.Phase.DELETE, ex, null, entry.getRemoteKey()));
 				undeletable.add(entry);
 			} 
 		}

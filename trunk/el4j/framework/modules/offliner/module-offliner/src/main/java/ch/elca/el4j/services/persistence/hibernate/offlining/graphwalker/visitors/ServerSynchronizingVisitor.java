@@ -83,7 +83,7 @@ public class ServerSynchronizingVisitor implements NodeVisitor {
 		MappingEntry entry = mapped.getEntry();
 		m_wrapper.wrap(OffliningStateWrappable.class, node).setState(OffliningState.CONFLICTED);
 		keyed.setKey(entry.getRemoteKey().getKey());
-		return Conflict.newDependent(node);
+		return Conflict.newDependent(Conflict.Phase.SYNCHRONIZE, node);
 	}
 
 	/** {@inheritDoc} 
@@ -174,7 +174,7 @@ public class ServerSynchronizingVisitor implements NodeVisitor {
 					// A conflict occurred. Load the remote version and stick both in a
 					// conflict object.
 					Object remote = fetchRemote(entry.getRemoteKey());
-					throw new NodeException(new Conflict(e, copy, remote));
+					throw new NodeException(new Conflict(Conflict.Phase.SYNCHRONIZE, e, copy, remote));
 				}
 				entry.setRemoteBaseVersion(keyed.getVersion());
 				entry.setLocalBaseVersion(localVersion);
@@ -192,7 +192,7 @@ public class ServerSynchronizingVisitor implements NodeVisitor {
 				try {
 					saveObject(copy);
 				} catch (Exception e) {
-					throw new NodeException(new Conflict(e, copy, null));
+					throw new NodeException(new Conflict(Conflict.Phase.SYNCHRONIZE, e, copy, null));
 				}
 				entry.setLocalBaseVersion(localVersion);
 				entry.setRemoteKey(new UniqueKey(keyed.getKey(), node.getClass()));

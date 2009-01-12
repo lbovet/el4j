@@ -103,7 +103,7 @@ public class ForcedOffliningVisitor extends OffliningVisitor {
 		try {
 			saveObject(node);
 		} catch (Exception e) {
-			throw new NodeException(new Conflict(e, null, node));
+			throw new NodeException(new Conflict(Conflict.Phase.FORCE, e, null, node));
 		}
 		
 		// Success. Save the mapping entry back.

@@ -60,8 +60,33 @@ public class Conflict implements Serializable {
 		CONSTRAINT
 	}
 	
+	/**
+	 * The phase during which this conflict was encountered.
+	 */
+	public enum Phase {
+		/** Synchronizing an object. */
+		SYNCHRONIZE,
+		
+		/** Deleting an object during synchronization. */
+		DELETE,
+		
+		/** 
+		 * Offlining. This can refer both to a user-initiated offline() or to an offline
+		 * during the last phase of synchronization.
+		 */
+		OFFLINE,
+		
+		/** Forcing an object. */
+		FORCE
+	}
+	
 	/** The exception that cause this conflict. */
 	private final Throwable m_cause;
+	
+	/**
+	 * The phase during which the conflict occurred.
+	 */
+	private final Phase m_phase;
 	
 	/**
 	 * The type of this conflict.
@@ -87,8 +112,9 @@ public class Conflict implements Serializable {
 	 * @param localObject The object we are trying to commit.
 	 * @param remoteObject The remote object, if applicable.
 	 */
-	public Conflict(Throwable cause, Object localObject, Object remoteObject) {
+	public Conflict(Phase phase, Throwable cause, Object localObject, Object remoteObject) {
 		m_cause = cause;
+		m_phase = phase;
 		m_localObject = localObject;
 		m_remoteObject = remoteObject;
 
@@ -110,12 +136,19 @@ public class Conflict implements Serializable {
 	 * @param localObject The object with a dependent conflict.
 	 * @return The conflict object.
 	 */
-	public static Conflict newDependent(Object localObject) {
-		Conflict conflict = new Conflict(null, localObject, null);
+	public static Conflict newDependent(Phase phase, Object localObject) {
+		Conflict conflict = new Conflict(phase, null, localObject, null);
 		conflict.m_causeType = Type.DEPENDENT;
 		return conflict;
 	}
 		
+	/**
+	 * @return The phase during which this conflict occurred.
+	 */
+	public Phase getPhase() {
+		return m_phase;
+	}
+	
 	/**
 	 * @return 
 	 * The local object we were trying to commit when the conflict occurred.
