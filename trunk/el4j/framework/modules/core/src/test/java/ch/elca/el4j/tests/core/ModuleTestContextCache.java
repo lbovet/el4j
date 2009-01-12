@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
@@ -55,7 +54,7 @@ public final class ModuleTestContextCache {
 	 * @param config    a {@link ModuleApplicationContext} configuration
 	 * @return          the corresponding {@link ModuleApplicationContext}
 	 */
-	public static ApplicationContext get(ModuleTestContextConfiguration config) {
+	public static ConfigurableApplicationContext get(ModuleTestContextConfiguration config) {
 		return get(new Configuration(config));
 	}
 	
@@ -65,7 +64,7 @@ public final class ModuleTestContextCache {
 	 * @param allowBeanDefinitionOverriding    <code>true</code> if bean definition overriding should be allowed
 	 * @return                                 the corresponding {@link ModuleApplicationContext}
 	 */
-	public static ApplicationContext get(String[] inclusiveConfigLocations,
+	public static ConfigurableApplicationContext get(String[] inclusiveConfigLocations,
 			String[] exclusiveConfigLocations, boolean allowBeanDefinitionOverriding) {
 		
 		return get(new Configuration(inclusiveConfigLocations, exclusiveConfigLocations,
@@ -73,10 +72,20 @@ public final class ModuleTestContextCache {
 	}
 	
 	/**
+	 * Clear this ModuleApplicationContext cache.
+	 */
+	public static void clear() {
+		for (ConfigurableApplicationContext context : s_cache.values()) {
+			context.close();
+		}
+		s_cache.clear();
+	}
+	
+	/**
 	 * @param config    a {@link ModuleApplicationContext} configuration
 	 * @return          the corresponding {@link ModuleApplicationContext}
 	 */
-	private static synchronized ApplicationContext get(Configuration config) {
+	private static synchronized ConfigurableApplicationContext get(Configuration config) {
 		if (s_cache == null) {
 			s_cache = new HashMap<Configuration, ConfigurableApplicationContext>();
 		}
@@ -90,7 +99,7 @@ public final class ModuleTestContextCache {
 		} else {
 			ConfigurableApplicationContext newContext = new ModuleApplicationContext(
 				config.getInclusiveConfigLocations(), config.getExclusiveConfigLocations(),
-				config.isBeanOverridingAllowed(), (ApplicationContext) null);
+				config.isBeanOverridingAllowed(), (ConfigurableApplicationContext) null);
 			
 			s_cache.put(config, newContext);
 			return newContext;
