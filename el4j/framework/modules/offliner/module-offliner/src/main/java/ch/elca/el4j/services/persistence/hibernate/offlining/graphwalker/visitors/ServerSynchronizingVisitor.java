@@ -171,7 +171,10 @@ public class ServerSynchronizingVisitor implements NodeVisitor {
 				try {
 					saveObject(copy);
 				} catch (Exception e) {
-					throw new NodeException(new Conflict(e, copy, null));
+					// A conflict occurred. Load the remote version and stick both in a
+					// conflict object.
+					Object remote = fetchRemote(entry.getRemoteKey());
+					throw new NodeException(new Conflict(e, copy, remote));
 				}
 				entry.setRemoteBaseVersion(keyed.getVersion());
 				entry.setLocalBaseVersion(localVersion);
@@ -220,5 +223,26 @@ public class ServerSynchronizingVisitor implements NodeVisitor {
 		s_log.debug("Saving object.");
 		TotallyGenericDaoUtility.getDao(m_daoRegistry, obj).saveOrUpdate(obj);
 		return obj;
+	}
+	
+	/**
+	 * Fetch the remote version of an object using its unique key.
+	 * This is used if an object with local key is conflicted so we can return both versions
+	 * in the conflict object. 
+	 * If something goes wrong here, bail out and return null.
+	 * The reason for this is that if it's not a version conflict, we don't want to abort the whole
+	 * synchronizing process.
+	 * @param remoteKey The UniqueKey for the remote object.
+	 * @return The remote object.
+	 */
+	private Object fetchRemote(UniqueKey remoteKey) {
+		Object o;
+		try {
+			o = TotallyGenericDaoUtility.getDao(m_daoRegistry, remoteKey.getObjectClass())
+				.findById(remoteKey.getKey()); 
+		} catch (Exception e) {
+			o = null;
+		}
+		return o;
 	}
 }

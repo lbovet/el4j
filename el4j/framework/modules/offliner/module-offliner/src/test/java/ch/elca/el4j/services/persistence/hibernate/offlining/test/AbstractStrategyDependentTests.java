@@ -337,6 +337,14 @@ public abstract class AbstractStrategyDependentTests extends AbstractTest {
 		Conflict[] c = m_offliner.synchronize();
 		assertEquals(1, c.length);
 		assertEquals(Conflict.Type.VERSION, c[0].getCauseType());
+		
+		// Check both objects are reported correctly in the conflict.
+		Conflict conflict = c[0];
+		SimplePerson localPerson = (SimplePerson) conflict.getLocalObject();
+		SimplePerson remotePerson = (SimplePerson) conflict.getRemoteObject();
+		
+		assertEquals("Arlo Smith", localPerson.getName());
+		assertEquals("Arlo Jones", remotePerson.getName());
 	}
 	
 	/**
