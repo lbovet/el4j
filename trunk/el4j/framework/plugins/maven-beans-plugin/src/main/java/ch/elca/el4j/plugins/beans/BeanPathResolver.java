@@ -201,6 +201,8 @@ public class BeanPathResolver {
 					m_logger.log(" * " + s);
 				}
 			}
+			
+			ctx.close();
 		}
 	}
 	

@@ -18,6 +18,7 @@
 package ch.elca.el4j.demos.statistics.light;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 
@@ -58,7 +59,7 @@ public class LightStatisticsDemo {
 	 * @param args Arguments provided by the command line.
 	 */
 	public static void main(String[] args) {
-		ApplicationContext ac = new ModuleApplicationContext(s_mandatoryFiles, false);
+		ConfigurableApplicationContext ac = new ModuleApplicationContext(s_mandatoryFiles, false);
 
 		Foo bean = (Foo) ac.getBean(s_bean);
 		
@@ -69,6 +70,8 @@ public class LightStatisticsDemo {
 		bean.sleepOneSecond();
 		bean.fibonacci(15);
 		// Checkstyle: MagicNumber on
+		
+		ac.registerShutdownHook();
 		
 		System.out.println("Waiting forever...");
 		try {

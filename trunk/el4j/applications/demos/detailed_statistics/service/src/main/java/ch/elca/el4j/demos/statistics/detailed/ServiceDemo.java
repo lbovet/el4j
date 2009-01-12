@@ -60,12 +60,14 @@ public final class ServiceDemo {
 	 */
 	public static void main(String[] args) {
 
-		new ModuleApplicationContext(CONFIG_LOCATIONS, true);
+		ModuleApplicationContext context = new ModuleApplicationContext(CONFIG_LOCATIONS, true);
 		
 		System.out.println();
 		System.out.println("JMX console can be started in browser with "
 			+ "URL http://localhost:9092");
 		System.out.println();
 		System.out.println("Waiting on client...");
+		
+		context.registerShutdownHook();
 	}
 }
