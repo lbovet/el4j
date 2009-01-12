@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ExampleModelImpl implements ExampleModel {
-	private Object m_property1;
+	private String m_property1;
 	private List<Integer> m_list;
 	private Map<Integer, Integer> m_map;
 	
@@ -15,11 +15,11 @@ public class ExampleModelImpl implements ExampleModel {
 		m_map = new HashMap<Integer, Integer>();
 	}
 	
-	public Object getProperty1() {
+	public String getProperty1() {
 		return m_property1;
 	}
 
-	public void setProperty1(Object o) {
+	public void setProperty1(String o) {
 		m_property1 = o;
 	}
 	
