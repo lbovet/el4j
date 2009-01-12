@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface ExampleModel {
-	public Object getProperty1();
-	public void setProperty1(Object o);
+	public String getProperty1();
+	public void setProperty1(String o);
 	
 	public List<Integer> getList();
 	public void setList(List<Integer> list);
