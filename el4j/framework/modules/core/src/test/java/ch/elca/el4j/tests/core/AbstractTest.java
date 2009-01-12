@@ -16,7 +16,8 @@
  */
 package ch.elca.el4j.tests.core;
 
-import org.springframework.context.ApplicationContext;
+import org.junit.AfterClass;
+import org.springframework.context.ConfigurableApplicationContext;
 
 /**
  * This class is a base class for tests in the EL4J framework.
@@ -35,7 +36,7 @@ public abstract class AbstractTest {
 	/**
 	 * Application context to load beans.
 	 */
-	private ApplicationContext m_applicationContext;
+	private ConfigurableApplicationContext m_applicationContext;
 
 	/**
 	 * Hide default constructor.
@@ -43,15 +44,24 @@ public abstract class AbstractTest {
 	protected AbstractTest() { }
 
 	/**
-	 * @return Returns the applicationContext.
+	 * @return Returns the application context.
 	 */
-	protected synchronized ApplicationContext getApplicationContext() {
+	protected synchronized ConfigurableApplicationContext getApplicationContext() {
 		if (m_applicationContext == null) {
 			
 			m_applicationContext = ModuleTestContextCache.get(getIncludeConfigLocations(),
 				getExcludeConfigLocations(), isBeanOverridingAllowed());
 		}
 		return m_applicationContext;
+	}
+	
+	/**
+	 * Close all application contexts. This method gets executed "@AfterClass", but something like
+	 * TestNG's "@AfterSuite" would be more efficient.
+	 */
+	@AfterClass
+	public static void closeAllApplicationContexts() {
+		ModuleTestContextCache.clear();
 	}
 
 	/**
