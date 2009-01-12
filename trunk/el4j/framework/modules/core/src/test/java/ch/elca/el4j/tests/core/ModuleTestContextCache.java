@@ -75,10 +75,12 @@ public final class ModuleTestContextCache {
 	 * Clear this ModuleApplicationContext cache.
 	 */
 	public static void clear() {
-		for (ConfigurableApplicationContext context : s_cache.values()) {
-			context.close();
+		if (s_cache != null) {
+			for (ConfigurableApplicationContext context : s_cache.values()) {
+				context.close();
+			}
+			s_cache.clear();
 		}
-		s_cache.clear();
 	}
 	
 	/**
