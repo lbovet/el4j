@@ -330,6 +330,28 @@ public class MappingEntry implements Serializable {
 			// How to compare longs.
 			return (int) (o1.getDeleteVersion() - o2.getDeleteVersion());
 		}
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) { return true; }
+		if (obj instanceof MappingEntry) {
+			MappingEntry other = (MappingEntry) obj;
+			return m_id == other.m_id;
+		} else {
+			return false;
+		}
+	}
+
+
+
+	/** {@inheritDoc} */
+	@Override
+	public int hashCode() {
+		return m_id;
 	};
 
+	
+	
 }

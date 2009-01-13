@@ -197,6 +197,10 @@ public abstract class AbstractStrategyDependentTests extends AbstractTest {
 		
 		assertEquals(1, conflicts.length);
 		assertEquals(Conflict.Type.CONSTRAINT , conflicts[0].getCauseType());
+		
+		// Resynchronize and assert the conflict is still there (fixes an earlier bug).
+		conflicts = m_offliner.synchronize();
+		assertEquals(1, conflicts.length);
 	}
 	
 	/**
