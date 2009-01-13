@@ -14,11 +14,12 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.gui.swing.cookswing;
+package ch.elca.el4j.gui.swing.cookswing.action;
 
 import javax.swing.AbstractButton;
 import javax.swing.Action;
 
+import ch.elca.el4j.gui.swing.ActionsContext;
 import ch.elca.el4j.gui.swing.GUIApplication;
 
 import cookxml.core.DecodeEngine;
@@ -66,34 +67,39 @@ public class ButtonActionSetter implements Setter {
 		if (actionHolder == null) {
 			actionHolder = decodeEngine.getVariable("this");
 		}
-		GUIApplication app = GUIApplication.getInstance();
+		
 		String attrValue = (String) value;
 		// Check attrValue if it contains class name
 		String[] parsedValues = attrValue.split("#");
 		boolean composedAttr = false;
-		Class<?> c = null;
+		Class<?> cls = null;
 		if (parsedValues.length == 2) {
 			composedAttr = true;
 			try {
-				c =  Class.forName(parsedValues[0]);
+				cls =  Class.forName(parsedValues[0]);
 				attrValue = parsedValues[1];
 			} catch (ClassNotFoundException e) {
 				composedAttr = false;
 			}
 		}
+		
+		ActionsContext actionsContext;
+		if (actionHolder instanceof ActionsContextAware) {
+			actionsContext = ((ActionsContextAware) actionHolder).getActionsContext();
+		} else {
+			// use ActionsContext of GUIApplication as parent context and extend it with the actionHolder
+			actionsContext = ActionsContext.extend(GUIApplication.getInstance().getActionsContext(), actionHolder);
+		}
+		
 		Action action;
 		if (composedAttr) {
-			action = app.getAction(c, actionHolder, attrValue);
+			action = actionsContext.getAction(cls, attrValue);
 		} else {
-			action = app.getAction(actionHolder, attrValue);
+			action = actionsContext.getAction(attrValue);
 		}
 		
 		AbstractButton button = (AbstractButton) obj;
 		
-		if (action == null) {
-			// search in all instances with action mappings
-			action = app.getAction(attrValue);
-		}
 		if (action == null) {
 			throw new ActionNotFoundException(attrValue);
 		}

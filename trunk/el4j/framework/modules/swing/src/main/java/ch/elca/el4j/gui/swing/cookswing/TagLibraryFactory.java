@@ -25,6 +25,7 @@ import cookxml.core.setter.DefaultSetter;
 import cookxml.core.setter.DoNothingSetter;
 import cookxml.core.taglibrary.InheritableTagLibrary;
 
+import ch.elca.el4j.gui.swing.cookswing.action.ButtonActionSetter;
 import ch.elca.el4j.gui.swing.cookswing.binding.BindingCreator;
 import ch.elca.el4j.gui.swing.cookswing.binding.ColumnBindingCreator;
 import ch.elca.el4j.gui.swing.cookswing.binding.ComboBoxBindingCreator;
@@ -50,7 +51,7 @@ import ch.elca.el4j.gui.swing.cookswing.designgridlayout.RowCreator;
  */
 public final class TagLibraryFactory {
 	/**
-	 * Hidden default construcor.
+	 * Hidden default constructor.
 	 */
 	private TagLibraryFactory() { }
 	

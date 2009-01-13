@@ -27,7 +27,9 @@ import org.jdesktop.application.Action;
 import ch.elca.el4j.demos.gui.GUIExtension;
 import ch.elca.el4j.demos.jasper.gui.reporting.ReportSaver;
 import ch.elca.el4j.demos.jasper.gui.reporting.ReportViewer;
+import ch.elca.el4j.gui.swing.ActionsContext;
 import ch.elca.el4j.gui.swing.GUIApplication;
+import ch.elca.el4j.gui.swing.util.MenuUtils;
 
 /**
  * Sample application extension that extends Thin Client by adding a reporting section.
@@ -56,22 +58,10 @@ public class JasperReports implements GUIExtension {
 	
 	/** {@inheritDoc} */
 	public void extendMenuBar(JMenuBar menubar) {
-		String[] reportMenuActionNames
-			= {"showReportViewer", "showReportSaver"};
+		String[] reportMenuActionNames = {"showReportViewer", "showReportSaver"};
 		
-		JMenu menu = new JMenu();
-		menu.setName("reportMenu");
-		
-		for (String actionName : reportMenuActionNames) {
-			if (actionName.equals("---")) {
-				menu.add(new JSeparator());
-			} else {
-				JMenuItem menuItem = new JMenuItem();
-				menuItem.setAction(m_application.getAction(actionName));
-				//menuItem.setIcon(null);
-				menu.add(menuItem);
-			}
-		}
+		ActionsContext actionsContext = ActionsContext.extendDefault(this);
+		JMenu menu = MenuUtils.createMenu(actionsContext, "reportMenu", reportMenuActionNames);
 		
 		menubar.add(menu, menubar.getComponentCount() - 2);
 	}

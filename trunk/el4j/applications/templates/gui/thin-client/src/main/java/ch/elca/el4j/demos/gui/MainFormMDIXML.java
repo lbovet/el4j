@@ -33,6 +33,8 @@ import org.jdesktop.application.ResourceMap;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import ch.elca.el4j.gui.swing.AbstractMDIApplication;
+import ch.elca.el4j.gui.swing.ActionsContext;
+
 import cookxml.cookswing.CookSwing;
 
 /**
@@ -102,8 +104,7 @@ public class MainFormMDIXML extends AbstractMDIApplication {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void startup() {
-		MainFormActions actions = new MainFormActions(this);
-		super.addActionMappingInstance(actions);
+		m_actionsContext = ActionsContext.create(new MainFormActions(this), this);
 		
 		CookSwing cookSwing = new CookSwing(this);
 		setMainFrame((JFrame) cookSwing.render("gui/main.xml"));
@@ -125,8 +126,6 @@ public class MainFormMDIXML extends AbstractMDIApplication {
 			getSpringContext().getBeansOfType(GUIExtension.class);
 		
 		for (GUIExtension extension : extensions.values()) {
-			super.addActionMappingInstance(extension);
-			
 			extension.setApplication(this);
 			extension.extendMenuBar(getMainFrame().getJMenuBar());
 			extension.extendToolBar(m_toolbar);

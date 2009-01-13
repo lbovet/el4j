@@ -36,7 +36,9 @@ import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
+import ch.elca.el4j.gui.swing.ActionsContext;
 import ch.elca.el4j.gui.swing.MDIApplication;
+import ch.elca.el4j.gui.swing.util.MenuUtils;
 
 // Checkstyle: MagicNumber off
 /**
@@ -63,15 +65,14 @@ public class MainFormMDI extends MDIApplication {
 	 * Determines if user is admin (for activation demo).
 	 */
 	protected boolean m_admin = false;
-	
+
 	/**
 	 * Main definition of the GUI.
 	 *  This method is called back by the GUI framework
 	 */
 	@Override
 	protected void startup() {
-		MainFormActions actions = new MainFormActions(this);
-		super.addActionMappingInstance(actions);
+		m_actionsContext = ActionsContext.create(new MainFormActions(this), this);
 		
 		getMainFrame().setJMenuBar(createMenuBar());
 		showMain(createMainPanel());
@@ -88,8 +89,7 @@ public class MainFormMDI extends MDIApplication {
 		
 		createDefaultDesktopPane();
 		
-		// show a popup menu consisting of menu items
-		m_popup = createPopup(new String[] {
+		m_popup = MenuUtils.createPopup(m_actionsContext, new String[] {
 			"showDemo1", "showDemo2", "---", "quit"});
 		m_desktopPane.addMouseListener(new MouseAdapter() {
 			@Override
@@ -108,8 +108,6 @@ public class MainFormMDI extends MDIApplication {
 			getSpringContext().getBeansOfType(GUIExtension.class);
 		
 		for (GUIExtension extension : extensions.values()) {
-			super.addActionMappingInstance(extension);
-			
 			extension.setApplication(this);
 			extension.extendMenuBar(getMainFrame().getJMenuBar());
 			extension.extendToolBar(toolbar);
@@ -194,10 +192,10 @@ public class MainFormMDI extends MDIApplication {
 				"showSearch", "showRefDB", "---",
 				"showDemo5", "sendExampleEvent", "throwException"};
 		String[] helpMenuActionNames = {"help", "helpAdmin", "toggleAdmin", "about"};
-		menuBar.add(createMenu("fileMenu", fileMenuActionNames));
-		menuBar.add(createMenu("editMenu", editMenuActionNames));
-		menuBar.add(createMenu("demoMenu", demoMenuActionNames));
-		menuBar.add(createMenu("helpMenu", helpMenuActionNames));
+		menuBar.add(MenuUtils.createMenu(m_actionsContext, "fileMenu", fileMenuActionNames));
+		menuBar.add(MenuUtils.createMenu(m_actionsContext, "editMenu", editMenuActionNames));
+		menuBar.add(MenuUtils.createMenu(m_actionsContext, "demoMenu", demoMenuActionNames));
+		menuBar.add(MenuUtils.createMenu(m_actionsContext, "helpMenu", helpMenuActionNames));
 		return menuBar;
 	}
 	
