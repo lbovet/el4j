@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.gui.swing.cookswing;
+package ch.elca.el4j.gui.swing.cookswing.action;
 
 import ch.elca.el4j.core.exceptions.BaseRTException;
 

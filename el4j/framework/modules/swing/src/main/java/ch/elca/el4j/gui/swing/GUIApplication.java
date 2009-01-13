@@ -38,11 +38,13 @@ import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.core.context.ModuleApplicationContextConfiguration;
 import ch.elca.el4j.gui.swing.config.DefaultConfig;
 import ch.elca.el4j.gui.swing.cookswing.TagLibraryFactory;
+import ch.elca.el4j.gui.swing.cookswing.action.ActionsContextAware;
 import ch.elca.el4j.gui.swing.eventbus.ExceptionThrowingEventService;
 import ch.elca.el4j.gui.swing.exceptions.CookXmlExceptionHandler;
 import ch.elca.el4j.gui.swing.exceptions.Exceptions;
@@ -78,7 +80,7 @@ import cookxml.core.exceptionhandler.StrictExceptionHandler;
  *
  * @author Stefan Wismer (SWI)
  */
-public abstract class GUIApplication extends SingleFrameApplication {
+public abstract class GUIApplication extends SingleFrameApplication implements ActionsContextAware {
 
 	/**
 	 * The logger.
@@ -90,6 +92,11 @@ public abstract class GUIApplication extends SingleFrameApplication {
 	 * The Spring context.
 	 */
 	protected ApplicationContext m_springContext;
+	
+	/**
+	 * The Actions context for resolving action names.
+	 */
+	protected ActionsContext m_actionsContext;
 	
 	/**
 	 * The configuration. This is used to set constant parameters like colors to mark values as
@@ -260,56 +267,13 @@ public abstract class GUIApplication extends SingleFrameApplication {
 	public void showMain() {
 		super.show(getMainFrame());
 	}
-
-	/**
-	 * Creates a JMenu out of a String array containing action names. A
-	 * separator is represented by the string "---"
-	 *
-	 * @param menuName
-	 *            the menu name
-	 * @param actionNames
-	 *            the array of menu items
-	 * @return a JMenu
-	 */
-	protected JMenu createMenu(String menuName, String[] actionNames) {
-		JMenu menu = new JMenu();
-		menu.setName(menuName);
-		return initMenu(actionNames, menu);
-	}
 	
-	/**
-	 * Creates a JPopupMenu out of a String array containing action names. A
-	 * separator is represented by the string "---"
-	 *
-	 * @param actionNames
-	 *            the array of menu items
-	 * @return a JPopupMenu
-	 */
-	protected JPopupMenu createPopup(String[] actionNames) {
-		JPopupMenu menu = new JPopupMenu();
-		return initMenu(actionNames, menu);
-	}
-	
-	/**
-	 * Fills a menu with menu items.
-	 *
-	 * @param <T>            the menu type (e.g. JMenu, JPopupMenu)
-	 * @param actionNames    the array of menu items
-	 * @param menu           the menu to insert the items
-	 * @return               a menu
-	 */
-	private <T extends JComponent> T initMenu(String[] actionNames, T menu) {
-		for (String actionName : actionNames) {
-			if (actionName.equals("---")) {
-				menu.add(new JSeparator());
-			} else {
-				JMenuItem menuItem = new JMenuItem();
-				menuItem.setAction(getAction(actionName));
-				//menuItem.setIcon(null);
-				menu.add(menuItem);
-			}
+	/** {@inheritDoc} */
+	public ActionsContext getActionsContext() {
+		if (m_actionsContext == null) {
+			m_actionsContext = ActionsContext.create(this);
 		}
-		return menu;
+		return m_actionsContext;
 	}
 	
 	/**
@@ -320,14 +284,8 @@ public abstract class GUIApplication extends SingleFrameApplication {
 	 * @return             the corresponding action object
 	 * @see #addActionMappingInstance(Object)
 	 */
-	public Action getAction(String actionName) {
-		for (Object candidate : m_instancesWithActionMappings) {
-			Action foundAction = getAction(candidate, actionName);
-			if (foundAction != null) {
-				return foundAction;
-			}
-		}
-		return null;
+	protected Action getAction(String actionName) {
+		return getAction(this, actionName);
 	}
 	
 	/**
@@ -340,14 +298,7 @@ public abstract class GUIApplication extends SingleFrameApplication {
 		org.jdesktop.application.ApplicationContext ac
 			= Application.getInstance().getContext();
 		
-		return ac.getActionMap(object).get(actionName);
-	}
-	
-	public Action getAction(Class<?> cls, Object object, String actionName) {
-		org.jdesktop.application.ApplicationContext ac
-			= Application.getInstance().getContext();
-		
-		return ac.getActionMap(cls, object).get(actionName);
+		return ac.getActionMap(Object.class, object).get(actionName);
 	}
 	
 	/**
@@ -367,13 +318,13 @@ public abstract class GUIApplication extends SingleFrameApplication {
 	 *  (in order to allow distributing Action methods on
 	 *   different classes.
 	 */
-	protected List<Object> m_instancesWithActionMappings
+	/*protected List<Object> m_instancesWithActionMappings
 		= new ArrayList<Object>();
 	{
 		// always add "this" to the list of objects where Action methods
 		// can be found
 		addActionMappingInstance(this);
-	}
+	}*/
 	
 	/**
 	 * Add an object with @Action methods to the list of
@@ -382,16 +333,27 @@ public abstract class GUIApplication extends SingleFrameApplication {
 	 *    this array.
 	 * @param o the object with @Action methods
 	 */
-	public void addActionMappingInstance(Object o) {
+	/*public void addActionMappingInstance(Object o) {
 		m_instancesWithActionMappings.add(o);
-	}
+	}*/
 	
 	/*
 	 * @see #addActionMappingInstance
 	 */
 	/** {@inheritDoc} */
-	public void removeActionMappingInstance(Object o) {
+	/*public void removeActionMappingInstance(Object o) {
 		m_instancesWithActionMappings.remove(o);
+	}*/
+	
+	/** {@inheritDoc} */
+	@Override
+	protected void shutdown() {
+		if (m_springContext != null) {
+			if (m_springContext instanceof ConfigurableApplicationContext) {
+				((ConfigurableApplicationContext) m_springContext).close();
+			}
+		}
+		super.shutdown();
 	}
 
 	/**

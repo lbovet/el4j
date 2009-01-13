@@ -35,7 +35,9 @@ import org.jdesktop.application.ResourceMap;
 import org.noos.xing.mydoggy.ToolWindowAnchor;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
+import ch.elca.el4j.gui.swing.ActionsContext;
 import ch.elca.el4j.gui.swing.DockingApplication;
+import ch.elca.el4j.gui.swing.util.MenuUtils;
 
 // Checkstyle: MagicNumber off
 /**
@@ -65,8 +67,7 @@ public class MainFormDocking extends DockingApplication {
 	 */
 	@Override
 	protected void startup() {
-		MainFormActions actions = new MainFormActions(this);
-		super.addActionMappingInstance(actions);
+		m_actionsContext = ActionsContext.create(new MainFormActions(this), this);
 		
 		getMainFrame().setJMenuBar(createMenuBar());
 		showMain(createMainPanel());
@@ -89,8 +90,6 @@ public class MainFormDocking extends DockingApplication {
 			getSpringContext().getBeansOfType(GUIExtension.class);
 		
 		for (GUIExtension extension : extensions.values()) {
-			super.addActionMappingInstance(extension);
-			
 			extension.setApplication(this);
 			extension.extendMenuBar(getMainFrame().getJMenuBar());
 			extension.extendToolBar(toolbar);
@@ -175,6 +174,8 @@ public class MainFormDocking extends DockingApplication {
 	 * @return    the created menu bar
 	 */
 	protected JMenuBar createMenuBar() {
+		MainFormActions actions = new MainFormActions(this);
+		
 		JMenuBar menuBar = new JMenuBar();
 		String[] fileMenuActionNames = {"quit"};
 		String[] editMenuActionNames = {"cut", "copy", "paste", "delete"};
@@ -183,10 +184,10 @@ public class MainFormDocking extends DockingApplication {
 				"showSearch", "showRefDB", "---",
 				"showDemo5", "sendExampleEvent", "throwException"};
 		String[] helpMenuActionNames = {"help", "helpAdmin", "toggleAdmin", "about"};
-		menuBar.add(createMenu("fileMenu", fileMenuActionNames));
-		menuBar.add(createMenu("editMenu", editMenuActionNames));
-		menuBar.add(createMenu("demoMenu", demoMenuActionNames));
-		menuBar.add(createMenu("helpMenu", helpMenuActionNames));
+		menuBar.add(MenuUtils.createMenu(m_actionsContext, "fileMenu", fileMenuActionNames));
+		menuBar.add(MenuUtils.createMenu(m_actionsContext, "editMenu", editMenuActionNames));
+		menuBar.add(MenuUtils.createMenu(m_actionsContext, "demoMenu", demoMenuActionNames));
+		menuBar.add(MenuUtils.createMenu(m_actionsContext, "helpMenu", helpMenuActionNames));
 		return menuBar;
 	}
 	
