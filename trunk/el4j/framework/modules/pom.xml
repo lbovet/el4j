@@ -43,6 +43,6 @@
 		<module>xml_merge</module>
 		<module>bshlauncher</module>
 		<module>cobertura-runtime</module>
-		<!--<module>offliner</module>-->
+		<module>offliner</module>
 	</modules>
 </project>
