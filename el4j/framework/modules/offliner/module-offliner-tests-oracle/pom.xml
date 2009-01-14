@@ -21,6 +21,14 @@
 			<artifactId>module-offliner</artifactId>
 			<version>${version.module-offliner}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-offliner</artifactId>
+			<version>${version.module-offliner}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -46,10 +54,12 @@
 
 	<profiles>
 		<profile>
-			<id>integrationTests</id>
+			<id>oracle</id>
+			<!--
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
+			-->
 			<build>
 				<plugins>
 					<plugin>
@@ -158,7 +168,6 @@
 								</goals>
 								<configuration>
 									<mainClass>ch.elca.el4j.services.persistence.hibernate.offlining.test.runner.TestStarter</mainClass>
-									<commandlineArgs>${el4j.project.tools} 1527 ${project.build.directory}</commandlineArgs>
 									<cleanupDaemonThreads>false</cleanupDaemonThreads>
 								</configuration>
 							</execution>

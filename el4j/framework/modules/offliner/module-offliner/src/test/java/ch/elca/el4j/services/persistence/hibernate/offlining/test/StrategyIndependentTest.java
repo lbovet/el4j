@@ -47,21 +47,37 @@ public class StrategyIndependentTest extends AbstractTest {
 
 	/**
 	 * Check that a new element inserted into REMOTE is identified as REMOTE, and same for LOCAL.
+	 * For db2 tests, the constraints are LOCAL: k > 0 and REMOTE: k < 0 
+	 * whereas oracle has LOCAL: 2000000000 < k < 4000000000 and REMOTE: 0 < k < 2000000000.
 	 */
 	public void testKeyStrategy() {
+		long remoteKey;
+		long localKey;
 		m_offliner.setOnline(true);
 		SimplePerson r = new SimplePerson();
 		r.setName("Alice");
 		r.setEmail("alice@remote.org");
 		saveSimplePerson(r);
-		assertTrue("The keys in the remote database must be > 0", r.getId() > 0L);
+		remoteKey = r.getId();
 		
 		m_offliner.setOnline(false);
 		SimplePerson l = new SimplePerson();
 		l.setName("Alice");
 		l.setEmail("alice@local.org");
 		saveSimplePerson(l);
-		assertTrue("The keys in the local database must be < 0", l.getId() < 0L);
+		localKey = l.getId();
+		
+		// 0 = error, 1 = derby, 2 = oracle
+		int db = 0;
+		if (remoteKey > 0L && localKey < 0L) {
+			db = 1;
+		} else if (0L < remoteKey && remoteKey < 2000000000L
+			&& 2000000000L < localKey && localKey < 4000000000L) {
+			db = 2;
+		} 
+		if (db == 0) {
+			fail("The keys are not consistent with either of the database test cases.");
+		}
 	}
 	
 	/**

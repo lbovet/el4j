@@ -63,10 +63,10 @@
 			<value>jdbc:oracle:thin:@srv11645.elca.ch:1521:DL04</value>
 		</property>
 		<property name="user">
-			<value>LEAF2</value>
+			<value>OT_REMOTE</value>
 		</property>
 		<property name="password">
-			<value>LEAF</value>
+			<value>OT_REMOTE</value>
 		</property>
 
 		

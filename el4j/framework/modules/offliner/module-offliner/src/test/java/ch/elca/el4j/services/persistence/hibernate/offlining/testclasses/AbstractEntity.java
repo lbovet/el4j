@@ -54,7 +54,7 @@ public abstract class AbstractEntity implements Serializable {
 	 * @return Returns the id.
 	 */
 	@Id @Column(name = "ID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "keyid_generator")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "keyid_generator")
 	public long getId() {
 		return m_id;
 	}

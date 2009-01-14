@@ -68,7 +68,7 @@ public class OfflinerProperty {
 	 * @return The id.
 	 */
 	@Id @Column(name = "ID") 
-	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "keyid_generator")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "keyid_generator")
 	public int getId() {
 		return m_id;
 	}
