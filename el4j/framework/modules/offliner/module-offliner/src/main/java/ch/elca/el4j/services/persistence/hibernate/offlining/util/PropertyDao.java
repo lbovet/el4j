@@ -41,21 +41,13 @@ import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
 public class PropertyDao extends GenericHibernateDao<OfflinerProperty, Integer>
 	implements PropertyDaoInterface {
 	
-	/**
-	 * Check if a property exists.
-	 * @param name The property name.
-	 * @return <code>true</code> if the property exists.
-	 */
+	/** {@inheritDoc} */
 	@Transactional
 	public boolean isPropertyPresent(String name) {
 		return getByName(name) != null;
 	}
-		
-	/**
-	 * Get an integer-valued property.
-	 * @param name The property name.
-	 * @return The property value.
-	 */
+
+	/** {@inheritDoc} */
 	@Transactional
 	public int getIntProperty(String name) {
 		OfflinerProperty p = getByName(name);
@@ -65,11 +57,17 @@ public class PropertyDao extends GenericHibernateDao<OfflinerProperty, Integer>
 		return Integer.parseInt(p.getPropertyValue());
 	}
 	
-	/**
-	 * Get a string-valued property.
-	 * @param name The property name.
-	 * @return The property value.
-	 */
+	/** {@inheritDoc} */
+	@Transactional
+	public long getLongProperty(String name) {
+		OfflinerProperty p = getByName(name);
+		if (p == null) {
+			throw new IllegalArgumentException("No property of name " + name);
+		}
+		return Long.parseLong(p.getPropertyValue());
+	}
+	
+	/** {@inheritDoc} */
 	@Transactional
 	public String getStringProperty(String name) {
 		OfflinerProperty p = getByName(name);
@@ -95,12 +93,8 @@ public class PropertyDao extends GenericHibernateDao<OfflinerProperty, Integer>
 			return list.get(0);
 		}
 	}
-	
-	/**
-	 * Save a property.
-	 * @param name The property name.
-	 * @param value The property value.
-	 */
+
+	/** {@inheritDoc} */
 	@Transactional
 	public void saveProperty(String name, String value) {
 		OfflinerProperty p = getByName(name);
@@ -117,14 +111,16 @@ public class PropertyDao extends GenericHibernateDao<OfflinerProperty, Integer>
 			throw new AssertionError("Saving property failed.");
 		}
 	}
-	
-	/**
-	 * Save a property.
-	 * @param name The property name.
-	 * @param value The property value.
-	 */
+
+	/** {@inheritDoc} */
 	@Transactional
 	public void saveProperty(String name, int value) {
 		saveProperty(name, Integer.toString(value));
+	}
+
+	/** {@inheritDoc} */
+	@Transactional
+	public void saveProperty(String name, long value) {
+		saveProperty(name, Long.toString(value));
 	}
 }

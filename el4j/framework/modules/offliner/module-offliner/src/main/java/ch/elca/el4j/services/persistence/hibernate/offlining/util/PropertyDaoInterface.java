@@ -47,6 +47,13 @@ public interface PropertyDaoInterface {
 	int getIntProperty(String name);
 	
 	/**
+	 * Get a long-valued property.
+	 * @param name The property name.
+	 * @return The property value.
+	 */
+	long getLongProperty(String name);
+	
+	/**
 	 * Get a string-valued property.
 	 * @param name The property name.
 	 * @return The property value.
@@ -66,4 +73,11 @@ public interface PropertyDaoInterface {
 	 * @param value The property value.
 	 */
 	void saveProperty(String name, int value);
+	
+	/**
+	 * Save a property.
+	 * @param name The property name.
+	 * @param value The property value.
+	 */
+	void saveProperty(String name, long value);
 }
