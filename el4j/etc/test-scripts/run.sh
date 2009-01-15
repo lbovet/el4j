@@ -58,7 +58,7 @@ case $1 in
 		./internal/etc/release-scripts/createTemplates.sh clean
 		;;
 	"release_website")
-		rm -rf /home/users2/tester/java/el4j/snapshot/website/external/* > /dev/null
+		rm -rf ~/java/el4j/snapshot/website/external/* > /dev/null
 		cd external/site
 		./site.sh
 		cd ../..
