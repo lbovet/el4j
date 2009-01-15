@@ -44,6 +44,24 @@ public class OfflinerSpringImpl implements Offliner, ModuleApplicationListener {
 	/** The actual client. This is null until we are initialized. */
 	private OfflinerClientImpl m_client;
 	
+	/** Whether to start the offliner in online or offline mode, if it is explicitly stated. */
+	private boolean m_startOnline;
+	
+	/** Whether to explicitly state how to start the offliner (online/offline). */
+	private boolean m_fixedStartOnline;
+	
+	/**
+	 * Create the client, stating whether to start online or offline.
+	 * @param info The offliner info.
+	 * @param online Whether to start online (<code>true</code>) or offline.
+	 */
+	public OfflinerSpringImpl(OfflinerInfo info, boolean online) {
+		m_tempInfo = info;
+		m_client = null;
+		m_fixedStartOnline = true;
+		m_startOnline = online;
+	}
+	
 	/**
 	 * Create the client.
 	 * @param info The offliner info.
@@ -51,6 +69,7 @@ public class OfflinerSpringImpl implements Offliner, ModuleApplicationListener {
 	public OfflinerSpringImpl(OfflinerInfo info) {
 		m_tempInfo = info;
 		m_client = null;
+		m_fixedStartOnline = false;
 	}
 	
 	/**
@@ -145,10 +164,13 @@ public class OfflinerSpringImpl implements Offliner, ModuleApplicationListener {
 	}
 
 	/**
-	 * The context is copmlete. Create the real client.
+	 * The context is complete. Create the real client.
 	 */
 	public void onContextRefreshed() {
 		m_client = new OfflinerClientImpl(m_tempInfo);
+		if (m_fixedStartOnline) {
+			m_client.setOnline(m_startOnline);
+		}
 	}
 	
 
