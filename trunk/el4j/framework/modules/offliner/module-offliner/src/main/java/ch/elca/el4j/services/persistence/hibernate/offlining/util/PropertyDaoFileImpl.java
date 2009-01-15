@@ -119,4 +119,15 @@ public class PropertyDaoFileImpl implements PropertyDaoInterface {
 	public void saveProperty(String name, int value) {
 		saveProperty(name, Integer.toString(value));
 	}
+
+	/** {@inheritDoc} */
+	public long getLongProperty(String name) {
+		return Long.parseLong(getStringProperty(name));
+	}
+
+	/** {@inheritDoc} */
+	public void saveProperty(String name, long value) {
+		saveProperty(name, Long.toString(value));
+	}
+	
 }

@@ -51,6 +51,9 @@ public class OfflinerProperty {
 	/** The current state of the offliner. This allows us to start up in the same state as we last shut down. */
 	public static final String CURRENT_STATE = "currentState";
 	
+	/** The current delete order. */
+	public static final String DELETE_ORDER = "deleteOrder";
+	
 	/** The key. */
 	private int m_id;
 	

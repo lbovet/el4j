@@ -86,8 +86,7 @@ public class OfflinerClientImpl implements Offliner {
 		if (!m_info.isComplete()) {
 			throw new IllegalArgumentException("Info object is not complete.");
 		}
-		m_deleteOrder = 0L;
-
+		
 		if (!m_info.getPropertyDao().isPropertyPresent(OfflinerProperty.LAST_COMMIT_PROP)) {
 			m_info.getPropertyDao().saveProperty(OfflinerProperty.LAST_COMMIT_PROP, 0);
 		}
@@ -96,6 +95,13 @@ public class OfflinerClientImpl implements Offliner {
 		}
 		if (!m_info.getPropertyDao().isPropertyPresent(OfflinerProperty.CURRENT_STATE)) {
 			m_info.getPropertyDao().saveProperty(OfflinerProperty.CURRENT_STATE, 1);
+		}
+		
+		if (!m_info.getPropertyDao().isPropertyPresent(OfflinerProperty.DELETE_ORDER)) {
+			m_info.getPropertyDao().saveProperty(OfflinerProperty.DELETE_ORDER, 0L);
+			m_deleteOrder = 0L;
+		} else {
+			m_deleteOrder = m_info.getPropertyDao().getLongProperty(OfflinerProperty.DELETE_ORDER);
 		}
 		
 		m_online = (m_info.getPropertyDao().getIntProperty(OfflinerProperty.CURRENT_STATE) != 0);
@@ -166,6 +172,7 @@ public class OfflinerClientImpl implements Offliner {
 			throw new OfflinerInternalRTException("Delete on mapping table failed.");
 		}
 		m_deleteOrder = 0L;
+		m_info.getPropertyDao().saveProperty(OfflinerProperty.DELETE_ORDER, 0L);
 	}
 
 	/** {@inheritDoc} */
@@ -206,7 +213,9 @@ public class OfflinerClientImpl implements Offliner {
 			// in the database to prevent constraint violations.
 			// If an object is deleted locally, its server version
 			// becomes useless and we use the field to store the delete order.
-			entry.setDeleteVersion(++m_deleteOrder);
+			++m_deleteOrder;
+			m_info.getPropertyDao().saveProperty(OfflinerProperty.DELETE_ORDER, m_deleteOrder);
+			entry.setDeleteVersion(m_deleteOrder);
 			mapped.setEntry(entry);
 		}
 
