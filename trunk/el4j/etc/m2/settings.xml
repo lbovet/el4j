@@ -255,8 +255,9 @@
 				<weblogic10x.manager.password>weblogic</weblogic10x.manager.password>
 				<weblogic10x.container.log.file>${project.build.directory}/weblogic.log</weblogic10x.container.log.file>
 				<weblogic10x.cargo.log.file>${project.build.directory}/cargo-weblogic.log</weblogic10x.cargo.log.file>
-				<weblogic10x.jrockit.home>/opt/bea/jrockit-R27.4.0-jdk1.5.0_12</weblogic10x.jrockit.home>
-				
+				<!--<weblogic10x.jrockit.home>/opt/bea/jrockit-R27.4.0-jdk1.5.0_12</weblogic10x.jrockit.home>-->
+				<weblogic10x.home>${el4j.project.tools}/bea/jrockit</weblogic10x.home>
+
 				<!-- EL4J team specific settings -->
 				<!-- Uncomment the following on leaffy -->
 				<!--project-server.path>file:/home/java</project-server.path-->
