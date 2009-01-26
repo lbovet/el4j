@@ -517,11 +517,10 @@
 					<artifactId>cargo-maven2-plugin</artifactId>
 					<!--
 						Due to bugs fix built snapshot version is used.
-							* cargo-maven2-plugin (revision 1180
+							* cargo-maven2-plugin (revision 1862
 								+ patch http://jira.codehaus.org/browse/CARGO-411
-								+ patch http://jira.codehaus.org/browse/CARGO-412)
+								without patch http://jira.codehaus.org/browse/CARGO-412)
 					-->
-					<!-- <version>0.3-20060918.130206-4</version>-->
 					<version>1.0-el4j_20090126_1000</version> <!-- EL4J CUSTOMIZATION -->
 					<configuration>
 						<configuration>
@@ -1248,7 +1247,7 @@
 			</build>
 			<properties>
 			
-				<jee-web.containerId>weblogic10x</jee-web.containerId>
+				<jee-web.containerId>weblogic103x</jee-web.containerId>
 
 				<jee-web.host>localhost</jee-web.host>
 				<jee-web.port>7001</jee-web.port>
