@@ -522,7 +522,7 @@
 								+ patch http://jira.codehaus.org/browse/CARGO-412)
 					-->
 					<!-- <version>0.3-20060918.130206-4</version>-->
-					<version>1.0-el4j_20080110_1000</version> <!-- EL4J CUSTOMIZATION -->
+					<version>1.0-el4j_20090126_1000</version> <!-- EL4J CUSTOMIZATION -->
 					<configuration>
 						<configuration>
 							<properties>
@@ -1391,9 +1391,9 @@
 			<releases>
 				<enabled>true</enabled>
 			</releases>
-			<id>el4jReleaseRepositoryInternal</id>
+			<id>el4jRepositoryInternal</id>
 			<name>Internal release repository of the EL4J project</name>
-			<url>http://leaffy.elca.ch/java/maven2repository</url>
+			<url>http://el4.elca-services.ch/el4j-protected/maven2repository/</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>
@@ -1404,7 +1404,7 @@
 			<releases>
 				<enabled>true</enabled>
 			</releases>
-			<id>el4jReleasePluginRepositoryExternal</id>
+			<id>el4jPluginRepositoryExternal</id>
 			<name>External release repository of the EL4J project</name>
 			<url>http://el4.elca-services.ch/el4j/maven2repository</url>
 		</pluginRepository>
