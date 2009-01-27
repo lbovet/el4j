@@ -235,10 +235,13 @@
 				<tomcat6x.cargo.log.file>${project.build.directory}/logs/tomcat6x/cargo.log</tomcat6x.cargo.log.file>
 				<tomcat6x.eclipse.runtime.facet.name>Apache Tomcat v6.0</tomcat6x.eclipse.runtime.facet.name>
 
+
+				<bea.home>${el4j.project.tools}/bea</bea.home>
+
 				<!-- Weblogic9x -->
-				<weblogic9x.home>${el4j.project.tools}/bea/weblogic90</weblogic9x.home>
+				<weblogic9x.home>${bea.home}/weblogic90</weblogic9x.home>
 				<weblogic9x.server.name>myserver</weblogic9x.server.name>
-				<weblogic9x.domains.home>${el4j.project.tools}/bea/domains</weblogic9x.domains.home>
+				<weblogic9x.domains.home>${bea.home}/domains</weblogic9x.domains.home>
 				<weblogic9x.domain.name>el4j</weblogic9x.domain.name>
 				<weblogic9x.manager.username>weblogic</weblogic9x.manager.username>
 				<weblogic9x.manager.password>weblogic</weblogic9x.manager.password>
@@ -247,16 +250,16 @@
 				
 				
 				<!-- Weblogic10x -->
-				<weblogic10x.home>${el4j.project.tools}/bea/weblogic100</weblogic10x.home>
+				<weblogic10x.home>${bea.home}/weblogic100</weblogic10x.home>
 				<weblogic10x.server.name>myserver</weblogic10x.server.name>
-				<weblogic10x.domains.home>${el4j.project.tools}/bea/domains/weblogic10x/${weblogic10x.domain.name}</weblogic10x.domains.home>
+				<weblogic10x.domains.home>${bea.home}/domains/weblogic10x/${weblogic10x.domain.name}</weblogic10x.domains.home>
 				<weblogic10x.domain.name>el4j</weblogic10x.domain.name>
 				<weblogic10x.manager.username>weblogic</weblogic10x.manager.username>
 				<weblogic10x.manager.password>weblogic</weblogic10x.manager.password>
 				<weblogic10x.container.log.file>${project.build.directory}/weblogic.log</weblogic10x.container.log.file>
 				<weblogic10x.cargo.log.file>${project.build.directory}/cargo-weblogic.log</weblogic10x.cargo.log.file>
-				<!--<weblogic10x.jrockit.home>/opt/bea/jrockit-R27.4.0-jdk1.5.0_12</weblogic10x.jrockit.home>-->
-				<weblogic10x.home>/home/tester/el4j/hudson_build_workspaces/tools/bea/jrockit</weblogic10x.home>
+				<weblogic10x.jrockit.home>${bea.home}/jrockit</weblogic10x.jrockit.home>
+
 
 				<!-- EL4J team specific settings -->
 				<!-- Uncomment the following on leaffy -->

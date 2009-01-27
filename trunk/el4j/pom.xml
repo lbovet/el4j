@@ -1227,6 +1227,7 @@
 										<cargo.servlet.port>${jee-web.port}</cargo.servlet.port>
 										<cargo.weblogic.deployable.folder>autodeploy</cargo.weblogic.deployable.folder>
 										<cargo.weblogic.jvm>${weblogic10x.jrockit.home}/bin/java</cargo.weblogic.jvm>
+										<cargo.weblogic.bea.home>${bea.home}</cargo.weblogic.bea.home>
 									</properties>
 								</configuration>
 							</configuration>
