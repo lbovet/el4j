@@ -15,6 +15,7 @@
 			<el4j:create-component finish-method="setGridPanelLayout">
 				<label text="Name" />
 				<textfield cx:var="m_name" />
+				<textfield cx:var="m_author" />
 				<textfield cx:var="m_description" />
 				<checkbox cx:var="m_incomplete" />
 
@@ -31,7 +32,7 @@
 						<el4j:column label="Incomplete?" property="incomplete" class="java.lang.Boolean" />
 						<el4j:column label="Version" property="version" />
 						<el4j:column label="Date" property="date" class="java.util.Date" />
-						<el4j:column label="Insertion Timestamp" property="whenInserted" class="java.sql.Timestamp" />
+						<el4j:column label="Inserted" property="whenInserted" class="java.util.Date" />
 					</el4j:tablebinding>
 				</table>
 			</scrollpane>
