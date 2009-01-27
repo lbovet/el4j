@@ -15,7 +15,7 @@
 			<el4j:create-component finish-method="setGridPanelLayout">
 				<label text="Name" />
 				<textfield cx:var="m_name" />
-				<textfield cx:var="m_author" />
+				<textfield cx:var="m_authorName" />
 				<textfield cx:var="m_description" />
 				<checkbox cx:var="m_incomplete" />
 
