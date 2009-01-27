@@ -29,7 +29,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.TableModel;
+
+import net.java.dev.designgridlayout.DesignGridLayout;
 
 import org.acegisecurity.AccessDeniedException;
 import org.acegisecurity.context.SecurityContextHolder;
@@ -42,9 +46,6 @@ import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.Binding;
 import org.jdesktop.swingbinding.validation.ValidatedProperty;
 import org.springframework.stereotype.Component;
-
-import com.silvermindsoftware.hitch.Binder;
-import com.silvermindsoftware.hitch.BinderManager;
 
 import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.Reference;
@@ -63,7 +64,8 @@ import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.LikeCriteria;
 
-import net.java.dev.designgridlayout.DesignGridLayout;
+import com.silvermindsoftware.hitch.Binder;
+import com.silvermindsoftware.hitch.BinderManager;
 
 import cookxml.cookswing.CookSwing;
 
@@ -113,11 +115,14 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 	}
 	
 	private JTextField m_name;
+	protected JTextField m_authorName;
 	private JTextField m_description;
 	private JCheckBox m_incomplete;
 	
 	private JButton m_createButton;
 	private JButton m_deleteButton;
+	
+	protected boolean m_create;
 	
 	private JTable m_references;
 	
@@ -172,16 +177,18 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 	/**
 	 * Create a new table entry.
 	 */
-	@Action
+	@Action(enabledProperty = "create")
 	public void create() {
-		Reference newRef = new Book();
+		Book newRef = new Book();
 		newRef.setName(m_name.getText());
+		newRef.setAuthorName(m_authorName.getText());
 		newRef.setDescription(m_description.getText());
 		newRef.setIncomplete(m_incomplete.isSelected());
 		
 		m_refList.add(m_service.saveReference(newRef));
 		
 		m_name.setText("");
+		m_authorName.setText("");
 		m_description.setText("");
 		m_incomplete.setSelected(false);
 	}
@@ -206,6 +213,25 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 			m_listBinding.bind();
 		}
 	}
+	
+	/**
+	 * Is the user allowed to create a new Book.
+	 * @return if the user is allowed to create.
+	 */
+	public boolean isCreate() {
+		return m_create;
+	}
+
+	/**
+	 * Check the condition if the user is allowed to create.
+	 * Fires a property change.
+	 */
+	public void updateCreate() {
+		boolean oldCreate = m_create;
+		m_create = (m_name != null && m_name.getText().length() > 0 
+			&& m_authorName != null && m_authorName.getText().length() > 2);
+		firePropertyChange("create", oldCreate, m_create);
+	}
 
 	/**
 	 * Layout the form components.
@@ -221,9 +247,11 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 		// the first two rows contains a label and a text field each
 		
 		layout.row().grid().add(new JLabel("Name")).add(m_name);
+		layout.row().grid().add(new JLabel("Author")).add(m_authorName);
 		layout.row().grid().add(new JLabel("Description")).add(m_description);
 		layout.row().grid().add(new JLabel("Incomplete")).add(m_incomplete);
 		layout.row().grid().add(m_createButton).add(m_deleteButton);
+		m_createButton.setEnabled(false);
 	}
 
 	private void loadModel() {
@@ -312,6 +340,34 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 						}
 					}
 				}
+			}
+		});
+		
+		m_name.getDocument().addDocumentListener(new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+				updateCreate();
+			}
+
+			public void insertUpdate(DocumentEvent e) {
+				updateCreate();
+			}
+
+			public void removeUpdate(DocumentEvent e) {
+				updateCreate();
+			}
+		});
+		
+		m_authorName.getDocument().addDocumentListener(new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+				updateCreate();
+			}
+
+			public void insertUpdate(DocumentEvent e) {
+				updateCreate();
+			}
+
+			public void removeUpdate(DocumentEvent e) {
+				updateCreate();
 			}
 		});
 	}
