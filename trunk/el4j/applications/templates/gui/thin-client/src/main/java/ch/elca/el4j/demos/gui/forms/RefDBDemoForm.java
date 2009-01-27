@@ -88,6 +88,7 @@ import cookxml.cookswing.CookSwing;
 @Component("refDBDemoForm")
 public class RefDBDemoForm extends JPanel implements Bindable {
 	protected JTextField m_name;
+	protected JTextField m_author;
 	protected JTextField m_description;
 	protected JCheckBox m_incomplete;
 	
@@ -144,14 +145,16 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 	 */
 	@Action
 	public void create() {
-		Reference newRef = new Book();
+		Book newRef = new Book();
 		newRef.setName(m_name.getText());
 		newRef.setDescription(m_description.getText());
+		newRef.setAuthorName(m_author.getText());
 		newRef.setIncomplete(m_incomplete.isSelected());
 		
 		m_refList.add(m_service.saveReference(newRef));
 		
 		m_name.setText("");
+		m_author.setText("");
 		m_description.setText("");
 		m_incomplete.setSelected(false);
 	}
@@ -187,6 +190,7 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 		// the first two rows contains a label and a text field each
 		
 		layout.row().grid().add(new JLabel("Name")).add(m_name);
+		layout.row().grid().add(new JLabel("Author")).add(m_author);
 		layout.row().grid().add(new JLabel("Description")).add(m_description);
 		layout.row().grid().add(new JLabel("Incomplete")).add(m_incomplete);
 		layout.row().grid().add(m_createButton).add(m_deleteButton);
