@@ -250,9 +250,9 @@
 				
 				
 				<!-- Weblogic10x -->
-				<weblogic10x.home>${bea.home}/weblogic100</weblogic10x.home>
+				<weblogic10x.home>${bea.home}/wlserver_10.3</weblogic10x.home>
 				<weblogic10x.server.name>myserver</weblogic10x.server.name>
-				<weblogic10x.domains.home>${bea.home}/domains/weblogic10x/${weblogic10x.domain.name}</weblogic10x.domains.home>
+				<weblogic10x.domains.home>${el4j.project.tools}/domains/weblogic10x/${weblogic10x.domain.name}</weblogic10x.domains.home>
 				<weblogic10x.domain.name>el4j</weblogic10x.domain.name>
 				<weblogic10x.manager.username>weblogic</weblogic10x.manager.username>
 				<weblogic10x.manager.password>weblogic</weblogic10x.manager.password>
