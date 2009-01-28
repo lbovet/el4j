@@ -1,2 +1,2 @@
 #!/bin/bash
-mvn db:prepare exec:java
+source mvn db:prepare exec:java
