@@ -20,7 +20,8 @@ import org.junit.AfterClass;
 import org.springframework.context.ConfigurableApplicationContext;
 
 /**
- * This class is a base class for tests in the EL4J framework.
+ * This class is a base class for tests in the EL4J framework. By default it keeps the created application context
+ * during all the tests in a test class.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -69,7 +70,7 @@ public abstract class AbstractTest {
 	 *         be allowed.
 	 */
 	protected boolean isBeanOverridingAllowed() {
-		return true;
+		return false;
 	}
 
 	/**
