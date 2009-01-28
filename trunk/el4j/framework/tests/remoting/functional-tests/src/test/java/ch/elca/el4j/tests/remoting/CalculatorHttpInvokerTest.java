@@ -16,9 +16,6 @@
  */
 package ch.elca.el4j.tests.remoting;
 
-import org.springframework.context.ApplicationContext;
-
-import ch.elca.el4j.core.context.ModuleApplicationContext;
 
 /**
  * This class is a test for the calculator.
@@ -34,13 +31,11 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
  * @author Waraich Rashid (RWA)
  */
 public class CalculatorHttpInvokerTest extends AbstractCalculatorTest {
-	/**
-	 * {@inheritDoc}
-	 */
-	ApplicationContext getContext() {
-		return  new ModuleApplicationContext(
-			new String[] {"classpath*:mandatory/*.xml",
-				"scenarios/client/remotingtests-httpinvoker-client-config.xml"},
-				false);
+	
+	/** {@inheritDoc} */
+	@Override
+	protected String[] getIncludeConfigLocations() {
+		return new String[] {"classpath*:mandatory/*.xml",
+			"scenarios/client/remotingtests-httpinvoker-client-config.xml"};
 	}
 }

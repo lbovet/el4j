@@ -16,15 +16,14 @@
  */
 package ch.elca.el4j.tests.remoting;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.junit.Before;
-import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-
+import ch.elca.el4j.tests.core.AbstractTest;
 import ch.elca.el4j.tests.remoting.service.Calculator;
 import ch.elca.el4j.tests.remoting.service.CalculatorException;
 import ch.elca.el4j.tests.remoting.service.CalculatorOperation;
@@ -42,32 +41,26 @@ import ch.elca.el4j.tests.remoting.service.CalculatorOperation;
  * @author Waraich Rashid (RWA)
  */
 
-public abstract class AbstractCalculatorTest {
+public abstract class AbstractCalculatorTest extends AbstractTest {
 	/**
 	 * Private logger.
 	 */
-	private static Log s_logger
-		= LogFactory.getLog(AbstractCalculatorTest.class);
+	private static Log s_logger = LogFactory.getLog(AbstractCalculatorTest.class);
 
 	/**
 	 * Instance of the calculator proxy.
 	 */
 	private Calculator m_calc;
-
+	
 	/**
-	 * {@inheritDoc}
+	 * @return    the calculator object
 	 */
-	@Before
-	public void setUp() {
-		ApplicationContext appContext = getContext();
-		m_calc = (Calculator) appContext.getBean("calculator");
+	public Calculator getCalc() {
+		if (m_calc == null) {
+			m_calc = (Calculator) getApplicationContext().getBean("calculator");
+		}
+		return m_calc;
 	}
-
-	/**
-	 * Gives back the Context of the test.
-	 * @return Returns the mApplicationContext
-	 */
-	abstract ApplicationContext getContext();
 	
 	/**
 	 * This test tests the area calculation method.
@@ -77,9 +70,8 @@ public abstract class AbstractCalculatorTest {
 		final double a = 2.3;
 		final double b = 5.7;
 		final double delta = 0.00000001;
-		double result = m_calc.getArea(a, b);
-		assertEquals("The area is not correctly calculated.", result,
-			a * b, delta);
+		double result = getCalc().getArea(a, b);
+		assertEquals("The area is not correctly calculated.", result, a * b, delta);
 	}
 	
 	/**
@@ -89,7 +81,7 @@ public abstract class AbstractCalculatorTest {
 	@Test
 	public void testExceptionBehaviour() {
 		try {
-			m_calc.throwMeAnException();
+			getCalc().throwMeAnException();
 			fail("No exception was thrown.");
 		} catch (CalculatorException e) {
 			s_logger.debug("Expected exception caught.", e);
@@ -102,11 +94,9 @@ public abstract class AbstractCalculatorTest {
 	@Test
 	public void testAbilityToHandleEnumerations() {
 		// Checkstyle: MagicNumber off
-		double result
-			= m_calc.calculate(1.2, 2.5, CalculatorOperation.ADDITION);
+		double result = getCalc().calculate(1.2, 2.5, CalculatorOperation.ADDITION);
 		assertEquals(3.7, result, 0.1);
-		result
-			= m_calc.calculate(1.2, 2.5, CalculatorOperation.SUBTRACTION);
+		result = getCalc().calculate(1.2, 2.5, CalculatorOperation.SUBTRACTION);
 		assertEquals(-1.3, result, 0.1);
 		//Checkstyle: MagicNumber on
 	}

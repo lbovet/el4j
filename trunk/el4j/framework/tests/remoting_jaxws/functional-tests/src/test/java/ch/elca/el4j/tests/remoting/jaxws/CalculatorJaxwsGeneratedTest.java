@@ -19,19 +19,15 @@ package ch.elca.el4j.tests.remoting.jaxws;
 //Checkstyle: EmptyBlock off
 //Checkstyle: MagicNumber off
 
+import java.util.Arrays;
+
+import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.util.Arrays;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
-
-import ch.elca.el4j.core.context.ModuleApplicationContext;
+import ch.elca.el4j.tests.core.AbstractTest;
 import ch.elca.el4j.tests.remoting.jaxws.service.IntMatrixAdapter;
 import ch.elca.el4j.tests.remoting.jaxws.service.gen.CalculatorException_Exception;
 import ch.elca.el4j.tests.remoting.jaxws.service.gen.CalculatorValueObject;
@@ -52,40 +48,21 @@ import ch.elca.el4j.tests.remoting.jaxws.service.gen.SomeIntValue;
  * @author Philippe Jacot (PJA)
  * @author Stefan Wismer (SWI)
  */
-public class CalculatorJaxwsGeneratedTest {
+public class CalculatorJaxwsGeneratedTest extends AbstractTest {
 	/**
 	 * Is the delta to doubles can have to be equal.
 	 */
 	private static final double DOUBLE_TOLERANCE = 0.000000001;
-		
-	/**
-	 * ApplicationContext.
-	 */
-	private ConfigurableApplicationContext m_appContext;
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Before
-	public void setUp() {
-		m_appContext
-			= new ModuleApplicationContext(
-				new String[] {"classpath*:mandatory/*.xml",
-					"scenarios/client/remotingtests-jaxws-client-config.xml"},
-					false);
-	}
 	
-	/**
-	 *
-	 * {@inheritDoc}
-	 */
-	@After
-	public void tearDown() {
-		m_appContext.close();
+	/** {@inheritDoc} */
+	@Override
+	protected String[] getIncludeConfigLocations() {
+		return new String[] {"classpath*:mandatory/*.xml",
+			"scenarios/client/remotingtests-jaxws-client-config.xml"};
 	}
 
 	/**
-	 * This test tests the area calulation method.
+	 * This test tests the area calculation method.
 	 */
 	@Test
 	public void testAreaCalculation() {
@@ -220,16 +197,6 @@ public class CalculatorJaxwsGeneratedTest {
 	 * @return Calculator to use
 	 */
 	public CalculatorWS getCalc() {
-		return (CalculatorWS) getApplicationContext().
-			getBean("calculatorGenerated");
-	}
-	
-	
-	/**
-	 * Get the Applicationcontext.
-	 * @return The ApplicationContext
-	 */
-	protected ApplicationContext getApplicationContext() {
-		return m_appContext;
+		return (CalculatorWS) getApplicationContext().getBean("calculatorGenerated");
 	}
 }
