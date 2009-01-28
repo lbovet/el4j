@@ -36,6 +36,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
+import ch.elca.el4j.tests.core.AbstractTest;
 import ch.elca.el4j.tests.remoting.jaxws.service.Calculator;
 import ch.elca.el4j.tests.remoting.jaxws.service.CalculatorException;
 import ch.elca.el4j.tests.remoting.jaxws.service.CalculatorValueObject;
@@ -56,40 +57,21 @@ import ch.elca.el4j.tests.remoting.jaxws.service.SomeIntValue;
  * @author Philippe Jacot (PJA)
  * @author Stefan Wismer (SWI)
  */
-public class CalculatorJaxwsTest {
+public class CalculatorJaxwsTest extends AbstractTest {
 	/**
 	 * Is the delta to doubles can have to be equal.
 	 */
 	private static final double DOUBLE_TOLERANCE = 0.000000001;
 		
-	/**
-	 * ApplicationContext.
-	 */
-	private ConfigurableApplicationContext m_appContext;
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Before
-	public void setUp() {
-		m_appContext
-			= new ModuleApplicationContext(
-				new String[] {"classpath*:mandatory/*.xml",
-					"scenarios/client/remotingtests-jaxws-client-config.xml"},
-					false);
-	}
-	
-	/**
-	 *
-	 * {@inheritDoc}
-	 */
-	@After
-	public void tearDown() {
-		m_appContext.close();
+	/** {@inheritDoc} */
+	@Override
+	protected String[] getIncludeConfigLocations() {
+		return new String[] {"classpath*:mandatory/*.xml",
+			"scenarios/client/remotingtests-jaxws-client-config.xml"};
 	}
 
 	/**
-	 * This test tests the area calulation method.
+	 * This test tests the area calculation method.
 	 */
 	@Test
 	public void testAreaCalculation() {
@@ -215,14 +197,5 @@ public class CalculatorJaxwsTest {
 	 */
 	public Calculator getCalc() {
 		return (Calculator) getApplicationContext().getBean("calculator");
-	}
-	
-	
-	/**
-	 * Get the Applicationcontext.
-	 * @return The ApplicationContext
-	 */
-	protected ApplicationContext getApplicationContext() {
-		return m_appContext;
 	}
 }

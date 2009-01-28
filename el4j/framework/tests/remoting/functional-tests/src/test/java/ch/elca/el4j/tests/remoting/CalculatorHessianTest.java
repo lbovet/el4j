@@ -16,9 +16,6 @@
  */
 package ch.elca.el4j.tests.remoting;
 
-import org.springframework.context.ApplicationContext;
-
-import ch.elca.el4j.core.context.ModuleApplicationContext;
 
 /**
  * This class is a test for the calculator.
@@ -35,13 +32,11 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
  */
 
 public class CalculatorHessianTest extends AbstractCalculatorTest {
-	/**
-	 * {@inheritDoc}
-	 */
-	ApplicationContext getContext() {
-		return  new ModuleApplicationContext(
-			new String[] {"classpath*:mandatory/*.xml",
-				"scenarios/client/remotingtests-hessian-client-config.xml"},
-				false);
+	
+	/** {@inheritDoc} */
+	@Override
+	protected String[] getIncludeConfigLocations() {
+		return new String[] {"classpath*:mandatory/*.xml",
+			"scenarios/client/remotingtests-hessian-client-config.xml"};
 	}
 }
