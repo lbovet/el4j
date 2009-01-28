@@ -15,9 +15,7 @@ if [ $# -ge 2 ] ; then
 fi
 
 if [ $# -ge 3 ] && [ $3 == "Java6" ] ; then
-	cat settings.xml \
-		| sed 's#jrockit-R27.4.0-jdk1.5.0_12#jrockit-R27.5.0-jdk1.6.0_03#' \
-		| sed 's#/m2repository#/m2repositoryJava6#' > ~/.m2/settings.xml
+	cat settings.xml | sed 's#/m2repository#/m2repositoryJava6#' > ~/.m2/settings.xml
 	OPTS="-Del4j.java.version=1.6"
 else
 	cp settings.xml ~/.m2/settings.xml

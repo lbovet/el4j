@@ -95,15 +95,6 @@ public abstract class AbstractTestCaseBase extends AbstractTest {
 	 * Hide default constructor.
 	 */
 	protected AbstractTestCaseBase() { }
-
-	/**
-	 * @return Returns <code>true</code> if bean definition overriding should
-	 *         be allowed.
-	 */
-	@Override
-	protected boolean isBeanOverridingAllowed() {
-		return false;
-	}
 	
 	/**
 	 * @return Returns the dataSource.
