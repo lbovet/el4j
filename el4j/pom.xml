@@ -1076,7 +1076,7 @@
 		</profile>
 		
 		
-		<!-- Weblogic 10 -->
+		<!-- Weblogic 10.3 (configs for 10.0 are commented out) -->
 		<profile>
 			<id>weblogic10x</id>
 			<!--<activation>
@@ -1084,7 +1084,9 @@
 			</activation>-->
 			
 			<!--we add some dependencies here just to make sure they are downloaded into the local repsoitory (see below)-->
-			<dependencies>
+			
+			<!-- seems to be not necessary in 10.3 as we skip JAX-WS tests anyway -->
+			<!-- <dependencies>
 				<dependency>
 					<groupId>com.sun.xml.stream.buffer</groupId>
 					<artifactId>streambuffer</artifactId>
@@ -1124,7 +1126,7 @@
 				</dependency>
 				
 			</dependencies>
-			
+			-->
 			
 			<build>
 				<pluginManagement>
@@ -1145,9 +1147,10 @@
 									
 									<dependencies>
 									
-										<!-- these files are added to CLASSPATH when starting weblogic, because the original XML handlers coming with weblogic are just a little bit crappy... -->
+										<!-- these files are added to CLASSPATH when starting weblogic, because the original XML handlers coming with weblogic 10.0 are just a little bit crappy... -->
 										
-										<dependency>
+										<!-- seems to be not necessary in 10.3 as we skip JAX-WS tests anyway -->
+										<!-- <dependency>
 											<location>${localRepository}/com/sun/xml/ws/jaxws-rt/2.1.3/jaxws-rt-2.1.3.jar</location>
 										</dependency>
 										
@@ -1210,7 +1213,7 @@
 										<dependency>
 											<location>${weblogic10x.home}/common/eval/pointbase/lib/pbclient51.jar</location>
 										</dependency>
-										
+										-->
 									</dependencies>
 									<!--log>${weblogic10x.container.log.file}</log-->
 									<!--enable log only for debugging purposes-->
@@ -1241,6 +1244,14 @@
 <!--									<additionalWarClasspathContainer>org.eclipse.jst.j2ee.internal.web.container</additionalWarClasspathContainer>-->
 <!--									<additionalWarClasspathContainer>org.eclipse.jst.j2ee.internal.module.container</additionalWarClasspathContainer>-->
 <!--								</additionalWarClasspathContainers>-->
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-surefire-plugin</artifactId>
+							<configuration>
+								<!-- strange: tests only run on Weblogic 10.3 if we fork each test -->
+								<forkMode>always</forkMode>
 							</configuration>
 						</plugin>
 					</plugins>
