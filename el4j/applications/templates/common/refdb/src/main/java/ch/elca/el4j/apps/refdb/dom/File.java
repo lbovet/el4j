@@ -157,7 +157,7 @@ public class File extends AbstractFile {
 	public void setData(Blob data) {
 		m_data = data;
 		// Set also the content when loading blob with hibernate
-		getContent();
+		//getContent();
 	}
 	
 }
