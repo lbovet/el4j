@@ -627,7 +627,7 @@ public class ExtentEntity extends AbstractExtentPart {
 		if (isGetter && !m.getName().equals("getClass") && !m.getName().equals("get")) {
 
 			if (m.getReturnType().isPrimitive() || m.getReturnType().isEnum()
-				|| m.getReturnType().equals(String.class)) {
+				/*|| m.getReturnType().equals(String.class)*/) {
 				
 				addField(toFieldName(m));
 			} else if (Collection.class.isAssignableFrom(m.getReturnType())) {

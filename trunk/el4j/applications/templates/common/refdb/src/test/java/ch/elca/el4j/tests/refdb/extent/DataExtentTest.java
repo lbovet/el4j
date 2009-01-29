@@ -203,19 +203,21 @@ public class DataExtentTest extends AbstractTestCaseBase {
 		}
 		found = false;
 		
-		if (!ex.getRootEntity().getFields().contains("name")) {
-			fail("All feature does not add field name.");
-		}
 		found = false;
-		
+		boolean nameFound = false;
 		List<ExtentEntity> es = ex.getRootEntity().getChildEntities();
 		for (ExtentEntity e : es) {
 			if (e.getName().equals("brain")) {
 				found = true;
+			} else if (e.getName().equals("name")) {
+				nameFound = true;
 			}
 		}
 		if (!found) {
 			fail("All feature does not add field brain");
+		}
+		if (!nameFound) {
+			fail("All feature does not add field name.");
 		}
 	}
 	
@@ -232,11 +234,11 @@ public class DataExtentTest extends AbstractTestCaseBase {
 		try {
 			ex.with("name", "legalStatus", "brain");
 			assertEquals("Id was built incorrectly.", ex.toString(),
-				"|ch.elca.el4j.tests.person.dom.Person[legalStatus, name][|brain[][][]|][]|");
+				"|ch.elca.el4j.tests.person.dom.Person[legalStatus][|brain[][][]|, |name[][][]|][]|");
 			
 			ex.with("friends").without("legalStatus");
 			assertEquals("Id was built incorrectly.", ex.toString(),
-				"|ch.elca.el4j.tests.person.dom.Person[name][|brain[][][]|]"
+				"|ch.elca.el4j.tests.person.dom.Person[][|brain[][][]|, |name[][][]|]"
 				+ "[friends[|ch.elca.el4j.tests.person.dom.Person[][][]|]]|");
 				
 		} catch (NoSuchMethodException e) {
@@ -356,8 +358,8 @@ public class DataExtentTest extends AbstractTestCaseBase {
 	public void testMultipleAdd() {
 		DataExtent ex = new DataExtent(Person.class);
 		try {
-			ex.with("name", "name", "brain", "brain");
-			assertEquals("Could add name field multiple times.", 
+			ex.with("legalStatus", "legalStatus", "brain", "brain");
+			assertEquals("Could add legalStatus field multiple times.", 
 				ex.getRootEntity().getFields().size(), 1);
 			assertEquals("Could add brain entity multiple times.", 
 				ex.getRootEntity().getChildEntities().size(), 1);

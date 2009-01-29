@@ -207,8 +207,6 @@ public class Annotation extends AbstractIntKeyIntOptimisticLockingDto {
 	 */
 	public void setData(Clob data) {
 		m_data = data;
-		// Set also the content when loading clob with hibernate
-		//getContent();
 	}
 
 	/**
