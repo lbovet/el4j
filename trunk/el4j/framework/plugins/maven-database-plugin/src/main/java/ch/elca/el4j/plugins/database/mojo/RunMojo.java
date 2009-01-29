@@ -16,6 +16,7 @@
  */
 package ch.elca.el4j.plugins.database.mojo;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
@@ -39,13 +40,14 @@ public class RunMojo extends AbstractDBExecutionMojo {
 	/**
 	 * File prefix of all sql files that should be executed.
 	 *
-	 * @parameter expression="${filePrefix}"
+	 * @parameter expression="${filePrefix}" default-value=""
+	 * @required
 	 */
 	protected String filePrefix;
 	
 	/**
 	 * Order in which sql files should be executed. <code>true</code> means
-	 * top-down, <code>false</code> buttom-up.
+	 * top-down, <code>false</code> bottom-up.
 	 *
 	 * @parameter expression="${reverse}"
 	 *            default-value="false"
@@ -56,6 +58,10 @@ public class RunMojo extends AbstractDBExecutionMojo {
 	 * {@inheritDoc}
 	 */
 	public void executeInternal() throws MojoExecutionException, MojoFailureException {
+		if (StringUtils.isEmpty(filePrefix)) {
+			throw new MojoExecutionException(
+				"File prefix is not set. Use '-DfilePrefix=somePrefix' to specify prefix.");
+		}
 		try {
 			executeAction(filePrefix, reverse, false);
 		} catch (Exception e) {

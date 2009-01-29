@@ -34,6 +34,7 @@ import java.util.regex.Pattern;
 
 
 import org.apache.maven.artifact.Artifact;
+import org.apache.maven.plugin.MojoFailureException;
 import org.springframework.core.io.Resource;
 import org.springframework.util.StringUtils;
 
@@ -150,7 +151,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 	 * specific.
 	 *
 	 * Note: if you use a non-default separator in your project you have to
-	 * state this parameter expclicetly as well as it uses the default separator
+	 * state this parameter explicitly as well as it uses the default separator
 	 * in its default value.
 	 *
 	 * @parameter expression="${db.sqlSourceDir}" default-value=
@@ -162,6 +163,13 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 	 * The Data Holder.
 	 */
 	private ConnectionPropertiesHolder m_holder;
+	
+	/**
+	 * Should db plugin run in dry mode (i.e. no changes to database)?
+	 *
+	 * @parameter expression="${db.dryRun}" default-value="false"
+	 */
+	private boolean dryRun;
 
 	// Checkstyle: MemberName on
 
@@ -178,7 +186,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 	 * @param isSilent indicates whether we reduce log output
 	 */
 	protected void executeAction(String goal, boolean reversed,
-		boolean isSilent) {
+		boolean isSilent) throws MojoFailureException {
 		
 		//first make sure, that connectionPropertiesDir ends with a "/"
 		//because this is needed for further operations
@@ -227,7 +235,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 		} else {
 			//no file for connection-properties was specified, so search it
 
-			//then dbName must be provided, so that corrent
+			//then dbName must be provided, so that current
 			//properties file can be found
 			//hint: since there is a default value for dbName,
 			//this case should never occur
@@ -260,6 +268,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 			if (reversed) {
 				Collections.reverse(resources);
 			}
+			resources = preProcessResources(resources);
 			processResources(resources, goal, isSilent);
 		} else {
 			getLog().error("-----------------------------------------------");
@@ -318,7 +327,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 	/**
 	 * Searches the resources for a .properties file containing connection
 	 * properties for current dbName.
-	 * Looks in current artifact und from the leafs to the root
+	 * Looks in current artifact and from the leafs to the root
 	 * in all dependent artifacts
 	 * until properties file is found.
 	 *
@@ -407,10 +416,17 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 		}
 
 		return result;
-
-
-
 	}
+	
+	/**
+	 * Pre-process resources list.
+	 * @param resources    the list of SQL resources
+	 */
+	protected List<Resource> preProcessResources(List<Resource> resources) throws MojoFailureException {
+		// just pass original list; can be overridden by subclasses
+		return resources;
+	}
+	
 	/**
 	 * Iterates through array and executes sql statements of resources.
 	 * If goal is create or update, resources are processed in reversed order.
@@ -426,10 +442,13 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 		boolean beSilent) {
 		List<SQLException> sqlExceptions = new ArrayList<SQLException>();
 		List<String> failedSqlStatements = new ArrayList<String>();
-		Connection connection = getConnection();
+		Connection connection = null;
+		if (!dryRun) {
+			connection = getConnection();
+		}
 		Statement stmt = null;
 		try {
-			// Process resources from back to beginning to beginn with
+			// Process resources from back to beginning to begin with
 			// Resources of uppermost dependency first
 			for (Resource resource : resources) {
 				if (getLog().isDebugEnabled()) {
@@ -444,28 +463,33 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 						"Error in " + resource.getFilename()
 						+ ": No valid SQL statements found.", null);
 				}
-				// Execute statements extracted from file.
-				// Collect exception and throw them afterwards to ensure that
-				// all SQL Statements are processed.
-				for (String sqlString : sqlStmts) {
-					try {
-						stmt = connection.createStatement();
-						sqlString = sqlString.replace("###SEMICOLUMN###", ";");
-						
-						getLog().debug(sqlString);
-						stmt.execute(sqlString);
-					} catch (SQLException e) {
-						sqlExceptions.add(e);
-						failedSqlStatements.add(sqlString);
-					} finally {
-						if (stmt != null) {
-							stmt.close();
-							stmt = null;
+				
+				if (!dryRun) {
+					// Execute statements extracted from file.
+					// Collect exception and throw them afterwards to ensure that
+					// all SQL Statements are processed.
+					for (String sqlString : sqlStmts) {
+						try {
+							stmt = connection.createStatement();
+							sqlString = sqlString.replace("###SEMICOLUMN###", ";");
+							
+							getLog().debug(sqlString);
+							stmt.execute(sqlString);
+						} catch (SQLException e) {
+							sqlExceptions.add(e);
+							failedSqlStatements.add(sqlString);
+						} finally {
+							if (stmt != null) {
+								stmt.close();
+								stmt = null;
+							}
 						}
 					}
 				}
 			}
-			connection.close();
+			if (!dryRun) {
+				connection.close();
+			}
 		} catch (SQLException e) {
 			sqlExceptions.add(e);
 			failedSqlStatements.add("<no stmt available>");
@@ -474,7 +498,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 		}
 		if (!sqlExceptions.isEmpty()) {
 			// If we encountered exceptions during execution,
-			// throw new Exception and pass it first occured exception.
+			// throw new Exception and pass it first occurred exception.
 			if (!beSilent) {
 				getLog().info("Exceptions during goal db:'" + goal + "'");
 				for (int i = 0; i < sqlExceptions.size(); i++) {
@@ -533,7 +557,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 	}
 
 	/**
-	 * Seperate source paths in sourceDir and return them as an array.
+	 * Separate source paths in sourceDir and return them as an array.
 	 *
 	 * @return Array of source paths
 	 */
