@@ -32,6 +32,7 @@ import javax.persistence.Transient;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
+import org.hibernate.lob.BlobImpl;
 import org.hibernate.validator.NotNull;
 
 /**
@@ -59,8 +60,14 @@ public class File extends AbstractFile {
 	/** See corresponding setter method for more details. */
 	private byte[] m_content;
 	
-	/** See corresponding setter method for more details. */
-	private Blob m_data;
+	/** 
+	 * See corresponding setter method for more details.
+	 * Field declared as transient to be excluded from serialization.
+	 * Note: Hibernate's blob is not capable of serialization, 
+	 * therefore we have fields for the data: hibernate's blob and the content
+	 * for user convenience and serialization (client-server exchange).
+	 */
+	private transient Blob m_data;
 
 	/**
 	 * Content of the file (usually binary).
@@ -69,10 +76,11 @@ public class File extends AbstractFile {
 	@Transient
 	public byte[] getContent() {
 		if (m_content == null) {
+			// Read content out of hibernate's blob the first time used.
 			InputStream in = null;
 			ByteArrayOutputStream out = null;
 			byte[] primitiveData = null;
-			Blob blob = getData();
+			Blob blob = m_data;
 			if (blob != null) {
 				try {
 					in = blob.getBinaryStream();
@@ -118,6 +126,7 @@ public class File extends AbstractFile {
 	 */
 	public void setContent(byte[] content) {
 		if (content != null && content.length > 0) {
+			// Set the blob as well as the content for hibernate.
 			setData(Hibernate.createBlob(content));
 			m_content = content;
 		} else {
@@ -130,10 +139,14 @@ public class File extends AbstractFile {
 	 * Content of the file converted to Blob. Used by hibernate only!
 	 * @return Returns the data.
 	 */
-	@NotNull
+	@NotNull(message = "{File.data}")
 	@Lob
 	@Column(name = "content")
 	public Blob getData() {
+		if (m_data == null) {
+			// Re-set the blob if null (eg. after serialization)
+			setContent(m_content);
+		}
 		return m_data;
 	}
 	
@@ -143,6 +156,8 @@ public class File extends AbstractFile {
 	 */
 	public void setData(Blob data) {
 		m_data = data;
+		// Set also the content when loading blob with hibernate
+		getContent();
 	}
 	
 }

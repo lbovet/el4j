@@ -39,6 +39,7 @@ import javax.persistence.Transient;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
+import org.hibernate.lob.ClobImpl;
 import org.hibernate.validator.NotNull;
 
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
@@ -86,10 +87,16 @@ public class Annotation extends AbstractIntKeyIntOptimisticLockingDto {
 	/**
 	 * Comment that the annotator makes about the reference.
 	 */
-	private String m_content = null;
+	private String m_content;// = null;
 	
-	/** See corresponding setter method for more details. */
-	private Clob m_data;
+	/** 
+	 * See corresponding setter method for more details.
+	 * Field declared as transient to be excluded from serialization.
+	 * Note: Hibernate's blob is not capable of serialization, 
+	 * therefore we have fields for the data: hibernate's blob and the content
+	 * for user convenience and serialization (client-server exchange).
+	 */
+	private transient Clob m_data;
 
 	/**
 	 * Date when does the annotation has been inserted (created
@@ -120,10 +127,11 @@ public class Annotation extends AbstractIntKeyIntOptimisticLockingDto {
 	@Transient
 	public String getContent() {
 		if (m_content == null) {
+			// Read content out of hibernate's clob the first time used.
 			InputStream in = null;
 			ByteArrayOutputStream out = null;
 			String primitiveData = null;
-			Clob clob = getData();
+			Clob clob = m_data;
 			if (clob != null) {
 				try {
 					in = clob.getAsciiStream();
@@ -168,6 +176,7 @@ public class Annotation extends AbstractIntKeyIntOptimisticLockingDto {
 	 */
 	public void setContent(String content) {
 		if (content != null && content.length() > 0) {
+			// Set the clob as well as the content for hibernate.
 			setData(Hibernate.createClob(content));
 			m_content = content;
 		} else {
@@ -177,23 +186,29 @@ public class Annotation extends AbstractIntKeyIntOptimisticLockingDto {
 	}
 	
 	/**
-	 * Content of the file converted to Blob. Used by hibernate only!
+	 * Content of the file converted to Clob. Used by hibernate only!
 	 * @return Returns the data.
 	 */
-	@NotNull
+	@NotNull(message = "{Annotation.data}")
 	@Lob
 	@Basic(fetch = FetchType.EAGER)
 	@Column(name = "content")
 	public Clob getData() {
+		if (m_data == null) {
+			// Re-set the clob if null (eg. after serialization)
+			setContent(m_content);
+		}
 		return m_data;
 	}
 	
 	/**
-	 * Set the content as Blob. Used by hibernate only!
+	 * Set the content as Clob. Used by hibernate only!
 	 * @param data    the data to set.
 	 */
 	public void setData(Clob data) {
 		m_data = data;
+		// Set also the content when loading clob with hibernate
+		getContent();
 	}
 
 	/**
