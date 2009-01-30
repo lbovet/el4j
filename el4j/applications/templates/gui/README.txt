@@ -28,6 +28,18 @@ distributed mode
               Therefore no properties could be applied." can be ignored here.
 
 
+secured versions
+================
+
+  there are secured versions of the client and the server:
+    use secure-thin-client and secure-server.
+
+  there is no standalone version. In order to use the security module there, modify the pom.xml as follows:
+    - look for the tag <dependencies>
+    - change the dependency with the articfactId 'swing-demo-thin-client' to 'swing-demo-secure-thin-client'
+    - rebuild the demo with mvn clean install
+    - restart the demo.
+
 Deploy the application as a single jar
 =======================================
  

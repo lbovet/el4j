@@ -34,7 +34,7 @@
 		class="org.acegisecurity.userdetails.memory.InMemoryDaoImpl">
 		<property name="userMap">
 			<value>
-				el4super=secret,ROLE_SUPERUSER
+				el4super=secret,ROLE_NORMALUSER,ROLE_SUPERUSER
 				el4normal=el4j,ROLE_NORMALUSER
 			</value>
 		</property>
@@ -70,10 +70,8 @@
 		</property>
 	</bean>
 
-	<!-- <bean id="autoProxyCreator"
-		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator"> -->
 	<bean id="securityAutoProxyCreator"
-		class="ch.elca.el4j.core.aop.IntelligentExclusiveBeanNameAutoProxyCreator">
+		class="ch.elca.el4j.core.aop.ExclusiveBeanNameAutoProxyCreator">
 		<property name="interceptorNames">
 			<list>
 				<value>remoteReferenceServiceSecurityInterceptor</value>

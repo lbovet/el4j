@@ -18,7 +18,6 @@ package ch.elca.el4j.demos.gui;
 
 import org.bushe.swing.event.EventBus;
 import org.jdesktop.application.Action;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import ch.elca.el4j.demos.gui.events.ExampleEvent;
 import ch.elca.el4j.gui.swing.GUIApplication;
@@ -104,12 +103,7 @@ public class MainFormActions {
 	 */
 	@Action
 	public void showRefDB() {
-		// try to run secure version of refDB editor (see swing-demo-secure-thin-client)
-		try {
-			m_app.show("secureRefDBDemoForm");
-		} catch (NoSuchBeanDefinitionException e) {
-			m_app.show("refDBDemoForm");
-		}
+		m_app.show("refDBDemoForm");
 	}
 	
 

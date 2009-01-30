@@ -42,6 +42,12 @@ public class PrivateData {
 	//@RolesAllowed({ "ROLE_SUPERUSER" })
 	@Secured({ "ROLE_SUPERUSER" })
 	public String getSecret() {
-		return "Access granted";
+		return "<html><b>Access granted</b></html>";
 	}
+	
+	/**
+	 * Test if user is authenticated.
+	 */
+	@Secured({ "ROLE_NORMALUSER" })
+	public void testAccess() { }
 }
