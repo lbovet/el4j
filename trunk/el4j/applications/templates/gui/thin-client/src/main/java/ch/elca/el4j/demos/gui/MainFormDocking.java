@@ -24,7 +24,6 @@ import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.border.Border;
@@ -33,7 +32,6 @@ import javax.swing.border.EmptyBorder;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.noos.xing.mydoggy.ToolWindowAnchor;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import ch.elca.el4j.gui.swing.ActionsContext;
 import ch.elca.el4j.gui.swing.DockingApplication;
@@ -55,11 +53,6 @@ import ch.elca.el4j.gui.swing.util.MenuUtils;
  * @author Stefan Wismer (SWI)
  */
 public class MainFormDocking extends DockingApplication {
-
-	/**
-	 * Determines if user is admin (for activation demo).
-	 */
-	protected boolean m_admin = false;
 	
 	/**
 	 * Main definition of the GUI.
@@ -67,7 +60,7 @@ public class MainFormDocking extends DockingApplication {
 	 */
 	@Override
 	protected void startup() {
-		m_actionsContext = ActionsContext.create(new MainFormActions(this), this);
+		m_actionsContext = ActionsContext.create(this, new MainFormActions(this));
 		
 		getMainFrame().setJMenuBar(createMenuBar());
 		showMain(createMainPanel());
@@ -118,59 +111,6 @@ public class MainFormDocking extends DockingApplication {
 	}
 
 	/**
-	 * A "special" help only for admins (for demo purpose only).
-	 * Must be placed in the GUIApplication, since the propertyChange cannot
-	 * be fired!
-	 */
-	@Action(enabledProperty = "admin")
-	public void helpAdmin() {
-		try {
-			show("securityDemoForm");
-		} catch (NoSuchBeanDefinitionException e) {
-			String alertMessage = getContext().getResourceMap().getString("securityModuleAlert");
-			JOptionPane.showMessageDialog(null, alertMessage);
-		}
-	}
-	
-	/**
-	 * Indicates whether permission "admin" is set
-	 *  (used via enabledProperty field of \@Action).
-	 *  @return    <code>true</code> if user has admin rights
-	 */
-	public boolean isAdmin() {
-		return hasRole("ROLE_SUPERVISOR");
-	}
-	
-	/**
-	 * Toggle admin flag (for visibility of menu entry).
-	 */
-	@Action
-	public void toggleAdmin() {
-		// enable help menuItem
-		boolean oldAdmin = m_admin;
-		m_admin = !m_admin;
-		firePropertyChange("admin", oldAdmin, m_admin);
-	}
-	
-	/**
-	 * @param requestedRole    the role to check
-	 * @return                 <code>true</code> if user has specified role.
-	 */
-	public boolean hasRole(String requestedRole) {
-		/*  commented out for now (until acegi security is set up):
-		 *
-		GrantedAuthority[] authorities = SecurityContextHolder.getContext()
-			.getAuthentication().getAuthorities();
-
-		for (GrantedAuthority grantedAuthority : authorities) {
-			if (grantedAuthority.getAuthority().equals(requestedRole)) {
-				return true;
-			}
-		}*/
-		return m_admin;
-	}
-
-	/**
 	 * @return    the created menu bar
 	 */
 	protected JMenuBar createMenuBar() {
@@ -183,7 +123,7 @@ public class MainFormDocking extends DockingApplication {
 			= {"showDemo1", "showDemo2", "showDemo3", "showDemo4", "---",
 				"showSearch", "showRefDB", "---",
 				"showDemo5", "sendExampleEvent", "throwException"};
-		String[] helpMenuActionNames = {"help", "helpAdmin", "toggleAdmin", "about"};
+		String[] helpMenuActionNames = {"help", "about"};
 		menuBar.add(MenuUtils.createMenu(m_actionsContext, "fileMenu", fileMenuActionNames));
 		menuBar.add(MenuUtils.createMenu(m_actionsContext, "editMenu", editMenuActionNames));
 		menuBar.add(MenuUtils.createMenu(m_actionsContext, "demoMenu", demoMenuActionNames));
@@ -195,6 +135,7 @@ public class MainFormDocking extends DockingApplication {
 	 * @return    the created tool bar
 	 */
 	protected JToolBar createToolBar() {
+		ActionsContext actionsContext = getActionsContext();
 		String[] toolbarActionNames = {"quit", "paste"};
 		JToolBar toolBar = new JToolBar();
 		toolBar.setFloatable(false);
@@ -204,7 +145,7 @@ public class MainFormDocking extends DockingApplication {
 			button.setBorder(border);
 			button.setVerticalTextPosition(JButton.BOTTOM);
 			button.setHorizontalTextPosition(JButton.CENTER);
-			button.setAction(getAction(actionName));
+			button.setAction(actionsContext.getAction(actionName));
 			button.setFocusable(false);
 			button.setText("");
 			toolBar.add(button);

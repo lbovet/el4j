@@ -176,8 +176,8 @@ public class RefDBDemoForm extends JPanel implements Bindable {
 			if (o != null) {
 				Reference selectedReference
 					= (Reference) ((ValidatedProperty) o).getParent();
-				m_refList.remove(selectedReference);
 				m_service.deleteReference(selectedReference.getKey());
+				m_refList.remove(selectedReference);
 			}
 		}
 	}

@@ -13,6 +13,7 @@
 	<!-- scan for all GUI components (scope-resolver is necessary to take @LazyInit into account -->
 	<context:component-scan base-package="ch.elca.el4j.demos.secure.gui.forms"
 		scope-resolver="ch.elca.el4j.core.context.annotations.LazyInitAwareScopeMetadataResolver" />
-		
+	
+	<bean id="securityDemo" class="ch.elca.el4j.demos.secure.gui.SecurityDemo" />	
 	<bean id="PrivateData" class="ch.elca.el4j.demos.secure.gui.PrivateData" lazy-init="true"/>
 </beans>

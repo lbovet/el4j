@@ -21,8 +21,7 @@ import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.acegisecurity.context.SecurityContextHolder;
-import org.acegisecurity.providers.UsernamePasswordAuthenticationToken;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import ch.elca.el4j.core.context.annotations.LazyInit;
@@ -42,6 +41,7 @@ import ch.elca.el4j.gui.swing.GUIApplication;
  * @author Stefan Wismer (SWI)
  */
 @LazyInit
+@Scope("prototype")
 @Component("securityDemoForm")
 public class SecurityDemoForm extends JPanel {
 	public SecurityDemoForm() {
@@ -52,11 +52,11 @@ public class SecurityDemoForm extends JPanel {
 		setPreferredSize(new Dimension(200, 50));
 		setBounds(0, 0, 500, 50);
 		
-		// set security token
+		// set security token (this is now done using login form)
 		//SecurityContextHolder.getContext().setAuthentication(
 		//    new UsernamePasswordAuthenticationToken("el4normal", "el4j"));
-		SecurityContextHolder.getContext().setAuthentication(
-			new UsernamePasswordAuthenticationToken("el4super", "secret"));
+		//SecurityContextHolder.getContext().setAuthentication(
+		//	new UsernamePasswordAuthenticationToken("el4super", "secret"));
 		
 		PrivateData data = (PrivateData) GUIApplication.getInstance()
 			.getSpringContext().getBean("PrivateData");
@@ -65,7 +65,8 @@ public class SecurityDemoForm extends JPanel {
 			String result = data.getSecret();
 			someLabel.setText(result);
 		} catch (Exception e) {
-			someLabel.setText("Access denied");
+			someLabel.setText("<html><b>Access denied.</b><br>"
+				+ "Only super users are allowed.<br>Login as el4super/secret</html>");
 		}
 	}
 }

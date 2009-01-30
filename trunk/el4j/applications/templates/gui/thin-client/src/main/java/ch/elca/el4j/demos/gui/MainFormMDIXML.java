@@ -24,13 +24,10 @@ import java.util.Map;
 import javax.swing.Box;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
 
-import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import ch.elca.el4j.gui.swing.AbstractMDIApplication;
 import ch.elca.el4j.gui.swing.ActionsContext;
@@ -67,11 +64,6 @@ public class MainFormMDIXML extends AbstractMDIApplication {
 	 */
 	private JToolBar m_toolbar;
 	
-	/**
-	 * Determines if user is admin (for activation demo).
-	 */
-	private boolean m_admin = false;
-	
 	/** {@inheritDoc} */
 	@Override
 	protected JDesktopPane getDesktopPane() {
@@ -104,7 +96,7 @@ public class MainFormMDIXML extends AbstractMDIApplication {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void startup() {
-		m_actionsContext = ActionsContext.create(new MainFormActions(this), this);
+		m_actionsContext = ActionsContext.create(this, new MainFormActions(this));
 		
 		CookSwing cookSwing = new CookSwing(this);
 		setMainFrame((JFrame) cookSwing.render("gui/main.xml"));
@@ -138,58 +130,4 @@ public class MainFormMDIXML extends AbstractMDIApplication {
 		
 		showMain();
 	}
-
-	/**
-	 * A "special" help only for admins (for demo purpose only).
-	 * Must be placed in the GUIApplication, since the propertyChange cannot
-	 * be fired!
-	 */
-	@Action(enabledProperty = "admin")
-	public void helpAdmin() {
-		try {
-			show("securityDemoForm");
-		} catch (NoSuchBeanDefinitionException e) {
-			String alertMessage = getContext().getResourceMap().getString("securityModuleAlert");
-			JOptionPane.showMessageDialog(null, alertMessage);
-		}
-	}
-	
-	/**
-	 * Indicates whether permission "admin" is set
-	 *  (used via enabledProperty field of \@Action).
-	 *  @return    <code>true</code> if user has admin rights
-	 */
-	public boolean isAdmin() {
-		return hasRole("ROLE_SUPERVISOR");
-	}
-	
-	/**
-	 * Toggle admin flag (for visibility of menu entry).
-	 */
-	@Action
-	public void toggleAdmin() {
-		// enable help menuItem
-		boolean oldAdmin = m_admin;
-		m_admin = !m_admin;
-		firePropertyChange("admin", oldAdmin, m_admin);
-	}
-	
-	/**
-	 * @param requestedRole    the role to check
-	 * @return                 <code>true</code> if user has specified role.
-	 */
-	public boolean hasRole(String requestedRole) {
-		/*  commented out for now (until acegi security is set up):
-		 *
-		GrantedAuthority[] authorities = SecurityContextHolder.getContext()
-			.getAuthentication().getAuthorities();
-
-		for (GrantedAuthority grantedAuthority : authorities) {
-			if (grantedAuthority.getAuthority().equals(requestedRole)) {
-				return true;
-			}
-		}*/
-		return m_admin;
-	}
-
 }
