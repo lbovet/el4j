@@ -76,6 +76,7 @@ public class SecureUsernamePasswordAuthenticationServiceContextPasser extends
 	public void pushImplicitlyPassedContext(Object context) {
 		if (context == null) {
 			s_logger.warn("Authentication == null");
+			SecurityContextHolder.getContext().setAuthentication(null);
 			return;
 		}
 		

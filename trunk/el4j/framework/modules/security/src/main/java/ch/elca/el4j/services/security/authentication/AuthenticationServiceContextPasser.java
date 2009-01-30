@@ -18,13 +18,11 @@
 package ch.elca.el4j.services.security.authentication;
 
 import org.acegisecurity.Authentication;
-import org.acegisecurity.context.SecurityContext;
 import org.acegisecurity.context.SecurityContextHolder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import ch.elca.el4j.core.contextpassing.AbstractImplicitContextPasser;
-import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 
 /**
  * The ImplicitContextPasser for the AuthenticationService. It handles the
@@ -84,6 +82,7 @@ public class AuthenticationServiceContextPasser extends
 	public void pushImplicitlyPassedContext(Object context) {
 		if (context == null) {
 			s_logger.warn("Authentication == null");
+			SecurityContextHolder.getContext().setAuthentication(null);
 			return;
 		}
 		Authentication ad = (Authentication) context;
