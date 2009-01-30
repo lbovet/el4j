@@ -85,8 +85,8 @@ public class AuthenticationServiceContextPasser extends
 			SecurityContextHolder.getContext().setAuthentication(null);
 			return;
 		}
-		Authentication ad = (Authentication) context;
-		SecurityContextHolder.getContext().setAuthentication(ad);
+		Authentication auth = (Authentication) context;
+		SecurityContextHolder.getContext().setAuthentication(auth);
 	}
 
 }
