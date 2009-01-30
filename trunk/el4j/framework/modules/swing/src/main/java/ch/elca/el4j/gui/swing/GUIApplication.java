@@ -277,18 +277,6 @@ public abstract class GUIApplication extends SingleFrameApplication implements A
 	}
 	
 	/**
-	 * Returns the first action object found for an action name.
-	 *  (Looks in the internal list of candidate objects.)
-	 *
-	 * @param actionName   the action name as String
-	 * @return             the corresponding action object
-	 * @see #addActionMappingInstance(Object)
-	 */
-	protected Action getAction(String actionName) {
-		return getAction(this, actionName);
-	}
-	
-	/**
 	 * Returns the action object for a specific object and action name.
 	 * @param object        the object containing actions
 	 * @param actionName    the action name as String
@@ -312,38 +300,6 @@ public abstract class GUIApplication extends SingleFrameApplication implements A
 
 		return ac.getResourceMap().getString(id);
 	}
-	
-	/**
-	 * Holds objects that contain @Action methods
-	 *  (in order to allow distributing Action methods on
-	 *   different classes.
-	 */
-	/*protected List<Object> m_instancesWithActionMappings
-		= new ArrayList<Object>();
-	{
-		// always add "this" to the list of objects where Action methods
-		// can be found
-		addActionMappingInstance(this);
-	}*/
-	
-	/**
-	 * Add an object with @Action methods to the list of
-	 *  objects in which to look for actions.
-	 *   BTW: "this" is always added as first element in
-	 *    this array.
-	 * @param o the object with @Action methods
-	 */
-	/*public void addActionMappingInstance(Object o) {
-		m_instancesWithActionMappings.add(o);
-	}*/
-	
-	/*
-	 * @see #addActionMappingInstance
-	 */
-	/** {@inheritDoc} */
-	/*public void removeActionMappingInstance(Object o) {
-		m_instancesWithActionMappings.remove(o);
-	}*/
 	
 	/** {@inheritDoc} */
 	@Override
