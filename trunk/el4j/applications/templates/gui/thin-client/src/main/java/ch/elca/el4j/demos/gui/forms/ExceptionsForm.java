@@ -21,6 +21,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -200,12 +201,18 @@ public class ExceptionsForm extends JPanel implements Bindable, Handler, Applica
 	
 	/** {@inheritDoc} */
 	public void handle(Exception e) {
+		Exception actualException = e;
+		// unwrap exception if necessary (Swing wraps Exceptions into InvocationTargetExceptions)
+		if (e instanceof InvocationTargetException && e.getCause() instanceof Exception) {
+			actualException = (Exception) e.getCause();
+		}
+		
 		// ensure that this form is visible
 		GUIApplication.getInstance().show("exceptionsForm");
 		
 		SimpleDateFormat fmt = new SimpleDateFormat("HH:mm:ss");
-		m_exceptions.add(0, new ExceptionEntry(fmt.format(new Date()), e));
+		m_exceptions.add(0, new ExceptionEntry(fmt.format(new Date()), actualException));
 		m_exceptionsTable.setRowSelectionInterval(m_exceptions.size() - 1, m_exceptions.size() - 1);
-		updateStacktrace(e);
+		updateStacktrace(actualException);
 	}
 }
