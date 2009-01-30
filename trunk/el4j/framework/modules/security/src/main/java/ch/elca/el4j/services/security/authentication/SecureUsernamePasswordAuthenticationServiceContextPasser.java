@@ -83,7 +83,7 @@ public class SecureUsernamePasswordAuthenticationServiceContextPasser extends
 		Authentication auth = (Authentication) context;
 		if (auth instanceof UsernamePasswordAuthenticationToken) {
 			UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(
-				auth.getPrincipal(), m_cipher.decrypt((String) auth.getCredentials()), auth.getAuthorities());
+				auth.getPrincipal(), m_cipher.decrypt((String) auth.getCredentials()));
 			
 			SecurityContextHolder.getContext().setAuthentication(result);
 		} else {
