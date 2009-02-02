@@ -37,8 +37,15 @@ public class ExampleExceptionHandler implements Handler {
 	}
 	
 	/** {@inheritDoc} */
-	public void handle(Exception e) {
+	public int getPriority() {
+		return 0;
+	}
+	
+	/** {@inheritDoc} */
+	public boolean handle(Exception e) {
 		System.err.println("An exception occurred!");
 		e.printStackTrace(System.err);
+		
+		return false;
 	}
 }

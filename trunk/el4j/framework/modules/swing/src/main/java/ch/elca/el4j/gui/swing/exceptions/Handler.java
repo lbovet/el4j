@@ -37,12 +37,19 @@ public interface Handler {
 	 *             Exception; <tt>false</tt> otherwise.
 	 */
 	public boolean recognize(Exception e);
+	
+	/**
+	 * @return    the priority of this handler. The larger the priority value to earlier it gets executed.
+	 */
+	public int getPriority();
 
 	/**
 	 * React to the given Exception in any way seen fit. This may include
 	 * notifying the user, writing to a log, or any other valid logic.
 	 *
 	 * @param e    the thrown exception
+	 * @return     whether exception handling should be stopped (<code>true</code>) or the next handler should be
+	 *             executed (<code>false</code>).
 	 */
-	public void handle(Exception e);
+	public boolean handle(Exception e);
 }
