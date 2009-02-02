@@ -521,7 +521,7 @@
 								+ patch http://jira.codehaus.org/browse/CARGO-411
 								without patch http://jira.codehaus.org/browse/CARGO-412)
 					-->
-					<version>1.0-el4j_20090126_1000</version> <!-- EL4J CUSTOMIZATION -->
+					<version>1.0-el4j_20090202_1150</version> <!-- EL4J CUSTOMIZATION -->
 					<configuration>
 						<configuration>
 							<properties>
@@ -942,10 +942,6 @@
 							<configuration>
 								<wait>true</wait>
 								<container>
-									<!--
-										Must be set to version 5 due cargo
-										has no version 6 impl.
-									-->
 									<containerId>tomcat6x</containerId>
 									<zipUrlInstaller>
 										<url>${tomcat6x.zipDownloadUrl}</url>
@@ -957,8 +953,11 @@
 								<configuration>
 									<type>existing</type>
 									<home>${tomcat6x.home}</home>
+									<properties>
+										<cargo.remote.username>admin</cargo.remote.username>
+										<cargo.remote.password>admin</cargo.remote.password>
+									</properties>
 								</configuration>
-								
 							</configuration>
 						</plugin>
 						<plugin>
