@@ -74,8 +74,7 @@ public class SecurityDemo extends AbstractBean implements GUIExtension {
 		Exceptions.getInstance().addHandler(new Handler() {
 			public boolean recognize(Exception e) {
 				if (e instanceof InvocationTargetException) {
-					InvocationTargetException ite
-						= (InvocationTargetException) e;
+					InvocationTargetException ite = (InvocationTargetException) e;
 					if (ite.getTargetException() instanceof AccessDeniedException) {
 						return true;
 					} else if (ite.getTargetException() instanceof AuthenticationCredentialsNotFoundException) {
@@ -84,10 +83,12 @@ public class SecurityDemo extends AbstractBean implements GUIExtension {
 				}
 				return false;
 			}
-			public void handle(Exception e) {
-				JOptionPane.showMessageDialog(null,
-					"Access denied.", "Security Demo",
-					JOptionPane.ERROR_MESSAGE);
+			public int getPriority() {
+				return -1000;
+			}
+			public boolean handle(Exception e) {
+				JOptionPane.showMessageDialog(null, "Access denied.", "Security Demo", JOptionPane.ERROR_MESSAGE);
+				return true;
 			}
 		});
 	}

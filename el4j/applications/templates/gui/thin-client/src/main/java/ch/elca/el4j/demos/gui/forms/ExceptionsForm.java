@@ -200,7 +200,12 @@ public class ExceptionsForm extends JPanel implements Bindable, Handler, Applica
 	}
 	
 	/** {@inheritDoc} */
-	public void handle(Exception e) {
+	public int getPriority() {
+		return -100000;
+	}
+	
+	/** {@inheritDoc} */
+	public boolean handle(Exception e) {
 		Exception actualException = e;
 		// unwrap exception if necessary (Swing wraps Exceptions into InvocationTargetExceptions)
 		if (e instanceof InvocationTargetException && e.getCause() instanceof Exception) {
@@ -214,5 +219,7 @@ public class ExceptionsForm extends JPanel implements Bindable, Handler, Applica
 		m_exceptions.add(0, new ExceptionEntry(fmt.format(new Date()), actualException));
 		m_exceptionsTable.setRowSelectionInterval(m_exceptions.size() - 1, m_exceptions.size() - 1);
 		updateStacktrace(actualException);
+		
+		return false;
 	}
 }
