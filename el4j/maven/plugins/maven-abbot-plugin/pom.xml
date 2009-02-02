@@ -71,34 +71,12 @@
 		<dependency>
 			<groupId>net.sf.abbot</groupId>
 			<artifactId>abbot</artifactId>
-			<version>1.0.0.rc5</version>
+			<version>1.0.2</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.abbot</groupId>
 			<artifactId>costello</artifactId>
-			<version>1.0.1</version>
+			<version>1.0.2</version>
 		</dependency>
-		
-		<dependency>
-			<groupId>org.beanshell</groupId>
-			<artifactId>bsh</artifactId>
-			<version>2.0b4</version>
-		</dependency>
-		<dependency>
-			<groupId>gnu-regexp</groupId>
-			<artifactId>gnu-regexp</artifactId>
-			<version>1.1.4</version>
-		</dependency>
-		<dependency>
-			<groupId>jdom</groupId>
-			<artifactId>jdom</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>compile</scope>
-		</dependency>
-
 	</dependencies>
 </project>
