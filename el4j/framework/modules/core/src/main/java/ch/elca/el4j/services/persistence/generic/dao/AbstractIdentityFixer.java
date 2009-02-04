@@ -338,7 +338,10 @@ public abstract class AbstractIdentityFixer {
 			List mergedEntries = new ArrayList(attachedCollection.size());
 			
 			for (Object updatedObject : updatedCollection) {
-				Object anchorObject = hintMapping.get(updatedObject);
+				Object anchorObject = null;
+				if (hintMapping != null) {
+					anchorObject = hintMapping.get(updatedObject);
+				}
 				mergedEntries.add(merge(anchorObject,
 					updatedObject, anchorObject != null && isIdentical, reached, objectsToUpdate, hintMapping));
 			}
@@ -449,6 +452,13 @@ public abstract class AbstractIdentityFixer {
 	 */
 	public boolean isRepresentative(Object object) {
 		return m_representatives.containsValue(object);
+	}
+	
+	/**
+	 * @return a collection of all the representatives held by the identity fixer.	 
+	 */	
+	public Collection<Object> getRepresentatives() {
+		return m_representatives.values();
 	}
 	
 	/**
