@@ -38,11 +38,6 @@ import java.util.PriorityQueue;
  */
 public final class Exceptions implements Thread.UncaughtExceptionHandler {
 	/**
-	 * The singleton instance.
-	 */
-	private static final Exceptions INSTANCE = new Exceptions();
-	
-	/**
 	 * The Handler comparator that uses the priority to sort.
 	 */
 	private static final Comparator<Handler> ORDER_BY_PRIORITY = new Comparator<Handler>() {
@@ -52,10 +47,14 @@ public final class Exceptions implements Thread.UncaughtExceptionHandler {
 	};
 	
 	/**
+	 * The singleton instance.
+	 */
+	private static final Exceptions INSTANCE = new Exceptions();
+	
+	/**
 	 * The list of exception handlers order by priority.
 	 */
-	PriorityQueue<Handler> m_handlers = new PriorityQueue<Handler>(5, ORDER_BY_PRIORITY);
-	
+	private PriorityQueue<Handler> m_handlers = new PriorityQueue<Handler>(5, ORDER_BY_PRIORITY);
 	
 	/**
 	 * @return    the singleton instance
