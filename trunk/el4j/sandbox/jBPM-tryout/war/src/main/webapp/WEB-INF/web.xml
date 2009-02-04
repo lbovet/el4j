@@ -22,6 +22,7 @@
 		<param-name>inclusiveLocations</param-name>
 		<param-value>
 			classpath*:mandatory/*.xml,
+			classpath*:mandatory/generic/*.xml,
 			classpath*:scenarios/db/raw/*.xml,
 			classpath*:scenarios/dataaccess/hibernate/*.xml,
 			classpath*:optional/interception/transactionJava5Annotations.xml
@@ -34,7 +35,7 @@
 		</description>
 		<param-name>exclusiveLocations</param-name>
 		<param-value>
-			classpath*:mandatory/keyword/keyword-core-config.xml
+			classpath*:mandatory/keyword-core-service-config.xml
 		</param-value>
 	</context-param>
 	
