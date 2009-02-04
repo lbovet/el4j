@@ -24,12 +24,11 @@ import java.lang.reflect.Modifier;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.collections.map.AbstractReferenceMap;
@@ -132,11 +131,6 @@ public abstract class AbstractIdentityFixer {
 	 * @see #id(Object)
 	 */
 	Map<Object, Object> m_representatives;
-	
-	/**
-	 * A set of objects whose fields should be refreshed (overwritten but with respect to identity) in any case.
-	 */
-	Set<Object> m_objectsToUpdateAllFields = new HashSet<Object>();;
 
 
 	/**
@@ -249,19 +243,6 @@ public abstract class AbstractIdentityFixer {
 		}
 		return fields;
 	}
-
-	/*
-	 * (TODO?)
-	 * The current merge algorithm recurses over all fields of all objects in
-	 * the object graph. This includes internal private ones of Collection
-	 * instances and, while good for correctness, is not very efficient. 
-	 * 
-	 * It would be an improvement to treat collection objects specially : their
-	 * entries are operated on by merge, but the collection instance itself is 
-	 * immutable. Coding this might prove rather difficult and subtle, though.
-	 * 
-	 * DBD
-	 */
 	
 	/**
 	 * Actually performs the merge.
@@ -277,13 +258,20 @@ public abstract class AbstractIdentityFixer {
 	 *              the set of objects in the updated object graph that have
 	 *              been (or are being) merged. Used to avoid merging an
 	 *              object more than once.
+	 * @param objectsToUpdate
+	 *              A list of anchor objects that should updated, all other objects are not touched. If objectsToUpdate
+	 *              is <code>null</code> then all reachable objects get updated.
+	 * @param hintMapping
+	 *              A map of [updated -> anchor] used to correctly merge collections. If no collections have to be
+	 *              merged this parameter can be <code>null</code>.
 	 * @return
 	 *              the representative.
 	 */
 	@SuppressWarnings("unchecked")
 	protected <T> T merge(T anchor, T updated,
 		boolean isIdentical,
-		IdentityHashMap<Object, Object> reached) {
+		IdentityHashMap<Object, Object> reached,
+		List<Object> objectsToUpdate, IdentityHashMap<Object, Object> hintMapping) {
 		
 		if (immutableValue(updated)) {
 			trace("", updated, " is an immutable value");
@@ -308,8 +296,8 @@ public abstract class AbstractIdentityFixer {
 			if (id == ANONYMOUS) {
 				attached = anchor;
 			} else {
-				assert id != null;
-				attached = (T) m_representatives.get(id);
+				//assert id != null;
+				attached = id != null ? (T) m_representatives.get(id) : null;
 			}
 			
 			if (attached == null) {
@@ -337,10 +325,29 @@ public abstract class AbstractIdentityFixer {
 						anchor != null ? Array.get(anchor, i) : null,
 						Array.get(updated, i),
 						isIdentical,
-						reached
+						reached,
+						objectsToUpdate,
+						hintMapping
 					)
 				);
 			}
+		} else if (attached instanceof Collection) {
+			Collection attachedCollection = (Collection) attached;
+			Collection updatedCollection = (Collection) updated;
+			
+			List mergedEntries = new ArrayList(attachedCollection.size());
+			
+			for (Object updatedObject : updatedCollection) {
+				Object anchorObject = hintMapping.get(updatedObject);
+				mergedEntries.add(merge(anchorObject,
+					updatedObject, anchorObject != null && isIdentical, reached, objectsToUpdate, hintMapping));
+			}
+			
+			// write collection to be sure that it contains "exactly the same" (in the sense of identity) objects that
+			// are present in the updated collection (might be less or more objects or another ordering, if collection
+			// supports it)
+			attachedCollection.clear();
+			attachedCollection.addAll(mergedEntries);
 		} else {
 			for (Field f : fields(updated.getClass())) {
 				try {
@@ -349,12 +356,16 @@ public abstract class AbstractIdentityFixer {
 						anchor != null ? f.get(anchor) : null,
 						fieldValue,
 						isIdentical,
-						reached
+						reached,
+						objectsToUpdate,
+						hintMapping
 					);
-					// SWI: perform overwrite only on entities, not on values!
-					// Otherwise all changes to the current state of the object get lost
-					// This can be disabled by adding the object to m_objectsToUpdateAllFields
-					if (m_objectsToUpdateAllFields.contains(updated)
+					// If objectsToUpdate is specified, perform overwrite only on entities
+					// and objects stored in objectsToUpdate, not on values.
+					// This is important when we reload an entity from database where not all
+					// references are loaded (lazy loading). Then we don't want to overwrite
+					// valid local references with not loaded (=null) references
+					if (objectsToUpdate == null || objectsToUpdate.contains(attached)
 						|| (fieldValue != null && id(fieldValue) != ANONYMOUS)) {
 						
 						f.set(attached, merged);
@@ -392,9 +403,43 @@ public abstract class AbstractIdentityFixer {
 			anchor,
 			updated,
 			anchor != null,
-			new IdentityHashMap<Object, Object>()
+			new IdentityHashMap<Object, Object>(),
+			null,
+			new IdentityHashMap<Object, Object>(0)
 		);
-		m_objectsToUpdateAllFields.clear();
+		return result;
+	}
+	
+	/**
+	 * Updates the unique representative by duplicating the state in
+	 * {@code updated}. If no representative exists so far, one is created.
+	 *
+	 * <p>For every potentially modified entity, {@link NewEntityState}
+	 * notification are sent using the configured change notifier.
+	 *
+	 * @param anchor
+	 *              the representative known to be transitively identical
+	 *              with {@code updated}, or null, if the representative's
+	 *              logical identity is already defined.
+	 * @param updated
+	 *              The object holding the new state.
+	 * @param objectsToUpdate
+	 *              A list of anchor objects that should updated, all other objects are not touched. If objectsToUpdate
+	 *              is <code>null</code> then all reachable objects get updated.
+	 * @param hintMapping
+	 *              A map of [updated -> anchor] used to correctly merge collections. If no collections have to be
+	 *              merged this parameter can be <code>null</code>.
+	 * @return The representative.
+	 */
+	public <T> T merge(T anchor, T updated, List<Object> objectsToUpdate, IdentityHashMap<Object, Object> hintMapping) {
+		T result = merge(
+			anchor,
+			updated,
+			anchor != null,
+			new IdentityHashMap<Object, Object>(),
+			objectsToUpdate,
+			hintMapping
+		);
 		return result;
 	}
 	
@@ -404,15 +449,6 @@ public abstract class AbstractIdentityFixer {
 	 */
 	public boolean isRepresentative(Object object) {
 		return m_representatives.containsValue(object);
-	}
-	
-	/**
-	 * Mark an object such that its fields get overwritten the next time a merge operation occurs.
-	 * Changes get lost, but identity is kept.
-	 * @param object    the object to reload
-	 */
-	public void refreshFieldsOfObject(Object object) {
-		m_objectsToUpdateAllFields.add(object);
 	}
 	
 	/**
