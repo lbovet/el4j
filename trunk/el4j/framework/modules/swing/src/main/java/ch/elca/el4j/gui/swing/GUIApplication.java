@@ -17,17 +17,11 @@
 package ch.elca.el4j.gui.swing;
 
 import java.awt.EventQueue;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
 import javax.swing.UIManager;
 
 import org.apache.commons.logging.Log;
@@ -53,7 +47,6 @@ import ch.elca.el4j.gui.swing.wrapper.JFrameWrapperFactory;
 import ch.elca.el4j.util.config.GenericConfig;
 
 import cookxml.cookswing.CookSwing;
-import cookxml.core.exceptionhandler.StrictExceptionHandler;
 
 
 /**
@@ -63,12 +56,14 @@ import cookxml.core.exceptionhandler.StrictExceptionHandler;
  * Additional features:
  *  <ul>
  *   <li> give access to a Spring application context
- *   <li> allows installing a handler for uncaught exceptions, refer also to {@link ch.elca.el4j.gui.swing.exceptions.Exceptions} and
+ *   <li> allows installing a handler for uncaught exceptions, refer also to
+ *         {@link ch.elca.el4j.gui.swing.exceptions.Exceptions} and
  *         {@link ch.elca.el4j.gui.swing.exceptions.Handler}
  *   <li> defines a convenience method for menus
  *   <li> defines a getAction(String) method
  *      (refer to recommended programming pattern with this method of
  *       the app framework )
+ *   <li> defines an {@link ActionsContext} which allows to spread Actions over several classes
  *  </ul>
  *
  * <script type="text/javascript">printFileStatus
