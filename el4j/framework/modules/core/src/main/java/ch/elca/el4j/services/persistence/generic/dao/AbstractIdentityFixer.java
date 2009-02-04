@@ -457,7 +457,7 @@ public abstract class AbstractIdentityFixer {
 	/**
 	 * @return a collection of all the representatives held by the identity fixer.	 
 	 */	
-	public Collection<Object> getRepresentatives() {
+	public Collection<?> getRepresentatives() {
 		return m_representatives.values();
 	}
 	
