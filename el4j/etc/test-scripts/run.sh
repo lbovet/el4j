@@ -110,6 +110,7 @@ case $1 in
 		rm -rf testarchetype
 		;;
 	"gui_tests")
+		rm -rf ~/.Example
 		if ! vncserver -kill :5 ; then
 			echo "VNC server stopped"
 		fi
