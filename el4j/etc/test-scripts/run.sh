@@ -110,6 +110,8 @@ case $1 in
 		rm -rf testarchetype
 		;;
 	"gui_tests")
+		vncserver -kill :5 || true
+		
 		vncserver -geometry 1024x768 -depth 16 :5
 		export DISPLAY=:5
 
@@ -120,6 +122,6 @@ case $1 in
 		mvn clean install -Pmanualtest
 
 		vncserver -kill :5
-		export DISPLAY=:1
+		unset DISPLAY
 		;;
 esac
