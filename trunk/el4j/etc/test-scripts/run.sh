@@ -110,7 +110,9 @@ case $1 in
 		rm -rf testarchetype
 		;;
 	"gui_tests")
-		vncserver -kill :5 || true
+		if ! vncserver -kill :5 ; then
+			echo "VNC server stopped"
+		fi
 		
 		vncserver -geometry 1024x768 -depth 16 :5
 		export DISPLAY=:5
