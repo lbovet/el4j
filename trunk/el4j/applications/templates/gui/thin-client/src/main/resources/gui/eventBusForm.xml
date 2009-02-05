@@ -9,7 +9,7 @@
 		http://www.elca.ch/el4j/cookSwing http://el4.elca-services.ch/el4j/schema/swing/el4jSwing.xsd
 		http://cookxml.sf.net/common/ http://el4.elca-services.ch/el4j/schema/swing/cookXmlCommon.xsd
 		http://cookxml.sf.net/ http://el4.elca-services.ch/el4j/schema/swing/cookXml.xsd"
-	cx:varref="this" preferredsize="700, 200">
+	cx:varref="this" preferredsize="550, 200">
 
 	<borderlayout>
 		<constraint location="Center">
