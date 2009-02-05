@@ -109,4 +109,17 @@ case $1 in
 		mvn -f testarchetype/pom.xml clean install $2
 		rm -rf testarchetype
 		;;
+	"gui_tests")
+		vncserver -geometry 1024x768 -depth 16 :5
+		export DISPLAY=:5
+
+		# wait until desktop environment is ready
+		sleep 60
+
+		cd external/applications/templates/gui/abbot
+		mvn clean install -Pmanualtest
+
+		vncserver -kill :5
+		export DISPLAY=:1
+		;;
 esac
