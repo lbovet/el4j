@@ -111,18 +111,11 @@ case $1 in
 		;;
 	"gui_tests")
 		rm -rf ~/.Example
-		if ! vncserver -kill :5 ; then
-			echo "VNC server not running"
-		else
-			echo "Stopping VNC server"
-			sleep 10
-		fi
 		
-		vncserver -geometry 1024x768 -depth 16 :5
 		export DISPLAY=:5
-
-		# wait until desktop environment is ready
-		sleep 30
+		if ! vncserver -geometry 1024x768 -depth 16 :5 ; then
+			echo "VNC server alread running? Try to continue..."
+		fi
 
 		cd external/applications/templates/gui/abbot
 		mvn clean install -Pmanualtest
