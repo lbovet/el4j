@@ -20,6 +20,8 @@
 
 	<!-- Launcher -->
 	<launch args="[]" class="ch.elca.el4j.demos.gui.MainStandaloneMDI" method="main" />
+	<wait args="mainFrame" class="abbot.tester.ComponentTester" method="assertComponentShowing" />
+	<wait args="JMenuBar Instance" class="abbot.tester.ComponentTester" method="assertComponentShowing" />
 	
 	<action args="Cancelable Form Demo" method="actionSelectMenuItem" />
 	<wait args="Cancelable Demo Form" class="abbot.tester.ComponentTester" method="assertComponentShowing" />

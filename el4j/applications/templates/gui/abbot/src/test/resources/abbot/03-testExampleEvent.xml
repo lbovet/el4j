@@ -49,11 +49,10 @@
 	<component class="javax.swing.JFrame" id="mainFrame" name="mainFrame"
 		root="true" title="AppFramework + MDI Example" />
 
-	<launch args="[]" class="ch.elca.el4j.demos.gui.MainStandaloneMDI"
-		method="main" />
-
-	<wait args="mainFrame" class="abbot.tester.ComponentTester"
-		method="assertComponentShowing" />
+	<launch args="[]" class="ch.elca.el4j.demos.gui.MainStandaloneMDI" method="main" />
+	<wait args="mainFrame" class="abbot.tester.ComponentTester" method="assertComponentShowing" />
+	<wait args="JMenuBar Instance" class="abbot.tester.ComponentTester" method="assertComponentShowing" />
+	
 	<action args="EventBus Demo..." method="actionSelectMenuItem" />
 	<wait args="ch.elca.el4j.demos.gui.forms.EventBusDemoForm" class="abbot.tester.ComponentTester"
 		method="assertComponentShowing" />

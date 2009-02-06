@@ -37,6 +37,8 @@
 	<launch args="[]" class="ch.elca.el4j.demos.gui.MainStandaloneMDI" classpath=".;../standalone-client/target/swing-demo-standalone-client-2.6-SNAPSHOT.jar" method="main" />
 	-->
 	<launch args="[]" class="ch.elca.el4j.demos.gui.MainStandaloneMDI" method="main" />
+	<wait args="mainFrame" class="abbot.tester.ComponentTester" method="assertComponentShowing" />
+	<wait args="JMenuBar Instance" class="abbot.tester.ComponentTester" method="assertComponentShowing" />
 
 	<action args="Resource Injection Demo" method="actionSelectMenuItem" />
 	<wait args="ResourceInjectionDemoForm" class="abbot.tester.ComponentTester" method="assertComponentShowing" />

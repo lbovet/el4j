@@ -25,7 +25,10 @@
 
 	<!-- Launcher -->
 	<launch args="[]" class="ch.elca.el4j.demos.gui.MainStandaloneMDI" method="main" />
-	 
+	<wait args="mainFrame" class="abbot.tester.ComponentTester" method="assertComponentShowing" />
+	<wait args="JMenuBar Instance" class="abbot.tester.ComponentTester" method="assertComponentShowing" />
+
+	
 	<action args="mdMenu" method="actionSelectMenuItem" />
 	<wait args="frame" class="abbot.tester.ComponentTester" method="assertComponentShowing" />
 	
