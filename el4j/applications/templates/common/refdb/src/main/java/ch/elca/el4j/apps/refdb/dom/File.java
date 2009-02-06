@@ -141,7 +141,7 @@ public class File extends AbstractFile {
 	 */
 	@NotNull(message = "{File.data}")
 	@Lob
-	@Column(name = "content")
+	@Column(name = "content", length = Integer.MAX_VALUE - 1)
 	public Blob getData() {
 		if (m_data == null) {
 			// Re-set the blob if null (eg. after serialization)

@@ -192,7 +192,7 @@ public class Annotation extends AbstractIntKeyIntOptimisticLockingDto {
 	@NotNull(message = "{Annotation.data}")
 	@Lob
 	@Basic(fetch = FetchType.EAGER)
-	@Column(name = "content")
+	@Column(name = "content", length = Integer.MAX_VALUE - 1)
 	public Clob getData() {
 		if (m_data == null) {
 			// Re-set the clob if null (eg. after serialization)
