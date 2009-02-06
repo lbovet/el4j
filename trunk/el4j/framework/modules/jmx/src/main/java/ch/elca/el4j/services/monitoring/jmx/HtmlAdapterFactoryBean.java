@@ -276,13 +276,14 @@ public class HtmlAdapterFactoryBean
 	}
 
 	/**
-	 *
 	 * {@inheritDoc}
 	 */
 	public void destroy() throws Exception {
 		// Try to stop the AdaptorServer
 		if (m_htmlAdaptorServer != null) {
 			m_htmlAdaptorServer.stop();
+			getServer().unregisterMBean(new ObjectName(m_htmlParserName));
+			getServer().unregisterMBean(new ObjectName(getName()));
 		}
 	}
 }

@@ -12,7 +12,8 @@
 	<!-- $Author$ -->
 	
 	<!-- The MBean Server created by the MBeanServerFactoryBean -->
-	<bean id="mBeanServer" class="ch.elca.el4j.services.monitoring.jmx.MBeanServerFactoryBean">
+	<bean id="mBeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean">
+		<property name="locateExistingServerIfPossible" value="true" />
 		<property name="defaultDomain">
 			<value>DefaultDomain</value>
 		</property>
