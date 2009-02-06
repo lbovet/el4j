@@ -162,8 +162,8 @@ public abstract class GUIApplication extends SingleFrameApplication implements A
 		try {
 			EventServiceLocator.setEventService(EventServiceLocator.SERVICE_NAME_EVENT_BUS,
 				new ExceptionThrowingEventService());
-		} catch (EventServiceExistsException e1) {
-			s_logger.warn("Unable to register EventService");
+		} catch (EventServiceExistsException e) {
+			s_logger.warn("Unable to register EventService.", e);
 		}
 		
 		// configure CookSwing
@@ -299,6 +299,12 @@ public abstract class GUIApplication extends SingleFrameApplication implements A
 	/** {@inheritDoc} */
 	@Override
 	protected void shutdown() {
+		try {
+			EventServiceLocator.setEventService(EventServiceLocator.SERVICE_NAME_EVENT_BUS, null);
+		} catch (EventServiceExistsException e) {
+			s_logger.warn("Unable to unregister EventService.", e);
+		}
+		
 		if (m_springContext != null) {
 			if (m_springContext instanceof ConfigurableApplicationContext) {
 				((ConfigurableApplicationContext) m_springContext).close();
