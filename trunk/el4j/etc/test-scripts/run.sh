@@ -113,13 +113,14 @@ case $1 in
 		rm -rf ~/.Example
 		if ! vncserver -kill :5 ; then
 			echo "VNC server stopped"
+			sleep 10
 		fi
 		
 		vncserver -geometry 1024x768 -depth 16 :5
 		export DISPLAY=:5
 
 		# wait until desktop environment is ready
-		sleep 60
+		sleep 30
 
 		cd external/applications/templates/gui/abbot
 		mvn clean install -Pmanualtest
