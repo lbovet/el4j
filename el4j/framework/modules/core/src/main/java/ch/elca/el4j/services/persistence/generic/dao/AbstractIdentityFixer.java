@@ -369,7 +369,7 @@ public abstract class AbstractIdentityFixer {
 					// references are loaded (lazy loading). Then we don't want to overwrite
 					// valid local references with not loaded (=null) references
 					if (objectsToUpdate == null || objectsToUpdate.contains(attached)
-						|| (fieldValue != null && id(fieldValue) != ANONYMOUS)) {
+						/*|| (fieldValue != null && id(fieldValue) != ANONYMOUS)*/) {
 						
 						f.set(attached, merged);
 					}
@@ -459,6 +459,17 @@ public abstract class AbstractIdentityFixer {
 	 */	
 	public Collection<?> getRepresentatives() {
 		return m_representatives.values();
+	}
+	
+	/**
+	 * Remove an object from the representatives.
+	 * @param object  the object to remove
+	 */
+	public void removeRepresentative(Object object) {
+		Object id = id(object);
+		if (m_representatives.get(id) != null && m_representatives.get(id).equals(object)) {
+			m_representatives.remove(id);
+		}
 	}
 	
 	/**
