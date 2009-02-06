@@ -112,7 +112,9 @@ case $1 in
 	"gui_tests")
 		rm -rf ~/.Example
 		if ! vncserver -kill :5 ; then
-			echo "VNC server stopped"
+			echo "VNC server not running"
+		else
+			echo "Stopping VNC server"
 			sleep 10
 		fi
 		
