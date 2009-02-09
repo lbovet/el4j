@@ -91,7 +91,7 @@ public abstract class GUIApplication extends SingleFrameApplication implements A
 	/**
 	 * The Actions context for resolving action names.
 	 */
-	protected ActionsContext m_actionsContext;
+	protected ActionsContext m_actionsContext = ActionsContext.create(this);
 	
 	/**
 	 * The configuration. This is used to set constant parameters like colors to mark values as
@@ -265,9 +265,6 @@ public abstract class GUIApplication extends SingleFrameApplication implements A
 	
 	/** {@inheritDoc} */
 	public ActionsContext getActionsContext() {
-		if (m_actionsContext == null) {
-			m_actionsContext = ActionsContext.create(this);
-		}
 		return m_actionsContext;
 	}
 	
