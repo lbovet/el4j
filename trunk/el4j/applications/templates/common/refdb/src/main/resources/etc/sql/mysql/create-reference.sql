@@ -14,13 +14,13 @@ CREATE TABLE referencesTable (
   whenInserted              DATETIME      NOT NULL,
   documentDate              DATE,
   optimisticLockingVersion  INTEGER        NOT NULL
-);
+) engine = innoDB;
 
 CREATE TABLE links (
   keyToReference            INTEGER
   	NOT NULL REFERENCES referencesTable(keyId),
   url                       VARCHAR(500)
-);
+) engine = innoDB;
 
 CREATE TABLE formalPublications (
   keyToReference            INTEGER
@@ -28,7 +28,7 @@ CREATE TABLE formalPublications (
   authorName                VARCHAR(64),
   publisher                 VARCHAR(64),
   pageNum                   SMALLINT NOT NULL DEFAULT 0
-);
+) engine = innoDB;
 
 CREATE TABLE books (
   keyToReference            INTEGER
@@ -37,7 +37,7 @@ CREATE TABLE books (
   publisher                 VARCHAR(64),
   pageNum                   SMALLINT NOT NULL DEFAULT 0,
   isbnNumber                VARCHAR(20)
-);
+) engine = innoDB;
 
 CREATE TABLE referenceKeywordRelationships (
   keyReference              INTEGER
@@ -45,7 +45,7 @@ CREATE TABLE referenceKeywordRelationships (
   keyKeyword                INTEGER
   	NOT NULL REFERENCES keywords(keyId),
   PRIMARY KEY (keyReference, keyKeyword)
-);
+) engine = innoDB;
 
 CREATE TABLE annotations (
   keyId                     INTEGER        NOT NULL
@@ -57,7 +57,7 @@ CREATE TABLE annotations (
   content                   LONGBLOB       NOT NULL,
   whenInserted              DATETIME      NOT NULL,
   optimisticLockingVersion  INTEGER        NOT NULL
-);
+) engine = innoDB;
 
 CREATE TABLE files (
   keyId                     INTEGER        NOT NULL
@@ -70,4 +70,4 @@ CREATE TABLE files (
   content					LONGBLOB	   NOT NULL,
   optimisticLockingVersion  INTEGER        NOT NULL,
   dtype						VARCHAR(100)
-);
+) engine = innoDB;
