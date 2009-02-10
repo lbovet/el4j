@@ -21,6 +21,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,12 +32,25 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LazyInitializationException;
 import org.junit.Test;
+import org.springframework.dao.DataIntegrityViolationException;
 
+import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
+
+import ch.elca.el4j.apps.keyword.dao.impl.hibernate.HibernateKeywordDao;
+import ch.elca.el4j.apps.keyword.dom.Keyword;
+import ch.elca.el4j.apps.refdb.dao.BookDao;
 import ch.elca.el4j.apps.refdb.dao.impl.hibernate.GenericHibernateFileDaoInterface;
+import ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateBookDao;
 import ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateFileDao;
+import ch.elca.el4j.apps.refdb.dom.Annotation;
+import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.File;
+import ch.elca.el4j.apps.refdb.dom.Link;
 import ch.elca.el4j.apps.refdb.dom.Reference;
+import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
+import ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHibernateDao;
+import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.LikeCriteria;
@@ -67,6 +84,13 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 	 * Person DAO. Created by application context.
 	 */
 	private GenericHibernatePersonDaoInterface m_personDao;
+
+	/**
+	 * Keyword DAO. Created by application context.
+	 */
+	private ConvenienceGenericHibernateDao<Keyword, Integer> m_keywordDao;
+
+	private ConvenienceGenericHibernateDao<Book, Integer> m_hiberanteBookDao;
 	
 	/**
 	 * {@inheritDoc}
@@ -418,6 +442,103 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 	}
 	
 	/**
+	 * Test blob/clob handling of hibernate dao.
+	 */
+	@Test
+	public void testBlobClobHandling() {
+		createAndSaveData();
+		
+		// Change an annotation and save it
+		try {
+			Book b1 = getBookDao().getAll().iterator().next();
+			Annotation a1 = b1.getAnnotations().iterator().next();
+			a1.setAnnotator("New Annotator");
+			getAnnotationDao().saveOrUpdate(a1);
+			
+		} catch (LazyInitializationException e) {
+			s_logger.debug("Expected exception catched", e);
+		}
+		
+		// Retrieve annotation with extent of depth 3, change and save
+		try {
+			Book b2 = getHibernateBookDao().getAll(new DataExtent(Book.class).all(3)).iterator().next();
+			Annotation a2 = b2.getAnnotations().iterator().next();
+			a2.setAnnotator("Another Annotator");
+			getAnnotationDao().saveOrUpdate(a2);
+		} catch (DataIntegrityViolationException e) {
+			s_logger.debug("Expected exception catched", e);
+		}
+		try {
+			Annotation a3 = getAnnotationDao().getAll().iterator().next();
+			a3.setAnnotator("Another Annotator");
+			getAnnotationDao().saveOrUpdate(a3);
+		} catch (DataIntegrityViolationException e) {
+			s_logger.debug("Expected exception catched", e);
+		}
+		
+		/* Remark: these tests have been added to test the blob/clob handling of hibernate with derby database drivers.
+		 * It seems that the blob/clob loaded from db is not meet the expectations of hibernate itself,
+		 * so after loading and saving again, we get an exception...
+		 */
+		
+	}
+	
+	private void createAndSaveData() {
+		Keyword k1 = new Keyword();
+		k1.setName("hibernate");
+		k1.setDescription("Hibernate persistence service");
+		Keyword k2 = new Keyword();
+		k2.setName("object-oriented programming");
+		Keyword k3 = new Keyword();
+		k3.setName("manual");
+		Keyword k4 = new Keyword();
+		k4.setName("relational databases");
+		File f1 = new File();
+		f1.setName("JavaPersistenceWithHibernate.pdf");
+		f1.setMimeType("application/pdf");
+		String content = "Hibernate is an object-relational mapping (ORM) library for the Java language, providing "
+				+ "a framework for mapping an object-oriented domain model to a traditional relational database. "
+				+ "Hibernate solves Object-Relational impedance mismatch problems by replacing direct "
+				+ "persistence-related database accesses with high-level object handling functions. The "
+				+ "Hibernate 2.1 framework won a Jolt Award in 2005. [1] Hibernate is free as open source "
+				+ "software that is distributed under the GNU Lesser General Public License.";
+		f1.setSize(content.length());
+		f1.setContent(content.getBytes());
+		Book b = new Book();
+		b.setName("Hibernate in action");
+		b.setHashValue("hia");
+		b.setAuthorName("Christian Bauer, Gavin King");
+		b.setPublisher("Greenwich: Manning Publications");
+		b.setDescription("Persisting your Java objects to a relational database. The book for it.");
+		b.setIncomplete(false);
+		b.setKeywords(new HashSet<Keyword>(Arrays.asList(k1, k2, k3, k4)));
+		f1.setReference(b);
+		Annotation a = new Annotation();
+		a.setAnnotator("John Miller");
+		a.setContent("very interesting book");
+		a.setGrade(10);
+		a.setReference(b);
+		Calendar c = Calendar.getInstance();
+		c.set(2004, 5, 12);
+		b.setDate(new Date(c.getTimeInMillis()));
+		b.setPageNum(1683);
+		Link l = new Link();
+		l.setName("Sample Link");
+		l.setUrl("www.sample.link");
+		l.setDescription("some example link just for nothing");
+		
+		getKeywordDao().saveOrUpdate(k1);
+		getKeywordDao().saveOrUpdate(k2);
+		getKeywordDao().saveOrUpdate(k3);
+		getKeywordDao().saveOrUpdate(k4);
+		getHibernateBookDao().saveOrUpdate(b);
+		getLinkDao().saveOrUpdate(l);
+		getAnnotationDao().saveOrUpdate(a);
+		getFileDao().saveOrUpdate(f1);
+		
+	}
+
+	/**
 	 * @return Returns the person DAO.
 	 */
 	protected GenericHibernatePersonDaoInterface getPersonDao() {
@@ -429,6 +550,35 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 				.getFor(Person.class);
 		}
 		return m_personDao;
+	}
+	
+	/**
+	 * @return Returns the person DAO.
+	 */
+	protected ConvenienceGenericHibernateDao<Keyword, Integer> getKeywordDao() {
+		if (m_keywordDao == null) {
+			DefaultDaoRegistry daoRegistry
+				= (DefaultDaoRegistry) getApplicationContext()
+					.getBean("daoRegistry");
+			m_keywordDao = (ConvenienceGenericHibernateDao<Keyword, Integer>) daoRegistry
+				.getFor(Keyword.class);
+		}
+		return m_keywordDao;
+	}
+	
+	
+	/**
+	 * @return Returns the hibernate book DAO.
+	 */
+	protected ConvenienceGenericHibernateDao<Book, Integer> getHibernateBookDao() {
+		if (m_hiberanteBookDao == null) {
+			DefaultDaoRegistry daoRegistry
+				= (DefaultDaoRegistry) getApplicationContext()
+					.getBean("daoRegistry");
+			m_hiberanteBookDao
+				= (ConvenienceGenericHibernateDao<Book, Integer>) daoRegistry.getFor(Book.class);
+		}
+		return m_hiberanteBookDao;
 	}
 
 }
