@@ -165,6 +165,8 @@ public class Annotation extends AbstractIntKeyIntOptimisticLockingDto {
 			}
 			if (primitiveData != null) {
 				m_content = primitiveData.length() > 0 ? primitiveData : null;
+				// Recreate Clob for hibernate (eg. derby returns an unusable clob object)
+				m_data = Hibernate.createClob(primitiveData);
 			}
 		}
 		return m_content;

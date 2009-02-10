@@ -114,6 +114,8 @@ public class File extends AbstractFile {
 			}
 			if (primitiveData != null) {
 				m_content = primitiveData.length > 0 ? primitiveData : null;
+				// Recreate Blob for hibernate (eg. derby returns an unusable blob object)
+				m_data = Hibernate.createBlob(primitiveData);
 			}
 		}
 		return m_content;
