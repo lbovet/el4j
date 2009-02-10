@@ -1323,7 +1323,7 @@
 				<db.host>localhost</db.host>
 				<db.port>3306</db.port>
 				<db.database-name>el4j</db.database-name>
-				<db.url>jdbc:mysql://${db.host}:${db.port}/${db.database-name}?zeroDateTimeBehavior=convertToNull</db.url>
+				<db.url>jdbc:mysql://${db.host}:${db.port}/${db.database-name}?zeroDateTimeBehavior=convertToNull&amp;relaxAutoCommit=true</db.url>
 			</properties>
 		</profile>
 		
