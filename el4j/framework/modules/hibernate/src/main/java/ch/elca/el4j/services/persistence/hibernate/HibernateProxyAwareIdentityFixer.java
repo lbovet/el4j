@@ -238,4 +238,20 @@ public class HibernateProxyAwareIdentityFixer
 		}
 		return iv;
 	}
+
+	/** {@inheritDoc} */
+	@Override
+	protected Object prepareObject(Object o) {
+		if (o instanceof HibernateProxy) {
+			// Try to unwrap/replace the hibernate proxy by its real object
+			try {
+				Object prepared = ((HibernateProxy) o).writeReplace();
+				return prepared;
+			} catch (Exception e) {
+				return o;
+			}
+		} else {
+			return o;
+		}
+	}
 }

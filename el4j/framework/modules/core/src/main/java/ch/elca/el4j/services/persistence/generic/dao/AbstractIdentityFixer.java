@@ -273,6 +273,7 @@ public abstract class AbstractIdentityFixer {
 		IdentityHashMap<Object, Object> reached,
 		List<Object> objectsToUpdate, IdentityHashMap<Object, Object> hintMapping) {
 		
+		updated = (T) prepareObject(updated);
 		if (immutableValue(updated)) {
 			trace("", updated, " is an immutable value");
 			return updated;
@@ -505,6 +506,16 @@ public abstract class AbstractIdentityFixer {
 	 *         value, <code>false</code> otherwise
 	 */
 	protected abstract boolean immutableValue(Object o);
+	
+	/**
+	 * Returns the prepared Object, is called before checked for immutability
+	 * to give the id fixer the chance to convert immutable values to usable ones.
+	 *
+	 * @param o
+	 *            The concerned object
+	 * @return The prepared object.
+	 */
+	protected abstract Object prepareObject(Object o);
 	
 	/*
 	 * Warning: The ReturnsUnchangedParameter annotation is not always found
