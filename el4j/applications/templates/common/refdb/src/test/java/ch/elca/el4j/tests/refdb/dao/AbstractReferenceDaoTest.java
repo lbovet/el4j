@@ -26,7 +26,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashSet;
 import java.util.List;
+
+import javax.transaction.Transaction;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,7 +38,11 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.orm.hibernate3.HibernateTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.apps.refdb.dao.AnnotationDao;
 import ch.elca.el4j.apps.refdb.dao.FileDao;
 import ch.elca.el4j.apps.refdb.dao.FormalPublicationDao;
@@ -69,6 +76,12 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 	private static Log s_logger
 		= LogFactory.getLog(AbstractReferenceDaoTest.class);
 
+	
+	/**
+	 * The transaction manager.
+	 */
+	private HibernateTransactionManager m_transactionManager;
+	
 	/**
 	 * Hide default constructor.
 	 */
@@ -549,7 +562,91 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		assertTrue("Not only FormalPublication returned",
 			list.size() == 1 && list.get(0).getClass() == FormalPublication.class);
 	}
+	
+	/**
+	 * Tests the insertion of multiple keywords in several updates.
+	 */
+	@Test
+	public void testInsertMultipleKeywords() {
+		try {
+			// add a book
+			Book book = new Book();
+			book.setName("Testbook");
+			book.setAuthorName("Mister Y");
+			book.setPageNum(22);
+			Annotation a1 = new Annotation();
+			a1.setAnnotator("arr");
+			a1.setContent("very good testbook!");
+			Annotation a2 = new Annotation();
+			a2.setAnnotator("arr");
+			a2.setContent("it is snowing outside");
+			book.setAnnotations(new HashSet<Annotation>());
+			book.getAnnotations().add(a1);
+			a1.setReference(book);
+			book.getAnnotations().add(a2);
+			a2.setReference(book);
+			Keyword k1 = new Keyword();
+			k1.setName("Testkeyword97");
+			book.setKeywords(new HashSet<Keyword>());
+			book.getKeywords().add(k1);
+			try {
+				TransactionStatus transaction = getTransactionManager().getTransaction(new DefaultTransactionDefinition());
+				
+				k1 = getKeywordDao().saveOrUpdate(k1);
+				book = getBookDao().saveOrUpdate(book);
+				a1 = getAnnotationDao().saveOrUpdate(a1);
+				a2 = getAnnotationDao().saveOrUpdate(a2);
+				
+				getTransactionManager().getSessionFactory().getCurrentSession().flush();
+				getTransactionManager().commit(transaction);
+			} catch (Exception e) {
+				fail("Could not save the data: " + e.getMessage());
+			}
+			assertEquals("Keyword not inserted", 1, getBookDao().reload(book).getKeywords().size());
+			
+			book.setKeywords(new HashSet<Keyword>(book.getKeywords()));
+			
+			Keyword k2 = new Keyword();
+			k2.setName("FancyKeyword77");
+			
+			k2 = getKeywordDao().saveOrUpdate(k2);
+//			getKeywordDao().getAll();
+			
+			book.getKeywords().add(k2);
+			book = getBookDao().saveOrUpdate(book);
+			/*try {
+				TransactionStatus transaction = getTransactionManager().getTransaction(new DefaultTransactionDefinition());
+				
+				book = getBookDao().saveOrUpdate(book);
+				a1 = getAnnotationDao().saveOrUpdate(a1);
+				a2 = getAnnotationDao().saveOrUpdate(a2);
+				
+				getTransactionManager().getSessionFactory().getCurrentSession().flush();
+				getTransactionManager().commit(transaction);
+			} catch (Exception e) {
+				fail("Could not save the data after setting the second keyword: " + e.getMessage());
+			}*/
+			assertEquals("Not all keywords inserted", 2, getBookDao().reload(book).getKeywords().size());
+		
+		} finally {
+			for (Book b : getBookDao().getAll()) {
+				getBookDao().delete(b);
+			}
+			for (Keyword k : getKeywordDao().getAll()) {
+				getKeywordDao().delete(k);
+			}
+			
+		}
+		
+	}
 
+	protected HibernateTransactionManager getTransactionManager() {
+		if (m_transactionManager == null) {
+			m_transactionManager = (HibernateTransactionManager) getApplicationContext()
+				.getBean("transactionManager");
+		}
+		return m_transactionManager;
+	}
 	/**
 	 * This internal test inserts, gets and removes a file.
 	 *

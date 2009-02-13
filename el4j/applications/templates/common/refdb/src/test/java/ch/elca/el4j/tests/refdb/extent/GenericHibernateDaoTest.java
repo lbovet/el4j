@@ -86,10 +86,8 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 	private GenericHibernatePersonDaoInterface m_personDao;
 
 	/**
-	 * Keyword DAO. Created by application context.
+	 * Book DAO. Created by application context.
 	 */
-	private ConvenienceGenericHibernateDao<Keyword, Integer> m_keywordDao;
-
 	private ConvenienceGenericHibernateDao<Book, Integer> m_hiberanteBookDao;
 	
 	/**
@@ -551,21 +549,6 @@ public class GenericHibernateDaoTest extends AbstractTestCaseBase {
 		}
 		return m_personDao;
 	}
-	
-	/**
-	 * @return Returns the person DAO.
-	 */
-	protected ConvenienceGenericHibernateDao<Keyword, Integer> getKeywordDao() {
-		if (m_keywordDao == null) {
-			DefaultDaoRegistry daoRegistry
-				= (DefaultDaoRegistry) getApplicationContext()
-					.getBean("daoRegistry");
-			m_keywordDao = (ConvenienceGenericHibernateDao<Keyword, Integer>) daoRegistry
-				.getFor(Keyword.class);
-		}
-		return m_keywordDao;
-	}
-	
 	
 	/**
 	 * @return Returns the hibernate book DAO.

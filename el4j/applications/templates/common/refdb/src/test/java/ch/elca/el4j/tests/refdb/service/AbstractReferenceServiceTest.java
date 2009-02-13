@@ -99,20 +99,6 @@ public abstract class AbstractReferenceServiceTest
 	}
 
 	/**
-	 * @return Returns the keyword DAO.
-	 */
-	public KeywordDao getKeywordDao() {
-		if (m_keywordDao == null) {
-			DefaultDaoRegistry daoRegistry
-				= (DefaultDaoRegistry) getApplicationContext()
-					.getBean("daoRegistry");
-			m_keywordDao = (KeywordDao) daoRegistry
-				.getFor(Keyword.class);
-		}
-		return m_keywordDao;
-	}
-	
-	/**
 	 * This test inserts a link and three keywords.
 	 */
 	@Test
