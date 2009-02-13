@@ -26,6 +26,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 
+import ch.elca.el4j.apps.keyword.dao.KeywordDao;
+import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.apps.refdb.dao.AnnotationDao;
 import ch.elca.el4j.apps.refdb.dao.BookDao;
 import ch.elca.el4j.apps.refdb.dao.FileDao;
@@ -90,6 +92,8 @@ public abstract class AbstractTestCaseBase extends AbstractTest {
 	 * File DAO. Created by application context.
 	 */
 	private FileDao m_fileDao;
+
+	private KeywordDao m_keywordDao;
 	
 	/**
 	 * Hide default constructor.
@@ -234,6 +238,20 @@ public abstract class AbstractTestCaseBase extends AbstractTest {
 				.getFor(File.class);
 		}
 		return m_fileDao;
+	}
+	
+	/**
+	 * @return Returns the keyword DAO.
+	 */
+	protected KeywordDao getKeywordDao() {
+		if (m_keywordDao == null) {
+			DefaultDaoRegistry daoRegistry
+				= (DefaultDaoRegistry) getApplicationContext()
+					.getBean("daoRegistry");
+			m_keywordDao = (KeywordDao) daoRegistry
+				.getFor(Keyword.class);
+		}
+		return m_keywordDao;
 	}
 	
 }

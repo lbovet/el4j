@@ -39,7 +39,6 @@ import javax.persistence.Transient;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
-import org.hibernate.lob.ClobImpl;
 import org.hibernate.validator.NotNull;
 
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
@@ -165,8 +164,6 @@ public class Annotation extends AbstractIntKeyIntOptimisticLockingDto {
 			}
 			if (primitiveData != null) {
 				m_content = primitiveData.length() > 0 ? primitiveData : null;
-				// Recreate Clob for hibernate (eg. derby returns an unusable clob object)
-				m_data = Hibernate.createClob(primitiveData);
 			}
 		}
 		return m_content;
@@ -196,11 +193,13 @@ public class Annotation extends AbstractIntKeyIntOptimisticLockingDto {
 	@Basic(fetch = FetchType.EAGER)
 	@Column(name = "content", length = Integer.MAX_VALUE - 1)
 	public Clob getData() {
-		if (m_data == null) {
-			// Re-set the clob if null (eg. after serialization)
-			setContent(m_content);
+		if (m_content == null) {
+			return m_data;
+		} else {
+			// Recreate the clob whenever possible,
+			// otherwise the string reader seams to be unusable somehow
+			return Hibernate.createClob(m_content);
 		}
-		return m_data;
 	}
 	
 	/**
