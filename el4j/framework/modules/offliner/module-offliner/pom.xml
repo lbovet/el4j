@@ -20,7 +20,6 @@
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-core</artifactId>
-			<!-- <version>1.8</version> -->
 		</dependency>
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
@@ -33,12 +32,10 @@
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-database</artifactId>
-			<!-- <version>1.4</version> -->
 		</dependency>
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-hibernate</artifactId>
-			<!-- <version>1.5</version> -->
 		</dependency>
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
@@ -51,25 +48,10 @@
 			<artifactId>maven-database-plugin</artifactId>
 			<version>${version.maven-database-plugin}</version>
 		</dependency>
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.4</version>
-		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-
-				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -166,7 +148,8 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jdepend-maven-plugin</artifactId>
-				<version>2.0-el4j_20080409</version>
+				<version>2.0-beta-2</version>
+				<!-- <version>2.0-el4j_20080409</version> -->
 			</plugin>
 			<!--
 				<plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>javancss-maven-plugin</artifactId>
@@ -194,7 +177,6 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>dashboard-maven-plugin</artifactId>
-				<version>1.0-el4j_20080408</version>
 			</plugin>
 		</plugins>
 	</reporting>
