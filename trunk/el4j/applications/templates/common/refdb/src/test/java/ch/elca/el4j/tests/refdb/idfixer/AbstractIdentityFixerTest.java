@@ -22,9 +22,11 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.hibernate.validator.AssertFalse;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -64,6 +66,8 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
 	private ConvenienceGenericDao<Keyword, Integer> m_keywordDao;
 	/** The identity-fixed book DAO.*/
 	private ConvenienceGenericDao<Book, Integer> m_bookDao;
+	/** The not identity-fixed book DAO.*/
+	private ConvenienceGenericDao<Book, Integer> m_noFixedBookDao;
 	
 	/**
 	 * Returns the identity fixing proxy for the DAO that is responsible
@@ -75,6 +79,15 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
 			IdentityFixedDao.class).decorate(getDaoRegistry().getFor(c));
 	}
 	
+	/**
+	 * Returns the proxy for the DAO that is responsible
+	 * for entities of type {@code T} without any id fixer.
+	 */
+	@SuppressWarnings("unchecked")
+	private <T,ID extends Serializable> ConvenienceGenericDao<T,ID> nonFixedDaoFor(Class<T> c) {
+		return (ConvenienceGenericDao<T,ID>) getDaoRegistry().getFor(c);
+	}
+	
 
 	/** {@inheritDoc} */
 	@Override
@@ -83,6 +96,7 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
 		super.setUp();
 		m_keywordDao =  identityFixedDaoFor(Keyword.class);
 		m_bookDao = identityFixedDaoFor(Book.class);
+		m_noFixedBookDao = nonFixedDaoFor(Book.class);
 	}
 	
 	/***/
@@ -146,6 +160,64 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
 		Keyword kwn = (Keyword) ref.getKeywords().iterator().next();
 		assertEquals("associated keyword is different instance", kw, kwn);
 		assertEquals("state not propagated", kwn.getName(), "Another name");
+	}
+	
+	/***/
+	@Test
+	public void testLoadAdditionalGraph() {
+		Set<Keyword> kws = new HashSet<Keyword>();
+		for (int i = 0; i < 5; i++) {
+			Keyword k1 = new Keyword();
+			k1.setName("test1" + i);
+			kws.add(m_keywordDao.saveOrUpdate(k1));
+		}
+		
+		Book b1 = new Book();
+		b1.setName("Bookname");
+		b1.setAuthorName("Author");
+		b1.setKeywords(kws);
+		m_noFixedBookDao.saveOrUpdate(b1);
+		
+		Book b2 = m_fixer.merge(null, m_noFixedBookDao.findById(b1.getKey()), new ArrayList<Object>(), null);
+		
+		assertTrue("Books were not the same", b1 != b2);
+		
+		for (Keyword k : b2.getKeywords()) {
+			for (Keyword k2 : kws) {
+				if (k.getKey() == k2.getKey()) {
+					assertTrue("Keywords were not identity-fixed when loading additional objects", k == k2);
+				}
+			}
+		}
+		
+	}
+	
+	/***/
+	@Test
+	public void testLoadModifiedGraph() {
+		Set<Keyword> kws = new HashSet<Keyword>();
+		for (int i = 0; i < 5; i++) {
+			Keyword k1 = new Keyword();
+			k1.setName("test2" + i);
+			kws.add(m_keywordDao.saveOrUpdate(k1));
+		}
+		
+		Book b1 = new Book();
+		b1.setName("Bookname");
+		b1.setAuthorName("Author");
+		b1.setKeywords(kws);
+		m_fixer.merge(null, m_noFixedBookDao.saveOrUpdate(b1), new ArrayList<Object>(), null);
+		
+		Keyword newKw = new Keyword();
+		newKw.setName("FancyKeyword");
+		m_keywordDao.saveOrUpdate(newKw);
+		b1.getKeywords().add(newKw);
+		
+		Book b2 = m_fixer.merge(null, m_noFixedBookDao.findById(b1.getKey()), new ArrayList<Object>(), null);
+		
+		assertTrue("Loading book returned another instance.", b1 == b2);
+		
+		assertTrue("Loading the book did not return the keywords modified meanwhile", b1.getKeywords().size() == 6);
 	}
 	
 	/** Renames the only keyword to "another name". */

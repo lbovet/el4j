@@ -273,7 +273,9 @@ public abstract class AbstractIdentityFixer {
 		IdentityHashMap<Object, Object> reached,
 		List<Object> objectsToUpdate, IdentityHashMap<Object, Object> hintMapping) {
 		
+		// Prepare the updated object
 		updated = (T) prepareObject(updated);
+		
 		if (immutableValue(updated)) {
 			trace("", updated, " is an immutable value");
 			return updated;
@@ -285,28 +287,41 @@ public abstract class AbstractIdentityFixer {
 			return attached;
 		}
 
+		boolean isNew = true;
+		
 		// choose representative
-		//s_logger.debug(m_representatives);
 		Object id = id(updated);
 		if (isIdentical) {
+			// anchor is the guaranteed representative
 			attached = anchor;
 			assert id(anchor) == null
 				|| id(anchor) == ANONYMOUS
 				|| id(anchor).equals(id);
+			isNew = false;
 		} else {
 			if (id == ANONYMOUS) {
 				attached = anchor;
 			} else {
-				//assert id != null;
-				attached = id != null ? (T) m_representatives.get(id) : null;
+				// check for a corresponding representative
+				if (id != null) {
+					attached = (T) m_representatives.get(id);
+					isNew = (attached != null) ? false : true;
+				}
+				// we don't have to merge if attached == updated, meaning that it equals the representative
+				if (attached == updated) {
+					reached.put(updated, attached);
+					return attached;
+				}
 			}
 			
+			
+			// if no representative found, go through graph and insert the new objects
 			if (attached == null) {
 				attached = updated;
 			}
 		}
 		assert attached != null;
-		if (id != ANONYMOUS && id != null) {
+		if (id != ANONYMOUS && id != null && isNew) {
 			m_representatives.put(id, attached);
 		}
 		
@@ -323,9 +338,9 @@ public abstract class AbstractIdentityFixer {
 				Array.set(
 					attached, i,
 					merge(
-						anchor != null ? Array.get(anchor, i) : null,
+						attached != null ? Array.get(attached, i) : null,
 						Array.get(updated, i),
-						isIdentical,
+						attached != null && isIdentical,
 						reached,
 						objectsToUpdate,
 						hintMapping
@@ -355,11 +370,13 @@ public abstract class AbstractIdentityFixer {
 		} else {
 			for (Field f : fields(updated.getClass())) {
 				try {
+					boolean isUpdateNeeded = objectsToUpdate == null || objectsToUpdate.contains(attached)
+						|| isNew /*|| (fieldValue != null && id(fieldValue) != ANONYMOUS)*/;
 					Object fieldValue = f.get(updated);
 					Object merged = merge(
-						anchor != null ? f.get(anchor) : null,
+						(isUpdateNeeded && attached != null) ? f.get(attached) : null,
 						fieldValue,
-						isIdentical,
+						attached != null && isIdentical,
 						reached,
 						objectsToUpdate,
 						hintMapping
@@ -369,8 +386,7 @@ public abstract class AbstractIdentityFixer {
 					// This is important when we reload an entity from database where not all
 					// references are loaded (lazy loading). Then we don't want to overwrite
 					// valid local references with not loaded (=null) references
-					if (objectsToUpdate == null || objectsToUpdate.contains(attached)
-						/*|| (fieldValue != null && id(fieldValue) != ANONYMOUS)*/) {
+					if (isUpdateNeeded) {
 						
 						f.set(attached, merged);
 					}
