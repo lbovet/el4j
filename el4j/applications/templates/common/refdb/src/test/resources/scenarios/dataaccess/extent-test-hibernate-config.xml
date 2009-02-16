@@ -35,7 +35,7 @@
 	
 	<!-- Convenience Hibernate Session Factory Bean: it autocollects all @entity-annotated classes in
 		the Java packages given under the property autoDetectEntityPackage -->
-	<bean id="sessionFactory" class="ch.elca.el4j.services.persistence.hibernate.entityfinder.EntityDetectorAnnotationSessionFactoryBean">
+	<bean id="sessionFactory" parent="abstractSessionFactory">
 	
 		<!-- the packages that entity auto-detection will browse.	-->
 		<property name="autoDetectEntityPackage">
@@ -46,20 +46,9 @@
 			</list>
 		</property>
 		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.dialect">${databaseDialect}</prop>
-				<prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>
+			<props merge="true">
 				<prop key="hibernate.max_fetch_depth">0</prop>
-				<prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.RAMDirectoryProvider</prop>
-				<!-- <prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.FSDirectoryProvider</prop>
-				<prop key="hibernate.search.default.indexBase">/hibernateSearch/indexes</prop> -->
 			</props>
-		</property>
-		<property name="useTransactionAwareDataSource">
-			<value>true</value>
-		</property>
-		<property name="dataSource">
-			<ref bean="dataSource"/>
 		</property>
 	</bean>
 
