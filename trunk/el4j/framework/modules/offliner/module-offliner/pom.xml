@@ -12,7 +12,7 @@
 	<artifactId>module-offliner</artifactId>
 	<version>${version.module-offliner}</version>
 	<packaging>jar</packaging>
-	<name>EL4J module Offliner</name>
+	<name>EL4J module offliner</name>
 	<description>Module Offliner of the EL4J framework. This is a study how database offlining could be done.</description>
 
 	<dependencies>

@@ -12,7 +12,7 @@
 	<artifactId>module-offliner-tests-db2</artifactId>
 	<version>${version.module-offliner}</version>
 	<packaging>jar</packaging>
-	<name>EL4J module Offliner tests for db2</name>
+	<name>EL4J module offliner tests for db2</name>
 	<description>The db2 tests of module offliner.</description>
 
 	<dependencies>
@@ -33,15 +33,6 @@
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-
-				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
