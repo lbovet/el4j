@@ -37,7 +37,9 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Store;
 import org.hibernate.validator.AssertTrue;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.NotNull;
@@ -62,7 +64,6 @@ import ch.elca.el4j.services.persistence.hibernate.dto.AbstractIndexedIntKeyIntO
  */
 
 @Entity
-@Indexed
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "REFERENCESTABLE")
 @SequenceGenerator(name = "keyid_generator",
@@ -160,6 +161,7 @@ public abstract class Reference extends AbstractIndexedIntKeyIntOptimisticLockin
 	/**
 	 * @return Returns the description.
 	 */
+	@Field(index = Index.TOKENIZED, store = Store.NO)
 	public String getDescription() {
 		return m_description;
 	}
@@ -207,6 +209,7 @@ public abstract class Reference extends AbstractIndexedIntKeyIntOptimisticLockin
 	/**
 	 * @return Returns the name.
 	 */
+	@Field(index = Index.TOKENIZED, store = Store.NO)
 	@NotNull(message = "{Reference.name}")
 	@Length(min = 3, message = "{Reference.name}")
 	public String getName() {

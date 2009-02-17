@@ -1365,5 +1365,78 @@ public abstract class AbstractReferenceServiceTest
 		assertEquals("Keywords not properly removed.",
 			0, keywordList.size());
 	}
+	
+	public void testCollectionRefresher() {
+		ReferenceService service = getReferenceService();
+		KeywordDao keywordDao = getKeywordDao();
+		Link link = new Link();
+		
+		Keyword keyword = new Keyword();
+		keyword.setName("iBatis");
+		Keyword keyword2 = new Keyword();
+		keyword2.setName("SqlMap 2.0");
+		Keyword keyword3 = new Keyword();
+		keyword3.setName("Data mapper");
+		
+		Set<Keyword> listKeywords = new HashSet<Keyword>();
+		listKeywords.add(keyword);
+		listKeywords.add(keyword2);
+		// don't add keyword3 yet
+		
+		// set keywords before saving them
+		link.setKeywords(listKeywords);
+		
+		keywordDao.saveOrUpdate(keyword);
+		keywordDao.saveOrUpdate(keyword2);
+		service.saveReference(link);
+		
+		assertTrue("link.getKeywords() should have been rebuilt.", link.getKeywords().contains(keyword));
+		
+		// add keyword3 before saving it
+		link.getKeywords().add(keyword3);
+		keywordDao.saveOrUpdate(keyword3);
+		service.saveReference(link);
+		
+		assertTrue("link.getKeywords() should have been updated.", link.getKeywords().contains(keyword3));
+	}
+	
+	/**
+	 * Test Hibernate Search.
+	 */
+	@Test
+	public void testHibernateSearch() {
+		ReferenceService service = getReferenceService();
+		
+		Book book1 = new Book();
+		book1.setName("ABC DEF");
+		Set<Keyword> keywordsGolding = new HashSet<Keyword>();
+		book1.setKeywords(keywordsGolding);
+		book1.setAuthorName("GHI");
+		book1 = (Book) service.saveReference(book1);
+		
+		Book book2 = new Book();
+		book2.setName("JKL DEF");
+		Set<Keyword> keywordsHuxley = new HashSet<Keyword>();
+		book2.setKeywords(keywordsHuxley);
+		book2.setAuthorName("MNO");
+		book2 = (Book) service.saveReference(book2);
+		
+		List<Reference> abcList = service.searchReferences(new String[] {"name"}, "ABC");
+		assertEquals(1, abcList.size());
+		assertEquals(book1, abcList.get(0));
+		
+		// lucene tokenizer should only work on whole words
+		List<Reference> emptyList = service.searchReferences(new String[] {"name"}, "AB");
+		assertEquals(0, emptyList.size());
+		
+		List<Reference> defList = service.searchReferences(new String[] {"name"}, "DEF");
+		assertEquals(2, defList.size());
+		assertTrue(defList.contains(book1));
+		assertTrue(defList.contains(book2));
+		
+		List<Reference> mnoList = service.searchReferences(new String[] {"name", "authorName"}, "MNO");
+		assertEquals(1, mnoList.size());
+		assertEquals(book2, mnoList.get(0));
+	}
 }
 //Checkstyle: MagicNumber on

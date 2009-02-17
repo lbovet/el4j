@@ -18,6 +18,9 @@ package ch.elca.el4j.apps.refdb.dom;
 
 import javax.persistence.MappedSuperclass;
 
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Store;
 import org.hibernate.validator.Length;
 import org.hibernate.validator.Min;
 import org.hibernate.validator.NotNull;
@@ -58,6 +61,7 @@ public abstract class AbstractFormalPublication extends Reference {
 	/**
 	 * @return Returns the authorName.
 	 */
+	@Field(index = Index.TOKENIZED, store = Store.NO)
 	@NotNull(message = "{AbstractFormalPublication.authorName}")
 	@Length(min = 3, message = "{AbstractFormalPublication.authorName}")
 	public String getAuthorName() {
@@ -93,6 +97,7 @@ public abstract class AbstractFormalPublication extends Reference {
 	/**
 	 * @return Returns the publisher.
 	 */
+	@Field(index = Index.TOKENIZED, store = Store.NO)
 	public String getPublisher() {
 		return m_publisher;
 	}
