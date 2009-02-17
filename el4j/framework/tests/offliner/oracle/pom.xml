@@ -4,15 +4,14 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>ch.elca.el4j.modules</groupId>
-		<artifactId>offliner-base</artifactId>
+		<groupId>ch.elca.el4j.tests</groupId>
+		<artifactId>module-offliner-tests</artifactId>
 		<version>1.6-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>module-offliner-tests-oracle</artifactId>
 	<version>${version.module-offliner}</version>
-	<packaging>jar</packaging>
-	<name>EL4J module offliner tests for oracle</name>
+	<name>EL4J test offliner oracle</name>
 	<description>The oracle tests of module offliner.</description>
 
 	<dependencies>
