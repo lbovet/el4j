@@ -24,8 +24,6 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
-import org.hibernate.search.annotations.DocumentId;
-
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntOptimisticLockingDto;
 import ch.elca.el4j.services.persistence.generic.dto.PrimaryKeyOptimisticLockingObject;
@@ -68,7 +66,6 @@ public abstract class AbstractIndexedIntKeyIntOptimisticLockingDto
 	 */
 	@Id @GeneratedValue(strategy = GenerationType.AUTO,
 		generator = "keyid_generator")
-	@DocumentId
 	@Column(name = "KEYID")
 	public final int getKey() {
 		return m_key;
