@@ -321,7 +321,7 @@ public abstract class AbstractIdentityFixer {
 			}
 		}
 		assert attached != null;
-		if (id != ANONYMOUS && id != null && isNew) {
+		if (id != ANONYMOUS && id != null) {
 			m_representatives.put(id, attached);
 		}
 		
