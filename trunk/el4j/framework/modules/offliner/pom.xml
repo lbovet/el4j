@@ -25,7 +25,5 @@
 	</description>
 	<modules>
 		<module>module-offliner</module>
-		<module>module-offliner-tests-db2</module>
-		<module>module-offliner-tests-oracle</module>
 	</modules>
 </project>
