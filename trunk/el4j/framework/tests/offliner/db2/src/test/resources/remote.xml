@@ -30,6 +30,9 @@
 				-->
 			</list>
 		</property>
+		<property name="dataSource">
+			<ref bean="dataSourceRemote"/>
+		</property>
 	</bean>
 
 	<!-- A data source to keep the ModuleApplicationContext happy.
