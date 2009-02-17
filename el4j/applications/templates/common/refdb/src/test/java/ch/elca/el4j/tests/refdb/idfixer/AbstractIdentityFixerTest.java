@@ -38,6 +38,7 @@ import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
 import ch.elca.el4j.services.persistence.generic.dao.DaoChangeListener;
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.IdentityFixedDao;
+import ch.elca.el4j.services.persistence.generic.dao.IdentityFixerMergePolicy;
 import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.Change;
 import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.NewEntityState;
 import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
@@ -178,7 +179,8 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
 		b1.setKeywords(kws);
 		m_noFixedBookDao.saveOrUpdate(b1);
 		
-		Book b2 = m_fixer.merge(null, m_noFixedBookDao.findById(b1.getKey()), new ArrayList<Object>(), null);
+		Book b2 = m_fixer.merge(null, m_noFixedBookDao.findById(b1.getKey()), 
+			IdentityFixerMergePolicy.extendOnlyPolicy());
 		
 		assertTrue("Books were not the same", b1 != b2);
 		
@@ -206,14 +208,15 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
 		b1.setName("Bookname");
 		b1.setAuthorName("Author");
 		b1.setKeywords(kws);
-		m_fixer.merge(null, m_noFixedBookDao.saveOrUpdate(b1), new ArrayList<Object>(), null);
+		m_fixer.merge(null, m_noFixedBookDao.saveOrUpdate(b1), IdentityFixerMergePolicy.extendOnlyPolicy());
 		
 		Keyword newKw = new Keyword();
 		newKw.setName("FancyKeyword");
 		m_keywordDao.saveOrUpdate(newKw);
 		b1.getKeywords().add(newKw);
 		
-		Book b2 = m_fixer.merge(null, m_noFixedBookDao.findById(b1.getKey()), new ArrayList<Object>(), null);
+		Book b2 = m_fixer.merge(null, m_noFixedBookDao.findById(b1.getKey()), 
+			IdentityFixerMergePolicy.extendOnlyPolicy());
 		
 		assertTrue("Loading book returned another instance.", b1 == b2);
 		

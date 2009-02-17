@@ -25,6 +25,7 @@ import javax.persistence.Entity;
 import org.junit.Test;
 
 import ch.elca.el4j.services.persistence.generic.dao.AbstractIdentityFixer;
+import ch.elca.el4j.services.persistence.generic.dao.IdentityFixerMergePolicy;
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 import ch.elca.el4j.services.persistence.hibernate.HibernatePrimaryKeyObjectIdentityFixer;
 
@@ -81,7 +82,8 @@ public class IdentityFixerTest {
 		objectsToUpdate.add(anchor);
 		// do NOT update anchorChild1
 		AbstractIdentityFixer idFixer = new HibernatePrimaryKeyObjectIdentityFixer();
-		Example merged = idFixer.merge(anchor, updated, objectsToUpdate, hintMap);
+		Example merged = idFixer.merge(anchor, updated, 
+			IdentityFixerMergePolicy.reloadObjectsPolicy(objectsToUpdate, hintMap));
 		
 		assertEquals(merged, anchor);
 		
@@ -97,8 +99,12 @@ public class IdentityFixerTest {
 		assertFalse(anchorChild1.name.equals(updatedChild1.name));
 		assertEquals(anchorChild1.parent, anchor);
 		
+		// re-fix the updated, because the child list got modified
+		updated.children = new ArrayList<Example>();
+		updated.children.add(updatedChild1);
+		
 		// this time update all entities
-		merged = idFixer.merge(anchor, updated, null, hintMap);
+		merged = idFixer.merge(anchor, updated, IdentityFixerMergePolicy.reloadAllPolicy(hintMap));
 		
 		assertEquals(anchorChild1.name, updatedChild1.name);
 		assertEquals(anchorChild1.parent, anchor);

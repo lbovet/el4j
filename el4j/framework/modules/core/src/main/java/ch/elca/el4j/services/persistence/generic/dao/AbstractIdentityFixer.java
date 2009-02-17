@@ -39,6 +39,8 @@ import org.springframework.aop.IntroductionInterceptor;
 import org.springframework.aop.support.IntroductionInfoSupport;
 
 import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.NewEntityState;
+import ch.elca.el4j.services.persistence.generic.dao.IdentityFixerMergePolicy.CollectionUpdatePolicy;
+import ch.elca.el4j.services.persistence.generic.dao.IdentityFixerMergePolicy.UpdatePolicy;
 import ch.elca.el4j.services.persistence.generic.dao.annotations.ReturnsUnchangedParameter;
 import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoChangeNotifier;
 import ch.elca.el4j.util.codingsupport.AopHelper;
@@ -301,6 +303,7 @@ public abstract class AbstractIdentityFixer {
 		} else {
 			if (id == ANONYMOUS) {
 				attached = anchor;
+				isNew = attached == null;
 			} else {
 				// check for a corresponding representative
 				if (id != null) {
@@ -362,21 +365,35 @@ public abstract class AbstractIdentityFixer {
 					updatedObject, anchorObject != null && isIdentical, reached, objectsToUpdate, hintMapping));
 			}
 			
-			// write collection to be sure that it contains "exactly the same" (in the sense of identity) objects that
-			// are present in the updated collection (might be less or more objects or another ordering, if collection
-			// supports it)
-			attachedCollection.clear();
-			attachedCollection.addAll(mergedEntries);
+			
+			// Only refill the collection if object has to be updated
+			if (objectsToUpdate == null || objectsToUpdate.contains(attachedCollection) || isNew) {
+				// write collection to be sure that it contains "exactly the same" (in the sense of identity) objects
+				// that are present in the updated collection (might be less or more objects or another ordering,
+				// if collection supports it)
+				updatedCollection.clear();
+				updatedCollection.addAll(mergedEntries);
+			} else {
+				// refill the new collection with the old values
+				updatedCollection.clear();
+				updatedCollection.addAll(attachedCollection);
+			}
+			attached = (T) updatedCollection;
 		} else {
+			boolean isUpdateNeeded = objectsToUpdate == null || objectsToUpdate.contains(attached) || isNew;
 			for (Field f : fields(updated.getClass())) {
 				try {
-					boolean isUpdateNeeded = objectsToUpdate == null || objectsToUpdate.contains(attached)
-						|| isNew /*|| (fieldValue != null && id(fieldValue) != ANONYMOUS)*/;
 					Object fieldValue = f.get(updated);
+					Object fieldValue2 = (attached != null) ? f.get(attached) : null;
+					boolean collectionUpdate = fieldValue2 != null && fieldValue2 instanceof Collection 
+						&& id(fieldValue2) == ANONYMOUS;
+					if (objectsToUpdate != null && isUpdateNeeded && collectionUpdate) {
+						objectsToUpdate.add(fieldValue2);
+					}
 					Object merged = merge(
-						(isUpdateNeeded && attached != null) ? f.get(attached) : null,
+						(isUpdateNeeded || collectionUpdate) ? fieldValue2 : null,
 						fieldValue,
-						attached != null && isIdentical,
+						fieldValue2 != null && isIdentical,
 						reached,
 						objectsToUpdate,
 						hintMapping
@@ -386,7 +403,7 @@ public abstract class AbstractIdentityFixer {
 					// This is important when we reload an entity from database where not all
 					// references are loaded (lazy loading). Then we don't want to overwrite
 					// valid local references with not loaded (=null) references
-					if (isUpdateNeeded) {
+					if (isUpdateNeeded || collectionUpdate) {
 						
 						f.set(attached, merged);
 					}
@@ -401,6 +418,187 @@ public abstract class AbstractIdentityFixer {
 		m_changeNotifier.announce(e);
 		
 		return attached;
+	}
+	
+	/**
+	 * Actually performs the merge.
+	 *
+	 * @param anchor
+	 *              the (presumed) representative, or null
+	 * @param updated
+	 *              the new version of the object
+	 * @param policy
+	 *              the policy to use.
+	 * @param reached
+	 *              the set of objects in the updated object graph that have
+	 *              been (or are being) merged. Used to avoid merging an
+	 *              object more than once.
+	 * @return
+	 *              the representative.
+	 */
+	@SuppressWarnings("unchecked")
+	protected <T> T merge(T anchor, T updated, IdentityFixerMergePolicy policy,
+		boolean isIdentical, IdentityHashMap<Object, Object> reached) {
+		
+		//T oldVersion = null;
+		T updateState = updated;
+		if (policy.isPreparationAllowed()) {
+			// Prepare the updated object
+			updateState = (T) prepareObject(updateState);
+		}
+		if (immutableValue(updateState)) {
+			trace("", updateState, " is an immutable value");
+			return updateState;
+		}
+				
+		T savedState = (T) reached.get(updateState);
+		if (savedState != null) {
+			trace("",  updateState, " was already merged to ", savedState);
+			return savedState;
+		}
+
+		boolean isNew = true;
+		
+		// choose representative
+		Object id = id(updateState);
+		if (isIdentical) {
+			// anchor is the guaranteed representative
+			savedState = anchor;
+			assert id(anchor) == null
+				|| id(anchor) == ANONYMOUS
+				|| id(anchor).equals(id);
+			isNew = false;
+		} else {
+			if (id == ANONYMOUS) {
+				// saved state of anonymous object might be given as anchor
+				savedState = anchor;
+				isNew = savedState == null;
+			} else {
+				// check for a corresponding representative
+				if (id != null) {
+					savedState = (T) m_representatives.get(id);
+					isNew = (savedState == null);
+				}
+				// we don't have to merge if attached == updated, meaning that it equals the representative already
+				if (savedState == updateState) {
+					reached.put(updateState, savedState);
+					return savedState;
+				}
+			}
+			
+			
+			// if no representative found, go through graph and insert the new objects
+			if (savedState == null) {
+				savedState = updateState;
+			}
+		}
+		assert savedState != null;
+		if (id != ANONYMOUS && id != null && (isNew || isIdentical)) {
+			m_representatives.put(id, savedState);
+		}
+		
+		// register representative
+		reached.put(updateState, savedState);
+		
+		trace("merging ", updateState, " to ", savedState);
+		m_traceIndentation++;
+		if (updateState.getClass().isArray()) {
+			
+			int l = Array.getLength(updateState);
+			assert Array.getLength(savedState) == Array.getLength(updateState);
+			for (int i = 0; i < l; i++) {
+				Array.set(
+					savedState, i,
+					merge(
+						savedState != null ? Array.get(savedState, i) : null,
+						Array.get(updateState, i),
+						policy,
+						savedState != null && isIdentical,
+						reached
+					)
+				);
+			}
+		} else if (savedState instanceof Collection) {
+			Collection savedCollection = (Collection) savedState;
+			Collection updateCollection = (Collection) updateState;
+			
+			List mergedEntries;;
+			
+			// Check the update policy
+			if (policy.getUpdatePolicy() == UpdatePolicy.UPDATE_ALL 
+				|| (policy.getUpdatePolicy() == UpdatePolicy.UPDATE_CHOSEN 
+					&& policy.getObjectsToUpdate().contains(savedCollection)) 
+				|| isNew || immutableValue(savedCollection)) {
+				
+				mergedEntries = new ArrayList(updateCollection.size());
+				for (Object updatedObject : updateCollection) {
+					Object anchorObject = null;
+					if (policy.getHintMapping() != null) {
+						anchorObject = policy.getHintMapping().get(updatedObject);
+					}
+					mergedEntries.add(merge(anchorObject, updatedObject, policy, 
+						anchorObject != null && isIdentical, reached));
+				}
+				updateCollection.clear();
+				updateCollection.addAll(mergedEntries);
+				savedState = (T) updateCollection;
+				
+			} else {
+				mergedEntries = new ArrayList(savedCollection.size());
+				for (Object updatedObject : savedCollection) {
+					Object anchorObject = null;
+					if (policy.getHintMapping() != null) {
+						anchorObject = policy.getHintMapping().get(updatedObject);
+					}
+					mergedEntries.add(merge(anchorObject, updatedObject, policy, 
+						anchorObject != null && isIdentical, reached));
+				}
+				savedCollection.clear();
+				savedCollection.addAll(mergedEntries);
+			}
+			
+		} else {
+			boolean isUpdateNeeded = policy.getUpdatePolicy() == UpdatePolicy.UPDATE_ALL 
+				|| (policy.getUpdatePolicy() == UpdatePolicy.UPDATE_CHOSEN 
+					&& policy.getObjectsToUpdate().contains(savedState))
+				|| isNew;
+			for (Field f : fields(updateState.getClass())) {
+				try {
+					Object fieldValueNew = f.get(updateState);
+					Object fieldValueOld = (savedState != null) ? f.get(savedState) : null;
+					boolean collectionUpdate = fieldValueOld != null && fieldValueOld instanceof Collection 
+						&& id(fieldValueOld) == ANONYMOUS;
+					if (policy.getUpdatePolicy() == UpdatePolicy.UPDATE_CHOSEN && collectionUpdate) {
+						policy.getObjectsToUpdate().add(fieldValueOld);
+					}
+					Object merged = merge(
+						fieldValueOld,
+						fieldValueNew,
+						policy,
+						fieldValueOld != null && isIdentical,
+						reached
+					);
+					// If objectsToUpdate is specified, perform overwrite only on entities
+					// and objects stored in objectsToUpdate, not on values.
+					// This is important when we reload an entity from database where not all
+					// references are loaded (lazy loading). Then we don't want to overwrite
+					// valid local references with not loaded (=null) references
+					if (isUpdateNeeded || (collectionUpdate 
+						&& policy.getCollectionUpdatePolicy() != CollectionUpdatePolicy.OLD_BASE)) {
+						
+						f.set(savedState, merged);
+					}
+				} catch (IllegalAccessException e) { assert false : e; }
+			}
+		}
+		m_traceIndentation--;
+
+		// notify state change
+		NewEntityState e = new NewEntityState();
+		e.setChangee(savedState);
+		m_changeNotifier.announce(e);
+		
+		return savedState;
 	}
 	
 	/**
@@ -422,10 +620,9 @@ public abstract class AbstractIdentityFixer {
 		T result = merge(
 			anchor,
 			updated,
+			IdentityFixerMergePolicy.reloadAllPolicy(),
 			anchor != null,
-			new IdentityHashMap<Object, Object>(),
-			null,
-			new IdentityHashMap<Object, Object>(0)
+			new IdentityHashMap<Object, Object>()
 		);
 		return result;
 	}
@@ -451,14 +648,13 @@ public abstract class AbstractIdentityFixer {
 	 *              merged this parameter can be <code>null</code>.
 	 * @return The representative.
 	 */
-	public <T> T merge(T anchor, T updated, List<Object> objectsToUpdate, IdentityHashMap<Object, Object> hintMapping) {
+	public <T> T merge(T anchor, T updated, IdentityFixerMergePolicy policy) {
 		T result = merge(
 			anchor,
 			updated,
+			policy,
 			anchor != null,
-			new IdentityHashMap<Object, Object>(),
-			objectsToUpdate,
-			hintMapping
+			new IdentityHashMap<Object, Object>()
 		);
 		return result;
 	}
