@@ -133,7 +133,26 @@ public abstract class AbstractIdentityFixer {
 	 * @see #id(Object)
 	 */
 	Map<Object, Object> m_representatives;
-
+	
+	/**
+	 * The collection mapping for a 2-way merging [Object world -> Persistence world].
+	 */
+	IdentityHashMap<Collection<?>, Collection<?>> m_collectionMapping
+		= new IdentityHashMap<Collection<?>, Collection<?>>();
+	
+	/**
+	 * The temporary reverse collection mapping for a 2-way merging [Persistence world -> Object world].
+	 */
+	IdentityHashMap<Collection<?>, Collection<?>> m_reverseCollectionMapping
+		= new IdentityHashMap<Collection<?>, Collection<?>>();
+	
+	/**
+	 * The temporary mapping of all the collections which has to be re-fixed when merging back
+	 * in the 2-way merging process [Persistence world -> Object world] keyed by their parent object
+	 * and the field to access the collection.
+	 */
+	HashMap<IdentityFixerCollectionField, Collection<?>> m_collectionsToBeReplaced
+		= new HashMap<IdentityFixerCollectionField, Collection<?>>();
 
 	/**
 	 * Constructs a new IdentityFixer. You'd never have guessed that, would you?
@@ -269,6 +288,7 @@ public abstract class AbstractIdentityFixer {
 	 * @return
 	 *              the representative.
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	protected <T> T merge(T anchor, T updated,
 		boolean isIdentical,
@@ -373,7 +393,7 @@ public abstract class AbstractIdentityFixer {
 				// if collection supports it)
 				updatedCollection.clear();
 				updatedCollection.addAll(mergedEntries);
-			} else {
+			} else{
 				// refill the new collection with the old values
 				updatedCollection.clear();
 				updatedCollection.addAll(attachedCollection);
@@ -429,16 +449,22 @@ public abstract class AbstractIdentityFixer {
 	 *              the new version of the object
 	 * @param policy
 	 *              the policy to use.
+	 * @param isIdentical
+	 *              whether anchor is known to be transitively identical with
+	 *              updated.
 	 * @param reached
 	 *              the set of objects in the updated object graph that have
 	 *              been (or are being) merged. Used to avoid merging an
 	 *              object more than once.
+	 * @param locked
+	 *              the set of id's that are locked for updating unless the new version
+	 *              is the specified object.
 	 * @return
 	 *              the representative.
 	 */
 	@SuppressWarnings("unchecked")
-	protected <T> T merge(T anchor, T updated, IdentityFixerMergePolicy policy,
-		boolean isIdentical, IdentityHashMap<Object, Object> reached) {
+	protected <T> T merge(T anchor, T updated, IdentityFixerMergePolicy policy, boolean isIdentical,
+		IdentityHashMap<Object, Object> reached, HashMap<Object, Object> locked) {
 		
 		//T oldVersion = null;
 		T updateState = updated;
@@ -493,8 +519,15 @@ public abstract class AbstractIdentityFixer {
 			}
 		}
 		assert savedState != null;
-		if (id != ANONYMOUS && id != null && (isNew || isIdentical)) {
-			m_representatives.put(id, savedState);
+		
+		// if id of updateState is locked, return
+		if (id != ANONYMOUS && id != null) {
+			if (locked.get(id) != null && locked.get(id) != updateState) {
+				return savedState;
+			}
+			if (isNew || isIdentical) {
+				m_representatives.put(id, savedState);
+			}
 		}
 		
 		// register representative
@@ -514,7 +547,8 @@ public abstract class AbstractIdentityFixer {
 						Array.get(updateState, i),
 						policy,
 						savedState != null && isIdentical,
-						reached
+						reached,
+						locked
 					)
 				);
 			}
@@ -522,14 +556,15 @@ public abstract class AbstractIdentityFixer {
 			Collection savedCollection = (Collection) savedState;
 			Collection updateCollection = (Collection) updateState;
 			
-			List mergedEntries;;
+			List mergedEntries;
 			
-			// Check the update policy
+			// Check the update policy, or take new list if new or old is immutable
 			if (policy.getUpdatePolicy() == UpdatePolicy.UPDATE_ALL 
 				|| (policy.getUpdatePolicy() == UpdatePolicy.UPDATE_CHOSEN 
 					&& policy.getObjectsToUpdate().contains(savedCollection)) 
 				|| isNew || immutableValue(savedCollection)) {
 				
+				// First merge the entries of the new list
 				mergedEntries = new ArrayList(updateCollection.size());
 				for (Object updatedObject : updateCollection) {
 					Object anchorObject = null;
@@ -537,11 +572,25 @@ public abstract class AbstractIdentityFixer {
 						anchorObject = policy.getHintMapping().get(updatedObject);
 					}
 					mergedEntries.add(merge(anchorObject, updatedObject, policy, 
-						anchorObject != null && isIdentical, reached));
+						anchorObject != null && isIdentical, reached, locked));
 				}
-				updateCollection.clear();
-				updateCollection.addAll(mergedEntries);
-				savedState = (T) updateCollection;
+				if (needsAdditionalProcessing(updateCollection)) {
+					// check if this collection was already remerged
+					Collection<?> restoreCollection = m_reverseCollectionMapping.get(savedCollection);
+					if (restoreCollection != null) {
+						m_reverseCollectionMapping.remove(savedCollection);
+						savedState = (T) restoreCollection;
+						savedCollection = restoreCollection;
+						
+					}
+					if (savedCollection != updateCollection) {
+						// new collection pair to store mapping of
+						m_collectionMapping.put(savedCollection, updateCollection);
+					}
+					
+				}
+				savedCollection.clear();
+				savedCollection.addAll(mergedEntries);
 				
 			} else {
 				mergedEntries = new ArrayList(savedCollection.size());
@@ -551,7 +600,7 @@ public abstract class AbstractIdentityFixer {
 						anchorObject = policy.getHintMapping().get(updatedObject);
 					}
 					mergedEntries.add(merge(anchorObject, updatedObject, policy, 
-						anchorObject != null && isIdentical, reached));
+						anchorObject != null && isIdentical, reached, locked));
 				}
 				savedCollection.clear();
 				savedCollection.addAll(mergedEntries);
@@ -571,20 +620,31 @@ public abstract class AbstractIdentityFixer {
 					if (policy.getUpdatePolicy() == UpdatePolicy.UPDATE_CHOSEN && collectionUpdate) {
 						policy.getObjectsToUpdate().add(fieldValueOld);
 					}
+					boolean updateAnyway = false;
+					if (collectionUpdate && needsAdditionalProcessing(fieldValueNew)) {
+						// check for a hint object to replace list again
+						IdentityFixerCollectionField idcf = new IdentityFixerCollectionField(savedState, f);
+						Collection<?> replaceCollection = m_collectionsToBeReplaced.get(idcf);
+						if (replaceCollection != null) {
+							updateAnyway = true;
+							fieldValueOld = replaceCollection;
+							m_collectionsToBeReplaced.remove(idcf);
+						}
+					}
 					Object merged = merge(
 						fieldValueOld,
 						fieldValueNew,
 						policy,
 						fieldValueOld != null && isIdentical,
-						reached
+						reached,
+						locked
 					);
 					// If objectsToUpdate is specified, perform overwrite only on entities
 					// and objects stored in objectsToUpdate, not on values.
 					// This is important when we reload an entity from database where not all
 					// references are loaded (lazy loading). Then we don't want to overwrite
 					// valid local references with not loaded (=null) references
-					if (isUpdateNeeded || (collectionUpdate 
-						&& policy.getCollectionUpdatePolicy() != CollectionUpdatePolicy.OLD_BASE)) {
+					if (isUpdateNeeded || updateAnyway) {
 						
 						f.set(savedState, merged);
 					}
@@ -617,12 +677,22 @@ public abstract class AbstractIdentityFixer {
 	 * @return The representative.
 	 */
 	public <T> T merge(T anchor, T updated) {
+		HashMap<Object, Object> locked = new HashMap<Object, Object>();
+		if (updated instanceof Collection) {
+			for (Object o : (Collection<?>) updated) {
+				Object id = id(o);
+				if (id != null && id != ANONYMOUS) {
+					locked.put(id, o);
+				}
+			}
+		}
 		T result = merge(
 			anchor,
 			updated,
 			IdentityFixerMergePolicy.reloadAllPolicy(),
 			anchor != null,
-			new IdentityHashMap<Object, Object>()
+			new IdentityHashMap<Object, Object>(),
+			locked
 		);
 		return result;
 	}
@@ -649,14 +719,108 @@ public abstract class AbstractIdentityFixer {
 	 * @return The representative.
 	 */
 	public <T> T merge(T anchor, T updated, IdentityFixerMergePolicy policy) {
+		HashMap<Object, Object> locked = new HashMap<Object, Object>();
+		if (updated instanceof Collection) {
+			for (Object o : (Collection<?>) updated) {
+				Object id = id(o);
+				if (id != null && id != ANONYMOUS) {
+					locked.put(id, o);
+				}
+			}
+		}
 		T result = merge(
 			anchor,
 			updated,
 			policy,
 			anchor != null,
-			new IdentityHashMap<Object, Object>()
+			new IdentityHashMap<Object, Object>(),
+			locked
 		);
 		return result;
+	}
+	
+	/**
+	 * @param object
+	 * @param reached
+	 * @param mergeRecursive
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	protected Object remerge(Object object, IdentityHashMap<Object, Object> reached, boolean mergeRecursive) {
+		
+		if (immutableValue(object)) {
+			return object;
+		}
+		
+		if (reached.get(object) == object) {
+			return object;
+		}
+		
+		if (mergeRecursive) {
+			reached.put(object, object);
+		}
+		
+		// check for collections in the fields
+		for (Field f : fields(object.getClass())) {
+			try {
+				Object fieldValue = f.get(object);
+				if (fieldValue instanceof Collection) {
+					Collection fieldCollection = (Collection) fieldValue;
+					Collection mappedCollection = m_collectionMapping.get(fieldCollection);
+					if (mappedCollection != null && fieldCollection != mappedCollection) {
+						// there exists already a mapping, fix it
+						f.set(object, mappedCollection);
+						List<Object> tmpList = new ArrayList<Object>(fieldCollection);
+						mappedCollection.clear();
+						mappedCollection.addAll(tmpList);
+						m_reverseCollectionMapping.put(mappedCollection, fieldCollection);
+					} else {
+						// no mapping, add a hint object
+						m_collectionsToBeReplaced.put(new IdentityFixerCollectionField(object, f), fieldCollection);
+					}
+					if (mergeRecursive) {
+						for (Object o : fieldCollection) {
+							remerge(o, reached, mergeRecursive);
+						}
+					}
+				} else if (mergeRecursive) {
+					if (fieldValue.getClass().isArray()) {
+						int l = Array.getLength(fieldValue);
+						for (int i = 0; i < l; i++) {
+							remerge(Array.get(fieldValue, i), reached, mergeRecursive);
+						}
+					} else {
+						remerge(fieldValue, reached, mergeRecursive);
+					}
+				}
+			} catch (IllegalAccessException e) { assert false : e; }
+		}
+		
+		
+		return object;
+	}
+	
+	/**
+	 * @param object
+	 * @return
+	 */
+	public Object remerge(Object object, boolean mergeRecursive) {
+		return remerge(object,
+			new IdentityHashMap<Object, Object>(),
+			mergeRecursive
+		);
+	}
+	
+	/**
+	 * @param object
+	 * @return
+	 */
+	public List<Object> remerge(List<Object> objects) {
+		List<Object> returnList = new ArrayList<Object>(objects.size());
+		for (Object o : objects) {
+			returnList.add(remerge(o, false));
+		}
+		return returnList;
 	}
 	
 	/**
@@ -681,6 +845,7 @@ public abstract class AbstractIdentityFixer {
 	public void removeRepresentative(Object object) {
 		Object id = id(object);
 		if (m_representatives.get(id) != null && m_representatives.get(id).equals(object)) {
+			// TODO: remove collection mappings from this representative
 			m_representatives.remove(id);
 		}
 	}
@@ -728,6 +893,15 @@ public abstract class AbstractIdentityFixer {
 	 * @return The prepared object.
 	 */
 	protected abstract Object prepareObject(Object o);
+	
+	/**
+	 * @param o
+	 *            The concerned object.
+	 * @return if the object needs additional processing during a {@link AbstractIdentityFixer#remerge}.
+	 */
+	protected boolean needsAdditionalProcessing(Object o) {
+		return false;
+	}
 	
 	/*
 	 * Warning: The ReturnsUnchangedParameter annotation is not always found
