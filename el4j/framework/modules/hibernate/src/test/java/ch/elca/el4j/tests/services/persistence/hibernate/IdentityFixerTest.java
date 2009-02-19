@@ -100,8 +100,8 @@ public class IdentityFixerTest {
 		assertEquals(anchorChild1.parent, anchor);
 		
 		// re-fix the updated, because the child list got modified
-		updated.children = new ArrayList<Example>();
-		updated.children.add(updatedChild1);
+//		updated.children = new ArrayList<Example>();
+//		updated.children.add(updatedChild1);
 		
 		// this time update all entities
 		merged = idFixer.merge(anchor, updated, IdentityFixerMergePolicy.reloadAllPolicy(hintMap));

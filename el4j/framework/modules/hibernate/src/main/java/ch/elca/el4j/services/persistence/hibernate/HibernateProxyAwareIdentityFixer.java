@@ -22,7 +22,9 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.Map;
 
 import javax.persistence.EmbeddedId;
@@ -73,6 +75,7 @@ import ch.elca.el4j.util.codingsupport.annotations.ImplementationAssumption;
 public class HibernateProxyAwareIdentityFixer
 		extends AbstractIdentityFixer {
 	
+
 	/**
 	 * A type holding an object's identity as required by
 	 * {@link HibernateProxyAwareIdentityFixer#id(Object)}.
@@ -253,5 +256,11 @@ public class HibernateProxyAwareIdentityFixer
 		} else {
 			return o;
 		}
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	protected boolean needsAdditionalProcessing(Object o) {
+		return o instanceof PersistentCollection;
 	}
 }
