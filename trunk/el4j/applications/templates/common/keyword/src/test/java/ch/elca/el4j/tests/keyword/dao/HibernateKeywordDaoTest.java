@@ -21,6 +21,7 @@ import static ch.elca.el4j.services.search.criterias.CriteriaHelper.like;
 import static ch.elca.el4j.services.search.criterias.CriteriaHelper.not;
 import static ch.elca.el4j.services.search.criterias.CriteriaHelper.or;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.List;
@@ -29,6 +30,7 @@ import org.junit.Test;
 
 import ch.elca.el4j.apps.keyword.dao.KeywordDao;
 import ch.elca.el4j.apps.keyword.dom.Keyword;
+import ch.elca.el4j.services.monitoring.DbLogger;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.AndCriteria;
 import ch.elca.el4j.services.search.criterias.ComparisonCriteria;
@@ -78,6 +80,8 @@ public class HibernateKeywordDaoTest
 	 */
 	@Test
 	public void testSearchKeywordsHibernateSpecificForNow() {
+		int dbRoundtrips = DbLogger.getRoundtripCount();
+		
 		KeywordDao dao = getKeywordDao();
 		Keyword keyword = new Keyword();
 		keyword.setName("Java");
@@ -270,6 +274,8 @@ public class HibernateKeywordDaoTest
 			"Search for empty name and description does not result in "
 				+ "five keywords.", 5, list.size());
 		
+		assertTrue("The test generated more DB roundtrips than expected.",
+			(DbLogger.getRoundtripCount() - dbRoundtrips) <= 25);
 	}
 	
 	/**
