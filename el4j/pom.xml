@@ -1473,6 +1473,12 @@
 			</dependency>
 			<dependency>
 				<groupId>ch.elca.el4j.modules</groupId>
+				<artifactId>module-database-jamon</artifactId>
+				<version>${version.module-database}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>ch.elca.el4j.modules</groupId>
 				<artifactId>module-database-mysql</artifactId>
 				<version>${version.module-database}</version>
 				<type>jar</type>

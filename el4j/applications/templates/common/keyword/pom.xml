@@ -95,6 +95,7 @@
 			<artifactId>datadumper</artifactId>
 			<version>0.9</version>
 		</dependency> -->
+		
 		<!-- Dependency to hibernate due to hibernate annotations. -->
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
@@ -105,6 +106,12 @@
 			<artifactId>module-database</artifactId>
 		</dependency>
 		
+		<!-- Monitor DB roundtrips and other metrics. -->
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-database-jamon</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-core</artifactId>
