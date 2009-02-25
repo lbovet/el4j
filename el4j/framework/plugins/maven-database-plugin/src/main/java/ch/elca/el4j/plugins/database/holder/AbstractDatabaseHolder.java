@@ -127,7 +127,6 @@ public abstract class AbstractDatabaseHolder {
 	 * @param project The projects we're working on.
 	 * @return List of project's jar URLs
 	 */
-	@SuppressWarnings("unchecked")
 	private ArrayList<URL> getProjectUrls(ArtifactRepository repo,
 			MavenProject project) {
 		ArrayList<URL> urls = new ArrayList<URL>();
