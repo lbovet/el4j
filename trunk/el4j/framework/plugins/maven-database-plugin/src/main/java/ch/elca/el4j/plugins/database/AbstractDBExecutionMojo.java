@@ -16,10 +16,7 @@
  */
 package ch.elca.el4j.plugins.database;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
@@ -29,9 +26,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.MojoFailureException;
@@ -40,6 +34,7 @@ import org.springframework.util.StringUtils;
 
 import ch.elca.el4j.plugins.database.holder.ConnectionPropertiesHolder;
 import ch.elca.el4j.plugins.database.holder.DatabaseHolderException;
+import ch.elca.el4j.plugins.database.util.SqlUtils;
 
 /**
  *
@@ -421,6 +416,8 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 	/**
 	 * Pre-process resources list.
 	 * @param resources    the list of SQL resources
+	 * @return             the processed resources list
+	 * @throws MojoFailureException
 	 */
 	protected List<Resource> preProcessResources(List<Resource> resources) throws MojoFailureException {
 		// just pass original list; can be overridden by subclasses
@@ -456,7 +453,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 				} else {
 					getLog().info("Processing resource: " + resource.getFilename());
 				}
-				List<String> sqlStmts = extractStmtsFromFile(resource.getURL());
+				List<String> sqlStmts = SqlUtils.extractStmtsFromFile(resource.getURL(), delimiter, blockDelimiter);
 				
 				if (sqlStmts.size() == 0) {
 					throw new DatabaseHolderException(
@@ -464,16 +461,17 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 						+ ": No valid SQL statements found.", null);
 				}
 				
-				if (!dryRun) {
-					// Execute statements extracted from file.
-					// Collect exception and throw them afterwards to ensure that
-					// all SQL Statements are processed.
-					for (String sqlString : sqlStmts) {
+				
+				// Execute statements extracted from file.
+				// Collect exception and throw them afterwards to ensure that
+				// all SQL Statements are processed.
+				for (String sqlString : sqlStmts) {
+					sqlString = sqlString.replace("###SEMICOLUMN###", ";");
+					getLog().debug(sqlString);
+					
+					if (!dryRun) {
 						try {
 							stmt = connection.createStatement();
-							sqlString = sqlString.replace("###SEMICOLUMN###", ";");
-							
-							getLog().debug(sqlString);
 							stmt.execute(sqlString);
 						} catch (SQLException e) {
 							sqlExceptions.add(e);
@@ -581,78 +579,6 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 					fullPath.length());
 			} else {
 				fullPath = "";
-			}
-		}
-		return result;
-	}
-
-	/**
-	 * Extract sql statements from given file.
-	 *
-	 * @param fileURL
-	 *            URL of the file
-	 * @return List of statements
-	 */
-	private List<String> extractStmtsFromFile(URL fileURL) {
-		ArrayList<String> result = new ArrayList<String>();
-		String part;
-		StringBuffer stmt = new StringBuffer();
-		int index;
-		final Pattern beginStmtRegex = Pattern.compile("(declare|is|begin|as)",
-			Pattern.CASE_INSENSITIVE);
-		Matcher beginStmtMatcher;
-		String expectedDelimiter = delimiter;
-
-		BufferedReader buffRead = null;
-		try {
-			buffRead = new BufferedReader(new InputStreamReader(
-				fileURL.openStream()));
-			while ((part = buffRead.readLine()) != null) {
-				part = StringUtils.trimWhitespace(part);
-				
-				// Filter out comments and blank lines
-				if (StringUtils.hasText(part) && !part.startsWith("--")) {
-					beginStmtMatcher = beginStmtRegex.matcher(part);
-					// Detect begin/end of statement sequence
-					if (beginStmtMatcher.matches()) {
-						expectedDelimiter = blockDelimiter;
-					}
-					
-					// Split statements by delimiter, by default ';'
-					while ((index = part.indexOf(expectedDelimiter)) != -1) {
-						
-						// add statement to result array
-						result.add(stmt.toString() + part.substring(0, index));
-						
-						// reset expected delimiter
-						expectedDelimiter = delimiter;
-						// reset statement string
-						stmt.setLength(0);
-						
-						// check if Part has input after the delimiter.
-						// If so, continue.
-						if (index < part.length()) {
-							part = part.substring(index + 1, part.length());
-						} else {
-							part = "";
-						}
-					}
-					
-					// append space so that "...ABC\nNAME..." is not reduced to
-					// "...ABCNAME..." instead of "...ABC NAME..."
-					stmt.append(part).append(" ");
-				}
-			}
-		} catch (IOException e) {
-			throw new DatabaseHolderException(e);
-		} finally {
-			if (buffRead != null) {
-				try {
-					buffRead.close();
-				} catch (IOException e) {
-					getLog().error("The file '" + fileURL
-						+ "' could not be close.", e);
-				}
 			}
 		}
 		return result;
