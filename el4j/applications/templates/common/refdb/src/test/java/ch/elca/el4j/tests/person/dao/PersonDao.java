@@ -16,7 +16,7 @@
  */
 package ch.elca.el4j.tests.person.dao;
 
-import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
+import ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHibernateDao;
 import ch.elca.el4j.tests.person.dom.Person;
 
 /**
@@ -34,6 +34,6 @@ import ch.elca.el4j.tests.person.dom.Person;
  * @author Alex Mathey (AMA)
  */
 public interface PersonDao
-	extends ConvenienceGenericDao<Person, Integer> {
+	extends ConvenienceGenericHibernateDao<Person, Integer> {
 
 }

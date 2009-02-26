@@ -30,7 +30,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
-import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
+import ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHibernateDao;
 import ch.elca.el4j.services.tcpforwarder.TcpForwarder;
 import ch.elca.el4j.tests.tcpforwarder.dom.Name;
 import ch.elca.el4j.util.env.EnvPropertiesUtils;
@@ -114,7 +114,7 @@ public class TcpForwarderTest {
 	/**
 	 * Data Access Object.
 	 */
-	private ConvenienceGenericDao<Name, Integer> m_dao;
+	private ConvenienceGenericHibernateDao<Name, Integer> m_dao;
 	
 	/**
 	 * {@inheritDoc}
@@ -239,9 +239,9 @@ public class TcpForwarderTest {
 	 * @return The DAO for the inserts
 	 */
 	@SuppressWarnings("unchecked")
-	private ConvenienceGenericDao<Name, Integer> getDao() {
+	private ConvenienceGenericHibernateDao<Name, Integer> getDao() {
 		if (m_dao == null) {
-			m_dao = (ConvenienceGenericDao<Name, Integer>)
+			m_dao = (ConvenienceGenericHibernateDao<Name, Integer>)
 				getApplicationContext().getBean("nameDao");
 		}
 		return m_dao;

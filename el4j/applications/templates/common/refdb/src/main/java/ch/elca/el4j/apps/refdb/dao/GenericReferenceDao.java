@@ -23,7 +23,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 
 import ch.elca.el4j.apps.refdb.dom.Reference;
-import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
+import ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHibernateDao;
 
 /**
  *
@@ -46,7 +46,7 @@ import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
  * @author Alex Mathey (AMA)
  */
 public interface GenericReferenceDao<T extends Reference,
-	ID extends Serializable> extends ConvenienceGenericDao<T, ID> {
+	ID extends Serializable> extends ConvenienceGenericHibernateDao<T, ID> {
 	
 	/**
 	 * Get all the references with the same name.
