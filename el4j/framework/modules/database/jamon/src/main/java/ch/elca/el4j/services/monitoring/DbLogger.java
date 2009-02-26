@@ -23,7 +23,8 @@ import com.jamonapi.Monitor;
 import com.jamonapi.MonitorFactory;
 
 /**
- * A simple DB-Logger that counts the number of DB roundtrips. It is a minimalistic wrapper for {@link MonitorFactory},
+ * A simple DB-Logger that counts the number of DB roundtrips (single-threaded, i.e. roundtrips are not associated with
+ * executing thread). It is a minimalistic wrapper for {@link MonitorFactory},
  * so use JAMons MonitorFactory directly if you need more control.
  *
  * <script type="text/javascript">printFileStatus
