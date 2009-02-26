@@ -62,9 +62,9 @@ public class TriggerAssignedIdentityGenerator extends AbstractPostInsertGenerato
 		return new Delegate(persister, dialect);
 	}
 
-    /**
-     * Delegate for the returned generated value.
-     */
+	/**
+	 * Delegate for the returned generated value.
+	 */
 	public static class Delegate extends AbstractReturningDelegate {
 		/**
 		 * Use database dialect.
