@@ -23,7 +23,7 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
-/**
+ /**
  * This is an abstract class for optimistic locking. The used version type is an
  * integer.
  * In java code the update count must be checked to know if the version number
