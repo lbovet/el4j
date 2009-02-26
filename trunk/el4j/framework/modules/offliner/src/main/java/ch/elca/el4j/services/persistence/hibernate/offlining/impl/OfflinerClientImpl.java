@@ -25,8 +25,8 @@ import javax.swing.SwingUtilities;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
-import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
 import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
+import ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHibernateDao;
 import ch.elca.el4j.services.persistence.hibernate.offlining.Conflict;
 import ch.elca.el4j.services.persistence.hibernate.offlining.Offliner;
 import ch.elca.el4j.services.persistence.hibernate.offlining.OfflinerInternalRTException;
@@ -162,7 +162,7 @@ public class OfflinerClientImpl implements Offliner {
 	public void clearLocal() {
 		for (Class<?> cls : m_info.getClasses().keySet()) {
 			Object obj = m_info.getClientDaoRegistry().getFor(cls);
-			ConvenienceGenericDao<?, ?> dao = (ConvenienceGenericDao<?, ?>) obj;
+			ConvenienceGenericHibernateDao<?, ?> dao = (ConvenienceGenericHibernateDao<?, ?>) obj;
 			dao.deleteAll();
 		}
 

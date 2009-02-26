@@ -34,13 +34,13 @@ import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.services.persistence.generic.dao.AbstractIdentityFixer;
-import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
 import ch.elca.el4j.services.persistence.generic.dao.DaoChangeListener;
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.IdentityFixedDao;
 import ch.elca.el4j.services.persistence.generic.dao.IdentityFixerMergePolicy;
 import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.Change;
 import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.NewEntityState;
+import ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHibernateDao;
 import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
 
 /**
@@ -64,19 +64,19 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
 	protected AbstractIdentityFixer m_fixer;
 
 	/** The identity-fixed keyword DAO.*/
-	private ConvenienceGenericDao<Keyword, Integer> m_keywordDao;
+	private ConvenienceGenericHibernateDao<Keyword, Integer> m_keywordDao;
 	/** The identity-fixed book DAO.*/
-	private ConvenienceGenericDao<Book, Integer> m_bookDao;
+	private ConvenienceGenericHibernateDao<Book, Integer> m_bookDao;
 	/** The not identity-fixed book DAO.*/
-	private ConvenienceGenericDao<Book, Integer> m_noFixedBookDao;
+	private ConvenienceGenericHibernateDao<Book, Integer> m_noFixedBookDao;
 	
 	/**
 	 * Returns the identity fixing proxy for the DAO that is responsible
 	 * for entities of type {@code T}.
 	 */
 	@SuppressWarnings("unchecked")
-	private <T,ID extends Serializable> ConvenienceGenericDao<T,ID> identityFixedDaoFor(Class<T> c) {
-		return (ConvenienceGenericDao<T,ID>) m_fixer.new GenericInterceptor(
+	private <T,ID extends Serializable> ConvenienceGenericHibernateDao<T,ID> identityFixedDaoFor(Class<T> c) {
+		return (ConvenienceGenericHibernateDao<T,ID>) m_fixer.new GenericInterceptor(
 			IdentityFixedDao.class).decorate(getDaoRegistry().getFor(c));
 	}
 	
@@ -85,8 +85,8 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
 	 * for entities of type {@code T} without any id fixer.
 	 */
 	@SuppressWarnings("unchecked")
-	private <T,ID extends Serializable> ConvenienceGenericDao<T,ID> nonFixedDaoFor(Class<T> c) {
-		return (ConvenienceGenericDao<T,ID>) getDaoRegistry().getFor(c);
+	private <T,ID extends Serializable> ConvenienceGenericHibernateDao<T,ID> nonFixedDaoFor(Class<T> c) {
+		return (ConvenienceGenericHibernateDao<T,ID>) getDaoRegistry().getFor(c);
 	}
 	
 
@@ -225,8 +225,8 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
 	
 	/** Renames the only keyword to "another name". */
 	private void renameKeyword() {
-		ConvenienceGenericDao<Keyword, Integer> otherKeywordDao
-			= (ConvenienceGenericDao<Keyword, Integer>) getDaoRegistry().getFor(Keyword.class);
+		ConvenienceGenericHibernateDao<Keyword, Integer> otherKeywordDao
+			= (ConvenienceGenericHibernateDao<Keyword, Integer>) getDaoRegistry().getFor(Keyword.class);
 		Keyword okw = otherKeywordDao.getAll().iterator().next();
 		okw.setName("Another name");
 		otherKeywordDao.saveOrUpdate(okw);

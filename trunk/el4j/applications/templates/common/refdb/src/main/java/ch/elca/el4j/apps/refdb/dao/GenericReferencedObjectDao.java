@@ -21,7 +21,7 @@ import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 
-import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
+import ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHibernateDao;
 
 /**
  *
@@ -44,7 +44,7 @@ import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
  * @author Alex Mathey (AMA)
  */
 public interface GenericReferencedObjectDao<T, ID extends Serializable> extends
-	ConvenienceGenericDao<T, ID> {
+	ConvenienceGenericHibernateDao<T, ID> {
 	
 	/**
 	 * Get all domain objects which are referenced by a given reference.

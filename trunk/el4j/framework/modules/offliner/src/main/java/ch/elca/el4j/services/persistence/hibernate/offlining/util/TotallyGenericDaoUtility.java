@@ -18,8 +18,8 @@ package ch.elca.el4j.services.persistence.hibernate.offlining.util;
 
 import java.io.Serializable;
 
-import ch.elca.el4j.services.persistence.generic.dao.ConvenienceGenericDao;
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
+import ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHibernateDao;
 
 /**
  * Manages all access to DAOs with unknown generics in one place.
@@ -47,7 +47,7 @@ public final class TotallyGenericDaoUtility {
 	 * @param obj The object.
 	 * @return A DAO for this object.
 	 */
-	public static ConvenienceGenericDao<Object, Serializable> 
+	public static ConvenienceGenericHibernateDao<Object, Serializable> 
 	getDao(DaoRegistry reg,	Object obj) {
 		return getDao(reg, obj.getClass());
 	}
@@ -58,14 +58,14 @@ public final class TotallyGenericDaoUtility {
 	 * @param cls The object class.
 	 * @return A DAO for this object.
 	 */
-	public static ConvenienceGenericDao<Object, Serializable> 
+	public static ConvenienceGenericHibernateDao<Object, Serializable> 
 	getDao(DaoRegistry reg,	Class<?> cls) {
 		
 		// "Single point of ugliness".
 		// If this is unsafe, at least we have only one place to fix it.
 		@SuppressWarnings("unchecked")
-		ConvenienceGenericDao<Object, Serializable> dao 
-			= (ConvenienceGenericDao<Object, Serializable>)
+		ConvenienceGenericHibernateDao<Object, Serializable> dao 
+			= (ConvenienceGenericHibernateDao<Object, Serializable>)
 				reg.getFor(cls);
 		return dao;
 	}
