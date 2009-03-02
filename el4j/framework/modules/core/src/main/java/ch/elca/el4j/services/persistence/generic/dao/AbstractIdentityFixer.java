@@ -39,7 +39,6 @@ import org.springframework.aop.IntroductionInterceptor;
 import org.springframework.aop.support.IntroductionInfoSupport;
 
 import ch.elca.el4j.services.persistence.generic.dao.DaoChangeNotifier.NewEntityState;
-import ch.elca.el4j.services.persistence.generic.dao.IdentityFixerMergePolicy.CollectionUpdatePolicy;
 import ch.elca.el4j.services.persistence.generic.dao.IdentityFixerMergePolicy.UpdatePolicy;
 import ch.elca.el4j.services.persistence.generic.dao.annotations.ReturnsUnchangedParameter;
 import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoChangeNotifier;
@@ -73,8 +72,8 @@ import ch.elca.el4j.util.codingsupport.AopHelper;
  *
  * <h4>Configuration</h4>
  * To get a working identity fixer, you must write a subclass and override the
- * two abstract methods, {@link #id(Object)} and {@link #immutableValue(Object)}
- * .
+ * three abstract methods, {@link #id(Object)}, {@link #immutableValue(Object)}
+ * and {@link #prepareObject(Object)}.
  *
  * <h4>Use</h4>
  * All objects received from an identity-mangling source should pass through an
@@ -86,10 +85,22 @@ import ch.elca.el4j.util.codingsupport.AopHelper;
  * <h4>Guarantees</h4>
  * During its lifetime, an identity fixer will always return the same object
  * for every logical identity. It will update the shared instance with the state
- * of the new copies, and notify registered observers about every such update.
+ * of the new copies - according to a specified {@link IdentityFixerMergePolicy} or by its
+ * default policy -, and notify registered observers about every such update.
  * These guarantees extend to objects (directly or indirectly) referenced by the
  * translated object unless they are recognized as immutable values by
  * {@link #immutableValue(Object)}.
+ * 
+ * <h4>2-way merging of Collections</h4>
+ * Since some identity-mangling sources are replacing collections by own implementations containing
+ * also metadata, this class offers a mechanism to work on normal java collection while the source
+ * still gets to work on its own versions of the collections.<br>
+ * To set up a working 2-way merging, you need to:
+ * <ul>
+ * 	<li>implement {@link #needsAdditionalProcessing(Object)} to identify the replaced collections.</li>
+ * 	<li>call {@link #remerge} on every object you pass to the source</li>
+ *  <li>call {@link #merge} as usual on the objects coming from the source</li>
+ * </ul>
  *
  * <h4>Requirements</h4>
  * <p> This class needs {@link java.lang.reflect.ReflectPermission}
@@ -393,7 +404,7 @@ public abstract class AbstractIdentityFixer {
 				// if collection supports it)
 				updatedCollection.clear();
 				updatedCollection.addAll(mergedEntries);
-			} else{
+			} else {
 				// refill the new collection with the old values
 				updatedCollection.clear();
 				updatedCollection.addAll(attachedCollection);
@@ -458,7 +469,8 @@ public abstract class AbstractIdentityFixer {
 	 *              object more than once.
 	 * @param locked
 	 *              the set of id's that are locked for updating unless the new version
-	 *              is the specified object.
+	 *              is the specified object. This map should be used to prevent updating a representative
+	 *              multiple times which might result in a update to an old or non fully loaded object.
 	 * @return
 	 *              the representative.
 	 */
@@ -466,7 +478,7 @@ public abstract class AbstractIdentityFixer {
 	protected <T> T merge(T anchor, T updated, IdentityFixerMergePolicy policy, boolean isIdentical,
 		IdentityHashMap<Object, Object> reached, HashMap<Object, Object> locked) {
 		
-		//T oldVersion = null;
+		boolean identical = isIdentical;
 		T updateState = updated;
 		if (policy.isPreparationAllowed()) {
 			// Prepare the updated object
@@ -487,7 +499,18 @@ public abstract class AbstractIdentityFixer {
 		
 		// choose representative
 		Object id = id(updateState);
-		if (isIdentical) {
+		
+		if (identical) {
+			// check if anchor would overwrite an already stored representative
+			if (id(anchor) != null && m_representatives.get(id(anchor)) != null) {
+				// anchor already present as representative,
+				s_logger.debug("Anchor was given for a representative already present, anchor is discarded!");
+				identical = false;
+				assert anchor == m_representatives.get(id(anchor));
+			}
+		}
+		if (identical) {
+			
 			// anchor is the guaranteed representative
 			savedState = anchor;
 			assert id(anchor) == null
@@ -525,7 +548,7 @@ public abstract class AbstractIdentityFixer {
 			if (locked.get(id) != null && locked.get(id) != updateState) {
 				return savedState;
 			}
-			if (isNew || isIdentical) {
+			if (isNew || identical) {
 				m_representatives.put(id, savedState);
 			}
 		}
@@ -546,7 +569,7 @@ public abstract class AbstractIdentityFixer {
 						savedState != null ? Array.get(savedState, i) : null,
 						Array.get(updateState, i),
 						policy,
-						savedState != null && isIdentical,
+						savedState != null && identical,
 						reached,
 						locked
 					)
@@ -572,7 +595,7 @@ public abstract class AbstractIdentityFixer {
 						anchorObject = policy.getHintMapping().get(updatedObject);
 					}
 					mergedEntries.add(merge(anchorObject, updatedObject, policy, 
-						anchorObject != null && isIdentical, reached, locked));
+						anchorObject != null && identical, reached, locked));
 				}
 				if (needsAdditionalProcessing(updateCollection)) {
 					// check if this collection was already remerged
@@ -600,7 +623,7 @@ public abstract class AbstractIdentityFixer {
 						anchorObject = policy.getHintMapping().get(updatedObject);
 					}
 					mergedEntries.add(merge(anchorObject, updatedObject, policy, 
-						anchorObject != null && isIdentical, reached, locked));
+						anchorObject != null && identical, reached, locked));
 				}
 				savedCollection.clear();
 				savedCollection.addAll(mergedEntries);
@@ -635,7 +658,7 @@ public abstract class AbstractIdentityFixer {
 						fieldValueOld,
 						fieldValueNew,
 						policy,
-						fieldValueOld != null && isIdentical,
+						fieldValueOld != null && identical,
 						reached,
 						locked
 					);
@@ -698,8 +721,9 @@ public abstract class AbstractIdentityFixer {
 	}
 	
 	/**
-	 * Updates the unique representative by duplicating the state in
-	 * {@code updated}. If no representative exists so far, one is created.
+	 * Updates the set of unique representatives according to the {@link IdentityFixerMergePolicy}.
+	 * If no representative exists of an object contained by the graph of objects in {@code updated}
+	 * so far, one is created.
 	 *
 	 * <p>For every potentially modified entity, {@link NewEntityState}
 	 * notification are sent using the configured change notifier.
@@ -710,13 +734,11 @@ public abstract class AbstractIdentityFixer {
 	 *              logical identity is already defined.
 	 * @param updated
 	 *              The object holding the new state.
-	 * @param objectsToUpdate
-	 *              A list of anchor objects that should updated, all other objects are not touched. If objectsToUpdate
-	 *              is <code>null</code> then all reachable objects get updated.
-	 * @param hintMapping
-	 *              A map of [updated -> anchor] used to correctly merge collections. If no collections have to be
-	 *              merged this parameter can be <code>null</code>.
+	 * @param policy
+	 *              The policy how to merge the representatives.
 	 * @return The representative.
+	 * 
+	 * @see IdentityFixerMergePolicy
 	 */
 	public <T> T merge(T anchor, T updated, IdentityFixerMergePolicy policy) {
 		HashMap<Object, Object> locked = new HashMap<Object, Object>();
@@ -740,10 +762,19 @@ public abstract class AbstractIdentityFixer {
 	}
 	
 	/**
+	 * Prepare an object to be passed to an identity-mangling source.
+	 * Using this method along with merge for incoming objects from the source,
+	 * a 2-way merging for collections is guaranteed.
+	 * 
 	 * @param object
+     *              the object to be prepared.
 	 * @param reached
+	 *              the set of objects that have
+	 *              been (or are being) remerged. Used to avoid remerging an
+	 *              object more than once.
 	 * @param mergeRecursive
-	 * @return
+	 *              if the graph of objects should be traversed recursively and prepare all objects.
+	 * @return the prepared representative
 	 */
 	@SuppressWarnings("unchecked")
 	protected Object remerge(Object object, IdentityHashMap<Object, Object> reached, boolean mergeRecursive) {
@@ -783,7 +814,7 @@ public abstract class AbstractIdentityFixer {
 							remerge(o, reached, mergeRecursive);
 						}
 					}
-				} else if (mergeRecursive) {
+				} else if (mergeRecursive && fieldValue != null) {
 					if (fieldValue.getClass().isArray()) {
 						int l = Array.getLength(fieldValue);
 						for (int i = 0; i < l; i++) {
@@ -801,8 +832,13 @@ public abstract class AbstractIdentityFixer {
 	}
 	
 	/**
-	 * @param object
-	 * @return
+	 * Prepare an object to be passed to an identity-mangling source.
+	 * Using this method along with merge for incoming objects from the source,
+	 * a 2-way merging for collections is guaranteed.
+	 * 
+	 * @param object           the object to be prepared.
+	 * @param mergeRecursive   if the graph of objects should be traversed recursively and prepare all objects.
+	 * @return the prepared representative
 	 */
 	public Object remerge(Object object, boolean mergeRecursive) {
 		return remerge(object,
@@ -812,8 +848,12 @@ public abstract class AbstractIdentityFixer {
 	}
 	
 	/**
-	 * @param object
-	 * @return
+	 * Prepare a list of objects to be passed to an identity-mangling source.
+	 * Using this method along with merge for incoming objects from the source,
+	 * a 2-way merging for collections is guaranteed.
+	 * 
+	 * @param objects           the list of objects to be prepared.
+	 * @return the prepared representatives list.
 	 */
 	public List<Object> remerge(List<Object> objects) {
 		List<Object> returnList = new ArrayList<Object>(objects.size());
@@ -845,7 +885,8 @@ public abstract class AbstractIdentityFixer {
 	public void removeRepresentative(Object object) {
 		Object id = id(object);
 		if (m_representatives.get(id) != null && m_representatives.get(id).equals(object)) {
-			// TODO: remove collection mappings from this representative
+			// TODO: remove collection mappings from this representative, elegant solution??
+			m_collectionsToBeReplaced.remove(id);
 			m_representatives.remove(id);
 		}
 	}
@@ -931,15 +972,25 @@ public abstract class AbstractIdentityFixer {
 		}
 		
 		/** {@inheritDoc} */
+		@SuppressWarnings("unchecked")
 		public Object invoke(MethodInvocation invocation) throws Throwable {
-			Object result = invocation.proceed();
 			ReturnsUnchangedParameter rp
 				= invocation.getMethod().getAnnotation(
 					ReturnsUnchangedParameter.class
 				);
-			return (rp != null)
-				? merge(invocation.getArguments()[rp.value()], result)
-				: merge(null, result);
+			if (rp != null) {
+				Object arg = invocation.getArguments()[rp.value()];
+				if (arg instanceof List) {
+					remerge((List) arg);
+				} else {
+					remerge(arg, true);
+				}
+				Object result = invocation.proceed();
+				return merge(arg, result);
+			} else {
+				Object result = invocation.proceed();
+				return merge(null, result);
+			}
 		}
 
 		/**

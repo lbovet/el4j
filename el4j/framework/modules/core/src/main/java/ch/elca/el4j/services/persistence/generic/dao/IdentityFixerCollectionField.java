@@ -69,7 +69,7 @@ public class IdentityFixerCollectionField {
 	/** {@inheritDoc} */
 	@Override
 	public int hashCode() {
-		return m_instance.hashCode() * 31 + m_field.hashCode();
+		return m_instance.getClass().hashCode() * 31 + m_field.hashCode();
 	}
 	
 	/** {@inheritDoc} */
