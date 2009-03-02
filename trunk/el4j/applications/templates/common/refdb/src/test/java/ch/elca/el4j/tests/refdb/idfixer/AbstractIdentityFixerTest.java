@@ -223,6 +223,36 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
 		assertTrue("Loading the book did not return the keywords modified meanwhile", b1.getKeywords().size() == 6);
 	}
 	
+	/**
+	 * Test the collection handling: does dao return the same list/set/... again
+	 * instead of the collection created by the persistence layer (eg. PersistentSet from Hibernate). 
+	 */
+	@Test
+	public void testCollectionHandling() {
+		Set<Keyword> kws = new HashSet<Keyword>();
+		for (int i = 0; i < 5; i++) {
+			Keyword k1 = new Keyword();
+			k1.setName("test2" + i);
+			kws.add(m_keywordDao.saveOrUpdate(k1));
+		}
+		
+		Book b1 = new Book();
+		b1.setName("Bookname");
+		b1.setAuthorName("Author");
+		b1.setKeywords(kws);
+		m_bookDao.saveOrUpdate(b1);
+		
+		assertTrue("IdentityFixer has changed collection", kws == b1.getKeywords());
+		
+		Keyword k2 = new Keyword();
+		k2.setName("testAddingNewKeyword");
+		b1.getKeywords().add(m_keywordDao.saveOrUpdate(k2));
+		
+		Book b2 = m_bookDao.saveOrUpdate(b1);
+		assertEquals("Inserting keyword in original collection causes problems when persisting", 
+			6, b2.getKeywords().size());
+	}
+	
 	/** Renames the only keyword to "another name". */
 	private void renameKeyword() {
 		ConvenienceGenericHibernateDao<Keyword, Integer> otherKeywordDao

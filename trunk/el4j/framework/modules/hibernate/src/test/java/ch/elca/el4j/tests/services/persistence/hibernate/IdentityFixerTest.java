@@ -16,20 +16,24 @@
  */
 package ch.elca.el4j.tests.services.persistence.hibernate;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
 
+import org.hibernate.collection.PersistentBag;
 import org.junit.Test;
 
 import ch.elca.el4j.services.persistence.generic.dao.AbstractIdentityFixer;
 import ch.elca.el4j.services.persistence.generic.dao.IdentityFixerMergePolicy;
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 import ch.elca.el4j.services.persistence.hibernate.HibernatePrimaryKeyObjectIdentityFixer;
-
-import static junit.framework.Assert.*;
 
 /**
  * Tests for identity fixer.
@@ -124,6 +128,50 @@ public class IdentityFixerTest {
 		assertEquals(anchor.children.get(1), updatedChild2);
 		// inserted item should be id-fixed
 		assertEquals(anchor.children.get(1).parent, anchor);
+	}
+	
+	@Test
+	public void testCollectionReplacing() {
+		Example anchor = new Example();
+		Example anchorChild1 = new Example();
+		
+		anchor.name = "Anchor";
+		anchor.parent = anchor;
+		
+		ArrayList<Example> childrenList = new ArrayList<Example>();
+		anchor.children = childrenList;
+		anchor.children.add(anchorChild1);
+		anchor.ints = new int[] {3, 9};
+		
+		anchorChild1.name = "Child 1";
+		anchorChild1.parent = anchor;
+		
+		
+		AbstractIdentityFixer idFixer = new HibernatePrimaryKeyObjectIdentityFixer();
+		
+		// insert the anchor into the idFixer representatives
+		idFixer.merge(null, anchor);
+		
+		assertTrue("List of children not untouched!", anchor.children == childrenList);
+		
+		// simulate giving the anchor to hibernate
+		idFixer.remerge(anchor, true);
+		
+		// play hibernate and create an updated list
+		LinkedList<Example> updatedList = new LinkedList<Example>();
+		updatedList.add(anchorChild1);
+		org.hibernate.collection.PersistentBag updatedHibernateList 
+			= new org.hibernate.collection.PersistentBag(null, updatedList);
+		
+		anchor.children = updatedHibernateList;
+		// "generate key"
+		anchor.name = "Anchor(withKey)";
+		
+		// merge with the original object
+		idFixer.merge(null, anchor);
+		
+		assertTrue("List of children not untouched!", anchor.children == childrenList);
+		assertEquals("Name not updated", "Anchor(withKey)", anchor.name);
 	}
 	
 	@Entity
