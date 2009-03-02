@@ -767,7 +767,7 @@ public abstract class AbstractIdentityFixer {
 	 * a 2-way merging for collections is guaranteed.
 	 * 
 	 * @param object
-     *              the object to be prepared.
+	 *              the object to be prepared.
 	 * @param reached
 	 *              the set of objects that have
 	 *              been (or are being) remerged. Used to avoid remerging an
