@@ -29,6 +29,7 @@ import javax.swing.JToolBar;
 
 import org.jdesktop.application.ResourceMap;
 
+import ch.elca.el4j.demos.gui.extension.GUIExtension;
 import ch.elca.el4j.gui.swing.AbstractMDIApplication;
 import ch.elca.el4j.gui.swing.ActionsContext;
 

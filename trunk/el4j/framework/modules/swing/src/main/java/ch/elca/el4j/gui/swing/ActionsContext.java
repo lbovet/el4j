@@ -16,6 +16,10 @@
  */
 package ch.elca.el4j.gui.swing;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.swing.Action;
 
 import org.jdesktop.application.Application;
@@ -37,7 +41,7 @@ public final class ActionsContext {
 	/**
 	 * The array containing all instances to search for annotated methods.
 	 */
-	private final Object[] m_instancesWithActionMappings;
+	private List<Object> m_instancesWithActionMappings;
 	
 	/**
 	 * The parent {@link ActionsContext} if any.
@@ -51,7 +55,7 @@ public final class ActionsContext {
 	 */
 	private ActionsContext(ActionsContext parentContext, Object... instancesWithActionMappings) {
 		m_parentContext = parentContext;
-		m_instancesWithActionMappings = instancesWithActionMappings;
+		m_instancesWithActionMappings = new ArrayList<Object>(Arrays.asList(instancesWithActionMappings));
 	}
 	
 	/**
@@ -80,6 +84,14 @@ public final class ActionsContext {
 	 */
 	public static ActionsContext create(Object... instancesWithActionMappings) {
 		return new ActionsContext(null, instancesWithActionMappings);
+	}
+	
+	/**
+	 * Add an instances to search for annotated methods.
+	 * @param instanceWithActionMappings    an instances to search for annotated methods
+	 */
+	public void add(Object instanceWithActionMappings) {
+		m_instancesWithActionMappings.add(instanceWithActionMappings);
 	}
 	
 	/**
@@ -113,6 +125,11 @@ public final class ActionsContext {
 		org.jdesktop.application.ApplicationContext ac
 			= Application.getInstance().getContext();
 		
-		return ac.getActionMap(Object.class, object).get(actionName);
+		Action action = ac.getActionMap(Object.class, object).get(actionName);
+		if (action == null && m_parentContext != null) {
+			return m_parentContext.getAction(object, actionName);
+		} else {
+			return action;
+		}
 	}
 }
