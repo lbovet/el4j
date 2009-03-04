@@ -20,6 +20,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -33,6 +35,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.jdesktop.application.ResourceMap;
 
+import ch.elca.el4j.demos.gui.extension.GUIExtension;
 import ch.elca.el4j.gui.swing.ActionsContext;
 import ch.elca.el4j.gui.swing.MDIApplication;
 import ch.elca.el4j.gui.swing.util.MenuUtils;
@@ -81,8 +84,7 @@ public class MainFormMDI extends MDIApplication {
 		
 		createDefaultDesktopPane();
 		
-		m_popup = MenuUtils.createPopup(m_actionsContext, new String[] {
-			"showDemo1", "showDemo2", "---", "quit"});
+		m_popup = MenuUtils.createPopup(m_actionsContext, Arrays.asList("showDemo1", "showDemo2", "---", "quit"));
 		m_desktopPane.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -124,13 +126,13 @@ public class MainFormMDI extends MDIApplication {
 	 */
 	protected JMenuBar createMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
-		String[] fileMenuActionNames = {"quit"};
-		String[] editMenuActionNames = {"cut", "copy", "paste", "delete"};
-		String[] demoMenuActionNames
-			= {"showDemo1", "showDemo2", "showDemo3", "showDemo4", "---",
+		List<String> fileMenuActionNames = Arrays.asList("quit");
+		List<String> editMenuActionNames = Arrays.asList("cut", "copy", "paste", "delete");
+		List<String> demoMenuActionNames
+			= Arrays.asList("showDemo1", "showDemo2", "showDemo3", "showDemo4", "---",
 				"showSearch", "showRefDB", "---",
-				"showDemo5", "sendExampleEvent", "throwException"};
-		String[] helpMenuActionNames = {"help", "about"};
+				"showDemo5", "sendExampleEvent", "throwException");
+		List<String> helpMenuActionNames = Arrays.asList("help", "about");
 		menuBar.add(MenuUtils.createMenu(m_actionsContext, "fileMenu", fileMenuActionNames));
 		menuBar.add(MenuUtils.createMenu(m_actionsContext, "editMenu", editMenuActionNames));
 		menuBar.add(MenuUtils.createMenu(m_actionsContext, "demoMenu", demoMenuActionNames));

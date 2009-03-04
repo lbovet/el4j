@@ -19,11 +19,11 @@ package ch.elca.el4j.demos.secure.gui;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
+import java.util.List;
 
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
-import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 
 import org.acegisecurity.AccessDeniedException;
@@ -34,23 +34,17 @@ import org.acegisecurity.GrantedAuthority;
 import org.acegisecurity.context.SecurityContextHolder;
 import org.acegisecurity.providers.UsernamePasswordAuthenticationToken;
 import org.jdesktop.application.Action;
-import org.jdesktop.beans.AbstractBean;
 import org.jdesktop.swingx.JXLoginPane;
 import org.jdesktop.swingx.JXLoginPane.JXLoginFrame;
 import org.jdesktop.swingx.auth.LoginService;
 
-import ch.elca.el4j.demos.gui.GUIExtension;
-import ch.elca.el4j.gui.swing.ActionsContext;
-import ch.elca.el4j.gui.swing.GUIApplication;
+import ch.elca.el4j.demos.gui.extension.AbstractGUIExtension;
 import ch.elca.el4j.gui.swing.exceptions.Exceptions;
 import ch.elca.el4j.gui.swing.exceptions.Handler;
-import ch.elca.el4j.gui.swing.util.MenuUtils;
 
 /**
  * This GUI extension shows security related demos.
  * 
- * Remark: It extends AbstractBean because property change support is needed.
- *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
  *    "$Revision$",
@@ -60,17 +54,12 @@ import ch.elca.el4j.gui.swing.util.MenuUtils;
  *
  * @author Stefan Wismer (SWI)
  */
-public class SecurityDemo extends AbstractBean implements GUIExtension {
+public class SecurityDemo extends AbstractGUIExtension {
 
 	/**
-	 * The main application which gets extended.
+	 * Default Constructor.
 	 */
-	GUIApplication m_application;
-	
-	/** {@inheritDoc} */
-	public void setApplication(GUIApplication application) {
-		m_application = application;
-		
+	public SecurityDemo() {
 		Exceptions.getInstance().addHandler(new Handler() {
 			public boolean recognize(Exception e) {
 				if (e instanceof InvocationTargetException) {
@@ -95,17 +84,14 @@ public class SecurityDemo extends AbstractBean implements GUIExtension {
 	
 	/** {@inheritDoc} */
 	public void extendMenuBar(JMenuBar menubar) {
-		String[] reportMenuActionNames = {"showLoginForm", "showSimpleDemo", "showSimpleDemoForced", "showSecureRefDb"};
-		
-		ActionsContext actionsContext = ActionsContext.extendDefault(this);
-		JMenu menu = MenuUtils.createMenu(actionsContext, "securityMenu", reportMenuActionNames);
-		
-		menubar.add(menu, menubar.getComponentCount() - 2);
+		extendMenuBarDefault(menubar, "securityMenu");
 	}
 	
 	/** {@inheritDoc} */
-	public void extendToolBar(JToolBar toolbar) { }
-
+	public List<String> getActions() {
+		return Arrays.asList("showLoginForm", "showSimpleDemo", "showSimpleDemoForced", "showSecureRefDb");
+	}
+	
 	/**
 	 * Shows a login form.
 	 */

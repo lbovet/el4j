@@ -16,6 +16,8 @@
  */
 package ch.elca.el4j.gui.swing.util;
 
+import java.util.Collection;
+
 import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -49,10 +51,10 @@ public final class MenuUtils {
 	 *
 	 * @param context        the actions context
 	 * @param menuName       the menu name
-	 * @param actionNames    the array of menu items
+	 * @param actionNames    the collection of menu items
 	 * @return a JMenu
 	 */
-	public static JMenu createMenu(ActionsContext context, String menuName, String[] actionNames) {
+	public static JMenu createMenu(ActionsContext context, String menuName, Collection<String> actionNames) {
 		JMenu menu = new JMenu();
 		menu.setName(menuName);
 		return initMenu(context, actionNames, menu);
@@ -63,11 +65,10 @@ public final class MenuUtils {
 	 * separator is represented by the string "---"
 	 *
 	 * @param context        the actions context
-	 * @param actionNames
-	 *            the array of menu items
+	 * @param actionNames    the collection of menu items
 	 * @return a JPopupMenu
 	 */
-	public static JPopupMenu createPopup(ActionsContext context, String[] actionNames) {
+	public static JPopupMenu createPopup(ActionsContext context, Collection<String> actionNames) {
 		JPopupMenu menu = new JPopupMenu();
 		return initMenu(context, actionNames, menu);
 	}
@@ -77,11 +78,11 @@ public final class MenuUtils {
 	 *
 	 * @param <T>            the menu type (e.g. JMenu, JPopupMenu)
 	 * @param context        the actions context
-	 * @param actionNames    the array of menu items
+	 * @param actionNames    the collection of menu items
 	 * @param menu           the menu to insert the items
 	 * @return               a menu
 	 */
-	private static <T extends JComponent> T initMenu(ActionsContext context, String[] actionNames, T menu) {
+	private static <T extends JComponent> T initMenu(ActionsContext context, Collection<String> actionNames, T menu) {
 		for (String actionName : actionNames) {
 			if (actionName.equals("---")) {
 				menu.add(new JSeparator());
