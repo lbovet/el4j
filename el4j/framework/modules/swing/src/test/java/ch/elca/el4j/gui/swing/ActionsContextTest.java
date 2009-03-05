@@ -16,6 +16,8 @@
  */
 package ch.elca.el4j.gui.swing;
 
+import java.awt.Toolkit;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -23,6 +25,8 @@ import static org.junit.Assert.*;
 import ch.elca.el4j.gui.swing.actions.ChildActions;
 import ch.elca.el4j.gui.swing.actions.GrandparentActions;
 import ch.elca.el4j.gui.swing.actions.ParentActions;
+
+import sun.awt.HeadlessToolkit;
 
 /**
  * Test {@link ActionsContext}s.
@@ -61,12 +65,17 @@ public class ActionsContextTest {
 		actionsContext.getAction("doD").actionPerformed(null);
 		assertEquals("Child.doD", stateHolder.getValue());
 		
-		GrandparentActions grandparent = new GrandparentActions("", stateHolder);
-		actionsContext.getAction(grandparent, "doB").actionPerformed(null);
-		assertEquals("Grandparent.doB", stateHolder.getValue());
-		
-		actionsContext.getAction(child, "doB").actionPerformed(null);
-		assertEquals("Parent.doB", stateHolder.getValue());
+		if (!(Toolkit.getDefaultToolkit() instanceof HeadlessToolkit)) {
+			// getAction(object, action) makes ResourceMap execute getMenuShortcutKeyMask() on built-in
+			// "quit"-action, which does not work in headless mode
+			
+			GrandparentActions grandparent = new GrandparentActions("", stateHolder);
+			actionsContext.getAction(grandparent, "doB").actionPerformed(null);
+			assertEquals("Grandparent.doB", stateHolder.getValue());
+			
+			actionsContext.getAction(child, "doB").actionPerformed(null);
+			assertEquals("Parent.doB", stateHolder.getValue());
+		}
 	}
 	
 	/**
@@ -94,8 +103,13 @@ public class ActionsContextTest {
 		actionsContext.getAction("doD").actionPerformed(null);
 		assertEquals("3_Child.doD", stateHolder.getValue());
 		
-		actionsContext.getAction(parent, "doB").actionPerformed(null);
-		assertEquals("2_Parent.doB", stateHolder.getValue());
+		if (!(Toolkit.getDefaultToolkit() instanceof HeadlessToolkit)) {
+			// getAction(object, action) makes ResourceMap execute getMenuShortcutKeyMask() on built-in
+			// "quit"-action, which does not work in headless mode
+			
+			actionsContext.getAction(parent, "doB").actionPerformed(null);
+			assertEquals("2_Parent.doB", stateHolder.getValue());
+		}
 	}
 	
 	/**
@@ -124,7 +138,12 @@ public class ActionsContextTest {
 		actionsContext.getAction("doD").actionPerformed(null);
 		assertEquals("3_Child.doD", stateHolder.getValue());
 		
-		actionsContext.getAction(parent, "doB").actionPerformed(null);
-		assertEquals("2_Parent.doB", stateHolder.getValue());
+		if (!(Toolkit.getDefaultToolkit() instanceof HeadlessToolkit)) {
+			// getAction(object, action) makes ResourceMap execute getMenuShortcutKeyMask() on built-in
+			// "quit"-action, which does not work in headless mode
+			
+			actionsContext.getAction(parent, "doB").actionPerformed(null);
+			assertEquals("2_Parent.doB", stateHolder.getValue());
+		}
 	}
 }
