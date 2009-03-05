@@ -125,6 +125,8 @@ public final class ActionsContext {
 		org.jdesktop.application.ApplicationContext ac
 			= Application.getInstance().getContext();
 		
+		// it's important to use Object.class here. Otherwise @Action annotated methods in
+		// super classes are not considered, which normally is not expected
 		Action action = ac.getActionMap(Object.class, object).get(actionName);
 		if (action == null && m_parentContext != null) {
 			return m_parentContext.getAction(object, actionName);

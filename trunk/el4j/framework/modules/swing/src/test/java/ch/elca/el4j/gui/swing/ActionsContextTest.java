@@ -47,6 +47,10 @@ public class ActionsContextTest {
 	 */
 	@Test
 	public void testSubClasses() {
+		if (skipTests()) {
+			// see comment in skipTests()
+			return;
+		}
 		ValueHolder<String> stateHolder = new ValueHolder<String>();
 		stateHolder.setValue("nothing");
 		
@@ -65,17 +69,12 @@ public class ActionsContextTest {
 		actionsContext.getAction("doD").actionPerformed(null);
 		assertEquals("Child.doD", stateHolder.getValue());
 		
-		if (!(Toolkit.getDefaultToolkit() instanceof HeadlessToolkit)) {
-			// getAction(object, action) makes ResourceMap execute getMenuShortcutKeyMask() on built-in
-			// "quit"-action, which does not work in headless mode
+		GrandparentActions grandparent = new GrandparentActions("", stateHolder);
+		actionsContext.getAction(grandparent, "doB").actionPerformed(null);
+		assertEquals("Grandparent.doB", stateHolder.getValue());
 			
-			GrandparentActions grandparent = new GrandparentActions("", stateHolder);
-			actionsContext.getAction(grandparent, "doB").actionPerformed(null);
-			assertEquals("Grandparent.doB", stateHolder.getValue());
-			
-			actionsContext.getAction(child, "doB").actionPerformed(null);
-			assertEquals("Parent.doB", stateHolder.getValue());
-		}
+		actionsContext.getAction(child, "doB").actionPerformed(null);
+		assertEquals("Parent.doB", stateHolder.getValue());
 	}
 	
 	/**
@@ -83,6 +82,10 @@ public class ActionsContextTest {
 	 */
 	@Test
 	public void testChain() {
+		if (skipTests()) {
+			// see comment in skipTests()
+			return;
+		}
 		ValueHolder<String> stateHolder = new ValueHolder<String>();
 		stateHolder.setValue("nothing");
 		
@@ -103,13 +106,8 @@ public class ActionsContextTest {
 		actionsContext.getAction("doD").actionPerformed(null);
 		assertEquals("3_Child.doD", stateHolder.getValue());
 		
-		if (!(Toolkit.getDefaultToolkit() instanceof HeadlessToolkit)) {
-			// getAction(object, action) makes ResourceMap execute getMenuShortcutKeyMask() on built-in
-			// "quit"-action, which does not work in headless mode
-			
-			actionsContext.getAction(parent, "doB").actionPerformed(null);
-			assertEquals("2_Parent.doB", stateHolder.getValue());
-		}
+		actionsContext.getAction(parent, "doB").actionPerformed(null);
+		assertEquals("2_Parent.doB", stateHolder.getValue());
 	}
 	
 	/**
@@ -117,6 +115,10 @@ public class ActionsContextTest {
 	 */
 	@Test
 	public void testParentContext() {
+		if (skipTests()) {
+			// see comment in skipTests()
+			return;
+		}
 		ValueHolder<String> stateHolder = new ValueHolder<String>();
 		stateHolder.setValue("nothing");
 		
@@ -138,12 +140,16 @@ public class ActionsContextTest {
 		actionsContext.getAction("doD").actionPerformed(null);
 		assertEquals("3_Child.doD", stateHolder.getValue());
 		
-		if (!(Toolkit.getDefaultToolkit() instanceof HeadlessToolkit)) {
-			// getAction(object, action) makes ResourceMap execute getMenuShortcutKeyMask() on built-in
-			// "quit"-action, which does not work in headless mode
-			
-			actionsContext.getAction(parent, "doB").actionPerformed(null);
-			assertEquals("2_Parent.doB", stateHolder.getValue());
-		}
+		actionsContext.getAction(parent, "doB").actionPerformed(null);
+		assertEquals("2_Parent.doB", stateHolder.getValue());
+	}
+	
+	/**
+	 * @return    <code>true</code> if tests should be skipped (see comment)
+	 */
+	private boolean skipTests() {
+		// getAction(object, action) makes ResourceMap execute getMenuShortcutKeyMask() on built-in
+		// "quit"-action, which does not work in headless mode
+		return Toolkit.getDefaultToolkit() instanceof HeadlessToolkit;
 	}
 }
