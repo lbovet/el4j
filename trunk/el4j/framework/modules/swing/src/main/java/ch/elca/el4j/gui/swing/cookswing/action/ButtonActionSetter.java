@@ -19,9 +19,12 @@ package ch.elca.el4j.gui.swing.cookswing.action;
 import javax.swing.AbstractButton;
 import javax.swing.Action;
 
-import ch.elca.el4j.gui.swing.ActionsContext;
-import ch.elca.el4j.gui.swing.GUIApplication;
+import org.jdesktop.application.Application;
+import org.jdesktop.application.ApplicationContext;
 
+import ch.elca.el4j.gui.swing.ActionsContext;
+
+import cookxml.cookswing.CookSwing;
 import cookxml.core.DecodeEngine;
 import cookxml.core.exception.SetterException;
 import cookxml.core.interfaces.Setter;
@@ -68,41 +71,38 @@ public class ButtonActionSetter implements Setter {
 			actionHolder = decodeEngine.getVariable("this");
 		}
 		
-		String attrValue = (String) value;
+		Action action = null;
+		
+		String actionName = (String) value;
 		// Check attrValue if it contains class name
-		String[] parsedValues = attrValue.split("#");
-		boolean composedAttr = false;
+		String[] parsedValues = actionName.split("#");
 		Class<?> cls = null;
 		if (parsedValues.length == 2) {
-			composedAttr = true;
 			try {
 				cls =  Class.forName(parsedValues[0]);
-				attrValue = parsedValues[1];
+				ApplicationContext ac = Application.getInstance().getContext();
+				action = ac.getActionMap(cls, actionHolder).get(parsedValues[1]);
 			} catch (ClassNotFoundException e) {
-				composedAttr = false;
+				action = null;
 			}
 		}
 		
-		ActionsContext actionsContext;
-		if (actionHolder instanceof ActionsContextAware) {
-			actionsContext = ((ActionsContextAware) actionHolder).getActionsContext();
-		} else {
-			// use ActionsContext of GUIApplication as parent context and extend it with the actionHolder
-			actionsContext = ActionsContext.extend(GUIApplication.getInstance().getActionsContext(), actionHolder);
-		}
-		
-		Action action;
-		if (composedAttr) {
-			action = actionsContext.getAction(cls, attrValue);
-		} else {
-			action = actionsContext.getAction(attrValue);
+		if (action == null) {
+			ActionsContext actionsContext;
+			if (actionHolder instanceof ActionsContextAware) {
+				actionsContext = ((ActionsContextAware) actionHolder).getActionsContext();
+			} else {
+				// use ActionsContext of GUIApplication as parent context and extend it with the actionHolder
+				actionsContext = ActionsContext.extendDefault(actionHolder);
+			}
+			
+			action = actionsContext.getAction(actionName);
+			if (action == null) {
+				throw new ActionNotFoundException(actionName);
+			}
 		}
 		
 		AbstractButton button = (AbstractButton) obj;
-		
-		if (action == null) {
-			throw new ActionNotFoundException(attrValue);
-		}
 		button.setAction(action);
 	}
 }
