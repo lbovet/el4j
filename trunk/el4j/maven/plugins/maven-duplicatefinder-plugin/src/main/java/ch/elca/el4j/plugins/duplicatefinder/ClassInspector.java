@@ -14,11 +14,10 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.util.maven;
+package ch.elca.el4j.plugins.duplicatefinder;
 
 import java.awt.BorderLayout;
 import java.util.Enumeration;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -30,6 +29,8 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.tree.DefaultMutableTreeNode;
+
+import ch.elca.el4j.util.classpath.DuplicateClassFinder;
 
 /**
  * A GUI to inspect all defined classes of a project.
@@ -127,9 +128,7 @@ public class ClassInspector {
 		 * Load classes from finder into tree.
 		 */
 		private void populateTree() {
-			Iterator<String> i = m_finder.iterator();
-			while (i.hasNext()) {
-				String currentClass = i.next();
+			for (String currentClass : m_finder.getAllClasses()) {
 				String pkg;
 				String name;
 				if (!currentClass.contains(".")) {

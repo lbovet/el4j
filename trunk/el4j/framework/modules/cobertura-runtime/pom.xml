@@ -25,12 +25,6 @@
 		applications over their complete lifetime.
 	</description>
 	<dependencies>
-		<!-- Maven tools -->
-		<dependency>
-			<groupId>ch.elca.el4j.maven</groupId>
-			<artifactId>maven-utils</artifactId>
-			<version>${version.maven-utils}</version>
-		</dependency>
 		<!-- EL4J framework modules -->
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>

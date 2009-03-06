@@ -29,7 +29,7 @@ import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
-import ch.elca.el4j.util.maven.DuplicateClassFinder;
+import ch.elca.el4j.util.classpath.DuplicateClassFinder;
 
 /**
  * The proxy class for the JVM. Each MBean Server contains exactly one JVM

@@ -15,7 +15,7 @@
  * For alternative licensing, please contact info@elca.ch
  */
 
-package ch.elca.el4j.util.maven;
+package ch.elca.el4j.util.classpath;
 
 import java.io.File;
 import java.io.IOException;
@@ -341,6 +341,13 @@ public class DuplicateClassFinder {
 	Iterator<String> iterator() {
 		assertSearched(true);
 		return m_classes.keySet().iterator();
+	}
+	
+	/**
+	 * @return    all found classes
+	 */
+	public Set<String> getAllClasses() {
+		return new HashSet<String>(m_classes.keySet());
 	}
 	
 	/**
