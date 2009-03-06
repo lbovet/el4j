@@ -22,10 +22,27 @@ import javax.persistence.SequenceGenerator;
 
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 
+/**
+ * This class is part of an example DOM of EL4J,
+ * describing the brain of a person.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Andreas Rueedlinger (ARR)
+ */
 @Entity
 @SequenceGenerator(name = "keyid_generator", sequenceName = "brain_sequence")
 public class Brain extends AbstractIntKeyIntOptimisticLockingDto {
+	
+	/** See corresponding getter for informations. */
 	private int m_iq;
+	
+	/** See corresponding getter for informations. */
 	private Person m_owner;
 
 	/**
@@ -63,6 +80,7 @@ public class Brain extends AbstractIntKeyIntOptimisticLockingDto {
 		this.m_owner = owner;
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public String toString() {
 		return m_owner + "'s brain (iq = " + m_iq + ")";

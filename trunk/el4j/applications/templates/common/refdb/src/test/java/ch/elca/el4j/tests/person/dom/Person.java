@@ -27,15 +27,17 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.IndexColumn;
 import org.hibernate.validator.NotNull;
 
+import ch.elca.el4j.core.metadata.ContainedClass;
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 
 /**
- * Person domain object.
+ * This class is part of an example DOM of EL4J,
+ * describing a Person.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -47,7 +49,6 @@ import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimistic
  * @author Andreas Rueedlinger (ARR)
  */
 @Entity
-@Table(name = "person")
 @SequenceGenerator(name = "keyid_generator", sequenceName = "person_sequence")
 public class Person extends AbstractIntKeyIntOptimisticLockingDto {
 	
@@ -114,8 +115,9 @@ public class Person extends AbstractIntKeyIntOptimisticLockingDto {
 	/**
 	 * @return Returns the teeth.
 	 */
-	@OneToMany(cascade = { CascadeType.ALL })
+	@OneToMany(mappedBy = "owner", cascade = { CascadeType.ALL })
 	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	@ContainedClass(Tooth.class)
 	public List<Tooth> getTeeth() {
 		return m_teeth;
 	}
@@ -132,6 +134,8 @@ public class Person extends AbstractIntKeyIntOptimisticLockingDto {
 	 */
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
 	@JoinTable(name = "friends")
+	@IndexColumn(name = "friends_key")
+	@ContainedClass(Person.class)
 	public List<Person> getFriends() {
 		return m_friends;
 	}

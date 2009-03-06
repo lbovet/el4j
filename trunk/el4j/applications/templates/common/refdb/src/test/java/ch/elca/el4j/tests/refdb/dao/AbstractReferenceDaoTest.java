@@ -585,8 +585,9 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 			k1.setName("Testkeyword97");
 			book.setKeywords(new HashSet<Keyword>());
 			book.getKeywords().add(k1);
+			TransactionStatus transaction = null;
 			try {
-				TransactionStatus transaction = getTransactionManager().getTransaction(new DefaultTransactionDefinition());
+				transaction = getTransactionManager().getTransaction(new DefaultTransactionDefinition());
 				
 				k1 = getKeywordDao().saveOrUpdate(k1);
 				book = getBookDao().saveOrUpdate(book);
@@ -596,6 +597,7 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 				getTransactionManager().getSessionFactory().getCurrentSession().flush();
 				getTransactionManager().commit(transaction);
 			} catch (Exception e) {
+				m_transactionManager.rollback(transaction);
 				fail("Could not save the data: " + e.getMessage());
 			}
 			assertEquals("Keyword not inserted", 1, getBookDao().reload(book).getKeywords().size());

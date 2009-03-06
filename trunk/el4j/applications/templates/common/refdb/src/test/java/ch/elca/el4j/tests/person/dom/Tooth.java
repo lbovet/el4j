@@ -16,20 +16,46 @@
  */
 package ch.elca.el4j.tests.person.dom;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
 import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 
+/**
+ * This class is part of an example DOM of EL4J,
+ * describing the tooth of a person.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Andreas Rueedlinger (ARR)
+ */
 @Entity
 @SequenceGenerator(name = "keyid_generator", sequenceName = "tooth_sequence")
 public class Tooth extends AbstractIntKeyIntOptimisticLockingDto {
+	
+	/** See corresponding getter for informations. */
 	private int m_age;
+	
+	/** See corresponding getter for informations. */
 	private Person m_owner;
 	
+	/**
+	 * Create a tooth.
+	 */
 	public Tooth() { }
 	
+	/**
+	 * Create a tooth with a given age.
+	 * @param age the age of the tooth.
+	 */
 	public Tooth(int age) {
 		m_age = age;
 	}
@@ -52,6 +78,8 @@ public class Tooth extends AbstractIntKeyIntOptimisticLockingDto {
 	 * @return Returns the owner.
 	 */
 	@ManyToOne
+	@JoinColumn(name = "owner_keyid", nullable = false,
+		unique = false, updatable = false)
 	public Person getOwner() {
 		return m_owner;
 	}
@@ -63,6 +91,7 @@ public class Tooth extends AbstractIntKeyIntOptimisticLockingDto {
 		m_owner = owner;
 	}
 	
+	/** {@inheritDoc} */
 	@Override
 	public String toString() {
 		return m_owner + "'s tooth (age = " + m_age + ")";
