@@ -14,17 +14,18 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.util.maven;
+package ch.elca.el4j.util.classpath;
 
 import java.net.URL;
 import java.net.URLClassLoader;
 
 /**
- * Tool for analyzing the classpath in maven projects.
- * '<code>mvn exec:java</code>' uses an URLClassloader for the main class and
- * passes all project dependencies plus the target directories as URLs to that.
+ * Tool for analyzing the classpath (e.g. in maven projects).
  * This tool allows the list of URLs to be easily retrieved:
- * Call <code>getClassPath(YourMainClass.class)</code> .
+ * Call <code>getClassPath(YourMainClass.class)</code>.
+ * 
+ * Remark: '<code>mvn exec:java</code>' uses an URLClassloader for the main class and
+ * passes all project dependencies plus the target directories as URLs to that.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",

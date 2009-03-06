@@ -22,7 +22,6 @@ import javax.swing.JPanel;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 
-import ch.elca.el4j.util.maven.ClassInspector;
 
 /**
  * Class inspector - launch duplicate finder and show the class inspector.

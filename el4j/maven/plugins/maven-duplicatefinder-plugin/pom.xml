@@ -50,9 +50,8 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>ch.elca.el4j.maven</groupId>
-			<artifactId>maven-utils</artifactId>
-			<version>${version.maven-utils}</version>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-core</artifactId>
 		</dependency>
 
 		<dependency>

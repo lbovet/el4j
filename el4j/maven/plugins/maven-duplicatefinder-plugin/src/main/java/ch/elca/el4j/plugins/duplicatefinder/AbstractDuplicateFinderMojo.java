@@ -26,7 +26,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 
-import ch.elca.el4j.util.maven.DuplicateClassFinder;
+import ch.elca.el4j.util.classpath.DuplicateClassFinder;
 
 /**
  * Plugin to run duplicatefinder as part of the build lifecycle.
