@@ -19,11 +19,12 @@ CREATE TABLE person (
 );
 
 CREATE TABLE friends (
+   friends_key               INTEGER        	NOT NULL,
    person_keyid				 INTEGER
 	NOT NULL	REFERENCES person(keyId),
    friends_keyid 			 INTEGER
 	NOT NULL	REFERENCES person(keyId),
-   PRIMARY KEY (person_keyid, friends_keyid)
+   PRIMARY KEY (person_keyid, friends_key)
 );
 
 
@@ -35,14 +36,5 @@ CREATE TABLE tooth (
    age		                 INTEGER        	NOT NULL,
    owner_keyid 				 INTEGER
 	NOT NULL	REFERENCES person(keyId)
-);
-
-CREATE TABLE person_tooth
-(
-   person_keyid			 INTEGER
-	NOT NULL	REFERENCES person(keyId),
-   teeth_keyid			 INTEGER
-	NOT NULL	REFERENCES tooth(keyId),
-   PRIMARY KEY (person_keyid, teeth_keyid)
 );
 
