@@ -18,6 +18,7 @@ package ch.elca.el4j.env.beans;
 
 import java.io.IOException;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeansException;
@@ -54,7 +55,7 @@ public class EnvPropertyPlaceholderConfigurer
 	 * The correct env location.
 	 */
 	public static final String ENV_PLACEHOLDER_PROPERTIES_LOCATION
-		= "classpath:env-placeholder.properties";
+		= "classpath*:env-placeholder.properties";
 	
 	/**
 	 * The deprecated env location.
@@ -66,7 +67,7 @@ public class EnvPropertyPlaceholderConfigurer
 	 * This logger is used to print out some global debugging info.
 	 * Consult it for info what is going on.
 	 */
-	protected static final Log s_el4jLogger
+	protected static final Log s_logger
 		= LogFactory.getLog(ModuleApplicationContext.EL4J_DEBUGGING_LOGGER);
 	
 	/**
@@ -100,10 +101,36 @@ public class EnvPropertyPlaceholderConfigurer
 			ConfigurableListableBeanFactory beanFactory) throws BeansException {
 		Resource oldEnvLocation
 			= m_applicationContext.getResource(OLD_ENV_PROPERTIES_LOCATION);
-		Resource envLocation
-			= m_applicationContext.getResource(
-				ENV_PLACEHOLDER_PROPERTIES_LOCATION);
 		
+		Resource[] envLocations = null;
+		try {
+			envLocations = m_applicationContext
+				.getResources(ENV_PLACEHOLDER_PROPERTIES_LOCATION);
+		} catch (IOException e) {
+			envLocations = new Resource[0];
+		}
+		
+		// reverse array to make nearer env files override farther env files
+		ArrayUtils.reverse(envLocations);
+		
+		// check all env locations
+		boolean atLeastOneEnvLocationExists = false;
+		for (Resource envLocation : envLocations) {
+			String envLocationUrl = "no url";
+			if (envLocation.exists()) {
+				atLeastOneEnvLocationExists = true;
+				try {
+					envLocationUrl = envLocation.getURL().toString();
+				} catch (IOException e) {
+					envLocationUrl = "unknown url";
+				}
+				
+				s_logger.debug("The used env placeholder properties file is '"
+					+ envLocationUrl + "'.");
+			}
+		}
+		
+		// check deprecated env location
 		String oldEnvLocationUrl = "no url";
 		if (oldEnvLocation.exists()) {
 			try {
@@ -113,41 +140,29 @@ public class EnvPropertyPlaceholderConfigurer
 			}
 		}
 		
-		String envLocationUrl = "no url";
-		if (envLocation.exists()) {
-			try {
-				envLocationUrl = envLocation.getURL().toString();
-			} catch (IOException e) {
-				envLocationUrl = "unknown url";
+		if (atLeastOneEnvLocationExists) {
+			if (oldEnvLocation.exists()) {
+				CoreNotificationHelper.notifyMisconfiguration(
+					"There are two environment configuration files on the "
+						+ "classpath. Please remove the deprecated one. "
+						+ "Deprecated location: '"
+						+ oldEnvLocationUrl + "'.");
 			}
-		}
-		
-		if (oldEnvLocation.exists() && envLocation.exists()) {
-			CoreNotificationHelper.notifyMisconfiguration(
-				"There are two environment configuration files on the "
-					+ "classpath. Please remove the deprecated one. "
-					+ "Correct location: '"
-					+ envLocationUrl
-					+ "'; deprecated location '"
-					+ oldEnvLocationUrl + "'.");
-		}
-		
-		if (envLocation.exists()) {
-			s_el4jLogger.debug("The used env placeholder properties file is '"
-				+ envLocationUrl + "'.");
-			super.setLocation(envLocation);
-		} else if (oldEnvLocation.exists()) {
-			s_el4jLogger.warn(
-				"DEPRECATED: The used env placeholder properties file '"
-					+ oldEnvLocationUrl
-					+ "' is deprecated. Please use the new loaction '"
-					+ ENV_PLACEHOLDER_PROPERTIES_LOCATION + "'.");
-			super.setLocation(oldEnvLocation);
+			super.setLocations(envLocations);
 		} else {
-			s_el4jLogger.warn(
-				"No env placeholder properties file could be found. The "
-					+ "correct location for this file is '"
-					+ ENV_PLACEHOLDER_PROPERTIES_LOCATION + "'.");
+			if (oldEnvLocation.exists()) {
+				s_logger.warn(
+					"DEPRECATED: The used env placeholder properties file '"
+						+ oldEnvLocationUrl
+						+ "' is deprecated. Please use the new loaction '"
+						+ ENV_PLACEHOLDER_PROPERTIES_LOCATION + "'.");
+				super.setLocation(oldEnvLocation);
+			} else {
+				s_logger.warn(
+					"No env placeholder properties file could be found. The "
+						+ "correct location for this file is '"
+						+ ENV_PLACEHOLDER_PROPERTIES_LOCATION + "'.");
+			}
 		}
 		
 		super.postProcessBeanFactory(beanFactory);
@@ -200,7 +215,7 @@ public class EnvPropertyPlaceholderConfigurer
 	}
 	
 	/**
-	 * @param file Thie file containing the cryptor settings.
+	 * @param file The file containing the cryptor settings.
 	 */
 	public void setCryptorFile(String file) {
 		m_cryptorFile = file;
@@ -208,6 +223,7 @@ public class EnvPropertyPlaceholderConfigurer
 	
 	/**
 	 * Decrypts values read from the env-*.properties files.
+	 * 
 	 * @param originalValue  The value read from env-*.properties
 	 * @return The value with all encrypted values decrypted.
 	 */
