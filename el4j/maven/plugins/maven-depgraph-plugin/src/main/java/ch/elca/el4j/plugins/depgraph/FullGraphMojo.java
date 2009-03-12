@@ -21,6 +21,8 @@ import java.util.List;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 
+import ch.elca.el4j.maven.depgraph.DependencyGraph;
+
 /**
  * Can be used to draw a dependency graph from the project, the mojo is executed
  * in. It traverses all dependencies and creates a graph using Graphviz. It draws
@@ -48,7 +50,6 @@ public class FullGraphMojo extends AbstractDependencyGraphMojo {
 	 */
 	private List<MavenProject> m_reactorProjects;
 
-
 	
 	/**
 	 * {@inheritDoc}
@@ -57,7 +58,7 @@ public class FullGraphMojo extends AbstractDependencyGraphMojo {
 		super.execute();
 		
 		DependencyGraph resultGraph = new DependencyGraph();
-		resultGraph.setName(m_project.getName());
+		resultGraph.setName(getProject().getName());
 		
 		for (MavenProject prj : m_reactorProjects) {
 			processProject(prj, resultGraph);

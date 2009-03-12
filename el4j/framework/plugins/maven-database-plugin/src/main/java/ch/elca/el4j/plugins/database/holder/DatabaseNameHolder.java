@@ -17,19 +17,14 @@
 package ch.elca.el4j.plugins.database.holder;
 
 import java.io.IOException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.List;
 import java.util.Properties;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.project.MavenProject;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
-import ch.elca.el4j.plugins.database.DepGraphWalker;
+import ch.elca.el4j.maven.ResourceLoader;
 
 /**
  *
@@ -44,7 +39,7 @@ import ch.elca.el4j.plugins.database.DepGraphWalker;
  *
  * @author David Stefan (DST)
  */
-public class DatabaseNameHolder extends AbstractDatabaseHolder {
+public class DatabaseNameHolder {
 
 	/**
 	 * Logger.
@@ -56,7 +51,12 @@ public class DatabaseNameHolder extends AbstractDatabaseHolder {
 	 * Placeholder for database name.
 	 */
 	private static final String PLACEHOLDER = "{db.name}";
-
+	
+	/**
+	 * The resource loader.
+	 */
+	protected ResourceLoader m_resourceLoader;
+	
 	/**
 	 * Database name.
 	 */
@@ -64,18 +64,16 @@ public class DatabaseNameHolder extends AbstractDatabaseHolder {
 	
 	/**
 	 * Constructor.
-	 * @param repository Maven repository
-	 * @param project Maven project
-	 * @param walker The dependency graph walker
+	 * @param resourceLoader    the resource loader
+	 * @param project           the Maven project
 	 */
-	public DatabaseNameHolder(ArtifactRepository repository,
-		MavenProject project, DepGraphWalker walker) {
-		super(repository, project, walker);
-		loadDBName(getProjectURLs(), project);
+	public DatabaseNameHolder(ResourceLoader resourceLoader, MavenProject project) {
+		m_resourceLoader = resourceLoader;
+		loadDBName(project);
 	}
 	
 	/**
-	 * Util method for replacing occurences in String, because
+	 * Util method for replacing occurrences in String, because
 	 *  replace method of String (and StringUtils) class doesn't work for this.
 	 *
 	 * @param input String where we want to replace oldExpr
@@ -99,6 +97,19 @@ public class DatabaseNameHolder extends AbstractDatabaseHolder {
 	 */
 	public String getDbName() {
 		return m_dbName;
+	}
+	
+	/**
+	 * Get resources from the classloader.
+	 * @param path Path of the resources to get
+	 * @return Array of resources
+	 */
+	public Resource[] getResources(String path) {
+		try {
+			return m_resourceLoader.getResources(path);
+		} catch (IOException e) {
+			throw new DatabaseHolderException(e);
+		}
 	}
 	
 	/**
@@ -136,64 +147,33 @@ public class DatabaseNameHolder extends AbstractDatabaseHolder {
 	 * If not set, classpath is searched for .env files containing
 	 * db.name .
 	 *
-	 *
-	 * @param urls The Project URLs (to build classpath)
 	 * @param project The current MavenProject (to get system properties)
 	 *
-	 *
-	 *
 	 */
-	private void loadDBName(List<URL> urls, MavenProject project) {
+	private void loadDBName(MavenProject project) {
 
 		// Check if DB Name was set with configuration tag or should be
 		// read from project's env.properties
 		
 		String dbFromConfig = project.getProperties().getProperty("db.name");
 		
-		
 		if (dbFromConfig == null) {
 			
 			try {
-				// Create own classloader and resovler for env.properties,
-				// because we only want the file from the project we're
-				// working on
-				URLClassLoader projectClasspath = URLClassLoader.newInstance(
-					urls.toArray(new URL[1]), Thread.currentThread()
-						.getContextClassLoader());
-				PathMatchingResourcePatternResolver projectResolver
-					= new PathMatchingResourcePatternResolver(projectClasspath);
-
-				// Check if project contains env.properties
-				Resource[] resources = projectResolver
-					.getResources("classpath*:env/env.properties");
-				try {
-					Properties properties = getProperties(resources);
-					m_dbName = properties.getProperty("db.name");
-				} catch (IllegalArgumentException e) {
-					// Didn't find a env.properties file in the project
-					// Therefore, start looking in the dependencies
-					resources = getResources("classpath*:env/env.properties");
-					try {
-						m_dbName
-							= getProperties(resources).getProperty("db.name");
-					} catch (IllegalArgumentException e1) {
-						throw new DatabaseHolderException(e1);
-					}
-					
-					
-					s_logger.info("DB name set from env.properties to: "
-						+  getDbName());
-				}
-			} catch (IOException e) {
+				// Check if project contains env.properties (only files from the project)
+				Resource[] resources = getResources("classpath*:env/env.properties");
+				
+				Properties properties = getProperties(resources);
+				m_dbName = properties.getProperty("db.name");
+				s_logger.info("DB name set from env.properties to: " + getDbName());
+			} catch (Exception e) {
 				throw new DatabaseHolderException(e);
-
 			}
 		} else {
 			m_dbName = dbFromConfig;
 			
 			s_logger.info("DB name set from system property to: "
 				+ getDbName());
-			
 		}
 	}
 }

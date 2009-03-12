@@ -19,6 +19,9 @@ package ch.elca.el4j.plugins.envsupport;
 import java.io.File;
 
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 
 /**
  * Environment support plugin. Filters the resources of given env dir and saves
@@ -76,13 +79,34 @@ public class EnvSupportMojo extends AbstractEnvSupportMojo {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void execute() throws MojoExecutionException {
+	public void execute() throws MojoExecutionException, MojoFailureException {
+		initializeFiltering();
+		
 		if (useGlobalResourceDirectory) {
-			copyResourcesFiltered(globalResourceDirectory,
-				outputDirectory, "globalResources");
+			boolean fresh = copyResourcesFiltered(globalResourceDirectory, outputDirectory, "globalResources");
+			if (fresh) {
+				processEnvPropertiesFiles(outputDirectory, "globalResources", "env-placeholder.properties");
+				processEnvPropertiesFiles(outputDirectory, "globalResources", "env-bean-property.properties");
+			}
 		} else {
-			copyResourcesFiltered(resourceDirectory, outputDirectory,
-				"resources");
+			boolean fresh = copyResourcesFiltered(resourceDirectory, outputDirectory, "resources");
+			if (fresh) {
+				processEnvPropertiesFiles(outputDirectory, "resources", "env-placeholder.properties");
+				processEnvPropertiesFiles(outputDirectory, "resources", "env-bean-property.properties");
+			}
+		}
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	protected Resource[] getProjectEnvFiles(String envPropertiesFilename) {
+		File envFile = new File(useGlobalResourceDirectory ? globalResourceDirectory : resourceDirectory,
+			envPropertiesFilename);
+		
+		if (envFile.exists()) {
+			return (Resource[]) new Resource[] {new FileSystemResource(envFile)};
+		} else {
+			return new Resource[0];
 		}
 	}
 }
