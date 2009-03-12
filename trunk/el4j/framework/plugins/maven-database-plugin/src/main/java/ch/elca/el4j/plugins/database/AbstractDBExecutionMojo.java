@@ -617,10 +617,8 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 
 
 		if (m_holder == null) {
-			m_holder = new ConnectionPropertiesHolder(
-				getRepository(),
+			m_holder = new ConnectionPropertiesHolder(getResourceLoader(false),
 				getProject(),
-				getGraphWalker(),
 				connectionPropertiesSource,
 				driverPropertiesSource);
 		}

@@ -18,7 +18,11 @@ package ch.elca.el4j.plugins.envsupport;
 
 import java.io.File;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 
 /**
  * Test environment support plugin. Filters the test resources of given env dir
@@ -37,7 +41,7 @@ import org.apache.maven.plugin.MojoExecutionException;
  * @phase generate-test-resources
  * @requiresProject true
  */
-public class TestEnvSupportMojo extends AbstractEnvSupportMojo {
+public class TestEnvSupportMojo extends EnvSupportMojo {
 	// Checkstyle: MemberName off
 	/**
 	 * The test output directory into which to copy the env resources.
@@ -76,13 +80,37 @@ public class TestEnvSupportMojo extends AbstractEnvSupportMojo {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void execute() throws MojoExecutionException {
+	public void execute() throws MojoExecutionException, MojoFailureException {
+		initializeFiltering();
+		
 		if (useGlobalTestResourceDirectory) {
-			copyResourcesFiltered(globalTestResourceDirectory,
-				testOutputDirectory, "globalTestResources");
+			boolean fresh = copyResourcesFiltered(
+				globalTestResourceDirectory, testOutputDirectory, "globalTestResources");
+			if (fresh) {
+				processEnvPropertiesFiles(testOutputDirectory, "globalTestResources", "env-placeholder.properties");
+				processEnvPropertiesFiles(testOutputDirectory, "globalTestResources", "env-bean-property.properties");
+			}
 		} else {
-			copyResourcesFiltered(testResourceDirectory, testOutputDirectory,
-				"testResources");
+			boolean fresh = copyResourcesFiltered(testResourceDirectory, testOutputDirectory, "testResources");
+			if (fresh) {
+				processEnvPropertiesFiles(testOutputDirectory, "testResources", "env-placeholder.properties");
+				processEnvPropertiesFiles(testOutputDirectory, "testResources", "env-bean-property.properties");
+			}
+		}
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	protected Resource[] getProjectEnvFiles(String envPropertiesFilename) {
+		Resource[] nonTestResources = super.getProjectEnvFiles(envPropertiesFilename);
+		
+		File envFile = new File(useGlobalTestResourceDirectory ? globalTestResourceDirectory : testResourceDirectory,
+			envPropertiesFilename);
+		
+		if (envFile.exists()) {
+			return (Resource[]) ArrayUtils.add(nonTestResources, new FileSystemResource(envFile));
+		} else {
+			return nonTestResources;
 		}
 	}
 }

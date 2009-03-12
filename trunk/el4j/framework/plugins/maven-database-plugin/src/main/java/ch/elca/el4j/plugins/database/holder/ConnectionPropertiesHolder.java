@@ -20,13 +20,12 @@ import java.io.IOException;
 import java.sql.Driver;
 import java.util.Properties;
 
-import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.project.MavenProject;
 import org.springframework.core.io.Resource;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-import ch.elca.el4j.plugins.database.DepGraphWalker;
+import ch.elca.el4j.maven.ResourceLoader;
 
 /**
  *
@@ -71,16 +70,14 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
 	
 	/**
 	 * Constructor.
-	 * @param repository Maven repository
-	 * @param project Maven project
-	 * @param connectionSource Path to properties file of connection properties
-	 * @param driverSource Path to properties file for Driver Property
-	 * @param walker The Dependency Graph walker
+	 * @param resourceLoader    the resource loader
+	 * @param project           the Maven project
+	 * @param connectionSource  path to properties file of connection properties
+	 * @param driverSource      path to properties file for Driver Property
 	 */
-	public ConnectionPropertiesHolder(ArtifactRepository repository,
-		MavenProject project, DepGraphWalker walker,
-		String connectionSource, String driverSource) {
-		super(repository, project, walker);
+	public ConnectionPropertiesHolder(ResourceLoader resourceLoader,
+		MavenProject project, String connectionSource, String driverSource) {
+		super(resourceLoader, project);
 		loadDriverName(driverSource);
 		loadConnectionProperties(connectionSource);
 	}
@@ -111,7 +108,7 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
 	 */
 	public Driver getDriver() {
 		try {
-			return (Driver) getClassloader()
+			return (Driver) m_resourceLoader.getClassLoader()
 				.loadClass(m_driverName).newInstance();
 		} catch (Exception e) {
 			throw new DatabaseHolderException(e);
@@ -138,7 +135,7 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
 				source = "classpath*:" + source;
 			}
 			try {
-				Resource[] resources = getResources(source);
+				Resource[] resources = m_resourceLoader.getResources(source);
 				Properties properties = getProperties(resources);
 				m_url = properties.getProperty("dataSource.jdbcUrl");
 				if (m_url == null) {
@@ -198,7 +195,7 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
 		}
 		try {
 			
-			Resource[] resources = getResources(source);
+			Resource[] resources = m_resourceLoader.getResources(source);
 			Properties properties = getProperties(resources);
 			// only the first resource is taken
 			m_resource = resources[0].getURL().toString();

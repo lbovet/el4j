@@ -54,17 +54,10 @@
 		</plugins>
 	</build>
 	<dependencies>
-	
-		<!--dependency to module-core, so we can use its ResourceLoader -->
 		<dependency>
-			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-core</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>ch.elca.el4j.maven.plugins</groupId>
-			<artifactId>maven-depgraph-plugin</artifactId>
-			<version>${version.maven-depgraph-plugin}</version>
+			<groupId>ch.elca.el4j.maven</groupId>
+			<artifactId>maven-utils</artifactId>
+			<version>${version.maven-utils}</version>
 		</dependency>
 	
 		<dependency>
@@ -74,18 +67,6 @@
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-project</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
 		</dependency>
 
 		<!-- Derby Network Server Dependencies -->

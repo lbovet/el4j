@@ -18,6 +18,8 @@ package ch.elca.el4j.plugins.depgraph;
 
 import org.apache.maven.plugin.MojoExecutionException;
 
+import ch.elca.el4j.maven.depgraph.DependencyGraph;
+
 /**
  * Can be used to draw a dependency graph from the project, the mojo is executed
  * in. It traverses all dependencies and creates a graph using Graphviz. It
@@ -44,9 +46,9 @@ public class DependencyGraphMojo extends AbstractDependencyGraphMojo {
 		initOutput();
 		
 		DependencyGraph resultGraph = new DependencyGraph();
-		resultGraph.setName(m_project.getName());
+		resultGraph.setName(getProject().getName());
 		
-		processProject(m_project, resultGraph);
+		processProject(getProject(), resultGraph);
 		
 		project(resultGraph);
 		

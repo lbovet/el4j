@@ -28,21 +28,19 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.maven.artifact.Artifact;
-import org.apache.maven.artifact.factory.ArtifactFactory;
-import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
-import org.apache.maven.artifact.repository.ArtifactRepository;
-import org.apache.maven.artifact.resolver.ArtifactCollector;
-import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
-import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.shared.dependency.tree.DependencyNode;
-import org.apache.maven.shared.dependency.tree.DependencyTreeBuilder;
 import org.apache.maven.shared.dependency.tree.DependencyTreeBuilderException;
 import org.apache.maven.shared.dependency.tree.filter.ArtifactDependencyNodeFilter;
 import org.apache.maven.shared.dependency.tree.traversal.BuildingDependencyNodeVisitor;
 import org.apache.maven.shared.dependency.tree.traversal.FilteringDependencyNodeVisitor;
+
+import ch.elca.el4j.maven.depgraph.DepGraphArtifact;
+import ch.elca.el4j.maven.depgraph.DepGraphProjector;
+import ch.elca.el4j.maven.depgraph.DependencyGraph;
+import ch.elca.el4j.maven.depgraph.RegexArtifactFilter;
 
 /**
  *
@@ -58,7 +56,7 @@ import org.apache.maven.shared.dependency.tree.traversal.FilteringDependencyNode
  * @author Philippe Jacot (PJA), Claude Humard (CHD)
  * @requiresDependencyResolution test
  */
-public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
+public abstract class AbstractDependencyGraphMojo extends AbstractDependencyAwareMojo {
 	/**
 	 * The default file extension.
 	 */
@@ -69,15 +67,6 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
 	 */
 	private static Log s_log = LogFactory
 		.getLog(AbstractDependencyGraphMojo.class);
-	
-	/**
-	 * The maven project.
-	 *
-	 * @parameter expression="${project}"
-	 * @required
-	 * @readonly
-	 */
-	protected MavenProject m_project;
 
 	/**
 	 * The file to write to.
@@ -129,12 +118,6 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
 	private boolean filterEmptyArtifacts;
 
 	/**
-	 * @parameter expression="${localRepository}"
-	 * @required
-	 */
-	protected ArtifactRepository m_localRepository;
-
-	/**
 	 * The *.dot file to write to. Will be a temporary file if unset.
 	 *
 	 * @parameter expression="${depgraph.dotFile}"
@@ -156,46 +139,9 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
 	private boolean drawOmitted;
 
 	/**
-	 * @component
-	 */
-	private ArtifactResolver m_artifactResolver;
-
-	/**
-	 * The MetaDataSource used by the collector.
-	 *
-	 * @component
-	 */
-	protected ArtifactMetadataSource m_artifactMetadataSource;
-
-	/**
 	 * The projector used to project the graph.
 	 */
 	private DepGraphProjector m_projector;
-
-	/**
-	 * The ArtifactCollector used to resolve the dependencies.
-	 *
-	 * @component
-	 */
-	private ArtifactCollector m_collector;
-	
-	/**
-	 * The dependency tree builder to use.
-	 *
-	 * @component
-	 * @required
-	 * @readonly
-	 */
-	private DependencyTreeBuilder dependencyTreeBuilder;
-
-	/**
-	 * The artifact factory to use.
-	 *
-	 * @component
-	 * @required
-	 * @readonly
-	 */
-	private ArtifactFactory artifactFactory;
 
 	/**
 	 * Initialize the output directory/file.
@@ -204,7 +150,7 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
 	 */
 	protected void initOutput() throws MojoExecutionException {
 		if (outFile == null) {
-			outFile = new File(m_project.getName() + "." + getExtension());
+			outFile = new File(getProject().getName() + "." + getExtension());
 		}
 
 		// First, check if there was an output directory given
@@ -287,9 +233,7 @@ public abstract class AbstractDependencyGraphMojo extends AbstractMojo {
 
 		DependencyNode rootNode = null;
 		try {
-			rootNode = dependencyTreeBuilder.buildDependencyTree(project,
-				m_localRepository, artifactFactory, m_artifactMetadataSource,
-				filter, m_collector);
+			rootNode = buildDependencyTree(filter);
 		} catch (DependencyTreeBuilderException e) {
 			s_log.error("Error resolving artifacts", e);
 			return;

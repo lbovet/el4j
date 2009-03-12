@@ -1,4 +1,4 @@
-package ch.elca.el4j.plugins.depgraph;
+package ch.elca.el4j.maven.depgraph;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -35,6 +35,10 @@ import org.codehaus.plexus.util.cli.Commandline;
 import org.codehaus.plexus.util.cli.DefaultConsumer;
 import org.codehaus.plexus.util.cli.StreamConsumer;
 
+import ch.elca.el4j.maven.depgraph.DepGraphArtifact;
+import ch.elca.el4j.maven.depgraph.DepGraphProjector;
+import ch.elca.el4j.maven.depgraph.DependencyGraph;
+
 /**
  * This class projects a dependency graph to the graphviz format.
  *

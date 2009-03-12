@@ -55,20 +55,22 @@
 	</build>
 	<dependencies>
 		<dependency>
+			<groupId>ch.elca.el4j.maven</groupId>
+			<artifactId>maven-utils</artifactId>
+			<version>${version.maven-utils}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.elca.el4j.modules</groupId>
+			<artifactId>module-env</artifactId>
+		</dependency>
+		
+		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-plugin-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-project</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
 		</dependency>
 		
 		<dependency>

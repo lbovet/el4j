@@ -1,11 +1,9 @@
-package ch.elca.el4j.plugins.depgraph;
+package ch.elca.el4j.maven.depgraph;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.resolver.ResolutionListener;
 import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
@@ -30,12 +28,6 @@ public class DepGraphResolutionListener implements ResolutionListener {
 	 * Number indicating that no filtering is done.
 	 */
 	private static final int NOT_FILTERING = -1;
-	
-	/**
-	 * Logger.
-	 */
-	private static Log s_log = LogFactory
-		.getLog(DepGraphResolutionListener.class);
 	
 	/**
 	 * The graph.
@@ -150,10 +142,10 @@ public class DepGraphResolutionListener implements ResolutionListener {
 				try {
 					dependant.addDependency(getArtifact(artifact));
 				} catch (IllegalArgumentException e) {
-					s_log.debug("Ignore dependency "
+					/*s_log.debug("Ignore dependency "
 						+ getArtifact(artifact).getArtifactId() + ". "
 						+ dependant.getArtifactId()
-						+ " already depends on it.");
+						+ " already depends on it.");*/
 				}
 			} else {
 				// Create an artifact for this one

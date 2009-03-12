@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.plugins.depgraph;
+package ch.elca.el4j.maven.depgraph;
 
 import org.apache.maven.plugin.MojoExecutionException;
 

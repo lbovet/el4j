@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.plugins.database;
+package ch.elca.el4j.maven;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -36,11 +36,10 @@ import org.codehaus.plexus.util.dag.CycleDetectedException;
 import org.codehaus.plexus.util.dag.DAG;
 import org.codehaus.plexus.util.dag.TopologicalSorter;
 
-import ch.elca.el4j.plugins.database.holder.DatabaseHolderException;
-import ch.elca.el4j.plugins.depgraph.DepGraphArtifact;
-import ch.elca.el4j.plugins.depgraph.DepGraphResolutionListener;
-import ch.elca.el4j.plugins.depgraph.DependencyGraph;
-import ch.elca.el4j.plugins.depgraph.RegexArtifactFilter;
+import ch.elca.el4j.maven.depgraph.DepGraphArtifact;
+import ch.elca.el4j.maven.depgraph.DepGraphResolutionListener;
+import ch.elca.el4j.maven.depgraph.DependencyGraph;
+import ch.elca.el4j.maven.depgraph.RegexArtifactFilter;
 
 /**
  *
@@ -232,7 +231,7 @@ public class DepGraphWalker {
 					.getRemoteArtifactRepositories(), m_repo);
 				artifactURLs.add(artifact.getFile().toURL());
 			} catch (Exception e) {
-				throw new DatabaseHolderException(e);
+				throw new DepGraphWalkerException(e);
 			}
 		}
 		return artifactURLs;
@@ -279,7 +278,7 @@ public class DepGraphWalker {
 					.getRemoteArtifactRepositories(), m_repo);
 				artifacts.add(artifact);
 			} catch (Exception e) {
-				throw new DatabaseHolderException(e);
+				throw new DepGraphWalkerException(e);
 			}
 		}
 		return artifacts;
@@ -325,7 +324,7 @@ public class DepGraphWalker {
 				filter, Collections.singletonList(listener));
 
 		} catch (AbstractArtifactResolutionException e) {
-			throw new DatabaseHolderException(e);
+			throw new DepGraphWalkerException(e);
 		}
 
 	}
@@ -350,7 +349,7 @@ public class DepGraphWalker {
 				m_dag.addEdge(artifact.getQualifiedName(), dep
 					.getQualifiedName());
 			} catch (CycleDetectedException e) {
-				throw new DatabaseHolderException(e);
+				throw new DepGraphWalkerException(e);
 			}
 		}
 	}

@@ -16,15 +16,8 @@
  */
 package ch.elca.el4j.plugins.database;
 
-import org.apache.maven.artifact.factory.ArtifactFactory;
-import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
-import org.apache.maven.artifact.repository.ArtifactRepository;
-import org.apache.maven.artifact.resolver.ArtifactCollector;
-import org.apache.maven.artifact.resolver.ArtifactResolver;
-import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.project.MavenProject;
 
 import ch.elca.el4j.plugins.database.holder.DatabaseNameHolder;
 
@@ -49,7 +42,7 @@ import ch.elca.el4j.plugins.database.holder.DatabaseNameHolder;
  * @requiresProject true
  * @requiresDependencyResolution test
  */
-public abstract class AbstractDBMojo extends AbstractMojo {
+public abstract class AbstractDBMojo extends AbstractDependencyAwareMojo {
 	
 	// Checkstyle: MemberName off
 	
@@ -60,7 +53,6 @@ public abstract class AbstractDBMojo extends AbstractMojo {
 	 * @parameter expression="${db.wait}" default-value = "true"
 	 */
 	private boolean wait;
-	
 
 	/**
 	 * Directory of tools (such as application servers or local
@@ -72,52 +64,9 @@ public abstract class AbstractDBMojo extends AbstractMojo {
 	private String toolsPath;
 
 	/**
-	 * The maven project from where this plugin is called.
-	 *
-	 * @parameter expression="${project}"
-	 * @required
-	 * @readonly
-	 */
-	private MavenProject project;
-	
-	/**
-	 * Local maven repository.
-	 *
-	 * @parameter expression="${localRepository}"
-	 * @required
-	 * @readonly
-	 */
-	private ArtifactRepository repository;
-	
-	/**
 	 * @parameter expression="${skip}" default-value = "false"
 	 */
 	private boolean skip;
-	
-	/**
-	 * @component
-	 */
-	private ArtifactMetadataSource artifactMetadataSource;
-	
-	/**
-	 * @component
-	 */
-	private ArtifactCollector collector;
-	
-	/**
-	 * @component
-	 */
-	private ArtifactFactory factory;
-	
-	/**
-	 * @component
-	 */
-	private ArtifactResolver artifactResolver;
-	
-	/**
-	 * The Dependency Graph Walker.
-	 */
-	private DepGraphWalker graphWalker;
 
 	/**
 	 * The Data Holder.
@@ -158,28 +107,20 @@ public abstract class AbstractDBMojo extends AbstractMojo {
 	protected boolean needStartup() {
 		
 		try {
-			
 			String db = getDbNameHolder().getDbName();
 			
 			boolean result;
 			if (db.equalsIgnoreCase("db2")) {
-				
 				result = true;
-				
 			} else {
-				
 				getLog().warn("Database " + db + " can not be started "
 					+ "by this plugin.");
-				
 				result = false;
 			}
-			
 			return result;
 			
 		} catch (Exception e) {
-			
 			getLog().error("Error getting DbName: " + e.getMessage());
-			
 			return false;
 		}
 	}
@@ -201,41 +142,13 @@ public abstract class AbstractDBMojo extends AbstractMojo {
 		return wait;
 	}
 
-	/**
-	 * @return The Maven artifact repository
-	 */
-	protected ArtifactRepository getRepository() {
-		return repository;
-	}
 
-	/**
-	 * @return The maven project
-	 */
-	protected MavenProject getProject() {
-		return project;
-	}
-
-
-	/**
-	 * @return The Dependency GraphWalker
-	 */
-	protected DepGraphWalker getGraphWalker() {
-		if (graphWalker == null) {
-			graphWalker = new DepGraphWalker(repository, project,
-				artifactResolver, collector, artifactMetadataSource, factory);
-		}
-		return graphWalker;
-	}
-	
 	/**
 	 * @return The holder
 	 */
 	protected DatabaseNameHolder getDbNameHolder() {
 		if (m_holder == null) {
-			m_holder = new DatabaseNameHolder(
-				repository,
-				project,
-				getGraphWalker());
+			m_holder = new DatabaseNameHolder(getResourceLoader(false), getProject());
 		}
 		return m_holder;
 	}
