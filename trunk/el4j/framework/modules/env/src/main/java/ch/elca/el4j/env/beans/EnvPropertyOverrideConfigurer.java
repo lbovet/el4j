@@ -18,6 +18,7 @@ package ch.elca.el4j.env.beans;
 
 import java.io.IOException;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeansException;
@@ -57,14 +58,14 @@ public class EnvPropertyOverrideConfigurer extends PropertyOverrideConfigurer
 	 * The env bean property location.
 	 */
 	public static final String ENV_BEAN_PROPERTY_PROPERTIES_LOCATION
-		= "classpath:env-bean-property.properties";
+		= "classpath*:env-bean-property.properties";
 
 	/**
 	 * This logger is used to print out some global debugging info. Consult it
 	 * for info what is going on.
 	 */
-	protected static final Log s_el4jLogger = LogFactory
-		.getLog(ModuleApplicationContext.EL4J_DEBUGGING_LOGGER);
+	protected static final Log s_logger
+		= LogFactory.getLog(ModuleApplicationContext.EL4J_DEBUGGING_LOGGER);
 
 	/**
 	 * Is the used application context.
@@ -99,30 +100,49 @@ public class EnvPropertyOverrideConfigurer extends PropertyOverrideConfigurer
 	@Override
 	public void postProcessBeanFactory(
 		ConfigurableListableBeanFactory beanFactory) throws BeansException {
-		Resource envBeanPropertyLocation = m_applicationContext
-			.getResource(ENV_BEAN_PROPERTY_PROPERTIES_LOCATION);
-
-		String envBeanPropertyLocationUrl = "no url";
-		if (envBeanPropertyLocation.exists()) {
-			try {
-				envBeanPropertyLocationUrl = envBeanPropertyLocation.getURL()
-					.toString();
-			} catch (IOException e) {
-				envBeanPropertyLocationUrl = "unknown url";
-			}
-		}
-
-		if (envBeanPropertyLocation.exists()) {
-			s_el4jLogger
-				.debug("The used env bean property properties file is '"
-					+ envBeanPropertyLocationUrl + "'.");
-			super.setLocation(envBeanPropertyLocation);
-		} else {
-			s_el4jLogger
+		Resource[] envBeanPropertyLocations = null;
+		try {
+			envBeanPropertyLocations = m_applicationContext
+				.getResources(ENV_BEAN_PROPERTY_PROPERTIES_LOCATION);
+		} catch (IOException e1) {
+			s_logger
 				.warn("No env bean property properties file could be found. The"
 					+ " correct location for this file is '"
 					+ ENV_BEAN_PROPERTY_PROPERTIES_LOCATION + "'.");
 		}
+		
+		// reverse array to make nearer env files override farther env files
+		ArrayUtils.reverse(envBeanPropertyLocations);
+		
+		// check that every env property location exists
+		boolean atLeastOneEnvLocationExists = false;
+		for (Resource envBeanPropertyLocation : envBeanPropertyLocations) {
+			String envBeanPropertyLocationUrl = "no url";
+			if (envBeanPropertyLocation.exists()) {
+				atLeastOneEnvLocationExists = true;
+				try {
+					envBeanPropertyLocationUrl = envBeanPropertyLocation.getURL()
+						.toString();
+				} catch (IOException e) {
+					envBeanPropertyLocationUrl = "unknown url";
+				}
+			}
+
+			if (envBeanPropertyLocation.exists()) {
+				s_logger
+					.debug("The used env bean property properties file is '"
+						+ envBeanPropertyLocationUrl + "'.");
+			}
+		}
+		
+		if (!atLeastOneEnvLocationExists) {
+			s_logger
+				.warn("No env bean property properties file could be found. The"
+					+ " correct location for this file is '"
+					+ ENV_BEAN_PROPERTY_PROPERTIES_LOCATION + "'.");
+		}
+
+		super.setLocations(envBeanPropertyLocations);
 
 		super.postProcessBeanFactory(beanFactory);
 	}
@@ -135,12 +155,12 @@ public class EnvPropertyOverrideConfigurer extends PropertyOverrideConfigurer
 			super.applyPropertyValue(factory, beanName, property, value);
 		} catch (NoSuchBeanDefinitionException e) {
 			if (m_ignoreBeanNameNotFound) {
-				s_el4jLogger
+				s_logger
 					.warn("No bean with name '" + beanName
 						+ "' found. Therefore "
 						+ "no properties could be applied.");
 			} else {
-				s_el4jLogger
+				s_logger
 					.error("No bean with name '" + beanName
 						+ "' found. Therefore "
 						+ "no properties could be applied.");
@@ -150,7 +170,9 @@ public class EnvPropertyOverrideConfigurer extends PropertyOverrideConfigurer
 	}
 
 	/**
-	 * NOT ALLOWED TO USE! {@inheritDoc}
+	 * NOT ALLOWED TO USE!
+	 * 
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setLocation(Resource location) {
@@ -159,7 +181,9 @@ public class EnvPropertyOverrideConfigurer extends PropertyOverrideConfigurer
 	}
 
 	/**
-	 * NOT ALLOWED TO USE! {@inheritDoc}
+	 * NOT ALLOWED TO USE!
+	 * 
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setLocations(Resource[] locations) {
@@ -243,8 +267,8 @@ public class EnvPropertyOverrideConfigurer extends PropertyOverrideConfigurer
 				throw new BeanDefinitionStoreException(
 					"Error during decryption.");
 			}
-
 		}
+		
 		return super.convertPropertyValue(value);
 	}
 }
