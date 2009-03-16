@@ -61,6 +61,11 @@ public class PropertiesHelper {
 	 * @return the Properties Object
 	 */
 	public Properties loadProperties(String inputFileName) {
+		// downwards compatibility: append "file:" if it is missing and filename exists
+		String resourceName = inputFileName;
+		if (new File(inputFileName).exists() && !inputFileName.startsWith("file:")) {
+			resourceName = "file:" + resourceName; 
+		}
 
 		ListResourcePatternResolverDecorator resolver = new ListResourcePatternResolverDecorator(
 			new ManifestOrderedConfigLocationProvider(),
@@ -73,7 +78,7 @@ public class PropertiesHelper {
 		
 		InputStream in = null;
 		try {
-			Resource[] resources = resolver.getResources(inputFileName);
+			Resource[] resources = resolver.getResources(resourceName);
 			for (Resource resource : resources) {
 				in = resource.getInputStream();
 				properties.load(in);
