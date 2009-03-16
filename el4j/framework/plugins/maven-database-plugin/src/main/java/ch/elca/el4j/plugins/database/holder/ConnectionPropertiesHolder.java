@@ -16,14 +16,11 @@
  */
 package ch.elca.el4j.plugins.database.holder;
 
-import java.io.IOException;
 import java.sql.Driver;
 import java.util.Properties;
 
 import org.apache.maven.project.MavenProject;
 import org.springframework.core.io.Resource;
-import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 
 import ch.elca.el4j.maven.ResourceLoader;
 
@@ -62,11 +59,6 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
 	 * JDBC Driver for database connection.
 	 */
 	private String m_driverName;
-	
-	/**
-	 * The (first) resource from where the properties were read.
-	 */
-	private String m_resource;
 	
 	/**
 	 * Constructor.
@@ -116,13 +108,6 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
 	}
 	
 	/**
-	 * @return Returns the (first) resource from where the properties were read.
-	 */
-	public String getResource() {
-		return m_resource;
-	}
-	
-	/**
 	 * Load connection properties from specified properties file.
 	 * @param sourceDir
 	 *          Path where to find properties file
@@ -137,48 +122,20 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
 			try {
 				Resource[] resources = m_resourceLoader.getResources(source);
 				Properties properties = getProperties(resources);
-				m_url = properties.getProperty("dataSource.jdbcUrl");
+				m_url = properties.getProperty("dataSource.jdbcUrl", "");
 				if (m_url == null) {
-					m_url = properties.getProperty("dataSource.url");
+					m_url = properties.getProperty("dataSource.url", "");
 				}
-				m_username = properties.getProperty("dataSource.user");
+				m_username = properties.getProperty("dataSource.user", "");
 				if (m_username == null) {
-					m_username = properties.getProperty("dataSource.username");
+					m_username = properties.getProperty("dataSource.username", "");
 				}
-				m_password = properties.getProperty("dataSource.password");
+				m_password = properties.getProperty("dataSource.password", "");
 			} catch (Exception e) {
 				throw new DatabaseHolderException(
 					"Error reading connection properties at " + source, e);
 			}
 		}
-	}
-	
-	/**
-	 * Loads connection properties from the given properties resource file.
-	 *
-	 * @param propertiesResource Are the database properties as resource.
-	 * @return Returns <code>true</code> if all necessary connection properties
-	 *         could be loaded.
-	 */
-	public boolean loadConnectionProperties(Resource propertiesResource) {
-		Assert.notNull(propertiesResource);
-		Properties properties;
-		try {
-			properties = getProperties(propertiesResource);
-		} catch (IOException e) {
-			throw new DatabaseHolderException(
-				"Error reading connection properties!", e);
-		}
-		m_url = properties.getProperty("dataSource.jdbcUrl");
-		if (m_url == null) {
-			m_url = properties.getProperty("dataSource.url");
-		}
-		m_username = properties.getProperty("dataSource.user");
-		if (m_username == null) {
-			m_username = properties.getProperty("dataSource.username");
-		}
-		m_password = properties.getProperty("dataSource.password");
-		return StringUtils.hasText(m_url) && StringUtils.hasText(m_username);
 	}
 	
 	/**
@@ -197,8 +154,7 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
 			
 			Resource[] resources = m_resourceLoader.getResources(source);
 			Properties properties = getProperties(resources);
-			// only the first resource is taken
-			m_resource = resources[0].getURL().toString();
+			
 			m_driverName = properties.getProperty("dataSource.driverClass");
 			if (m_driverName == null) {
 				m_driverName = properties.getProperty("dataSource.driverClassName");

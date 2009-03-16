@@ -21,6 +21,7 @@ import java.util.Properties;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.springframework.core.io.Resource;
 
@@ -118,7 +119,7 @@ public class DatabaseNameHolder {
 	 * needed due to (Spring) PathResolver we use.
 	 *
 	 * @param resources
-	 *            Array of resources. Should only be one properties file
+	 *            Array of resources. Most specific resource must be last.
 	 * @return Properties object of file given
 	 * @throws IOException
 	 * @throws IllegalAccessException
@@ -129,14 +130,17 @@ public class DatabaseNameHolder {
 			throw new IllegalArgumentException(
 				"Path doesn't contain resources");
 		}
-		if (resources.length > 1) {
-			s_logger.warn("Source path is ambigous");
-		}
-		Resource resource = resources[0];
-		Properties properties = new Properties();
-		properties.load(resource.getURL().openStream());
-		return properties;
 		
+		Properties properties = new Properties();
+		for (Resource resource : resources) {
+			try {
+				properties.load(resource.getInputStream());
+			} catch (IOException e) {
+				throw new DatabaseHolderException("Cannot load resource '" + resource.toString() + "'", e);
+			}
+		}
+		
+		return properties;
 	}
 	
 	/**
@@ -160,7 +164,7 @@ public class DatabaseNameHolder {
 		if (dbFromConfig == null) {
 			
 			try {
-				// Check if project contains env.properties (only files from the project)
+				// Check if project contains env.properties
 				Resource[] resources = getResources("classpath*:env/env.properties");
 				
 				Properties properties = getProperties(resources);
