@@ -22,12 +22,12 @@
 	
 	<dependencies>
 		<dependency>
-			<groupId>ch.test</groupId>
+			<groupId>ch.elca.el4j.tests</groupId>
 			<artifactId>A1</artifactId>
 			<version>1.0</version>
 		</dependency>
 		<dependency>
-			<groupId>ch.test</groupId>
+			<groupId>ch.elca.el4j.tests</groupId>
 			<artifactId>A2</artifactId>
 			<version>1.0</version>
 		</dependency>
