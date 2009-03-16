@@ -68,7 +68,7 @@ public class EnvPropertiesUtils {
 	 */
 	public static Properties getEnvPlaceholderProperties() {
 		return new PropertiesHelper()
-			.loadProperties("classpath:env-placeholder.properties");
+			.loadProperties("classpath*:env-placeholder.properties");
 	}
 	
 	/**
@@ -77,6 +77,6 @@ public class EnvPropertiesUtils {
 	 */
 	public static Properties getEnvBeanPropertyProperties() {
 		return new PropertiesHelper()
-			.loadProperties("classpath:env-bean-property.properties");
+			.loadProperties("classpath*:env-bean-property.properties");
 	}
 }
