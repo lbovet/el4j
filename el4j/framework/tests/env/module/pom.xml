@@ -11,14 +11,14 @@
 
 	<parent>
 		<groupId>ch.elca.el4j.tests</groupId>
-		<artifactId>el4j-framework-tests</artifactId>
+		<artifactId>env-tests</artifactId>
 		<version>1.6-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>module-env-tests</artifactId>
 	<version>${version.module-env}</version>
 	<packaging>jar</packaging>
-	<name>EL4J test env</name>
+	<name>EL4J test env module</name>
 	<description>
 		Tests for module env of the EL4J framework.
 	</description>
