@@ -19,7 +19,6 @@ package ch.elca.el4j.plugins.envsupport;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.springframework.core.io.Resource;
