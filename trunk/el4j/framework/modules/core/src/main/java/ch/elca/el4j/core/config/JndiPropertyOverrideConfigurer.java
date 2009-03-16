@@ -107,7 +107,6 @@ public class JndiPropertyOverrideConfigurer extends PropertyOverrideConfigurer {
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	protected void processProperties(
 			ConfigurableListableBeanFactory beanFactory,
 			Properties props) throws BeansException {
