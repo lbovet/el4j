@@ -167,7 +167,7 @@ public class DepGraphWalker {
 
 	/**
 	 * Collects and returns list of urls of all dependencies of this project,
-	 * topologically sorted.
+	 * topologically sorted: Most specific last.
 	 *
 	 * @return List of dependencies jar URLs
 	 */
