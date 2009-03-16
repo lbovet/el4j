@@ -21,7 +21,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -93,16 +92,12 @@ public class ResourceLoader {
 		MavenProject project, DepGraphWalker walker, boolean mostSpecificResourceLast) {
 		
 		m_mostSpecificResourceLast = mostSpecificResourceLast;
+		
 		List<URL> projectUrls = getProjectUrls(repository, project);
 		List<URL> dependenciesUrls = walker.getDependencyURLs();
 		List<URL> urls = new ArrayList<URL>();
-		urls.addAll(projectUrls);
 		urls.addAll(dependenciesUrls);
-		
-		if (mostSpecificResourceLast) {
-			Collections.reverse(dependenciesUrls);
-			Collections.reverse(urls);
-		}
+		urls.addAll(projectUrls);
 		
 		m_projectResolver = createResolver(projectUrls);
 		m_dependenciesResolver = createResolver(dependenciesUrls);
@@ -166,14 +161,13 @@ public class ResourceLoader {
 
 		try {
 			urls.add(new URL("file", "", "/"
-				+ project.getBuild().getTestOutputDirectory() + "/"));
-			urls.add(new URL("file", "", "/"
 				+ project.getBuild().getOutputDirectory() + "/"));
+			urls.add(new URL("file", "", "/"
+				+ project.getBuild().getTestOutputDirectory() + "/"));
 
 			
 		} catch (MalformedURLException e) {
 			s_logger.error("Malformed resource URL: " + e);
-			//throw new DatabaseHolderException(e);
 		}
 
 		return urls;
@@ -192,10 +186,9 @@ public class ResourceLoader {
 		ListResourcePatternResolverDecorator resolver = new ListResourcePatternResolverDecorator(
 			new ManifestOrderedConfigLocationProvider(),
 			new OrderedPathMatchingResourcePatternResolver(classloader));
-		resolver.setMostSpecificResourceLast(false);
+		resolver.setMostSpecificResourceLast(m_mostSpecificResourceLast);
 		resolver.setMergeWithOuterResources(true);
 		
 		return resolver;
 	}
-	
 }
