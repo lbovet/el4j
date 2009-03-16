@@ -100,7 +100,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 	 * found.
 	 *
 	 * @parameter expression="${db.environmentBeanPropertyPropertiesPath}"
-	 *            default-value="classpath:env-bean-property.properties"
+	 *            default-value="classpath*:env-bean-property.properties"
 	 */
 	private String environmentBeanPropertyPropertiesPath;
 
@@ -238,7 +238,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 			if (!StringUtils.hasText(getDbNameHolder().getDbName())) {
 				getLog().error("Please provide a value for either "
 					+ "the parameter 'db.connectionPropertiesSource' or "
-					+ "'db.dbName'");
+					+ "'db.name'");
 			} else {
 				getLog().info(
 					"No .properties file was specified via POM or parameter.");
@@ -282,38 +282,14 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 	private boolean tryLoadingDatabasePropertiesViaEnvironment() {
 		boolean propertiesFound = false;
 		if (StringUtils.hasText(environmentBeanPropertyPropertiesPath)) {
-			List<String> pathList = new ArrayList<String>();
-			pathList.add(environmentBeanPropertyPropertiesPath);
-			List<Resource> resources = getResources(pathList);
-			if (resources != null && resources.size() > 0) {
-				Resource r = resources.get(0);
-				String rUrlString;
-				try {
-					rUrlString = r.getURL().toString();
-				} catch (IOException e) {
-					rUrlString = "UNKNOWN_PATH/" + r.getFilename();
-				}
-				if (resources.size() > 1) {
-					getLog().warn("More than one environment file could be "
-						+ "found! Only the first resource '"
-						+ rUrlString + "' will be used!");
-				}
-				boolean necessaryPropertiesLoaded
-					= getConnPropHolder().loadConnectionProperties(r);
-				if (necessaryPropertiesLoaded) {
-					connectionPropertiesSource
-						= environmentBeanPropertyPropertiesPath;
-					propertiesFound = true;
-				} else {
-					getLog().warn("Environment file '" + rUrlString
-						+ "' could not be used to load all necessary "
-						+ "database properties.");
-				}
-			} else {
-				getLog().warn("No environment file at '"
-					+ environmentBeanPropertyPropertiesPath
-					+ "' could be found. Database properties will be looked up "
-					+ "in standard way.");
+			
+			getConnPropHolder().loadConnectionProperties(environmentBeanPropertyPropertiesPath);
+			
+			if (StringUtils.hasText(getConnPropHolder().getUrl())
+				&& StringUtils.hasText(getConnPropHolder().getUsername())) {
+				
+				propertiesFound = true;
+				connectionPropertiesSource = environmentBeanPropertyPropertiesPath;
 			}
 		}
 		return propertiesFound;
@@ -355,7 +331,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 //          + currentDependency.getArtifactId()
 //          + "-override-" + getDbName() + ".properties";
 
-			getLog().info("Search artifact "
+			getLog().debug("Search artifact "
 				+ currentDependency.getArtifactId() + "...");
 
 
@@ -380,14 +356,14 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 			//search must be executed in classpath
 			pattern = "classpath*:" + connectionPropertiesDir + pattern;
 
-			getLog().info("Using pattern " + pattern);
+			getLog().debug("Using pattern " + pattern);
 
 			Resource[] res = getConnPropHolder().getResources(pattern);
 
 
 			if (res.length == 0) {
 				//no properties found for this artifact, so try parent artifact
-				getLog().info("Artifact " + currentDependency.getArtifactId()
+				getLog().debug("Artifact " + currentDependency.getArtifactId()
 					+ " has no .properties file. Trying next dependency...");
 
 
@@ -442,6 +418,13 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 		Connection connection = null;
 		if (!dryRun) {
 			connection = getConnection();
+			
+			if (connection == null) {
+				throw new DatabaseHolderException("Could not create connection. Please check connection settings: db '"
+					+ getConnPropHolder().getDbName() + "', user '"
+					+ getConnPropHolder().getUsername() + "' at '"
+					+ getConnPropHolder().getUrl() + "'", null);
+			}
 		}
 		Statement stmt = null;
 		try {
@@ -594,7 +577,6 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 		prop.put("user", getConnPropHolder().getUsername());
 		prop.put("password", getConnPropHolder().getPassword());
 		Driver driver = getConnPropHolder().getDriver();
-		getLog().debug("Reading properties from " + getConnPropHolder().getResource());
 		getLog().info("Trying to connect to db '"
 			+ getConnPropHolder().getDbName() + "', user '"
 			+ getConnPropHolder().getUsername() + "' at '"
@@ -614,10 +596,8 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 	 * @return The Data Holder
 	 */
 	private ConnectionPropertiesHolder getConnPropHolder() {
-
-
 		if (m_holder == null) {
-			m_holder = new ConnectionPropertiesHolder(getResourceLoader(false),
+			m_holder = new ConnectionPropertiesHolder(getResourceLoader(true),
 				getProject(),
 				connectionPropertiesSource,
 				driverPropertiesSource);
