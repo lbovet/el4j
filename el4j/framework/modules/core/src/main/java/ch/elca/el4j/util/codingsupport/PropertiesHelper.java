@@ -18,7 +18,6 @@
 package ch.elca.el4j.util.codingsupport;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -29,6 +28,9 @@ import java.util.Properties;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
+import ch.elca.el4j.core.io.support.ListResourcePatternResolverDecorator;
+import ch.elca.el4j.core.io.support.ManifestOrderedConfigLocationProvider;
+import ch.elca.el4j.core.io.support.OrderedPathMatchingResourcePatternResolver;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 
 /**
@@ -55,32 +57,32 @@ public class PropertiesHelper {
 	 * properties from this file to a Properties Object.
 	 *
 	 * @param inputFileName
-	 *            The file which will be loaded
+	 *            The file(s) which will be loaded
 	 * @return the Properties Object
 	 */
 	public Properties loadProperties(String inputFileName) {
 
-		Properties props = new Properties();
-
-		PathMatchingResourcePatternResolver pmrpr
-			= new PathMatchingResourcePatternResolver();
-
-		Resource res = pmrpr.getResource(inputFileName);
+		ListResourcePatternResolverDecorator resolver = new ListResourcePatternResolverDecorator(
+			new ManifestOrderedConfigLocationProvider(),
+			new OrderedPathMatchingResourcePatternResolver());
+		// most specific resource has to be last, because later properties will overwrite previously set ones.
+		resolver.setMostSpecificResourceLast(true);
+		resolver.setMergeWithOuterResources(true);
+		
+		Properties properties = new Properties();
+		
 		InputStream in = null;
-
 		try {
-			// Load the properties into the Properties object
-			try {
-				in = res.getInputStream();
-			} catch (IOException e) {
-				File file = new File(inputFileName);
-				in = new FileInputStream(file);
+			Resource[] resources = resolver.getResources(inputFileName);
+			for (Resource resource : resources) {
+				in = resource.getInputStream();
+				properties.load(in);
+				in.close();
 			}
-			props.load(in);
 		} catch (IOException e) {
 			CoreNotificationHelper.notifyMisconfiguration(
-					"An IOException was thrown. The responsible file is '"
-					+ inputFileName + "'.", e);
+				"An IOException was thrown. The responsible file is '"
+				+ inputFileName + "'.", e);
 		} finally {
 			if (in != null) {
 				try {
@@ -93,7 +95,7 @@ public class PropertiesHelper {
 			}
 		}
 
-		return props;
+		return properties;
 	}
 
 	/**

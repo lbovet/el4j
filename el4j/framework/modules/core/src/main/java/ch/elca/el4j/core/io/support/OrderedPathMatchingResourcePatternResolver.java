@@ -44,17 +44,39 @@ import org.springframework.util.StringUtils;
 public class OrderedPathMatchingResourcePatternResolver extends
 	PathMatchingResourcePatternResolver {
 	
+	/**
+	 * The logger.
+	 */
 	private static final Log s_logger = LogFactory.getLog(
 		OrderedPathMatchingResourcePatternResolver.class);
 	
+	/**
+	 * Create a PathMatchingResourcePatternResolver using a DefaultResourceLoader
+	 * that sorts the files in a folder alphabetically.
+	 * <p>ClassLoader access will happen via the thread context class loader.
+	 * @see org.springframework.core.io.DefaultResourceLoader
+	 */
 	public OrderedPathMatchingResourcePatternResolver() {
 		super();
 	}
 	
+	/**
+	 * Create a new PathMatchingResourcePatternResolver with a DefaultResourceLoader
+	 * that sorts the files in a folder alphabetically.
+	 * @param classLoader the ClassLoader to load classpath resources with,
+	 * or <code>null</code> for using the thread context class loader
+	 * @see org.springframework.core.io.DefaultResourceLoader
+	 */
 	public OrderedPathMatchingResourcePatternResolver(ClassLoader classLoader) {
 		super(classLoader);
 	}
 	
+	/**
+	 * Create a new PathMatchingResourcePatternResolver that sorts the files in a folder alphabetically.
+	 * <p>ClassLoader access will happen via the thread context class loader.
+	 * @param resourceLoader the ResourceLoader to load root directories and
+	 * actual resources with
+	 */
 	public OrderedPathMatchingResourcePatternResolver(ResourceLoader resourceLoader) {
 		super(resourceLoader);
 	}
