@@ -84,18 +84,13 @@ public class TestEnvSupportMojo extends EnvSupportMojo {
 		initializeFiltering();
 		
 		if (useGlobalTestResourceDirectory) {
-			boolean fresh = copyResourcesFiltered(
-				globalTestResourceDirectory, testOutputDirectory, "globalTestResources");
-			if (fresh) {
-				processEnvPropertiesFiles(testOutputDirectory, "globalTestResources", "env-placeholder.properties");
-				processEnvPropertiesFiles(testOutputDirectory, "globalTestResources", "env-bean-property.properties");
-			}
+			copyResourcesFiltered(globalTestResourceDirectory, testOutputDirectory, "globalTestResources");
+			processEnvPropertiesFiles(testOutputDirectory, "globalTestResources", "env-placeholder.properties");
+			processEnvPropertiesFiles(testOutputDirectory, "globalTestResources", "env-bean-property.properties");
 		} else {
-			boolean fresh = copyResourcesFiltered(testResourceDirectory, testOutputDirectory, "testResources");
-			if (fresh) {
-				processEnvPropertiesFiles(testOutputDirectory, "testResources", "env-placeholder.properties");
-				processEnvPropertiesFiles(testOutputDirectory, "testResources", "env-bean-property.properties");
-			}
+			copyResourcesFiltered(testResourceDirectory, testOutputDirectory, "testResources");
+			processEnvPropertiesFiles(testOutputDirectory, "testResources", "env-placeholder.properties");
+			processEnvPropertiesFiles(testOutputDirectory, "testResources", "env-bean-property.properties");
 		}
 	}
 	
