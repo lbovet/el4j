@@ -64,10 +64,14 @@ public class EnvListMojo extends EnvSupportMojo {
 			Resource[] resources = getResourceLoader(true).getDependenciesResources(
 				"classpath*:" + envPropertiesFilename);
 			
+			getLog().info("");
+			getLog().info("Resulting merged and evaluated " + envPropertiesFilename + ":");
+			
 			Properties properties = new Properties();
 			for (Resource resource : resources) {
 				try {
 					properties.load(resource.getInputStream());
+					getLog().info(" (Including " + getArtifactNameFromResource(resource) + ")");
 				} catch (IOException e) {
 					throw new MojoExecutionException(
 						"Cannot load resource '" + resource.toString() + "'");
@@ -76,8 +80,7 @@ public class EnvListMojo extends EnvSupportMojo {
 			
 			properties.putAll(getFilteredOverwriteProperties(envPropertiesFilename));
 			
-			getLog().info("");
-			getLog().info("Resulting merged and evaluated " + envPropertiesFilename + ":");
+			
 			for (Object keyObj : properties.keySet()) {
 				String key = (String) keyObj;
 				getLog().info("  " + key + "=" + properties.getProperty(key));
@@ -97,7 +100,7 @@ public class EnvListMojo extends EnvSupportMojo {
 		Resource[] resources = getAllUnfilteredResources(envPropertiesFilename);
 		
 		// print most specific resource first
-		ArrayUtils.reverse(resources);
+		//ArrayUtils.reverse(resources);
 		
 		getLog().info("");
 		getLog().info("Properties stored in " + envPropertiesFilename + ":");
@@ -122,7 +125,7 @@ public class EnvListMojo extends EnvSupportMojo {
 		getLog().info("Checking properties...");
 		
 		// make list 'most specific resource last'
-		ArrayUtils.reverse(resources);
+		//ArrayUtils.reverse(resources);
 		checkProperties(resources);
 	}
 }

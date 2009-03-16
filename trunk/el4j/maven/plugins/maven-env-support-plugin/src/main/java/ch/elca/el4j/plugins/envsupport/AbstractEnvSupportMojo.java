@@ -400,7 +400,7 @@ public abstract class AbstractEnvSupportMojo extends AbstractDependencyAwareMojo
 			}
 		}
 		
-		List<String> currentPropertiesKeys = new ArrayList<String>();
+		List<String> keysDefinedInThisArtifact = new ArrayList<String>();
 		
 		// add (non-abstract) properties defined in the current artifact
 		resources = getProjectEnvFiles(envPropertiesFilename);
@@ -415,29 +415,42 @@ public abstract class AbstractEnvSupportMojo extends AbstractDependencyAwareMojo
 				}
 				if (!key.startsWith(ABSTRACT_PROPERTY)) {
 					unfilteredProperties.setProperty(key, value);
-					currentPropertiesKeys.add(key);
+					keysDefinedInThisArtifact.add(key);
 				}
 			}
 		}
-		m_filterProperties.clearErrors();
 		
-		// warn if variables are not set
+		// load env files filtered by other artifacts to determine which expression have already been evaluated there
+		Resource[] resourcesFilteredByOthers = getResourceLoader(true).getDependenciesResources(
+			"classpath*:" + envPropertiesFilename);
+		Properties propertiesFilteredByOthers = loadProperties(resourcesFilteredByOthers);
+		
+		m_filterProperties.clearErrors();
 		Properties filteredProperties = filterProperties(unfilteredProperties);
-		for (String errorKey : m_filterProperties.getErrors()) {
-			getLog().warn("Could not evaluate expression because variable '" + errorKey + "' is not set.");
-		}
+		
+		boolean unsetVariables = false;
 		
 		// only take properties that could have been evaluated (unless they are declared in current artifact)
 		Properties overwriteProperties = new Properties();
 		for (Object keyObj : unfilteredProperties.keySet()) {
 			String key = (String) keyObj;
 			
-			if (currentPropertiesKeys.contains(key)
-				|| allExpressionsEvaluated(unfilteredProperties.getProperty(key))) {
-				
+			boolean allExpressionsEvaluated = allExpressionsEvaluated(unfilteredProperties.getProperty(key));
+			if (!allExpressionsEvaluated && !propertiesFilteredByOthers.containsKey(key)) {
+				unsetVariables = true;
+				getLog().warn("Could not evaluate expression '" + unfilteredProperties.getProperty(key)
+					+ "' because some variables are not set.");
+			}
+			if (keysDefinedInThisArtifact.contains(key) || allExpressionsEvaluated) {
 				overwriteProperties.setProperty(key, filteredProperties.getProperty(key));
 			}
 		}
+		
+		// warn if variables are not set
+		if (unsetVariables) {
+			getLog().warn("Use 'mvn envsupport:list' to get detailed information.");
+		}
+		
 		return overwriteProperties;
 	}
 	
@@ -501,7 +514,7 @@ public abstract class AbstractEnvSupportMojo extends AbstractDependencyAwareMojo
 		}
 		
 		// is resource from project dependencies?
-		for (Object artifactObj : getProject().getDependencyArtifacts()) {
+		for (Object artifactObj : getProject().getArtifacts()) {
 			Artifact artifact = (Artifact) artifactObj;
 			try {
 				if (resource.getURL().toString().startsWith("jar:" + artifact.getFile().toURL().toString())) {
@@ -516,18 +529,20 @@ public abstract class AbstractEnvSupportMojo extends AbstractDependencyAwareMojo
 	}
 	
 	/**
-	 * @param resource    the resource to load the properties from
-	 * @return            the loaded properties
+	 * @param resources    the resources to load the properties from (most specific resource has to be last)
+	 * @return             the loaded properties
 	 */
-	private Properties loadProperties(Resource resource) throws MojoExecutionException {
-		Properties props = new Properties();
-		try {
-			props.load(resource.getInputStream());
-		} catch (IOException e) {
-			throw new MojoExecutionException(
-				"Cannot load resource '" + resource.toString() + "'");
+	private Properties loadProperties(Resource... resources) throws MojoExecutionException {
+		Properties properties = new Properties();
+		for (Resource resource : resources) {
+			try {
+				properties.load(resource.getInputStream());
+			} catch (IOException e) {
+				throw new MojoExecutionException(
+					"Cannot load resource '" + resource.toString() + "'");
+			}
 		}
-		return props;
+		return properties;
 	}
 	
 	/**
