@@ -55,7 +55,7 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>ch.elca.el4j.maven</groupId>
+			<groupId>ch.elca.el4j.maven.plugins</groupId>
 			<artifactId>maven-utils</artifactId>
 			<version>${version.maven-utils}</version>
 		</dependency>

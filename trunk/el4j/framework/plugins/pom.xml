@@ -23,8 +23,11 @@
 		Maven 2 plugins of EL4J.
 	</description>
 	<modules>
+		<module>utils</module>
 		<module>maven-beans-plugin</module>
 		<module>maven-database-plugin</module>
 		<module>maven-cobertura-runtime-plugin</module>
+		<module>maven-depgraph-plugin</module>
+		<module>maven-env-support-plugin</module>
 	</modules>
 </project>
