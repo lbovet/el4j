@@ -2,7 +2,7 @@
  Environment support plugin
  -----
  -----
- 28 Jan 2008
+ 12 Mar 2009
  -----
 
 Environment support plugin
@@ -140,10 +140,90 @@ dataSource.url=${db.url}
   
   [Global environment resource directory] You can define to use a global resource
   directory so you do not have to have the <<<src/main/env>>> path in each artifact.
-  But be aware that you have the <<<env-placeholder.properties>>> file only one time in 
-  your classpath (otherwise you will get a warning and the wrong properties file may be 
-  chosen)!
   
+  [Inheritance of properties] (as of EL4J 1.6) Whenever you add a maven dependency
+  to your project, the env properties defined in that project are inherited and
+  therefore available to your project. For example, all basic <<<dataSource>>>
+  connection properties are stored in <<<module-database-common>>> and are set
+  as you include this module (also indirectly). To make this work, all env properties
+  are tried to get re-evaluated in the current project context (e.g. because <<<${db.username}>>>
+  is not set while compiling <<<module-database-common>>>).
+  
+  [Advanced use of property inheritance] (as of EL4J 1.6) To prevent properties from
+  beeing re-evaluated the <<<(final)>>> modifier is introduced. It is also checked
+  that no properties try to override it:
+
++----------------
+(final)someConstant=${doNotReEvaluateInEachDependentProject}$
+(final)anotherConstant=aConstantValue
++----------------
+
+  Another modifier is <<<(abstract)>>>. It allows to define a property without having to
+  specify its value. Projects depending on the project having abstract properties have
+  to define them to be fully functional. A warning is printed during compilation if there
+  exist abstract properties that are not overwritten.
+  
++----------------
+(abstract)someRequiredProperty
++----------------
+  
+  Example: If this property is not overwritten, the following gets printed:
+  
++----------------
+[INFO] [envsupport:resources {execution: default}]
+[INFO] The following abstract env properties are not set:
+[INFO]     * someRequiredProperty (in 'this artifact (module-hibernate)')
+[INFO] They have to be set in order to make this artifact fully functional.
++----------------
+
+  [Debugging] (as of EL4J 1.6) The goal <<<list>>> of this plugin prints a detailed report
+  of what properites files are considered and how they get evaluated.
+  
+  Here is an example output:
+  
++----------------
+$ mvn envsupport:list
+...
+[INFO] [envsupport:list]
+[INFO]
+[INFO] Properties stored in env-placeholder.properties:
+[INFO]   Properties of ch.elca.el4j.modules:module-database-common:
+[INFO]     db.name=${db.name}
+[INFO]   Properties of ch.elca.el4j.modules:module-remoting_core:
+[INFO]     jee-web.port=${jee-web.port}
+[INFO]     jee-web.host=${jee-web.host}
+[INFO]     jee-web.context=${jee-web.context}
+[INFO]
+[INFO] Checking properties...
+[INFO]
+[INFO] Resulting merged and evaluated env-placeholder.properties:
+[INFO]  (Including ch.elca.el4j.modules:module-database-common)
+[INFO]  (Including ch.elca.el4j.applications:keyword)
+[INFO]  (Including ch.elca.el4j.applications:refdb)
+[INFO]  (Including ch.elca.el4j.modules:module-remoting_core)
+[INFO]  (Including ch.elca.el4j.applications:swing-demo-common)
+[INFO]   db.name=db2
+[INFO]   jee-web.port=8080
+[INFO]   jee-web.host=localhost
+[INFO]   jee-web.context=swing-demo
+[INFO]
+[INFO] Properties stored in env-bean-property.properties:
+[INFO]   Properties of ch.elca.el4j.modules:module-hibernate:
+[INFO]     dataSource.password=${db.password}
+[INFO]     dataSource.user=${db.username}
+[INFO]     dataSource.jdbcUrl=${db.url}
+[INFO]
+[INFO] Checking properties...
+[INFO]
+[INFO] Resulting merged and evaluated env-bean-property.properties:
+[INFO]  (Including ch.elca.el4j.modules:module-hibernate)
+[INFO]  (Including ch.elca.el4j.applications:keyword)
+[INFO]  (Including ch.elca.el4j.applications:refdb)
+[INFO]   dataSource.password=el4j_user
+[INFO]   dataSource.user=el4j_user
+[INFO]   dataSource.jdbcUrl=jdbc:derby://localhost:1527/el4j;create=true
++----------------
+
   []
   
   For detailed usage {{{plugin-info.html}see the plugin info page}}.
