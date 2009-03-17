@@ -21,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -286,6 +287,8 @@ public class ListResourcePatternResolverDecorator
 			resources = delegateResourcesLookup(locationPattern);
 		}
 		
+		fixOrderOfTestResources(resources);
+		
 		// Reverse the array if the most specific resource should be at the
 		// beginning of the array.
 		if (!isMostSpecificResourceLast()) {
@@ -293,6 +296,46 @@ public class ListResourcePatternResolverDecorator
 		}
 		
 		return resources;
+	}
+
+	/**
+	 * Fix the order of resources such that test resources override non-test resources.
+	 * 
+	 * @param resources    the resources array to fix
+	 */
+	private void fixOrderOfTestResources(Resource[] resources) {
+		// create map of base directory -> index in resources array (for non-test and test)
+		Map<String, Integer> resourceIndexMap = new HashMap<String, Integer>();
+		Map<String, Integer> testResourceIndexMap = new HashMap<String, Integer>();
+		for (int i = 0; i < resources.length; i++) {
+			Resource resource = resources[i];
+			try {
+				// only consider files (the others are already ordered correctly)
+				if (resource.getURL().getProtocol().equals("file")) {
+					if (resource.getFile().getParent().endsWith("target\\classes")) {
+						resourceIndexMap.put(resource.getFile().getParentFile().getParentFile().getParent(), i);
+					} else if (resource.getFile().getParent().endsWith("target\\test-classes")) {
+						testResourceIndexMap.put(resource.getFile().getParentFile().getParentFile().getParent(), i);
+					}
+				}
+			} catch (IOException e) {
+				// ignore: try next entry
+			}
+		}
+		
+		// find resources that have test and non-test resources
+		for (String resourceDir : resourceIndexMap.keySet()) {
+			if (testResourceIndexMap.containsKey(resourceDir)) {
+				int resIdx = resourceIndexMap.get(resourceDir);
+				int testIdx = testResourceIndexMap.get(resourceDir);
+				if (resIdx > testIdx) {
+					// swap entries
+					Resource tmp = resources[resIdx];
+					resources[resIdx] = resources[testIdx];
+					resources[testIdx] = tmp;
+				}
+			}
+		}
 	}
 
 	/**
