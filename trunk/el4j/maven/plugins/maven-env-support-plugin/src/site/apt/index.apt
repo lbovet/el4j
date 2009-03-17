@@ -150,11 +150,11 @@ dataSource.url=${db.url}
   is not set while compiling <<<module-database-common>>>).
   
   [Advanced use of property inheritance] (as of EL4J 1.6) To prevent properties from
-  beeing re-evaluated the <<<(final)>>> modifier is introduced. It is also checked
+  being re-evaluated the <<<(final)>>> modifier is introduced. It is also checked
   that no properties try to override it:
 
 +----------------
-(final)someConstant=${doNotReEvaluateInEachDependentProject}$
+(final)someConstant=${doNotReEvaluateInEachDependentProject}
 (final)anotherConstant=aConstantValue
 +----------------
 
@@ -177,7 +177,7 @@ dataSource.url=${db.url}
 +----------------
 
   [Debugging] (as of EL4J 1.6) The goal <<<list>>> of this plugin prints a detailed report
-  of what properites files are considered and how they get evaluated.
+  of what properties files are considered and how they get evaluated.
   
   Here is an example output:
   
