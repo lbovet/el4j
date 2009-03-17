@@ -312,9 +312,9 @@ public class ListResourcePatternResolverDecorator
 			try {
 				// only consider files (the others are already ordered correctly)
 				if (resource.getURL().getProtocol().equals("file")) {
-					if (resource.getFile().getParent().endsWith("target\\classes")) {
+					if (resource.getFile().getParent().endsWith("classes")) {
 						resourceIndexMap.put(resource.getFile().getParentFile().getParentFile().getParent(), i);
-					} else if (resource.getFile().getParent().endsWith("target\\test-classes")) {
+					} else if (resource.getFile().getParent().endsWith("test-classes")) {
 						testResourceIndexMap.put(resource.getFile().getParentFile().getParentFile().getParent(), i);
 					}
 				}
