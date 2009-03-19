@@ -258,8 +258,7 @@ public class ListResourcePatternResolverDecorator
 
 			if (isMergeWithOuterResources()) {
 				try {
-					resources = mergeResources(resources,
-						delegateResourcesLookup(locationPattern));
+					resources = mergeResources(delegateResourcesLookup(locationPattern), resources);
 				} catch (IOException ioe) {
 					s_logger.error("Couldn't merge configuration locations.",
 							ioe);
@@ -287,55 +286,13 @@ public class ListResourcePatternResolverDecorator
 			resources = delegateResourcesLookup(locationPattern);
 		}
 		
-		fixOrderOfTestResources(resources);
-		
 		// Reverse the array if the most specific resource should be at the
-		// beginning of the array.
-		if (!isMostSpecificResourceLast()) {
+		// end of the array.
+		if (isMostSpecificResourceLast()) {
 			ArrayUtils.reverse(resources);
 		}
 		
 		return resources;
-	}
-
-	/**
-	 * Fix the order of resources such that test resources override non-test resources.
-	 * 
-	 * @param resources    the resources array to fix
-	 */
-	private void fixOrderOfTestResources(Resource[] resources) {
-		// create map of base directory -> index in resources array (for non-test and test)
-		Map<String, Integer> resourceIndexMap = new HashMap<String, Integer>();
-		Map<String, Integer> testResourceIndexMap = new HashMap<String, Integer>();
-		for (int i = 0; i < resources.length; i++) {
-			Resource resource = resources[i];
-			try {
-				// only consider files (the others are already ordered correctly)
-				if (resource.getURL().getProtocol().equals("file")) {
-					if (resource.getFile().getParent().endsWith("test-classes")) {
-						testResourceIndexMap.put(resource.getFile().getParentFile().getParentFile().getParent(), i);
-					} else if (resource.getFile().getParent().endsWith("classes")) {
-						resourceIndexMap.put(resource.getFile().getParentFile().getParentFile().getParent(), i);
-					}
-				}
-			} catch (IOException e) {
-				// ignore: try next entry
-			}
-		}
-		
-		// find resources that have test and non-test resources
-		for (String resourceDir : resourceIndexMap.keySet()) {
-			if (testResourceIndexMap.containsKey(resourceDir)) {
-				int resIdx = resourceIndexMap.get(resourceDir);
-				int testIdx = testResourceIndexMap.get(resourceDir);
-				if (resIdx > testIdx) {
-					// swap entries
-					Resource tmp = resources[resIdx];
-					resources[resIdx] = resources[testIdx];
-					resources[testIdx] = tmp;
-				}
-			}
-		}
 	}
 
 	/**
@@ -418,9 +375,9 @@ public class ListResourcePatternResolverDecorator
 		Resource resource = null;
 		try {
 			if (isMostSpecificResourceLast()) {
-				resource = findFirstClassPathResource(location);
-			} else {
 				resource = findLastClassPathResource(location);
+			} else {
+				resource = findFirstClassPathResource(location);
 			}
 		} catch (FileNotFoundException e) {
 			// Treat a FileNotFoundException differently to avoid stacktraces
@@ -439,19 +396,47 @@ public class ListResourcePatternResolverDecorator
 	 * @return Returns only the first found class path resource.
 	 * @throws IOException On any io problem.
 	 */
-	protected Resource findFirstClassPathResource(String location)
-		throws IOException {
+	protected Resource findFirstClassPathResource(String location) throws IOException {
 		Resource resource = null;
-		for (int i = 0; i < m_configLocations.length && resource == null; i++) {
-			if (location.equals(m_configLocations[i])) {
-				resource = m_configLocationResources[i];
+		Map<URL, Resource> resourceUrlMap = new LinkedHashMap<URL, Resource>();
+		if (isMergeWithOuterResources()) {
+			Resource[] resources = delegateResourcesLookup(location);
+			for (Resource r : resources) {
+				try {
+					
+					// POS: the next line can throw a FileNotFoundException
+					//  when run in a web server (in a servlet context)
+					//   But this is no real problem.
+					URL url = r.getURL();
+					resourceUrlMap.put(url, r);
+				} catch (FileNotFoundException fnfe) { }
+			}
+			
+			List<Resource> orderedResources = new ArrayList<Resource>();
+			for (int i = 0; i < m_configLocations.length; i++) {
+				if (location.equals(m_configLocations[i])) {
+					Resource r = m_configLocationResources[i];
+					URL url = r.getURL();
+					resourceUrlMap.remove(url);
+					orderedResources.add(r);
+				}
+			}
+			
+			if (resourceUrlMap.size() > 0) {
+				resource
+					= resourceUrlMap.entrySet().iterator().next().getValue();
+			} else if (orderedResources.size() > 0) {
+				resource = orderedResources.get(0);
+			}
+		} else {
+			for (int i = 0; i < m_configLocations.length; i++) {
+				if (location.equals(m_configLocations[i])) {
+					resource = m_configLocationResources[i];
+					break;
+				}
 			}
 		}
-		
-		if (resource == null && isMergeWithOuterResources()) {
-			resource = delegateResourceLookup(location);
-		}
-		
+	
 		return resource;
 	}
 	
@@ -490,11 +475,11 @@ public class ListResourcePatternResolverDecorator
 				}
 			}
 			
-			if (resourceUrlMap.size() > 0) {
+			if (orderedResources.size() > 0) {
+				resource = orderedResources.get(0);
+			} else if (resourceUrlMap.size() > 0) {
 				resource
 					= resourceUrlMap.entrySet().iterator().next().getValue();
-			} else if (orderedResources.size() > 0) {
-				resource = orderedResources.get(0);
 			}
 		} else {
 			for (int i = m_configLocations.length - 1;
@@ -537,15 +522,17 @@ public class ListResourcePatternResolverDecorator
 		
 		List<Resource> result = new ArrayList<Resource>();
 		List<URL> urlList = new ArrayList<URL>();
-		for (Resource resource : former) {
-			result.add(resource);
+		for (Resource resource : latter) {
 			urlList.add(resource.getURL());
 		}
-		for (Resource resource : latter) {
+		for (Resource resource : former) {
 			URL url = resource.getURL();
 			if (!urlList.contains(url)) {
 				result.add(resource);
 			}
+		}
+		for (Resource resource : latter) {
+			result.add(resource);
 		}
 		return (Resource[]) result.toArray(new Resource[result.size()]);
 	}

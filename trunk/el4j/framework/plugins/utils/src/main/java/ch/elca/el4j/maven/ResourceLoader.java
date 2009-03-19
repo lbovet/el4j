@@ -21,6 +21,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -95,9 +96,12 @@ public class ResourceLoader {
 		
 		List<URL> projectUrls = getProjectUrls(repository, project);
 		List<URL> dependenciesUrls = walker.getDependencyURLs();
+		// make most specific first (as it has to be in classpaths)
+		Collections.reverse(dependenciesUrls);
 		List<URL> urls = new ArrayList<URL>();
-		urls.addAll(dependenciesUrls);
+
 		urls.addAll(projectUrls);
+		urls.addAll(dependenciesUrls);
 		
 		m_projectResolver = createResolver(projectUrls);
 		m_dependenciesResolver = createResolver(dependenciesUrls);
@@ -161,9 +165,9 @@ public class ResourceLoader {
 
 		try {
 			urls.add(new URL("file", "", "/"
-				+ project.getBuild().getOutputDirectory() + "/"));
-			urls.add(new URL("file", "", "/"
 				+ project.getBuild().getTestOutputDirectory() + "/"));
+			urls.add(new URL("file", "", "/"
+				+ project.getBuild().getOutputDirectory() + "/"));
 
 			
 		} catch (MalformedURLException e) {

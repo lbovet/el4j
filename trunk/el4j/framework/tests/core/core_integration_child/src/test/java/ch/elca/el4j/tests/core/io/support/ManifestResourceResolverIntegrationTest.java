@@ -144,11 +144,9 @@ public class ManifestResourceResolverIntegrationTest
 	 */
 	@Test
 	public void testOrder() {
-		assertAllBefore(CONFIG_CORE, CONFIG_CORE_TESTS, m_locations);
-		assertAllBefore(CONFIG_CORE, CONFIG_CORE_INTEGRATION_TESTS,
-				m_locations);
-		assertAllBefore(CONFIG_CORE_TESTS, CONFIG_CORE_INTEGRATION_TESTS,
-				m_locations);
+		assertAllBefore(CONFIG_CORE_TESTS, CONFIG_CORE, m_locations);
+		assertAllBefore(CONFIG_CORE_INTEGRATION_TESTS, CONFIG_CORE, m_locations);
+		assertAllBefore(CONFIG_CORE_INTEGRATION_TESTS, CONFIG_CORE_TESTS, m_locations);
 	}
 
 	/**
@@ -235,8 +233,7 @@ public class ManifestResourceResolverIntegrationTest
 	@Test
 	public void testGetAllResourcesEndingWithA() throws IOException {
 		checkResources("classpath*:scenarios/core/**/*a.xml",
-				new String[] {CONFIG_CORE_TESTS_3, CONFIG_CORE_TESTS_6,
-					CONFIG_CORE_INTEGRATION_TESTS_1});
+				new String[] {CONFIG_CORE_INTEGRATION_TESTS_1, CONFIG_CORE_TESTS_6, CONFIG_CORE_TESTS_3});
 	}
 	
 	/**
