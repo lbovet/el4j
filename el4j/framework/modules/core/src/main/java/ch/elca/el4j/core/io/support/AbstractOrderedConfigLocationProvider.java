@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.springframework.core.io.Resource;
 
 /**
@@ -104,7 +105,7 @@ public abstract class AbstractOrderedConfigLocationProvider
 	 *      merged.
 	 *
 	 * @return Returns the ordered list of configuration locations declared
-	 *      by the modules.
+	 *      by the modules. Most specific location comes first.
 	 */
 	protected String[] mergeConfigLocations(Module[] modules) {
 		List<String> configLocations = new ArrayList<String>();
@@ -112,8 +113,10 @@ public abstract class AbstractOrderedConfigLocationProvider
 			configLocations.addAll(modules[i].getConfigFilesAsList());
 		}
 		
-		return (String[]) configLocations.toArray(
+		String[] result = (String[]) configLocations.toArray(
 				new String[configLocations.size()]);
+		ArrayUtils.reverse(result);
+		return result;
 	}
 	
 	/**
@@ -125,7 +128,7 @@ public abstract class AbstractOrderedConfigLocationProvider
 	 *      has to be merged.
 	 *
 	 * @return Returns the ordered list of configuration location resources
-	 *      declared by the modules.
+	 *      declared by the modules. Most specific location comes first.
 	 */
 	protected Resource[] mergeConfigLocationResources(Module[] modules) {
 		List<Resource> configLocationResources = new ArrayList<Resource>();
@@ -133,7 +136,9 @@ public abstract class AbstractOrderedConfigLocationProvider
 			configLocationResources.addAll(
 				module.getConfigFileResourcesAsList());
 		}
-		return (Resource[]) configLocationResources.toArray(
+		Resource[] result = (Resource[]) configLocationResources.toArray(
 				new Resource[configLocationResources.size()]);
+		ArrayUtils.reverse(result);
+		return result;
 	}
 }
