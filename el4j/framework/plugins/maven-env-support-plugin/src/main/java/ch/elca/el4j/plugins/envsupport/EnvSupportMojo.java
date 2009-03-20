@@ -80,6 +80,9 @@ public class EnvSupportMojo extends AbstractEnvSupportMojo {
 	 * {@inheritDoc}
 	 */
 	public void execute() throws MojoExecutionException, MojoFailureException {
+		if ("pom".equals(getProject().getPackaging())) {
+			return;
+		}
 		initializeFiltering();
 		
 		if (useGlobalResourceDirectory) {

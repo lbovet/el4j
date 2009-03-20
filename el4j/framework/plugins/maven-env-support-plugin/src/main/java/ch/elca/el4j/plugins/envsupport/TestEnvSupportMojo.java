@@ -81,6 +81,9 @@ public class TestEnvSupportMojo extends EnvSupportMojo {
 	 * {@inheritDoc}
 	 */
 	public void execute() throws MojoExecutionException, MojoFailureException {
+		if ("pom".equals(getProject().getPackaging())) {
+			return;
+		}
 		initializeFiltering();
 		
 		if (useGlobalTestResourceDirectory) {
