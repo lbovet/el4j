@@ -93,12 +93,12 @@ import ch.elca.el4j.util.codingsupport.AopHelper;
  * 
  * <h4>2-way merging of Collections</h4>
  * Since some identity-mangling sources are replacing collections by own implementations containing
- * also metadata, this class offers a mechanism to work on normal java collection while the source
+ * also metadata, this class offers a mechanism to work on normal java collections while the source
  * still gets to work on its own versions of the collections.<br>
  * To set up a working 2-way merging, you need to:
  * <ul>
  * 	<li>implement {@link #needsAdditionalProcessing(Object)} to identify the replaced collections.</li>
- * 	<li>call {@link #remerge} on every object you pass to the source</li>
+ * 	<li>call {@link #reverseMerge} on every object you pass to the source</li>
  *  <li>call {@link #merge} as usual on the objects coming from the source</li>
  * </ul>
  *
@@ -480,7 +480,7 @@ public abstract class AbstractIdentityFixer {
 		
 		boolean identical = isIdentical;
 		T updateState = updated;
-		if (policy.isPreparationAllowed()) {
+		if (policy.isPerformPreparation()) {
 			// Prepare the updated object
 			updateState = (T) prepareObject(updateState);
 		}
@@ -591,14 +591,14 @@ public abstract class AbstractIdentityFixer {
 				mergedEntries = new ArrayList(updateCollection.size());
 				for (Object updatedObject : updateCollection) {
 					Object anchorObject = null;
-					if (policy.getHintMapping() != null) {
-						anchorObject = policy.getHintMapping().get(updatedObject);
+					if (policy.getCollectionEntryMapping() != null) {
+						anchorObject = policy.getCollectionEntryMapping().get(updatedObject);
 					}
 					mergedEntries.add(merge(anchorObject, updatedObject, policy, 
 						anchorObject != null && identical, reached, locked));
 				}
 				if (needsAdditionalProcessing(updateCollection)) {
-					// check if this collection was already remerged
+					// check if this collection was already reverseMerged
 					Collection<?> restoreCollection = m_reverseCollectionMapping.get(savedCollection);
 					if (restoreCollection != null) {
 						m_reverseCollectionMapping.remove(savedCollection);
@@ -619,8 +619,8 @@ public abstract class AbstractIdentityFixer {
 				mergedEntries = new ArrayList(savedCollection.size());
 				for (Object updatedObject : savedCollection) {
 					Object anchorObject = null;
-					if (policy.getHintMapping() != null) {
-						anchorObject = policy.getHintMapping().get(updatedObject);
+					if (policy.getCollectionEntryMapping() != null) {
+						anchorObject = policy.getCollectionEntryMapping().get(updatedObject);
 					}
 					mergedEntries.add(merge(anchorObject, updatedObject, policy, 
 						anchorObject != null && identical, reached, locked));
@@ -770,14 +770,14 @@ public abstract class AbstractIdentityFixer {
 	 *              the object to be prepared.
 	 * @param reached
 	 *              the set of objects that have
-	 *              been (or are being) remerged. Used to avoid remerging an
+	 *              been (or are being) reverseMerged. Used to avoid reverseMerging an
 	 *              object more than once.
 	 * @param mergeRecursive
 	 *              if the graph of objects should be traversed recursively and prepare all objects.
 	 * @return the prepared representative
 	 */
 	@SuppressWarnings("unchecked")
-	protected Object remerge(Object object, IdentityHashMap<Object, Object> reached, boolean mergeRecursive) {
+	protected Object reverseMerge(Object object, IdentityHashMap<Object, Object> reached, boolean mergeRecursive) {
 		
 		if (immutableValue(object)) {
 			return object;
@@ -811,17 +811,17 @@ public abstract class AbstractIdentityFixer {
 					}
 					if (mergeRecursive) {
 						for (Object o : fieldCollection) {
-							remerge(o, reached, mergeRecursive);
+							reverseMerge(o, reached, mergeRecursive);
 						}
 					}
 				} else if (mergeRecursive && fieldValue != null) {
 					if (fieldValue.getClass().isArray()) {
 						int l = Array.getLength(fieldValue);
 						for (int i = 0; i < l; i++) {
-							remerge(Array.get(fieldValue, i), reached, mergeRecursive);
+							reverseMerge(Array.get(fieldValue, i), reached, mergeRecursive);
 						}
 					} else {
-						remerge(fieldValue, reached, mergeRecursive);
+						reverseMerge(fieldValue, reached, mergeRecursive);
 					}
 				}
 			} catch (IllegalAccessException e) { assert false : e; }
@@ -840,8 +840,8 @@ public abstract class AbstractIdentityFixer {
 	 * @param mergeRecursive   if the graph of objects should be traversed recursively and prepare all objects.
 	 * @return the prepared representative
 	 */
-	public Object remerge(Object object, boolean mergeRecursive) {
-		return remerge(object,
+	public Object reverseMerge(Object object, boolean mergeRecursive) {
+		return reverseMerge(object,
 			new IdentityHashMap<Object, Object>(),
 			mergeRecursive
 		);
@@ -855,10 +855,10 @@ public abstract class AbstractIdentityFixer {
 	 * @param objects           the list of objects to be prepared.
 	 * @return the prepared representatives list.
 	 */
-	public List<Object> remerge(List<Object> objects) {
+	public List<Object> reverseMerge(List<Object> objects) {
 		List<Object> returnList = new ArrayList<Object>(objects.size());
 		for (Object o : objects) {
-			returnList.add(remerge(o, false));
+			returnList.add(reverseMerge(o, false));
 		}
 		return returnList;
 	}
@@ -938,7 +938,7 @@ public abstract class AbstractIdentityFixer {
 	/**
 	 * @param o
 	 *            The concerned object.
-	 * @return if the object needs additional processing during a {@link AbstractIdentityFixer#remerge}.
+	 * @return if the object needs additional processing during a {@link AbstractIdentityFixer#merge}.
 	 */
 	protected boolean needsAdditionalProcessing(Object o) {
 		return false;
@@ -981,9 +981,9 @@ public abstract class AbstractIdentityFixer {
 			if (rp != null) {
 				Object arg = invocation.getArguments()[rp.value()];
 				if (arg instanceof List) {
-					remerge((List) arg);
+					reverseMerge((List) arg);
 				} else {
-					remerge(arg, true);
+					reverseMerge(arg, true);
 				}
 				Object result = invocation.proceed();
 				return merge(arg, result);
