@@ -42,27 +42,38 @@ public class IdentityFixerMergePolicy {
 	/** The objects to update, only set when <code>m_updatePolicy == UpdatePolicy.UPDATE_CHOSEN</code>. */
 	private List<Object> m_objectsToUpdate;
 	
-	/** The collection update policy. */
-	private CollectionUpdatePolicy m_collectionUpdatePolicy;
-	
-	/** Is Preparation allowed. */
-	private boolean m_preparationAllowed;
+	/** Should Preparation be performed. */
+	private boolean m_performPreparation;
 	
 	/**
 	 *	A map of [updated -> anchor] used to correctly merge collections.
 	 */
-	private IdentityHashMap<Object, Object> m_hintMapping;
+	private IdentityHashMap<Object, Object> m_collectionEntryMapping;
 	
 	/**
 	 * Default constructor.
-	 * Sets update policy to all, collection base: new when update,
-	 * and preparation is allowed.
+	 * Sets update policy to all and preparation will be performed.
 	 */
 	protected IdentityFixerMergePolicy() {
 		m_updatePolicy = UpdatePolicy.UPDATE_ALL;
-		m_collectionUpdatePolicy = CollectionUpdatePolicy.NEW_WHEN_UPDATE;
-		m_preparationAllowed = true;
-		m_hintMapping = new IdentityHashMap<Object, Object>();
+		m_performPreparation = true;
+		m_collectionEntryMapping = new IdentityHashMap<Object, Object>();
+	}
+	
+	/**
+	 * Constructor to customize the policy.
+	 * @param updatePolicy            the update policy to use.
+	 * @param objectsToUpdate         the objectsToUpdate if UDPATE_CHOSEN policy is chosen above.
+	 * @param performPreparation      should preparation be performed (eg. for unwrapping proxies).
+	 * @param collectionEntryMapping  the collectionEntryMapping [updated -> anchor] 
+	 *               used to correctly merge collections.
+	 */
+	protected IdentityFixerMergePolicy(UpdatePolicy updatePolicy, List<Object> objectsToUpdate,
+		boolean performPreparation, IdentityHashMap<Object, Object> collectionEntryMapping) {
+		m_updatePolicy = updatePolicy;
+		m_objectsToUpdate = objectsToUpdate;
+		m_performPreparation = performPreparation;
+		m_collectionEntryMapping = collectionEntryMapping;
 	}
 	
 	/**
@@ -70,6 +81,14 @@ public class IdentityFixerMergePolicy {
 	 */
 	public UpdatePolicy getUpdatePolicy() {
 		return m_updatePolicy;
+	}
+	
+	/**
+	 * Set the objects to update explicitly.
+	 * @param objectsToUpdate the list of objects to update.
+	 */
+	public void setObjectsToUpdate(List<Object> objectsToUpdate) {
+		m_objectsToUpdate = objectsToUpdate;
 	}
 	
 	/**
@@ -81,24 +100,17 @@ public class IdentityFixerMergePolicy {
 	}
 	
 	/**
-	 * @return The collection update policy.
-	 */
-	public CollectionUpdatePolicy getCollectionUpdatePolicy() {
-		return m_collectionUpdatePolicy;
-	}
-	
-	/**
 	 * @return if preparation is allowed.
 	 */
-	public boolean isPreparationAllowed() {
-		return m_preparationAllowed;
+	public boolean isPerformPreparation() {
+		return m_performPreparation;
 	}
 	
 	/**
 	 * @return A map of [updated -> anchor] used to correctly merge collections.
 	 */
-	public IdentityHashMap<Object, Object> getHintMapping() {
-		return m_hintMapping;
+	public IdentityHashMap<Object, Object> getCollectionEntryMapping() {
+		return m_collectionEntryMapping;
 	}
 	
 	/**
@@ -125,31 +137,6 @@ public class IdentityFixerMergePolicy {
 	}
 	
 	/**
-	 * This enumeration describes how the identity fixer should handle collection updates.
-	 */
-	public enum CollectionUpdatePolicy {
-		/**
-		 * Always take the old collection as base for constructing the merged collection.
-		 * Old meaning the one already referenced by the representative of the id fixer.
-		 */
-		OLD_BASE,
-		
-		/**
-		 * Always take the new collection as base for constructing the merged collection.
-		 * New meaning the one given as argument to be merged.
-		 */
-		NEW_BASE,
-		
-		/**
-		 * Take the new collection as base when the collection actually gets updated,
-		 * meaning that the content is coming from the new collection.
-		 * Take the old collection as base otherwise.
-		 */
-		NEW_WHEN_UPDATE
-		
-	}
-	
-	/**
 	 * @return a policy forcing all objects to be updated.
 	 */
 	public static IdentityFixerMergePolicy reloadAllPolicy() {
@@ -162,9 +149,8 @@ public class IdentityFixerMergePolicy {
 	 *     leaving the rest untouched.
 	 */
 	public static IdentityFixerMergePolicy reloadObjectsPolicy(List<Object> objectsToUpdate) {
-		IdentityFixerMergePolicy obj = new IdentityFixerMergePolicy();
-		obj.m_updatePolicy = UpdatePolicy.UPDATE_CHOSEN;
-		obj.m_objectsToUpdate = new ArrayList<Object>(objectsToUpdate);
+		IdentityFixerMergePolicy obj = new IdentityFixerMergePolicy(UpdatePolicy.UPDATE_CHOSEN, 
+			new ArrayList<Object>(objectsToUpdate), true, new IdentityHashMap<Object, Object>());
 		return obj;
 	}
 	
@@ -173,72 +159,65 @@ public class IdentityFixerMergePolicy {
 	 *      only extending it by the new objects.
 	 */
 	public static IdentityFixerMergePolicy extendOnlyPolicy() {
-		IdentityFixerMergePolicy obj = new IdentityFixerMergePolicy();
-		obj.m_updatePolicy = UpdatePolicy.NO_UPDATE;
+		IdentityFixerMergePolicy obj = new IdentityFixerMergePolicy(UpdatePolicy.NO_UPDATE, null, true, 
+			new IdentityHashMap<Object, Object>());
 		return obj;
 	}
 	
 	/**
-	 * @param hintMapping        the hintMapping [updated -> anchor] used to correctly merge collections.
+	 * @param collectionEntryMapping  the collectionEntryMapping [updated -> anchor] 
+	 *              used to correctly merge collections.
 	 * @return a policy forcing all objects to be updated.
 	 */
-	public static IdentityFixerMergePolicy reloadAllPolicy(IdentityHashMap<Object, Object> hintMapping) {
-		IdentityFixerMergePolicy obj = new IdentityFixerMergePolicy();
-		obj.m_hintMapping = hintMapping;
+	public static IdentityFixerMergePolicy reloadAllPolicy(IdentityHashMap<Object, Object> collectionEntryMapping) {
+		IdentityFixerMergePolicy obj = new IdentityFixerMergePolicy(UpdatePolicy.UPDATE_ALL, null, 
+			true, collectionEntryMapping);
 		return obj;
 	}
 	
 	/**
-	 * @param objectsToUpdate the objects to be updated.
-	 * @param hintMapping        the hintMapping [updated -> anchor] used to correctly merge collections.
+	 * @param objectsToUpdate         the objects to be updated.
+	 * @param collectionEntryMapping  the collectionEntryMapping [updated -> anchor] 
+	 *              used to correctly merge collections.
 	 * @return a policy forcing only the specified objects to be updated,
 	 *     leaving the rest untouched.
 	 */
 	public static IdentityFixerMergePolicy reloadObjectsPolicy(List<Object> objectsToUpdate,
-		IdentityHashMap<Object, Object> hintMapping) {
-		IdentityFixerMergePolicy obj = new IdentityFixerMergePolicy();
-		obj.m_updatePolicy = UpdatePolicy.UPDATE_CHOSEN;
-		obj.m_objectsToUpdate = new ArrayList<Object>(objectsToUpdate);
-		obj.m_hintMapping = hintMapping;
+		IdentityHashMap<Object, Object> collectionEntryMapping) {
+		IdentityFixerMergePolicy obj = new IdentityFixerMergePolicy(UpdatePolicy.UPDATE_CHOSEN, 
+			new ArrayList<Object>(objectsToUpdate), true, collectionEntryMapping);
 		return obj;
 	}
 	
 	/**
-	 * @param hintMapping        the hintMapping [updated -> anchor] used to correctly merge collections.
+	 * @param collectionEntryMapping  the collectionEntryMapping [updated -> anchor] 
+	 *              used to correctly merge collections.
 	 * @return a policy leaving all the objects of the previous graph untouched,
 	 *      only extending it by the new objects.
 	 */
-	public static IdentityFixerMergePolicy extendOnlyPolicy(IdentityHashMap<Object, Object> hintMapping) {
-		IdentityFixerMergePolicy obj = new IdentityFixerMergePolicy();
-		obj.m_updatePolicy = UpdatePolicy.NO_UPDATE;
-		obj.m_hintMapping = hintMapping;
+	public static IdentityFixerMergePolicy extendOnlyPolicy(IdentityHashMap<Object, Object> collectionEntryMapping) {
+		IdentityFixerMergePolicy obj = new IdentityFixerMergePolicy(UpdatePolicy.NO_UPDATE, null, 
+			true, collectionEntryMapping);
 		return obj;
 	}
 	
 	/**
-	 * @param updatePolicy       the update policy to use.
-	 * @param objectsToUpdate    the objectsToUpdate if UDPATE_CHOSEN policy is chosen above.
-	 * @param collectionPolicy   the collection update policy, 
-	 *                  which base has to be used constructing the merged collections.
-	 * @param identical          is the anchor given identical to the object to be merged.
-	 * @param preparationAllowed is object preparation allowed (eg. for unwrapping proxies).
-	 * @param hintMapping        the hintMapping [updated -> anchor] used to correctly merge collections.
+	 * @param updatePolicy           the update policy to use.
+	 * @param objectsToUpdate        the objectsToUpdate if UDPATE_CHOSEN policy is chosen above.
+	 * @param performPreparation     should preparation be performed (eg. for unwrapping proxies).
+	 * @param collectionEntryMapping the collectionEntryMapping [updated -> anchor] 
+	 *              used to correctly merge collections.
 	 * @return the custom policy specified by the arguments.
 	 */
 	public static IdentityFixerMergePolicy customPolicy(UpdatePolicy updatePolicy, List<Object> objectsToUpdate,
-		CollectionUpdatePolicy collectionPolicy, boolean identical, boolean preparationAllowed,
-		IdentityHashMap<Object, Object> hintMapping) {
+		boolean performPreparation,	IdentityHashMap<Object, Object> collectionEntryMapping) {
 		
-		IdentityFixerMergePolicy obj = new IdentityFixerMergePolicy();
-		obj.m_updatePolicy = updatePolicy;
+		List<Object> objs = null;
 		if (updatePolicy == UpdatePolicy.UPDATE_CHOSEN) {
-			obj.m_objectsToUpdate = new ArrayList<Object>(objectsToUpdate);
-		} else {
-			obj.m_objectsToUpdate = null;
+			objs = new ArrayList<Object>(objectsToUpdate);
 		}
-		obj.m_collectionUpdatePolicy = collectionPolicy;
-		obj.m_preparationAllowed = preparationAllowed;
-		obj.m_hintMapping = hintMapping;
+		IdentityFixerMergePolicy obj = new IdentityFixerMergePolicy(updatePolicy, objs, 
+			performPreparation, collectionEntryMapping);
 		return obj;
 	}
 		

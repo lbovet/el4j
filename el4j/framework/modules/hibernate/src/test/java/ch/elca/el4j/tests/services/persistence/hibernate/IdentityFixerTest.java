@@ -155,7 +155,7 @@ public class IdentityFixerTest {
 		assertTrue("List of children not untouched!", anchor.children == childrenList);
 		
 		// simulate giving the anchor to hibernate
-		idFixer.remerge(anchor, true);
+		idFixer.reverseMerge(anchor, true);
 		
 		// play hibernate and create an updated list
 		LinkedList<Example> updatedList = new LinkedList<Example>();
