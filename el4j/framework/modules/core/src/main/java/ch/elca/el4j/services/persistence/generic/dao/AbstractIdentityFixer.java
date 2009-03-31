@@ -528,8 +528,10 @@ public abstract class AbstractIdentityFixer {
 					savedState = (T) m_representatives.get(id);
 					isNew = (savedState == null);
 				}
-				// we don't have to merge if attached == updated, meaning that it equals the representative already
-				if (savedState == updateState) {
+				// we have to merge even if attached == updated, meaning that it equals the representative already
+				// in case we are in a 2-way merging scenario and supposed to fix the collections again!
+				// we are only save if the object was reached already, meaning in the values of the reached map.
+				if (savedState == updateState && reached.containsValue(savedState)) {
 					reached.put(updateState, savedState);
 					return savedState;
 				}

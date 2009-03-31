@@ -251,6 +251,11 @@ public abstract class AbstractIdentityFixerTest extends AbstractTestCaseBase {
 		Book b2 = m_bookDao.saveOrUpdate(b1);
 		assertEquals("Inserting keyword in original collection causes problems when persisting", 
 			6, b2.getKeywords().size());
+		
+		assertTrue("IdentityFixer has changed collection", kws == b2.getKeywords());
+		b2.getKeywords().remove(k2);
+		b2 = m_bookDao.saveOrUpdate(b2);
+		assertEquals("Deleting keyword causes problems when persisting.", 5, b2.getKeywords().size());
 	}
 	
 	/** Renames the only keyword to "another name". */
