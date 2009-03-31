@@ -6,8 +6,8 @@
 -- start with value 10 to avoid violation of the unique constraint
 -- the first few values are used by the example data
 CREATE SEQUENCE reference_sequence    INCREMENT BY 1 START WITH 10;
-CREATE SEQUENCE annotation_sequence   INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE file_sequence         INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE annotation_sequence   INCREMENT BY 1 START WITH 10;
+CREATE SEQUENCE file_sequence         INCREMENT BY 1 START WITH 10;
 
 CREATE TABLE referencesTable (
   keyId                     INTEGER        
