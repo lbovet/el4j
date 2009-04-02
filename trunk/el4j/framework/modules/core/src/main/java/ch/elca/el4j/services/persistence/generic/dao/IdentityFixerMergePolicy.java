@@ -100,9 +100,9 @@ public class IdentityFixerMergePolicy {
 	}
 	
 	/**
-	 * @return if preparation is allowed.
+	 * @return if preparation is needed.
 	 */
-	public boolean isPerformPreparation() {
+	public boolean needsPreparation() {
 		return m_performPreparation;
 	}
 	
