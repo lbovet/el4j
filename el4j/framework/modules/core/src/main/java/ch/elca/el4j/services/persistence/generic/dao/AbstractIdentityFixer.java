@@ -480,7 +480,7 @@ public abstract class AbstractIdentityFixer {
 		
 		boolean identical = isIdentical;
 		T updateState = updated;
-		if (policy.isPerformPreparation()) {
+		if (policy.needsPreparation()) {
 			// Prepare the updated object
 			updateState = (T) prepareObject(updateState);
 		}
