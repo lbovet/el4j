@@ -24,6 +24,9 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import ch.elca.el4j.util.codingsupport.Reject;
 
 
@@ -44,6 +47,11 @@ import ch.elca.el4j.util.codingsupport.Reject;
 public abstract class AbstractIntKeyIntOptimisticLockingDto
 	extends AbstractIntOptimisticLockingDto
 	implements PrimaryKeyOptimisticLockingObject {
+	
+	/**
+	 * The logger.
+	 */
+	private static Log s_logger = LogFactory.getLog(AbstractIntKeyIntOptimisticLockingDto.class);
 
 	/**
 	 * Primary key.
@@ -54,6 +62,11 @@ public abstract class AbstractIntKeyIntOptimisticLockingDto
 	 * Flag to indicate if the key is new.
 	 */
 	private boolean m_keyNew = true;
+	
+	/**
+	 * Has the hashCode value been leaked while being in transient state?
+	 */
+	private boolean m_transientHashCodeLeaked = false;
 
 	/**
 	 * @return Returns the key.
@@ -107,7 +120,18 @@ public abstract class AbstractIntKeyIntOptimisticLockingDto
 	 * {@inheritDoc}
 	 */
 	public int hashCode() {
-		return m_keyNew ? super.hashCode() : m_key;
+		if (m_keyNew) {
+			m_transientHashCodeLeaked = true;
+			return super.hashCode();
+		} else {
+			if (m_transientHashCodeLeaked) {
+				s_logger.error("hashCode() has be called once on transient state and once on persistent state  "
+					+ "of object '" + this.toString() + "' (" + getClass().toString() + "). "
+					+ "This can happen if you insert a transient object into a collection and persist them afterwards. "
+					+ "Save the objects before you insert them into a collection!");
+			}
+			return m_key;
+		}
 	}
 
 	/**
@@ -117,9 +141,6 @@ public abstract class AbstractIntKeyIntOptimisticLockingDto
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
-			return false;
-		}
 		/* The following is a solution that works for hibernate lazy loading proxies.
 		if (getClass() != HibernateProxyHelper.getClassWithoutInitializingProxy(obj)) {
 			return false;
@@ -128,7 +149,7 @@ public abstract class AbstractIntKeyIntOptimisticLockingDto
 			final AbstractIntKeyIntOptimisticLockingDto other = (AbstractIntKeyIntOptimisticLockingDto) obj;
 			if (!isKeyNew() && !other.isKeyNew()) {
 				return getKey() == other.getKey() && getClass() == other.getClass();
-			} 
+			}
 		}
 		return false;
 	}
