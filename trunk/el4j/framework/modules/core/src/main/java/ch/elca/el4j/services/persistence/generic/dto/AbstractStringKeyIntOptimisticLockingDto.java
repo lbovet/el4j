@@ -17,7 +17,13 @@
 
 package ch.elca.el4j.services.persistence.generic.dto;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import ch.elca.el4j.util.codingsupport.ObjectUtils;
 
@@ -34,19 +40,30 @@ import ch.elca.el4j.util.codingsupport.ObjectUtils;
  *
  * @author Martin Zeltner (MZE)
  */
+@MappedSuperclass
 public abstract class AbstractStringKeyIntOptimisticLockingDto
 	extends AbstractIntOptimisticLockingDto
 	implements PrimaryKeyOptimisticLockingObject {
 	
 	/**
+	 * The logger.
+	 */
+	private static Log s_logger = LogFactory.getLog(AbstractStringKeyIntOptimisticLockingDto.class);
+	
+	/**
 	 * Primary key.
 	 */
-	@Id
 	private String m_key;
+	
+	/**
+	 * Has the hashCode value been leaked while being in transient state?
+	 */
+	private boolean m_transientHashCodeLeaked = false;
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Transient
 	public boolean isKeyNew() {
 		return m_key == null;
 	}
@@ -54,22 +71,25 @@ public abstract class AbstractStringKeyIntOptimisticLockingDto
 	/**
 	 * @return Returns the key.
 	 */
-	public final String getKey() {
+	@Id
+	@Column(name = "KEYID")
+	public String getKey() {
 		return m_key;
-	}
-
-	/**
-	 * @param key The key to set.
-	 */
-	public final void setKey(String key) {
-		m_key = key;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Object getKeyAsObject() {
+	@Transient
+	public Object getKeyAsObject() {
 		return isKeyNew() ? null : getKey();
+	}
+
+	/**
+	 * @param key The key to set.
+	 */
+	public void setKey(String key) {
+		m_key = key;
 	}
 
 	/**
@@ -84,13 +104,27 @@ public abstract class AbstractStringKeyIntOptimisticLockingDto
 	 * {@inheritDoc}
 	 */
 	public int hashCode() {
-		return (m_key != null) ? m_key.hashCode() : 0;
+		if (m_key == null) {
+			m_transientHashCodeLeaked = true;
+			return super.hashCode();
+		} else {
+			if (m_transientHashCodeLeaked) {
+				s_logger.error("hashCode() has be called once on transient state and once on persistent state  "
+					+ "of object '" + this.toString() + "' (" + getClass().toString() + "). "
+					+ "This can happen if you insert a transient object into a collection and persist them afterwards. "
+					+ "Save the objects before you insert them into a collection!");
+			}
+			return m_key.hashCode();
+		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
 		if (obj instanceof AbstractStringKeyIntOptimisticLockingDto) {
 			AbstractStringKeyIntOptimisticLockingDto other
 				= (AbstractStringKeyIntOptimisticLockingDto) obj;
