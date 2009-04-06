@@ -46,7 +46,7 @@ import org.hibernate.validator.NotNull;
 
 import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.core.metadata.ContainedClass;
-import ch.elca.el4j.services.persistence.hibernate.dto.AbstractIndexedIntKeyIntOptimisticLockingDto;
+import ch.elca.el4j.services.persistence.generic.dto.AbstractIntKeyIntOptimisticLockingDto;
 
 /**
  * Reference domain object. This is the base reference class and describes a
@@ -68,7 +68,7 @@ import ch.elca.el4j.services.persistence.hibernate.dto.AbstractIndexedIntKeyIntO
 @Table(name = "REFERENCESTABLE")
 @SequenceGenerator(name = "keyid_generator",
 	sequenceName = "reference_sequence")
-public abstract class Reference extends AbstractIndexedIntKeyIntOptimisticLockingDto {
+public abstract class Reference extends AbstractIntKeyIntOptimisticLockingDto {
 	/**
 	 * Name of the reference (book title, ...).
 	 */
