@@ -14,12 +14,15 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.tests.security.sample;
 
-import org.acegisecurity.annotation.Secured;
+package ch.elca.el4j.tests.services.security.sample;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 /**
- * Sample service for access tests.
+ * Sample service implementation.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -30,14 +33,18 @@ import org.acegisecurity.annotation.Secured;
  *
  * @author Andreas Pfenninger (APR)
  */
-@Secured({"ROLE_TELLER"})
-public interface SampleService  {
-
+public class SampleServiceImpl implements SampleService {
+	
+	/** The static logger. */
+	private static Log s_logger = LogFactory.getLog(SampleServiceImpl.class);
+	
 	/**
-	 * @param i a numer.
-	 * @return i + 1
+	 * {@inheritDoc}
 	 */
-	@Secured({"ROLE_PERMISSION_ADDONE"})
-	public int addOne(int i);
+	public int addOne(int i) {
+		int result = i + 1;
+		s_logger.debug(i + " + 1 = " + result);
+		return result;
+	}
 
 }

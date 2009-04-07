@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.tests.security;
+package ch.elca.el4j.tests.services.security;
 
 
 import javax.crypto.KeyGenerator;
