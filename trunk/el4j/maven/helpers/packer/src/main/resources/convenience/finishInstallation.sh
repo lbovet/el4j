@@ -8,11 +8,11 @@ echo
 
 if [ ! -e ~/.bash_profile ] ; then
 	cat aliases.sh > ~/.bash_profile
-	echo "Aliases installed."
+	echo "Aliases installed. Please check ~/.bash_profile if everything is OK."
 else
 	if [ $(grep "EL4J aliases" ~/.bash_profile | wc -l) -eq 0 ] ; then
 		cat aliases.sh >> ~/.bash_profile
-		echo "Aliases installed."
+		echo "Aliases installed. Please check ~/.bash_profile if everything is OK."
 	else
 		echo "Skipping .bash_profile because it already contains marker comment 'EL4J aliases'"
 		echo "Aliases not installed."
