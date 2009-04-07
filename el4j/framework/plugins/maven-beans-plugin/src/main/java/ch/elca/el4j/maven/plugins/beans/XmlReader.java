@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.plugins.beans;
+package ch.elca.el4j.maven.plugins.beans;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,7 +24,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Reads configuration from .java files.
+ * Reader for xml files.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL: https://el4j.svn.sourceforge.net/svnroot/el4j/trunk/el4j/etc/eclipse/codeTemplates.xml $",
@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
  *
  * @author David Bernhard (DBD)
  */
-public class JavaReader extends AbstractReader {
+public class XmlReader extends AbstractReader {
 
 	/** {@inheritDoc} */
 	@Override
@@ -50,7 +50,7 @@ public class JavaReader extends AbstractReader {
 			throw new RuntimeException(e);
 		}
 	}
-
+	
 	/**
 	 * STATE : We are searching for a marker to begin reading at.
 	 */
@@ -90,13 +90,7 @@ public class JavaReader extends AbstractReader {
 		
 		/** {@inheritDoc} */
 		public LineReadingState processLine(String line) {
-			final String regex = ".*\"(.*)\".*";
-			Pattern p = Pattern.compile(regex);
-			Matcher m = p.matcher(line);
-			if (m.matches()) {
-				m_data.add(m.group(1));
-			}
-			if (line.contains("}")) {
+			if (line.contains("</")) {
 				String[] result = m_data.toArray(new String[0]);
 				if (m_include) {
 					m_inclusive = result;
@@ -105,6 +99,12 @@ public class JavaReader extends AbstractReader {
 				}
 				return new SearchingState();
 			} else {
+				final String regex = "[ \t]*([^, \t]*)[,]?[ \t]*";
+				Pattern p = Pattern.compile(regex);
+				Matcher m = p.matcher(line);
+				if (m.matches()) {
+					m_data.add(m.group(1));
+				}
 				return this;
 			}
 		}

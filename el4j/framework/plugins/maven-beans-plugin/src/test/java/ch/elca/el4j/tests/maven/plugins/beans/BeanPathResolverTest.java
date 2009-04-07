@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.plugins.beandoc.test;
+package ch.elca.el4j.tests.maven.plugins.beans;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -22,7 +22,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.elca.el4j.plugins.beans.BeanPathResolver;
+import ch.elca.el4j.maven.plugins.beans.BeanPathResolver;
 
 import junit.framework.TestCase;
 
