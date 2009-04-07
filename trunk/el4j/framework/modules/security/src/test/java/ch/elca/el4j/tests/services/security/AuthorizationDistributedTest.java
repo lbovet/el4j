@@ -14,35 +14,41 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.tests.security;
+package ch.elca.el4j.tests.services.security;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import org.acegisecurity.AccessDeniedException;
+import org.acegisecurity.Authentication;
 import org.acegisecurity.AuthenticationCredentialsNotFoundException;
-import org.acegisecurity.AuthenticationException;
+import org.acegisecurity.BadCredentialsException;
 import org.acegisecurity.GrantedAuthority;
 import org.acegisecurity.GrantedAuthorityImpl;
-import org.acegisecurity.context.SecurityContext;
-import org.acegisecurity.context.SecurityContextHolder;
-import org.acegisecurity.context.SecurityContextImpl;
 import org.acegisecurity.providers.TestingAuthenticationToken;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
+import ch.elca.el4j.services.security.authentication.AuthenticationService;
 import ch.elca.el4j.services.security.encryption.RSACipher;
-import ch.elca.el4j.tests.security.provider.ExtendedTestingAuthenticationProvider;
-import ch.elca.el4j.tests.security.sample.SampleService;
+import ch.elca.el4j.tests.services.security.provider.ExtendedTestingAuthenticationProvider;
+import ch.elca.el4j.tests.services.security.sample.SampleService;
+import ch.elca.el4j.tests.services.security.server.AuthorizationServer;
 
 // Checkstyle: EmptyBlock off
 // Checkstyle: MagicNumber off
 
 /**
- * Tests various logins and authorization in a local environment.
+ * Tests various logins and authorization in a distributed environment. <br>
+ * <ul>
+ * <li>first runs AuthorizationServer (server part, no server case)</li>
+ * <li>then runs AuthorizationTestDistributed as unit server</li>
+ * </ul>
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -53,52 +59,84 @@ import ch.elca.el4j.tests.security.sample.SampleService;
  *
  * @author Raphael Boog (RBO)
  */
-public class AuthorizationLocalTest {
-	
-	/** The static logger. */
+public class AuthorizationDistributedTest {
+	/**
+	 * Private logger.
+	 */
 	private static Log s_logger = LogFactory
-		.getLog(AuthorizationLocalTest.class);
-
+		.getLog(AuthorizationDistributedTest.class);
+	
 	/**
 	 * Method access role.
 	 */
 	private static final String METHOD_ACCESS_ROLE = "ROLE_PERMISSION_ADDONE";
 
 	/**
-	 * Config locations.
+	 * Server config locations.
 	 */
-	private String[] m_configLocations = new String[] {
+	private String[] m_configLocationsServer = new String[] {
+		"classpath*:mandatory/*.xml",
 		"classpath:optional/security-attributes.xml",
+		"classpath:scenarios/services/sampleService.xml",
 		"classpath:scenarios/server/applicationContextTest.xml",
-		"classpath:scenarios/services/sampleService.xml"};
+		"classpath:scenarios/securityscope/distributed-security"
+			+ "-scope-server.xml",
+		"classpath:optional/rmi-protocol-config.xml",
+		"classpath:scenarios/services/serviceExporter.xml"};
+
+	/**
+	 * Client config locations.
+	 */
+	private String[] m_configLocationsClient = new String[] {
+		"classpath*:mandatory/*.xml",
+		"classpath:scenarios/services/serviceProxy.xml",
+		"classpath:scenarios/securityscope/"
+			+ "distributed-security-scope-client.xml",
+		"classpath:optional/rmi-protocol-config.xml"};
 
 	/**
 	 * Application context.
 	 */
-	private ApplicationContext m_ac;
+	private ConfigurableApplicationContext m_ac;
 
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Before
+	public void setUp() {
+		s_logger.debug("Starting server.");
+		AuthorizationServer.main(m_configLocationsServer);
+		s_logger.debug("Server started. Loading client context.");
+
+		m_ac = new ModuleApplicationContext(m_configLocationsClient, false);
+		s_logger.debug("Client context loaded.");
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@After
+	public void tearDown() {
+		AuthorizationServer.close();
+		m_ac.close();
+	}
+	
 	/**
 	 * Test tries to execute the target method without authentication.
 	 *
-	 * @throws Exception If something.
+	 * @throws Exception
+	 *             If something.
 	 */
 	@Test
 	public void testMethodCallWithoutLogin() throws Exception {
-
-		s_logger.debug("Loading Application Context.");
-		m_ac = new ModuleApplicationContext(m_configLocations, false);
-		s_logger.debug("Application Context loaded.");
-
 		try {
 			getSampleService().addOne(1234);
-			fail("User should not be able to execute this method without "
-					+ "login");
+			fail("User should not be able to execute this method "
+				+ "without login");
 		} catch (AuthenticationCredentialsNotFoundException e) {
 			// o.k.
-		}catch (Exception e) {
-			System.out.println(e);
 		}
-
 	}
 
 	/**
@@ -109,17 +147,11 @@ public class AuthorizationLocalTest {
 	 */
 	@Test
 	public void testCorrectAuthorization() throws Exception {
-
-		s_logger.debug("Loading Application Context.");
-		m_ac = new ModuleApplicationContext(m_configLocations, false);
-		s_logger.debug("Application Context loaded.");
-
 		createSecureContext("server", "server", METHOD_ACCESS_ROLE);
 		int result = getSampleService().addOne(1234);
 		assertEquals(result, 1235);
-
 	}
-
+	
 	/**
 	 * Test does a correct authorization. Then it does a remote call to the
 	 * sample service. Afterwards, it logs out, tries to call the method again
@@ -129,24 +161,18 @@ public class AuthorizationLocalTest {
 	 */
 	@Test
 	public void testCorrectAuthorizationAfterLogoutNoAccess() throws Exception {
-
-		s_logger.debug("Loading Application Context.");
-		m_ac = new ModuleApplicationContext(m_configLocations, false);
-		s_logger.debug("Application Context loaded.");
-
 		createSecureContext("server", "server", METHOD_ACCESS_ROLE);
 		int result = getSampleService().addOne(1234);
 		assertEquals(result, 1235);
 
-		destroySecureContext();
+		destroySecureContext("server", "server");
 
 		try {
 			getSampleService().addOne(1234);
 			fail("An AccessDeniedException should have been thrown.");
-		} catch (AuthenticationCredentialsNotFoundException e) {
+		} catch (AccessDeniedException e) {
 			// ok.
 		}
-
 	}
 
 	/**
@@ -158,12 +184,7 @@ public class AuthorizationLocalTest {
 	 */
 	@Test
 	public void testFailedAuthorization() throws Exception {
-
-		s_logger.debug("Loading Application Context.");
-		m_ac = new ModuleApplicationContext(m_configLocations, false);
-		s_logger.debug("Application Context loaded.");
-
-		createSecureContext("server", "server", "WRONG_ROLE");
+		createSecureContext("test4", "test4", "ROLE_NO_PERMISSION");
 
 		try {
 			getSampleService().addOne(1234);
@@ -181,32 +202,32 @@ public class AuthorizationLocalTest {
 	 */
 	@Test
 	public void testFailedAuthentication() throws Exception {
-
-		s_logger.debug("Loading Application Context.");
-		m_ac = new ModuleApplicationContext(m_configLocations, false);
-		s_logger.debug("Application Context loaded.");
-
-		createSecureContext("server", "wrong_credential", "SOME_ROLE");
-
 		try {
-			getSampleService().addOne(1234);
-			fail("An AuthenticationException should have been thrown.");
-		} catch (AuthenticationException e) {
+			createSecureContext("Different username", "than password", "");
+			fail("User should not be able to authenticate since the password "
+					+ "is not valid.");
+		} catch (BadCredentialsException e) {
 			// o.k.
 		}
-
 	}
 
 	/**
-	 * Returns the local authentication provider.
+	 * @return Returns the authentication service.
+	 */
+	private AuthenticationService getAuthenticationService() {
+		return (AuthenticationService) m_ac.getBean("authenticationService");
+	}
+
+	/**
+	 * Returns the authentication provider of the authorization server.
 	 * 
-	 * @return The ExtendedTestingAuthenticationProvider of this application
-	 * context.
+	 * @return The ExtendedTestingAuthenticationProvider of the server.
 	 */
 	private ExtendedTestingAuthenticationProvider getAuthenticationProvider() {
 		
 		return (ExtendedTestingAuthenticationProvider)
-			m_ac.getBean("extendedTestingAuthenticationProvider");
+			AuthorizationServer.getApplicationContext().
+			getBean("extendedTestingAuthenticationProvider");
 	}
 	
 	/**
@@ -217,8 +238,8 @@ public class AuthorizationLocalTest {
 	}
 
 	/**
-	 * Create a secure context, i.e. login, with a TestingAuthenticationToken,
-	 * i.e. a token where the user can define which roles it possesses.
+	 * Create a secure context with a TestingAuthenticationToken, i.e. a token
+	 * where the user can define which roles it possesses.
 	 *
 	 * @param principal
 	 *            The username
@@ -227,26 +248,37 @@ public class AuthorizationLocalTest {
 	 * @param role
 	 *            The role
 	 */
-	private void createSecureContext(String principal,
-		String credential, String role) {
+	private void createSecureContext(String principal, String credential,
+		String role) {
 		
 		String publicKey = getAuthenticationProvider().getPublicKey();
 		RSACipher rsaCipher = new RSACipher(publicKey);
 		String encryptedCredential = rsaCipher.encrypt(credential);
 		
-		TestingAuthenticationToken auth = new TestingAuthenticationToken(
-			principal, encryptedCredential, new GrantedAuthority[] {
+		Authentication auth = new TestingAuthenticationToken(principal,
+			encryptedCredential, new GrantedAuthority[] {
 				new GrantedAuthorityImpl("ROLE_TELLER"),
 				new GrantedAuthorityImpl(role)});
-		SecurityContext sc = SecurityContextHolder.getContext();
-		sc.setAuthentication(auth);
+
+		getAuthenticationService().authenticate(auth);
 	}
 
 	/**
 	 * Delete the secure context, i.e. logging out the user.
+	 *
+	 * @param principal Is the principal.
+	 * @param credential is the credential.
 	 */
-	private void destroySecureContext() {
-		SecurityContextHolder.setContext(new SecurityContextImpl());
+	private void destroySecureContext(String principal, String credential) {
+		
+		String publicKey = getAuthenticationProvider().getPublicKey();
+		RSACipher rsaCipher = new RSACipher(publicKey);
+		String encryptedCredential = rsaCipher.encrypt(credential);
+		
+		Authentication auth = new TestingAuthenticationToken(principal,
+			encryptedCredential, new GrantedAuthority[]{});
+		
+		getAuthenticationService().authenticate(auth);
 	}
 }
 //Checkstyle: EmptyBlock on

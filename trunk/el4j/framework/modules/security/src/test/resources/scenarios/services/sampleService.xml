@@ -9,6 +9,6 @@
 	<!-- $Author$ -->
 	
 	<bean id="sampleService"
-		class="ch.elca.el4j.tests.security.sample.SampleServiceImpl"/>
+		class="ch.elca.el4j.tests.services.security.sample.SampleServiceImpl"/>
 
 </beans>

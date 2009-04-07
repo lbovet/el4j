@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.tests.security.server;
+package ch.elca.el4j.tests.services.security.server;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

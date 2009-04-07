@@ -18,7 +18,7 @@
 	<!-- ~~~~~~~~~~~~~~~~~~~~ AUTHENTICATION DEFINITIONS ~~~~~~~~~~~~~~~~~~ -->
 	<!-- This authentication provider accepts any presented TestingAuthenticationToken -->
 	<bean id="extendedTestingAuthenticationProvider"
-		class="ch.elca.el4j.tests.security.provider.ExtendedTestingAuthenticationProvider"/>
+		class="ch.elca.el4j.tests.services.security.provider.ExtendedTestingAuthenticationProvider"/>
 	<!-- The authentication manager that iterates through our only authentication provider -->
 	<bean id="authenticationManager"
 		class="org.acegisecurity.providers.ProviderManager">

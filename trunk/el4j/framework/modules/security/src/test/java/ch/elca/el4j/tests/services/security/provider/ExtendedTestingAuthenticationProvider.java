@@ -15,7 +15,7 @@
  * For alternative licensing, please contact info@elca.ch
  */
 
-package ch.elca.el4j.tests.security.provider;
+package ch.elca.el4j.tests.services.security.provider;
 
 import org.acegisecurity.Authentication;
 import org.acegisecurity.AuthenticationException;
