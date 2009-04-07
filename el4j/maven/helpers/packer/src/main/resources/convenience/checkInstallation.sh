@@ -21,5 +21,5 @@ echo expected output:
 echo Must print out the version number of a Java 5 JDK or newer.
 echo Must print out the same version number as above.
 echo Must print out the version "2.0.9" or newer.
-echo Must print something like -Xmx1024M -Xss128k -XX:MaxPermSize=512M -Duser.language=en -Duser.region=US
+echo Must print something like -Xmx1024M -Xss128k -XX:MaxPermSize=256M -Duser.language=en -Duser.region=US
  
