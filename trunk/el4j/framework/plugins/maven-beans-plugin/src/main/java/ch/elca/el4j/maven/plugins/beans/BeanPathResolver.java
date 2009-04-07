@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.plugins.beans;
+package ch.elca.el4j.maven.plugins.beans;
 
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -24,9 +24,9 @@ import java.util.List;
 import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.core.context.ModuleApplicationContextConfiguration;
 import ch.elca.el4j.core.context.ModuleApplicationContextUtils;
-import ch.elca.el4j.plugins.beans.BeansMojo.LogCallback;
-import ch.elca.el4j.plugins.beans.resolve.Resolver;
-import ch.elca.el4j.plugins.beans.resolve.ResolverManager;
+import ch.elca.el4j.maven.plugins.beans.BeansMojo.LogCallback;
+import ch.elca.el4j.maven.plugins.beans.resolve.Resolver;
+import ch.elca.el4j.maven.plugins.beans.resolve.ResolverManager;
 
 /**
  * Creates a bean path (array of beans files) from a ModuleApplicationContext -

@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.plugins.beans;
+package ch.elca.el4j.maven.plugins.beans;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +29,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 
-import ch.elca.el4j.plugins.beans.resolve.ResolverManager;
+import ch.elca.el4j.maven.plugins.beans.resolve.ResolverManager;
 
 /**
  * The mojo to extract beans from a project.
