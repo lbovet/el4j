@@ -1,4 +1,4 @@
-package ch.elca.el4j.services.debug;
+package ch.elca.el4j.tests.services.debug;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,6 +8,11 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+import ch.elca.el4j.services.debug.BshCommandLineLauncher;
+import ch.elca.el4j.services.debug.ResultHolder;
+import ch.elca.el4j.services.debug.ShellExecutor;
+import ch.elca.el4j.services.debug.ShellExecutorImpl;
+
 public class ShellExecutorTest {
 
 	@Test
@@ -15,7 +20,7 @@ public class ShellExecutorTest {
 		ShellExecutor se = new ShellExecutorImpl();
 		
 		se.eval("bsh.show=true;");
-		Object result = se.eval("System.out.println(\"hallo welt\"); ii=10;");
+		Object result = se.eval("System.out.println(\"hello world\"); ii=10;");
 		System.out.println("result:"+result);
 	}
 	
