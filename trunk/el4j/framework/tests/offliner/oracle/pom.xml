@@ -157,7 +157,7 @@
 									<goal>java</goal>
 								</goals>
 								<configuration>
-									<mainClass>ch.elca.el4j.services.persistence.hibernate.offlining.test.runner.TestStarter</mainClass>
+									<mainClass>ch.elca.el4j.tests.services.persistence.hibernate.offlining.runner.TestStarter</mainClass>
 									<cleanupDaemonThreads>false</cleanupDaemonThreads>
 								</configuration>
 							</execution>
@@ -175,7 +175,7 @@
 									<goal>java</goal>
 								</goals>
 								<configuration>
-									<mainClass>ch.elca.el4j.services.persistence.hibernate.offlining.test.runner.TestStopper</mainClass>
+									<mainClass>ch.elca.el4j.tests.services.persistence.hibernate.offlining.runner.TestStopper</mainClass>
 									<cleanupDaemonThreads>true</cleanupDaemonThreads>
 								</configuration>
 							</execution>

@@ -33,7 +33,7 @@
 
 	<!-- Mapped is separate for local and remote. -->
 	
-	<bean id="typed" class="ch.elca.el4j.services.persistence.hibernate.offlining.test.OracleTypedImpl" />
+	<bean id="typed" class="ch.elca.el4j.tests.services.persistence.hibernate.offlining.OracleTypedImpl" />
 	
 	<bean id="uniqueKeyed" class="ch.elca.el4j.services.persistence.hibernate.offlining.objectwrapper.impl.UniqueKeyedImpl" />
 	

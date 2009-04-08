@@ -162,7 +162,7 @@
 									<goal>java</goal>
 								</goals>
 								<configuration>
-									<mainClass>ch.elca.el4j.services.persistence.hibernate.offlining.test.runner.TestStarter</mainClass>
+									<mainClass>ch.elca.el4j.tests.services.persistence.hibernate.offlining.runner.TestStarter</mainClass>
 									<commandlineArgs>${el4j.project.tools} 1527 ${project.build.directory}</commandlineArgs>
 									<cleanupDaemonThreads>false</cleanupDaemonThreads>
 									<classpathScope>test</classpathScope>
@@ -182,7 +182,7 @@
 									<goal>java</goal>
 								</goals>
 								<configuration>
-									<mainClass>ch.elca.el4j.services.persistence.hibernate.offlining.test.runner.TestStopper</mainClass>
+									<mainClass>ch.elca.el4j.tests.services.persistence.hibernate.offlining.runner.TestStopper</mainClass>
 									<cleanupDaemonThreads>true</cleanupDaemonThreads>
 									<classpathScope>test</classpathScope>
 								</configuration>
