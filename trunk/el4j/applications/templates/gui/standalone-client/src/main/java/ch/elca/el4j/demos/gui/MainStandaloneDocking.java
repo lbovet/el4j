@@ -6,9 +6,9 @@ import com.jgoodies.looks.plastic.theme.ExperienceBlue;
 
 import ch.elca.el4j.core.context.ModuleApplicationContextConfiguration;
 import ch.elca.el4j.demos.gui.exceptions.ExampleExceptionHandler;
-import ch.elca.el4j.gui.swing.GUIApplication;
-import ch.elca.el4j.gui.swing.exceptions.Exceptions;
-import ch.elca.el4j.gui.swing.splash.ImageSplashScreen;
+import ch.elca.el4j.services.gui.swing.GUIApplication;
+import ch.elca.el4j.services.gui.swing.exceptions.Exceptions;
+import ch.elca.el4j.services.gui.swing.splash.ImageSplashScreen;
 
 
 

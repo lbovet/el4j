@@ -32,7 +32,7 @@ import org.springframework.stereotype.Component;
 import ch.elca.el4j.core.context.annotations.LazyInit;
 import ch.elca.el4j.demos.gui.events.SearchProgressEvent;
 import ch.elca.el4j.demos.gui.events.SearchRefDBEvent;
-import ch.elca.el4j.gui.swing.GUIApplication;
+import ch.elca.el4j.services.gui.swing.GUIApplication;
 
 /**
  * This class represents a simple search dialog.

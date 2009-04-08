@@ -33,8 +33,8 @@ import com.silvermindsoftware.hitch.BinderManager;
 import ch.elca.el4j.core.context.annotations.LazyInit;
 import ch.elca.el4j.demos.model.DefaultPerson;
 import ch.elca.el4j.demos.model.Person;
-import ch.elca.el4j.gui.swing.cookswing.binding.Bindable;
-import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
+import ch.elca.el4j.services.gui.model.mixin.PropertyChangeListenerMixin;
+import ch.elca.el4j.services.gui.swing.cookswing.binding.Bindable;
 
 import cookxml.cookswing.CookSwing;
 

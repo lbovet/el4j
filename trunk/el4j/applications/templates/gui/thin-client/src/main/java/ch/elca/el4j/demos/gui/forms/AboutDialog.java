@@ -41,7 +41,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import ch.elca.el4j.core.context.annotations.LazyInit;
-import ch.elca.el4j.gui.swing.GUIApplication;
+import ch.elca.el4j.services.gui.swing.GUIApplication;
 
 /**
  * A standard About dialog.

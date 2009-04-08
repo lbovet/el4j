@@ -33,9 +33,9 @@ import com.silvermindsoftware.hitch.annotations.ModelObject;
 import ch.elca.el4j.core.context.annotations.LazyInit;
 import ch.elca.el4j.demos.model.DefaultPerson;
 import ch.elca.el4j.demos.model.Person;
-import ch.elca.el4j.gui.swing.GUIApplication;
-import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
-import ch.elca.el4j.model.mixin.SaveRestoreCapability;
+import ch.elca.el4j.services.gui.model.mixin.PropertyChangeListenerMixin;
+import ch.elca.el4j.services.gui.model.mixin.SaveRestoreCapability;
+import ch.elca.el4j.services.gui.swing.GUIApplication;
 
 import net.java.dev.designgridlayout.DesignGridLayout;
 

@@ -16,7 +16,7 @@
  */
 package ch.elca.el4j.demos.gui.exceptions;
 
-import ch.elca.el4j.gui.swing.exceptions.Handler;
+import ch.elca.el4j.services.gui.swing.exceptions.Handler;
 
 /**
  * This class represents an example exception handler.

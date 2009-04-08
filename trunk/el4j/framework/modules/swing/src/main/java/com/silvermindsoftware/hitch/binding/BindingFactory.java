@@ -31,7 +31,7 @@ import org.jdesktop.beansbinding.Property;
 import com.silvermindsoftware.hitch.validation.ValidatingBindingListener;
 import com.silvermindsoftware.hitch.validation.response.ValidationResponder;
 
-import ch.elca.el4j.gui.swing.GUIApplication;
+import ch.elca.el4j.services.gui.swing.GUIApplication;
 import ch.elca.el4j.util.config.GenericConfig;
 
 /**

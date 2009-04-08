@@ -34,8 +34,8 @@ import com.silvermindsoftware.hitch.binding.BindingFactory;
 import com.silvermindsoftware.hitch.binding.PropertyUtil;
 import com.silvermindsoftware.hitch.validation.ValidatingBindingListener;
 
-import ch.elca.el4j.gui.swing.GUIApplication;
-import ch.elca.el4j.model.tablemodel.TableSorter;
+import ch.elca.el4j.services.gui.model.tablemodel.TableSorter;
+import ch.elca.el4j.services.gui.swing.GUIApplication;
 import ch.elca.el4j.util.config.GenericConfig;
 
 /**

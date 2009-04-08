@@ -43,7 +43,7 @@ import ch.elca.el4j.demos.gui.widgets.IntegerField;
 import ch.elca.el4j.demos.model.DefaultPerson;
 import ch.elca.el4j.demos.model.MyNumber;
 import ch.elca.el4j.demos.model.Person;
-import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
+import ch.elca.el4j.services.gui.model.mixin.PropertyChangeListenerMixin;
 
 import net.java.dev.designgridlayout.DesignGridLayout;
 

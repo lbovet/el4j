@@ -36,7 +36,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import ch.elca.el4j.core.context.annotations.LazyInit;
-import ch.elca.el4j.gui.swing.GUIApplication;
+import ch.elca.el4j.services.gui.swing.GUIApplication;
 
 @LazyInit
 @Component("helpDialog")

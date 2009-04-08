@@ -39,8 +39,8 @@ import org.jdesktop.swingx.JXLoginPane.JXLoginFrame;
 import org.jdesktop.swingx.auth.LoginService;
 
 import ch.elca.el4j.demos.gui.extension.AbstractGUIExtension;
-import ch.elca.el4j.gui.swing.exceptions.Exceptions;
-import ch.elca.el4j.gui.swing.exceptions.Handler;
+import ch.elca.el4j.services.gui.swing.exceptions.Exceptions;
+import ch.elca.el4j.services.gui.swing.exceptions.Handler;
 
 /**
  * This GUI extension shows security related demos.

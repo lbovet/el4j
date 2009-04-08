@@ -22,7 +22,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JTextField;
 
-import ch.elca.el4j.gui.swing.GUIApplication;
+import ch.elca.el4j.services.gui.swing.GUIApplication;
 
 
 /**
