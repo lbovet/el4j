@@ -25,6 +25,7 @@ import static org.junit.Assert.*;
 import ch.elca.el4j.gui.swing.actions.ChildActions;
 import ch.elca.el4j.gui.swing.actions.GrandparentActions;
 import ch.elca.el4j.gui.swing.actions.ParentActions;
+import ch.elca.el4j.services.gui.swing.ActionsContext;
 
 import sun.awt.HeadlessToolkit;
 

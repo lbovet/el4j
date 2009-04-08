@@ -13,8 +13,8 @@ import org.jdesktop.observablecollections.ObservableListListener;
 import org.junit.Test;
 import org.springframework.aop.framework.Advised;
 
-import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
-import ch.elca.el4j.model.mixin.SaveRestoreCapability;
+import ch.elca.el4j.services.gui.model.mixin.PropertyChangeListenerMixin;
+import ch.elca.el4j.services.gui.model.mixin.SaveRestoreCapability;
 import ch.elca.el4j.util.codingsupport.AopHelper;
 
 import com.silvermindsoftware.hitch.events.PropertyChangeListenerCapability;

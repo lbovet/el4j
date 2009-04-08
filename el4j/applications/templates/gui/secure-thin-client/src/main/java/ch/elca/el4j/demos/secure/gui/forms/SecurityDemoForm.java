@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
 
 import ch.elca.el4j.core.context.annotations.LazyInit;
 import ch.elca.el4j.demos.secure.gui.PrivateData;
-import ch.elca.el4j.gui.swing.GUIApplication;
+import ch.elca.el4j.services.gui.swing.GUIApplication;
 
 /**
  * This class shows how to use the acegi security framework.

@@ -26,7 +26,7 @@ import org.jdesktop.swingbinding.validation.ValidationCapability;
 
 import com.silvermindsoftware.hitch.binding.PropertyUtil;
 
-import ch.elca.el4j.gui.swing.GUIApplication;
+import ch.elca.el4j.services.gui.swing.GUIApplication;
 
 /**
  * A validating cell renderer for comboboxes.

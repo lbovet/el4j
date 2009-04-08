@@ -33,11 +33,11 @@ import com.silvermindsoftware.hitch.annotations.ModelObject;
 import ch.elca.el4j.apps.refdb.dom.Reference;
 import ch.elca.el4j.core.context.annotations.LazyInit;
 import ch.elca.el4j.demos.gui.events.ReferenceUpdateEvent;
-import ch.elca.el4j.gui.swing.GUIApplication;
-import ch.elca.el4j.gui.swing.frames.ApplicationFrame;
-import ch.elca.el4j.gui.swing.frames.ApplicationFrameAware;
-import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
-import ch.elca.el4j.model.mixin.SaveRestoreCapability;
+import ch.elca.el4j.services.gui.model.mixin.PropertyChangeListenerMixin;
+import ch.elca.el4j.services.gui.model.mixin.SaveRestoreCapability;
+import ch.elca.el4j.services.gui.swing.GUIApplication;
+import ch.elca.el4j.services.gui.swing.frames.ApplicationFrame;
+import ch.elca.el4j.services.gui.swing.frames.ApplicationFrameAware;
 
 import net.java.dev.designgridlayout.DesignGridLayout;
 

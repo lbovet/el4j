@@ -20,7 +20,7 @@ import org.bushe.swing.event.EventBus;
 import org.jdesktop.application.Action;
 
 import ch.elca.el4j.demos.gui.events.ExampleEvent;
-import ch.elca.el4j.gui.swing.GUIApplication;
+import ch.elca.el4j.services.gui.swing.GUIApplication;
 
 /**
  * Base class for main forms.

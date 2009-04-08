@@ -31,7 +31,7 @@ import org.jdesktop.swingbinding.SwingBindings;
 import com.silvermindsoftware.hitch.binding.AbstractBindingCreator;
 import com.silvermindsoftware.hitch.binding.PropertyUtil;
 
-import ch.elca.el4j.gui.swing.GUIApplication;
+import ch.elca.el4j.services.gui.swing.GUIApplication;
 import ch.elca.el4j.util.config.GenericConfig;
 
 /**

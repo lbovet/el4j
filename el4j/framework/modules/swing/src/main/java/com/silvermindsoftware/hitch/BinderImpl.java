@@ -41,7 +41,7 @@ import com.silvermindsoftware.hitch.meta.ModelMeta;
 import com.silvermindsoftware.hitch.validation.ValidatingBindingListener;
 import com.silvermindsoftware.hitch.validation.response.ValidationResponder;
 
-import ch.elca.el4j.gui.swing.GUIApplication;
+import ch.elca.el4j.services.gui.swing.GUIApplication;
 import ch.elca.el4j.util.config.GenericConfig;
 
 /**

@@ -21,8 +21,8 @@ import java.util.List;
 import javax.swing.JMenuBar;
 import javax.swing.JToolBar;
 
-import ch.elca.el4j.gui.swing.ActionsContext;
-import ch.elca.el4j.gui.swing.GUIApplication;
+import ch.elca.el4j.services.gui.swing.ActionsContext;
+import ch.elca.el4j.services.gui.swing.GUIApplication;
 
 /**
  * This interface provides extension points to the GUI template (internal use only!)

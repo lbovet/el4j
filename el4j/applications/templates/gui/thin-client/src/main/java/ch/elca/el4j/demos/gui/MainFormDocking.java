@@ -36,9 +36,9 @@ import org.jdesktop.application.ResourceMap;
 import org.noos.xing.mydoggy.ToolWindowAnchor;
 
 import ch.elca.el4j.demos.gui.extension.GUIExtension;
-import ch.elca.el4j.gui.swing.ActionsContext;
-import ch.elca.el4j.gui.swing.DockingApplication;
-import ch.elca.el4j.gui.swing.util.MenuUtils;
+import ch.elca.el4j.services.gui.swing.ActionsContext;
+import ch.elca.el4j.services.gui.swing.DockingApplication;
+import ch.elca.el4j.services.gui.swing.util.MenuUtils;
 
 // Checkstyle: MagicNumber off
 /**

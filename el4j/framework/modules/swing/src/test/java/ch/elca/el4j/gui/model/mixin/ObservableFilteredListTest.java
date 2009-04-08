@@ -33,7 +33,7 @@ import org.jdesktop.observablecollections.ObservableListListener;
 import org.junit.Before;
 import org.junit.Test;
 
-import ch.elca.el4j.model.mixin.ObservableFilteredList;
+import ch.elca.el4j.services.gui.model.mixin.ObservableFilteredList;
 import ch.elca.el4j.util.collections.helpers.Filter;
 
 /**

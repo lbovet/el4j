@@ -33,10 +33,10 @@ import org.springframework.stereotype.Component;
 import ch.elca.el4j.core.context.annotations.LazyInit;
 import ch.elca.el4j.demos.gui.events.ExampleEvent;
 import ch.elca.el4j.demos.gui.events.SearchProgressEvent;
-import ch.elca.el4j.gui.swing.cookswing.binding.Bindable;
-import ch.elca.el4j.gui.swing.frames.ApplicationFrame;
-import ch.elca.el4j.gui.swing.frames.ApplicationFrameAware;
-import ch.elca.el4j.model.mixin.PropertyChangeListenerMixin;
+import ch.elca.el4j.services.gui.model.mixin.PropertyChangeListenerMixin;
+import ch.elca.el4j.services.gui.swing.cookswing.binding.Bindable;
+import ch.elca.el4j.services.gui.swing.frames.ApplicationFrame;
+import ch.elca.el4j.services.gui.swing.frames.ApplicationFrameAware;
 
 import com.silvermindsoftware.hitch.Binder;
 import com.silvermindsoftware.hitch.BinderManager;
@@ -190,7 +190,7 @@ public class EventBusDemoForm extends JPanel implements Bindable, ApplicationFra
 	
 	/**
 	 * Remark: This event is registered an fired by
-	 * {@link ch.elca.el4j.gui.swing.AbstractMDIApplication}.
+	 * {@link ch.elca.el4j.services.gui.swing.AbstractMDIApplication}.
 	 *
 	 * @param event    internalFrame event
 	 */

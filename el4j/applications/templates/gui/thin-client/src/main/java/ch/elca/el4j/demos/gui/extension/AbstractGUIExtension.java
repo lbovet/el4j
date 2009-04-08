@@ -22,9 +22,9 @@ import javax.swing.JToolBar;
 
 import org.jdesktop.beans.AbstractBean;
 
-import ch.elca.el4j.gui.swing.ActionsContext;
-import ch.elca.el4j.gui.swing.GUIApplication;
-import ch.elca.el4j.gui.swing.util.MenuUtils;
+import ch.elca.el4j.services.gui.swing.ActionsContext;
+import ch.elca.el4j.services.gui.swing.GUIApplication;
+import ch.elca.el4j.services.gui.swing.util.MenuUtils;
 
 /**
  * An abstract default implementation of the {@link GUIExtension} (internal use only!).

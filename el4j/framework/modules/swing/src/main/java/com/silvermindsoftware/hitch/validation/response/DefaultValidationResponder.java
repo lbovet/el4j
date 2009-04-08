@@ -20,7 +20,7 @@ import java.awt.Color;
 
 import javax.swing.JComponent;
 
-import ch.elca.el4j.gui.swing.GUIApplication;
+import ch.elca.el4j.services.gui.swing.GUIApplication;
 
 /**
  * A default ValidationResponder that makes the background of the corresponding

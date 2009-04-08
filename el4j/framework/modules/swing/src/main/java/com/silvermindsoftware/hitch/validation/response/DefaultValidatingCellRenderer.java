@@ -24,7 +24,7 @@ import javax.swing.JList;
 
 import org.jdesktop.swingbinding.validation.ValidatedProperty;
 
-import ch.elca.el4j.gui.swing.GUIApplication;
+import ch.elca.el4j.services.gui.swing.GUIApplication;
 
 /**
  * A validating cell renderer for lists.
