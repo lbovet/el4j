@@ -10,7 +10,7 @@
 	
 	<!--  Reporter -->
 	<bean id="detailedStatisticsReporter"
-		class="ch.elca.el4j.demos.statistics.detailed.jmx.DetailedStatisticsReporter">
+		class="ch.elca.el4j.services.statistics.detailed.jmx.DetailedStatisticsReporter">
 		<property name="server">
 			<ref bean="mBeanServer" />
 		</property>
