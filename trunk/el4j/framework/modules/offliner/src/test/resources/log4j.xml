@@ -12,7 +12,7 @@
 		</layout>
 	</appender>
 	
-	<logger name="ch.elca.el4j.services.persistence.hibernate.offlining.test.runner">
+	<logger name="ch.elca.el4j.tests.services.persistence.hibernate.offlining.runner">
 		<level value="INFO" />
 	</logger>
 
