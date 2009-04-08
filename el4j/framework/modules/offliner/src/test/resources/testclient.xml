@@ -15,7 +15,7 @@
 			<ref bean="rmiProtocol" />
 		</property>
 		<property name="serviceInterface">
-			<value>ch.elca.el4j.services.persistence.hibernate.offlining.test.runner.TestController</value>
+			<value>ch.elca.el4j.tests.services.persistence.hibernate.offlining.runner.TestController</value>
 		</property>
 		<property name="serviceName">
 			<value>Offlining.TestController</value>

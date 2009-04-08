@@ -18,7 +18,7 @@
 		<!-- The attribute base-packages indicates the packages where we look for DAOs -->
 	<context:component-scan use-default-filters="false"
 		annotation-config="false"
-		base-package="ch.elca.el4j.services.persistence.hibernate.offlining.testclasses.dao">
+		base-package="ch.elca.el4j.tests.services.persistence.hibernate.offlining.dao">
 		<context:include-filter type="annotation"
 		expression="ch.elca.el4j.services.persistence.generic.dao.AutocollectedGenericDao" />
 	</context:component-scan>
