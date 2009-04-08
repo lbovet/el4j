@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.demos.statistics.detailed.jmx;
+package ch.elca.el4j.services.statistics.detailed.jmx;
 
 /**
  * This class publishes the detailed statistics through JMX (MBean Interface).
