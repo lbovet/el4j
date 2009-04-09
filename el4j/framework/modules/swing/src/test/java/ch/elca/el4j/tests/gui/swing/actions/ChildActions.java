@@ -14,11 +14,11 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.gui.swing.actions;
+package ch.elca.el4j.tests.gui.swing.actions;
 
 import org.jdesktop.application.Action;
 
-import ch.elca.el4j.gui.swing.ValueHolder;
+import ch.elca.el4j.tests.gui.swing.ValueHolder;
 
 /**
  * Child class containing actions.

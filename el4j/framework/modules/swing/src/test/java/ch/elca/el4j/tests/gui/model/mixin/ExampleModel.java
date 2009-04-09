@@ -1,4 +1,4 @@
-package ch.elca.el4j.gui.model.mixin;
+package ch.elca.el4j.tests.gui.model.mixin;
 
 import java.util.List;
 import java.util.Map;

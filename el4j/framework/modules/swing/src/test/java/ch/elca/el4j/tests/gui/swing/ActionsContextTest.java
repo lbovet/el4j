@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.gui.swing;
+package ch.elca.el4j.tests.gui.swing;
 
 import java.awt.Toolkit;
 
@@ -22,10 +22,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-import ch.elca.el4j.gui.swing.actions.ChildActions;
-import ch.elca.el4j.gui.swing.actions.GrandparentActions;
-import ch.elca.el4j.gui.swing.actions.ParentActions;
 import ch.elca.el4j.services.gui.swing.ActionsContext;
+import ch.elca.el4j.tests.gui.swing.actions.ChildActions;
+import ch.elca.el4j.tests.gui.swing.actions.GrandparentActions;
+import ch.elca.el4j.tests.gui.swing.actions.ParentActions;
 
 import sun.awt.HeadlessToolkit;
 
