@@ -158,7 +158,7 @@ public class PropertyEncryptionUtil {
 		m_cl = Thread.currentThread().getContextClassLoader();
 		try {
 			m_c = m_cl
-				.loadClass("ch.elca.el4j.modules.encryption.PropertyEncryptor");
+				.loadClass("ch.elca.el4j.services.encryption.PropertyEncryptor");
 			m_cryptor = (AbstractPropertyEncryptor) m_c.newInstance();
 		} catch (ClassNotFoundException e) {
 			// An exception landing us here means we are in external.
