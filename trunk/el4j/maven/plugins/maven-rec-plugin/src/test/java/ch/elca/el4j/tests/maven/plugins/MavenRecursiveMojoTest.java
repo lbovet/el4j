@@ -1,4 +1,4 @@
-package ch.elca.el4j.maven.plugins;
+package ch.elca.el4j.tests.maven.plugins;
 
 import java.io.File;
 
