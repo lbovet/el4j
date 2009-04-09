@@ -1,4 +1,4 @@
-package ch.elca.el4j.maven.plugins;
+package ch.elca.el4j.tests.maven.plugins;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -18,6 +18,9 @@ import org.jdom.Namespace;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import ch.elca.el4j.maven.plugins.BootstrapFileHandler;
+import ch.elca.el4j.maven.plugins.ProjectData;
 
 public class BootstrapFileHandlerTest {
 
