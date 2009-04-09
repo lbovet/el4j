@@ -16,6 +16,7 @@
  */
 package ch.elca.el4j.tests.person.dom;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -137,6 +138,9 @@ public class Person extends AbstractIntKeyIntOptimisticLockingDto {
 	@IndexColumn(name = "friends_key")
 	@ContainedClass(Person.class)
 	public List<Person> getFriends() {
+		if (m_friends == null) {
+			m_friends = new ArrayList<Person>();
+		}
 		return m_friends;
 	}
 
