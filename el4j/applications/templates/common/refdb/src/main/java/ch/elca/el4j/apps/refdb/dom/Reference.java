@@ -18,6 +18,7 @@ package ch.elca.el4j.apps.refdb.dom;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -274,6 +275,9 @@ public abstract class Reference extends AbstractIntKeyIntOptimisticLockingDto {
 	@LazyCollection(value = LazyCollectionOption.FALSE)
 	@ContainedClass(Keyword.class)
 	public Set<Keyword> getKeywords() {
+		if (m_keywords == null) {
+			m_keywords = new HashSet<Keyword>();
+		}
 		return m_keywords;
 	}
 
