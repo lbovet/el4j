@@ -987,6 +987,7 @@
 				<jee-web.war.name>${project.build.finalName}</jee-web.war.name>
 				<jee-web.webapp.directory>${project.build.directory}/exploded-wars/${jee-web.war.name}</jee-web.webapp.directory>
 				<jee-web.context>${project.artifactId}</jee-web.context>
+				<jee-web.context.cargo>${jee-web.context}</jee-web.context.cargo>
 
 				<!-- Deploy exploded war. -->
 				<jee-web.war.location>${jee-web.webapp.directory}</jee-web.war.location>
@@ -1069,6 +1070,7 @@
 				<jee-web.war.name>${project.build.finalName}</jee-web.war.name>
 				<jee-web.webapp.directory>${project.build.directory}/exploded-wars/${jee-web.war.name}</jee-web.webapp.directory>
 				<jee-web.context>${project.artifactId}</jee-web.context>
+				<jee-web.context.cargo>${jee-web.context}</jee-web.context.cargo>
 
 				<!-- Deploy packed war by default. -->
 				<jee-web.war.location>${project.build.directory}/${jee-web.war.name}.war</jee-web.war.location>
@@ -1266,6 +1268,7 @@
 				<jee-web.war.name>${project.build.finalName}</jee-web.war.name>
 				<jee-web.webapp.directory>${project.build.directory}/exploded-wars/${jee-web.war.name}</jee-web.webapp.directory>
 				<jee-web.context>${project.artifactId}</jee-web.context>
+				<jee-web.context.cargo>${jee-web.context}</jee-web.context.cargo>
 
 				<!-- Deploy packed war by default. -->
 				<jee-web.war.location>${project.build.directory}/${jee-web.war.name}.war</jee-web.war.location>
