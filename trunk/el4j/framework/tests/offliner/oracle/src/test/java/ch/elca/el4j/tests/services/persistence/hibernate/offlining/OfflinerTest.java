@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.tests.persistence.hibernate.offlining;
+package ch.elca.el4j.tests.services.persistence.hibernate.offlining;
 
 import java.util.Set;
 
