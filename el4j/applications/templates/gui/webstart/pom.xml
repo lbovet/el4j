@@ -102,7 +102,7 @@
 							<deployable>
 								<location>${jee-web.war.location}</location>
 								<properties>
-									<context>${jee-web.context}</context>
+									<context>${jee-web.context.cargo}</context>
 								</properties>
 							</deployable>
 						</deployables>
