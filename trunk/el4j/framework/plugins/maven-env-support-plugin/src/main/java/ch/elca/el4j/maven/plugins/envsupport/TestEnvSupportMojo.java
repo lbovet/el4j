@@ -111,4 +111,13 @@ public class TestEnvSupportMojo extends EnvSupportMojo {
 			return nonTestResources;
 		}
 	}
+	
+	/** {@inheritDoc} */
+	@Override
+	protected String getArtifactNameFromLocalResource(FileSystemResource resource) {
+		if (resource.getFile().getPath().startsWith(testResourceDirectory.getPath())) {
+			return "this artifact (" + getProject().getArtifact().getArtifactId() + " test)";
+		}
+		return null;
+	}
 }

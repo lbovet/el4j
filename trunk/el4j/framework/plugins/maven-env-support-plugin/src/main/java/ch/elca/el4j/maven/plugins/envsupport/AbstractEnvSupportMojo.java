@@ -44,6 +44,7 @@ import org.apache.maven.plugin.resources.util.InterpolationFilterReader;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.IOUtil;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.util.StringUtils;
 
@@ -504,13 +505,11 @@ public abstract class AbstractEnvSupportMojo extends AbstractDependencyAwareMojo
 	 */
 	protected String getArtifactNameFromResource(Resource resource) {
 		// is resource from current project?
-		try {
-			if (resource.getURL().toString().startsWith(
-				getProject().getBasedir().toURL().toString())) {
-				return "this artifact (" + getProject().getArtifact().getArtifactId() + ")";
+		if (resource instanceof FileSystemResource) {
+			String name = getArtifactNameFromLocalResource((FileSystemResource) resource);
+			if (name != null) {
+				return name;
 			}
-		} catch (Exception e) {
-			// continue
 		}
 		
 		// is resource from project dependencies?
@@ -518,7 +517,11 @@ public abstract class AbstractEnvSupportMojo extends AbstractDependencyAwareMojo
 			Artifact artifact = (Artifact) artifactObj;
 			try {
 				if (resource.getURL().toString().startsWith("jar:" + artifact.getFile().toURL().toString())) {
-					return artifact.getGroupId() + ":" + artifact.getArtifactId();
+					String suffix = "";
+					if (artifact.getType().equals("test-jar")) {
+						suffix = ":test";
+					}
+					return artifact.getGroupId() + ":" + artifact.getArtifactId() + suffix;
 				}
 			} catch (Exception e) {
 				// continue
@@ -527,6 +530,13 @@ public abstract class AbstractEnvSupportMojo extends AbstractDependencyAwareMojo
 		
 		return resource.toString();
 	}
+	
+	/**
+	 * @param resource    a resource located in the current project
+	 * @return            the name of the artifact containing the given resource (the main question: test or not?)
+	 *                    or <code>null</code> if resource cannot be associated with the current project.
+	 */
+	protected abstract String getArtifactNameFromLocalResource(FileSystemResource resource);
 	
 	/**
 	 * @param resources    the resources to load the properties from (most specific resource has to be last)

@@ -108,4 +108,13 @@ public class EnvSupportMojo extends AbstractEnvSupportMojo {
 			return new Resource[0];
 		}
 	}
+	
+	/** {@inheritDoc} */
+	@Override
+	protected String getArtifactNameFromLocalResource(FileSystemResource resource) {
+		if (resource.getFile().getPath().startsWith(resourceDirectory.getPath())) {
+			return "this artifact (" + getProject().getArtifact().getArtifactId() + ")";
+		}
+		return null;
+	}
 }
