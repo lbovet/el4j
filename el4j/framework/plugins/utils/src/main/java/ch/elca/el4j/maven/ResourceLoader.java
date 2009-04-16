@@ -82,7 +82,7 @@ public class ResourceLoader {
 	private final boolean m_mostSpecificResourceLast;
 	
 	/**
-	 * Create a resource loader .
+	 * Create a resource loader.
 	 * @param repository Maven repository for artifacts
 	 * @param project Maven project we're working on
 	 * @param walker The Dependency GraphWalker
