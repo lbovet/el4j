@@ -135,7 +135,7 @@ public class DepGraphWalker {
 	 * this project,
 	 * topologically sorted.
 	 * 
- 	 * @param scope    the maven scope that the dependencies have to be in
+	 * @param scope    the maven scope that the dependencies have to be in
 	 *
 	 * @return List of dependencies as Artifact
 	 */
@@ -161,8 +161,8 @@ public class DepGraphWalker {
 	 * Collects and returns list of urls of all dependencies of this project,
 	 * topologically sorted: Most specific last.
 	 *
- 	 * @param scope    the maven scope that the dependencies have to be in
- 	 * 
+	 * @param scope    the maven scope that the dependencies have to be in
+	 * 
 	 * @return List of dependencies jar URLs
 	 */
 	public List<URL> getDependencyURLs(String scope) {
