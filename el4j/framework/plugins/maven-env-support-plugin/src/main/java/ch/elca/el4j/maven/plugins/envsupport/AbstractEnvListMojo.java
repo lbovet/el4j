@@ -36,45 +36,6 @@ import org.springframework.core.io.Resource;
  */
 public abstract class AbstractEnvListMojo extends AbstractEnvSupportMojo {
 	/**
-	 * Print the resulting (filtered) properties.
-	 * 
-	 * @param envPropertiesFilename    the env property filename
-	 */
-	protected void showMergedProperties(String envPropertiesFilename) throws MojoExecutionException {
-		try {
-			Resource[] resources = getResourceLoader(true).getDependenciesResources(
-				"classpath*:" + envPropertiesFilename);
-			
-			if (resources.length > 0) {
-				getLog().info("");
-				getLog().info("Resulting merged and evaluated " + envPropertiesFilename + ":");
-				
-				Properties properties = new Properties();
-				for (Resource resource : resources) {
-					try {
-						properties.load(resource.getInputStream());
-						getLog().info(" (Including " + getArtifactNameFromResource(resource) + ")");
-					} catch (IOException e) {
-						throw new MojoExecutionException(
-							"Cannot load resource '" + resource.toString() + "'");
-					}
-				}
-				
-				properties.putAll(getFilteredOverwriteProperties(envPropertiesFilename));
-				
-				
-				for (Object keyObj : properties.keySet()) {
-					String key = (String) keyObj;
-					getLog().info("  " + key + "=" + properties.getProperty(key));
-				}
-			}
-		} catch (IOException e) {
-			throw new MojoExecutionException(
-				"Cannot collect env files for '" + envPropertiesFilename + "'");
-		}
-	}
-	
-	/**
 	 * Print each property file taken for property resolution.
 	 * 
 	 * @param envPropertiesFilename    the env property filename
@@ -112,6 +73,45 @@ public abstract class AbstractEnvListMojo extends AbstractEnvSupportMojo {
 			// make list 'most specific resource last'
 			//ArrayUtils.reverse(resources);
 			checkProperties(resources);
+		}
+	}
+	
+	/**
+	 * Print the resulting (filtered) properties.
+	 * 
+	 * @param envPropertiesFilename    the env property filename
+	 */
+	protected void showMergedProperties(String envPropertiesFilename) throws MojoExecutionException {
+		try {
+			Resource[] resources = getResourceLoader().getDependenciesResources(
+				"classpath*:" + envPropertiesFilename);
+			
+			if (resources.length > 0) {
+				getLog().info("");
+				getLog().info("Resulting merged and evaluated " + envPropertiesFilename + ":");
+				
+				Properties properties = new Properties();
+				for (Resource resource : resources) {
+					try {
+						properties.load(resource.getInputStream());
+						getLog().info(" (Including " + getArtifactNameFromResource(resource) + ")");
+					} catch (IOException e) {
+						throw new MojoExecutionException(
+							"Cannot load resource '" + resource.toString() + "'");
+					}
+				}
+				
+				properties.putAll(getFilteredOverwriteProperties(envPropertiesFilename));
+				
+				
+				for (Object keyObj : properties.keySet()) {
+					String key = (String) keyObj;
+					getLog().info("  " + key + "=" + properties.getProperty(key));
+				}
+			}
+		} catch (IOException e) {
+			throw new MojoExecutionException(
+				"Cannot collect env files for '" + envPropertiesFilename + "'");
 		}
 	}
 }

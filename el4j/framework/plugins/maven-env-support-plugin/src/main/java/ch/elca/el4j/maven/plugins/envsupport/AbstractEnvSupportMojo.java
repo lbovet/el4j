@@ -48,6 +48,8 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.util.StringUtils;
 
+import ch.elca.el4j.maven.ResourceLoader;
+
 /**
  * Abstract environment support plugin. Filters the resources of given env dir
  * and saves the generate resources in a special dir.
@@ -382,7 +384,7 @@ public abstract class AbstractEnvSupportMojo extends AbstractDependencyAwareMojo
 	protected Properties getFilteredOverwriteProperties(String envPropertiesFilename)
 		throws IOException, MojoExecutionException {
 		
-		Resource[] resources = getResourceLoader(true).getDependenciesResources(
+		Resource[] resources = getResourceLoader().getDependenciesResources(
 			"classpath*:" + envPropertiesFilename + ".orig");
 		
 		Properties unfilteredProperties = new Properties();
@@ -422,7 +424,7 @@ public abstract class AbstractEnvSupportMojo extends AbstractDependencyAwareMojo
 		}
 		
 		// load env files filtered by other artifacts to determine which expression have already been evaluated there
-		Resource[] resourcesFilteredByOthers = getResourceLoader(true).getDependenciesResources(
+		Resource[] resourcesFilteredByOthers = getResourceLoader().getDependenciesResources(
 			"classpath*:" + envPropertiesFilename);
 		Properties propertiesFilteredByOthers = loadProperties(resourcesFilteredByOthers);
 		
@@ -487,7 +489,7 @@ public abstract class AbstractEnvSupportMojo extends AbstractDependencyAwareMojo
 	protected Resource[] getAllUnfilteredResources(String envPropertiesFilename) {
 		Resource[] resources = null;
 		try {
-			Resource[] depResources = getResourceLoader(true).getDependenciesResources(
+			Resource[] depResources = getResourceLoader().getDependenciesResources(
 				"classpath*:" + envPropertiesFilename + ".orig");
 			
 			Resource[] projectEnvFile = getProjectEnvFiles(envPropertiesFilename);
@@ -512,11 +514,12 @@ public abstract class AbstractEnvSupportMojo extends AbstractDependencyAwareMojo
 			}
 		}
 		
+		final String repoURL = "jar:file:/" + getRepository().getBasedir() + "/";
 		// is resource from project dependencies?
 		for (Object artifactObj : getProject().getArtifacts()) {
 			Artifact artifact = (Artifact) artifactObj;
 			try {
-				if (resource.getURL().toString().startsWith("jar:" + artifact.getFile().toURL().toString())) {
+				if (resource.getURL().toString().startsWith(repoURL + getRepository().pathOf(artifact))) {
 					String suffix = "";
 					if (artifact.getType().equals("test-jar")) {
 						suffix = ":test";
@@ -573,4 +576,9 @@ public abstract class AbstractEnvSupportMojo extends AbstractDependencyAwareMojo
 	 * @return                         an array of resources (is never <code>null</code>)
 	 */
 	protected abstract Resource[] getProjectEnvFiles(String envPropertiesFilename);
+	
+	/**
+	 * @return    the resource loader to use
+	 */
+	protected abstract ResourceLoader getResourceLoader();
 }

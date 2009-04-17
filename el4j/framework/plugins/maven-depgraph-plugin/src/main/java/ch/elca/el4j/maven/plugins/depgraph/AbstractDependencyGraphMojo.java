@@ -406,9 +406,7 @@ public abstract class AbstractDependencyGraphMojo extends AbstractDependencyAwar
 		if (!drawOmitted && omitted) {
 			return null;
 		}
-		DepGraphArtifact artifact = graph.getArtifact(a.getArtifactId(), a
-			.getGroupId(), a.getVersion(), a.getScope(), a.getType(),
-			a.getClassifier(), omitted);
+		DepGraphArtifact artifact = graph.getArtifact(a, omitted);
 		return artifact;
 	}
 	

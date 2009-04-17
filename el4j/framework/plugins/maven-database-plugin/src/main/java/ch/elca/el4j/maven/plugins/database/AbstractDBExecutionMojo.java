@@ -312,7 +312,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 
 		//create list of dependencies
 		List<Artifact>dependencies
-			= getGraphWalker().getDependencyArtifacts();
+			= getGraphWalker().getDependencyArtifacts("runtime");
 
 		//add current artifact to search-list
 		if (dependencies != null) {
@@ -597,7 +597,7 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 	 */
 	private ConnectionPropertiesHolder getConnPropHolder() {
 		if (m_holder == null) {
-			m_holder = new ConnectionPropertiesHolder(getResourceLoader(true),
+			m_holder = new ConnectionPropertiesHolder(getResourceLoader(true, true),
 				getProject(),
 				connectionPropertiesSource,
 				driverPropertiesSource);

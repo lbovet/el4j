@@ -19,6 +19,8 @@ package ch.elca.el4j.maven.depgraph;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import org.apache.maven.artifact.Artifact;
+
 /**
  *
  * This class represents an artifact.
@@ -34,90 +36,38 @@ import java.util.LinkedList;
  */
 public class DepGraphArtifact {
 	/**
-	 * The artifacts groupId.
+	 * The maven artifact.
 	 */
-	private String m_groupId;
+	private Artifact m_artifact;
 	
 	/**
-	 * The artifacts Id.
-	 */
-	private String m_artifactId;
-	
-	/**
-	 * The artifacts version.
-	 */
-	private String m_version;
-	
-	/**
-	 * The artifacts scope.
-	 */
-	private String m_scope;
-	
-	/**
-	 * The artifacts type.
-	 */
-	private String m_type;
-	
-	/**
-	 * The artifacts classifier.
-	 */
-	private String m_classifier;
-	
-	/**
-	 * Whether this artifact has been omitted
+	 * Whether this artifact has been omitted.
 	 */
 	private boolean m_omitted;
 	
 	/**
 	 * All dependencies of this artifact.
 	 */
-	private Collection<DepGraphArtifact> m_artifacts
+	private Collection<DepGraphArtifact> m_dependencies
 		= new LinkedList<DepGraphArtifact>();
 
 	/**
 	 * Create a new DepGraphArtifact.
 	 *
-	 * @param artifactId The id to set
-	 * @param groupId The group to set
-	 * @param version The version to set
-	 * @param scope The scope to set
-	 * @param type The type to set
+	 * @param artifact    The maven artifact
 	 */
-	public DepGraphArtifact(String artifactId, String groupId, String version,
-		String scope, String type, String classifier) {
-		this(artifactId, groupId, version, scope, type, classifier, false);
+	public DepGraphArtifact(Artifact artifact) {
+		this(artifact, false);
 	}
 	
 	/**
 	 * Create a new DepGraphArtifact.
 	 *
-	 * @param artifactId The id to set
-	 * @param groupId The group to set
-	 * @param version The version to set
-	 * @param scope The scope to set
-	 * @param type The type to set
+	 * @param artifact    The maven artifact
 	 * @param omitted Whether this artifact is omitted
 	 */
-	public DepGraphArtifact(String artifactId, String groupId, String version,
-		String scope, String type, String classifier, boolean omitted) {
-		if (artifactId == null) {
-			throw new NullPointerException("ArtifactId null");
-		}
-		
-		if (groupId == null) {
-			throw new NullPointerException("GroupId null");
-		}
-		
-		if (version == null) {
-			throw new NullPointerException("Version null");
-		}
-		
-		m_artifactId = artifactId;
-		m_groupId = groupId;
-		m_version = version;
-		m_scope = scope;
-		m_type = type;
-		m_classifier = classifier != null ? classifier : "";
+	public DepGraphArtifact(Artifact artifact, boolean omitted) {
+		m_artifact = artifact;
 		m_omitted = omitted;
 	}
 	
@@ -126,7 +76,7 @@ public class DepGraphArtifact {
 	 * @return The id
 	 */
 	public String getArtifactId() {
-		return m_artifactId;
+		return m_artifact.getArtifactId();
 	}
 	
 	/**
@@ -134,7 +84,7 @@ public class DepGraphArtifact {
 	 * @return The group id
 	 */
 	public String getGroupId() {
-		return m_groupId;
+		return m_artifact.getGroupId();
 	}
 	
 	/**
@@ -142,7 +92,7 @@ public class DepGraphArtifact {
 	 * @return The version
 	 */
 	public String getVersion() {
-		return m_version;
+		return m_artifact.getVersion();
 	}
 	
 	/**
@@ -150,7 +100,7 @@ public class DepGraphArtifact {
 	 * @return The Scope
 	 */
 	public String getScope() {
-		return m_scope;
+		return m_artifact.getScope();
 	}
 	
 	/**
@@ -158,7 +108,7 @@ public class DepGraphArtifact {
 	 * @return The type.
 	 */
 	public String getType() {
-		return m_type;
+		return m_artifact.getType();
 	}
 	
 	/**
@@ -166,16 +116,23 @@ public class DepGraphArtifact {
 	 * @return The classifier.
 	 */
 	public String getClassifier() {
-		return m_classifier;
+		return m_artifact.getClassifier();
 	}
 	
 	/**
-	 * Get a qualified name of this artifact.
-	 * @return groupId:version:classifier:artifactId:omitted
+	 * Get a qualified name of this artifact (ignore version as it might change during artifact resolution).
+	 * @return groupId:classifier:artifactId:omitted
 	 */
 	public String getQualifiedName() {
-		return m_groupId + ":" + m_version + ":" + m_classifier + ":"
-			+ m_artifactId + ":" + m_omitted;
+		return getGroupId() + ":" + getClassifier() + ":"
+			+ getArtifactId() + ":" + m_omitted;
+	}
+	
+	/**
+	 * @return    The maven artifact.
+	 */
+	public Artifact getMavenArtifact() {
+		return m_artifact;
 	}
 	
 	/**
@@ -187,12 +144,12 @@ public class DepGraphArtifact {
 			throw new NullPointerException("Dependency null");
 		}
 		
-		if (m_artifacts.contains(dependency)) {
+		if (m_dependencies.contains(dependency)) {
 			throw new IllegalArgumentException(
 				"Artifact already depends on " + dependency.getQualifiedName());
 		}
 		
-		m_artifacts.add(dependency);
+		m_dependencies.add(dependency);
 	}
 	
 	/**
@@ -200,33 +157,9 @@ public class DepGraphArtifact {
 	 * @return The dependencies
 	 */
 	public Collection<DepGraphArtifact> getDependencies() {
-		return new LinkedList<DepGraphArtifact>(m_artifacts);
+		return new LinkedList<DepGraphArtifact>(m_dependencies);
 	}
 	
-	/**
-	 *
-	 * {@inheritDoc}
-	 */
-	public boolean equals(Object obj) {
-		if (obj instanceof DepGraphArtifact) {
-			DepGraphArtifact d = (DepGraphArtifact) obj;
-			return m_artifactId.equals(d.getArtifactId())
-				&& m_groupId.equals(d.getGroupId())
-				&& m_classifier.equals(d.getClassifier())
-				&& m_version.equals(d.getVersion());
-		} else {
-			return super.equals(obj);
-		}
-	}
-	
-	/**
-	 *
-	 * {@inheritDoc}
-	 */
-	public int hashCode() {
-		return getQualifiedName().hashCode();
-	}
-
 	/**
 	 * @return whether this artifact has been omitted.
 	 */
@@ -243,5 +176,25 @@ public class DepGraphArtifact {
 	public void setOmitted(boolean omitted) {
 		this.m_omitted = omitted;
 	}
-
+	
+	/**
+	 *
+	 * {@inheritDoc}
+	 */
+	public boolean equals(Object obj) {
+		if (obj instanceof DepGraphArtifact) {
+			DepGraphArtifact d = (DepGraphArtifact) obj;
+			return getQualifiedName().equals(d.getQualifiedName());
+		} else {
+			return super.equals(obj);
+		}
+	}
+	
+	/**
+	 *
+	 * {@inheritDoc}
+	 */
+	public int hashCode() {
+		return getQualifiedName().hashCode();
+	}
 }

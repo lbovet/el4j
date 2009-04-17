@@ -23,6 +23,8 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
+import ch.elca.el4j.maven.ResourceLoader;
+
 /**
  * Environment support plugin. Filters the resources of given env dir and saves
  * the generate resources in a special dir.
@@ -94,6 +96,12 @@ public class EnvSupportMojo extends AbstractEnvSupportMojo {
 			processEnvPropertiesFiles(outputDirectory, "resources", "env-placeholder.properties");
 			processEnvPropertiesFiles(outputDirectory, "resources", "env-bean-property.properties");
 		}
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	protected ResourceLoader getResourceLoader() {
+		return getResourceLoader(true, false);
 	}
 	
 	/** {@inheritDoc} */

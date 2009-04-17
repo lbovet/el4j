@@ -86,16 +86,17 @@ public class ResourceLoader {
 	 * @param repository Maven repository for artifacts
 	 * @param project Maven project we're working on
 	 * @param walker The Dependency GraphWalker
-	 * @param mostSpecificResourceLast    Indicates if the most specific resource should be the last resource
+	 * @param mostSpecificResourceLast    Indicates whether the most specific resource should be the last resource
 	 *                                    in the fetched resource array.
+	 * @param includeTestResources        Whether test resources should be include
 	 */
 	public ResourceLoader(ArtifactRepository repository,
-		MavenProject project, DepGraphWalker walker, boolean mostSpecificResourceLast) {
+		MavenProject project, DepGraphWalker walker, boolean mostSpecificResourceLast, boolean includeTestResources) {
 		
 		m_mostSpecificResourceLast = mostSpecificResourceLast;
 		
-		List<URL> projectUrls = getProjectUrls(repository, project);
-		List<URL> dependenciesUrls = walker.getDependencyURLs();
+		List<URL> projectUrls = getProjectUrls(repository, project, includeTestResources);
+		List<URL> dependenciesUrls = walker.getDependencyURLs(includeTestResources ? "test" : "runtime");
 		// make most specific first (as it has to be in classpaths)
 		Collections.reverse(dependenciesUrls);
 		List<URL> urls = new ArrayList<URL>();
@@ -157,17 +158,18 @@ public class ResourceLoader {
 	 *
 	 * @param repo The artifact repository.
 	 * @param project The projects we're working on.
+	 * @param includeTestResources Whether test resources should be include
 	 * @return List of project's jar URLs
 	 */
 	private ArrayList<URL> getProjectUrls(ArtifactRepository repo,
-			MavenProject project) {
+			MavenProject project, boolean includeTestResources) {
 		ArrayList<URL> urls = new ArrayList<URL>();
 
 		try {
-			urls.add(new URL("file", "", "/"
-				+ project.getBuild().getTestOutputDirectory() + "/"));
-			urls.add(new URL("file", "", "/"
-				+ project.getBuild().getOutputDirectory() + "/"));
+			if (includeTestResources) {
+				urls.add(new URL("file", "", "/" + project.getBuild().getTestOutputDirectory() + "/"));
+			}
+			urls.add(new URL("file", "", "/" + project.getBuild().getOutputDirectory() + "/"));
 
 			
 		} catch (MalformedURLException e) {
