@@ -91,14 +91,7 @@ public class DepGraphResolutionListener implements ResolutionListener {
 	 * @return The dependency for artifact
 	 */
 	private DepGraphArtifact getArtifact(Artifact artifact) {
-		String aId = artifact.getArtifactId();
-		String gId = artifact.getGroupId();
-		String version = artifact.getVersion();
-		String scope = artifact.getScope();
-		String type = artifact.getType();
-		String classifier = artifact.getClassifier();
-
-		return m_graph.getArtifact(aId, gId, version, scope, type, classifier);
+		return m_graph.getArtifact(artifact);
 	}
 	
 	/**

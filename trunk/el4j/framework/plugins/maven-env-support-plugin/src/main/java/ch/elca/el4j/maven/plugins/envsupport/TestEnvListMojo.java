@@ -24,6 +24,8 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
+import ch.elca.el4j.maven.ResourceLoader;
+
 /**
  * Print a list of all test env properties with their resolved values.
  *
@@ -77,6 +79,12 @@ public class TestEnvListMojo extends EnvListMojo {
 		showEnvPropertiesFiles("env-bean-property.properties");
 		showMergedProperties("env-bean-property.properties");
 
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	protected ResourceLoader getResourceLoader() {
+		return getResourceLoader(true, true);
 	}
 
 	/** {@inheritDoc} */

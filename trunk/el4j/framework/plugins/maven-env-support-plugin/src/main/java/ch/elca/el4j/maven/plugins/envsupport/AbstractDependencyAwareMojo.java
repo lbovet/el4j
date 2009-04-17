@@ -140,13 +140,15 @@ public abstract class AbstractDependencyAwareMojo extends AbstractMojo {
 	/**
 	 * Get the resource loader.
 	 * 
-	 * @param mostSpecificResourceLast    Indicates if the most specific resource should be the last resource
+	 * @param mostSpecificResourceLast    Indicates whether the most specific resource should be the last resource
 	 *                                    in the fetched resource array.
+	 * @param includeTestResources        Whether test resources should be include
 	 * @return    the resource loader.
 	 */
-	protected ResourceLoader getResourceLoader(boolean mostSpecificResourceLast) {
+	protected ResourceLoader getResourceLoader(boolean mostSpecificResourceLast, boolean includeTestResources) {
 		if (m_resourceLoader == null || m_resourceLoader.isMostSpecificResourceLast() != mostSpecificResourceLast) {
-			m_resourceLoader = new ResourceLoader(localRepository, project, getGraphWalker(), mostSpecificResourceLast);
+			m_resourceLoader = new ResourceLoader(
+				localRepository, project, getGraphWalker(), mostSpecificResourceLast, includeTestResources);
 		}
 		return m_resourceLoader;
 	}

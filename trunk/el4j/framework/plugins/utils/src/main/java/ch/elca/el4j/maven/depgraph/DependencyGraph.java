@@ -22,6 +22,8 @@ import java.util.List;
 
 import java.util.Map;
 
+import org.apache.maven.artifact.Artifact;
+
 /**
  *
  * This class is a set of artifacts that make up a dependency graph.
@@ -36,15 +38,6 @@ import java.util.Map;
  * @author Philippe Jacot (PJA)
  */
 public class DependencyGraph {
-	/**
-	 * All known artifacts
-	 * Non-Generic hasmap cause of a bug in a tool used for maven plugins.
-	 */
-	// There is a qdox problem when using a HashMap
-	// (Most likely all generics of the form <a,b>)
-	// .. http://jira.codehaus.org/browse/QDOX-89
-	private Map<String, DepGraphArtifact> m_artifacts
-		= new HashMap();
 	
 	/**
 	 * The name of the graph.
@@ -54,41 +47,32 @@ public class DependencyGraph {
 	/**
 	 * Whether to draw artifact scope.
 	 */
-	private boolean drawScope = true;
+	private boolean m_drawScope = true;
+	
+	/**
+	 * All known artifacts.
+	 */
+	private Map<String, DepGraphArtifact> m_artifacts
+		= new HashMap<String, DepGraphArtifact>();
 	
 	/**
 	 * Get the Artifact for the given attributes.
-	 * @param artifactId The artifact ID
-	 * @param groupId The group ID
-	 * @param version The version
-	 * @param scope The scope
-	 * @param type The type
-	 * @param classifier The classifier
+	 * @param artifact    The maven artifact
 	 * @return A DepgraphArtifact
 	 */
-	public DepGraphArtifact getArtifact(String artifactId, String groupId,
-		String version, String scope, String type, String classifier) {
-		return getArtifact(artifactId, groupId, version, scope, type,
-			classifier, false);
+	public DepGraphArtifact getArtifact(Artifact artifact) {
+		return getArtifact(artifact, false);
 	}
 	
 	/**
 	 * Get the Artifact for the given attributes.
-	 * @param artifactId The artifact ID
-	 * @param groupId The group ID
-	 * @param version The version
-	 * @param scope The scope
-	 * @param type The type
-	 * @param classifier The classifier
+	 * @param artifact    The maven artifact
 	 * @param omitted Whether artifact is omitted
 	 * @return A DepgraphArtifact
 	 */
-	public DepGraphArtifact getArtifact(
-		String artifactId, String groupId,
-		String version, String scope, String type, String classifier, boolean omitted) {
+	public DepGraphArtifact getArtifact(Artifact artifact, boolean omitted) {
 		DepGraphArtifact newArtifact
-			= new DepGraphArtifact(artifactId, groupId, version, scope, type,
-				classifier, omitted);
+			= new DepGraphArtifact(artifact, omitted);
 		
 		if (m_artifacts.containsKey(newArtifact.getQualifiedName())) {
 			return m_artifacts.get(newArtifact.getQualifiedName());
@@ -96,6 +80,14 @@ public class DependencyGraph {
 			m_artifacts.put(newArtifact.getQualifiedName(), newArtifact);
 			return newArtifact;
 		}
+	}
+	
+	/**
+	 * @param qualifiedName    qualified name
+	 * @return                 the corresponding DepgraphArtifact
+	 */
+	public DepGraphArtifact getArtifactByQualifiedName(String qualifiedName) {
+		return m_artifacts.get(qualifiedName);
 	}
 	
 	/**
@@ -137,13 +129,13 @@ public class DependencyGraph {
 	 * @return whether to draw the artifact scope.
 	 */
 	public boolean drawScope() {
-		return drawScope;
+		return m_drawScope;
 	}
 
 	/**
 	 * @param enable set to true to enable drawing of artifact scope.
 	 */
 	public void setDrawScope(boolean enable) {
-		drawScope = enable;
+		m_drawScope = enable;
 	}
 }

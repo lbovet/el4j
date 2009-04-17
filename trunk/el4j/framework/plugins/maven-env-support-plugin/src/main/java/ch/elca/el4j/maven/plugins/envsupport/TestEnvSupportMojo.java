@@ -24,6 +24,8 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
+import ch.elca.el4j.maven.ResourceLoader;
+
 /**
  * Test environment support plugin. Filters the test resources of given env dir
  * and saves the generate test resources in a special dir.
@@ -99,6 +101,12 @@ public class TestEnvSupportMojo extends EnvSupportMojo {
 	
 	/** {@inheritDoc} */
 	@Override
+	protected ResourceLoader getResourceLoader() {
+		return getResourceLoader(true, true);
+	}
+	
+	/** {@inheritDoc} */
+	@Override
 	protected Resource[] getProjectEnvFiles(String envPropertiesFilename) {
 		Resource[] nonTestResources = super.getProjectEnvFiles(envPropertiesFilename);
 		
@@ -115,8 +123,13 @@ public class TestEnvSupportMojo extends EnvSupportMojo {
 	/** {@inheritDoc} */
 	@Override
 	protected String getArtifactNameFromLocalResource(FileSystemResource resource) {
-		if (resource.getFile().getPath().startsWith(testResourceDirectory.getPath())) {
-			return "this artifact (" + getProject().getArtifact().getArtifactId() + " test)";
+		String nonTest = super.getArtifactNameFromLocalResource(resource);
+		if (nonTest != null) {
+			return nonTest;
+		} else {
+			if (resource.getFile().getPath().startsWith(testResourceDirectory.getPath())) {
+				return "this artifact (" + getProject().getArtifact().getArtifactId() + ":test)";
+			}
 		}
 		return null;
 	}

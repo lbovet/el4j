@@ -148,7 +148,7 @@ public abstract class AbstractDBMojo extends AbstractDependencyAwareMojo {
 	 */
 	protected DatabaseNameHolder getDbNameHolder() {
 		if (m_holder == null) {
-			m_holder = new DatabaseNameHolder(getResourceLoader(true), getProject());
+			m_holder = new DatabaseNameHolder(getResourceLoader(true, true), getProject());
 		}
 		return m_holder;
 	}
