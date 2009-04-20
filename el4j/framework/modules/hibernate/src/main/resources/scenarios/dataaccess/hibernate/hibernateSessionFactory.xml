@@ -41,16 +41,6 @@
 			</props>
 		</property>
 		
-		<property name="eventListeners">
-			<map>
-				<entry key="post-collection-recreate">
-					<ref bean="hibernateCollectionRefresher"/>
-				</entry>
-				<entry key="post-collection-update">
-					<ref bean="hibernateCollectionRefresher"/>
-				</entry>
-			</map>
-		</property>
 		<property name="useTransactionAwareDataSource">
 			<value>true</value>
 		</property>
@@ -58,8 +48,4 @@
 			<ref bean="dataSource"/>
 		</property>
 	</bean>
-	
-	<!-- Refreshes collections due to possible changes of the hash codes (workaround) -->
-	<bean id="hibernateCollectionRefresher" lazy-init="true"
-		class="ch.elca.el4j.services.persistence.hibernate.HibernatePersistentCollectionRefresher"/>
 </beans>
