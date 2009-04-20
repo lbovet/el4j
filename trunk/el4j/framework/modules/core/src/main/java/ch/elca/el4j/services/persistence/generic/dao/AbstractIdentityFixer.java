@@ -153,6 +153,7 @@ public abstract class AbstractIdentityFixer {
 	
 	/**
 	 * The temporary reverse collection mapping for a 2-way merging [Persistence world -> Object world].
+	 * This is used for efficiency reasons.
 	 */
 	IdentityHashMap<Collection<?>, Collection<?>> m_reverseCollectionMapping
 		= new IdentityHashMap<Collection<?>, Collection<?>>();
@@ -478,28 +479,29 @@ public abstract class AbstractIdentityFixer {
 	protected <T> T merge(T anchor, T updated, IdentityFixerMergePolicy policy, boolean isIdentical,
 		IdentityHashMap<Object, Object> reached, HashMap<Object, Object> locked) {
 		
+		// create local variables because one should not modify arguments directly (checkstyle)
+		T referenceHolder = null;
+		T valueHolder = updated;
 		boolean identical = isIdentical;
-		T updateState = updated;
+		
 		if (policy.needsPreparation()) {
-			// Prepare the updated object
-			updateState = (T) prepareObject(updateState);
+			// Prepare the updated object (e.g. unproxy)
+			valueHolder = (T) prepareObject(valueHolder);
 		}
-		if (immutableValue(updateState)) {
-			trace("", updateState, " is an immutable value");
-			return updateState;
+		
+		// immutable?
+		if (immutableValue(valueHolder)) {
+			trace("", valueHolder, " is an immutable value");
+			return valueHolder;
 		}
-				
-		T savedState = (T) reached.get(updateState);
+		
+		// already merged?
+		T savedState = (T) reached.get(valueHolder);
 		if (savedState != null) {
-			trace("",  updateState, " was already merged to ", savedState);
+			trace("",  valueHolder, " was already merged to ", savedState);
 			return savedState;
 		}
 
-		boolean isNew = true;
-		
-		// choose representative
-		Object id = id(updateState);
-		
 		if (identical) {
 			// check if anchor would overwrite an already stored representative
 			if (id(anchor) != null && m_representatives.get(id(anchor)) != null) {
@@ -509,77 +511,80 @@ public abstract class AbstractIdentityFixer {
 				assert anchor == m_representatives.get(id(anchor));
 			}
 		}
+		
+		boolean isNew = true;
+		
+		// choose representative
+		Object valueHolderId = id(valueHolder);
+		
 		if (identical) {
-			
 			// anchor is the guaranteed representative
-			savedState = anchor;
-			assert id(anchor) == null
-				|| id(anchor) == ANONYMOUS
-				|| id(anchor).equals(id);
+			referenceHolder = anchor;
+			assert id(referenceHolder) == null
+				|| id(referenceHolder) == ANONYMOUS
+				|| id(referenceHolder).equals(valueHolderId);
 			isNew = false;
 		} else {
-			if (id == ANONYMOUS) {
+			if (valueHolderId == ANONYMOUS) {
 				// saved state of anonymous object might be given as anchor
-				savedState = anchor;
-				isNew = savedState == null;
+				referenceHolder = anchor;
+				isNew = (referenceHolder == null);
 			} else {
 				// check for a corresponding representative
-				if (id != null) {
-					savedState = (T) m_representatives.get(id);
-					isNew = (savedState == null);
+				if (valueHolderId != null) {
+					referenceHolder = (T) m_representatives.get(valueHolderId);
+					isNew = (referenceHolder == null);
 				}
 				// we have to merge even if attached == updated, meaning that it equals the representative already
 				// in case we are in a 2-way merging scenario and supposed to fix the collections again!
-				// we are only save if the object was reached already, meaning in the values of the reached map.
-				if (savedState == updateState && reached.containsValue(savedState)) {
-					reached.put(updateState, savedState);
-					return savedState;
+				// we are only safe if the object was reached already, i.e. it is stored in the reached map.
+				if (referenceHolder == valueHolder && reached.containsValue(referenceHolder)) {
+					reached.put(valueHolder, referenceHolder);
+					return referenceHolder;
 				}
 			}
 			
-			
 			// if no representative found, go through graph and insert the new objects
-			if (savedState == null) {
-				savedState = updateState;
+			if (referenceHolder == null) {
+				referenceHolder = valueHolder;
 			}
 		}
-		assert savedState != null;
+		assert referenceHolder != null;
 		
-		// if id of updateState is locked, return
-		if (id != ANONYMOUS && id != null) {
-			if (locked.get(id) != null && locked.get(id) != updateState) {
-				return savedState;
+		if (valueHolderId != null && valueHolderId != ANONYMOUS) {
+			// if id of updateState is locked, return
+			if (locked.get(valueHolderId) != null && locked.get(valueHolderId) != valueHolder) {
+				return referenceHolder;
 			}
 			if (isNew || identical) {
-				m_representatives.put(id, savedState);
+				m_representatives.put(valueHolderId, referenceHolder);
 			}
 		}
 		
 		// register representative
-		reached.put(updateState, savedState);
+		reached.put(valueHolder, referenceHolder);
 		
-		trace("merging ", updateState, " to ", savedState);
+		trace("merging ", valueHolder, " to ", referenceHolder);
 		m_traceIndentation++;
-		if (updateState.getClass().isArray()) {
+		if (valueHolder.getClass().isArray()) {
 			
-			int l = Array.getLength(updateState);
-			assert Array.getLength(savedState) == Array.getLength(updateState);
-			for (int i = 0; i < l; i++) {
+			assert Array.getLength(referenceHolder) == Array.getLength(valueHolder);
+			for (int i = 0; i < Array.getLength(valueHolder); i++) {
 				Array.set(
-					savedState, i,
+					referenceHolder, i,
 					merge(
-						savedState != null ? Array.get(savedState, i) : null,
-						Array.get(updateState, i),
+						Array.get(referenceHolder, i),
+						Array.get(valueHolder, i),
 						policy,
-						savedState != null && identical,
+						identical,
 						reached,
 						locked
 					)
 				);
 			}
-		} else if (savedState instanceof Collection) {
-			Collection savedCollection = (Collection) savedState;
-			Collection updateCollection = (Collection) updateState;
+		} else if (valueHolder instanceof Collection) {
+			Collection savedCollection = (Collection) referenceHolder;
+			Collection updateCollection = (Collection) valueHolder;
 			
 			List mergedEntries;
 			
@@ -604,7 +609,7 @@ public abstract class AbstractIdentityFixer {
 					Collection<?> restoreCollection = m_reverseCollectionMapping.get(savedCollection);
 					if (restoreCollection != null) {
 						m_reverseCollectionMapping.remove(savedCollection);
-						savedState = (T) restoreCollection;
+						referenceHolder = (T) restoreCollection;
 						savedCollection = restoreCollection;
 						
 					}
@@ -634,12 +639,12 @@ public abstract class AbstractIdentityFixer {
 		} else {
 			boolean isUpdateNeeded = policy.getUpdatePolicy() == UpdatePolicy.UPDATE_ALL 
 				|| (policy.getUpdatePolicy() == UpdatePolicy.UPDATE_CHOSEN 
-					&& policy.getObjectsToUpdate().contains(savedState))
+					&& policy.getObjectsToUpdate().contains(referenceHolder))
 				|| isNew;
-			for (Field f : fields(updateState.getClass())) {
+			for (Field f : fields(valueHolder.getClass())) {
 				try {
-					Object fieldValueNew = f.get(updateState);
-					Object fieldValueOld = (savedState != null) ? f.get(savedState) : null;
+					Object fieldValueNew = f.get(valueHolder);
+					Object fieldValueOld = f.get(referenceHolder);
 					boolean collectionUpdate = fieldValueOld != null && fieldValueOld instanceof Collection 
 						&& id(fieldValueOld) == ANONYMOUS;
 					if (policy.getUpdatePolicy() == UpdatePolicy.UPDATE_CHOSEN && collectionUpdate) {
@@ -648,7 +653,7 @@ public abstract class AbstractIdentityFixer {
 					boolean updateAnyway = false;
 					if (collectionUpdate && needsAdditionalProcessing(fieldValueNew)) {
 						// check for a hint object to replace list again
-						IdentityFixerCollectionField idcf = new IdentityFixerCollectionField(savedState, f);
+						IdentityFixerCollectionField idcf = new IdentityFixerCollectionField(referenceHolder, f);
 						Collection<?> replaceCollection = m_collectionsToBeReplaced.get(idcf);
 						if (replaceCollection != null) {
 							updateAnyway = true;
@@ -671,7 +676,7 @@ public abstract class AbstractIdentityFixer {
 					// valid local references with not loaded (=null) references
 					if (isUpdateNeeded || updateAnyway) {
 						
-						f.set(savedState, merged);
+						f.set(referenceHolder, merged);
 					}
 				} catch (IllegalAccessException e) { assert false : e; }
 			}
@@ -680,10 +685,10 @@ public abstract class AbstractIdentityFixer {
 
 		// notify state change
 		NewEntityState e = new NewEntityState();
-		e.setChangee(savedState);
+		e.setChangee(referenceHolder);
 		m_changeNotifier.announce(e);
 		
-		return savedState;
+		return referenceHolder;
 	}
 	
 	/**
