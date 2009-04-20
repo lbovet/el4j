@@ -21,7 +21,7 @@ case $1 in
 		;;
 	"external_svn")
 		cd external
-		mvn clean install -fae -B -U $2
+		mvn clean install -fae -B -U -Pauto,tomcat6x,db2,integrationTests $2
 		;;
 	"internal_nightly")
 		cd internal
@@ -37,7 +37,7 @@ case $1 in
 		;;
 	"internal_svn")
 		cd internal
-		mvn clean install -fae -B -U $2
+		mvn clean install -fae -B -U -Pauto,tomcat6x,db2,integrationTests $2
 		;;
 	"release_tomcat")
 		mvn -f external/pom.xml clean install -fae -B -Pauto,tomcat6x,db2,integrationTests $2
@@ -101,8 +101,8 @@ case $1 in
 		version=$(cat external/maven/archetypes/module-template/pom.xml | grep "<version>" | tail -n 1 | tr -d ' \t\r\n<>version/')
 
 		#mvn archetype:create -DarchetypeGroupId=ch.elca.el4j
-		mvn org.apache.maven.plugins:maven-archetype-plugin:1.0-alpha-7:create -DarchetypeGroupId=ch.elca.el4j  \
-			 -DarchetypeArtifactId=EL4JArchetypeCore -DarchetypeVersion=$version \
+		mvn org.apache.maven.plugins:maven-archetype-plugin:1.0-alpha-7:create -DarchetypeGroupId=ch.elca.el4j.archetypes  \
+			 -DarchetypeArtifactId=EL4JCore -DarchetypeVersion=$version \
 			 -DgroupId=ch.elca.test -DartifactId=testarchetype  \
 			 -DremoteRepositories=http://el4.elca-services.ch/el4j/maven2repository
 
