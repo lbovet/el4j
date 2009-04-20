@@ -77,6 +77,10 @@ public class ClassLocator {
 					loadDirectory(packageName, resource, classLocations);
 				} else if (resource.getProtocol().equalsIgnoreCase("JAR")) {
 					loadJar(packageName, resource, classLocations);
+				} else if (resource.getProtocol().equalsIgnoreCase("ZIP")) {
+					// Weblogic 10.3x uses zip: instead of jar:
+					resource = new URL("jar", resource.getHost(), resource.getPort(), resource.getFile());
+					loadJar(packageName, resource, classLocations);
 				} else {
 					throw new ClassNotFoundException("Unknown protocol on class resource: "
 							+ resource.toExternalForm());
