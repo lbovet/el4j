@@ -1,6 +1,6 @@
 
 <archetype>
-	<id>EL4JArchetypeCore</id>
+	<id>EL4JCore</id>
 	<sources>
 		<source>src/main/java/Calculator.java</source>
 	</sources>
