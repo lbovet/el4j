@@ -365,7 +365,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-antrun-plugin</artifactId>
-					<version>1.2</version>
+					<version>1.3</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -457,7 +457,7 @@
 							* maven-war-plugin (revision 429069)
 					<version>2.0.2-20060907.100703-1</version>
 			-->
-					<version>2.0.2</version>
+					<version>2.1-beta-1</version>
 					<configuration>
 						<warName>${jee-web.war.name}</warName>
 						<webappDirectory>${jee-web.webapp.directory}</webappDirectory>
@@ -488,7 +488,7 @@
 							* archiva (revision 439966)
 					<version>2.2-20060922.131747-1</version>
 			-->
-					<version>2.2</version>
+					<version>2.3</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -498,7 +498,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
-					<version>2.0-beta-7</version>
+					<version>2.0-beta-9</version>
 					<configuration>
 						<tagBase>
 							https://el4j.svn.sourceforge.net/svnroot/el4j/tags/
@@ -544,7 +544,7 @@
 								+ patch http://jira.codehaus.org/browse/MEXEC-11)
 					<version>1.0.3-20061204.110918-2</version>
 			-->
-					<version>1.1</version>
+					<version>1.1.1</version>
 					<configuration>
 						<classpathScope>test</classpathScope>
 					</configuration>
@@ -746,23 +746,6 @@
 					<artifactId>cobertura-maven-plugin</artifactId>
 					<version>${version.cobertura-maven-plugin}</version>
 				</plugin>
-				
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-source-plugin</artifactId>
-					<version>2.0.4</version>
-					<executions>
-						<execution>
-							<id>createSourceJars</id>
-							<phase>package</phase>
-							<goals>
-								<goal>jar</goal>
-								<goal>test-jar</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				
 				<!-- Further EL4J specific plugins -->
 				<plugin>
 					<groupId>ch.elca.el4j.maven.plugins</groupId>
@@ -1945,7 +1928,7 @@
 			<dependency>
 				<groupId>commons-digester</groupId>
 				<artifactId>commons-digester</artifactId>
-				<version>1.8</version>
+				<version>2.0</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-discovery</groupId>
@@ -2032,7 +2015,7 @@
 			<dependency>
 				<groupId>javax.mail</groupId>
 				<artifactId>mail</artifactId>
-				<version>1.4.1</version>
+				<version>1.4.2</version>
 			</dependency>
 			<dependency>
 				<groupId>wsdl4j</groupId>
