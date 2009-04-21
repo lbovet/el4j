@@ -153,15 +153,9 @@
 		<!-- Uncomment this block if you are inside ELCA! -->
 		<!-- <mirror>
 			<id>nexusReleases</id>
-			<mirrorOf>central,codehaus,jboss,maven2-repository.dev.java.net,el4jReleaseRepositoryInternal</mirrorOf>
+			<mirrorOf>central,codehaus,jboss,java.net,maven2-repository.dev.java.net,el4jReleaseRepositoryInternal</mirrorOf>
 			<name>Nexus mirror for releases</name>
 			<url>http://leaffy.elca.ch:8082/nexus/content/groups/releases</url>
-		</mirror>
-		<mirror>
-			<id>nexusReleasesMaven1</id>
-			<mirrorOf>java.net</mirrorOf>
-			<name>Nexus mirror for maven 1 releases</name>
-			<url>http://leaffy.elca.ch:8082/nexus/content/repositories/java-net-maven-1.release/</url>
 		</mirror> -->
 		
 		
