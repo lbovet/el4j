@@ -17,9 +17,9 @@
 
 	<artifactId>env-tests</artifactId>
 	<packaging>pom</packaging>
-	<name>EL4J test env infrastucture</name>
+	<name>EL4J test env infrastructure</name>
 	<description>
-		Tests for the env infrastucture of the EL4J framework.
+		Tests for the env infrastructure of the EL4J framework.
 	</description>
 	
 	<modules>
