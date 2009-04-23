@@ -44,7 +44,7 @@ import org.springframework.context.annotation.ClassPathScanningCandidateComponen
  */
 
 @RunWith(AllTests.class)
-public class OfflinerTestOracle {
+public class OfflinerOracleTest {
 	
 	public static Test suite() {
 		TestSuite suite = new TestSuite();
