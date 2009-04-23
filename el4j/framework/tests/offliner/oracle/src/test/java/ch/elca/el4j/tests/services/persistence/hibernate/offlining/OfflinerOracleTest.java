@@ -51,7 +51,7 @@ public class OfflinerOracleTest {
 		ClassPathScanningCandidateComponentProvider scan
 			= new ClassPathScanningCandidateComponentProvider(true);
 		Set<BeanDefinition> candidates = 
-			scan.findCandidateComponents("ch.elca.el4j.services.persistence.hibernate.offlining.test");
+			scan.findCandidateComponents("ch.elca.el4j.tests.services.persistence.hibernate.offlining");
 		for (BeanDefinition candidate : candidates) {
 			String name = candidate.getBeanClassName();
 			try {
