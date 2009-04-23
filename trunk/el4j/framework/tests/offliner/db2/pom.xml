@@ -43,18 +43,11 @@
 	</build>
 
 	<profiles>
-		<!--
-		<profile>
-			<id>oracle</id>
-		</profile>
-		-->
 		<profile>
 			<id>db2</id>
-			<!--
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
-			-->
 			<build>
 				<plugins>
 					<plugin>

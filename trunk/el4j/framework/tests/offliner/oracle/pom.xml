@@ -45,11 +45,6 @@
 	<profiles>
 		<profile>
 			<id>oracle</id>
-			<!--
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			-->
 			<build>
 				<plugins>
 					<plugin>
