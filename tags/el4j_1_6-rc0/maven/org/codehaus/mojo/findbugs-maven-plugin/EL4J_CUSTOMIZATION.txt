@@ -1,0 +1,7 @@
+http://svn.codehaus.org/mojo/tags/mojo-16/findbugs-maven-plugin
+REVISION: 7231
+APPLIED PATCHES:
+   * see diff.patch
+CURRENTLY USED VERSION: 1.2-el4j_20080716_1200
+DEPENDENT CUSTOMIZED ARTIFACTS:
+   * n/a
