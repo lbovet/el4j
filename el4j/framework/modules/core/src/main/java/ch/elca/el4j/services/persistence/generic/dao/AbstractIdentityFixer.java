@@ -619,6 +619,10 @@ public abstract class AbstractIdentityFixer {
 					}
 					
 				}
+				if (immutableValue(savedCollection)) {
+					// take the new collection as container, since the old is not usable
+					savedCollection = updateCollection;
+				}
 				savedCollection.clear();
 				savedCollection.addAll(mergedEntries);
 				
