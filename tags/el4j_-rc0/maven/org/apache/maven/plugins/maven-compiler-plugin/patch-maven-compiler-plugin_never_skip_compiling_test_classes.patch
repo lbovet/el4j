@@ -1,0 +1,28 @@
+Index: src/main/java/org/apache/maven/plugin/TestCompilerMojo.java
+===================================================================
+--- src/main/java/org/apache/maven/plugin/TestCompilerMojo.java	(Revision 439989)
++++ src/main/java/org/apache/maven/plugin/TestCompilerMojo.java	(Arbeitskopie)
+@@ -45,6 +45,14 @@
+      * @parameter expression="${maven.test.skip}"
+      */
+     private boolean skip;
++    
++    /**
++     * Flag to indicate if the skip flag above should be ignored.
++     * See http://jira.codehaus.org/browse/MCOMPILER-35
++     * 
++     * @parameter default-value="false"
++     */
++    private boolean neverSkipCompiling;
+ 
+     /**
+      * The source directories containing the test-source to be compiled.
+@@ -90,7 +98,7 @@
+     public void execute()
+         throws MojoExecutionException, CompilationFailureException
+     {
+-        if ( skip )
++        if ( !neverSkipCompiling && skip )
+         {
+             getLog().info( "Not compiling test sources" );
+         }

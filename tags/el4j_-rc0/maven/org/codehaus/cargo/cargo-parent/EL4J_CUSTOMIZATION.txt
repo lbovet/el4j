@@ -1,0 +1,7 @@
+SVN URL: http://svn.codehaus.org/cargo/pom/trunk
+REVISION: 1546
+APPLIED PATCHES: 
+   * changed version and added/replaced distributionManagement-section and wagon-configuration
+CURRENTLY USED VERSION: 3-el4j_20080110_1000
+DEPENDENT CUSTOMIZED ARTIFACTS: 
+   * groupId=org.codehaus.cargo artifactId=cargo-core

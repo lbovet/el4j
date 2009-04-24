@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<faqs id="FAQ" title="Frequently Asked Questions">
+ <part id="General">
+   <faq id="Aggregate Reporting">
+     <question>Is there an easy way to generate the aggregate report ?</question>
+     <answer>
+       <p>
+       Unfortunately Maven's internal support for report aggregation
+  is rather poor and does have a number of limitations.
+    </p>
+       <p>
+  This may be addressed in the future by a module like 
+  <a href="http://mojo.codehaus.org/dashboard-maven-plugin/">dashboard</a>
+   to get an aggregate report.
+    </p>
+     </answer>
+   </faq>
+ </part>
+</faqs>
