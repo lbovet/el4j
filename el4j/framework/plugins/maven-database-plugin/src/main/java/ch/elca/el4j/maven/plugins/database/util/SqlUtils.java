@@ -57,6 +57,21 @@ public final class SqlUtils {
 	 * @return                      a list of sql statements
 	 */
 	public static List<String> extractStmtsFromFile(URL fileURL, String statementDelimiter, String blockDelimiter) {
+		return extractStmtsFromFile(fileURL, statementDelimiter, blockDelimiter, null);
+	}
+	
+	/**
+	 * Extract sql statements from given file.
+	 * 
+	 * @param fileURL               URL of the file
+	 * @param statementDelimiter    Separator for sql statements
+	 * @param blockDelimiter        Separator for sql blocks
+	 * @param patterns              a list of search-replace patterns
+	 * @return                      a list of sql statements
+	 */
+	public static List<String> extractStmtsFromFile(URL fileURL, String statementDelimiter, String blockDelimiter,
+		List<FindReplacePattern> patterns) {
+		
 		ArrayList<String> result = new ArrayList<String>();
 		String part;
 		StringBuffer stmt = new StringBuffer();
@@ -74,6 +89,12 @@ public final class SqlUtils {
 			buffRead = new BufferedReader(new InputStreamReader(
 				fileURL.openStream()));
 			while ((part = buffRead.readLine()) != null) {
+				if (patterns != null) {
+					for (FindReplacePattern pattern : patterns) {
+						part = pattern.apply(part);
+					}
+				}
+				
 				String trimmed = StringUtils.trimWhitespace(part);
 				
 				// Filter out comments
