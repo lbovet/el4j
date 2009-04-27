@@ -15,7 +15,9 @@
     key declared in farther files.
     There is support to get help on the currently active env configuration via mvn env-support:list
   = DB plugin: updateMojo now supports version ranges (ELJ-55), db.dryRun added, 
-        now supports /* */-style comments
+     now supports /* */-style comments, db.sqlFindReplacePattern parameter added: it allows
+	 to do search/ replaces on db scripts (it uses sed-like syntax, so /orig/new/ replaces orig 
+	 by new). Refer to the doc on the maven-generated website.
   = enable assertions by default (-ea)
   = Improved the corbertura plugin: New support to measure coverage when doing other kind of tests
      (you can enable and disable the coverage checking), support of THB included to be able
