@@ -1,4 +1,77 @@
 --------------------------------------------------------------------------------
+ Date :   30.04.09
+                            EL4J version  1.6
+--------------------------------------------------------------------------------
+* Core
+  = Consistency of configuration file and packages names was improved
+  = Upgrades: Spring upgraded from 2.5.5 to 2.5.6, htlmUnit to version 2.4, 
+    designgridlayout to version 1.0, upgrade to Weblogic 10.3, jaxws: some libraries updated,
+	easymockclassextension updated to 2.4, update to abbot/costello 1.0.2, commons-digester,
+	javax.mail, unified version of jamonapi
+	
+* Build system
+  = module-env now support multiple env properties files on the classpath. They get merged according 
+    to the el4j module spirit: properties declared in nearer files overwrite properties with the same 
+	key declared in farther files.
+	There is support to get help on the currently active env configuration via  mvn env-support:list
+  = DB plugin: updateMojo now supports version ranges (ELJ-55), db.dryRun added, 
+        now supports /* */-style comments
+  = enable assertions by default (-ea)		
+  = Improved the corbertura plugin: New support to measure coverage when doing other kind of tests
+     (you can enable and disable the coverage checking), support of THB included to be able
+	 to ignore certain methods in coverage
+  = Improved dependency graph plugin: now you can choose the scope such as compile, runtime
+  = ListResourcePatternResolverDecorator improved such that the order of local classes and test-classes is correct
+  = Upgrades: maven-clean-plugin to version 2.3, upgrade to new cargo plugin (el4j-encanced 1.0-beta2),
+     maven-enforcer-plugin 1.0-beta-1, maven-plugin-plugin (2.5) and maven-project-info-reports-plugin (2.1.1),
+	 site-plugin 2.0, install, war, release, exec, antrun
+  
+* Security
+  = Some security bugs fixed
+  = Security demo improved: reuse original RefDBDemoForm, add login dialog, make demo a GUIExtension, 
+     separate it neatly from thin-client
+  
+* Data access
+  = Added DataExtent framework to control what part of a graph of object is loaded
+    by Hibernate. 
+  = Migrated from dbcp to c3p0 for connection pooling (better control and monitoring, more robust)
+  = Abstract*Dto now prints error if hashCode is called in transient and persisted state. See also 
+    the clarified Hibernate guidelines!
+  = New HibernatePersistentCollectionRefresher can be used to refresh all persisted sets and maps.
+     (We do not enable it by default, but this can be useful, see Hibernate guidelines of EL4J).
+  = Added reload method to generic dao and to its descendants
+  = Identity-fixer: more control added to specify what should should be merged and what not.
+  = Added offliner module: it allows to conveniently implement an offline-mode for a Hibernate application.
+  = Updated AbstractIntKeyIntOptimisticLockingDto.java for compatibility with offliner and beanbrowser
+  = New helper class (TriggerAssignedIdentityGenerator) to support using Oracle triggers to generate 
+     the PKs with Hibernate
+  = Full JPA support using hibernate entity manager functionality in SessionFactory creation (set up correct
+     event handlers such that things like @PrePersist wokrs also with pure Hibernate)
+  = module-database-jamon added: it allows counting the number of database roundtrips hibernate (or other code)
+     requires
+  = Upgrades: slf4j-simple replaced by slf4j-log4j12, removed configs for tomcat5, 
+     use of ReferenceIdentityMap instead of WeakIdentityHashMap
+  
+* GUI Framework
+  = Improved some abstractions (SDI/MDI/docking, use of @Autowire for less 
+     configuration, better use of eventbus, ActionsContext introduced, Exception handling rewritten)
+  = Swing demo now makes use of @Component and @LazyInit instead of Spring XML files
+  = New about, help and exceptions dialog 
+  = Costello (Abbot editor) integrated
+  = Cookxml patched to make cx:ctor conform to the xml schema
+  = Clean ups and documentation improvement
+ 
+* Various 
+  = Updated refdb and keywords templates: nicer use of Hibernate, refined blob/clob handling,
+     dropped some unncessary domain object model classes, 
+  = module-jmx: replace MBeanServerFactoryBean by Spring implementation (fixes some unload issues)
+  = jbpm tryout moved to internal
+  = Workaround for zip protocol used in Weblogic 10.3x added (otherwise there are deployment issues).
+  = new maven property 'jee-web.context.cargo' added, which allows to specify a context for cargo. 
+    This is necessary when deploying to the root context: 'jee-web.context' is '/', but 
+	'jee-web.context.cargo' needs to be 'ROOT'.
+
+--------------------------------------------------------------------------------
  Date :   22.10.08
                             EL4J version  1.5.1
 --------------------------------------------------------------------------------
