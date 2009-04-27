@@ -23,9 +23,9 @@
      (you can enable and disable the coverage checking), support of THB included to be able
      to ignore certain methods in coverage
   = ListResourcePatternResolverDecorator improved such that the order of local classes and test-classes is correct
-  = Upgrades: maven-clean-plugin to version 2.3, upgrade to new cargo plugin (el4j-encanced 1.0-beta2),
-     maven-enforcer-plugin 1.0-beta-1, maven-plugin-plugin (2.5) and maven-project-info-reports-plugin (2.1.1),
-     site-plugin 2.0, install, war, release, exec, antrun
+  = Upgrades: Maven version 2.0.10, maven-clean-plugin to version 2.3, upgrade to new cargo plugin 
+    (el4j-encanced 1.0-beta2), maven-enforcer-plugin 1.0-beta-1, maven-plugin-plugin (2.5) and  
+	 maven-project-info-reports-plugin (2.1.1), site-plugin 2.0, install, war, release, exec, antrun
   
 * Security
   = Some security bugs fixed
