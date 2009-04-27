@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.MojoFailureException;
@@ -34,6 +35,7 @@ import org.springframework.util.StringUtils;
 
 import ch.elca.el4j.maven.plugins.database.holder.ConnectionPropertiesHolder;
 import ch.elca.el4j.maven.plugins.database.holder.DatabaseHolderException;
+import ch.elca.el4j.maven.plugins.database.util.FindReplacePattern;
 import ch.elca.el4j.maven.plugins.database.util.SqlUtils;
 
 /**
@@ -153,6 +155,16 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 	 *  "/etc/sql/general/, /etc/sql/{db.name}/"
 	 */
 	private String sqlSourceDir;
+	
+	/**
+	 * The find-replace pattern to apply to content of each SQL file.
+	 * The syntax is similar to the unix tool 'sed': the first character
+	 * is used as delimiter for all tokens.
+	 * Syntax: '#findRegex#replace#anotherFindRegex#anotherReplace#' and so on.
+	 * 
+	 * @parameter expression="${db.sqlFindReplacePattern}" default-value=""
+	 */
+	private String sqlFindReplacePattern;
 
 	/**
 	 * The Data Holder.
@@ -380,13 +392,29 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 				result = null;
 
 				break;
-
 			}
-
-
 		}
 
 		return result;
+	}
+	
+	/**
+	 * @return    the list of active find-replace patterns.
+	 */
+	protected List<FindReplacePattern> getFindReplacePatterns() {
+		List<FindReplacePattern> patterns = new ArrayList<FindReplacePattern>();
+		
+		patterns.add(new FindReplacePattern("###SEMICOLUMN###", ";", Pattern.LITERAL));
+		
+		if (StringUtils.hasText(sqlFindReplacePattern)) {
+			String patternSeparator = sqlFindReplacePattern.substring(0, 1);
+			String[] parts = sqlFindReplacePattern.substring(1).split(patternSeparator);
+			for (int i = 0; i < (parts.length / 2); i++) {
+				patterns.add(new FindReplacePattern(parts[i * 2], parts[i * 2 + 1]));
+			}
+		}
+		
+		return patterns;
 	}
 	
 	/**
@@ -436,7 +464,9 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 				} else {
 					getLog().info("Processing resource: " + resource.getFilename());
 				}
-				List<String> sqlStmts = SqlUtils.extractStmtsFromFile(resource.getURL(), delimiter, blockDelimiter);
+				
+				List<String> sqlStmts = SqlUtils.extractStmtsFromFile(
+					resource.getURL(), delimiter, blockDelimiter, getFindReplacePatterns());
 				
 				if (sqlStmts.size() == 0) {
 					throw new DatabaseHolderException(
@@ -449,7 +479,6 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 				// Collect exception and throw them afterwards to ensure that
 				// all SQL Statements are processed.
 				for (String sqlString : sqlStmts) {
-					sqlString = sqlString.replace("###SEMICOLUMN###", ";");
 					getLog().debug(sqlString);
 					
 					if (!dryRun) {
