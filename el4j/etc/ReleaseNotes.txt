@@ -13,7 +13,7 @@
   = module-env now support multiple env properties files on the classpath. They get merged according 
     to the el4j module spirit: properties declared in nearer files overwrite properties with the same 
     key declared in farther files.
-    There is support to get help on the currently active env configuration via mvn env-support:list
+    There is support to get help on the currently active env configuration via mvn envsupport:list
   = DB plugin: updateMojo now supports version ranges (ELJ-55), db.dryRun added, 
      now supports /* */-style comments, db.sqlFindReplacePattern parameter added: it allows
 	 to do search/ replaces on db scripts (it uses sed-like syntax, so /orig/new/ replaces orig 
