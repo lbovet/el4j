@@ -283,7 +283,7 @@
 						<artifactId>maven-file-collector-plugin</artifactId>
 						<configuration>
 							<rootSourceDirectory>${el4j.external}/framework</rootSourceDirectory>
-							<sourceDirectoryExcludePatterns>${el4j.external}/framework/tests/remoting/versioning/src/**/java</sourceDirectoryExcludePatterns>
+							<sourceDirectoryExcludePatterns>${el4j.external}/framework/tests/remoting/versioning/src/**/java,${el4j.external}/framework/tests/env/plugin/**/src/test/java</sourceDirectoryExcludePatterns>
 							<sourceDirectoryIncludePatterns>modules/**/src/test/java,tests/**/src/main/java,tests/**/src/test/java</sourceDirectoryIncludePatterns>
 							<sourceFileIncludePatterns>**/*.java,**/*.html</sourceFileIncludePatterns>
 							<targetDirectory>${aggregated.files.output.directory}</targetDirectory>
