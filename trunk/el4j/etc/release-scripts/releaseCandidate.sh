@@ -40,7 +40,7 @@ fi
 
 #echo "Which tag should be chosen for the new release? (like 1.1.1, without -rc0)"
 #read tagDot
-tagScore=$(echo $nextVersion | sed "s/\./_/g")
+tagScore=$(echo $tagDot | sed "s/\./_/g")
 echo "Which release candiate should be chosen? (like 0 or 1, without -rc)"
 read rc
 echo "Tag is $tagDot-rc$rc, OK?"

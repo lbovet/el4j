@@ -621,6 +621,7 @@ public abstract class AbstractIdentityFixer {
 				}
 				if (immutableValue(savedCollection)) {
 					// take the new collection as container, since the old is not usable
+					referenceHolder = (T) updateCollection;
 					savedCollection = updateCollection;
 				}
 				savedCollection.clear();
@@ -664,6 +665,9 @@ public abstract class AbstractIdentityFixer {
 							fieldValueOld = replaceCollection;
 							m_collectionsToBeReplaced.remove(idcf);
 						}
+					}
+					if (collectionUpdate && immutableValue(fieldValueOld)) {
+						updateAnyway = true;
 					}
 					Object merged = merge(
 						fieldValueOld,

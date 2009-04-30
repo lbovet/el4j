@@ -235,7 +235,10 @@ public class AggregateFilesMojo extends AbstractMojo {
 								for (int i = 0; !matchesExclude
 									&& i < m_dirExcludePatterns.length; i++) {
 									String excludePattern
-										= m_dirExcludePatterns[i];
+										= StringUtils.replace(
+											m_dirExcludePatterns[i], 
+											File.separator, "/");
+									
 									if (pathMatcher.isPattern(excludePattern)) {
 										matchesExclude = pathMatcher.match(
 											excludePattern, dirString);
