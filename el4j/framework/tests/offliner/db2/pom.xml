@@ -91,8 +91,9 @@
 								</goals>
 								<phase>pre-integration-test</phase>
 								<configuration>
-									<sqlSourceDir>/etc/sql/general/, /etc/sql/${db.name}-local/</sqlSourceDir>
+									<sqlSourceDir>/etc/sql/general/, /etc/sql/${db.name}/, /etc/sql/${db.name}-offliner/</sqlSourceDir>
 									<connectionPropertiesSource>local.properties</connectionPropertiesSource>
+									<sqlFindReplacePattern>#START WITH 1#START WITH -1#INCREMENT BY 1#INCREMENT BY -1#</sqlFindReplacePattern>
 								</configuration>
 							</execution>
 							
@@ -105,7 +106,6 @@
 								</goals>
 								<phase>pre-integration-test</phase>
 								<configuration>
-									<sqlSourceDir>/etc/sql/general/, /etc/sql/${db.name}-remote/</sqlSourceDir>
 									<connectionPropertiesSource>remote.properties</connectionPropertiesSource>
 								</configuration>
 							</execution>
@@ -118,8 +118,9 @@
 								</goals>
 								<phase>post-integration-test</phase>
 								<configuration>
-									<sqlSourceDir>/etc/sql/general/, /etc/sql/${db.name}-local/</sqlSourceDir>
+									<sqlSourceDir>/etc/sql/general/, /etc/sql/${db.name}/, /etc/sql/${db.name}-offliner/</sqlSourceDir>
 									<connectionPropertiesSource>local.properties</connectionPropertiesSource>
+									<sqlFindReplacePattern>#START WITH 1#START WITH -1#INCREMENT BY 1#INCREMENT BY -1#</sqlFindReplacePattern>
 								</configuration>
 							</execution>
 							
@@ -131,7 +132,6 @@
 								</goals>
 								<phase>post-integration-test</phase>
 								<configuration>
-									<sqlSourceDir>/etc/sql/general/, /etc/sql/${db.name}-remote/</sqlSourceDir>
 									<connectionPropertiesSource>remote.properties</connectionPropertiesSource>
 								</configuration>
 							</execution>

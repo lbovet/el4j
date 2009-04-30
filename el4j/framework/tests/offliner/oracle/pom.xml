@@ -84,8 +84,9 @@
 								</goals>
 								<phase>pre-integration-test</phase>
 								<configuration>
-									<sqlSourceDir>/etc/sql/general/, /etc/sql/${db.name}-local/</sqlSourceDir>
+									<sqlSourceDir>/etc/sql/general/, /etc/sql/${db.name}/, /etc/sql/${db.name}-offliner/</sqlSourceDir>
 									<connectionPropertiesSource>local.properties</connectionPropertiesSource>
+									<sqlFindReplacePattern>#START WITH 1#START WITH 2000000001 MINVALUE 2000000001 MAXVALUE 4000000000#</sqlFindReplacePattern>
 								</configuration>
 							</execution>
 							
@@ -98,8 +99,8 @@
 								</goals>
 								<phase>pre-integration-test</phase>
 								<configuration>
-									<sqlSourceDir>/etc/sql/general/, /etc/sql/${db.name}-remote/</sqlSourceDir>
 									<connectionPropertiesSource>remote.properties</connectionPropertiesSource>
+									<sqlFindReplacePattern>#START WITH 1#START WITH 1 MINVALUE 1 MAXVALUE 2000000000#</sqlFindReplacePattern>
 								</configuration>
 							</execution>
 							
@@ -111,8 +112,9 @@
 								</goals>
 								<phase>post-integration-test</phase>
 								<configuration>
-									<sqlSourceDir>/etc/sql/general/, /etc/sql/${db.name}-local/</sqlSourceDir>
+									<sqlSourceDir>/etc/sql/general/, /etc/sql/${db.name}/, /etc/sql/${db.name}-offliner/</sqlSourceDir>
 									<connectionPropertiesSource>local.properties</connectionPropertiesSource>
+									<sqlFindReplacePattern>#START WITH 1#START WITH 2000000001 MINVALUE 2000000001 MAXVALUE 4000000000#</sqlFindReplacePattern>
 								</configuration>
 							</execution>
 							
@@ -124,8 +126,8 @@
 								</goals>
 								<phase>post-integration-test</phase>
 								<configuration>
-									<sqlSourceDir>/etc/sql/general/, /etc/sql/${db.name}-remote/</sqlSourceDir>
 									<connectionPropertiesSource>remote.properties</connectionPropertiesSource>
+									<sqlFindReplacePattern>#START WITH 1#START WITH 1 MINVALUE 1 MAXVALUE 2000000000#</sqlFindReplacePattern>
 								</configuration>
 							</execution>
 							
