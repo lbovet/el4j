@@ -3,53 +3,53 @@
 
 	<element name="env" type="env:env"></element>
 
-    <element name="placeholder" type="env:inheritableProperty"></element>
+	<element name="placeholder" type="env:inheritableProperty"></element>
 
-    <element name="bean-override" type="env:inheritableProperty"></element>
+	<element name="bean-override" type="env:inheritableProperty"></element>
 
-    <element name="bean-overrides" type="env:bean-overrides"></element>
+	<element name="bean-overrides" type="env:bean-overrides"></element>
 
-    <element name="placeholders" type="env:placeholders"></element>
+	<element name="placeholders" type="env:placeholders"></element>
 
-    <element name="remove-placeholder" type="env:removeProperty"></element>
+	<element name="remove-placeholder" type="env:removeProperty"></element>
 
-    <element name="remove-bean-override" type="env:removeProperty"></element>
-    
-    <complexType name="env">
-    	<sequence>
-            <element ref="env:placeholders" maxOccurs="1" minOccurs="0"></element>
-            <element ref="env:bean-overrides" maxOccurs="1" minOccurs="0"></element>
-            <any minOccurs="0" maxOccurs="unbounded" namespace="##other"></any>
-    	</sequence>
-    </complexType>
+	<element name="remove-bean-override" type="env:removeProperty"></element>
+	
+	<complexType name="env">
+		<sequence>
+			<element ref="env:placeholders" maxOccurs="1" minOccurs="0"></element>
+			<element ref="env:bean-overrides" maxOccurs="1" minOccurs="0"></element>
+			<any minOccurs="0" maxOccurs="unbounded" namespace="##other"></any>
+		</sequence>
+	</complexType>
 
-    <complexType name="placeholders">
-    	<sequence minOccurs="0" maxOccurs="unbounded">
-    		<choice><element ref="env:placeholder"></element><element ref="env:remove-placeholder"></element></choice>
-    	</sequence>
-    </complexType>
+	<complexType name="placeholders">
+		<sequence minOccurs="0" maxOccurs="unbounded">
+			<choice><element ref="env:placeholder"></element><element ref="env:remove-placeholder"></element></choice>
+		</sequence>
+	</complexType>
 
-    <complexType name="bean-overrides">
-    	<sequence minOccurs="0" maxOccurs="unbounded">
-    		<choice><element ref="env:bean-override"></element><element ref="env:remove-bean-override"></element></choice>
-    	</sequence>
-    </complexType>
+	<complexType name="bean-overrides">
+		<sequence minOccurs="0" maxOccurs="unbounded">
+			<choice><element ref="env:bean-override"></element><element ref="env:remove-bean-override"></element></choice>
+		</sequence>
+	</complexType>
 
-    <complexType name="inheritableProperty">
-    	<attribute name="name" type="string" use="required"></attribute>
-    	<attribute name="value" type="string"></attribute>
-    	<attribute name="type">
-    		<simpleType>
-    			<restriction base="string">
-    				<enumeration value="abstract"></enumeration>
-    				<enumeration value="final"></enumeration>
-    			</restriction>
-    		</simpleType>
-    	</attribute>
-    	<attribute name="comment" type="string"></attribute>
-    </complexType>
+	<complexType name="inheritableProperty">
+		<attribute name="name" type="string" use="required"></attribute>
+		<attribute name="value" type="string"></attribute>
+		<attribute name="type">
+			<simpleType>
+				<restriction base="string">
+					<enumeration value="abstract"></enumeration>
+					<enumeration value="final"></enumeration>
+				</restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="comment" type="string"></attribute>
+	</complexType>
 
-    <complexType name="removeProperty">
-    	<attribute name="name" type="string" use="required"></attribute>
-    </complexType>
+	<complexType name="removeProperty">
+		<attribute name="name" type="string" use="required"></attribute>
+	</complexType>
 </schema>
