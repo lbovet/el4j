@@ -17,8 +17,8 @@
 package ch.elca.el4j.env.beans;
 
 import java.io.IOException;
+import java.util.Properties;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeansException;
@@ -26,14 +26,13 @@ import org.springframework.beans.factory.BeanDefinitionStoreException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.PropertyOverrideConfigurer;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.io.Resource;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
+import ch.elca.el4j.env.xml.EnvXml;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
-
 import ch.elca.el4j.util.encryption.AbstractPropertyEncryptor;
 import ch.elca.el4j.util.encryption.EncryptionException;
 import ch.elca.el4j.util.encryption.PasswordSource;
@@ -50,6 +49,7 @@ import ch.elca.el4j.util.env.PropertyEncryptionUtil;
  * );</script>
  *
  * @author Martin Zeltner (MZE)
+ * @author Stefan Wismer (SWI)
  */
 public class EnvPropertyOverrideConfigurer extends PropertyOverrideConfigurer
 	implements ApplicationContextAware {
@@ -58,7 +58,7 @@ public class EnvPropertyOverrideConfigurer extends PropertyOverrideConfigurer
 	 * The env bean property location.
 	 */
 	public static final String ENV_BEAN_PROPERTY_PROPERTIES_LOCATION
-		= "classpath*:env-bean-property.properties";
+		= "classpath:env-bean-property.properties";
 
 	/**
 	 * This logger is used to print out some global debugging info. Consult it
@@ -100,50 +100,48 @@ public class EnvPropertyOverrideConfigurer extends PropertyOverrideConfigurer
 	@Override
 	public void postProcessBeanFactory(
 		ConfigurableListableBeanFactory beanFactory) throws BeansException {
-		Resource[] envBeanPropertyLocations = null;
-		try {
-			envBeanPropertyLocations = m_applicationContext
-				.getResources(ENV_BEAN_PROPERTY_PROPERTIES_LOCATION);
-		} catch (IOException e1) {
-			s_logger
-				.warn("No env bean property properties file could be found. The"
-					+ " correct location for this file is '"
-					+ ENV_BEAN_PROPERTY_PROPERTIES_LOCATION + "'.");
+		
+		// new inheritable env support
+		boolean envXmlFound = false;
+		EnvXml envXmlConfigLoader;
+		if (m_applicationContext instanceof ModuleApplicationContext) {
+			ModuleApplicationContext mac = (ModuleApplicationContext) m_applicationContext;
+			envXmlConfigLoader = new EnvXml(m_applicationContext, mac.isMostSpecificResourceLast());
+		} else {
+			envXmlConfigLoader = new EnvXml();
+		}
+		if (envXmlConfigLoader.hasValidConfigurations()) {
+			super.setProperties((Properties) envXmlConfigLoader.getGroupConfiguration(EnvXml.ENV_GROUP_BEAN_OVERRIDES));
+			super.setLocalOverride(true);
+			envXmlFound = true;
 		}
 		
-		// reverse array to make nearer env files override farther env files
-		ArrayUtils.reverse(envBeanPropertyLocations);
-		
-		// check that every env property location exists
-		boolean atLeastOneEnvLocationExists = false;
-		for (Resource envBeanPropertyLocation : envBeanPropertyLocations) {
-			String envBeanPropertyLocationUrl = "no url";
-			if (envBeanPropertyLocation.exists()) {
-				atLeastOneEnvLocationExists = true;
-				try {
-					envBeanPropertyLocationUrl = envBeanPropertyLocation.getURL()
-						.toString();
-				} catch (IOException e) {
-					envBeanPropertyLocationUrl = "unknown url";
-				}
-			}
-
-			if (envBeanPropertyLocation.exists()) {
-				s_logger
-					.debug("The used env bean property properties file is '"
-						+ envBeanPropertyLocationUrl + "'.");
+		// old only-one-env-on-classpath strategy
+		Resource envBeanPropertyLocation = m_applicationContext
+			.getResource(ENV_BEAN_PROPERTY_PROPERTIES_LOCATION);
+	
+		String envBeanPropertyLocationUrl = "no url";
+		if (envBeanPropertyLocation.exists()) {
+			try {
+				envBeanPropertyLocationUrl = envBeanPropertyLocation.getURL()
+					.toString();
+			} catch (IOException e) {
+				envBeanPropertyLocationUrl = "unknown url";
 			}
 		}
-		
-		if (!atLeastOneEnvLocationExists) {
-			s_logger
-				.warn("No env bean property properties file could be found. The"
-					+ " correct location for this file is '"
-					+ ENV_BEAN_PROPERTY_PROPERTIES_LOCATION + "'.");
+	
+		if (!envXmlFound) {
+			if (envBeanPropertyLocation.exists()) {
+				s_logger.debug("The used env bean property properties file is '"
+					+ envBeanPropertyLocationUrl + "'.");
+				super.setLocation(envBeanPropertyLocation);
+			} else {
+				s_logger.warn("No env bean property properties file could be found. The"
+						+ " correct location for this file is '"
+						+ ENV_BEAN_PROPERTY_PROPERTIES_LOCATION + "'.");
+			}
 		}
-
-		super.setLocations(envBeanPropertyLocations);
-
+			
 		super.postProcessBeanFactory(beanFactory);
 	}
 

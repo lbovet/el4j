@@ -129,6 +129,13 @@ public class ResourceLoader {
 	}
 	
 	/**
+	 * @return    the resource loader
+	 */
+	public ListResourcePatternResolverDecorator getResolver() {
+		return m_resolver;
+	}
+	
+	/**
 	 * Get resources in the project but not in its dependencies.
 	 * @param path Path of the resources to get
 	 * @return Array of resources

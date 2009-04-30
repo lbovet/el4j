@@ -121,21 +121,28 @@ public class ConnectionPropertiesHolder extends DatabaseNameHolder {
 			}
 			try {
 				Resource[] resources = m_resourceLoader.getResources(source);
-				Properties properties = getProperties(resources);
-				m_url = properties.getProperty("dataSource.jdbcUrl", "");
-				if (m_url == null) {
-					m_url = properties.getProperty("dataSource.url", "");
-				}
-				m_username = properties.getProperty("dataSource.user", "");
-				if (m_username == null) {
-					m_username = properties.getProperty("dataSource.username", "");
-				}
-				m_password = properties.getProperty("dataSource.password", "");
+				loadConnectionProperties(getProperties(resources));
 			} catch (Exception e) {
 				throw new DatabaseHolderException(
 					"Error reading connection properties at " + source, e);
 			}
 		}
+	}
+	
+	/**
+	 * Load connection properties from specified properties file.
+	 * @param properties    the bean-override properties
+	 */
+	public void loadConnectionProperties(Properties properties) {
+		m_url = properties.getProperty("dataSource.jdbcUrl", "");
+		if (m_url == null) {
+			m_url = properties.getProperty("dataSource.url", "");
+		}
+		m_username = properties.getProperty("dataSource.user", "");
+		if (m_username == null) {
+			m_username = properties.getProperty("dataSource.username", "");
+		}
+		m_password = properties.getProperty("dataSource.password", "");
 	}
 	
 	/**

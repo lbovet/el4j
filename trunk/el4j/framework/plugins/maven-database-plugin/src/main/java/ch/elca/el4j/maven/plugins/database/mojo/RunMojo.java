@@ -37,6 +37,7 @@ import ch.elca.el4j.maven.plugins.database.AbstractDBExecutionMojo;
  * @author Stefan Wismer (SWI)
  */
 public class RunMojo extends AbstractDBExecutionMojo {
+	// Checkstyle: MemberName off
 	/**
 	 * File prefix of all sql files that should be executed.
 	 *
@@ -53,6 +54,7 @@ public class RunMojo extends AbstractDBExecutionMojo {
 	 *            default-value="false"
 	 */
 	protected Boolean reverse;
+	// Checkstyle: MemberName on
 	
 	/**
 	 * {@inheritDoc}

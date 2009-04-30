@@ -17,23 +17,23 @@
 package ch.elca.el4j.maven.plugins.envsupport;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.maven.artifact.Artifact;
@@ -48,7 +48,9 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.util.StringUtils;
 
+import ch.elca.el4j.env.xml.ResolverUtils;
 import ch.elca.el4j.maven.ResourceLoader;
+import ch.elca.el4j.maven.plugins.envsupport.handlers.VariablesAndFinalPropertiesHandler;
 
 /**
  * Abstract environment support plugin. Filters the resources of given env dir
@@ -73,16 +75,6 @@ public abstract class AbstractEnvSupportMojo extends AbstractDependencyAwareMojo
 	 * Default includes string array.
 	 */
 	public static final String[] DEFAULT_INCLUDES = {"**/**"};
-	
-	/**
-	 * The property key prefix to make a property abstract.
-	 */
-	private static final String ABSTRACT_PROPERTY = "(abstract)";
-	
-	/**
-	 * The property key prefix to make a property final.
-	 */
-	private static final String FINAL_PROPERTY = "(final)";
 	
 	// Checkstyle: MemberName off
 	/**
@@ -153,15 +145,17 @@ public abstract class AbstractEnvSupportMojo extends AbstractDependencyAwareMojo
 		for (String fileName : includedFiles) {
 			File sourceFile = new File(resourceDir, fileName);
 			File destinationFile = new File(outputDir, fileName);
-			File backupFile = new File(outputDir, fileName + ".orig");
-	
+			
 			if (!destinationFile.getParentFile().exists()) {
 				destinationFile.getParentFile().mkdirs();
 			}
 	
 			try {
-				copyFileFiltered(sourceFile, destinationFile);
-				FileUtils.copyFile(sourceFile, backupFile);
+				if (fileName.equals("env.xml")) {
+					FileUtils.copyFile(sourceFile, destinationFile);
+				} else {
+					copyFileFiltered(sourceFile, destinationFile);
+				}
 			} catch (IOException e) {
 				throw new MojoExecutionException(
 					"Error copying filtered env " + resourceType + ".", e);
@@ -277,222 +271,123 @@ public abstract class AbstractEnvSupportMojo extends AbstractDependencyAwareMojo
 	}
 	
 	/**
-	 * @param outputDir                The output directory into which to copy the env resources.
-	 * @param resourceType             the resource type (used for log output only)
-	 * @param envPropertiesFilename    the env property file
+	 * Create the properties file containing the variable -> value mapping.
+	 * @param envXmlFilename       the env.xml filename
+	 * @param outputDir            the output directory
+	 * @param envValuesFilename    the filename of the properties file to write
 	 */
-	protected void processEnvPropertiesFiles(File outputDir, String resourceType, String envPropertiesFilename)
-		throws MojoExecutionException {
-		
-		if (!outputDir.exists() && !outputDir.mkdirs()) {
-			throw new MojoExecutionException(
-				"Cannot create env " + resourceType + " output directory: "
-				+ outputDir);
-		}
-		
-		FileOutputStream targetEnv = null;
+	protected void createEnvValuesFile(String envXmlFilename, File outputDir, String envValuesFilename) {
+		Resource[] resources = getAllEnvXmls(envXmlFilename);
+		InputStream inputStream = null;
 		try {
-			// check properties if they are valid (e.g. no final violations)
-			checkProperties(getAllUnfilteredResources(envPropertiesFilename));
+			SAXParserFactory factory = SAXParserFactory.newInstance(); 
+			SAXParser saxParser = factory.newSAXParser();
 			
-			Properties overwrittenProperties = getFilteredOverwriteProperties(envPropertiesFilename);
+			VariablesAndFinalPropertiesHandler finalEntriesHandler = new VariablesAndFinalPropertiesHandler();
 			
-			if (!overwrittenProperties.isEmpty()) {
-				File envFile = new File(outputDir, envPropertiesFilename);
-				try {
-					if (!envFile.exists() && !envFile.createNewFile()) {
-						throw new MojoExecutionException(
-							"Cannot create env file '" + envPropertiesFilename + "'");
-					}
-				} catch (IOException e) {
-					throw new MojoExecutionException(
-						"Cannot create env file '" + envPropertiesFilename + "'");
-				}
+			for (Resource resource : resources) {
+				inputStream = resource.getInputStream();
+				saxParser.parse(inputStream, finalEntriesHandler);
+				inputStream.close();
+			}
 				
-				targetEnv = new FileOutputStream(envFile);
-				overwrittenProperties.store(targetEnv, null);
+			// write variables to file
+			m_filterProperties.clearSuccesses();
+			ResolverUtils.resolve(finalEntriesHandler.getConcatenatedValues(), m_filterProperties);
+			Set<String> successes = m_filterProperties.getSuccesses();
+			
+			Properties envValues = new Properties();
+			for (String prop : successes) {
+				envValues.put(prop, m_filterProperties.get(prop));
 			}
 			
-		} catch (IOException e) {
-			IOUtil.close(targetEnv);
-			throw new MojoExecutionException(
-				"Cannot collect env files for '" + envPropertiesFilename + "'");
+			if (envValues.size() > 0) {
+				File envVariablesFile = new File(outputDir, envValuesFilename);
+				outputDir.mkdirs();
+				envValues.store(new FileOutputStream(envVariablesFile), null);
+			}
+		} catch (Exception e) {
+			getLog().error(e);
 		} finally {
-			IOUtil.close(targetEnv);
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e1) {
+					getLog().warn(e1);
+					// ignore
+				}
+			}
 		}
 	}
 
 	/**
-	 * Check if properties are valid (i.e. no final property gets overwritten) and print all abstract properties.
-	 * 
-	 * @param resources    the env properties files
+	 * Create the properties file containing the final properties.
+	 * @param resourceDir             the directory to look for the env.xml file
+	 * @param envXmlFilename          the env.xml filename
+	 * @param outputDir               the output directory
+	 * @param envConstantsFilename    the filename of the properties file to write
 	 */
-	protected void checkProperties(Resource[] resources) throws MojoExecutionException {
-		Map<String, Resource> finalProps = new HashMap<String, Resource>();
-		Map<String, Resource> abstractProps = new HashMap<String, Resource>();
-		
-		for (Resource resource : resources) {
-			Properties props = loadProperties(resource);
-			// check that no final value gets overwritten
-			for (Object keyObj : props.keySet()) {
-				String key = (String) keyObj;
-				
-				boolean isAbstract = false;
-				boolean isFinal = false;
-				if (key.startsWith(ABSTRACT_PROPERTY)) {
-					isAbstract = true;
-					key = key.substring(ABSTRACT_PROPERTY.length());
-				} else if (key.startsWith(FINAL_PROPERTY)) {
-					isFinal = true;
-					key = key.substring(FINAL_PROPERTY.length());
-				}
-				
-				if (finalProps.containsKey(key)) {
-					throw new MojoExecutionException(
-						"It is not allowed to overwrite final property '" + key + "' in "
-						+ getArtifactNameFromResource(resource).replace(".orig", "")
-						+ ".\nAlternatively, you might want to recompile artifact containing '"
-						+ getArtifactNameFromResource(finalProps.get(key)).replace(".orig", "")
-						+ "' using the correct settings.");
-				}
-				if (!isAbstract && abstractProps.containsKey(key)) {
-					abstractProps.remove(key);
-				}
-				
-				if (isAbstract) {
-					abstractProps.put(key, resource);
-				} else if (isFinal) {
-					finalProps.put(key, resource);
-				}
-			}
-		}
-		if (!abstractProps.isEmpty()) {
-			getLog().info("The following abstract env properties are not set:");
-			for (String key : abstractProps.keySet()) {
-				getLog().info("    * " + key + " (in '" + getArtifactNameFromResource(abstractProps.get(key)) + "')");
-			}
-			getLog().info("They have to be set in order to make this artifact fully functional.");
-		}
-	}
-
-	
-	
-	/**
-	 * @param envPropertiesFilename    the env property file
-	 * @return                         all filtered properties that are needed to be written in the env file
-	 */
-	protected Properties getFilteredOverwriteProperties(String envPropertiesFilename)
-		throws IOException, MojoExecutionException {
-		
-		Resource[] resources = getResourceLoader().getDependenciesResources(
-			"classpath*:" + envPropertiesFilename + ".orig");
-		
-		Properties unfilteredProperties = new Properties();
-		
-		// collect properties that are defined in other properties files but might be overridden now
-		for (Resource resource : resources) {
-			Properties props = loadProperties(resource);
-			// do not collect constant, abstract or final values
-			for (Object keyObj : props.keySet()) {
-				String key = (String) keyObj;
-				String value = props.getProperty(key) != null ? props.getProperty(key) : "";
-				if (!key.startsWith(ABSTRACT_PROPERTY) && !key.startsWith(FINAL_PROPERTY)
-					&& (value.contains("${") || value.contains("@"))) {
-					unfilteredProperties.setProperty(key, value);
-				}
-			}
-		}
-		
-		List<String> keysDefinedInThisArtifact = new ArrayList<String>();
-		
-		// add (non-abstract) properties defined in the current artifact
-		resources = getProjectEnvFiles(envPropertiesFilename);
-		for (Resource resource : resources) {
-			Properties props = loadProperties(resource);
-			// do not include abstract values
-			for (Object keyObj : props.keySet()) {
-				String key = (String) keyObj;
-				String value = props.getProperty(key) != null ? props.getProperty(key) : "";
-				if (key.startsWith(FINAL_PROPERTY)) {
-					key = key.substring(FINAL_PROPERTY.length());
-				}
-				if (!key.startsWith(ABSTRACT_PROPERTY)) {
-					unfilteredProperties.setProperty(key, value);
-					keysDefinedInThisArtifact.add(key);
-				}
-			}
-		}
-		
-		// load env files filtered by other artifacts to determine which expression have already been evaluated there
-		Resource[] resourcesFilteredByOthers = getResourceLoader().getDependenciesResources(
-			"classpath*:" + envPropertiesFilename);
-		Properties propertiesFilteredByOthers = loadProperties(resourcesFilteredByOthers);
-		
-		m_filterProperties.clearErrors();
-		Properties filteredProperties = filterProperties(unfilteredProperties);
-		
-		boolean unsetVariables = false;
-		
-		// only take properties that could have been evaluated (unless they are declared in current artifact)
-		Properties overwriteProperties = new Properties();
-		for (Object keyObj : unfilteredProperties.keySet()) {
-			String key = (String) keyObj;
-			
-			boolean allExpressionsEvaluated = allExpressionsEvaluated(unfilteredProperties.getProperty(key));
-			if (!allExpressionsEvaluated && !propertiesFilteredByOthers.containsKey(key)) {
-				unsetVariables = true;
-				getLog().warn("Could not evaluate expression '" + unfilteredProperties.getProperty(key)
-					+ "' because some variables are not set.");
-			}
-			if (keysDefinedInThisArtifact.contains(key) || allExpressionsEvaluated) {
-				overwriteProperties.setProperty(key, filteredProperties.getProperty(key));
-			}
-		}
-		
-		// warn if variables are not set
-		if (unsetVariables) {
-			getLog().warn("Use 'mvn envsupport:list' to get detailed information.");
-		}
-		
-		return overwriteProperties;
-	}
-	
-	/**
-	 * @param unfilteredProperties    properties to filter
-	 * @return                        the filtered properties
-	 */
-	protected Properties filterProperties(Properties unfilteredProperties) {
-		Properties filteredProperties = new Properties();
+	protected void createEnvConstantsFile(File resourceDir, String envXmlFilename, File outputDir,
+		String envConstantsFilename) {
+		FileInputStream envXmlStream = null;
 		try {
-			ByteArrayOutputStream unfilteredBuffer = new ByteArrayOutputStream();
-			ByteArrayOutputStream filteredBuffer = new ByteArrayOutputStream();
-			unfilteredProperties.store(unfilteredBuffer, null);
+			SAXParserFactory factory = SAXParserFactory.newInstance(); 
+			SAXParser saxParser = factory.newSAXParser();
 			
-			Reader reader = new BufferedReader(new InputStreamReader(
-				new ByteArrayInputStream(unfilteredBuffer.toByteArray())));
-			// filter output
-			reader = createFilteredReader(reader, true);
-			IOUtil.copy(reader, filteredBuffer);
+			VariablesAndFinalPropertiesHandler finalEntriesHandler = new VariablesAndFinalPropertiesHandler();
 			
-			filteredProperties.load(new ByteArrayInputStream(filteredBuffer.toByteArray()));
-		} catch (IOException e) {
-			return null;
+			File envXml = new File(resourceDir, envXmlFilename);
+			
+			if (envXml.exists()) {
+				envXmlStream = new FileInputStream(envXml);
+				saxParser.parse(envXmlStream, finalEntriesHandler);
+				envXmlStream.close();
+				
+				Properties finalProperties = finalEntriesHandler.getFinalProperties();
+				
+				// filter values of final properties
+				for (Object objectKey : finalProperties.keySet()) {
+					String key = (String) objectKey;
+					String value = finalProperties.getProperty(key);
+					String resolvedValue = ResolverUtils.resolve(value, m_filterProperties);
+					// add property to resolved properties map
+					m_filterProperties.setProperty(key, resolvedValue);
+					
+					finalProperties.setProperty(key, resolvedValue);
+				}
+				
+				// write final properties to file
+				if (finalProperties.size() > 0) {
+					File envConstantsFile = new File(outputDir, envConstantsFilename);
+					outputDir.mkdirs();
+					finalProperties.store(new FileOutputStream(envConstantsFile), null);
+				}
+			}
+		} catch (Exception e) {
+			getLog().error(e);
+		} finally {
+			if (envXmlStream != null) {
+				try {
+					envXmlStream.close();
+				} catch (IOException e1) {
+					getLog().warn(e1);
+					// ignore
+				}
+			}
 		}
-		
-		return filteredProperties;
 	}
 	
 	/**
-	 * @param envPropertiesFilename    the env property filename
-	 * @return                         all resources matching the filename (project + dependencies)
+	 * @param envXmlFilename    the env.xml filename
+	 * @return                  all env.xml resources on the classpath
 	 */
-	protected Resource[] getAllUnfilteredResources(String envPropertiesFilename) {
+	protected Resource[] getAllEnvXmls(String envXmlFilename) {
 		Resource[] resources = null;
 		try {
 			Resource[] depResources = getResourceLoader().getDependenciesResources(
-				"classpath*:" + envPropertiesFilename + ".orig");
+				"classpath*:" + envXmlFilename);
 			
-			Resource[] projectEnvFile = getProjectEnvFiles(envPropertiesFilename);
+			Resource[] projectEnvFile = getProjectEnvFiles(envXmlFilename);
 			
 			resources = (Resource[]) ArrayUtils.addAll(depResources, projectEnvFile);
 		} catch (IOException e) {
@@ -505,13 +400,25 @@ public abstract class AbstractEnvSupportMojo extends AbstractDependencyAwareMojo
 	 * @param resource    a resource
 	 * @return            the name of the artifact containing the given resource
 	 */
-	protected String getArtifactNameFromResource(Resource resource) {
-		// is resource from current project?
+	public String getArtifactNameFromResource(Resource resource) {
+		// is resource from current project (source)?
+		String localResourceName = null;
 		if (resource instanceof FileSystemResource) {
-			String name = getArtifactNameFromLocalResource((FileSystemResource) resource);
-			if (name != null) {
-				return name;
+			localResourceName = getArtifactNameFromLocalResource((FileSystemResource) resource);
+		} else {
+			// is resource from current project (target)?
+			try {
+				boolean islocalResource = resource.getFile().getPath().startsWith(getProject().getBasedir().getPath());
+				if (islocalResource) {
+					localResourceName = "this artifact (" + getProject().getArtifact().getArtifactId() + ")";
+				}
+			} catch (IOException e) {
+				getLog().warn(e);
+				// continue
 			}
+		}
+		if (localResourceName != null) {
+			return localResourceName;
 		}
 		
 		final String repoURL = "jar:file:/" + getRepository().getBasedir() + "/";
@@ -527,6 +434,7 @@ public abstract class AbstractEnvSupportMojo extends AbstractDependencyAwareMojo
 					return artifact.getGroupId() + ":" + artifact.getArtifactId() + suffix;
 				}
 			} catch (Exception e) {
+				getLog().warn(e);
 				// continue
 			}
 		}
@@ -540,36 +448,6 @@ public abstract class AbstractEnvSupportMojo extends AbstractDependencyAwareMojo
 	 *                    or <code>null</code> if resource cannot be associated with the current project.
 	 */
 	protected abstract String getArtifactNameFromLocalResource(FileSystemResource resource);
-	
-	/**
-	 * @param resources    the resources to load the properties from (most specific resource has to be last)
-	 * @return             the loaded properties
-	 */
-	private Properties loadProperties(Resource... resources) throws MojoExecutionException {
-		Properties properties = new Properties();
-		for (Resource resource : resources) {
-			try {
-				properties.load(resource.getInputStream());
-			} catch (IOException e) {
-				throw new MojoExecutionException(
-					"Cannot load resource '" + resource.toString() + "'");
-			}
-		}
-		return properties;
-	}
-	
-	/**
-	 * @param value    a String that can contain expressions
-	 * @return         <code>true</code> if all expressions could be evaluated
-	 */
-	private boolean allExpressionsEvaluated(String value) {
-		for (String errorKey : m_filterProperties.getErrors()) {
-			if (value.contains("${" + errorKey + "}") || value.contains("@" + errorKey + "@")) {
-				return false;
-			}
-		}
-		return true;
-	}
 	
 	/**
 	 * @param envPropertiesFilename    the env property file name

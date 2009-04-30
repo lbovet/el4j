@@ -89,12 +89,12 @@ public class EnvSupportMojo extends AbstractEnvSupportMojo {
 		
 		if (useGlobalResourceDirectory) {
 			copyResourcesFiltered(globalResourceDirectory, outputDirectory, "globalResources");
-			processEnvPropertiesFiles(outputDirectory, "globalResources", "env-placeholder.properties");
-			processEnvPropertiesFiles(outputDirectory, "globalResources", "env-bean-property.properties");
+			createEnvValuesFile("env.xml", outputDirectory, "env-values.properties");
+			createEnvConstantsFile(globalResourceDirectory, "env.xml", outputDirectory, "env-constants.properties");
 		} else {
 			copyResourcesFiltered(resourceDirectory, outputDirectory, "resources");
-			processEnvPropertiesFiles(outputDirectory, "resources", "env-placeholder.properties");
-			processEnvPropertiesFiles(outputDirectory, "resources", "env-bean-property.properties");
+			createEnvValuesFile("env.xml", outputDirectory, "env-values.properties");
+			createEnvConstantsFile(resourceDirectory, "env.xml", outputDirectory, "env-constants.properties");
 		}
 	}
 	

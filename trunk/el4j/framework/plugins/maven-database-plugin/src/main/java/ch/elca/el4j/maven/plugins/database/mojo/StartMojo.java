@@ -45,6 +45,7 @@ public class StartMojo extends AbstractDBMojo {
 	 */
 	private static final int DELAY = 500;
 	
+	// Checkstyle: MemberName off
 	/**
 	 * The port to run derby.
 	 *
@@ -65,6 +66,7 @@ public class StartMojo extends AbstractDBMojo {
 	 * @parameter expression="${db.password}"  default-value=""
 	 */
 	private String dbPassword;
+	// Checkstyle: MemberName on
 	
 	/**
 	 * {@inheritDoc}
