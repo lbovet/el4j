@@ -16,16 +16,12 @@
  */
 package ch.elca.el4j.maven.plugins.envsupport;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Properties;
-
-import org.apache.maven.plugin.resources.util.InterpolationFilterReader;
+import java.util.Set;
 
 /**
  * This {@link Properties} implementation logs all attempts to access a not existing key thought the method get().
- * It is a specific implementation for {@link InterpolationFilterReader} and should therefore only be used in connection
- * with this reader.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -38,9 +34,14 @@ import org.apache.maven.plugin.resources.util.InterpolationFilterReader;
  */
 public class ErrorTracingProperties extends Properties {
 	/**
-	 * The list of not existing keys that where tried to access.
+	 * The set of not existing keys that were tried to access.
 	 */
-	private List<String> m_errors = new ArrayList<String>();
+	private Set<String> m_errors = new HashSet<String>();
+	
+	/**
+	 * The set of existing keys that could be access successfully.
+	 */
+	private Set<String> m_successes = new HashSet<String>();
 	
 	/** {@inheritDoc} */
 	@Override
@@ -48,22 +49,62 @@ public class ErrorTracingProperties extends Properties {
 		Object result = super.get(key);
 		if (result == null) {
 			m_errors.add((String) key);
+		} else {
+			m_successes.add((String) key);
+		}
+		return result;
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public String getProperty(String key) {
+		String result = super.getProperty(key);
+		if (result == null) {
+			m_errors.add((String) key);
+		} else {
+			m_successes.add((String) key);
+		}
+		return result;
+	}
+	
+	/** {@inheritDoc} */
+	@Override
+	public String getProperty(String key, String defaultValue) {
+		String result = super.getProperty(key, defaultValue);
+		if (result == null) {
+			m_errors.add((String) key);
+		} else {
+			m_successes.add((String) key);
 		}
 		return result;
 	}
 	
 	/**
-	 * @return    a list of not existing keys that where tried to access
+	 * @return    a set of not existing keys that were tried to access
 	 */
-	public List<String> getErrors() {
+	public Set<String> getErrors() {
 		return m_errors;
 	}
 	
 	/**
-	 * Clear the list of access errors.
+	 * Clear the set of access errors.
 	 */
 	public void clearErrors() {
 		m_errors.clear();
 	}
 	
+	
+	/**
+	 * @return    a set of existing keys that could be access successfully
+	 */
+	public Set<String> getSuccesses() {
+		return m_successes;
+	}
+	
+	/**
+	 * Clear the set of successful access.
+	 */
+	public void clearSuccesses() {
+		m_successes.clear();
+	}
 }

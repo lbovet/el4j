@@ -17,8 +17,8 @@
 package ch.elca.el4j.env.beans;
 
 import java.io.IOException;
+import java.util.Properties;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeansException;
@@ -30,6 +30,8 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.io.Resource;
 
 import ch.elca.el4j.core.context.ModuleApplicationContext;
+import ch.elca.el4j.core.exceptions.MisconfigurationRTException;
+import ch.elca.el4j.env.xml.EnvXml;
 import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
 import ch.elca.el4j.util.encryption.AbstractPropertyEncryptor;
 import ch.elca.el4j.util.encryption.EncryptionException;
@@ -47,6 +49,7 @@ import ch.elca.el4j.util.env.PropertyEncryptionUtil;
  * );</script>
  *
  * @author Martin Zeltner (MZE)
+ * @author Stefan Wismer (SWI)
  */
 public class EnvPropertyPlaceholderConfigurer
 	extends PropertyPlaceholderConfigurer implements ApplicationContextAware {
@@ -55,7 +58,7 @@ public class EnvPropertyPlaceholderConfigurer
 	 * The correct env location.
 	 */
 	public static final String ENV_PLACEHOLDER_PROPERTIES_LOCATION
-		= "classpath*:env-placeholder.properties";
+		= "classpath:env-placeholder.properties";
 	
 	/**
 	 * The deprecated env location.
@@ -99,69 +102,53 @@ public class EnvPropertyPlaceholderConfigurer
 	@Override
 	public void postProcessBeanFactory(
 			ConfigurableListableBeanFactory beanFactory) throws BeansException {
-		Resource oldEnvLocation
-			= m_applicationContext.getResource(OLD_ENV_PROPERTIES_LOCATION);
 		
-		Resource[] envLocations = null;
-		try {
-			envLocations = m_applicationContext
-				.getResources(ENV_PLACEHOLDER_PROPERTIES_LOCATION);
-		} catch (IOException e) {
-			envLocations = new Resource[0];
+		// very old env location is not supported anymore
+		Resource oldEnvLocation = m_applicationContext.getResource(OLD_ENV_PROPERTIES_LOCATION);
+		if (oldEnvLocation.exists()) {
+			throw new MisconfigurationRTException(
+				"DEPRECATED: The used env placeholder properties file '"
+					+ oldEnvLocation.toString()
+					+ "' is deprecated. Please use the new loaction '"
+					+ ENV_PLACEHOLDER_PROPERTIES_LOCATION + "'.");
 		}
 		
-		// reverse array to make nearer env files override farther env files
-		ArrayUtils.reverse(envLocations);
+		// new inheritable env support
+		boolean envXmlFound = false;
+		EnvXml envXmlConfigLoader;
+		if (m_applicationContext instanceof ModuleApplicationContext) {
+			ModuleApplicationContext mac = (ModuleApplicationContext) m_applicationContext;
+			envXmlConfigLoader = new EnvXml(m_applicationContext, mac.isMostSpecificResourceLast());
+		} else {
+			envXmlConfigLoader = new EnvXml();
+		}
+		if (envXmlConfigLoader.hasValidConfigurations()) {
+			super.setProperties((Properties) envXmlConfigLoader.getGroupConfiguration(EnvXml.ENV_GROUP_PLACEHOLDERS));
+			super.setLocalOverride(true);
+			envXmlFound = true;
+		}
 		
-		// check all env locations
-		boolean atLeastOneEnvLocationExists = false;
-		for (Resource envLocation : envLocations) {
-			String envLocationUrl = "no url";
+		// old only-one-env-on-classpath strategy
+		Resource envLocation = m_applicationContext.getResource(ENV_PLACEHOLDER_PROPERTIES_LOCATION);
+		String envLocationUrl = "no url";
+		if (envLocation.exists()) {
+			try {
+				envLocationUrl = envLocation.getURL().toString();
+			} catch (IOException e) {
+				envLocationUrl = "unknown url";
+			}
+		}
+		
+		if (!envXmlFound) {
 			if (envLocation.exists()) {
-				atLeastOneEnvLocationExists = true;
-				try {
-					envLocationUrl = envLocation.getURL().toString();
-				} catch (IOException e) {
-					envLocationUrl = "unknown url";
-				}
-				
 				s_logger.debug("The used env placeholder properties file is '"
 					+ envLocationUrl + "'.");
-			}
-		}
-		
-		// check deprecated env location
-		String oldEnvLocationUrl = "no url";
-		if (oldEnvLocation.exists()) {
-			try {
-				oldEnvLocationUrl = oldEnvLocation.getURL().toString();
-			} catch (IOException e) {
-				oldEnvLocationUrl = "unknown url";
-			}
-		}
-		
-		if (atLeastOneEnvLocationExists) {
-			if (oldEnvLocation.exists()) {
-				CoreNotificationHelper.notifyMisconfiguration(
-					"There are two environment configuration files on the "
-						+ "classpath. Please remove the deprecated one. "
-						+ "Deprecated location: '"
-						+ oldEnvLocationUrl + "'.");
-			}
-			super.setLocations(envLocations);
-		} else {
-			if (oldEnvLocation.exists()) {
-				s_logger.warn(
-					"DEPRECATED: The used env placeholder properties file '"
-						+ oldEnvLocationUrl
-						+ "' is deprecated. Please use the new loaction '"
-						+ ENV_PLACEHOLDER_PROPERTIES_LOCATION + "'.");
-				super.setLocation(oldEnvLocation);
+				super.setLocation(envLocation);
 			} else {
 				s_logger.warn(
 					"No env placeholder properties file could be found. The "
 						+ "correct location for this file is '"
-						+ ENV_PLACEHOLDER_PROPERTIES_LOCATION + "'.");
+						+ EnvXml.ENV_XML_LOCATION + "'.");
 			}
 		}
 		

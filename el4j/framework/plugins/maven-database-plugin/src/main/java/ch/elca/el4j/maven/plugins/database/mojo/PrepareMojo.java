@@ -38,7 +38,7 @@ import ch.elca.el4j.maven.plugins.database.util.derby.DerbyNetworkServerStarter;
  * @author David Stefan (DST)
  */
 public class PrepareMojo extends AbstractDBExecutionMojo {
-
+	// Checkstyle: MemberName off
 	/**
 	 * Delay to wait for Derby Network Server.
 	 */
@@ -64,6 +64,7 @@ public class PrepareMojo extends AbstractDBExecutionMojo {
 	 * @parameter expression="${db.password}"  default-value=""
 	 */
 	private String dbPassword;
+	// Checkstyle: MemberName on
 	
 	/**
 	 * {@inheritDoc}

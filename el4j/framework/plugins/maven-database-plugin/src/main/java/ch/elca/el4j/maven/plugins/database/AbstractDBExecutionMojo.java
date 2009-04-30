@@ -37,6 +37,7 @@ import ch.elca.el4j.maven.plugins.database.holder.ConnectionPropertiesHolder;
 import ch.elca.el4j.maven.plugins.database.holder.DatabaseHolderException;
 import ch.elca.el4j.maven.plugins.database.util.FindReplacePattern;
 import ch.elca.el4j.maven.plugins.database.util.SqlUtils;
+import ch.elca.el4j.util.env.EnvPropertiesUtils;
 
 /**
  *
@@ -204,35 +205,6 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 		getLog().info("maven-database-plugin is working...");
 		getLog().info("Current artifact: " + getProject().getArtifactId());
 
-//      getLog().info("Dependency tree: ");
-//      getLog().info("============");
-
-//      List<Artifact> deps = getGraphWalker().
-//      getDependencyArtifacts();
-//      //add current artifact to search-list
-//      if (deps != null) { deps.add(getProject().getArtifact()); }
-
-//      for (Artifact dep : deps) {
-//      getLog().info(dep.getArtifactId());
-//      }
-
-//      getLog().info("============");
-
-//      getLog().info("Resources:");
-
-//      Resource[] res = getHolder().getResources("classpath*:"
-//      + connectionPropertiesDir);
-//      //res now holds all resources matching path-pattern
-
-//      for (Resource r : res) {
-//      try {
-//      getLog().info("  "
-//      + r.getURL().getFile());
-//      } catch (Exception e) {
-//      getLog().info("Error getting URL of resource.");
-//      }
-//      }
-
 		if (StringUtils.hasText(connectionPropertiesSource)) {
 			getLog().info("Connection properties defined via pom parameter "
 				+ "'connectionPropertiesSource':" + connectionPropertiesSource);
@@ -294,16 +266,34 @@ public abstract class AbstractDBExecutionMojo extends AbstractDBMojo {
 	private boolean tryLoadingDatabasePropertiesViaEnvironment() {
 		boolean propertiesFound = false;
 		if (StringUtils.hasText(environmentBeanPropertyPropertiesPath)) {
-			
-			getConnPropHolder().loadConnectionProperties(environmentBeanPropertyPropertiesPath);
-			
+			// try to find old-style env properties
+			try {
+				getConnPropHolder().loadConnectionProperties(environmentBeanPropertyPropertiesPath);
+				
+				if (StringUtils.hasText(getConnPropHolder().getUrl())
+					&& StringUtils.hasText(getConnPropHolder().getUsername())) {
+					
+					propertiesFound = true;
+					connectionPropertiesSource = environmentBeanPropertyPropertiesPath;
+				}
+			} catch (DatabaseHolderException e) {
+				propertiesFound = false;
+			}
+		}
+		if (!propertiesFound) {
+			// find env.xml-style properties
+			Properties envBeanPropertyProperties 
+				= EnvPropertiesUtils.getEnvBeanPropertyProperties(getResourceLoader(true, true).getResolver(), true);
+		
+			getConnPropHolder().loadConnectionProperties(envBeanPropertyProperties);
 			if (StringUtils.hasText(getConnPropHolder().getUrl())
 				&& StringUtils.hasText(getConnPropHolder().getUsername())) {
 				
 				propertiesFound = true;
-				connectionPropertiesSource = environmentBeanPropertyPropertiesPath;
+				connectionPropertiesSource = "env.xml";
 			}
 		}
+		
 		return propertiesFound;
 	}
 	

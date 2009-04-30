@@ -20,7 +20,11 @@ import java.util.Properties;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.core.io.support.ResourcePatternResolver;
 
+import ch.elca.el4j.env.beans.EnvPropertyOverrideConfigurer;
+import ch.elca.el4j.env.beans.EnvPropertyPlaceholderConfigurer;
+import ch.elca.el4j.env.xml.EnvXml;
 import ch.elca.el4j.util.codingsupport.CollectionUtils;
 import ch.elca.el4j.util.codingsupport.PropertiesHelper;
 
@@ -67,16 +71,65 @@ public class EnvPropertiesUtils {
 	 * @return The currently used placeholder environment properties.
 	 */
 	public static Properties getEnvPlaceholderProperties() {
-		return new PropertiesHelper()
-			.loadProperties("classpath*:env-placeholder.properties");
+		return getEnvPlaceholderProperties(null, true);
 	}
 	
 	/**
+	 * Retrieves the currently used placeholder environment properties.
+	 * @param resourcePatternResolver     the resolver to ask for the resources
+	 * @param mostSpecificResourceLast    is most specific resource last
+	 * @return The currently used placeholder environment properties.
+	 */
+	public static Properties getEnvPlaceholderProperties(
+		ResourcePatternResolver resourcePatternResolver, boolean mostSpecificResourceLast) {
+		Properties properties;
+		EnvXml parser;
+		if (resourcePatternResolver != null) {
+			parser = new EnvXml(resourcePatternResolver, mostSpecificResourceLast);
+		} else {
+			parser = new EnvXml();
+		}
+		if (parser.hasValidConfigurations()) {
+			properties = (Properties) parser.getGroupConfiguration(EnvXml.ENV_GROUP_PLACEHOLDERS);
+		} else {
+			properties = new Properties();
+		}
+		properties.putAll(new PropertiesHelper().loadProperties(
+			EnvPropertyPlaceholderConfigurer.ENV_PLACEHOLDER_PROPERTIES_LOCATION));
+		
+		return properties;
+	}
+	/**
 	 * Retrieves the currently used bean property environment properties.
-	 * @return The currently used bean property environment properties.
+	 * @return The currently used bean override properties.
 	 */
 	public static Properties getEnvBeanPropertyProperties() {
-		return new PropertiesHelper()
-			.loadProperties("classpath*:env-bean-property.properties");
+		return getEnvBeanPropertyProperties(null, true);
+	}
+	/**
+	 * Retrieves the currently used bean property environment properties.
+	 * @param resourcePatternResolver     the resolver to ask for the resources
+	 * @param mostSpecificResourceLast    is most specific resource last
+	 * @return The currently used bean override properties.
+	 */
+	public static Properties getEnvBeanPropertyProperties(
+		ResourcePatternResolver resourcePatternResolver, boolean mostSpecificResourceLast) {
+		
+		Properties properties;
+		EnvXml parser;
+		if (resourcePatternResolver != null) {
+			parser = new EnvXml(resourcePatternResolver, mostSpecificResourceLast);
+		} else {
+			parser = new EnvXml();
+		}
+		if (parser.hasValidConfigurations()) {
+			properties = (Properties) parser.getGroupConfiguration(EnvXml.ENV_GROUP_BEAN_OVERRIDES);
+		} else {
+			properties = new Properties();
+		}
+		properties.putAll(new PropertiesHelper().loadProperties(
+			EnvPropertyOverrideConfigurer.ENV_BEAN_PROPERTY_PROPERTIES_LOCATION));
+		
+		return properties;
 	}
 }

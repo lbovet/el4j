@@ -16,11 +16,13 @@
  */
 package ch.elca.el4j.maven.plugins.envsupport;
 
-import java.io.IOException;
-import java.util.Properties;
-
 import org.apache.maven.plugin.MojoExecutionException;
-import org.springframework.core.io.Resource;
+import org.apache.maven.plugin.MojoFailureException;
+
+import ch.elca.el4j.env.InvalidEnvXmlContentException;
+import ch.elca.el4j.env.xml.EnvXml;
+import ch.elca.el4j.maven.plugins.envsupport.handlers.ExplainBeanOverridesHandler;
+import ch.elca.el4j.maven.plugins.envsupport.handlers.ExplainPlaceholdersHandler;
 
 /**
  * Abstract base class for all 'list env properties'-mojos. 
@@ -35,83 +37,33 @@ import org.springframework.core.io.Resource;
  * @author Stefan Wismer (SWI)
  */
 public abstract class AbstractEnvListMojo extends AbstractEnvSupportMojo {
-	/**
-	 * Print each property file taken for property resolution.
-	 * 
-	 * @param envPropertiesFilename    the env property filename
-	 */
-	protected void showEnvPropertiesFiles(String envPropertiesFilename) throws MojoExecutionException {
-		Resource[] resources = getAllUnfilteredResources(envPropertiesFilename);
-		
-		// print most specific resource first
-		//ArrayUtils.reverse(resources);
-		
-		getLog().info("");
-		getLog().info("Properties stored in " + envPropertiesFilename + ":"
-			+ ((resources.length == 0) ? " none." : ""));
-		
-		for (Resource resource : resources) {
-			getLog().info("  Properties of " + getArtifactNameFromResource(resource) + ":");
-			
-			Properties props = new Properties();
-			try {
-				props.load(resource.getInputStream());
-			} catch (IOException e) {
-				throw new MojoExecutionException(
-					"Cannot load resource '" + resource.toString() + "'");
-			}
-			for (Object keyObj : props.keySet()) {
-				String key = (String) keyObj;
-				getLog().info("    " + key + "=" + props.getProperty(key));
-			}
-		}
-		
-		if (resources.length > 0) {
-			getLog().info("");
-			getLog().info("Checking properties...");
-			
-			// make list 'most specific resource last'
-			//ArrayUtils.reverse(resources);
-			checkProperties(resources);
-		}
-	}
 	
-	/**
-	 * Print the resulting (filtered) properties.
-	 * 
-	 * @param envPropertiesFilename    the env property filename
-	 */
-	protected void showMergedProperties(String envPropertiesFilename) throws MojoExecutionException {
-		try {
-			Resource[] resources = getResourceLoader().getDependenciesResources(
-				"classpath*:" + envPropertiesFilename);
+	/** {@inheritDoc} */
+	public void execute() throws MojoExecutionException, MojoFailureException {
+		initializeFiltering();
+		
+		EnvXml env = new EnvXml(getResourceLoader().getResolver(), true);
+		if (env.hasValidConfigurations()) {
+			env.setOverrideValues(m_filterProperties);
+			env.registerHandler(EnvXml.ENV_GROUP_PLACEHOLDERS, new ExplainPlaceholdersHandler(this, getLog()));
+			env.registerHandler(EnvXml.ENV_GROUP_BEAN_OVERRIDES, null);
 			
-			if (resources.length > 0) {
-				getLog().info("");
-				getLog().info("Resulting merged and evaluated " + envPropertiesFilename + ":");
-				
-				Properties properties = new Properties();
-				for (Resource resource : resources) {
-					try {
-						properties.load(resource.getInputStream());
-						getLog().info(" (Including " + getArtifactNameFromResource(resource) + ")");
-					} catch (IOException e) {
-						throw new MojoExecutionException(
-							"Cannot load resource '" + resource.toString() + "'");
-					}
-				}
-				
-				properties.putAll(getFilteredOverwriteProperties(envPropertiesFilename));
-				
-				
-				for (Object keyObj : properties.keySet()) {
-					String key = (String) keyObj;
-					getLog().info("  " + key + "=" + properties.getProperty(key));
-				}
+			try {
+				env.getGroupConfiguration(EnvXml.ENV_GROUP_PLACEHOLDERS);
+			} catch (InvalidEnvXmlContentException e) {
+				throw new MojoExecutionException(e.getMessage());
 			}
-		} catch (IOException e) {
-			throw new MojoExecutionException(
-				"Cannot collect env files for '" + envPropertiesFilename + "'");
+			
+			getLog().info("------------------------------------------------------------------------");
+			
+			env.registerHandler(EnvXml.ENV_GROUP_PLACEHOLDERS, null);
+			env.registerHandler(EnvXml.ENV_GROUP_BEAN_OVERRIDES, new ExplainBeanOverridesHandler(this, getLog()));
+			
+			try {
+				env.getGroupConfiguration(EnvXml.ENV_GROUP_BEAN_OVERRIDES);
+			} catch (InvalidEnvXmlContentException e) {
+				throw new MojoExecutionException(e.getMessage());
+			}
 		}
 	}
 }

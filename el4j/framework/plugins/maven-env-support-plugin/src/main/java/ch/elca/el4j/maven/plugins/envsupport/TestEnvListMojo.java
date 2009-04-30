@@ -19,8 +19,6 @@ package ch.elca.el4j.maven.plugins.envsupport;
 import java.io.File;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
@@ -69,17 +67,6 @@ public class TestEnvListMojo extends EnvListMojo {
 	private boolean useGlobalTestResourceDirectory;
 	// Checkstyle: MemberName on
 	
-	/** {@inheritDoc} */
-	public void execute() throws MojoExecutionException, MojoFailureException {
-		initializeFiltering();
-		
-		showEnvPropertiesFiles("env-placeholder.properties");
-		showMergedProperties("env-placeholder.properties");
-		
-		showEnvPropertiesFiles("env-bean-property.properties");
-		showMergedProperties("env-bean-property.properties");
-
-	}
 	
 	/** {@inheritDoc} */
 	@Override

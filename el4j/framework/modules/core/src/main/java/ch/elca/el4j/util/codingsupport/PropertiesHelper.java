@@ -51,7 +51,38 @@ import ch.elca.el4j.services.monitoring.notification.CoreNotificationHelper;
  * @author Raphael Boog (RBO)
  */
 public class PropertiesHelper {
-
+	
+	/**
+	 * Loads properties from given resources. Properties declared in late resources overwrite properties.
+	 * declared in earlier resources. Invalid resources just get skipped.
+	 * @param resources    the properties files
+	 * @return             the merged properties
+	 */
+	public static Properties loadPropertiesFromResources(Resource[] resources) {
+		Properties properties = new Properties();
+		InputStream in = null;
+		
+		for (Resource resource : resources) {
+			try {
+				in = resource.getInputStream();
+				properties.load(in);
+			} catch (IOException e) {
+				// ignore
+			} finally {
+				if (in != null) {
+					try {
+						in.close();
+					} catch (IOException e) {
+						CoreNotificationHelper.notifyMisconfiguration(
+							"An IOException was thrown while loading properties from '"
+							+ resource + "'.", e);
+					}
+				}
+			}
+		}
+		
+		return properties;
+	}
 	/**
 	 * Resolves the given file name to an absolute file name and then loads the
 	 * properties from this file to a Properties Object.
@@ -74,33 +105,14 @@ public class PropertiesHelper {
 		resolver.setMostSpecificResourceLast(true);
 		resolver.setMergeWithOuterResources(true);
 		
-		Properties properties = new Properties();
-		
-		InputStream in = null;
 		try {
-			Resource[] resources = resolver.getResources(resourceName);
-			for (Resource resource : resources) {
-				in = resource.getInputStream();
-				properties.load(in);
-				in.close();
-			}
+			return loadPropertiesFromResources(resolver.getResources(resourceName));
 		} catch (IOException e) {
 			CoreNotificationHelper.notifyMisconfiguration(
 				"An IOException was thrown. The responsible file is '"
 				+ inputFileName + "'.", e);
-		} finally {
-			if (in != null) {
-				try {
-					in.close();
-				} catch (IOException e) {
-					CoreNotificationHelper.notifyMisconfiguration(
-						"An IOException was thrown. The responsible file is '"
-						+ inputFileName + "'.", e);
-				}
-			}
+			return null;
 		}
-
-		return properties;
 	}
 
 	/**

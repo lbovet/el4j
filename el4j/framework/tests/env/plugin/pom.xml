@@ -39,11 +39,7 @@
 		<module>A2</module>
 		<module>B1</module>
 		<module>C1</module>
-		<!--<module>A3</module>
-		
-		<module>B2</module>
-		
-		<module>D</module>-->
+		<module>legacyApp</module>
 	</modules>
 
 </project>
