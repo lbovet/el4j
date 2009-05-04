@@ -31,6 +31,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Session;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -637,6 +638,77 @@ public abstract class AbstractReferenceDaoTest extends AbstractTestCaseBase {
 		}
 		
 	}
+	
+//	/**
+//	 * Tests the reparenting of an annotation to a new reference.
+//	 */
+//	@Test
+//	public void testReparenting() {
+//		try {
+//			// add a book
+//			Book book = new Book();
+//			book.setName("Testbook");
+//			book.setAuthorName("Mister Y");
+//			book.setPageNum(22);
+//			Annotation a1 = new Annotation();
+//			a1.setAnnotator("arr");
+//			a1.setContent("very good testbook!");
+//			Annotation a2 = new Annotation();
+//			a2.setAnnotator("arr");
+//			a2.setContent("it is snowing outside");
+//			book.setAnnotations(new HashSet<Annotation>());
+//			book.getAnnotations().add(a1);
+//			a1.setReference(book);
+//			book.getAnnotations().add(a2);
+//			a2.setReference(book);
+//			
+//			book = getBookDao().saveOrUpdate(book);
+//			
+//			// add a second book
+//			Book book2 = new Book();
+//			book2.setName("Testbook2");
+//			book2.setAuthorName("Mister Z");
+//			book2.setPageNum(23);
+//			book2.setAnnotations(new HashSet<Annotation>());
+//			book2 = getBookDao().saveOrUpdate(book2);
+//			
+//			
+//			Annotation aReparent = book.getAnnotations().iterator().next();
+////			aReparent.setReference(book2);
+////			book2.getAnnotations().add(aReparent);
+//			
+//			TransactionStatus transaction = null;
+//			try {
+//				transaction = getTransactionManager().getTransaction(new DefaultTransactionDefinition());
+//				
+//				Session s = getTransactionManager().getSessionFactory().getCurrentSession();
+//				Annotation a = (Annotation) s.get(Annotation.class, aReparent.getKey());
+//				Book b1 = (Book) s.get(Book.class, book.getKey());
+//				Book b2 = (Book) s.get(Book.class, book2.getKey());
+//				a.setReference(b2);
+//				a.setAnnotator("arr(updated");
+//				s.flush();
+//				
+////				getTransactionManager().getSessionFactory().getCurrentSession().flush();
+//				getTransactionManager().commit(transaction);
+//				
+//				book = getBookDao().reload(book);
+//				book2 = getBookDao().reload(book2);
+//				
+//			} catch (Exception e) {
+//				m_transactionManager.rollback(transaction);
+//				fail("Could not save the data: " + e.getMessage());
+//			}
+//			assertEquals("Annotation not reparented", 1, book.getAnnotations().size());
+//			
+//		} finally {
+//			for (Book b : getBookDao().getAll()) {
+//				getBookDao().delete(b);
+//			}
+//			
+//		}
+//		
+//	}
 
 	protected HibernateTransactionManager getTransactionManager() {
 		if (m_transactionManager == null) {
