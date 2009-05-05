@@ -26,7 +26,9 @@ import org.hibernate.ejb.event.CallbackHandlerConsumer;
 import org.hibernate.event.EventListeners;
 import org.hibernate.secure.JACCSecurityListener;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
+import org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
@@ -183,33 +185,33 @@ public class EntityDetectorAnnotationSessionFactoryBean extends AnnotationSessio
 		super.afterPropertiesSet();
 	}
 	
-	/** {@inheritDoc} *//*
-	@Override
-	protected Configuration newConfiguration() throws HibernateException {
-		Ejb3Configuration cfg = new Ejb3Configuration();
-		Ejb3Configuration configured = cfg.configure("TestEntityManager", null);
-		return configured.getHibernateConfiguration();
-		
-	}*/
-	
 	/** {@inheritDoc} */
 	protected SessionFactory newSessionFactory(Configuration config) throws HibernateException {
 		if (jpaFullSupportEnabled) {
 			Ejb3Configuration cfg = new Ejb3Configuration();
 			// merge the ejb3 event listeners and the configured listeners we get
-			Configuration newConfig = mergeEventListeners(config, cfg.getHibernateConfiguration());
+			
 			try {
+				Field listeners = LocalSessionFactoryBean.class.getDeclaredField("eventListeners");
+				listeners.setAccessible(true);
+				Map<?, ?> listenerMap = (Map<?, ?>) listeners.get(this);
+				Configuration newConfig = mergeEventListeners(config, cfg.getHibernateConfiguration(), listenerMap);
+				
 				Field f = cfg.getClass().getDeclaredField("cfg");
 				f.setAccessible(true);
 				f.set(cfg, newConfig);
-				Ejb3Configuration configured = cfg.configure("TestEntityManager", null);
-//				HibernateEntityManagerFactory emf = (HibernateEntityManagerFactory) configured.buildEntityManagerFactory();
-//				return emf.getSessionFactory();
+				DefaultPersistenceUnitManager pum = new DefaultPersistenceUnitManager();
+				pum.setPersistenceXmlLocation("classpath*:META-INF/defaultPersistence.xml");
+				pum.preparePersistenceUnitInfos();
+				Ejb3Configuration configured = cfg.configure(
+					pum.obtainPersistenceUnitInfo("DefaultPersistenceUnit"),
+					null
+				);
 				return configured.getHibernateConfiguration().buildSessionFactory();
 			} catch (Throwable e) {
 				s_logger.debug("Could not load SessionFactory with Ejb3Configuration. "
 						+ "Not all JPA Annotations are available!");
-				return newConfig.buildSessionFactory();
+				return super.newSessionFactory(config);
 			}
 		} else {
 			return super.newSessionFactory(config);
@@ -217,16 +219,19 @@ public class EntityDetectorAnnotationSessionFactoryBean extends AnnotationSessio
 	}
 	
 	/**
-	 * Merge the event listeners of two configurations.
-	 * @param primaryConfig    the configuration to take as base.
-	 * @param secondaryConfig  the configuration to take additional event listeners from.
+	 * Replace the event listeners in the targetConfig with the ones in sourceConfig 
+	 * and overwrite with the listeners from the listenerMap.
+	 * @param targetConfig    the configuration to take as base.
+	 * @param sourceConfig  the configuration to take the event listeners from.
+	 * @param listenerMap	the Map containing specified event listeners (overwrite other ones).
 	 * @return  the new configuration with the merged listeners.
 	 */
-	private Configuration mergeEventListeners(Configuration primaryConfig, Configuration secondaryConfig) {
+	private Configuration mergeEventListeners(Configuration targetConfig, Configuration sourceConfig, Map listenerMap) {
+		
 		final Object[] readerMethodArgs = new Object[0];
 		// get the event listeners
-		EventListeners listenerConfig = primaryConfig.getEventListeners();
-		EventListeners secondListenerConfig = secondaryConfig.getEventListeners();
+		EventListeners listenerConfig = targetConfig.getEventListeners();
+		EventListeners secondListenerConfig = sourceConfig.getEventListeners();
 
 		BeanInfo beanInfo = null;
 		try {
@@ -240,31 +245,14 @@ public class EntityDetectorAnnotationSessionFactoryBean extends AnnotationSessio
 				int i = 0;
 				for (int max = pds.length; i < max; i++) {
 					// read the specific listener arrays
-					final Object listeners = pds[i].getReadMethod().invoke(listenerConfig, readerMethodArgs);
-					final Object listeners2 = pds[i].getReadMethod().invoke(secondListenerConfig, readerMethodArgs);
+					final Object listeners = pds[i].getReadMethod().invoke(secondListenerConfig, readerMethodArgs);
 					if (listeners == null) {
 						throw new HibernateException("Listener [" + pds[i].getName() + "] was null");
 					}
 					if (listeners instanceof Object[]) {
-						Object[] listenersArray2 = new Object[0];
-						if (listeners2 == null) {
-							continue;
-						} else {
-							if (listeners2 instanceof Object[]) {
-								listenersArray2 = (Object[]) listeners2;
-							} else {
-								continue;
-							}
-						}
-						Object[] listenersArray = (Object[]) listeners;
-						// create a new array with the size of both listener arrays
-						int newSize = listenersArray.length + listenersArray2.length;
-						Class<?> clazz = pds[i].getReadMethod().getReturnType().getComponentType();
-						Object newArray = Array.newInstance(clazz, newSize);
-						System.arraycopy(listenersArray2, 0, newArray, 0, listenersArray2.length);
-						System.arraycopy(listenersArray, 0, newArray, listenersArray2.length, listenersArray.length);
+						
 						// write the new array
-						pds[i].getWriteMethod().invoke(listenerConfig, newArray);
+						pds[i].getWriteMethod().invoke(listenerConfig, listeners);
 					}
 				}
 			} catch (HibernateException e) {
@@ -281,7 +269,27 @@ public class EntityDetectorAnnotationSessionFactoryBean extends AnnotationSessio
 				Introspector.flushFromCaches(getClass());
 			}
 		}
-		return primaryConfig;
+		if (listenerMap != null) {
+			// Register specified Hibernate event listeners.
+			for (Iterator<?> it = listenerMap.entrySet().iterator(); it.hasNext();) {
+				Map.Entry<?, ?> entry = (Map.Entry<?, ?>) it.next();
+				Assert.isTrue(entry.getKey() instanceof String, "Event listener key needs to be of type String");
+				String listenerType = (String) entry.getKey();
+				Object listenerObject = entry.getValue();
+				if (listenerObject instanceof Collection) {
+					Collection<?> listeners = (Collection<?>) listenerObject;
+					EventListeners listenerRegistry = targetConfig.getEventListeners();
+					Object[] listenerArray = (Object[]) Array.newInstance(
+						listenerRegistry.getListenerClassFor(listenerType), 
+						listeners.size());
+					listenerArray = listeners.toArray(listenerArray);
+					targetConfig.setListeners(listenerType, listenerArray);
+				} else {
+					targetConfig.setListener(listenerType, listenerObject);
+				}
+			}
+		}
+		return targetConfig;
 	}
 	
 }
