@@ -9,15 +9,8 @@
 		Configuration file for Hibernate's entity manager,
 		only used to get the full JPA support (incl. @PrePersist,... event listeners) 
 		-->
-	<persistence-unit name="TestEntityManager">
+	<persistence-unit name="DefaultPersistenceUnit">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<properties>
-			<property name="hibernate.dialect" value="${databaseDialect}"/>
-			<property name="hibernate.connection.driver_class" value="${dataSource.driverClass}" /> 
-			<property name="hibernate.connection.url" value="${dataSource.jdbcUrl}" /> 
-			<property name="hibernate.connection.username" value="${dataSource.username}" /> 
-			<property name="hibernate.connection.password" value="${dataSource.password}" />
-		</properties>
 		
 	</persistence-unit>
 </persistence>

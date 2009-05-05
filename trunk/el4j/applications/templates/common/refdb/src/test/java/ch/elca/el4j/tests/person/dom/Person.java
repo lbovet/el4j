@@ -27,6 +27,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.Cascade;
@@ -209,5 +210,13 @@ public class Person extends AbstractIntKeyIntOptimisticLockingDto {
 		@Override public String toString() {
 			return m_description;
 		}
+	}
+	
+	/**
+	 * Modify the name when persisting: for jpaSupport tests.
+	 */
+	@PrePersist
+	public void modifyName() {
+		setName(getName() + "(modified when persisted)");
 	}
 }
