@@ -241,7 +241,6 @@ public class ExtentEntity extends AbstractExtentPart {
 			}
 			try {
 				Method m  = BeanPropertyUtils.getReadMethod(m_entityClass, child.getName());
-				//child.setMethod(m);
 				if (m != null) {
 					child.setParent(this);
 					m_childEntities.add(child);
