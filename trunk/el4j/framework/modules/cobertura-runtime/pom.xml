@@ -25,10 +25,11 @@
 		applications over their complete lifetime.
 	</description>
 	<dependencies>
-		<!-- EL4J framework modules -->
+		<!-- Do not include module-core, because profile 'cobertura-runtime' is specified in root pom. This makes
+			module-core depending on this module, which leads to a dependency cycle! -->
 		<dependency>
-			<groupId>ch.elca.el4j.modules</groupId>
-			<artifactId>module-core</artifactId>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring</artifactId>
 		</dependency>
 
 		<!-- Third party tools -->
