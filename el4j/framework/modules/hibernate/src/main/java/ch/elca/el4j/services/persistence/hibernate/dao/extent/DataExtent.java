@@ -52,7 +52,8 @@ import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentEntit
  * 	<li> Collections: all data types implementing the {@link java.util.Collection} interface should be
  * 		added to the extent as collection for a proper fetching at runtime.
  * </ul>
- * <b>Remark:</b> When using DataExtent you don't have to have any knowledge about the db mapping or anything like that. 
+ * <b>Remark:</b> When using DataExtent you don't have to have any knowledge 
+ * about the db mapping or anything like that. 
  * It suffices to know the interface of the entity you are about to use. For example if you have:<br>
  * <code><pre>
  * public class Employee {
