@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 	<!--
-		Spring bean configuration file for data source and transaction
-		manager. Needed beans which are not defined in this file: *
-		sessionFactory Following properties must be overwritten: *
-		dataSource.driverClass * dataSource.url * dataSource.user *
-		dataSource.password
+		Spring bean configuration file for data source.
+		
+		The following properties must be overwritten:
+		* dataSource.driverClass
+		* dataSource.jdbcUrl
+		* dataSource.user
+		* dataSource.password
 	-->
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -49,24 +51,6 @@
 		-->
 		<property name="initialPoolSize">
 			<value>3</value>
-		</property>
-
-			</bean>
-
-	<!-- The transactionmanager to use for regular non JTA datasource -->
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-		<property name="dataSource">
-			<ref local="dataSource" />
-		</property>
-		<property name="sessionFactory">
-			<ref bean="sessionFactory" />
-		</property>
-	</bean>
-
-	<bean id="abstractDao" abstract="true">
-		<property name="sessionFactory">
-			<ref bean="sessionFactory" />
 		</property>
 	</bean>
 </beans>
