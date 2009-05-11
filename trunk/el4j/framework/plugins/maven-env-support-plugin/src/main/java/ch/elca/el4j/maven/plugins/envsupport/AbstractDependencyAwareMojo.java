@@ -126,13 +126,16 @@ public abstract class AbstractDependencyAwareMojo extends AbstractMojo {
 	/**
 	 * Builds a tree of dependencies for the current Maven project.
 	 * 
-	 * @param filter    the artifact filter to use
-	 * @return          the dependency tree root node of the specified Maven project
-	 * @throws          DependencyTreeBuilderException
-	 *                      if the dependency tree cannot be resolved
+	 * @param mavenProject    the maven project to build the dependency tree for
+	 * @param filter          the artifact filter to use
+	 * @return                the dependency tree root node of the specified Maven project
+	 * @throws                DependencyTreeBuilderException
+	 *                            if the dependency tree cannot be resolved
 	 */
-	protected DependencyNode buildDependencyTree(ArtifactFilter filter) throws DependencyTreeBuilderException {
-		return m_dependencyTreeBuilder.buildDependencyTree(project,
+	protected DependencyNode buildDependencyTree(MavenProject mavenProject,
+		ArtifactFilter filter) throws DependencyTreeBuilderException {
+		return m_dependencyTreeBuilder.buildDependencyTree(mavenProject,
+			
 			localRepository, artifactFactory, artifactMetadataSource,
 			filter, collector);
 	}
