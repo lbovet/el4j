@@ -233,7 +233,7 @@ public abstract class AbstractDependencyGraphMojo extends AbstractDependencyAwar
 
 		DependencyNode rootNode = null;
 		try {
-			rootNode = buildDependencyTree(filter);
+			rootNode = buildDependencyTree(project, filter);
 		} catch (DependencyTreeBuilderException e) {
 			s_log.error("Error resolving artifacts", e);
 			return;
