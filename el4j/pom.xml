@@ -565,7 +565,6 @@
 						</additionalBuildcommands>
 						<workspace>${el4j.project.home}/workspace</workspace>
 						<wtpversion>2.0</wtpversion>
-						<reactorProjectGroupIdPrefixes>${eclipse.reactorProjectGroupIdPrefixes}</reactorProjectGroupIdPrefixes>
 					</configuration>
 					<executions>
 						<execution>
