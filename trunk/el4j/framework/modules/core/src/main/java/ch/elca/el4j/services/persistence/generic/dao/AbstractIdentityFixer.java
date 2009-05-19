@@ -589,9 +589,15 @@ public abstract class AbstractIdentityFixer {
 			List mergedEntries;
 			
 			// Check the update policy, or take new list if new or old is immutable
+			boolean isInPolicy = false;
+			try {
+				isInPolicy = policy.getObjectsToUpdate().contains(savedCollection);
+			} catch (Exception e) {
+				isInPolicy = false;
+			}
 			if (policy.getUpdatePolicy() == UpdatePolicy.UPDATE_ALL 
 				|| (policy.getUpdatePolicy() == UpdatePolicy.UPDATE_CHOSEN 
-					&& policy.getObjectsToUpdate().contains(savedCollection)) 
+					&& isInPolicy) 
 				|| isNew || immutableValue(savedCollection)) {
 				
 				// First merge the entries of the new list
