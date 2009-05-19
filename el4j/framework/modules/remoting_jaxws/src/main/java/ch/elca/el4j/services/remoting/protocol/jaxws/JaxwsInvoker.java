@@ -42,10 +42,15 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.FatalBeanException;
 import org.springframework.util.Assert;
 
+import ch.elca.el4j.services.remoting.protocol.JaxwsSpring;
+
 
 /**
  * This class is used to wrap the by wsimport generated classes so that they
  * implement the original interface.
+ * 
+ * This interceptor doesn't work for all cases.
+ * Use the new {@link JaxwsSpring} protocol, which doesn't need this hack anymore.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -56,6 +61,7 @@ import org.springframework.util.Assert;
  *
  * @author Stefan Wismer (SWI)
  */
+@Deprecated
 public class JaxwsInvoker implements java.lang.reflect.InvocationHandler {
 	
 	/**
