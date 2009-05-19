@@ -86,6 +86,11 @@ public class CalculatorValueObject {
 	private List<Integer> m_myIntegerList;
 	
 	/**
+	 * A list of nested objects.
+	 */
+	private List<SomeIntValue> m_myNestedObjectList;
+	
+	/**
 	 * A set of Integers.
 	 */
 	private Set<Integer> m_myIntegerSet;
@@ -238,6 +243,20 @@ public class CalculatorValueObject {
 	 */
 	public void setMyIntegerList(List<Integer> myIntegerList) {
 		m_myIntegerList = myIntegerList;
+	}
+
+	/**
+	 * @return Returns the myNestedObjectList.
+	 */
+	public List<SomeIntValue> getMyNestedObjectList() {
+		return m_myNestedObjectList;
+	}
+
+	/**
+	 * @param myNestedObjectList Is the myNestedObjectList to set.
+	 */
+	public void setMyNestedObjectList(List<SomeIntValue> myNestedObjectList) {
+		m_myNestedObjectList = myNestedObjectList;
 	}
 
 	/**
