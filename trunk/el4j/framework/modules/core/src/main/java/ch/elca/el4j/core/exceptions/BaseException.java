@@ -90,7 +90,10 @@ public class BaseException extends Exception {
 	 *            the parameters to substitute in the message
 	 */
 	public BaseException(String message, Object[] parameters) {
-		this(message, parameters, null);
+		// do not initialize cause otherwise initCause doesn't work anymore.
+		super();
+		m_message = message;
+		m_messageFormatParameters = parameters;
 	}
 
 	/**
@@ -112,7 +115,7 @@ public class BaseException extends Exception {
 	 *            the message of this exception
 	 */
 	public BaseException(String message) {
-		this(message, null, null);
+		this(message, (Object[]) null);
 	}
 
 	/**
