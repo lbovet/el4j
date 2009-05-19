@@ -166,8 +166,8 @@ abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
 				classesToProcess.add(sei);
 			}
 			
-			for (String classToPrecess : classesToProcess) {
-				sei = classToPrecess;
+			for (String classToProcess : classesToProcess) {
+				sei = classToProcess;
 				ArrayList<String> args = getWsGenArgs();
 
 				if (WsGen.doMain(args.toArray(new String[args.size()])) != 0)
@@ -184,7 +184,7 @@ abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
 						contextURL = contextURL + "/";
 					}
 					
-					String serviceName = getServiceName(classToPrecess);
+					String serviceName = getServiceName(classToProcess);
 					serviceURL = serviceURL.replaceAll("\\*", serviceName);
 					
 					replaceURLinWSDL(serviceName,
@@ -303,6 +303,11 @@ abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
 				try {
 					Class c = classLoader.loadClass(className);
 					
+					// ignore interfaces
+					if (c.isInterface()) {
+						continue;
+					}
+					
 					// second check for generated files
 					if (c.getPackage().getName().endsWith(".gen")) {
 						continue;
@@ -363,17 +368,17 @@ abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
 	}
 	
 	/**
-	 * @param classToPrecess   the web service class to process
+	 * @param classToProcess   the web service class to process
 	 * @return                 the service name derived from the annotated class
 	 * @throws MojoExecutionException
 	 */
 	@SuppressWarnings("unchecked")
-	private String getServiceName(String classToPrecess)
+	private String getServiceName(String classToProcess)
 		throws MojoExecutionException {
 		
 		String serviceName = null;
 		try {
-			Class c = classLoader.loadClass(classToPrecess);
+			Class c = classLoader.loadClass(classToProcess);
 			
 			Annotation[] annots = c.getAnnotations();
 			// search for @WebService annotations
@@ -390,11 +395,11 @@ abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
 			}
 		} catch (Exception e) {
 			throw new MojoExecutionException(
-				"Could not get serviceName from " + classToPrecess);
+				"Could not get serviceName from " + classToProcess);
 		}
 		if (serviceName == null) {
 			throw new MojoExecutionException(
-				"Could not get serviceName from " + classToPrecess);
+				"Could not get serviceName from " + classToProcess);
 		}
 		
 		// cut "WSService" suffix away
@@ -402,8 +407,8 @@ abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
 			serviceName = serviceName.substring(0,
 				serviceName.length() - "WSService".length());
 		} else {
-			throw new MojoExecutionException(
-				classToPrecess + " does not follow the convention that "
+			getLog().warn(
+				classToProcess + " does not follow the convention that "
 				+ "serviceName must end with WSService");
 		}
 		
