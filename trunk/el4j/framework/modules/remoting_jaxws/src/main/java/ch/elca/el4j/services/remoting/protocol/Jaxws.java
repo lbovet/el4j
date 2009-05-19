@@ -20,6 +20,8 @@ import java.lang.reflect.Method;
 
 import javax.xml.ws.Service;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jvnet.jax_ws_commons.spring.SpringService;
 
 import com.sun.xml.ws.client.sei.SEIStub;
@@ -45,6 +47,11 @@ import ch.elca.el4j.services.remoting.protocol.jaxws.JaxwsInvoker;
  * @author Stefan Wismer (SWI)
  */
 public class Jaxws extends AbstractInetSocketAddressWebProtocol {
+	
+	/**
+	 * The logger.
+	 */
+	protected static final Log s_logger = LogFactory.getLog(Jaxws.class);
 
 	/**
 	 * The JAX-WS Binding.
@@ -132,7 +139,8 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
 			if (serviceInterface.isInstance(bean)) {
 				createdProxy = bean;
 			} else {
-				// create dynamic proxy
+				// create dynamic proxy (very hacky)
+				s_logger.warn("ATTENTION: Do not use the Jaxws protocol for this purpose. Use JaxwsSpring instead!");
 				createdProxy = JaxwsInvoker.newInstance(bean, serviceInterface,
 					serviceInterface.getPackage().getName() + ".gen");
 			}

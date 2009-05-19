@@ -16,12 +16,10 @@
  */
 package ch.elca.el4j.services.remoting.protocol;
 
-import javax.xml.ws.Service;
-
 import ch.elca.el4j.services.remoting.ProtocolSpecificConfiguration;
 
 /**
- * The JAX-WS protocol configuration class.
+ * The JAX-WS protocol (Spring) configuration class.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -32,31 +30,66 @@ import ch.elca.el4j.services.remoting.ProtocolSpecificConfiguration;
  *
  * @author Stefan Wismer (SWI)
  */
-public class JaxwsProtocolConfiguration implements
-	ProtocolSpecificConfiguration {
+public class JaxwsSpringProtocolConfiguration implements ProtocolSpecificConfiguration {
 	
 	/**
-	 * The service implementation class.
+	 * The URI of the namespace.
 	 */
-	private Class<? extends Service> m_serviceImplementation;
+	private String m_namespaceUri;
+	
+	/**
+	 * The service name.
+	 */
+	private String m_serviceName;
+	
+	/**
+	 * The port name.
+	 */
+	private String m_portName;
 	
 	/** {@inheritDoc} */
 	public void afterPropertiesSet() throws Exception { }
 
 	/**
-	 * @return Returns the serviceImplementation.
+	 * @return the URI of the namespace
 	 */
-	public Class<? extends Service> getServiceImplementation() {
-		return m_serviceImplementation;
+	public String getNamespaceUri() {
+		return m_namespaceUri;
 	}
 
 	/**
-	 * @param serviceImplementation Is the serviceImplementation to set.
+	 * @param namespaceUri the URI of the namespace
 	 */
-	public void setServiceImplementation(
-		Class<? extends Service> serviceImplementation) {
-		
-		m_serviceImplementation = serviceImplementation;
+	public void setNamespaceUri(String namespaceUri) {
+		m_namespaceUri = namespaceUri;
+	}
+
+	/**
+	 * @return the service name
+	 */
+	public String getServiceName() {
+		return m_serviceName;
+	}
+
+	/**
+	 * @param serviceName the service name
+	 */
+	public void setServiceName(String serviceName) {
+		m_serviceName = serviceName;
+	}
+
+	/**
+	 * @return the port name
+	 */
+	public String getPortName() {
+		return m_portName;
+	}
+
+	/**
+	 * @param portName the port name
+	 */
+	public void setPortName(String portName) {
+		m_portName = portName;
 	}
 
 }
