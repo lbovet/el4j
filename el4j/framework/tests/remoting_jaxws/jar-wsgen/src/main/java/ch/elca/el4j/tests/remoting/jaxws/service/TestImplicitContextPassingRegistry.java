@@ -22,6 +22,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.util.Assert;
 
 import ch.elca.el4j.core.contextpassing.ImplicitContextPasser;
 import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
@@ -40,6 +41,12 @@ import ch.elca.el4j.core.contextpassing.ImplicitContextPassingRegistry;
  */
 public class TestImplicitContextPassingRegistry implements
 		ImplicitContextPassingRegistry {
+	
+	/**
+	 * The test message.
+	 */
+	private static final String MESSAGE = "Hello everybody, I am THE test message.";
+	
 	/**
 	 * Private logger.
 	 */
@@ -68,7 +75,7 @@ public class TestImplicitContextPassingRegistry implements
 	@SuppressWarnings("unchecked")
 	public Map getAssembledImplicitContext() {
 		Map map = new HashMap();
-		map.put("testMessage", "Hello everybody, I am THE test message.");
+		map.put("testMessage", MESSAGE);
 		return map;
 	}
 
@@ -78,5 +85,6 @@ public class TestImplicitContextPassingRegistry implements
 	@SuppressWarnings("unchecked")
 	public void pushAssembledImplicitContext(Map contexts) {
 		s_logger.info("Test message: " + contexts.get("testMessage"));
+		Assert.isTrue(MESSAGE.equals(contexts.get("testMessage")));
 	}
 }

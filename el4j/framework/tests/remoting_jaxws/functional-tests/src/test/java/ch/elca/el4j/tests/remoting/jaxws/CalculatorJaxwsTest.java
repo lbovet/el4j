@@ -138,6 +138,10 @@ public class CalculatorJaxwsTest extends AbstractTest {
 		SomeIntValue v = new SomeIntValue(MY_INT);
 		o.setSomeValue(v);
 		
+		List<SomeIntValue> intValues = new ArrayList<SomeIntValue>();
+		intValues.add(v);
+		o.setMyNestedObjectList(intValues);
+		
 		List<Integer> list = new ArrayList<Integer>();
 		list.add(4);
 		list.add(7);
@@ -150,19 +154,23 @@ public class CalculatorJaxwsTest extends AbstractTest {
 		
 		CalculatorValueObject echo = getCalc().echoValueObject(o);
 		
-		assertEquals("Int values are not equals.",
+		assertEquals("Int values are not equal.",
 			o.getMyInt(), echo.getMyInt());
-		assertEquals("Long values are not equals.",
+		assertEquals("Long values are not equal.",
 			o.getMyLong(), echo.getMyLong());
-		assertEquals("Double values are not equals.",
+		assertEquals("Double values are not equal.",
 			o.getMyDouble(), echo.getMyDouble(), DOUBLE_TOLERANCE);
-		assertEquals("Strings are not equals.",
+		assertEquals("Strings are not equal.",
 			o.getMyString(), echo.getMyString());
-		assertTrue("Byte arrays are not equals.",
+		assertTrue("Byte arrays are not equal.",
 			Arrays.equals(o.getMyByteArray(), echo.getMyByteArray()));
-		assertEquals("SomeIntValue are not equals.",
+		assertEquals("SomeIntValue are not equal.",
 			o.getSomeValue().getSomeValue(),
 			echo.getSomeValue().getSomeValue());
+		
+		assertEquals("MyNestedObjectList is not equal.",
+			o.getMyNestedObjectList().get(0).getSomeValue(),
+			echo.getMyNestedObjectList().get(0).getSomeValue());
 		
 		if (echo.getMyIntegerList().size() == list.size()) {
 			assertTrue("List items are not equal.",
