@@ -17,6 +17,9 @@
 
 package ch.elca.el4j.tests.remoting.jaxws.service;
 
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+
 
 /**
  * This interface is a calculator.
@@ -30,6 +33,9 @@ package ch.elca.el4j.tests.remoting.jaxws.service;
  *
  * @author Martin Zeltner (MZE)
  */
+@WebService(name = "CalculatorWS",
+	serviceName = "CalculatorWSService",
+	targetNamespace = "http://gen.service.jaxws.remoting.tests.el4j.elca.ch/")
 public interface Calculator {
 	/**
 	 * This method calculates the area of a rectangle.
@@ -40,6 +46,7 @@ public interface Calculator {
 	 *            Is the second side.
 	 * @return Returns the area of the triangle.
 	 */
+	@WebMethod
 	public double getArea(double a, double b);
 	
 	/**
@@ -47,6 +54,7 @@ public interface Calculator {
 	 *
 	 * @throws CalculatorException will be thrown every time.
 	 */
+	@WebMethod
 	public void throwMeAnException() throws CalculatorException;
 	
 	/**
@@ -64,6 +72,7 @@ public interface Calculator {
 	 * @param text Is the object to analyze.
 	 * @return Returns the number of uppercase letters.
 	 */
+	@WebMethod
 	public int countNumberOfUppercaseLetters(String text);
 	
 	/**
@@ -72,5 +81,6 @@ public interface Calculator {
 	 * @param o Is the object to echo.
 	 * @return Returns the received object.
 	 */
+	@WebMethod
 	public CalculatorValueObject echoValueObject(CalculatorValueObject o);
 }

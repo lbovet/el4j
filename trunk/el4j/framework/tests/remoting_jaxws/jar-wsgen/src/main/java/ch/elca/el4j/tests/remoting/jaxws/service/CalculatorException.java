@@ -40,6 +40,16 @@ public class CalculatorException extends BaseException {
 	}
 	
 	/**
+	 * Constructor setting the message
+	 * (required by {@link com.sun.xml.ws.fault.SOAPFaultBuilder#createUserDefinedException}).
+	 * @param message The message
+	 */
+	public CalculatorException(String message) {
+		super(message, (Object[]) null);
+	}
+	
+	
+	/**
 	 * Set the message.
 	 * @param message The message
 	 */
