@@ -1860,12 +1860,35 @@
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring</artifactId>
-				<version>2.5.6.SEC01</version>
+				<version>${version.spring}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-webmvc</artifactId>
-				<version>2.5.6.SEC01</version>
+				<version>${version.spring}</version>
+				<exclusions>
+					<!-- do not use modularized Spring as we already include an all-in-one version -->
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-beans</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-context</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-context-support</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-core</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-web</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			
 			<!-- Logging -->
@@ -2264,6 +2287,9 @@
 		<checkstyle.enable.rss>false</checkstyle.enable.rss>
 		<checkstyle.enable.rules.summary>false</checkstyle.enable.rules.summary>
 		
+		<!-- Spring -->
+		<version.spring>2.5.6.SEC01</version.spring>
+		
 		<!-- Dependency versions -->
 		<version.derby>10.4.1.3</version.derby>
 		
@@ -2279,9 +2305,6 @@
 		<version.cobertura-maven-plugin>2.2-el4j_20081202_1400</version.cobertura-maven-plugin>
 		<version.clirr-maven-plugin>2.2.2-el4j_20080812_1330</version.clirr-maven-plugin>
 		<version.dashboard-maven-plugin>1.0.0-beta-1-el4j_20081022_0930</version.dashboard-maven-plugin>
-
-		<!-- Eclipse -->
-		<eclipse.reactorProjectGroupIdPrefixes/>
 		
 		<!-- Cobertura -->
 		<cobertura-runtime.dataDirectory>${el4j.project.home}/cobertura-runtime</cobertura-runtime.dataDirectory>
