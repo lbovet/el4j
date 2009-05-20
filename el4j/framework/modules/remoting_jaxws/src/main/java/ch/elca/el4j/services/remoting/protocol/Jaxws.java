@@ -53,11 +53,6 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
 	 */
 	protected static final Log s_logger = LogFactory.getLog(Jaxws.class);
 
-	/**
-	 * The JAX-WS Binding.
-	 */
-	private SpringBinding m_jaxwsBinding;
-
 	
 	/** {@inheritDoc} */
 	@SuppressWarnings("unchecked")
@@ -78,15 +73,12 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
 		binding.setUrl(generateUrl(exporterBean));
 		try {
 			binding.setService(service.getObject());
-			m_jaxwsBinding = binding;
 		} catch (Exception e) {
 			CoreNotificationHelper.notifyMisconfiguration(
 				"Could not create JAX-WS binding for " + bean, e);
 		}
 		
-		// just return something that can be instantiated.
-		// WSSpringServlet will search and register all bindings
-		return "";
+		return binding;
 	}
 
 	/** {@inheritDoc} */
@@ -171,7 +163,7 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Class getExporterObjectType() {
-		return String.class;
+		return SpringBinding.class;
 	}
 
 	/** {@inheritDoc} */
@@ -193,13 +185,5 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
 	 * @param service The service
 	 */
 	protected void adaptExporterService(SpringService service) {
-	}
-
-	/**
-	 * @return Returns the JAX-WS Binding.
-	 * Used in @see WSSpringServlet
-	 */
-	public SpringBinding getJaxwsBinding() {
-		return m_jaxwsBinding;
 	}
 }

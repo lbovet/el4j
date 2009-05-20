@@ -78,15 +78,19 @@ public class WSSpringServlet extends HttpServlet {
 				= (RemotingServiceExporter) instance;
 			
 			if (exporter.getRemoteProtocol() instanceof Jaxws) {
-				Jaxws protocol = (Jaxws) exporter.getRemoteProtocol();
-				if (protocol.getJaxwsBinding() != null) {
-					bindings.add(protocol.getJaxwsBinding());
+				try {
+					SpringBinding binding = (SpringBinding) exporter.getObject();
+					if (binding != null) {
+						bindings.add(binding);
+					}
+				} catch (Exception e) {
+					// ignore invalid binding
 				}
 			}
 		}
 		
 		// bindings declared in the jaxws-spring manner
-		//bindings.addAll(wac.getBeansOfType(SpringBinding.class).values());
+		bindings.addAll(wac.getBeansOfType(SpringBinding.class).values());
 
 		// create adapters
 		ServletAdapterList l = new ServletAdapterList();
