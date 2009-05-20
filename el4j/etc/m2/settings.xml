@@ -262,6 +262,20 @@
 			</properties>
 		</profile>
 		
+		<profile>
+			<!-- profile needed for sonar reports -->
+			<id>sonar</id>
+			<properties>
+				<sonar.jdbc.url>
+                  jdbc:oracle:thin:@srv11645.elca.ch:1521:DL04
+                </sonar.jdbc.url>
+                <sonar.jdbc.driver>oracle.jdbc.driver.OracleDriver</sonar.jdbc.driver>
+                <sonar.jdbc.username>sonar</sonar.jdbc.username>
+                <sonar.jdbc.password>dsx8uxhj18</sonar.jdbc.password>
+				
+				<sonar.host.url>http://el4j.elca.ch:9000</sonar.host.url>
+			</properties>
+		</profile>
 		<!-- profile
 			| Specifies a set of introductions to the build process, to be activated using one or more of the
 			| mechanisms described above. For inheritance purposes, and to activate profiles via <activatedProfiles/>
