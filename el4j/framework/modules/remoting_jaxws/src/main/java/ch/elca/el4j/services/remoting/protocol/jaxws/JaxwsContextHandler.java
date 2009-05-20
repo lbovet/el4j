@@ -81,7 +81,6 @@ public class JaxwsContextHandler extends AbstractJaxwsJaxbContextHandler {
 	}
 
 	/** {@inheritDoc} */
-	@SuppressWarnings("unchecked")
 	public boolean handleMessage(SOAPMessageContext context) {
 		Boolean outboundProperty = (Boolean) context
 			.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
