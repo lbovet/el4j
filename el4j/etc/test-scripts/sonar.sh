@@ -2,12 +2,18 @@
 
 # check if sonar server is up running
 
-if [ ! sonarstatus ] ; then
+sonarstatus > son-status
+
+status=$(cat son-status)
+
+if [ "$status" == "sonar is not running" ] ; then
 	echo "Sonar is not running yet!"
 	# start sonar and wait for some minutes to be sure server is up
 	startsonar
 	sleep 300
 fi
+
+rm son-status
 
 # run sonar in external
 
