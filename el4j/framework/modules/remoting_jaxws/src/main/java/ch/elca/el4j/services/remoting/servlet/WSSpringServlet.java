@@ -73,9 +73,9 @@ public class WSSpringServlet extends HttpServlet {
 
 		// search for Jaxws RemotingServiceExporter objects
 		Map<?, ?> map = wac.getBeansOfType(RemotingServiceExporter.class);
-		for (Object instance : map.values()) {
+		for (Object beanName : map.keySet()) {
 			RemotingServiceExporter exporter
-				= (RemotingServiceExporter) instance;
+				= (RemotingServiceExporter) map.get(beanName);
 			
 			if (exporter.getRemoteProtocol() instanceof Jaxws) {
 				try {
@@ -85,6 +85,8 @@ public class WSSpringServlet extends HttpServlet {
 					}
 				} catch (Exception e) {
 					// ignore invalid binding
+					log("Could not create JAX-WS Spring binding for bean '"
+						+ ((String) beanName).substring(1) + "'");
 				}
 			}
 		}
