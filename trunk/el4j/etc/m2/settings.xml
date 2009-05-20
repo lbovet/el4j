@@ -270,8 +270,8 @@
                   jdbc:oracle:thin:@srv11645.elca.ch:1521:DL04
                 </sonar.jdbc.url>
                 <sonar.jdbc.driver>oracle.jdbc.driver.OracleDriver</sonar.jdbc.driver>
-                <sonar.jdbc.username>sonar</sonar.jdbc.username>
-                <sonar.jdbc.password>dsx8uxhj18</sonar.jdbc.password>
+                <sonar.jdbc.username>__USR_SON__</sonar.jdbc.username>
+                <sonar.jdbc.password>__PWD_SON__</sonar.jdbc.password>
 				
 				<sonar.host.url>http://el4j.elca.ch:9000</sonar.host.url>
 			</properties>
