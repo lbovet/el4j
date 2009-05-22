@@ -124,11 +124,16 @@ public class RemotingBenchmark {
 		= LogFactory.getLog(RemotingBenchmark.class);
 	
 	/**
-	 * Contains StackTraceElements of exceptions, which occured during the
+	 * Contains StackTraceElements of exceptions, which occurred during the
 	 * benchmark.
 	 */
 	private static LinkedList s_exceptionElements = new LinkedList();
-
+	
+	/**
+	 * Contains the number of test failures occurred during the execution of the benchmark.
+	 */
+	private static int s_numberFailures;
+	
 	/**
 	 * These are the tests, which have to be run.
 	 */
@@ -207,6 +212,10 @@ public class RemotingBenchmark {
 		
 		
 		printStackTrace();
+		
+		if (s_numberFailures > 0) {
+			System.exit(1);
+		}
 	}
 	
 	/**
@@ -463,6 +472,7 @@ public class RemotingBenchmark {
 	 */
 	private void addStackTraceElements(Exception e){
 		s_exceptionElements.addLast(e);
+		s_numberFailures++;
 	}
 
 	/**
