@@ -221,4 +221,7 @@
 			</build>
 		</profile>
 	</profiles>
+	<properties>
+		<jee-web.context>module-remoting-demos-web</jee-web.context>
+	</properties>
 </project>
