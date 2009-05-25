@@ -19,20 +19,20 @@ package ch.elca.el4j.tests.remoting.jaxws;
 //Checkstyle: EmptyBlock off
 //Checkstyle: MagicNumber off
 
-import java.util.Arrays;
-
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Arrays;
+
+import org.junit.Test;
+
 import ch.elca.el4j.tests.core.AbstractTest;
 import ch.elca.el4j.tests.remoting.jaxws.service.IntMatrixAdapter;
-import ch.elca.el4j.tests.remoting.jaxws.service.gen.CalculatorException_Exception;
-import ch.elca.el4j.tests.remoting.jaxws.service.gen.CalculatorValueObject;
-import ch.elca.el4j.tests.remoting.jaxws.service.gen.CalculatorWS;
-import ch.elca.el4j.tests.remoting.jaxws.service.gen.SomeIntValue;
+import ch.elca.el4j.tests.remoting.jaxws.webservice.Calculator;
+import ch.elca.el4j.tests.remoting.jaxws.webservice.CalculatorException_Exception;
+import ch.elca.el4j.tests.remoting.jaxws.webservice.CalculatorValueObject;
+import ch.elca.el4j.tests.remoting.jaxws.webservice.SomeIntValue;
 
 /**
  *
@@ -202,7 +202,7 @@ public class CalculatorJaxwsGeneratedTest extends AbstractTest {
 	 * Get the calculator to use.
 	 * @return Calculator to use
 	 */
-	public CalculatorWS getCalc() {
-		return (CalculatorWS) getApplicationContext().getBean("calculatorGenerated");
+	public Calculator getCalc() {
+		return (Calculator) getApplicationContext().getBean("calculatorGenerated");
 	}
 }

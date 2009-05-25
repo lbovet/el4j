@@ -22,7 +22,7 @@ import javax.jws.WebService;
 
 
 /**
- * This interface is a calculator.
+ * This interface is an additional calculator (just to test a second service).
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -33,9 +33,9 @@ import javax.jws.WebService;
  *
  * @author Martin Zeltner (MZE)
  */
-@WebService(name = "CalculatorPortType",
+@WebService(name = "CalculatorCopyPortType",
 	targetNamespace = "http://webservice.jaxws.remoting.tests.el4j.elca.ch/")
-public interface Calculator {
+public interface CalculatorCopy {
 	/**
 	 * This method calculates the area of a rectangle.
 	 *
