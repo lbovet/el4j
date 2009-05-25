@@ -50,7 +50,7 @@ abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
 	/**
 	 * Specify that a WSDL file should be generated in ${resourceDestDir}
 	 *
-	 * @parameter default-value="true"
+	 * @parameter default-value="false"
 	 */
 	private boolean genWsdl;
 
@@ -166,6 +166,16 @@ abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
 				classesToProcess.add(sei);
 			}
 			
+			// prepare hostURL and contextURL
+			if (hostURL != null && contextURL != null) {
+				if (!hostURL.endsWith("/")) {
+					hostURL = hostURL + "/";
+				}
+				if (!contextURL.endsWith("/")) {
+					contextURL = contextURL + "/";
+				}
+			}
+			
 			for (String classToProcess : classesToProcess) {
 				sei = classToProcess;
 				ArrayList<String> args = getWsGenArgs();
@@ -174,21 +184,14 @@ abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
 					throw new MojoExecutionException("Error executing: wsgen " + args);
 				
 				
-				if (hostURL != null && contextURL != null
-					&& serviceURL != null) {
+				if (hostURL != null && contextURL != null && serviceURL != null) {
 					
-					if (!hostURL.endsWith("/")) {
-						hostURL = hostURL + "/";
-					}
-					if (!contextURL.endsWith("/")) {
-						contextURL = contextURL + "/";
-					}
+					String[] nameAndServiceName = getNameAndServiceName(classToProcess);
+					String name = nameAndServiceName[0];
+					String serviceName = nameAndServiceName[1];
 					
-					String serviceName = getServiceName(classToProcess);
-					serviceURL = serviceURL.replaceAll("\\*", serviceName);
-					
-					replaceURLinWSDL(serviceName,
-						hostURL + contextURL + serviceURL);
+					String actualServiceURL = serviceURL.replaceAll("\\*", name);
+					replaceURLinWSDL(serviceName, hostURL + contextURL + actualServiceURL);
 				}
 			}
 		} catch (MojoExecutionException e) {
@@ -308,11 +311,6 @@ abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
 						continue;
 					}
 					
-					// second check for generated files
-					if (c.getPackage().getName().endsWith(".gen")) {
-						continue;
-					}
-					
 					Annotation[] annots = c.getAnnotations();
 					// search for @WebService annotations
 					for (Annotation annotation : annots) {
@@ -339,12 +337,11 @@ abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
 	private void replaceURLinWSDL(String serviceName, String url)
 		throws MojoExecutionException {
 		
-		File file = new File(resourceDestDir.getAbsolutePath()
-			+ File.separatorChar + serviceName + "WSService.wsdl");
+		File file = new File(resourceDestDir, serviceName + ".wsdl");
 		
 		if (file.exists()) {
 			String line;
-			StringBuffer sb = new StringBuffer();
+			StringBuilder sb = new StringBuilder();
 			try {
 				// read file and replace
 				FileInputStream fis = new FileInputStream(file);
@@ -373,9 +370,10 @@ abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
 	 * @throws MojoExecutionException
 	 */
 	@SuppressWarnings("unchecked")
-	private String getServiceName(String classToProcess)
+	private String[] getNameAndServiceName(String classToProcess)
 		throws MojoExecutionException {
 		
+		String name = null;
 		String serviceName = null;
 		try {
 			Class c = classLoader.loadClass(classToProcess);
@@ -386,12 +384,25 @@ abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
 				if (annotation.annotationType().getName()
 					.equals("javax.jws.WebService")) {
 					
+					name = (String) annotation
+						.annotationType().getMethod("name")
+						.invoke(annotation);
+					
 					serviceName = (String) annotation
 						.annotationType().getMethod("serviceName")
 						.invoke(annotation);
 					
 					break;
 				}
+			}
+			
+			if (name == null) {
+				// JAX-WS default value
+				name = c.getSimpleName();
+			}
+			if (serviceName == null) {
+				// JAX-WS default value
+				serviceName = c.getSimpleName() + "Service";
 			}
 		} catch (Exception e) {
 			throw new MojoExecutionException(
@@ -402,16 +413,6 @@ abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
 				"Could not get serviceName from " + classToProcess);
 		}
 		
-		// cut "WSService" suffix away
-		if (serviceName.endsWith("WSService")) {
-			serviceName = serviceName.substring(0,
-				serviceName.length() - "WSService".length());
-		} else {
-			getLog().warn(
-				classToProcess + " does not follow the convention that "
-				+ "serviceName must end with WSService");
-		}
-		
-		return serviceName;
+		return new String[] {name, serviceName};
 	}
 }

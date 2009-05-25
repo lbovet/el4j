@@ -19,9 +19,7 @@ Maven JAX-WS Plugin
 
     * The <<<\<contextURL\>>>> parameter sets the context part (for example <<<module-remoting-jaxws-tests>>>)
 
-    * The <<<\<serviceURL\>>>> parameter sets the service name (for example <<<Calculator.Jaxws.Remotingtests>>>). All star characters (<<<*>>>) are replaced by the corresponding service interface name specified by the annotated class (for example <<<*.Jaxws.Remotingtests>>>).
-
-  * The default value for <<<\<genwsdl\>>>> is true (in contrast to the original plugin)
+    * The <<<\<serviceURL\>>>> parameter sets the service name (for example <<<Calculator.Jaxws.Remotingtests>>>). All star characters (<<<*>>>) are replaced by the corresponding webservice name (<<<@WebService(name = ...)>>>) specified by the annotated class (for example <<<*.Jaxws.Remotingtests>>>).
 
   * The default value for <<<\<wsdlDirectory\>>>> is <<<${project.build.directory}/jaxws/wsgen/wsdl>>> (in contrast to <<<${basedir}/src/wsdl>>> in the original). This enables the generation of all needed files in one maven install pass.
   
