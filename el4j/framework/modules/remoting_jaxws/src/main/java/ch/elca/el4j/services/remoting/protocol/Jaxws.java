@@ -32,7 +32,6 @@ import ch.elca.el4j.services.remoting.AbstractRemotingBase;
 import ch.elca.el4j.services.remoting.ProtocolSpecificConfiguration;
 import ch.elca.el4j.services.remoting.RemotingProxyFactoryBean;
 import ch.elca.el4j.services.remoting.RemotingServiceExporter;
-import ch.elca.el4j.services.remoting.protocol.jaxws.JaxwsInvoker;
 
 /**
  * This class implements all needed things for the soap protocol using JAX-WS.
@@ -104,20 +103,10 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
 				// use wsimport-generated classes directly (no dynamic proxies)
 				wsServiceClass = jaxWsConfig.getServiceImplementation();
 				methodName = "get" + serviceInterface.getSimpleName();
-			} else if (serviceName.endsWith("WS")
-				&& serviceName.contains(".gen.")) {
-				
+			} else {
 				// use generated classes directly (no dynamic proxies)
 				wsServiceClass = Class.forName(serviceName + "Service");
 				methodName = "get" + serviceInterface.getSimpleName() + "Port";
-			} else {
-				// create dynamic proxies
-				// therefore the client stubs implement the service interface
-				wsServiceClass = Class.forName(
-					serviceInterface.getPackage().getName() + ".gen."
-					+ serviceInterface.getSimpleName() + "WSService");
-				methodName = "get" + serviceInterface.getSimpleName()
-					+ "WSPort";
 			}
 			
 			Service clientService = (Service) wsServiceClass.newInstance();
@@ -127,15 +116,7 @@ public class Jaxws extends AbstractInetSocketAddressWebProtocol {
 			
 			Method getter = wsServiceClass.getMethod(methodName);
 
-			Object bean = getter.invoke(clientService);
-			if (serviceInterface.isInstance(bean)) {
-				createdProxy = bean;
-			} else {
-				// create dynamic proxy (very hacky)
-				s_logger.warn("ATTENTION: Do not use the Jaxws protocol for this purpose. Use JaxwsSpring instead!");
-				createdProxy = JaxwsInvoker.newInstance(bean, serviceInterface,
-					serviceInterface.getPackage().getName() + ".gen");
-			}
+			createdProxy = getter.invoke(clientService);
 		} catch (Exception e) {
 			CoreNotificationHelper.notifyMisconfiguration(
 				"Could not create JAX-WS binding for "
