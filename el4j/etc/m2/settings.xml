@@ -361,6 +361,7 @@
 	<pluginGroups>
 		<pluginGroup>org.codehaus.cargo</pluginGroup>
 		<pluginGroup>org.codehaus.mojo</pluginGroup>
+		<pluginGroup>org.codehaus.sonar</pluginGroup>
 		<pluginGroup>ch.elca.el4j.maven.plugins</pluginGroup>
 	</pluginGroups>
 </settings>
