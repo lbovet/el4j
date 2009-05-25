@@ -132,7 +132,7 @@ public class RemotingBenchmark {
 	/**
 	 * These are the tests, which have to be run.
 	 */
-	private static String[] s_tests = {"jaxwsWithContextCalculator"};
+	private static String[] s_tests = {"calculatorWithoutContext", "calculatorWithContext"};
 
 	/**
 	 * This member contains the large text. It will be used for testing.
