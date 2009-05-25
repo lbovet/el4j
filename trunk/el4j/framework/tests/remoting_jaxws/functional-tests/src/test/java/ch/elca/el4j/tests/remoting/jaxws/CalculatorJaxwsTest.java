@@ -29,13 +29,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
 
-import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.tests.core.AbstractTest;
 import ch.elca.el4j.tests.remoting.jaxws.service.Calculator;
 import ch.elca.el4j.tests.remoting.jaxws.service.CalculatorException;

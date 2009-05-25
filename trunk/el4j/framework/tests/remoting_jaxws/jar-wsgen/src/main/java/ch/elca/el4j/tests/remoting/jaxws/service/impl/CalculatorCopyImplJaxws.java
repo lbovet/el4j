@@ -18,14 +18,14 @@ package ch.elca.el4j.tests.remoting.jaxws.service.impl;
 
 import javax.jws.WebService;
 
-import ch.elca.el4j.tests.remoting.jaxws.service.Calculator;
+import ch.elca.el4j.tests.remoting.jaxws.service.CalculatorCopy;
 import ch.elca.el4j.tests.remoting.jaxws.service.CalculatorException;
 import ch.elca.el4j.tests.remoting.jaxws.service.CalculatorValueObject;
 import ch.elca.el4j.tests.remoting.jaxws.service.SpecialCalculatorException;
 
 /**
  *
- * This class is a annotated version of {@link CalculatorImpl}.
+ * This class is an additional annotated version of {@link CalculatorImpl} (just to test a second service).
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -41,10 +41,10 @@ import ch.elca.el4j.tests.remoting.jaxws.service.SpecialCalculatorException;
  * name = name of implemented core interface
  * serviceName = name of implemented core interface + "Service"
  */
-@WebService(name = "Calculator",
-	serviceName = "CalculatorService",
+@WebService(name = "CalculatorCopy",
+	serviceName = "CalculatorCopyService",
 	targetNamespace = "http://webservice.jaxws.remoting.tests.el4j.elca.ch/")
-public class CalculatorImplJaxws implements Calculator {
+public class CalculatorCopyImplJaxws implements CalculatorCopy {
 
 	/**
 	 * {@inheritDoc}
