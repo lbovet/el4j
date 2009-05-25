@@ -40,6 +40,15 @@ public class CalculatorException extends BaseException {
 	}
 	
 	/**
+	 * Constructor setting the message
+	 * (required by {@link com.sun.xml.ws.fault.SOAPFaultBuilder#createUserDefinedException}).
+	 * @param message The message
+	 */
+	public CalculatorException(String message) {
+		super(message, (Object[]) null);
+	}
+	
+	/**
 	 * A setter for the message property is needed as XFire cannot initialize
 	 * the exception otherwise.
 	 * @param message The message of this Exception

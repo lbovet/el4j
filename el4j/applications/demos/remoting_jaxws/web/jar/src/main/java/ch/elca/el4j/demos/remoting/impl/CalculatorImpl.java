@@ -40,16 +40,13 @@ import ch.elca.el4j.demos.remoting.ComplexNumber;
  * @author Stefan Wismer (SWI)
  *
  *
- * IMPORTANT:
- *
- * WebService naming convention:
- * name = name of implemented core interface + "WS"
- * serviceName = name of implemented core interface + "WSService"
- * targetNamespace = "http://gen." + package name of implemented core interface
+ * Recommended naming convention:
+ * name = name of implemented core interface
+ * serviceName = name of implemented core interface + "Service"
  */
-@WebService(name = "CalculatorWS",
-	serviceName = "CalculatorWSService",
-	targetNamespace = "http://gen.remoting.demos.el4j.elca.ch/")
+@WebService(name = "Calculator",
+	serviceName = "CalculatorService",
+	targetNamespace = "http://webservice.remoting.demos.el4j.elca.ch/")
 public class CalculatorImpl implements Calculator {
 	
 	/**
@@ -62,19 +59,16 @@ public class CalculatorImpl implements Calculator {
 	}
 
 	/** {@inheritDoc} */
-	@WebMethod
 	public double getArea(double a, double b) {
 		return a * b;
 	}
 
 	/** {@inheritDoc} */
-	@WebMethod
 	public void throwMeAnException() throws CalculatorException {
 		throw new CalculatorException();
 	}
 	
 	/** {@inheritDoc} */
-	@WebMethod
 	public int countNumberOfUppercaseLetters(String text) {
 		if (text == null) {
 			return 0;
@@ -91,7 +85,6 @@ public class CalculatorImpl implements Calculator {
 	}
 	
 	/** {@inheritDoc} */
-	@WebMethod
 	public ComplexNumber add(ComplexNumber cn1, ComplexNumber cn2) {
 		ComplexNumber result = new ComplexNumber(0, 0);
 		result.setReal(cn1.getReal() + cn2.getReal());

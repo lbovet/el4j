@@ -9,7 +9,50 @@
 	<!-- $Author$ -->
 
 	<!-- JAX-WS Soap Protocol -->
-	<bean id="jaxwsProtocol" class="ch.elca.el4j.services.remoting.protocol.JaxwsSoapHeaderContextPassing">
+	<bean id="jaxwsProtocolWithoutContext" class="ch.elca.el4j.services.remoting.protocol.Jaxws">
+		<property name="serviceHost">
+			<value>${jee-web.host}</value>
+		</property>
+		<property name="servicePort">
+			<value>${jee-web.port}</value>
+		</property>
+		<property name="contextPath">
+			<value>${jee-web.context}</value>
+		</property>
+	</bean>
+	<bean id="jaxwsProtocolWithContext" class="ch.elca.el4j.services.remoting.protocol.JaxwsSoapHeaderContextPassing">
+		<property name="serviceHost">
+			<value>${jee-web.host}</value>
+		</property>
+		<property name="servicePort">
+			<value>${jee-web.port}</value>
+		</property>
+		<property name="contextPath">
+			<value>${jee-web.context}</value>
+		</property>
+		<property name="implicitContextPassingRegistry">
+			<ref local="implicitContextPassingRegistry" />
+		</property>
+		<property name="contextPassingContext">
+			<ref bean="jaxwsContextPassingContext" />
+		</property>
+	</bean>
+	
+	<!-- JAX-WS Soap Protocol for clients that do not need generated code -->
+	<bean id="jaxwsSpringProtocolWithoutContext"
+		class="ch.elca.el4j.services.remoting.protocol.JaxwsSpring">
+		<property name="serviceHost">
+			<value>${jee-web.host}</value>
+		</property>
+		<property name="servicePort">
+			<value>${jee-web.port}</value>
+		</property>
+		<property name="contextPath">
+			<value>${jee-web.context}</value>
+		</property>
+	</bean>
+	<bean id="jaxwsSpringProtocolWithContext"
+		class="ch.elca.el4j.services.remoting.protocol.JaxwsSpringSoapHeaderContextPassing">
 		<property name="serviceHost">
 			<value>${jee-web.host}</value>
 		</property>
@@ -29,7 +72,7 @@
 
 	<bean id="implicitContextPassingRegistry" class="ch.elca.el4j.demos.remoting.TestImplicitContextPassingRegistry" />
 		
-	<!-- JAXBContext used by the JaxwsJaxb protocol to marshall the implicit context -->
+	<!-- JAXBContext used by the JaxwsJaxb protocol to marshal the implicit context -->
 	<bean id="jaxwsContextPassingContext"
 		class="javax.xml.bind.JAXBContext"
 		factory-method="newInstance">

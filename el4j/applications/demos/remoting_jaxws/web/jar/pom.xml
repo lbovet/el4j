@@ -31,14 +31,8 @@
 				<executions>
 					<execution>
 						<goals>
-							<goal>wsimport</goal>
 							<goal>wsgen</goal>
 						</goals>
-						<configuration>
-							<hostURL>http://${jee-web.host}:${jee-web.port}</hostURL>
-							<contextURL>${jee-web.context}</contextURL>
-							<serviceURL>Calculator.JaxwsWithContext.Benchmark</serviceURL>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>

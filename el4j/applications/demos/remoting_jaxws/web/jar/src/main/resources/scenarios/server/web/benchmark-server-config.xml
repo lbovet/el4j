@@ -10,9 +10,24 @@
 	
 	<import resource="classpath:scenarios/common/benchmark-protocols-config.xml" />
 
+	<bean id="jaxwsWithoutContextCalculatorExporter" class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
+		<property name="remoteProtocol">
+			<ref bean="jaxwsProtocolWithoutContext" />
+		</property>
+		<property name="serviceInterface">
+			<value>ch.elca.el4j.demos.remoting.Calculator</value>
+		</property>
+		<property name="serviceName">
+			<value>Calculator.JaxwsWithoutContext.Benchmark</value>
+		</property>
+		<property name="service">
+			<idref bean="jaxwsCalculatorImpl"/>
+		</property>
+	</bean>
+	
 	<bean id="jaxwsWithContextCalculatorExporter" class="ch.elca.el4j.services.remoting.RemotingServiceExporter">
 		<property name="remoteProtocol">
-			<ref bean="jaxwsProtocol" />
+			<ref bean="jaxwsProtocolWithContext" />
 		</property>
 		<property name="serviceInterface">
 			<value>ch.elca.el4j.demos.remoting.Calculator</value>

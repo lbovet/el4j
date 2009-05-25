@@ -17,6 +17,9 @@
 
 package ch.elca.el4j.demos.remoting;
 
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+
 
 
 /**
@@ -32,7 +35,9 @@ package ch.elca.el4j.demos.remoting;
  * @author Martin Zeltner (MZE)
  * @author Rashid Waraich (RWA)
  */
-
+@WebService(name = "Calculator",
+	serviceName = "CalculatorService",
+	targetNamespace = "http://webservice.remoting.demos.el4j.elca.ch/")
 public interface Calculator {
 	/**
 	 * This method calculates the area of a rectangle.
@@ -43,6 +48,7 @@ public interface Calculator {
 	 *            Is the second side.
 	 * @return Returns the area of the triangle.
 	 */
+	@WebMethod
 	public double getArea(double a, double b);
 	
 	/**
@@ -50,6 +56,7 @@ public interface Calculator {
 	 *
 	 * @throws CalculatorException will be thrown every time.
 	 */
+	@WebMethod
 	public void throwMeAnException() throws CalculatorException;
 	
 	/**
@@ -58,6 +65,7 @@ public interface Calculator {
 	 * @param text Is the object to analyze.
 	 * @return Returns the number of uppercase letters.
 	 */
+	@WebMethod
 	public int countNumberOfUppercaseLetters(String text);
 	
 	/**
@@ -69,5 +77,6 @@ public interface Calculator {
 	 *              The second ComplexNumber
 	 * @return Returns the sum of the ComplexNumbers
 	 */
+	@WebMethod
 	public ComplexNumber add(ComplexNumber cn1, ComplexNumber cn2);
 }
