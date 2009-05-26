@@ -1384,7 +1384,7 @@
 			<releases>
 				<enabled>true</enabled>
 			</releases>
-			<id>el4jReleaseRepositoryExternal</id>
+			<id>el4jRepositoryExternal</id>
 			<name>External release repository of the EL4J project</name>
 			<url>http://el4.elca-services.ch/el4j/maven2repository</url>
 		</repository>

@@ -153,7 +153,7 @@
 		<!-- Uncomment this block if you are inside ELCA! -->
 		<!-- <mirror>
 			<id>nexusReleases</id>
-			<mirrorOf>central,codehaus,jboss,java.net,maven2-repository.dev.java.net,el4jReleaseRepositoryInternal</mirrorOf>
+			<mirrorOf>central,codehaus,jboss,java.net,maven2-repository.dev.java.net,el4jRepositoryInternal</mirrorOf>
 			<name>Nexus mirror for releases</name>
 			<url>http://leaffy.elca.ch:8082/nexus/content/groups/releases</url>
 		</mirror> -->
@@ -163,7 +163,7 @@
 		<!-- Uncomment if you are inside ELCA! -->
 		<!-- <mirror>
 			<id>nexusSnapshots</id>
-			<mirrorOf>apache.snapshots,codehaus.snapshot,el4jSnapshotRepositoryInternal</mirrorOf>
+			<mirrorOf>apache.snapshots,codehaus.snapshot</mirrorOf>
 			<name>Nexus mirror for snapshots</name>
 			<url>http://leaffy.elca.ch:8082/nexus/content/groups/snapshots</url>
 		</mirror> -->
@@ -172,16 +172,9 @@
 		<!-- Uncomment if you are inside ELCA but not at Lausanne! -->
 		<!-- <mirror>
 			<id>nexusEl4ElcaServices</id>
-			<mirrorOf>el4jReleaseRepositoryExternal,el4jReleasePluginRepositoryExternal</mirrorOf>
+			<mirrorOf>el4jPluginRepositoryExternal,el4jPluginRepositoryInternal</mirrorOf>
 			<name>Proxmity mirrored el4jReleaseRepositoryExternal.</name>
 			<url>http://leaffy.elca.ch:8082/nexus/content/groups/releases</url>
-		</mirror>
-		
-		<mirror>
-			<id>nexusEl4ElcaServicesSnapshot</id>
-			<mirrorOf>el4jSnapshotRepositoryExternal,el4jSnapshotPluginRepositoryExternal</mirrorOf>
-			<name>Proxmity mirrored el4jSnapshotRepositoryExternal.</name>
-			<url>http://leaffy.elca.ch:8082/nexus/content/groups/snapshots</url>
 		</mirror> -->
 	</mirrors>
 
