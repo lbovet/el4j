@@ -184,7 +184,7 @@ abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
 					throw new MojoExecutionException("Error executing: wsgen " + args);
 				
 				
-				if (hostURL != null && contextURL != null && serviceURL != null) {
+				if (genWsdl && hostURL != null && contextURL != null && serviceURL != null) {
 					
 					String[] nameAndServiceName = getNameAndServiceName(classToProcess);
 					String name = nameAndServiceName[0];
@@ -361,6 +361,8 @@ abstract class AbstractWsGenMojo extends AbstractJaxwsMojo {
 				throw new MojoExecutionException(
 					"Could not modify WSDL file for service " + serviceName);
 			}
+		} else {
+			getLog().warn("Could not find generated WSDL for service '" + serviceName + "'");
 		}
 	}
 	
