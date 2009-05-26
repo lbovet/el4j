@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+
+	<!-- $Revision$ -->
+	<!-- $URL$ -->
+	<!-- $Date$ -->
+	<!-- $Author$ -->
+	
+	<bean id="DefaultConfig" class="ch.elca.el4j.util.config.GenericConfig">
+		<property name="map">
+			<map>
+				<entry key="class" value="DefaultConfig"/>
+				<entry key="DefaultConfig" value="DefaultConfig"/>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="SpecificConfig" class="ch.elca.el4j.util.config.GenericConfig">
+		<property name="parent">
+			<ref bean="DefaultConfig" />
+		</property>
+		<property name="overrideMap">
+			<map>
+				<entry key="class" value="SpecificConfig"/>
+				<entry key="SpecificConfig" value="SpecificConfig"/>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="MoreSpecificConfig" class="ch.elca.el4j.util.config.GenericConfig">
+		<property name="parent">
+			<ref bean="SpecificConfig" />
+		</property>
+		<property name="overrideMap">
+			<map>
+				<entry key="class" value="MoreSpecificConfig"/>
+				<entry key="MoreSpecificConfig" value="MoreSpecificConfig"/>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="MoreSpecificConfigUsingProperties" class="ch.elca.el4j.util.config.GenericConfig">
+		<property name="parent">
+			<ref bean="SpecificConfig" />
+		</property>
+		<property name="overrideMap">
+			<util:properties location="classpath:scenarios/util/config/specific.properties"/>
+		</property>
+	</bean>
+</beans>
