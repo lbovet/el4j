@@ -18,7 +18,7 @@ rm son-status
 # run sonar in external
 
 cd external/
-
+svn up
 mvn clean install
 
 mvn sonar:sonar -Dsonar.skippedModules=el4j-demos-remoting-jaxws,el4j-framework-tests-remoting-jaxws -P+sonar
@@ -26,7 +26,7 @@ mvn sonar:sonar -Dsonar.skippedModules=el4j-demos-remoting-jaxws,el4j-framework-
 # run sonar in internal
 
 cd ../internal/
-
+svn up
 mvn clean install
 
 mvn sonar:sonar -Dsonar.skippedModules=el4j-demos-remoting-jaxws,el4j-framework-tests-remoting-jaxws -P+sonar
