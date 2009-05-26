@@ -1366,40 +1366,6 @@ public abstract class AbstractReferenceServiceTest
 			0, keywordList.size());
 	}
 	
-	public void testCollectionRefresher() {
-		ReferenceService service = getReferenceService();
-		KeywordDao keywordDao = getKeywordDao();
-		Link link = new Link();
-		
-		Keyword keyword = new Keyword();
-		keyword.setName("iBatis");
-		Keyword keyword2 = new Keyword();
-		keyword2.setName("SqlMap 2.0");
-		Keyword keyword3 = new Keyword();
-		keyword3.setName("Data mapper");
-		
-		Set<Keyword> listKeywords = new HashSet<Keyword>();
-		listKeywords.add(keyword);
-		listKeywords.add(keyword2);
-		// don't add keyword3 yet
-		
-		// set keywords before saving them
-		link.setKeywords(listKeywords);
-		
-		keywordDao.saveOrUpdate(keyword);
-		keywordDao.saveOrUpdate(keyword2);
-		service.saveReference(link);
-		
-		assertTrue("link.getKeywords() should have been rebuilt.", link.getKeywords().contains(keyword));
-		
-		// add keyword3 before saving it
-		link.getKeywords().add(keyword3);
-		keywordDao.saveOrUpdate(keyword3);
-		service.saveReference(link);
-		
-		assertTrue("link.getKeywords() should have been updated.", link.getKeywords().contains(keyword3));
-	}
-	
 	/**
 	 * Test Hibernate Search.
 	 */
