@@ -4,7 +4,7 @@
 --------------------------------------------------------------------------------
 * Core
   = Consistency of configuration file and packages names was improved
-  = Upgrades: Spring upgraded from 2.5.5 to 2.5.6, htlmUnit to version 2.4, 
+  = Upgrades: Spring upgraded from 2.5.5 to 2.5.6.SEC01, htlmUnit to version 2.4, 
     designgridlayout to version 1.0, upgrade to Weblogic 10.3, jaxws: some libraries updated,
     easymockclassextension updated to 2.4, update to abbot/costello 1.0.2, commons-digester,
     javax.mail, unified version of jamonapi
@@ -36,6 +36,8 @@
   = Added DataExtent framework to control what part of a graph of object is loaded
     by Hibernate. 
   = Migrated from dbcp to c3p0 for connection pooling (better control and monitoring, more robust)
+  = hibernateDatabase.xml is now split into hibernateDataSource.xml and hibernateDefaultBeans.xml.
+    This allows to exclude the default dataSource without having to redefine the other beans
   = Abstract*Dto now prints error if hashCode is called in transient and persisted state. See also 
     the clarified Hibernate guidelines!
   = New HibernatePersistentCollectionRefresher can be used to refresh all persisted sets and maps.
@@ -71,6 +73,7 @@
   = new maven property 'jee-web.context.cargo' added, which allows to specify a context for cargo. 
     This is necessary when deploying to the root context: 'jee-web.context' is '/', but 
     'jee-web.context.cargo' needs to be 'ROOT'.
+  = New JAX-WS protocol (for clients only) added, which uses the built-in support by Spring.
 
 --------------------------------------------------------------------------------
  Date :   22.10.08
