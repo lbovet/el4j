@@ -904,7 +904,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>dashboard-maven-plugin</artifactId>
-				<version>1.0.0-beta-1-el4j_20081022_0930</version>
+				<version>${version.dashboard-maven-plugin}</version>
 				<!-- <version>1.0.0-beta-1-el4j_20080812_1330</version>-->
 			</plugin>
 			
@@ -2350,7 +2350,7 @@
 		<version.cobertura-maven-plugin>2.3-el4j_20090519_1445</version.cobertura-maven-plugin>
 		<version.sonar-maven-plugin>1.8</version.sonar-maven-plugin>
 		<version.clirr-maven-plugin>2.2.2-el4j_20080812_1330</version.clirr-maven-plugin>
-		<version.dashboard-maven-plugin>1.0.0-beta-1-el4j_20081022_0930</version.dashboard-maven-plugin>
+		<version.dashboard-maven-plugin>1.0.0-beta-1-el4j_20090527_0835</version.dashboard-maven-plugin>
 		
 		<!-- Cobertura -->
 		<cobertura-runtime.dataDirectory>${el4j.project.home}/cobertura-runtime</cobertura-runtime.dataDirectory>
