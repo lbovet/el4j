@@ -43,12 +43,14 @@ cd ..
 
 # generate doc for plugins
 cd maven/plugins
-mvn clean install site
+mvn clean install
+mvn site
 plugins=$(find -maxdepth 1 -name "maven-*-plugin"  -exec basename {} \;)
 cd ../..
 
 cd framework/plugins
-mvn clean install site
+mvn clean install
+mvn site
 frameworkPlugins=$(find -maxdepth 1 -name "maven-*-plugin"  -exec basename {} \;)
 cd ../..
 
