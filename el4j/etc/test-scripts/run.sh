@@ -60,7 +60,7 @@ case $1 in
 	"release_website")
 		rm -rf ~/java/el4j/snapshot/website/external/* > /dev/null
 		cd external/site
-		./site.sh
+		./site.sh $2
 		cd ../..
 
 		## internal is not necessary
