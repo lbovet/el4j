@@ -20,6 +20,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.PropertyOverrideConfigurer;
+import org.springframework.beans.factory.config.TypedStringValue;
 
 /**
  * A property override configurer that makes the data source bean use the JAMon JDBC interceptor.
@@ -46,12 +47,27 @@ public class JamonDatasourcePropertyOverrideConfigurer extends PropertyOverrideC
 		while (bd.getOriginatingBeanDefinition() != null) {
 			bd = bd.getOriginatingBeanDefinition();
 		}
-		String oldDriver = (String) bd.getPropertyValues().getPropertyValue(DRIVER_CLASS).getValue();
-		String oldJdbcUrl = (String) bd.getPropertyValues().getPropertyValue(JDBC_URL).getValue();
+		
+		String oldDriver = getPropertyValue(bd, DRIVER_CLASS);
+		String oldJdbcUrl = getPropertyValue(bd, JDBC_URL);
 		
 		String newJdbcUrl = oldJdbcUrl.replace("jdbc:", "jdbc:jamon:") + "jamonrealdriver=" + oldDriver;
 		
-		bd.getPropertyValues().addPropertyValue(DRIVER_CLASS, "com.jamonapi.proxy.JAMonDriver");
-		bd.getPropertyValues().addPropertyValue(JDBC_URL, newJdbcUrl);
+		bd.getPropertyValues().addPropertyValue(DRIVER_CLASS, new TypedStringValue("com.jamonapi.proxy.JAMonDriver"));
+		bd.getPropertyValues().addPropertyValue(JDBC_URL, new TypedStringValue(newJdbcUrl));
+	}
+
+	/**
+	 * @param bd          the beanDefinition
+	 * @param property    the property name
+	 * @return            the property value
+	 */
+	private String getPropertyValue(BeanDefinition bd, String property) {
+		Object valueObject = bd.getPropertyValues().getPropertyValue(property).getValue();
+		if (valueObject instanceof TypedStringValue) {
+			return ((TypedStringValue) valueObject).getValue();
+		} else {
+			return valueObject.toString();
+		}
 	}
 }
