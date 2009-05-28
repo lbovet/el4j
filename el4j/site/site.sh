@@ -55,10 +55,10 @@ frameworkPlugins=$(find -maxdepth 1 -name "maven-*-plugin"  -exec basename {} \;
 cd ../..
 
 # generate test reports (no -Ptest.quiet)
-mvn install -Pauto,tomcat6x,db2 $1
+mvn install -Pauto,tomcat6x,db2,integrationTests $1
 mvn antrun:run -f site/pom.xml -Pcopy.surefire-report.tomcat-derby $1
 
-mvn install -Pauto,weblogic10x,oracle $1
+mvn install -Pauto,weblogic10x,oracle,integrationTests $1
 mvn antrun:run -f site/pom.xml -Pcopy.surefire-report.weblogic-oracle $1
 
 # aggregate files
