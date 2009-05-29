@@ -413,7 +413,6 @@ public abstract class AbstractEnvSupportMojo extends AbstractDependencyAwareMojo
 					localResourceName = "this artifact (" + getProject().getArtifact().getArtifactId() + ")";
 				}
 			} catch (IOException e) {
-				getLog().warn(e);
 				// continue
 			}
 		}
