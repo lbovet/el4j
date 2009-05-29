@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- Version: $Revision$ -->
+	<!-- URL: $URL$ -->
+	<!-- Date: $Date$ -->
+	<!-- Author: $Author$ -->
+
+	<parent>
+		<groupId>ch.elca.el4j.applications</groupId>
+		<artifactId>el4j-templates</artifactId>
+		<version>1.6-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>el4j-templates-swing-demo</artifactId>
+	<packaging>pom</packaging>
+	<name>EL4J application swing demo</name>
+	<description>Swing demo application of the EL4J framework.</description>
+	<modules>
+		<module>abbot</module>
+		<module>common</module>
+		<module>server</module>
+		<module>thin-client</module>
+		<module>standalone-client</module>
+		<module>secure-server</module>
+		<module>secure-thin-client</module>
+		<module>jasper-thin-client</module>
+	</modules>
+	<profiles>
+		<profile>
+			<id>auto</id>
+			<!-- disabled by default to reduce build duration -->
+			<modules>
+				<module>webstart</module>
+			</modules>
+		</profile>
+	</profiles>
+	<properties>
+		<!-- if you want to deploy to the root context in tomcat, use "ROOT", not "". See also http://jira.codehaus.org/browse/CARGO-516 -->
+		<jee-web.context>swing-demo</jee-web.context>
+	</properties>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+				<configuration>
+					<aggregate>true</aggregate>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>taglist-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<configuration>
+					<!-- specify your own checkstyle -->
+					<!--configLocation></configLocation-->
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<configuration>
+					<targetJdk>${el4j.java.version}</targetJdk>
+					<aggregate>true</aggregate>
+					<!-- rules with lower priority than this will not
+					be evaluated. Default is 5. -->
+					<minimumPriority>5</minimumPriority>
+					<!-- http://pmd.sourceforge.net/rules/index.html -->
+					<rulesets>
+						<ruleset>rulesets/basic.xml</ruleset>
+						<ruleset>rulesets/braces.xml</ruleset>
+						<ruleset>rulesets/codesize.xml</ruleset>
+						<ruleset>rulesets/clone.xml</ruleset>
+						<ruleset>rulesets/controversial.xml</ruleset>
+						<ruleset>rulesets/coupling.xml</ruleset>
+						<ruleset>rulesets/design.xml</ruleset>
+						<ruleset>rulesets/finalizers.xml</ruleset>
+						<ruleset>rulesets/imports.xml</ruleset>
+						<!--ruleset>rulesets/j2ee.xml</ruleset-->
+						<ruleset>rulesets/javabeans.xml</ruleset>
+						<ruleset>rulesets/junit.xml</ruleset>
+						<ruleset>rulesets/logging-java.xml</ruleset>
+						<ruleset>rulesets/logging-jakarta-commons.xml</ruleset>
+						<ruleset>rulesets/naming.xml</ruleset>
+						<ruleset>rulesets/optimizations.xml</ruleset>
+						<ruleset>rulesets/strictexception.xml</ruleset>
+						<ruleset>rulesets/strings.xml</ruleset>
+						<ruleset>rulesets/sunsecure.xml</ruleset>
+						<ruleset>rulesets/unusedcode.xml</ruleset>
+						<!--ruleset>rulesets/basic-jsp.xml</ruleset-->
+						<!--ruleset>rulesets/basic-jsf.xml</ruleset-->
+					</rulesets>
+					<!-- CPD: The minimum number of tokens that need to be
+					duplicated before it causes a violation. Default is 100. -->
+					<minimumTokens>30</minimumTokens>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>1.2-el4j_20080716_1200</version>
+				<configuration>
+					<xmlOutput>true</xmlOutput>
+					<!-- Min, Default, Max -->
+					<effort>Max</effort>
+					<!-- High, Default, Low, Ignore, and Exp -->
+					<threshold>Low</threshold>
+					<pluginList>${el4j.external}/maven/extensions/findbugs/findbugs-checks.jar</pluginList>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jdepend-maven-plugin</artifactId>
+				<version>2.0-el4j_20080409</version>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>javancss-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<reportSets>
+					<reportSet>
+						<id>standardReports</id>
+						<reports>
+							<report>dependencies</report>
+							<report>dependency-convergence</report>
+							<report>issue-tracking</report>
+							<report>mailing-list</report>
+							<report>summary</report>
+							<report>project-team</report>
+							<report>index</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+			<!-- must be the last report -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>dashboard-maven-plugin</artifactId>
+				<version>1.0-el4j_20080408</version>
+			</plugin>
+		</plugins>
+	</reporting>
+
+	<distributionManagement>
+		<site>
+			<id>GuiTemplate</id>
+			<name>GuiTemplate</name>
+			<!-- must be an absolute path -->
+			<url>file://localhost/tmp/guitemplate</url>
+		</site>
+	</distributionManagement>
+</project>

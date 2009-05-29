@@ -1,0 +1,9 @@
+SVN URL: http://svn.apache.org/repos/asf/maven/plugins/trunk/maven-compiler-plugin
+REVISION: 438050
+APPLIED PATCHES: 
+   * patch http://jira.codehaus.org/browse/MCOMPILER-35 (patch-maven-compiler-plugin_never_skip_compiling_test_classes.patch)
+   * changed dependency org.apache.maven:maven-plugin-testing-harness:1.0-SNAPSHOT to release org.apache.maven:maven-plugin-testing-harness:1.1
+CURRENTLY USED VERSION: 2.1-el4j_20080110_1520
+DEPENDENT CUSTOMIZED ARTIFACTS:
+   * groupId=org.codehaus.plexus artifactId=plexus-compiler-api
+   * groupId=org.codehaus.plexus artifactId=plexus-compiler-javac
