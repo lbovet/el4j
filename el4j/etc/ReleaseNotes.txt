@@ -74,6 +74,7 @@
     This is necessary when deploying to the root context: 'jee-web.context' is '/', but 
     'jee-web.context.cargo' needs to be 'ROOT'.
   = New JAX-WS protocol (for clients only) added, which uses the built-in support by Spring.
+  = EL4J can now be tracked in Sonar (code quality management system).
 
 --------------------------------------------------------------------------------
  Date :   22.10.08
