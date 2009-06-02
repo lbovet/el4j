@@ -93,10 +93,6 @@ if  [ $performExternal == "y" ] ; then
 	cd maven
 	mvn deploy -N
 	
-	cd utils
-	mvn deploy
-	cd ..
-	
 	cd archetypes
 	for i in $(ls) ; do
 		cd $i
@@ -113,6 +109,12 @@ if  [ $performExternal == "y" ] ; then
 		mvn deploy
 		cd ..
 	done
+	
+	# deploy maven utils
+	cd utils
+	mvn deploy
+	cd ..
+	
 	cd ../..
 	
 	cd ..
