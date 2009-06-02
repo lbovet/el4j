@@ -2,10 +2,15 @@
  News
  -----
  -----
- 24 Oct 2008
+ 02 Jun 2009
  -----
 
 News
+
+  * <01/06/2009> - <<EL4J 1.6 released!>> 
+  Quite a large number of new features: DataExtent for controlling lazy loading, JAX-WS upgrade, cleaned up env support (to share config
+  between Maven and Spring, now each module can incrementally define its configuration), database scripts can now be versioned and only
+  the "right" scripts are then applied, ID fixer improvements, support for the Maven Sonar plugin, better handling of the PK handling with Hibernate, full JPA support in Hibernate (e.g. @PrePersist can be enabled). Upgrades for many libraries C3P0 instead of DBCP, Spring, Maven, ...
 
   * <24/10/2008> - <<EL4J 1.5.1 released!>> This is mainly a maintenance release: Clean ups, upgrade to new plugins and improved modules.
 
