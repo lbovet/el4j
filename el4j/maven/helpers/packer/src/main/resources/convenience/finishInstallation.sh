@@ -6,15 +6,15 @@ echo "please check the documentation under http://wiki.elca.ch/twiki/el4j/bin/vi
 echo "and http://el4j.sourceforge.net/"
 echo
 
-if [ ! -e ~/.bash_profile ] ; then
-	cat aliases.sh > ~/.bash_profile
-	echo "Aliases installed. Please check ~/.bash_profile if everything is OK."
+if [ ! -e ~/.bashrc ] ; then
+	cat aliases.sh > ~/.bashrc
+	echo "Aliases installed. Please check ~/.bashrc if everything is OK."
 else
-	if [ $(grep "EL4J aliases" ~/.bash_profile | wc -l) -eq 0 ] ; then
-		cat aliases.sh >> ~/.bash_profile
-		echo "Aliases installed. Please check ~/.bash_profile if everything is OK."
+	if [ $(grep "EL4J aliases" ~/.bashrc | wc -l) -eq 0 ] ; then
+		cat aliases.sh >> ~/.bashrc
+		echo "Aliases installed. Please check ~/.bashrc if everything is OK."
 	else
-		echo "Skipping .bash_profile because it already contains marker comment 'EL4J aliases'"
+		echo "Skipping .bashrc because it already contains marker comment 'EL4J aliases'"
 		echo "Aliases not installed."
 	fi
 fi
