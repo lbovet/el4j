@@ -22,7 +22,7 @@ File collector plugin
   
 +----------------
     <plugin>
-        <groupId>ch.elca.el4j.plugins</groupId>
+        <groupId>ch.elca.el4j.maven.plugins</groupId>
         <artifactId>maven-file-collector-plugin</artifactId>
         <configuration>
             <rootSourceDirectory>modules</rootSourceDirectory>
@@ -31,7 +31,7 @@ File collector plugin
             <targetDirectory>target/aggregated-files</targetDirectory>
             <allowOverwrite>false</allowOverwrite>
         </configuration>
-    </plugin
+    </plugin>
 +----------------
 
   []
