@@ -17,8 +17,10 @@
 package ch.elca.el4j.services.security.filters;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -28,6 +30,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
+import ch.elca.el4j.util.env.EnvPropertiesUtils;
+
 /**
  * Blocks requests from unauthorized IP addresses. It answers with the 401
  * (Unauthorized) status code if the IP is not authorized. Authorized IPs are
@@ -35,8 +39,9 @@ import javax.servlet.http.HttpServletResponse;
  * <p>
  * 
  * The list of authorized IP addresses are read from a configurable system
- * property. The format is <code>x1.y1.z1.w1[,x2.y2.z2.w2]</code> or
- * <code>*</code> to disable the filter (authorize everyone).
+ * property or env property, if the system property is not defined.
+ * The format is <code>x1.y1.z1.w1[,x2.y2.z2.w2]</code> whereas
+ * <code>*</code> can be used to match any character sequence.
  * 
  * <p>
  * Configuration:
@@ -75,10 +80,10 @@ public class IPAddressFilter implements Filter {
 		= org.apache.commons.logging.LogFactory.getLog(IPAddressFilter.class);
 
 	/**     */
-	private List<String> m_ipList;
+	private List<Pattern> m_ipList;
 
 	/**     */
-	private String m_systemProperty;
+	private String m_filterPropertyName;
 
 	/**     */
 	private boolean m_disabled = false;
@@ -86,16 +91,16 @@ public class IPAddressFilter implements Filter {
 	/** {@inheritDoc} */
 	public void init(FilterConfig config) throws ServletException {
 		
-		m_systemProperty = config.getInitParameter(PROPERTY_PARAM_NAME);
+		m_filterPropertyName = config.getInitParameter(PROPERTY_PARAM_NAME);
 		
-		if (m_systemProperty == null) {
+		if (m_filterPropertyName == null) {
 			String message = "Missing required parameter "
 				+ "'" + PROPERTY_PARAM_NAME + "'";
 			s_log.error(message);
 			throw new ServletException(message);
 		}
 		
-		s_log.debug("Using property: " + m_systemProperty);
+		s_log.debug("Using property: " + m_filterPropertyName);
 	}
 
 	/** {@inheritDoc} */
@@ -108,8 +113,20 @@ public class IPAddressFilter implements Filter {
 		if (m_ipList == null) {
 			initList();
 		}
+		
+		boolean accessGranted = false;
+		if (!m_disabled) {
+			for (Pattern pattern : m_ipList) {
+				if (pattern.matcher(request.getRemoteAddr()).matches()) {
+					accessGranted = true;
+					break;
+				}
+			}
+		} else {
+			accessGranted = true;
+		}
 
-		if (m_ipList.contains(request.getRemoteAddr()) || m_disabled) {
+		if (accessGranted) {
 			s_log.debug("Permission granted");
 			chain.doFilter(request, response);
 		} else {
@@ -133,21 +150,32 @@ public class IPAddressFilter implements Filter {
 	 * @throws ServletException Empty or misconfigured FilterConfig file.
 	 */
 	private void initList() throws ServletException {
-
-		String ipListString = System.getProperty(m_systemProperty);
+		
+		String ipListString = System.getProperty(m_filterPropertyName);
+		
+		// no system property set -> use env property
+		if (ipListString == null) {
+			ipListString = EnvPropertiesUtils.getEnvPlaceholderProperties().getProperty(m_filterPropertyName);
+		}
 
 		s_log.debug("Authorized IP addresses: " + ipListString);
 
 		if (ipListString == null) {
-			throw new ServletException("Missing required system property "
-				+ "'" + m_systemProperty + "'");
+			throw new ServletException("Missing required system or env property "
+				+ "'" + m_filterPropertyName + "'");
 		}
 
 		if (ipListString.equals(WILDCARD)) {
 			m_disabled = true;
 		}
-
+		
 		// remove spaces and split
-		m_ipList = Arrays.asList(ipListString.replaceAll(" ", "").split(","));
+		List<String> ips = Arrays.asList(ipListString.replaceAll(" ", "").split(","));
+		m_ipList = new ArrayList<Pattern>(ips.size());
+		for (String ipPattern : ips) {
+			ipPattern = ipPattern.replaceAll("\\.", "\\\\.");
+			ipPattern = ipPattern.replaceAll("\\*", ".*");
+			m_ipList.add(Pattern.compile(ipPattern));
+		}
 	}
 }
