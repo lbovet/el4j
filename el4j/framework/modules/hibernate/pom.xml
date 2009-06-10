@@ -45,8 +45,8 @@
 			<version>3.3.1.GA</version>
 			<exclusions>
 				<!--
-					Exclude the dependencies if they were taken from another
-					repository than the el4.elca-services.ch
+					Exclude dependencies if they were taken from another
+					repository than public-el4.elca-services.ch
 				-->
 				<exclusion>
 					<groupId>javax.transaction</groupId>
