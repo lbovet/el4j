@@ -1384,7 +1384,7 @@
 			</releases>
 			<id>el4jRepositoryExternal</id>
 			<name>External release repository of the EL4J project</name>
-			<url>http://el4.elca-services.ch/el4j/maven2repository</url>
+			<url>http://public-el4.elca-services.ch/el4j/maven2repository</url>
 		</repository>
 		<repository>
 			<id>central</id>
@@ -1432,7 +1432,7 @@
 			</releases>
 			<id>el4jRepositoryInternal</id>
 			<name>Internal release repository of the EL4J project</name>
-			<url>http://el4.elca-services.ch/el4j-protected/maven2repository/</url>
+			<url>http://public-el4.elca-services.ch/el4j-protected/maven2repository/</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>
@@ -1445,7 +1445,7 @@
 			</releases>
 			<id>el4jPluginRepositoryExternal</id>
 			<name>External release repository of the EL4J project</name>
-			<url>http://el4.elca-services.ch/el4j/maven2repository</url>
+			<url>http://public-el4.elca-services.ch/el4j/maven2repository</url>
 		</pluginRepository>
 	</pluginRepositories>
 	<distributionManagement>
@@ -2124,11 +2124,11 @@
 		<!-- Distribution mgt repository ids, names and urls -->
 		<distmgt.repository.id.external>ftpEl4ElcaServices</distmgt.repository.id.external>
 		<distmgt.repository.name.external>External EL4J repository</distmgt.repository.name.external>
-		<distmgt.repository.url.external>ftp://el4.elca-services.ch/htdocs/el4j/maven2repository</distmgt.repository.url.external>
+		<distmgt.repository.url.external>ftp://public-el4.elca-services.ch/htdocs/el4j/maven2repository</distmgt.repository.url.external>
 
 		<distmgt.repository.id.internal>ftpEl4ElcaServices</distmgt.repository.id.internal>
 		<distmgt.repository.name.internal>Internal EL4J repository</distmgt.repository.name.internal>
-		<distmgt.repository.url.internal>ftp://el4.elca-services.ch/htdocs/el4j-protected/maven2repository</distmgt.repository.url.internal>
+		<distmgt.repository.url.internal>ftp://public-el4.elca-services.ch/htdocs/el4j-protected/maven2repository</distmgt.repository.url.internal>
 
 		<distmgt.repository.id.sandbox>httpSandbox</distmgt.repository.id.sandbox>
 		<distmgt.repository.name.sandbox>Sandbox EL4J repository</distmgt.repository.name.sandbox>
@@ -2144,7 +2144,7 @@
 
 		<!-- <distmgt.snapshot-repository.id.external>ftpEl4ElcaServicesSnapshot</distmgt.snapshot-repository.id.external>
 		<distmgt.snapshot-repository.name.external>External EL4J snapshot repository</distmgt.snapshot-repository.name.external>
-		<distmgt.snapshot-repository.url.external>ftp://el4.elca-services.ch/htdocs/el4j/maven2snapshots</distmgt.snapshot-repository.url.external>
+		<distmgt.snapshot-repository.url.external>ftp://public-el4.elca-services.ch/htdocs/el4j/maven2snapshots</distmgt.snapshot-repository.url.external>
 
 		<distmgt.snapshot-repository.id.internal>ftpLeaffySnapshot</distmgt.snapshot-repository.id.internal>
 		<distmgt.snapshot-repository.name.internal>Internal EL4J snapshot repository</distmgt.snapshot-repository.name.internal>
