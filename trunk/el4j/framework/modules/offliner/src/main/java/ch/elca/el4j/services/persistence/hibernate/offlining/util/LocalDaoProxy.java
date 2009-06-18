@@ -16,6 +16,7 @@
  */
 package ch.elca.el4j.services.persistence.hibernate.offlining.util;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -133,11 +134,7 @@ public final class LocalDaoProxy implements InvocationHandler {
 		 * @param args The arguments.
 		 * @return The invocation result.
 		 */
-		protected final Object callDaoMethod(String name, Object... args) {
-			Class<?>[] argClasses = new Class<?>[args.length];
-			for (int i = 0; i < args.length; i++) {
-				argClasses[i] = args[i].getClass();
-			}
+		protected final Object callDaoMethod(String name, Class<?>[] argClasses, Object[] args) {
 			try {
 				Method method = m_target.getClass()
 					.getMethod(name, argClasses);
@@ -211,7 +208,7 @@ public final class LocalDaoProxy implements InvocationHandler {
 				m_offliner.markForDeletion(m_entity);
 			}
 			public void handleBefore() {
-				m_entity = callDaoMethod("findById", m_argv[0]);
+				m_entity = callDaoMethod("findById", new Class[] {Serializable.class}, new Object[] {m_argv[0]});
 			}
 		},
 		
@@ -227,7 +224,7 @@ public final class LocalDaoProxy implements InvocationHandler {
 				m_offliner.markForDeletion(m_all.toArray());
 			}
 			public void handleBefore() {
-				m_all = (List<?>) callDaoMethod("getAll", new Object[0]);
+				m_all = (List<?>) callDaoMethod("getAll", new Class[0], new Object[0]);
 			}
 		},
 		
@@ -246,7 +243,7 @@ public final class LocalDaoProxy implements InvocationHandler {
 			public void handleBefore() {
 				s_log.warn("Using deprecated method delete(ID) of dao. "
 					+ "Use deleteById(ID) instead.");
-				m_entity = callDaoMethod("findById", m_argv[0]);
+				m_entity = callDaoMethod("findById", new Class[] {Serializable.class}, new Object[] {m_argv[0]});
 				
 			}
 		}
