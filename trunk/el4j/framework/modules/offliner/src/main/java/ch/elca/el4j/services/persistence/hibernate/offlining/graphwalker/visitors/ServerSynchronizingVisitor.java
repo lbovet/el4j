@@ -19,6 +19,7 @@ package ch.elca.el4j.services.persistence.hibernate.offlining.graphwalker.visito
 import java.io.Serializable;
 
 import org.apache.log4j.Logger;
+import org.springframework.orm.hibernate3.HibernateSystemException;
 
 import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.hibernate.offlining.Conflict;
@@ -192,6 +193,12 @@ public class ServerSynchronizingVisitor implements NodeVisitor {
 				try {
 					saveObject(copy);
 				} catch (Exception e) {
+					if (e instanceof HibernateSystemException) {
+						if (e.getMessage().contains("cascade") && e.getMessage().contains("delete-orphan")) {
+							throw new OfflinerInternalRTException(
+								"Offliner does not support cascade type 'delete-orphan'.");
+						}
+					}
 					throw new NodeException(new Conflict(Conflict.Phase.SYNCHRONIZE, e, copy, null));
 				}
 				entry.setLocalBaseVersion(localVersion);
