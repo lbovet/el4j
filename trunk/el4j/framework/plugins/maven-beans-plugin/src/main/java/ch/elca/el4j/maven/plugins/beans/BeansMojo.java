@@ -16,20 +16,28 @@
  */
 package ch.elca.el4j.maven.plugins.beans;
 
+
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
+import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 
-import ch.elca.el4j.maven.plugins.beans.resolve.ResolverManager;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 
 /**
  * The mojo to extract beans from a project.
@@ -50,34 +58,70 @@ public class BeansMojo extends AbstractMojo {
 
 	/**
 	 * The maven project - used for runtime classpath resolution.
+	 * 
 	 * @parameter expression="${project}"
 	 */
 	private MavenProject m_project;
 
+	/**
+	 * Local maven repository.
+	 * 
+	 * @parameter expression="${localRepository}"
+	 * @required
+	 * @readonly
+	 */
+	private ArtifactRepository m_localRepository;
+
 	// Checkstyle: MemberName off
-	
+
 	/**
 	 * The file to read configuration information from.
+	 * 
 	 * @parameter
 	 * @required
 	 */
 	private String sourceFile;
-	
+
+	/**
+	 * @parameter default-value="xml"
+	 * @alias configExtensions
+	 */
+	private String configSuffixes;
+
+	/**
+	 * @parameter default-value="true"
+	 */
+	private boolean allowBeanDefinitionOverriding;
+
+	/**
+	 * @parameter default-value="true"
+	 */
+	private boolean enableImports;
+
+	/**
+	 * @parameter default-value="true"
+	 */
+	private boolean incomplete;
+	/**
+	 * @parameter default-value="${project.artifactId}"
+	 */
+	private String name;
+
 	// Checkstyle: MemberName on
-	
+
 	/** {@inheritDoc} */
 	public void execute() throws MojoExecutionException, MojoFailureException {
-		
+
 		URL[] classpath = constructClasspath();
-		
+
 		File file = new File(sourceFile);
-		
+
 		if (!file.isAbsolute()) {
 			file = new File(m_project.getBasedir(), sourceFile);
 		}
-		
+
 		ConfigurationExtractor ex = new ConfigurationExtractor(file);
-		
+
 		BeanPathResolver resolver = new BeanPathResolver();
 		resolver.setLogger(new LogCallback() {
 
@@ -91,34 +135,111 @@ public class BeansMojo extends AbstractMojo {
 				getLog().info(str);
 			}
 		});
-		String[] files = resolver.resolve(
-			ex.getInclusive(), ex.getExclusive(), classpath,
-			m_project.getBasedir().toString());
 
-		ResolverManager mgr = new ResolverManager(classpath);
-		
-		String outputDir = m_project.getBasedir().getAbsolutePath();
-		
-		File beanDirectory = new File(outputDir, "target/beans");
-		
-		beanDirectory.mkdirs();
-		if (!beanDirectory.exists() || !beanDirectory.isDirectory()) {
-			throw new MojoFailureException("Failed to create beans directory.");
-		}
-		
-		for (String f : files) {
-			try {
-				mgr.copy(f, beanDirectory);
-			} catch (IOException e) {
-				
-				throw new MojoFailureException("IO exception copying files. "
-					+ e.toString());
+		// reads out all inclusive configuration files and all exclusive configuration files
+		String[] files = resolver.resolve(ex.getInclusive(), ex.getExclusive(), classpath, m_project.getBasedir()
+			.toString());
+
+		/*
+		 * truncate to get full path of form: d:/....
+		 */
+		for (int j = 0; j < files.length; j++) {
+
+			files[j] = files[j].substring(files[j].indexOf("file:/") + 6);
+
+			// cut away classpath where necessary
+			if (files[j].startsWith(m_project.getBasedir().getAbsolutePath().replace("\\", "/"))) {
+				files[j] = files[j].substring(m_project.getBasedir().getAbsolutePath().length());
+
+			} else {
+				// if files is not in classpath, then it is in the m2repository
+				files[j] = "external:/M2_REPO" + files[j].substring(m_localRepository.getBasedir().length());
+
 			}
 		}
+
+		/* if we have found config files then force spring nature... and write .springBeans file */
+		if (files.length > 0) {
+			SpringNatureForcer forcer = new SpringNatureForcer(m_project.getBasedir());
+			forcer.setLogger(new LogCallback() {
+
+				/** {@inheritDoc} */
+				public boolean isActive() {
+					return getLog().isInfoEnabled();
+				}
+
+				/** {@inheritDoc} */
+				public void log(String str) {
+					getLog().info(str);
+				}
+			});
+			forcer.forceSpringNature();
+			
+			
+			writespringBeansFile(files);
+		}
+
+	}
+
+	/**
+	 * Writes the paths of the springIDE configuration files into .springBeans.
+	 * 
+	 * @param files
+	 *            are the paths of the used (in the Module Application Context) configuration files.
+	 */
+
+	private void writespringBeansFile(String[] files) throws MojoExecutionException, MojoFailureException {
+		Map context = new HashMap();
+		context.put("configs", files);
+		context.put("configSuffixes", configSuffixes.split(","));
+		context.put("allowBeanDefinitionOverriding", String.valueOf(allowBeanDefinitionOverriding));
+		context.put("incomplete", String.valueOf(incomplete));
+		context.put("enableImports", String.valueOf(enableImports));
+		context.put("name", name);
+
+		getLog().info("create SpringIDE configuration for " + name);
+
+		File dotSpringBeans = new File(m_project.getBasedir(), ".springBeans");
+		applyTemplate(context, dotSpringBeans, "springBeans.fm");
+
+		File prefs = new File(m_project.getBasedir(), ".settings/org.springframework.ide.eclipse.core.prefs");
+		applyTemplate(context, prefs, "prefs.fm");
+
 	}
 	
 	/**
+	 * Uses a Template class (and template files) to automatically write the .springBeans and .pref files.
+	 * 
+	 * 
+	 * @param context is a HashMap holding the configuration details
+	 * @param out is the file we want to write to
+	 * @param template is the name of the templates file
+	 * @throws MojoExecutionException
+	 */
+	
+	protected void applyTemplate(Map context, File out, String template) throws MojoExecutionException {
+
+		Configuration cfg = new Configuration();
+		cfg.setClassForTemplateLoading(getClass(), "");
+
+		out.getParentFile().mkdirs();
+		try {
+			Writer configWriter = new FileWriter(out);
+			Template tpl = cfg.getTemplate(template);
+			tpl.process(context, configWriter);
+			configWriter.flush();
+			configWriter.close();
+			getLog().info("Write SpringIDE configuration to: " + out.getAbsolutePath());
+		} catch (IOException ioe) {
+			throw new MojoExecutionException("Unable to write SpringIDE configuration file", ioe);
+		} catch (TemplateException te) {
+			throw new MojoExecutionException("Unable to merge freemarker template", te);
+		}
+	}
+
+	/**
 	 * Constructs an URL[] representing the runtime classpath.
+	 * 
 	 * @return The urls.
 	 */
 	private URL[] constructClasspath() {
@@ -143,22 +264,53 @@ public class BeansMojo extends AbstractMojo {
 		}
 		return classpath.toArray(new URL[0]);
 	}
-	
+
 	/**
 	 * Interface to allow other classes to use the mojo logger.
 	 */
 	interface LogCallback {
 		/**
 		 * Log a debug message.
-		 * @param str The mesasge to log.
+		 * 
+		 * @param str
+		 *            The mesasge to log.
 		 */
 		void log(String str);
 
 		/**
-		 * Whether to do logging (saves time if we skip the statements
-		 * completely otherwise). Calls Logger.isDebugEnabled().
+		 * Whether to do logging (saves time if we skip the statements completely otherwise). Calls
+		 * Logger.isDebugEnabled().
+		 * 
 		 * @return Whether logging is active.
 		 */
 		boolean isActive();
 	}
+
+	/**
+	 * Forces SpringNature (in the .project file that is checked by eclipse). -> adds a tag in the nature tag of the
+	 * (xml) .project file
+	
+	private void forceSpringNature() {
+		try {
+			File dotProject = new File(m_project.getBasedir(), ".project");
+			String content = FileUtils.readFileToString(dotProject, null);
+			if (content.indexOf("<nature>org.springframework.ide.eclipse.core.springnature</nature>") < 0) {
+				getLog().info("Add spring nature to the eclipse .project file");
+				try {
+					Xpp3Dom dom = Xpp3DomBuilder.build(new FileReader(dotProject));
+					Xpp3Dom nature = new Xpp3Dom("nature");
+					nature.setValue("org.springframework.ide.eclipse.core.springnature");
+					dom.getChild("natures").addChild(nature);
+					FileWriter writer = new FileWriter(dotProject);
+					Xpp3DomWriter.write(writer, dom);
+					writer.close();
+				} catch (Exception e) {
+					getLog().warn("Failed to add missing tomcat nature to the eclipse .project file", e);
+				}
+			}
+		} catch (IOException e) {
+			getLog().info("Failed to retrieve the Eclipse .project file");
+		}
+	}
+	*/
 }
