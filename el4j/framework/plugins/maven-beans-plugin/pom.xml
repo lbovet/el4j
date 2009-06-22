@@ -22,8 +22,8 @@
 	<name>EL4J maven beans plugin</name>
 	<description>
 		A plugin to extract all beans files from a
-		ModuleApplicationContext configuration in a source file and copy
-		them to the target directory for use by spring IDE.
+		ModuleApplicationContext configuration in a source file and autmoatically
+		generate the .springBeans file that for the SpringIDE.
 	</description>
 	<build>
 		<plugins>
@@ -67,6 +67,21 @@
 		<dependency>
 			<groupId>ch.elca.el4j.modules</groupId>
 			<artifactId>module-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.6</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.plexus</groupId>
+			<artifactId>plexus-utils</artifactId>
+			<version>1.4.7</version>
 		</dependency>
 	</dependencies>
 </project>
