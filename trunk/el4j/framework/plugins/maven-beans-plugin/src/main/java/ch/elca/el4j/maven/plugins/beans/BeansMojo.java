@@ -174,8 +174,7 @@ public class BeansMojo extends AbstractMojo {
 				}
 			});
 			forcer.forceSpringNature();
-			
-			
+
 			writespringBeansFile(files);
 		}
 
@@ -286,31 +285,4 @@ public class BeansMojo extends AbstractMojo {
 		boolean isActive();
 	}
 
-	/**
-	 * Forces SpringNature (in the .project file that is checked by eclipse). -> adds a tag in the nature tag of the
-	 * (xml) .project file
-	
-	private void forceSpringNature() {
-		try {
-			File dotProject = new File(m_project.getBasedir(), ".project");
-			String content = FileUtils.readFileToString(dotProject, null);
-			if (content.indexOf("<nature>org.springframework.ide.eclipse.core.springnature</nature>") < 0) {
-				getLog().info("Add spring nature to the eclipse .project file");
-				try {
-					Xpp3Dom dom = Xpp3DomBuilder.build(new FileReader(dotProject));
-					Xpp3Dom nature = new Xpp3Dom("nature");
-					nature.setValue("org.springframework.ide.eclipse.core.springnature");
-					dom.getChild("natures").addChild(nature);
-					FileWriter writer = new FileWriter(dotProject);
-					Xpp3DomWriter.write(writer, dom);
-					writer.close();
-				} catch (Exception e) {
-					getLog().warn("Failed to add missing tomcat nature to the eclipse .project file", e);
-				}
-			}
-		} catch (IOException e) {
-			getLog().info("Failed to retrieve the Eclipse .project file");
-		}
-	}
-	*/
 }
