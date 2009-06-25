@@ -25,8 +25,8 @@ import ch.elca.el4j.core.context.ModuleApplicationContext;
 import ch.elca.el4j.core.context.ModuleApplicationContextConfiguration;
 import ch.elca.el4j.core.context.ModuleApplicationContextUtils;
 import ch.elca.el4j.maven.plugins.beans.BeansMojo.LogCallback;
-import ch.elca.el4j.maven.plugins.beans.resolve.Resolver;
-import ch.elca.el4j.maven.plugins.beans.resolve.ResolverManager;
+import ch.elca.el4j.maven.plugins.beans.resolvers.Resolver;
+import ch.elca.el4j.maven.plugins.beans.resolvers.ResolverManager;
 
 /**
  * Creates a bean path (array of beans files) from a ModuleApplicationContext -
