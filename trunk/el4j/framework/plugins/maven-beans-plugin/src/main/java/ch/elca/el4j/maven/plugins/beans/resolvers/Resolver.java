@@ -14,14 +14,13 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.maven.plugins.beans.resolve;
+package ch.elca.el4j.maven.plugins.beans.resolvers;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 /**
- * Resolver for plain file: entries.
+ * Interface for resolving bean path entries against their type (file, jar ...).
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
@@ -32,37 +31,25 @@ import java.net.URL;
  *
  * @author David Bernhard (DBD)
  */
-public class FileResolver extends AbstractResolver {
+public interface Resolver {
 
 	/**
-	 * Set up a file resolver.
-	 * @param classpath The classpath to check valid files against.
+	 * @return The protocol this resolver works on. "" for the manager.
 	 */
-	public FileResolver(URL[] classpath) {
-		super(classpath);
-	}
-
-	/** {@inheritDoc} */
-	public String getProtocol() {
-		return "file";
-	}
-
-	/** {@inheritDoc} */
-	public boolean accept(String file) {
-		String f = strip(file);
-		for (String entry : m_classpath) {
-			if (f.startsWith(entry)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/** {@inheritDoc} */
-	public void copy(String file, File target) throws IOException {
-		File destDir = createDir("files", target);
-		File source = new File(strip(file));
-		File dest = new File(destDir, source.getName());
-		copyFile(source, dest);
-	}
+	String getProtocol();
+	
+	/**
+	 * Check if a file is to be included in the resolved bean files.
+	 * @param file The file name/path.
+	 * @return Whether this file is included.
+	 */
+	boolean accept(String file);
+	
+	/**
+	 * Copy a file to its proper place in the target directory.
+	 * @param file The file to copy.
+	 * @param target The target directory. It must exist.
+	 * @throws IOException If soemthing goes wrong with file operations.
+	 */
+	void copy(String file, File target) throws IOException;
 }

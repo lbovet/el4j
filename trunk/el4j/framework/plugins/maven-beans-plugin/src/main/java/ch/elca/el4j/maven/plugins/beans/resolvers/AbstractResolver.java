@@ -14,7 +14,7 @@
  *
  * For alternative licensing, please contact info@elca.ch
  */
-package ch.elca.el4j.maven.plugins.beans.resolve;
+package ch.elca.el4j.maven.plugins.beans.resolvers;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
