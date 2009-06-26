@@ -127,7 +127,7 @@ public class BeansMojo extends AbstractMojo {
 
 			/** {@inheritDoc} */
 			public boolean isActive() {
-				return getLog().isInfoEnabled();
+				return getLog().isDebugEnabled();
 			}
 
 			/** {@inheritDoc} */
@@ -151,10 +151,15 @@ public class BeansMojo extends AbstractMojo {
 			if (files[j].startsWith(m_project.getBasedir().getAbsolutePath().replace("\\", "/"))) {
 				files[j] = files[j].substring(m_project.getBasedir().getAbsolutePath().length());
 
-			} else {
-				// if files is not in classpath, then it is in the m2repository
+			} else if (files[j].contains(m_localRepository.getBasedir().replace("\\", "/"))) {
+				// if files is not in classpath, then maybe it is in the m2repository
 				files[j] = "external:/M2_REPO" + files[j].substring(m_localRepository.getBasedir().length());
 
+			} else {
+				/* if it isn't in classpath nor in m2repo, well then just cut of everything before the first ":"
+				 * because format is file:/ .. 
+				 */
+				files[j] = "external:/" + files[j].substring("file:/".length());
 			}
 		}
 

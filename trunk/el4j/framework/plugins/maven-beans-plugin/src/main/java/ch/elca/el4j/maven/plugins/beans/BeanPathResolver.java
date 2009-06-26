@@ -173,24 +173,29 @@ public class BeanPathResolver {
 				for (URL u : m_givenClasspath) {
 					m_logger.log(" > " + u);
 				}
+			
 				m_logger.log("Current thread context classpath:");
 				for (URL u : urls) {
 					m_logger.log(" > " + u);
 				}
+			
+			
 				m_logger.log("Inclusive files:");
 				if (m_inclusive != null) {
 					for (String s : m_inclusive) {
-						m_logger.log(" + " + s);
+							m_logger.log(" + " + s);
 					}
 				}
+				
+			
 				m_logger.log("Exclusive files:");
 				if (m_exclusive != null) {
 					for (String s : m_exclusive) {
-						m_logger.log(" - " + s);
+							m_logger.log(" - " + s);
 					}
 				}
+				
 			}
-			
 			// AllowBeanDefinitionOverriding is an unused parameter?
 			String[] result = utils.calculateInputFiles(
 				m_inclusive, m_exclusive, false);
