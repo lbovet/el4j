@@ -6,17 +6,36 @@ echo "please check the documentation under http://wiki.elca.ch/twiki/el4j/bin/vi
 echo "and http://el4j.sourceforge.net/"
 echo
 
-if [ ! -e ~/.bashrc ] ; then
-	cat aliases.sh > ~/.bashrc
-	echo "Aliases installed. Please check ~/.bashrc if everything is OK."
-else
-	if [ $(grep "EL4J aliases" ~/.bashrc | wc -l) -eq 0 ] ; then
-		cat aliases.sh >> ~/.bashrc
-		echo "Aliases installed. Please check ~/.bashrc if everything is OK."
+case "`uname`" in
+CYGWIN*)
+	bashFile=~/.bash_profile
+	bashFileName="~/.bash_profile"
+	;;
+*)
+	bashFile=~/.bashrc
+	bashFileName="~/.bashrc"
+	;;
+esac
+
+echo "Enter 'yes' to automatically append aliases to your $bashFileName, otherwise"
+echo "please add the aliases stored in aliases.sh to your $bashFileName"
+read autoInstall
+
+if [ $autoInstall == "yes" ] ; then
+	if [ ! -e "$bashFile" ] ; then
+		cat aliases.sh > "$bashFile"
+		echo "Aliases installed. Please check $bashFileName if everything is OK."
 	else
-		echo "Skipping .bashrc because it already contains marker comment 'EL4J aliases'"
-		echo "Aliases not installed."
+		if [ $(grep "EL4J aliases" "$bashFile" | wc -l) -eq 0 ] ; then
+			cat aliases.sh >> "$bashFile"
+			echo "Aliases installed. Please check $bashFileName if everything is OK."
+		else
+			echo "Skipping .bashrc because it already contains marker comment 'EL4J aliases'"
+			echo "Aliases not installed."
+		fi
 	fi
+else
+	echo "No aliases installed."
 fi
 
 echo
