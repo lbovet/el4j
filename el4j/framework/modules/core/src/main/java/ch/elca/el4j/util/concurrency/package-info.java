@@ -1,12 +1,10 @@
 /**
+ *   Class, field, and method level annotations for describing thread-safety policies. 
+ *  <p>
  * These annotations are copied from this book: {@link http://jcip.net/} in order to place them in a proper package.
  *   Please refer also to the book Effective Java, 2nd edition, Item 70.
  *
  <p>
-  Class, field, and method level annotations for describing thread-safety policies.
-</p>
-
-<p>
   Three class-level annotations describe the <em>intended</em> thread-safety promises of a class:
   <code>@Immutable</code>, <code>@ThreadSafe</code>, and <code>@NotThreadSafe</code>.
   <code>@Immutable</code> means that the class is immutable,
