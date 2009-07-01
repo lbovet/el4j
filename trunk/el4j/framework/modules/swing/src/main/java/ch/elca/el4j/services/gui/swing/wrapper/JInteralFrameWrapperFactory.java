@@ -22,7 +22,7 @@ import javax.swing.JInternalFrame;
 import ch.elca.el4j.services.gui.swing.frames.InternalApplicationFrame;
 
 /**
- * This class wraps components into {@link JInternalFrame}s.
+ * This factory wraps components into {@link JInternalFrame}s.
  *
  * <script type="text/javascript">printFileStatus
  *   ("$URL$",
