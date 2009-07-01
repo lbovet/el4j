@@ -27,7 +27,14 @@ import org.apache.maven.plugin.MojoExecutionException;
 
 import com.sun.tools.ws.wscompile.WsimportTool;
 
+
 /**
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author gnodet <gnodet@apache.org>
  * @author dantran <dantran@apache.org>

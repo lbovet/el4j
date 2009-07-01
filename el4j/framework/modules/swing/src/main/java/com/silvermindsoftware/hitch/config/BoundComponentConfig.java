@@ -18,6 +18,14 @@ package com.silvermindsoftware.hitch.config;
 
 import com.silvermindsoftware.hitch.ReadOnly;
 
+/**
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ */
 public class BoundComponentConfig {
 
 	private Class type = void.class;

@@ -9,6 +9,14 @@ import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 import org.codehaus.plexus.PlexusTestCase;
 import org.junit.Test;
 
+/**
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ */
 public class MavenRecursiveMojoTest extends AbstractMojoTestCase {
 
 	File level1_1_1 = new File(PlexusTestCase.getBasedir()

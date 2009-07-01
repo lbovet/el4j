@@ -20,6 +20,14 @@ import ch.elca.el4j.services.persistence.generic.dao.GenericDao;
  * For alternative licensing, please contact info@elca.ch
  */
 
+/**
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ */
 @AutocollectedGenericDao(value="titi")
 public class Dao1 extends DummyDao<String> implements GenericDao<String> {
 

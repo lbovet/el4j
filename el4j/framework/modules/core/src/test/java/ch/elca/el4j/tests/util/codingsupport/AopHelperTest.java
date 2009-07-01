@@ -19,6 +19,13 @@ import ch.elca.el4j.util.codingsupport.AopHelper;
 
 /**
  * This class shows some exceptions on stdout (for information purposes)
+ * 
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  */
 public class AopHelperTest {
 

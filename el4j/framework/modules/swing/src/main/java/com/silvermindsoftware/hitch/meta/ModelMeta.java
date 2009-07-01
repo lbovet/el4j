@@ -18,6 +18,14 @@ package com.silvermindsoftware.hitch.meta;
 
 import java.lang.reflect.Field;
 
+/**
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ */
 public class ModelMeta {
 
 	private Field modelField;

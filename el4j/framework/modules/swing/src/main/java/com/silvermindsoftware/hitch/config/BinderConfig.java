@@ -30,6 +30,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ */
 public class BinderConfig {
 
 	private static final Log log = LogFactory.getLog(BinderConfig.class);

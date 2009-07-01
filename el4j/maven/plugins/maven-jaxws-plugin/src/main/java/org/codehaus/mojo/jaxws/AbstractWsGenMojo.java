@@ -36,8 +36,14 @@ import org.apache.maven.plugin.MojoFailureException;
 
 import com.sun.tools.ws.WsGen;
 
+
 /**
- *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author gnodet <gnodet@apache.org>
  * @author dantran <dantran@apache.org>
