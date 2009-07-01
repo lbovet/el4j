@@ -38,6 +38,13 @@ import org.apache.commons.logging.LogFactory;
  *
  * This class was contributed to EL4J by Reto Fankhauser.
  *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
  * @author Reto Fankhauser (RFA)
  */
 public class ExceptionChainConversionInterceptor implements MethodInterceptor {

@@ -9,6 +9,18 @@ import org.junit.Test;
 
 import ch.elca.el4j.maven.plugins.database.util.SqlUtils;
 
+/**
+ * A Test class to test {@link SqlUtils}.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Stefan Wismer (SWI)
+ */
 public class SqlUtilTest {
 
 	@Test

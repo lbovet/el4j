@@ -19,7 +19,6 @@ package ch.elca.el4j.services.gui.swing.frames;
 import javax.swing.JComponent;
 
 import org.bushe.swing.event.annotation.AnnotationProcessor;
-import org.noos.xing.mydoggy.ToolWindow;
 import org.noos.xing.mydoggy.ToolWindowTab;
 
 import ch.elca.el4j.services.gui.swing.wrapper.AbstractWrapperFactory;

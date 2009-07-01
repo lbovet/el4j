@@ -18,6 +18,18 @@ package ch.elca.el4j.demos.model;
 
 import java.util.List;
 
+/**
+ * A simple Person (example model).
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Stefan Wismer (SWI)
+ */
 public interface Person {
 
 	public String getFirstName();

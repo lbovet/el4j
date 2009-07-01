@@ -17,27 +17,30 @@
 package ch.elca.el4j.demos.gui.forms;
 
 import java.awt.BorderLayout;
-import java.net.URL;
 
-import javax.help.HelpSet;
-import javax.help.JHelp;
-import javax.help.SwingHelpUtilities;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jdesktop.application.ResourceMap;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import ch.elca.el4j.core.context.annotations.LazyInit;
 import ch.elca.el4j.services.gui.swing.GUIApplication;
 
+/**
+ * A very simple help dialog just containing a label.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Andreas Rueedlinger (ARR)
+ */
 @LazyInit
 @Component("helpDialog")
 public class HelpDialog extends JPanel {

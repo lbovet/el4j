@@ -19,10 +19,21 @@ package ch.elca.el4j.services.gui.swing.frames;
 import javax.swing.Icon;
 import javax.swing.JComponent;
 
-import org.noos.xing.mydoggy.ContentManager;
 import org.noos.xing.mydoggy.ToolWindowAnchor;
 import org.noos.xing.mydoggy.ToolWindowManager;
 
+/**
+ * This class holds information about the tab configuration.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Stefan Wismer (SWI)
+ */
 public class ToolWindowTabConfiguration extends ContentConfiguration {
 	protected ToolWindowAnchor m_anchor;
 	

@@ -13,8 +13,14 @@ import org.xml.sax.EntityResolver;
  *     * Do not abuse. It could be used as general thread-local global variables
  *     * There is a potential security risk here (do not put confidential info in here)
  *
- * @author Philipp H. Oser (POS)
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
+ * @author Philipp H. Oser (POS)
  */
 public class XmlMergeContext {
 

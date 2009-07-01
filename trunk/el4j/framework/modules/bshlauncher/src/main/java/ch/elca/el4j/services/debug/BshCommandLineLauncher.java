@@ -39,8 +39,14 @@ import org.springframework.util.StringUtils;
  *    <br>
  * Limitation: cut and paste (with external info) is currently not supported.
  *
- * @author Philipp H. Oser (POS)
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
+ * @author Philipp H. Oser (POS)
  */
 public class BshCommandLineLauncher implements ApplicationContextAware, InitializingBean {
 

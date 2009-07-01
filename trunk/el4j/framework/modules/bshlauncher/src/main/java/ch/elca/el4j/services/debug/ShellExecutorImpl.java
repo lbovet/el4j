@@ -18,7 +18,8 @@ import bsh.TargetError;
 /**
  * The evaluator can evaluate script expressions.
  *
- * For now it uses bsh. Later it should also be able to support other shells (via bean scripting or the jdk 1.6 mechanism).
+ * For now it uses bsh. Later it should also be able to support other shells
+ * (via bean scripting or the jdk 1.6 mechanism).
  *
  * Features: <br>
  *   bsh.show=true shows more eval output <br>
@@ -33,6 +34,8 @@ import bsh.TargetError;
  *    "$Date$",
  *    "$Author$"
  * );</script>
+ * 
+ * @author Philipp H. Oser (POS)
  */
 public class ShellExecutorImpl implements ShellExecutor {
 

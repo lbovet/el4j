@@ -43,6 +43,13 @@ import org.springframework.util.StringUtils;
  *
  *
  * Source of the idea: secutix project
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  */
 public class EntityDetectorAnnotationSessionFactoryBean extends AnnotationSessionFactoryBean
 	implements InitializingBean {

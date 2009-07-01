@@ -16,10 +16,6 @@
  */
 package ch.elca.el4j.tests.refdb.dao;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -31,7 +27,6 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Session;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -40,6 +35,10 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import ch.elca.el4j.apps.keyword.dom.Keyword;
 import ch.elca.el4j.apps.refdb.dao.AnnotationDao;

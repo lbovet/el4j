@@ -23,6 +23,18 @@ import org.hibernate.validator.Length;
 import org.hibernate.validator.Min;
 import org.hibernate.validator.NotNull;
 
+/**
+ * A simple implementation of {@link Person}.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Stefan Wismer (SWI)
+ */
 public class DefaultPerson implements Person {
 	protected String m_firstName;
 	protected String m_lastName;
