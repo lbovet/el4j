@@ -51,5 +51,6 @@
 
 	<complexType name="removeProperty">
 		<attribute name="name" type="string" use="required"></attribute>
+		<attribute name="comment" type="string"></attribute>
 	</complexType>
 </schema>
