@@ -3,8 +3,17 @@ package ch.elca.el4j.services.search.criterias;
 import java.io.Serializable;
 
 /**
- * Represents an order imposed upon a {@link QueryObject} result set
+ * Represents an order imposed upon a {@link QueryObject} result set.
  *   Simplification of Order class of hibernate
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Philipp Oser (POS)
  */
 public class Order implements Serializable {
 

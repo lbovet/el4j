@@ -26,6 +26,18 @@ import ch.elca.el4j.services.gui.swing.GUIApplication;
 import ch.elca.el4j.services.gui.swing.frames.ContentApplicationFrame;
 import ch.elca.el4j.services.gui.swing.frames.ContentConfiguration;
 
+/**
+ * This factory wraps components into {@link ContentApplicationFrame}s.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Stefan Wismer (SWI)
+ */
 public class ContentWrapperFactory extends AbstractWrapperFactory<ContentApplicationFrame> {
 	/**
 	 * The abstract factory.

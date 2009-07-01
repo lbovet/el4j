@@ -54,8 +54,14 @@ import org.springframework.util.ClassUtils;
  * Remark: We delegate sometimes to the AOPUtil of Spring
  *    (we duplicated the methods here for simplicity).
  *
- * @author Philipp Oser (POS)
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
+ * @author Philipp Oser (POS)
  */
 public class AopHelper {
 

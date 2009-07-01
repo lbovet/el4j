@@ -23,6 +23,16 @@ package ch.elca.el4j.util.collections;
 import java.util.*;
 import java.util.Map.Entry;
 
+/**
+ * A {@link HashSet} that uses == to determine of two entries are equal.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ */
 public class IdentityHashSet<E> implements Set<E> {
 	
 	IdentityHashMap<E, Object> map = new IdentityHashMap<E, Object>();

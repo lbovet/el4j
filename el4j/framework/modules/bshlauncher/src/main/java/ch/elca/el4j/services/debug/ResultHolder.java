@@ -2,6 +2,18 @@ package ch.elca.el4j.services.debug;
 
 import java.io.Serializable;
 
+/**
+ * This class holds the result of a method execution.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Philipp H. Oser (POS)
+ */
 public class ResultHolder implements Serializable {
 
 	Object returnValue;

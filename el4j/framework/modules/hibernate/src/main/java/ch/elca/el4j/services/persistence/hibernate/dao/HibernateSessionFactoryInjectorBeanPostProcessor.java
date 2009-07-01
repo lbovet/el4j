@@ -35,10 +35,16 @@ import ch.elca.el4j.util.codingsupport.Reject;
  * Inject the session factory in GenericDaos (or other daos) if needed.
  *  It gets the sessionFactory from the spring context
  *   by using the default name {@link SESSION_FACTORY_BEAN_DEFAULT_NAME} or
- *   via its settor method.
+ *   via its setter method.
  *
- * @author pos
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
+ * @author Philipp Oser (POS)
  */
 public class HibernateSessionFactoryInjectorBeanPostProcessor
 		implements BeanPostProcessor, PriorityOrdered, ApplicationContextAware {
@@ -46,7 +52,7 @@ public class HibernateSessionFactoryInjectorBeanPostProcessor
 	private static final Log s_logger= LogFactory.getLog(HibernateSessionFactoryInjectorBeanPostProcessor.class);
 
 	/**
-	 * The default name for the property of the session factory
+	 * The default name for the property of the session factory.
 	 */
 	public static final String SESSION_FACTORY_BEAN_DEFAULT_NAME = "sessionFactory";
 	
@@ -54,24 +60,25 @@ public class HibernateSessionFactoryInjectorBeanPostProcessor
 		
 
 	/**
-	 * Initiates the real work
+	 * Initiates the real work.
 	 */
 	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-		s_logger.debug("Treating bean with name:"+beanName);
+		s_logger.debug("Treating bean with name:" + beanName);
 		if (GenericDao.class.isAssignableFrom(bean.getClass())) {
-			s_logger.debug("init dao with name:"+beanName);
-			initDao((GenericDao<?>)bean);
+			s_logger.debug("init dao with name:" + beanName);
+			initDao((GenericDao<?>) bean);
 		}
 		return bean;
 	}
 
+	/** {@inheritDoc} */
 	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
 		return bean;
 	}
 
 
 	/**
-	 * Try to init the sessionFactory of the bean
+	 * Try to init the sessionFactory of the bean.
 	 * @param dao
 	 */
 	protected void initDao(GenericDao<?> dao) {
@@ -81,12 +88,12 @@ public class HibernateSessionFactoryInjectorBeanPostProcessor
 					dao.getClass());
 				Object value = pd.getReadMethod().invoke(dao);
 				if (value == null) {
-					pd.getWriteMethod().invoke(dao,m_sessionFactory);
+					pd.getWriteMethod().invoke(dao, m_sessionFactory);
 				}
 				s_logger.debug("value set in dao set");
 			} catch (Exception e) {
 				// ignore problems
-				s_logger.info("problem when auto-setting sessionFactory",e);
+				s_logger.info("problem when auto-setting sessionFactory", e);
 
 			}
 		}
@@ -95,11 +102,11 @@ public class HibernateSessionFactoryInjectorBeanPostProcessor
 	
 	
 	/**
-	 * Gets the session factory (from spring context if needed)
+	 * Gets the session factory (from spring context if needed).
 	 * @return
 	 */
 	public SessionFactory getSessionFactory() {
-		if ((m_sessionFactory == null) && (m_applicationContext != null)){
+		if ((m_sessionFactory == null) && (m_applicationContext != null)) {
 			// try to locate the session factory
 			if (m_applicationContext.containsBean(SESSION_FACTORY_BEAN_DEFAULT_NAME)) {
 				m_sessionFactory = (SessionFactory)
@@ -127,12 +134,15 @@ public class HibernateSessionFactoryInjectorBeanPostProcessor
 		this.order = order;
 	}
 
+	/** {@inheritDoc} */
 	public int getOrder() {
 		return this.order;
 	}
 
+	/** {@inheritDoc} */
 	public void setApplicationContext(ApplicationContext applicationContext)
-	throws BeansException {
+		throws BeansException {
+		
 		m_applicationContext = applicationContext;
 	}
 }

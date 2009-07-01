@@ -1,8 +1,5 @@
 package ch.elca.el4j.tests.gui.model.mixin;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -13,12 +10,26 @@ import org.jdesktop.observablecollections.ObservableListListener;
 import org.junit.Test;
 import org.springframework.aop.framework.Advised;
 
-import ch.elca.el4j.services.gui.model.mixin.PropertyChangeListenerMixin;
-import ch.elca.el4j.services.gui.model.mixin.SaveRestoreCapability;
-import ch.elca.el4j.util.codingsupport.AopHelper;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import com.silvermindsoftware.hitch.events.PropertyChangeListenerCapability;
 
+import ch.elca.el4j.services.gui.model.mixin.PropertyChangeListenerMixin;
+import ch.elca.el4j.services.gui.model.mixin.SaveRestoreCapability;
+
+/**
+ * A test for {@link PropertyChangeListenerMixin}.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Stefan Wismer (SWI)
+ */
 public class PropertyChangeListenerMixinTest {
 
 	@Test

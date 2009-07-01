@@ -14,6 +14,13 @@ import org.springframework.util.Assert;
 
 /**
  * Utility to locate classes from the classpath.
+ *
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  */
 public class ClassLocator {
 	/**

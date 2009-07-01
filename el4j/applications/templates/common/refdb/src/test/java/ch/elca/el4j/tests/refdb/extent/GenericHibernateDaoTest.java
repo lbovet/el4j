@@ -16,11 +16,6 @@
  */
 package ch.elca.el4j.tests.refdb.extent;
 
-import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentCollection.collection;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -34,23 +29,20 @@ import org.hibernate.LazyInitializationException;
 import org.junit.Test;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-import ch.elca.el4j.apps.keyword.dao.impl.hibernate.HibernateKeywordDao;
 import ch.elca.el4j.apps.keyword.dom.Keyword;
-import ch.elca.el4j.apps.refdb.dao.BookDao;
 import ch.elca.el4j.apps.refdb.dao.impl.hibernate.GenericHibernateFileDaoInterface;
-import ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateBookDao;
 import ch.elca.el4j.apps.refdb.dao.impl.hibernate.HibernateFileDao;
 import ch.elca.el4j.apps.refdb.dom.Annotation;
 import ch.elca.el4j.apps.refdb.dom.Book;
 import ch.elca.el4j.apps.refdb.dom.File;
 import ch.elca.el4j.apps.refdb.dom.Link;
 import ch.elca.el4j.apps.refdb.dom.Reference;
-import ch.elca.el4j.services.persistence.generic.dao.DaoRegistry;
 import ch.elca.el4j.services.persistence.generic.dao.impl.DefaultDaoRegistry;
 import ch.elca.el4j.services.persistence.hibernate.dao.ConvenienceGenericHibernateDao;
-import ch.elca.el4j.services.persistence.hibernate.dao.GenericHibernateDao;
 import ch.elca.el4j.services.persistence.hibernate.dao.extent.DataExtent;
 import ch.elca.el4j.services.search.QueryObject;
 import ch.elca.el4j.services.search.criterias.LikeCriteria;
@@ -59,6 +51,8 @@ import ch.elca.el4j.tests.person.dom.Brain;
 import ch.elca.el4j.tests.person.dom.Person;
 import ch.elca.el4j.tests.person.dom.Tooth;
 import ch.elca.el4j.tests.refdb.AbstractTestCaseBase;
+
+import static ch.elca.el4j.services.persistence.hibernate.dao.extent.ExtentCollection.collection;
 /**
  *
  * Test case for <code>GenericHibernateDao</code> to test
