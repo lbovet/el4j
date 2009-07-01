@@ -559,9 +559,11 @@
 					<configuration>
 						<additionalProjectnatures>
 							<projectnature>de.mvmsoft.checkclipse.CheckclipseNature</projectnature>
+							<projectnature>net.sf.eclipsecs.core.CheckstyleNature</projectnature>
 						</additionalProjectnatures>
 						<additionalBuildcommands>
 							<buildcommand>de.mvmsoft.checkclipse.CheckclipseBuilder</buildcommand>
+							<buildcommand>net.sf.eclipsecs.core.CheckstyleBuilder</buildcommand>
 						</additionalBuildcommands>
 						<workspace>${el4j.project.home}/workspace</workspace>
 						<wtpversion>2.0</wtpversion>
@@ -1883,6 +1885,13 @@
 				<artifactId>junit</artifactId>
 				<version>4.4</version>
 				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.testng</groupId>
+				<artifactId>testng</artifactId>
+				<version>5.8</version>
+				<scope>test</scope>
+				<classifier>jdk15</classifier>
 			</dependency>
 			
 			<!-- Easymock -->
