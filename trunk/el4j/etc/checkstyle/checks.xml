@@ -63,6 +63,10 @@
 		<property name="checkFormat" value="MemberName" />
 	</module>
 	
+	<module name="FileLength">
+		<property name="max" value="2000" />
+	</module>
+	
 	<module name="TreeWalker">
 		<!-- Makes comments available to filters -->
 		<module name="FileContentsHolder"/>
@@ -121,7 +125,7 @@
 		<module name="RedundantImport" />
 		<module name="UnusedImports" />
 		<module name="ImportOrder">
-			<property name="groups" value="java,javax,org,com,ch,junit,net" />
+			<property name="groups" value="java,javax,org,com,ch,net" />
 			<property name="ordered" value="true" />
 			<property name="separated" value="true" />
 		</module>
@@ -131,9 +135,6 @@
 
 		<module name="ExecutableStatementCount">
 			<property name="max" value="30" />
-		</module>
-		<module name="FileLength">
-			<property name="max" value="2000" />
 		</module>
 		<module name="LineLength">
 			<property name="max" value="120" />
@@ -186,25 +187,27 @@
 
 
 		<!-- Use of system.out instead of logger -->
-		<module name="GenericIllegalRegexp">
+		<module name="Regexp">
 		<!-- . matches any character, so we need to escape it and use \. to match dots. -->
 			<property name="format" value="System\.out\.print"/>
 			<property name="ignoreComments " value="true"/>
 			<property name="message" value="Use logger instead of system.out"/>
+			<property name="illegalPattern" value="true"/>
 		</module>
 		
-		<module name="GenericIllegalRegexp">
+		<module name="Regexp">
 			<property name="format" value="^\s* [^*^-]"/>
 			<property name="ignoreComments" value="true"/>
 			<property name="message" value="Use tabs for indentation"/>
+			<property name="illegalPattern" value="true"/>
 		</module>
 		
-		<module name="GenericIllegalRegexp">
-			<property name="format" value="\S\s\s+$"/>
+		<module name="Regexp">
+			<property name="format" value="\S[ \t][ \t]+$"/>
 			<property name="ignoreComments" value="true"/>
 			<property name="message" value="Remove whitespaces at end of line"/>
+			<property name="illegalPattern" value="true"/>
 		</module>
-
 
 		<!-- Modifiers -->
 
@@ -325,7 +328,7 @@
 		<!--module name="FinalParameters"/-->
 		<module name="Indentation" />
 		<module name="TrailingComment" />
-		<module name="RequiredRegexp">
+		<module name="Regexp">
 			<property name="format" value="printFileStatus" />
 		</module>
 
