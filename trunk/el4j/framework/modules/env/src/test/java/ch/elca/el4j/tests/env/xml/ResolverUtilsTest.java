@@ -25,6 +25,14 @@ import static org.junit.Assert.*;
 
 import ch.elca.el4j.env.xml.ResolverUtils;
 
+/**
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ */
 public class ResolverUtilsTest {
 	@Test
 	public void testResolve() {

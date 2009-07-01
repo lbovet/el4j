@@ -22,6 +22,14 @@ import org.junit.Test;
 import ch.elca.el4j.maven.plugins.BootstrapFileHandler;
 import ch.elca.el4j.maven.plugins.ProjectData;
 
+/**
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ */
 public class BootstrapFileHandlerTest {
 
 	private File testXml = new File(PlexusTestCase.getBasedir()

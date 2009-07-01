@@ -16,6 +16,14 @@ package com.silvermindsoftware.hitch.config;
  * limitations under the License.
  */
 
+/**
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ */
 public class ModelObjectConfig {
 
 	private String modelField;

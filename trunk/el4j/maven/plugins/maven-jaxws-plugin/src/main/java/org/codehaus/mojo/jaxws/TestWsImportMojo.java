@@ -5,6 +5,13 @@ import java.io.File;
 /**
  * Parses wsdl and binding files and generates Java code needed to access it
  * (for tests.)
+ * 
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
  *
  * @author Kohsuke Kawaguchi
  */

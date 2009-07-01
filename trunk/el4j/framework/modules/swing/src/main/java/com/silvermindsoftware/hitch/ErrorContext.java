@@ -19,6 +19,14 @@ package com.silvermindsoftware.hitch;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ */
 public class ErrorContext {
 
 	private static class ThreadLocalList extends ThreadLocal {

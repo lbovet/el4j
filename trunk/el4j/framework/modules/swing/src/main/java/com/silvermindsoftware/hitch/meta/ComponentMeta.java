@@ -21,6 +21,14 @@ import com.silvermindsoftware.hitch.ReadOnly;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+/**
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ */
 public class ComponentMeta {
 
 	private Class modelPropertyType;

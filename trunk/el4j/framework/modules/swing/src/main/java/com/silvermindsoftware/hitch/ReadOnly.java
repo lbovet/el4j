@@ -16,6 +16,14 @@ package com.silvermindsoftware.hitch;
  * limitations under the License.
  */
 
+/**
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ */
 public enum ReadOnly {
 
 	TRUE, FALSE, DEFAULT;

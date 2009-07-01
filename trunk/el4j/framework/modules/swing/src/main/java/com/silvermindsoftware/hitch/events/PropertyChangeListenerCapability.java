@@ -6,7 +6,14 @@ import java.beans.PropertyChangeSupport;
 /**
  * Interface for property change listener support
  *
- * @author SWI
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ *
+ * @author Stefan Wismer (SWI)
  */
 public interface PropertyChangeListenerCapability {
 	/**

@@ -21,6 +21,14 @@ import java.util.List;
  * limitations under the License.
  */
 
+/**
+ * <script type="text/javascript">printFileStatus
+ *   ("$URL$",
+ *    "$Revision$",
+ *    "$Date$",
+ *    "$Author$"
+ * );</script>
+ */
 public class ClassInfo {
 
 	/* Class Hierarchy */
