@@ -7,7 +7,7 @@
  * Any republication or derived work distributed in source code form
  * must include this copyright and license notice.
  */
- 
+
 package ch.elca.el4j.util.concurrency;
 
 import java.lang.annotation.*;
