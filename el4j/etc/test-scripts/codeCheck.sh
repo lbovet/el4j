@@ -35,21 +35,19 @@ result=0
 echo "Checking for valid printFileStatus..."
 echo "" > java_files.tmp
 cat files.tmp | grep  ".java$" >> java_files.tmp
-for i in $(cat java_files.tmp) ; do
+for i in $(grep -v "/maven/archetypes/" java_files.tmp) ; do
 	
 	# dummy command to make it unix style
 	sed "s/ABC/ABC/" < $i > current.tmp
 	
 	egrep "printFileStatus" current.tmp > /dev/null
 	if [ $? -ne 0 ] ; then
-		# test deactivated: too many matches
-		echo -n "dummy" > /dev/null
-		#echo "$i: printFileStatus missing."
-		#result=1
+		echo "printFileStatus missing: $i"
+		result=1
 	else
 		egrep "URL: http" current.tmp > /dev/null
 		if [ $? -ne 0 ] ; then
-			echo "$i: 'URL:' has to be followed by a space"
+			echo "'URL:' has to be followed by a space: $i"
 			egrep -n "URL: http" $i
 			result=1
 		fi
@@ -67,7 +65,7 @@ for i in $(cat files.tmp) ; do
 	
 	egrep "^[[:blank:]]* [^*^-]" current.tmp > /dev/null
 	if [ $? -eq 0 ] ; then
-		echo "$i: Spaces at beginning of line found."
+		echo "Spaces at beginning of line found in: $i"
 		egrep -n "^[[:blank:]]* [^*^-]" $i
 		result=1
 	fi
