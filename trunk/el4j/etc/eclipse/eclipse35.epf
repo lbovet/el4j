@@ -139,3 +139,5 @@ file_export_version=3.0
 /instance/org.eclipse.jdt.ui/org.eclipse.jdt.ui.importorder=java;\#java;javax;\#javax;org;\#org;com;\#com;ch;\#ch;net;\#net;
 /instance/org.eclipse.wst.xml.core/honourAllSchemaLocations=false
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.problem.missingSerialVersion=ignore
+/instance/org.testng.eclipse/.outdir=/target/test-output
+/instance/org.testng.eclipse/.absolutepath=false
