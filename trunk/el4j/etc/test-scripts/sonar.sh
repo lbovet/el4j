@@ -1,19 +1,11 @@
 #!/bin/bash -e
 
-# check if sonar server is up running
-
-sonarstatus > son-status
-
-status=$(cat son-status)
-
-if [ "$status" == "sonar is not running" ] ; then
-	echo "Sonar is not running yet!"
+# check if sonar server is running
+if ! /home/tester/el4j/tools/sonar/bin/linux-x86-32/sonar.sh status ; then
 	# start sonar and wait for some minutes to be sure server is up
 	startsonar
 	sleep 300
 fi
-
-rm son-status
 
 # run sonar in external
 
