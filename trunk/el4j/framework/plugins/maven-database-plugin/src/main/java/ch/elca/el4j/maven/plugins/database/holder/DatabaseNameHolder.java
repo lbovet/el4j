@@ -144,7 +144,7 @@ public class DatabaseNameHolder {
 	
 	/**
 	 * Get name of database (either db2 or oracle) from project's
-	 * env.properties file or configuration tag.
+	 * env-values.properties or env.properties file or configuration tag.
 	 *
 	 * At first, system property db.name is checked.
 	 * If not set, classpath is searched for .env files containing
@@ -156,19 +156,24 @@ public class DatabaseNameHolder {
 	private void loadDBName(MavenProject project) {
 
 		// Check if DB Name was set with configuration tag or should be
-		// read from project's env.properties
+		// read from project's env-values.properties or env.properties
 		
 		String dbFromConfig = project.getProperties().getProperty("db.name");
 		
 		if (dbFromConfig == null) {
 			
 			try {
-				// Check if project contains env.properties
-				Resource[] resources = getResources("classpath*:env/env.properties");
+				// Check if project contains env-values.properties
+				Resource[] resources = getResources("classpath*:env-values.properties");
+				
+				if (resources.length == 0) {
+					// Check if project contains old env.properties
+					resources = getResources("classpath*:env/env.properties");
+				}
 				
 				Properties properties = getProperties(resources);
 				m_dbName = properties.getProperty("db.name");
-				s_logger.info("DB name set from env.properties to: " + getDbName());
+				s_logger.info("DB name set from env(-values).properties to: " + getDbName());
 			} catch (Exception e) {
 				throw new DatabaseHolderException(e);
 			}
