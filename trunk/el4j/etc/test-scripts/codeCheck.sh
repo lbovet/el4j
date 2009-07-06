@@ -78,6 +78,16 @@ for i in $(cat files.tmp) ; do
 done
 echo "done"
 
+if [ $1 == "external" ] ; then
+	# search for ELCA internal header
+	for i in $(cat files.tmp) ; do
+		grep "confidential and proprietary information" $i > /dev/null
+		if [ $? -eq 0 ] ; then
+			echo "ELCA internal header found in $i"
+			result=1
+		fi
+	done
+fi
 if [ $1 == "internal" ] ; then
 	# search for LGPL header
 	for i in $(cat files.tmp) ; do
