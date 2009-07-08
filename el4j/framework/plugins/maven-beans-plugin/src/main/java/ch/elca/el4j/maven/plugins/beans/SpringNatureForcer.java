@@ -45,22 +45,17 @@ import ch.elca.el4j.maven.plugins.beans.BeansMojo.LogCallback;
 
 public class SpringNatureForcer {
 	
-	private File baseDirectory;
-	private LogCallback m_logger;
-	
-	public SpringNatureForcer(File baseDirectory) {
-		this.baseDirectory = baseDirectory;
-	}
-	
-	
-	
+	/**
+	 * Lets the class use the logging functionality of the Mojo.
+	 */
+	private static LogCallback m_logger;
 	
 	
 	/**
 	 * Forces SpringNature (in the .project file that is checked by eclipse). -> adds a tag in the nature tag of the
 	 * (xml) .project file
 	 */
-	public void forceSpringNature() {
+	public static void forceSpringNature(File baseDirectory) {
 		try {
 			File dotProject = new File(baseDirectory, ".project");
 			String content = FileUtils.readFileToString(dotProject, null);
@@ -89,7 +84,7 @@ public class SpringNatureForcer {
 	 * @param log is a logger as one would get in the main class through getLog().
 	 */
 
-	void setLogger(LogCallback log) {
+	static void setLogger(LogCallback log) {
 		m_logger = log;
 	}
 	
